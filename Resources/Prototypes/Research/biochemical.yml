@@ -16,7 +16,7 @@
   - ChemicalPayload
   - ClothingEyesGlassesChemical
   - Jug
-  - ImplantOMatic
+
 
 - type: technology
   id: SurgicalTools
@@ -34,6 +34,19 @@
   - Drill
   - Saw
   - Hemostat
+
+- type: technology
+  id: PortableImplantCreation
+  name: research-technology-surgical-tools
+  icon:
+    sprite: Objects/Specific/Medical/Impalantomatic/implantomatic.rsi
+    state: implantomatic
+  discipline: Biochemical
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - ImplantOMatic
+  - Implanter
 
 - type: technology
   id: BiochemicalStasis

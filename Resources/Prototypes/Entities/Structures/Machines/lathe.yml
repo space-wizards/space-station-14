@@ -790,7 +790,6 @@
       - DiseaseSwab
       - Beaker
       - Syringe
-      - Implanter
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
@@ -823,6 +822,7 @@
       - Jug
       - SyringeCryostasis
       - ImplantOMatic
+      - Implanter
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

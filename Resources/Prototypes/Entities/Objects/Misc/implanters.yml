@@ -10,8 +10,8 @@
       sound:
         path: /Audio/Items/welder_drop.ogg
     - type: Sprite
-      sprite: Objects/Tools/welder.rsi
-      state: icon
+      sprite: Objects/Specific/Medical/implantomatic.rsi
+      state: implantomatic
     - type: RefillableSolution
       solution: implantloader
     - type: ExaminableSolution
@@ -32,18 +32,35 @@
       recipes:
         - LightImplant
         - BikeHornImplant
+        - SadTromboneImplant
 
+# Ability to have light in front of you.
 - type: implantRecipe
   id: LightImplant
   product: LightImplant
-  reagent: WeldingFuel
-  cost: 100 # Welding fuel is incredibly plentiful
+  reagent: Plasma
+  cost: 30
 
+# Allows for endless honking. This is why you do not give the Implantomatic to the Clown.
 - type: implantRecipe
   id: BikeHornImplant
   product: BikeHornImplant
-  reagent: BananaHonk
-  cost: 30 # Banana Honk glasses contain 30u
+  reagent: Honk # A poison that causes honking
+  cost: 30
+
+# Sad trombone noise on death. Funny, but harmless.
+- type: implantRecipe
+  id: SadTromboneImplant
+  product: SadTromboneImplant
+  reagent: Saxoite # A poison that causes honking
+  cost: 30
+
+## Allows you to shoot space cleaner from your hands
+#- type: implantRecipe
+#  id: SpaceCleanerImplant
+#  product: BikeHornImplant # TODO: make this implant
+#  reagent: SpaceCleaner
+#  cost: 50
 
 - type: entity
   name: implanter
