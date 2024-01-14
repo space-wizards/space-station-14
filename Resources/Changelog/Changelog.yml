@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: Gibbed mothroaches wont drop all normal moth species parts, just animal
-      organs.
-    type: Fix
-  id: 5211
-  time: '2023-11-27T21:42:53.0000000+00:00'
 - author: deltanedas
   changes:
   - message: When Revolution rounds end each headrev has their number of converted
@@ -3741,3 +3734,13 @@
   id: 5711
   time: '2024-01-14T22:14:19.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24087
+- author: Dygon
+  changes:
+  - message: The particle decelerator's projectile now deals less damage, has a shorter
+      lifespan and can be reflected by objects that reflect energy projectiles.
+    type: Tweak
+  - message: Bullet grenade projectiles no longer penetrate walls.
+    type: Fix
+  id: 5712
+  time: '2024-01-14T23:39:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24032
