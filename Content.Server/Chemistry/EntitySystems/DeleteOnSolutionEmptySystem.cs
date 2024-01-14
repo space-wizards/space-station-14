@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components.DeleteOnSolutionEmptyComponent;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 
@@ -12,27 +13,27 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
         {
             base.Initialize();
             SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         }
 
-        public void OnStartup(EntityUid uid, DeleteOnSolutionEmptyComponent component, ComponentStartup args)
+        public void OnStartup(Entity<DeleteOnSolutionEmptyComponent> entity, ref ComponentStartup args)
         {
-            CheckSolutions(uid, component);
+            CheckSolutions(entity);
         }
 
-        public void OnSolutionChange(EntityUid uid, DeleteOnSolutionEmptyComponent component, SolutionChangedEvent args)
+        public void OnSolutionChange(Entity<DeleteOnSolutionEmptyComponent> entity, ref SolutionContainerChangedEvent args)
         {
-            CheckSolutions(uid, component);
+            CheckSolutions(entity);
         }
 
-        public void CheckSolutions(EntityUid uid, DeleteOnSolutionEmptyComponent component)
+        public void CheckSolutions(Entity<DeleteOnSolutionEmptyComponent> entity)
         {
-            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>(uid))
+            if (!TryComp(entity, out SolutionContainerManagerComponent? solutions))
                 return;
 
-            if (_solutionContainerSystem.TryGetSolution(uid, component.Solution, out var solution))
+            if (_solutionContainerSystem.TryGetSolution((entity.Owner, solutions), entity.Comp.Solution, out _, out var solution))
                 if (solution.Volume <= 0)
-                    EntityManager.QueueDeleteEntity(uid);
+                    EntityManager.QueueDeleteEntity(entity);
         }
     }
 }

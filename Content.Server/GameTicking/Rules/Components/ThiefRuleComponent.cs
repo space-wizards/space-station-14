@@ -15,6 +15,7 @@ public sealed partial class ThiefRuleComponent : Component
     /// <summary>
     /// Add a Pacified comp to thieves
     /// </summary>
+    [DataField]
     public bool PacifistThieves = true;
 
     /// <summary>
@@ -41,9 +42,10 @@ public sealed partial class ThiefRuleComponent : Component
     public List<EntProtoId> StarterItems = new List<EntProtoId> { "ToolboxThief", "ClothingHandsChameleonThief" }; //TO DO - replace to chameleon thieving gloves whem merg
 
     /// <summary>
-    /// All Thiefes created by this rule
+    /// All Thieves created by this rule
     /// </summary>
-    public readonly List<EntityUid> ThiefMinds = new();
+    [DataField]
+    public List<EntityUid> ThievesMinds = new();
 
     /// <summary>
     /// Max Thiefs created by rule on roundstart

@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Components;
@@ -8,8 +10,6 @@ using Content.Shared.PDA;
 using Content.Shared.StationRecords;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.GameTicking;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -26,7 +26,7 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedStationRecordsSystem _records = default!;
+    [Dependency] private readonly SharedStationRecordsSystem _recordsSystem = default!;
 
     public override void Initialize()
     {
@@ -42,7 +42,7 @@ public sealed class AccessReaderSystem : EntitySystem
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
         args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            _records.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
+            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -348,6 +348,9 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="accessor">The accessor to log</param>
     private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
     {
+        if (IsPaused(ent))
+            return;
+
         if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
             ent.Comp.AccessLog.Dequeue();
 

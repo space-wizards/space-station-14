@@ -59,7 +59,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobPossumMorty
+      - MobPossumMortyOld
 
 - type: entity
   name: Raccoon Morticia Spawner
@@ -778,7 +778,22 @@
   - type: ConditionalSpawner
     prototypes:
     - MobPenguin
-
+    
+    
+- type: entity
+  name: Hellspawn Spawner
+  id: SpawnMobHellspawn
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: hellspawn
+      sprite: Markers/mobs.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobHellspawn
+      
 - type: entity
   name: ore crab spawner
   id: SpawnMobOreCrab
@@ -791,10 +806,10 @@
       sprite: Mobs/Elemental/orecrab.rsi
   - type: RandomSpawner
     prototypes:
-      - MobUraniumCrab
-      - MobIronCrab
-      - MobQuartzCrab
-      - MobSilverCrab
+      - MobSpawnCrabUranium
+      - MobSpawnCrabIron
+      - MobSpawnCrabQuartz
+      - MobSpawnCrabSilver
 
 - type: entity
   name: luminous person spawner

@@ -454,7 +454,7 @@
   placementMode: SnapgridCenter
   canRotate: false
 
-- type: construction  
+- type: construction
   name: diagonal plasma window
   id: PlasmaWindowDiagonal
   graph: WindowDiagonal
@@ -776,6 +776,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: wooden barricade
+  id: BarricadeDirectional
+  graph: BarricadeDirectional
+  startNode: start
+  targetNode: barricadefull
+  category: construction-category-structures
+  description: An improvised barricade made out of wooden planks.
+  icon:
+    sprite: Structures/barricades.rsi
+    state: barricade_directional
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: railing
   id: Railing
   graph: Railing
@@ -1028,7 +1045,7 @@
   description: A wall light fixture. Use light tubes.
   icon:
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
-    state: off
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -1048,7 +1065,7 @@
   description: A wall light fixture. Use light bulbs.
   icon:
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
-    state: off
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

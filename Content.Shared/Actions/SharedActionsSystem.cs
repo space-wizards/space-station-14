@@ -562,7 +562,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="actionId">Action entity to add</param>
     /// <param name="component">The <see cref="performer"/>'s action component of </param>
     /// <param name="actionPrototypeId">The action entity prototype id to use if <see cref="actionId"/> is invalid.</param>
-    /// <param name="container">The entity that contains/enables this action (e.g., flashlight)..</param>
+    /// <param name="container">The entity that contains/enables this action (e.g., flashlight).</param>
     public bool AddAction(EntityUid performer,
         [NotNullWhen(true)] ref EntityUid? actionId,
         string? actionPrototypeId,

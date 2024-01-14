@@ -1,7 +1,7 @@
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
@@ -31,7 +31,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
 
             // timer ignores if its full, it's just a fixed cycle
             regen.NextRegenTime = _timing.CurTime + regen.Duration;
-            if (_solutionContainer.TryGetSolution(uid, regen.Solution, out var solution, manager))
+            if (_solutionContainer.ResolveSolution((uid, manager), regen.SolutionName, ref regen.Solution, out var solution))
             {
                 var amount = FixedPoint2.Min(solution.AvailableVolume, regen.Generated.Volume);
                 if (amount <= FixedPoint2.Zero)
@@ -48,13 +48,13 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                     generated = regen.Generated.Clone().SplitSolution(amount);
                 }
 
-                _solutionContainer.TryAddSolution(uid, solution, generated);
+                _solutionContainer.TryAddSolution(regen.Solution.Value, generated);
             }
         }
     }
 
-    private void OnUnpaused(EntityUid uid, SolutionRegenerationComponent comp, ref EntityUnpausedEvent args)
+    private void OnUnpaused(Entity<SolutionRegenerationComponent> entity, ref EntityUnpausedEvent args)
     {
-        comp.NextRegenTime += args.PausedTime;
+        entity.Comp.NextRegenTime += args.PausedTime;
     }
 }

@@ -56,6 +56,18 @@
   - type: BureaucraticErrorRule
 
 - type: entity
+  id: ClericalError
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-clerical-error-announcement
+    minimumPlayers: 15
+    weight: 5
+    duration: 1
+  - type: ClericalErrorRule
+
+- type: entity
   parent: BaseGameRule
   id: ClosetSkeleton
   noSpawn: true
@@ -427,8 +439,16 @@
     weight: 5
     earliestStart: 20
     reoccurrenceDelay: 60
-    startAnnouncement: station-event-ion-storm-start-announcement
-    startAudio:
-      path: /Audio/Announcements/ion_storm.ogg
     duration: 1
   - type: IonStormRule
+
+- type: entity
+  id: MimicVendorRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      earliestStart: 0
+      minimumPlayers: 20
+      weight: 5
+    - type: MobReplacementRule

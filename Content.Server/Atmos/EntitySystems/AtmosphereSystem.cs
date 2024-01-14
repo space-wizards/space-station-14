@@ -38,6 +38,8 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
 
+    private HashSet<EntityUid> _entSet = new();
+
     public override void Initialize()
     {
         base.Initialize();

@@ -43,7 +43,7 @@
   - StorageImplanter
   - DnaScramblerImplanter
   - EphedrineChemistryBottle
-  - OmnizineChemistryBottle
+  - SoapOmega
   - Syringe
   - DrinkVodkaBottleFull
 
@@ -56,6 +56,7 @@
     state: telecrystal
   content:
   - AgentIDCard
+  - Emag
   - SyndicatePersonalAI
   - ClothingHeadHatSyndieMAA
   - CigPackSyndicate
@@ -87,7 +88,7 @@
     state: icon
   content:
   - EncryptionKeyStationMaster
-  - RadioJammer
+  - CyberPen
   - SpyCrewMonitor
   - BriefcaseSyndieLobbyingBundleFilled
   - ClothingMaskGasVoiceChameleon
@@ -105,3 +106,6 @@
   - ClothingNeckCloakVoid
   - FultonBeacon
   - Fulton
+  - SmokeGrenade
+  - SmokeGrenade
+  - SmokeGrenade

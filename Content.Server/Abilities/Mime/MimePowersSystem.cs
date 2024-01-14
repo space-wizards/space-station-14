@@ -84,7 +84,7 @@ namespace Content.Server.Abilities.Mime
             }
 
             // Check there are no mobs there
-            foreach (var entity in _lookupSystem.GetEntitiesIntersecting(tile.Value, 0f))
+            foreach (var entity in _lookupSystem.GetLocalEntitiesIntersecting(tile.Value, 0f))
             {
                 if (HasComp<MobStateComponent>(entity) && entity != uid)
                 {

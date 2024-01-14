@@ -293,7 +293,8 @@ public sealed class ChatUIController : UIController
             throw new Exception("Cannot get active screen!");
         }
 
-        var stringSize = $"{size.X},{size.Y}";
+        var stringSize =
+            $"{size.X.ToString(CultureInfo.InvariantCulture)},{size.Y.ToString(CultureInfo.InvariantCulture)}";
         switch (UIManager.ActiveScreen)
         {
             case DefaultGameScreen _:
