@@ -65,29 +65,6 @@
     radius: 5
     power: 2
     color: "#b00000"
-    
-- type: entity
-  id: EnergyDomeSmallHoly
-  noSpawn: true
-  parent: EnergyDomeBase
-  components:
-  - type: AmbientSound
-    volume: -10
-    range: 5
-    sound:
-      path: /Audio/Ambience/ambicha4.ogg
-  - type: Sprite
-    drawdepth: Effects
-    noRot: true
-    sprite: Effects/EnergyDome/energydome_small.rsi
-    layers:
-    - state: small
-      color: "#fff7cc"
-  - type: PointLight
-    enabled: true
-    radius: 5
-    power: 2
-    color: "#fff7cc"
 
 - type: entity
   id: EnergyDomeMediumBlue
@@ -116,3 +93,34 @@
     radius: 5
     power: 10
     color: "#64b9de"
+
+- type: entity
+  id: EnergyDomeSlowing
+  noSpawn: true
+  parent: EnergyDomeBase
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 2.8
+        density: 0
+        hard: false
+        mask:
+        - None
+        layer:
+        - MidImpassable
+  - type: Sprite
+    sprite: Effects/EnergyDome/energydome_big.rsi
+    layers:
+    - state: big
+      color: "#64b9de"
+  - type: PointLight
+    enabled: true
+    radius: 5
+    power: 10
+    color: "#64b9de"
+  - type: SlowContacts
+    walkSpeedModifier: 0.4
+    sprintSpeedModifier: 0.4

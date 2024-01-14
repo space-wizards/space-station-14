@@ -34,7 +34,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         base.Initialize();
 
         //Generator events
-        SubscribeLocalEvent<EnergyDomeGeneratorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, MapInitEvent>(OnInit);
 
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ActivateInWorldEvent>(OnActivatedInWorld);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, AfterInteractEvent>(OnAfterInteract);
@@ -59,7 +59,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     }
 
 
-    private void OnInit(Entity<EnergyDomeGeneratorComponent> generator, ref ComponentInit args)
+    private void OnInit(Entity<EnergyDomeGeneratorComponent> generator, ref MapInitEvent args)
     {
         if (generator.Comp.CanDeviceNetworkUse)
             _signalSystem.EnsureSinkPorts(generator, generator.Comp.TogglePort, generator.Comp.OnPort, generator.Comp.OffPort);
@@ -200,7 +200,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         //and the barrier is not turned off.
         //
         //Laying down works well (-_-)
-        if (GetProtectedEntity(generator) != generator.Comp.ProtectedEntity)
+        if (GetProtectedEntity(generator) != generator.Comp.DomeParentEntity)
             TurnOff(generator, false);
     }
 
@@ -275,7 +275,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         var protectedEntity = GetProtectedEntity(generator);
 
         var newDome = Spawn(generator.Comp.DomePrototype, Transform(protectedEntity).Coordinates);
-        generator.Comp.ProtectedEntity = protectedEntity;
+        generator.Comp.DomeParentEntity = protectedEntity;
         _transform.SetParent(newDome, protectedEntity);
 
         if (TryComp<EnergyDomeComponent>(newDome, out var domeComp))

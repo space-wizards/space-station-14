@@ -10,11 +10,14 @@ namespace Content.Server.EnergyDome;
 [RegisterComponent, Access(typeof(EnergyDomeSystem))] //Access add
 public sealed partial class EnergyDomeGeneratorComponent : Component
 {
+    [DataField]
+    public bool Enabled = false;
+
     /// <summary>
     /// How much energy will be spent from the battery per unit of damage taken by the shield.
     /// </summary>
     [DataField]
-    public float DamageEnergyDraw = 50f;
+    public float DamageEnergyDraw = 10f;
 
     /// <summary>
     /// Whether or not the dome can be toggled via standard interactions
@@ -29,24 +32,29 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
     [DataField]
     public bool CanDeviceNetworkUse = false;
 
-    [DataField]
-    public bool Enabled = false;
-
     //Dome
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId DomePrototype = "EnergyDomeSmallRed";
+
     [DataField]
     public EntityUid? SpawnedDome;
 
+    /// <summary>
+    /// the entity on which the shield will be hung. This is either the container containing
+    /// the item or the item itself. Determined when the shield is activated,
+    /// it is stored in the component for changing the protected entity.
+    /// </summary>
     [DataField]
-    public EntityUid? ProtectedEntity;
+    public EntityUid? DomeParentEntity;
 
     //Action
     [DataField]
     public EntProtoId ToggleAction = "ActionToggleDome";
+
     [DataField]
     public EntityUid? ToggleActionEntity;
 
+    //Sounds
     [DataField]
     public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
@@ -65,6 +73,7 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
         Params = AudioParams.Default.WithVariation(0.05f)
     };
 
+    //Ports
     [DataField]
     public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
 

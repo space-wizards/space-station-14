@@ -147,7 +147,7 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: BatterySelfRecharger
-    autoRecharge: false
+    autoRecharge: false # true only when active
     autoRechargeRate: -800   #<- discharge per second while active
   - type: Damageable
     damageContainer: Inorganic
