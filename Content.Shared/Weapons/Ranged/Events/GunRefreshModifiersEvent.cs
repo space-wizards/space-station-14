@@ -10,6 +10,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// </summary>
 [ByRefEvent]
 public record struct GunRefreshModifiersEvent(
+    Entity<GunComponent> Gun,
     SoundSpecifier? SoundGunshot,
     float CameraRecoilScalar,
     Angle AngleIncrease,

@@ -491,6 +491,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var comp = gun.Comp;
         var ev = new GunRefreshModifiersEvent(
+            (gun, comp),
             comp.SoundGunshot,
             comp.CameraRecoilScalar,
             comp.AngleIncrease,
