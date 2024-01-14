@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Feluk6174
-  changes:
-  - message: Bananadine is now a psychedelic that can be obtained by grinding baked
-      banana peels, which can be obtained by microwaving banana peels.
-    type: Add
-  id: 5199
-  time: '2023-11-22T01:08:53.0000000+00:00'
 - author: Gotimanga
   changes:
   - message: The reagent "egg" is now known as "cooked egg"
@@ -3730,3 +3723,10 @@
   id: 5699
   time: '2024-01-14T02:45:54.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24052
+- author: 21Melkuu
+  changes:
+  - message: Added Mayo to the Chefvend.
+    type: Add
+  id: 5700
+  time: '2024-01-14T02:47:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24017
