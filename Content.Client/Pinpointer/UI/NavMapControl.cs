@@ -58,6 +58,7 @@ public partial class NavMapControl : MapGridControl
     private bool _draggin;
     private Vector2 _startDragPosition = default!;
     private bool _recentering = false;
+    private Vector2 _recentering_target = Vector2.Zero;
     private float _updateTimer = 0.25f;
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
     public Color _backgroundColor;
@@ -145,7 +146,7 @@ public partial class NavMapControl : MapGridControl
 
         _recenter.OnPressed += args =>
         {
-            _recentering = true;
+            ForceRecenter();
         };
 
         ForceNavMapUpdate();
@@ -154,6 +155,7 @@ public partial class NavMapControl : MapGridControl
     public void ForceRecenter()
     {
         _recentering = true;
+        _recentering_target = Vector2.Zero;
     }
 
     public void ForceNavMapUpdate()
@@ -279,11 +281,11 @@ public partial class NavMapControl : MapGridControl
         if (_recentering)
         {
             var frameTime = Timing.FrameTime;
-            var diff = _offset * (float) frameTime.TotalSeconds;
+            var diff = (_offset - _recentering_target) * (float) frameTime.TotalSeconds;
 
-            if (_offset.LengthSquared() < RecenterMinimum)
+            if ((_offset - _recentering_target).LengthSquared() < RecenterMinimum)
             {
-                _offset = Vector2.Zero;
+                _offset = _recentering_target;
                 _recentering = false;
                 _recenter.Disabled = true;
             }
