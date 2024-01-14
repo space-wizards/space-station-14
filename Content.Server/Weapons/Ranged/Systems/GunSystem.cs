@@ -236,7 +236,7 @@ public sealed partial class GunSystem : SharedGunSystem
                                 var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
                                 RaiseLocalEvent(target.HitEntity, ref ev);
 
-                                //Don't penetrate if target reflects the laser.
+                                //Don't penetrate if the target reflects the laser.
                                 if (ev.Reflected)
                                 {
                                     result = target.Distance;

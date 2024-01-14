@@ -71,7 +71,7 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     public CollisionGroup? PenetrationLayer;
 
     /// <summary>
-    /// Is the hitscan blocked by entities with a radiation resistance.
+    /// Is the hitscan blocked by entities with a certain radiation resistance.
     /// </summary>
     /// <remarks>
     /// Entities with a radiation resistance higher than the hitscan's PenetrationPower will not be penetrated.
@@ -80,8 +80,8 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     public bool BlockedByRadiationResistance;
 
     /// <summary>
-    /// Decides how many mobs can be penetrated for canPenetrateMobs.
-    /// Decides how high of a radiation resistance can be penetrated for canPenetrateStructures.
+    /// Decides how many entities can be penetrated if BlockedByRadiationResistance is false.
+    /// Decides how high of a radiation resistance can be penetrated if BlockedByRadiationResistance is true.
     /// </summary>
     [DataField]
     public int PenetrationPower = 4;
