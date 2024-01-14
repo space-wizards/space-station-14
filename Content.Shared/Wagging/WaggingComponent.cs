@@ -12,6 +12,12 @@ namespace Content.Shared.Wagging;
 public sealed partial class WaggingComponent : Component
 {
     [DataField]
+    public EntProtoId Action = "ActionToggleWagging";
+
+    [DataField]
+    public EntityUid? ActionEntity;
+
+    [DataField]
     public ProtoId<EmotePrototype> EmoteId = "WagTail";
 
     /// <summary>

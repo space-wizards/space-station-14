@@ -1,8 +1,10 @@
-﻿using Content.Server.Chat.Systems;
+﻿using Content.Server.Actions;
+using Content.Server.Chat.Systems;
 using Content.Server.Humanoid;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
+using Content.Shared.Toggleable;
 using Content.Shared.Wagging;
 using Robust.Shared.Prototypes;
 
@@ -13,6 +15,8 @@ namespace Content.Server.Wagging;
 /// </summary>
 public sealed class WaggingSystem : EntitySystem
 {
+    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -20,8 +24,28 @@ public sealed class WaggingSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<WaggingComponent, MapInitEvent>(OnWaggingMapInit);
+        SubscribeLocalEvent<WaggingComponent, ComponentShutdown>(OnWaggingShutdown);
+        SubscribeLocalEvent<WaggingComponent, ToggleActionEvent>(OnWaggingToggle);
         SubscribeLocalEvent<WaggingComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<WaggingComponent, EmoteEvent>(OnEmote);
+    }
+
+    private void OnWaggingMapInit(EntityUid uid, WaggingComponent component, MapInitEvent args)
+    {
+        _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+    }
+
+    private void OnWaggingShutdown(EntityUid uid, WaggingComponent component, ComponentShutdown args)
+    {
+        _actions.RemoveAction(uid, component.ActionEntity);
+    }
+
+    private void OnWaggingToggle(EntityUid uid, WaggingComponent component, ref ToggleActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        TryToggleWagging(uid, wagging: component);
     }
 
     private void OnMobStateChanged(EntityUid uid, WaggingComponent component, MobStateChangedEvent args)
@@ -31,15 +55,6 @@ public sealed class WaggingSystem : EntitySystem
 
         if (component.Wagging)
             TryToggleWagging(uid, wagging: component);
-    }
-
-    private void OnEmote(EntityUid uid, WaggingComponent component, ref EmoteEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (args.Emote.ID == component.EmoteId)
-            args.Handled = TryToggleWagging(uid, component);
     }
 
     public bool TryToggleWagging(EntityUid uid, WaggingComponent? wagging = null, HumanoidAppearanceComponent? humanoid = null)
@@ -86,6 +101,9 @@ public sealed class WaggingSystem : EntitySystem
             _humanoidAppearance.SetMarkingId(uid, MarkingCategories.Tail, idx, newMarkingId,
                 humanoid: humanoid);
         }
+
+        var emoteText = Loc.GetString(wagging.Wagging ? "wagging-emote-start" : "wagging-emote-stop", ("ent", uid));
+        _chat.TrySendInGameICMessage(uid, emoteText, InGameICChatType.Emote, ChatTransmitRange.Normal); // Ok while emotes dont have radial menu
 
         return true;
     }
