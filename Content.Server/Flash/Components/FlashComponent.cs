@@ -14,9 +14,12 @@ namespace Content.Server.Flash.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float Range { get; set; } = 7f;
 
+        /// <summary>
+        /// If set, the flash can be used for AoE in hand.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("aoeFlashDuration")]
-        public int AoeFlashDuration { get; set; } = 2000;
+        public int? AoeFlashDuration { get; set; } = 2000;
 
         [DataField("slowTo")]
         [ViewVariables(VVAccess.ReadWrite)]

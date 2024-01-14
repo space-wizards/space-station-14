@@ -68,11 +68,11 @@ namespace Content.Server.Flash
 
         private void OnFlashUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
         {
-            if (args.Handled || !UseFlash(uid, comp, args.User))
+            if (args.Handled || !comp.AoeFlashDuration.HasValue || !UseFlash(uid, comp, args.User))
                 return;
 
             args.Handled = true;
-            FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true);
+            FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration.Value, comp.SlowTo, true);
         }
 
         private bool UseFlash(EntityUid uid, FlashComponent comp, EntityUid user)
