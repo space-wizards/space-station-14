@@ -67,46 +67,55 @@ public sealed partial class DungeonSystem
         bool rotation = false)
     {
         var originTransform = Matrix3.CreateTranslation(origin);
-        SpawnRoom(gridUid, grid, originTransform, room, random, clearExisting, rotation);
+        var roomRotation = Angle.Zero;
+
+        if (rotation)
+        {
+            roomRotation = GetRoomRotation(room, random);
+        }
+
+        var roomTransform = Matrix3.CreateTransform((Vector2) room.Size / 2f, roomRotation);
+        Matrix3.Multiply(roomTransform, originTransform, out var finalTransform);
+
+        SpawnRoom(gridUid, grid, finalTransform, room, clearExisting);
+    }
+
+    public Angle GetRoomRotation(DungeonRoomPrototype room, Random random)
+    {
+        var roomRotation = Angle.Zero;
+
+        if (room.Size.X == room.Size.Y)
+        {
+            // Give it a random rotation
+            roomRotation = random.Next(4) * Math.PI / 2;
+        }
+        else if (random.Next(2) == 1)
+        {
+            roomRotation += Math.PI;
+        }
+
+        return roomRotation;
     }
 
     public void SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
-        Matrix3 transform,
+        Matrix3 roomTransform,
         DungeonRoomPrototype room,
-        Random random,
-        bool clearExisting = false,
-        bool rotation = false)
+        bool clearExisting = false)
     {
         // Ensure the underlying template exists.
         var roomMap = GetOrCreateTemplate(room);
         var templateMapUid = _mapManager.GetMapEntityId(roomMap);
         var templateGrid = Comp<MapGridComponent>(templateMapUid);
-        var roomRotation = Angle.Zero;
         var roomDimensions = room.Size;
 
-        if (rotation)
-        {
-            if (roomDimensions.X == roomDimensions.Y)
-            {
-                // Give it a random rotation
-                roomRotation = random.Next(4) * Math.PI / 2;
-            }
-            else if (random.Next(2) == 1)
-            {
-                roomRotation += Math.PI;
-            }
-        }
-
-        var roomTransform = Matrix3.CreateTransform((Vector2) room.Size / 2f, roomRotation);
-        Matrix3.Multiply(roomTransform, transform, out var finalTransform);
-        var finalRoomRotation = finalTransform.Rotation();
+        var finalRoomRotation = roomTransform.Rotation();
 
         // go BRRNNTTT on existing stuff
         if (clearExisting)
         {
-            var gridBounds = new Box2(transform.Transform(Vector2.Zero), transform.Transform(room.Size));
+            var gridBounds = new Box2(roomTransform.Transform(Vector2.Zero), roomTransform.Transform(room.Size));
             _entitySet.Clear();
             // Polygon skin moment
             gridBounds = gridBounds.Enlarged(-0.05f);
@@ -138,7 +147,7 @@ public sealed partial class DungeonSystem
                 var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
                 var tileRef = _maps.GetTileRef(templateMapUid, templateGrid, indices);
 
-                var tilePos = finalTransform.Transform(indices + tileOffset);
+                var tilePos = roomTransform.Transform(indices + tileOffset);
                 var rounded = tilePos.Floored();
                 _tiles.Add((rounded, tileRef.Tile));
             }
@@ -154,7 +163,7 @@ public sealed partial class DungeonSystem
         foreach (var templateEnt in _lookup.GetEntitiesIntersecting(templateMapUid, bounds, LookupFlags.Uncontained))
         {
             var templateXform = _xformQuery.GetComponent(templateEnt);
-            var childPos = finalTransform.Transform(templateXform.LocalPosition - roomCenter);
+            var childPos = roomTransform.Transform(templateXform.LocalPosition - roomCenter);
             var childRot = templateXform.LocalRotation + finalRoomRotation;
             var protoId = _metaQuery.GetComponent(templateEnt).EntityPrototype?.ID;
 
@@ -182,7 +191,7 @@ public sealed partial class DungeonSystem
                 // Offset by 0.5 because decals are offset from bot-left corner
                 // So we convert it to center of tile then convert it back again after transform.
                 // Do these shenanigans because 32x32 decals assume as they are centered on bottom-left of tiles.
-                var position = finalTransform.Transform(decal.Coordinates + Vector2Helpers.Half - roomCenter);
+                var position = roomTransform.Transform(decal.Coordinates + Vector2Helpers.Half - roomCenter);
                 position -= Vector2Helpers.Half;
 
                 // Umm uhh I love decals so uhhhh idk what to do about this

@@ -10,3 +10,7 @@ advertisement-snack-9 = Have some more Getmore!
 advertisement-snack-10 = Best quality snacks straight from mars.
 advertisement-snack-11 = We love chocolate!
 advertisement-snack-12 = Try our new jerky!
+thankyou-snack-1 = Eat up!
+thankyou-snack-2 = Enjoy your product!
+thankyou-snack-3 = Have a nice snack.
+thankyou-snack-4 = Yummy!

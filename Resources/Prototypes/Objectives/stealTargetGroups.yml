@@ -181,7 +181,7 @@
     
 - type: stealTargetGroup
   id: ClothingOuterHardsuitVoidParamed
-  name: paramedic Void Suit
+  name: paramedic void suit
   sprite:
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
     state: icon

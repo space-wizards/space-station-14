@@ -2,3 +2,5 @@
   id: BarDrobeAds
   advertisements:
     - advertisement-bardrobe-1
+  thankyous:
+    - vending-machine-thanks
