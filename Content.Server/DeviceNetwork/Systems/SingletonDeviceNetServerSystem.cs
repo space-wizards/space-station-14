@@ -15,36 +15,10 @@ public sealed class SingletonDeviceNetServerSystem : EntitySystem
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
-    private const float UpdateRate = 3f;
-    private float _updateDiff;
-
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SingletonDeviceNetServerComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // check update rate
-        _updateDiff += frameTime;
-        if (_updateDiff < UpdateRate)
-            return;
-        _updateDiff -= UpdateRate;
-
-        var servers = EntityQueryEnumerator<SingletonDeviceNetServerComponent>();
-
-        while (servers.MoveNext(out var id, out var server))
-        {
-            //Make sure the server is disconnected when it becomes unavailable
-            if (server.Available)
-                continue;
-
-            if (server.Active)
-                DisconnectServer(id, server);
-        }
     }
 
     /// <summary>
@@ -54,7 +28,6 @@ public sealed class SingletonDeviceNetServerSystem : EntitySystem
     {
         return Resolve(serverId, ref serverComponent) && serverComponent.Active;
     }
-
 
     /// <summary>
     /// Returns the address of the currently active server for the given station id if there is one.<br/>
@@ -115,7 +88,7 @@ public sealed class SingletonDeviceNetServerSystem : EntitySystem
     {
         component.Available = args.Powered;
 
-        if (!args.Powered)
+        if (!args.Powered && component.Active)
             DisconnectServer(uid, component);
     }
 
