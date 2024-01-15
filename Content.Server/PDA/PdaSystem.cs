@@ -6,6 +6,7 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.PDA.Ringer;
 using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
@@ -34,6 +35,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttleSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -62,6 +64,7 @@ namespace Content.Server.PDA
 
             UpdateAlertLevel(uid, pda);
             UpdateStationName(uid, pda);
+            UpdateEvacShuttle(uid, pda);
         }
 
         protected override void OnItemInserted(EntityUid uid, PdaComponent pda, EntInsertedIntoContainerMessage args)
@@ -131,37 +134,13 @@ namespace Content.Server.PDA
 
             UpdateStationName(uid, pda);
             UpdateAlertLevel(uid, pda);
+            UpdateEvacShuttle(uid, pda);
             // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
             // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
             // TODO don't make this depend on cartridge loader!?!?
             if (!TryComp(uid, out CartridgeLoaderComponent? loader))
                 return;
-
-            TimeSpan? shuttleTime;
-            EvacShuttleStatus shuttleStatus;
-            if (_emergencyShuttleSystem.DockTime != null)
-            {
-                var dockTime = _cfg.GetCVar(CCVars.EmergencyShuttleDockTime);
-                shuttleTime = _emergencyShuttleSystem.DockTime + TimeSpan.FromSeconds(dockTime);
-                shuttleStatus = EvacShuttleStatus.WaitingToLaunch;
-            }
-            else
-            {
-                if (_roundEndSystem.ExpectedCountdownEnd != null)
-                {
-                    shuttleTime = _roundEndSystem.ExpectedCountdownEnd;
-                    shuttleStatus = EvacShuttleStatus.WaitingToArrival;
-                }
-                else
-                {
-                    var autoCalledBefore = _roundEndSystem.AutoCalledBefore
-                        ? _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallExtensionTime)
-                        : _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallTime);
-                    shuttleTime = _roundEndSystem.AutoCallStartTime + TimeSpan.FromMinutes(autoCalledBefore);
-                    shuttleStatus = EvacShuttleStatus.WaitingToCall;
-                }
-            }
 
             var programs = _cartridgeLoader.GetAvailablePrograms(uid, loader);
             var id = CompOrNull<IdCardComponent>(pda.ContainedId);
@@ -178,8 +157,8 @@ namespace Content.Server.PDA
                     JobTitle = id?.JobTitle,
                     StationAlertLevel = pda.StationAlertLevel,
                     StationAlertColor = pda.StationAlertColor,
-                    EvacShuttleStatus = shuttleStatus,
-                    EvacShuttleTime = shuttleTime
+                    EvacShuttleStatus = pda.ShuttleStatus,
+                    EvacShuttleTime = pda.ShuttleTime
                 },
                 pda.StationName,
                 showUplink,
@@ -255,6 +234,36 @@ namespace Content.Server.PDA
         {
             var station = _station.GetOwningStation(uid);
             pda.StationName = station is null ? null : Name(station.Value);
+        }
+
+        private void UpdateEvacShuttle(EntityUid uid, PdaComponent pda)
+        {
+            TimeSpan? shuttleTime;
+            EvacShuttleStatus shuttleStatus;
+            if (_emergencyShuttleSystem.EmergencyShuttleArrived)
+            {
+                shuttleTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_emergencyShuttleSystem.СonsoleAccumulator);
+                shuttleStatus = EvacShuttleStatus.WaitingToLaunch;
+            }
+            else
+            {
+                if (_roundEndSystem.ExpectedCountdownEnd != null)
+                {
+                    shuttleTime = _roundEndSystem.ExpectedCountdownEnd;
+                    shuttleStatus = EvacShuttleStatus.WaitingToArrival;
+                }
+                else
+                {
+                    shuttleTime = _roundEndSystem.TimeToCallShuttle();
+                    shuttleStatus = EvacShuttleStatus.WaitingToCall;
+                }
+            }
+            var station = _station.GetOwningStation(uid);
+            if (!TryComp<StationEmergencyShuttleComponent>(station, out var stationEmergencyShuttleComponent))
+                return;
+
+            pda.ShuttleStatus = shuttleStatus;
+            pda.ShuttleTime = shuttleTime;
         }
 
         private void UpdateAlertLevel(EntityUid uid, PdaComponent pda)
