@@ -16019,10 +16019,25 @@ entities:
     - type: Transform
       pos: -43.5,-0.5
       parent: 30
+  - uid: 1334
+    components:
+    - type: Transform
+      pos: 30.5,39.5
+      parent: 30
+  - uid: 1371
+    components:
+    - type: Transform
+      pos: 30.5,41.5
+      parent: 30
   - uid: 1393
     components:
     - type: Transform
       pos: 32.5,43.5
+      parent: 30
+  - uid: 1723
+    components:
+    - type: Transform
+      pos: 30.5,40.5
       parent: 30
   - uid: 1878
     components:
@@ -56023,19 +56038,19 @@ entities:
       parent: 30
 - proto: CryogenicSleepUnit
   entities:
-  - uid: 1334
+  - uid: 1771
     components:
     - type: Transform
       pos: 31.5,41.5
       parent: 30
-  - uid: 1723
+  - uid: 5490
     components:
     - type: Transform
       pos: 31.5,42.5
       parent: 30
 - proto: CryogenicSleepUnitSpawner
   entities:
-  - uid: 5482
+  - uid: 13665
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -56043,7 +56058,7 @@ entities:
       parent: 30
 - proto: CryogenicSleepUnitSpawnerLateJoin
   entities:
-  - uid: 1771
+  - uid: 9041
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -109485,6 +109500,13 @@ entities:
       parent: 30
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 14842
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: 30.5,42.5
+      parent: 30
   - uid: 14948
     components:
     - type: MetaData
@@ -142876,13 +142898,6 @@ entities:
     - type: Transform
       pos: -37.5,34.5
       parent: 30
-  - uid: 1371
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      pos: 32.5,42.5
-      parent: 30
   - uid: 1463
     components:
     - type: MetaData
@@ -143467,6 +143482,13 @@ entities:
       flags: PvsPriority
     - type: Transform
       pos: 7.5,31.5
+      parent: 30
+  - uid: 5482
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: 32.5,42.5
       parent: 30
   - uid: 5500
     components:
