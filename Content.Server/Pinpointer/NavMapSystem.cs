@@ -126,10 +126,16 @@ public sealed class NavMapSystem : SharedNavMapSystem
         if (!args.IsInDetailsRange || !TryComp<NavMapBeaconComponent>(ent, out var navMap))
             return;
 
+        var label = Name(args.Examined);
+        if (navMap.Text is not null)
+        {
+            label = Loc.GetString(navMap.Text);
+        }
+
         args.PushMarkup(Loc.GetString("nav-beacon-examine-text",
             ("enabled", navMap.Enabled),
             ("color", navMap.Color.ToHexNoAlpha()),
-            ("label", navMap.Text ?? string.Empty)));
+            ("label", label)));
     }
 
     private void UpdateBeaconEnabledVisuals(Entity<NavMapBeaconComponent> ent)

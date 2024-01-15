@@ -420,9 +420,10 @@ public partial class NavMapControl : MapGridControl
                 var position = beacon.Position - offset;
                 position = Scale(position with { Y = -position.Y });
 
-                var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
+                var text = Loc.GetString(beacon.Text);
+                var textDimensions = handle.GetDimensions(font, text, 1f);
                 handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _backgroundColor);
-                handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
+                handle.DrawString(font, position - textDimensions / 2, text, beacon.Color);
             }
         }
 
