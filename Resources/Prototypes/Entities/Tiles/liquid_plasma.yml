@@ -14,6 +14,7 @@
       tags:
       - Catwalk
   - type: Lava
+    fireStacks: 0.5
   - type: Transform
     anchored: true
   - type: SyncSprite
