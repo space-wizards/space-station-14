@@ -11,9 +11,7 @@ using Content.Shared.Atmos;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
