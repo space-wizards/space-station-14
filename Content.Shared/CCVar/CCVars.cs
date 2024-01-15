@@ -224,6 +224,12 @@ namespace Content.Shared.CCVar
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// Whether or not disconnecting inside of a cryopod should remove the character or just store them until they reconnect.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameCryoSleepRejoining = CVarDef.Create("game.cryo_sleep_rejoining", false, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
@@ -304,6 +310,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> PanicBunkerCustomReason =
             CVarDef.Create("game.panic_bunker.custom_reason", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Allow bypassing the panic bunker if the user is whitelisted.
+        /// </summary>
+        public static readonly CVarDef<bool> BypassBunkerWhitelist =
+            CVarDef.Create("game.panic_bunker.whitelisted_can_bypass", true, CVar.SERVERONLY);
 
         /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.

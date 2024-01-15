@@ -117,3 +117,15 @@ reagent-desc-bruizine = Originally developed as a cough medicine, it turns out t
 
 reagent-name-holywater = holy water
 reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
+
+reagent-name-pyrazine = pyrazine
+reagent-desc-pyrazine = Efficiently heals burns from the hottest of fires. Causes massive internal bleeding when overdosed.
+
+reagent-name-insuzine = insuzine
+reagent-desc-insuzine = Rapidly repairs dead tissue caused by electrocution, but cools you slightly. Completely freezes the patient when overdosed.
+
+reagent-name-necrosol = necrosol
+reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses
+
+reagent-name-aloxadone = aloxadone
+reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.

@@ -4,6 +4,7 @@ salvage-system-announcement-spawn-no-debris-available = No debris could be recov
 salvage-system-announcement-arrived = A piece of salvagable debris has been pulled in. Estimated hold time: {$timeLeft} seconds.
 salvage-asteroid-name = Asteroid
 
+salvage-magnet-window-title = Salvage magnet
 salvage-expedition-window-progression = Progression
 
 salvage-magnet-resources = {$resource ->
@@ -14,13 +15,16 @@ salvage-magnet-resources = {$resource ->
     [OreSilver] Silver
     [OrePlasma] Plasma
     [OreUranium] Uranium
+    [OreArtifactFragment] Artifact fragments
     *[other] {$resource}
 }
 
 salvage-magnet-resources-count = {$count ->
     [1] (Poor)
-    [2] (Rich)
-    [3] (Rich)
+    [2] (Moderate)
+    [3] (Moderate)
+    [4] (Rich)
+    [5] (Rich)
     *[other] (Extraordinary)
 }
 

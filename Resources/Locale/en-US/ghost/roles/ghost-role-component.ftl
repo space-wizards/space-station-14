@@ -188,7 +188,6 @@ ghost-role-information-loneop-rules = You are a syndicate operative tasked with 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
 
-
 ghost-role-information-hellspawn-name = Hellspawn
 ghost-role-information-hellspawn-description = You are an antagonist, bring death to those who do not follow the great god Nar'Sie.
 
@@ -210,3 +209,15 @@ ghost-role-information-BreadDog-rules = You're an edible dog made of bread. Your
 ghost-role-information-exterminator-name = Exterminator
 ghost-role-information-exterminator-description = You been been sent back in time to terminate a target with high importance to the future.
 ghost-role-information-exterminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.
+
+ghost-role-information-space-ninja-name = Space Ninja
+ghost-role-information-space-ninja-description = Use stealth and deception to sabotage the station.
+ghost-role-information-space-ninja-rules = You are an elite mercenary of the Spider Clan. You aren't required to follow your objectives, yet your NINJA HONOR demands you try.
+
+ghost-role-information-syndicate-reinforcement-name = Syndicate Agent
+ghost-role-information-syndicate-reinforcement-description = Someone needs reinforcements. You, the first person the syndicate could find, will help them.
+ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
+ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
+ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.

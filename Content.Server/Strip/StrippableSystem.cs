@@ -13,6 +13,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
@@ -93,7 +94,7 @@ namespace Content.Server.Strip
                 return;
 
             // is the target a handcuff?
-            if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt)
+            if (TryComp(hand.HeldEntity, out VirtualItemComponent? virt)
                 && TryComp(target, out CuffableComponent? cuff)
                 && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
             {
@@ -413,7 +414,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (HasComp<HandVirtualItemComponent>(hand.HeldEntity))
+                if (HasComp<VirtualItemComponent>(hand.HeldEntity))
                     return false;
 
                 if (!_handsSystem.CanDropHeld(target, hand, false))
