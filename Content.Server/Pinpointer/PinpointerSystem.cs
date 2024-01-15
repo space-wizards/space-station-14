@@ -275,9 +275,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var storedOrder1 = 0;
         var storedOrder10 = 0;
 
-        //Adds the target selection verb if there is more than 1 stored target, no need to show a list with only 1 target
-        //because it will be targeted by default
-        if (component.StoredTargets.Count > 1)
+        //Adds the target selection verb if there is at least 1 stored target, no need to show an empty list.
+        if (component.StoredTargets.Count > 0)
         {
             foreach (var target in component.StoredTargets)
             {
