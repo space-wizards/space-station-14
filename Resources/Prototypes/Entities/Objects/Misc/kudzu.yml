@@ -54,7 +54,7 @@
         types: {}
       damage:
         types:
-          Heat: 1
+          Heat: 3
     - type: Reactive
       groups:
         Flammable: [Touch]
@@ -179,7 +179,7 @@
       fireSpread: true
       damage:
        types:
-         Heat: 1
+         Heat: 3
     - type: GrowingKudzu
       growthTickChance: 0.3
     - type: AtmosExposed

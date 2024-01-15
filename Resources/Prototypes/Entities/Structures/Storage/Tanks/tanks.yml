@@ -28,6 +28,7 @@
     weldingDamage:
       types:
         Heat: 10
+  - type: PacifismDangerousAttack
   - type: Explosive
     explosionType: Default
     totalIntensity: 120 # ~ 5 tile radius

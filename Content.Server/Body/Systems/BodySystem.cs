@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Body.Systems;
@@ -36,11 +37,17 @@ public sealed class BodySystem : SharedBodySystem
 
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
-        SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
     }
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
     {
+        // If they haven't actually moved then ignore it.
+        if ((args.Component.HeldMoveButtons &
+             (MoveButtons.Down | MoveButtons.Left | MoveButtons.Up | MoveButtons.Right)) == 0x0)
+        {
+            return;
+        }
+
         if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mindId, out var mind))
         {
             mind.TimeOfDeath ??= _gameTiming.RealTime;
@@ -55,19 +62,6 @@ public sealed class BodySystem : SharedBodySystem
         {
             RaiseLocalEvent(organ.Id, args);
         }
-    }
-
-    private void OnBeingMicrowaved(EntityUid uid, BodyComponent component, BeingMicrowavedEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // Don't microwave animals, kids
-        SharedTransform.AttachToGridOrMap(uid);
-        _appearance.SetData(args.Microwave, MicrowaveVisualState.Bloody, true);
-        GibBody(uid, false, component);
-
-        args.Handled = true;
     }
 
     protected override void AddPart(

@@ -25,6 +25,20 @@ anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
 
+anomaly-gorilla-core-slot-name = Anomaly core
+anomaly-gorilla-charge-none = It has no [bold]anomaly core[/bold] inside of it.
+anomaly-gorilla-charge-limit = It has [color={$count ->
+    [3]green
+    [2]yellow
+    [1]orange
+    [0]red
+    *[other]purple
+}]{$count} {$count ->
+    [one]charge
+    *[other]charges
+}[/color] remaining.
+anomaly-gorilla-charge-infinite = It has [color=gold]infinite charges[/color]. [italic]For now...[/italic]
+
 anomaly-sync-connected = Anomaly successfully attached
 anomaly-sync-disconnected = The connection to the anomaly has been lost!
 anomaly-sync-no-anomaly = No anomaly in range.

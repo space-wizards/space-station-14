@@ -7,7 +7,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     Marks an entity as being a 'portal' which teleports entities sent through it to linked entities.
 ///     Relies on <see cref="LinkedEntityComponent"/> being set up.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PortalComponent : Component
 {
     /// <summary>

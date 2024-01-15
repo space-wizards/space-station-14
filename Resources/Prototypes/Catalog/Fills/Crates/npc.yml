@@ -127,6 +127,14 @@
       - id: MonkeyCubeBox
 
 - type: entity
+  id: CrateNPCKoboldCube
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeBox
+
+- type: entity
   id: CrateNPCMouse
   parent: CrateLivestock
   components:

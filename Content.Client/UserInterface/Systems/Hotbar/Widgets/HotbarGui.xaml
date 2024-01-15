@@ -5,38 +5,26 @@
     xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Controls"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
     Name="HotbarInterface"
-    VerticalExpand="False"
+    VerticalExpand="True"
     VerticalAlignment="Bottom"
     Orientation="Vertical"
     HorizontalAlignment="Center">
-    <Control HorizontalAlignment="Center">
-        <inventory:ItemStatusPanel
-            Name="StatusPanel"
-            Visible="False"
-            HorizontalAlignment="Center"
-        />
-        <BoxContainer Name="StorageContainer"
-                      Access="Public"
-                      HorizontalAlignment="Center"
-                      Margin="10">
-            <storage:StorageContainer
-                Name="StoragePanel"
-                Visible="False"/>
-        </BoxContainer>
-    </Control>
     <BoxContainer Orientation="Vertical">
-        <inventory:ItemSlotButtonContainer
-            Name="InventoryHotbar"
-            Access="Public"
-            Visible="False"
-            Columns="10"
-            SlotGroup="Default"
-            ExpandBackwards="True"
-            VerticalExpand="True"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Margin="0 0 0 4"
-        />
+        <Control HorizontalAlignment="Center">
+            <inventory:ItemStatusPanel
+                Name="StatusPanel"
+                Visible="False"
+                HorizontalAlignment="Center"
+            />
+            <BoxContainer Name="StorageContainer"
+                          Access="Public"
+                          HorizontalAlignment="Center"
+                          Margin="10">
+                <storage:StorageContainer
+                    Name="StoragePanel"
+                    Visible="False"/>
+            </BoxContainer>
+        </Control>
         <BoxContainer Orientation="Horizontal" Name="Hotbar" HorizontalAlignment="Center">
             <inventory:ItemSlotButtonContainer
                 Name="SecondHotbar"

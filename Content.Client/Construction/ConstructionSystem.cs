@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Client.Popups;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -80,24 +81,31 @@ namespace Content.Client.Construction
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
         {
-            if (component.Prototype == null) return;
-
-            args.PushMarkup(Loc.GetString(
-                "construction-ghost-examine-message",
-                ("name", component.Prototype.Name)));
-
-            if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+            if (component.Prototype == null)
                 return;
 
-            var startNode = graph.Nodes[component.Prototype.StartNode];
-
-            if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
-                !startNode.TryGetEdge(path[0].Name, out var edge))
+            using (args.PushGroup(nameof(ConstructionGhostComponent)))
             {
-                return;
-            }
+                args.PushMarkup(Loc.GetString(
+                    "construction-ghost-examine-message",
+                    ("name", component.Prototype.Name)));
 
-            edge.Steps[0].DoExamine(args);
+                if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+                    return;
+
+                var startNode = graph.Nodes[component.Prototype.StartNode];
+
+                if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
+                    !startNode.TryGetEdge(path[0].Name, out var edge))
+                {
+                    return;
+                }
+
+                foreach (var step in edge.Steps)
+                {
+                    step.DoExamine(args);
+                }
+            }
         }
 
         public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;

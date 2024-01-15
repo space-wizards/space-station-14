@@ -29,7 +29,6 @@
             False: { visible: false }
     - type: Item
       size: Large
-    - type: ItemCooldown
     - type: Speech
       speechVerb: Robotic
     - type: Defibrillator
@@ -39,7 +38,7 @@
     - type: DoAfter
     - type: UseDelay
     - type: StaticPrice
-      price: 100
+      price: 30
     - type: GuideHelp
       guides:
       - Medical Doctor

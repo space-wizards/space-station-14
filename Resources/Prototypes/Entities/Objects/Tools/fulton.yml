@@ -83,8 +83,6 @@
   name: fulton
   suffix: One
   components:
-  - type: Item
-    size: Small
   - type: Stack
     count: 1
 

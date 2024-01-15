@@ -33,7 +33,7 @@ public sealed class ContainerFillSystem : EntitySystem
             foreach (var proto in prototypes)
             {
                 var ent = Spawn(proto, coords);
-                if (!container.Insert(ent, EntityManager, null, xform))
+                if (!_containerSystem.Insert(ent, container, containerXform: xform))
                 {
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
                     Transform(ent).AttachToGridOrMap();

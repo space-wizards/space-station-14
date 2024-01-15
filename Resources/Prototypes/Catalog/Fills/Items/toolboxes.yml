@@ -43,7 +43,7 @@
 - type: entity
   id: ToolboxElectricalTurretFilled
   name: electrical toolbox
-  suffix: Filled
+  suffix: Syndicate, Turret, Filled
   parent: ToolboxElectricalTurret
   components:
   - type: StorageFill
@@ -60,6 +60,27 @@
         orGroup: GlovesOrWires
       - id: CableHVStack10
         orGroup: GlovesOrWires
+
+- type: entity
+  id: ToolboxArtisticFilled
+  name: artistic toolbox
+  suffix: Filled
+  parent: ToolboxArtistic
+  components:
+  - type: StorageFill
+    contents:
+    - id: CrayonBox
+    - id: Paper
+      amount: 3
+    - id: Pen
+    - id: MysteryFigureBox
+      prob: 0.5
+    - id: MysteryFigureBox
+      prob: 0.5
+    - id: BookRandom
+      amount: 2 
+    - id: CrayonMime
+    - id: CrayonRainbow
 
 - type: entity
   id: ToolboxMechanicalFilled
