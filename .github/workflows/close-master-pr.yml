@@ -12,4 +12,4 @@ jobs:
     steps:    
     - uses: superbrothers/close-pull-request@v3
       with:
-        comment: "Thank you for your contrubution to the Space Station 14 repository. Unfortunately it looks like you submitted your pull request from the master branch.\n We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html) for intructions on how to make a new branch."
+        comment: "Thank you for your contribution to the Space Station 14 repository. Unfortunately it looks like you submitted your pull request from the master branch. We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html) \n\n You can move your current work from the master branch to another branch by doing `git branch <branch_name` and resetting the master branch."
