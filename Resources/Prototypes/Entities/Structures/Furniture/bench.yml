@@ -1,0 +1,177 @@
+# Base benches
+- type: entity
+  name: bench
+  id: BenchBaseMiddle
+  suffix: Middle
+  abstract: true
+  parent: SeatBase
+  description: Multiple seats spanning a single object. Truly a marvel of science.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/Furniture/bench.rsi
+  - type: Physics
+    bodyType: Static
+
+- type: entity
+  name: bamboo bench
+  id: BenchBambooMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    state: bamboo_sofamiddle
+
+- type: entity
+  id: BenchBambookLeft
+  suffix: Left
+  parent: BenchBambooMiddle
+  components:
+  - type: Sprite
+    state: bamboo_sofaend_left
+
+- type: entity
+  id: BenchBambooRight
+  suffix: Right
+  parent: BenchBambooMiddle
+  components:
+  - type: Sprite
+    state: bamboo_sofaend_right
+
+- type: entity
+  name: rainbow bench
+  id: BenchRainbowMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    state: bench_middle
+
+- type: entity
+  id: BenchRainbowLeft
+  suffix: Left
+  parent: BenchRainbowMiddle
+  components:
+  - type: Sprite
+    state: bench_left
+
+- type: entity
+  id: BenchRainbowRight
+  suffix: Right
+  parent: BenchRainbowMiddle
+  components:
+  - type: Sprite
+    state: bench_right
+
+- type: entity
+  name: wooden bench
+  id: BenchWoodenMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    state: pewmiddle
+
+- type: entity
+  id: BenchWoodenLeft
+  suffix: Left
+  parent: BenchWoodenMiddle
+  components:
+  - type: Sprite
+    state: pewend_left
+
+- type: entity
+  id: BenchWoodenRight
+  suffix: Right
+  parent: BenchWoodenMiddle
+  components:
+  - type: Sprite
+    state: pewend_right
+
+- type: entity
+  name: sofa
+  id: BenchSofaMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    state: sofamiddle
+
+- type: entity
+  id: BenchSofaLeft
+  suffix: Left
+  parent: BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: sofaend_left
+
+- type: entity
+  id: BenchSofaRight
+  suffix: Right
+  parent: BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: sofaend_right
+
+- type: entity
+  name: sofa
+  id: BenchSofaCorner
+  suffix: Corner
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/Furniture/bench.rsi
+    state: sofacorner
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  name: corp sofa
+  id: BenchCorpSofaMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    state: corp_sofamiddle
+
+- type: entity
+  id: BenchCorpSofaLeft
+  suffix: Left
+  parent: BenchCorpSofaMiddle
+  components:
+  - type: Sprite
+    state: corp_sofaend_left
+
+- type: entity
+  id: BenchCorpSofaRight
+  suffix: Right
+  parent: BenchCorpSofaMiddle
+  components:
+  - type: Sprite
+    state: corp_sofaend_right
+
+- type: entity
+  id: BenchCorpSofaCorner
+  suffix: Corner
+  parent: BenchSofaCorner
+  components:
+  - type: Sprite
+    state: corp_sofacorner

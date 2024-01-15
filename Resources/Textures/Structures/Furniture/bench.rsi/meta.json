@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TG at commit https://github.com/tgstation/tgstation/commit/45b5bc20fbc0bdeb04e169f7aaa7ea8e14b4990b#diff-5d71c782b900bc77b4d1c5798be8d3e3c67dbc5ef5b3203c4995f01df471a633",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sofacorner",
+      "directions": 4
+    },
+    {
+      "name": "sofacorner_armrest",
+      "directions": 4
+    },
+    {
+      "name": "sofaend_right",
+      "directions": 4
+    },
+    {
+      "name": "sofaend_left_armrest",
+      "directions": 4
+    },
+    {
+      "name": "sofaend_left",
+      "directions": 4
+    },
+    {
+      "name": "sofaend_right_armrest",
+      "directions": 4
+    },
+    {
+      "name": "sofamiddle",
+      "directions": 4
+    },
+    {
+      "name": "pewmiddle",
+      "directions": 4
+    },
+    {
+      "name": "pewend_left",
+      "directions": 4
+    },
+    {
+      "name": "pewend_right",
+      "directions": 4
+    },
+    {
+      "name": "pewend_left_armrest",
+      "directions": 4
+    },
+    {
+      "name": "pewend_right_armrest",
+      "directions": 4
+    },
+    {
+      "name": "corp_sofacorner",
+      "directions": 4
+    },
+    {
+      "name": "corp_sofaend_right",
+      "directions": 4
+    },
+    {
+      "name": "corp_sofamiddle",
+      "directions": 4
+    },
+    {
+      "name": "corp_sofaend_left",
+      "directions": 4
+    },
+    {
+      "name": "corp_sofacorner_armrest",
+      "directions": 4
+    },
+    {
+      "name": "corp_sofaend_left_armrest",
+      "directions": 4
+    },
+    {
+      "name": "corp_sofaend_right_armrest",
+      "directions": 4
+    },
+    {
+      "name": "bench_right",
+      "directions": 4
+    },
+    {
+      "name": "bench_middle",
+      "directions": 4
+    },
+    {
+      "name": "bench_left",
+      "directions": 4
+    },
+    {
+      "name": "bench_solo",
+      "directions": 4
+    },
+    {
+      "name": "bamboo_sofaend_right",
+      "directions": 4
+    },
+    {
+      "name": "bamboo_sofamiddle",
+      "directions": 4
+    },
+    {
+      "name": "bamboo_sofaend_left",
+      "directions": 4
+    }
+  ]
+}
