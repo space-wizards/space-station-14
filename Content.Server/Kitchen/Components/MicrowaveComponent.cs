@@ -78,8 +78,8 @@ namespace Content.Server.Kitchen.Components
         /// <summary>
         ///     If the microwave currently contains a metalic object or item that can cause it to explode.
         /// </summary>
-        [DataField("canExplode"), ViewVariables(VVAccess.ReadWrite)]
-        public bool CanExplode = false;
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool IsSparking = false;
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";

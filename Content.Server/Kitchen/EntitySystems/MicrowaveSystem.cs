@@ -404,12 +404,12 @@ namespace Content.Server.Kitchen.EntitySystems
         /// </remarks>
         private bool HandleUnsafeItems(EntityUid uid, MicrowaveComponent component)
         {
-            if (!component.CanExplode)
+            if (!component.IsSparking)
             {
                 return true;
             }
 
-            if (component.CanExplode)
+            if (component.IsSparking)
             {
                 if (_random.Prob(.1f))
                 {
@@ -437,10 +437,12 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid) || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
                 return;
 
+            _targetTime = _gameTiming.CurTime;
+
             var solidsDict = new Dictionary<string, int>();
             var reagentDict = new Dictionary<string, FixedPoint2>();
             // TODO use lists of Reagent quantities instead of reagent prototype ids.
-            component.CanExplode = false;
+            component.IsSparking = false;
             foreach (var item in component.Storage.ContainedEntities)
             {
                 // special behavior when being microwaved ;)
@@ -455,7 +457,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 if (_tag.HasTag(item, "MicrowaveMachineUnsafe") || _tag.HasTag(item, "Metal"))
                 {
-                    component.CanExplode = true;
+                    component.IsSparking = true;
                 }
 
                 if (_tag.HasTag(item, "Plastic"))
@@ -569,7 +571,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         _destruction.BreakEntity(uid);
                     }
-                    _targetTime = _gameTiming.CurTime+TimeSpan.FromSeconds(1);
+                    _targetTime += TimeSpan.FromSeconds(1);
                 }
 
                 //check if there's still cook time left
