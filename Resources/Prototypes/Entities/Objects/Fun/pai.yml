@@ -73,6 +73,38 @@
 
 - type: entity
   parent: PersonalAI
+  id: SyndicateAgentPersonalAI
+  suffix: Agent
+  name: syndicate personal ai device
+  description: Your electronic pal who's fun to be with!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: pai-base
+    - state: pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-syndicate
+    roleDescription: pai-system-role-description-syndicate
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: pai-off-overlay }
+          Searching: { state: pai-searching-overlay }
+          On: { state: syndicate-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
