@@ -167,10 +167,19 @@ public sealed class PryingSystem : EntitySystem
             return;
         }
 
-        // TODO: When we get airlock prediction make this predicted.
+        // TODO: When we get airlock prediction make this fully predicted.
         // When that happens also fix the checking function in the Client AirlockSystem.
         if (args.Used != null && comp != null)
-            _audioSystem.PlayPvs(comp.UseSound, args.Used.Value);
+        {
+            if (HasComp<AirlockComponent>(uid))
+            {
+                _audioSystem.PlayPvs(comp.UseSound, args.Used.Value);
+            }
+            else
+            {
+                _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+            }
+        }
 
         var ev = new PriedEvent(args.User);
         RaiseLocalEvent(uid, ref ev);

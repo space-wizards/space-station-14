@@ -174,8 +174,8 @@
 - type: entity
   id: AsteroidRockTin
   parent: AsteroidRock
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -519,8 +519,8 @@
 - type: entity
   id: WallRockTin
   parent: WallRock
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -737,8 +737,8 @@
 - type: entity
   id: WallRockBasaltTin
   parent: WallRockBasalt
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -955,8 +955,8 @@
 - type: entity
   id: WallRockSnowTin
   parent: WallRockSnow
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -1174,8 +1174,8 @@
 - type: entity
   id: WallRockSandTin
   parent: WallRockSand
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -1392,8 +1392,8 @@
 - type: entity
   id: WallRockChromiteTin
   parent: WallRockChromite
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -1610,8 +1610,8 @@
 - type: entity
   id: WallRockAndesiteTin
   parent: WallRockAndesite
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0

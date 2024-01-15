@@ -15,6 +15,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6
   - type: DamageOnLand
     damage:
       types:
@@ -60,6 +64,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-trash
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6
   - type: Tag
     tags:
     - Trash
@@ -76,6 +84,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small
+  - type: Item
+    storedOffset: 0,-3
 # Needs the full thing because inherting is dumb sometimes.
   - type: Destructible
     thresholds:
@@ -106,6 +116,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-trash
+  - type: Item
+    storedOffset: 0,-3
 
 # Plastic Plate
 
@@ -118,6 +130,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-plastic
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6
   - type: Tag
     tags:
     - Trash
@@ -131,6 +147,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: Tag
     tags:
     - Trash
@@ -146,6 +166,11 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: tin
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: Tag
     tags:
     - Trash
