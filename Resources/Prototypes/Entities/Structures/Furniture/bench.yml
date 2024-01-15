@@ -14,7 +14,7 @@
     sprite: Structures/Furniture/bench.rsi
   - type: Physics
     bodyType: Static
-    canCollide: true
+    canCollide: false
 
 - type: entity
   name: bamboo bench
@@ -129,7 +129,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    canCollide: true
+    canCollide: false
   - type: Pullable
   - type: Damageable
     damageContainer: Inorganic
