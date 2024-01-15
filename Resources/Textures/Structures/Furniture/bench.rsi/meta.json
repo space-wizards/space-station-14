@@ -100,6 +100,14 @@
       "directions": 4
     },
     {
+      "name": "bench_solo_base",
+      "directions": 4
+    },
+    {
+      "name": "bench_solo_cover",
+      "directions": 4
+    },
+    {
       "name": "bamboo_sofaend_right",
       "directions": 4
     },

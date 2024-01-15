@@ -177,3 +177,32 @@
   components:
   - type: Sprite
     state: corp_sofacorner
+
+- type: entity
+  name: comfortable rainbow bench
+  id: BenchComfRainbowSolo
+  suffix: Solo
+  parent: BenchBaseMiddle
+  description: A bench with an extremely comfortable backrest.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/bench.rsi
+    state: bench_solo
+
+- type: entity
+  name: comfortable bench
+  id: BenchComfSolo
+  suffix: Solo
+  parent: BenchBaseMiddle
+  description: A bench with an extremely comfortable backrest.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/bench.rsi
+    layers:
+    - state: bench_solo_base
+    - state: bench_solo_cover
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bench_solo_cover: Rainbow
