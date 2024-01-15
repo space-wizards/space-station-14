@@ -6,9 +6,6 @@ using Content.Server.EUI;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.Objectives;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Server.Revolutionary;
 using Content.Server.Revolutionary.Components;
@@ -46,8 +43,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly EuiManager _euiMan = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ObjectivesSystem _objectives = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -64,7 +59,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
         SubscribeLocalEvent<ExiledComponent, EntityUnpausedEvent>(OnExiledUnpaused);
-        SubscribeLocalEvent<ExiledComponent, ChangedGridEvent>(OnExiledGridChanged);
+        SubscribeLocalEvent<ExiledComponent, EntParentChangedMessage>(OnExiledGridChanged);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<CommandStaffComponent, ExiledEvent>(OnCommandExiled);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
@@ -292,7 +287,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             CheckCommandLose(false);
     }
 
-    private void OnExiledGridChanged(EntityUid uid, ExiledComponent comp, ChangedGridEvent ev)
+    private void OnExiledGridChanged(EntityUid uid, ExiledComponent comp, EntParentChangedMessage ev)
     {
         if (comp.ConsideredForExile && !comp.Exiled)
         {
