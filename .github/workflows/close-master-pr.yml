@@ -1,0 +1,15 @@
+name: Close PR's from submitters master branch
+
+on:
+  pull_request_target:
+    types: [ opened, ready_for_review ]
+    
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: github.head_ref == 'master'
+    
+    steps:    
+    - uses: superbrothers/close-pull-request@v3
+      with:
+        comment: "Thank you for your contrubution to the Space Station 14 repository. Unfortunately it looks like you submitted your pull request from the master branch.\n We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html) for intructions on how to make a new branch."
