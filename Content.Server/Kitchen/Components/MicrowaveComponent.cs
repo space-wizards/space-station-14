@@ -83,7 +83,6 @@ namespace Content.Server.Kitchen.Components
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
-
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
