@@ -5,6 +5,7 @@
   description: It's magic.
   components:
   - type: Microwave
+    capacity: 10
   - type: Appearance
   - type: GenericVisualizer
     visuals:

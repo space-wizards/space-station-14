@@ -24,7 +24,19 @@
       - id: PlushieXeno
       - id: PlushieHampter
       - id: PlushieMoth
+      - id: PlushieArachind
       - id: PlushiePenguin
+
+- type: entity
+  id: CrateFunLizardPlushieBulk
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: PlushieLizard
+        amount: 3
+      - id: PlushieSpaceLizard
+        amount: 2
 
 - type: entity
   id: CrateFunInstrumentsVariety
