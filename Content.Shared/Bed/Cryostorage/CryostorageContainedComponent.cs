@@ -27,7 +27,7 @@ public sealed partial class CryostorageContainedComponent : Component
     /// The cryostorage this entity is 'stored' in.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid Cryostorage;
+    public EntityUid? Cryostorage;
 
     [DataField]
     public NetUserId? UserId;

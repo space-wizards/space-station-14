@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
@@ -14,6 +15,7 @@ namespace Content.Shared.Bed.Cryostorage;
 /// </summary>
 public abstract class SharedCryostorageSystem : EntitySystem
 {
+    [Dependency] protected readonly ISharedAdminLogManager AdminLog = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -30,9 +32,11 @@ public abstract class SharedCryostorageSystem : EntitySystem
         SubscribeLocalEvent<CryostorageComponent, EntInsertedIntoContainerMessage>(OnInsertedContainer);
         SubscribeLocalEvent<CryostorageComponent, EntRemovedFromContainerMessage>(OnRemovedContainer);
         SubscribeLocalEvent<CryostorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
+        SubscribeLocalEvent<CryostorageComponent, ComponentShutdown>(OnShutdownContainer);
 
         SubscribeLocalEvent<CryostorageContainedComponent, EntGotRemovedFromContainerMessage>(OnRemovedContained);
         SubscribeLocalEvent<CryostorageContainedComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<CryostorageContainedComponent, ComponentShutdown>(OnShutdownContained);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
@@ -62,7 +66,8 @@ public abstract class SharedCryostorageSystem : EntitySystem
             return;
 
         var containedComp = EnsureComp<CryostorageContainedComponent>(args.Entity);
-        containedComp.GracePeriodEndTime = Timing.CurTime + comp.GracePeriod;
+        var delay = Mind.TryGetMind(args.Entity, out _, out _) ? comp.GracePeriod : comp.NoMindGracePeriod;
+        containedComp.GracePeriodEndTime = Timing.CurTime + delay;
         containedComp.Cryostorage = ent;
         Dirty(args.Entity, containedComp);
     }
@@ -95,6 +100,22 @@ public abstract class SharedCryostorageSystem : EntitySystem
         }
     }
 
+    private void OnShutdownContainer(Entity<CryostorageComponent> ent, ref ComponentShutdown args)
+    {
+        var comp = ent.Comp;
+        foreach (var stored in comp.StoredPlayers)
+        {
+            if (TryComp<CryostorageContainedComponent>(stored, out var containedComponent))
+            {
+                containedComponent.Cryostorage = null;
+                Dirty(stored, containedComponent);
+            }
+        }
+
+        comp.StoredPlayers.Clear();
+        Dirty(ent, comp);
+    }
+
     private void OnRemovedContained(Entity<CryostorageContainedComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
         var (_, comp) = ent;
@@ -107,6 +128,15 @@ public abstract class SharedCryostorageSystem : EntitySystem
         var comp = ent.Comp;
         if (comp.GracePeriodEndTime != null)
             comp.GracePeriodEndTime = comp.GracePeriodEndTime.Value + args.PausedTime;
+    }
+
+    private void OnShutdownContained(Entity<CryostorageContainedComponent> ent, ref ComponentShutdown args)
+    {
+        var comp = ent.Comp;
+
+        CompOrNull<CryostorageComponent>(comp.Cryostorage)?.StoredPlayers.Remove(ent);
+        ent.Comp.Cryostorage = null;
+        Dirty(ent, comp);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent _)

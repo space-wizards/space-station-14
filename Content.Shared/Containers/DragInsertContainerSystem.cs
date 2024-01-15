@@ -1,5 +1,7 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -8,6 +10,7 @@ namespace Content.Shared.Containers;
 
 public sealed class DragInsertContainerSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -30,7 +33,7 @@ public sealed class DragInsertContainerSystem : EntitySystem
         if (!_container.TryGetContainer(ent, comp.ContainerId, out var container))
             return;
 
-        args.Handled = _container.Insert(args.Dragged, container);
+        args.Handled = Insert(args.Dragged, args.User, ent, container);
     }
 
     private void OnCanDragDropOn(Entity<DragInsertContainerComponent> ent, ref CanDropTargetEvent args)
@@ -77,6 +80,7 @@ public sealed class DragInsertContainerSystem : EntitySystem
                 {
                     Act = () =>
                     {
+                        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} emptied container {ToPrettyString(ent)}");
                         var ents = _container.EmptyContainer(container);
                         foreach (var contained in ents)
                         {
@@ -97,11 +101,20 @@ public sealed class DragInsertContainerSystem : EntitySystem
         {
             AlternativeVerb verb = new()
             {
-                Act = () => _container.Insert(user, container),
+                Act = () => Insert(user, user, ent, container),
                 Text = Loc.GetString("container-verb-text-enter"),
                 Priority = 2
             };
             args.Verbs.Add(verb);
         }
+    }
+
+    public bool Insert(EntityUid target, EntityUid user, EntityUid containerEntity, BaseContainer container)
+    {
+        if (!_container.Insert(user, container))
+            return false;
+
+        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(target):player} into container {ToPrettyString(containerEntity)}");
+        return true;
     }
 }
