@@ -194,6 +194,44 @@
   id: BenchComfSolo
   suffix: Solo
   parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/bench.rsi
+    layers:
+    - state: bench_solo_base
+    - state: bench_solo_cover
+
+- type: entity
+  name: comfortable bench
+  id: BenchRedComfSolo
+  suffix: Solo. Red
+  parent: BenchComfSolo
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/bench.rsi
+    layers:
+    - state: bench_solo_base
+    - state: bench_solo_cover
+      color: "#8c4141"
+
+- type: entity
+  name: comfortable bench
+  id: BenchBlueComfSolo
+  suffix: Solo. Blue
+  parent: BenchComfSolo
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/bench.rsi
+    layers:
+    - state: bench_solo_base
+    - state: bench_solo_cover
+      color: "#282774"
+
+- type: entity
+  name: comfortable bench
+  id: BenchColorfulComfSolo
+  suffix: Solo. Colorful
+  parent: BenchComfSolo
   description: A bench with an extremely comfortable backrest.
   components:
   - type: Sprite
