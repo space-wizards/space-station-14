@@ -1,11 +1,9 @@
 using Content.Shared.Inventory;
 using Content.Shared.Chemistry.Reagent;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    [UsedImplicitly]
     public sealed partial class WearableReaction : ReagentEffect
     {
 
@@ -23,16 +21,11 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-            if (args.Reagent != null)
-            {
-                if (args.Quantity >= AmountThreshold)
-                {
-                    if (args.EntityManager.System<InventorySystem>().SpawnItemInSlot(args.SolutionEntity, Slot, PrototypeID))
-                    {
-                        args.Source?.RemoveReagent(args.Reagent.ID, AmountThreshold);
-                    }
-                }
-            }
+            if (args.Reagent == null || args.Quantity < AmountThreshold)
+                return;
+
+            if (args.EntityManager.System<InventorySystem>().SpawnItemInSlot(args.SolutionEntity, Slot, PrototypeID))
+                args.Source?.RemoveReagent(args.Reagent.ID, AmountThreshold);
         }
     }
 }
