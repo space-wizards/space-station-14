@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: Ubaser
   changes:
-  - message: Remove the Captain's spare gloves from his locker.
-    type: Remove
-  id: 5216
-  time: '2023-11-28T05:45:56.0000000+00:00'
-- author: Ubaser
-  changes:
   - message: The HoP now starts with a pair of papercut-proof gloves.
     type: Add
   id: 5217
@@ -3752,3 +3746,13 @@
   id: 5716
   time: '2024-01-15T06:35:28.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24096
+- author: Bhijn and Myr
+  changes:
+  - message: Attempting to weld without protection will now cause eye damage proper.
+      Additionally, attempting to weld with a welder that's off when you aren't wearing
+      protection will no longer blind you. It's the bright light that hurts your eyes,
+      not the underwhelming lack of it!
+    type: Fix
+  id: 5717
+  time: '2024-01-15T07:47:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24106
