@@ -37,12 +37,12 @@ public sealed class ActionContainerSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, ActionsContainerComponent component, MindAddedMessage args)
     {
-        if(!_mind.TryGetMind(uid, out var mindId, out _))
+        if (!_mind.TryGetMind(uid, out var mindId, out _))
             return;
         if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionContainerComp))
             return;
 
-        if (!HasComp<GhostComponent>(uid) && mindActionContainerComp.Container.ContainedEntities.Count > 0 )
+        if (!HasComp<GhostComponent>(uid) && mindActionContainerComp.Container.ContainedEntities.Count > 0)
             _actions.GrantContainedActions(uid, mindId);
     }
 
@@ -242,6 +242,27 @@ public sealed class ActionContainerSystem : EntitySystem
 
         DebugTools.AssertOwner(uid, comp);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
+
+        if (!TryComp<MetaDataComponent>(actionId, out var actionMetaData))
+            return false;
+        if (!TryPrototype(actionId, out var actionPrototype, actionMetaData))
+            return false;
+
+        foreach (var act in comp.Container.ContainedEntities.ToArray()) // dont add duplicate actions
+        {
+            if (TryComp<MetaDataComponent>(act, out var metaDataComponent))
+            {
+                if (TryPrototype(act, out var prototype, metaDataComponent))
+                {
+                    if (actionPrototype.ID == prototype.ID)
+                    {
+                        Log.Debug($"Tried to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}. Failed due to duplicate actions.");
+                        return false;
+                    }
+                }
+            }
+        }
+
         if (!_container.Insert(actionId, comp.Container))
         {
             Log.Error($"Failed to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}");

@@ -27,6 +27,8 @@ using Robust.Shared.Utility;
 using Content.Shared.Interaction.Components;
 using System.Threading.Tasks;
 using Content.Server.Forensics;
+using Content.Shared.Mindshield.Components;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Polymorph.Systems
 {
@@ -51,6 +53,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -454,6 +457,13 @@ namespace Content.Server.Polymorph.Systems
 
             var newEntityUid = Spawn(newHumanoidData.EntityPrototype.ID, targetTransformComp.Coordinates);
             var newEntityUidTransformComp = Transform(newEntityUid);
+
+            if (TryComp(source, out MindShieldComponent? mindshieldComp)) // copy over mindshield status
+            {
+                var copiedMindshieldComp = (Component) _serialization.CreateCopy(mindshieldComp, notNullableOverride: true);
+                EntityManager.AddComponent(newEntityUid, copiedMindshieldComp);
+            }
+
             SendToPausesdMap(newEntityUid, newEntityUidTransformComp);
 
             newHumanoidData.EntityUid = newEntityUid;

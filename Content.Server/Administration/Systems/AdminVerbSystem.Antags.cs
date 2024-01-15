@@ -21,6 +21,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
+    [Dependency] private readonly ChangelingRuleSystem _lingsRule = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
@@ -149,10 +150,10 @@ public sealed partial class AdminVerbSystem
                 if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
                     return;
 
-                // if its not a human dont make it a changeling
+                // if its not a humanoid dont make it a changeling
                 var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
-                if (!isHuman)
-                    return;
+                if (isHuman)
+                    _lingsRule.MakeChangeling(session);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-changeling"),

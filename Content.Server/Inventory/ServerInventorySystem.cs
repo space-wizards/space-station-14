@@ -48,7 +48,7 @@ namespace Content.Server.Inventory
             var enumerator = new InventorySlotEnumerator(source.Comp);
             while (enumerator.NextItem(out var item, out var slot))
             {
-                if (TryComp<MetaDataComponent>(source, out var targetMeta))
+                if (TryComp<MetaDataComponent>(item, out var targetMeta))
                     Log.Debug(targetMeta.EntityName);
                 if (TryUnequip(source, slot.Name, true, true, inventory: source.Comp))
                     TryEquip(target, item, slot.Name, true, true, inventory: target.Comp);

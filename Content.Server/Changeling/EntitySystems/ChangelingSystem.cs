@@ -271,15 +271,15 @@ public sealed partial class ChangelingSystem : EntitySystem
             var selfMessage = Loc.GetString("changeling-transform-activate", ("target", Identity.Entity(transformedUid.Value, EntityManager)));
             _popup.PopupEntity(selfMessage, transformedUid.Value, transformedUid.Value);
 
-            // var newLingComponent = EnsureComp<ChangelingComponent>(transformedUid.Value);
-            // newLingComponent.Chemicals = component.Chemicals;
-            // newLingComponent.ChemicalsPerSecond = component.ChemicalsPerSecond;
-            // newLingComponent.StoredDNA = component.StoredDNA;
-            //newLingComponent.SelectedDNA = component.SelectedDNA;
-            // newLingComponent.ArmBladeActive = component.ArmBladeActive;
-            var copiedLingComp = component;
+            var newLingComponent = EnsureComp<ChangelingComponent>(transformedUid.Value);
+            newLingComponent.Chemicals = component.Chemicals;
+            newLingComponent.ChemicalsPerSecond = component.ChemicalsPerSecond;
+            newLingComponent.StoredDNA = component.StoredDNA;
+            newLingComponent.SelectedDNA = component.SelectedDNA;
+            newLingComponent.ArmBladeActive = component.ArmBladeActive;
+            newLingComponent.ChameleonSkinActive = component.ChameleonSkinActive;
+            newLingComponent.LingArmorActive = component.LingArmorActive;
             RemComp(uid, component);
-            EntityManager.AddComponent(transformedUid.Value, copiedLingComp);
 
             if (TryComp(uid, out StoreComponent? storeComp))
             {

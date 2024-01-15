@@ -212,6 +212,23 @@ public sealed partial class ChangelingComponent : Component
     public float DNAStingCost = -25f;
     #endregion
 
+    #region Ability containers
+    [DataField]
+    public EntityUid? EvolutionMenuActionEntity;
+
+    [DataField]
+    public EntityUid? RegenerateActionEntity;
+
+    [DataField]
+    public EntityUid? AbsorbActionEntity;
+
+    [DataField]
+    public EntityUid? DNACycleActionEntity;
+
+    [DataField]
+    public EntityUid? TransformActionEntity;
+    #endregion
+
     [DataField]
     public float Accumulator = 0f;
 }
