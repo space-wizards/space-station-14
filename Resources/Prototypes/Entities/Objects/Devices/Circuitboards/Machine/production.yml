@@ -566,6 +566,22 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: MedipenRefillerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: medipen refiller machine board
+  description: A machine printed circuit board for a Medipen Refiller.
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: MedipenRefiller
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        Glass: 5
+        Steel: 3
+
+- type: entity
   id: BiomassReclaimerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: biomass reclaimer machine board

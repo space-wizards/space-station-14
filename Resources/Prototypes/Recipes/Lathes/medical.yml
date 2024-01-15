@@ -142,6 +142,15 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: ChemicalMedipen
+  result: ChemicalMedipen
+  name: medipen (empty)
+  completetime: 2
+  materials:
+    Plastic: 500
+    Steel: 200
+
+- type: latheRecipe
   id: MedkitBurn
   result: MedkitBurn
   name: burn treatment kit (empty)
@@ -218,7 +227,7 @@
   materials:
     Steel: 500
     Plastic: 300
-    
+
 - type: latheRecipe
   id: RollerBedSpawnFolded
   result: RollerBedSpawnFolded

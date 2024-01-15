@@ -93,7 +93,7 @@
 - type: entity
   name: chemical medipen
   parent: BaseItem
-  description: A sterile injector for rapid administration of drugs to patients. This one can't be refilled.
+  description: A sterile injector for rapid administration of drugs to patients.
   id: ChemicalMedipen
   components:
   - type: Sprite
@@ -119,8 +119,7 @@
     changeColor: false
     emptySpriteName: firstaid_empty
   - type: Tag
-    tags:
-    - Trash
+    tags: [ "Trash", "Medipen" ]
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
@@ -155,7 +154,7 @@
         - ReagentId: TranexamicAcid
           Quantity: 3
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: poison auto-injector
@@ -182,7 +181,7 @@
         - ReagentId: Epinephrine
           Quantity: 5
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: brute auto-injector
@@ -212,7 +211,7 @@
         - ReagentId: TranexamicAcid
           Quantity: 5
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: burn auto-injector
@@ -242,7 +241,7 @@
         - ReagentId: Leporazine
           Quantity: 10
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: rad auto-injector
@@ -272,7 +271,7 @@
         - ReagentId: Bicaridine
           Quantity: 5
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: space medipen
@@ -303,7 +302,7 @@
           - ReagentId: Barozine
             Quantity: 20
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: stimulant injector
@@ -333,7 +332,7 @@
   - type: StaticPrice
     price: 500
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: stimulant microinjector
@@ -360,7 +359,7 @@
   - type: StaticPrice
     price: 100
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: combat medipen
@@ -392,7 +391,7 @@
   - type: StaticPrice
     price: 500
   - type: Tag
-    tags: []
+    tags: [ "Medipen" ]
 
 - type: entity
   name: pen

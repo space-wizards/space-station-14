@@ -556,10 +556,10 @@
 
 - type: Tag
   id: Goat
-  
+
 - type: Tag
   id: GPS
-  
+
 - type: Tag
   id: Grenade
 
@@ -785,13 +785,16 @@
   id: Matchstick
 
 - type: Tag
-  id: Mayo  
+  id: Mayo
 
 - type: Tag
   id: Meat
 
 - type: Tag
   id: Medkit
+
+- type: Tag
+  id: Medipen
 
 - type: Tag
   id: Metal

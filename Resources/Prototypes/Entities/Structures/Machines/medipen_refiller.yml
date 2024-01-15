@@ -1,0 +1,81 @@
+- type: entity
+  id: MedipenRefiller
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: Medipen Refiller
+  description: A machine that refill medipens.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Machines/medipen_refiller.rsi
+    layers:
+    - state: base
+    - state: powered
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Appearance
+  - type: MedipenRefiller
+    isEmmaged: false
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Physics
+    bodyType: Static
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-medipenrefiller
+    layoutId: medipen_refiller
+  - type: Machine
+    board: MedipenRefillerMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      outputSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+      outputSlot:
+        whitelist:
+          tags:
+          - Medipen
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}
+  - type: DumpableSolution
+    solution: buffer
+    unlimited: true

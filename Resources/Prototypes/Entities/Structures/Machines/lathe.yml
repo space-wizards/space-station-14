@@ -378,6 +378,7 @@
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
+      - MedipenRefillerMachineCircuitboard
       - BiomassReclaimerMachineCircuitboard
       - BiofabricatorMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
@@ -806,6 +807,7 @@
       - MedkitCombat
     dynamicRecipes:
       - HandheldCrewMonitor
+      - ChemicalMedipen
       - ClothingHandsGlovesNitrile
       - CryostasisBeaker
       - LargeBeaker

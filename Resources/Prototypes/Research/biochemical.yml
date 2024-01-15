@@ -120,6 +120,19 @@
   - Chemistry
 
 - type: technology
+  id: MedipenFabrication
+  name: research-technology-medipen-fabrication
+  icon:
+    sprite: Structures/Machines/medipen_refiller.rsi
+    state: base
+  discipline: Biochemical
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - MedipenRefillerMachineCircuitboard
+  - ChemicalMedipen
+
+- type: technology
   id: CrewMonitoring
   name: research-technology-crew-monitoring
   icon:
