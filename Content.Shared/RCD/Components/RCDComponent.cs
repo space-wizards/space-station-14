@@ -39,22 +39,36 @@ public sealed partial class RCDComponent : Component
     /// List of RCD prototypes that the device comes loaded with
     /// </summary>
     [DataField("availablePrototypes"), AutoNetworkedField]
-    public List<ProtoId<RCDPrototype>> AvailablePrototypes = new();
+    public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes = new();
+
+    public Direction PrototypeDirection = Direction.South;
 }
 
 public enum RcdMode : byte
 {
     Invalid,
     Deconstruct,
-    Floors,
-    Catwalks,
-    Walls,
-    Airlocks,
-    Windows,
-    DirectionalWindows,
-    Machines,
-    Computers,
-    Lighting,
+    DeconstructTile,
+    DeconstructObject,
+    ConstructTile,
+    ConstructObject,
+}
+
+public enum RcdConstructionRule : byte
+{
+    Invalid,
+    MustBuildOnEmptyTile,
+    CanBuildOnEmptyTile,
+    MustBuildOnSubfloor,
+    DirectionalCollider,
+    IsWindow,
+}
+
+public enum RcdRotationRule : byte
+{
+    Fixed,
+    Camera,
+    User,
 }
 
 [Serializable, NetSerializable]
@@ -65,6 +79,22 @@ public sealed class RCDSystemMessage : BoundUserInterfaceMessage
     public RCDSystemMessage(ProtoId<RCDPrototype> protoId)
     {
         ProtoId = protoId;
+    }
+}
+
+/// <summary>
+/// A message that calls the click interaction on a alert
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class RCDRotationEvent : EntityEventArgs
+{
+    public readonly NetEntity NetEntity;
+    public readonly Direction Direction;
+
+    public RCDRotationEvent(NetEntity netEntity, Direction direction)
+    {
+        NetEntity = netEntity;
+        Direction = direction;
     }
 }
 

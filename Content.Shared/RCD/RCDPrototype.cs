@@ -1,3 +1,4 @@
+using Content.Shared.Physics;
 using Content.Shared.RCD.Components;
 using Robust.Shared.Prototypes;
 
@@ -59,4 +60,14 @@ public sealed class RCDPrototype : IPrototype
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fx")]
     public string? Effect { get; private set; }
+
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("rules")]
+    public HashSet<RcdConstructionRule> ConstructionRules = new();
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("collisonMask")]
+    public CollisionGroup CollisionMask = CollisionGroup.MobMask;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("rotation")]
+    public RcdRotationRule RotationRule = RcdRotationRule.User;
 }

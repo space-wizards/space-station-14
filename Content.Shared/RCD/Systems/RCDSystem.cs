@@ -6,6 +6,7 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
@@ -16,11 +17,14 @@ using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
+using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -30,7 +34,8 @@ using System.Numerics;
 
 namespace Content.Shared.RCD.Systems;
 
-public sealed class RCDSystem : EntitySystem
+[Virtual]
+public class RCDSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -61,6 +66,15 @@ public sealed class RCDSystem : EntitySystem
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<RCDComponent, DoAfterAttemptEvent<RCDDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<RCDComponent, RCDSystemMessage>(OnRCDSystemMessage);
+        SubscribeNetworkEvent<RCDRotationEvent>(OnRCDRotationEvent);
+
+        CommandBinds.Builder
+            .Bind(EngineKeyFunctions.EditorRotateObject,
+                InputCmdHandler.FromDelegate(session =>
+                {
+                    HandleObjectRotation(session);
+                }))
+            .Register<RCDSystem>();
     }
 
     #region Event handling
@@ -164,7 +178,7 @@ public sealed class RCDSystem : EntitySystem
         var effectPrototype = component.CachedPrototype.Effect;
         var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
 
-        if (component.CachedPrototype.Mode == RcdMode.Floors && !tile.Tile.IsEmpty)
+        if (component.CachedPrototype.Mode == RcdMode.ConstructTile && !tile.Tile.IsEmpty)
         {
             delay = 0;
             effectPrototype = "EffectRCDConstructInstant";
@@ -221,6 +235,50 @@ public sealed class RCDSystem : EntitySystem
         // Play audio and consume charges
         _audio.PlayPredicted(component.SuccessSound, uid, args.User);
         _charges.UseCharges(uid, component.CachedPrototype.Cost);
+    }
+
+    private void OnRCDRotationEvent(RCDRotationEvent ev)
+    {
+        var uid = GetEntity(ev.NetEntity);
+
+        if (!TryComp<RCDComponent>(uid, out var rcd))
+            return;
+
+        rcd.PrototypeDirection = ev.Direction;
+    }
+
+    private bool HandleObjectRotation(ICommonSession? session)
+    {
+        if (session?.AttachedEntity == null)
+            return false;
+
+        if (!TryComp<HandsComponent>(session.AttachedEntity.Value, out var hands))
+            return false;
+
+        var uid = hands.ActiveHand?.HeldEntity;
+
+        if (uid == null || !TryComp<RCDComponent>(uid, out var rcd))
+            return false;
+
+        switch (rcd.PrototypeDirection)
+        {
+            case Direction.North:
+                rcd.PrototypeDirection = Direction.East;
+                break;
+            case Direction.East:
+                rcd.PrototypeDirection = Direction.South;
+                break;
+            case Direction.South:
+                rcd.PrototypeDirection = Direction.West;
+                break;
+            case Direction.West:
+                rcd.PrototypeDirection = Direction.North;
+                break;
+        }
+
+        RaiseNetworkEvent(new RCDRotationEvent(GetNetEntity(uid.Value), rcd.PrototypeDirection));
+
+        return true;
     }
 
     #endregion
@@ -280,7 +338,7 @@ public sealed class RCDSystem : EntitySystem
         //    return false;
 
         // Try to construct the prototype (or if this is a dry run, check that the construct is still valid instead)
-        switch (component.CachedPrototype.Mode)
+        /*switch (component.CachedPrototype.Mode)
         {
             case RcdMode.Deconstruct: return TryToDeconstruct(uid, component, mapGridData, target, user, dryRun);
             case RcdMode.Floors: return TryToConstructFloor(uid, component, mapGridData, user, dryRun);
@@ -292,9 +350,136 @@ public sealed class RCDSystem : EntitySystem
             case RcdMode.Machines: return TryToConstructMachine(uid, component, mapGridData, user, false, dryRun);
             case RcdMode.Computers: return TryToConstructMachine(uid, component, mapGridData, user, true, dryRun);
             case RcdMode.Lighting: return TryToConstructLighting(uid, component, mapGridData, user, dryRun);
+        }*/
+
+        if (dryRun)
+            return IsConstructionLocationValid(uid, component, mapGridData, user);
+
+        else
+        {
+            switch (component.CachedPrototype.Mode)
+            {
+                case RcdMode.Deconstruct: return TryToDeconstruct(uid, component, mapGridData, target, user, dryRun);
+                case RcdMode.ConstructTile: return TryToDoConstruction(uid, component, mapGridData, user);
+                case RcdMode.ConstructObject: return TryToDoConstruction(uid, component, mapGridData, user);
+            }
         }
+
         Logger.Debug("Test 6");
         return false;
+    }
+
+    private bool IsConstructionLocationValid(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user)
+    {
+        if (component.CachedPrototype == null)
+            return false;
+
+        // Check rule: Must build on empty tile
+        if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.MustBuildOnEmptyTile) && !mapGridData.Tile.Tile.IsEmpty)
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+            return false;
+        }
+
+        // Check rule: Must build on non-empty tile
+        if (!component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.CanBuildOnEmptyTile) && mapGridData.Tile.Tile.IsEmpty)
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+            return false;
+        }
+
+        // Check rule: Must place on subfloor
+        if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.MustBuildOnSubfloor) && !mapGridData.Tile.Tile.GetContentTileDefinition().IsSubFloor)
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-requires-subfloor-message"), uid, user);
+            return false;
+        }
+
+        // Tile specific rules
+        if (component.CachedPrototype.Mode == RcdMode.ConstructTile)
+        {
+            // Check rule: Tile placement is valid
+            if (!_floors.CanPlaceTile(mapGridData.GridUid, mapGridData.Component, out var reason))
+            {
+                _popup.PopupClient(reason, user, user);
+                return false;
+            }
+
+            // Ensure that all construction rules shared between tiles and object are checked before exiting here
+            return true;
+        }
+
+        // Check rule: The tile is unoccupied
+        bool isWindow = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
+
+        foreach (var ent in _lookup.GetEntitiesIntersecting(mapGridData.Tile, -0.1f, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Static))
+        {
+            if (!TryComp<FixturesComponent>(ent, out var fixtures))
+                continue;
+
+            if (isWindow && HasComp<SharedCanBuildWindowOnTopComponent>(ent))
+                continue;
+
+            for (int i = 0; i < fixtures.FixtureCount; i++)
+            {
+                (var _, var fixture) = fixtures.Fixtures.ElementAt(i);
+
+                if ((fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0)
+                    continue;
+
+                if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.DirectionalCollider) &&
+                    Prototype(ent)?.ID == component.CachedPrototype.Prototype &&
+                    GetAngleFromUserFacing(user).GetCardinalDir() != Transform(ent).LocalRotation.GetCardinalDir())
+                    continue;
+
+                // Collision detected
+                _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private bool TryToDoConstruction(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user)
+    {
+        if (!_net.IsServer)
+            return true;
+
+        if (!IsConstructionLocationValid(uid, component, mapGridData, user))
+            return false;
+
+        switch (component.CachedPrototype.Mode)
+        {
+            case RcdMode.ConstructTile:
+                _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, new Tile(_tileDefMan[component.CachedPrototype.Prototype!].TileId));
+                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} {mapGridData.Position} to {component.CachedPrototype.Prototype}");
+                break;
+
+            case RcdMode.ConstructObject:
+                var ent = Spawn(component.CachedPrototype.Prototype!, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+
+                Logger.Debug("rule: " + component.CachedPrototype.RotationRule);
+                Logger.Debug("dir: " + component.PrototypeDirection);
+
+                switch (component.CachedPrototype.RotationRule)
+                {
+                    case RcdRotationRule.Fixed:
+                        Transform(ent).LocalRotation = Angle.Zero;
+                        break;
+                    case RcdRotationRule.Camera:
+                        Transform(ent).LocalRotation = Transform(uid).LocalRotation;
+                        break;
+                    case RcdRotationRule.User:
+                        Transform(ent).LocalRotation = component.PrototypeDirection.ToAngle();
+                        break;
+                }
+
+                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
+                break;
+        }
+
+        return true;
     }
 
     #region Entity construction/deconstruction checks and entity spawning/deletion

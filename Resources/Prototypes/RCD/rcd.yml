@@ -13,10 +13,12 @@
   name: rcd-component-wall-solid
   category: WallsAndFlooring
   texture: "/Textures/Interface/Radial/RCD/solid_wall.png"
-  mode: Walls
+  mode: ConstructObject
   prototype: WallSolid 
   cost: 4
   delay: 2
+  collisonMask: FullTileMask
+  rotation: Fixed
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -24,10 +26,12 @@
   name: rcd-component-floor-steel
   category: WallsAndFlooring
   texture: "/Textures/Interface/Radial/RCD/metal_tile.png"
-  mode: Floors
+  mode: ConstructTile
   prototype: FloorSteel
   cost: 1
   delay: 1
+  rules:
+    - CanBuildOnEmptyTile
   fx: EffectRCDConstructFast
   
 - type: rcd
@@ -35,10 +39,12 @@
   name: rcd-component-plating
   category: WallsAndFlooring
   texture: "/Textures/Interface/Radial/RCD/plating.png"
-  mode: Floors
+  mode: ConstructTile
   prototype: Plating
   cost: 1
   delay: 1
+  rules:
+    - CanBuildOnEmptyTile
   fx: EffectRCDConstructFast
   
 - type: rcd
@@ -46,10 +52,14 @@
   name: rcd-component-catwalk
   category: WallsAndFlooring
   texture: "/Textures/Interface/Radial/RCD/catwalk.png"
-  mode: Catwalks
+  mode: ConstructObject
   prototype: Catwalk
   cost: 1
   delay: 1
+  collisonMask: SubfloorMask
+  rules:
+    - MustBuildOnSubfloor
+  rotation: Fixed
   fx: EffectRCDConstructFast
   
 - type: rcd
@@ -57,10 +67,12 @@
   name: rcd-component-wall-reinforced
   category: WallsAndFlooring
   texture: "/Textures/Interface/Radial/RCD/reinforced_wall.png"
-  mode: Walls
+  mode: ConstructObject
   prototype: WallReinforced
   cost: 8
   delay: 4
+  collisonMask: FullTileMask
+  rotation: Fixed
   fx: EffectRCDConstructSlow
   
 - type: rcd
@@ -68,10 +80,12 @@
   name: rcd-component-grille
   category: WindowsAndGrilles
   texture: "/Textures/Interface/Radial/RCD/grille.png"
-  mode: Walls
+  mode: ConstructObject
   prototype: Grille
   cost: 4
   delay: 2
+  collisonMask: FullTileMask
+  rotation: Fixed
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -79,10 +93,14 @@
   name: rcd-component-window
   category: WindowsAndGrilles
   texture: "/Textures/Interface/Radial/RCD/window.png"
-  mode: Windows
+  mode: ConstructObject
   prototype: Window
   cost: 4
   delay: 2
+  collisonMask: FullTileMask
+  rules:
+    - IsWindow
+  rotation: Fixed
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -90,10 +108,15 @@
   name: rcd-component-window-directional
   category: WindowsAndGrilles
   texture: "/Textures/Interface/Radial/RCD/directional.png"
-  mode: DirectionalWindows
+  mode: ConstructObject
   prototype: WindowDirectional
   cost: 2
   delay: 1
+  collisonMask: FullTileMask
+  rules:
+    - IsWindow
+    - DirectionalCollider
+  rotation: User
   fx: EffectRCDConstructFast
   
 - type: rcd
@@ -101,10 +124,15 @@
   name: rcd-component-window-reinforced-directional
   category: WindowsAndGrilles
   texture: "/Textures/Interface/Radial/RCD/directional_reinforced.png"
-  mode: DirectionalWindows
+  mode: ConstructObject
   prototype: WindowReinforcedDirectional
   cost: 2
   delay: 1
+  collisonMask: FullTileMask
+  rules:
+    - IsWindow
+    - DirectionalCollider
+  rotation: User
   fx: EffectRCDConstructFast
   
 - type: rcd
@@ -112,10 +140,15 @@
   name: rcd-component-reinforced-window
   category: WindowsAndGrilles
   texture: "/Textures/Interface/Radial/RCD/window_reinforced.png"
-  mode: Windows
+  mode: ConstructObject
   prototype: ReinforcedWindow
   cost: 4
   delay: 2
+  collisonMask: FullTileMask
+  rules:
+    - IsWindow
+    - DirectionalCollider
+  rotation: User
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -123,10 +156,12 @@
   name: rcd-component-airlock
   category: Airlocks
   texture: "/Textures/Interface/Radial/RCD/airlock.png"
-  mode: Airlocks
+  mode: ConstructObject
   prototype: Airlock
   cost: 4
   delay: 2
+  collisonMask: FullTileMask
+  rotation: Camera
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -134,10 +169,12 @@
   name: rcd-component-airlock-glass
   category: Airlocks
   texture: "/Textures/Interface/Radial/RCD/glass_airlock.png"
-  mode: Airlocks
+  mode: ConstructObject
   prototype: AirlockGlass
   cost: 4
   delay: 2
+  collisonMask: FullTileMask
+  rotation: Camera
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -145,21 +182,25 @@
   name: rcd-component-firelock
   category: Airlocks
   texture: "/Textures/Interface/Radial/RCD/firelock.png"
-  mode: Airlocks
+  mode: ConstructObject
   prototype: Firelock
   cost: 4
   delay: 2
+  collisonMask: FullTileMask
+  rotation: Camera
   fx: EffectRCDConstructNormal
   
 - type: rcd
   id: ComputerFrame
   name: rcd-component-computer-frame
-  mode: Computers
+  mode: ConstructObject
   category: ComputerAndMachineFrames
   texture: "/Textures/Interface/Radial/RCD/computer_frame.png"
   prototype: ComputerFrame
   cost: 4
   delay: 2
+  collisonMask: MachineMask
+  rotation: User
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -167,10 +208,12 @@
   name: rcd-component-machine-frame
   category: ComputerAndMachineFrames
   texture: "/Textures/Interface/Radial/RCD/machine_frame.png"
-  mode: Machines
+  mode: ConstructObject
   prototype: MachineFrame
   cost: 4
   delay: 2
+  collisonMask: MachineMask
+  rotation: User
   fx: EffectRCDConstructNormal
   
 - type: rcd
@@ -178,10 +221,14 @@
   name: rcd-component-tube-light
   category: Lighting
   texture: "/Textures/Interface/Radial/RCD/tube_light.png"
-  mode: Lighting
+  mode: ConstructObject
   prototype: Poweredlight
   cost: 2
   delay: 1
+  collisonMask: TabletopMachineMask
+  rules:
+  - DirectionalCollider
+  rotation: User
   fx: EffectRCDConstructFast
   
 - type: rcd
@@ -189,9 +236,13 @@
   name: rcd-component-window-bulb-light
   category: Lighting
   texture: "/Textures/Interface/Radial/RCD/bulb_light.png"
-  mode: Lighting
+  mode: ConstructObject
   prototype: PoweredSmallLight
   cost: 2
   delay: 1
+  collisonMask: TabletopMachineMask
+  rules:
+  - DirectionalCollider
+  rotation: User
   fx: EffectRCDConstructFast
   
