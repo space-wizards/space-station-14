@@ -12805,6 +12805,11 @@ entities:
     - type: Transform
       pos: 16.5,-20.5
       parent: 60
+  - uid: 9621
+    components:
+    - type: Transform
+      pos: -44.5,20.5
+      parent: 60
   - uid: 10656
     components:
     - type: Transform
@@ -12829,11 +12834,6 @@ entities:
     components:
     - type: Transform
       pos: 18.5,-18.5
-      parent: 60
-  - uid: 13893
-    components:
-    - type: Transform
-      pos: -44.5,20.5
       parent: 60
   - uid: 14053
     components:
@@ -62197,19 +62197,19 @@ entities:
       parent: 60
 - proto: CryogenicSleepUnit
   entities:
-  - uid: 13899
+  - uid: 13893
     components:
     - type: Transform
       pos: -45.5,21.5
       parent: 60
-  - uid: 16532
+  - uid: 16531
     components:
     - type: Transform
       pos: -45.5,19.5
       parent: 60
 - proto: CryogenicSleepUnitSpawner
   entities:
-  - uid: 16533
+  - uid: 16532
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -62217,7 +62217,7 @@ entities:
       parent: 60
 - proto: CryogenicSleepUnitSpawnerLateJoin
   entities:
-  - uid: 16531
+  - uid: 13899
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -62475,7 +62475,7 @@ entities:
       parent: 60
 - proto: DefaultStationBeaconDorms
   entities:
-  - uid: 8396
+  - uid: 7645
     components:
     - type: Transform
       pos: -46.5,20.5
@@ -104311,12 +104311,12 @@ entities:
     - type: Transform
       pos: -57.5,18.5
       parent: 60
-  - uid: 17457
+  - uid: 17456
     components:
     - type: Transform
       pos: -44.5,19.5
       parent: 60
-  - uid: 17468
+  - uid: 17457
     components:
     - type: Transform
       pos: -44.5,21.5
@@ -112680,7 +112680,7 @@ entities:
     - type: Transform
       pos: 3.5,22.5
       parent: 60
-  - uid: 16551
+  - uid: 16550
     components:
     - type: Transform
       pos: -46.5,22.5
@@ -115629,6 +115629,13 @@ entities:
       parent: 60
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 16535
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: -46.5,21.5
+      parent: 60
   - uid: 16536
     components:
     - type: MetaData
@@ -115658,13 +115665,6 @@ entities:
       parent: 60
     - type: ApcPowerReceiver
       powerLoad: 0
-  - uid: 16550
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      pos: -46.5,21.5
-      parent: 60
   - uid: 16993
     components:
     - type: MetaData
@@ -118974,7 +118974,7 @@ entities:
     - type: Transform
       pos: 18.5,-12.5
       parent: 60
-  - uid: 17456
+  - uid: 16551
     components:
     - type: Transform
       pos: -46.5,26.5
@@ -122109,6 +122109,11 @@ entities:
     - type: Transform
       pos: 52.5,18.5
       parent: 60
+  - uid: 8396
+    components:
+    - type: Transform
+      pos: -44.5,19.5
+      parent: 60
   - uid: 8427
     components:
     - type: Transform
@@ -122271,11 +122276,6 @@ entities:
     components:
     - type: Transform
       pos: -51.5,15.5
-      parent: 60
-  - uid: 9621
-    components:
-    - type: Transform
-      pos: -44.5,19.5
       parent: 60
   - uid: 9643
     components:
@@ -123210,7 +123210,7 @@ entities:
     - type: Transform
       pos: 2.5,37.5
       parent: 60
-  - uid: 16535
+  - uid: 16534
     components:
     - type: Transform
       pos: -44.5,21.5
@@ -126522,7 +126522,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 42.49971,-21.305145
       parent: 60
-  - uid: 16534
+  - uid: 16533
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
@@ -127447,11 +127447,6 @@ entities:
       parent: 60
 - proto: SignRedFour
   entities:
-  - uid: 7645
-    components:
-    - type: Transform
-      pos: -44.5,21.5
-      parent: 60
   - uid: 24155
     components:
     - type: Transform
