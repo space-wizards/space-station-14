@@ -9,6 +9,7 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Humanoid;
 using Content.Server.Decals;
 using Content.Shared.SubFloor;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Paint;
 
@@ -84,7 +85,7 @@ public sealed class PaintSystem : SharedPaintSystem
             return false;
         }
 
-        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target))
+        if (HasComp<MobStateComponent>(target) || HasComp<SubFloorHideComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("paint-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;
@@ -98,8 +99,7 @@ public sealed class PaintSystem : SharedPaintSystem
                 _popup.PopupEntity(Loc.GetString("paint-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
             }
-
-            if (quantity < 1)// checks quantity of solution is more than 0.
+            else
             {
                 _popup.PopupEntity(Loc.GetString("paint-empty", ("used", used)), actor, actor, PopupType.Medium);
                 return false;

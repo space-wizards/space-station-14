@@ -106,7 +106,6 @@ namespace Content.Client.Paint
             {
                 var shader = _proto.Index<ShaderPrototype>("Colored").InstanceUnique();
 
-                shader.SetParameter("color", component.Color);
                 sprite.PostShader = false ? shader : null;
             }
         }
