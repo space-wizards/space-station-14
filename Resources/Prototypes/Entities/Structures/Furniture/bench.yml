@@ -41,30 +41,6 @@
     state: bamboo_sofaend_right
 
 - type: entity
-  name: rainbow bench
-  id: BenchRainbowMiddle
-  parent: BenchBaseMiddle
-  components:
-  - type: Sprite
-    state: bench_middle
-
-- type: entity
-  id: BenchRainbowLeft
-  suffix: Left
-  parent: BenchRainbowMiddle
-  components:
-  - type: Sprite
-    state: bench_left
-
-- type: entity
-  id: BenchRainbowRight
-  suffix: Right
-  parent: BenchRainbowMiddle
-  components:
-  - type: Sprite
-    state: bench_right
-
-- type: entity
   name: wooden bench
   id: BenchWoodenMiddle
   parent: BenchBaseMiddle
@@ -179,27 +155,46 @@
     state: corp_sofacorner
 
 - type: entity
-  name: comfortable rainbow bench
-  id: BenchComfRainbowSolo
+  name: comfortable bench
+  id: BenchComfSolo
   suffix: Solo
   parent: BenchBaseMiddle
   description: A bench with an extremely comfortable backrest.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/bench.rsi
-    state: bench_solo
-
-- type: entity
-  name: comfortable bench
-  id: BenchComfSolo
-  suffix: Solo
-  parent: BenchBaseMiddle
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/bench.rsi
     layers:
     - state: bench_solo_base
     - state: bench_solo_cover
+
+- type: entity
+  name: comfortable bench
+  id: BenchComfMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_middle_base
+    - state: bench_middle_cover
+
+- type: entity
+  id: BenchComfLeft
+  suffix: Left
+  parent: BenchComfMiddle
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_left_base
+    - state: bench_left_cover
+
+- type: entity
+  id: BenchComfRight
+  suffix: Right
+  parent: BenchComfMiddle
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_right_base
+    - state: bench_right_cover
 
 - type: entity
   name: comfortable bench
@@ -208,10 +203,43 @@
   parent: BenchComfSolo
   components:
   - type: Sprite
-    sprite: Structures/Furniture/bench.rsi
     layers:
     - state: bench_solo_base
     - state: bench_solo_cover
+      color: "#8c4141"
+
+- type: entity
+  name: comfortable bench
+  id: BenchRedComfMiddle
+  suffix: Middle. Red
+  parent: BenchRedComfSolo
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_middle_base
+    - state: bench_middle_cover
+      color: "#8c4141"
+
+- type: entity
+  id: BenchRedComfLeft
+  suffix: Left. Red
+  parent: BenchRedComfSolo
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_left_base
+    - state: bench_left_cover
+      color: "#8c4141"
+
+- type: entity
+  id: BenchRedComfRight
+  suffix: Right. Red
+  parent: BenchRedComfSolo
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_right_base
+    - state: bench_right_cover
       color: "#8c4141"
 
 - type: entity
@@ -221,10 +249,43 @@
   parent: BenchComfSolo
   components:
   - type: Sprite
-    sprite: Structures/Furniture/bench.rsi
     layers:
     - state: bench_solo_base
     - state: bench_solo_cover
+      color: "#282774"
+
+- type: entity
+  name: comfortable bench
+  id: BenchBlueComfMiddle
+  suffix: Middle. Blue
+  parent: BenchBlueComfSolo
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_middle_base
+    - state: bench_middle_cover
+      color: "#282774"
+
+- type: entity
+  id: BenchBlueComfLeft
+  suffix: Left. Blue
+  parent: BenchBlueComfSolo
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_left_base
+    - state: bench_left_cover
+      color: "#282774"
+
+- type: entity
+  id: BenchBlueComfRight
+  suffix: Right. Blue
+  parent: BenchBlueComfSolo
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_right_base
+    - state: bench_right_cover
       color: "#282774"
 
 - type: entity

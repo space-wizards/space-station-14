@@ -108,6 +108,30 @@
       "directions": 4
     },
     {
+      "name": "bench_middle_base",
+      "directions": 4
+    },
+    {
+      "name": "bench_middle_cover",
+      "directions": 4
+    },
+    {
+      "name": "bench_left_base",
+      "directions": 4
+    },
+    {
+      "name": "bench_left_cover",
+      "directions": 4
+    },
+    {
+      "name": "bench_right_base",
+      "directions": 4
+    },
+    {
+      "name": "bench_right_cover",
+      "directions": 4
+    },
+    {
       "name": "bamboo_sofaend_right",
       "directions": 4
     },
