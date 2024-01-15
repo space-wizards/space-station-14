@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Velcroboy
-  changes:
-  - message: Fixed janitorial items (wet floor signs, spray bottles, light replacers,
-      and plungers) not fitting in the janitor's trolley.
-    type: Fix
-  id: 5213
-  time: '2023-11-27T22:16:17.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix ambient audio not playing.
@@ -3745,3 +3738,11 @@
   id: 5713
   time: '2024-01-15T03:57:31.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23980
+- author: Bhijn and Myr
+  changes:
+  - message: You can now open and close your eyes while cuffed if the action to do
+      so is available to you. (Such as if it was granted via blindness)
+    type: Fix
+  id: 5714
+  time: '2024-01-15T05:11:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24097
