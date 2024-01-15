@@ -753,8 +753,6 @@
       whitelist:
         tags:
           - Sheet
-    - type: StealTarget
-      stealGroup: AmmoTechFabCircuitboard
 
 - type: entity
   id: MedicalTechFab

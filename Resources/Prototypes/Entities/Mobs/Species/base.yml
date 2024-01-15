@@ -80,6 +80,8 @@
         clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
           True: {visible: true}
           False: {visible: false}
+  - type: StatusIcon
+    bounds: -0.5,-0.5,0.5,0.5
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
