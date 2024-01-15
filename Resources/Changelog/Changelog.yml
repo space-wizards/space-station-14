@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed riot shield audio and popup spam
-    type: Fix
-  id: 5218
-  time: '2023-11-28T07:06:38.0000000+00:00'
 - author: UbaserB
   changes:
   - message: Blood now has a sprite when placed in metamorphic glasses.
@@ -3757,3 +3751,10 @@
   id: 5718
   time: '2024-01-15T09:30:37.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24117
+- author: Nimfar11
+  changes:
+  - message: Adds the ability to build blast doors.
+    type: Add
+  id: 5719
+  time: '2024-01-15T12:49:08.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24050
