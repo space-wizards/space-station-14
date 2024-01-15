@@ -422,6 +422,10 @@ public partial class NavMapControl : MapGridControl
 
                 var text = beacon.Text;
                 text ??= string.Empty;
+                if (text == string.Empty)
+                {
+                    text = beacon.Name;
+                }
                 var textDimensions = handle.GetDimensions(font, text, 1f);
                 handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _backgroundColor);
                 handle.DrawString(font, position - textDimensions / 2, text, beacon.Color);

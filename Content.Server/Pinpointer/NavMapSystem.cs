@@ -240,7 +240,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
                 }
             }
 
-            beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition));
+            beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition, Name(beaconUid)));
         }
 
         var airlockQuery = EntityQueryEnumerator<NavMapDoorComponent, TransformComponent>();

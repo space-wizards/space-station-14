@@ -42,7 +42,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    public readonly record struct NavMapBeacon(Color Color, string? Text, Vector2 Position);
+    public readonly record struct NavMapBeacon(Color Color, string Text, Vector2 Position, string Name);
 
     [Serializable, NetSerializable]
     public readonly record struct NavMapAirlock(Vector2 Position);
