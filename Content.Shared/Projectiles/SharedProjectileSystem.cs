@@ -203,8 +203,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             if (args.Fixture.CollisionLayer > (int) CollisionGroup.MachineLayer)
                 damageAfterCollide.PenetrationPower -= 1;
 
-            //If the target's CollisonLayer is lower than the MobLayer it's a "soft" target and
-            //deducts less penetration power.
+            //If the target's CollisonLayer is equal to or lower than the MachineLayer,
+            //it's a "soft" target and deducts less penetration power.
             else
                 damageAfterCollide.PenetrationPower -= 0.5f;
 
