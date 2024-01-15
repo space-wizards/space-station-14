@@ -101,7 +101,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
             warpPoint.Location = args.Text;
         }
 
-        args.Text ??= string.Empty;
         navMap.Text = args.Text;
         navMap.Color = args.Color;
         navMap.Enabled = args.Enabled;
@@ -228,7 +227,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             // TODO: Make warp points use metadata name instead.
             string? name = beacon.Text;
 
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
                 if (TryComp<WarpPointComponent>(beaconUid, out var warpPoint) && warpPoint.Location != null)
                 {
@@ -240,7 +239,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
                 }
             }
 
-            beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition, Name(beaconUid)));
+            beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition));
         }
 
         var airlockQuery = EntityQueryEnumerator<NavMapDoorComponent, TransformComponent>();
