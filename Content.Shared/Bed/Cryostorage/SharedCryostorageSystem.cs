@@ -1,5 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -33,6 +34,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
         SubscribeLocalEvent<CryostorageComponent, EntRemovedFromContainerMessage>(OnRemovedContainer);
         SubscribeLocalEvent<CryostorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<CryostorageComponent, ComponentShutdown>(OnShutdownContainer);
+        SubscribeLocalEvent<CryostorageComponent, CanDropTargetEvent>(OnCanDropTarget);
 
         SubscribeLocalEvent<CryostorageContainedComponent, EntGotRemovedFromContainerMessage>(OnRemovedContained);
         SubscribeLocalEvent<CryostorageContainedComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -114,6 +116,18 @@ public abstract class SharedCryostorageSystem : EntitySystem
 
         comp.StoredPlayers.Clear();
         Dirty(ent, comp);
+    }
+
+    private void OnCanDropTarget(Entity<CryostorageComponent> ent, ref CanDropTargetEvent args)
+    {
+        if (args.Dragged == args.User)
+            return;
+
+        if (!Mind.TryGetMind(args.Dragged, out _, out var mindComp) || mindComp.Session?.AttachedEntity != args.Dragged)
+            return;
+
+        args.CanDrop = false;
+        args.Handled = true;
     }
 
     private void OnRemovedContained(Entity<CryostorageContainedComponent> ent, ref EntGotRemovedFromContainerMessage args)
