@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Made by github user @moonheart08, greyscaled by aexxie",
+    "copyright": "Made by github user @moonheart08",
     "size": {
         "x": 32,
         "y": 32
@@ -57,57 +57,6 @@
         },
         {
             "name": "thin_inner_sw"
-        },
-        {
-            "name": "thin_box_greyscale"
-        },
-        {
-            "name": "thin_corner_ne_greyscale"
-        },
-        {
-            "name": "thin_corner_se_greyscale"
-        },
-        {
-            "name": "thin_corner_nw_greyscale"
-        },
-        {
-            "name": "thin_corner_sw_greyscale"
-        },
-        {
-            "name": "thin_end_n_greyscale"
-        },
-        {
-            "name": "thin_end_e_greyscale"
-        },
-        {
-            "name": "thin_end_s_greyscale"
-        },
-        {
-            "name": "thin_end_w_greyscale"
-        },
-        {
-            "name": "thin_line_n_greyscale"
-        },
-        {
-            "name": "thin_line_e_greyscale"
-        },
-        {
-            "name": "thin_line_s_greyscale"
-        },
-        {
-            "name": "thin_line_w_greyscale"
-        },
-        {
-            "name": "thin_inner_ne_greyscale"
-        },
-        {
-            "name": "thin_inner_se_greyscale"
-        },
-        {
-            "name": "thin_inner_nw_greyscale"
-        },
-        {
-            "name": "thin_inner_sw_greyscale"
         }
     ]
 }

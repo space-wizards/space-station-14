@@ -1,5 +1,6 @@
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.DeviceLinking;
+using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -73,6 +74,9 @@ namespace Content.Server.Kitchen.Components
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
