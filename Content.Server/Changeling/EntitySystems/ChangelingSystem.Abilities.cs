@@ -267,13 +267,15 @@ public sealed partial class ChangelingSystem
         {
             if (handContainer.ContainedEntity != null)
             {
-                if (TryPrototype(handContainer.ContainedEntity.Value, out var protoInHand))
+                if (TryComp<MetaDataComponent>(handContainer.ContainedEntity.Value, out var targetMeta))
                 {
-                    var result = _proto.HasIndex<EntityPrototype>(ArmBladeId);
-                    if (result)
+                    if (TryPrototype(handContainer.ContainedEntity.Value, out var prototype, targetMeta))
                     {
-                        component.ArmBladeActive = false;
-                        QueueDel(handContainer.ContainedEntity.Value);
+                        if (prototype.ID == ArmBladeId)
+                        {
+                            component.ArmBladeActive = false;
+                            QueueDel(handContainer.ContainedEntity.Value);
+                        }
                     }
                 }
             }
@@ -316,23 +318,27 @@ public sealed partial class ChangelingSystem
         {
             if (_inventorySystem.TryGetSlotEntity(uid, HeadId, out var headitem) && _inventorySystem.TryGetSlotEntity(uid, OuterClothingId, out var outerclothingitem))
             {
-                if (TryPrototype(headitem.Value, out var headitemproto))
+                if (TryComp<MetaDataComponent>(headitem, out var targetHelmetMeta))
                 {
-                    var result = _proto.HasIndex<EntityPrototype>(LingHelmetId);
-                    if (result)
+                    if (TryPrototype(headitem.Value, out var prototype, targetHelmetMeta))
                     {
-                        _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
-                        QueueDel(headitem);
+                        if (prototype.ID == LingHelmetId)
+                        {
+                            _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
+                            QueueDel(headitem);
+                        }
                     }
                 }
 
-                if (TryPrototype(outerclothingitem.Value, out var outerclothingproto))
+                if (TryComp<MetaDataComponent>(outerclothingitem, out var targetArmorMeta))
                 {
-                    var result = _proto.HasIndex<EntityPrototype>(LingArmorId);
-                    if (result)
+                    if (TryPrototype(outerclothingitem.Value, out var prototype, targetArmorMeta))
                     {
-                        _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
-                        QueueDel(outerclothingitem);
+                        if (prototype.ID == LingArmorId)
+                        {
+                            _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
+                            QueueDel(outerclothingitem);
+                        }
                     }
                 }
             }
@@ -418,14 +424,22 @@ public sealed partial class ChangelingSystem
             }
         }
 
+        if (!HasComp<HumanoidAppearanceComponent>(target))
+        {
+            var selfMessageFailNoHuman = Loc.GetString("changeling-dna-fail-nohuman", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessageFailNoHuman, uid, uid);
+            return;
+        }
+
         if (!TryUseAbility(uid, component, component.DNAStingCost))
             return;
 
-        var selfMessageSuccess = Loc.GetString("changeling-dna-sting", ("target", Identity.Entity(target, EntityManager)));
-        _popup.PopupEntity(selfMessageSuccess, uid, uid);
+        if (StealDNA(uid, target, component))
+        {
+            args.Handled = true;
 
-        args.Handled = true;
-
-        StealDNA(uid, target, component);
+            var selfMessageSuccess = Loc.GetString("changeling-dna-sting", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessageSuccess, uid, uid);
+        }
     }
 }

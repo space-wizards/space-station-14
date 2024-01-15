@@ -194,8 +194,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             return false;
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoidappearance))
         {
-            var selfMessage = Loc.GetString("changeling-dna-nodna", ("target", Identity.Entity(target, EntityManager)));
-            _popup.PopupEntity(selfMessage, uid, uid);
             return false;
         }
 
@@ -273,15 +271,15 @@ public sealed partial class ChangelingSystem : EntitySystem
             var selfMessage = Loc.GetString("changeling-transform-activate", ("target", Identity.Entity(transformedUid.Value, EntityManager)));
             _popup.PopupEntity(selfMessage, transformedUid.Value, transformedUid.Value);
 
-            var newLingComponent = EnsureComp<ChangelingComponent>(transformedUid.Value);
-            newLingComponent.Chemicals = component.Chemicals;
-            newLingComponent.ChemicalsPerSecond = component.ChemicalsPerSecond;
-            newLingComponent.StoredDNA = component.StoredDNA;
-            newLingComponent.SelectedDNA = component.SelectedDNA;
-            newLingComponent.ArmBladeActive = component.ArmBladeActive;
-            newLingComponent.LingArmorActive = component.LingArmorActive;
-            newLingComponent.ChameleonSkinActive = component.ChameleonSkinActive;
+            // var newLingComponent = EnsureComp<ChangelingComponent>(transformedUid.Value);
+            // newLingComponent.Chemicals = component.Chemicals;
+            // newLingComponent.ChemicalsPerSecond = component.ChemicalsPerSecond;
+            // newLingComponent.StoredDNA = component.StoredDNA;
+            //newLingComponent.SelectedDNA = component.SelectedDNA;
+            // newLingComponent.ArmBladeActive = component.ArmBladeActive;
+            var copiedLingComp = component;
             RemComp(uid, component);
+            EntityManager.AddComponent(transformedUid.Value, copiedLingComp);
 
             if (TryComp(uid, out StoreComponent? storeComp))
             {
@@ -304,7 +302,7 @@ public sealed partial class ChangelingSystem : EntitySystem
                 }
             }
 
-            _actionContainer.TransferAllActions(uid, transformedUid.Value);
+            _actionContainer.TransferAllActionsWithNewAttached(uid, transformedUid.Value, transformedUid.Value);
         }
     }
 }
