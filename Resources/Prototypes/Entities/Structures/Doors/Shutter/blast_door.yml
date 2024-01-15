@@ -76,7 +76,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
