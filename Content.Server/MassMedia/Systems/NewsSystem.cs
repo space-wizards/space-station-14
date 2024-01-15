@@ -75,20 +75,20 @@ public sealed class NewsSystem : SharedNewsSystem
         component.CartridgeLoader = default;
     }
 
-    private void OnArticlePublished(EntityUid uid, NewsReaderCartridgeComponent component, ref NewsArticlePublishedEvent args)
+    private void OnArticlePublished(Entity<NewsReaderCartridgeComponent> ent, ref NewsArticlePublishedEvent args)
     {
-        if (!component.CartridgeLoader.HasValue)
+        if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-        UpdateReaderUi(uid, component.CartridgeLoader.Value, component);
+        UpdateReaderUi(ent, loaderUid);
 
-        if (!component.NotificationOn )
+        if (!ent.Comp.NotificationOn)
             return;
 
         _cartridgeLoaderSystem.SendNotification(
-            component.CartridgeLoader.Value,
+            loaderUid,
             Loc.GetString("news-pda-notification-header"),
-            args.Article.Name);
+            args.Article.Title);
     }
 
     private void OnArticleDeleted(EntityUid uid, NewsReaderCartridgeComponent component, ref NewsArticleDeletedEvent args)
@@ -99,19 +99,25 @@ public sealed class NewsSystem : SharedNewsSystem
         UpdateReaderUi(uid, component.CartridgeLoader.Value, component);
     }
 
-    public override void Update(float frameTime)
+    private void OnReaderUiMessage(Entity<NewsReaderCartridgeComponent> ent, ref CartridgeMessageEvent args)
     {
-        base.Update(frameTime);
+        if (args is not NewsReaderUiMessageEvent message)
+            return;
 
-        var query = EntityQueryEnumerator<NewsWriterComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        switch (message.Action)
         {
-            if (comp.PublishEnabled || _timing.CurTime < comp.NextPublish)
-                continue;
-
-            comp.PublishEnabled = true;
-            UpdateWriterUi(uid, comp);
+            case NewsReaderUiAction.Next:
+                NewsReaderLeafArticle(ent, 1);
+                break;
+            case NewsReaderUiAction.Prev:
+                NewsReaderLeafArticle(ent, -1);
+                break;
+            case NewsReaderUiAction.NotificationSwitch:
+                ent.Comp.NotificationOn = !ent.Comp.NotificationOn;
+                break;
         }
+
+        UpdateReaderUi(ent, GetEntity(args.LoaderUid));
     }
 
     private bool TryGetArticles(EntityUid uid, [NotNullWhen(true)] out List<NewsArticle>? articles)
