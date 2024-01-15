@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix ambient audio not playing.
-    type: Fix
-  id: 5214
-  time: '2023-11-28T03:09:26.0000000+00:00'
 - author: M3739
   changes:
   - message: An entry regarding cyborgs has been added to the guidebook.
@@ -3746,3 +3740,10 @@
   id: 5714
   time: '2024-01-15T05:11:21.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24097
+- author: Flareguy
+  changes:
+  - message: Made lava & liquid plasma significantly less lethal.
+    type: Tweak
+  id: 5715
+  time: '2024-01-15T06:33:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24100
