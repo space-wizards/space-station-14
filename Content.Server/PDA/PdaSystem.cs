@@ -115,11 +115,11 @@ namespace Content.Server.PDA
             }
         }
 
-        private void OnNotification(EntityUid uid, PdaComponent component, ref CartridgeLoaderNotificationSentEvent args)
+        private void OnNotification(Entity<PdaComponent> ent, ref CartridgeLoaderNotificationSentEvent args)
         {
-            _ringer.RingerPlayRingtone(uid);
+            _ringer.RingerPlayRingtone(ent.Owner);
 
-            if (!_containerSystem.TryGetContainingContainer(uid, out var container)
+            if (!_containerSystem.TryGetContainingContainer(ent, out var container)
                 || !TryComp<ActorComponent>(container.Owner, out var actor))
                 return;
 
@@ -134,7 +134,7 @@ namespace Content.Server.PDA
                 wrappedMessage,
                 EntityUid.Invalid,
                 false,
-                actor.PlayerSession.ConnectedClient);
+                actor.PlayerSession.Channel);
         }
 
         /// <summary>

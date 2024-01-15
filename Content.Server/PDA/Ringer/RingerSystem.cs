@@ -63,16 +63,16 @@ namespace Content.Server.PDA.Ringer
             UpdateRingerUserInterface(uid, ringer, true);
         }
 
-        public void RingerPlayRingtone(EntityUid uid, RingerComponent? ringer = default!)
+        public void RingerPlayRingtone(Entity<RingerComponent?> ent)
         {
-            if (!Resolve(uid, ref ringer))
+            if (!Resolve(ent, ref ent.Comp))
                 return;
 
-            EnsureComp<ActiveRingerComponent>(uid);
+            EnsureComp<ActiveRingerComponent>(ent);
 
-            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);
+            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), ent, Filter.Pvs(ent, 0.05f), false, PopupType.Medium);
 
-            UpdateRingerUserInterface(uid, ringer, true);
+            UpdateRingerUserInterface(ent, ent.Comp, true);
         }
 
         private void UpdateRingerUserInterfaceDriver(EntityUid uid, RingerComponent ringer, RingerRequestUpdateInterfaceMessage args)

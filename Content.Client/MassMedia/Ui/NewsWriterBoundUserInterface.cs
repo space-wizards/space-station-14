@@ -59,13 +59,13 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
         if (stringContent.Length == 0)
             return;
 
-        var name = title.Length <= SharedNewsSystem.MaxNameLength
+        var name = title.Length <= SharedNewsSystem.MaxTitleLength
             ? title
-            : $"{title[..(SharedNewsSystem.MaxNameLength - 3)]}...";
+            : $"{title[..(SharedNewsSystem.MaxTitleLength - 3)]}...";
 
-        var content = stringContent.Length <= SharedNewsSystem.MaxArticleLength
+        var content = stringContent.Length <= SharedNewsSystem.MaxContentLength
             ? stringContent
-            : $"{stringContent[..(SharedNewsSystem.MaxArticleLength - 3)]}...";
+            : $"{stringContent[..(SharedNewsSystem.MaxContentLength - 3)]}...";
 
 
         SendMessage(new NewsWriterPublishMessage(name, content));

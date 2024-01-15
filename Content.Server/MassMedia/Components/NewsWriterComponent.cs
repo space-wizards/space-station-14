@@ -4,22 +4,21 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.MassMedia.Components;
 
-
 [RegisterComponent]
 [Access(typeof(NewsSystem))]
 public sealed partial class NewsWriterComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("publishEnabled")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool PublishEnabled;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextPublish", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextPublish;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("publishCooldown")]
-    public float PublishCooldown = 60f;
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float PublishCooldown = 20f;
 
-    [DataField("noAccessSound")]
+    [DataField]
     public SoundSpecifier NoAccessSound = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
-    [DataField("confirmSound")]
+    [DataField]
     public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 }

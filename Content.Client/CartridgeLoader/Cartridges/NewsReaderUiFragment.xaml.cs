@@ -17,9 +17,6 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
     public NewsReaderUiFragment()
     {
         RobustXamlLoader.Load(this);
-        Orientation = LayoutOrientation.Vertical;
-        HorizontalExpand = true;
-        VerticalExpand = true;
 
         Next.OnPressed += _ => OnNextButtonPressed?.Invoke();
         Prev.OnPressed += _ => OnPrevButtonPressed?.Invoke();
@@ -33,7 +30,7 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
         ShareTime.Visible = true;
         Author.Visible = true;
 
-        PageName.Text = article.Name;
+        PageName.Text = article.Title;
         PageText.SetMarkup(article.Content);
 
         PageNum.Text = $"{targetNum}/{totalNum}";

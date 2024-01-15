@@ -13,11 +13,11 @@ using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Database;
 using Content.Shared.MassMedia.Components;
 using Content.Shared.MassMedia.Systems;
-using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Content.Server.MassMedia.Components;
 using Robust.Shared.Timing;
 using Content.Server.Station.Systems;
+using Content.Shared.Popups;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
 
@@ -26,12 +26,12 @@ namespace Content.Server.MassMedia.Systems;
 public sealed class NewsSystem : SharedNewsSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
@@ -48,39 +48,138 @@ public sealed class NewsSystem : SharedNewsSystem
         SubscribeLocalEvent<NewsWriterComponent, NewsWriterPublishMessage>(OnWriteUiPublishMessage);
 
         // News reader
-        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeAddedEvent>(OnAdded);
-        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeRemovedEvent>(OnRemoved);
         SubscribeLocalEvent<NewsReaderCartridgeComponent, NewsArticlePublishedEvent>(OnArticlePublished);
         SubscribeLocalEvent<NewsReaderCartridgeComponent, NewsArticleDeletedEvent>(OnArticleDeleted);
         SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeMessageEvent>(OnReaderUiMessage);
         SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeUiReadyEvent>(OnReaderUiReady);
     }
 
-    private void OnMapInit(EntityUid uid, NewsWriterComponent component, MapInitEvent args)
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<NewsWriterComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.PublishEnabled || _timing.CurTime < comp.NextPublish)
+                continue;
+
+            comp.PublishEnabled = true;
+            UpdateWriterUi((uid, comp));
+        }
+    }
+
+    #region Writer Event Handlers
 
     private void OnEntityUnpause(Entity<NewsWriterComponent> ent, ref EntityUnpausedEvent args)
     {
         ent.Comp.NextPublish += args.PausedTime;
     }
 
+    private void OnMapInit(Entity<NewsWriterComponent> ent, ref MapInitEvent args)
     {
-        var station = _station.GetOwningStation(uid);
+        var station = _station.GetOwningStation(ent);
         if (!station.HasValue)
             return;
 
-        if (!HasComp<StationNewsComponent>(station.Value))
-            AddComp<StationNewsComponent>(station.Value);
+        EnsureComp<StationNewsComponent>(station.Value);
     }
 
-    private void OnAdded(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeAddedEvent args)
+    private void OnWriteUiDeleteMessage(Entity<NewsWriterComponent> ent, ref NewsWriterDeleteMessage msg)
     {
-        component.CartridgeLoader = args.Loader;
+        if (!TryGetArticles(ent, out var articles))
+            return;
+
+        if (msg.ArticleNum >= articles.Count)
+            return;
+
+        if (msg.Session.AttachedEntity is not { } actor)
+            return;
+
+        var article = articles[msg.ArticleNum];
+        if (CheckDeleteAccess(article, ent, actor))
+        {
+            _adminLogger.Add(
+                LogType.Chat, LogImpact.Medium,
+                $"{ToPrettyString(actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
+                );
+
+            articles.RemoveAt(msg.ArticleNum);
+            _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("news-write-no-access-popup"), ent, PopupType.SmallCaution);
+            _audio.PlayPvs(ent.Comp.NoAccessSound, ent);
+        }
+
+        var args = new NewsArticleDeletedEvent();
+        var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref args);
+        }
+
+        UpdateWriterDevices();
     }
 
-    private void OnRemoved(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeRemovedEvent args)
+    private void OnRequestArticlesUiMessage(Entity<NewsWriterComponent> ent, ref NewsWriterArticlesRequestMessage msg)
     {
-        component.CartridgeLoader = default;
+        UpdateWriterUi(ent);
     }
+
+    private void OnWriteUiPublishMessage(Entity<NewsWriterComponent> ent, ref NewsWriterPublishMessage msg)
+    {
+        if (!ent.Comp.PublishEnabled)
+            return;
+
+        ent.Comp.PublishEnabled = false;
+        ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
+
+        if (!TryGetArticles(ent, out var articles))
+            return;
+
+        if (msg.Session.AttachedEntity is not { } author)
+            return;
+
+        if (!_accessReader.FindStationRecordKeys(author, out _))
+            return;
+
+        string? authorName = null;
+        if (_idCardSystem.TryFindIdCard(author, out var idCard))
+            authorName = idCard.Comp.FullName;
+
+        var title = msg.Title.Trim();
+        var content = msg.Content.Trim();
+
+        var article = new NewsArticle
+        {
+            Title = title.Length <= MaxTitleLength ? title : $"{title[..MaxTitleLength]}...",
+            Content = content.Length <= MaxContentLength ? content : $"{content[..MaxContentLength]}...",
+            Author = authorName,
+            ShareTime = _ticker.RoundDuration()
+        };
+
+        _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Medium,
+            $"{ToPrettyString(author):actor} created news article {article.Title} by {article.Author}: {article.Content}"
+            );
+
+        articles.Add(article);
+
+        var args = new NewsArticlePublishedEvent(article);
+        var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref args);
+        }
+
+        UpdateWriterDevices();
+    }
+    #endregion
 
     private void OnArticlePublished(Entity<NewsReaderCartridgeComponent> ent, ref NewsArticlePublishedEvent args)
     {
@@ -98,12 +197,12 @@ public sealed class NewsSystem : SharedNewsSystem
             args.Article.Title);
     }
 
-    private void OnArticleDeleted(EntityUid uid, NewsReaderCartridgeComponent component, ref NewsArticleDeletedEvent args)
+    private void OnArticleDeleted(Entity<NewsReaderCartridgeComponent> ent, ref NewsArticleDeletedEvent args)
     {
-        if (!component.CartridgeLoader.HasValue)
+        if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-        UpdateReaderUi(uid, component.CartridgeLoader.Value, component);
+        UpdateReaderUi(ent, loaderUid);
     }
 
     private void OnReaderUiMessage(Entity<NewsReaderCartridgeComponent> ent, ref CartridgeMessageEvent args)
@@ -127,6 +226,11 @@ public sealed class NewsSystem : SharedNewsSystem
         UpdateReaderUi(ent, GetEntity(args.LoaderUid));
     }
 
+    private void OnReaderUiReady(Entity<NewsReaderCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
+    {
+        UpdateReaderUi(ent, args.Loader);
+    }
+
     private bool TryGetArticles(EntityUid uid, [NotNullWhen(true)] out List<NewsArticle>? articles)
     {
         if (_station.GetOwningStation(uid) is not { } station ||
@@ -140,219 +244,73 @@ public sealed class NewsSystem : SharedNewsSystem
         return true;
     }
 
-    private void OnReaderUiReady(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeUiReadyEvent args)
+    private void UpdateWriterUi(Entity<NewsWriterComponent> ent)
     {
-        UpdateReaderUi(uid, args.Loader, component);
-    }
-
-    private void UpdateWriterUi(EntityUid uid, NewsWriterComponent component)
-    {
-        if (!_ui.TryGetUi(uid, NewsWriterUiKey.Key, out var ui))
+        if (!_ui.TryGetUi(ent, NewsWriterUiKey.Key, out var ui))
             return;
 
-        if (!TryGetArticles(uid, out var articles))
+        if (!TryGetArticles(ent, out var articles))
             return;
 
-        var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), component.PublishEnabled, component.NextPublish);
+        var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), ent.Comp.PublishEnabled, ent.Comp.NextPublish);
         _ui.SetUiState(ui, state);
     }
 
-    private void UpdateReaderUi(EntityUid uid, EntityUid loaderUid, NewsReaderCartridgeComponent? component)
+    private void UpdateReaderUi(Entity<NewsReaderCartridgeComponent> ent, EntityUid loaderUid)
     {
-        if (!Resolve(uid, ref component))
+        if (!TryGetArticles(ent, out var articles))
             return;
 
-        if (!TryGetArticles(uid, out var articles))
-            return;
-
-        NewsReaderLeafArticle(uid, component, 0);
+        NewsReaderLeafArticle(ent, 0);
 
         if (articles.Count == 0)
         {
-            _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, new NewsReaderEmptyBoundUserInterfaceState(component.NotificationOn));
+            _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, new NewsReaderEmptyBoundUserInterfaceState(ent.Comp.NotificationOn));
             return;
         }
 
         var state = new NewsReaderBoundUserInterfaceState(
-            articles[component.ArticleNumber],
-            component.ArticleNumber + 1,
+            articles[ent.Comp.ArticleNumber],
+            ent.Comp.ArticleNumber + 1,
             articles.Count,
-            component.NotificationOn);
+            ent.Comp.NotificationOn);
 
         _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private void OnReaderUiMessage(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeMessageEvent args)
+    private void NewsReaderLeafArticle(Entity<NewsReaderCartridgeComponent> ent, int leafDir)
     {
-        if (args is not NewsReaderUiMessageEvent message)
+        if (!TryGetArticles(ent, out var articles))
             return;
 
-        switch (message.Action)
-        {
-            case NewsReaderUiAction.Next:
-                NewsReaderLeafArticle(uid, component, 1);
-                break;
-            case NewsReaderUiAction.Prev:
-                NewsReaderLeafArticle(uid, component, -1);
-                break;
-            case NewsReaderUiAction.NotificationSwitch:
-                component.NotificationOn = !component.NotificationOn;
-                break;
-        }
+        ent.Comp.ArticleNumber += leafDir;
 
-        UpdateReaderUi(uid, GetEntity(args.LoaderUid), component);
-    }
+        if (ent.Comp.ArticleNumber >= articles.Count)
+            ent.Comp.ArticleNumber = 0;
 
-    private void OnWriteUiPublishMessage(EntityUid uid, NewsWriterComponent component, NewsWriterPublishMessage msg)
-    {
-        if (!component.PublishEnabled)
-            return;
-
-        component.PublishEnabled = false;
-        component.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(component.PublishCooldown);
-
-        if (!TryGetArticles(uid, out var articles))
-            return;
-
-
-        var author = msg.Session.AttachedEntity;
-
-        if (!author.HasValue)
-            return;
-
-        if (!_accessReader.FindStationRecordKeys(author.Value, out _))
-            return;
-
-        string? authorName = null;
-
-        if (_idCardSystem.TryFindIdCard(author.Value, out var idCard))
-            authorName = idCard.Comp.FullName;
-
-        var name = msg.Name.Trim();
-        var content = msg.Content.Trim();
-
-        var article = new NewsArticle
-        {
-            Name = name.Length <= MaxNameLength ? name : $"{name[..MaxNameLength]}...",
-            Content = content.Length <= MaxArticleLength ? content : $"{content[..MaxArticleLength]}...",
-            Author = authorName,
-            ShareTime = _ticker.RoundDuration()
-        };
-
-        _audio.PlayPvs(component.ConfirmSound, uid);
-
-        _adminLogger.Add(
-            LogType.Chat,
-            LogImpact.Medium,
-            $"{ToPrettyString(author):actor} created news article {article.Name} by {article.Author}: {article.Content}"
-            );
-
-        articles.Add(article);
-
-        var args = new NewsArticlePublishedEvent(article);
-
-        var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
-        while (query.MoveNext(out var readerUid, out _))
-        {
-            RaiseLocalEvent(readerUid, ref args);
-        }
-
-        UpdateWriterDevices();
-    }
-
-    private void OnWriteUiDeleteMessage(EntityUid uid, NewsWriterComponent component, NewsWriterDeleteMessage msg)
-    {
-        if (!TryGetArticles(uid, out var articles))
-            return;
-
-        if (msg.ArticleNum >= articles.Count)
-            return;
-
-        var article = articles[msg.ArticleNum];
-        var actor = msg.Session.AttachedEntity;
-
-        if (CheckDeleteAccess(article, uid, actor))
-        {
-            if (actor != null)
-            {
-                _adminLogger.Add(
-                    LogType.Chat,
-                    LogImpact.Medium,
-                    $"{ToPrettyString(actor.Value):actor} deleted news article {article.Name} by {article.Author}: {article.Content}"
-                    );
-            }
-            else
-            {
-                _adminLogger.Add(
-                    LogType.Chat, LogImpact.Medium,
-                    $"{msg.Session.Name:actor} deleted news article {article.Name}: {article.Content}");
-            }
-
-            articles.RemoveAt(msg.ArticleNum);
-            _audio.PlayPvs(component.ConfirmSound, uid);
-        }
-        else
-        {
-            _popup.PopupEntity(Loc.GetString("news-write-no-access-popup"), uid);
-            _audio.PlayPvs(component.NoAccessSound, uid);
-        }
-
-        var args = new NewsArticleDeletedEvent();
-
-        var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
-        while (query.MoveNext(out var readerUid, out _))
-        {
-            RaiseLocalEvent(readerUid, ref args);
-        }
-
-        UpdateWriterDevices();
-    }
-
-    private void OnRequestArticlesUiMessage(EntityUid uid, NewsWriterComponent component, NewsWriterArticlesRequestMessage msg)
-    {
-        UpdateWriterUi(uid, component);
-    }
-
-    private void NewsReaderLeafArticle(EntityUid uid, NewsReaderCartridgeComponent component, int leafDir)
-    {
-        if (!TryGetArticles(uid, out var articles))
-            return;
-
-        component.ArticleNumber += leafDir;
-
-        if (component.ArticleNumber >= articles.Count)
-            component.ArticleNumber = 0;
-
-        if (component.ArticleNumber < 0)
-            component.ArticleNumber = articles.Count - 1;
+        if (ent.Comp.ArticleNumber < 0)
+            ent.Comp.ArticleNumber = articles.Count - 1;
     }
 
     private void UpdateWriterDevices()
     {
         var query = EntityQueryEnumerator<NewsWriterComponent>();
-
         while (query.MoveNext(out var owner, out var comp))
         {
-            UpdateWriterUi(owner, comp);
+            UpdateWriterUi((owner, comp));
         }
     }
 
-    private bool CheckDeleteAccess(NewsArticle articleToDelete, EntityUid device, EntityUid? user)
+    private bool CheckDeleteAccess(NewsArticle articleToDelete, EntityUid device, EntityUid user)
     {
-        if (EntityManager.TryGetComponent<AccessReaderComponent>(device, out var accessReader) &&
-            user.HasValue &&
-            _accessReader.IsAllowed(user.Value, device, accessReader))
-        {
+        if (TryComp<AccessReaderComponent>(device, out var accessReader) &&
+            _accessReader.IsAllowed(user, device, accessReader))
             return true;
-        }
 
         if (articleToDelete.AuthorStationRecordKeyIds == null || articleToDelete.AuthorStationRecordKeyIds.Count == 0)
-        {
             return true;
-        }
 
-        return user.HasValue
-               && _accessReader.FindStationRecordKeys(user.Value, out var recordKeys)
+        return _accessReader.FindStationRecordKeys(user, out var recordKeys)
                && StationRecordsToNetEntities(recordKeys).Intersect(articleToDelete.AuthorStationRecordKeyIds).Any();
     }
 
@@ -361,4 +319,3 @@ public sealed class NewsSystem : SharedNewsSystem
         return records.Select(record => (GetNetEntity(record.OriginStation), record.Id)).ToList();
     }
 }
-
