@@ -22,7 +22,7 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     float tileLoss;
 
@@ -58,10 +58,13 @@ public sealed class HeatExchangerSystem : EntitySystem
 
         // make sure that the tile the device is on isn't blocked by a wall or something similar.
         var xform = Transform(uid);
-        if (TryComp<MapGridComponent>(xform.GridUid, out var mapGrid) &&
-            _atmosphereSystem.IsTileAirBlocked(xform.GridUid.Value, _map.LocalToTile(uid, mapGrid, xform.Coordinates)))
+        if (_transform.TryGetGridTilePosition(uid, out var tile))
         {
-            return;
+            // TryGetGridTilePosition() already returns false if GridUid is null, but the null checker isn't smart enough yet
+            if (xform.GridUid != null && _atmosphereSystem.IsTileAirBlocked(xform.GridUid.Value, tile))
+            {
+                return;
+            }
         }
 
         var dt = args.dt;
