@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: The HoP now starts with a pair of papercut-proof gloves.
-    type: Add
-  id: 5217
-  time: '2023-11-28T06:21:06.0000000+00:00'
 - author: themias
   changes:
   - message: Fixed riot shield audio and popup spam
@@ -3756,3 +3750,10 @@
   id: 5717
   time: '2024-01-15T07:47:00.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24106
+- author: Boaz1111
+  changes:
+  - message: Stimpack price has been reduced to 4 TC
+    type: Tweak
+  id: 5718
+  time: '2024-01-15T09:30:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24117
