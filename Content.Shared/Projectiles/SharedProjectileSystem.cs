@@ -170,11 +170,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     /// </summary>
     private void AfterProjectileHit(EntityUid uid, ProjectileComponent component, ref AfterProjectileHitEvent args)
     {
-        if (!TryComp<CanPenetrateComponent>(uid, out var damageAfterCollide))
+        if (!TryComp<CanPenetrateComponent>(uid, out var canPenetrate))
             return;
 
         //Delete the projectile if it has no penetration power left.
-        if (damageAfterCollide.PenetrationPower <= 0)
+        if (canPenetrate.PenetrationPower <= 0)
         {
             QueueDel(uid);
             return;
@@ -182,9 +182,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         //Delete the projectile if it hits an entity with a CollisionLayer that has a higher value than it's PenetrationLayer.
         //This allows a projectile to only penetrate a specific set of entities.
-        if (damageAfterCollide.PenetrationLayer != null)
+        if (canPenetrate.PenetrationLayer != null)
         {
-            if (args.Fixture.CollisionLayer > (int) damageAfterCollide.PenetrationLayer)
+            if (args.Fixture.CollisionLayer > (int) canPenetrate.PenetrationLayer)
             {
                 QueueDel(uid);
                 return;
@@ -192,24 +192,24 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
 
         //Allow the projectile to deal damage again.
-        if(damageAfterCollide.DamageAfterCollide)
+        if(canPenetrate.DamageAfterCollide)
             component.DamagedEntity = false;
 
         //If the projectile has a limit on the amount of penetrations, reduce it.
-        if (damageAfterCollide.PenetrationPower != null)
+        if (canPenetrate.PenetrationPower != null)
         {
             //If it's CollisonLayer is higher than the MachineLayer it's a "hard" target and
             //deducts more penetration power.
             if (args.Fixture.CollisionLayer > (int) CollisionGroup.MachineLayer)
-                damageAfterCollide.PenetrationPower -= 1;
+                canPenetrate.PenetrationPower -= 1;
 
             //If the target's CollisonLayer is equal to or lower than the MachineLayer,
             //it's a "soft" target and deducts less penetration power.
             else
-                damageAfterCollide.PenetrationPower -= 0.5f;
+                canPenetrate.PenetrationPower -= 0.5f;
 
             // Delete the projectile if it collides with an entity that it doesn't have enough penetration power for.
-            if (damageAfterCollide.PenetrationPower < 0)
+            if (canPenetrate.PenetrationPower < 0)
             {
                 QueueDel(uid);
                 return;
@@ -217,8 +217,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
 
         //Apply the penetration damage modifier if the projectile has one.
-        if (damageAfterCollide.DamageModifier != null)
-            component.Damage *= damageAfterCollide.DamageModifier.Value;
+        if (canPenetrate.DamageModifier != null)
+            component.Damage *= canPenetrate.DamageModifier.Value;
 
         //Overrides the original DeleteOnCollide if the projectile passes all penetration checks.
         //This is to prevent having to set DeleteOnCollide to false on every prototype
