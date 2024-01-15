@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: When Revolution rounds end each headrev has their number of converted
-      people shown.
-    type: Tweak
-  id: 5212
-  time: '2023-11-27T21:43:49.0000000+00:00'
 - author: Velcroboy
   changes:
   - message: Fixed janitorial items (wet floor signs, spray bottles, light replacers,
@@ -3744,3 +3737,11 @@
   id: 5712
   time: '2024-01-14T23:39:09.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24032
+- author: Rainbeon
+  changes:
+  - message: Added Aloxadone, a cryogenics chemical for treating patients with third
+      degree burns.
+    type: Add
+  id: 5713
+  time: '2024-01-15T03:57:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23980
