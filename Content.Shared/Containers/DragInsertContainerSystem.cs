@@ -111,7 +111,7 @@ public sealed class DragInsertContainerSystem : EntitySystem
 
     public bool Insert(EntityUid target, EntityUid user, EntityUid containerEntity, BaseContainer container)
     {
-        if (!_container.Insert(user, container))
+        if (!_container.Insert(target, container))
             return false;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(target):player} into container {ToPrettyString(containerEntity)}");
