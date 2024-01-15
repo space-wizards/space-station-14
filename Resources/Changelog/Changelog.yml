@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: M3739
-  changes:
-  - message: An entry regarding cyborgs has been added to the guidebook.
-    type: Add
-  id: 5215
-  time: '2023-11-28T03:18:22.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Remove the Captain's spare gloves from his locker.
@@ -3747,3 +3741,14 @@
   id: 5715
   time: '2024-01-15T06:33:05.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24100
+- author: EmoGarbage404
+  changes:
+  - message: Added cryogenic sleep units. Disconnecting or ghosting inside one of
+      these pods will keep your body secure and free up your job slot on the station.
+    type: Add
+  - message: Added cryogenics access, which allows someone to retrieve items from
+      inside of cryogenic sleep units. This is given to security and command by default.
+    type: Add
+  id: 5716
+  time: '2024-01-15T06:35:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24096
