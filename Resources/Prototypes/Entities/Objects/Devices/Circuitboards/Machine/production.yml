@@ -112,8 +112,6 @@
       requirements:
         MatterBin: 1
         Manipulator: 1
-    - type: StealTarget
-      stealGroup: AmmoTechFabCircuitboard
 
 - type: entity
   id: MedicalTechFabCircuitboard

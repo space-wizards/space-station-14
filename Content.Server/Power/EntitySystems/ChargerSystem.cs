@@ -115,13 +115,14 @@ internal sealed class ChargerSystem : EntitySystem
     private void UpdateStatus(EntityUid uid, ChargerComponent component)
     {
         var status = GetStatus(uid, component);
-        if (component.Status == status || !TryComp(uid, out ApcPowerReceiverComponent? receiver))
-            return;
+        TryComp(uid, out AppearanceComponent? appearance);
 
         if (!_container.TryGetContainer(uid, component.SlotId, out var container))
             return;
 
-        TryComp(uid, out AppearanceComponent? appearance);
+        _appearance.SetData(uid, CellVisual.Occupied, container.ContainedEntities.Count != 0, appearance);
+        if (component.Status == status || !TryComp(uid, out ApcPowerReceiverComponent? receiver))
+            return;
 
         component.Status = status;
 
@@ -155,8 +156,6 @@ internal sealed class ChargerSystem : EntitySystem
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        _appearance.SetData(uid, CellVisual.Occupied, container.ContainedEntities.Count != 0, appearance);
     }
 
     private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)

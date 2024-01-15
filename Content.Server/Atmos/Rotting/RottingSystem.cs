@@ -5,12 +5,12 @@ using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Rejuvenate;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -23,7 +23,6 @@ public sealed class RottingSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -56,7 +55,10 @@ public sealed class RottingSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
     {
-        if (!_mobState.IsDead(uid))
+        if (args.NewMobState != MobState.Dead && args.OldMobState != MobState.Dead)
+            return;
+
+        if (HasComp<RottingComponent>(uid))
             return;
 
         component.RotAccumulator = TimeSpan.Zero;
@@ -134,7 +136,7 @@ public sealed class RottingSystem : EntitySystem
         }
 
         var description = "perishable-" + stage;
-        args.PushMarkup(Loc.GetString(description));
+        args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
     }
 
     /// <summary>
@@ -157,7 +159,7 @@ public sealed class RottingSystem : EntitySystem
             >= 1 => "rotting-bloated",
                _ => "rotting-rotting"
         };
-        args.PushMarkup(Loc.GetString(description));
+        args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(uid, EntityManager))));
     }
 
     /// <summary>
@@ -183,6 +185,23 @@ public sealed class RottingSystem : EntitySystem
         args.Handled = component.CurrentTemperature < Atmospherics.T0C + 0.85f;
     }
 
+    /// <summary>
+    /// Is anything speeding up the decay?
+    /// e.g. buried in a grave
+    /// TODO: hot temperatures increase rot?
+    /// </summary>
+    /// <returns></returns>
+    private float GetRotRate(EntityUid uid)
+    {
+        if (_container.TryGetContainingContainer(uid, out var container) &&
+            TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
+        {
+            return rotContainer.DecayModifier;
+        }
+
+        return 1f;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -197,7 +216,7 @@ public sealed class RottingSystem : EntitySystem
             if (IsRotten(uid) || !IsRotProgressing(uid, perishable))
                 continue;
 
-            perishable.RotAccumulator += perishable.PerishUpdateRate;
+            perishable.RotAccumulator += perishable.PerishUpdateRate * GetRotRate(uid);
             if (perishable.RotAccumulator >= perishable.RotAfter)
             {
                 var rot = AddComp<RottingComponent>(uid);
@@ -214,7 +233,7 @@ public sealed class RottingSystem : EntitySystem
 
             if (!IsRotProgressing(uid, perishable))
                 continue;
-            rotting.TotalRotTime += rotting.RotUpdateRate;
+            rotting.TotalRotTime += rotting.RotUpdateRate * GetRotRate(uid);
 
             if (rotting.DealDamage)
             {
