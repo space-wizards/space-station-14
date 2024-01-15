@@ -18,13 +18,13 @@ public sealed partial class CryostorageComponent : Component
     /// How long a player can remain inside Cryostorage before automatically being taken care of, given that they have no mind.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NoMindGracePeriod = TimeSpan.FromSeconds(5f); //todo fix both these values
+    public TimeSpan NoMindGracePeriod = TimeSpan.FromSeconds(30f);
 
     /// <summary>
     /// How long a player can remain inside Cryostorage before automatically being taken care of.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan GracePeriod = TimeSpan.FromMinutes(0.1f);
+    public TimeSpan GracePeriod = TimeSpan.FromMinutes(5f);
 
     /// <summary>
     /// A list of players who have actively entered cryostorage.
