@@ -110,4 +110,9 @@ public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArca
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public int RewardAmount = 0;
+
+    /// <summary>
+    /// Whether the game machine should thank (or otherwise talk to) the player when they leave
+    /// </summary>
+    public bool ShouldSayThankYou;
 }

@@ -1,0 +1,19 @@
+- type: advertisementsPack
+  id: BlockGameAds
+  advertisements:
+    - advertisement-block-game-1
+    - advertisement-block-game-2
+    - advertisement-block-game-3
+    - advertisement-block-game-4
+    - advertisement-block-game-5
+    - advertisement-block-game-6
+    - advertisement-block-game-7
+    - advertisement-block-game-8
+    - advertisement-block-game-9
+  thankyous:
+    - thankyou-block-game-1
+    - thankyou-block-game-2
+    - thankyou-block-game-3
+    - thankyou-block-game-4
+    - thankyou-block-game-5
+    - thankyou-block-game-6
