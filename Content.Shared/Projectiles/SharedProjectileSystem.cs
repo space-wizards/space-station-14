@@ -4,12 +4,14 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -32,6 +34,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<ProjectileComponent, AfterProjectileHitEvent>(AfterProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
@@ -96,22 +99,22 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!component.EmbedOnThrow)
             return;
 
-        Embed(uid, args.Target, component);
+        Embed(uid, args.Target, null, component);
     }
 
     private void OnEmbedProjectileHit(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileHitEvent args)
     {
-        Embed(uid, args.Target, component);
+        Embed(uid, args.Target, args.Shooter, component);
 
         // Raise a specific event for projectiles.
-        if (TryComp<ProjectileComponent>(uid, out var projectile))
+        if (TryComp(uid, out ProjectileComponent? projectile))
         {
             var ev = new ProjectileEmbedEvent(projectile.Shooter!.Value, projectile.Weapon!.Value, args.Target);
             RaiseLocalEvent(uid, ref ev);
         }
     }
 
-    private void Embed(EntityUid uid, EntityUid target, EmbeddableProjectileComponent component)
+    private void Embed(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
     {
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
@@ -121,13 +124,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         if (component.Offset != Vector2.Zero)
         {
-            _transform.SetLocalPosition(xform, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset));
+            _transform.SetLocalPosition(uid, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset),
+                xform);
         }
 
-        if (component.Sound != null)
-        {
-            _audio.PlayPredicted(component.Sound, uid, null);
-        }
+        _audio.PlayPredicted(component.Sound, uid, null);
+        var ev = new EmbedEvent(user, target);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
@@ -160,6 +163,45 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     {
         args.Cancel("pacified-cannot-throw-embed");
     }
+
+    /// <summary>
+    /// Checks if the projectile is allowed to penetrate the target it hit.
+    /// </summary>
+    private void AfterProjectileHit(EntityUid uid, ProjectileComponent component, ref AfterProjectileHitEvent args)
+    {
+        if (!TryComp<CanPenetrateComponent>(uid, out var damageAfterCollide))
+            return;
+
+        //Delete the projectile if it hits an entity with a CollisionLayer that has a higher value than it's PenetrationLayer.
+        //This allows a projectile to only penetrate a specific set of entities.
+        if (damageAfterCollide.PenetrationLayer != null)
+        {
+            if (args.Fixture.CollisionLayer > (int) damageAfterCollide.PenetrationLayer ||
+                damageAfterCollide.PenetrationPower == 0)
+            {
+                QueueDel(uid);
+                return;
+            }
+        }
+
+        //Allow the projectile to deal damage again.
+        if(damageAfterCollide.DamageAfterCollide)
+            component.DamagedEntity = false;
+
+        //If the projectile has a limit on the amount of penetrations, reduce it.
+        if (damageAfterCollide.PenetrationPower != null)
+            damageAfterCollide.PenetrationPower -= 1;
+
+        //Apply the penetration damage modifier if the projectile has one.
+        if (damageAfterCollide.DamageModifier != null)
+            component.Damage *= damageAfterCollide.DamageModifier.Value;
+
+        //Overrides the original DeleteOnCollide if the projectile passes all penetration checks.
+        //This is to prevent having to set DeleteOnCollide to false on every prototype
+        //you want to give the ability to penetrate entities.
+        if(component.DeleteOnCollide)
+            component.DeleteOnCollide = false;
+    }
 }
 
 [Serializable, NetSerializable]
@@ -186,3 +228,9 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
+
+/// <summary>
+/// Raised after a projectile has dealt it's damage.
+/// </summary>
+[ByRefEvent]
+public record struct AfterProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, Fixture Fixture);
