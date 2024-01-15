@@ -41,6 +41,7 @@ public sealed class NewsSystem : SharedNewsSystem
         base.Initialize();
 
         // News writer
+        SubscribeLocalEvent<NewsWriterComponent, EntityUnpausedEvent>(OnEntityUnpause);
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NewsWriterComponent, NewsWriterDeleteMessage>(OnWriteUiDeleteMessage);
         SubscribeLocalEvent<NewsWriterComponent, NewsWriterArticlesRequestMessage>(OnRequestArticlesUiMessage);
@@ -56,6 +57,12 @@ public sealed class NewsSystem : SharedNewsSystem
     }
 
     private void OnMapInit(EntityUid uid, NewsWriterComponent component, MapInitEvent args)
+
+    private void OnEntityUnpause(Entity<NewsWriterComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextPublish += args.PausedTime;
+    }
+
     {
         var station = _station.GetOwningStation(uid);
         if (!station.HasValue)
