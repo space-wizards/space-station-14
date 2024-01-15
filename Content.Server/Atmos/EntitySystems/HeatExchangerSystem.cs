@@ -11,7 +11,9 @@ using Content.Shared.Atmos;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -20,6 +22,7 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     float tileLoss;
 
@@ -49,6 +52,14 @@ public sealed class HeatExchangerSystem : EntitySystem
                 || !TryComp(uid, out AtmosDeviceComponent? device)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
+        {
+            return;
+        }
+
+        // make sure that the tile the device is on isn't blocked by a wall or something similar.
+        var xform = Transform(uid);
+        if (TryComp<MapGridComponent>(xform.GridUid, out var mapGrid) &&
+            _atmosphereSystem.IsTileAirBlocked(xform.GridUid.Value, _map.LocalToTile(uid, mapGrid, xform.Coordinates)))
         {
             return;
         }
