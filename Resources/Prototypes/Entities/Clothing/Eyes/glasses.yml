@@ -219,7 +219,7 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesHudMedical
   id: ClothingEyesGlassesMedical
   name: medical glasses
   description: Styled medical hud
@@ -228,12 +228,3 @@
     sprite: Clothing/Eyes/Glasses/medglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/medglasses.rsi
-  - type: ShowHealthBars
-    damageContainers: 
-    - Biological
-  - type: ShowHealthIcons
-    damageContainers: 
-    - Biological
-  - type: Tag
-    tags:
-    - HudMedical

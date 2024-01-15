@@ -248,14 +248,14 @@
   result: ClothingEyesHudMedical
   completetime: 2
   materials:
-    Steel: 600
-    Glass: 400
+    Steel: 500
+    Glass: 500
     
 - type: latheRecipe
   id: ClothingEyesGlassesMedical
   result: ClothingEyesGlassesMedical
   completetime: 2
   materials:
-    Steel: 400
-    Glass: 600
+    Steel: 500
+    Glass: 500
 
