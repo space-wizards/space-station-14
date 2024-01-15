@@ -59,6 +59,8 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     private void OnNavMapBeaconStartup(EntityUid uid, NavMapBeaconComponent component, ComponentStartup args)
     {
+        component.Text ??= string.Empty;
+        component.Text = Loc.GetString(component.Text);
         RefreshNavGrid(uid);
     }
 
@@ -99,6 +101,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             warpPoint.Location = args.Text;
         }
 
+        args.Text ??= string.Empty;
         navMap.Text = args.Text;
         navMap.Color = args.Color;
         navMap.Enabled = args.Enabled;
@@ -126,16 +129,10 @@ public sealed class NavMapSystem : SharedNavMapSystem
         if (!args.IsInDetailsRange || !TryComp<NavMapBeaconComponent>(ent, out var navMap))
             return;
 
-        var label = Name(args.Examined);
-        if (navMap.Text is not null)
-        {
-            label = Loc.GetString(navMap.Text);
-        }
-
         args.PushMarkup(Loc.GetString("nav-beacon-examine-text",
             ("enabled", navMap.Enabled),
             ("color", navMap.Color.ToHexNoAlpha()),
-            ("label", label)));
+            ("label", navMap.Text ?? string.Empty)));
     }
 
     private void UpdateBeaconEnabledVisuals(Entity<NavMapBeaconComponent> ent)
