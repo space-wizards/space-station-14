@@ -12,6 +12,8 @@
   - type: Rotatable
   - type: Sprite
     sprite: Structures/Furniture/bench.rsi
+  - type: Physics
+    bodyType: Static
 
 - type: entity
   name: bamboo bench
@@ -125,7 +127,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Pullable
   - type: Damageable
     damageContainer: Inorganic
