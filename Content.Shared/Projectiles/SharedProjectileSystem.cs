@@ -5,6 +5,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Physics;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -172,12 +173,18 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!TryComp<CanPenetrateComponent>(uid, out var damageAfterCollide))
             return;
 
+        //Delete the projectile if it has no penetration power left.
+        if (damageAfterCollide.PenetrationPower <= 0)
+        {
+            QueueDel(uid);
+            return;
+        }
+
         //Delete the projectile if it hits an entity with a CollisionLayer that has a higher value than it's PenetrationLayer.
         //This allows a projectile to only penetrate a specific set of entities.
         if (damageAfterCollide.PenetrationLayer != null)
         {
-            if (args.Fixture.CollisionLayer > (int) damageAfterCollide.PenetrationLayer ||
-                damageAfterCollide.PenetrationPower == 0)
+            if (args.Fixture.CollisionLayer > (int) damageAfterCollide.PenetrationLayer)
             {
                 QueueDel(uid);
                 return;
@@ -190,7 +197,24 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         //If the projectile has a limit on the amount of penetrations, reduce it.
         if (damageAfterCollide.PenetrationPower != null)
-            damageAfterCollide.PenetrationPower -= 1;
+        {
+            //If it's CollisonLayer is higher than the MachineLayer it's a "hard" target and
+            //deducts more penetration power.
+            if (args.Fixture.CollisionLayer > (int) CollisionGroup.MachineLayer)
+                damageAfterCollide.PenetrationPower -= 1;
+
+            //If the target's CollisonLayer is lower than the MobLayer it's a "soft" target and
+            //deducts less penetration power.
+            else
+                damageAfterCollide.PenetrationPower -= 0.5f;
+
+            // Delete the projectile if it collides with an entity that it doesn't have enough penetration power for.
+            if (damageAfterCollide.PenetrationPower < 0)
+            {
+                QueueDel(uid);
+                return;
+            }
+        }
 
         //Apply the penetration damage modifier if the projectile has one.
         if (damageAfterCollide.DamageModifier != null)

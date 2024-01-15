@@ -5,6 +5,7 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
@@ -30,6 +31,19 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
             || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
+
+        //Apply the gun's modifiers to the projectile.
+        if (TryComp<GunComponent>(component.Weapon, out var gun) && !component.GunModifiersApplied)
+        {
+            if (TryComp<CanPenetrateComponent>(uid, out var penetration) &&
+                gun.PenetrationModifier != null)
+                penetration.PenetrationPower += gun.PenetrationModifier.Value;
+
+            if (gun.DamageMultiplier != null)
+                component.Damage *= gun.DamageMultiplier.Value;
+
+            component.GunModifiersApplied = true;
+        }
 
         var target = args.OtherEntity;
         // it's here so this check is only done once before possible hit
