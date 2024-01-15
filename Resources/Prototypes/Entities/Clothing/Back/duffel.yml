@@ -165,6 +165,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate

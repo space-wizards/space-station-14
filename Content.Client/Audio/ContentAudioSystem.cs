@@ -1,12 +1,18 @@
 using Content.Shared.Audio;
-using Robust.Client.GameObjects;
-using Robust.Shared.Audio;
+using Content.Shared.GameTicking;
+using Robust.Client.Audio;
+using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
+    [Dependency] private readonly IAudioManager _audioManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
     // Need how much volume to change per tick and just remove it when it drops below "0"
     private readonly Dictionary<EntityUid, float> _fadingOut = new();
 
@@ -18,11 +24,42 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     private const float MinVolume = -32f;
     private const float DefaultDuration = 2f;
 
+    /*
+     * Gain multipliers for specific audio sliders.
+     * The float value will get multiplied by this when setting
+     * i.e. a gain of 0.5f x 3 will equal 1.5f which is supported in OpenAL.
+     */
+
+    public const float MasterVolumeMultiplier = 3f;
+    public const float MidiVolumeMultiplier = 0.25f;
+    public const float AmbienceMultiplier = 3f;
+    public const float AmbientMusicMultiplier = 3f;
+    public const float LobbyMultiplier = 3f;
+    public const float InterfaceMultiplier = 2f;
+
     public override void Initialize()
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
         InitializeAmbientMusic();
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
+    }
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+    {
+        _fadingOut.Clear();
+
+        // Preserve lobby music but everything else should get dumped.
+        var lobbyStream = EntityManager.System<BackgroundAudioSystem>().LobbyStream;
+        TryComp(lobbyStream, out AudioComponent? audioComp);
+        var oldGain = audioComp?.Gain;
+
+        SilenceAudio();
+
+        if (oldGain != null)
+        {
+            Audio.SetGain(lobbyStream, oldGain.Value, audioComp);
+        }
     }
 
     public override void Shutdown()
@@ -81,7 +118,8 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
             }
 
             var volume = component.Volume - change * frameTime;
-            component.Volume = MathF.Max(MinVolume, volume);
+            volume = MathF.Max(MinVolume, volume);
+            _audio.SetVolume(stream, volume, component);
 
             if (component.Volume.Equals(MinVolume))
             {
@@ -107,7 +145,8 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
             }
 
             var volume = component.Volume + change * frameTime;
-            component.Volume = MathF.Min(target, volume);
+            volume = MathF.Max(target, volume);
+            _audio.SetVolume(stream, volume, component);
 
             if (component.Volume.Equals(target))
             {

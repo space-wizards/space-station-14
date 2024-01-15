@@ -26,12 +26,11 @@
     mixMessage: "bible-mixing-success"
     reactionTypes:
     - Holy
-  - type: ItemCooldown
   - type: Sprite
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Small
     sprite: Objects/Specific/Chapel/bible.rsi
   - type: Clothing
     slots:
@@ -46,6 +45,8 @@
   - type: Tag
     tags:
     - Book
+  - type: StealTarget
+    stealGroup: Bible
 
 - type: entity
   parent: Bible

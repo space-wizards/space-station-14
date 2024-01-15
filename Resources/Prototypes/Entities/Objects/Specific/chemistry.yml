@@ -62,6 +62,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpillBehavior
         solution: beaker
       - !type:SpawnEntitiesBehavior
@@ -199,7 +201,7 @@
     maxFillLevels: 6
     fillBaseName: beakerlarge
   - type: StaticPrice
-    price: 40
+    price: 20
 
 - type: entity
   name: cryostasis beaker
@@ -470,12 +472,12 @@
   parent: BaseStorageItem
   description: Holds up to 10 pills.
   components:
+  - type: Item
+    size: Tiny
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
-  - type: Item
-    sprite: Objects/Specific/Chemistry/pills_canister.rsi
-    size: Small
   - type: Tag
     tags:
       - PillCanister

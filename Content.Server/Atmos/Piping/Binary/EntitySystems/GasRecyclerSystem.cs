@@ -33,7 +33,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasRecyclerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
-        private void OnEnabled(EntityUid uid, GasRecyclerComponent comp, AtmosDeviceEnabledEvent args)
+        private void OnEnabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceEnabledEvent args)
         {
             UpdateAppearance(uid, comp);
         }
@@ -51,20 +51,23 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
             }
 
-            if (comp.Reacting)
+            using (args.PushGroup(nameof(GasRecyclerComponent)))
             {
-                args.PushMarkup(Loc.GetString("gas-recycler-reacting"));
-            }
-            else
-            {
-                if (inlet.Air.Pressure < comp.MinPressure)
+                if (comp.Reacting)
                 {
-                    args.PushMarkup(Loc.GetString("gas-recycler-low-pressure"));
+                    args.PushMarkup(Loc.GetString("gas-recycler-reacting"));
                 }
-
-                if (inlet.Air.Temperature < comp.MinTemp)
+                else
                 {
-                    args.PushMarkup(Loc.GetString("gas-recycler-low-temperature"));
+                    if (inlet.Air.Pressure < comp.MinPressure)
+                    {
+                        args.PushMarkup(Loc.GetString("gas-recycler-low-pressure"));
+                    }
+
+                    if (inlet.Air.Temperature < comp.MinTemp)
+                    {
+                        args.PushMarkup(Loc.GetString("gas-recycler-low-temperature"));
+                    }
                 }
             }
         }
@@ -105,11 +108,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return 0;
             }
             float overPressConst = 300; // pressure difference (in atm) to get 200 L/sec transfer rate
-            float alpha = Atmospherics.MaxTransferRate / (float)Math.Sqrt(overPressConst*Atmospherics.OneAtmosphere);
+            float alpha = Atmospherics.MaxTransferRate * _atmosphereSystem.PumpSpeedup() / (float)Math.Sqrt(overPressConst*Atmospherics.OneAtmosphere);
             return alpha * (float)Math.Sqrt(inlet.Pressure - outlet.Pressure);
         }
 
-        private void OnDisabled(EntityUid uid, GasRecyclerComponent comp, AtmosDeviceDisabledEvent args)
+        private void OnDisabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceDisabledEvent args)
         {
             comp.Reacting = false;
             UpdateAppearance(uid, comp);

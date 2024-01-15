@@ -56,14 +56,13 @@ namespace Content.IntegrationTests.Tests
             "CentComm",
             "Box",
             "Europa",
-            "Barratry",
             "Saltern",
             "Core",
             "Marathon",
-            "Kettle",
             "Gemini",
             "MeteorArena",
-            "Atlas"
+            "Atlas",
+            "Reach"    
         };
 
         /// <summary>
@@ -299,7 +298,7 @@ namespace Content.IntegrationTests.Tests
 
             Assert.That(gameMaps.Remove(PoolManager.TestMap));
 
-            CollectionAssert.AreEquivalent(GameMaps.ToHashSet(), gameMaps, "Game map prototype missing from test cases.");
+            Assert.That(gameMaps, Is.EquivalentTo(GameMaps.ToHashSet()), "Game map prototype missing from test cases.");
 
             await pair.CleanReturnAsync();
         }

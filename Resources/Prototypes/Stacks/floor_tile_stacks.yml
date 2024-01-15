@@ -97,6 +97,13 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileLime
+  name: lime tile
+  spawn: FloorTileItemLime
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileDirty
   name: dirty tile
   spawn: FloorTileItemDirty
@@ -415,5 +422,20 @@
   id: FloorTileWeb
   name: web tile
   spawn: FloorTileItemWeb
+  maxCount: 30
+  itemSize: 5
+
+# Faux science tiles
+- type: stack
+  id: FloorTileAstroGrass
+  name: astro-grass floor
+  spawn: FloorTileItemAstroGrass
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileAstroIce
+  name: astro-ice floor
+  spawn: FloorTileItemAstroIce
   maxCount: 30
   itemSize: 5

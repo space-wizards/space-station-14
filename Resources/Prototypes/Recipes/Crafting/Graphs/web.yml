@@ -41,7 +41,13 @@
       - material: WebSilk
         amount: 12
         doAfter: 6
-
+        
+    - to: boots
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
+        
   # Deconstruction
   - node: tile
     entity: FloorTileItemWeb
@@ -60,3 +66,6 @@
 
   - node: shield
     entity: WebShield
+
+  - node: boots
+    entity: ClothingShoesBootsWinterWeb

@@ -1,12 +1,12 @@
 using Content.Server.Anomaly.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Anomaly.Components;
-using Robust.Shared.Random;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Robust.Shared.Prototypes;
 using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -42,17 +42,17 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnPulse(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalyPulseEvent args)
+    private void OnPulse(Entity<ReagentProducerAnomalyComponent> entity, ref AnomalyPulseEvent args)
     {
         if (_random.NextFloat(0.0f, 1.0f) > args.Stability)
-            ChangeReagent(uid, component, args.Severity);
+            ChangeReagent(entity, args.Severity);
     }
 
-    private void ChangeReagent(EntityUid uid, ReagentProducerAnomalyComponent component, float severity)
+    private void ChangeReagent(Entity<ReagentProducerAnomalyComponent> entity, float severity)
     {
-        var reagent = GetRandomReagentType(uid, component, severity);
-        component.ProducingReagent = reagent;
-        _audio.PlayPvs(component.ChangeSound, uid);
+        var reagent = GetRandomReagentType(entity, severity);
+        entity.Comp.ProducingReagent = reagent;
+        _audio.PlayPvs(entity.Comp.ChangeSound, entity);
     }
 
     //reagent realtime generation
@@ -68,7 +68,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (component.AccumulatedFrametime < component.UpdateInterval)
                 continue;
 
-            if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var producerSol))
+            if (!_solutionContainer.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var producerSolution))
                 continue;
 
             Solution newSol = new();
@@ -76,7 +76,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
             newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solutionContainer.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled.
+            _solutionContainer.TryAddSolution(component.Solution.Value, newSol); //TO DO - the container is not fully filled. 
 
             component.AccumulatedFrametime = 0;
 
@@ -87,7 +87,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             // and nothing worked out for me. So for now it will be like this.
             if (component.NeedRecolor)
             {
-                var color = producerSol.GetColor(_prototypeManager);
+                var color = producerSolution.GetColor(_prototypeManager);
                 _light.SetColor(uid, color);
                 if (TryComp<RandomSpriteComponent>(uid, out var randomSprite))
                 {
@@ -103,9 +103,9 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
         }
     }
 
-    private void OnMapInit(EntityUid uid, ReagentProducerAnomalyComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<ReagentProducerAnomalyComponent> entity, ref MapInitEvent args)
     {
-        ChangeReagent(uid, component, 0.1f); //MapInit Reagent 100% change
+        ChangeReagent(entity, 0.1f); //MapInit Reagent 100% change
     }
 
     // returns a random reagent based on a system of random weights.
@@ -117,33 +117,33 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     // After that, a random reagent in the selected category is selected.
     //
     // Such a system is made to control the danger and interest of the anomaly more.
-    private string GetRandomReagentType(EntityUid uid, ReagentProducerAnomalyComponent component, float severity)
+    private string GetRandomReagentType(Entity<ReagentProducerAnomalyComponent> entity, float severity)
     {
         //Category Weight Randomization
-        var currentWeightDangerous = MathHelper.Lerp(component.WeightSpreadDangerous.X, component.WeightSpreadDangerous.Y, severity);
-        var currentWeightFun = MathHelper.Lerp(component.WeightSpreadFun.X, component.WeightSpreadFun.Y, severity);
-        var currentWeightUseful = MathHelper.Lerp(component.WeightSpreadUseful.X, component.WeightSpreadUseful.Y, severity);
+        var currentWeightDangerous = MathHelper.Lerp(entity.Comp.WeightSpreadDangerous.X, entity.Comp.WeightSpreadDangerous.Y, severity);
+        var currentWeightFun = MathHelper.Lerp(entity.Comp.WeightSpreadFun.X, entity.Comp.WeightSpreadFun.Y, severity);
+        var currentWeightUseful = MathHelper.Lerp(entity.Comp.WeightSpreadUseful.X, entity.Comp.WeightSpreadUseful.Y, severity);
 
         var sumWeight = currentWeightDangerous + currentWeightFun + currentWeightUseful;
         var rnd = _random.NextFloat(0f, sumWeight);
         //Dangerous
-        if (rnd <= currentWeightDangerous && component.DangerousChemicals.Count > 0)
+        if (rnd <= currentWeightDangerous && entity.Comp.DangerousChemicals.Count > 0)
         {
-            var reagent = _random.Pick(component.DangerousChemicals);
+            var reagent = _random.Pick(entity.Comp.DangerousChemicals);
             return reagent;
         }
         else rnd -= currentWeightDangerous;
         //Fun
-        if (rnd <= currentWeightFun && component.FunChemicals.Count > 0)
+        if (rnd <= currentWeightFun && entity.Comp.FunChemicals.Count > 0)
         {
-            var reagent = _random.Pick(component.FunChemicals);
+            var reagent = _random.Pick(entity.Comp.FunChemicals);
             return reagent;
         }
         else rnd -= currentWeightFun;
         //Useful
-        if (rnd <= currentWeightUseful && component.UsefulChemicals.Count > 0)
+        if (rnd <= currentWeightUseful && entity.Comp.UsefulChemicals.Count > 0)
         {
-            var reagent = _random.Pick(component.UsefulChemicals);
+            var reagent = _random.Pick(entity.Comp.UsefulChemicals);
             return reagent;
         }
         //We should never end up here.

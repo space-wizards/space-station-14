@@ -1,0 +1,25 @@
+﻿- type: entity
+  id: BarberScissors
+  name: barber scissors
+  description: is able to reshape the hairstyle of any crew cut to your liking.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/scissors.rsi
+    state: icon
+  - type: MagicMirror
+  - type: ActivatableUI
+    key: enum.MagicMirrorUiKey.Key
+    closeOnHandDeselect: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.MagicMirrorUiKey.Key
+      type: MagicMirrorBoundUserInterface
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    attackRate: 1
+    damage:
+      types:
+        Piercing: 6
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"

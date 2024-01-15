@@ -170,7 +170,14 @@
       gasType: CarbonDioxide
       # 2 moles of gas for every sheet of plasma.
       moleRatio: 2
-
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNodes:
+        - output_hv
+        - output_mv
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      state: portgen0
+      
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -219,7 +226,14 @@
     - type: UpgradePowerSupplier
       powerSupplyMultiplier: 1.25
       scaling: Exponential
-
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNodes:
+        - output_hv
+        - output_mv
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      state: portgen1
+      
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -293,7 +307,12 @@
       nodes:
         output:
           !type:CableDeviceNode
-          nodeGroupID: Apc
+          nodeGroupID: Apc   
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNode: output
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      state: portgen3
     - type: PowerSupplier
       # No ramping needed on this bugger.
       voltage: Apc

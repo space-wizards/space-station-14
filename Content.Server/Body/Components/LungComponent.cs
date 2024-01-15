@@ -8,7 +8,7 @@ namespace Content.Server.Body.Components;
 [RegisterComponent, Access(typeof(LungSystem))]
 public sealed partial class LungComponent : Component
 {
-    [DataField("air")]
+    [DataField]
     [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public GasMixture Air { get; set; } = new()
     {
@@ -16,7 +16,15 @@ public sealed partial class LungComponent : Component
         Temperature = Atmospherics.NormalBodyTemperature
     };
 
-    [ViewVariables]
-    [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-    public Solution LungSolution = default!;
+    /// <summary>
+    /// The name/key of the solution on this entity which these lungs act on.
+    /// </summary>
+    [DataField]
+    public string SolutionName = LungSystem.LungSolutionName;
+
+    /// <summary>
+    /// The solution on this entity that these lungs act on.
+    /// </summary>
+    [DataField]
+    public Entity<SolutionComponent>? Solution = null;
 }

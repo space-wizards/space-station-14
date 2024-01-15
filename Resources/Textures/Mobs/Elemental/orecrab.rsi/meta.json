@@ -8,15 +8,19 @@
   "copyright": "Made by brainfood1183 (github)",
   "states": [
     {
-      "name": "ironcrab",
+      "name": "iron_crab",
       "directions": 4
     },
     {
-      "name": "uraniumcrab",
+      "name": "uranium_crab",
       "directions": 4
     },
     {
-      "name": "quartzcrab",
+      "name": "silver_crab",
+      "directions": 4
+    },
+    {
+      "name": "quartz_crab",
       "directions": 4
     }
   ]

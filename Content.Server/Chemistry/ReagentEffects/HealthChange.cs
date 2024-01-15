@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Text.Json.Serialization;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -7,6 +5,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -19,19 +19,19 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         /// Damage to apply every metabolism cycle. Damage Ignores resistances.
         /// </summary>
+        [DataField(required: true)]
         [JsonPropertyName("damage")]
-        [DataField("damage", required: true)]
         public DamageSpecifier Damage = default!;
 
         /// <summary>
         ///     Should this effect scale the damage by the amount of chemical in the solution?
         ///     Useful for touch reactions, like styptic powder or acid.
         /// </summary>
+        [DataField]
         [JsonPropertyName("scaleByQuantity")]
-        [DataField("scaleByQuantity")]
         public bool ScaleByQuantity;
 
-        [DataField("ignoreResistances")]
+        [DataField]
         [JsonPropertyName("ignoreResistances")]
         public bool IgnoreResistances = true;
 

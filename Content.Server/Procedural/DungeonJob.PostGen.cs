@@ -790,7 +790,7 @@ public sealed partial class DungeonJob
             foreach (var entrance in room.Entrances)
             {
                 // Just so we can still actually get in to the entrance we won't deter from a tile away from it.
-                var normal = ((Vector2) entrance + grid.TileSizeHalfVector - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
+                var normal = (entrance + grid.TileSizeHalfVector - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
                 deterredTiles.Remove(entrance + normal);
             }
         }

@@ -37,6 +37,9 @@ ent-CrateNPCGorilla = Gorilla crate
 ent-CrateNPCMonkeyCube = Monkey cube crate
     .desc = A crate containing three boxes of monkey cubes.
 
+ent-CrateNPCKoboldCube = Kobold cube crate
+    .desc = A crate containing three boxes of kobold cubes.
+
 ent-CrateNPCMouse = Mice crate
     .desc = A crate containing five mice.
 
@@ -45,6 +48,9 @@ ent-CrateNPCParrot = Parrot crate
 
 ent-CrateNPCPenguin = Penguin crate
     .desc = A crate containing two penguins.
+
+ent-CrateNPCMothroach = Crate of mothroaches
+    .desc = A crate containing four mothroaches.
 
 ent-CrateNPCPig = Pig crate
     .desc = A crate containing a single pig.

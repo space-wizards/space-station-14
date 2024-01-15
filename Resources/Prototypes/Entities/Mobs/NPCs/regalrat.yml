@@ -289,7 +289,7 @@
 - type: entity
   id: ActionRatKingDomain
   name: Rat King's Domain
-  description: Spend some hunger to release a cloud of miasma into the air.
+  description: Spend some hunger to release a cloud of ammonia into the air.
   noSpawn: true
   components:
   - type: InstantAction

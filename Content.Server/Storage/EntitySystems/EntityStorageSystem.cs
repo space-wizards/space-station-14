@@ -102,11 +102,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
     private void OnExploded(Entity<EntityStorageComponent> ent, ref BeforeExplodeEvent args)
     {
-        if (ent.Comp.ExplosionDamageCoefficient <= 0)
-            return;
-
         args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
-        args.DamageCoefficient *= ent.Comp.ExplosionDamageCoefficient;
     }
 
     protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)

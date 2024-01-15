@@ -1293,3 +1293,10 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: wisp
+- type: marking
+  id: HumanHairUneven
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: uneven
