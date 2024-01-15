@@ -1,61 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Disabled space wind & atmos tile ripping.
-    type: Remove
-  id: 5210
-  time: '2023-11-27T21:42:29.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Gibbed mothroaches wont drop all normal moth species parts, just animal
-      organs.
-    type: Fix
-  id: 5211
-  time: '2023-11-27T21:42:53.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: When Revolution rounds end each headrev has their number of converted
-      people shown.
-    type: Tweak
-  id: 5212
-  time: '2023-11-27T21:43:49.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - message: Fixed janitorial items (wet floor signs, spray bottles, light replacers,
-      and plungers) not fitting in the janitor's trolley.
-    type: Fix
-  id: 5213
-  time: '2023-11-27T22:16:17.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix ambient audio not playing.
-    type: Fix
-  id: 5214
-  time: '2023-11-28T03:09:26.0000000+00:00'
-- author: M3739
-  changes:
-  - message: An entry regarding cyborgs has been added to the guidebook.
-    type: Add
-  id: 5215
-  time: '2023-11-28T03:18:22.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Remove the Captain's spare gloves from his locker.
-    type: Remove
-  id: 5216
-  time: '2023-11-28T05:45:56.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: The HoP now starts with a pair of papercut-proof gloves.
-    type: Add
-  id: 5217
-  time: '2023-11-28T06:21:06.0000000+00:00'
-- author: themias
-  changes:
-  - message: Fixed riot shield audio and popup spam
-    type: Fix
-  id: 5218
-  time: '2023-11-28T07:06:38.0000000+00:00'
 - author: UbaserB
   changes:
   - message: Blood now has a sprite when placed in metamorphic glasses.
@@ -3739,3 +3682,79 @@
   id: 5710
   time: '2024-01-14T16:47:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23646
+- author: Nairodian
+  changes:
+  - message: Added four new reagent slimes, Mute Toxin, Norepinephric Acid, Ephedrine,
+      and Robust Harvest.
+    type: Add
+  id: 5711
+  time: '2024-01-14T22:14:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24087
+- author: Dygon
+  changes:
+  - message: The particle decelerator's projectile now deals less damage, has a shorter
+      lifespan and can be reflected by objects that reflect energy projectiles.
+    type: Tweak
+  - message: Bullet grenade projectiles no longer penetrate walls.
+    type: Fix
+  id: 5712
+  time: '2024-01-14T23:39:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24032
+- author: Rainbeon
+  changes:
+  - message: Added Aloxadone, a cryogenics chemical for treating patients with third
+      degree burns.
+    type: Add
+  id: 5713
+  time: '2024-01-15T03:57:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23980
+- author: Bhijn and Myr
+  changes:
+  - message: You can now open and close your eyes while cuffed if the action to do
+      so is available to you. (Such as if it was granted via blindness)
+    type: Fix
+  id: 5714
+  time: '2024-01-15T05:11:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24097
+- author: Flareguy
+  changes:
+  - message: Made lava & liquid plasma significantly less lethal.
+    type: Tweak
+  id: 5715
+  time: '2024-01-15T06:33:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24100
+- author: EmoGarbage404
+  changes:
+  - message: Added cryogenic sleep units. Disconnecting or ghosting inside one of
+      these pods will keep your body secure and free up your job slot on the station.
+    type: Add
+  - message: Added cryogenics access, which allows someone to retrieve items from
+      inside of cryogenic sleep units. This is given to security and command by default.
+    type: Add
+  id: 5716
+  time: '2024-01-15T06:35:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24096
+- author: Bhijn and Myr
+  changes:
+  - message: Attempting to weld without protection will now cause eye damage proper.
+      Additionally, attempting to weld with a welder that's off when you aren't wearing
+      protection will no longer blind you. It's the bright light that hurts your eyes,
+      not the underwhelming lack of it!
+    type: Fix
+  id: 5717
+  time: '2024-01-15T07:47:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24106
+- author: Boaz1111
+  changes:
+  - message: Stimpack price has been reduced to 4 TC
+    type: Tweak
+  id: 5718
+  time: '2024-01-15T09:30:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24117
+- author: Nimfar11
+  changes:
+  - message: Adds the ability to build blast doors.
+    type: Add
+  id: 5719
+  time: '2024-01-15T12:49:08.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24050
