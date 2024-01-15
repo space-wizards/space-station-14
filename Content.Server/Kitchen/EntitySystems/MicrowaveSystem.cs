@@ -465,7 +465,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!TryComp<ActiveMicrowaveComponent>(ent, out var activeMicrowave))
                 return;
 
-            RemComp<ActiveMicrowaveComponent>(ent);
+            EntityManager.RemoveComponentDeferred<ActiveMicrowaveComponent>(ent);
             foreach (var solid in ent.Comp.Storage.ContainedEntities)
                 EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(solid);
 
