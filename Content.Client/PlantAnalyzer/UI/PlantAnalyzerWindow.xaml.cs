@@ -7,6 +7,9 @@ using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Client.Gravity.UI;
+using Robust.Client.UserInterface.Controls;
+using System.Buffers;
 
 namespace Content.Client.PlantAnalyzer.UI;
 
@@ -17,8 +20,9 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly IPrototypeManager _prototypes;
     private readonly IResourceCache _cache;
+    private readonly ButtonGroup _buttonGroup = new();
 
-    public PlantAnalyzerWindow()
+    public PlantAnalyzerWindow(PlantAnalyzerBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
 
@@ -27,6 +31,10 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _prototypes = dependencies.Resolve<IPrototypeManager>();
         _cache = dependencies.Resolve<IResourceCache>();
+
+        OnButton.ToggleMode = true;
+        OnButton.OnPressed += _ => owner.AdvPressed();
+
     }
     public void Populate(PlantAnalyzerScannedSeedPlantInformation msg)
     {
@@ -39,7 +47,6 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             return;
         }
         NoData.Visible = false;
-        //Traits.Visible = false;
 
         Title = Loc.GetString("plant-analyzer-interface-title");
 
@@ -63,7 +70,6 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases));
 
         Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
-
 
         NutrientUsage.Text = "Nutrient usage: " + msg.NutrientConsumption;
         WaterUsage.Text = "Water usage: " + msg.WaterConsumption;

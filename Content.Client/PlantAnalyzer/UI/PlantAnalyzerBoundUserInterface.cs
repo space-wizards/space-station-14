@@ -1,3 +1,4 @@
+using Content.Shared.Gravity;
 using Content.Shared.PlantAnalyzer;
 using JetBrains.Annotations;
 
@@ -16,12 +17,12 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window = new PlantAnalyzerWindow
+        _window = new PlantAnalyzerWindow(this)
         {
             Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
         };
         _window.OnClose += Close;
-        _window.OpenToLeft();
+        _window.OpenCentered();
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -33,6 +34,12 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
             return;
 
         _window.Populate(cast);
+    }
+
+    public void AdvPressed()
+    {
+        SendMessage(new PlantAnalyzerMode(true));
+        
     }
 
     protected override void Dispose(bool disposing)

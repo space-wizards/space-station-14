@@ -10,6 +10,8 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
 {
     public readonly NetEntity? TargetEntity;
 
+    public Boolean ScanMode;
+
     public string SeedName = "";
     public string SeedYield = "";
     public string SeedPotency = "";
@@ -35,47 +37,59 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string Maturation = "";
     public string GrowthStages = "";
     public string PlantSpeciation = "";
-    public string Tolerances = "";
 
-    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedYield, string seedPotency,
-        string seedChem, string plantHarvestType, string exudeGases, string seedMutations, Boolean isTray, string plantSpeciation, string tolerances)
+    public string Tolerances = "";
+    public string Endurance = "";
+
+    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedChem, string plantHarvestType,
+        string exudeGases, string seedMutations, Boolean isTray, string plantSpeciation, string tolerances, string generalTraits, Boolean scanMode)
     {
         TargetEntity = targetEntit;
+        ScanMode = scanMode;
 
         SeedName = seedName;
-        SeedYield = seedYield;
-        SeedPotency = seedPotency;
         SeedChem = seedChem;
         Repeat = plantHarvestType;
-
         ExudeGases = exudeGases;
-        SeedMutations = seedMutations;
+
         IsTray = isTray;
 
-
+        SeedMutations = seedMutations;
         PlantSpeciation = plantSpeciation;
+        if (scanMode)
+        {
+            String[] arrTol = tolerances.Split(";");
+            NutrientConsumption = arrTol[0];
+            WaterConsumption = arrTol[1];
+            IdealHeat = arrTol[2];
+            HeatTolerance = arrTol[3];
+            IdealLight = arrTol[4];
+            LightTolerance = arrTol[5];
+            ToxinsTolerance = arrTol[6];
+            LowPresssureTolerance = arrTol[7];
+            HighPressureTolerance = arrTol[8];
+            PestTolerance = arrTol[9];
+            WeedTolerance = arrTol[10];
 
-        Tolerances = tolerances;
+            String[] arrGeneral = generalTraits.Split(";");
+            Endurance = arrGeneral[0];
+            SeedYield = arrGeneral[1];
+            Lifespan = arrGeneral[2];
+            Maturation = arrGeneral[3];
+            GrowthStages = arrGeneral[4];
+            SeedPotency = arrGeneral[5];
+        }
 
-        String[] arr = tolerances.Split(";");
+    }
+}
 
-        NutrientConsumption = arr[0];
-        WaterConsumption = arr[1];
-        IdealHeat = arr[2];
-        HeatTolerance = arr[3];
-        IdealLight = arr[4];
-        LightTolerance = arr[5];
-        ToxinsTolerance = arr[6];
-        LowPresssureTolerance = arr[7];
-        HighPressureTolerance = arr[8];
-        PestTolerance = arr[9];
-        WeedTolerance = arr[10];
+[Serializable, NetSerializable]
+public sealed class PlantAnalyzerMode : BoundUserInterfaceMessage
+{
+    public Boolean AdvancedScan { get; }
 
-        Lifespan = arr[11];
-        Maturation = arr[12];
-        GrowthStages = arr[13];
-
-
-
+    public PlantAnalyzerMode(Boolean advancedScan)
+    {
+        AdvancedScan = advancedScan;
     }
 }

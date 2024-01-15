@@ -12,7 +12,17 @@ public sealed partial class PlantAnalyzerComponent : Component
     ///     How long it takes to scan.
     /// </summary>
     [DataField("scanDelay")]
-    public float ScanDelay = 0.8f;
+    public float ScanDelay = 1f;
+
+    [DataField("advScanDelay")]
+    public float AdvScanDelay = 10f;
+
+    /// <summary>
+    /// Which scan mode to use
+    /// </summary>
+    [DataField("advancedScan")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool AdvancedScan = false;
 
     /// <summary>
     ///     Sound played on scanning begin.
