@@ -5027,7 +5027,6 @@ entities:
     - type: DeviceLinkSink
       links:
       - 7519
-      - 5803
   - uid: 4651
     components:
     - type: MetaData
@@ -42758,9 +42757,6 @@ entities:
       linkedPorts:
         6283:
         - Pressed: Toggle
-        invalid:
-        - Pressed: Toggle
-        4291: []
   - uid: 6389
     components:
     - type: Transform
