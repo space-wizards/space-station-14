@@ -32,3 +32,30 @@
     sprite: Structures/Doors/Airlocks/Glass/external.rsi
   - type: PaintableAirlock
     group: ExternalGlass
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalManual
+  suffix: Glass, External, Manual
+  description: It opens manualy, it closes, it might crush you, and there might be only space behind it. Old construction thing.
+  components:
+  - type: Door
+    bumpOpen: false
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/external_manual.rsi
+  - type: PaintableAirlock
+    group: ExternalManual
+
+- type: entity
+  parent: AirlockExternalManual
+  id: AirlockExternalManualGlass
+  suffix: Glass, External, Manual
+  components:
+  - type: Door
+    occludes: false
+  - type: Occluder
+    enabled: false
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/external_manual.rsi
+  - type: PaintableAirlock
+    group: ExternalGlassManual
