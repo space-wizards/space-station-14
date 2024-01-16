@@ -54,9 +54,12 @@ public sealed class ActiveGeneratorRevvingSystem: EntitySystem
     /// </summary>
     /// <remarks>This is not the same as revving it, when this is called the generator will start producing power.</remarks>
     /// <param name="uid">Uid of the generator entity.</param>
-    private void StartGenerator(EntityUid uid)
+    /// <returns>True if the generator was successfully started, false otherwise.</returns>
+    private bool StartGenerator(EntityUid uid)
     {
-        RaiseLocalEvent(uid, new AutoGeneratorStartedEvent());
+        var ev = new AutoGeneratorStartedEvent();
+        RaiseLocalEvent(uid, ref ev);
+        return ev.Started;
     }
 
     /// <summary>
@@ -72,11 +75,11 @@ public sealed class ActiveGeneratorRevvingSystem: EntitySystem
             activeGeneratorRevvingComponent.CurrentTime += TimeSpan.FromSeconds(frameTime);
             Dirty(uid, activeGeneratorRevvingComponent);
 
-            if (activeGeneratorRevvingComponent.CurrentTime >= portableGeneratorComponent.StartTime)
-            {
-                StartGenerator(uid);
+            if (activeGeneratorRevvingComponent.CurrentTime < portableGeneratorComponent.StartTime)
+                continue;
+
+            if (StartGenerator(uid))
                 StopAutoRevving(uid);
-            }
         }
     }
 }

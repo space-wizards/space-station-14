@@ -97,13 +97,15 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         GeneratorTugged(uid, component, args.User, out args.Repeat);
     }
 
-    private void OnAutoGeneratorStarted(EntityUid uid, PortableGeneratorComponent component, AutoGeneratorStartedEvent args)
+    private void OnAutoGeneratorStarted(EntityUid uid, PortableGeneratorComponent component, ref AutoGeneratorStartedEvent args)
     {
         GeneratorTugged(uid, component, null, out var repeat);
 
         // restart the auto rev if it should be repeated
         if (repeat)
             _revving.StartAutoRevving(uid);
+        else
+            args.Started = true;
     }
 
     private void GeneratorTugged(EntityUid uid, PortableGeneratorComponent component, EntityUid? user, out bool repeat)
