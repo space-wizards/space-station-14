@@ -71,13 +71,13 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
     private void OnRemoveItemBuiMessage(Entity<CryostorageComponent> ent, ref CryostorageRemoveItemBuiMessage args)
     {
-        var comp = ent.Comp;
+        var (_, comp) = ent;
         if (args.Session.AttachedEntity is not { } attachedEntity)
             return;
 
-        var cryoContained = GetEntity(args.Entity);
+        var cryoContained = GetEntity(args.StoredEntity);
 
-        if (!comp.StoredPlayers.Contains(cryoContained))
+        if (!comp.StoredPlayers.Contains(cryoContained) || !IsInPausedMap(cryoContained))
             return;
 
         if (!HasComp<HandsComponent>(attachedEntity))
@@ -134,6 +134,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         if (comp.GracePeriodEndTime != null)
             comp.GracePeriodEndTime = Timing.CurTime + cryostorageComponent.NoMindGracePeriod;
+        comp.AllowReEnteringBody = false;
         comp.UserId = args.Mind.Comp.UserId;
     }
 
@@ -147,9 +148,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         if (args.NewStatus is SessionStatus.Disconnected or SessionStatus.Zombie)
         {
-            if (CryoSleepRejoiningEnabled)
-                containedComponent.StoredWhileDisconnected = true;
-
+            containedComponent.AllowReEnteringBody = true;
             var delay = CompOrNull<CryostorageComponent>(containedComponent.Cryostorage)?.NoMindGracePeriod ?? TimeSpan.Zero;
             containedComponent.GracePeriodEndTime = Timing.CurTime + delay;
             containedComponent.UserId = args.Session.UserId;
@@ -196,15 +195,17 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             return;
         }
 
-        if (!comp.StoredWhileDisconnected &&
-            userId != null &&
-            Mind.TryGetMind(userId.Value, out var mind) &&
-            mind.Value.Comp.Session?.AttachedEntity == ent)
+        if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
         {
-            _gameTicker.OnGhostAttempt(mind.Value, false);
+            if (userId != null && Mind.TryGetMind(userId.Value, out var mind))
+            {
+                _gameTicker.OnGhostAttempt(mind.Value, false);
+            }
         }
+        comp.AllowReEnteringBody = false;
         _transform.SetParent(ent, PausedMap.Value);
         cryostorageComponent.StoredPlayers.Add(ent);
+        Dirty(ent, comp);
         UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageEnt.Value)}");
     }
@@ -212,13 +213,13 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)
     {
         var (uid, comp) = entity;
-        if (!CryoSleepRejoiningEnabled || !comp.StoredWhileDisconnected)
+        if (!CryoSleepRejoiningEnabled || !IsInPausedMap(uid))
             return;
 
         // how did you destroy these? they're indestructible.
         if (comp.Cryostorage is not { } cryostorage ||
             TerminatingOrDeleted(cryostorage) ||
-            !TryComp<CryostorageComponent>(comp.Cryostorage, out var cryostorageComponent))
+            !TryComp<CryostorageComponent>(cryostorage, out var cryostorageComponent))
         {
             QueueDel(entity);
             return;
@@ -234,8 +235,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         }
 
         comp.GracePeriodEndTime = null;
-        comp.StoredWhileDisconnected = false;
-        cryostorageComponent.StoredPlayers.Remove(entity);
+        cryostorageComponent.StoredPlayers.Remove(uid);
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(entity):player} re-entered the game from cryostorage {ToPrettyString(cryostorage)}");
         UpdateCryostorageUIState((cryostorage, cryostorageComponent));
     }
@@ -295,7 +295,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var query = EntityQueryEnumerator<CryostorageContainedComponent>();
         while (query.MoveNext(out var uid, out var containedComp))
         {
-            if (containedComp.GracePeriodEndTime == null || containedComp.StoredWhileDisconnected)
+            if (containedComp.GracePeriodEndTime == null)
                 continue;
 
             if (Timing.CurTime < containedComp.GracePeriodEndTime)
