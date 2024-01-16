@@ -106,8 +106,12 @@ public sealed class ExecutionSystem : EntitySystem
         if (!TryComp<DamageableComponent>(victim, out var damage))
             return false;
         
+        // You can't execute something that cannot die
+        if (!TryComp<MobStateComponent>(victim, out var mobState))
+            return false;
+        
         // You're not allowed to execute dead people (no fun allowed)
-        if (TryComp<MobStateComponent>(victim, out var mobState) && _mobStateSystem.IsDead(victim, mobState))
+        if (_mobStateSystem.IsDead(victim, mobState))
             return false;
 
         // You must be incapacitated to be executed
