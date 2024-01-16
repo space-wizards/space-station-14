@@ -19,6 +19,10 @@
       "directions": 4
     },
     {
+        "name": "panel",
+        "directions": 4
+    },
+    {
       "name": "invaders",
       "directions": 4,
       "delays": [
