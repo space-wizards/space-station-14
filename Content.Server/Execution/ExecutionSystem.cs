@@ -1,5 +1,6 @@
 using Content.Server.Interaction;
 using Content.Server.Kitchen.Components;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -39,6 +40,7 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly GunSystem _gunSystem = default!;
 
     private const float MeleeExecutionTimeModifier = 5.0f;
     private const float GunExecutionTime = 6.0f;
@@ -155,8 +157,8 @@ public sealed class ExecutionSystem : EntitySystem
     {
         if (!CanExecuteWithAny(weapon, victim, user)) return false;
         
-        // We must be able to actually fire the gun and have it do damage
-        if (!TryComp<GunComponent>(weapon, out var gun))
+        // We must be able to actually fire the gun
+        if (!TryComp<GunComponent>(weapon, out var gun) && _gunSystem.CanShoot(gun!))
             return false;
 
         return true;
