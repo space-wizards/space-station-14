@@ -6,7 +6,7 @@ namespace Content.Server.Power.Generator;
 
 public sealed class GeneratorSignalControlSystem: EntitySystem
 {
-    [Dependency] private GeneratorSystem _generator = default!;
+    [Dependency] private readonly ActiveGeneratorRevvingSystem _revving = default!;
 
     public override void Initialize()
     {
@@ -24,7 +24,7 @@ public sealed class GeneratorSignalControlSystem: EntitySystem
 
         if (args.Port == component.OnPort)
         {
-            _generator.SetFuelGeneratorOn(uid, true, generator);
+            _revving.StartAutoRevving(uid);
         }
         else if (args.Port == component.OffPort)
         {
