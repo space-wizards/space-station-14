@@ -457,7 +457,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     component.IsSparking = true;
                 }
 
-                if (_tag.HasTag(item, "Plastic"))
+                if (_tag.HasTag(item, "MicrowaveSelfUnsafe") || _tag.HasTag(item, "Plastic"))
                 {
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
                     _container.Insert(junk, component.Storage);
