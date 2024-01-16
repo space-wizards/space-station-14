@@ -229,7 +229,7 @@
   group: market
 
 - type: cargoProduct
-  id: LivestockMothroach
+  id: LivestockTortoise
   icon:
     sprite: Mobs/Animals/tortoise.rsi
     state: tortoise
