@@ -20,7 +20,7 @@
     - map: ["computerLayerBody"]
       state: arcade
     - map: ["computerLayerScreen"]
-      state: invaders
+      state: screen_invaders
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
       state: panel
       visible: false
@@ -47,6 +47,16 @@
   name: space villain arcade
   parent: ArcadeBase
   components:
+  - type: Sprite
+    sprite: Structures/Machines/arcade.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: screen_spacevillain
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+      visible: false
   - type: SpaceVillainArcade
     rewardAmount: 0
     possibleRewards:
@@ -139,7 +149,7 @@
     - map: ["computerLayerBody"]
       state: arcade
     - map: ["computerLayerScreen"]
-      state: blockgame
+      state: screen_blockgame
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
       state: panel
       visible: false
