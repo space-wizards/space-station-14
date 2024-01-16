@@ -44,7 +44,7 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private const float MeleeExecutionTimeModifier = 5.0f;
-    private const float GunExecutionTime = 10.0f;
+    private const float GunExecutionTime = 6.0f;
     private const float DamageModifier = 9.0f;
 
     /// <inheritdoc/>
@@ -365,6 +365,18 @@ public sealed class ExecutionSystem : EntitySystem
         // Gun successfully fired, deal damage
         _damageableSystem.TryChangeDamage(victim, damage * DamageModifier, true);
         _audioSystem.PlayEntity(component.SoundGunshot, Filter.Pvs(weapon), weapon, false, AudioParams.Default);
+        
+        // Popups
+        if (attacker != victim)
+        {
+            ShowExecutionPopup("execution-popup-gun-complete-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("execution-popup-gun-complete-external", Filter.PvsExcept(attacker), PopupType.MediumCaution, attacker, victim, weapon);
+        }
+        else
+        {
+            ShowExecutionPopup("suicide-popup-gun-complete-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("suicide-popup-gun-complete-external", Filter.PvsExcept(attacker), PopupType.MediumCaution, attacker, victim, weapon);
+        }
     }
 
     private void ShowExecutionPopup(string locString, Filter filter, PopupType type,
