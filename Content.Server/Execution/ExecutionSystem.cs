@@ -26,7 +26,8 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
 
-    private const float ExecutionTime = 10.0f;
+    private const float MeleeExecutionTimeModifier = 5.0f;
+    private const float GunExecutionTime = 10.0f;
     private const float DamageModifier = 9.0f;
 
     /// <inheritdoc/>
@@ -144,6 +145,8 @@ public sealed class ExecutionSystem : EntitySystem
         if (!CanExecuteChecksMelee(weapon, victim, user))
             return;
 
+        var executionTime = Comp<MeleeWeaponComponent>(weapon).AttackRate * MeleeExecutionTimeModifier;
+
         _popupSystem.PopupEntity(Loc.GetString(
                 "execution-popup-melee-initial-internal", ("weapon", weapon), ("victim", victim)),
             user, Filter.Entities(user), true, PopupType.Medium);
@@ -152,7 +155,7 @@ public sealed class ExecutionSystem : EntitySystem
             user, Filter.PvsExcept(user), true, PopupType.MediumCaution);
         
         var doAfter =
-            new DoAfterArgs(EntityManager, user, ExecutionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
+            new DoAfterArgs(EntityManager, user, executionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -176,7 +179,7 @@ public sealed class ExecutionSystem : EntitySystem
             user, Filter.PvsExcept(user), true, PopupType.MediumCaution);
         
         var doAfter =
-            new DoAfterArgs(EntityManager, user, ExecutionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
+            new DoAfterArgs(EntityManager, user, GunExecutionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
