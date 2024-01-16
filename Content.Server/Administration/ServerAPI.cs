@@ -1,5 +1,9 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -9,6 +13,7 @@ using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
+using Content.Shared.Administration.Events;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Prototypes;
@@ -37,11 +42,10 @@ public sealed class ServerApi : IPostInjectInit
 
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    private string _token = default!;
+    private string _token = string.Empty;
     private ISawmill _sawmill = default!;
-    private string _motd = default!;
 
-    public void PostInject()
+    void IPostInjectInit.PostInject()
     {
         _sawmill = Logger.GetSawmill("serverApi");
 
@@ -65,7 +69,6 @@ public sealed class ServerApi : IPostInjectInit
         try
         {
             _config.OnValueChanged(CCVars.AdminApiToken, UpdateToken, true);
-            _config.OnValueChanged(CCVars.MOTD, UpdateMotd, true);
         }
         catch (Exception e)
         {
@@ -77,17 +80,11 @@ public sealed class ServerApi : IPostInjectInit
     public void Shutdown()
     {
         _config.UnsubValueChanged(CCVars.AdminApiToken, UpdateToken);
-        _config.UnsubValueChanged(CCVars.MOTD, UpdateMotd);
     }
 
     private void UpdateToken(string token)
     {
         _token = token;
-    }
-
-    private void UpdateMotd(string motd)
-    {
-        _motd = motd;
     }
 
 
@@ -98,41 +95,40 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionPanicPunker(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/panic_bunker")
+        if (context.RequestMethod != HttpMethod.Patch || context.Url.AbsolutePath != "/admin/actions/panic_bunker")
         {
             return false;
         }
 
         if (!CheckAccess(context))
-        {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
-        }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
-            return true;
-        }
-
-        var actionSupplied = context.RequestHeaders.TryGetValue("Action", out var action);
-        if (!actionSupplied)
+        var body = await ReadJson<PanicBunkerActionBody>(context);
+        var (success, actor) = await CheckActor(context, body);
+        if (!success)
         {
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
 
-        var valueSupplied = context.RequestHeaders.TryGetValue("Value", out var value);
-        if (!valueSupplied)
+        if (body!.Action == null || body.Value == null)
         {
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "An action and value are required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "An action and value are required to perform this action.",
+                    ErrorType = ErrorTypes.ActionNotSpecified
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
 
-        switch (action) // TODO: This looks bad, there has to be a better way to do this.
+        switch (body.Action) // TODO: This looks bad, there has to be a better way to do this.
         {
             case "enabled":
-                if (!bool.TryParse(value.ToString(), out var enabled))
+                if (!bool.TryParse(body.Value, out var enabled))
                 {
                     await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                     return true;
@@ -144,7 +140,7 @@ public sealed class ServerApi : IPostInjectInit
                 });
                 break;
             case "disable_with_admins":
-                if (!bool.TryParse(value.ToString(), out var disableWithAdmins))
+                if (!bool.TryParse(body.Value, out var disableWithAdmins))
                 {
                     await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                     return true;
@@ -156,7 +152,7 @@ public sealed class ServerApi : IPostInjectInit
                 });
                 break;
             case "enable_without_admins":
-                if (!bool.TryParse(value.ToString(), out var enableWithoutAdmins))
+                if (!bool.TryParse(body.Value, out var enableWithoutAdmins))
                 {
                     await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                     return true;
@@ -168,7 +164,7 @@ public sealed class ServerApi : IPostInjectInit
                 });
                 break;
             case "count_deadminned_admins":
-                if (!bool.TryParse(value.ToString(), out var countDeadminnedAdmins))
+                if (!bool.TryParse(body.Value, out var countDeadminnedAdmins))
                 {
                     await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                     return true;
@@ -180,7 +176,7 @@ public sealed class ServerApi : IPostInjectInit
                 });
                 break;
             case "show_reason":
-                if (!bool.TryParse(value.ToString(), out var showReason))
+                if (!bool.TryParse(body.Value, out var showReason))
                 {
                     await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                     return true;
@@ -192,7 +188,7 @@ public sealed class ServerApi : IPostInjectInit
                 });
                 break;
             case "min_account_age_hours":
-                if (!int.TryParse(value.ToString(), out var minAccountAgeHours))
+                if (!int.TryParse(body.Value, out var minAccountAgeHours))
                 {
                     await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                     return true;
@@ -204,7 +200,7 @@ public sealed class ServerApi : IPostInjectInit
                 });
                 break;
             case "min_overall_hours":
-                if (!int.TryParse(value.ToString(), out var minOverallHours))
+                if (!int.TryParse(body.Value, out var minOverallHours))
                 {
                     await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                     return true;
@@ -217,7 +213,7 @@ public sealed class ServerApi : IPostInjectInit
                 break;
         }
 
-        _sawmill.Info($"Panic bunker setting {action} changed to {value} by {actor!.Name}({actor!.Guid}).");
+        _sawmill.Info($"Panic bunker setting {body.Action} changed to {body.Value} by {actor!.Name} ({actor!.Guid}).");
         await context.RespondAsync("Success", HttpStatusCode.OK);
         return true;
     }
@@ -227,35 +223,42 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionForceMotd(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/set_motd")
+        if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/admin/actions/set_motd")
         {
             return false;
         }
 
         if (!CheckAccess(context))
+            return true;
+
+        var motd = await ReadJson<MotdActionBody>(context);
+        var (success, actor) = await CheckActor(context, motd);
+        if (!success)
+            return true;
+
+
+        if (motd!.Motd == null)
         {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "A motd is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "A motd is required to perform this action.",
+                    ErrorType = ErrorTypes.MotdNotSpecified
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
-            return true;
-        }
+        _sawmill.Info($"MOTD changed to \"{motd.Motd}\" by {actor!.Name} ({actor.Guid}).");
 
-        var motdSupplied = context.RequestHeaders.TryGetValue("MOTD", out var motd);
-        if (!motdSupplied)
-        {
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-            return true;
-        }
-
-        _sawmill.Info($"MOTD changed to \"{motd}\" by {actor!.Name}({actor!.Guid}).");
-
-        _taskManager.RunOnMainThread(() => _config.SetCVar(CCVars.MOTD, motd.ToString()));
+        _taskManager.RunOnMainThread(() => _config.SetCVar(CCVars.MOTD, motd.Motd));
         // A hook in the MOTD system sends the changes to each client
-        await context.RespondAsync("Success", HttpStatusCode.OK);
+        await context.RespondJsonAsync(new BaseResponse()
+        {
+            Message = "OK"
+        });
         return true;
     }
 
@@ -264,43 +267,61 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionForcePreset(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/force_preset")
+        if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/admin/actions/force_preset")
         {
             return false;
         }
 
         if (!CheckAccess(context))
-        {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
-        }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+        var body = await ReadJson<PresetActionBody>(context);
+        var (success, actor) = await CheckActor(context, body);
+        if (!success)
             return true;
-        }
 
-        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+        var ticker = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<GameTicker>());
 
         if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
         {
-            _sawmill.Info($"Attempted to force preset {actor!.Name}({actor!.Guid}) while the game was not in the pre-round lobby.");
-            await context.RespondAsync("This can only be executed while the game is in the pre-round lobby.", HttpStatusCode.BadRequest);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "Round already started",
+                Exception = new ExceptionData()
+                {
+                    Message = "Round already started",
+                    ErrorType = ErrorTypes.RoundAlreadyStarted
+                }
+            }, HttpStatusCode.Conflict);
             return true;
         }
 
-        var presetSupplied = context.RequestHeaders.TryGetValue("PresetId", out var preset);
-        if (!presetSupplied)
+        if (body!.PresetId == null)
         {
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "A preset is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "A preset is required to perform this action.",
+                    ErrorType = ErrorTypes.PresetNotSpecified
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
 
-        var result = await RunOnMainThread(() => ticker.FindGamePreset(preset.ToString()));
+        var result = await RunOnMainThread(() => ticker.FindGamePreset(body.PresetId));
         if (result == null)
         {
-            await context.RespondAsync($"No preset exists with name {preset}.", HttpStatusCode.NotFound);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "Preset not found",
+                Exception = new ExceptionData()
+                {
+                    Message = "Preset not found",
+                    ErrorType = ErrorTypes.PresetNotSpecified
+                }
+            }, HttpStatusCode.UnprocessableContent);
             return true;
         }
 
@@ -308,8 +329,11 @@ public sealed class ServerApi : IPostInjectInit
         {
             ticker.SetGamePreset(result);
         });
-        _sawmill.Info($"Forced the game to start with preset {preset} by {actor!.Name}({actor!.Guid}).");
-        await context.RespondAsync("Success", HttpStatusCode.OK);
+        _sawmill.Info($"Forced the game to start with preset {body.PresetId} by {actor!.Name}({actor.Guid}).");
+        await context.RespondJsonAsync(new BaseResponse()
+        {
+            Message = "OK"
+        });
         return true;
     }
 
@@ -318,45 +342,58 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionEndGameRule(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/end_game_rule")
+        if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/admin/actions/end_game_rule")
         {
             return false;
         }
 
         if (!CheckAccess(context))
-        {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
-        }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+        var body = await ReadJson<GameRuleActionBody>(context);
+        var (success, actor) = await CheckActor(context, body);
+        if (!success)
             return true;
-        }
 
-        var gameRuleSupplied = context.RequestHeaders.TryGetValue("GameRuleId", out var gameRule);
-        if (!gameRuleSupplied)
+        if (body!.GameRuleId == null)
         {
-            _sawmill.Info($"Attempted to end game rule without supplying a game rule name by {actor!.Name}({actor!.Guid}).");
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "A game rule is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "A game rule is required to perform this action.",
+                    ErrorType = ErrorTypes.GuidNotSpecified
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
-        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+        var ticker = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<GameTicker>());
+
         var gameRuleEntity = await RunOnMainThread(() => ticker
             .GetActiveGameRules()
-            .FirstOrNull(rule => _entityManager.MetaQuery.GetComponent(rule).EntityPrototype?.ID == gameRule.ToString()));
+            .FirstOrNull(rule => _entityManager.MetaQuery.GetComponent(rule).EntityPrototype?.ID == body.GameRuleId));
 
         if (gameRuleEntity == null) // Game rule not found
         {
-            _sawmill.Info($"Attempted to end game rule {gameRule} by {actor!.Name}({actor!.Guid}), but it was not found.");
-            await context.RespondAsync("Gamerule not found or not active",HttpStatusCode.NotFound);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "Game rule not found or not active",
+                Exception = new ExceptionData()
+                {
+                    Message = "Game rule not found or not active",
+                    ErrorType = ErrorTypes.GameRuleNotFound
+                }
+            }, HttpStatusCode.Conflict);
             return true;
         }
 
-        _sawmill.Info($"Ended game rule {gameRule} by {actor!.Name}({actor!.Guid}).");
+        _sawmill.Info($"Ended game rule {body.GameRuleId} by {actor!.Name} ({actor!.Guid}).");
         _taskManager.RunOnMainThread(() => ticker.EndGameRule((EntityUid) gameRuleEntity));
-        await context.RespondAsync($"Ended game rule {gameRule}({gameRuleEntity})", HttpStatusCode.OK);
+        await context.RespondJsonAsync(new BaseResponse()
+        {
+            Message = "OK"
+        });
         return true;
     }
 
@@ -365,48 +402,73 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionAddGameRule(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/add_game_rule")
+        if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/admin/actions/add_game_rule")
         {
             return false;
         }
 
         if (!CheckAccess(context))
-        {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
-        }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+        var body = await ReadJson<GameRuleActionBody>(context);
+        var (success, actor) = await CheckActor(context, body);
+        if (!success)
             return true;
-        }
 
-        var gameRuleSupplied = context.RequestHeaders.TryGetValue("GameRuleId", out var gameRule);
-        if (!gameRuleSupplied)
+        if (body!.GameRuleId == null)
         {
-            _sawmill.Info($"Attempted to add game rule without supplying a game rule name by {actor!.Name}({actor!.Guid}).");
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "A game rule is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "A game rule is required to perform this action.",
+                    ErrorType = ErrorTypes.GuidNotSpecified
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
 
         var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
-
-        var tsc = new TaskCompletionSource<EntityUid>();
-        _taskManager.RunOnMainThread(() =>
+        var ruleEntity = await RunOnMainThread<EntityUid?>(() =>
         {
-            var ruleEntity = ticker.AddGameRule(gameRule.ToString());
-            _sawmill.Info($"Added game rule {gameRule} by {actor!.Name}({actor!.Guid}).");
+            // See if prototype exists
+            try
+            {
+                _prototypeManager.Index(body.GameRuleId);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return null;
+            }
+
+            var ruleEntity = ticker.AddGameRule(body.GameRuleId);
+            _sawmill.Info($"Added game rule {body.GameRuleId} by {actor!.Name} ({actor!.Guid}).");
             if (ticker.RunLevel == GameRunLevel.InRound)
             {
                 ticker.StartGameRule(ruleEntity);
-                _sawmill.Info($"Started game rule {gameRule} by {actor!.Name}({actor!.Guid}).");
+                _sawmill.Info($"Started game rule {body.GameRuleId} by {actor!.Name} ({actor!.Guid}).");
             }
-            tsc.TrySetResult(ruleEntity);
+            return ruleEntity;
         });
+        if (ruleEntity == null)
+        {
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "Game rule not found",
+                Exception = new ExceptionData()
+                {
+                    Message = "Game rule not found",
+                    ErrorType = ErrorTypes.GameRuleNotFound
+                }
+            }, HttpStatusCode.NotFound);
+            return true;
+        }
 
-        var ruleEntity = await tsc.Task;
-        await context.RespondAsync($"Added game rule {ruleEntity}", HttpStatusCode.OK);
+        await context.RespondJsonAsync(new BaseResponse()
+        {
+            Message = "OK"
+        });
         return true;
     }
 
@@ -415,64 +477,81 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionKick(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/kick")
+        if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/admin/actions/kick")
         {
             return false;
         }
 
         if (!CheckAccess(context))
+            return true;
+
+        var body = await ReadJson<KickActionBody>(context);
+        var (success, actor) = await CheckActor(context,body);
+        if (!success)
+            return true;
+
+        if (body == null)
         {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
+            _sawmill.Info($"Attempted to kick player without supplying a body by {actor!.Name}({actor!.Guid}).");
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "A body is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "A body is required to perform this action.",
+                    ErrorType = ErrorTypes.BodyUnableToParse
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
-            return true;
-        }
-
-        var playerSupplied = context.RequestHeaders.TryGetValue("Guid", out var guid);
-        if (!playerSupplied)
+        if (body.Guid == null)
         {
             _sawmill.Info($"Attempted to kick player without supplying a username by {actor!.Name}({actor!.Guid}).");
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "A player is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "A player is required to perform this action.",
+                    ErrorType = ErrorTypes.GuidNotSpecified
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
 
         var session = await RunOnMainThread(() =>
         {
-            // There is no function to get a session by GUID, so we have to iterate over all sessions and check their GUIDs.
-            foreach (var player in _playerManager.Sessions)
-            {
-                if (player.UserId.UserId.ToString() == guid.ToString())
-                {
-                    return player;
-                }
-            }
-            return null;
+            _playerManager.TryGetSessionById(new NetUserId(new Guid(body.Guid)), out var player);
+            return player;
         });
 
         if (session == null)
         {
-            _sawmill.Info($"Attempted to kick player {guid} by {actor!.Name}({actor!.Guid}), but they were not found.");
-            await context.RespondAsync("Player not found", HttpStatusCode.NotFound);
+            _sawmill.Info($"Attempted to kick player {body.Guid} by {actor!.Name} ({actor!.Guid}), but they were not found.");
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "Player not found",
+                Exception = new ExceptionData()
+                {
+                    Message = "Player not found",
+                    ErrorType = ErrorTypes.PlayerNotFound
+                }
+            }, HttpStatusCode.NotFound);
             return true;
         }
 
-        var reasonSupplied = context.RequestHeaders.TryGetValue("Reason", out var reason);
-        if (!reasonSupplied)
-        {
-            reason = "No reason supplied";
-        }
-
+        var reason = body.Reason ?? "No reason supplied";
         reason += " (kicked by admin)";
 
         _taskManager.RunOnMainThread(() =>
         {
-            _netManager.DisconnectChannel(session.Channel, reason.ToString());
+            _netManager.DisconnectChannel(session.Channel, reason);
         });
-        await context.RespondAsync("Success", HttpStatusCode.OK);
+        await context.RespondJsonAsync(new BaseResponse()
+        {
+            Message = "OK"
+        });
         _sawmill.Info("Kicked player {0} ({1}) for {2} by {3}({4})", session.Name, session.UserId.UserId.ToString(), reason, actor!.Name, actor!.Guid);
         return true;
     }
@@ -482,43 +561,54 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionRoundStatus(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/round")
+        if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/admin/actions/round")
         {
             return false;
         }
 
         if (!CheckAccess(context))
+            return true;
+        var body = await ReadJson<RoundActionBody>(context);
+
+        var (success, actor) = await CheckActor(context, body);
+        if (!success)
+            return true;
+
+        // Get the action from the request body
+        if (body == null || string.IsNullOrWhiteSpace(body.Action))
         {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "An action is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "An action is required to perform this action.",
+                    ErrorType = ErrorTypes.ActionNotSpecified
+                }
+            }, HttpStatusCode.BadRequest);
             return true;
         }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
-            return true;
-        }
-
-        // Not using body, because that's a stream and I don't want to deal with that
-        var actionSupplied = context.RequestHeaders.TryGetValue("Action", out var action);
-        if (!actionSupplied)
-        {
-            _sawmill.Info($"Attempted to {action} round without supplying an action by {actor!.Name}({actor!.Guid}).");
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-            return true;
-        }
-
-        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
-        var roundEndSystem = _entitySystemManager.GetEntitySystem<RoundEndSystem>();
-        switch (action)
+        var ticker = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<GameTicker>());
+        var roundEndSystem = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<RoundEndSystem>());
+        switch (body.Action)
         {
             case "start":
                 if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
                 {
-                    await context.RespondAsync("Round already started", HttpStatusCode.BadRequest);
-                    _sawmill.Info("Forced round start failed: round already started");
+                    await context.RespondJsonAsync(new BaseResponse()
+                    {
+                        Message = "Round already started",
+                        Exception = new ExceptionData()
+                        {
+                            Message = "Round already started",
+                            ErrorType = ErrorTypes.RoundAlreadyStarted
+                        }
+                    }, HttpStatusCode.UnprocessableEntity);
+                    _sawmill.Debug("Forced round start failed: round already started");
                     return true;
                 }
+
                 _taskManager.RunOnMainThread(() =>
                 {
                     ticker.StartRound();
@@ -528,8 +618,16 @@ public sealed class ServerApi : IPostInjectInit
             case "end":
                 if (ticker.RunLevel != GameRunLevel.InRound)
                 {
-                    await context.RespondAsync("Round already ended", HttpStatusCode.BadRequest);
-                    _sawmill.Info("Forced round end failed: round is not in progress");
+                    await context.RespondJsonAsync(new BaseResponse()
+                    {
+                        Message = "Round already ended",
+                        Exception = new ExceptionData()
+                        {
+                            Message = "Round already ended",
+                            ErrorType = ErrorTypes.RoundAlreadyEnded
+                        }
+                    }, HttpStatusCode.UnprocessableEntity);
+                    _sawmill.Debug("Forced round end failed: round is not in progress");
                     return true;
                 }
                 _taskManager.RunOnMainThread(() =>
@@ -541,8 +639,16 @@ public sealed class ServerApi : IPostInjectInit
             case "restart":
                 if (ticker.RunLevel != GameRunLevel.InRound)
                 {
-                    await context.RespondAsync("Round already ended", HttpStatusCode.BadRequest);
-                    _sawmill.Info("Forced round restart failed: round is not in progress");
+                    await context.RespondJsonAsync(new BaseResponse()
+                    {
+                        Message = "Round not in progress",
+                        Exception = new ExceptionData()
+                        {
+                            Message = "Round not in progress",
+                            ErrorType = ErrorTypes.RoundNotInProgress
+                        }
+                    }, HttpStatusCode.UnprocessableEntity);
+                    _sawmill.Debug("Forced round restart failed: round is not in progress");
                     return true;
                 }
                 _taskManager.RunOnMainThread(() =>
@@ -559,12 +665,23 @@ public sealed class ServerApi : IPostInjectInit
                 _sawmill.Info("Forced instant round restart");
                 break;
             default:
-                await context.RespondErrorAsync(HttpStatusCode.BadRequest);
+                await context.RespondJsonAsync(new BaseResponse()
+                {
+                    Message = "Invalid action supplied.",
+                    Exception = new ExceptionData()
+                    {
+                        Message = "Invalid action supplied.",
+                        ErrorType = ErrorTypes.ActionNotSupported
+                    }
+                }, HttpStatusCode.BadRequest);
                 return true;
         }
 
-        _sawmill.Info($"Round {action} by {actor!.Name}({actor!.Guid}).");
-        await context.RespondAsync("Success", HttpStatusCode.OK);
+        _sawmill.Info($"Round {body.Action} by {actor!.Name} ({actor!.Guid}).");
+        await context.RespondJsonAsync(new BaseResponse()
+        {
+            Message = "OK"
+        });
         return true;
     }
 #endregion
@@ -572,30 +689,28 @@ public sealed class ServerApi : IPostInjectInit
 #region Fetching
 
     /// <summary>
-    ///     Returns an array containing all presets.
+    ///     Returns an array containing all available presets.
     /// </summary>
     private async Task<bool> GetForcePresets(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Get || context.Url!.AbsolutePath != "/admin/force_presets")
+        if (context.RequestMethod != HttpMethod.Get || context.Url.AbsolutePath != "/admin/force_presets")
         {
             return false;
         }
 
         if (!CheckAccess(context))
-        {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
-        }
 
-        var jObject = new JsonObject();
-        var presets = new List<string>();
+        var presets = new List<(string id, string desc)>();
         foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
         {
-            presets.Add(preset.ID);
+            presets.Add((preset.ID, preset.Description));
         }
 
-        jObject["presets"] = JsonNode.Parse(JsonSerializer.Serialize(presets));
-        await context.RespondAsync(jObject.ToString(), HttpStatusCode.OK);
+        await context.RespondJsonAsync(new PresetResponse()
+        {
+            Presets = presets
+        });
         return true;
     }
 
@@ -604,18 +719,14 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> GetGameRules(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Get || context.Url!.AbsolutePath != "/admin/game_rules")
+        if (context.RequestMethod != HttpMethod.Get || context.Url.AbsolutePath != "/admin/game_rules")
         {
             return false;
         }
 
         if (!CheckAccess(context))
-        {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
-        }
 
-        var jObject = new JsonObject();
         var gameRules = new List<string>();
         foreach (var gameRule in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
@@ -626,8 +737,10 @@ public sealed class ServerApi : IPostInjectInit
                 gameRules.Add(gameRule.ID);
         }
 
-        jObject["game_rules"] = JsonNode.Parse(JsonSerializer.Serialize(gameRules));
-        await context.RespondAsync(jObject.ToString(), HttpStatusCode.OK);
+        await context.RespondJsonAsync(new GameruleResponse()
+        {
+            GameRules = gameRules
+        });
         return true;
     }
 
@@ -637,23 +750,17 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> InfoHandler(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Get || context.Url!.AbsolutePath != "/admin/info" || _token == string.Empty)
+        if (context.RequestMethod != HttpMethod.Get || context.Url.AbsolutePath != "/admin/info")
         {
             return false;
-            // 404
         }
 
         if (!CheckAccess(context))
-        {
-            await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
-        }
 
-        if (!CheckActor(context, out var actor))
-        {
-            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+        var (success, actor) = await CheckActor(context);
+        if (!success)
             return true;
-        }
 
         /*  Information to display
             Round number
@@ -666,69 +773,49 @@ public sealed class ServerApi : IPostInjectInit
             Panic bunker status
          */
 
-        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
-        var adminSystem = _entitySystemManager.GetEntitySystem<AdminSystem>();
+        var ticker = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<GameTicker>());
+        var adminSystem = await RunOnMainThread(() =>_entitySystemManager.GetEntitySystem<AdminSystem>());
 
-        var jObject = new JsonObject();
-
-        jObject["round_id"] = await RunOnMainThread(() => ticker.RoundId);
-
-        var players = new List<Player>();
-        var onlineAdmins = new List<Player>();
-        var onlineAdminsDeadmined = new List<Player>();
-
-        foreach (var player in _playerManager.Sessions)
+        var players = new List<Actor>();
+        await RunOnMainThread(async () =>
         {
-            players.Add(new Player
+            foreach (var player in _playerManager.Sessions)
             {
-                Guid = player.UserId.UserId.ToString(),
-                Name = player.Name
-            });
-            if (await RunOnMainThread(() => _adminManager.IsAdmin(player)))
-            {
-                onlineAdmins.Add(new Player
+                var isAdmin = _adminManager.IsAdmin(player);
+                var isDeadmined = _adminManager.IsAdmin(player, true) && !isAdmin;
+
+                players.Add(new Actor()
                 {
                     Guid = player.UserId.UserId.ToString(),
-                    Name = player.Name
+                    Name = player.Name,
+                    IsAdmin = isAdmin,
+                    IsDeadmined = isDeadmined
                 });
             }
-            else if (await RunOnMainThread(() => _adminManager.IsAdmin(player, true)))
-            {
-                onlineAdminsDeadmined.Add(new Player
-                {
-                    Guid = player.UserId.UserId.ToString(),
-                    Name = player.Name
-                });
-            }
-        }
-
-        // The JsonSerializer.Serialize into JsonNode.Parse is a bit of a hack
-        jObject["players"] = JsonNode.Parse(JsonSerializer.Serialize(players));
-        jObject["admins"] = JsonNode.Parse(JsonSerializer.Serialize(onlineAdmins));
-        jObject["deadmined"] = JsonNode.Parse(JsonSerializer.Serialize(onlineAdminsDeadmined));
-
-        var gameRules = new List<string>();
-        foreach (var addedGameRule in await RunOnMainThread(() => ticker.GetActiveGameRules()))
+        });
+        var gameRules = await RunOnMainThread(() =>
         {
-            var meta = _entityManager.MetaQuery.GetComponent(addedGameRule);
-            gameRules.Add(meta.EntityPrototype?.ID ?? meta.EntityPrototype?.Name ?? "Unknown");
-        }
+            var gameRules = new List<string>();
+            foreach (var addedGameRule in ticker.GetActiveGameRules())
+            {
+                var meta = _entityManager.MetaQuery.GetComponent(addedGameRule);
+                gameRules.Add(meta.EntityPrototype?.ID ?? meta.EntityPrototype?.Name ?? "Unknown");
+            }
 
-        jObject["game_rules"] = JsonNode.Parse(JsonSerializer.Serialize(gameRules));
-        jObject["game_preset"] = ticker.CurrentPreset?.ID;
-        jObject["map"] = await RunOnMainThread(() => _gameMapManager.GetSelectedMap()?.MapName ?? "Unknown");
-        jObject["motd"] = _motd;
-        jObject["panic_bunker"] = new JsonObject();
-        jObject["panic_bunker"]!["enabled"] = adminSystem.PanicBunker.Enabled;
-        jObject["panic_bunker"]!["disable_with_admins"] = adminSystem.PanicBunker.DisableWithAdmins;
-        jObject["panic_bunker"]!["enable_without_admins"] = adminSystem.PanicBunker.EnableWithoutAdmins;
-        jObject["panic_bunker"]!["count_deadminned_admins"] = adminSystem.PanicBunker.CountDeadminnedAdmins;
-        jObject["panic_bunker"]!["show_reason"] = adminSystem.PanicBunker.ShowReason;
-        jObject["panic_bunker"]!["min_account_age_hours"] = adminSystem.PanicBunker.MinAccountAgeHours;
-        jObject["panic_bunker"]!["min_overall_hours"] = adminSystem.PanicBunker.MinOverallHours;
+            return gameRules;
+        });
 
-        _sawmill.Info($"Info requested by {actor!.Name}({actor!.Guid}).");
-        await context.RespondAsync(jObject.ToString(), HttpStatusCode.OK);
+        _sawmill.Info($"Info requested by {actor!.Name} ({actor!.Guid}).");
+        await context.RespondJsonAsync(new InfoResponse()
+        {
+            Players = players,
+            RoundId = ticker.RoundId,
+            Map = await RunOnMainThread(() => _gameMapManager.GetSelectedMap()?.MapName ?? "Unknown"),
+            PanicBunker = adminSystem.PanicBunker,
+            GamePreset = ticker.CurrentPreset?.ID,
+            GameRules = gameRules,
+            MOTD = _config.GetCVar(CCVars.MOTD)
+        });
         return true;
     }
 
@@ -739,13 +826,31 @@ public sealed class ServerApi : IPostInjectInit
         var auth = context.RequestHeaders.TryGetValue("Authorization", out var authToken);
         if (!auth)
         {
-            _sawmill.Info(@"Unauthorized access attempt to admin API. No auth header");
+            context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "An authorization header is required to perform this action.",
+                Exception = new ExceptionData()
+                {
+                    Message = "An authorization header is required to perform this action.",
+                    ErrorType = ErrorTypes.MissingAuthentication
+                }
+            });
             return false;
         } // No auth header, no access
 
-        if (authToken == _token)
+
+        if (CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(authToken.ToString()), Encoding.UTF8.GetBytes(_token)))
             return true;
 
+        context.RespondJsonAsync(new BaseResponse()
+        {
+            Message = "Invalid authorization header.",
+            Exception = new ExceptionData()
+            {
+                Message = "Invalid authorization header.",
+                ErrorType = ErrorTypes.InvalidAuthentication
+            }
+        });
         // Invalid auth header, no access
         _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}""", authToken.ToString());
         return false;
@@ -759,37 +864,195 @@ public sealed class ServerApi : IPostInjectInit
         var taskCompletionSource = new TaskCompletionSource<T>();
         _taskManager.RunOnMainThread(() =>
         {
-            taskCompletionSource.TrySetResult(func());
+            try
+            {
+                taskCompletionSource.TrySetResult(func());
+            }
+            catch (Exception e)
+            {
+                taskCompletionSource.TrySetException(e);
+            }
         });
 
         var result = await taskCompletionSource.Task;
         return result;
     }
 
-    private bool CheckActor(IStatusHandlerContext context, out Player? actor)
+    private async Task<(bool, Actor? actor)> CheckActor(IStatusHandlerContext context, BaseBody? body = null)
     {
-        // We are trusting the header to be correct.
-        // This is fine because the header is set by the SS14.Admin backend.
-        var actorSupplied = context.RequestHeaders.TryGetValue("Actor", out var actorHeader);
-        if (!actorSupplied)
+        // Try to read the actor from the request body
+        var actor = body?.Actor ?? (await ReadJson<BaseBody>(context))?.Actor;
+        if (actor != null)
         {
-            actor = null;
-            return false;
+            // Check if the actor is valid, like if all the required fields are present
+            if (string.IsNullOrWhiteSpace(actor.Guid) || string.IsNullOrWhiteSpace(actor.Name))
+            {
+                await context.RespondJsonAsync(new BaseResponse()
+                {
+                    Message = "Invalid actor supplied.",
+                    Exception = new ExceptionData()
+                    {
+                        Message = "Invalid actor supplied.",
+                        ErrorType = ErrorTypes.InvalidActor
+                    }
+                }, HttpStatusCode.BadRequest);
+                return (false, null);
+            }
+
+            return (true, actor);
         }
 
-        var stringRep = actorHeader.ToString();
-        actor = new Player()
+        await context.RespondJsonAsync(new BaseResponse()
         {
-            // GUID_NAME format
-            Guid = stringRep[..stringRep.IndexOf('_')],
-            Name = stringRep[(stringRep.IndexOf('_') + 1)..]
-        };
-        return true;
+            Message = "An actor is required to perform this action.",
+            Exception = new ExceptionData()
+            {
+                Message = "An actor is required to perform this action.",
+                ErrorType = ErrorTypes.MissingActor
+            }
+        }, HttpStatusCode.BadRequest);
+        return (false, null);
     }
 
-    private sealed class Player
+    /// <summary>
+    /// Helper function to read JSON encoded data from the request body.
+    /// </summary>
+    private async Task<T?> ReadJson<T>(IStatusHandlerContext context)
     {
-        public string Guid { get; set; } = default!;
-        public string Name { get; set; } = default!;
+        // Check if the request body is empty
+        try
+        {
+            var json = await context.RequestBodyJsonAsync<T>();
+            return json;
+        }
+        catch (Exception e)
+        {
+            await context.RespondJsonAsync(new BaseResponse()
+            {
+                Message = "Unable to parse request body.",
+                Exception = new ExceptionData()
+                {
+                    Message = e.Message,
+                    ErrorType = ErrorTypes.BodyUnableToParse,
+                    StackTrace = e.StackTrace
+                }
+            }, HttpStatusCode.BadRequest);
+            return default;
+        }
     }
+
+#region From Client
+
+    private record BaseBody
+    {
+        public Actor? Actor { get; init; }
+    }
+
+    private record Actor
+    {
+        public string? Guid { get; init; }
+        public string? Name { get; init; }
+        public bool IsAdmin { get; init; } = false;
+        public bool IsDeadmined { get; init; } = false;
+    }
+
+    private record RoundActionBody : BaseBody
+    {
+        public string? Action { get; init; }
+    }
+
+    private record KickActionBody : BaseBody
+    {
+        public string? Guid { get; init; }
+        public string? Reason { get; init; }
+    }
+
+    private record GameRuleActionBody : BaseBody
+    {
+        public string? GameRuleId { get; init; }
+    }
+
+    private record PresetActionBody : BaseBody
+    {
+        public string? PresetId { get; init; }
+    }
+
+    private record MotdActionBody : BaseBody
+    {
+        public string? Motd { get; init; }
+    }
+
+    private record PanicBunkerActionBody : BaseBody
+    {
+        public string? Action { get; init; }
+        public string? Value { get; init; }
+    }
+
+#endregion
+
+#region Responses
+
+    private record BaseResponse
+    {
+        public string? Message { get; init; } = "OK";
+        public ExceptionData? Exception { get; init; } = null;
+    }
+
+    private record ExceptionData
+    {
+        public string Message { get; init; } = string.Empty;
+        public ErrorTypes ErrorType { get; init; } = ErrorTypes.None;
+        public string? StackTrace { get; init; } = null;
+    }
+
+    private enum ErrorTypes
+    {
+        BodyUnableToParse = -2,
+        None = -1,
+        MissingAuthentication = 0,
+        InvalidAuthentication = 1,
+        MissingActor = 2,
+        InvalidActor = 3,
+        RoundNotInProgress = 4,
+        RoundAlreadyStarted = 5,
+        RoundAlreadyEnded = 6,
+        ActionNotSpecified = 7,
+        ActionNotSupported = 8,
+        GuidNotSpecified = 9,
+        PlayerNotFound = 10,
+        GameRuleNotFound = 11,
+        PresetNotSpecified = 12,
+        MotdNotSpecified = 13
+    }
+
+#endregion
+
+#region Misc
+
+    /// <summary>
+    /// Record used to send the response for the info endpoint.
+    /// </summary>
+    private record InfoResponse
+    {
+        public int RoundId { get; init; } = 0;
+        public List<Actor> Players { get; init; } = new();
+        public List<string> GameRules { get; init; } = new();
+        public string? GamePreset { get; init; } = null;
+        public string? Map { get; init; } = null;
+        public string? MOTD { get; init; } = null;
+        public PanicBunkerStatus PanicBunker { get; init; } = new();
+    }
+
+    private record PresetResponse : BaseResponse
+    {
+        public List<(string id, string desc)> Presets { get; init; } = new();
+    }
+
+    private record GameruleResponse : BaseResponse
+    {
+        public List<string> GameRules { get; init; } = new();
+    }
+
+#endregion
+
 }
