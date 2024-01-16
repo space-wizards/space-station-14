@@ -90,8 +90,8 @@ public sealed class ExecutionSystem : EntitySystem
         if (!TryStartExecutionDoafterCommonChecks(weapon, victim, user))
             return;
         
-        // We must be able to actually fire the gun and have it do damage
-        if (!TryComp<GunComponent>(weapon, out var gun))
+        // We must be able to actually hurt people with the weapon
+        if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
             return;
     }
     
@@ -100,8 +100,8 @@ public sealed class ExecutionSystem : EntitySystem
         if (!TryStartExecutionDoafterCommonChecks(weapon, victim, user))
             return;
         
-        // We must be able to actually hurt people with the weapon
-        if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
+        // We must be able to actually fire the gun and have it do damage
+        if (!TryComp<GunComponent>(weapon, out var gun))
             return;
     }
 }
