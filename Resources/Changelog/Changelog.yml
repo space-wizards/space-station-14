@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix audio not playing during weather.
-    type: Fix
-  id: 5221
-  time: '2023-11-28T12:35:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - message: Fix some sound sources not playing positionally (e.g. glass breaking).
     type: Fix
   id: 5222
@@ -3758,3 +3752,12 @@
   id: 5721
   time: '2024-01-16T07:53:46.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24136
+- author: Dygon
+  changes:
+  - message: Flare shells now embed into whatever they hit.
+    type: Tweak
+  - message: Flare shells ignite mobs again.
+    type: Fix
+  id: 5722
+  time: '2024-01-16T09:17:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23648
