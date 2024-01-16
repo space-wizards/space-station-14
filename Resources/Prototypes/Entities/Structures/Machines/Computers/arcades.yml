@@ -115,6 +115,8 @@
     board: SpaceVillainArcadeComputerCircuitboard
   - type: Advertise
     pack: SpaceVillainAds
+    minWait: 120
+    maxWait: 300 # Arcades are noisy
 
 - type: entity
   id: SpaceVillainArcadeFilled
@@ -155,3 +157,5 @@
     board: BlockGameArcadeComputerCircuitboard
   - type: Advertise
     pack: BlockGameAds
+    minWait: 120
+    maxWait: 300 # Arcades are noisy
