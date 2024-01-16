@@ -19,11 +19,11 @@ suicide-popup-gun-complete-internal = You shoot yourself in the head!
 suicide-popup-gun-complete-external = {$attacker} shoots {REFLEXIVE($attacker)} in the head!
 
 execution-popup-melee-initial-internal = You ready {THE($weapon)} against {$victim}'s throat.
-execution-popup-melee-initial-external = {$attacker} readies {POSS-ADJ(attacker)} {$weapon} against the throat of {$victim}.
+execution-popup-melee-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against the throat of {$victim}.
 execution-popup-melee-complete-internal = You slit the throat of {$victim}!
 execution-popup-melee-complete-external = {$attacker} slits the throat of {$victim}!
 
 suicide-popup-melee-initial-internal = You ready {THE($weapon)} against your throat.
-suicide-popup-melee-initial-external = {$attacker} readies {POSS-ADJ(attacker)} {$weapon} against their throat.
+suicide-popup-melee-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against {POSS-ADJ($attacker)} throat.
 suicide-popup-melee-complete-internal = You slit your throat with {THE($weapon)}.
 suicide-popup-melee-complete-external = {$attacker} slits their throat with {THE($weapon)}.
