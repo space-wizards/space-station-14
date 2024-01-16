@@ -3026,7 +3026,7 @@
       gender: epicene
   - type: Inventory
     speciesId: tortoise
-    templateId: head
+    templateId: tortoise
   - type: InventorySlots
   - type: InteractionPopup
     successChance: 0.7

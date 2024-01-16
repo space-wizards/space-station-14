@@ -41,6 +41,12 @@
     sprite: Clothing/Head/Animals/headslime.rsi
   - type: Clothing
     sprite: Clothing/Head/Animals/headslime.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase

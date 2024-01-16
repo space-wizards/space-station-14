@@ -1,0 +1,12 @@
+- type: inventoryTemplate
+  id: tortoise
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 0,1
+    strippingWindowPos: 0,0
+    displayName: Head
+    whitelist:
+      tags:
+        - TortoiseWearable

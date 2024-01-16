@@ -8,6 +8,12 @@
     sprite: Clothing/Head/Hats/beaver_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beaver_hat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -154,6 +160,12 @@
     sprite: Clothing/Head/Hats/bowler_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/bowler_hat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -222,6 +234,8 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+    - DroneUsable
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -236,8 +250,10 @@
   - type: Tag
     tags:
     - ClothMade
-    - HamsterWearable
+    - DroneUsable
     - WhitelistChameleon
+    - TortoiseWearable
+    - HamsterWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -249,6 +265,12 @@
     sprite: Clothing/Head/Hats/greyfedora.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/greyfedora.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -260,6 +282,12 @@
     sprite: Clothing/Head/Hats/fez.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/fez.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -303,6 +331,12 @@
     sprite: Clothing/Head/Hats/outlawhat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/outlawhat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -325,6 +359,11 @@
     sprite: Clothing/Head/Hats/paper.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/paper.rsi
+  - type: Tag
+    tags:
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -336,6 +375,12 @@
     sprite: Clothing/Head/Hats/pirate.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/pirate.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -358,6 +403,12 @@
     sprite: Clothing/Head/Hats/redwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/redwizard.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -382,6 +433,12 @@
     sprite: Clothing/Head/Hats/sombrero.rsi
   - type: AddAccentClothing
     accent: SpanishAccent
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -436,6 +493,7 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -460,6 +518,12 @@
     sprite: Clothing/Head/Hats/violetwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/violetwizard.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -484,6 +548,12 @@
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/witch.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -511,6 +581,7 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -522,6 +593,12 @@
     sprite: Clothing/Head/Hats/xmascrown.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/xmascrown.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -601,6 +678,12 @@
     sprite: Clothing/Head/Hats/fishcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/fishcap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -686,6 +769,12 @@
     sprite: Clothing/Head/Hats/piratetricord.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/piratetricord.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -778,6 +867,11 @@
     containers:
       storagebase: !type:Container
   - type: Tag
+    tags:
+    - ClothMade
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -834,9 +928,10 @@
     sprite: Clothing/Head/Hats/party_red.rsi
   - type: Tag
     tags:
-      - DroneUsable
-      - WhitelistChameleon
-      - HamsterWearable
+    - DroneUsable
+    - WhitelistChameleon
+    - HamsterWearable
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadHatPartyRed

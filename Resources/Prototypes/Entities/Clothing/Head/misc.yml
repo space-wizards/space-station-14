@@ -151,6 +151,11 @@
   - type: PhysicalComposition #you can't just pass up some free plastic!
     materialComposition:
       Plastic: 100
+  - type: Tag
+    tags:
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -166,6 +171,11 @@
     price: 3000
   - type: AddAccentClothing
     accent: MobsterAccent
+  - type: Tag
+    tags:
+    - DroneUsable
+    - WhitelistChameleon
+    - TortoiseWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -183,7 +193,7 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
-    
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatDogEars
