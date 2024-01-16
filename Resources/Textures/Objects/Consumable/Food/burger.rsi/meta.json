@@ -180,6 +180,9 @@
     {
       "name": "inhand-left",
       "directions": 4
+    },
+    {
+      "name": "mothroach"
     }
   ]
 }
