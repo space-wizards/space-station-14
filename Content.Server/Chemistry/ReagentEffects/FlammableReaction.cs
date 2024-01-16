@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public sealed partial class FlammableReaction : ReagentEffect
     {
-        [DataField("multiplier")]
+        [DataField]
         public float Multiplier = 0.05f;
 
         public override bool ShouldLog => true;

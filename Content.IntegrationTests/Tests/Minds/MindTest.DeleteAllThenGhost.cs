@@ -36,8 +36,8 @@ public sealed partial class MindTests
         await pair.RunTicksSync(5);
 
         // Client is not attached to anything
-        Assert.Null(pair.Client.Player?.ControlledEntity);
-        Assert.Null(pair.PlayerData?.Mind);
+        Assert.That(pair.Client.Player?.ControlledEntity, Is.Null);
+        Assert.That(pair.PlayerData?.Mind, Is.Null);
 
         // Attempt to ghost
         var cConHost = pair.Client.ResolveDependency<IConsoleHost>();

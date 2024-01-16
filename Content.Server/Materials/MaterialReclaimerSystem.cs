@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
@@ -11,7 +11,6 @@ using Content.Server.Wires;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -20,6 +19,7 @@ using Content.Shared.Mind;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Materials;
 
@@ -51,40 +51,40 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         SubscribeLocalEvent<MaterialReclaimerComponent, SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, PowerChangedEvent>(OnActivePowerChanged);
     }
-    private void OnStartup(EntityUid uid, MaterialReclaimerComponent component, ComponentStartup args)
+    private void OnStartup(Entity<MaterialReclaimerComponent> entity, ref ComponentStartup args)
     {
-        component.OutputSolution = _solutionContainer.EnsureSolution(uid, component.SolutionContainerId);
+        _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.SolutionContainerId);
     }
 
-    private void OnUpgradeExamine(EntityUid uid, MaterialReclaimerComponent component, UpgradeExamineEvent args)
+    private void OnUpgradeExamine(Entity<MaterialReclaimerComponent> entity, ref UpgradeExamineEvent args)
     {
-        args.AddPercentageUpgrade(Loc.GetString("material-reclaimer-upgrade-process-rate"), component.MaterialProcessRate / component.BaseMaterialProcessRate);
+        args.AddPercentageUpgrade(Loc.GetString("material-reclaimer-upgrade-process-rate"), entity.Comp.MaterialProcessRate / entity.Comp.BaseMaterialProcessRate);
     }
 
-    private void OnRefreshParts(EntityUid uid, MaterialReclaimerComponent component, RefreshPartsEvent args)
+    private void OnRefreshParts(Entity<MaterialReclaimerComponent> entity, ref RefreshPartsEvent args)
     {
-        var rating = args.PartRatings[component.MachinePartProcessRate] - 1;
-        component.MaterialProcessRate = component.BaseMaterialProcessRate * MathF.Pow(component.PartRatingProcessRateMultiplier, rating);
-        Dirty(component);
+        var rating = args.PartRatings[entity.Comp.MachinePartProcessRate] - 1;
+        entity.Comp.MaterialProcessRate = entity.Comp.BaseMaterialProcessRate * MathF.Pow(entity.Comp.PartRatingProcessRateMultiplier, rating);
+        Dirty(entity);
     }
 
-    private void OnPowerChanged(EntityUid uid, MaterialReclaimerComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<MaterialReclaimerComponent> entity, ref PowerChangedEvent args)
     {
-        AmbientSound.SetAmbience(uid, component.Enabled && args.Powered);
-        component.Powered = args.Powered;
-        Dirty(component);
+        AmbientSound.SetAmbience(entity.Owner, entity.Comp.Enabled && args.Powered);
+        entity.Comp.Powered = args.Powered;
+        Dirty(entity);
     }
 
-    private void OnInteractUsing(EntityUid uid, MaterialReclaimerComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<MaterialReclaimerComponent> entity, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
         // if we're trying to get a solution out of the reclaimer, don't destroy it
-        if (component.OutputSolution.Contents.Any())
+        if (_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.SolutionContainerId, out _, out var outputSolution) && outputSolution.Contents.Any())
         {
             if (TryComp<SolutionContainerManagerComponent>(args.Used, out var managerComponent) &&
-                managerComponent.Solutions.Any(s => s.Value.AvailableVolume > 0))
+                _solutionContainer.EnumerateSolutions((args.Used, managerComponent)).Any(s => s.Solution.Comp.Solution.AvailableVolume > 0))
             {
                 if (_openable.IsClosed(args.Used))
                     return;
@@ -95,10 +95,10 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             }
         }
 
-        args.Handled = TryStartProcessItem(uid, args.Used, component, args.User);
+        args.Handled = TryStartProcessItem(entity.Owner, args.Used, entity.Comp, args.User);
     }
 
-    private void OnSuicide(EntityUid uid, MaterialReclaimerComponent component, SuicideEvent args)
+    private void OnSuicide(Entity<MaterialReclaimerComponent> entity, ref SuicideEvent args)
     {
         if (args.Handled)
             return;
@@ -109,9 +109,9 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))
         {
             _ticker.OnGhostAttempt(mindId, false, mind: mind);
-            if (mind.OwnedEntity is { Valid: true } entity)
+            if (mind.OwnedEntity is { Valid: true } suicider)
             {
-                _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), entity);
+                _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), suicider);
             }
         }
 
@@ -120,13 +120,13 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             Filter.PvsExcept(victim, entityManager: EntityManager), true);
 
         _body.GibBody(victim, true);
-        _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
+        _appearance.SetData(entity.Owner, RecyclerVisuals.Bloody, true);
     }
 
-    private void OnActivePowerChanged(EntityUid uid, ActiveMaterialReclaimerComponent component, ref PowerChangedEvent args)
+    private void OnActivePowerChanged(Entity<ActiveMaterialReclaimerComponent> entity, ref PowerChangedEvent args)
     {
         if (!args.Powered)
-            TryFinishProcessItem(uid, null, component);
+            TryFinishProcessItem(entity, null, entity.Comp);
     }
 
     /// <inheritdoc/>
@@ -224,6 +224,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     {
         if (!Resolve(reclaimer, ref reclaimerComponent, ref xform))
             return;
+        if (!_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution))
+            return;
 
         efficiency *= reclaimerComponent.Efficiency;
 
@@ -241,8 +243,9 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         // if the item we inserted has reagents, add it in.
         if (TryComp<SolutionContainerManagerComponent>(item, out var solutionContainer))
         {
-            foreach (var solution in solutionContainer.Solutions.Values)
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solutionContainer)))
             {
+                var solution = soln.Comp.Solution;
                 foreach (var quantity in solution.Contents)
                 {
                     totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, false);
@@ -250,7 +253,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             }
         }
 
-        _solutionContainer.TryTransferSolution(reclaimer, reclaimerComponent.OutputSolution, totalChemicals, totalChemicals.Volume);
+        _solutionContainer.TryTransferSolution(outputSolution.Value, totalChemicals, totalChemicals.Volume);
         if (totalChemicals.Volume > 0)
         {
             _puddle.TrySpillAt(reclaimer, totalChemicals, out _, sound, transformComponent: xform);

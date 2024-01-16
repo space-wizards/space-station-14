@@ -11,3 +11,6 @@ advertisement-coffee-10 = Coffee helps you work!
 advertisement-coffee-11 = Try some tea.
 advertisement-coffee-12 = We hope you like the best!
 advertisement-coffee-13 = Try our new chocolate!
+thankyou-coffee-1 = Enjoy your beverage!
+thankyou-coffee-2 = Get it while it's hot!
+thankyou-coffee-3 = Beverage completed.

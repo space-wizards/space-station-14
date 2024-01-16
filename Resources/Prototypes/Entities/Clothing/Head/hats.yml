@@ -738,7 +738,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHetmanHat
-  name: Hetman hat
+  name: hetman hat
   description: From the Zaporozhian Sich with love.
   components:
   - type: Sprite
@@ -814,7 +814,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGladiator
-  name: Gladiator helmet
+  name: gladiator helmet
   description: Protects the head from harsh ash winds and toy spears.
   components:
   - type: Sprite
@@ -867,3 +867,25 @@
     sprite: Clothing/Head/Hats/party_blue.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/party_blue.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGreyFlatcap
+  name: grey flatcap
+  description: Fashionable for both the working class and old man Jenkins.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/greyflatcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/greyflatcap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBrownFlatcap
+  name: brown flatcap
+  description: Stupid clown! You made me look bad!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/brownflatcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/brownflatcap.rsi

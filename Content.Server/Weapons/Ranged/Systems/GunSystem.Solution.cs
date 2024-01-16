@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -18,29 +19,29 @@ public sealed partial class GunSystem
         base.InitializeSolution();
 
         SubscribeLocalEvent<SolutionAmmoProviderComponent, MapInitEvent>(OnSolutionMapInit);
-        SubscribeLocalEvent<SolutionAmmoProviderComponent, SolutionChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<SolutionAmmoProviderComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
     }
 
-    private void OnSolutionMapInit(EntityUid uid, SolutionAmmoProviderComponent component, MapInitEvent args)
+    private void OnSolutionMapInit(Entity<SolutionAmmoProviderComponent> entity, ref MapInitEvent args)
     {
-        UpdateSolutionShots(uid, component);
+        UpdateSolutionShots(entity.Owner, entity.Comp);
     }
 
-    private void OnSolutionChanged(EntityUid uid, SolutionAmmoProviderComponent component, SolutionChangedEvent args)
+    private void OnSolutionChanged(Entity<SolutionAmmoProviderComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        if (args.Solution.Name == component.SolutionId)
-            UpdateSolutionShots(uid, component, args.Solution);
+        if (args.Solution.Name == entity.Comp.SolutionId)
+            UpdateSolutionShots(entity.Owner, entity.Comp, args.Solution);
     }
 
     protected override void UpdateSolutionShots(EntityUid uid, SolutionAmmoProviderComponent component, Solution? solution = null)
     {
         var shots = 0;
         var maxShots = 0;
-        if (solution == null && !_solutionContainer.TryGetSolution(uid, component.SolutionId, out solution))
+        if (solution == null && !_solutionContainer.TryGetSolution(uid, component.SolutionId, out _, out solution))
         {
             component.Shots = shots;
             component.MaxShots = maxShots;
-            Dirty(component);
+            Dirty(uid, component);
             return;
         }
 
@@ -49,7 +50,7 @@ public sealed partial class GunSystem
 
         component.Shots = shots;
         component.MaxShots = maxShots;
-        Dirty(component);
+        Dirty(uid, component);
 
         UpdateSolutionAppearance(uid, component);
     }
@@ -58,10 +59,10 @@ public sealed partial class GunSystem
     {
         var (ent, shootable) = base.GetSolutionShot(uid, component, position);
 
-        if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution))
+        if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution, out _))
             return (ent, shootable);
 
-        var newSolution = _solutionContainer.SplitSolution(uid, solution, component.FireCost);
+        var newSolution = _solutionContainer.SplitSolution(solution.Value, component.FireCost);
 
         if (newSolution.Volume <= FixedPoint2.Zero)
             return (ent, shootable);
@@ -73,9 +74,9 @@ public sealed partial class GunSystem
         }
 
         // Add the solution to the vapor and actually send the thing
-        if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution))
+        if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution, out _))
         {
-            _solutionContainer.TryAddSolution(ent, vaporSolution, newSolution);
+            _solutionContainer.TryAddSolution(vaporSolution.Value, newSolution);
         }
         return (ent, shootable);
     }
