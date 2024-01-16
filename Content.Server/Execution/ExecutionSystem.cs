@@ -135,10 +135,6 @@ public sealed class ExecutionSystem : EntitySystem
         // The victim must be incapacitated to be executed
         if (victim != attacker && _actionBlockerSystem.CanInteract(victim, null))
             return false;
-        
-        // You must be not incapacitated to execute yourself
-        if (victim == attacker && !_actionBlockerSystem.CanInteract(victim, null))
-            return false;
 
         // All checks passed
         return true;
