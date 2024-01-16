@@ -1036,3 +1036,24 @@
   completetime: 2
   materials:
     Cloth: 100
+
+- type: latheRecipe
+  id: ClothingNeckTieRed
+  result: ClothingNeckTieRed
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckTieDet
+  result: ClothingNeckTieDet
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckTieSci
+  result: ClothingNeckTieSci
+  completetime: 2
+  materials:
+    Cloth: 50

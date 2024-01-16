@@ -5,6 +5,7 @@ using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Timing;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -126,7 +127,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             var handButton = AddHand(name, hand.Location);
 
-            if (_entities.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
+            if (_entities.TryGetComponent(hand.HeldEntity, out VirtualItemComponent? virt))
             {
                 handButton.SpriteView.SetEntity(virt.BlockingEntity);
                 handButton.Blocked = true;
@@ -177,7 +178,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (hand == null)
             return;
 
-        if (_entities.TryGetComponent(entity, out HandVirtualItemComponent? virt))
+        if (_entities.TryGetComponent(entity, out VirtualItemComponent? virt))
         {
             hand.SpriteView.SetEntity(virt.BlockingEntity);
             hand.Blocked = true;

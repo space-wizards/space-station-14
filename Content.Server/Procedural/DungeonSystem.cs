@@ -35,7 +35,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private HashSet<EntityUid> _entSet = new();
     private readonly List<(Vector2i, Tile)> _tiles = new();
 
     private EntityQuery<MetaDataComponent> _metaQuery;

@@ -3,6 +3,7 @@
   parent: BaseStructureDynamic
   name: closet
   description: A standard-issue Nanotrasen storage unit.
+  abstract: true
   components:
   - type: ResistLocker
   - type: Transform
@@ -87,6 +88,8 @@
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+  - type: StaticPrice
+    price: 50
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
