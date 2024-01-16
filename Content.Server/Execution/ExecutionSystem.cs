@@ -114,8 +114,12 @@ public sealed class ExecutionSystem : EntitySystem
         if (_mobStateSystem.IsDead(victim, mobState))
             return false;
 
-        // You must be incapacitated to be executed
-        if (_actionBlockerSystem.CanInteract(victim, null))
+        // You must be incapacitated to execute someone else
+        if (victim != user && _actionBlockerSystem.CanInteract(victim, null))
+            return false;
+        
+        // You must be not incapacitated to execute yourself
+        if (victim == user && !_actionBlockerSystem.CanInteract(victim, null))
             return false;
 
         // All checks passed
