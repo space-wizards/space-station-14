@@ -152,14 +152,15 @@ namespace Content.Server.Cargo.Systems
             GetTradeStations(stationData, ref _listEnts);
             var fulfilled = false;
 
+            // Try to fulfill from any station where possible, if the pad is not occupied.
             foreach (var trade in _listEnts)
             {
                 var tradePads = GetCargoPallets(trade);
                 _random.Shuffle(tradePads);
 
-                var pads = GetFreeCargoPallets(trade, tradePads);
+                var freePads = GetFreeCargoPallets(trade, tradePads);
 
-                foreach (var pad in pads)
+                foreach (var pad in freePads)
                 {
                     var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
 

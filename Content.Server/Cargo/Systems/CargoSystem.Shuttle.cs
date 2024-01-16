@@ -168,6 +168,7 @@ public sealed partial class CargoSystem
 
     private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid)
     {
+        _pads.Clear();
         var query = AllEntityQuery<CargoPalletComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var compXform))
@@ -178,10 +179,10 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            pads.Add((uid, comp, compXform));
+            _pads.Add((uid, comp, compXform));
         }
 
-        return pads;
+        return _pads;
     }
 
     private IEnumerable<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)>
