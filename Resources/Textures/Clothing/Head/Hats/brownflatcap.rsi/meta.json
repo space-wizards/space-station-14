@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Tunguso4ka (github) for SS14, monkey made by brainfood1183 (github) for ss14, edited by Alekshhh",
+  "copyright": "Spritework done by Hanzdegloker",
   "size": {
     "x": 32,
     "y": 32
@@ -11,11 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "equipped-INNERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "equipped-INNERCLOTHING-monkey",
+      "name": "equipped-HELMET",
       "directions": 4
     },
     {
