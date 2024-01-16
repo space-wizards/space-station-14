@@ -310,10 +310,14 @@ public sealed class ExecutionSystem : EntitySystem
         RaiseLocalEvent(weapon, ev);
 
         // Check if there's any ammo left
-        if (ev.Ammo.Count <= 0) return;
+        if (ev.Ammo.Count <= 0)
+        {
+            _audioSystem.PlayEntity(component.SoundEmpty, Filter.Pvs(weapon), weapon, true, AudioParams.Default);
+            ShowExecutionPopup("execution-popup-gun-empty", Filter.Pvs(weapon), PopupType.Medium, attacker, victim, weapon);
+            return;
+        }
         
         // Information about the ammo like damage
-        SoundSpecifier? shootSound = component.SoundGunshot;
         DamageSpecifier damage = new DamageSpecifier();
 
         // Get some information from IShootable
@@ -353,17 +357,17 @@ public sealed class ExecutionSystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        // Check for clumsiness
+        // Clumsy people have a chance to shoot themselves
         if (TryComp<ClumsyComponent>(attacker, out var clumsy) && component.ClumsyProof == false)
         {
             if (_interactionSystem.TryRollClumsy(attacker, 0.33333333f, clumsy))
             {
-                _damageableSystem.TryChangeDamage(attacker, damage, origin: attacker);
-                
                 ShowExecutionPopup("execution-popup-gun-clumsy-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
                 ShowExecutionPopup("execution-popup-gun-clumsy-external", Filter.PvsExcept(attacker), PopupType.MediumCaution, attacker, victim, weapon);
 
-                _audioSystem.PlayEntity(component.SoundGunshot, Filter.Pvs(weapon), weapon, false, AudioParams.Default);
+                // You shoot yourself with the gun (no damage multiplier)
+                _damageableSystem.TryChangeDamage(attacker, damage, origin: attacker);
+                _audioSystem.PlayEntity(component.SoundGunshot, Filter.Pvs(weapon), weapon, true, AudioParams.Default);
                 return;
             }
         }
@@ -376,12 +380,12 @@ public sealed class ExecutionSystem : EntitySystem
         if (attacker != victim)
         {
             ShowExecutionPopup("execution-popup-gun-complete-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
-            ShowExecutionPopup("execution-popup-gun-complete-external", Filter.PvsExcept(attacker), PopupType.MediumCaution, attacker, victim, weapon);
+            ShowExecutionPopup("execution-popup-gun-complete-external", Filter.PvsExcept(attacker), PopupType.LargeCaution, attacker, victim, weapon);
         }
         else
         {
-            ShowExecutionPopup("suicide-popup-gun-complete-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
-            ShowExecutionPopup("suicide-popup-gun-complete-external", Filter.PvsExcept(attacker), PopupType.MediumCaution, attacker, victim, weapon);
+            ShowExecutionPopup("suicide-popup-gun-complete-internal", Filter.Entities(attacker), PopupType.LargeCaution, attacker, victim, weapon);
+            ShowExecutionPopup("suicide-popup-gun-complete-external", Filter.PvsExcept(attacker), PopupType.LargeCaution, attacker, victim, weapon);
         }
     }
 
