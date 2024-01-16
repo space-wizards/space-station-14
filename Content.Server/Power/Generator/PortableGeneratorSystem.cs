@@ -133,12 +133,13 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         }
         else
         {
+            // try again bozo
+            repeat = true;
+
             if (user is null)
                 return;
 
             _popup.PopupEntity(Loc.GetString("portable-generator-start-fail"), uid, user.Value);
-            // Try again bozo
-            repeat = true;
         }
     }
 

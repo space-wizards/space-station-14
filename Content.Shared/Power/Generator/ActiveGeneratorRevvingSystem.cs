@@ -74,8 +74,8 @@ public sealed class ActiveGeneratorRevvingSystem: EntitySystem
 
             if (activeGeneratorRevvingComponent.CurrentTime >= portableGeneratorComponent.StartTime)
             {
-                StopAutoRevving(uid);
                 StartGenerator(uid);
+                StopAutoRevving(uid);
             }
         }
     }
