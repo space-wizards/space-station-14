@@ -244,7 +244,7 @@
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetSecurityService
-  name: security service headset
+  name: sec-service headset
   description: Listen in to security's woes.
   components:
   - type: ContainerFill
