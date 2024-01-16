@@ -54,14 +54,14 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanExecuteChecksMelee(weapon, victim, victim))
+        if (!CanExecuteWithMelee(weapon, victim, victim))
             return;
         
         UtilityVerb verb = new()
         {
             Act = () =>
             {
-                TryStartExecutionDoafterMelee(weapon, victim, attacker);
+                TryStartMeleeExecutionDoafter(weapon, victim, attacker);
             },
             Impact = LogImpact.High,
             Text = Loc.GetString("execution-verb-name"),
@@ -83,14 +83,14 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanExecuteChecksGun(weapon, victim, victim))
+        if (!CanExecuteWithGun(weapon, victim, victim))
             return;
         
         UtilityVerb verb = new()
         {
             Act = () =>
             {
-                TryStartExecutionDoafterGun(weapon, victim, attacker);
+                TryStartGunExecutionDoafter(weapon, victim, attacker);
             },
             Impact = LogImpact.High,
             Text = Loc.GetString("execution-verb-name"),
@@ -100,7 +100,7 @@ public sealed class ExecutionSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private bool CanExecuteChecks(EntityUid weapon, EntityUid victim, EntityUid user)
+    private bool CanExecuteWithAny(EntityUid weapon, EntityUid victim, EntityUid user)
     {
         // No point executing someone if they can't take damage
         if (!TryComp<DamageableComponent>(victim, out var damage))
@@ -118,9 +118,9 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
 
-    private bool CanExecuteChecksMelee(EntityUid weapon, EntityUid victim, EntityUid user)
+    private bool CanExecuteWithMelee(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteChecks(weapon, victim, user)) return false;
+        if (!CanExecuteWithAny(weapon, victim, user)) return false;
         
         // We must be able to actually hurt people with the weapon
         if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
@@ -129,9 +129,9 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
     
-    private bool CanExecuteChecksGun(EntityUid weapon, EntityUid victim, EntityUid user)
+    private bool CanExecuteWithGun(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteChecks(weapon, victim, user)) return false;
+        if (!CanExecuteWithAny(weapon, victim, user)) return false;
         
         // We must be able to actually fire the gun and have it do damage
         if (!TryComp<GunComponent>(weapon, out var gun))
@@ -140,9 +140,9 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
     
-    private void TryStartExecutionDoafterMelee(EntityUid weapon, EntityUid victim, EntityUid user)
+    private void TryStartMeleeExecutionDoafter(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteChecksMelee(weapon, victim, user))
+        if (!CanExecuteWithMelee(weapon, victim, user))
             return;
 
         var executionTime = Comp<MeleeWeaponComponent>(weapon).AttackRate * MeleeExecutionTimeModifier;
@@ -166,9 +166,9 @@ public sealed class ExecutionSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfter);
     }
     
-    private void TryStartExecutionDoafterGun(EntityUid weapon, EntityUid victim, EntityUid user)
+    private void TryStartGunExecutionDoafter(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteChecksGun(weapon, victim, user))
+        if (!CanExecuteWithGun(weapon, victim, user))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString(
@@ -195,7 +195,7 @@ public sealed class ExecutionSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return false;
         
-        if (!CanExecuteChecks(args.Used.Value, args.Target.Value, uid))
+        if (!CanExecuteWithAny(args.Used.Value, args.Target.Value, uid))
             return false;
         
         // All checks passed
@@ -211,7 +211,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Used!.Value;
         var victim = args.Target!.Value;
 
-        if (!CanExecuteChecksMelee(weapon, victim, attacker)) return;
+        if (!CanExecuteWithMelee(weapon, victim, attacker)) return;
 
         if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
             return;
@@ -236,6 +236,6 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Used!.Value;
         var victim = args.Target!.Value;
 
-        if (!CanExecuteChecksGun(weapon, victim, attacker)) return;
+        if (!CanExecuteWithGun(weapon, victim, attacker)) return;
     }
 }
