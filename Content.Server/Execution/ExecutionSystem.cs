@@ -148,22 +148,26 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
     
-    private void TryStartMeleeExecutionDoafter(EntityUid weapon, EntityUid victim, EntityUid user)
+    private void TryStartMeleeExecutionDoafter(EntityUid weapon, EntityUid victim, EntityUid attacker)
     {
-        if (!CanExecuteWithMelee(weapon, victim, user))
+        if (!CanExecuteWithMelee(weapon, victim, attacker))
             return;
 
         var executionTime = (1.0f / Comp<MeleeWeaponComponent>(weapon).AttackRate) * MeleeExecutionTimeModifier;
 
-        _popupSystem.PopupEntity(Loc.GetString(
-                "execution-popup-melee-initial-internal", ("weapon", weapon), ("victim", victim)),
-            user, Filter.Entities(user), true, PopupType.Medium);
-        _popupSystem.PopupEntity(Loc.GetString(
-                "execution-popup-melee-initial-external", ("weapon", weapon), ("victim", victim)),
-            user, Filter.PvsExcept(user), true, PopupType.MediumCaution);
+        if (attacker == victim)
+        {
+            ShowExecutionPopup("suicide-popup-melee-initial-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("suicide-popup-melee-initial-external", Filter.PvsExcept(attacker), PopupType.Medium, attacker, victim, weapon);
+        }
+        else
+        {
+            ShowExecutionPopup("execution-popup-melee-initial-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("execution-popup-melee-initial-external", Filter.PvsExcept(attacker), PopupType.Medium, attacker, victim, weapon);
+        }
         
         var doAfter =
-            new DoAfterArgs(EntityManager, user, executionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
+            new DoAfterArgs(EntityManager, attacker, executionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -174,20 +178,24 @@ public sealed class ExecutionSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfter);
     }
     
-    private void TryStartGunExecutionDoafter(EntityUid weapon, EntityUid victim, EntityUid user)
+    private void TryStartGunExecutionDoafter(EntityUid weapon, EntityUid victim, EntityUid attacker)
     {
-        if (!CanExecuteWithGun(weapon, victim, user))
+        if (!CanExecuteWithGun(weapon, victim, attacker))
             return;
-
-        _popupSystem.PopupEntity(Loc.GetString(
-                "execution-popup-gun-initial-internal", ("weapon", weapon), ("victim", victim)),
-            user, Filter.Entities(user), true, PopupType.Medium);
-        _popupSystem.PopupEntity(Loc.GetString(
-                "execution-popup-gun-initial-external", ("weapon", weapon), ("victim", victim)),
-            user, Filter.PvsExcept(user), true, PopupType.MediumCaution);
         
+        if (attacker == victim)
+        {
+            ShowExecutionPopup("suicide-popup-gun-initial-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("suicide-popup-gun-initial-external", Filter.PvsExcept(attacker), PopupType.Medium, attacker, victim, weapon);
+        }
+        else
+        {
+            ShowExecutionPopup("execution-popup-gun-initial-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("execution-popup-gun-initial-external", Filter.PvsExcept(attacker), PopupType.Medium, attacker, victim, weapon);
+        }
+
         var doAfter =
-            new DoAfterArgs(EntityManager, user, GunExecutionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
+            new DoAfterArgs(EntityManager, attacker, GunExecutionTime, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -216,8 +224,8 @@ public sealed class ExecutionSystem : EntitySystem
             return;
         
         var attacker = args.User;
-        var weapon = args.Used!.Value;
         var victim = args.Target!.Value;
+        var weapon = args.Used!.Value;
 
         if (!CanExecuteWithMelee(weapon, victim, attacker)) return;
 
@@ -226,13 +234,17 @@ public sealed class ExecutionSystem : EntitySystem
         
         _damageableSystem.TryChangeDamage(victim, melee.Damage * DamageModifier, true);
         _meleeSystem.PlayHitSound(victim, weapon, null, null, null);
-        
-        _popupSystem.PopupEntity(Loc.GetString(
-                "execution-popup-melee-complete-internal", ("victim", victim)),
-            attacker, Filter.Entities(attacker), true, PopupType.Medium);
-        _popupSystem.PopupEntity(Loc.GetString(
-                "execution-popup-melee-complete-external", ("attacker", attacker), ("victim", victim)),
-            attacker, Filter.PvsExcept(attacker), true, PopupType.MediumCaution);
+
+        if (attacker == victim)
+        {
+            ShowExecutionPopup("suicide-popup-melee-complete-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("suicide-popup-melee-complete-external", Filter.PvsExcept(attacker), PopupType.Medium, attacker, victim, weapon);
+        }
+        else
+        {
+            ShowExecutionPopup("execution-popup-melee-complete-internal", Filter.Entities(attacker), PopupType.Medium, attacker, victim, weapon);
+            ShowExecutionPopup("execution-popup-melee-complete-external", Filter.PvsExcept(attacker), PopupType.Medium, attacker, victim, weapon);
+        }
     }
     
     private void OnDoafterGun(EntityUid uid, GunComponent component, DoAfterEvent args)
@@ -245,5 +257,13 @@ public sealed class ExecutionSystem : EntitySystem
         var victim = args.Target!.Value;
 
         if (!CanExecuteWithGun(weapon, victim, attacker)) return;
+    }
+
+    private void ShowExecutionPopup(string locString, Filter filter, PopupType type,
+        EntityUid attacker, EntityUid victim, EntityUid weapon)
+    {
+        _popupSystem.PopupEntity(Loc.GetString(
+                locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+            attacker, filter, true, type);
     }
 }
