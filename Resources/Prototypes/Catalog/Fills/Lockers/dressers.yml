@@ -61,6 +61,7 @@
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
+      - id: ClothingMaskNeckGaiter
 
 - type: entity
   id: DresserQuarterMasterFilled
@@ -74,6 +75,18 @@
       - id: ClothingUniformJumpsuitQMTurtleneck
       - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
+
+- type: entity
+  id: DresserResearchDirectorFilled
+  parent: Dresser
+  suffix: Filled, Research Director
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckCloakRd
+      - id: ClothingHeadHatBeretRND
+      - id: ClothingHandsGlovesColorPurple
+      - id: ClothingHeadsetAltScience
 
 - type: entity
   id: DresserWardenFilled

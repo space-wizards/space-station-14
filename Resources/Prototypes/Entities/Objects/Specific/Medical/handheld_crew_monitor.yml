@@ -42,7 +42,7 @@
 
 - type: entity
   id: SpyCrewMonitor
-  name: Spy Monitor
+  name: spy monitor
   description: A spy device capable of connecting to crew monitoring servers.
   parent: HandheldCrewMonitor
   components:
@@ -59,6 +59,30 @@
 - type: entity
   id: SpyCrewMonitorEmpty
   parent: SpyCrewMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default 
+
+- type: entity
+  id: SyndiCrewMonitor
+  name: syndicate crew monitor
+  description: The syndicated version of crew monitor, intercepts information from the server.
+  parent: HandheldCrewMonitor
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/syndihandheldcrewmonitor.rsi
+    state: syndiscanner
+  - type: Item
+    sprite: Objects/Specific/Medical/syndihandheldcrewmonitor.rsi
+  - type: PowerCellDraw
+    useRate: 40
+
+- type: entity
+  id: SyndiCrewMonitorEmpty
+  parent: SyndiCrewMonitor
   suffix: Empty
   components:
   - type: ItemSlots

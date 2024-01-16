@@ -254,6 +254,11 @@ public sealed partial class ChemistrySystem
                 _adminLogger.Add(LogType.ForceFeed,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject {EntityManager.ToPrettyString(target):target} with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}");
             }
+            else
+            {
+                _adminLogger.Add(LogType.ForceFeed,
+                    $"{EntityManager.ToPrettyString(user):user} is attempting to draw {injector.Comp.TransferAmount.ToString()} units from {EntityManager.ToPrettyString(target):target}");
+            }
         }
         else
         {
@@ -261,7 +266,15 @@ public sealed partial class ChemistrySystem
             actualDelay /= 2;
 
             if (injector.Comp.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
-                _adminLogger.Add(LogType.Ingestion, $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
+            {
+                _adminLogger.Add(LogType.Ingestion,
+                    $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.ForceFeed,
+                    $"{EntityManager.ToPrettyString(user):user} is attempting to draw {injector.Comp.TransferAmount.ToString()} units from themselves.");
+            }
         }
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, actualDelay, new InjectorDoAfterEvent(), injector.Owner, target: target, used: injector.Owner)

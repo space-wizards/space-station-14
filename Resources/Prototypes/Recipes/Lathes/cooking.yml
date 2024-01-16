@@ -19,21 +19,35 @@
   result: DrinkMug
   completetime: 0.8
   materials:
-    Glass: 50
+    Glass: 100
 
 - type: latheRecipe
   id: DrinkMugMetal
   result: DrinkMugMetal
   completetime: 0.8
   materials:
-    Steel: 50
+    Steel: 100
 
 - type: latheRecipe
   id: DrinkGlass
   result: DrinkGlass
   completetime: 0.8
   materials:
-    Glass: 50
+    Glass: 100
+
+- type: latheRecipe
+  id: DrinkShotGlass
+  result: DrinkShotGlass
+  completetime: 0.4
+  materials:
+    Glass: 100
+
+- type: latheRecipe
+  id: DrinkGlassCoupeShaped
+  result: DrinkGlassCoupeShaped
+  completetime: 0.8
+  materials:
+    Glass: 100
 
 - type: latheRecipe
   id: FoodPlate
@@ -62,3 +76,24 @@
   completetime: 0.4
   materials:
     Plastic: 50
+
+- type: latheRecipe
+  id: FoodBowlBig
+  result: FoodBowlBig
+  completetime: 0.8
+  materials:
+    Glass: 100
+
+- type: latheRecipe
+  id: FoodPlateTin
+  result: FoodPlateTin
+  completetime: 0.4
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: FoodKebabSkewer
+  result: FoodKebabSkewer
+  completetime: 0.4
+  materials:
+    Steel: 100

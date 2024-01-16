@@ -14,21 +14,12 @@ public abstract class SharedDiceSystem : EntitySystem
         SubscribeLocalEvent<DiceComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DiceComponent, LandEvent>(OnLand);
         SubscribeLocalEvent<DiceComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<DiceComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<DiceComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<DiceComponent, AfterAutoHandleStateEvent>(OnDiceAfterHandleState);
     }
 
-    private void OnHandleState(EntityUid uid, DiceComponent component, ref ComponentHandleState args)
+    private void OnDiceAfterHandleState(EntityUid uid, DiceComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (args.Current is DiceComponent.DiceState state)
-            component.CurrentValue = state.CurrentValue;
-
         UpdateVisuals(uid, component);
-    }
-
-    private void OnGetState(EntityUid uid, DiceComponent component, ref ComponentGetState args)
-    {
-        args.State = new DiceComponent.DiceState(component.CurrentValue);
     }
 
     private void OnUseInHand(EntityUid uid, DiceComponent component, UseInHandEvent args)
@@ -48,8 +39,12 @@ public abstract class SharedDiceSystem : EntitySystem
     private void OnExamined(EntityUid uid, DiceComponent dice, ExaminedEvent args)
     {
         //No details check, since the sprite updates to show the side.
-        args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", dice.Sides)));
-        args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-2", ("currentSide", dice.CurrentValue)));
+        using (args.PushGroup(nameof(DiceComponent)))
+        {
+            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", dice.Sides)));
+            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-2",
+                ("currentSide", dice.CurrentValue)));
+        }
     }
 
     public void SetCurrentSide(EntityUid uid, int side, DiceComponent? die = null)

@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Rotting;
+using Content.Server.Atmos.Rotting;
 using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Electrocution;
@@ -66,13 +66,14 @@ public sealed class DefibrillatorSystem : EntitySystem
 
     private void OnUseInHand(EntityUid uid, DefibrillatorComponent component, UseInHandEvent args)
     {
-        if (args.Handled || _useDelay.ActiveDelay(uid))
+        if (args.Handled || !TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay)))
             return;
 
         if (!TryToggle(uid, component, args.User))
             return;
+
         args.Handled = true;
-        _useDelay.BeginDelay(uid);
+        _useDelay.TryResetDelay((uid, useDelay));
     }
 
     private void OnPowerCellSlotEmpty(EntityUid uid, DefibrillatorComponent component, ref PowerCellSlotEmptyEvent args)
@@ -200,7 +201,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         // clowns zap themselves
         if (HasComp<ClumsyComponent>(user) && user != target)
         {
-            Zap(uid, user, user, component, mob, thresholds);
+            Zap(uid, user, user, component);
             return;
         }
 

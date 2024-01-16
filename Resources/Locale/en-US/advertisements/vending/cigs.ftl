@@ -9,3 +9,5 @@ advertisement-cigs-8 = Don't quit, buy more!
 advertisement-cigs-9 = Nicotine heaven.
 advertisement-cigs-10 = Best cigarettes since 2150.
 advertisement-cigs-11 = Award-winning cigs.
+thankyou-cigs-1 = You've got 'em, now smoke 'em!
+thankyou-cigs-2 = You probably won't regret it!

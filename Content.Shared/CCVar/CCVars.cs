@@ -224,6 +224,12 @@ namespace Content.Shared.CCVar
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// Whether or not disconnecting inside of a cryopod should remove the character or just store them until they reconnect.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameCryoSleepRejoining = CVarDef.Create("game.cryo_sleep_rejoining", false, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
@@ -258,7 +264,7 @@ namespace Content.Shared.CCVar
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
-            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED);
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Whether or not the panic bunker will disable when an admin comes online.
@@ -306,6 +312,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.panic_bunker.custom_reason", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        /// Allow bypassing the panic bunker if the user is whitelisted.
+        /// </summary>
+        public static readonly CVarDef<bool> BypassBunkerWhitelist =
+            CVarDef.Create("game.panic_bunker.whitelisted_can_bypass", true, CVar.SERVERONLY);
+
+        /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.
         /// </summary>
         public static readonly CVarDef<bool> GameTableBonk =
@@ -350,6 +362,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> RoundRestartTime =
             CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The prototype to use for secret weights.
+        /// </summary>
+        public static readonly CVarDef<string> SecretWeightPrototype =
+            CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
 
         /*
          * Discord
@@ -497,6 +515,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyInRound =
             CVarDef.Create("tips.in_game_frequency", 60f * 60);
+
+        public static readonly CVarDef<string> LoginTipsDataset =
+            CVarDef.Create("tips.login_dataset", "Tips");
 
         /*
          * Console
@@ -804,6 +825,14 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> AdminAhelpOverrideClientName =
             CVarDef.Create("admin.override_adminname_in_client_ahelp", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The threshold of minutes to appear as a "new player" in the ahelp menu
+        ///     If 0, appearing as a new player is disabled.
+        /// </summary>
+        public static readonly CVarDef<int> NewPlayerThreshold =
+            CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Explosions
          */
@@ -1506,6 +1535,18 @@ namespace Content.Shared.CCVar
 
 
         /*
+        * Accessibility
+        */
+
+        /// <summary>
+        /// Toggle for visual effects that may potentially cause motion sickness.
+        /// Where reasonable, effects affected by this CVar should use an alternate effect.
+        /// Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.
+        /// </summary>
+        public static readonly CVarDef<bool> ReducedMotion =
+            CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
          * CHAT
          */
 
@@ -1625,12 +1666,6 @@ namespace Content.Shared.CCVar
         /*
          * Salvage
          */
-
-        /// <summary>
-        ///     Forced salvage map prototype name (if empty, randomly selected)
-        /// </summary>
-        public static readonly CVarDef<string>
-            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /// <summary>
         /// Duration for missions

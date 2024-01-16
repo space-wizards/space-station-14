@@ -7,13 +7,13 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab;
 [GenerateTypedNameReferences]
 public sealed partial class ObjectsTabEntry : ContainerButton
 {
-    public EntityUid AssocEntity;
+    public NetEntity AssocEntity;
 
-    public ObjectsTabEntry(string name, EntityUid euid)
+    public ObjectsTabEntry(string name, NetEntity nent)
     {
         RobustXamlLoader.Load(this);
-        AssocEntity = euid;
-        EIDLabel.Text = euid.ToString();
+        AssocEntity = nent;
+        EIDLabel.Text = nent.ToString();
         NameLabel.Text = name;
     }
 }

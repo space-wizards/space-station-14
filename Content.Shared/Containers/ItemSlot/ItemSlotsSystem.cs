@@ -265,6 +265,9 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
             }
 
+            if (swap && slot.HasItem && !CanEject(uid, user, slot))
+                return false;
+
             var ev = new ItemSlotInsertAttemptEvent(uid, usedUid, user, slot);
             RaiseLocalEvent(uid, ref ev);
             RaiseLocalEvent(usedUid, ref ev);

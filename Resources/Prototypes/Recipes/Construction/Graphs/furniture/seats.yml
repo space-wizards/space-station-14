@@ -58,6 +58,11 @@
               doAfter: 1
             - material: MetalRod
               amount: 2
+        - to: chairSteelBench
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
 
     - node: chair
       entity: Chair
@@ -174,6 +179,18 @@
               amount: 1
             - !type:SpawnPrototype
               prototype: PartRodMetal1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairSteelBench
+      entity: SteelBench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
               amount: 2
           steps:
             - tool: Screwing
