@@ -114,7 +114,7 @@ public sealed class ExecutionSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private bool CanExecuteWithAny(EntityUid weapon, EntityUid victim, EntityUid user)
+    private bool CanExecuteWithAny(EntityUid weapon, EntityUid victim, EntityUid attacker)
     {
         // No point executing someone if they can't take damage
         if (!TryComp<DamageableComponent>(victim, out var damage))
@@ -127,13 +127,17 @@ public sealed class ExecutionSystem : EntitySystem
         // You're not allowed to execute dead people (no fun allowed)
         if (_mobStateSystem.IsDead(victim, mobState))
             return false;
+        
+        // You must be able to attack people to execute
+        if (!_actionBlockerSystem.CanAttack(attacker, victim))
+            return false;
 
         // The victim must be incapacitated to be executed
-        if (victim != user && _actionBlockerSystem.CanInteract(victim, null))
+        if (victim != attacker && _actionBlockerSystem.CanInteract(victim, null))
             return false;
         
         // You must be not incapacitated to execute yourself
-        if (victim == user && !_actionBlockerSystem.CanInteract(victim, null))
+        if (victim == attacker && !_actionBlockerSystem.CanInteract(victim, null))
             return false;
 
         // All checks passed
