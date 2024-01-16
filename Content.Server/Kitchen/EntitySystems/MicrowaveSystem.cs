@@ -106,7 +106,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
         {
-            AddComp<ActivelyMicrowavedComponent>(args.Entity);
+            EnsureComp<ActivelyMicrowavedComponent>(args.Entity);
         }
 
         private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -428,7 +428,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     QueueDel(item);
                 }
 
-                AddComp<ActivelyMicrowavedComponent>(item);
+                EnsureComp<ActivelyMicrowavedComponent>(item);
 
                 var metaData = MetaData(item); //this simply begs for cooking refactor
                 if (metaData.EntityPrototype == null)
@@ -464,7 +464,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 CanSatisfyRecipe(component, r, solidsDict, reagentDict)).FirstOrDefault(r => r.Item2 > 0);
 
             _audio.PlayPvs(component.StartCookingSound, uid);
-            var activeComp = AddComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
+            var activeComp = EnsureComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
