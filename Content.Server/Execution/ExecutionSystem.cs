@@ -314,29 +314,35 @@ public sealed class ExecutionSystem : EntitySystem
         
         // Information about the ammo like damage
         SoundSpecifier? shootSound = component.SoundGunshot;
-        DamageSpecifier? damage = null;
+        DamageSpecifier damage = new DamageSpecifier();
 
         // Get some information from IShootable
-        var ammo_uid = ev.Ammo[0].Entity;
+        var ammoUid = ev.Ammo[0].Entity;
         switch (ev.Ammo[0].Shootable)
         {
             case CartridgeAmmoComponent cartridge:
                 // Get the damage value
                 var prototype = _prototypeManager.Index<EntityPrototype>(cartridge.Prototype);
                 prototype.TryGetComponent<ProjectileComponent>(out var projectileA, _componentFactory); // sloth forgive me
-                damage = projectileA!.Damage * cartridge.Count;
-                
+                if (projectileA != null)
+                {
+                    damage = projectileA.Damage * cartridge.Count;
+                }
+
                 // Expend the cartridge
                 cartridge.Spent = true;
-                _appearanceSystem.SetData(ammo_uid!.Value, AmmoVisuals.Spent, true);
-                Dirty(ammo_uid.Value, cartridge);
+                _appearanceSystem.SetData(ammoUid!.Value, AmmoVisuals.Spent, true);
+                Dirty(ammoUid.Value, cartridge);
                 
                 break;
             
             case AmmoComponent newAmmo:
-                TryComp<ProjectileComponent>(ammo_uid, out var projectileB);
-                damage = projectileB!.Damage;
-                Del(ammo_uid);
+                TryComp<ProjectileComponent>(ammoUid, out var projectileB);
+                if (projectileB != null)
+                {
+                    damage = projectileB.Damage;
+                }
+                Del(ammoUid);
                 break;
             
             case HitscanPrototype hitscan:
