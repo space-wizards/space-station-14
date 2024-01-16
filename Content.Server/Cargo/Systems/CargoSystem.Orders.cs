@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Paper;
+using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
@@ -10,6 +11,7 @@ using Content.Shared.Database;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems
@@ -87,10 +89,12 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            var bankAccount = GetBankAccount(uid, component);
+            var station = _station.GetOwningStation(uid);
 
             // No station to deduct from.
-            if (!TryGetOrderDatabase(uid, out var dbUid, out var orderDatabase, component) || bankAccount == null)
+            if (!TryComp(station, out StationBankAccountComponent? bank) ||
+                !TryComp(station, out StationDataComponent? stationData) ||
+                !TryGetOrderDatabase(uid, out var orderDatabase))
             {
                 ConsolePopup(args.Session, Loc.GetString("cargo-console-station-not-found"));
                 PlayDenySound(uid, component);
@@ -136,7 +140,7 @@ namespace Content.Server.Cargo.Systems
             var cost = order.Price * order.OrderQuantity;
 
             // Not enough balance
-            if (cost > bankAccount.Balance)
+            if (cost > bank.Balance)
             {
                 ConsolePopup(args.Session, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
                 PlayDenySound(uid, component);
@@ -144,8 +148,38 @@ namespace Content.Server.Cargo.Systems
             }
 
             // No slots at the trade station
-            // TODO:
-            throw new NotImplementedException();
+            _listEnts.Clear();
+            GetTradeStations(stationData, ref _listEnts);
+            var fulfilled = false;
+
+            foreach (var trade in _listEnts)
+            {
+                var tradePads = GetCargoPallets(trade);
+                _random.Shuffle(tradePads);
+
+                var pads = GetFreeCargoPallets(trade, tradePads);
+
+                foreach (var pad in pads)
+                {
+                    var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
+
+                    if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                    {
+                        fulfilled = true;
+                        break;
+                    }
+                }
+
+                if (fulfilled)
+                    break;
+            }
+
+            if (!fulfilled)
+            {
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-unfulfilled"));
+                PlayDenySound(uid, component);
+                return;
+            }
 
             _idCardSystem.TryFindIdCard(player, out var idCard);
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
@@ -154,18 +188,31 @@ namespace Content.Server.Cargo.Systems
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bankAccount.Balance}");
+                $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
 
-            DeductFunds(bankAccount, cost);
-            UpdateOrders(dbUid!.Value, orderDatabase);
+            DeductFunds(bank, cost);
+            UpdateOrders(station.Value, orderDatabase);
+        }
+
+        private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
+        {
+            foreach (var gridUid in data.Grids)
+            {
+                if (!_tradeQuery.HasComponent(gridUid))
+                    continue;
+
+                ents.Add(gridUid);
+            }
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
         {
-            if (!TryGetOrderDatabase(uid, out var dbUid, out var orderDatabase, component))
+            var station = _station.GetOwningStation(uid);
+
+            if (!TryGetOrderDatabase(station, out var orderDatabase))
                 return;
 
-            RemoveOrder(dbUid!.Value, args.OrderId, orderDatabase);
+            RemoveOrder(station.Value, args.OrderId, orderDatabase);
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
@@ -176,11 +223,9 @@ namespace Content.Server.Cargo.Systems
             if (args.Amount <= 0)
                 return;
 
-            var bank = GetBankAccount(uid, component);
-            if (bank == null)
-                return;
+            var stationUid = _station.GetOwningStation(uid);
 
-            if (!TryGetOrderDatabase(uid, out var dbUid, out var orderDatabase, component))
+            if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
                 return;
 
             if (!_protoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
@@ -191,7 +236,7 @@ namespace Content.Server.Cargo.Systems
 
             var data = GetOrderData(args, product, GenerateOrderId(orderDatabase));
 
-            if (!TryAddOrder(dbUid!.Value, data, orderDatabase))
+            if (!TryAddOrder(stationUid.Value, data, orderDatabase))
             {
                 PlayDenySound(uid, component);
                 return;
@@ -366,17 +411,27 @@ namespace Content.Server.Cargo.Systems
             return true;
         }
 
-        private bool FulfillOrder(StationCargoOrderDatabaseComponent orderDB, EntityCoordinates whereToPutIt,
-                string? paperPrototypeToPrint)
+        /// <summary>
+        /// Tries to fulfill the next outstanding order.
+        /// </summary>
+        private bool FulfillNextOrder(StationCargoOrderDatabaseComponent orderDB, EntityCoordinates spawn, string? paperProto)
         {
             if (!PopFrontOrder(orderDB, out var order))
                 return false;
 
+            return FulfillOrder(order, spawn, paperProto);
+        }
+
+        /// <summary>
+        /// Fulfills the specified cargo order and spawns paper attached to it.
+        /// </summary>
+        private bool FulfillOrder(CargoOrderData order, EntityCoordinates spawn, string? paperProto)
+        {
             // Create the item itself
-            var item = Spawn(order.ProductId, whereToPutIt);
+            var item = Spawn(order.ProductId, spawn);
 
             // Create a sheet of paper to write the order details on
-            var printed = EntityManager.SpawnEntity(paperPrototypeToPrint, whereToPutIt);
+            var printed = EntityManager.SpawnEntity(paperProto, spawn);
             if (TryComp<PaperComponent>(printed, out var paper))
             {
                 // fill in the order data
@@ -410,18 +465,9 @@ namespace Content.Server.Cargo.Systems
 
         #region Station
 
-        private StationBankAccountComponent? GetBankAccount(EntityUid uid, CargoOrderConsoleComponent _)
+        private bool TryGetOrderDatabase([NotNullWhen(true)] EntityUid? stationUid, [MaybeNullWhen(false)] out StationCargoOrderDatabaseComponent dbComp)
         {
-            var station = _station.GetOwningStation(uid);
-
-            TryComp<StationBankAccountComponent>(station, out var bankComponent);
-            return bankComponent;
-        }
-
-        private bool TryGetOrderDatabase(EntityUid uid, [MaybeNullWhen(false)] out EntityUid? dbUid, [MaybeNullWhen(false)] out StationCargoOrderDatabaseComponent dbComp, CargoOrderConsoleComponent _)
-        {
-            dbUid = _station.GetOwningStation(uid);
-            return TryComp(dbUid, out dbComp);
+            return TryComp(stationUid, out dbComp);
         }
 
         #endregion

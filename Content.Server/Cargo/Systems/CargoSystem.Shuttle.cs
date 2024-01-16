@@ -166,9 +166,8 @@ public sealed partial class CargoSystem
         return space;
     }
 
-    private List<(EntityUid Entity, CargoPalletComponent Component)> GetCargoPallets(EntityUid gridUid)
+    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid)
     {
-        var pads = new List<(EntityUid, CargoPalletComponent)>();
         var query = AllEntityQuery<CargoPalletComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var compXform))
@@ -179,10 +178,27 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            pads.Add((uid, comp));
+            pads.Add((uid, comp, compXform));
         }
 
         return pads;
+    }
+
+    private IEnumerable<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)>
+        GetFreeCargoPallets(EntityUid gridUid,
+            List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)> pallets)
+    {
+        _setEnts.Clear();
+
+        foreach (var pallet in pallets)
+        {
+            var aabb = _lookup.GetAABBNoContainer(pallet.Entity, pallet.Transform.LocalPosition, pallet.Transform.LocalRotation);
+
+            if (_lookup.AnyEntitiesIntersecting(gridUid, aabb, LookupFlags.Dynamic))
+                continue;
+
+            yield return pallet;
+        }
     }
 
     #endregion
@@ -218,10 +234,15 @@ public sealed partial class CargoSystem
         amount = 0;
         toSell = new HashSet<EntityUid>();
 
-        foreach (var (palletUid, _) in GetCargoPallets(gridUid))
+        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid))
         {
             // Containers should already get the sell price of their children so can skip those.
-            foreach (var ent in _lookup.GetEntitiesIntersecting(palletUid, LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
+            _setEnts.Clear();
+
+            _lookup.GetEntitiesIntersecting(palletUid, _setEnts,
+                LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate);
+
+            foreach (var ent in _setEnts)
             {
                 // Dont sell:
                 // - anything already being sold
@@ -267,19 +288,6 @@ public sealed partial class CargoSystem
         }
 
         return true;
-    }
-
-    private void AddCargoContents(EntityUid targetGrid, StationCargoOrderDatabaseComponent orderDatabase)
-    {
-        var pads = GetCargoPallets(targetGrid);
-        while (pads.Count > 0)
-        {
-            var coordinates = new EntityCoordinates(targetGrid, _xformQuery.GetComponent(_random.PickAndTake(pads).Entity).LocalPosition);
-            if (!FulfillOrder(orderDatabase, coordinates, orderDatabase.PrinterOutput))
-            {
-                break;
-            }
-        }
     }
 
     private void OnPalletSale(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletSellMessage args)
