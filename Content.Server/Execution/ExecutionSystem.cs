@@ -1,7 +1,5 @@
-using System.Numerics;
 using Content.Server.Interaction;
 using Content.Server.Kitchen.Components;
-using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -20,7 +18,6 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
