@@ -104,7 +104,7 @@ public sealed partial class ChangelingSystem
         {
             var selfMessage = Loc.GetString("changeling-dna-interrupted", ("target", Identity.Entity(target, EntityManager)));
             _popup.PopupEntity(selfMessage, uid, uid);
-            component.AbsorbStage = 0.0f;
+            component.AbsorbStage = 0;
             args.Repeat = false;
             return;
         }
@@ -141,7 +141,7 @@ public sealed partial class ChangelingSystem
             {
                 if (!StealDNA(uid, target, component))
                 {
-                    component.AbsorbStage = 0.0f;
+                    component.AbsorbStage = 0;
                     args.Repeat = false;
                     return;
                 }
@@ -172,10 +172,10 @@ public sealed partial class ChangelingSystem
             }
         }
 
-        if (component.AbsorbStage >= 2.0)
-            component.AbsorbStage = 0.0f;
+        if (component.AbsorbStage >= 2)
+            component.AbsorbStage = 0;
         else
-            component.AbsorbStage += 1.0f;
+            component.AbsorbStage += 1;
     }
 
     private static bool RepeatDoAfter(ChangelingComponent component)
@@ -201,7 +201,7 @@ public sealed partial class ChangelingSystem
 
         if (_mobState.IsCritical(uid)) // make sure the ling is critical, if not they cant regenerate
         {
-            if (!TryUseAbility(uid, component, component.RegenerateChemicalsCost))
+            if (!TryUseAbility(uid, component, component.ChemicalsCostTen))
                 return;
 
             args.Handled = true;
@@ -242,7 +242,7 @@ public sealed partial class ChangelingSystem
         if (handContainer == null)
             return;
 
-        if (!TryUseAbility(uid, component, component.ArmBladeChemicalsCost, !component.ArmBladeActive))
+        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.ArmBladeActive))
             return;
 
         args.Handled = true;
@@ -295,7 +295,7 @@ public sealed partial class ChangelingSystem
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
-        if (!TryUseAbility(uid, component, component.LingArmorChemicalsCost, !component.LingArmorActive, component.LingArmorRegenCost))
+        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.LingArmorActive, component.LingArmorRegenCost))
             return;
 
         args.Handled = true;
@@ -355,7 +355,7 @@ public sealed partial class ChangelingSystem
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
-        if (!TryUseAbility(uid, component, component.ChameleonSkinChemicalsCost, !component.ChameleonSkinActive))
+        if (!TryUseAbility(uid, component, component.ChemicalsCostTwentyFive, !component.ChameleonSkinActive))
             return;
 
         args.Handled = true;
@@ -385,7 +385,7 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        if (!TryUseAbility(uid, component, component.DissonantShriekChemicalsCost))
+        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty))
             return;
 
         args.Handled = true;
@@ -431,7 +431,7 @@ public sealed partial class ChangelingSystem
             return;
         }
 
-        if (!TryUseAbility(uid, component, component.DNAStingCost))
+        if (!TryUseAbility(uid, component, component.ChemicalsCostTwentyFive))
             return;
 
         if (StealDNA(uid, target, component))

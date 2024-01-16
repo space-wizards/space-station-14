@@ -43,18 +43,38 @@ public sealed partial class ChangelingComponent : Component
     [DataField]
     public int SelectedDNA = 0;
 
+    #region Chemical Costs
+    [DataField]
+    public float ChemicalsCostFive = -5f;
+
+    [DataField]
+    public float ChemicalsCostTen = -10f;
+
+    [DataField]
+    public float ChemicalsCostFifteen = -15f;
+
+    [DataField]
+    public float ChemicalsCostTwenty = -20f;
+
+    [DataField]
+    public float ChemicalsCostTwentyFive = -25f;
+
+    [DataField]
+    public float ChemicalsCostFifty = -50f;
+    #endregion
+
     #region DNA Absorb Ability
     /// <summary>
     /// How long an absorb stage takes, in seconds.
     /// </summary>
     [DataField]
-    public float AbsorbDuration = 15.0f;
+    public float AbsorbDuration = 15f;
 
     /// <summary>
     /// The stage of absorbing that the changeling is on. Maximum of 2 stages.
     /// </summary>
     [DataField]
-    public float AbsorbStage = 0.0f;
+    public int AbsorbStage = 0;
 
     /// <summary>
     /// The amount of genetic damage the target gains when they're absorbed.
@@ -69,21 +89,7 @@ public sealed partial class ChangelingComponent : Component
     public float AbsorbedChangelingPointsAmount = 5.0f;
     #endregion
 
-    #region Transform Ability
-    /// <summary>
-    /// The amount of chemicals that is needed to use the transform ability.
-    /// </summary>
-    [DataField]
-    public float TransformChemicalsCost = -5f;
-    #endregion
-
     #region Regenerate Ability
-    /// <summary>
-    /// The amount of chemicals that is needed to use the regenerate ability.
-    /// </summary>
-    [DataField]
-    public float RegenerateChemicalsCost = -10f;
-
     /// <summary>
     /// The amount of burn damage is healed when the regenerate ability is sucesssfully used.
     /// </summary>
@@ -120,12 +126,6 @@ public sealed partial class ChangelingComponent : Component
 
     #region Armblade Ability
     /// <summary>
-    /// The amount of chemicals that is needed to use the arm blade.
-    /// </summary>
-    [DataField]
-    public float ArmBladeChemicalsCost = -20f;
-
-    /// <summary>
     /// If the ling has an active armblade or not.
     /// </summary>
     [DataField]
@@ -133,12 +133,6 @@ public sealed partial class ChangelingComponent : Component
     #endregion
 
     #region Chitinous Armor Ability
-    /// <summary>
-    /// The amount of chemicals that is needed to inflate the changeling's body into armor.
-    /// </summary>
-    [DataField]
-    public float LingArmorChemicalsCost = -20f;
-
     /// <summary>
     /// The amount of chemical regeneration is reduced when the ling armor is active.
     /// </summary>
@@ -153,12 +147,6 @@ public sealed partial class ChangelingComponent : Component
     #endregion
 
     #region Chameleon Skin Ability
-    /// <summary>
-    /// The amount of chemicals that is needed to activate chameleon skin ability.
-    /// </summary>
-    [DataField]
-    public float ChameleonSkinChemicalsCost = -25f;
-
     /// <summary>
     /// If the ling has chameleon skin active or not.
     /// </summary>
@@ -180,12 +168,6 @@ public sealed partial class ChangelingComponent : Component
 
     #region Dissonant Shriek Ability
     /// <summary>
-    /// The amount of chemicals that is needed to activate the changeling's Dissonant Shriek.
-    /// </summary>
-    [DataField]
-    public float DissonantShriekChemicalsCost = -20f;
-
-    /// <summary>
     /// Range of the Dissonant Shriek's EMP in tiles.
     /// </summary>
     [DataField]
@@ -202,31 +184,6 @@ public sealed partial class ChangelingComponent : Component
     /// </summary>
     [DataField]
     public float DissonantShriekEmpDuration = 12f;
-    #endregion
-
-    #region Changeling stings
-    /// <summary>
-    /// The amount of chemicals that is needed to use DNA extract sting.
-    /// </summary>
-    [DataField]
-    public float DNAStingCost = -25f;
-    #endregion
-
-    #region Ability containers
-    [DataField]
-    public EntityUid? EvolutionMenuActionEntity;
-
-    [DataField]
-    public EntityUid? RegenerateActionEntity;
-
-    [DataField]
-    public EntityUid? AbsorbActionEntity;
-
-    [DataField]
-    public EntityUid? DNACycleActionEntity;
-
-    [DataField]
-    public EntityUid? TransformActionEntity;
     #endregion
 
     [DataField]
