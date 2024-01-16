@@ -1,4 +1,6 @@
+using Content.Server.Cuffs;
 using Content.Server.Kitchen.Components;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -21,8 +23,11 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
 
     private const float ExecutionTime = 10.0f;
+    private const float DamageModifier = 9.0f;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -80,14 +85,18 @@ public sealed class ExecutionSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private bool TryStartExecutionDoafterChecks(EntityUid weapon, EntityUid victim, EntityUid user)
+    private bool CanExecuteChecks(EntityUid weapon, EntityUid victim, EntityUid user)
     {
         // No point executing someone if they can't take damage
         if (!TryComp<DamageableComponent>(victim, out var damage))
             return false;
         
         // You're not allowed to execute dead people (no fun allowed)
-        if (TryComp<MobStateComponent>(victim, out var mobState) && _mobStateSystem.IsDead(victim, mobState))
+        if (TryComp<MobStateComponent>(victim, out var mobState) && !_mobStateSystem.IsAlive(victim, mobState))
+            return false;
+        
+        // They have to be cuffed to be executed
+        if (!TryComp<CuffableComponent>(victim, out var cuffable) || cuffable.CanStillInteract)
             return false;
 
         // All checks passed
@@ -96,7 +105,7 @@ public sealed class ExecutionSystem : EntitySystem
     
     private void TryStartExecutionDoafterMelee(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!TryStartExecutionDoafterChecks(weapon, victim, user))
+        if (!CanExecuteChecks(weapon, victim, user))
             return;
         
         // We must be able to actually hurt people with the weapon
@@ -124,7 +133,7 @@ public sealed class ExecutionSystem : EntitySystem
     
     private void TryStartExecutionDoafterGun(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!TryStartExecutionDoafterChecks(weapon, victim, user))
+        if (!CanExecuteChecks(weapon, victim, user))
             return;
         
         // We must be able to actually fire the gun and have it do damage
@@ -152,7 +161,10 @@ public sealed class ExecutionSystem : EntitySystem
 
     private bool OnDoafterChecks(EntityUid uid, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled)
+        if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
+            return false;
+        
+        if (!CanExecuteChecks(args.Used.Value, args.Target.Value, uid))
             return false;
         
         // All checks passed
@@ -164,7 +176,23 @@ public sealed class ExecutionSystem : EntitySystem
         if (!OnDoafterChecks(uid, args))
             return;
 
-        TryComp<DamageableComponent>(args.Target!.Value, out var damage);
+        // These are fine because it's checked in OnDoafterChecks
+        var attacker = args.User;
+        var weapon = args.Used!.Value;
+        var victim = args.Target!.Value;
+
+        if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
+            return;
+        
+        _damageableSystem.TryChangeDamage(victim, melee.Damage * DamageModifier);
+        _meleeSystem.PlayHitSound(victim, weapon, null, null, null);
+        
+        _popupSystem.PopupEntity(Loc.GetString(
+                "execution-popup-melee-complete-internal", ("victim", victim)),
+            attacker, Filter.Entities(attacker), true, PopupType.Medium);
+        _popupSystem.PopupEntity(Loc.GetString(
+                "execution-popup-melee-complete-external", ("attacker", weapon), ("victim", victim)),
+            attacker, Filter.PvsExcept(attacker), true, PopupType.MediumCaution);
     }
     
     private void OnDoafterGun(EntityUid uid, GunComponent component, DoAfterEvent args)
