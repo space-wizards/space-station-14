@@ -17,6 +17,9 @@
     {
       "name": "equipped-HELMET-hamster",
       "directions": 4
+    },    {
+      "name": "equipped-HELMET-tortoise",
+      "directions": 4
     },
     {
       "name": "inhand-left",

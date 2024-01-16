@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ss220club/Paradise/commit/2af46e9b078e7b1bf7c3dd041f065eb83dd5ab34#diff-c097eec438620fdc23ec311ad6199663568786271101e92e83da5c0379c37854",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tortoise-crit",
+      "directions": 4
+    },
+    {
+      "name": "tortoise",
+      "directions": 4
+    },
+    {
+      "name": "tortoise-dead"
+    }
+  ]
+}

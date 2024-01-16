@@ -220,3 +220,12 @@
     contents:
       - id: MobMothroach
         amount: 4
+
+- type: entity
+  id: CrateNPCTortoise
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobTortoise
+        amount: 1

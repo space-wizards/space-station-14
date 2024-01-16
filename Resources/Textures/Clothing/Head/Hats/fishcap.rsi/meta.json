@@ -1,4 +1,3 @@
-
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
@@ -13,6 +12,10 @@
     },
     {
       "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-tortoise",
       "directions": 4
     },
     {

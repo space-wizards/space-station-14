@@ -63,3 +63,6 @@ ent-CrateNPCLizard = Lizard crate
 
 ent-CrateNPCKangaroo = Kangaroo crate
     .desc = A crate containing a kangaroo.
+
+ent-CrateNPCTortoise = Tortoise crate
+    .desc = A crate containing a tortoise.

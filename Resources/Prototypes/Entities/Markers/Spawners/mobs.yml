@@ -752,6 +752,20 @@
     - MobCow
 
 - type: entity
+  name: Tortoise Spawner
+  id: SpawnMobTortoise
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: tortoise
+      sprite: Mobs/Animals/tortoise.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobTortoise
+
+- type: entity
   name: Gorilla Spawner
   id: SpawnMobGorilla
   parent: MarkerBase
@@ -778,8 +792,8 @@
   - type: ConditionalSpawner
     prototypes:
     - MobPenguin
-    
-    
+
+
 - type: entity
   name: Hellspawn Spawner
   id: SpawnMobHellspawn
@@ -793,7 +807,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobHellspawn
-      
+
 - type: entity
   name: ore crab spawner
   id: SpawnMobOreCrab
