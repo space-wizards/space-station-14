@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix global audio not being global.
-    type: Fix
-  - message: Update MIDI audio every frame rather than every 1/10 seconds to fix positioning
-      and occlusion weirdness.
-    type: Tweak
-  id: 5220
-  time: '2023-11-28T09:48:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - message: Fix audio not playing during weather.
     type: Fix
   id: 5221
@@ -3759,3 +3750,11 @@
   id: 5720
   time: '2024-01-16T03:43:18.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24135
+- author: tday
+  changes:
+  - message: Explosion and Chemical Reaction admin logs now use grid-relative coordinates
+      when possible.
+    type: Fix
+  id: 5721
+  time: '2024-01-16T07:53:46.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24136
