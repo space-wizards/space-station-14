@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Remove the Captain's spare gloves from his locker.
-    type: Remove
-  id: 5216
-  time: '2023-11-28T05:45:56.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: The HoP now starts with a pair of papercut-proof gloves.
-    type: Add
-  id: 5217
-  time: '2023-11-28T06:21:06.0000000+00:00'
-- author: themias
-  changes:
-  - message: Fixed riot shield audio and popup spam
-    type: Fix
-  id: 5218
-  time: '2023-11-28T07:06:38.0000000+00:00'
-- author: UbaserB
-  changes:
-  - message: Blood now has a sprite when placed in metamorphic glasses.
-    type: Add
-  id: 5219
-  time: '2023-11-28T07:09:56.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix global audio not being global.
@@ -3752,3 +3728,34 @@
   id: 5716
   time: '2024-01-15T06:35:28.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24096
+- author: Bhijn and Myr
+  changes:
+  - message: Attempting to weld without protection will now cause eye damage proper.
+      Additionally, attempting to weld with a welder that's off when you aren't wearing
+      protection will no longer blind you. It's the bright light that hurts your eyes,
+      not the underwhelming lack of it!
+    type: Fix
+  id: 5717
+  time: '2024-01-15T07:47:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24106
+- author: Boaz1111
+  changes:
+  - message: Stimpack price has been reduced to 4 TC
+    type: Tweak
+  id: 5718
+  time: '2024-01-15T09:30:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24117
+- author: Nimfar11
+  changes:
+  - message: Adds the ability to build blast doors.
+    type: Add
+  id: 5719
+  time: '2024-01-15T12:49:08.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24050
+- author: Boaz1111
+  changes:
+  - message: Reinforced Glass and Reinforced Plasma Glass no longer bubble randomly
+    type: Fix
+  id: 5720
+  time: '2024-01-16T03:43:18.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24135

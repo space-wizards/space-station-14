@@ -23,6 +23,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        canReact: false
 
 - type: entity
   parent: SheetOtherBase
@@ -103,6 +107,7 @@
         reagents:
         - ReagentId: Plasma
           Quantity: 10
+        canReact: false
   - type: Tag
     tags:
     - Sheet
@@ -158,6 +163,7 @@
           Quantity: 5
         - ReagentId: Phosphorus
           Quantity: 5
+        canReact: false
 
 - type: entity
   parent: SheetPlastic
@@ -219,6 +225,7 @@
           Quantity: 8
         - ReagentId: Radium
           Quantity: 2
+        canReact: false
 
 - type: entity
   parent: SheetUranium
@@ -268,6 +275,7 @@
             Quantity: 7
           - ReagentId: Fat
             Quantity: 3
+          canReact: false
 
 - type: entity
   parent: MaterialSheetMeat
