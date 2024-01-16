@@ -120,6 +120,54 @@
     access: [["NuclearOperative"]]
 
 - type: entity
+  parent: AirlockExternalManual
+  id: AirlockExternalManualLocked
+  suffix: External, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  parent: AirlockExternalManual
+  id: AirlockExternalManualCargoLocked
+  suffix: External, Cargo, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockExternalManual
+  id: AirlockExternalManualEngineeringLocked
+  suffix: External, Engineering, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockExternalManual
+  id: AirlockExternalManualAtmosphericsLocked
+  suffix: External, Atmospherics, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: AirlockExternalManual
+  id: AirlockExternalManualSyndicateLocked
+  suffix: External, Syndicate, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternalManual
+  id: AirlockExternalManualNukeopLocked
+  suffix: External, Nukeop, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
   suffix: Kitchen, Locked
@@ -434,6 +482,54 @@
   parent: AirlockExternalGlass
   id: AirlockExternalGlassAtmosphericsLocked
   suffix: External, Glass, Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: AirlockExternalManualGlass
+  id: AirlockExternalManualGlassLocked
+  suffix: External, Glass, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  parent: AirlockExternalManualGlass
+  id: AirlockExternalManualGlassCargoLocked
+  suffix: External, Glass, Cargo, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockExternalManualGlass
+  id: AirlockExternalManualGlassSyndicateLocked
+  suffix: External, Glass, Syndicate, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternalManualGlass
+  id: AirlockExternalManualGlassNukeopLocked
+  suffix: External, Glass, Nukeop, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
+  parent: AirlockExternalManualGlass
+  id: AirlockExternalManualGlassEngineeringLocked
+  suffix: External, Glass, Engineering, Locked, Manual
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockExternalManualGlass
+  id: AirlockExternalManualGlassAtmosphericsLocked
+  suffix: External, Glass, Atmospherics, Locked, Manual
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
