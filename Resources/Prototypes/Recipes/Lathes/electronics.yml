@@ -39,6 +39,15 @@
     Plastic: 50
 
 - type: latheRecipe
+  id: TurboItemRechargerCircuitboard
+  result: TurboItemRechargerCircuitboard
+  completetime: 2
+  materials:
+    Steel: 500
+    Plastic: 500
+    Gold: 100
+
+- type: latheRecipe
   id: DoorElectronics
   result: DoorElectronics
   completetime: 2
@@ -105,6 +114,15 @@
     Gold: 50
 
 - type: latheRecipe
+  id: HellfireFreezerMachineCircuitBoard
+  result: HellfireFreezerMachineCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
   id: CondenserMachineCircuitBoard
   result: CondenserMachineCircuitBoard
   completetime: 4
@@ -158,6 +176,15 @@
 - type: latheRecipe
   id: BiomassReclaimerMachineCircuitboard
   result: BiomassReclaimerMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: BiofabricatorMachineCircuitboard
+  result: BiofabricatorMachineCircuitboard
   completetime: 4
   materials:
      Steel: 100
@@ -609,6 +636,15 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: FlatpackerMachineCircuitboard
+  result: FlatpackerMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
 
 - type: latheRecipe
   id: SheetifierMachineCircuitboard

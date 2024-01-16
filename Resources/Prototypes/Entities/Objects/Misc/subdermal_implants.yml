@@ -177,6 +177,19 @@
       range: 1.75
       energyConsumption: 50000
       disableDuration: 10
+      
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ScramImplant
+  name: scram implant
+  description: This implant randomly teleports the user within a large radius when activated.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateScramImplant
+    - type: TriggerImplantAction
+    - type: ScramImplant
+      teleportAttempts: 10 # small amount of risk of being teleported into space and lets you teleport off shuttles
 
 - type: entity
   parent: BaseSubdermalImplant

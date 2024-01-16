@@ -1,9 +1,7 @@
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Tesla.Components;
 using Content.Server.Lightning;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -24,9 +22,9 @@ public sealed class TeslaCoilSystem : EntitySystem
     //When struck by lightning, charge the internal battery
     private void OnHitByLightning(Entity<TeslaCoilComponent> coil, ref HitByLightningEvent args)
     {
-        if (!TryComp<BatteryComponent>(coil, out var batteryComponent))
-            return;
-
-        _battery.SetCharge(coil, batteryComponent.CurrentCharge + coil.Comp.ChargeFromLightning);
+        if (TryComp<BatteryComponent>(coil, out var batteryComponent))
+        {
+            _battery.SetCharge(coil, batteryComponent.CurrentCharge + coil.Comp.ChargeFromLightning);
+        }
     }
 }

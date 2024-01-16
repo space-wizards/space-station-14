@@ -64,6 +64,7 @@
   - type: Weldable
     time: 3
   - type: Airlock
+  - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
