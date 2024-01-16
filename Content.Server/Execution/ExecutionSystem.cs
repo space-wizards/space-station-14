@@ -71,7 +71,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanExecuteWithMelee(weapon, victim, victim))
+        if (!CanExecuteWithMelee(weapon, victim, attacker))
             return;
         
         UtilityVerb verb = new()
@@ -100,7 +100,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanExecuteWithGun(weapon, victim, victim))
+        if (!CanExecuteWithGun(weapon, victim, attacker))
             return;
         
         UtilityVerb verb = new()
