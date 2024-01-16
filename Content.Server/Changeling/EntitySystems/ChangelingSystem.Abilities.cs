@@ -109,7 +109,7 @@ public sealed partial class ChangelingSystem
             return;
         }
 
-        if (component.AbsorbStage == 0.0)
+        if (component.AbsorbStage == 0)
         {
             var othersMessage = Loc.GetString("changeling-dna-stage-2-others", ("user", Identity.Entity(uid, EntityManager)));
             _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.MediumCaution);
@@ -117,7 +117,7 @@ public sealed partial class ChangelingSystem
             var selfMessage = Loc.GetString("changeling-dna-stage-2-self");
             _popup.PopupEntity(selfMessage, uid, uid, PopupType.MediumCaution);
         }
-        else if (component.AbsorbStage == 1.0)
+        else if (component.AbsorbStage == 1)
         {
             var othersMessage = Loc.GetString("changeling-dna-stage-3-others", ("user", Identity.Entity(uid, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
             _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.LargeCaution);
@@ -125,7 +125,7 @@ public sealed partial class ChangelingSystem
             var selfMessage = Loc.GetString("changeling-dna-stage-3-self", ("target", Identity.Entity(target, EntityManager)));
             _popup.PopupEntity(selfMessage, uid, uid, PopupType.LargeCaution);
         }
-        else if (component.AbsorbStage == 2.0)
+        else if (component.AbsorbStage == 2)
         {
             var doStealDNA = true;
             if (TryComp(target, out DnaComponent? dnaCompTarget))

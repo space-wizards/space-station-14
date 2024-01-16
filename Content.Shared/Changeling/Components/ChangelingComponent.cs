@@ -68,7 +68,7 @@ public sealed partial class ChangelingComponent : Component
     /// How long an absorb stage takes, in seconds.
     /// </summary>
     [DataField]
-    public float AbsorbDuration = 15f;
+    public int AbsorbDuration = 15;
 
     /// <summary>
     /// The stage of absorbing that the changeling is on. Maximum of 2 stages.
