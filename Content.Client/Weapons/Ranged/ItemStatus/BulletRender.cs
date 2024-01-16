@@ -19,6 +19,15 @@ public sealed class BulletRender : Control
     private static readonly Color ColorGoneA = Color.FromHex("#000000");
     private static readonly Color ColorGoneB = Color.FromHex("#222222");
 
+    /// <summary>
+    /// Try to ensure there's at least this many bullets on one row.
+    /// </summary>
+    /// <remarks>
+    /// For example, if there are two rows and the second row has only two bullets,
+    /// we "steal" some bullets from the row below it to make it look nicer.
+    /// </remarks>
+    public const int MinCountPerRow = 7;
+
     public const int BulletHeight = 12;
     public const int BulletSeparationNormal = 3;
     public const int BulletSeparationTiny = 2;
@@ -101,6 +110,15 @@ public sealed class BulletRender : Control
             var thisRowCount = Math.Min(countPerRow, Capacity - bulletsDone);
             if (thisRowCount <= 0)
                 break;
+
+            // Handle MinCountPerRow
+            // We only do this if:
+            // 1. The next row would have less than MinCountPerRow bullets.
+            // 2. The next row is actually visible (we aren't the last row).
+            // 3. MinCountPerRow is actually smaller than the count per row (avoid degenerate cases).
+            var nextRowCount = Capacity - bulletsDone - thisRowCount;
+            if (nextRowCount < MinCountPerRow && row != Rows - 1 && MinCountPerRow < countPerRow)
+                thisRowCount -= MinCountPerRow - nextRowCount;
 
             // Account for row width to right-align.
             var rowWidth = RowWidth(thisRowCount);
