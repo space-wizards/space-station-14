@@ -12,18 +12,18 @@ public sealed partial class GeneratorSignalControlComponent: Component
     /// <summary>
     /// The port that should be invoked when turning the generator on.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SinkPortPrototype> OnPort = "On";
 
     /// <summary>
     /// The port that should be invoked when turning the generator off.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SinkPortPrototype> OffPort = "Off";
 
     /// <summary>
     /// The port that should be invoked when toggling the generator.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
 }
