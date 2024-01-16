@@ -1,7 +1,12 @@
+using Content.Shared.DoAfter;
+
 namespace Content.Shared.Power.Generator;
 
 public sealed class ActiveGeneratorRevvingSystem: EntitySystem
 {
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly EntityManager _entity = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -24,8 +29,12 @@ public sealed class ActiveGeneratorRevvingSystem: EntitySystem
     /// <param name="uid">Uid of the generator entity.</param>
     public void StartAutoRevving(EntityUid uid)
     {
-        if (HasComp<ActiveGeneratorRevvingComponent>(uid))
+        if (TryComp<ActiveGeneratorRevvingComponent>(uid, out var component))
+        {
+            // reset the revving
+            component.CurrentTime = TimeSpan.FromSeconds(0);
             return;
+        }
 
         AddComp(uid, new ActiveGeneratorRevvingComponent());
     }
@@ -47,7 +56,7 @@ public sealed class ActiveGeneratorRevvingSystem: EntitySystem
     /// <param name="uid">Uid of the generator entity.</param>
     private void StartGenerator(EntityUid uid)
     {
-        RaiseLocalEvent(uid, new GeneratorStartedEvent());
+        RaiseLocalEvent(uid, new AutoGeneratorStartedEvent());
     }
 
     /// <summary>

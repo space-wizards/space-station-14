@@ -33,7 +33,10 @@ public sealed class GeneratorSignalControlSystem: EntitySystem
         }
         else if (args.Port == component.TogglePort)
         {
-            _generator.SetFuelGeneratorOn(uid, !generator.On, generator);
+            if (generator.On)
+                _generator.SetFuelGeneratorOn(uid, false, generator);
+            else
+                _revving.StartAutoRevving(uid);
         }
     }
 }
