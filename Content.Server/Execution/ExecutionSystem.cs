@@ -53,7 +53,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanExecuteChecks(weapon, victim, victim))
+        if (!CanExecuteChecksMelee(weapon, victim, victim))
             return;
         
         UtilityVerb verb = new()
@@ -82,7 +82,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanExecuteChecks(weapon, victim, victim))
+        if (!CanExecuteChecksGun(weapon, victim, victim))
             return;
         
         UtilityVerb verb = new()
@@ -116,16 +116,34 @@ public sealed class ExecutionSystem : EntitySystem
         // All checks passed
         return true;
     }
-    
-    private void TryStartExecutionDoafterMelee(EntityUid weapon, EntityUid victim, EntityUid user)
+
+    private bool CanExecuteChecksMelee(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteChecks(weapon, victim, user))
-            return;
+        if (!CanExecuteChecks(weapon, victim, user)) return false;
         
         // We must be able to actually hurt people with the weapon
         if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
-            return;
+            return false;
+
+        return true;
+    }
+    
+    private bool CanExecuteChecksGun(EntityUid weapon, EntityUid victim, EntityUid user)
+    {
+        if (!CanExecuteChecks(weapon, victim, user)) return false;
         
+        // We must be able to actually fire the gun and have it do damage
+        if (!TryComp<GunComponent>(weapon, out var gun))
+            return false;
+
+        return true;
+    }
+    
+    private void TryStartExecutionDoafterMelee(EntityUid weapon, EntityUid victim, EntityUid user)
+    {
+        if (!CanExecuteChecksMelee(weapon, victim, user))
+            return;
+
         _popupSystem.PopupEntity(Loc.GetString(
                 "execution-popup-melee-initial-internal", ("weapon", weapon), ("victim", victim)),
             user, Filter.Entities(user), true, PopupType.Medium);
@@ -147,13 +165,9 @@ public sealed class ExecutionSystem : EntitySystem
     
     private void TryStartExecutionDoafterGun(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteChecks(weapon, victim, user))
+        if (!CanExecuteChecksGun(weapon, victim, user))
             return;
-        
-        // We must be able to actually fire the gun and have it do damage
-        if (!TryComp<GunComponent>(weapon, out var gun))
-            return;
-        
+
         _popupSystem.PopupEntity(Loc.GetString(
                 "execution-popup-gun-initial-internal", ("weapon", weapon), ("victim", victim)),
             user, Filter.Entities(user), true, PopupType.Medium);
@@ -187,13 +201,14 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void OnDoafterMelee(EntityUid uid, SharpComponent component, DoAfterEvent args)
     {
-        if (!OnDoafterChecks(uid, args))
+        if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return;
-
-        // These are fine because it's checked in OnDoafterChecks
+        
         var attacker = args.User;
         var weapon = args.Used!.Value;
         var victim = args.Target!.Value;
+
+        if (!CanExecuteChecksMelee(weapon, victim, attacker)) return;
 
         if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
             return;
@@ -205,13 +220,19 @@ public sealed class ExecutionSystem : EntitySystem
                 "execution-popup-melee-complete-internal", ("victim", victim)),
             attacker, Filter.Entities(attacker), true, PopupType.Medium);
         _popupSystem.PopupEntity(Loc.GetString(
-                "execution-popup-melee-complete-external", ("attacker", weapon), ("victim", victim)),
+                "execution-popup-melee-complete-external", ("attacker", attacker), ("victim", victim)),
             attacker, Filter.PvsExcept(attacker), true, PopupType.MediumCaution);
     }
     
     private void OnDoafterGun(EntityUid uid, GunComponent component, DoAfterEvent args)
     {
-        if (!OnDoafterChecks(uid, args))
+        if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return;
+        
+        var attacker = args.User;
+        var weapon = args.Used!.Value;
+        var victim = args.Target!.Value;
+
+        if (!CanExecuteChecksGun(weapon, victim, attacker)) return;
     }
 }
