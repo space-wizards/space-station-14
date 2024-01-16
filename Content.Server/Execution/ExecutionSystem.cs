@@ -1,6 +1,5 @@
-using Content.Server.Cuffs;
 using Content.Server.Kitchen.Components;
-using Content.Shared.Cuffs.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -23,6 +22,7 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
 
@@ -49,11 +49,18 @@ public sealed class ExecutionSystem : EntitySystem
         if (args.Hands == null || args.Using == null || !args.CanAccess || !args.CanInteract)
             return;
         
+        var attacker = args.User;
+        var weapon = args.Using!.Value;
+        var victim = args.Target;
+
+        if (!CanExecuteChecks(weapon, victim, victim))
+            return;
+        
         UtilityVerb verb = new()
         {
             Act = () =>
             {
-                TryStartExecutionDoafterMelee(args.Using!.Value, args.Target, args.User);
+                TryStartExecutionDoafterMelee(weapon, victim, attacker);
             },
             Impact = LogImpact.High,
             Text = Loc.GetString("execution-verb-name"),
@@ -71,11 +78,18 @@ public sealed class ExecutionSystem : EntitySystem
         if (args.Hands == null || args.Using == null || !args.CanAccess || !args.CanInteract)
             return;
 
+        var attacker = args.User;
+        var weapon = args.Using!.Value;
+        var victim = args.Target;
+
+        if (!CanExecuteChecks(weapon, victim, victim))
+            return;
+        
         UtilityVerb verb = new()
         {
             Act = () =>
             {
-                TryStartExecutionDoafterGun(args.Using!.Value, args.Target, args.User);
+                TryStartExecutionDoafterGun(weapon, victim, attacker);
             },
             Impact = LogImpact.High,
             Text = Loc.GetString("execution-verb-name"),
@@ -92,11 +106,11 @@ public sealed class ExecutionSystem : EntitySystem
             return false;
         
         // You're not allowed to execute dead people (no fun allowed)
-        if (TryComp<MobStateComponent>(victim, out var mobState) && !_mobStateSystem.IsAlive(victim, mobState))
+        if (TryComp<MobStateComponent>(victim, out var mobState) && _mobStateSystem.IsDead(victim, mobState))
             return false;
-        
-        // They have to be cuffed to be executed
-        if (!TryComp<CuffableComponent>(victim, out var cuffable) || cuffable.CanStillInteract)
+
+        // You must be incapacitated to be executed
+        if (_actionBlockerSystem.CanInteract(victim, null))
             return false;
 
         // All checks passed
@@ -184,7 +198,7 @@ public sealed class ExecutionSystem : EntitySystem
         if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
             return;
         
-        _damageableSystem.TryChangeDamage(victim, melee.Damage * DamageModifier);
+        _damageableSystem.TryChangeDamage(victim, melee.Damage * DamageModifier, true);
         _meleeSystem.PlayHitSound(victim, weapon, null, null, null);
         
         _popupSystem.PopupEntity(Loc.GetString(
