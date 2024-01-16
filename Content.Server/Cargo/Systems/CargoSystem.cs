@@ -14,8 +14,6 @@ using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
@@ -25,9 +23,6 @@ namespace Content.Server.Cargo.Systems;
 public sealed partial class CargoSystem : SharedCargoSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -63,13 +58,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeShuttle();
         InitializeTelepad();
         InitializeBounty();
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        ShutdownShuttle();
-        CleanupCargoShuttle();
     }
 
     public override void Update(float frameTime)

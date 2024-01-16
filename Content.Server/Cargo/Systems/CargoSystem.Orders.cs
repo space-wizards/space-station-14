@@ -143,6 +143,10 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
+            // No slots at the trade station
+            // TODO:
+            throw new NotImplementedException();
+
             _idCardSystem.TryFindIdCard(player, out var idCard);
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             order.SetApproverData(idCard.Comp?.FullName, idCard.Comp?.JobTitle);
@@ -336,10 +340,10 @@ namespace Content.Server.Cargo.Systems
 
         public void ClearOrders(StationCargoOrderDatabaseComponent component)
         {
-            if (component.Orders.Count == 0) return;
+            if (component.Orders.Count == 0)
+                return;
 
             component.Orders.Clear();
-            Dirty(component);
         }
 
         private static bool PopFrontOrder(StationCargoOrderDatabaseComponent orderDB, [NotNullWhen(true)] out CargoOrderData? orderOut)
@@ -365,45 +369,43 @@ namespace Content.Server.Cargo.Systems
         private bool FulfillOrder(StationCargoOrderDatabaseComponent orderDB, EntityCoordinates whereToPutIt,
                 string? paperPrototypeToPrint)
         {
-            if (PopFrontOrder(orderDB, out var order))
+            if (!PopFrontOrder(orderDB, out var order))
+                return false;
+
+            // Create the item itself
+            var item = Spawn(order.ProductId, whereToPutIt);
+
+            // Create a sheet of paper to write the order details on
+            var printed = EntityManager.SpawnEntity(paperPrototypeToPrint, whereToPutIt);
+            if (TryComp<PaperComponent>(printed, out var paper))
             {
-                // Create the item itself
-                var item = Spawn(order.ProductId, whereToPutIt);
+                // fill in the order data
+                var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderId));
+                _metaSystem.SetEntityName(printed, val);
 
-                // Create a sheet of paper to write the order details on
-                var printed = EntityManager.SpawnEntity(paperPrototypeToPrint, whereToPutIt);
-                if (TryComp<PaperComponent>(printed, out var paper))
+                _paperSystem.SetContent(printed, Loc.GetString(
+                        "cargo-console-paper-print-text",
+                        ("orderNumber", order.OrderId),
+                        ("itemName", MetaData(item).EntityName),
+                        ("requester", order.Requester),
+                        ("reason", order.Reason),
+                        ("approver", order.Approver ?? string.Empty)),
+                    paper);
+
+                // attempt to attach the label to the item
+                if (TryComp<PaperLabelComponent>(item, out var label))
                 {
-                    // fill in the order data
-                    var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderId));
-                    _metaSystem.SetEntityName(printed, val);
-
-                    _paperSystem.SetContent(printed, Loc.GetString(
-                                "cargo-console-paper-print-text",
-                                ("orderNumber", order.OrderId),
-                                ("itemName", MetaData(item).EntityName),
-                                ("requester", order.Requester),
-                                ("reason", order.Reason),
-                                ("approver", order.Approver ?? string.Empty)),
-                            paper);
-
-                    // attempt to attach the label to the item
-                    if (TryComp<PaperLabelComponent>(item, out var label))
-                    {
-                        _slots.TryInsert(item, label.LabelSlot, printed, null);
-                    }
+                    _slots.TryInsert(item, label.LabelSlot, printed, null);
                 }
-
-                return true;
             }
 
-            return false;
+            return true;
+
         }
 
         private void DeductFunds(StationBankAccountComponent component, int amount)
         {
             component.Balance = Math.Max(0, component.Balance - amount);
-            Dirty(component);
         }
 
         #region Station
