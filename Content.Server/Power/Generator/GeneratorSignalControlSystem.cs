@@ -30,13 +30,19 @@ public sealed class GeneratorSignalControlSystem: EntitySystem
         else if (args.Port == component.OffPort)
         {
             _generator.SetFuelGeneratorOn(uid, false, generator);
+            _revving.StopAutoRevving(uid);
         }
         else if (args.Port == component.TogglePort)
         {
             if (generator.On)
+            {
                 _generator.SetFuelGeneratorOn(uid, false, generator);
+                _revving.StopAutoRevving(uid);
+            }
             else
+            {
                 _revving.StartAutoRevving(uid);
+            }
         }
     }
 }
