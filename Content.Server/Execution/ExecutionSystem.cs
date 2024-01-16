@@ -145,7 +145,7 @@ public sealed class ExecutionSystem : EntitySystem
         if (!CanExecuteWithMelee(weapon, victim, user))
             return;
 
-        var executionTime = Comp<MeleeWeaponComponent>(weapon).AttackRate * MeleeExecutionTimeModifier;
+        var executionTime = (1.0f / Comp<MeleeWeaponComponent>(weapon).AttackRate) * MeleeExecutionTimeModifier;
 
         _popupSystem.PopupEntity(Loc.GetString(
                 "execution-popup-melee-initial-internal", ("weapon", weapon), ("victim", victim)),
