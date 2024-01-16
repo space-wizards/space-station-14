@@ -96,6 +96,11 @@
       - Off
       - Toggle
     - type: GeneratorSignalControl
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
 
 - type: entity
   abstract: true
