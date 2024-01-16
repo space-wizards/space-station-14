@@ -48,13 +48,25 @@
     external:    Structures/Doors/Airlocks/Glass/external.rsi
 
 - type: AirlockGroup
-  id: Shuttle
+  id: ExternalManual
   iconPriority: 50
+  stylePaths:
+    external:    Structures/Doors/Airlocks/Standard/external_manual.rsi
+
+- type: AirlockGroup
+  id: ExternalGlassManual
+  iconPriority: 40
+  stylePaths:
+    external:    Structures/Doors/Airlocks/Glass/external_manual.rsi
+
+- type: AirlockGroup
+  id: Shuttle
+  iconPriority: 30
   stylePaths:
     shuttle:     Structures/Doors/Airlocks/Standard/shuttle.rsi
 
 - type: AirlockGroup
   id: ShuttleGlass
-  iconPriority: 40
+  iconPriority: 20
   stylePaths:
     shuttle:     Structures/Doors/Airlocks/Glass/shuttle.rsi
