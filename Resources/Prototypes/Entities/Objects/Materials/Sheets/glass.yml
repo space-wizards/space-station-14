@@ -45,6 +45,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      glass: 
+        canReact: false
 
 - type: entity
   parent: SheetGlassBase
@@ -192,7 +196,7 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
-
+        canReact: false
 - type: entity
   parent: SheetGlassBase
   id: SheetPGlass
@@ -266,6 +270,7 @@
           Quantity: 10
         - ReagentId: Plasma
           Quantity: 10
+        canReact: false
 
 - type: entity
   parent: SheetPGlass
@@ -308,6 +313,7 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
+        canReact: false
 
 - type: entity
   parent: SheetRPGlass
@@ -382,6 +388,7 @@
           Quantity: 10
         - ReagentId: Uranium
           Quantity: 10
+        canReact: false
 
 - type: entity
   parent: SheetUGlass
@@ -435,6 +442,8 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
+        canReact: false 
+    
 - type: entity
   parent: SheetRUGlass
   id: SheetRUGlass1

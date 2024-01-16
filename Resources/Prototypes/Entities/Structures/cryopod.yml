@@ -21,7 +21,8 @@
     access: [["Cryogenics"]]
   - type: InteractionOutline
   - type: Cryostorage
-  - type: Climbable
+  - type: Physics
+    canCollide: false
   - type: DragInsertContainer
     containerId: storage
   - type: ExitContainerOnMove
@@ -46,7 +47,7 @@
 - type: entity
   parent: CryogenicSleepUnit
   id: CryogenicSleepUnitSpawner
-  suffix: Spawner, All
+  suffix: Spawner, Roundstart AllJobs
   components:
   - type: ContainerSpawnPoint
     containerId: storage
