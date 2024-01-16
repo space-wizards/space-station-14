@@ -50,7 +50,7 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="target">Where the lightning fires to</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
-    public void ShootLightning(EntityUid user, EntityUid target, bool triggerLightningEvents, string lightningPrototype = "Lightning")
+    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning",  bool triggerLightningEvents = false)
     {
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
@@ -95,7 +95,7 @@ public sealed class LightningSystem : SharedLightningSystem
             if (!_random.Prob(curTarget.HitProbability)) //Chance to ignore target
                 continue;
 
-            ShootLightning(user, targets[count].Owner, triggerLightningEvents, lightningPrototype);
+            ShootLightning(user, targets[count].Owner, lightningPrototype, triggerLightningEvents);
             if (arcDepth - targets[count].LightningResistance > 0)
             {
                 ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].LightningResistance, triggerLightningEvents);

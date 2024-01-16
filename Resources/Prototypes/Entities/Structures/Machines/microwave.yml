@@ -85,8 +85,8 @@
         acts: ["Breakage"]
   - type: Explosive
     explosionType: Default
-    maxIntensity: 20
-    totalIntensity: 10
+    maxIntensity: 10
+    totalIntensity: 5
     intensitySlope: 5
     canCreateVacuum: false
     deleteAfterExplosion: false

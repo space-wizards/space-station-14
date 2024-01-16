@@ -61,9 +61,9 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
 
-        private TimeSpan _targetTime = TimeSpan.Zero;
-
         [Dependency] private readonly SharedItemSystem _item = default!;
+
+        private TimeSpan _targetTime = TimeSpan.Zero;        
 
         public override void Initialize()
         {
@@ -397,10 +397,10 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         /// <summary>
-        /// handles the attempted cooking of unsafe objects
+        /// Handles the attempted cooking of unsafe objects
         /// </summary>
         /// <remarks>
-        /// returns true if the microwave can continue to cook, false if it can't.
+        /// Returns true if the microwave can continue to cook, false if it can't.
         /// </remarks>
         private bool HandleUnsafeItems(EntityUid uid, MicrowaveComponent component)
         {
@@ -409,17 +409,14 @@ namespace Content.Server.Kitchen.EntitySystems
                 return true;
             }
 
-            if (component.IsSparking)
+            if (_random.Prob(.1f))
             {
-                if (_random.Prob(.1f))
-                {
-                    _explosion.TriggerExplosive(uid);
-                    return false;  // microwave is fucked, stop the cooking.
-                }
-                if (_random.Prob(.75f))
-                {
-                    _lightning.ShootRandomLightnings(uid, 1.0f, 1, "Spark", triggerLightningEvents: false);
-                }
+                _explosion.TriggerExplosive(uid);
+                return false;  // microwave is fucked, stop the cooking.
+            }
+            if (_random.Prob(.75f))
+            {
+                _lightning.ShootRandomLightnings(uid, 1.0f, 1, "Spark", triggerLightningEvents: false);
             }
 
             return true;
@@ -559,7 +556,6 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Update(frameTime);
 
             var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
-
             while (query.MoveNext(out var uid, out var active, out var microwave))
             {
 
@@ -570,6 +566,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (!HandleUnsafeItems(uid, microwave))
                     {
                         _destruction.BreakEntity(uid);
+                        continue;
                     }
                     _targetTime += TimeSpan.FromSeconds(1);
                 }
