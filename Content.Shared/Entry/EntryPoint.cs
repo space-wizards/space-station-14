@@ -22,7 +22,7 @@ namespace Content.Shared.Entry
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IResourceManager _resMan = default!;
 
-        private const string IgnoreFile = "/ignoredPrototypes.yml";
+        private readonly ResPath _ignoreFile = new("/ignoredPrototypes.yml");
 
         public override void PreInit()
         {
@@ -125,8 +125,7 @@ namespace Content.Shared.Entry
         private bool TryReadFile([NotNullWhen(true)] out SequenceDataNode? sequence)
         {
             sequence = null;
-            var path = new ResPath(IgnoreFile);
-            if (!_resMan.TryContentFileRead(path, out var stream))
+            if (!_resMan.TryContentFileRead(_ignoreFile, out var stream))
                 return false;
 
             using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
