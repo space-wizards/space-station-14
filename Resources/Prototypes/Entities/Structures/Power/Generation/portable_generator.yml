@@ -90,6 +90,12 @@
       supplyRampRate: 500
       supplyRampTolerance: 500
       enabled: false
+    - type: DeviceLinkSink
+      ports:
+      - On
+      - Off
+      - Toggle
+    - type: GeneratorSignalControl
 
 - type: entity
   abstract: true

@@ -37,6 +37,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (!headset.Enabled || MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
+
         if (!Resolve(uid, ref keyHolder))
             return;
 
