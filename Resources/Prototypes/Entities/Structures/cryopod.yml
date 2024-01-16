@@ -46,7 +46,7 @@
 - type: entity
   parent: CryogenicSleepUnit
   id: CryogenicSleepUnitSpawner
-  suffix: Spawner, All
+  suffix: Spawner, Roundstart AllJobs
   components:
   - type: ContainerSpawnPoint
     containerId: storage
