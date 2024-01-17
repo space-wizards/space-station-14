@@ -54,12 +54,3 @@
   components:
   - type: ReagentDispenser
     pack: EmptyInventory
-
-- type: entity
-  id: ChemDispenserEmptyBottles
-  name: chemical dispenser
-  suffix: Empty Bottles
-  parent: ChemDispenser
-  components:
-  - type: ReagentDispenser
-    pack: ChemDispenserExpendedInventory

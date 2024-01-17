@@ -20,10 +20,6 @@ namespace Content.Shared.Chemistry.Dispenser
         [DataField("inventory", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
         private List<string> _inventory = new();
 
-        [DataField("labels", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
-        private List<string> _labels = new();
-
         public List<string> Inventory => _inventory;
-        public List<string> Labels => _labels;
     }
 }

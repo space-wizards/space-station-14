@@ -173,19 +173,10 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             // Get list of pre-loaded containers
             List<string> preLoad = new List<string>();
-            List<string> preLoadLabels = new List<string>();
             if (component.PackPrototypeId is not null
                 && _prototypeManager.TryIndex(component.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
                 preLoad.AddRange(packPrototype.Inventory);
-
-                // Normally, we get the label from the container name (e.g. "jug"). However, this is not useful for a pre-filled
-                // dispenser, so we apply the labels in the prototype.
-                foreach (var label in packPrototype.Labels)
-                {
-                    var localizedName = _prototypeManager.TryIndex(label, out ReagentPrototype? p) ? p.LocalizedName : label;
-                    preLoadLabels.Add(localizedName);
-                }
             }
 
             // Populate storage slots with base storage slot whitelist
@@ -205,16 +196,6 @@ namespace Content.Server.Chemistry.EntitySystems
                 component.StorageSlots.Add(storageComponent);
                 component.StorageSlots[i].Name = "Storage Slot " + (i+1);
                 _itemSlotsSystem.AddItemSlot(uid, component.StorageSlotIds[i], component.StorageSlots[i]);
-
-                // Re-label item for brevity (if labels provided)
-                if (i < preLoadLabels.Count) {
-                    var storedContainer = _itemSlotsSystem.GetItemOrNull(component.Owner, storageSlotId);
-                    if (storedContainer != null)
-                    {
-                        var label = EnsureComp<LabelComponent>(storedContainer.Value);
-                        label.CurrentLabel = preLoadLabels[i];
-                    }
-                }
             }
 
             _itemSlotsSystem.AddItemSlot(uid, ReagentDispenserComponent.BeakerSlotId, component.BeakerSlot);
