@@ -1,6 +1,8 @@
 - type: entity
   id: CrateMaterialGlass
   parent: CrateGenericSteel
+  name: glass sheet crate
+  description: 90 sheets of glass, packed with care.
   components:
   - type: StorageFill
     contents:
@@ -10,6 +12,8 @@
 - type: entity
   id: CrateMaterialSteel
   parent: CrateGenericSteel
+  name: steel sheet crate
+  description: 90 sheets of steel.
   components:
   - type: StorageFill
     contents:
@@ -19,6 +23,8 @@
 - type: entity
   id: CrateMaterialTextiles
   parent: CrateGenericSteel
+  name: textiles crate
+  description: 60 pieces of cloth and 30 pieces of durathread.
   components:
   - type: StorageFill
     contents:
@@ -29,6 +35,8 @@
 - type: entity
   id: CrateMaterialPlastic
   parent: CrateGenericSteel
+  name: plastic sheet crate
+  description: 90 sheets of plastic.
   components:
   - type: StorageFill
     contents:
@@ -38,6 +46,8 @@
 - type: entity
   id: CrateMaterialWood
   parent: CrateGenericSteel
+  name: wood crate
+  description: Bunch of wood planks.
   components:
   - type: StorageFill
     contents:
@@ -46,6 +56,8 @@
 - type: entity
   id: CrateMaterialPlasteel
   parent: CrateGenericSteel
+  name: plasteel crate
+  description: 90 sheets of plasteel.
   components:
   - type: StorageFill
     contents:
@@ -55,6 +67,8 @@
 - type: entity
   id: CrateMaterialPlasma
   parent: CratePlasma
+  name: solid plasma crate
+  description: 90 sheets of plasma.
   components:
   - type: StorageFill
     contents:
@@ -64,6 +78,8 @@
 - type: entity
   id: CrateMaterialCardboard
   parent: CrateGenericSteel
+  name: cardboard crate
+  description: 60 pieces of cardboard.
   components:
   - type: StorageFill
     contents:
@@ -73,6 +89,8 @@
 - type: entity
   id: CrateMaterialPaper
   parent: CrateGenericSteel
+  name: paper crate
+  description: 90 sheets of paper.
   components:
   - type: StorageFill
     contents:
@@ -81,7 +99,7 @@
 
 #- type: entity
 #  id: CrateMaterialHFuelTank
-#  name:  fueltank crate
+#  name: fueltank crate
 #  parent: CrateGenericSteel
 #  components:
 #  - type: StorageFill
@@ -91,7 +109,7 @@
 
 #- type: entity
 #  id: CrateMaterialHWaterTank
-#  name:  watertank crate
+#  name: watertank crate
 #  parent: CrateGenericSteel
 #  components:
 #  - type: StorageFill
