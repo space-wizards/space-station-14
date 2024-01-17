@@ -63,6 +63,8 @@
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
         trade:
+          addComponents:
+            - type: TradeStation
           paths:
             - /Maps/Shuttles/trading_outpost.yml
 

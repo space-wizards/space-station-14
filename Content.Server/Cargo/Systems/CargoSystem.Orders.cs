@@ -94,7 +94,7 @@ namespace Content.Server.Cargo.Systems
             // No station to deduct from.
             if (!TryComp(station, out StationBankAccountComponent? bank) ||
                 !TryComp(station, out StationDataComponent? stationData) ||
-                !TryGetOrderDatabase(uid, out var orderDatabase))
+                !TryGetOrderDatabase(station, out var orderDatabase))
             {
                 ConsolePopup(args.Session, Loc.GetString("cargo-console-station-not-found"));
                 PlayDenySound(uid, component);
@@ -150,7 +150,7 @@ namespace Content.Server.Cargo.Systems
             // No slots at the trade station
             _listEnts.Clear();
             GetTradeStations(stationData, ref _listEnts);
-            var fulfilled = false;
+            EntityUid? tradeDestination = null;
 
             // Try to fulfill from any station where possible, if the pad is not occupied.
             foreach (var trade in _listEnts)
@@ -166,16 +166,16 @@ namespace Content.Server.Cargo.Systems
 
                     if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
                     {
-                        fulfilled = true;
+                        tradeDestination = trade;
                         break;
                     }
                 }
 
-                if (fulfilled)
+                if (tradeDestination != null)
                     break;
             }
 
-            if (!fulfilled)
+            if (tradeDestination == null)
             {
                 ConsolePopup(args.Session, Loc.GetString("cargo-console-unfulfilled"));
                 PlayDenySound(uid, component);
@@ -185,7 +185,9 @@ namespace Content.Server.Cargo.Systems
             _idCardSystem.TryFindIdCard(player, out var idCard);
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             order.SetApproverData(idCard.Comp?.FullName, idCard.Comp?.JobTitle);
-            _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
+            _audio.PlayPvs(component.ConfirmSound, uid);
+
+            ConsolePopup(args.Session, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(tradeDestination.Value).EntityName)));
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
