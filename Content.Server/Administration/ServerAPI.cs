@@ -213,7 +213,7 @@ public sealed class ServerApi : IPostInjectInit
                 break;
         }
 
-        _sawmill.Info($"Panic bunker setting {body.Action} changed to {body.Value} by {actor!.Name} ({actor!.Guid}).");
+        _sawmill.Info($"Panic bunker setting {body.Action} changed to {body.Value} by {actor!.Name} ({actor.Guid}).");
         await context.RespondAsync("Success", HttpStatusCode.OK);
         return true;
     }
@@ -388,7 +388,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        _sawmill.Info($"Ended game rule {body.GameRuleId} by {actor!.Name} ({actor!.Guid}).");
+        _sawmill.Info($"Ended game rule {body.GameRuleId} by {actor!.Name} ({actor.Guid}).");
         _taskManager.RunOnMainThread(() => ticker.EndGameRule((EntityUid) gameRuleEntity));
         await context.RespondJsonAsync(new BaseResponse()
         {
@@ -443,11 +443,11 @@ public sealed class ServerApi : IPostInjectInit
             }
 
             var ruleEntity = ticker.AddGameRule(body.GameRuleId);
-            _sawmill.Info($"Added game rule {body.GameRuleId} by {actor!.Name} ({actor!.Guid}).");
+            _sawmill.Info($"Added game rule {body.GameRuleId} by {actor!.Name} ({actor.Guid}).");
             if (ticker.RunLevel == GameRunLevel.InRound)
             {
                 ticker.StartGameRule(ruleEntity);
-                _sawmill.Info($"Started game rule {body.GameRuleId} by {actor!.Name} ({actor!.Guid}).");
+                _sawmill.Info($"Started game rule {body.GameRuleId} by {actor.Name} ({actor.Guid}).");
             }
             return ruleEntity;
         });
@@ -492,7 +492,7 @@ public sealed class ServerApi : IPostInjectInit
 
         if (body == null)
         {
-            _sawmill.Info($"Attempted to kick player without supplying a body by {actor!.Name}({actor!.Guid}).");
+            _sawmill.Info($"Attempted to kick player without supplying a body by {actor!.Name}({actor.Guid}).");
             await context.RespondJsonAsync(new BaseResponse()
             {
                 Message = "A body is required to perform this action.",
@@ -507,7 +507,7 @@ public sealed class ServerApi : IPostInjectInit
 
         if (body.Guid == null)
         {
-            _sawmill.Info($"Attempted to kick player without supplying a username by {actor!.Name}({actor!.Guid}).");
+            _sawmill.Info($"Attempted to kick player without supplying a username by {actor!.Name}({actor.Guid}).");
             await context.RespondJsonAsync(new BaseResponse()
             {
                 Message = "A player is required to perform this action.",
@@ -528,7 +528,7 @@ public sealed class ServerApi : IPostInjectInit
 
         if (session == null)
         {
-            _sawmill.Info($"Attempted to kick player {body.Guid} by {actor!.Name} ({actor!.Guid}), but they were not found.");
+            _sawmill.Info($"Attempted to kick player {body.Guid} by {actor!.Name} ({actor.Guid}), but they were not found.");
             await context.RespondJsonAsync(new BaseResponse()
             {
                 Message = "Player not found",
@@ -552,7 +552,7 @@ public sealed class ServerApi : IPostInjectInit
         {
             Message = "OK"
         });
-        _sawmill.Info("Kicked player {0} ({1}) for {2} by {3}({4})", session.Name, session.UserId.UserId.ToString(), reason, actor!.Name, actor!.Guid);
+        _sawmill.Info("Kicked player {0} ({1}) for {2} by {3}({4})", session.Name, session.UserId.UserId.ToString(), reason, actor!.Name, actor.Guid);
         return true;
     }
 
@@ -677,7 +677,7 @@ public sealed class ServerApi : IPostInjectInit
                 return true;
         }
 
-        _sawmill.Info($"Round {body.Action} by {actor!.Name} ({actor!.Guid}).");
+        _sawmill.Info($"Round {body.Action} by {actor!.Name} ({actor.Guid}).");
         await context.RespondJsonAsync(new BaseResponse()
         {
             Message = "OK"
@@ -805,7 +805,7 @@ public sealed class ServerApi : IPostInjectInit
             return gameRules;
         });
 
-        _sawmill.Info($"Info requested by {actor!.Name} ({actor!.Guid}).");
+        _sawmill.Info($"Info requested by {actor!.Name} ({actor.Guid}).");
         await context.RespondJsonAsync(new InfoResponse()
         {
             Players = players,
