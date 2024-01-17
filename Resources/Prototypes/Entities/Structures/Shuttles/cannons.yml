@@ -43,6 +43,7 @@
     - Toggle
     - On
     - Off
+  - type: AutoShootGun
   - type: GunSignalControl
   - type: StaticPrice
     price: 1500
