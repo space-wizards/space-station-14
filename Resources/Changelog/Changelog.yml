@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: Added a green central command cap like the captain's blue one.
-    type: Add
-  id: 5228
-  time: '2023-11-30T07:20:45.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Core has been reworked and added back into the map pool.
@@ -3767,3 +3761,10 @@
   id: 5728
   time: '2024-01-17T10:03:01.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24182
+- author: Ubaser
+  changes:
+  - message: Ore is now grindable to obtain basic chemicals.
+    type: Add
+  id: 5729
+  time: '2024-01-17T13:08:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24185
