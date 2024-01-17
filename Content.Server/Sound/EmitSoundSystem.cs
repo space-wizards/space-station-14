@@ -32,6 +32,20 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
                 TryEmitSound(uid, soundSpammer);
             }
         }
+
+        var intervalQuery = EntityQueryEnumerator<EmitSoundIntervalComponent>();
+
+        while (intervalQuery.MoveNext(out var uid, out var comp))
+        {
+            if (!comp.Enabled)
+                continue;
+
+            if (Timing.CurTime > comp.NextEmitTime)
+            {
+                TryEmitSound(uid, comp);
+                comp.NextEmitTime = Timing.CurTime + Random.Next(comp.MinInterval, comp.MaxInterval);
+            }
+        }
     }
 
     public override void Initialize()
@@ -40,6 +54,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
         SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
         SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
+        SubscribeLocalEvent<EmitSoundIntervalComponent, EntityUnpausedEvent>(OnUnpause);
     }
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
@@ -51,5 +66,10 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
     {
         TryEmitSound(uid, component);
         args.Handled = true;
+    }
+
+    private void OnUnpause(EntityUid uid, EmitSoundIntervalComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextEmitTime += args.PausedTime;
     }
 }

@@ -41,6 +41,15 @@
   - type: Pullable
   - type: StaticPrice
     price: 300
+  - type: EmitSoundInterval
+    minInterval: 30
+    maxInterval: 120
+    sound:
+      collection: ArcadeNoise
+      params:
+        volume: -8
+        maxDistance: 10
+        variation: 0.05
 
 - type: entity
   id: SpaceVillainArcade
@@ -125,8 +134,8 @@
     board: SpaceVillainArcadeComputerCircuitboard
   - type: Advertise
     pack: SpaceVillainAds
-    minWait: 120
-    maxWait: 300 # Arcades are noisy
+    minWait: 60 # Arcades are noisy
+    maxWait: 240
 
 - type: entity
   id: SpaceVillainArcadeFilled
@@ -167,5 +176,5 @@
     board: BlockGameArcadeComputerCircuitboard
   - type: Advertise
     pack: BlockGameAds
-    minWait: 120
-    maxWait: 300 # Arcades are noisy
+    minWait: 60 # Arcades are noisy
+    maxWait: 240
