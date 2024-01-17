@@ -46,6 +46,7 @@ flavor-base-spaceshroom = mysterious
 flavor-base-clean = clean
 flavor-base-alkaline = alkaline
 flavor-base-holy = holy
+flavor-base-horrible = horrible
 
 # lmao
 flavor-base-terrible = terrible

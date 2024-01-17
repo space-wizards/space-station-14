@@ -284,6 +284,9 @@
         Base: cockroach
       Dead:
         Base: cockroach_dead
+  - type: Bloodstream
+    bloodReagent: InsectBlood
+    bloodMaxVolume: 20
   - type: Food
   - type: Hunger
     baseDecayRate: 0.25
@@ -301,9 +304,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Cockroach
-  - type: Bloodstream
-    bloodReagent: Slime
-    bloodMaxVolume: 20
   - type: Tag
     tags:
     - Trash
@@ -415,6 +415,8 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
+  - type: Bloodstream
+    bloodReagent: InsectBlood
   - type: Respirator
     damage:
       types:
@@ -2035,6 +2037,8 @@
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
   - type: Tag
     tags:
     - DoorBumpOpener

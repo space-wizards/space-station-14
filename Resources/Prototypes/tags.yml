@@ -562,9 +562,18 @@
 
 - type: Tag
   id: Goat
-
+  
+- type: Tag
+  id: GPS
+  
 - type: Tag
   id: Grenade
+
+- type: Tag
+  id: HudMedical
+
+- type: Tag
+  id: HudSecurity
 
 - type: Tag
   id: GuideEmbeded
@@ -780,6 +789,9 @@
 
 - type: Tag
   id: Matchstick
+
+- type: Tag
+  id: Mayo  
 
 - type: Tag
   id: Meat

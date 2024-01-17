@@ -322,6 +322,9 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
+  - type: Tag
+    tags:
+    - HidesHair
 
 - type: entity
   parent: ClothingMaskGasExplorer
@@ -344,6 +347,9 @@
     sprite: Clothing/Mask/ert.rsi
   - type: Clothing
     sprite: Clothing/Mask/ert.rsi
+  - type: Tag
+    tags:
+    - HidesHair
 
 - type: entity
   parent: ClothingMaskGasERT

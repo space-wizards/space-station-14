@@ -86,6 +86,10 @@
   id: Meatball
   mapPath: /Maps/Salvage/meatball.yml
 
+- type: salvageMap
+  id: MediumHaulingShuttleWreck
+  mapPath: /Maps/Salvage/hauling-shuttle.yml
+
 # """Large""" maps
 
 - type: salvageMap
