@@ -2,12 +2,12 @@
   id: Deconstruct
   name: rcd-component-deconstruct
   category: Main
-  texture: "/Textures/Interface/Radial/RCD/deconstruct.png"
+  sprite: /Textures/Interface/Radial/RCD/deconstruct.png
   mode: Deconstruct
   cost: 8
   delay: 4
   fx: EffectRCDDeconstructSlow
-  ghost:
+  ghostSprite:
     sprite: Structures/Walls/solid.rsi
     state: full
 
@@ -15,7 +15,7 @@
   id: WallSolid
   name: rcd-component-wall-solid
   category: WallsAndFlooring
-  texture: "/Textures/Interface/Radial/RCD/solid_wall.png"
+  sprite: /Textures/Interface/Radial/RCD/solid_wall.png
   mode: ConstructObject
   prototype: WallSolid 
   cost: 4
@@ -23,7 +23,7 @@
   collisonMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstructNormal
-  ghost:
+  ghostSprite:
     sprite: Structures/Walls/solid.rsi
     state: full
   
@@ -31,7 +31,7 @@
   id: FloorSteel
   name: rcd-component-floor-steel
   category: WallsAndFlooring
-  texture: "/Textures/Interface/Radial/RCD/metal_tile.png"
+  sprite: /Textures/Interface/Radial/RCD/metal_tile.png
   mode: ConstructTile
   prototype: FloorSteel
   cost: 1
@@ -39,13 +39,13 @@
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstructFast
-  ghost: "/Textures/Tiles/steel_dirty.png"
+  ghostSprite: /Textures/Tiles/steel_dirty.png
   
 - type: rcd
   id: Plating
   name: rcd-component-plating
   category: WallsAndFlooring
-  texture: "/Textures/Interface/Radial/RCD/plating.png"
+  sprite: /Textures/Interface/Radial/RCD/plating.png
   mode: ConstructTile
   prototype: Plating
   cost: 1
@@ -53,13 +53,13 @@
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstructFast
-  ghost: "/Textures/Tiles/plating.png"
+  ghostSprite: /Textures/Tiles/plating.png
   
 - type: rcd
   id: Catwalk
   name: rcd-component-catwalk
   category: WallsAndFlooring
-  texture: "/Textures/Interface/Radial/RCD/catwalk.png"
+  sprite: /Textures/Interface/Radial/RCD/catwalk.png
   mode: ConstructObject
   prototype: Catwalk
   cost: 1
@@ -69,7 +69,7 @@
     - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstructFast
-  ghost:
+  ghostSprite:
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
   
@@ -77,7 +77,7 @@
   id: WallReinforced
   name: rcd-component-wall-reinforced
   category: WallsAndFlooring
-  texture: "/Textures/Interface/Radial/RCD/reinforced_wall.png"
+  sprite: /Textures/Interface/Radial/RCD/reinforced_wall.png
   mode: ConstructObject
   prototype: WallReinforced
   cost: 8
@@ -85,7 +85,7 @@
   collisonMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstructSlow
-  ghost:
+  ghostSprite:
     sprite: Structures/Walls/solid.rsi
     state: rgeneric
   
@@ -93,7 +93,7 @@
   id: Grille
   name: rcd-component-grille
   category: WindowsAndGrilles
-  texture: "/Textures/Interface/Radial/RCD/grille.png"
+  sprite: /Textures/Interface/Radial/RCD/grille.png
   mode: ConstructObject
   prototype: Grille
   cost: 4
@@ -101,7 +101,7 @@
   collisonMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstructNormal
-  ghost:
+  ghostSprite:
     sprite: Structures/Walls/grille.rsi
     state: grille
   
@@ -109,7 +109,7 @@
   id: Window
   name: rcd-component-window
   category: WindowsAndGrilles
-  texture: "/Textures/Interface/Radial/RCD/window.png"
+  sprite: /Textures/Interface/Radial/RCD/window.png
   mode: ConstructObject
   prototype: Window
   cost: 4
@@ -119,7 +119,7 @@
     - IsWindow
   rotation: Fixed
   fx: EffectRCDConstructNormal
-  ghost:
+  ghostSprite:
     sprite: Structures/Windows/window.rsi
     state: full
   
@@ -127,7 +127,7 @@
   id: WindowDirectional
   name: rcd-component-window-directional
   category: WindowsAndGrilles
-  texture: "/Textures/Interface/Radial/RCD/directional.png"
+  sprite: /Textures/Interface/Radial/RCD/directional.png
   mode: ConstructObject
   prototype: WindowDirectional
   cost: 2
@@ -135,10 +135,10 @@
   collisonMask: FullTileMask
   rules:
     - IsWindow
-    - DirectionalCollider
+    - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructFast
-  ghost:
+  ghostSprite:
     sprite: Structures/Windows/directional.rsi
     state: window
   
@@ -146,7 +146,7 @@
   id: WindowReinforcedDirectional
   name: rcd-component-window-reinforced-directional
   category: WindowsAndGrilles
-  texture: "/Textures/Interface/Radial/RCD/directional_reinforced.png"
+  sprite: /Textures/Interface/Radial/RCD/directional_reinforced.png
   mode: ConstructObject
   prototype: WindowReinforcedDirectional
   cost: 2
@@ -154,10 +154,10 @@
   collisonMask: FullTileMask
   rules:
     - IsWindow
-    - DirectionalCollider
+    - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructFast
-  ghost:
+  ghostSprite:
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
   
@@ -165,7 +165,7 @@
   id: ReinforcedWindow
   name: rcd-component-reinforced-window
   category: WindowsAndGrilles
-  texture: "/Textures/Interface/Radial/RCD/window_reinforced.png"
+  sprite: /Textures/Interface/Radial/RCD/window_reinforced.png
   mode: ConstructObject
   prototype: ReinforcedWindow
   cost: 4
@@ -173,10 +173,10 @@
   collisonMask: FullTileMask
   rules:
     - IsWindow
-    - DirectionalCollider
+    - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructNormal
-  ghost:
+  ghostSprite:
     sprite: Structures/Windows/reinforced_window.rsi
     state: full
   
@@ -184,7 +184,7 @@
   id: Airlock
   name: rcd-component-airlock
   category: Airlocks
-  texture: "/Textures/Interface/Radial/RCD/airlock.png"
+  sprite: /Textures/Interface/Radial/RCD/airlock.png
   mode: ConstructObject
   prototype: Airlock
   cost: 4
@@ -192,7 +192,7 @@
   collisonMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
-  ghost:
+  ghostSprite:
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     state: closed
   
@@ -200,7 +200,7 @@
   id: AirlockGlass
   name: rcd-component-airlock-glass
   category: Airlocks
-  texture: "/Textures/Interface/Radial/RCD/glass_airlock.png"
+  sprite: /Textures/Interface/Radial/RCD/glass_airlock.png
   mode: ConstructObject
   prototype: AirlockGlass
   cost: 4
@@ -208,7 +208,7 @@
   collisonMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
-  ghost:
+  ghostSprite:
     sprite: Structures/Doors/Airlocks/Glass/glass.rsi
     state: closed
   
@@ -216,7 +216,7 @@
   id: Firelock
   name: rcd-component-firelock
   category: Airlocks
-  texture: "/Textures/Interface/Radial/RCD/firelock.png"
+  sprite: /Textures/Interface/Radial/RCD/firelock.png
   mode: ConstructObject
   prototype: Firelock
   cost: 4
@@ -224,7 +224,7 @@
   collisonMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
-  ghost:
+  ghostSprite:
     sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
     state: closed
 
@@ -232,17 +232,17 @@
   id: TubeLight
   name: rcd-component-tube-light
   category: Lighting
-  texture: "/Textures/Interface/Radial/RCD/tube_light.png"
+  sprite: /Textures/Interface/Radial/RCD/tube_light.png
   mode: ConstructObject
   prototype: Poweredlight
   cost: 2
   delay: 1
   collisonMask: TabletopMachineMask
   rules:
-  - DirectionalCollider
+  - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructFast
-  ghost:
+  ghostSprite:
     sprite:  Structures/Wallmounts/Lighting/light_tube.rsi
     state: base
   
@@ -250,17 +250,17 @@
   id: BulbLight
   name: rcd-component-window-bulb-light
   category: Lighting
-  texture: "/Textures/Interface/Radial/RCD/bulb_light.png"
+  sprite: /Textures/Interface/Radial/RCD/bulb_light.png
   mode: ConstructObject
   prototype: PoweredSmallLight
   cost: 2
   delay: 1
   collisonMask: TabletopMachineMask
   rules:
-  - DirectionalCollider
+  - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructFast
-  ghost:
+  ghostSprite:
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
     state: base
   
@@ -268,7 +268,7 @@
   id: LVCable
   name: rcd-component-window-lv-cable
   category: Electrical
-  texture: "/Textures/Interface/Radial/RCD/lv_coil.png"
+  sprite: /Textures/Interface/Radial/RCD/lv_coil.png
   mode: ConstructObject
   prototype: CableApcExtension
   cost: 1
@@ -278,7 +278,7 @@
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstructInstant
-  ghost:
+  ghostSprite:
     sprite: Structures/Power/Cables/lv_cable.rsi
     state: lvcable_0
     
@@ -286,7 +286,7 @@
   id: MVCable
   name: rcd-component-window-mv-cable
   category: Electrical
-  texture: "/Textures/Interface/Radial/RCD/mv_coil.png"
+  sprite: /Textures/Interface/Radial/RCD/mv_coil.png
   mode: ConstructObject
   prototype: CableMV
   cost: 1
@@ -296,7 +296,7 @@
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstructInstant
-  ghost:
+  ghostSprite:
     sprite: Structures/Power/Cables/mv_cable.rsi
     state: mvcable_0
     
@@ -304,7 +304,7 @@
   id: HVCable
   name: rcd-component-window-hv-cable
   category: Electrical
-  texture: "/Textures/Interface/Radial/RCD/hv_coil.png"
+  sprite: /Textures/Interface/Radial/RCD/hv_coil.png
   mode: ConstructObject
   prototype: CableHV
   cost: 1
@@ -314,7 +314,7 @@
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstructInstant
-  ghost:
+  ghostSprite:
     sprite: Structures/Power/Cables/hv_cable.rsi
     state: hvcable_0
     
@@ -322,7 +322,7 @@
   id: CableTerminal
   name: rcd-component-window-cable-terminal
   category: Electrical
-  texture: "/Textures/Interface/Radial/RCD/cable_terminal.png"
+  sprite: /Textures/Interface/Radial/RCD/cable_terminal.png
   mode: ConstructObject
   prototype: CableTerminal
   cost: 1
@@ -332,6 +332,6 @@
   - MustBuildOnSubfloor
   rotation: User
   fx: EffectRCDConstructInstant
-  ghost:
+  ghostSprite:
     sprite: Structures/Power/cable_terminal.rsi
     state: term

@@ -1,5 +1,4 @@
 using Content.Shared.Physics;
-using Content.Shared.RCD.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -17,61 +16,97 @@ public sealed class RCDPrototype : IPrototype
     /// <summary>
     /// The name associated with the prototype
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("name", required: true)]
+    [DataField("name", required: true), ViewVariables(VVAccess.ReadOnly)]
     public string SetName { get; private set; } = string.Empty;
 
     /// <summary>
-    /// The category this prototype is filed under
+    /// The name of the radial container that this prototype will be listed under on the RCD menu
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("category", required: true)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public string Category { get; private set; } = string.Empty;
 
     /// <summary>
     /// Texture path for this prototypes menu icon
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("texture", required: true)]
-    public string TexturePath { get; private set; } = string.Empty;
+    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
+    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
 
     /// <summary>
     /// The RCD mode associated with the operation
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("mode", required: true)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public RcdMode Mode { get; private set; } = RcdMode.Invalid;
 
     /// <summary>
     /// The entity prototype that will be constructed (mode dependent)
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("prototype")]
-    public string? Prototype { get; private set; }
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntProtoId? Prototype { get; private set; }
 
     /// <summary>
     /// Number of charges consumed when the operation is completed
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("cost")]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public int Cost { get; private set; } = 1;
 
     /// <summary>
     /// The lenght of the operation 
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("delay")]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float Delay { get; private set; } = 1f;
 
     /// <summary>
     /// The visual effect that plays during this operation
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("fx")]
-    public string? Effect { get; private set; }
+    [DataField("fx"), ViewVariables(VVAccess.ReadOnly)]
+    public EntProtoId? Effect { get; private set; }
 
+    /// <summary>
+    /// A list of rules that govern where the entity prototype can be contructed
+    /// </summary>
+    [DataField("rules"), ViewVariables(VVAccess.ReadOnly)]
+    public HashSet<RcdConstructionRule> ConstructionRules { get; private set; } = new();
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("rules")]
-    public HashSet<RcdConstructionRule> ConstructionRules = new();
+    /// <summary>
+    /// The collision mask used for determining whether the entity prototype will
+    /// fit into a target tile
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public CollisionGroup CollisionMask { get; private set; } = CollisionGroup.MobMask;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("collisonMask")]
-    public CollisionGroup CollisionMask = CollisionGroup.MobMask;
+    /// <summary>
+    /// Governs how the local rotation of the constructed entity will be set
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public RcdRotation Rotation { get; private set; } = RcdRotation.User;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("rotation")]
-    public RcdRotationRule RotationRule = RcdRotationRule.User;
+    /// <summary>
+    /// The sprite to be used for the RCD construction ghost 
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public SpriteSpecifier GhostSprite { get; private set; } = SpriteSpecifier.Invalid;
+}
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("ghost")]
-    public SpriteSpecifier GhostIcon = SpriteSpecifier.Invalid;
+public enum RcdMode : byte
+{
+    Invalid,
+    Deconstruct,
+    ConstructTile,
+    ConstructObject,
+}
+
+public enum RcdConstructionRule : byte
+{
+    MustBuildOnEmptyTile,       // Can only be built on empty space (e.g. lattice)
+    CanBuildOnEmptyTile,        // Can be built on empty space or replace an existing tile (e.g. hull plating)
+    MustBuildOnSubfloor,        // Can only be built on exposed subfloor (e.g. catwalks on lattice or hull plating)
+    OnePerCardinalDirection,    // Up to four of these entities can fit in a tile if facing different cardinal directions (e.g. directional windows)
+    IsWindow,                   // The entity is a window and can be built on grilles
+}
+
+public enum RcdRotation : byte
+{
+    Fixed,      // The entity has a local rotation of zero
+    Camera,     // The rotation of the entity matches the local player camera
+    User,       // The entity can be rotated by the local player prior to placement
 }

@@ -239,7 +239,7 @@ public class RCDSystem : EntitySystem
         if (!TryComp<RCDComponent>(uid, out var rcd))
             return;
 
-        rcd.PrototypeDirection = ev.Direction;
+        rcd.ConstructionDirection = ev.Direction;
         Dirty(uid, rcd);
     }
 
@@ -355,9 +355,9 @@ public class RCDSystem : EntitySystem
                 if ((fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0)
                     continue;
 
-                if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.DirectionalCollider) &&
+                if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.OnePerCardinalDirection) &&
                     Prototype(ent)?.ID == component.CachedPrototype.Prototype &&
-                    component.PrototypeDirection != Transform(ent).LocalRotation.GetCardinalDir())
+                    component.ConstructionDirection != Transform(ent).LocalRotation.GetCardinalDir())
                     continue;
 
                 // Collision detected
@@ -440,16 +440,16 @@ public class RCDSystem : EntitySystem
             case RcdMode.ConstructObject:
                 var ent = Spawn(component.CachedPrototype.Prototype!, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
 
-                switch (component.CachedPrototype.RotationRule)
+                switch (component.CachedPrototype.Rotation)
                 {
-                    case RcdRotationRule.Fixed:
+                    case RcdRotation.Fixed:
                         Transform(ent).LocalRotation = Angle.Zero;
                         break;
-                    case RcdRotationRule.Camera:
+                    case RcdRotation.Camera:
                         Transform(ent).LocalRotation = Transform(uid).LocalRotation;
                         break;
-                    case RcdRotationRule.User:
-                        Transform(ent).LocalRotation = component.PrototypeDirection.ToAngle();
+                    case RcdRotation.User:
+                        Transform(ent).LocalRotation = component.ConstructionDirection.ToAngle();
                         break;
                 }
 

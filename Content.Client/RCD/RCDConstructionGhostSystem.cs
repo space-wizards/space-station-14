@@ -108,11 +108,11 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             sprite.Color = new Color(48, 255, 48, 128);
 
             sprite.AddBlankLayer(0);
-            sprite.LayerSetSprite(0, _cachedPrototype.GhostIcon);
+            sprite.LayerSetSprite(0, _cachedPrototype.GhostSprite);
             sprite.LayerSetShader(0, "unshaded");
             sprite.LayerSetVisible(0, true);
 
-            if (_cachedPrototype.RotationRule == RcdRotationRule.Camera)
+            if (_cachedPrototype.Rotation == RcdRotation.Camera)
                 sprite.NoRotation = true;
         }
 
@@ -133,8 +133,8 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
         // Update the construction ghost position and rotation
         _transformSystem.SetLocalPosition(_constructionGhost.Value, tilePosition.Position);
 
-        if (_cachedPrototype.RotationRule == RcdRotationRule.User)
-            _transformSystem.SetLocalRotation(_constructionGhost.Value, rcd!.PrototypeDirection.ToAngle());
+        if (_cachedPrototype.Rotation == RcdRotation.User)
+            _transformSystem.SetLocalRotation(_constructionGhost.Value, rcd!.ConstructionDirection.ToAngle());
     }
 
     // Work around to capture player input
@@ -195,7 +195,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     {
         var direction = Direction.South;
 
-        switch (rcd.PrototypeDirection)
+        switch (rcd.ConstructionDirection)
         {
             case Direction.North:
                 direction = Direction.East;

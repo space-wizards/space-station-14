@@ -2,7 +2,6 @@ using Content.Shared.RCD.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.RCD.Components;
 
@@ -18,19 +17,19 @@ public sealed partial class RCDComponent : Component
     /// <summary>
     /// List of RCD prototypes that the device comes loaded with
     /// </summary>
-    [DataField("availablePrototypes"), AutoNetworkedField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes = new();
 
     /// <summary>
     /// Sound that plays when a RCD operation successfully completes
     /// </summary>
-    [DataField("successSound")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier SuccessSound = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
 
     /// <summary>
     /// The ProtoId of the currently selected RCD prototype
     /// </summary>
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<RCDPrototype> ProtoId = default!;
 
     /// <summary>
@@ -39,65 +38,12 @@ public sealed partial class RCDComponent : Component
     /// <remarks>
     /// If the ProtoId is changed, make sure to update the CachedPrototype as well
     /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly)]
     public RCDPrototype CachedPrototype = default!;
 
-    [AutoNetworkedField]
-    public Direction PrototypeDirection = Direction.South;
-}
-
-public enum RcdMode : byte
-{
-    Invalid,
-    Deconstruct,
-    DeconstructTile,
-    DeconstructObject,
-    ConstructTile,
-    ConstructObject,
-}
-
-public enum RcdConstructionRule : byte
-{
-    Invalid,
-    MustBuildOnEmptyTile,
-    CanBuildOnEmptyTile,
-    MustBuildOnSubfloor,
-    DirectionalCollider,
-    IsWindow,
-}
-
-public enum RcdRotationRule : byte
-{
-    Fixed,
-    Camera,
-    User,
-}
-
-[Serializable, NetSerializable]
-public sealed class RCDSystemMessage : BoundUserInterfaceMessage
-{
-    public ProtoId<RCDPrototype> ProtoId;
-
-    public RCDSystemMessage(ProtoId<RCDPrototype> protoId)
-    {
-        ProtoId = protoId;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class RCDConstructionGhostRotationEvent : EntityEventArgs
-{
-    public readonly NetEntity NetEntity;
-    public readonly Direction Direction;
-
-    public RCDConstructionGhostRotationEvent(NetEntity netEntity, Direction direction)
-    {
-        NetEntity = netEntity;
-        Direction = direction;
-    }
-}
-
-[Serializable, NetSerializable]
-public enum RcdUiKey : byte
-{
-    Key
+    /// <summary>
+    /// The direction constructed entities will face upon spawning
+    /// </summary>
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public Direction ConstructionDirection = Direction.South;
 }
