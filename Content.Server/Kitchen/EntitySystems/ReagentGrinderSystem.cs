@@ -20,6 +20,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Server.Jittering;
+using Content.Shared.Jittering;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -36,11 +38,14 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
+        [Dependency] private readonly JitteringSystem _jitter = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<ActiveReagentGrinderComponent, ComponentStartup>(OnActiveGrinderStart);
+            SubscribeLocalEvent<ActiveReagentGrinderComponent, ComponentRemove>(OnActiveGrinderRemove);
             SubscribeLocalEvent<ReagentGrinderComponent, ComponentStartup>((uid, _, _) => UpdateUiState(uid));
             SubscribeLocalEvent((EntityUid uid, ReagentGrinderComponent _, ref PowerChangedEvent _) => UpdateUiState(uid));
             SubscribeLocalEvent<ReagentGrinderComponent, InteractUsingEvent>(OnInteractUsing);
@@ -117,6 +122,16 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 UpdateUiState(uid);
             }
+        }
+
+        private void OnActiveGrinderStart(Entity<ActiveReagentGrinderComponent> ent, ref ComponentStartup args)
+        {
+            _jitter.AddJitter(ent, -10, 100);
+        }
+
+        private void OnActiveGrinderRemove(Entity<ActiveReagentGrinderComponent> ent, ref ComponentRemove args)
+        {
+            RemComp<JitteringComponent>(ent);
         }
 
         private void OnEntRemoveAttempt(Entity<ReagentGrinderComponent> entity, ref ContainerIsRemovingAttemptEvent args)
