@@ -945,7 +945,7 @@
   - type: HeldSpeedModifier
   - type: Construction
     graph: MimeHardsuit
-    node: mimenHardsuit
+    node: mimeHardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMime
 
