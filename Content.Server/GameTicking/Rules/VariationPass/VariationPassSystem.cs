@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
@@ -11,13 +12,19 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 public abstract class VariationPassSystem<T> : GameRuleSystem<T>
     where T: IComponent
 {
-    protected readonly StationSystem Stations = default!;
+    [Dependency] protected readonly StationSystem Stations = default!;
+    [Dependency] protected readonly IRobustRandom Random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<T, StationVariationPassEvent>(ApplyVariation);
+    }
+
+    protected bool MemberOfStation(EntityUid ent, ref StationVariationPassEvent args)
+    {
+        return Stations.GetOwningStation(ent) == args.Station.Owner;
     }
 
     protected abstract void ApplyVariation(Entity<T> ent, ref StationVariationPassEvent args);

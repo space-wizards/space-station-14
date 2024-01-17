@@ -241,6 +241,17 @@ namespace Content.Server.Light.EntitySystems
         /// </summary>
         public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
+            if (!Resolve(uid, ref light, false))
+                return false;
+
+            // if we aren't mapinited,
+            // just null the spawned bulb
+            if (LifeStage(uid) < EntityLifeStage.MapInitialized)
+            {
+                light.HasLampOnSpawn = null;
+                return true;
+            }
+
             // check bulb state
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))

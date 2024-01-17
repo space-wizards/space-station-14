@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 
@@ -13,7 +14,7 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
+        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit, after: new []{typeof(ShuttleSystem)});
     }
 
     protected override void Added(EntityUid uid, StationVariationRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -29,6 +30,8 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
         // this is unlikely, but could happen if it was saved and reloaded, so check anyway
         if (HasComp<StationVariationHasRunComponent>(ev.Station))
             return;
+
+        Log.Info($"Running station variation for station {ToPrettyString(ev.Station)}");
 
         // raise the event on any passes that have been added
         var passEv = new StationVariationPassEvent(ev.Station);
