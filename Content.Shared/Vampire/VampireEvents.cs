@@ -1,24 +1,37 @@
 using Content.Shared.Actions;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Vampire.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Vampire;
 
-public sealed partial class VampireUseAreaPowerEvent : InstantActionEvent
+//Use power events
+public sealed partial class VampireSelfPowerEvent : InstantActionEvent
 {
     [DataField]
     public VampirePowerKey Type;
+    [DataField]
+    public VampirePowerDetails Details = new();
 };
-public sealed partial class VampireUseTargetedPowerEvent : EntityTargetActionEvent
+public sealed partial class VampireTargetedPowerEvent : EntityTargetActionEvent
 {
     [DataField]
     public VampirePowerKey Type;
+    [DataField]
+    public VampirePowerDetails Details = new();
 };
+public sealed partial class VampireSummonHeirloomEvent : InstantActionEvent
+{
 
+}
+
+//Doafter events
 [Serializable, NetSerializable]
 public sealed partial class VampireDrinkBloodEvent : DoAfterEvent
 {
+    [DataField]
+    public float Volume = 0;
     public override DoAfterEvent Clone() => this;
 }
 
@@ -26,16 +39,7 @@ public sealed partial class VampireDrinkBloodEvent : DoAfterEvent
 public sealed partial class VampireHypnotiseEvent : DoAfterEvent
 {
     [DataField]
-    public float Duration = 0;
+    public TimeSpan? Duration = TimeSpan.Zero;
 
-    public VampireHypnotiseEvent(float duration)
-    {
-        Duration = duration;
-    }
     public override DoAfterEvent Clone() => this;
-}
-[Serializable, NetSerializable]
-public sealed partial class VampireAbilityUnlockedEvent : EntityEventArgs
-{
-    public VampirePowerKey UnlockedAbility = default!;
 }

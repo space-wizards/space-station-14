@@ -1,0 +1,96 @@
+- type: listing
+  id: VampireHypnotise
+  name: Hypnotise
+  description: Stare deeply into the eyes of a mortal, rendering them senseless for 60 seconds.
+  cost:
+    BloodEssence: 60
+  productAction: ActionVampireHypnotise
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VampireScreech
+  name: Screech
+  description: Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby.
+  cost:
+    BloodEssence: 120
+  productAction: ActionVampireScreech
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VampireBloodSteal
+  name: Blood Steal
+  description: Wrench the blood from all bodies nearby - living or dead.
+  cost:
+    BloodEssence: 120
+  productAction: ActionVampireBloodSteal
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VampireBatForm
+  name: Bat Form
+  description: Transform into a bat
+  cost:
+    BloodEssence: 200
+  productAction: ActionVampireBatform
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyBeforeCondition
+    whitelist: []
+    blacklist: VampireMouseForm
+
+- type: listing
+  id: VampireMouseForm
+  name: Mouse Form
+  description: Transform into a mouse
+  cost:
+    BloodEssence: 200
+  productAction: ActionVampireMouseform
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyBeforeCondition
+    whitelist: []
+    blacklist: VampireBatForm
+
+- type: listing
+  id: VampireCloakOfDarkness
+  name: Cloak of Darkness
+  description: Cloak your form in darkness, hiding you from mortal eyes.
+  cost:
+    BloodEssence: 400
+  productAction: ActionVampireCloakOfDarkness
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+#- type: listing
+#  id: VampireSupernaturalStrength
+#  name: Supernatural Strength
+#  description: Infuse your muscles with unholy strength, allowing you to pry open any barricade mortals may hide behind.
+#  productAction: SupernaturalStrength
+#  cost:
+#    BloodEssence: 400
+#  categories:
+#  - VampireAbilities
+#  conditions:
+#  - !type:ListingLimitedStockCondition
+#    stock: 1

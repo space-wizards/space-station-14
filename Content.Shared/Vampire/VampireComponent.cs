@@ -1,35 +1,66 @@
+using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.Stealth.Components;
+using Content.Shared.StatusEffect;
+using Content.Shared.Store;
 using Content.Shared.Whitelist;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Frozen;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Shared.Vampire.Components;
 
 [RegisterComponent]
 public sealed partial class VampireComponent : Component
 {
-    /// <summary>
-    /// How much blood is available for abilities
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float AvailableBlood = default!;
+    //Statics
+    [ValidatePrototypeId<StorePresetPrototype>]
+    public static readonly string StorePresetProto = "StorePresetVampire";
+    [ValidatePrototypeId<CurrencyPrototype>]
+    public static readonly string CurrencyProto = "BloodEssence";
+    [ValidatePrototypeId<StatusEffectPrototype>]
+    public static readonly string SleepStatusEffectProto = "ForcedSleep";
+    [ValidatePrototypeId<EmotePrototype>]
+    public static readonly string ScreamEmoteProto = "Scream";
+    [ValidatePrototypeId<EntityPrototype>]
+    public static readonly string HeirloomProto = "HeirloomeVampire";
+
+    public static readonly EntityWhitelist AcceptableFoods = new()
+    {
+        Tags = new() { "Pill" }
+    };
+    public static readonly HashSet<String> Metabolizers = new()
+    {
+        "bloodsucker",
+        "vampire"
+    };
+    public static readonly DamageSpecifier MeleeDamage = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>() { { "Slash", 10 } }
+    };
+    public static readonly DamageSpecifier HolyDamage = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>() { { "Burn", 10 } }
+    };
+    public static readonly List<string> StartingAbilities = new()
+    {
+        "ActionVampireSummonHeirloom",
+        "ActionVampireToggleFangs",
+        "ActionVampireGlare"
+    };
 
     /// <summary>
     /// Total blood drank, counter for end of round screen
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float TotalBloodDrank = default!;
+    public float TotalBloodDrank = 0;
+
+    /// <summary>
+    /// How much blood per mouthful
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float MouthVolume = 0;
 
     /// <summary>
     /// How long till we apply another tick of space damage
@@ -44,21 +75,53 @@ public sealed partial class VampireComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? HomeCoffin = default!;
 
-    /// <summary>
-    /// Which ability list has the vampire chosen
-    /// TODO: Add ability lists
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public VampireAbilityListPrototype ChosenAbilityList = default!;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public HashSet<VampirePowerKey> ActiveAbilities = new();
+    public HashSet<VampirePowerKey> AbilityStates = new();
     /// <summary>
     /// All unlocked abilities
     /// </summary>
     public Dictionary<VampirePowerKey, EntityUid?> UnlockedPowers = new();
 
-    public SoundSpecifier BloodDrainSound = new SoundPathSpecifier("/Audio/Items/drink.ogg", new AudioParams() { Volume = -3f });
+    /// <summary>
+    /// Link to the vampires heirloom
+    /// </summary>
+    public EntityUid? Heirloom = default!;
+
+    /// <summary>
+    /// Current available balance, used to sync currency across heirlooms and add essence as we feed
+    /// </summary>
+    public Dictionary<string, FixedPoint2> Balance = new() { { VampireComponent.CurrencyProto, 0 } };
+
+    public readonly SoundSpecifier BloodDrainSound = new SoundPathSpecifier("/Audio/Items/drink.ogg", new AudioParams() { Volume = -3f });
+    public readonly SoundSpecifier AbilityPurchaseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
+}
+
+
+/// <summary>
+/// Contains all details about the ability and its effects or restrictions
+/// </summary>
+[DataDefinition]
+public sealed partial class VampirePowerDetails
+{
+    [DataField]
+    public float ActivationCost = 0;
+    [DataField]
+    public bool UsableWhileCuffed = true;
+    [DataField]
+    public bool UsableWhileStunned = true;
+    [DataField]
+    public bool UsableWhileMuffled = true;
+    [DataField]
+    public DamageSpecifier? Damage = default!;
+    [DataField]
+    public TimeSpan? Duration = TimeSpan.Zero;
+    [DataField]
+    public TimeSpan? DoAfterDelay = TimeSpan.Zero;
+    [DataField]
+    public string? PolymorphTarget = default!;
+    [DataField]
+    public float Upkeep = 0;
 }
 
 [RegisterComponent]
@@ -70,9 +133,31 @@ public sealed partial class CoffinComponent : Component
 {
 }
 [RegisterComponent]
+public sealed partial class VampireHeirloomComponent : Component
+{
+    //public EntityUid? Owner = default!;
+}
+[RegisterComponent]
 public sealed partial class VampireHealingComponent : Component
 {
     public double NextHealTick = 0;
+
+    public DamageSpecifier Healing = new DamageSpecifier()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>()
+        {
+            { "Blunt", 2 },
+            { "Slash", 2 },
+            { "Pierce", 2 },
+            { "Heat", 1 },
+            { "Cold", 2 },
+            { "Shock", 2 },
+            { "Caustic", 2 },
+            { "Airloss", 2 },
+            { "Bloodloss", 2 },
+            { "Genetic", 2 }
+        }
+    };
 }
 
 [RegisterComponent]
@@ -80,9 +165,12 @@ public sealed partial class VampireSealthComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public float NextStealthTick = 0;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Upkeep = 0;
 }
 
-[Prototype("vampireAbilityList")]
+/*[Prototype("vampireAbilityList")]
 public sealed partial class VampireAbilityListPrototype : IPrototype
 {
     [ViewVariables]
@@ -98,13 +186,13 @@ public sealed partial class VampireAbilityListPrototype : IPrototype
     public FrozenDictionary<VampirePowerKey, VampireAbilityEntry> AbilitiesByKey = default!;
 
     [DataField(required: true)]
-    public DamageSpecifier SpaceDamage = default!;
-
-    [DataField(required: true)]
     public DamageSpecifier MeleeDamage = default!;
 
     [DataField(required: true)]
     public DamageSpecifier CoffinHealing = default!;
+
+    [DataField]
+    public bool WeakToHolyWater = true;
 
     [DataField]
     public float BloodDrainVolume = 5;
@@ -116,7 +204,7 @@ public sealed partial class VampireAbilityListPrototype : IPrototype
     public float SpaceDamageFrequency = 2;
 
     [DataField]
-    public float StealthBloodCost = 5;
+    public float StealthCostPerSecond = 5;
 
     [DataField]
     public EntityWhitelist AcceptableFoods = new EntityWhitelist() { Tags = new() { "Pill" } };
@@ -145,11 +233,15 @@ public sealed partial class VampireAbilityEntry
     [DataField]
     public DamageSpecifier Damage = default!;
     [DataField]
-    public float Duration = 0;
+    public TimeSpan? Duration = default!;
     [DataField]
-    public float Delay = 0;
+    public TimeSpan? DoAfterDelay = default!;
+    [DataField]
+    public TimeSpan? UseDelay = default!;
+    [DataField]
+    public string PolymorphTarget = default!;
 }
-
+*/
 [Serializable, NetSerializable]
 public enum VampirePowerKey : byte
 {
@@ -158,9 +250,10 @@ public enum VampirePowerKey : byte
     DeathsEmbrace,
     Screech,
     Hypnotise,
-    BatForm,
+    Polymorph,
     NecroticTouch,
     BloodSteal,
     CloakOfDarkness,
-    StellarWeakness
+    StellarWeakness,
+    SupernaturalStrength
 }

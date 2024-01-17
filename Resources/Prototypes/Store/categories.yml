@@ -68,3 +68,7 @@
   id: RevenantAbilities
   name: store-category-abilities
 
+#vampire
+- type: storeCategory
+  id: VampireAbilities
+  name: store-category-abilities

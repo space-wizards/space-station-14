@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
+using Content.Server.Store.Events;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -167,7 +168,11 @@ public sealed partial class StoreSystem
         if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {
             // I guess we just allow duplicate actions?
-            _actions.AddAction(buyer, listing.ProductAction);
+            var actionUid = _actions.AddAction(buyer, listing.ProductAction);
+
+            //Raise a purchase event for handling downstream
+            if (actionUid != null)
+                RaiseLocalEvent(uid, new StorePurchasedActionEvent(buyer, actionUid.Value));
         }
 
         //broadcast event

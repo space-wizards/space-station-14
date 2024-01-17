@@ -1,0 +1,19 @@
+- type: entity
+  name: bat
+  parent: MobBat
+  id: MobBatVampire
+  description: Some cultures find them terrifying, others crunchy on the teeth.
+  components:
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - VimPilot
+    - CannotSuicide
+  - type: MindContainer
+    showExamineInfo: true
+  - type: NpcFactionMember
+    factions:
+    - PetsNT
+  - type: Alerts
+
+  

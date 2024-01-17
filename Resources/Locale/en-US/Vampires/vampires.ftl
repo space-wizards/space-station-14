@@ -24,3 +24,5 @@ vampire-cloak-disable = You release your grip on the shadows
 
 vampire-bloodsteal-other = You feel blood being ripped from your body!
 vampire-hypnotise-other = {CAPITALIZE(THE($user))} stares deeply into {THE($target)}'s eyes!
+
+store-currency-display-blood-essence = Blood Essence

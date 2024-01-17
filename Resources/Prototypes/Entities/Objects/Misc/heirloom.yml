@@ -1,0 +1,20 @@
+- type: entity
+  id: HeirloomeVampire
+  name: Family Heirloom
+  suffix: Vampire
+  description: A relic of a bygone age, remember your heritage.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
+    state: icon
+  - type: UserInterface
+    interfaces:
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+  - type: Store
+    categories:
+    - VampireAbilities
+    currencyWhitelist:
+    - BloodEssence
+  - type: VampireHeirloomComponent

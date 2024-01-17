@@ -1,4 +1,16 @@
 - type: entity
+  id: ActionVampireSummonHeirloom
+  name: Summon Heirloom
+  description: Summon a family heirloom, gifted by lilith herself.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: summonpendant
+    event: !type:VampireSummonHeirloomEvent
+
+- type: entity
   id: ActionVampireToggleFangs
   name: Toggle Fangs
   description: Extend or retract your fangs.
@@ -14,7 +26,7 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: fangs_extended
     event: 
-      !type:VampireUseAreaPowerEvent
+      !type:VampireSelfPowerEvent
       type: ToggleFangs
 
 - type: entity
@@ -31,46 +43,10 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/Vampire/glare.ogg
     event: 
-      !type:VampireUseTargetedPowerEvent
-      type: Glare
-    useDelay: 60
-
-- type: entity
-  id: ActionVampireScreech
-  name: Screech
-  description: Your enemies shall kneel
-  noSpawn: true
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    priority: 2
-    icon:
-      sprite: Interface/Actions/actions_vampire.rsi
-      state: screech
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Effects/Vampire/screech_tone.ogg
-    event: 
-      !type:VampireUseAreaPowerEvent
-      type: Screech
-    useDelay: 60
-
-- type: entity
-  id: ActionVampireBloodSteal
-  name: Blood Steal
-  description: It's not theirs, it's yours
-  noSpawn: true
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    priority: 2
-    icon:
-      sprite: Interface/Actions/actions_vampire.rsi
-      state: bloodsteal
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Effects/demon_consume.ogg
-    event: 
-      !type:VampireUseAreaPowerEvent
-      type: BloodSteal
+      !type:VampireTargetedPowerEvent
+        type: Glare
+        details:
+          duration: 10
     useDelay: 60
 
 - type: entity
@@ -90,9 +66,62 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: hypnotise
     event: 
-      !type:VampireUseTargetedPowerEvent
-      type: Hypnotise
+      !type:VampireTargetedPowerEvent
+        type: Hypnotise
+        details:
+          duration: 60
+          doAfterDelay: 5
     useDelay: 300
+
+- type: entity
+  id: ActionVampireScreech
+  name: Screech
+  description: Your enemies shall kneel
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    priority: 2
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: screech
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Vampire/screech_tone.ogg
+    event: 
+      !type:VampireSelfPowerEvent
+        type: Screech
+        details:
+          duration: 3
+          damage:
+            types:
+              Blunt: 10
+              Structural: 40
+          usableWhileMuffled: false
+          activationCost: 10
+    useDelay: 60
+
+- type: entity
+  id: ActionVampireBloodSteal
+  name: Blood Steal
+  description: It's not theirs, it's yours
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    priority: 2
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: bloodsteal
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/demon_consume.ogg
+    event: 
+      !type:VampireSelfPowerEvent
+        type: BloodSteal
+        details:
+          usableWhileStunned: false
+          usableWhileCuffed: false
+          activationCost: 20
+    useDelay: 60
 
 - type: entity
   id: ActionVampireBatform
@@ -109,8 +138,37 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/teleport_arrival.ogg
     event: 
-      !type:VampireUseAreaPowerEvent
-      type: Batform
+      !type:VampireSelfPowerEvent
+        type: Polymorph
+        details:
+          usableWhileStunned: false
+          usableWhileCuffed: false
+          polymorphTarget: mobBatVampire
+          activationCost: 20
+    useDelay: 30
+
+- type: entity
+  id: ActionVampireMouseform
+  name: Toggle Mouse Form
+  description: Assume your mouse form
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    priority: 2
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: mouseform
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/teleport_arrival.ogg
+    event: 
+      !type:VampireSelfPowerEvent
+        type: Polymorph
+        details:
+          usableWhileStunned: false
+          usableWhileCuffed: false
+          polymorphTarget: MobMouse
+          activationCost: 20
     useDelay: 30
 
 - type: entity
@@ -126,6 +184,10 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: cloakofdarkness
     event: 
-      !type:VampireUseAreaPowerEvent
-      type: CloakOfDarkness
+      !type:VampireSelfPowerEvent
+        type: CloakOfDarkness
+        details:
+          usableWhileStunned: false
+          activationCost: 30
+          upkeep: 1
     useDelay: 10

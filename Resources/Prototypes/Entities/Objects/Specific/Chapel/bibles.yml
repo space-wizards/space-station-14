@@ -75,7 +75,7 @@
       types:
         Caustic: 50
     damageUnholy: ## What damage is dealt when a chaplain hits an unholy creature
-      groups:
+      types:
         types: 20
     failChance: 0
     locPrefix: "necro"
