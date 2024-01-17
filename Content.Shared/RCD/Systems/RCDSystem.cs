@@ -60,15 +60,7 @@ public class RCDSystem : EntitySystem
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<RCDComponent, DoAfterAttemptEvent<RCDDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<RCDComponent, RCDSystemMessage>(OnRCDSystemMessage);
-        SubscribeNetworkEvent<RCDRotationEvent>(OnRCDRotationEvent);
-
-        CommandBinds.Builder
-            .Bind(EngineKeyFunctions.EditorRotateObject,
-                InputCmdHandler.FromDelegate(session =>
-                {
-                    HandleObjectRotation(session);
-                }))
-            .Register<RCDSystem>();
+        SubscribeNetworkEvent<RCDConstructionGhostRotationEvent>(OnRCDRotationEvent);
     }
 
     #region Event handling
@@ -229,7 +221,7 @@ public class RCDSystem : EntitySystem
         _charges.UseCharges(uid, component.CachedPrototype.Cost);
     }
 
-    private void OnRCDRotationEvent(RCDRotationEvent ev)
+    private void OnRCDRotationEvent(RCDConstructionGhostRotationEvent ev)
     {
         var uid = GetEntity(ev.NetEntity);
 
@@ -237,40 +229,7 @@ public class RCDSystem : EntitySystem
             return;
 
         rcd.PrototypeDirection = ev.Direction;
-    }
-
-    private bool HandleObjectRotation(ICommonSession? session)
-    {
-        if (session?.AttachedEntity == null)
-            return false;
-
-        if (!TryComp<HandsComponent>(session.AttachedEntity.Value, out var hands))
-            return false;
-
-        var uid = hands.ActiveHand?.HeldEntity;
-
-        if (uid == null || !TryComp<RCDComponent>(uid, out var rcd))
-            return false;
-
-        switch (rcd.PrototypeDirection)
-        {
-            case Direction.North:
-                rcd.PrototypeDirection = Direction.East;
-                break;
-            case Direction.East:
-                rcd.PrototypeDirection = Direction.South;
-                break;
-            case Direction.South:
-                rcd.PrototypeDirection = Direction.West;
-                break;
-            case Direction.West:
-                rcd.PrototypeDirection = Direction.North;
-                break;
-        }
-
-        RaiseNetworkEvent(new RCDRotationEvent(GetNetEntity(uid.Value), rcd.PrototypeDirection));
-
-        return true;
+        Dirty(uid, rcd);
     }
 
     #endregion

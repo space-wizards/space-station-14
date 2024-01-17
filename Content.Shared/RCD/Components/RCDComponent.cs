@@ -16,6 +16,12 @@ namespace Content.Shared.RCD.Components;
 public sealed partial class RCDComponent : Component
 {
     /// <summary>
+    /// List of RCD prototypes that the device comes loaded with
+    /// </summary>
+    [DataField("availablePrototypes"), AutoNetworkedField]
+    public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes = new();
+
+    /// <summary>
     /// Sound that plays when a RCD operation successfully completes
     /// </summary>
     [DataField("successSound")]
@@ -35,12 +41,7 @@ public sealed partial class RCDComponent : Component
     /// </remarks>
     public RCDPrototype CachedPrototype = default!;
 
-    /// <summary>
-    /// List of RCD prototypes that the device comes loaded with
-    /// </summary>
-    [DataField("availablePrototypes"), AutoNetworkedField]
-    public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes = new();
-
+    [AutoNetworkedField]
     public Direction PrototypeDirection = Direction.South;
 }
 
@@ -82,16 +83,13 @@ public sealed class RCDSystemMessage : BoundUserInterfaceMessage
     }
 }
 
-/// <summary>
-/// A message that calls the click interaction on a alert
-/// </summary>
 [Serializable, NetSerializable]
-public sealed class RCDRotationEvent : EntityEventArgs
+public sealed class RCDConstructionGhostRotationEvent : EntityEventArgs
 {
     public readonly NetEntity NetEntity;
     public readonly Direction Direction;
 
-    public RCDRotationEvent(NetEntity netEntity, Direction direction)
+    public RCDConstructionGhostRotationEvent(NetEntity netEntity, Direction direction)
     {
         NetEntity = netEntity;
         Direction = direction;
