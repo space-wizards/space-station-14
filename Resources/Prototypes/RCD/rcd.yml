@@ -8,8 +8,8 @@
   delay: 4
   fx: EffectRCDDeconstructSlow
   ghostSprite:
-    sprite: Structures/Walls/solid.rsi
-    state: full
+    sprite: Effects/rcd.rsi
+    state: deconstructPreview
 
 - type: rcd
   id: WallSolid
