@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
-using Content.Server.Station.Systems;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -36,6 +35,13 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
         var passQuery = EntityQueryEnumerator<StationVariationPassRuleComponent, GameRuleComponent>();
         while (passQuery.MoveNext(out var uid, out _, out _))
         {
+            // TODO: for some reason, ending a game rule just gives it a marker comp,
+            // and doesnt delete it
+            // so we have to check here that it isnt an ended game rule (which could happen if a preset failed to start
+            // or it was ended before station maps spawned etc etc etc)
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
             RaiseLocalEvent(uid, ref passEv);
         }
 
