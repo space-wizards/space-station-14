@@ -8,3 +8,11 @@
   - type: ConstructionGhost
   - type: Clickable
   - type: InteractionOutline
+  
+- type: entity
+  name: RCD construction ghost
+  id: rcdconstructionghost
+  noSpawn: true
+  components:
+  - type: Sprite
+    color: '#3F38'

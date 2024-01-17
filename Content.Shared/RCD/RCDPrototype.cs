@@ -1,6 +1,7 @@
 using Content.Shared.Physics;
 using Content.Shared.RCD.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.RCD;
 
@@ -70,4 +71,7 @@ public sealed class RCDPrototype : IPrototype
 
     [ViewVariables(VVAccess.ReadWrite), DataField("rotation")]
     public RcdRotationRule RotationRule = RcdRotationRule.User;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("ghost")]
+    public SpriteSpecifier GhostIcon = SpriteSpecifier.Invalid;
 }
