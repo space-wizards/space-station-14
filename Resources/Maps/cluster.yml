@@ -81921,18 +81921,6 @@ entities:
     - type: Transform
       pos: -28.522102,-7.4028454
       parent: 1
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 8928
-    components:
-    - type: Transform
-      pos: -33.421288,-7.524516
-      parent: 1
-  - uid: 9731
-    components:
-    - type: Transform
-      pos: -28.423817,12.547613
-      parent: 1
 - proto: ZiptiesBroken
   entities:
   - uid: 9314

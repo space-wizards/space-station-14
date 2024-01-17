@@ -42051,11 +42051,4 @@ entities:
     - type: Transform
       pos: 9.506623,-4.4162817
       parent: 1668
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 3901
-    components:
-    - type: Transform
-      pos: -12.625682,-7.0710163
-      parent: 1668
 ...
