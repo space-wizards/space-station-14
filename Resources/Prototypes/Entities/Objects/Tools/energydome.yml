@@ -173,6 +173,7 @@
     - On
     - Off
   - type: EnergyDomeGenerator
+    enabled: true
     damageEnergyDraw: 100
-    domePrototype: EnergyDomeMediumBlue
+    domePrototype: EnergyDomeSlowing
     canDeviceNetworkUse: true

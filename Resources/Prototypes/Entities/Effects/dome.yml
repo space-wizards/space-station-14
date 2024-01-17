@@ -112,15 +112,18 @@
         layer:
         - MidImpassable
   - type: Sprite
-    sprite: Effects/EnergyDome/energydome_big.rsi
+    drawdepth: LowFloors
+    sprite: Effects/EnergyDome/energydome_slowdown_big.rsi
     layers:
     - state: big
-      color: "#64b9de"
+      color: "#a3d177"
   - type: PointLight
     enabled: true
     radius: 5
-    power: 10
-    color: "#64b9de"
-  - type: SlowContacts
-    walkSpeedModifier: 0.4
-    sprintSpeedModifier: 0.4
+    power: 30
+    color: "#a3d177"
+  - type: DamageContacts
+    damage:
+      types:
+        Slash: -1.5
+        Piercing: -1.5
