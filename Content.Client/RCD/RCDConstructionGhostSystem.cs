@@ -1,36 +1,27 @@
-using Content.Client.Construction;
-using Content.Client.Interactable;
+using Content.Client.Gameplay;
 using Content.Shared.Hands.Components;
-using Content.Shared.Input;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using Content.Shared.RCD.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.Placement;
-using Robust.Client.Placement.Modes;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
+using Robust.Client.State;
 using Robust.Shared.Input;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using System.Numerics;
 
 namespace Content.Client.RCD;
 
-public sealed class RCDPlacementSystem : EntitySystem
+public sealed class RCDConstructionGhostSystem : EntitySystem
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
 
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -39,8 +30,8 @@ public sealed class RCDPlacementSystem : EntitySystem
     private EntityUid? _constructionGhost = null;
     private ProtoId<RCDPrototype>? _constructionPrototype = null;
     private RCDPrototype? _cachedPrototype = null;
-
     private bool _isKeyBindActive = false;
+
     private readonly BoundKeyFunction _keyfunction = EngineKeyFunctions.EditorRotateObject;
 
     public override void Initialize()
@@ -61,7 +52,7 @@ public sealed class RCDPlacementSystem : EntitySystem
         var uid = hands.ActiveHand?.HeldEntity;
         var hasRCD = TryComp<RCDComponent>(uid, out var rcd);
 
-        // Rotate the construction ghost if keybind was actived this frame
+        // Rotate the construction ghost if the keybind was actived this frame
         if (WasKeybindActivatedThisFrame(player.Value) && hasRCD)
             RotateRCDConstructionGhost(uid!.Value, rcd!);
 
@@ -95,9 +86,11 @@ public sealed class RCDPlacementSystem : EntitySystem
         if (!_rcdSystem.TryGetMapGridData(location, out var mapGridData))
             return;
 
-        var tilePosition = _mapSystem.GridTileToLocal(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Position);
+        // Delete the construction ghost if the distance between the player and the target tile is too great
+        var tileWorldPosition = _mapSystem.GridTileToWorldPos(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Position);
+        var distance = (tileWorldPosition - _transformSystem.GetWorldPosition(player.Value)).Length();
 
-        if (!_interactionSystem.InRangeUnobstructed(mapGridData.Value.Location.ToMap(EntityManager, _transformSystem), player.Value))
+        if (distance > 1.5f)
         {
             DeleteConstructionGhost();
             return;
@@ -105,6 +98,7 @@ public sealed class RCDPlacementSystem : EntitySystem
 
         // Create a new construction ghost if needed
         SpriteComponent? sprite;
+        var tilePosition = _mapSystem.GridTileToLocal(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Position);
 
         if (_constructionGhost == null)
         {
@@ -122,8 +116,17 @@ public sealed class RCDPlacementSystem : EntitySystem
                 sprite.NoRotation = true;
         }
 
+        // See if the mouse is hovering over a target
+        var currentState = _stateManager.CurrentState;
+
+        if (currentState is not GameplayStateBase screen)
+            return;
+
+        var target = screen.GetClickedEntity(location.ToMap(EntityManager, _transformSystem));
+
         // Update color of the construction ghost
-        var isValid = _rcdSystem.IsConstructionLocationValid(uid!.Value, rcd, mapGridData.Value, player.Value, false);
+        var isValid = _rcdSystem.IsRCDOperationStillValid(uid!.Value, rcd, mapGridData.Value, target, player.Value, false);
+
         sprite = EntityManager.GetComponent<SpriteComponent>(_constructionGhost.Value);
         sprite.Color = isValid ? new Color(48, 255, 48, 128) : new Color(255, 48, 48, 128);
 
@@ -213,7 +216,6 @@ public sealed class RCDPlacementSystem : EntitySystem
 
     private bool CurrentMousePosition(EntityUid player, out ScreenCoordinates coordinates)
     {
-        // Try to get current map.
         var map = MapId.Nullspace;
 
         if (EntityManager.TryGetComponent(player, out TransformComponent? xform))

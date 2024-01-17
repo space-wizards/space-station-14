@@ -16,3 +16,4 @@
   components:
   - type: Sprite
     color: '#3F38'
+    drawdepth: Effects

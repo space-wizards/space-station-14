@@ -19,11 +19,13 @@ rcd-component-insufficient-ammo-message = The RCD doesn't have enough compressed
 rcd-component-tile-indestructible-message = That tile can't be destructed!
 rcd-component-deconstruct-target-not-on-whitelist-message = You can't deconstruct that!
 rcd-component-nothing-to-deconstruct-message = There's nothing to deconstruct!
-rcd-component-tile-obstructed-message = There's something in the way!
+rcd-component-tile-obstructed-message = You can't deconstruct tilea when there's something on top of them!
 
-rcd-component-cannot-build-on-empty-space-message = You can't build without a foundation!
-rcd-component-cannot-build-as-tile-not-empty-message = You can't build here, the space is occupied!
-rcd-component-cannot-build-as-tile-requires-subfloor-message = You can only build that on a subfloor!
+# Construction
+rcd-component-cannot-build-on-non-empty-tile-message = A foundation already exists here!
+rcd-component-cannot-build-on-empty-tile-message = You can't build that without a foundation!
+rcd-component-cannot-build-as-space-is-occupied-message = You can't build here, the space is already occupied!
+rcd-component-cannot-build-as-subfloor-not-exposed-message = You can only build that on exposed subfloor!
 
 
 ### Category names
