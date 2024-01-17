@@ -211,7 +211,7 @@
               doAfter: 1
 
     - node: redComfBench
-      entity: BenchRedComfSolo
+      entity: BenchRedComfy
       edges:
         - to: start
           completed:
@@ -228,7 +228,7 @@
               doAfter: 1
 
     - node: blueComfBench
-      entity: BenchBlueComfSolo
+      entity: BenchBlueComfy
       edges:
         - to: start
           completed:
