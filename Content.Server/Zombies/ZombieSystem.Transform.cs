@@ -15,6 +15,7 @@ using Content.Server.NPC.Systems;
 using Content.Server.Roles;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
+using Content.Server.Traits.Assorted;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
@@ -35,6 +36,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using Content.Shared.Prying.Components;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Zombies
@@ -98,13 +100,15 @@ namespace Content.Server.Zombies
             var zombiecomp = AddComp<ZombieComponent>(target);
 
             //we need to basically remove all of these because zombies shouldn't
-            //get diseases, breath, be thirst, be hungry, die in space or have offspring
+            //get diseases, breath, be thirst, be hungry, die in space, have offspring or be paraplegic.
             RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
-            RemComp<ReproductiveComponent>(target); 
+            RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
+            RemComp<WheelchairBoundComponent>(target);
+            RemComp<LegsParalyzedComponent>(target);
 
             //funny voice
             var accentType = "zombie";
