@@ -259,7 +259,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
         else
         {
-            if (!TryUseAbility(uid, component, component.TransformChemicalsCost))
+            if (!TryUseAbility(uid, component, component.ChemicalsCostFive))
                 return;
 
             args.Handled = true;
@@ -286,6 +286,13 @@ public sealed partial class ChangelingSystem : EntitySystem
                 var copiedStoreComponent = (Component) _serialization.CreateCopy(storeComp, notNullableOverride: true);
                 RemComp<StoreComponent>(transformedUid.Value);
                 EntityManager.AddComponent(transformedUid.Value, copiedStoreComponent);
+            }
+
+            if (TryComp(uid, out UserInterfaceComponent? uiComp))
+            {
+                var copiedUIComp = (Component) _serialization.CreateCopy(uiComp, notNullableOverride: true);
+                RemComp<UserInterfaceComponent>(transformedUid.Value);
+                EntityManager.AddComponent(transformedUid.Value, copiedUIComp);
             }
 
             if (TryComp(uid, out StealthComponent? stealthComp)) // copy over stealth status

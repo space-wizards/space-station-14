@@ -12,7 +12,11 @@ changelings-no-one-ready = No players readied up! Can't start Changelings.
 # Ling role
 changeling-role-greeting =
     You are a changeling who has absorbed and taken the form of {$character-name}.
-    Your objectives are listed in the character menu.
+    Your objectives are listed in the character menu, use your special abilities to help complete them.
+
+changeling-role-greeting-short =
+    You are a changeling who has absorbed and taken the form of {$character-name}.
+    Use your special abilities to help complete your objectives.
 
 
 # Ling abilities

@@ -163,7 +163,7 @@ public sealed class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponen
             return false;
         }
 
-        var briefing = Loc.GetString("changeling-role-greeting", ("character-name", Identity.Entity(entity, EntityManager)));
+        var briefing = Loc.GetString("changeling-role-greeting-short", ("character-name", Identity.Entity(entity, EntityManager)));
 
         // Prepare changeling role
         var lingRole = new ChangelingRoleComponent
@@ -261,37 +261,37 @@ public sealed class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponen
         args.AgentName = Loc.GetString("ling-round-end-name");
     }
 
-    public List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind)
+    public List<(EntityUid Id, MindComponent Mind)> GetOtherChangelingMindsAliveAndConnected(MindComponent ourMind)
     {
-        List<(EntityUid Id, MindComponent Mind)> allTraitors = new();
-        foreach (var traitor in EntityQuery<TraitorRuleComponent>())
+        List<(EntityUid Id, MindComponent Mind)> allChangelings = new();
+        foreach (var changeling in EntityQuery<ChangelingRuleComponent>())
         {
-            foreach (var role in GetOtherTraitorMindsAliveAndConnected(ourMind, traitor))
+            foreach (var role in GetOtherChangelingMindsAliveAndConnected(ourMind, changeling))
             {
-                if (!allTraitors.Contains(role))
-                    allTraitors.Add(role);
+                if (!allChangelings.Contains(role))
+                    allChangelings.Add(role);
             }
         }
 
-        return allTraitors;
+        return allChangelings;
     }
 
-    private List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind, TraitorRuleComponent component)
+    private List<(EntityUid Id, MindComponent Mind)> GetOtherChangelingMindsAliveAndConnected(MindComponent ourMind, ChangelingRuleComponent component)
     {
-        var traitors = new List<(EntityUid Id, MindComponent Mind)>();
-        foreach (var traitor in component.TraitorMinds)
+        var changelings = new List<(EntityUid Id, MindComponent Mind)>();
+        foreach (var changeling in component.ChangelingMinds)
         {
-            if (TryComp(traitor, out MindComponent? mind) &&
+            if (TryComp(changeling, out MindComponent? mind) &&
                 mind.OwnedEntity != null &&
                 mind.Session != null &&
                 mind != ourMind &&
                 _mobStateSystem.IsAlive(mind.OwnedEntity.Value) &&
                 mind.CurrentEntity == mind.OwnedEntity)
             {
-                traitors.Add((traitor, mind));
+                changelings.Add((changeling, mind));
             }
         }
 
-        return traitors;
+        return changelings;
     }
 }
