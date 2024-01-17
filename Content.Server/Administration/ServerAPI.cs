@@ -429,9 +429,9 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
         var ruleEntity = await RunOnMainThread<EntityUid?>(() =>
         {
+            var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
             // See if prototype exists
             try
             {
@@ -461,7 +461,7 @@ public sealed class ServerApi : IPostInjectInit
                     Message = "Game rule not found",
                     ErrorType = ErrorTypes.GameRuleNotFound
                 }
-            }, HttpStatusCode.NotFound);
+            }, HttpStatusCode.UnprocessableContent);
             return true;
         }
 
@@ -537,7 +537,7 @@ public sealed class ServerApi : IPostInjectInit
                     Message = "Player not found",
                     ErrorType = ErrorTypes.PlayerNotFound
                 }
-            }, HttpStatusCode.NotFound);
+            }, HttpStatusCode.UnprocessableContent);
             return true;
         }
 
@@ -589,8 +589,12 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        var ticker = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<GameTicker>());
-        var roundEndSystem = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<RoundEndSystem>());
+        var (ticker, roundEndSystem) = await RunOnMainThread(() =>
+        {
+            var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+            var roundEndSystem = _entitySystemManager.GetEntitySystem<RoundEndSystem>();
+            return (ticker, roundEndSystem);
+        });
         switch (body.Action)
         {
             case "start":
@@ -773,8 +777,12 @@ public sealed class ServerApi : IPostInjectInit
             Panic bunker status
          */
 
-        var ticker = await RunOnMainThread(() => _entitySystemManager.GetEntitySystem<GameTicker>());
-        var adminSystem = await RunOnMainThread(() =>_entitySystemManager.GetEntitySystem<AdminSystem>());
+        var (ticker, adminSystem) = await RunOnMainThread(() =>
+        {
+            var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+            var adminSystem = _entitySystemManager.GetEntitySystem<AdminSystem>();
+            return (ticker, adminSystem);
+        });
 
         var players = new List<Actor>();
         await RunOnMainThread(async () =>
