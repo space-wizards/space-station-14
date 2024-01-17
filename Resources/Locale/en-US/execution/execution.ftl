@@ -12,7 +12,7 @@ execution-popup-gun-complete-internal = You blast {$victim} in the head!
 execution-popup-gun-complete-external = {$attacker} blasts {$victim} in the head!
 execution-popup-gun-clumsy-internal = You miss {$victim}'s head and shoot your foot instead!
 execution-popup-gun-clumsy-external = {$attacker} misses {$victim} and shoots {POSS-ADJ($attacker)} foot instead!
-execution-popup-gun-empty = {CAPITALIZE(THE($weapon))} clicks. 
+execution-popup-gun-empty = {CAPITALIZE(THE($weapon))} clicks.
 
 suicide-popup-gun-initial-internal = You place the muzzle of {THE($weapon)} in your mouth.
 suicide-popup-gun-initial-external = {$attacker} places the muzzle of {THE($weapon)} in {POSS-ADJ($attacker)} mouth.
@@ -26,5 +26,5 @@ execution-popup-melee-complete-external = {$attacker} slits the throat of {$vict
 
 suicide-popup-melee-initial-internal = You ready {THE($weapon)} against your throat.
 suicide-popup-melee-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against {POSS-ADJ($attacker)} throat.
-suicide-popup-melee-complete-internal = You slit your throat with {THE($weapon)}.
-suicide-popup-melee-complete-external = {$attacker} slits their throat with {THE($weapon)}.
+suicide-popup-melee-complete-internal = You slit your throat with {THE($weapon)}!
+suicide-popup-melee-complete-external = {$attacker} slits {POSS-ADJ($attacker)} throat with {THE($weapon)}!
