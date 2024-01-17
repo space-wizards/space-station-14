@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Removed artifact spam on roundend due to the ensuing lag.
-    type: Remove
-  id: 5223
-  time: '2023-11-29T03:39:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - message: Fix doppler effect on shuttles by also setting player's velocity in the
       audio API.
     type: Fix
@@ -3762,3 +3756,12 @@
   id: 5723
   time: '2024-01-16T13:47:53.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23866
+- author: Lank
+  changes:
+  - message: Added a new "follow" command.
+    type: Add
+  - message: Replaced the ahelp menu's "Teleport to" verb with "Follow".
+    type: Tweak
+  id: 5724
+  time: '2024-01-17T01:26:15.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24142
