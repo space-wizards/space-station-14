@@ -22,7 +22,7 @@ namespace Content.Shared.Entry
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IResourceManager _resMan = default!;
 
-        private readonly ResPath _ignoreFile = new("/ignoredPrototypes.yml");
+        private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
 
         public override void PreInit()
         {
@@ -105,36 +105,44 @@ namespace Content.Shared.Entry
 
         private void IgnorePrototypes()
         {
-            if (!TryReadFile(out var sequence))
+            if (!TryReadFile(out var sequences))
                 return;
-            foreach (var node in sequence.Sequence)
-            {
-                var path = new ResPath(((ValueDataNode) node).Value);
 
-                if (string.IsNullOrEmpty(path.Extension))
+            foreach (var sequence in sequences)
+            {
+                foreach (var node in sequence.Sequence)
                 {
-                    _prototypeManager.AbstractDirectory(path);
-                }
-                else
-                {
-                    _prototypeManager.AbstractFile(path);
+                    var path = new ResPath(((ValueDataNode) node).Value);
+
+                    if (string.IsNullOrEmpty(path.Extension))
+                    {
+                        _prototypeManager.AbstractDirectory(path);
+                    }
+                    else
+                    {
+                        _prototypeManager.AbstractFile(path);
+                    }
                 }
             }
         }
 
-        private bool TryReadFile([NotNullWhen(true)] out SequenceDataNode? sequence)
+        private bool TryReadFile([NotNullWhen(true)] out List<SequenceDataNode>? sequence)
         {
-            sequence = null;
-            if (!_resMan.TryContentFileRead(_ignoreFile, out var stream))
-                return false;
+            sequence = new();
 
-            using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
-            var documents = DataNodeParser.ParseYamlStream(reader).FirstOrDefault();
+            foreach (var path in _resMan.ContentFindFiles(_ignoreFileDirectory))
+            {
+                if (!_resMan.TryContentFileRead(path, out var stream))
+                    continue;
 
-            if (documents == null)
-                return false;
+                using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
+                var documents = DataNodeParser.ParseYamlStream(reader).FirstOrDefault();
 
-            sequence = (SequenceDataNode) documents.Root;
+                if (documents == null)
+                    continue;
+
+                sequence.Add((SequenceDataNode) documents.Root);
+            }
             return true;
         }
     }
