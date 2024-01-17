@@ -5512,22 +5512,22 @@ entities:
             color: '#FFFFFFFF'
             id: WarnCornerNE
           decals:
-            3841: -33,21
+            3835: -33,21
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerNW
           decals:
-            3838: -31,21
+            3832: -31,21
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSE
           decals:
-            3842: -33,19
+            3836: -33,19
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSW
           decals:
-            3837: -31,19
+            3831: -31,19
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallNE
@@ -5639,7 +5639,7 @@ entities:
             3204: 56,11
             3391: -19,41
             3443: 1,-13
-            3840: -33,20
+            3834: -33,20
         - node:
             color: '#52B4E996'
             id: WarnLineGreyscaleE
@@ -5989,7 +5989,7 @@ entities:
             3381: -27,39
             3387: -15,41
             3444: -1,-13
-            3839: -31,20
+            3833: -31,20
         - node:
             color: '#DE3A3A96'
             id: WarnLineW
@@ -62846,11 +62846,6 @@ entities:
     - type: Transform
       pos: 33.5,-20.5
       parent: 60
-  - uid: 315
-    components:
-    - type: Transform
-      pos: 20.5,-20.5
-      parent: 60
   - uid: 430
     components:
     - type: Transform
@@ -63213,6 +63208,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -74.5,18.5
       parent: 60
+  - uid: 18785
+    components:
+    - type: Transform
+      pos: 20.5,-13.5
+      parent: 60
   - uid: 18949
     components:
     - type: Transform
@@ -63296,6 +63296,11 @@ entities:
       parent: 60
 - proto: DisposalJunction
   entities:
+  - uid: 315
+    components:
+    - type: Transform
+      pos: 20.5,-20.5
+      parent: 60
   - uid: 346
     components:
     - type: Transform
@@ -66470,6 +66475,36 @@ entities:
     - type: Transform
       pos: -31.5,25.5
       parent: 60
+  - uid: 18008
+    components:
+    - type: Transform
+      pos: 20.5,-19.5
+      parent: 60
+  - uid: 18544
+    components:
+    - type: Transform
+      pos: 20.5,-18.5
+      parent: 60
+  - uid: 18546
+    components:
+    - type: Transform
+      pos: 20.5,-17.5
+      parent: 60
+  - uid: 18683
+    components:
+    - type: Transform
+      pos: 20.5,-16.5
+      parent: 60
+  - uid: 18693
+    components:
+    - type: Transform
+      pos: 20.5,-15.5
+      parent: 60
+  - uid: 18697
+    components:
+    - type: Transform
+      pos: 20.5,-14.5
+      parent: 60
   - uid: 18943
     components:
     - type: Transform
@@ -67166,6 +67201,12 @@ entities:
     components:
     - type: Transform
       pos: -31.5,26.5
+      parent: 60
+  - uid: 18698
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 19.5,-13.5
       parent: 60
   - uid: 18969
     components:
