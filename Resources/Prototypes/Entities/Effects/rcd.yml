@@ -6,6 +6,7 @@
     anchored: True
   - type: Sprite
     snapCardinals: true
+    noRot: true
     drawdepth: Effects
     sprite: /Textures/Effects/rcd.rsi
     state: constructNormal
