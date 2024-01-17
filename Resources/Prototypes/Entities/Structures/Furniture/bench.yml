@@ -16,6 +16,8 @@
   - type: Physics
     bodyType: Static
     canCollide: true
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: comfortable bench
