@@ -123,3 +123,13 @@
   noSpawn: true
   components:
   - type: RampingStationEventScheduler
+
+# variation passes
+- type: entity
+  id: BasicRoundstartVariation
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationVariationRule
+    rules:
+    - LightBreakVariationPass

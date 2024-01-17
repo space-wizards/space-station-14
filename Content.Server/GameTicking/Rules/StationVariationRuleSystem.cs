@@ -25,7 +25,7 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
         }
     }
 
-    private void OnStationPostInit(StationPostInitEvent ev)
+    private void OnStationPostInit(ref StationPostInitEvent ev)
     {
         // this is unlikely, but could happen if it was saved and reloaded, so check anyway
         if (HasComp<StationVariationHasRunComponent>(ev.Station))
@@ -33,7 +33,7 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
 
         // raise the event on any passes that have been added
         var passEv = new StationVariationPassEvent(ev.Station);
-        var passQuery = EntityQueryEnumerator<StationVariationSinglePassRuleComponent, GameRuleComponent>();
+        var passQuery = EntityQueryEnumerator<StationVariationPassRuleComponent, GameRuleComponent>();
         while (passQuery.MoveNext(out var uid, out _, out _))
         {
             RaiseLocalEvent(uid, ref passEv);
@@ -44,7 +44,7 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
 }
 
 /// <summary>
-///     Raised directed on game rule entities which are added and marked as <see cref="StationVariationSinglePassRuleComponent"/>
+///     Raised directed on game rule entities which are added and marked as <see cref="StationVariationPassRuleComponent"/>
 ///     when a new station is initialized that should be variantized.
 /// </summary>
 /// <param name="Station">The new station that was added, and its config & grids.</param>
