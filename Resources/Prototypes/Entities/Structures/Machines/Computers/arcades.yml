@@ -41,6 +41,7 @@
   - type: Pullable
   - type: StaticPrice
     price: 300
+  - type: EmitSoundIntervalRequirePower
   - type: EmitSoundInterval
     minInterval: 30
     maxInterval: 120

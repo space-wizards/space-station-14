@@ -38,12 +38,17 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         while (intervalQuery.MoveNext(out var uid, out var comp))
         {
             if (!comp.Enabled)
+            {
+                // While disabled, keep pushing the next emit time out,
+                // effectively pausing the timer.
+                comp.NextEmitTime += TimeSpan.FromSeconds(frameTime);
                 continue;
+            }
 
             if (Timing.CurTime > comp.NextEmitTime)
             {
                 TryEmitSound(uid, comp);
-                comp.NextEmitTime = Timing.CurTime + Random.Next(comp.MinInterval, comp.MaxInterval);
+                SelectNextInterval(uid, comp);
             }
         }
     }
@@ -54,7 +59,8 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
         SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
         SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
-        SubscribeLocalEvent<EmitSoundIntervalComponent, EntityUnpausedEvent>(OnUnpause);
+        SubscribeLocalEvent<EmitSoundIntervalComponent, EntityUnpausedEvent>(OnIntervalUnpause);
+        SubscribeLocalEvent<EmitSoundIntervalComponent, ComponentInit>(OnIntervalInit);
     }
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
@@ -68,7 +74,17 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         args.Handled = true;
     }
 
-    private void OnUnpause(EntityUid uid, EmitSoundIntervalComponent component, ref EntityUnpausedEvent args)
+    private void OnIntervalInit(EntityUid uid, EmitSoundIntervalComponent component, ComponentInit args)
+    {
+        SelectNextInterval(uid, component);
+    }
+
+    private void SelectNextInterval(EntityUid uid, EmitSoundIntervalComponent component)
+    {
+        component.NextEmitTime = Timing.CurTime + Random.Next(component.MinInterval, component.MaxInterval);
+    }
+
+    private void OnIntervalUnpause(EntityUid uid, EmitSoundIntervalComponent component, ref EntityUnpausedEvent args)
     {
         component.NextEmitTime += args.PausedTime;
     }
