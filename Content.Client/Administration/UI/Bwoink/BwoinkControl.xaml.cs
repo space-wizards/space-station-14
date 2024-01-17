@@ -204,7 +204,7 @@ namespace Content.Client.Administration.UI.Bwoink
             Respawn.Visible = _adminManager.CanCommand("respawn");
             Respawn.Disabled = !Respawn.Visible || disabled;
 
-            Follow.Visible = _adminManager.CanCommand("tpto");
+            Follow.Visible = _adminManager.CanCommand("follow");
             Follow.Disabled = !Follow.Visible || disabled;
         }
 
