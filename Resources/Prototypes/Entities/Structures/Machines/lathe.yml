@@ -742,7 +742,7 @@
         - CartridgePistol
         - CartridgeMagnum
         - ShellShotgun
-        - ShellShotgunSlug
+        - ShellShotgunSlug #shotgun slug
         - ShellShotgunFlare
         - ShellTranquilizer
         - CartridgeLightRifle
