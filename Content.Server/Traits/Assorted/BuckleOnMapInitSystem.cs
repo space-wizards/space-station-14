@@ -13,7 +13,7 @@ public sealed class BuckleOnMapInitSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, BuckleOnMapInitComponent component, MapInitEvent args)
     {
-        var buckle = Spawn(component.WheelchairPrototype, Transform(uid).Coordinates);
+        var buckle = Spawn(component.Prototype, Transform(uid).Coordinates);
         _buckleSystem.TryBuckle(uid, uid, buckle);
     }
 }

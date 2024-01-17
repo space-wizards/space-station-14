@@ -10,5 +10,5 @@ public sealed partial class BuckleOnMapInitComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
-    public EntProtoId WheelchairPrototype;
+    public EntProtoId Prototype;
 }
