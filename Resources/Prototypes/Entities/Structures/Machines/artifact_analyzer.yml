@@ -43,7 +43,6 @@
     powerLoad: 12000
     needsPower: false #only turns on when scanning
   - type: ArtifactAnalyzer
-    analysisDuration: 30
   - type: ItemPlacer
     whitelist:
       components:
