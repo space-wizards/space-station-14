@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Skeletons are zombie immune now.
-    type: Tweak
-  id: 5227
-  time: '2023-11-30T02:40:39.0000000+00:00'
 - author: MACMAN2003
   changes:
   - message: Added a green central command cap like the captain's blue one.
@@ -3766,3 +3760,10 @@
   id: 5727
   time: '2024-01-17T08:46:34.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24156
+- author: Ubaser
+  changes:
+  - message: Robohand gloves now have a unique sprite and can be found in the RoboDrobe.
+    type: Tweak
+  id: 5728
+  time: '2024-01-17T10:03:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24182
