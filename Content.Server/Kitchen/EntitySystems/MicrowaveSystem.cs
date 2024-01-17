@@ -212,7 +212,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         {
                             _sharedContainer.Remove(item, component.Storage);
                             EntityManager.DeleteEntity(item);
-                            break;
+                            continue;
                         }
                     }
                 }
@@ -567,6 +567,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (!HandleUnsafeItems(uid, microwave))
                     {
                         _destruction.BreakEntity(uid);
+                        continue;
                     }
                     _targetTime += TimeSpan.FromSeconds(1);
                 }
