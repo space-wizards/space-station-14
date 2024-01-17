@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.Components
         /// entity whitelist. Makes sure weird containers don't fit in the dispenser and that beakers
         /// don't accidentally get slotted into the source slots.
         /// </summary>
-        [DataField("storageWhitelist")]
+        [DataField]
         public EntityWhitelist? StorageWhitelist;
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         public static string BeakerSlotId = "ReagentDispenser-beakerSlot";
 
-        [DataField("beakerSlot")]
+        [DataField]
         public ItemSlot BeakerSlot = new();
 
         /// <summary>
@@ -55,9 +55,10 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// List of storage slots that were created at MapInit.
         /// </summary>
+        [DataField]
         public List<string> StorageSlotIds = new List<string>();
 
-        [DataField("storageSlots")]
+        [DataField]
         public List<ItemSlot> StorageSlots = new List<ItemSlot>();
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]

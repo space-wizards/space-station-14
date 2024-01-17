@@ -99,10 +99,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 // Set label from manually-applied label, or metadata if unavailable
                 string reagentLabel;
-                if (EntityManager.TryGetComponent<LabelComponent?>(storedContainer, out var label) && label.CurrentLabel != null)
+                if (TryComp<LabelComponent>(storedContainer, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
                     reagentLabel = label.CurrentLabel;
-                else if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
-                    reagentLabel = metadata.EntityName;
+                else if (storedContainer != null)
+                    reagentLabel = Name(storedContainer.Value);
                 else
                     continue;
 
@@ -112,7 +112,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     quantity = sol.Volume;
                 }
-                var storedAmount = $"({quantity}u)";
+                var storedAmount = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity));
 
                 inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(reagentLabel, storedAmount)));
             }
