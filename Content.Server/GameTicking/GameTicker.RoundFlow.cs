@@ -387,7 +387,7 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
 
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
-                listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong));
+                listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong, _audio.GetSound(new SoundCollectionSpecifier("RoundEnd"))));
         }
 
         private async void SendRoundEndDiscordMessage()
