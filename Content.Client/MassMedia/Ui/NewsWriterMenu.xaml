@@ -4,7 +4,6 @@
     xmlns:ui="clr-namespace:Content.Client.MassMedia.Ui"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'news-write-ui-default-title'}"
-    RectClipContent="False"
     MinSize="348 443"
     SetSize="348 443">
 

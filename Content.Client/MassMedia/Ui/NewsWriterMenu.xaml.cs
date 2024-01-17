@@ -22,6 +22,8 @@ public sealed partial class NewsWriterMenu : FancyWindow
 
         RobustXamlLoader.Load(this);
 
+        ContentsContainer.RectClipContent = false;
+
         // Customize scrollbar width and margin. This is not possible in xaml
         var scrollbar = ArticleListScrollbar.GetChild(1);
         scrollbar.SetWidth = 6f;
