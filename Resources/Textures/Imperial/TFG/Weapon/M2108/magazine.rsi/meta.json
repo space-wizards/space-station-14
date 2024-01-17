@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Made for Imperial Space project. Autor's discord: flazer",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "mag-2"
+        },
+        {
+            "name": "mag-3"
+        },
+        {
+            "name": "mag-4"
+        },
+        {
+            "name": "mag-5"
+        },
+        {
+            "name": "mag-6"
+        },
+        {
+            "name": "mag-7"
+        },
+        {
+            "name": "practice"
+        },
+        {
+            "name": "red-icon"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "rubber"
+        }
+    ]
+}

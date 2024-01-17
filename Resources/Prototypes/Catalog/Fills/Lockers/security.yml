@@ -51,6 +51,7 @@
       - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
       - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
       - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
+      - id: BoxAwardM2108 # Imperial Space high-risk steal-objectives item
 
 - type: entity
   id: LockerSecurityFilled

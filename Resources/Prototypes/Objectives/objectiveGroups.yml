@@ -20,6 +20,7 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     SecretDocumentsStealObjective: 0.5
+    WardenAnswarpistolStealObjective: 0.5 #Imperial Space custom objectives
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill

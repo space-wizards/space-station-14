@@ -534,6 +534,7 @@
       - MagazineLightRifle
       - MagazineBoxPistol
       - MagazineBoxMagnum
+      - BaseMagazineBoxACP #Imperial Space. For M2018 pistol
       - MagazineBoxRifle
       - MagazineBoxLightRifle
       - SpeedLoaderMagnum
