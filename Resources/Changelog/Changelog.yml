@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix doppler effect on shuttles by also setting player's velocity in the
-      audio API.
-    type: Fix
-  - message: Fix left-right ear weirdness caused by floating-point imprecision on
-      audio positioning.
-    type: Fix
-  id: 5224
-  time: '2023-11-29T05:44:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - message: Fix getting stuck between tables.
     type: Fix
   id: 5225
@@ -3765,3 +3755,10 @@
   id: 5724
   time: '2024-01-17T01:26:15.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24142
+- author: Dygon
+  changes:
+  - message: Water gun and spray nozzle projectiles now properly collide with objects.
+    type: Fix
+  id: 5725
+  time: '2024-01-17T08:21:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24175
