@@ -1,4 +1,4 @@
-﻿using Content.Server.Xenoarchaeology.XenoArtifacts;
+using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
@@ -17,7 +17,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     /// How long it takes to analyze an artifact
     /// </summary>
     [DataField("analysisDuration", customTypeSerializer: typeof(TimespanSerializer))]
-    public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(60);
+    public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// The corresponding console entity.
