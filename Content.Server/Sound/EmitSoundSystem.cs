@@ -76,12 +76,12 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
     private void OnIntervalInit(EntityUid uid, EmitSoundIntervalComponent component, ComponentInit args)
     {
-        SelectNextInterval(uid, component);
+        SelectNextInterval(uid, component, true);
     }
 
-    private void SelectNextInterval(EntityUid uid, EmitSoundIntervalComponent component)
+    private void SelectNextInterval(EntityUid uid, EmitSoundIntervalComponent component, bool ignoreMinimum = false)
     {
-        component.NextEmitTime = Timing.CurTime + Random.Next(component.MinInterval, component.MaxInterval);
+        component.NextEmitTime = Timing.CurTime + Random.Next(ignoreMinimum ? TimeSpan.Zero : component.MinInterval, component.MaxInterval);
     }
 
     private void OnIntervalUnpause(EntityUid uid, EmitSoundIntervalComponent component, ref EntityUnpausedEvent args)

@@ -44,7 +44,7 @@
   - type: EmitSoundIntervalRequirePower
   - type: EmitSoundInterval
     minInterval: 30
-    maxInterval: 120
+    maxInterval: 90
     sound:
       collection: ArcadeNoise
       params:
