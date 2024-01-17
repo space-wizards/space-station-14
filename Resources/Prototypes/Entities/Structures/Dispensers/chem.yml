@@ -40,11 +40,6 @@
     - Chemist
   - type: StealTarget
     stealGroup: ChemDispenser
-  - type: ContainerContainer
-    containers:
-      machine_board: !type:Container
-      machine_parts: !type:Container
-      ReagentDispenser-beakerSlot: !type:ContainerSlot
 
 - type: entity
   id: ChemDispenserEmpty
