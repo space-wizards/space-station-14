@@ -67,6 +67,8 @@
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
       state: panel
       visible: false
+  - type: PointLight
+    color: "#e3a136"
   - type: SpaceVillainArcade
     rewardAmount: 0
     possibleRewards:
