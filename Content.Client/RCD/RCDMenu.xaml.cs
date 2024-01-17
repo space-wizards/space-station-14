@@ -37,7 +37,8 @@ public sealed partial class RCDMenu : RadialMenu
 
         foreach (var protoId in rcd.AvailablePrototypes)
         {
-            var proto = _protoManager.Index(protoId);
+            if (!_protoManager.TryIndex(protoId, out var proto))
+                continue;
 
             if (proto.Mode == RcdMode.Invalid)
                 continue;

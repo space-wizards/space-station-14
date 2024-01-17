@@ -14,8 +14,8 @@
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-airlocks'}" TargetLayer="Airlocks">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/airlocks.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-computer-and-machine-frames'}" TargetLayer="ComputerAndMachineFrames">
-            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/computers_and_frames.png"/>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-electrical'}" TargetLayer="Electrical">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/multicoil.png"/>
         </ui:RadialMenuTextureButton>
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-lighting'}" TargetLayer="Lighting">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/lighting.png"/>
@@ -32,7 +32,7 @@
     <ui:RadialContainer Name="Airlocks"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
     <!-- Computer and machine frames -->
-    <ui:RadialContainer Name="ComputerAndMachineFrames"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Electrical"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
        
     <!-- Lighting -->
     <ui:RadialContainer Name="Lighting"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>

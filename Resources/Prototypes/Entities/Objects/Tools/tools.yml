@@ -356,10 +356,12 @@
     - Airlock
     - AirlockGlass
     - Firelock
-    - ComputerFrame
-    - MachineFrame
     - TubeLight
     - BulbLight
+    - LVCable
+    - MVCable
+    - HVCable
+    - CableTerminal
     - Deconstruct
   - type: LimitedCharges
     maxCharges: 20
