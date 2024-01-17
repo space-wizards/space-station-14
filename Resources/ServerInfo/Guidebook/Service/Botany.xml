@@ -86,21 +86,23 @@ Necrosol is analogous to Cryoxadone.
 <GuideReagentEmbed Reagent="Necrosol"/>
 Phalanximine poisons the plant with toxins and removes [color=lightgreen]the death gene[/color]. Requires a minimum of 4u.
 <GuideReagentEmbed Reagent="Phalanximine"/>
+
 Diethylamine give your plants nutrients, eliminates pests, treats plant and with some probability speeds up growth. 
-<GuideReagentEmbed Reagent="Diethylamine"/>
+
 Ammonia give your plants nutrients and treats plants. 
-<GuideReagentEmbed Reagent="Ammonia"/>
+
 EZ nutrient give your plants nutrients. 
-<GuideReagentEmbed Reagent="EZNutrient"/>
+
 Left-4-Zed give your plants nutrients, harmful to health and with some probability changes the mutation modifier, which affects the mutation level.
-<GuideReagentEmbed Reagent="Left4Zed"/>
+
 Pest Killer poisons the plant with toxins and eliminates pests. 
-<GuideReagentEmbed Reagent="PestKiller"/>
+
 Plant-B-Gone poisons the plant with toxins, harmful to health, eliminates weeds and changes the mutation modifier.
-<GuideReagentEmbed Reagent="PlantBGone"/>
+
 Weed Killer poisons the plant with toxins and eliminates weeds.
-<GuideReagentEmbed Reagent="WeedKiller"/>
+
 Robust Harvest give your plants little nutrients and with some probability creates weeds. A special effect of Robust Harvest is to [color=lightgreen]increases the potency[/color] by 3 per 1u. From 15 units has a chance to reduce the plant yield. Robust Harvest can't increase potency above 50.
-<GuideReagentEmbed Reagent="RobustHarvest"/>
+
+<GuideReagentGroupEmbed Group="Botanical"/>
 
 </Document>
