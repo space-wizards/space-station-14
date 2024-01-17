@@ -562,14 +562,17 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 active.CookTimeRemaining -= frameTime;
 
-                if (_gameTiming.CurTime >= _targetTime)
+                if (_gameTiming.CurTime < _targetTime)
                 {
-                    if (!HandleUnsafeItems(uid, microwave))
-                    {
-                        _destruction.BreakEntity(uid);
-                        continue;
-                    }
-                    _targetTime += TimeSpan.FromSeconds(1);
+                    continue;
+                }
+
+                _targetTime += TimeSpan.FromSeconds(1);
+
+                if (!HandleUnsafeItems(uid, microwave))
+                {
+                    _destruction.BreakEntity(uid);
+                    continue;
                 }
 
                 //check if there's still cook time left
