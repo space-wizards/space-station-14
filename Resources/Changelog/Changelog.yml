@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: Ubaser
   changes:
-  - message: Core has been reworked and added back into the map pool.
-    type: Add
-  id: 5229
-  time: '2023-11-30T08:13:13.0000000+00:00'
-- author: Ubaser
-  changes:
   - message: Nuclear operative agents now spawn with a PDA that can scan for injuries.
     type: Add
   id: 5230
@@ -3768,3 +3762,10 @@
   id: 5729
   time: '2024-01-17T13:08:31.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24185
+- author: mirrorcult
+  changes:
+  - message: Reagent grinders now shake around violently when grinding something
+    type: Add
+  id: 5730
+  time: '2024-01-17T13:14:33.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24190
