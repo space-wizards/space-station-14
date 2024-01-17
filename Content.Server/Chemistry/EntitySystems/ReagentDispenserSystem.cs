@@ -169,6 +169,10 @@ namespace Content.Server.Chemistry.EntitySystems
             _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
         }
 
+        /// <summary>
+        /// Automatically generate storage slots for all NumSlots, and fill them with their initial chemicals.
+        /// The actual spawning of entities happens in ItemSlotsSystem's MapInit.
+        /// </summary>
         private void OnMapInit(EntityUid uid, ReagentDispenserComponent component, MapInitEvent args)
         {
             // Get list of pre-loaded containers
