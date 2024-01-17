@@ -640,6 +640,7 @@
       - ForensicPad
       - RiotShield
       - ShellShotgun
+      - ShellShotunSlug
       - ShellShotgunFlare
       - ShellTranquilizer
       - MagazinePistol
@@ -741,6 +742,7 @@
         - CartridgePistol
         - CartridgeMagnum
         - ShellShotgun
+        - ShellShotgunSlug
         - ShellShotgunFlare
         - ShellTranquilizer
         - CartridgeLightRifle
