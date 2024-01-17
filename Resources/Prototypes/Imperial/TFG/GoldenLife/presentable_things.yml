@@ -64,3 +64,26 @@
     damage:
       types:
         Blunt: 10
+
+- type: entity
+  id: PresentableBox
+  parent: BaseStorageItem
+  name: presentable box
+  description: A presentable black box with might Imperial symbol on head.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/presentableBox.rsi
+    state: presentable
+  - type: Item
+    sprite: Imperial/TFG/GoldenLife/presentableBox.rsi
+    size: 20
+  - type: Storage
+    capacity: 20
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: StaticPrice
+    price: 20

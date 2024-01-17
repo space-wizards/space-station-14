@@ -48,12 +48,12 @@
 
 - type: entity
   id: BoxAwardM2108
-  parent: BoxCardboard
+  parent: PresentableBox
   name: box with warden's award M2018
   description:
   components:
   - type: Sprite
-    state: box_security
+    state: black
   - type: StorageFill
     contents:
     - id: WeaponPistolM2108Award
