@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: eddiedd
-  changes:
-  - message: Lemon has been discovered a mutation species, lemoon, which could be
-      grind for milk
-    type: Add
-  id: 5232
-  time: '2023-11-30T21:44:23.0000000+00:00'
 - author: Ubaser
   changes:
   - message: The senior physician beret now matches their outfit more.
@@ -3771,3 +3764,14 @@
   id: 5732
   time: '2024-01-17T16:46:07.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24195
+- author: notafet
+  changes:
+  - message: Chemical, booze, and soda dispensers now dispense reagents from stock
+      containers. Remember to refill!
+    type: Tweak
+  - message: Chemical, booze, and soda dispensers can no longer be emagged for extra
+      goodies.
+    type: Remove
+  id: 5733
+  time: '2024-01-17T21:43:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23907
