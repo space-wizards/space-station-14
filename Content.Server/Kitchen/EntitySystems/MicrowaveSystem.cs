@@ -212,7 +212,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         {
                             _sharedContainer.Remove(item, component.Storage);
                             EntityManager.DeleteEntity(item);
-                            continue;
+                            break;
                         }
                     }
                 }
