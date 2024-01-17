@@ -1,6 +1,8 @@
 - type: entity
   id: BaseThruster
   parent: BaseStructureDynamic
+  name: thruster
+  description: A thruster that allows a shuttle to move.
   abstract: true
   components:
     - type: AmbientSound
@@ -102,8 +104,9 @@
 
 - type: entity
   id: Gyroscope
-  name: gyroscope
   parent: [ BaseThruster, ConstructibleMachine ]
+  name: gyroscope
+  description: Increases the shuttle's potential angular rotation.
   components:
   - type: Thruster
     thrusterType: Angular

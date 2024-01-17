@@ -1,44 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix some sound sources not playing positionally (e.g. glass breaking).
-    type: Fix
-  id: 5222
-  time: '2023-11-28T23:19:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Removed artifact spam on roundend due to the ensuing lag.
-    type: Remove
-  id: 5223
-  time: '2023-11-29T03:39:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix doppler effect on shuttles by also setting player's velocity in the
-      audio API.
-    type: Fix
-  - message: Fix left-right ear weirdness caused by floating-point imprecision on
-      audio positioning.
-    type: Fix
-  id: 5224
-  time: '2023-11-29T05:44:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix getting stuck between tables.
-    type: Fix
-  id: 5225
-  time: '2023-11-29T13:23:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix remaining audio left-right transitioning too quickly.
-    type: Fix
-  id: 5226
-  time: '2023-11-30T00:56:08.0000000+00:00'
-- author: lzk228
-  changes:
-  - message: Skeletons are zombie immune now.
-    type: Tweak
-  id: 5227
-  time: '2023-11-30T02:40:39.0000000+00:00'
 - author: MACMAN2003
   changes:
   - message: Added a green central command cap like the captain's blue one.
@@ -3761,3 +3721,49 @@
   id: 5722
   time: '2024-01-16T09:17:05.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23648
+- author: Ubaser
+  changes:
+  - message: Resprited buckets.
+    type: Tweak
+  id: 5723
+  time: '2024-01-16T13:47:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23866
+- author: Lank
+  changes:
+  - message: Added a new "follow" command.
+    type: Add
+  - message: Replaced the ahelp menu's "Teleport to" verb with "Follow".
+    type: Tweak
+  id: 5724
+  time: '2024-01-17T01:26:15.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24142
+- author: Dygon
+  changes:
+  - message: Water gun and spray nozzle projectiles now properly collide with objects.
+    type: Fix
+  id: 5725
+  time: '2024-01-17T08:21:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24175
+- author: Veritius
+  changes:
+  - message: You can now dramatically execute cuffed people.
+    type: Add
+  - message: You can now kill yourself with guns.
+    type: Add
+  id: 5726
+  time: '2024-01-17T08:45:45.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24150
+- author: TurboTrackerss14
+  changes:
+  - message: Added Mothroach Burger.
+    type: Add
+  id: 5727
+  time: '2024-01-17T08:46:34.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24156
+- author: Ubaser
+  changes:
+  - message: Robohand gloves now have a unique sprite and can be found in the RoboDrobe.
+    type: Tweak
+  id: 5728
+  time: '2024-01-17T10:03:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24182
