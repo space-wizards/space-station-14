@@ -60,10 +60,8 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
-
         [Dependency] private readonly SharedItemSystem _item = default!;
-
-        private TimeSpan _targetTime = TimeSpan.Zero;        
+        private TimeSpan _targetTime = TimeSpan.Zero; 
 
         public override void Initialize()
         {
