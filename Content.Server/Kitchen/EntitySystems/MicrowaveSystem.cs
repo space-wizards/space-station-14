@@ -457,9 +457,12 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 if (_tag.HasTag(item, "MicrowaveSelfUnsafe") || _tag.HasTag(item, "Plastic"))
                 {
+                    foreach (var ingredient in component.Storage.ContainedEntities)
+                    {
+                        QueueDel(ingredient);
+                    }
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
                     _container.Insert(junk, component.Storage);
-                    QueueDel(item);
                     _sharedContainer.EmptyContainer(component.Storage);
                     _audio.PlayPvs(component.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
                     return;
