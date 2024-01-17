@@ -26,6 +26,30 @@
   id: Small4
   mapPath: /Maps/Salvage/small-4.yml
 
+- type: salvageMap
+  id: SmallCargo
+  mapPath: /Maps/Salvage/small-cargo.yml
+
+- type: salvageMap
+  id: SmallChapel
+  mapPath: /Maps/Salvage/small-chapel.yml
+
+- type: salvageMap
+  id: SmallChef
+  mapPath: /Maps/Salvage/small-chef.yml
+
+- type: salvageMap
+  id: SmallParty
+  mapPath: /Maps/Salvage/small-party.yml
+
+- type: salvageMap
+  id: SmallSyndicate
+  mapPath: /Maps/Salvage/small-syndicate.yml
+
+- type: salvageMap
+  id: SmallTesla
+  mapPath: /Maps/Salvage/small-tesla.yml
+
 # Small - Asteroids
 
 - type: salvageMap
