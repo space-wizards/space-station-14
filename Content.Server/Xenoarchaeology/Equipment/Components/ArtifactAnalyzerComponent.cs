@@ -20,25 +20,6 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(60);
 
     /// <summary>
-    /// A mulitplier on the duration of analysis.
-    /// Used for machine upgrading.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float AnalysisDurationMulitplier = 1;
-
-    /// <summary>
-    /// The machine part that modifies analysis duration.
-    /// </summary>
-    [DataField("machinePartAnalysisDuration", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartAnalysisDuration = "Manipulator";
-
-    /// <summary>
-    /// The modifier raised to the part rating to determine the duration multiplier.
-    /// </summary>
-    [DataField("partRatingAnalysisDurationMultiplier")]
-    public float PartRatingAnalysisDurationMultiplier = 0.75f;
-
-    /// <summary>
     /// The corresponding console entity.
     /// Can be null if not linked.
     /// </summary>
