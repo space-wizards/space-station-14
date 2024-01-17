@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Nuclear operative agents now spawn with a PDA that can scan for injuries.
-    type: Add
-  id: 5230
-  time: '2023-11-30T21:39:08.0000000+00:00'
-- author: Rainfey
-  changes:
-  - message: Agent ID not longer resets name when changing its appearance
-    type: Fix
-  id: 5231
-  time: '2023-11-30T21:42:44.0000000+00:00'
 - author: eddiedd
   changes:
   - message: Lemon has been discovered a mutation species, lemoon, which could be
@@ -3769,3 +3757,17 @@
   id: 5730
   time: '2024-01-17T13:14:33.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24190
+- author: Boaz1111
+  changes:
+  - message: Artifact analyzer now scans twice as fast!
+    type: Tweak
+  id: 5731
+  time: '2024-01-17T16:45:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24188
+- author: mirrorcult
+  changes:
+  - message: Eating/drinking sounds should be hopefully significantly less grating
+    type: Tweak
+  id: 5732
+  time: '2024-01-17T16:46:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24195
