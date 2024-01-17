@@ -51,6 +51,13 @@
         acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 250
+  - type: ActivatableUI
+    key: enum.MedipenRefillerUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.MedipenRefillerUiKey.Key
+      type: MedipenRefillerBoundUserInterface
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-medipenrefiller

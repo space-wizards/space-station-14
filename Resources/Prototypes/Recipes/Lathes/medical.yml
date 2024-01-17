@@ -147,7 +147,7 @@
   name: medipen (empty)
   completetime: 2
   materials:
-    Plastic: 500
+    Plasteel: 300
     Steel: 200
 
 - type: latheRecipe

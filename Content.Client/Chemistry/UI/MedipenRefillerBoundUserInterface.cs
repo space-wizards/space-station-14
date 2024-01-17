@@ -1,0 +1,31 @@
+using Content.Shared.Chemistry;
+using Content.Shared.Containers.ItemSlots;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+
+namespace Content.Client.Chemistry.UI
+{
+    [UsedImplicitly]
+    public sealed class MedipenRefillerBoundUserInterface : BoundUserInterface
+    {
+        [ViewVariables]
+        private MedipenRefillerWindow? _window;
+
+        public MedipenRefillerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        {
+        }
+
+        protected override void Open()
+        {
+            base.Open();
+
+            _window = new MedipenRefillerWindow
+            {
+                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
+            };
+
+            _window.OpenCentered();
+            _window.OnClose += Close;
+        }
+    }
+}
