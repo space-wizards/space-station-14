@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   noSpawn: true
@@ -10,7 +10,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 8  # Should have the same or less damage than a regular pellet
+        Piercing: 8
+        Blunt: 20
 
 - type: entity
   id: PelletShotgunBeanbag
