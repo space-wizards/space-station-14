@@ -78,10 +78,24 @@ entities:
       data:
         tiles:
           0,0:
-            0: 51
+            0: 65535
           0,-1:
-            0: 13568
+            0: 65023
             1: 512
+          0,1:
+            0: 3839
+          1,0:
+            0: 30583
+          1,1:
+            0: 23
+          0,-2:
+            0: 29456
+          1,-1:
+            0: 30481
+          -1,0:
+            0: 36044
+          -1,-1:
+            0: 52224
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -594,6 +608,13 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-3.5
+      parent: 1
+- proto: JetpackBlackFilled
+  entities:
+  - uid: 130
+    components:
+    - type: Transform
+      pos: 1.859375,0.828125
       parent: 1
 - proto: LockerSyndicatePersonal
   entities:

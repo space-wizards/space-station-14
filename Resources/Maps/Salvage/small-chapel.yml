@@ -85,7 +85,7 @@ entities:
             color: '#FFFFFFFF'
             id: Bot
           decals:
-            49: 2,4
+            48: 2,4
         - node:
             angle: 1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -246,12 +246,12 @@ entities:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerSe
           decals:
-            47: 4,3
+            46: 4,3
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerSw
           decals:
-            48: 1,3
+            47: 1,3
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinLineE
@@ -275,7 +275,29 @@ entities:
       data:
         tiles:
           0,0:
-            0: 1911
+            0: 65527
+          0,1:
+            0: 65535
+          0,2:
+            0: 65535
+          1,0:
+            0: 30481
+          1,1:
+            0: 13311
+          1,2:
+            0: 13107
+          2,0:
+            0: 4352
+          2,1:
+            0: 49
+          -1,0:
+            0: 52292
+          -1,1:
+            0: 52428
+          -1,2:
+            0: 52428
+          0,-1:
+            0: 21760
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -956,12 +978,5 @@ entities:
     components:
     - type: Transform
       pos: 3.5,10.5
-      parent: 1
-- proto: WoodenSupportBeam
-  entities:
-  - uid: 54
-    components:
-    - type: Transform
-      pos: 0.5,6.5
       parent: 1
 ...
