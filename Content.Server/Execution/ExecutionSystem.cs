@@ -35,7 +35,6 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -249,7 +248,7 @@ public sealed class ExecutionSystem : EntitySystem
             return;
         
         _damageableSystem.TryChangeDamage(victim, melee.Damage * DamageModifier, true);
-        _meleeSystem.PlayHitSound(victim, weapon, null, null, null);
+        _audioSystem.PlayEntity(melee.HitSound, Filter.Pvs(weapon), weapon, true, AudioParams.Default);
 
         if (attacker == victim)
         {
