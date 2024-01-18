@@ -23,6 +23,7 @@ using Content.Shared.Actions;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared.Alert;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Nutrition.Components;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -57,6 +58,9 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         _uplink.AddUplink(uid, FixedPoint2.New(10), ChangelingShopPresetPrototype, uid, EvolutionPointsCurrencyPrototype); // not really an 'uplink', but it's there to add the evolution menu
         StealDNA(uid, component);
+
+        RemComp<HungerComponent>(uid);
+        RemComp<ThirstComponent>(uid); // changelings dont get hungry or thirsty
     }
 
     [ValidatePrototypeId<EntityPrototype>]
