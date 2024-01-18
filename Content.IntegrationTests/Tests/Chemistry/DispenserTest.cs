@@ -25,7 +25,7 @@ public sealed class DispenserTest : InteractionTest
         await Interact();
 
         // Eject beaker via BUI.
-        var ev = new ItemSlotButtonPressedEvent(ReagentDispenserComponent.BeakerSlotId);
+        var ev = new ItemSlotButtonPressedEvent(SharedReagentDispenser.OutputSlotName);
         await SendBui(ReagentDispenserUiKey.Key, ev);
 
         // Beaker is back in the player's hands

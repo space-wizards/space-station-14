@@ -202,7 +202,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _itemSlotsSystem.AddItemSlot(uid, component.StorageSlotIds[i], component.StorageSlots[i]);
             }
 
-            _itemSlotsSystem.AddItemSlot(uid, ReagentDispenserComponent.BeakerSlotId, component.BeakerSlot);
+            _itemSlotsSystem.AddItemSlot(uid, SharedReagentDispenser.OutputSlotName, component.BeakerSlot);
         }
     }
 }
