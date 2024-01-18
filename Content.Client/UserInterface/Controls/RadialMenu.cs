@@ -70,6 +70,13 @@ public class RadialMenu : BaseWindow
     /// </remarks>
     public RadialMenu()
     {
+        // Hide all starting children (if any) except the first (this is the active layer)
+        if (ChildCount > 1)
+        {
+            for (int i = 1; i < ChildCount; i++)
+                GetChild(i).Visible = false;
+        }
+
         // Auto generate a contextual button for moving back through visited layers
         ContextualButton = new TextureButton()
         {
@@ -79,16 +86,20 @@ public class RadialMenu : BaseWindow
         };
 
         ContextualButton.OnButtonUp += _ => ReturnToPreviousLayer();
-
         AddChild(ContextualButton);
 
-        // When new children are added, hide them
-        OnChildAdded += child => child.Visible = ChildCount <= 2;
+        // Hide any further add children, unless its promoted to the active layer
+        OnChildAdded += child => child.Visible = (GetCurrentActiveLayer() == child);
     }
 
     private Control? GetCurrentActiveLayer()
     {
-        return Children.FirstOrDefault(x => x.Visible && x != ContextualButton);
+        var children = Children.Where(x => x != ContextualButton);
+
+        if (children.Count() == 0)
+            return null;
+
+        return children.First(x => x.Visible);
     }
 
     public bool TryToMoveToNewLayer(string newLayer)
