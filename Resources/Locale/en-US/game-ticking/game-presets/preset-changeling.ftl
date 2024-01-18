@@ -15,7 +15,8 @@ changeling-role-greeting =
     Your objectives are listed in the character menu, use your special abilities to help complete them.
 
 changeling-role-greeting-short =
-    You are a changeling who has absorbed and taken the form of {$character-name}.
+    You are a changeling who has absorbed 
+    and taken the form of {$character-name}.
     Use your special abilities to help complete your objectives.
 
 
