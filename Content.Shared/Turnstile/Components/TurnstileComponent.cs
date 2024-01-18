@@ -8,15 +8,8 @@ namespace Content.Shared.Turnstile.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(TurnstileSystem))]
 public sealed partial class TurnstileComponent : Component
 {
-    /// <summary>
-    /// The current state of the turnstile -- whether it is idle or rotating.
-    /// </summary>
-    /// <remarks>
-    /// This should never be set directly, use <see cref="TurnstileSystem.SetState(EntityUid, TurnstileState, TurnstileComponent?)"/> instead.
-    /// </remarks>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField, AutoNetworkedField]
-    public TurnstileState State = TurnstileState.Idle;
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? CurrentAdmittedMob;
 
     #region Sounds
     /// <summary>
@@ -33,18 +26,4 @@ public sealed partial class TurnstileComponent : Component
 
     #endregion
 
-}
-
-[Serializable, NetSerializable]
-public enum TurnstileState : byte
-{
-    Idle,
-    Rotating
-}
-
-[Serializable, NetSerializable]
-public enum TurnstileVisuals : byte
-{
-    State,
-    BaseRSI
 }

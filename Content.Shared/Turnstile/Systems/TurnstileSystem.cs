@@ -1,9 +1,12 @@
-﻿using Content.Shared.Mobs.Components;
+﻿using System.Numerics;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Turnstile.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -12,39 +15,34 @@ namespace Content.Shared.Turnstile.Systems;
 
 public sealed class TurnstileSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
+    private static readonly Vector2 _mobBoundsExpansion = new Vector2(0.2f, 0.2f);
 
     public override void Initialize()
     {
         base.Initialize();
+        UpdatesAfter.Add(typeof(SharedMoverController));
 
-        SubscribeLocalEvent<TurnstileComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(HandlePreventCollide);
     }
 
     private void HandlePreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
     {
-        // If Turnstile is rotating, allow entities the admitted entity is pulling to come through with it.
-        if (ent.Comp.State != TurnstileState.Rotating || !TryComp<PreventCollideComponent>(ent, out var preventCollide))
-            return;
+        // If turnstile is admitting this mob, allow it not to collide.
+        if (ent.Comp.CurrentAdmittedMob == args.OtherEntity)
+            args.Cancelled = true;
 
-        if (TryComp<SharedPullerComponent>(preventCollide.Uid, out var puller))
+        // If Turnstile is admitting a mob, allow entities the mob is pulling to come through with it.
+        if (TryComp<SharedPullerComponent>(ent.Comp.CurrentAdmittedMob, out var puller))
             args.Cancelled |= puller.Pulling == args.OtherEntity;
     }
-
-    private void OnComponentInit(Entity<TurnstileComponent> ent, ref ComponentInit args)
-    {
-        // No turnstile should be spawned in the rotating state, as that requires a mob to be passing through.
-        if (ent.Comp.State == TurnstileState.Rotating)
-            ent.Comp.State = TurnstileState.Idle;
-
-        _appearanceSystem.SetData(ent, TurnstileVisuals.State, ent.Comp.State);
-    }
-
 
     private void HandleCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
@@ -62,32 +60,31 @@ public sealed class TurnstileSystem : EntitySystem
         var facingDirection = xform.LocalRotation.GetDir();
         var directionOfContact = GetDirectionOfContact(xform, args.OtherEntity);
 
-        if (ent.Comp.State == TurnstileState.Rotating || facingDirection != directionOfContact)
+        // If the turnstile is already full with another entity or the direction of contact is incorrect...
+        if (HasComp<ActiveTurnstileMarkerComponent>(ent) || facingDirection != directionOfContact)
         {
             // Reject the entity, play sound
-            _audio.PlayPredicted(ent.Comp.BumpSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
+            _audio.PlayPredicted(ent.Comp.BumpSound, ent, args.OtherEntity);
             return;
         }
 
-        // Admit the entity.
-        var comp = EnsureComp<PreventCollideComponent>(ent);
-        comp.Uid = args.OtherEntity;
+        // Otherwise, admit the entity.
+        ent.Comp.CurrentAdmittedMob = args.OtherEntity;
 
-        // Play sound of turning
-        _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
+        // Play sound of turning.
+        _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
 
-        // We have to set collidable to false for one frame, otherwise the client does not
-        // predict the removal of the contacts properly, and instead thinks the mob is colliding when it isn't.
-        SetCollidable((ent, ent.Comp, null), false);
-        SetState((ent, ent.Comp), TurnstileState.Rotating);
+        // Refresh broadphase contacts to ensure correct prediction
+        RefreshPhysicsState(ent, args.OtherEntity);
+        EnsureComp<ActiveTurnstileMarkerComponent>(ent);
     }
 
     /// <summary>
-    ///     Turnstiles stop rotating once their admitted entity has passed through.
+    ///     Turnstiles return to their original state once their admitted mob has passed through.
     /// </summary>
-    private void StopRotatingIfEntityPassed(Entity<TurnstileComponent> ent)
+    private void ReturnToIdleIfEntityPassed(Entity<TurnstileComponent> ent)
     {
-        if (ent.Comp.State != TurnstileState.Rotating)
+        if (!HasComp<ActiveTurnstileMarkerComponent>(ent))
             return;
 
         // Check and see if we're still colliding with the admitted entity.
@@ -95,32 +92,39 @@ public sealed class TurnstileSystem : EntitySystem
         if (stillCollidingWithAdmitted)
             return;
 
-        SetState(ent, TurnstileState.Idle);
-        RemComp<PreventCollideComponent>(ent);
+        RemComp<ActiveTurnstileMarkerComponent>(ent);
+        ent.Comp.CurrentAdmittedMob = null;
     }
 
-    private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, TransformComponent? xform = null, PreventCollideComponent? preventCollide = null)
+    private bool GetIsCollidingWithAdmitted(Entity<TurnstileComponent, TransformComponent?> ent)
     {
-        if (!Resolve(uid, ref turnstile) || !Resolve(uid, ref xform) || !Resolve(uid, ref preventCollide))
+        if (!Resolve(ent, ref ent.Comp2))
             return false;
 
-        if (!TryComp<TransformComponent>(preventCollide.Uid, out var otherxform))
+        if (ent.Comp1.CurrentAdmittedMob == null)
             return false;
 
-        var turnstileAABB = _entityLookupSystem.GetAABBNoContainer(uid, xform.LocalPosition, xform.LocalRotation);
-        var otherAABB = _entityLookupSystem.GetAABBNoContainer(uid, otherxform.LocalPosition, otherxform.LocalRotation);
+        if (!TryComp<TransformComponent>(ent.Comp1.CurrentAdmittedMob, out var mobxform))
+            return false;
 
-        bool isColliding = turnstileAABB.Intersects(otherAABB);
+        if (!TryComp<MapGridComponent>(ent.Comp2.GridUid, out var grid))
+            return false;
 
-        // Is the entity pulling something else through too? If so, the turnstile should still be spinning to allow this object through.
-        if (TryComp<SharedPullerComponent>(preventCollide.Uid, out var puller))
+        var tile = _map.GetTileRef(ent.Comp2.GridUid.Value, grid, ent.Comp2.Coordinates);
+        var turnstileLocalBounds = _entityLookupSystem.GetLocalBounds(tile, grid.TileSize);
+        var mobLocalBounds = new Box2(mobxform.LocalPosition - _mobBoundsExpansion, mobxform.LocalPosition + _mobBoundsExpansion);
+
+        bool isColliding = turnstileLocalBounds.Intersects(mobLocalBounds);
+
+        // Is the entity pulling something else through too? If so, the turnstile should still act as though the current mob is walking through it.
+        if (TryComp<SharedPullerComponent>(ent.Comp1.CurrentAdmittedMob, out var puller))
         {
             if (puller.Pulling != null)
             {
-                if (TryComp<TransformComponent>(puller.Pulling.Value, out otherxform))
+                if (TryComp<TransformComponent>(puller.Pulling.Value, out var pulledxform))
                 {
-                    otherAABB = _entityLookupSystem.GetAABBNoContainer(uid, otherxform.LocalPosition, otherxform.LocalRotation);
-                    isColliding |= turnstileAABB.Intersects(otherAABB);
+                    var pulledLocalAABB = new Box2(pulledxform.LocalPosition - _mobBoundsExpansion, pulledxform.LocalPosition + _mobBoundsExpansion);
+                    isColliding |= turnstileLocalBounds.Intersects(pulledLocalAABB);
                 }
             }
         }
@@ -136,8 +140,7 @@ public sealed class TurnstileSystem : EntitySystem
         var query = EntityQueryEnumerator<TurnstileComponent, ActiveTurnstileMarkerComponent>();
         while (query.MoveNext(out var uid, out var turnstile, out _))
         {
-            SetCollidable(uid, true);
-            StopRotatingIfEntityPassed((uid, turnstile));
+            ReturnToIdleIfEntityPassed((uid, turnstile));
         }
     }
 
@@ -148,33 +151,12 @@ public sealed class TurnstileSystem : EntitySystem
         return (xform.LocalPosition - xformOther.LocalPosition).GetDir();
     }
 
-    private void SetCollidable(Entity<TurnstileComponent?, PhysicsComponent?> ent, bool collidable)
+    private void RefreshPhysicsState(Entity<TurnstileComponent, PhysicsComponent?> ent, Entity<PhysicsComponent?> other)
     {
-        if (!Resolve(ent, ref ent.Comp1) || !Resolve(ent, ref ent.Comp2))
+        if (!Resolve(ent, ref ent.Comp2) || !Resolve(other, ref other.Comp))
             return;
 
-        _physicsSystem.SetCanCollide(ent, collidable, body: ent.Comp2);
-    }
-
-    private void SetState(Entity<TurnstileComponent> ent, TurnstileState state)
-    {
-        // If no change, return.
-        if (state == ent.Comp.State)
-            return;
-
-        switch (state)
-        {
-            case TurnstileState.Rotating:
-                EnsureComp<ActiveTurnstileMarkerComponent>(ent);
-                break;
-
-            case TurnstileState.Idle:
-                RemComp<ActiveTurnstileMarkerComponent>(ent);
-                break;
-        }
-
-        ent.Comp.State = state;
-        Dirty(ent, ent.Comp);
-        _appearanceSystem.SetData(ent, TurnstileVisuals.State, ent.Comp.State);
+        _physics.DestroyContacts(ent.Comp2);
+        Dirty(ent, ent.Comp2);
     }
 }
