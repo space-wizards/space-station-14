@@ -517,7 +517,7 @@
     isCollidableWhenOpen: false
     closeSound:
       path: /Audio/Items/shovel_dig.ogg
-    openSound: 
+    openSound:
       path: /Audio/Items/shovel_dig.ogg
 
 - type: entity
@@ -540,6 +540,8 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSyndicate
+  name: Syndicate crate
+  description: A dark steel crate with red bands and a letter S embossed on the front.
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/syndicate.rsi

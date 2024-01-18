@@ -314,6 +314,14 @@
     FoodBreadBun: 1
     FoodMeatXeno: 1
 
+- type: microwaveMealRecipe
+  id: RecipeMothRoachburger
+  name: mothroachburger recipe
+  result: FoodBurgerMothRoach
+  solids:
+    FoodBreadBun: 1
+    MobMothroach: 1
+
 #Breads & Sandwiches
 
 - type: microwaveMealRecipe
