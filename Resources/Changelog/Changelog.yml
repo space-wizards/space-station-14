@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Rainbeon
-  changes:
-  - message: Cyborgs can now speak while in a Critical state.
-    type: Tweak
-  id: 5237
-  time: '2023-12-02T00:25:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Potentially fix audio filters.
@@ -3775,3 +3769,11 @@
   id: 5737
   time: '2024-01-18T15:28:01.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24228
+- author: koteq
+  changes:
+  - message: Jugs with the same labels are now correctly grouped and sorted in the
+      context menu.
+    type: Tweak
+  id: 5738
+  time: '2024-01-18T22:18:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24243
