@@ -235,7 +235,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     {
         var mapCoords = _eyeManager.PixelToMap(coords.Position);
 
-        if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid))
+        if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var _))
             return EntityCoordinates.FromMap(_mapManager, mapCoords);
 
         return EntityCoordinates.FromMap(gridUid, mapCoords, _transformSystem);
