@@ -54,6 +54,7 @@ public sealed class FaxBoundUi : BoundUserInterface
         var content = await reader.ReadToEndAsync();
         SendMessage(new FaxFileMessage(content.Substring(0, Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)), _window.OfficePaper));
         
+        reader.Close();
         _dialogIsOpen = false;
     }
 
