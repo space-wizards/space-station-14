@@ -7,6 +7,7 @@ using Content.Server.VoiceMask;
 using Content.Server.Wires;
 using Content.Shared.Speech;
 using Content.Shared.Wires;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech;
 
@@ -14,11 +15,17 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
 {
     private WiresSystem _wires = default!;
     private ChatSystem _chat = default!;
+    private IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     /// Length of the gibberish string sent when pulsing the wire
     /// </summary>
     private int _noiseLength = 16;
+
+    /// <summary>
+    /// Identifier of the SpeechVerbPrototype to use when pulsing the wire
+    /// </summary>
+    private string _speechVerb = "Electricity";
     public override Color Color { get; set; } = Color.Green;
     public override string Name { get; set; } = "wire-name-listen";
 
@@ -34,6 +41,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
 
         _wires = EntityManager.System<WiresSystem>();
         _chat = EntityManager.System<ChatSystem>();
+        _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
     }
     public override StatusLightState? GetLightState(Wire wire)
     {
@@ -85,6 +93,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         var mask = EntityManager.EnsureComponent<VoiceMaskComponent>(user);
         mask.Enabled = true;
         mask.VoiceName = Loc.GetString("wire-listen-pulse-identifier");
+        mask.SpeechVerb = _prototypeManager.Index<SpeechVerbPrototype>(_speechVerb);
 
         var chars = Loc.GetString("wire-listen-pulse-characters").ToCharArray();
         var noiseMsg = _chat.BuildGibberishString(chars, _noiseLength);
