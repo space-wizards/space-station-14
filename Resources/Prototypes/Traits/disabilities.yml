@@ -12,7 +12,7 @@
 - type: trait
   id: Narcolepsy
   name: trait-narcolepsy-name
-  description: trait-narcolepsy-decs
+  description: trait-narcolepsy-desc
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -21,6 +21,7 @@
 - type: trait
   id: Pacifist
   name: trait-pacifist-name
+  description: trait-pacifist-desc
   components:
     - type: Pacified
 
