@@ -156,6 +156,22 @@
         Heat: 0.95
 
 - type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskBalaclava
+  name: balaclava
+  description: Slightly suspicious face mask intended for keeping your face warm in cold environments, but you're not using it for that, are you?
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/balaclava.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/balaclava.rsi
+  - type: IdentityBlocker
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskBreath
   name: breath mask

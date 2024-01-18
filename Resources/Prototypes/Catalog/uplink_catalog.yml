@@ -1624,3 +1624,14 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: UplinkBalaclava
+  name: uplink-Balaclava-name
+  description: uplink-Balaclava-desc
+  icon: { sprite: /Textures/Clothing/Mask/balaclava.rsi, state: icon }
+  productEntity: ClothingMaskBalaclava
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkPointless
