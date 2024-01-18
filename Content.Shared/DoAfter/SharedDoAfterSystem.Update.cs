@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Utility;
@@ -9,6 +8,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 {
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+
+    private DoAfter[] _doAfters = Array.Empty<DoAfter>();
 
     public override void Update(float frameTime)
     {
@@ -35,8 +36,15 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     {
         var dirty = false;
 
-        foreach (var doAfter in comp.DoAfters.Values.ToArray())
+        var values = comp.DoAfters.Values;
+        var count = values.Count;
+        if (_doAfters.Length < count)
+            _doAfters = new DoAfter[count];
+
+        values.CopyTo(_doAfters, 0);
+        for (var i = 0; i < count; i++)
         {
+            var doAfter = _doAfters[i];
             if (doAfter.CancelledTime != null)
             {
                 if (time - doAfter.CancelledTime.Value > ExcessTime)
