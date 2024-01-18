@@ -20,7 +20,6 @@
     price: 15
 
 - type: entity
-  name: comfortable bench
   id: BenchColorfulComfy
   suffix: Solo. Colorful
   parent: BenchComfy
@@ -38,7 +37,6 @@
           bench_solo_cover: Rainbow
 
 - type: entity
-  name: comfortable bench
   id: BenchRedComfy
   suffix: Solo. Red
   parent: BenchComfy
@@ -54,7 +52,6 @@
     node: redComfBench
 
 - type: entity
-  name: comfortable bench
   id: BenchBlueComfy
   suffix: Solo. Blue
   parent: BenchComfy
