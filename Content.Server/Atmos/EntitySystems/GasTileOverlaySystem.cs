@@ -196,7 +196,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index, GameTick curTick)
         {
-            ref var oldData = ref chunk.GetData(index);
+            ref var oldData = ref chunk.TileData[chunk.GetDataIndex(index)];
             if (!gridAtmosphere.Tiles.TryGetValue(index, out var tile))
             {
                 if (oldData.Equals(default))

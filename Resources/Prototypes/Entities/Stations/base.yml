@@ -42,11 +42,10 @@
   id: BaseStationShuttles
   abstract: true
   components:
+    - type: StationCargoShuttle
+      path: /Maps/Shuttles/cargo.yml
     - type: GridSpawn
       groups:
-        cargo:
-          paths:
-          - /Maps/Shuttles/cargo.yml
         mining:
           paths:
           - /Maps/Shuttles/mining.yml

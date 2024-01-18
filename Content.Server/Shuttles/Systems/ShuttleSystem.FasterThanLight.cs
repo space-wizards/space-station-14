@@ -700,7 +700,7 @@ public sealed partial class ShuttleSystem
             return;
 
         // Flatten anything not parented to a grid.
-        var transform = _physics.GetPhysicsTransform(uid, xform, _xformQuery);
+        var transform = _physics.GetPhysicsTransform(uid, xform);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
         var immune = new HashSet<EntityUid>();
         var tileSet = new List<(Vector2i, Tile)>();
