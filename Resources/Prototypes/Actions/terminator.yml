@@ -1,0 +1,13 @@
+- type: entity
+  id: ActionArniesCurse
+  name: Arnie's curse
+  description: Gain some on-brand gear and a sick motorbike, in exchange for only being able to speak in Terminator quotes. Opportunity expires after a minute.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Mobs/Species/Terminator/parts.rsi
+      state: skull_icon
+    event: !type:ExterminatorCurseEvent {}
+  - type: TimedDespawn
+    lifetime: 60
