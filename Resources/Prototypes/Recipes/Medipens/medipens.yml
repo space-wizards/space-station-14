@@ -1,0 +1,59 @@
+- type: medipenRecipe
+  id: EmergencyMedipen
+  result: EmergencyMedipen
+  completetime: 1
+  reagents:
+    - ReagentId: Epinephrine
+      Quantity: 12
+    - ReagentId: TranexamicAcid
+      Quantity: 3
+
+- type: medipenRecipe
+  id: AntiPoisonMedipen
+  result: AntiPoisonMedipen
+  completetime: 1
+  reagents:
+    - ReagentId: Ultravasculine
+      Quantity: 10
+    - ReagentId: Epinephrine
+      Quantity: 5
+
+- type: medipenRecipe
+  id: BruteAutoInjector
+  result: BruteAutoInjector
+  completetime: 1
+  reagents:
+    - ReagentId: Bicaridine
+      Quantity: 15
+    - ReagentId: TranexamicAcid
+      Quantity: 5
+
+- type: medipenRecipe
+  id: BurnAutoInjector
+  result: BurnAutoInjector
+  completetime: 1
+  reagents:
+    - ReagentId: Dermaline
+      Quantity: 10
+    - ReagentId: Leporazine
+      Quantity: 10
+
+- type: medipenRecipe
+  id: RadAutoInjector
+  result: RadAutoInjector
+  completetime: 1
+  reagents:
+    - ReagentId: Arithrazine
+      Quantity: 15
+    - ReagentId: Bicaridine
+      Quantity: 5
+
+- type: medipenRecipe
+  id: CombatMedipen
+  result: CombatMedipen
+  completetime: 1
+  reagents:
+    - ReagentId: Omnizine
+      Quantity: 25
+    - ReagentId: TranexamicAcid
+      Quantity: 5
