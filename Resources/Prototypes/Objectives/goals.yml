@@ -3,16 +3,16 @@
   text: station-goal-shuttle
 
 - type: stationGoal
-  id: StationGoalSingularity
-  text: station-goal-singularity
+  id: StationGoalTournament
+  text: station-goal-tournament
 
 - type: stationGoal
   id: StationGoalSolarPanels
   text: station-goal-solar-panels
 
 - type: stationGoal
-  id: StationGoalArtifacts
-  text: station-goal-artifacts
+  id: StationGoalScience
+  text: station-goal-science
 
 - type: stationGoal
   id: StationGoalBank
