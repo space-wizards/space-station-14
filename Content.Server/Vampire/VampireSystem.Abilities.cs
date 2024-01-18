@@ -11,6 +11,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Flash;
@@ -34,41 +35,41 @@ public sealed partial class VampireSystem
     /// <summary>
     /// Upon using any power that does not require a target
     /// </summary>
-    private void OnUseSelfPower(EntityUid uid, VampireComponent component, VampireSelfPowerEvent args) => TriggerPower((uid, component), args.Type, args.Details);
+    private void OnUseSelfPower(EntityUid uid, VampireComponent component, VampireSelfPowerEvent args) => args.Handled = TriggerPower((uid, component), args.Type, args.Details);
     /// <summary>
     /// Upon using any power that requires a target
     /// </summary>
-    private void OnUseTargetedPower(EntityUid uid, VampireComponent component, VampireTargetedPowerEvent args) => TriggerPower((uid, component), args.Type, args.Details, args.Target);
-    private void TriggerPower(Entity<VampireComponent> vampire, VampirePowerKey powerType, VampirePowerDetails def, EntityUid? target = null)
+    private void OnUseTargetedPower(EntityUid uid, VampireComponent component, VampireTargetedPowerEvent args) => args.Handled = TriggerPower((uid, component), args.Type, args.Details, args.Target);
+    private bool TriggerPower(Entity<VampireComponent> vampire, VampirePowerKey powerType, VampirePowerDetails def, EntityUid? target = null)
     {
         if (!IsAbilityUnlocked(vampire, powerType))
-            return;
-
-        if (def.ActivationCost > 0 && def.ActivationCost > GetBloodEssence(vampire))
-        {
-            _popup.PopupClient(Loc.GetString("vampire-not-enough-blood"), vampire, vampire, PopupType.MediumCaution);
-            return;
-        }
+            return false;
 
         //Block if we are cuffed
         if (!def.UsableWhileCuffed && TryComp<CuffableComponent>(vampire, out var cuffable) && !cuffable.CanStillInteract)
         {
             _popup.PopupEntity(Loc.GetString("vampire-cuffed"), vampire, vampire, PopupType.MediumCaution);
-            return;
+            return false;
         }
 
         //Block if we are stunned
         if (!def.UsableWhileStunned && HasComp<StunnedComponent>(vampire))
         {
             _popup.PopupEntity(Loc.GetString("vampire-stunned"), vampire, vampire, PopupType.MediumCaution);
-            return;
+            return false;
         }
 
         //Block if we are muzzled - so far only one item does this?
         if (!def.UsableWhileMuffled && TryComp<ReplacementAccentComponent>(vampire, out var accent) && accent.Accent.Equals("mumble"))
         {
             _popup.PopupEntity(Loc.GetString("vampire-muffled"), vampire, vampire, PopupType.MediumCaution);
-            return;
+            return false;
+        }
+
+        if (def.ActivationCost > 0 && !SubtractBloodEssence(vampire, def.ActivationCost))
+        {
+            _popup.PopupClient(Loc.GetString("vampire-not-enough-blood"), vampire, vampire, PopupType.MediumCaution);
+            return false;
         }
 
         var success = true;
@@ -76,6 +77,11 @@ public sealed partial class VampireSystem
         //TODO: Rewrite when a magic effect system is introduced (like reagents)
         switch (powerType)
         {
+            case VampirePowerKey.SummonHeirloom:
+                {
+                    SummonHeirloom(vampire);
+                    break;
+                }
             case VampirePowerKey.ToggleFangs:
                 {
                     ToggleFangs(vampire);
@@ -120,35 +126,36 @@ public sealed partial class VampireSystem
                 break;
         }
 
-        if (!success)
-            return;
 
-        AddBloodEssence(vampire, -def.ActivationCost);
-
-        _action.StartUseDelay(GetAbilityEntity(vampire, powerType));
+        //if (success)
+        //   _action.StartUseDelay(GetAbilityEntity(vampire, powerType));
+        return success;
     }
 
     #region Other Powers
     /// <summary>
     /// Spawn and bind the pendant if one does not already exist, otherwise just summon to the vampires hand
     /// </summary>
-    private void OnSummonHeirloom(EntityUid uid, VampireComponent component, VampireSummonHeirloomEvent args)
+    private void SummonHeirloom(Entity<VampireComponent> vampire)
     {
-        if (!component.Heirloom.HasValue
-            || LifeStage(component.Heirloom.Value) >= EntityLifeStage.Terminating)
+        if (!vampire.Comp.Heirloom.HasValue
+            || LifeStage(vampire.Comp.Heirloom.Value) >= EntityLifeStage.Terminating)
         {
             //If the pendant does not exist, or has been deleted - spawn one
-            component.Heirloom = Spawn(VampireComponent.HeirloomProto);
+            vampire.Comp.Heirloom = Spawn(VampireComponent.HeirloomProto);
 
-            if (TryComp<VampireHeirloomComponent>(component.Heirloom, out var heirloomComponent))
-                heirloomComponent.Owner = uid;
+            if (TryComp<VampireHeirloomComponent>(vampire.Comp.Heirloom, out var heirloomComponent))
+                heirloomComponent.VampireOwner = vampire;
 
-            if (TryComp<StoreComponent>(component.Heirloom, out var storeComponent))
-                //Tie the store balance to the vampires balance
-                storeComponent.Balance = component.Balance;
+            //Init the store balance, or init the vampire's balance if this is the first summon
+            if (TryComp<StoreComponent>(vampire.Comp.Heirloom, out var storeComponent))
+                if (vampire.Comp.Balance == null)
+                    vampire.Comp.Balance = storeComponent.Balance;
+                else
+                    storeComponent.Balance = vampire.Comp.Balance;
         }
         //Move to players hands
-        _hands.PickupOrDrop(uid, component.Heirloom.Value);
+        _hands.PickupOrDrop(vampire, vampire.Comp.Heirloom.Value);
     }
     private void Screech(Entity<VampireComponent> vampire, TimeSpan? duration, DamageSpecifier? damage = null)
     {
@@ -349,6 +356,8 @@ public sealed partial class VampireSystem
             component.HomeCoffin = args.Container.Owner;
             EnsureComp<VampireHealingComponent>(args.Entity);
             _popup.PopupEntity(Loc.GetString("vampire-deathsembrace-bind"), uid, uid);
+            _admin.Add(LogType.Damaged, LogImpact.Low, $"{ToPrettyString(uid):user} bound a new coffin");
+
         }
     }
     /// <summary>
@@ -368,9 +377,7 @@ public sealed partial class VampireSystem
             return false;
 
         //Someone smashed your crib bro'
-        if (!Exists(vampire.Comp.HomeCoffin.Value)
-            || LifeStage(vampire.Comp.HomeCoffin.Value) == EntityLifeStage.Terminating
-            || LifeStage(vampire.Comp.HomeCoffin.Value) == EntityLifeStage.Deleted)
+        if (!Exists(vampire.Comp.HomeCoffin.Value) || LifeStage(vampire.Comp.HomeCoffin.Value) >= EntityLifeStage.Terminating)
         {
             vampire.Comp.HomeCoffin = null;
             return false;
@@ -391,7 +398,13 @@ public sealed partial class VampireSystem
 
         _entityStorage.CloseStorage(vampire.Comp.HomeCoffin.Value, coffinEntityStorage);
 
-        return _entityStorage.Insert(vampire, vampire.Comp.HomeCoffin.Value, coffinEntityStorage);
+        if (_entityStorage.Insert(vampire, vampire.Comp.HomeCoffin.Value, coffinEntityStorage))
+        {
+            _admin.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(vampire):user} was moved to their home coffin");
+            return true;
+        }
+
+        return false;
     }
     /// <summary>
     /// Heal the vampire while they are in the coffin
@@ -426,7 +439,7 @@ public sealed partial class VampireSystem
     /// <summary>
     /// Check and start drinking blood from a humanoid
     /// </summary>
-    private void OnInteractWithHumanoid(EntityUid uid, HumanoidAppearanceComponent component, InteractHandEvent args)
+    /*private void OnInteractWithHumanoid(EntityUid uid, HumanoidAppearanceComponent component, InteractHandEvent args)
     {
         if (args.Handled)
             return;
@@ -438,7 +451,18 @@ public sealed partial class VampireSystem
             return;
 
         args.Handled = TryDrink((args.User, vampireComponent), args.Target, TimeSpan.FromSeconds(1));
+    }*/
+    private void OnInteractHandEvent(EntityUid uid, VampireComponent component, BeforeInteractHandEvent args)
+    {
+        if (!HasComp<HumanoidAppearanceComponent>(args.Target))
+            return;
+
+        if (args.Target == uid)
+            return;
+
+        args.Handled = TryDrink((uid, component), args.Target, TimeSpan.FromSeconds(1));
     }
+
     private void ToggleFangs(Entity<VampireComponent> vampire)
     {
         var actionEntity = GetAbilityEntity(vampire.Comp, VampirePowerKey.ToggleFangs);
@@ -448,12 +472,14 @@ public sealed partial class VampireSystem
             SetAbilityActive(vampire.Comp, VampirePowerKey.ToggleFangs, false);
             _action.SetToggled(actionEntity, false);
             popupText = Loc.GetString("vampire-fangs-retracted");
+            _admin.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(vampire):user} retracted their fangs");
         }
         else
         {
             SetAbilityActive(vampire.Comp, VampirePowerKey.ToggleFangs, true);
             _action.SetToggled(vampire.Comp.UnlockedPowers[VampirePowerKey.ToggleFangs], true);
             popupText = Loc.GetString("vampire-fangs-extended");
+            _admin.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(vampire):user} extended their fangs");
         }
         _popup.PopupEntity(popupText, vampire.Owner, vampire.Owner);
     }
@@ -508,14 +534,6 @@ public sealed partial class VampireSystem
         if (_food.IsMouthBlocked(args.Target.Value, entity))
             return;
 
-        //Thou shall not feed upon the blood of the holy
-        if (HasComp<BibleUserComponent>(args.Target))
-        {
-            _damageableSystem.TryChangeDamage(entity, VampireComponent.HolyDamage, true);
-            _popup.PopupEntity(Loc.GetString("vampire-ingest-holyblood"), entity, entity, PopupType.LargeCaution);
-            args.Repeat = false;
-        }
-
         if (_rotting.IsRotten(args.Target.Value))
         {
             _popup.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), args.User, args.User, PopupType.SmallCaution);
@@ -532,28 +550,40 @@ public sealed partial class VampireSystem
             _popup.PopupEntity(Loc.GetString("vampire-blooddrink-empty"), entity.Owner, entity.Owner, PopupType.SmallCaution);
             return;
         }
+
         var volumeToConsume = (FixedPoint2) Math.Min((float) victimBloodRemaining.Value, args.Volume);
-
-        args.Repeat = true;
-
-        //Transfer 95% to the vampire
-        var bloodSolution = _solution.SplitSolution(targetBloodstream.BloodSolution.Value, volumeToConsume * 0.95);
-
-        if (!TryIngestBlood(entity, bloodSolution))
-        {
-            //Undo, put the blood back
-            _solution.AddSolution(targetBloodstream.BloodSolution.Value, bloodSolution);
-            args.Repeat = false;
-            return;
-        }
 
         //Slurp
         _audio.PlayPvs(entity.Comp.BloodDrainSound, entity.Owner, AudioParams.Default.WithVolume(-3f));
 
-        AddBloodEssence(entity, volumeToConsume * 0.95);
-
-        //And spill 5% on the floor
+        //Spill an extra 5% on the floor
         _blood.TryModifyBloodLevel(args.Target.Value, -(volumeToConsume * 0.05));
+
+        //Thou shall not feed upon the blood of the holy
+        if (HasComp<BibleUserComponent>(args.Target))
+        {
+            _damageableSystem.TryChangeDamage(entity, VampireComponent.HolyDamage, true);
+            _popup.PopupEntity(Loc.GetString("vampire-ingest-holyblood"), entity, entity, PopupType.LargeCaution);
+            _admin.Add(LogType.Damaged, LogImpact.Low, $"{ToPrettyString(entity):user} attempted to drink {volumeToConsume}u of {ToPrettyString(args.Target):target}'s holy blood");
+            return;
+        }
+        else
+        {
+            //Pull out some of the blood
+            var bloodSolution = _solution.SplitSolution(targetBloodstream.BloodSolution.Value, volumeToConsume);
+
+            if (!TryIngestBlood(entity, bloodSolution))
+            {
+                //Undo, put the blood back
+                _solution.AddSolution(targetBloodstream.BloodSolution.Value, bloodSolution);
+                return;
+            }
+
+            _admin.Add(LogType.Damaged, LogImpact.Low, $"{ToPrettyString(entity):user} drank {volumeToConsume}u of {ToPrettyString(args.Target):target}'s blood");
+            AddBloodEssence(entity, volumeToConsume * 0.95);
+
+            args.Repeat = true;
+        }
     }
     /// <summary>
     /// Attempt to insert the solution into the first stomach that has space available
@@ -579,4 +609,31 @@ public sealed partial class VampireSystem
         return false;
     }
     #endregion
+
+    private bool IsAbilityUnlocked(VampireComponent vampire, VampirePowerKey ability)
+    {
+        return vampire.UnlockedPowers.ContainsKey(ability);
+    }
+    private bool IsAbilityActive(VampireComponent vampire, VampirePowerKey ability)
+    {
+        return vampire.AbilityStates.Contains(ability);
+    }
+    private bool SetAbilityActive(VampireComponent vampire, VampirePowerKey ability, bool active)
+    {
+        if (active)
+        {
+            return vampire.AbilityStates.Add(ability);
+        }
+        else
+        {
+            return vampire.AbilityStates.Remove(ability);
+        }
+    }
+    private EntityUid? GetAbilityEntity(VampireComponent vampire, VampirePowerKey ability)
+    {
+        if (IsAbilityUnlocked(vampire, ability))
+            return vampire.UnlockedPowers[ability];
+        return null;
+    }
+
 }

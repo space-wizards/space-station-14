@@ -1,19 +1,21 @@
 - type: entity
   id: ActionVampireSummonHeirloom
-  name: Summon Heirloom
-  description: Summon a family heirloom, gifted by lilith herself.
+  name: vampire-ability-summonheirloom
+  description: vampire-ability-summonheirloom-description
   noSpawn: true
   components:
   - type: InstantAction
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
-      state: summonpendant
-    event: !type:VampireSummonHeirloomEvent
+      state: summonheirloom
+    event:
+      !type:VampireSelfPowerEvent
+      type: SummonHeirloom
 
 - type: entity
   id: ActionVampireToggleFangs
-  name: Toggle Fangs
-  description: Extend or retract your fangs.
+  name: vampire-ability-togglefangs
+  description: vampire-ability-togglefangs-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -31,11 +33,14 @@
 
 - type: entity
   id: ActionVampireGlare
-  name: Glare
-  description: Strike fear into their souls
+  name: vampire-ability-glare
+  description: vampire-ability-glare-description
   noSpawn: true
   components:
   - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
     priority: 2
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
@@ -51,14 +56,14 @@
 
 - type: entity
   id: ActionVampireHypnotise
-  name: Hypnotise
-  description: Come with me, little lamb
+  name: vampire-ability-hypnotise
+  description: vampire-ability-hypnotise-description
   noSpawn: true
   components:
   - type: EntityTargetAction
     whitelist:
       components:
-      - Body
+      - HumanoidAppearance
     canTargetSelf: false
     interactOnMiss: false
     priority: 2
@@ -75,8 +80,8 @@
 
 - type: entity
   id: ActionVampireScreech
-  name: Screech
-  description: Your enemies shall kneel
+  name: vampire-ability-screech
+  description: vampire-ability-screech-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -102,8 +107,8 @@
 
 - type: entity
   id: ActionVampireBloodSteal
-  name: Blood Steal
-  description: It's not theirs, it's yours
+  name: vampire-ability-bloodsteal
+  description: vampire-ability-bloodsteal-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -125,8 +130,8 @@
 
 - type: entity
   id: ActionVampireBatform
-  name: Toggle Bat Form
-  description: Assume your bat form
+  name: vampire-ability-batform
+  description: vampire-ability-batform-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -149,8 +154,8 @@
 
 - type: entity
   id: ActionVampireMouseform
-  name: Toggle Mouse Form
-  description: Assume your mouse form
+  name: vampire-ability-mouseform
+  description: vampire-ability-mouseform-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -173,8 +178,8 @@
 
 - type: entity
   id: ActionVampireCloakOfDarkness
-  name: Cloak of Darkness
-  description: Hide yourself from mortal eyes
+  name: vampire-ability-cloakofdarkness
+  description: vampire-ability-cloakofdarkness-description
   noSpawn: true
   components:
   - type: InstantAction

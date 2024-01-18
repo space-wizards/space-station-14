@@ -1,41 +1,28 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
-using Content.Server.Store.Components;
-using Content.Server.Store.Systems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Damage;
-using Content.Shared.Store;
 using Content.Shared.Vampire.Components;
 using Content.Shared.Weapons.Melee;
-using Content.Shared.Whitelist;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.Vampire;
 
 public sealed partial class VampireSystem
 {
-    [Dependency] private readonly MetabolizerSystem _metabolism = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
-
     /// <summary>
     /// Convert the players into a vampire, all programatic because i dont want to replace the players body
     /// </summary>
     /// <param name="vampire">Which entity to convert</param>
-    private void MakeVampire(EntityUid vampire)
+    private void MakeVampire(EntityUid vampireUid)
     {
-        var vampireComponent = EnsureComp<VampireComponent>(vampire);
+        var vampireComponent = EnsureComp<VampireComponent>(vampireUid);
+        var vampire = new Entity<VampireComponent>(vampireUid, vampireComponent);
+
         EnsureComp<UnholyComponent>(vampire);
         RemComp<PerishableComponent>(vampire);
         RemComp<BarotraumaComponent>(vampire);
@@ -50,16 +37,18 @@ public sealed partial class VampireSystem
             melee.Animation = "WeaponArcClaw";
             melee.HitSound = new SoundPathSpecifier("/Audio/Weapons/slash.ogg");
         }
-
-        AddStartingAbilities(vampire, vampireComponent);
-
-        var store = EnsureComp<StoreComponent>(vampire);
-        store.AccountOwner = vampire;
-        _store.InitializeFromPreset(VampireComponent.StorePresetProto, vampire, store);
-
         MakeVulnerableToHoly(vampire);
+
+        //Initialise currency
+        vampireComponent.Balance = new() { { VampireComponent.CurrencyProto, 0 } };
+
+        //Add the summon heirloom ability
+        AddStartingAbilities(vampire);
+
+        //Order of operation requirement, must be called after initialising balance
+        UpdateBloodDisplay(vampire);
     }
-    private void MakeVulnerableToHoly(EntityUid vampire)
+    private void MakeVulnerableToHoly(Entity<VampireComponent> vampire)
     {
         //Take damage from holy water splash
         if (TryComp<ReactiveComponent>(vampire, out var reactive))
@@ -85,29 +74,23 @@ public sealed partial class VampireSystem
                 if (TryComp<StomachComponent>(organ.Id, out var stomachComponent))
                 {
                     //Override the stomach, prevents humans getting sick when ingesting blood
-                    _metabolism.SetMetabolizerTypes(metabolizer, VampireComponent.Metabolizers);
+                    _metabolism.ClearMetabolizerTypes(metabolizer);
                     _stomach.SetSpecialDigestible(stomachComponent, VampireComponent.AcceptableFoods);
                 }
-                else
-                {
-                    //Otherwise just add the metabolizers on - dont want to suffocate the vampires
-                    var tempMetabolizer = metabolizer.MetabolizerTypes ?? new HashSet<string>();
-                    foreach (var t in VampireComponent.Metabolizers)
-                        tempMetabolizer.Add(t);
 
-                    _metabolism.SetMetabolizerTypes(metabolizer, tempMetabolizer);
-                }
+                _metabolism.TryAddMetabolizerType(metabolizer, VampireComponent.MetabolizerVampire);
+                _metabolism.TryAddMetabolizerType(metabolizer, VampireComponent.MetabolizerBloodsucker);
             }
         }
     }
 
-    private void AddStartingAbilities(EntityUid vampire, VampireComponent component)
+    private void AddStartingAbilities(Entity<VampireComponent> vampire)
     {
-        foreach (var ability in VampireComponent.StartingAbilities)
+        var action = _action.AddAction(vampire, VampireComponent.SummonActionPrototype);
+        if (action.HasValue)
         {
-            var action = _action.AddAction(vampire, ability);
-            if (action != null)
-                OnStorePurchase(vampire, action.Value);
+            OnStorePurchase(vampire, action.Value);
+            vampire.Comp.UnlockedPowers[VampirePowerKey.SummonHeirloom] = action;
         }
     }
 
@@ -123,11 +106,7 @@ public sealed partial class VampireSystem
         {
             if (TryComp<MetabolizerComponent>(organ.Id, out var metabolizer))
             {
-                var currentMetabolizers = metabolizer.MetabolizerTypes;
-                if (currentMetabolizers == null)
-                    continue;
-                currentMetabolizers.Remove("vampire");
-                _metabolism.SetMetabolizerTypes(metabolizer, currentMetabolizers);
+                _metabolism.TryRemoveMetabolizerType(metabolizer, VampireComponent.MetabolizerVampire);
             }
         }
 

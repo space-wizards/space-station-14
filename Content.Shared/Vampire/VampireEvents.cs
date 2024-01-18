@@ -21,10 +21,10 @@ public sealed partial class VampireTargetedPowerEvent : EntityTargetActionEvent
     [DataField]
     public VampirePowerDetails Details = new();
 };
-public sealed partial class VampireSummonHeirloomEvent : InstantActionEvent
+/*public sealed partial class VampireSummonHeirloomEvent : InstantActionEvent
 {
 
-}
+}*/
 
 //Doafter events
 [Serializable, NetSerializable]

@@ -14,19 +14,25 @@
       "name": "fangs_extended"
     },
     {
-      "name": "deathsembrace"
-    },
-    {
       "name": "glare"
     },
     {
       "name": "screech"
     },
     {
+      "name": "hypnotise"
+    },
+    {
+      "name": "bloodsteal"
+    },
+    {
       "name": "batform"
     },
     {
-      "name": "summonpendant"
+      "name": "summonheirloom"
+    },
+    {
+      "name": "cloakofdarkness"
     }
   ]
 }

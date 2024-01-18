@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Rotting;
 using Content.Server.Beam;
 using Content.Server.Bed.Sleep;
@@ -6,14 +7,14 @@ using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Polymorph.Systems;
-using Content.Server.Speech.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Events;
+using Content.Server.Store.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Body.Systems;
+using Content.Shared.Buckle;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -33,11 +34,13 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Vampire;
 
 public sealed partial class VampireSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
@@ -51,7 +54,6 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -65,17 +67,21 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly MetabolizerSystem _metabolism = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<VampireComponent, ComponentStartup>(OnComponentStartup);
 
-        SubscribeLocalEvent<HumanoidAppearanceComponent, InteractHandEvent>(OnInteractWithHumanoid, before: new[] { typeof(InteractionPopupSystem), typeof(SleepingSystem) });
-
+        SubscribeLocalEvent<VampireComponent, BeforeInteractHandEvent>(OnInteractHandEvent);
+        /*SubscribeLocalEvent<HumanoidAppearanceComponent, InteractHandEvent>(OnInteractWithHumanoid,
+            before: new[] { typeof(InteractionPopupSystem), typeof(SleepingSystem), typeof(SharedBuckleSystem), typeof(SharedStunSystem) });
+        */
         SubscribeLocalEvent<VampireComponent, VampireDrinkBloodEvent>(DrinkDoAfter);
         SubscribeLocalEvent<VampireComponent, VampireHypnotiseEvent>(HypnotiseDoAfter);
-        SubscribeLocalEvent<VampireComponent, VampireSummonHeirloomEvent>(OnSummonHeirloom);
+        //SubscribeLocalEvent<VampireComponent, VampireSummonHeirloomEvent>(OnSummonHeirloom);
         SubscribeLocalEvent<VampireComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
         SubscribeLocalEvent<VampireComponent, EntGotRemovedFromContainerMessage>(OnRemovedFromContainer);
         SubscribeLocalEvent<VampireComponent, MobStateChangedEvent>(OnVampireStateChanged);
@@ -100,7 +106,7 @@ public sealed partial class VampireSystem : EntitySystem
             if (stealth.NextStealthTick <= 0)
             {
                 stealth.NextStealthTick = 1;
-                if (!AddBloodEssence((uid, vampire), -stealth.Upkeep))
+                if (!SubtractBloodEssence((uid, vampire), stealth.Upkeep))
                     RemCompDeferred<VampireSealthComponent>(uid);
             }
             stealth.NextStealthTick -= frameTime;
@@ -133,6 +139,7 @@ public sealed partial class VampireSystem : EntitySystem
             }
         }*/
     }
+
     private void OnComponentStartup(EntityUid uid, VampireComponent component, ComponentStartup args)
     {
         MakeVampire(uid);
@@ -145,8 +152,8 @@ public sealed partial class VampireSystem : EntitySystem
             return;
 
         //Only allow the heirloom owner to use this - prevent stealing others blood essence
-        //TODO: Popup
-        if (component.Owner != args.User)
+        //TODO: Popup, deprecation
+        if (component.VampireOwner != args.User)
             return;
 
         //And open the UI
@@ -172,6 +179,8 @@ public sealed partial class VampireSystem : EntitySystem
             vampireComponent.UnlockedPowers[vampirePower!.Type] = purchasedAction;
             return;
         }
+
+        UpdateBloodDisplay((purchaser, vampireComponent));
     }
 
 
@@ -195,47 +204,55 @@ public sealed partial class VampireSystem : EntitySystem
     }
     private bool AddBloodEssence(Entity<VampireComponent> vampire, FixedPoint2 quantity)
     {
+        if (quantity < 0)
+            return false;
+
         vampire.Comp.TotalBloodDrank += quantity.Float();
         vampire.Comp.Balance[VampireComponent.CurrencyProto] += quantity;
+
+        UpdateBloodDisplay(vampire);
+
         return true;
+    }
+    private bool SubtractBloodEssence(Entity<VampireComponent> vampire, FixedPoint2 quantity)
+    {
+        if (quantity < 0)
+            return false;
+
+        if (vampire.Comp.Balance[VampireComponent.CurrencyProto] < quantity)
+            return false;
+
+        vampire.Comp.Balance[VampireComponent.CurrencyProto] -= quantity;
+
+        UpdateBloodDisplay(vampire);
+
+        return true;
+    }
+    /// <summary>
+    /// Use the charges display on SummonHeirloom to show the remaining blood essence
+    /// </summary>
+    /// <param name="vampire"></param>
+    private void UpdateBloodDisplay(Entity<VampireComponent> vampire)
+    {
+        //Sanity check, you never know who is going to touch this code
+        if (!vampire.Comp.Balance.TryGetValue(VampireComponent.CurrencyProto, out var balance))
+            return;
+
+        var chargeDisplay = (int) Math.Round((decimal) balance);
+        var summonAction = GetAbilityEntity(vampire, VampirePowerKey.SummonHeirloom);
+
+        if (summonAction == null)
+            return;
+
+        _action.SetCharges(summonAction, chargeDisplay);
     }
     private FixedPoint2 GetBloodEssence(Entity<VampireComponent> vampire)
     {
-        if (!TryComp<StoreComponent>(vampire, out var storeComp))
+        if (!vampire.Comp.Balance.TryGetValue(VampireComponent.CurrencyProto, out var val))
             return 0;
-        var currencies = storeComp.Balance;
-        if (!currencies.TryGetValue(VampireComponent.CurrencyProto, out var val))
-            return 0;
+
         return val;
     }
-
-    private bool IsAbilityUnlocked(VampireComponent vampire, VampirePowerKey ability)
-    {
-        return vampire.UnlockedPowers.ContainsKey(ability);
-    }
-    private bool IsAbilityActive(VampireComponent vampire, VampirePowerKey ability)
-    {
-        return vampire.AbilityStates.Contains(ability);
-    }
-    private bool SetAbilityActive(VampireComponent vampire, VampirePowerKey ability, bool active)
-    {
-        if (active)
-        {
-            return vampire.AbilityStates.Add(ability);
-        }
-        else
-        {
-            return vampire.AbilityStates.Remove(ability);
-        }
-    }
-    private EntityUid? GetAbilityEntity(VampireComponent vampire, VampirePowerKey ability)
-    {
-        if (IsAbilityUnlocked(vampire, ability))
-            return vampire.UnlockedPowers[ability];
-        return null;
-    }
-
-
 
     /*private void DoSpaceDamage(Entity<VampireComponent> vampire)
     {

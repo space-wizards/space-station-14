@@ -152,9 +152,6 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
-            if (args.Handled)
-                return;
-
             args.Handled = true;
 
             if (!TryWakeCooldown(uid))

@@ -1,7 +1,36 @@
 - type: listing
+  id: VampireToggleFangs
+  name: vampire-ability-blessing
+  description: vampire-ability-blessing-description 
+  cost:
+    BloodEssence: 0
+  productAction: ActionVampireToggleFangs
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VampireGlare
+  name: vampire-ability-glare
+  description: vampire-ability-glare-description
+  cost:
+    BloodEssence: 20
+  productAction: ActionVampireGlare
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyBeforeCondition
+    whitelist:
+    - VampireToggleFangs
+
+- type: listing
   id: VampireHypnotise
-  name: Hypnotise
-  description: Stare deeply into the eyes of a mortal, rendering them senseless for 60 seconds.
+  name: vampire-ability-hypnotise
+  description: vampire-ability-hypnotise-description
   cost:
     BloodEssence: 60
   productAction: ActionVampireHypnotise
@@ -10,11 +39,14 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyBeforeCondition
+    whitelist:
+    - VampireToggleFangs
 
 - type: listing
   id: VampireScreech
-  name: Screech
-  description: Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby.
+  name: vampire-ability-screech
+  description: vampire-ability-screech-description
   cost:
     BloodEssence: 120
   productAction: ActionVampireScreech
@@ -23,11 +55,14 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyBeforeCondition
+    whitelist:
+    - VampireToggleFangs
 
 - type: listing
   id: VampireBloodSteal
-  name: Blood Steal
-  description: Wrench the blood from all bodies nearby - living or dead.
+  name: vampire-ability-bloodsteal
+  description: vampire-ability-bloodsteal-description
   cost:
     BloodEssence: 120
   productAction: ActionVampireBloodSteal
@@ -36,11 +71,14 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyBeforeCondition
+    whitelist:
+    - VampireToggleFangs
 
 - type: listing
   id: VampireBatForm
-  name: Bat Form
-  description: Transform into a bat
+  name: vampire-ability-batform
+  description: vampire-ability-batform-description
   cost:
     BloodEssence: 200
   productAction: ActionVampireBatform
@@ -50,13 +88,15 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   - !type:BuyBeforeCondition
-    whitelist: []
-    blacklist: VampireMouseForm
+    whitelist:
+    - VampireToggleFangs
+    blacklist: 
+    - VampireMouseForm
 
 - type: listing
   id: VampireMouseForm
-  name: Mouse Form
-  description: Transform into a mouse
+  name: vampire-ability-mouseform
+  description: vampire-ability-mouseform-description
   cost:
     BloodEssence: 200
   productAction: ActionVampireMouseform
@@ -66,13 +106,15 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   - !type:BuyBeforeCondition
-    whitelist: []
-    blacklist: VampireBatForm
+    whitelist:
+    - VampireToggleFangs
+    blacklist: 
+    - VampireBatForm
 
 - type: listing
   id: VampireCloakOfDarkness
-  name: Cloak of Darkness
-  description: Cloak your form in darkness, hiding you from mortal eyes.
+  name: vampire-ability-cloakofdarkness
+  description: vampire-ability-cloakofdarkness-description
   cost:
     BloodEssence: 400
   productAction: ActionVampireCloakOfDarkness
@@ -81,6 +123,9 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyBeforeCondition
+    whitelist:
+    - VampireToggleFangs
 
 #- type: listing
 #  id: VampireSupernaturalStrength

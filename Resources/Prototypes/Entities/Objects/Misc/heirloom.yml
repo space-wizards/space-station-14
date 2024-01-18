@@ -1,5 +1,5 @@
 - type: entity
-  id: HeirloomeVampire
+  id: HeirloomVampire
   name: Family Heirloom
   suffix: Vampire
   description: A relic of a bygone age, remember your heritage.
@@ -17,4 +17,4 @@
     - VampireAbilities
     currencyWhitelist:
     - BloodEssence
-  - type: VampireHeirloomComponent
+  - type: VampireHeirloom
