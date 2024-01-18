@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: Tacos can be eaten by Lizards now. It's fricken Taco Tuesday!
-    type: Fix
-  id: 5236
-  time: '2023-12-01T22:27:09.0000000+00:00'
 - author: Rainbeon
   changes:
   - message: Cyborgs can now speak while in a Critical state.
@@ -3773,3 +3767,11 @@
   id: 5736
   time: '2024-01-18T15:26:59.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24229
+- author: Ubaser
+  changes:
+  - message: Carrots now properly contain Oculine, and you can Juice them to obtain
+      the raw chemical.
+    type: Fix
+  id: 5737
+  time: '2024-01-18T15:28:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24228
