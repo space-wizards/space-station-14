@@ -8,8 +8,8 @@
     department: Security
     time: 36000 # 10 hours
   - !type:DepartmentTimeRequirement
-      department: Civilian
-      time: 18000 # 5 hours
+    department: Civilian
+    time: 18000 # 5 hours
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hop
@@ -32,7 +32,7 @@
     head: ClothingHeadHatFedoraBrown
     outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
-    ears: ClothingHeadsetSecurityService
+    ears: ClothingHeadsetSecurity
     belt: ClothingBeltHolsterFilled
   innerClothingSkirt: ClothingUniformJumpskirtDetective
   satchel: ClothingBackpackSatchelFilledDetective
