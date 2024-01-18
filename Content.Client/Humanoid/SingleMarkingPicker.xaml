@@ -19,7 +19,7 @@
 
         <!-- Color sliders -->
         <ScrollContainer MinHeight="200" HorizontalExpand="True">
-            <BoxContainer Name="ColorSelectorContainer" HorizontalExpand="True" />
+            <BoxContainer Name="ColorSelectorContainer" HorizontalExpand="False" Orientation="Vertical"/>
         </ScrollContainer>
     </BoxContainer>
 </BoxContainer>
