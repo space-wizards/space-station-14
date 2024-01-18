@@ -42,7 +42,7 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// Slot for container to dispense into.
         /// </summary>
-        public static string BeakerSlotId = "ReagentDispenser-beakerSlot";
+        public static string BeakerSlotId = "beakerSlot";
 
         [DataField]
         public ItemSlot BeakerSlot = new();

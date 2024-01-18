@@ -5,10 +5,11 @@ namespace Content.Shared.Chemistry
 {
     /// <summary>
     /// This class holds constants that are shared between client and server.
+    /// TODO: Kill this. The comp now stores the slot ID.
     /// </summary>
     public sealed class SharedReagentDispenser
     {
-        public const string OutputSlotName = "ReagentDispenser-beakerSlot";
+        public const string OutputSlotName = "beakerSlot";
     }
 
     [Serializable, NetSerializable]
