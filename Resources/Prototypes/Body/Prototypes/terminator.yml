@@ -42,7 +42,6 @@
     left foot:
       part: LeftFootHuman
 
-# TODO: terminator body parts
 - type: body
   id: TerminatorEndoskeleton
   name: terminatorEndoskeleton
