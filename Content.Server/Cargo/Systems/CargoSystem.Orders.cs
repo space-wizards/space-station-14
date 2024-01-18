@@ -4,6 +4,7 @@ using Content.Server.Labels.Components;
 using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
@@ -185,6 +186,9 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
+            if (!component.AllowedGroups.Contains(product.Group))
+                return;
+
             var data = GetOrderData(args, product, GenerateOrderId(orderDatabase));
 
             if (!TryAddOrder(dbUid!.Value, data, orderDatabase))
@@ -237,7 +241,7 @@ namespace Content.Server.Cargo.Systems
 
         private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)
         {
-            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.PointCost, args.Amount, args.Requester, args.Reason);
+            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.Cost, args.Amount, args.Requester, args.Reason);
         }
 
         public static int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)
