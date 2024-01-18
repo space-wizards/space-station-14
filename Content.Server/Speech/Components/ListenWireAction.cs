@@ -83,10 +83,12 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         // Save the user's existing voicemask if they have one
         var oldEnabled = true;
         var oldVoiceName = Loc.GetString("wire-listen-pulse-error-name");
+        SpeechVerbPrototype? oldSpeechVerb = null;
         if (EntityManager.TryGetComponent<VoiceMaskComponent>(user, out var oldMask))
         {
             oldEnabled = oldMask.Enabled;
             oldVoiceName = oldMask.VoiceName;
+            oldSpeechVerb = oldMask.SpeechVerb;
         }
 
         // Give the user a temporary voicemask component
@@ -113,6 +115,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         {
             mask.Enabled = oldEnabled;
             mask.VoiceName = oldVoiceName;
+            mask.SpeechVerb = oldSpeechVerb;
         }
 
         base.Pulse(user, wire);

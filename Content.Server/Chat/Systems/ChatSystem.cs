@@ -19,6 +19,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Radio;
+using Content.Shared.Speech;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -389,6 +390,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (message.Length == 0)
             return;
 
+        var speech = GetSpeechVerb(source, message);
+
         // get the entity's apparent name (if no override provided).
         string name;
         if (nameOverride != null)
@@ -400,10 +403,11 @@ public sealed partial class ChatSystem : SharedChatSystem
             var nameEv = new TransformSpeakerNameEvent(source, Name(source));
             RaiseLocalEvent(source, nameEv);
             name = nameEv.Name;
+            if (nameEv.SpeechVerb != null)
+                speech = nameEv.SpeechVerb;
         }
 
         name = FormattedMessage.EscapeText(name);
-        var speech = GetSpeechVerb(source, message);
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
             ("entityName", name),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
@@ -873,10 +877,13 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs
     public EntityUid Sender;
     public string Name;
 
-    public TransformSpeakerNameEvent(EntityUid sender, string name)
+    public SpeechVerbPrototype? SpeechVerb;
+
+    public TransformSpeakerNameEvent(EntityUid sender, string name, SpeechVerbPrototype? speechVerb = null)
     {
         Sender = sender;
         Name = name;
+        SpeechVerb = speechVerb;
     }
 }
 
