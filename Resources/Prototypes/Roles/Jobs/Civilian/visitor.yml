@@ -6,6 +6,6 @@
   canBeAntag: false
   icon: JobIconVisitor
   setPreference: false
-  showInIdCardConsole: true
+  overrideConsoleVisibility: true
   access:
   - Maintenance
