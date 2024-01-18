@@ -385,7 +385,7 @@
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Oculine
-          Qauntity: 3
+          Quantity: 3
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
@@ -396,7 +396,7 @@
       - ReagentId: JuiceCarrot
         Quantity: 10
       - ReagentId: Oculine
-        Qauntity: 2
+        Quantity: 2
 
 - type: entity
   name: cabbage
