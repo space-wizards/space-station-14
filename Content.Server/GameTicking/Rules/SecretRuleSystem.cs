@@ -41,7 +41,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
         var presetString = _configurationManager.GetCVar(CCVars.SecretWeightPrototype);
         var preset = _prototypeManager.Index<WeightedRandomPrototype>(presetString).Pick(_random);
         Logger.InfoS("gamepreset", $"Selected {preset} for secret.");
-        _adminLogger.Add(LogType.GameRule, $"Selected {preset} for secret.");
+        _adminLogger.Add(LogType.EventRan, $"Selected {preset} for secret.");
 
         var rules = _prototypeManager.Index<GamePresetPrototype>(preset).Rules;
         foreach (var rule in rules)

@@ -60,7 +60,7 @@ public sealed partial class GameTicker
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.GameRule, $"Added game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventRan, $"Added game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -104,7 +104,7 @@ public sealed partial class GameTicker
 
         _allPreviousGameRules.Add((RoundDuration(), id));
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.GameRule, $"Started game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventRan, $"Started game rule {ToPrettyString(ruleEntity)}");
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;
@@ -134,7 +134,7 @@ public sealed partial class GameTicker
         EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.GameRule, $"Ended game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -233,11 +233,11 @@ public sealed partial class GameTicker
         {
             if (shell.Player != null)
             {
-                _adminLogger.Add(LogType.GameRule, $"{shell.Player} tried to add game rule [{rule}] via command");
+                _adminLogger.Add(LogType.EventRan, $"{shell.Player} tried to add game rule [{rule}] via command");
             }
             else
             {
-                _adminLogger.Add(LogType.GameRule, $"Unknown tried to add game rule [{rule}] via command");
+                _adminLogger.Add(LogType.EventRan, $"Unknown tried to add game rule [{rule}] via command");
             }
             var ent = AddGameRule(rule);
 
@@ -264,11 +264,11 @@ public sealed partial class GameTicker
                 continue;
             if (shell.Player != null)
             {
-                _adminLogger.Add(LogType.GameRule, $"{shell.Player} tried to end game rule [{rule}] via command");
+                _adminLogger.Add(LogType.EventStopped, $"{shell.Player} tried to end game rule [{rule}] via command");
             }
             else
             {
-                _adminLogger.Add(LogType.GameRule, $"Unknown tried to end game rule [{rule}] via command");
+                _adminLogger.Add(LogType.EventStopped, $"Unknown tried to end game rule [{rule}] via command");
             }
 
             EndGameRule(ruleEnt.Value);
