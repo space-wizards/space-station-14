@@ -6,6 +6,7 @@
   mode: Deconstruct
   cost: 8
   delay: 4
+  rotation: Camera
   fx: EffectRCDDeconstructSlow
   ghostSprite:
     sprite: Effects/rcd.rsi
@@ -20,7 +21,7 @@
   prototype: WallSolid 
   cost: 4
   delay: 2
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstructNormal
   ghostSprite:
@@ -36,6 +37,7 @@
   prototype: FloorSteel
   cost: 1
   delay: 1
+  collisionMask: InteractImpassable
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstructFast
@@ -50,6 +52,7 @@
   prototype: Plating
   cost: 1
   delay: 1
+  collisionMask: InteractImpassable
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstructFast
@@ -64,7 +67,7 @@
   prototype: Catwalk
   cost: 1
   delay: 1
-  collisonMask: SubfloorMask
+  collisionMask: InteractImpassable
   rules:
     - MustBuildOnSubfloor
   rotation: Fixed
@@ -82,7 +85,7 @@
   prototype: Grille
   cost: 4
   delay: 2
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstructNormal
   ghostSprite:
@@ -98,7 +101,7 @@
   prototype: Window
   cost: 4
   delay: 2
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
   rules:
     - IsWindow
   rotation: Fixed
@@ -116,10 +119,10 @@
   prototype: WindowDirectional
   cost: 2
   delay: 1
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
+  collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rules:
     - IsWindow
-    - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructFast
   ghostSprite:
@@ -135,10 +138,9 @@
   prototype: ReinforcedWindow
   cost: 4
   delay: 2
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
   rules:
     - IsWindow
-    - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructNormal
   ghostSprite:
@@ -154,10 +156,10 @@
   prototype: WindowReinforcedDirectional
   cost: 2
   delay: 1
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
+  collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rules:
     - IsWindow
-    - OnePerCardinalDirection
   rotation: User
   fx: EffectRCDConstructFast
   ghostSprite:
@@ -173,7 +175,7 @@
   prototype: Airlock
   cost: 4
   delay: 2
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
   ghostSprite:
@@ -189,7 +191,7 @@
   prototype: AirlockGlass
   cost: 4
   delay: 2
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
   ghostSprite:
@@ -205,7 +207,7 @@
   prototype: Firelock
   cost: 4
   delay: 2
-  collisonMask: FullTileMask
+  collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
   ghostSprite:
@@ -221,9 +223,8 @@
   prototype: Poweredlight
   cost: 2
   delay: 1
-  collisonMask: TabletopMachineMask
-  rules:
-  - OnePerCardinalDirection
+  collisionMask: TabletopMachineMask
+  collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rotation: User
   fx: EffectRCDConstructFast
   ghostSprite:
@@ -239,9 +240,8 @@
   prototype: PoweredSmallLight
   cost: 2
   delay: 1
-  collisonMask: TabletopMachineMask
-  rules:
-  - OnePerCardinalDirection
+  collisionMask: TabletopMachineMask
+  collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rotation: User
   fx: EffectRCDConstructFast
   ghostSprite:
@@ -257,7 +257,7 @@
   prototype: CableApcExtension
   cost: 1
   delay: 0
-  collisonMask: None
+  collisionMask: InteractImpassable
   rules:
   - MustBuildOnSubfloor
   rotation: Fixed
@@ -275,7 +275,7 @@
   prototype: CableMV
   cost: 1
   delay: 0
-  collisonMask: None
+  collisionMask: InteractImpassable
   rules:
   - MustBuildOnSubfloor
   rotation: Fixed
@@ -293,7 +293,7 @@
   prototype: CableHV
   cost: 1
   delay: 0
-  collisonMask: None
+  collisionMask: InteractImpassable
   rules:
   - MustBuildOnSubfloor
   rotation: Fixed
@@ -311,7 +311,7 @@
   prototype: CableTerminal
   cost: 1
   delay: 0
-  collisonMask: None
+  collisionMask: InteractImpassable
   rules:
   - MustBuildOnSubfloor
   rotation: User

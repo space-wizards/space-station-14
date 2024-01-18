@@ -68,11 +68,20 @@ public sealed class RCDPrototype : IPrototype
     public HashSet<RcdConstructionRule> ConstructionRules { get; private set; } = new();
 
     /// <summary>
-    /// The collision mask used for determining whether the entity prototype will
-    /// fit into a target tile
+    /// The collision mask used for determining whether the entity prototype will fit into a target tile
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public CollisionGroup CollisionMask { get; private set; } = CollisionGroup.MobMask;
+
+    /// <summary>
+    /// Specifies a set of custom collision bounds for determining whether the entity prototype will fit into a target tile 
+    /// </summary>
+    /// <remarks>
+    /// Should be set assuming that the entity faces south.
+    /// Make sure that Rotation is set to RcdRotation.User if the entity is to be rotated by the user
+    /// </remarks>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public Box2? CollisionBounds { get; private set; } = null;
 
     /// <summary>
     /// Governs how the local rotation of the constructed entity will be set
@@ -100,7 +109,6 @@ public enum RcdConstructionRule : byte
     MustBuildOnEmptyTile,       // Can only be built on empty space (e.g. lattice)
     CanBuildOnEmptyTile,        // Can be built on empty space or replace an existing tile (e.g. hull plating)
     MustBuildOnSubfloor,        // Can only be built on exposed subfloor (e.g. catwalks on lattice or hull plating)
-    OnePerCardinalDirection,    // Up to four of these entities can fit in a tile if facing different cardinal directions (e.g. directional windows)
     IsWindow,                   // The entity is a window and can be built on grilles
 }
 

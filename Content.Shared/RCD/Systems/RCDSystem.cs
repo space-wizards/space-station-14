@@ -13,15 +13,19 @@ using Content.Shared.RCD.Components;
 using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.RCD.Systems;
 
@@ -38,6 +42,7 @@ public class RCDSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
@@ -127,25 +132,13 @@ public class RCDSystem : EntitySystem
         var location = args.ClickLocation;
 
         // Initial validity checks
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
+
         if (!location.IsValid(EntityManager))
             return;
 
-        var gridUid = location.GetGridUid(EntityManager);
-
-        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
-        {
-            location = location.AlignWithClosestGridTile();
-            gridUid = location.GetGridUid(EntityManager);
-
-            // Check if fixing it failed / get final grid ID
-            if (!TryComp<MapGridComponent>(gridUid, out mapGrid))
-                return;
-        }
-
         if (!TryGetMapGridData(location, out var mapGridData))
-            return;
-
-        if (!_gameTiming.IsFirstTimePredicted)
             return;
 
         if (!IsRCDOperationStillValid(uid, component, mapGridData.Value, args.Target, args.User))
@@ -157,7 +150,7 @@ public class RCDSystem : EntitySystem
         // If not placing a tile on empty space, make the construction instant
         var delay = component.CachedPrototype.Delay;
         var effectPrototype = component.CachedPrototype.Effect;
-        var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
+        var tile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
 
         if (component.CachedPrototype.Mode == RcdMode.ConstructTile && !tile.Tile.IsEmpty)
         {
@@ -166,8 +159,8 @@ public class RCDSystem : EntitySystem
         }
 
         // Try to start the do after
-        var effect = Spawn(effectPrototype, location);
-        var ev = new RCDDoAfterEvent(GetNetCoordinates(location), component.ProtoId, EntityManager.GetNetEntity(effect));
+        var effect = Spawn(effectPrototype, mapGridData.Value.Location);
+        var ev = new RCDDoAfterEvent(GetNetCoordinates(mapGridData.Value.Location), component.ProtoId, EntityManager.GetNetEntity(effect));
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, target: args.Target, used: uid)
         {
@@ -338,7 +331,8 @@ public class RCDSystem : EntitySystem
         }
 
         // Check rule: The tile is unoccupied
-        bool isWindow = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
+        var isWindow = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
+        var constructionAngle = (component.CachedPrototype.Rotation == RcdRotation.User) ? component.ConstructionDirection.ToAngle() : Direction.South.ToAngle();
 
         foreach (var ent in _lookup.GetEntitiesIntersecting(mapGridData.Tile, -0.1f, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Static))
         {
@@ -352,12 +346,14 @@ public class RCDSystem : EntitySystem
             {
                 (var _, var fixture) = fixtures.Fixtures.ElementAt(i);
 
-                if ((fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0)
+                // No collision possible
+                if (Prototype(ent)?.ID != component.CachedPrototype.Prototype &&
+                    (fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0))
                     continue;
 
-                if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.OnePerCardinalDirection) &&
-                    Prototype(ent)?.ID == component.CachedPrototype.Prototype &&
-                    component.ConstructionDirection != Transform(ent).LocalRotation.GetCardinalDir())
+                // Check for custom collision bounds
+                if (component.CachedPrototype.CollisionBounds != null &&
+                    !DoesCustomBoundsIntersectWithFixture(component.CachedPrototype.CollisionBounds.Value, constructionAngle, fixture))
                     continue;
 
                 // Collision detected
@@ -477,30 +473,22 @@ public class RCDSystem : EntitySystem
 
     #endregion
 
-    #region Data retrieval functions
-
-    private bool TryGetMapGrid(EntityUid? gridUid, EntityCoordinates location, [NotNullWhen(true)] out MapGridComponent? mapGrid)
-    {
-        if (!TryComp(gridUid, out mapGrid))
-        {
-            location = location.AlignWithClosestGridTile();
-            gridUid = location.GetGridUid(EntityManager);
-
-            // Check if updating the location resulted in a grid being found
-            if (!TryComp(gridUid, out mapGrid))
-                return false;
-        }
-
-        return true;
-    }
+    #region Utility functions
 
     public bool TryGetMapGridData(EntityCoordinates location, [NotNullWhen(true)] out MapGridData? mapGridData)
     {
         mapGridData = null;
         var gridUid = location.GetGridUid(EntityManager);
 
-        if (!TryGetMapGrid(gridUid, location, out var mapGrid))
-            return false;
+        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
+        {
+            location = location.AlignWithClosestGridTile(1.75f, EntityManager);
+            gridUid = location.GetGridUid(EntityManager);
+
+            // Check if we got a grid ID the second time round
+            if (!TryComp(gridUid, out mapGrid))
+                return false;
+        }
 
         gridUid = mapGrid.Owner;
 
@@ -509,6 +497,26 @@ public class RCDSystem : EntitySystem
         mapGridData = new MapGridData(gridUid.Value, mapGrid, location, tile, position);
 
         return true;
+    }
+
+    public bool DoesCustomBoundsIntersectWithFixture(Box2 boundingBox, Angle boundingBoxAngle, Fixture fixture)
+    {
+        var (entWorldPos, entWorldRot) = _transformSystem.GetWorldPositionRotation(Transform(fixture.Owner));
+        var entXform = new Transform(entWorldPos, entWorldRot);
+
+        var verts = new ValueList<Vector2>()
+        {
+            boundingBox.BottomLeft,
+            boundingBox.BottomRight,
+            boundingBox.TopRight,
+            boundingBox.TopLeft
+        };
+
+        var poly = new PolygonShape();
+        poly.Set(verts.Span, 4);
+
+        var polyXform = new Transform(entWorldPos, (float) boundingBoxAngle);
+        return poly.ComputeAABB(polyXform, 0).Intersects(fixture.Shape.ComputeAABB(entXform, 0));
     }
 
     #endregion
