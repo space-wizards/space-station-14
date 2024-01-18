@@ -59,7 +59,7 @@
             ToolTip="{Loc news-reader-ui-mute-tooltip}"
             MinWidth="20"/>
         <RichTextLabel Margin="5,2,2,2" Name="ShareTime" VerticalAlignment="Top"/>
-        <customControls:VSeparator/>
+        <customControls:VSeparator Margin="2 0"/>
         <RichTextLabel Margin="5,2,2,2" Name="Author" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </BoxContainer>
 </cartridges:NewsReaderUiFragment>

@@ -43,9 +43,14 @@ public sealed class NewsSystem : SharedNewsSystem
         // News writer
         SubscribeLocalEvent<NewsWriterComponent, EntityUnpausedEvent>(OnEntityUnpause);
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<NewsWriterComponent, NewsWriterDeleteMessage>(OnWriteUiDeleteMessage);
-        SubscribeLocalEvent<NewsWriterComponent, NewsWriterArticlesRequestMessage>(OnRequestArticlesUiMessage);
-        SubscribeLocalEvent<NewsWriterComponent, NewsWriterPublishMessage>(OnWriteUiPublishMessage);
+
+        // New writer bui messages
+        Subs.BuiEvents<NewsWriterComponent>(NewsWriterUiKey.Key, subs =>
+        {
+            subs.Event<NewsWriterDeleteMessage>(OnWriteUiDeleteMessage);
+            subs.Event<NewsWriterArticlesRequestMessage>(OnRequestArticlesUiMessage);
+            subs.Event<NewsWriterPublishMessage>(OnWriteUiPublishMessage);
+        });
 
         // News reader
         SubscribeLocalEvent<NewsReaderCartridgeComponent, NewsArticlePublishedEvent>(OnArticlePublished);
