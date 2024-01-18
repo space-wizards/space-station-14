@@ -11,6 +11,7 @@
   - type: ShowHealthBars
     damageContainers: 
     - Inorganic
+    - Silicon
 
 - type: entity
   parent: ClothingEyesBase
@@ -28,6 +29,9 @@
   - type: ShowHealthIcons
     damageContainers: 
     - Biological
+  - type: Tag
+    tags:
+    - HudMedical
 
 - type: entity
   parent: ClothingEyesBase
@@ -40,6 +44,9 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: ShowSecurityIcons
+  - type: Tag
+    tags:
+    - HudSecurity
 
 - type: entity
   parent: ClothingEyesBase
@@ -134,13 +141,19 @@
   parent: ClothingEyesBase
   id: ClothingEyesHudMedSec
   name: medsec hud
-  description: Filler
+  description: An eye display that looks like a mixture of medical and security huds.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/medsec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medsec.rsi
+  - type: Construction
+    graph: HudMedSec
+    node: medsecHud
   - type: ShowSecurityIcons
+  - type: ShowHealthBars
+    damageContainers: 
+    - Biological
 
 - type: entity
   parent: ClothingEyesBase
@@ -198,13 +211,8 @@
   - type: ShowSecurityIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesSunglasses
   id: ClothingEyesGlassesHiddenSecurity
-  name: sun glasses
-  description: A pair of black sunglasses.
+  suffix: Syndicate
   components:
-  - type: Sprite
-    sprite: Clothing/Eyes/Glasses/secglasses.rsi
-  - type: Clothing
-    sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: ShowSecurityIcons

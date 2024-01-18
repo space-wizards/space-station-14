@@ -118,9 +118,9 @@
           collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SpaceQuartz:
-            min: 4
-            max: 6
+          SpaceQuartz1:
+            min: 2
+            max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -150,8 +150,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SteelOre1:
-            min: 4
-            max: 6
+            min: 2
+            max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -181,8 +181,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           UraniumOre1:
-            min: 3
-            max: 6
+            min: 1
+            max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
@@ -214,8 +214,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SilverOre1:
-            min: 4
-            max: 6
+            min: 1
+            max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -264,7 +264,7 @@
     animation: WeaponArcBite
     damage:
       types:
-        Slash: 15
+        Slash: 8
   - type: MeleeChemicalInjector
     solution: bloodstream
     transferAmount: 5
@@ -310,6 +310,10 @@
         - ReagentSlimeToxin
         - ReagentSlimeNapalm
         - ReagentSlimeOmnizine
+        - ReagentSlimeMuteToxin
+        - ReagentSlimeNorepinephricAcid
+        - ReagentSlimeEphedrine
+        - ReagentSlimeRobustHarvest
       chance: 1
 
 - type: entity
@@ -345,6 +349,9 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#AAAAAA"
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 1
 
 - type: entity
   id: ReagentSlimeNocturine
@@ -362,6 +369,9 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#128e80"
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 3
 
 - type: entity
   id: ReagentSlimeTHC
@@ -447,3 +457,71 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#fcf7f9"
+
+- type: entity
+  id: ReagentSlimeMuteToxin
+  parent: ReagentSlime
+  suffix: Mute Toxin
+  components:
+  - type: Bloodstream
+    bloodReagent: MuteToxin
+  - type: PointLight
+    color: "#0f0f0f"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#0f0f0f"
+
+- type: entity
+  id: ReagentSlimeNorepinephricAcid
+  parent: ReagentSlime
+  suffix: Norepinephric Acid
+  components:
+  - type: Bloodstream
+    bloodReagent: NorepinephricAcid
+  - type: PointLight
+    color: "#96a8b5"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#96a8b5"
+
+- type: entity
+  id: ReagentSlimeEphedrine
+  parent: ReagentSlime
+  suffix: Ephedrine
+  components:
+  - type: Bloodstream
+    bloodReagent: Ephedrine
+  - type: PointLight
+    color: "#D2FFFA"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#D2FFFA"
+
+- type: entity
+  id: ReagentSlimeRobustHarvest
+  parent: ReagentSlime
+  suffix: Robust Harvest
+  components:
+  - type: Bloodstream
+    bloodReagent: RobustHarvest
+  - type: PointLight
+    color: "#3e901c"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#3e901c"

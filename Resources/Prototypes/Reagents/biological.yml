@@ -40,6 +40,18 @@
       amount: 0.5
 
 - type: reagent
+  parent: Blood
+  id: InsectBlood
+  name: reagent-name-insect-blood
+  group: Biological
+  desc: reagent-desc-insect-blood
+  flavor: horrible
+  color: "#808A51"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-slimy
+  slippery: false
+
+- type: reagent
   id: Slime
   name: reagent-name-slime
   group: Biological

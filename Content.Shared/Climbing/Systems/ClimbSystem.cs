@@ -247,7 +247,7 @@ public sealed partial class ClimbSystem : VirtualController
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
             return;
 
-        if (!Resolve(climbable, ref comp))
+        if (!Resolve(climbable, ref comp, false))
             return;
 
         if (!ReplaceFixtures(uid, climbing, fixtures))
