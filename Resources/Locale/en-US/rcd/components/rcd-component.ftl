@@ -33,7 +33,7 @@ rcd-component-cannot-build-as-subfloor-not-exposed-message = You can only build 
 rcd-component-walls-and-flooring = Walls and flooring
 rcd-component-windows-and-grilles = Windows and grilles
 rcd-component-airlocks = Airlocks
-rcd-component-computer-and-machine-frames = Computer and machine frames
+rcd-component-electrical = Electrical
 rcd-component-lighting = Lighting
 
 
@@ -57,3 +57,7 @@ rcd-component-computer-frame = computer frame
 rcd-component-machine-frame = machine frame
 rcd-component-tube-light = light
 rcd-component-window-bulb-light = small light
+rcd-component-window-lv-cable = LV cable
+rcd-component-window-mv-cable = MV cable
+rcd-component-window-hv-cable = HV cable
+rcd-component-window-cable-terminal = cable terminal
