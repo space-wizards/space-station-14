@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: enumerate0
-  changes:
-  - message: Recognizable solutions now appear sorted by volume first, then by name
-    type: Tweak
-  id: 5234
-  time: '2023-12-01T08:35:51.0000000+00:00'
 - author: Whisper
   changes:
   - message: Added the Death Acidifier, an implant that destroys your body and equipment
@@ -3776,3 +3770,10 @@
   id: 5734
   time: '2024-01-17T23:57:40.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24193
+- author: Volotomite
+  changes:
+  - message: Flippo can burn plasma now!
+    type: Fix
+  id: 5735
+  time: '2024-01-18T00:28:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24207
