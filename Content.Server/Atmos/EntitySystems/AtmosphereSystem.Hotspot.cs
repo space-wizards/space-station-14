@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (_hotspotSoundCooldown++ == 0 && !string.IsNullOrEmpty(HotspotSound))
             {
-                var coordinates = _mapSystem.ToCoordinates(tile.GridIndex, tile.GridIndices);
+                var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
 
                 // A few details on the audio parameters for fire.
                 // The greater the fire state, the lesser the pitch variation.

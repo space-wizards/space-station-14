@@ -106,7 +106,7 @@ public sealed class EntityAnomalySystem : EntitySystem
 
             amountCounter++;
 
-            var coordinates = _mapSystem.ToCoordinates(tileref);
+            var coordinates = _mapSystem.ToCenterCoordinates(tileref);
 
             Spawn(_random.Pick(spawns), coordinates);
 
