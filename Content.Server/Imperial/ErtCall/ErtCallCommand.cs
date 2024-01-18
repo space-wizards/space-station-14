@@ -35,7 +35,7 @@ public sealed class CallErt : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length == 0)
+        if (args.Length == 0) //hohoho
         {
             shell.WriteError(Loc.GetString("callertcommand-error-args0"));
             SoundSystem.Play("/Audio/Corvax/Adminbuse/noert.ogg", Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
