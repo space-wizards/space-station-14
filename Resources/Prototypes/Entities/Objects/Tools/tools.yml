@@ -364,8 +364,8 @@
     - CableTerminal
     - Deconstruct
   - type: LimitedCharges
-    maxCharges: 20
-    charges: 20
+    maxCharges: 30
+    charges: 30
   - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
@@ -420,8 +420,8 @@
   suffix: AutoRecharge
   components:
   - type: LimitedCharges
-    maxCharges: 15
-    charges: 15
+    maxCharges: 30
+    charges: 30
   - type: AutoRecharge
     rechargeDuration: 3
 
