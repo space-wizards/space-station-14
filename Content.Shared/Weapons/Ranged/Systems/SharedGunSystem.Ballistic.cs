@@ -164,8 +164,33 @@ public abstract partial class SharedGunSystem
                 Disabled = GetBallisticShots(component) == 0,
                 Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
             });
+            args.Verbs.Add(new Verb()
+            {
+                Text = Loc.GetString("gun-ballistic-shuffle"),
+                Disabled = GetBallisticShots(component) == 0,
+                Act = () => Shuffle(uid, component, args.User),
+            });
 
         }
+    }
+
+    private void Shuffle(EntityUid uid, BallisticAmmoProviderComponent component, EntityUid? user = null)
+    {
+        if (!component.Cycleable)
+            return;
+        var rng = new System.Random();
+        int n = component.Entities.Count;
+        while (n>1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            var value = component.Entities[k];
+            component.Entities[k] =  component.Entities[n];
+            component.Entities[n] = value;
+        }
+        Audio.PlayPredicted(component.SoundShuffle, uid, user);
+        var text = Loc.GetString("gun-ballistic-shuffle-done");
+        Popup(text, uid, user);
     }
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)

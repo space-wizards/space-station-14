@@ -16,6 +16,9 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
+    public SoundSpecifier? SoundShuffle = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/shuffle.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public EntProtoId? Proto;
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
