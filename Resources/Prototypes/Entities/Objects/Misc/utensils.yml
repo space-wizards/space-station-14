@@ -46,7 +46,7 @@
     attackRate: 1.5
     damage:
       types:
-        Piercing: 5
+        Piercing: 4
 
 - type: entity
   parent: UtensilBasePlastic
