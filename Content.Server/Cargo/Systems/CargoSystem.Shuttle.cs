@@ -21,6 +21,8 @@ public sealed partial class CargoSystem
 
     private void InitializeShuttle()
     {
+        SubscribeLocalEvent<TradeStationComponent, GridSplitEvent>(OnTradeSplit);
+
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
 
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
@@ -115,6 +117,15 @@ public sealed partial class CargoSystem
     }
 
     #endregion
+
+    private void OnTradeSplit(EntityUid uid, TradeStationComponent component, ref GridSplitEvent args)
+    {
+        // If the trade station gets bombed it's still a trade station.
+        foreach (var gridUid in args.NewGrids)
+        {
+            EnsureComp<TradeStationComponent>(gridUid);
+        }
+    }
 
     #region Shuttle
 
