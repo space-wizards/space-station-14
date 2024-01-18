@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Utility;
@@ -34,7 +35,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     {
         var dirty = false;
 
-        foreach (var doAfter in comp.DoAfters.Values)
+        foreach (var doAfter in comp.DoAfters.Values.ToArray())
         {
             if (doAfter.CancelledTime != null)
             {
