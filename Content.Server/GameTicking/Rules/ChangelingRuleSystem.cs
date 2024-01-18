@@ -48,21 +48,6 @@ public sealed class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponen
     private int PlayersPerLing => _cfg.GetCVar(CCVars.ChangelingPlayersPerChangeling);
     private int MaxChangelings => _cfg.GetCVar(CCVars.ChangelingMaxChangelings);
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string ChangelingEvolutionMenuId = "ActionChangelingEvolutionMenu";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string ChangelingRegenActionId = "ActionLingRegenerate";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string ChangelingAbsorbActionId = "ActionChangelingAbsorb";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string ChangelingDNACycleActionId = "ActionChangelingCycleDNA";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string ChangelingTransformActionId = "ActionChangelingTransform";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -190,6 +175,20 @@ public sealed class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponen
         _npcFaction.AddFaction(entity, "Syndicate");
 
         EnsureComp<ChangelingComponent>(entity);
+
+        // Give lings their objectives
+        var maxDifficulty = 5;
+        var maxPicks = _cfg.GetCVar(CCVars.ChangelingMaxPicks);
+        var difficulty = 0f;
+        for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
+        {
+            var objective = _objectives.GetRandomObjective(mindId, mind, "ChangelingObjectiveGroups");
+            if (objective == null)
+                continue;
+
+            _mindSystem.AddObjective(mindId, mind, objective.Value);
+            difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
+        }
 
         return true;
     }

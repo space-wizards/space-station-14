@@ -250,8 +250,7 @@ public sealed partial class ChangelingSystem
         if (!component.ArmBladeActive)
         {
             var armblade = Spawn(ArmBladeId, Transform(uid).Coordinates);
-            var unremoveableComp = EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
-            unremoveableComp.DeleteOnDrop = false;
+            EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
 
             if (_handsSystem.TryPickupAnyHand(uid, armblade))
             {
@@ -282,6 +281,19 @@ public sealed partial class ChangelingSystem
         }
     }
 
+    public void SpawnLingArmor(EntityUid uid, InventoryComponent inventory)
+    {
+        var helmet = Spawn(LingHelmetId, Transform(uid).Coordinates);
+        var armor = Spawn(LingArmorId, Transform(uid).Coordinates);
+        EnsureComp<UnremoveableComponent>(helmet); // cant remove the armor
+        EnsureComp<UnremoveableComponent>(armor); // cant remove the armor
+
+        _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
+        _inventorySystem.TryEquip(uid, helmet, HeadId, true, true, false, inventory);
+        _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
+        _inventorySystem.TryEquip(uid, armor, OuterClothingId, true, true, false, inventory);
+    }
+
     public const string LingHelmetId = "ClothingHeadHelmetLing";
     public const string LingArmorId = "ClothingOuterArmorChangeling";
     public const string HeadId = "head";
@@ -295,24 +307,14 @@ public sealed partial class ChangelingSystem
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.LingArmorActive, component.LingArmorRegenCost))
-            return;
-
-        args.Handled = true;
-
         if (!component.LingArmorActive)
         {
-            var helmet = Spawn(LingHelmetId, Transform(uid).Coordinates);
-            var armor = Spawn(LingArmorId, Transform(uid).Coordinates);
-            var compHelmet = EnsureComp<UnremoveableComponent>(helmet); // cant remove the armor
-            var compArmor = EnsureComp<UnremoveableComponent>(armor); // cant remove the armor
-            compHelmet.DeleteOnDrop = false;
-            compArmor.DeleteOnDrop = false;
+            if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.LingArmorActive, component.LingArmorRegenCost))
+                return;
 
-            _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
-            _inventorySystem.TryEquip(uid, helmet, HeadId, true, true, false, inventory);
-            _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
-            _inventorySystem.TryEquip(uid, armor, OuterClothingId, true, true, false, inventory);
+            args.Handled = true;
+
+            SpawnLingArmor(uid, inventory);
         }
         else
         {

@@ -1,5 +1,5 @@
 using Content.Server.Actions;
-using Content.Shared.DoAfter;
+using Content.Shared.Inventory;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Changeling;
@@ -228,10 +228,10 @@ public sealed partial class ChangelingSystem : EntitySystem
             component.SelectedDNA = 0;
 
         var selectedHumanoidData = component.StoredDNA[component.SelectedDNA];
-        if (selectedHumanoidData.EntityUid == null)
+        if (selectedHumanoidData.MetaDataComponent == null)
             return;
 
-        var selfMessage = Loc.GetString("changeling-dna-switchdna", ("target", Identity.Entity(selectedHumanoidData.EntityUid.Value, EntityManager)));
+        var selfMessage = Loc.GetString("changeling-dna-switchdna", ("target", selectedHumanoidData.MetaDataComponent.EntityName));
         _popup.PopupEntity(selfMessage, uid, uid);
     }
 
@@ -254,7 +254,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         if (selectedHumanoidData.DNA == dnaComp.DNA)
         {
-            var selfMessage = Loc.GetString("changeling-transform-fail", ("target", Identity.Entity(uid, EntityManager)));
+            var selfMessage = Loc.GetString("changeling-transform-fail", ("target", selectedHumanoidData.MetaDataComponent.EntityName));
             _popup.PopupEntity(selfMessage, uid, uid);
         }
         else
@@ -268,7 +268,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             if (transformedUid == null)
                 return;
 
-            var selfMessage = Loc.GetString("changeling-transform-activate", ("target", Identity.Entity(transformedUid.Value, EntityManager)));
+            var selfMessage = Loc.GetString("changeling-transform-activate", ("target", selectedHumanoidData.MetaDataComponent.EntityName));
             _popup.PopupEntity(selfMessage, transformedUid.Value, transformedUid.Value);
 
             var newLingComponent = EnsureComp<ChangelingComponent>(transformedUid.Value);
@@ -310,6 +310,12 @@ public sealed partial class ChangelingSystem : EntitySystem
             }
 
             _actionContainer.TransferAllActionsWithNewAttached(uid, transformedUid.Value, transformedUid.Value);
+
+            if (!TryComp(transformedUid.Value, out InventoryComponent? inventory))
+                return;
+
+            if (newLingComponent.LingArmorActive)
+                SpawnLingArmor(transformedUid.Value, inventory);
         }
     }
 }

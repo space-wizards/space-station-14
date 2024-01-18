@@ -1,0 +1,38 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseChangelingObjective
+  components:
+  - type: Objective
+    issuer: changeling
+  - type: RoleRequirement
+    roles:
+      components:
+      - ChangelingRole
+
+- type: entity
+  noSpawn: true
+  parent: [BaseChangelingObjective, BaseLivingObjective]
+  id: EscapeLingShuttleObjective
+  name: Escape to centcom alive and unrestrained.
+  description: We must get to central command.
+  components:
+  - type: Objective
+    difficulty: 1.2
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition
+
+- type: entity
+  noSpawn: true
+  parent: [BaseChangelingObjective, BaseKillObjective]
+  id: KillRandomPersonObjectiveLing
+  description: We must kill them.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-kill-person-title
+  - type: PickRandomPerson

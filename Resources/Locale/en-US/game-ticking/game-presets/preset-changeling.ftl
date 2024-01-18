@@ -2,7 +2,7 @@
 
 ling-round-end-name = changeling
 
-objective-issuer-ling = [color=red]Hivemind[/color]
+objective-issuer-changeling = [color=red]Hivemind[/color]
 
 changelings-title = Changelings
 changelings-description = placeholder dumbass
@@ -35,23 +35,23 @@ changeling-chameleon-toggle-off = Your skin reverts back to normal.
 changeling-dna-stage-1 = This creature is compatible. You must hold still...
 changeling-dna-stage-2-self = You extend a proboscis.
 changeling-dna-stage-2-others = {CAPITALIZE(THE($user))} extends a proboscis!
-changeling-dna-stage-3-self = You stab {CAPITALIZE(THE($target))} with the proboscis.
-changeling-dna-stage-3-others = {CAPITALIZE(THE($user))} stabs {CAPITALIZE(THE($target))} with the proboscis!
-changeling-dna-success = You have absorbed {CAPITALIZE(THE($target))}.
-changeling-dna-success-ling = You have absorbed {CAPITALIZE(THE($target))}. They were another changeling! You have gained 5 evolution points.
+changeling-dna-stage-3-self = You stab {THE($target)} with the proboscis.
+changeling-dna-stage-3-others = {CAPITALIZE(THE($user))} stabs {THE($target)} with the proboscis!
+changeling-dna-success = You have absorbed {THE($target)}.
+changeling-dna-success-ling = You have absorbed {THE($target)}. They were another changeling! You have gained 5 evolution points.
 changeling-dna-fail-nohuman = {CAPITALIZE(THE($target))} isn't a humanoid.
 changeling-dna-fail-notdead = {CAPITALIZE(THE($target))} isn't dead or in critical condition.
-changeling-dna-interrupted = You were interrupted while absorbing {CAPITALIZE(THE($target))}.
+changeling-dna-interrupted = You were interrupted while absorbing {THE($target)}.
 changeling-dna-alreadyabsorbed = {CAPITALIZE(THE($target))}'s DNA has been absorbed already!
 changeling-dna-nodna = {CAPITALIZE(THE($target))} does not have DNA!
-changeling-dna-switchdna = Switched to {CAPITALIZE(THE($target))}'s DNA.
+changeling-dna-switchdna = Switched to {$target}'s DNA.
 
-changeling-transform-activate = You transform into {CAPITALIZE(THE($target))}.
-changeling-transform-fail = You're already morphed as {CAPITALIZE(THE($target))}!
+changeling-transform-activate = You transform into {$target}.
+changeling-transform-fail = You're already morphed as {$target}!
 
-changeling-sting-fail-self = The sting was ineffective on {CAPITALIZE(THE($target))}!
+changeling-sting-fail-self = The sting was ineffective on {THE($target)}!
 changeling-sting-fail-target = You feel a slight sting.
 
-changeling-dna-sting = You extract the DNA of {CAPITALIZE(THE($target))}.
+changeling-dna-sting = You extract the DNA of {THE($target)}.
 changeling-dna-sting-fail-nodna = {CAPITALIZE(THE($target))} has no DNA!
-changeling-dna-sting-fail-alreadydna = You already have {CAPITALIZE(THE($target))}'s DNA!
+changeling-dna-sting-fail-alreadydna = You already have {THE($target)}'s DNA!
