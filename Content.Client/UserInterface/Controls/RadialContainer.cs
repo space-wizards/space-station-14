@@ -18,7 +18,29 @@ public class RadialContainer : LayoutContainer
     /// The top of the screen is at 0 radians, and the bottom of the screen is at PI radians
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
-    public Vector2 AngularRange { get; set; } = new Vector2(0f, 2 * MathF.PI);
+    public Vector2 AngularRange
+    {
+        get
+        {
+            return _angularRange;
+        }
+
+        set
+        {
+            var x = value.X;
+            var y = value.Y;
+
+            x = x > MathF.Tau ? x % MathF.Tau : x;
+            y = y > MathF.Tau ? y % MathF.Tau : y;
+
+            x = x < 0 ? MathF.Tau + x : x;
+            y = y < 0 ? MathF.Tau + y : y;
+
+            _angularRange = new Vector2(x, y);
+        }
+    }
+
+    private Vector2 _angularRange = new Vector2(0f, MathF.Tau - float.Epsilon);
 
     /// <summary>
     /// Determines the direction in which child elements will be arranged
