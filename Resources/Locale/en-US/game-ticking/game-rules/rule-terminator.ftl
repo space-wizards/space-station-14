@@ -12,3 +12,5 @@ terminator-role-briefing = Kill the target at all costs.
 
 terminator-endoskeleton-gib-popup = All the battered flesh falls apart, revealing a titanium endoskeleton!
 terminator-endoskeleton-burn-popup = The seared flesh is burned to a crisp, revealing a titanium endoskeleton!
+
+terminator-curse-popup = Bad... Bad to the bone...

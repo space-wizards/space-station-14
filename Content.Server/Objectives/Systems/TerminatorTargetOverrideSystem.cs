@@ -1,7 +1,7 @@
 using Content.Server.Objectives.Components;
-using Content.Server.Terminator.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Terminator.Components;
 
 namespace Content.Server.Objectives.Systems;
 
