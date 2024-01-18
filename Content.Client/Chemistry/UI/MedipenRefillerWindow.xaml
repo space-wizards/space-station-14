@@ -21,11 +21,9 @@
                 Orientation="Vertical"
                 SeparationOverride="5"
                 VerticalExpand="True">
-                <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                    <LineEdit
-                        Name="SearchBar"
-                        HorizontalExpand="True"
-                        PlaceHolder="{Loc 'medipen-refiller-menu-search'}" />
+                <BoxContainer Orientation="Horizontal"
+                    HorizontalExpand="True">
+                    <Label Text="{Loc 'medipen-refiller-window-medipen-list-label'}" />
                 </BoxContainer>
                 <BoxContainer
                     MinHeight="225"

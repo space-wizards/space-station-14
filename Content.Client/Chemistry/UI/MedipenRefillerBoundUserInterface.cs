@@ -1,8 +1,5 @@
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -37,7 +34,7 @@ namespace Content.Client.Chemistry.UI
             {
                 case MedipenRefillerUpdateState msg:
                     if (_window != null)
-                        _window.Recipes = msg.Recipes;
+                        _window.MedipenRecipes = msg.Recipes;
                     _window?.UpdateRecipes();
                     break;
             }

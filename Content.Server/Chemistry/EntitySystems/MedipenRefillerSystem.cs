@@ -1,35 +1,42 @@
 
 
-using Content.Shared.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Chemistry.SharedMedipenRefiller;
-using System.Linq;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class MedipenRefillerSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MedipenRefillerComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
         SubscribeLocalEvent<MedipenRefillerComponent, MedipenRefillerSyncRequestMessage>(OnMedipenRefillerSyncRequestMessage);
+        SubscribeLocalEvent<MedipenRefillerComponent, ComponentStartup>(OnComponentStartup);
     }
-    public List<ProtoId<MedipenRecipePrototype>> GetRecipes(EntityUid uid, MedipenRefillerComponent component)
+
+    private void OnComponentStartup(EntityUid uid, MedipenRefillerComponent component, ComponentStartup args)
     {
-        var ev = new MedipenRefillerGetRecipesEvent(uid)
+        if (!Resolve(uid, ref component!))
+            return;
+
+        var recipeList = new List<MedipenRecipePrototype>();
+
+        foreach (var medipen in component.MedipenList)
         {
-            Recipes = new List<ProtoId<MedipenRecipePrototype>>(component.StaticRecipes)
-        };
-        Console.WriteLine(ev.Recipes.Count.ToString());
-        RaiseLocalEvent(uid, ev);
-        return ev.Recipes;
+            if (!_prototypeManager.HasIndex<MedipenRecipePrototype>(medipen))
+                continue;
+
+            recipeList.Add(_prototypeManager.Index<MedipenRecipePrototype>(medipen));
+        }
+
+        component.MedipenRecipes = recipeList;
     }
 
     #region UI Messages
@@ -38,19 +45,15 @@ public sealed class MedipenRefillerSystem : EntitySystem
         if (!Resolve(uid, ref component!))
             return;
 
-        var ui = _uiSys.GetUi(uid, MedipenRefillerUiKey.Key);
+        var ui = _uiSys.GetUi(uid, SharedMedipenRefiller.MedipenRefillerUiKey.Key);
 
-        var state = new MedipenRefillerUpdateState(GetRecipes(uid, component));
+        var state = new MedipenRefillerUpdateState(component.MedipenRecipes);
         _uiSys.SetUiState(ui, state);
-
-        Console.WriteLine("I'm sending a user interface state to client.");
     }
 
     private void OnMedipenRefillerSyncRequestMessage(EntityUid uid, MedipenRefillerComponent component, MedipenRefillerSyncRequestMessage args)
     {
         UpdateUserInterfaceState(uid, component);
-
-        Console.WriteLine("I'm receiving a request from client.");
     }
     #endregion
 }
