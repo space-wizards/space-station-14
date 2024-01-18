@@ -22,7 +22,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: grid
+      name: Automated Trade Station
     - type: Transform
       pos: -2.9375,-1.625
       parent: invalid
