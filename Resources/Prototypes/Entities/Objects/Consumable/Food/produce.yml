@@ -222,6 +222,8 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
+      - ReagentId: Potassium
+        Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -256,6 +258,9 @@
       reagents:
       - ReagentId: Nothing
         Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: banana peel
@@ -548,7 +553,7 @@
         Quantity: 10
   - type: Tag
     tags:
-    - Meat
+    - Fruit
 
 - type: entity
   name: pineapple
@@ -1593,6 +1598,9 @@
     sprite: Objects/Specific/Hydroponics/bungo.rsi
   - type: Produce
     seedId: bungo
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: bungo pit
