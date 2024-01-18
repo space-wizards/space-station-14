@@ -131,7 +131,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
         sprite.Color = isValid ? new Color(48, 255, 48, 128) : new Color(255, 48, 48, 128);
 
         // Update the construction ghost position and rotation
-        _transformSystem.SetLocalPosition(_constructionGhost.Value, tilePosition.Position);
+        _transformSystem.SetWorldPosition(_constructionGhost.Value, tileWorldPosition);
 
         if (_cachedPrototype.Rotation == RcdRotation.User)
             _transformSystem.SetLocalRotation(_constructionGhost.Value, rcd!.ConstructionDirection.ToAngle());

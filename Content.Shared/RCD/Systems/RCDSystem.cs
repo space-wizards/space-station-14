@@ -511,16 +511,6 @@ public class RCDSystem : EntitySystem
         return true;
     }
 
-    private bool TryToGetRCDPrototype(ProtoId<RCDPrototype> protoId, [NotNullWhen(true)] out RCDPrototype? proto)
-    {
-        proto = null;
-
-        if (!_protoManager.TryIndex(protoId, out proto))
-            return false;
-
-        return true;
-    }
-
     #endregion
 }
 
