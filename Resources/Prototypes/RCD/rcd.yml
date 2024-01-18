@@ -74,22 +74,6 @@
     state: catwalk_preview
   
 - type: rcd
-  id: WallReinforced
-  name: rcd-component-wall-reinforced
-  category: WallsAndFlooring
-  sprite: /Textures/Interface/Radial/RCD/reinforced_wall.png
-  mode: ConstructObject
-  prototype: WallReinforced
-  cost: 8
-  delay: 4
-  collisonMask: FullTileMask
-  rotation: Fixed
-  fx: EffectRCDConstructSlow
-  ghostSprite:
-    sprite: Structures/Walls/solid.rsi
-    state: rgeneric
-  
-- type: rcd
   id: Grille
   name: rcd-component-grille
   category: WindowsAndGrilles
@@ -143,25 +127,6 @@
     state: window
   
 - type: rcd
-  id: WindowReinforcedDirectional
-  name: rcd-component-window-reinforced-directional
-  category: WindowsAndGrilles
-  sprite: /Textures/Interface/Radial/RCD/directional_reinforced.png
-  mode: ConstructObject
-  prototype: WindowReinforcedDirectional
-  cost: 2
-  delay: 1
-  collisonMask: FullTileMask
-  rules:
-    - IsWindow
-    - OnePerCardinalDirection
-  rotation: User
-  fx: EffectRCDConstructFast
-  ghostSprite:
-    sprite: Structures/Windows/directional.rsi
-    state: reinforced_window
-  
-- type: rcd
   id: ReinforcedWindow
   name: rcd-component-reinforced-window
   category: WindowsAndGrilles
@@ -179,6 +144,25 @@
   ghostSprite:
     sprite: Structures/Windows/reinforced_window.rsi
     state: full
+    
+- type: rcd
+  id: WindowReinforcedDirectional
+  name: rcd-component-window-reinforced-directional
+  category: WindowsAndGrilles
+  sprite: /Textures/Interface/Radial/RCD/directional_reinforced.png
+  mode: ConstructObject
+  prototype: WindowReinforcedDirectional
+  cost: 2
+  delay: 1
+  collisonMask: FullTileMask
+  rules:
+    - IsWindow
+    - OnePerCardinalDirection
+  rotation: User
+  fx: EffectRCDConstructFast
+  ghostSprite:
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window
   
 - type: rcd
   id: Airlock
