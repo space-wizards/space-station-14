@@ -15,10 +15,15 @@ public sealed class EntityAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+
+    private EntityQuery<PhysicsComponent> _physicsQuery;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
@@ -62,7 +67,7 @@ public sealed class EntityAnomalySystem : EntitySystem
 
     private void SpawnEntitesOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius, List<EntProtoId> spawns)
     {
-        if (!component.Spawns.Any())
+        if (component.Spawns.Count == 0)
             return;
 
         if (!_map.TryGetGrid(xform.GridUid, out var grid))
@@ -76,28 +81,35 @@ public sealed class EntityAnomalySystem : EntitySystem
             return;
 
         _random.Shuffle(tilerefs);
-        var physQuery = GetEntityQuery<PhysicsComponent>();
         var amountCounter = 0;
         foreach (var tileref in tilerefs)
         {
             var valid = true;
             foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
             {
-                if (!physQuery.TryGetComponent(ent, out var body))
+                if (!_physicsQuery.TryGetComponent(ent, out var body))
                     continue;
 
                 if (body.BodyType != BodyType.Static ||
                     !body.Hard ||
                     (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                {
                     continue;
+                }
 
                 valid = false;
                 break;
             }
+
             if (!valid)
                 continue;
+
             amountCounter++;
-            Spawn(_random.Pick(spawns), tileref.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map));
+
+            var coordinates = _mapSystem.ToCoordinates(tileref);
+
+            Spawn(_random.Pick(spawns), coordinates);
+
             if (amountCounter >= amount)
                 return;
         }
