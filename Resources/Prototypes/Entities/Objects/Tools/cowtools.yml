@@ -165,13 +165,6 @@
     damage:
       types:
         Blunt: 4
-  - type: GenericVisualizer
-    visuals:
-      enum.StorageVisuals.Open:
-        base:
-          True: { state: cow_toolbox }
-          False: { state: cow_toolbox }
-  - type: Appearance
 
 - type: entity
   id: CowToolboxFilled
