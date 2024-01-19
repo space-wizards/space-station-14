@@ -27,7 +27,7 @@
   - type: Drink
     solution: food
     useSound:
-      path: /Audio/Items/eating_1.ogg
+      collection: eating
   - type: Damageable
     damageContainer: Inorganic
   - type: Spillable
@@ -238,7 +238,7 @@
           Quantity: 50
   - type: Tag
     tags:
-      - Mayo        
+      - Mayo
 
 # - type: entity
 #   parent: ReagentPacketBase

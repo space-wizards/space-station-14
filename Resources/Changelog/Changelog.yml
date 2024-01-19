@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Nuclear operative agents now spawn with a PDA that can scan for injuries.
-    type: Add
-  id: 5230
-  time: '2023-11-30T21:39:08.0000000+00:00'
-- author: Rainfey
-  changes:
-  - message: Agent ID not longer resets name when changing its appearance
-    type: Fix
-  id: 5231
-  time: '2023-11-30T21:42:44.0000000+00:00'
-- author: eddiedd
-  changes:
-  - message: Lemon has been discovered a mutation species, lemoon, which could be
-      grind for milk
-    type: Add
-  id: 5232
-  time: '2023-11-30T21:44:23.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: The senior physician beret now matches their outfit more.
-    type: Tweak
-  id: 5233
-  time: '2023-12-01T08:34:08.0000000+00:00'
-- author: enumerate0
-  changes:
-  - message: Recognizable solutions now appear sorted by volume first, then by name
-    type: Tweak
-  id: 5234
-  time: '2023-12-01T08:35:51.0000000+00:00'
 - author: Whisper
   changes:
   - message: Added the Death Acidifier, an implant that destroys your body and equipment
@@ -3769,3 +3738,42 @@
   id: 5730
   time: '2024-01-17T13:14:33.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24190
+- author: Boaz1111
+  changes:
+  - message: Artifact analyzer now scans twice as fast!
+    type: Tweak
+  id: 5731
+  time: '2024-01-17T16:45:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24188
+- author: mirrorcult
+  changes:
+  - message: Eating/drinking sounds should be hopefully significantly less grating
+    type: Tweak
+  id: 5732
+  time: '2024-01-17T16:46:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24195
+- author: notafet
+  changes:
+  - message: Chemical, booze, and soda dispensers now dispense reagents from stock
+      containers. Remember to refill!
+    type: Tweak
+  - message: Chemical, booze, and soda dispensers can no longer be emagged for extra
+      goodies.
+    type: Remove
+  id: 5733
+  time: '2024-01-17T21:43:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23907
+- author: TheShuEd
+  changes:
+  - message: Added the ability to repair thrusters and gyroscopes on the shuttle.
+    type: Add
+  id: 5734
+  time: '2024-01-17T23:57:40.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24193
+- author: Volotomite
+  changes:
+  - message: Flippo can burn plasma now!
+    type: Fix
+  id: 5735
+  time: '2024-01-18T00:28:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24207
