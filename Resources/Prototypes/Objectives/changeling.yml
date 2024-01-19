@@ -53,8 +53,16 @@
   noSpawn: true
   parent: BaseChangelingStealObjective
   id: CommandIDStealObjective
-  name: Steal any command ID card.
-  description: We must steal any command member's ID card.
   components:
   - type: StealCondition
     stealGroup: CommandIDCard
+    descriptionText: We must steal any command member's ID card.
+
+- type: entity
+  noSpawn: true
+  parent: BaseChangelingStealObjective
+  id: SmileExtractStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: MaterialSmileExtract
+    descriptionText: We must steal smile's extract. It contains a compound that will be very useful to the hive.

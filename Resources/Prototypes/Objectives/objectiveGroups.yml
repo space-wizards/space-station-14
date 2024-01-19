@@ -139,6 +139,7 @@
   id: ChangelingObjectiveGroupSteal
   weights:
     CommandIDStealObjective: 1
+    SmileExtractStealObjective: 1
 
 - type: weightedRandom
   id: ChangelingObjectiveGroupKill

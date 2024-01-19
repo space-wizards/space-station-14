@@ -704,6 +704,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: StealTarget
+    stealGroup: MaterialSmileExtract
 
 - type: entity
   name: steak
