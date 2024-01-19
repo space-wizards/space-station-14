@@ -29,7 +29,7 @@
     shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHelmetBasic
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorPlateCarrier # Grey Station - ClothingOuterArmorPlateCarrier
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
