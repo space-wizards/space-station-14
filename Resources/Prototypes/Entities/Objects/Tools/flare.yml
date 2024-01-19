@@ -71,3 +71,11 @@
         maxDuration: 15.0
         startValue: 10.0
         endValue: 1.0
+  - type: Extractable
+    grindableSolutionName: flare
+  - type: SolutionContainerManager
+    solutions:
+      flare:
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 15

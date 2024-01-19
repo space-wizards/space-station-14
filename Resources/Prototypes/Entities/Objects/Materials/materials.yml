@@ -54,7 +54,7 @@
       cardboard:
         reagents:
         - ReagentId: Cellulose
-          Quantity: 6
+          Quantity: 10
 
 - type: entity
   parent: MaterialCardboard

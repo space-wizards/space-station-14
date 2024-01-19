@@ -60,6 +60,18 @@
           maxDuration: 10 # 300.0
           startValue: 5.0
           endValue: 1.5
+    - type: Extractable
+      grindableSolutionName: glowstick
+    - type: SolutionContainerManager
+      solutions:
+        glowstick:
+          reagents:
+          - ReagentId: Phenol
+            Quantity: 15
+          - ReagentId: Hydrogen
+            Quantity: 10
+          - ReagentId: Oxygen
+            Quantity: 10
 
 - type: entity
   name: red glowstick
