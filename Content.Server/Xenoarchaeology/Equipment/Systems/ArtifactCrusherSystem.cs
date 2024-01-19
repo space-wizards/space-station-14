@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
@@ -23,6 +24,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,7 +40,8 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Crushing)
             return;
 
-        if (!TryComp<EntityStorageComponent>(ent, out var entityStorageComp) || entityStorageComp.Contents.ContainedEntities.Count == 0)
+        if (!TryComp<EntityStorageComponent>(ent, out var entityStorageComp) ||
+            entityStorageComp.Contents.ContainedEntities.Count == 0)
             return;
 
         if (!this.IsPowered(ent, EntityManager))
@@ -61,10 +64,13 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 
     public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
     {
-        var (_, crusher, _) = ent;
+        var (uid, crusher, _) = ent;
 
         if (crusher.Crushing)
             return;
+
+        if (crusher.AutoLock)
+            _popup.PopupEntity(Loc.GetString("artifact-crusher-autolocks-enable"), uid);
 
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
