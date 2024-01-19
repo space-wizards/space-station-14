@@ -8,20 +8,25 @@ namespace Content.Server.Sound.Components
     [RegisterComponent]
     public sealed partial class SpamEmitSoundComponent : BaseEmitSoundComponent
     {
-        [DataField("accumulator")]
+        [DataField]
         public float Accumulator = 0f;
 
-        [DataField("rollInterval")]
+        [DataField]
         public float RollInterval = 2f;
 
-        [DataField("playChance")]
+        [DataField]
+        public float MaxExtraInterval = 2f;
+
+        [DataField]
         public float PlayChance = 0.5f;
 
         // Always Pvs.
-        [DataField("popUp")]
+        [DataField]
         public string? PopUp;
 
-        [DataField("enabled")]
+        [DataField]
         public bool Enabled = true;
+
+        public float ExtraInterval;
     }
 }

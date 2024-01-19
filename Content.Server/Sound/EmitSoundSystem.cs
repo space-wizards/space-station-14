@@ -19,36 +19,18 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
                 continue;
 
             soundSpammer.Accumulator += frameTime;
-            if (soundSpammer.Accumulator < soundSpammer.RollInterval)
+            if (soundSpammer.Accumulator < soundSpammer.RollInterval + soundSpammer.ExtraInterval)
             {
                 continue;
             }
-            soundSpammer.Accumulator -= soundSpammer.RollInterval;
+            soundSpammer.Accumulator -= soundSpammer.RollInterval + soundSpammer.ExtraInterval;
+            soundSpammer.ExtraInterval = Random.NextFloat(soundSpammer.MaxExtraInterval);
 
             if (Random.Prob(soundSpammer.PlayChance))
             {
                 if (soundSpammer.PopUp != null)
                     Popup.PopupEntity(Loc.GetString(soundSpammer.PopUp), uid);
                 TryEmitSound(uid, soundSpammer);
-            }
-        }
-
-        var intervalQuery = EntityQueryEnumerator<EmitSoundIntervalComponent>();
-
-        while (intervalQuery.MoveNext(out var uid, out var comp))
-        {
-            if (!comp.Enabled)
-            {
-                // While disabled, keep pushing the next emit time out,
-                // effectively pausing the timer.
-                comp.NextEmitTime += TimeSpan.FromSeconds(frameTime);
-                continue;
-            }
-
-            if (Timing.CurTime > comp.NextEmitTime)
-            {
-                TryEmitSound(uid, comp);
-                SelectNextInterval(uid, comp);
             }
         }
     }
@@ -59,8 +41,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
         SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
         SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
-        SubscribeLocalEvent<EmitSoundIntervalComponent, EntityUnpausedEvent>(OnIntervalUnpause);
-        SubscribeLocalEvent<EmitSoundIntervalComponent, ComponentInit>(OnIntervalInit);
+        SubscribeLocalEvent<SpamEmitSoundComponent, MapInitEvent>(HandleSpamEmitSoundMapInit);
     }
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
@@ -74,18 +55,10 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         args.Handled = true;
     }
 
-    private void OnIntervalInit(EntityUid uid, EmitSoundIntervalComponent component, ComponentInit args)
+    private void HandleSpamEmitSoundMapInit(EntityUid uid, SpamEmitSoundComponent component, MapInitEvent args)
     {
-        SelectNextInterval(uid, component, true);
-    }
-
-    private void SelectNextInterval(EntityUid uid, EmitSoundIntervalComponent component, bool ignoreMinimum = false)
-    {
-        component.NextEmitTime = Timing.CurTime + Random.Next(ignoreMinimum ? TimeSpan.Zero : component.MinInterval, component.MaxInterval);
-    }
-
-    private void OnIntervalUnpause(EntityUid uid, EmitSoundIntervalComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextEmitTime += args.PausedTime;
+        component.MaxExtraInterval = Random.NextFloat(component.MaxExtraInterval);
+        // Give the accumulator a random initial boost so they don't all start at once
+        component.Accumulator += Random.NextFloat(component.RollInterval + component.MaxExtraInterval);
     }
 }
