@@ -1,0 +1,24 @@
+﻿- type: soundCollection
+  id: Thud
+  files:
+  - /Audio/Effects/thud1.ogg
+  - /Audio/Effects/thud2.ogg
+  - /Audio/Effects/thud3.ogg
+  - /Audio/Effects/thud4.ogg
+
+- type: soundCollection
+  id: MetalScrape
+  files:
+  - /Audio/Effects/metal_scrape1.ogg
+  - /Audio/Effects/metal_scrape2.ogg
+  - /Audio/Effects/metal_scrape3.ogg
+
+- type: soundCollection
+  id: MetalHitHollow
+  files:
+  - /Audio/Effects/metal_hit_hollow.ogg
+
+- type: soundCollection
+  id: WeakHit
+  files:
+  - /Audio/Effects/weak_hit.ogg
