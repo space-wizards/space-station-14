@@ -87,7 +87,7 @@ namespace Content.Shared.Standing
                 // Create a temporary sensor to continue registering contacts in the disabled collision layer
                 _fixtureSystem.TryCreateFixture(
                     uid,
-                    new PhysShapeCircle(0.35f),
+                    new PhysShapeCircle(0.1f),
                     StandingSensorFixtureName,
                     collisionLayer: (int) CollisionGroup.None,
                     collisionMask: StandingCollisionLayer,
