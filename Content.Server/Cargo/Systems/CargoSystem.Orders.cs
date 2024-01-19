@@ -5,9 +5,11 @@ using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Interaction;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -35,7 +37,28 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
             SubscribeLocalEvent<CargoOrderConsoleComponent, BoundUIOpenedEvent>(OnOrderUIOpened);
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             Reset();
+        }
+
+        private void OnInteractUsing(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
+        {
+            if (!HasComp<CashComponent>(args.Used))
+                return;
+
+            var price = _pricing.GetPrice(args.Used);
+
+            if (price == 0)
+                return;
+
+            var stationUid = _station.GetOwningStation(args.Used);
+
+            if (!TryComp(stationUid, out StationBankAccountComponent? bank))
+                return;
+
+            _audio.PlayPvs(component.ConfirmSound, uid);
+            UpdateBankAccount(stationUid.Value, bank, (int) price);
+            QueueDel(args.Used);
         }
 
         private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)
