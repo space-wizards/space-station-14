@@ -118,7 +118,7 @@ public sealed class OpenableSystem : EntitySystem
     /// </summary>
     public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null)
     {
-        if (!Resolve(uid, ref comp) || opened == comp.Opened)
+        if (!Resolve(uid, ref comp, false) || opened == comp.Opened)
             return;
 
         comp.Opened = opened;
@@ -132,7 +132,7 @@ public sealed class OpenableSystem : EntitySystem
     /// <returns>Whether it got opened</returns>
     public bool TryOpen(EntityUid uid, OpenableComponent? comp = null)
     {
-        if (!Resolve(uid, ref comp) || comp.Opened)
+        if (!Resolve(uid, ref comp, false) || comp.Opened)
             return false;
 
         SetOpen(uid, true, comp);

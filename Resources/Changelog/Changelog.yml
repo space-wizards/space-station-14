@@ -1,92 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: Added a green central command cap like the captain's blue one.
-    type: Add
-  id: 5228
-  time: '2023-11-30T07:20:45.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Core has been reworked and added back into the map pool.
-    type: Add
-  id: 5229
-  time: '2023-11-30T08:13:13.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Nuclear operative agents now spawn with a PDA that can scan for injuries.
-    type: Add
-  id: 5230
-  time: '2023-11-30T21:39:08.0000000+00:00'
-- author: Rainfey
-  changes:
-  - message: Agent ID not longer resets name when changing its appearance
-    type: Fix
-  id: 5231
-  time: '2023-11-30T21:42:44.0000000+00:00'
-- author: eddiedd
-  changes:
-  - message: Lemon has been discovered a mutation species, lemoon, which could be
-      grind for milk
-    type: Add
-  id: 5232
-  time: '2023-11-30T21:44:23.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: The senior physician beret now matches their outfit more.
-    type: Tweak
-  id: 5233
-  time: '2023-12-01T08:34:08.0000000+00:00'
-- author: enumerate0
-  changes:
-  - message: Recognizable solutions now appear sorted by volume first, then by name
-    type: Tweak
-  id: 5234
-  time: '2023-12-01T08:35:51.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Added the Death Acidifier, an implant that destroys your body and equipment
-      without harming allies.
-    type: Add
-  - message: Added the microbomb implanter back to nukie uplinks.
-    type: Add
-  - message: Nukies have exchanged microbomb implants for Death Acidifiers.
-    type: Tweak
-  id: 5235
-  time: '2023-12-01T20:14:45.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Tacos can be eaten by Lizards now. It's fricken Taco Tuesday!
-    type: Fix
-  id: 5236
-  time: '2023-12-01T22:27:09.0000000+00:00'
-- author: Rainbeon
-  changes:
-  - message: Cyborgs can now speak while in a Critical state.
-    type: Tweak
-  id: 5237
-  time: '2023-12-02T00:25:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Potentially fix audio filters.
-    type: Fix
-  id: 5238
-  time: '2023-12-02T08:47:41.0000000+00:00'
-- author: EEASAS
-  changes:
-  - message: Mothroaches have been vaccinated to be weaker and slower. Also, they
-      are more valuable!
-    type: Tweak
-  - message: Mothroaches and rats cannot pull items anymore.
-    type: Tweak
-  id: 5239
-  time: '2023-12-02T16:45:07.0000000+00:00'
-- author: Moomoobeef
-  changes:
-  - message: Added sodium polyacrylate, an industrial desiccant. You probably should
-      not consume this.
-    type: Add
-  id: 5240
-  time: '2023-12-02T16:58:34.0000000+00:00'
 - author: Doru991
   changes:
   - message: Ambrosia Deus and Koibeans's chemical amounts have been reduced.
@@ -3767,3 +3679,100 @@
   id: 5728
   time: '2024-01-17T10:03:01.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24182
+- author: Ubaser
+  changes:
+  - message: Ore is now grindable to obtain basic chemicals.
+    type: Add
+  id: 5729
+  time: '2024-01-17T13:08:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24185
+- author: mirrorcult
+  changes:
+  - message: Reagent grinders now shake around violently when grinding something
+    type: Add
+  id: 5730
+  time: '2024-01-17T13:14:33.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24190
+- author: Boaz1111
+  changes:
+  - message: Artifact analyzer now scans twice as fast!
+    type: Tweak
+  id: 5731
+  time: '2024-01-17T16:45:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24188
+- author: mirrorcult
+  changes:
+  - message: Eating/drinking sounds should be hopefully significantly less grating
+    type: Tweak
+  id: 5732
+  time: '2024-01-17T16:46:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24195
+- author: notafet
+  changes:
+  - message: Chemical, booze, and soda dispensers now dispense reagents from stock
+      containers. Remember to refill!
+    type: Tweak
+  - message: Chemical, booze, and soda dispensers can no longer be emagged for extra
+      goodies.
+    type: Remove
+  id: 5733
+  time: '2024-01-17T21:43:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23907
+- author: TheShuEd
+  changes:
+  - message: Added the ability to repair thrusters and gyroscopes on the shuttle.
+    type: Add
+  id: 5734
+  time: '2024-01-17T23:57:40.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24193
+- author: Volotomite
+  changes:
+  - message: Flippo can burn plasma now!
+    type: Fix
+  id: 5735
+  time: '2024-01-18T00:28:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24207
+- author: Ubaser
+  changes:
+  - message: The paramedic's void suit now has a helmet toggle.
+    type: Tweak
+  id: 5736
+  time: '2024-01-18T15:26:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24229
+- author: Ubaser
+  changes:
+  - message: Carrots now properly contain Oculine, and you can Juice them to obtain
+      the raw chemical.
+    type: Fix
+  id: 5737
+  time: '2024-01-18T15:28:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24228
+- author: koteq
+  changes:
+  - message: Jugs with the same labels are now correctly grouped and sorted in the
+      context menu.
+    type: Tweak
+  id: 5738
+  time: '2024-01-18T22:18:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24243
+- author: EmoGarbage404
+  changes:
+  - message: Duplicate players will no longer spawn in cryogenic sleep units.
+    type: Fix
+  id: 5739
+  time: '2024-01-19T00:27:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24251
+- author: lapatison
+  changes:
+  - message: Guidebooks can now be found in random bookshelves.
+    type: Tweak
+  id: 5740
+  time: '2024-01-19T00:32:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24036
+- author: metalgearsloth
+  changes:
+  - message: Added trade stations for cargo instead of FTL.
+    type: Add
+  id: 5741
+  time: '2024-01-19T02:02:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23863

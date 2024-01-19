@@ -42,9 +42,6 @@
   - type: ApcPowerReceiver
     powerLoad: 12000
     needsPower: false #only turns on when scanning
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.80
-    scaling: Exponential
   - type: ArtifactAnalyzer
   - type: ItemPlacer
     whitelist:
