@@ -222,6 +222,8 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
+      - ReagentId: Potassium
+        Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -255,6 +257,8 @@
     juiceSolution:
       reagents:
       - ReagentId: Nothing
+        Quantity: 5
+      - ReagentId: Potassium
         Quantity: 5
 
 - type: entity
