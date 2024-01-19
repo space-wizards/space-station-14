@@ -67,11 +67,11 @@
         glowstick:
           reagents:
           - ReagentId: Phenol
-            Quantity: 10
+            Quantity: 15
           - ReagentId: Hydrogen
-            Quantity: 5
+            Quantity: 10
           - ReagentId: Oxygen
-            Quantity: 5
+            Quantity: 10
 
 - type: entity
   name: red glowstick
