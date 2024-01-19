@@ -56,3 +56,11 @@
   license: "CC-BY-SA-4.0"
   copyright: "Taken and modified from el1n freesound.org"
   source: "https://freesound.org/people/el1n/sounds/442746/"
+
+- files:
+  - spurs1.ogg
+  - spurs2.ogg
+  - spurs3.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/1e8d511946d194f92f744f5f957a7c41683d84a6/sound/effects/footstep"
