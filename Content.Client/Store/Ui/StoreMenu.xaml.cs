@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using Content.Client.Actions;
 using Content.Client.GameTicking.Managers;
 using Content.Client.Message;
@@ -58,7 +57,7 @@ public sealed partial class StoreMenu : DefaultWindow
             (type.Key, type.Value), type => _prototypeManager.Index<CurrencyPrototype>(type.Key));
 
         var balanceStr = string.Empty;
-        foreach (var ((type, amount),proto) in currency)
+        foreach (var ((_, amount),proto) in currency)
         {
             balanceStr += Loc.GetString("store-ui-balance-display", ("amount", amount),
                 ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
@@ -245,9 +244,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
         CategoryListContainer.Children.Clear();
         if (allCategories.Count < 1)
-        {
             return;
-        }
 
         foreach (var proto in allCategories)
         {
