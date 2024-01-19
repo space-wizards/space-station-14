@@ -1,6 +1,7 @@
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using System.Linq;
 using System.Numerics;
 
 namespace Content.Client.UserInterface.Controls;
@@ -55,6 +56,12 @@ public class RadialContainer : LayoutContainer
     public float Radius { get; set; } = 100f;
 
     /// <summary>
+    /// Sets whether the container should reserve a space on the layout for child which are not currently visible
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool ReserveSpaceForHiddenChildren { get; set; } = true;
+
+    /// <summary>
     /// This container arranges its children, evenly separated, in a radial pattern
     /// </summary>
     public RadialContainer()
@@ -64,22 +71,25 @@ public class RadialContainer : LayoutContainer
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        var children = ReserveSpaceForHiddenChildren ? Children : Children.Where(x => x.Visible);
+        var childCount = children.Count();
+
         // Determine the size of the arc, accounting for clockwise and anti-clockwise arrangements
         var arc = AngularRange.Y - AngularRange.X;
         arc = (arc < 0) ? MathF.Tau + arc : arc;
         arc = (RadialAlignment == RAlignment.AntiClockwise) ? MathF.Tau - arc : arc;
 
         // Account for both circular arrangements and arc-based arrangements
-        var childMod = (MathHelper.CloseTo(arc, MathF.Tau, 0.01f)) ? 0 : 1;
+        var childMod = MathHelper.CloseTo(arc, MathF.Tau, 0.01f) ? 0 : 1;
 
         // Determine the separation between child elements
-        var sepAngle = arc / (ChildCount - childMod);
+        var sepAngle = arc / (childCount - childMod);
         sepAngle *= (RadialAlignment == RAlignment.AntiClockwise) ? -1f : 1f;
 
         // Adjust the positions of all the child elements
-        for (int i = 0; i < ChildCount; i++)
+        for (int i = 0; i < childCount; i++)
         {
-            var child = GetChild(i);
+            var child = children.ElementAt(i);
             var position = new Vector2(Radius * MathF.Sin(AngularRange.X + sepAngle * i) + Width / 2f - child.Width / 2f, -Radius * MathF.Cos(AngularRange.X + sepAngle * i) + Height / 2f - child.Height / 2f);
 
             SetPosition(child, position);

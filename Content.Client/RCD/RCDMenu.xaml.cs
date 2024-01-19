@@ -7,6 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using System.Collections;
 using System.Numerics;
 
 namespace Content.Client.RCD;
@@ -28,14 +29,13 @@ public sealed partial class RCDMenu : RadialMenu
 
         _spriteSystem = _entManager.System<SpriteSystem>();
 
-        this.VerticalExpand = true;
-        this.HorizontalExpand = true;
+        // Find the main radial container
+        var main = FindControl<RadialContainer>("Main");
 
-        OnChildAdded += AddRCDMenuButtonOnClickActions;
+        if (main == null)
+            return;
 
-        SendRCDSystemMessageAction += bui.SendRCDSystemMessage;
-
-        // Populate menu
+        // Populate secondary radial containers
         if (!_entManager.TryGetComponent<RCDComponent>(owner, out var rcd))
             return;
 
@@ -73,10 +73,31 @@ public sealed partial class RCDMenu : RadialMenu
 
             button.AddChild(tex);
             parent.AddChild(button);
+
+            // Ensure that the button that transitions the menu to the associated category layer
+            // is visible in the main radial container (as these all start with Visible = false)
+            foreach (var child in main.Children)
+            {
+                var castChild = child as RadialMenuTextureButton;
+
+                if (castChild == null)
+                    continue;
+
+                if (castChild.TargetLayer == proto.Category)
+                {
+                    castChild.Visible = true;
+                    break;
+                }
+            }
         }
 
+        // Set up menu actions
         foreach (var child in Children)
             AddRCDMenuButtonOnClickActions(child);
+
+        OnChildAdded += AddRCDMenuButtonOnClickActions;
+
+        SendRCDSystemMessageAction += bui.SendRCDSystemMessage;
     }
 
     private void AddRCDMenuButtonOnClickActions(Control control)
