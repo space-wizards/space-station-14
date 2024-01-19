@@ -14,4 +14,4 @@ thankyou-discount-4 = We are legally obligated to remind you not to eat that.
 thankyou-discount-5 = Please don't sue us!
 thankyou-discount-6 = We swear it looked like that when we stocked it!
 thankyou-discount-7 = Yeah, good luck with that.
-thankyou-discount-8 = Enjoy your, uh.. "snack".
+thankyou-discount-8 = Enjoy your, uh... "snack".

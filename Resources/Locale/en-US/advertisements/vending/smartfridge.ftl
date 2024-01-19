@@ -5,5 +5,5 @@ advertisement-smartfridge-4 = New firmware update available.
 advertisement-smartfridge-5 = I am completely operational, and all my circuits are functioning perfectly.
 advertisement-smartfridge-6 = Scanning system for malicious software...
 advertisement-smartfridge-7 = Running system diagnostics...
-advertisement-smartfridge-8 = My circuitboards are too advanced for the functions I am allowed to operate.
+advertisement-smartfridge-8 = My circuit boards are too advanced for the functions I am allowed to operate.
 
