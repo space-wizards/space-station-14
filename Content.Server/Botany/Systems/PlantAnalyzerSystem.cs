@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Server.PowerCell;
 using Content.Shared.DoAfter;
@@ -38,6 +37,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             return;
         _audio.PlayPvs(plantAnalyzer.ScanningBeginSound, uid);
 
+        _scanMode = plantAnalyzer.AdvancedScan;
         if (plantAnalyzer.AdvancedScan)
         {
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, plantAnalyzer.AdvScanDelay, new PlantAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
@@ -96,7 +96,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var state = default(PlantAnalyzerScannedSeedPlantInformation);
         var seedData = default(SeedData);   // data of a unique Seed
         var seedProtoId = default(SeedPrototype);   // data of base seed prototype
-        _scanMode = plantAnalyzer.AdvancedScan;
 
         if (seedcomponent != null)
         {
@@ -132,7 +131,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     /// </summary>
     public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeedProt(SeedPrototype comp, EntityUid target)
     {
-        var seedName = "\r\n  NanoTrasen prototype: \r\n  " + Loc.GetString(comp.DisplayName) + " (tm)";
+        var seedName = "\r\n  NanoTrasen owned prototype: \r\n  " + Loc.GetString(comp.DisplayName) + " (tm)";
         //var seedName = comp.Name;
 
         var seedChem = "\r\n   ";
