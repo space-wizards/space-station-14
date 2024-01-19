@@ -36,3 +36,25 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
+
+- type: entity
+  abstract: true
+  parent: [BaseChangelingObjective, BaseStealObjective]
+  id: BaseChangelingStealObjective
+  components:
+  - type: StealCondition
+    verifyMapExistance: false
+  - type: Objective
+    difficulty: 2.5
+  - type: ObjectiveLimit
+    limit: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseChangelingStealObjective
+  id: CommandIDStealObjective
+  name: Steal any command ID card.
+  description: We must steal any command member's ID card.
+  components:
+  - type: StealCondition
+    stealGroup: CommandIDCard
