@@ -47,7 +47,7 @@
     solutions:
       matchstick:
         reagents:
-        - ReagentId: Phosphorous
+        - ReagentId: Phosphorus
           Quantity: 2
 
 - type: entity

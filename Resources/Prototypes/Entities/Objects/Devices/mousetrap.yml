@@ -57,14 +57,14 @@
     - type: Tag
       tags:
         - DroneUsable
-  - type: Extractable
-    grindableSolutionName: mousetrap
-  - type: SolutionContainerManager
-    mousetrap:
-      mousetrap:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 3 #its probably wooden
+    - type: Extractable
+      grindableSolutionName: mousetrap
+    - type: SolutionContainerManager
+      solutions:
+        mousetrap:
+          reagents:
+          - ReagentId: Cellulose
+            Quantity: 3 #its probably wooden
 
 - type: entity
   name: mousetrap
