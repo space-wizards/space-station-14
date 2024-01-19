@@ -30,7 +30,7 @@
     jumpsuit: ClothingUniformJumpsuitWarden
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesSecurity # Grey Station - Replaced Regular Sunglasses
     outerClothing: ClothingOuterCoatWarden
     id: WardenPDA
     ears: ClothingHeadsetSecurity

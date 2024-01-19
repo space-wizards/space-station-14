@@ -45,7 +45,7 @@
     back: ClothingBackpackHOSFilled
     shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterCoatHoSTrench
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesSecurity # Grey Station - Replaced Regular Sunglasses
     head: ClothingHeadHatBeretHoS
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat
