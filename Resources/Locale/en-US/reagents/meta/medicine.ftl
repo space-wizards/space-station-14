@@ -2,7 +2,7 @@ reagent-name-cryptobiolin = cryptobiolin
 reagent-desc-cryptobiolin = Causes confusion and dizziness.
 
 reagent-name-dylovene = dylovene
-reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain. It removes toxins from the tray and treats plants.
+reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in organisms. Overdosing will cause vomiting, dizzyness and pain.
 
 reagent-name-diphenhydramine = diphenhydramine
 reagent-desc-diphenhydramine = Rapidly purges the body of histamine, reduces jitteriness, and treats poison damage.
