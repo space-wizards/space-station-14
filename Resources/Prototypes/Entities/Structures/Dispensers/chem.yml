@@ -1,16 +1,19 @@
-﻿- type: entity
+- type: entity
   id: ChemDispenser
   name: chemical dispenser
+  suffix: Filled
   parent: ReagentDispenserBase
-  description: An industrial grade chemical dispenser with a sizeable chemical supply.
+  description: An industrial grade chemical dispenser.
   components:
   - type: Sprite
     sprite: Structures/dispensers.rsi
     state: industrial-working
     snapCardinals: true
   - type: ReagentDispenser
+    storageWhitelist:
+      tags:
+      - ChemDispensable
     pack: ChemDispenserStandardInventory
-    emagPack: ChemDispenserEmaggedInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Destructible
@@ -37,3 +40,12 @@
     - Chemist
   - type: StealTarget
     stealGroup: ChemDispenser
+
+- type: entity
+  id: ChemDispenserEmpty
+  name: chemical dispenser
+  suffix: Empty
+  parent: ChemDispenser
+  components:
+  - type: ReagentDispenser
+    pack: EmptyInventory

@@ -120,26 +120,22 @@
   name: pellet (.50 flare)
   noSpawn: true
   components:
-  - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
   - type: Fixtures
     fixtures:
-      fix1:
+      projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        density: 20
+          bounds: "-0.1,-0.1,0.1,0.1"
         mask:
-          - ItemMask
-        restitution: 0.3
-        friction: 0.2
+        - BulletImpassable
   - type: Tag
     tags:
-      - PelletShotgunFlare
+    - PelletShotgunFlare
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
@@ -163,6 +159,11 @@
     color: "#FF8080"
     radius: 15.0
     energy: 9.0
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Heat: 5
 
 - type: entity
   id: PelletShotgunUranium

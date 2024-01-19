@@ -13,8 +13,8 @@ public sealed partial class ContainerSpawnPointComponent : Component
     /// <summary>
     /// The ID of the container that this entity will spawn players into
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string ContainerId;
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string ContainerId = string.Empty;
 
     /// <summary>
     /// An optional job specifier

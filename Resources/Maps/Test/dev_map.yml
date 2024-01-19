@@ -616,7 +616,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-3.5
       parent: 179
-- proto: AlwaysPoweredLightLED
+- proto: AlwaysPoweredWallLight
   entities:
   - uid: 59
     components:

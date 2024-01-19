@@ -79,7 +79,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
             return;
         }
 
-        Del(args.Station);
+        Del(args.SpawnResult);
         args.SpawnResult = null;
     }
 }

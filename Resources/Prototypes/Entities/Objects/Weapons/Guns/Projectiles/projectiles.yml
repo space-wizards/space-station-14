@@ -754,14 +754,16 @@
         maxVol: 50
   - type: Fixtures
     fixtures:
-      fix1:
+      projectile:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.10,-0.30,0.10,0.15"
         hard: false
         mask:
-        - FullTileMask
-        - Opaque
+        - Impassable
+        - BulletImpassable
+  - type: CanPenetrate
+    penetrationLayer: MobLayer
   - type: Vapor
     active: true
   - type: Appearance
