@@ -10,7 +10,7 @@
   - type: MovedByPressure
   - type: EmitSoundOnCollide
     sound:
-      path: /Audio/Effects/wall_bonk.ogg
+      collection: WeakHit
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/drop.ogg
