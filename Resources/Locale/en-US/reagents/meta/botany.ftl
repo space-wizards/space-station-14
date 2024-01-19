@@ -5,7 +5,7 @@ reagent-name-left4-zed = left-4-zed
 reagent-desc-left4-zed = A cocktail of mutagenic compounds, which cause plant life to become highly unstable. It give your plants nutrients, harmful to health and with some probability changes the mutation modifier, which affects the mutation level.
 
 reagent-name-pest-killer = pest killer
-reagent-desc-pest-killer = A mixture that targets pests. Don't kill your plant with toxins!
+reagent-desc-pest-killer = A mixture that targets pests. While useful it slowly poisons plants with toxins, be careful when using it.
 
 reagent-name-plant-b-gone = plant-B-gone
 reagent-desc-plant-b-gone = A harmful toxic mixture to kill plantlife. Very effective against kudzu.
