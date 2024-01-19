@@ -1,6 +1,8 @@
 - type: entity
   id: BaseThruster
   parent: BaseStructureDynamic
+  name: thruster
+  description: A thruster that allows a shuttle to move.
   abstract: true
   components:
     - type: AmbientSound
@@ -37,6 +39,9 @@
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
     - type: StaticPrice
       price: 300
   placement:
@@ -47,9 +52,27 @@
   name: thruster
   parent: [ BaseThruster, ConstructibleMachine ]
   components:
-  - type: Thruster
   - type: Machine
     board: ThrusterMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -102,8 +125,9 @@
 
 - type: entity
   id: Gyroscope
-  name: gyroscope
   parent: [ BaseThruster, ConstructibleMachine ]
+  name: gyroscope
+  description: Increases the shuttle's potential angular rotation.
   components:
   - type: Thruster
     thrusterType: Angular
@@ -139,6 +163,25 @@
     color: "#4246b3"
   - type: Machine
     board: GyroscopeMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
   - type: UpgradePowerDraw
     powerDrawMultiplier: 0.75
     scaling: Exponential

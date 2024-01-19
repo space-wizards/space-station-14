@@ -160,7 +160,10 @@ ClothingHeadHatHoodRad: null
 # 2024-01-12
 SpaceMedipen: null
 
-#2024-01-18
+# 2024-01-18
+ClothingHeadHelmetVoidParamed: null
+
+#2024-01-19
 ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
 ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
 ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective

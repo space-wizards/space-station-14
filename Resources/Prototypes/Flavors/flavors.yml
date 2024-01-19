@@ -883,3 +883,9 @@
   id: horrible
   flavorType: Base
   description: flavor-base-horrible
+
+- type: flavor
+  id: light
+  flavorType: Complex
+  description: flavor-complex-light
+  

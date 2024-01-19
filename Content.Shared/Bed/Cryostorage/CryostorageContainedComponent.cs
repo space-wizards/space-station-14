@@ -12,10 +12,11 @@ namespace Content.Shared.Bed.Cryostorage;
 public sealed partial class CryostorageContainedComponent : Component
 {
     /// <summary>
-    /// Whether or not this entity is being stored on another map or is just chilling in a container
+    /// If true, the player's mind won't be removed from their body when they are moved into cryosleep
+    /// allowing them to rejoin later.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool StoredWhileDisconnected;
+    [DataField]
+    public bool AllowReEnteringBody;
 
     /// <summary>
     /// The time at which the cryostorage grace period ends.
