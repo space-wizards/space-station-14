@@ -41,7 +41,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
         SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
         SubscribeLocalEvent<EntityStorageComponent, FoldAttemptEvent>(OnFoldAttempt);
-        SubscribeLocalEvent<EntityStorageComponent, DroppedEvent>(OnDropped);
 
         SubscribeLocalEvent<EntityStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<EntityStorageComponent, ComponentHandleState>(OnHandleState);
@@ -154,12 +153,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         if (args.Container.Owner != component.Storage)
             return;
         RemComp(uid, component);
-    }
-
-    private void OnDropped(EntityUid uid, EntityStorageComponent component, DroppedEvent args)
-    {
-        if (!component.CanOpen)
-            component.CanOpen = true;
     }
 
     #region Gas mix event handlers

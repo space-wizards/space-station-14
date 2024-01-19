@@ -336,12 +336,16 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
         }
 
-        if (!component.CanOpen)
+        if (_container.IsEntityInContainer(target))
         {
-            var msg = Loc.GetString("entity-storage-component-already-contains-user-message");
-            Popup.PopupEntity(msg, user, user);
+            if (_container.TryGetOuterContainer(target,Transform(target) ,out var container) &&
+                !HasComp<HandsComponent>(container.Owner))
+            {
+                if (_net.IsServer)
+                    Popup.PopupEntity(Loc.GetString("entity-storage-component-already-contains-user-message"), user, user);
 
-            return false;
+                return false;
+            }
         }
 
         //Checks to see if the opening position, if offset, is inside of a wall.

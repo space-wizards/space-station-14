@@ -101,15 +101,6 @@ public abstract partial class SharedEntityStorageComponent : Component
     public bool Open;
 
     /// <summary>
-    /// Whether or not the EntityStorage  is allowed to open.
-    /// </summary>
-    /// <remarks>
-    /// Used to prevent storages opening in situations they shouldn't be able to.
-    /// </remarks>
-    [DataField]
-    public bool CanOpen = true;
-
-    /// <summary>
     /// The sound made when closed
     /// </summary>
     [DataField]
@@ -123,7 +114,7 @@ public abstract partial class SharedEntityStorageComponent : Component
 
     /// <summary>
     ///     Whitelist for what entities are allowed to be inserted into this container. If this is not null, the
-    ///     standard requirement asdasdthat the entity must be an item or mob is waived.
+    ///     standard requirement that the entity must be an item or mob is waived.
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;

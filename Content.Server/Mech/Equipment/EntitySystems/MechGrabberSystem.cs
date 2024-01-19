@@ -2,9 +2,7 @@
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
-using Content.Server.Storage.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
@@ -12,6 +10,7 @@ using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -40,8 +39,6 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentUiStateReadyEvent>(OnUiStateReady);
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentRemovedEvent>(OnEquipmentRemoved);
         SubscribeLocalEvent<MechGrabberComponent, AttemptRemoveMechEquipmentEvent>(OnAttemptRemove);
-        SubscribeLocalEvent<MechGrabberComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
-        SubscribeLocalEvent<MechGrabberComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
 
         SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
         SubscribeLocalEvent<MechGrabberComponent, GrabberDoAfterEvent>(OnMechGrab);
@@ -189,41 +186,5 @@ public sealed class MechGrabberSystem : EntitySystem
         _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);
 
         args.Handled = true;
-    }
-
-    private void OnEntityInserted(EntityUid uid, MechGrabberComponent component, EntInsertedIntoContainerMessage args)
-    {
-        SetStorageOpenable(args.Entity);
-    }
-
-    private void OnEntityRemoved(EntityUid uid, MechGrabberComponent component, EntRemovedFromContainerMessage args)
-    {
-        SetStorageOpenable(args.Entity);
-    }
-
-    /// <summary>
-    ///     Prevents an EntityStorage from being opened when inside the grabber's storage.
-    ///     This prevents unwanted entities from ending up in the grabber's storage.
-    /// </summary>
-    private void SetStorageOpenable(EntityUid uid)
-    {
-        if (!TryComp<EntityStorageComponent>(uid, out var storage))
-            return;
-
-        storage.CanOpen = !storage.CanOpen;
-
-        foreach (var entity in storage.Contents.ContainedEntities)
-        {
-            if (!TryComp<HandsComponent>(entity, out var hands))
-                continue;
-
-            foreach (var hand in hands.Hands)
-            {
-                if (!TryComp<EntityStorageComponent>(hand.Value.HeldEntity, out var heldItem))
-                    continue;
-
-                heldItem.CanOpen = !heldItem.CanOpen;
-            }
-        }
     }
 }
