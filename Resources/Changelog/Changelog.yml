@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Potentially fix audio filters.
-    type: Fix
-  id: 5238
-  time: '2023-12-02T08:47:41.0000000+00:00'
 - author: EEASAS
   changes:
   - message: Mothroaches have been vaccinated to be weaker and slower. Also, they
@@ -3777,3 +3771,10 @@
   id: 5738
   time: '2024-01-18T22:18:53.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24243
+- author: EmoGarbage404
+  changes:
+  - message: Duplicate players will no longer spawn in cryogenic sleep units.
+    type: Fix
+  id: 5739
+  time: '2024-01-19T00:27:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24251
