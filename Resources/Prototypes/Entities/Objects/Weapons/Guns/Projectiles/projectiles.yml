@@ -866,7 +866,7 @@
       types:
         Heat: 2
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
+      collection: WeakHit
     forceSound: true
 
 - type: entity

@@ -15,11 +15,6 @@
   - /Audio/Effects/glass_crack4.ogg
 
 - type: soundCollection
-  id: GlassShatter
-  files:
-  - /Audio/Effects/glass_shatter.ogg
-
-- type: soundCollection
   id: WindowShatter
   files:
   - /Audio/Effects/window_shatter1.ogg

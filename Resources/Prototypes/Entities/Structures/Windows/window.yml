@@ -11,8 +11,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmack
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag
@@ -105,8 +104,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmack
   - type: Sprite
     drawdepth: Mobs
     sprite: Structures/Windows/directional.rsi
