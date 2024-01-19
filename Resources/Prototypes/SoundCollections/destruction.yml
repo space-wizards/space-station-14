@@ -24,14 +24,14 @@
 - type: soundCollection
   id: WoodDestroy
   files:
-  - /Audio/Effects/wood_destroy.ogg
+  - /Audio/Effects/wood_destroy1.ogg
+  - /Audio/Effects/wood_destroy2.ogg
+  - /Audio/Effects/wood_destroy3.ogg
 
 - type: soundCollection
   id: WoodDestroyHeavy
   files:
   - /Audio/Effects/wood_destroy_heavy1.ogg
-  - /Audio/Effects/wood_destroy_heavy2.ogg
-  - /Audio/Effects/wood_destroy_heavy3.ogg
 
 - type: soundCollection
   id: MetalCrunch
