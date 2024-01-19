@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Cohnway
-  changes:
-  - message: Remilia's sprite made larger and more detailed
-    type: Tweak
-  id: 5242
-  time: '2023-12-02T17:12:32.0000000+00:00'
 - author: Minty642
   changes:
   - message: Ash can now be created by burning oil.
@@ -3775,3 +3769,10 @@
   id: 5742
   time: '2024-01-19T02:47:20.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24254
+- author: Repo
+  changes:
+  - message: Round restarts require minimum ghost levels on populated servers.
+    type: Fix
+  id: 5743
+  time: '2024-01-19T07:10:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23453
