@@ -14,7 +14,7 @@ reagent-name-robust-harvest = robust harvest
 reagent-desc-robust-harvest = A highly effective fertilizer. A botanist's go-to and a diona's best friend. A special effect of Robust Harvest is to increases the potency by 3 per 1u. From 15 units has a chance to reduce the plant yield. Robust Harvest can't increase potency above 50.
 
 reagent-name-weed-killer = weed killer
-reagent-desc-weed-killer = A mixture that targets weeds. Very effective against kudzu. Don't kill your plant with toxins!
+reagent-desc-weed-killer = A mixture that targets weeds. Very effective against kudzu and can kill normal plants.
 
 reagent-name-ammonia = ammonia
 reagent-desc-ammonia = An effective fertilizer, it gives your plants some nutrients.
