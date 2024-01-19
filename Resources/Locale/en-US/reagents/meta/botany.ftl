@@ -2,7 +2,7 @@ reagent-name-e-z-nutrient = EZ nutrient
 reagent-desc-e-z-nutrient = Give your plants some of those EZ nutrients! Dionas find this delicious.
 
 reagent-name-left4-zed = left-4-zed
-reagent-desc-left4-zed = A cocktail of mutagenic compounds, which cause plant life to become highly unstable. It give your plants nutrients, harmful to health and with some probability changes the mutation modifier, which affects the mutation level.
+reagent-desc-left4-zed = A cocktail of mutagenic compounds that gives nutrients, harms and affects plant life's genome.
 
 reagent-name-pest-killer = pest killer
 reagent-desc-pest-killer = A mixture that targets pests. While useful it slowly poisons plants with toxins, be careful when using it.
