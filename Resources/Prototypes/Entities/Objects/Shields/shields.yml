@@ -276,7 +276,7 @@
                   max: 1
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/woodhit.ogg
+                collection: WoodDestroy
 
 #Magic/Cult Shields (give these to wizard for now)
 

@@ -42,6 +42,8 @@
             max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      destroySound:
+        collection: WoodDestroyHeavy
   - type: AtmosExposed
 
 #Regular Barricade

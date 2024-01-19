@@ -948,13 +948,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
+          collection: WoodDestroyHeavy
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      collection: MetalBreak
+      collection: WoodDestroyHeavy
   - type: IconSmooth
     key: walls
     base: wood
@@ -996,7 +996,7 @@
             max: 1
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
   - type: IconSmooth
     key: walls
     base: wall
