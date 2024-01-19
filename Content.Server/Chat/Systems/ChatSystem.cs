@@ -403,8 +403,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             var nameEv = new TransformSpeakerNameEvent(source, Name(source));
             RaiseLocalEvent(source, nameEv);
             name = nameEv.Name;
-            if (nameEv.SpeechVerb != null)
-                speech = nameEv.SpeechVerb;
+            // Check for a speech verb override
+            if (nameEv.SpeechVerb != null && _prototypeManager.TryIndex<SpeechVerbPrototype>(nameEv.SpeechVerb, out var proto))
+                speech = proto;
         }
 
         name = FormattedMessage.EscapeText(name);
@@ -877,9 +878,10 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs
     public EntityUid Sender;
     public string Name;
 
-    public SpeechVerbPrototype? SpeechVerb;
+    [ValidatePrototypeId<SpeechVerbPrototype>]
+    public string? SpeechVerb;
 
-    public TransformSpeakerNameEvent(EntityUid sender, string name, SpeechVerbPrototype? speechVerb = null)
+    public TransformSpeakerNameEvent(EntityUid sender, string name, string? speechVerb = null)
     {
         Sender = sender;
         Name = name;

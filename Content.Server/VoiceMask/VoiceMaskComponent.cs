@@ -12,5 +12,7 @@ public sealed partial class VoiceMaskComponent : Component
     /// <summary>
     /// If not null, overrides the speech verb used when this entity speaks.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public SpeechVerbPrototype? SpeechVerb;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [ValidatePrototypeId<SpeechVerbPrototype>]
+    public string? SpeechVerb;
 }
