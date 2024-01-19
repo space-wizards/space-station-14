@@ -125,7 +125,7 @@ reagent-name-insuzine = insuzine
 reagent-desc-insuzine = Rapidly repairs dead tissue caused by electrocution, but cools you slightly. Completely freezes the patient when overdosed.
 
 reagent-name-necrosol = necrosol
-reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It removes toxins from the tray and rejuvenates the plant. Do not pour more than 5u into the hydroponics tray, otherwise the plant may convert to seeds.
+reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-aloxadone = aloxadone
 reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.
