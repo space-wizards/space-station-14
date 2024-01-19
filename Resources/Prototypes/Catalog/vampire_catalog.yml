@@ -127,6 +127,49 @@
     whitelist:
     - VampireToggleFangs
 
+#Passives
+- type: listing
+  id: VampireUnnaturalStrength
+  name: vampire-ability-unnaturalstrength
+  description: vampire-ability-unnaturalstrength-description
+  cost:
+    BloodEssence: 20
+  productEvent: 
+    !type:VampirePowerDetails
+    type: UnnaturalStrength
+    damage:
+      types:
+        Slash: 5
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyBeforeCondition
+    whitelist:
+    - VampireToggleFangs
+
+- type: listing
+  id: VampireSupernaturalStrength
+  name: vampire-ability-supernaturalstrength
+  description: vampire-ability-supernaturalstrength-description
+  cost:
+    BloodEssence: 400
+  productEvent: 
+    !type:VampirePowerDetails
+    type: SupernaturalStrength
+    damage:
+      types:
+        Slash: 5
+  categories:
+  - VampireAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyBeforeCondition
+    whitelist:
+    - VampireUnnaturalStrength
+
 #- type: listing
 #  id: VampireSupernaturalStrength
 #  name: Supernatural Strength

@@ -5,6 +5,7 @@ using Content.Server.Flash.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Store.Components;
+using Content.Shared.Actions;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat.Prototypes;
@@ -20,10 +21,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
+using Content.Shared.Prying.Components;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Store.Events;
 using Content.Shared.Stunnable;
 using Content.Shared.Vampire;
 using Content.Shared.Vampire.Components;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
@@ -35,14 +39,18 @@ public sealed partial class VampireSystem
     /// <summary>
     /// Upon using any power that does not require a target
     /// </summary>
-    private void OnUseSelfPower(EntityUid uid, VampireComponent component, VampireSelfPowerEvent args) => args.Handled = TriggerPower((uid, component), args.Type, args.Details);
+    private void OnUseSelfPower(EntityUid uid, VampireComponent component, VampireSelfPowerEvent args)
+        => args.Handled = TriggerPower((uid, component), args.Details);
+
     /// <summary>
     /// Upon using any power that requires a target
     /// </summary>
-    private void OnUseTargetedPower(EntityUid uid, VampireComponent component, VampireTargetedPowerEvent args) => args.Handled = TriggerPower((uid, component), args.Type, args.Details, args.Target);
-    private bool TriggerPower(Entity<VampireComponent> vampire, VampirePowerKey powerType, VampirePowerDetails def, EntityUid? target = null)
+    private void OnUseTargetedPower(EntityUid uid, VampireComponent component, VampireTargetedPowerEvent args)
+        => args.Handled = TriggerPower((uid, component), args.Details, args.Target);
+
+    private bool TriggerPower(Entity<VampireComponent> vampire, VampirePowerDetails def, EntityUid? target = null)
     {
-        if (!IsAbilityUnlocked(vampire, powerType))
+        if (!IsAbilityUnlocked(vampire, def.Type))
             return false;
 
         //Block if we are cuffed
@@ -66,16 +74,24 @@ public sealed partial class VampireSystem
             return false;
         }
 
+        //Block if we dont have enough essence
         if (def.ActivationCost > 0 && !SubtractBloodEssence(vampire, def.ActivationCost))
         {
             _popup.PopupClient(Loc.GetString("vampire-not-enough-blood"), vampire, vampire, PopupType.MediumCaution);
             return false;
         }
 
+        //Check if we are near an anchored prayable entity - ie the chapel
+        if (IsNearPrayable(vampire))
+        {
+            //Warning about holy power
+            return false;
+        }
+
         var success = true;
 
         //TODO: Rewrite when a magic effect system is introduced (like reagents)
-        switch (powerType)
+        switch (def.Type)
         {
             case VampirePowerKey.SummonHeirloom:
                 {
@@ -132,6 +148,29 @@ public sealed partial class VampireSystem
         return success;
     }
 
+    #region Passive Powers
+    private void UnnaturalStrength(Entity<VampireComponent> vampire, VampirePowerDetails def)
+    {
+        if (def.Damage is null)
+            return;
+
+        var meleeComp = EnsureComp<MeleeWeaponComponent>(vampire);
+        meleeComp.Damage += def.Damage;
+    }
+    private void SupernaturalStrength(Entity<VampireComponent> vampire, VampirePowerDetails def)
+    {
+        var pryComp = EnsureComp<PryingComponent>(vampire);
+        pryComp.Force = true;
+        pryComp.PryPowered = true;
+
+        if (def.Damage is null)
+            return;
+
+        var meleeComp = EnsureComp<MeleeWeaponComponent>(vampire);
+        meleeComp.Damage += def.Damage;
+    }
+    #endregion
+
     #region Other Powers
     /// <summary>
     /// Spawn and bind the pendant if one does not already exist, otherwise just summon to the vampires hand
@@ -159,9 +198,7 @@ public sealed partial class VampireSystem
     }
     private void Screech(Entity<VampireComponent> vampire, TimeSpan? duration, DamageSpecifier? damage = null)
     {
-        var transform = Transform(vampire.Owner);
-
-        foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, 3, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Sundries))
+        foreach (var entity in _entityLookup.GetEntitiesInRange(vampire, 3, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Sundries))
         {
             if (HasComp<BibleUserComponent>(entity))
                 continue;
@@ -344,8 +381,22 @@ public sealed partial class VampireSystem
     private void OnVampireStateChanged(EntityUid uid, VampireComponent component, MobStateChangedEvent args)
     {
         if (args.OldMobState != MobState.Dead && args.NewMobState == MobState.Dead)
-            OnUseSelfPower(uid, component, new() { Type = VampirePowerKey.DeathsEmbrace, Details = new() { ActivationCost = 100 } });
+        {
+            var action = GetAbilityEntity(component, VampirePowerKey.DeathsEmbrace);
+            if (action == null)
+                return;
+
+            if (!TryComp<InstantActionComponent>(action, out var instantActionComponent))
+                return;
+
+            var def = instantActionComponent.Event as VampireSelfPowerEvent;
+            if (def == null)
+                return;
+
+            OnUseSelfPower(uid, component, def);
+        }
     }
+
     /// <summary>
     /// When the vampire is inserted into a container (ie locker, crate etc) check for a coffin, and bind their home to it
     /// </summary>
@@ -560,6 +611,7 @@ public sealed partial class VampireSystem
         _blood.TryModifyBloodLevel(args.Target.Value, -(volumeToConsume * 0.05));
 
         //Thou shall not feed upon the blood of the holy
+        //TODO: Replace with raised event?
         if (HasComp<BibleUserComponent>(args.Target))
         {
             _damageableSystem.TryChangeDamage(entity, VampireComponent.HolyDamage, true);
@@ -567,6 +619,7 @@ public sealed partial class VampireSystem
             _admin.Add(LogType.Damaged, LogImpact.Low, $"{ToPrettyString(entity):user} attempted to drink {volumeToConsume}u of {ToPrettyString(args.Target):target}'s holy blood");
             return;
         }
+        //Check for zombie
         else
         {
             //Pull out some of the blood

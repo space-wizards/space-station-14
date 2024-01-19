@@ -9,12 +9,13 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Store.Components;
-using Content.Server.Store.Events;
+using Content.Shared.Store.Events;
 using Content.Server.Store.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Body.Systems;
 using Content.Shared.Buckle;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -23,9 +24,11 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Prayer;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Vampire;
@@ -76,21 +79,44 @@ public sealed partial class VampireSystem : EntitySystem
         SubscribeLocalEvent<VampireComponent, ComponentStartup>(OnComponentStartup);
 
         SubscribeLocalEvent<VampireComponent, BeforeInteractHandEvent>(OnInteractHandEvent);
-        /*SubscribeLocalEvent<HumanoidAppearanceComponent, InteractHandEvent>(OnInteractWithHumanoid,
-            before: new[] { typeof(InteractionPopupSystem), typeof(SleepingSystem), typeof(SharedBuckleSystem), typeof(SharedStunSystem) });
-        */
         SubscribeLocalEvent<VampireComponent, VampireDrinkBloodEvent>(DrinkDoAfter);
         SubscribeLocalEvent<VampireComponent, VampireHypnotiseEvent>(HypnotiseDoAfter);
-        //SubscribeLocalEvent<VampireComponent, VampireSummonHeirloomEvent>(OnSummonHeirloom);
         SubscribeLocalEvent<VampireComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
         SubscribeLocalEvent<VampireComponent, EntGotRemovedFromContainerMessage>(OnRemovedFromContainer);
         SubscribeLocalEvent<VampireComponent, MobStateChangedEvent>(OnVampireStateChanged);
         SubscribeLocalEvent<VampireComponent, VampireSelfPowerEvent>(OnUseSelfPower);
         SubscribeLocalEvent<VampireComponent, VampireTargetedPowerEvent>(OnUseTargetedPower);
         SubscribeLocalEvent<VampireComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<VampireComponent, StoreProductEvent>(OnStorePurchasePassive);
 
         SubscribeLocalEvent<VampireHeirloomComponent, UseInHandEvent>(OnUseHeirloom);
         SubscribeLocalEvent<VampireHeirloomComponent, StorePurchasedActionEvent>(OnStorePurchase);
+    }
+
+    private void OnStorePurchasePassive(EntityUid uid, VampireComponent component, StoreProductEvent args)
+    {
+        if (args.Ev is not VampirePowerDetails)
+            return;
+
+        var def = args.Ev as VampirePowerDetails;
+        if (def == null)
+            return;
+
+        var vampire = new Entity<VampireComponent>(uid, component);
+
+        switch (def.Type)
+        {
+            case VampirePowerKey.UnnaturalStrength:
+                {
+                    UnnaturalStrength(vampire, def);
+                    break;
+                }
+            case VampirePowerKey.SupernaturalStrength:
+                {
+                    SupernaturalStrength(vampire, def);
+                    break;
+                }
+        }
     }
 
     /// <summary>
@@ -170,13 +196,15 @@ public sealed partial class VampireSystem : EntitySystem
         if (TryComp<InstantActionComponent>(purchasedAction, out var instantAction) && instantAction.Event != null && instantAction.Event is VampireSelfPowerEvent)
         {
             var vampirePower = instantAction.Event as VampireSelfPowerEvent;
-            vampireComponent.UnlockedPowers[vampirePower!.Type] = purchasedAction;
+            if (vampirePower == null) return;
+            vampireComponent.UnlockedPowers[vampirePower.Details.Type] = purchasedAction;
             return;
         }
         if (TryComp<EntityTargetActionComponent>(purchasedAction, out var targetAction) && targetAction.Event != null && targetAction.Event is VampireTargetedPowerEvent)
         {
             var vampirePower = targetAction.Event as VampireTargetedPowerEvent;
-            vampireComponent.UnlockedPowers[vampirePower!.Type] = purchasedAction;
+            if (vampirePower == null) return;
+            vampireComponent.UnlockedPowers[vampirePower.Details.Type] = purchasedAction;
             return;
         }
 
@@ -254,14 +282,11 @@ public sealed partial class VampireSystem : EntitySystem
         return val;
     }
 
-    /*private void DoSpaceDamage(Entity<VampireComponent> vampire)
+    private void DoSpaceDamage(Entity<VampireComponent> vampire)
     {
-        if (!GetAbilityDefinition(vampire.Comp, VampirePowerKey.StellarWeakness, out var def) || def == null)
-            return;
-
-        _damageableSystem.TryChangeDamage(vampire, def.Damage, true, origin: vampire);
-        _popup.PopupEntity(Loc.GetString("vampire-startlight-burning"), vampire, vampire, Shared.Popups.PopupType.LargeCaution);
-    }*/
+        _damageableSystem.TryChangeDamage(vampire, VampireComponent.SpaceDamage, true, origin: vampire);
+        _popup.PopupEntity(Loc.GetString("vampire-startlight-burning"), vampire, vampire, PopupType.LargeCaution);
+    }
     private bool IsInSpace(EntityUid vampireUid)
     {
         var vampireTransform = Transform(vampireUid);
@@ -273,6 +298,20 @@ public sealed partial class VampireSystem : EntitySystem
         if (!_mapSystem.TryGetTileRef(vampireUid, grid, vampireTransform.Coordinates, out var tileRef))
             return true;
 
-        return tileRef.Tile.IsEmpty;
+        return tileRef.Tile.IsEmpty || tileRef.IsSpace();
+    }
+
+    private bool IsNearPrayable(EntityUid vampireUid)
+    {
+        var mapCoords = _transform.GetMapCoordinates(vampireUid);
+
+        var nearbyPrayables = _entityLookup.GetEntitiesInRange<PrayableComponent>(mapCoords, 5);
+        foreach (var prayable in nearbyPrayables)
+        {
+            if (Transform(prayable).Anchored)
+                return true;
+        }
+
+        return false;
     }
 }

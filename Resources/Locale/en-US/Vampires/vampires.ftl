@@ -6,6 +6,7 @@ vampire-fangs-retracted = You retract your fangs
 
 vampire-blooddrink-empty = This body is devoid of blood
 vampire-blooddrink-rotted = Their body is rotting and their blood tainted
+vampire-blooddrink-zombie = Their blood is tainted by death
 
 vampire-startlight-burning = You feel your skin burn in the light of a thousand suns
 

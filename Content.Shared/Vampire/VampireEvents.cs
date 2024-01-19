@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
+using Content.Shared.Store.Events;
 using Content.Shared.Vampire.Components;
 using Robust.Shared.Serialization;
 
@@ -10,21 +11,18 @@ namespace Content.Shared.Vampire;
 public sealed partial class VampireSelfPowerEvent : InstantActionEvent
 {
     [DataField]
-    public VampirePowerKey Type;
-    [DataField]
     public VampirePowerDetails Details = new();
 };
 public sealed partial class VampireTargetedPowerEvent : EntityTargetActionEvent
 {
     [DataField]
-    public VampirePowerKey Type;
+    public VampirePowerDetails Details = new();
+};
+public sealed partial class VampirePassiveActionEvent : BaseActionEvent
+{
     [DataField]
     public VampirePowerDetails Details = new();
 };
-/*public sealed partial class VampireSummonHeirloomEvent : InstantActionEvent
-{
-
-}*/
 
 //Doafter events
 [Serializable, NetSerializable]

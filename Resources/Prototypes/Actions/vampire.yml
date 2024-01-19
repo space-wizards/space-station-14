@@ -10,7 +10,11 @@
       state: summonheirloom
     event:
       !type:VampireSelfPowerEvent
-      type: SummonHeirloom
+      details:
+        type: SummonHeirloom
+        usableWhileCuffed: false
+        usableWhileStunned: false
+    useDelay: 60
 
 - type: entity
   id: ActionVampireToggleFangs
@@ -29,7 +33,8 @@
       state: fangs_extended
     event: 
       !type:VampireSelfPowerEvent
-      type: ToggleFangs
+      details:
+        type: ToggleFangs
 
 - type: entity
   id: ActionVampireGlare
@@ -49,8 +54,8 @@
       path: /Audio/Effects/Vampire/glare.ogg
     event: 
       !type:VampireTargetedPowerEvent
-        type: Glare
         details:
+          type: Glare
           duration: 10
     useDelay: 60
 
@@ -72,8 +77,8 @@
       state: hypnotise
     event: 
       !type:VampireTargetedPowerEvent
-        type: Hypnotise
         details:
+          type: Hypnotise
           duration: 60
           doAfterDelay: 5
     useDelay: 300
@@ -94,8 +99,8 @@
       path: /Audio/Effects/Vampire/screech_tone.ogg
     event: 
       !type:VampireSelfPowerEvent
-        type: Screech
         details:
+          type: Screech
           duration: 3
           damage:
             types:
@@ -121,8 +126,8 @@
       path: /Audio/Effects/demon_consume.ogg
     event: 
       !type:VampireSelfPowerEvent
-        type: BloodSteal
         details:
+          type: BloodSteal
           usableWhileStunned: false
           usableWhileCuffed: false
           activationCost: 20
@@ -144,8 +149,8 @@
       path: /Audio/Effects/teleport_arrival.ogg
     event: 
       !type:VampireSelfPowerEvent
-        type: Polymorph
         details:
+          type: Polymorph
           usableWhileStunned: false
           usableWhileCuffed: false
           polymorphTarget: mobBatVampire
@@ -168,8 +173,8 @@
       path: /Audio/Effects/teleport_arrival.ogg
     event: 
       !type:VampireSelfPowerEvent
-        type: Polymorph
         details:
+          type: Polymorph
           usableWhileStunned: false
           usableWhileCuffed: false
           polymorphTarget: MobMouse
@@ -190,8 +195,8 @@
       state: cloakofdarkness
     event: 
       !type:VampireSelfPowerEvent
-        type: CloakOfDarkness
         details:
+          type: CloakOfDarkness
           usableWhileStunned: false
           activationCost: 30
           upkeep: 1

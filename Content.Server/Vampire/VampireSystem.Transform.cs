@@ -6,6 +6,7 @@ using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Vampire.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -17,20 +18,21 @@ public sealed partial class VampireSystem
     /// <summary>
     /// Convert the players into a vampire, all programatic because i dont want to replace the players body
     /// </summary>
-    /// <param name="vampire">Which entity to convert</param>
     private void MakeVampire(EntityUid vampireUid)
     {
         var vampireComponent = EnsureComp<VampireComponent>(vampireUid);
         var vampire = new Entity<VampireComponent>(vampireUid, vampireComponent);
 
-        EnsureComp<UnholyComponent>(vampire);
+        //Render them unable to rot, immune to pressure and thirst
         RemComp<PerishableComponent>(vampire);
         RemComp<BarotraumaComponent>(vampire);
+        RemComp<ThirstComponent>(vampire); //Unsure, should vampires thirst.. or hunger?
 
+        //Render immune to cold, but not heat
         if (TryComp<TemperatureComponent>(vampire, out var temperatureComponent))
             temperatureComponent.ColdDamageThreshold = Atmospherics.TCMB;
 
-        //Extra melee power
+        //
         if (TryComp<MeleeWeaponComponent>(vampire, out var melee))
         {
             melee.Damage = VampireComponent.MeleeDamage;
@@ -48,8 +50,15 @@ public sealed partial class VampireSystem
         //Order of operation requirement, must be called after initialising balance
         UpdateBloodDisplay(vampire);
     }
+
+    /// <summary>
+    /// Add vulnerability to holy water when ingested or slashed, and take damage from the bible
+    /// </summary>
     private void MakeVulnerableToHoly(Entity<VampireComponent> vampire)
     {
+        //React to being beaten with the bible
+        EnsureComp<UnholyComponent>(vampire);
+
         //Take damage from holy water splash
         if (TryComp<ReactiveComponent>(vampire, out var reactive))
         {

@@ -42,6 +42,10 @@ public sealed partial class VampireComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>() { { "Burn", 10 } }
     };
+    public static readonly DamageSpecifier SpaceDamage = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>() { { "Burn", 2.5 } }
+    };
 
     [ValidatePrototypeId<EntityPrototype>]
     public static readonly string SummonActionPrototype = "ActionVampireSummonHeirloom";
@@ -90,9 +94,11 @@ public sealed partial class VampireComponent : Component
 /// <summary>
 /// Contains all details about the ability and its effects or restrictions
 /// </summary>
-[DataDefinition]
-public sealed partial class VampirePowerDetails
+[DataDefinition
+public sealed partial class VampirePowerProtype
 {
+    [DataField(required: true)]
+    public VampirePowerKey Type;
     [DataField]
     public float ActivationCost = 0;
     [DataField]
@@ -113,10 +119,17 @@ public sealed partial class VampirePowerDetails
     public float Upkeep = 0;
 }
 
+/// <summary>
+/// Marks an entity as taking damage when hit by a bible, rather than being healed
+/// </summary>
 [RegisterComponent]
 public sealed partial class UnholyComponent : Component
 {
 }
+
+/// <summary>
+/// Marks a container as a coffin, for the purposes of vampire healing
+/// </summary>
 [RegisterComponent]
 public sealed partial class CoffinComponent : Component
 {
@@ -173,6 +186,9 @@ public enum VampirePowerKey : byte
     BloodSteal,
     CloakOfDarkness,
     StellarWeakness,
-    SupernaturalStrength,
-    SummonHeirloom
+    SummonHeirloom,
+
+    //Passives
+    UnnaturalStrength,
+    SupernaturalStrength
 }

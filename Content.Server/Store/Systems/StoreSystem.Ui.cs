@@ -4,12 +4,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
-using Content.Server.Store.Events;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Store;
+using Content.Shared.Store.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -178,7 +178,9 @@ public sealed partial class StoreSystem
         //broadcast event
         if (listing.ProductEvent != null)
         {
-            RaiseLocalEvent(listing.ProductEvent);
+            var ev = new StoreProductEvent(buyer, listing, listing.ProductEvent);
+            RaiseLocalEvent(uid, ev);
+            RaiseLocalEvent(buyer, ev);
         }
 
         //log dat shit.
