@@ -349,7 +349,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/glass_break1.ogg
+              sound:
+                collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetGlass:
