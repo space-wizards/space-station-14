@@ -20,6 +20,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private string _search = "";
 
+    [ViewVariables]
+    private HashSet<ListingData> _listings = new();
+
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
@@ -55,7 +58,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         _menu.SearchTextUpdated += (_, search) =>
         {
             _search = search.Trim().ToLowerInvariant();
-            SendMessage(new StoreRequestUpdateInterfaceMessage());
+            UpdateListingsWithSearchFilter();
         };
     }
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -65,22 +68,13 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         if (_menu == null)
             return;
 
-
-
         switch (state)
         {
             case StoreUpdateState msg:
+                _listings = msg.Listings;
+
                 _menu.UpdateBalance(msg.Balance);
-
-                // Filter listings by search
-                if (!string.IsNullOrEmpty(_search))
-                {
-                    msg.Listings.RemoveWhere(listingData => !Loc.GetString(listingData.Name).Trim().ToLowerInvariant().Contains(_search) &&
-                                                                  !Loc.GetString(listingData.Description).Trim().ToLowerInvariant().Contains(_search));
-                }
-
-                _menu.PopulateStoreCategoryButtons(msg.Listings);
-                _menu.UpdateListing(msg.Listings.ToList());
+                UpdateListingsWithSearchFilter();
                 _menu.SetFooterVisibility(msg.ShowFooter);
                 break;
             case StoreInitializeState msg:
@@ -100,5 +94,20 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             return;
         _menu?.Close();
         _menu?.Dispose();
+    }
+
+    private void UpdateListingsWithSearchFilter()
+    {
+        if (_menu == null)
+            return;
+
+        var filteredListings = new HashSet<ListingData>(_listings);
+        if (!string.IsNullOrEmpty(_search))
+        {
+            filteredListings.RemoveWhere(listingData => !Loc.GetString(listingData.Name).Trim().ToLowerInvariant().Contains(_search) &&
+                                                        !Loc.GetString(listingData.Description).Trim().ToLowerInvariant().Contains(_search));
+        }
+        _menu.PopulateStoreCategoryButtons(filteredListings);
+        _menu.UpdateListing(filteredListings.ToList());
     }
 }
