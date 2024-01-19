@@ -175,6 +175,21 @@
   description: flavor-base-clean
 
 - type: flavor
+  id: mustard
+  flavorType: Complex
+  description: flavor-complex-mustard
+
+- type: flavor
+  id: mayonnaise
+  flavorType: Complex
+  description: flavor-complex-mayonnaise
+
+- type: flavor
+  id: ketchunaise
+  flavorType: Complex
+  description: flavor-complex-ketchunaise
+
+- type: flavor
   id: nothing
   flavorType: Complex
   description: flavor-complex-nothing
@@ -888,4 +903,3 @@
   id: light
   flavorType: Complex
   description: flavor-complex-light
-  
