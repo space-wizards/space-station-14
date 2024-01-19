@@ -38,8 +38,8 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSunglasses
-      - id: SpaceCash5000
-        amount: 6
+      - id: SpaceCash30000
+        amount: 1
       - id: EncryptionKeySyndie
       - id: RubberStampTrader
       - id: PhoneInstrumentSyndicate
@@ -53,14 +53,13 @@
   id: BriefcaseThiefBribingBundleFilled
   name: brown briefcase
   parent: BriefcaseSyndie
-  suffix: Spesos
+  suffix: Thief, Spesos
   components:
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSunglasses
-      - id: SpaceCash5000
-        amount: 4
-      - id: RubberStampTrader
+      - id: SpaceCash10000
+        amount: 2
       - id: ClothingUniformJumpsuitTacticool
       - id: ClothingOuterCoatJensen
       - id: ClothingHandsGlovesCombat
