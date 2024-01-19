@@ -222,8 +222,6 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
-      - ReagentId: Potassium
-        Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -922,7 +920,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 14
+        maxVol: 18
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
