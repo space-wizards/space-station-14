@@ -27,7 +27,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
@@ -93,7 +93,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:

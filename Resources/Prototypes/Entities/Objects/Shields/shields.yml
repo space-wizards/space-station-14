@@ -47,7 +47,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:
@@ -160,7 +161,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: WoodDestroy
             - !type:SpawnEntitiesBehavior
               spawn:
                 MaterialWoodPlank:
@@ -215,7 +217,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:
@@ -440,7 +443,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 BrokenEnergyShield:
@@ -518,7 +522,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalGlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:

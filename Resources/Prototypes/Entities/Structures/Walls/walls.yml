@@ -301,13 +301,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: gold
@@ -372,13 +372,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: plasma
@@ -415,13 +415,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: plastic
@@ -519,13 +519,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: reinf_over
@@ -642,13 +642,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: silver
@@ -723,7 +723,7 @@
         node: girder
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
@@ -811,13 +811,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalBreak
   - type: IconSmooth
     key: walls
     base: solid
@@ -872,13 +872,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalBreak
   - type: IconSmooth
     key: walls
     base: solidrust
@@ -909,13 +909,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalBreak
   - type: IconSmooth
     key: walls
     base: uranium
@@ -948,13 +948,13 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
     destroySound:
-      path: /Audio/Effects/metalbreak.ogg
+      collection: MetalBreak
   - type: IconSmooth
     key: walls
     base: wood

@@ -45,7 +45,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
   - type: StaticPrice
     price: 10
 

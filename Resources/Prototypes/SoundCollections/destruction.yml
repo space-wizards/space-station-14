@@ -59,6 +59,10 @@
   - /Audio/Effects/metal_glass_break2.ogg
 
 - type: soundCollection
-  id: MetalBreakHeavy
+  id: MetalSlam
   files:
-  - /Audio/Effects/metal_break_heavy1.ogg
+  - /Audio/Effects/metal_slam1.ogg
+  - /Audio/Effects/metal_slam2.ogg
+  - /Audio/Effects/metal_slam3.ogg
+  - /Audio/Effects/metal_slam4.ogg
+  - /Audio/Effects/metal_slam5.ogg

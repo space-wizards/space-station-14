@@ -57,7 +57,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -151,7 +151,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:

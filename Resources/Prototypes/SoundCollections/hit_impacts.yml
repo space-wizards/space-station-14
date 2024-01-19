@@ -19,9 +19,11 @@
   - /Audio/Effects/weak_hit2.ogg
 
 - type: soundCollection
-  id: MetalSlam
+  id: GlassSmack
   files:
-  - /Audio/Effects/metal_slam1.ogg
-  - /Audio/Effects/metal_slam2.ogg
-  - /Audio/Effects/metal_slam3.ogg
-  - /Audio/Effects/metal_slam4.ogg
+  - /Audio/Effects/glass_smack.ogg
+
+- type: soundCollection
+  id: GlassSmash
+  files:
+  - /Audio/Effects/glass_smash.ogg
