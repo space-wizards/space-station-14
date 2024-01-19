@@ -17,7 +17,7 @@ reagent-name-weed-killer = weed killer
 reagent-desc-weed-killer = A mixture that targets weeds. Very effective against kudzu. Don't kill your plant with toxins!
 
 reagent-name-ammonia = ammonia
-reagent-desc-ammonia = An effective fertilizer. It give your plants nutrients and treats plants.
+reagent-desc-ammonia = An effective fertilizer, it gives your plants some nutrients.
 
 reagent-name-diethylamine = diethylamine
 reagent-desc-diethylamine = A very potent fertilizer, treats plants with nutrients, eliminates pests, and sometimes it can even speed up growth.
