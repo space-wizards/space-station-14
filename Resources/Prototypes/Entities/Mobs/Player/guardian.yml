@@ -26,7 +26,7 @@
         types:
           Blunt: 5
       soundHit:
-        path: /Audio/Effects/hit_kick.ogg
+        collection: MetalThud
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.Base:
