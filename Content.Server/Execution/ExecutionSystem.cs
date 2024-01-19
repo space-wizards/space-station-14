@@ -50,16 +50,16 @@ public sealed class ExecutionSystem : EntitySystem
     {
         base.Initialize();
         
-        SubscribeLocalEvent<SharpComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionVerbsMelee);
+        SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionVerbsMelee);
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionVerbsGun);
         
-        SubscribeLocalEvent<SharpComponent, ExecutionDoAfterEvent>(OnDoafterMelee);
+        SubscribeLocalEvent<MeleeWeaponComponent, ExecutionDoAfterEvent>(OnDoafterMelee);
         SubscribeLocalEvent<GunComponent, ExecutionDoAfterEvent>(OnDoafterGun);
     }
 
     private void OnGetInteractionVerbsMelee(
         EntityUid uid, 
-        SharpComponent component,
+        MeleeWeaponComponent component,
         GetVerbsEvent<UtilityVerb> args)
     {
         if (args.Hands == null || args.Using == null || !args.CanAccess || !args.CanInteract)
@@ -145,11 +145,12 @@ public sealed class ExecutionSystem : EntitySystem
     {
         if (!CanExecuteWithAny(weapon, victim, user)) return false;
         
-        // We must be able to actually hurt people with the weapon
-        if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
-            return false;
+        // It must either be a sharp object or a harmless toy (among pequeno, foam cutlass, etc.)
+        // still nothing like executing someone with a crowbar or hamlet
+        if (HasComp<SharpComponent>(weapon))
+            return true;
 
-        return true;
+        return TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() <= 0.0f;
     }
     
     private bool CanExecuteWithGun(EntityUid weapon, EntityUid victim, EntityUid user)
@@ -233,7 +234,7 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
 
-    private void OnDoafterMelee(EntityUid uid, SharpComponent component, DoAfterEvent args)
+    private void OnDoafterMelee(EntityUid uid, MeleeWeaponComponent component, DoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return;
