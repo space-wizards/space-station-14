@@ -37,7 +37,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
         component.Airlocks.Clear();
         component.Airlocks.AddRange(state.Airlocks);
     }
-
 }
 
 public sealed class NavMapOverlay : Overlay
