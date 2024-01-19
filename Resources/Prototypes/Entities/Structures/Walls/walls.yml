@@ -309,8 +309,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: gold
@@ -427,8 +425,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: plastic
@@ -534,8 +530,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: reinf_over
@@ -660,8 +654,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: MetalSlam
   - type: IconSmooth
     key: walls
     base: silver
@@ -835,8 +827,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: MetalBreak
   - type: IconSmooth
     key: walls
     base: solid
@@ -937,8 +927,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: MetalBreak
   - type: IconSmooth
     key: walls
     base: uranium
@@ -979,8 +967,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: WoodDestroyHeavy
   - type: IconSmooth
     key: walls
     base: wood
