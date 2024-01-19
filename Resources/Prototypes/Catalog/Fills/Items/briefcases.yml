@@ -58,8 +58,8 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSunglasses
-      - id: SpaceCash10000
-        amount: 2
+      - id: SpaceCash20000
+        amount: 1
       - id: ClothingUniformJumpsuitTacticool
       - id: ClothingOuterCoatJensen
       - id: ClothingHandsGlovesCombat
