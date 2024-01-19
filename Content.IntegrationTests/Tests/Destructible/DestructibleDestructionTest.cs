@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     break;
                 }
 
-                Assert.That(found, Is.True, $"Unable to find {SpawnedEntityId} nearby for destructible test.");
+                Assert.That(found, Is.True, $"Unable to find {SpawnedEntityId} nearby for destructible test; found {entitiesInRange.Count} entities.");
             });
             await pair.CleanReturnAsync();
         }
