@@ -91,4 +91,4 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud

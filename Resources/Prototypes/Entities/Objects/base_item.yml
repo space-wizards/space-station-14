@@ -21,7 +21,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/hit_kick.ogg
+      collection: MetalThud
   - type: CollisionWake
   - type: TileFrictionModifier
     modifier: 0.5
