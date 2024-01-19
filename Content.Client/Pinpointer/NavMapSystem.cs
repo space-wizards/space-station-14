@@ -14,7 +14,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
     {
         base.Initialize();
         SubscribeLocalEvent<NavMapComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<NavMapBeaconComponent, ComponentStartup>(OnNavMapBeaconStartup);
     }
 
     private void OnHandleState(EntityUid uid, NavMapComponent component, ref ComponentHandleState args)
@@ -39,11 +38,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
         component.Airlocks.AddRange(state.Airlocks);
     }
 
-    private void OnNavMapBeaconStartup(EntityUid uid, NavMapBeaconComponent component, ComponentStartup args)
-    {
-        component.Text ??= string.Empty;
-        component.Text = Loc.GetString(component.Text);
-    }
 }
 
 public sealed class NavMapOverlay : Overlay

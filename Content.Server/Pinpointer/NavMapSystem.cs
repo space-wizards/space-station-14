@@ -59,8 +59,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     private void OnNavMapBeaconStartup(EntityUid uid, NavMapBeaconComponent component, ComponentStartup args)
     {
-        component.Text ??= string.Empty;
-        component.Text = Loc.GetString(component.Text);
         RefreshNavGrid(uid);
     }
 
