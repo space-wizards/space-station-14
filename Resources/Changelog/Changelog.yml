@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Improvised explosive devices now have unreliable timers that can take
-      anywhere from 0 to 60 seconds to explode.
-    type: Add
-  id: 5246
-  time: '2023-12-03T02:21:51.0000000+00:00'
 - author: liltenhead
   changes:
   - message: Replaced the Engivend's individual inflatables with the boxed version.
@@ -3781,3 +3774,11 @@
   id: 5746
   time: '2024-01-19T15:33:08.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24282
+- author: SpeltIncorrectyl
+  changes:
+  - message: Emagging the artifact crusher now stops it from being opened while it
+      is crushing.
+    type: Add
+  id: 5747
+  time: '2024-01-19T15:35:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23957
