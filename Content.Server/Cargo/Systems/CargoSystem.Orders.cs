@@ -216,6 +216,7 @@ namespace Content.Server.Cargo.Systems
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
 
+            orderDatabase.Orders.Remove(order);
             DeductFunds(bank, cost);
             UpdateOrders(station.Value, orderDatabase);
         }
