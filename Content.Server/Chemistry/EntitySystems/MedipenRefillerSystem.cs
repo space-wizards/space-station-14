@@ -76,15 +76,6 @@ public sealed class MedipenRefillerSystem : EntitySystem
         UpdateUserInterfaceState(uid, component);
     }
 
-    /*private void TransferReagent(EntityUid uid, MedipenRefillerComponent component, ReagentId reagent, FixedPoint2 amount)
-    {
-        if (!Resolve(uid, ref component!))
-            return;
-
-        _itemSlotsSystem.GetItemOrNull(uid);
-
-    }*/
-
     #region UI Messages
     public void UpdateUserInterfaceState(EntityUid uid, MedipenRefillerComponent component)
     {
