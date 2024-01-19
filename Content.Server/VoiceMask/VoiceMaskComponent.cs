@@ -10,9 +10,12 @@ public sealed partial class VoiceMaskComponent : Component
     [ViewVariables(VVAccess.ReadWrite)] public string VoiceName = "Unknown";
 
     /// <summary>
-    /// If not null, overrides the speech verb used when this entity speaks.
+    /// If EnableSpeechVerbModification is true, overrides the speech verb used when this entity speaks.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [ValidatePrototypeId<SpeechVerbPrototype>]
-    public string? SpeechVerb;
+    public string SpeechVerb = "Default";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool EnableSpeechVerbModification = false;
 }

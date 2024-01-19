@@ -83,7 +83,7 @@ public sealed class RadioSystem : EntitySystem
         SpeechVerbPrototype speech;
         if (mask != null
             && mask.Enabled
-            && mask.SpeechVerb != null
+            && mask.EnableSpeechVerbModification
             && _prototype.TryIndex<SpeechVerbPrototype>(mask.SpeechVerb, out var proto))
         {
             speech = proto;

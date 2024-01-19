@@ -877,8 +877,6 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs
 {
     public EntityUid Sender;
     public string Name;
-
-    [ValidatePrototypeId<SpeechVerbPrototype>]
     public string? SpeechVerb;
 
     public TransformSpeakerNameEvent(EntityUid sender, string name, string? speechVerb = null)
