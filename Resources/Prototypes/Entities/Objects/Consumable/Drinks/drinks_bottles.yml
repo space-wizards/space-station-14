@@ -497,9 +497,18 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
+    layers:
+      - state: icon
+      - state: icon-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: icon-
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: DrinkWaterBottleFull
   id: DrinkSodaWaterBottleFull
   name: soda water bottle
   description: Like water, but angry!
@@ -511,12 +520,9 @@
         reagents:
         - ReagentId: SodaWater
           Quantity: 150
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: DrinkWaterBottleFull
   id: DrinkTonicWaterBottleFull
   name: tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.
@@ -528,9 +534,6 @@
         reagents:
         - ReagentId: TonicWater
           Quantity: 150
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
 
 # Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
 
