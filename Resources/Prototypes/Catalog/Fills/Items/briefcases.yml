@@ -38,5 +38,13 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSunglasses
-      - id: SpaceCash1000
-        amount: 5
+      - id: SpaceCash5000
+        amount: 6
+      - id: EncryptionKeySyndie
+      - id: RubberStampTrader
+      - id: PhoneInstrumentSyndicate
+      - id: ClothingUniformJumpsuitTacticool
+      - id: ClothingOuterCoatJensen
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingMaskNeckGaiter
+      - id: SyndieHandyFlag
