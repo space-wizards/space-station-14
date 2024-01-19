@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Doru991
-  changes:
-  - message: Ambrosia Deus and Koibeans's chemical amounts have been reduced.
-    type: Tweak
-  - message: Plant chemical mutations can no longer produce any reagent in the game.
-    type: Tweak
-  id: 5241
-  time: '2023-12-02T17:01:58.0000000+00:00'
 - author: Cohnway
   changes:
   - message: Remilia's sprite made larger and more detailed
@@ -3776,3 +3768,10 @@
   id: 5741
   time: '2024-01-19T02:02:28.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23863
+- author: Emisse
+  changes:
+  - message: Title2 to lobby music
+    type: Add
+  id: 5742
+  time: '2024-01-19T02:47:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24254
