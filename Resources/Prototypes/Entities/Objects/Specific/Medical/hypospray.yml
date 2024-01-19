@@ -91,7 +91,7 @@
       delay: 0.0
 
 - type: entity
-  name: chemical medipen
+  name: empty medipen
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients.
   id: ChemicalMedipen
@@ -119,15 +119,13 @@
     changeColor: false
     emptySpriteName: firstaid_empty
   - type: Tag
-    tags: [ "Trash", "Medipen" ]
+    tags: [ "Medipen" ]
   - type: PhysicalComposition
     materialComposition:
-      Plastic: 50
-  - type: SpaceGarbage
+      Plasteel: 300
+      Steel: 200
   - type: StaticPrice
-    price: 75 # These are limited supply items.
-  - type: TrashOnSolutionEmpty
-    solution: pen
+    price: 100
 
 - type: entity
   name: emergency medipen

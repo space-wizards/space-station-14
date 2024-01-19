@@ -4,6 +4,10 @@ namespace Content.Shared.Chemistry;
 
 public sealed class SharedMedipenRefiller
 {
+    public const string BufferSolutionName = "buffer";
+    public const string InputSlotName = "beakerSlot";
+    public const string MedipenSlotName = "medipenSlot";
+
     [Serializable, NetSerializable]
     public enum MedipenRefillerUiKey
     {

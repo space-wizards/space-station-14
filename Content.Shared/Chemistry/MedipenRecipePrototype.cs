@@ -15,6 +15,9 @@ public sealed partial class MedipenRecipePrototype : IPrototype
     [DataField("result", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? Result { get; set; }
 
+    [DataField("lockedByEmag")]
+    public bool LockedByEmag { get; set; } = false;
+
     [DataField("reagents", required: true)]
     public Dictionary<string, int> ReagentsRequired { get; set; } = new();
 }

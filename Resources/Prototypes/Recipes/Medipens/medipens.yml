@@ -29,6 +29,7 @@
 - type: medipenRecipe
   id: RadAutoInjector
   result: RadAutoInjector
+  lockedByEmag: true
   reagents:
     Arithrazine: 15
     Bicaridine: 5
@@ -36,6 +37,7 @@
 - type: medipenRecipe
   id: CombatMedipen
   result: CombatMedipen
+  lockedByEmag: true
   reagents:
     Omnizine: 25
     TranexamicAcid: 5

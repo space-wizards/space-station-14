@@ -67,7 +67,7 @@
   - type: ContainerContainer
     containers:
       beakerSlot: !type:ContainerSlot
-      outputSlot: !type:ContainerSlot
+      medipenSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: ItemSlots
@@ -76,7 +76,7 @@
         whitelist:
           components:
           - FitsInDispenser
-      outputSlot:
+      medipenSlot:
         whitelist:
           tags:
           - Medipen
