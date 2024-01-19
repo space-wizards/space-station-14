@@ -7,7 +7,6 @@ using Content.Shared.Destructible;
 using Content.Shared.Explosion;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Storage.Components;
