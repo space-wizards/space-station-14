@@ -201,7 +201,7 @@
     maxFillLevels: 6
     fillBaseName: beakerlarge
   - type: StaticPrice
-    price: 40
+    price: 20
 
 - type: entity
   name: cryostasis beaker

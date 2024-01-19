@@ -58,7 +58,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetVoidParamed
-  name: Paramedic Void Helmet
+  name: paramedic void helmet
   description: A void helmet made for paramedics.
   components:
   - type: BreathMask
@@ -71,7 +71,6 @@
   - type: Armor
     modifiers:
       coefficients:
-        Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
 

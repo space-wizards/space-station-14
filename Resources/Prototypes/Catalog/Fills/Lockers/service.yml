@@ -33,7 +33,7 @@
   - type: StorageFill
     contents:
       - id: CrowbarRed
-      - id: MonkeyCubeBox
+      - id: VariantCubeBox
       - id: BoxMousetrap
         amount: 2
       - id: SprayBottleWater

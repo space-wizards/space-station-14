@@ -7,6 +7,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
+using Content.Shared.Burial.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -77,59 +78,62 @@ public sealed class PlantHolderSystem : EntitySystem
 
         var (_, component) = entity;
 
-        if (component.Seed == null)
+        using (args.PushGroup(nameof(PlantHolderComponent)))
         {
-            args.PushMarkup(Loc.GetString("plant-holder-component-nothing-planted-message"));
-        }
-        else if (!component.Dead)
-        {
-            var displayName = Loc.GetString(component.Seed.DisplayName);
-            args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
+            if (component.Seed == null)
+            {
+                args.PushMarkup(Loc.GetString("plant-holder-component-nothing-planted-message"));
+            }
+            else if (!component.Dead)
+            {
+                var displayName = Loc.GetString(component.Seed.DisplayName);
+                args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
                     ("seedName", displayName),
                     ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
 
-            if (component.Health <= component.Seed.Endurance / 2)
-            {
-                args.PushMarkup(Loc.GetString(
-                    "plant-holder-component-something-already-growing-low-health-message",
-                    ("healthState",
-                        Loc.GetString(component.Age > component.Seed.Lifespan
-                            ? "plant-holder-component-plant-old-adjective"
-                            : "plant-holder-component-plant-unhealthy-adjective"))));
+                if (component.Health <= component.Seed.Endurance / 2)
+                {
+                    args.PushMarkup(Loc.GetString(
+                        "plant-holder-component-something-already-growing-low-health-message",
+                        ("healthState",
+                            Loc.GetString(component.Age > component.Seed.Lifespan
+                                ? "plant-holder-component-plant-old-adjective"
+                                : "plant-holder-component-plant-unhealthy-adjective"))));
+                }
             }
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("plant-holder-component-dead-plant-matter-message"));
-        }
+            else
+            {
+                args.PushMarkup(Loc.GetString("plant-holder-component-dead-plant-matter-message"));
+            }
 
-        if (component.WeedLevel >= 5)
-            args.PushMarkup(Loc.GetString("plant-holder-component-weed-high-level-message"));
+            if (component.WeedLevel >= 5)
+                args.PushMarkup(Loc.GetString("plant-holder-component-weed-high-level-message"));
 
-        if (component.PestLevel >= 5)
-            args.PushMarkup(Loc.GetString("plant-holder-component-pest-high-level-message"));
+            if (component.PestLevel >= 5)
+                args.PushMarkup(Loc.GetString("plant-holder-component-pest-high-level-message"));
 
-        args.PushMarkup(Loc.GetString($"plant-holder-component-water-level-message",
-            ("waterLevel", (int) component.WaterLevel)));
-        args.PushMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
-            ("nutritionLevel", (int) component.NutritionLevel)));
+            args.PushMarkup(Loc.GetString($"plant-holder-component-water-level-message",
+                ("waterLevel", (int) component.WaterLevel)));
+            args.PushMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
+                ("nutritionLevel", (int) component.NutritionLevel)));
 
-        if (component.DrawWarnings)
-        {
-            if (component.Toxins > 40f)
-                args.PushMarkup(Loc.GetString("plant-holder-component-toxins-high-warning"));
+            if (component.DrawWarnings)
+            {
+                if (component.Toxins > 40f)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-toxins-high-warning"));
 
-            if (component.ImproperLight)
-                args.PushMarkup(Loc.GetString("plant-holder-component-light-improper-warning"));
+                if (component.ImproperLight)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-light-improper-warning"));
 
-            if (component.ImproperHeat)
-                args.PushMarkup(Loc.GetString("plant-holder-component-heat-improper-warning"));
+                if (component.ImproperHeat)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-heat-improper-warning"));
 
-            if (component.ImproperPressure)
-                args.PushMarkup(Loc.GetString("plant-holder-component-pressure-improper-warning"));
+                if (component.ImproperPressure)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-pressure-improper-warning"));
 
-            if (component.MissingGas > 0)
-                args.PushMarkup(Loc.GetString("plant-holder-component-gas-missing-warning"));
+                if (component.MissingGas > 0)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-gas-missing-warning"));
+            }
         }
     }
 
@@ -188,7 +192,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tagSystem.HasTag(args.Used, "Shovel"))
+        if (HasComp<ShovelComponent>(args.Used))
         {
             if (component.Seed != null)
             {

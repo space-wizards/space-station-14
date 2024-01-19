@@ -146,8 +146,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHatHoodRad
-        amount: 2
       - id: ClothingOuterSuitRad
         amount: 2
       - id: GeigerCounter
