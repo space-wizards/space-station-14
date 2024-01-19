@@ -50,7 +50,7 @@ reagent-name-barozine = barozine
 reagent-desc-barozine = A potent chemical that prevents pressure damage. Causes extreme stress on the body.
 
 reagent-name-phalanximine = phalanximine
-reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning and vomiting. Poisons the plant with toxins and removes the death gene if at least 4 units are added.
+reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning on organics and vomiting. Can potentially remove the death gene on plants.
 
 reagent-name-ambuzol = ambuzol
 reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
