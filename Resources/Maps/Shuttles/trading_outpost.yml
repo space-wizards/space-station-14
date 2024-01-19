@@ -23,7 +23,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: Automated Trading Outpost
+      name: Automated Trade Station
     - type: Transform
       pos: -2.9375,-1.625
       parent: invalid
@@ -463,19 +463,17 @@ entities:
     - type: Transform
       pos: -0.5,1.5
       parent: 2
-- proto: AirlockCargoGlassLocked
+- proto: AirlockCargoGlass
   entities:
   - uid: 248
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -0.5,5.5
+      pos: 11.5,5.5
       parent: 2
   - uid: 249
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 11.5,5.5
+      pos: -0.5,5.5
       parent: 2
 - proto: AirlockExternalGlass
   entities:
