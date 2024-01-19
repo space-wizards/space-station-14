@@ -13,8 +13,7 @@
   - BorgModuleGardening
   - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
-  - HydroponicsTrayMachineCircuitboard
-
+  - Plantanalyzer
 - type: technology
   id: CritterMechs
   name: research-technology-critter-mechs

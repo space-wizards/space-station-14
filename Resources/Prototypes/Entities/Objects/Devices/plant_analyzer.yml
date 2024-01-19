@@ -34,7 +34,7 @@
   components:
   - type: PowerCellDraw
     drawRate: 0
-    useRate: 20
+    useRate: 40
   - type: ActivatableUIRequiresPowerCell
 
 - type: entity
@@ -46,5 +46,3 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-
-

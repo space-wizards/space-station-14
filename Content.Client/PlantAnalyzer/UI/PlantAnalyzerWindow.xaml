@@ -6,42 +6,49 @@
    SetSize="300 500"
    Margin="10 10 10 10">
     <!-- Margin="left,top,right,bottom" -->
-    <GridContainer Rows="2">
+    <GridContainer Rows="3" Name ="GridCont">
         <BoxContainer Name="Toggle" >
-            <Label Name="AdvMode" Text="Advanced mode:" Margin="5 5 5 5"/>
+            <Label Name="AdvMode" Text="Advanced scan mode:" Margin="10 5 5 5"/>
             <Button Name="OnButton" Text="{Loc 'gravity-generator-window-power-on'}" StyleClasses="OpenRight" />
-            <Label Name="NoData" Text="{Loc plant-analyzer-window-no-seed-information-text}" Margin="5 5 5 5"/>
+            <Button Name="OffButton" Text="{Loc 'gravity-generator-window-power-off'}" StyleClasses="OpenLeft" />
+        </BoxContainer>
+        <BoxContainer Name="Top">
+            <Label Name="NoData" Text="{Loc 'plant-analyzer-window-no-seed-information-text'}" Margin="20 10 10 10" />
         </BoxContainer>
 
-        <TabContainer Name="Tabs" Margin="5 10 5 5" HorizontalExpand="True">
-            <BoxContainer Name="Basics" Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True">
-                <Label Name="PlantName" Margin="0 5 0 10"/>
-                <Label Name="Yield" Margin="0 5 0 10"/>
-                <Label Name="Potency" Margin="0 5 0 10"/>
-                <Label Name="Repeat" Margin="0 5 0 10"/>
-                <Label Name="Chemicals" Margin="0 5 0 10"/>
-                <Label Name="Gases" Margin="0 5 0 10"/>
-                <Label Name="Lifespan" Margin="0 5 0 10"/>
-                <Label Name="Maturation" Margin="0 5 0 10"/>
-                <Label Name="GrowthStages" Margin="0 5 0 10"/>
-            </BoxContainer>
-
-            <BoxContainer Name="Tolerances" Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True">
-                <Label Name="NutrientUsage" Margin="0 5 0 10"/>
-                <Label Name="WaterUsage" Margin="0 5 0 10"/>
-                <Label Name="IdealHeat" Margin="0 5 0 10"/>
-                <Label Name="IdealLight" Margin="0 5 0 10"/>
-                <Label Name="LightTolerance" Margin="0 5 0 10"/>
-                <Label Name="ToxinsTolerance" Margin="0 5 0 10"/>
-                <Label Name="LowPressureTolerance" Margin="0 5 0 10"/>
-                <Label Name="HighPressureTolerance" Margin="0 5 0 10"/>
-                <Label Name="PestTolerance" Margin="0 5 0 10"/>
-                <Label Name="WeedTolerance" Margin="0 5 0 10"/>
-            </BoxContainer>
-
-            <BoxContainer Name ="Mutations" Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True">
+        <TabContainer Name="Tabs" Margin="5 5 5 5" HorizontalExpand="True" VerticalExpand="True">
+            <ScrollContainer Name="Basics" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True" >
+                    <Label Name="PlantName" Margin="0 5 0 10"/>
+                    <Label Name="Yield" Margin="0 5 0 10"/>
+                    <Label Name="Potency" Margin="0 5 0 10"/>
+                    <Label Name="Repeat" Margin="0 5 0 10"/>
+                    <Label Name="Chemicals" Margin="0 5 0 10"/>
+                    <Label Name="Gases" Margin="0 5 0 10" />
+                    <Label Name="Lifespan" Margin="0 5 0 10" />
+                    <Label Name="Maturation" Margin="0 5 0 10" />
+                    <Label Name="GrowthStages" Margin="0 5 0 10" />
+                </BoxContainer>
+            </ScrollContainer>
+            <ScrollContainer Name="Tolerances" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer  Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True">
+                    <Label Name="NutrientUsage" Margin="0 5 0 5"/>
+                    <Label Name="WaterUsage" Margin="0 5 0 5"/>
+                    <Label Name="IdealHeat" Margin="0 5 0 5"/>
+                    <Label Name="HeatTolerance" Margin="0 5 0 5"/>
+                    <Label Name="IdealLight" Margin="0 5 0 5"/>
+                    <Label Name="LightTolerance" Margin="0 5 0 5"/>
+                    <Label Name="ToxinsTolerance" Margin="0 5 0 5"/>
+                    <Label Name="LowPressureTolerance" Margin="0 5 0 5"/>
+                    <Label Name="HighPressureTolerance" Margin="0 5 0 5"/>
+                    <Label Name="PestTolerance" Margin="0 5 0 5"/>
+                    <Label Name="WeedTolerance" Margin="0 5 0 5"/>
+                </BoxContainer>
+            </ScrollContainer>
+            <BoxContainer Name ="Mutations" Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True">
                 <Label Name="PlantSpeciation" Margin="0 5 0 5"/>
                 <Label Name="Traits" Margin="0 5 0 5"/>
+                <Label Name="ExtraInfo" Margin="0 5 0 5"/>
             </BoxContainer>
         </TabContainer>
 

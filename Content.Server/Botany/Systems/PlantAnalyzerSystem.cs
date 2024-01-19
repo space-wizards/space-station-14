@@ -9,7 +9,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Botany.Systems;
 
@@ -19,20 +18,18 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private PlantHolderComponent _plantHolder = default!;
-    private Boolean scanMode;
+    private Boolean _scanMode;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<PlantAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerDoAfterEvent>(OnDoAfter);
-
-
-        SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerMode>(OnModeSelected);
+        SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerSetMode>(OnModeSelected);
     }
 
     private void OnAfterInteract(EntityUid uid, PlantAnalyzerComponent plantAnalyzer, AfterInteractEvent args)
@@ -41,9 +38,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             return;
         _audio.PlayPvs(plantAnalyzer.ScanningBeginSound, uid);
 
-        Boolean advScan = plantAnalyzer.AdvancedScan;
-
-        if (advScan)
+        if (plantAnalyzer.AdvancedScan)
         {
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, plantAnalyzer.AdvScanDelay, new PlantAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
             {
@@ -66,6 +61,11 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, PlantAnalyzerComponent component, DoAfterEvent args)
     {
+        if (component.AdvancedScan) //double charge use for advanced scan to 80 usage which is of ~22% small cell
+        {
+            if (!_cell.TryUseActivatableCharge(uid, user: args.User))
+                return;
+        }
         if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.TryUseActivatableCharge(uid, user: args.User))
             return;
 
@@ -79,6 +79,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     {
         if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, PlantAnalyzerUiKey.Key, out var ui))
             return;
+
         _uiSystem.OpenUi(ui, actor.PlayerSession);
     }
 
@@ -95,7 +96,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var state = default(PlantAnalyzerScannedSeedPlantInformation);
         var seedData = default(SeedData);   // data of a unique Seed
         var seedProtoId = default(SeedPrototype);   // data of base seed prototype
-        scanMode = plantAnalyzer.AdvancedScan;
+        _scanMode = plantAnalyzer.AdvancedScan;
 
         if (seedcomponent != null)
         {
@@ -108,7 +109,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             {
                 seedProtoId = protoSeed;
                 state = ObtainingGeneDataSeedProt(protoSeed, target);
-                
             }
         }
         else if (plantcomp != null)    //where check if we poke the plantholder, it checks the plantholder seed
@@ -128,21 +128,24 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Analysis of seed from prototype.
+    ///     Analysis of seed from prototype. Shows all information since they are the "known stock" of NT.
     /// </summary>
     public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeedProt(SeedPrototype comp, EntityUid target)
     {
-        var seedName = Loc.GetString(comp.DisplayName);
+        var seedName = "\r\n  NanoTrasen prototype: \r\n  " + Loc.GetString(comp.DisplayName) + " (tm)";
+        //var seedName = comp.Name;
 
         var seedChem = "\r\n   ";
         var plantHarvestType = "";
         var exudeGases = "";
+        var potency = comp.Potency;
+        var yield = comp.Yield;
 
         var plantSpeciation = "";
         var plantMutations = "";
         var tolerances = "";
         var generalTraits = "";
-        scanMode = true;
+
         if (comp.HarvestRepeat == HarvestType.Repeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-repeat");
         if (comp.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-ephemeral");
         if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = Loc.GetString("plant-analyzer-harvest-autoharvest");
@@ -164,10 +167,11 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         plantSpeciation += String.Join(", \r\n", comp.MutationPrototypes.Select(item => item.ToString()));
         plantMutations = CheckAllMutations(comp, plantMutations);
         tolerances = CheckAllTolerances(comp, tolerances);
+
         generalTraits = CheckAllGeneralTraits(comp, generalTraits);
 
         return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName,
-            seedChem, plantHarvestType, exudeGases, plantMutations, false, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), scanMode);
+            seedChem, plantHarvestType, exudeGases, potency.ToString(), yield.ToString(), plantMutations, false, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), _scanMode);
     }
 
     /// <summary>
@@ -180,6 +184,8 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var seedChem = "\r\n   ";
         var plantHarvestType = "";
         var exudeGases = "";
+        var potency = comp.Potency;
+        var yield = comp.Yield;
 
         var plantSpeciation = "";
         var plantMutations = "";
@@ -204,7 +210,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
         }
 
-        if (scanMode)
+        if (_scanMode)
         {
             plantSpeciation += String.Join(", \r\n", comp.MutationPrototypes.Select(item => item.ToString()));
             plantMutations = CheckAllMutations(comp, plantMutations);
@@ -214,7 +220,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         generalTraits = CheckAllGeneralTraits(comp, generalTraits);
 
         return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName,
-            seedChem, plantHarvestType, exudeGases, plantMutations, trayChecker, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), scanMode);
+            seedChem, plantHarvestType, exudeGases, potency.ToString(), yield.ToString(), plantMutations, false, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), _scanMode);
     }
 
     /// <summary>
@@ -222,7 +228,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     /// </summary>
     public string CheckAllGeneralTraits(SeedData plant, string generalTraits)
     {
-        var seedName = Loc.GetString(plant.DisplayName);
+        var name = Loc.GetString(plant.DisplayName);
         var endurance = plant.Endurance;
         var yield = plant.Yield;
         var lifespan = plant.Lifespan;
@@ -230,7 +236,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var growthStages = plant.GrowthStages;
         var potency = plant.Potency;
 
-        generalTraits = endurance + ";" + yield.ToString() + ";" + lifespan + ";" + maturation + ";" + growthStages + ";" + potency;
+        generalTraits = name + ";" + endurance + ";" + yield.ToString() + ";" + lifespan + ";" + maturation + ";" + growthStages + ";" + potency;
 
         return generalTraits;
     }
@@ -265,23 +271,22 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
         return tolerances;
     }
-    private void OnModeSelected(EntityUid uid, PlantAnalyzerComponent component, PlantAnalyzerMode args)
+    private void OnModeSelected(EntityUid uid, PlantAnalyzerComponent component, PlantAnalyzerSetMode args)
     {
-        SetMode(uid, args.AdvancedScan, component);
+        SetMode(uid, component, args.AdvancedScan);
     }
-    public void SetMode(EntityUid uid, Boolean advancedScan, PlantAnalyzerComponent? component = null)
+    public void SetMode(EntityUid uid, PlantAnalyzerComponent? component, bool args)
     {
         if (!Resolve(uid, ref component))
             return;
-        if (component.AdvancedScan == true)
-        {
-            component.AdvancedScan = false;
-        }
-        else
+
+        if (args)
         {
             component.AdvancedScan = true;
         }
-
-        //UpdateUserInterface(uid, component);
+        else
+        {
+            component.AdvancedScan = false;
+        }
     }
 }

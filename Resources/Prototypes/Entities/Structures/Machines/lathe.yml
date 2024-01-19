@@ -81,6 +81,12 @@
     idleState: icon
     runningState: building
     staticRecipes:
+      - HydroponicsToolMiniHoe
+      - HydroponicsToolClippers 
+      - HydroponicsToolScythe
+      - HydroponicsToolHatchet
+      - HydroponicsToolSpade
+      - PlantBag
       - Wirecutter
       - Screwdriver
       - Welder
@@ -144,7 +150,7 @@
       - SubstationMachineCircuitboard
       - CellRechargerCircuitboard
       - BorgChargerCircuitboard
-      - WeaponCapacitorRechargerCircuitboard
+      - WeaponCapacitorRechargerCircuitboard 
   - type: EmagLatheRecipes
     emagStaticRecipes:
        - CartridgePistol
@@ -236,6 +242,7 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
+      - Plantanalyzer
       - PowerDrill
       - MiningDrill
       - AnomalyScanner

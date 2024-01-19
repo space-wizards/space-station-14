@@ -42,7 +42,7 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string Endurance = "";
 
     public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedChem, string plantHarvestType,
-        string exudeGases, string seedMutations, Boolean isTray, string plantSpeciation, string tolerances, string generalTraits, Boolean scanMode)
+        string exudeGases, string potency, string yield, string seedMutations, Boolean isTray, string plantSpeciation, string tolerances, string generalTraits, Boolean scanMode)
     {
         TargetEntity = targetEntit;
         ScanMode = scanMode;
@@ -51,12 +51,15 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
         SeedChem = seedChem;
         Repeat = plantHarvestType;
         ExudeGases = exudeGases;
+        SeedYield = yield;
+        SeedPotency = potency;
 
         IsTray = isTray;
 
         SeedMutations = seedMutations;
         PlantSpeciation = plantSpeciation;
-        if (scanMode)
+
+        if (scanMode || SeedName.Contains("NanoTrasen")) //advanced scan mode OR its a roundstart prototype seed
         {
             String[] arrTol = tolerances.Split(";");
             NutrientConsumption = arrTol[0];
@@ -72,23 +75,23 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
             WeedTolerance = arrTol[10];
 
             String[] arrGeneral = generalTraits.Split(";");
-            Endurance = arrGeneral[0];
-            SeedYield = arrGeneral[1];
-            Lifespan = arrGeneral[2];
-            Maturation = arrGeneral[3];
-            GrowthStages = arrGeneral[4];
-            SeedPotency = arrGeneral[5];
+            //SeedName = arrGeneral[0];
+            Endurance = arrGeneral[1];
+            SeedYield = arrGeneral[2];
+            Lifespan = arrGeneral[3];
+            Maturation = arrGeneral[4];
+            GrowthStages = arrGeneral[5];
+            SeedPotency = arrGeneral[6];
         }
-
     }
 }
 
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerMode : BoundUserInterfaceMessage
+public sealed class PlantAnalyzerSetMode : BoundUserInterfaceMessage
 {
-    public Boolean AdvancedScan { get; }
+    public bool AdvancedScan { get; }
 
-    public PlantAnalyzerMode(Boolean advancedScan)
+    public PlantAnalyzerSetMode(bool advancedScan)
     {
         AdvancedScan = advancedScan;
     }

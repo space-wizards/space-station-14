@@ -1,4 +1,3 @@
-using Content.Shared.Gravity;
 using Content.Shared.PlantAnalyzer;
 using JetBrains.Annotations;
 
@@ -21,6 +20,7 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         {
             Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
         };
+
         _window.OnClose += Close;
         _window.OpenCentered();
     }
@@ -36,10 +36,9 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         _window.Populate(cast);
     }
 
-    public void AdvPressed()
+    public void AdvPressed(bool mode)
     {
-        SendMessage(new PlantAnalyzerMode(true));
-        
+        SendMessage(new PlantAnalyzerSetMode(mode)); //called by xaml.cs
     }
 
     protected override void Dispose(bool disposing)
