@@ -20,4 +20,4 @@ reagent-name-ammonia = ammonia
 reagent-desc-ammonia = An effective fertilizer. It give your plants nutrients and treats plants.
 
 reagent-name-diethylamine = diethylamine
-reagent-desc-diethylamine = A very potent fertilizer. It give your plants nutrients, eliminates pests, treats plant and with some probability speeds up growth.
+reagent-desc-diethylamine = A very potent fertilizer, treats plants with nutrients, eliminates pests, and sometimes it can even speed up growth.
