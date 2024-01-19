@@ -1,57 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Added the Death Acidifier, an implant that destroys your body and equipment
-      without harming allies.
-    type: Add
-  - message: Added the microbomb implanter back to nukie uplinks.
-    type: Add
-  - message: Nukies have exchanged microbomb implants for Death Acidifiers.
-    type: Tweak
-  id: 5235
-  time: '2023-12-01T20:14:45.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Tacos can be eaten by Lizards now. It's fricken Taco Tuesday!
-    type: Fix
-  id: 5236
-  time: '2023-12-01T22:27:09.0000000+00:00'
-- author: Rainbeon
-  changes:
-  - message: Cyborgs can now speak while in a Critical state.
-    type: Tweak
-  id: 5237
-  time: '2023-12-02T00:25:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Potentially fix audio filters.
-    type: Fix
-  id: 5238
-  time: '2023-12-02T08:47:41.0000000+00:00'
-- author: EEASAS
-  changes:
-  - message: Mothroaches have been vaccinated to be weaker and slower. Also, they
-      are more valuable!
-    type: Tweak
-  - message: Mothroaches and rats cannot pull items anymore.
-    type: Tweak
-  id: 5239
-  time: '2023-12-02T16:45:07.0000000+00:00'
-- author: Moomoobeef
-  changes:
-  - message: Added sodium polyacrylate, an industrial desiccant. You probably should
-      not consume this.
-    type: Add
-  id: 5240
-  time: '2023-12-02T16:58:34.0000000+00:00'
-- author: Doru991
-  changes:
-  - message: Ambrosia Deus and Koibeans's chemical amounts have been reduced.
-    type: Tweak
-  - message: Plant chemical mutations can no longer produce any reagent in the game.
-    type: Tweak
-  id: 5241
-  time: '2023-12-02T17:01:58.0000000+00:00'
 - author: Cohnway
   changes:
   - message: Remilia's sprite made larger and more detailed
@@ -3777,3 +3724,54 @@
   id: 5735
   time: '2024-01-18T00:28:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24207
+- author: Ubaser
+  changes:
+  - message: The paramedic's void suit now has a helmet toggle.
+    type: Tweak
+  id: 5736
+  time: '2024-01-18T15:26:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24229
+- author: Ubaser
+  changes:
+  - message: Carrots now properly contain Oculine, and you can Juice them to obtain
+      the raw chemical.
+    type: Fix
+  id: 5737
+  time: '2024-01-18T15:28:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24228
+- author: koteq
+  changes:
+  - message: Jugs with the same labels are now correctly grouped and sorted in the
+      context menu.
+    type: Tweak
+  id: 5738
+  time: '2024-01-18T22:18:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24243
+- author: EmoGarbage404
+  changes:
+  - message: Duplicate players will no longer spawn in cryogenic sleep units.
+    type: Fix
+  id: 5739
+  time: '2024-01-19T00:27:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24251
+- author: lapatison
+  changes:
+  - message: Guidebooks can now be found in random bookshelves.
+    type: Tweak
+  id: 5740
+  time: '2024-01-19T00:32:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24036
+- author: metalgearsloth
+  changes:
+  - message: Added trade stations for cargo instead of FTL.
+    type: Add
+  id: 5741
+  time: '2024-01-19T02:02:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23863
+- author: Emisse
+  changes:
+  - message: Title2 to lobby music
+    type: Add
+  id: 5742
+  time: '2024-01-19T02:47:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24254
