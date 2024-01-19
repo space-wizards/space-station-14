@@ -76,7 +76,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -210,7 +210,7 @@
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
   - type: Construction
     graph: WallmountSubstation
     node: substation
