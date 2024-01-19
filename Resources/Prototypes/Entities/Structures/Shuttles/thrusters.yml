@@ -41,7 +41,7 @@
             acts: ["Destruction"]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalBreak
     - type: StaticPrice
       price: 300
   placement:
@@ -70,7 +70,7 @@
           acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
   - type: Sprite
@@ -179,7 +179,7 @@
           acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
   - type: UpgradePowerDraw

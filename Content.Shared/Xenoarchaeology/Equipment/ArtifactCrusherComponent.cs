@@ -88,7 +88,7 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// Sound played at the end of a successful crush.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? CrushingCompleteSound = new SoundPathSpecifier("/Audio/Effects/metal_crunch.ogg");
+    public SoundSpecifier? CrushingCompleteSound = new SoundCollectionSpecifier("MetalCrunch");
 
     /// <summary>
     /// Sound played throughout the entire crushing. Cut off if ended early.
