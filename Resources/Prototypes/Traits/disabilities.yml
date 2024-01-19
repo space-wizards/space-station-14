@@ -49,7 +49,8 @@
   name: trait-wheelchair-bound-name
   description: trait-wheelchair-bound-desc
   components:
-    - type: WheelchairBound
+    - type: BuckleOnMapInit
+      prototype: VehicleWheelchair
     - type: LegsParalyzed
 
 - type: trait

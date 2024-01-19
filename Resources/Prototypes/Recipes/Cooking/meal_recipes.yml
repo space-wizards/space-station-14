@@ -291,9 +291,9 @@
     TableSalt: 5
   solids:
     FoodBreadBun: 1
-    FoodMeat: 3
-    FoodCheeseSlice: 3
-    FoodTomato: 3
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodTomato: 2
     FoodEgg: 2
 
 - type: microwaveMealRecipe
