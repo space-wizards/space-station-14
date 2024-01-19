@@ -2,8 +2,6 @@
   id: ArcadeNoise
   files:
     - /Audio/Machines/Arcade/hahaha.ogg
-    - /Audio/Machines/Arcade/pacman.ogg
-    - /Audio/Machines/Arcade/pacman_eat.ogg
     - /Audio/Machines/Arcade/pew_pew.ogg
     - /Audio/Machines/Arcade/sting_01.ogg
     - /Audio/Machines/Arcade/sting_02.ogg
