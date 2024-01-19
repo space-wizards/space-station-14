@@ -1,10 +1,9 @@
 ﻿- type: soundCollection
-  id: Thud
+  id: MetalThud
   files:
-  - /Audio/Effects/thud1.ogg
-  - /Audio/Effects/thud2.ogg
-  - /Audio/Effects/thud3.ogg
-  - /Audio/Effects/thud4.ogg
+  - /Audio/Effects/metal_thud1.ogg
+  - /Audio/Effects/metal_thud2.ogg
+  - /Audio/Effects/metal_thud3.ogg
 
 - type: soundCollection
   id: MetalScrape
@@ -14,11 +13,15 @@
   - /Audio/Effects/metal_scrape3.ogg
 
 - type: soundCollection
-  id: MetalHitHollow
-  files:
-  - /Audio/Effects/metal_hit_hollow.ogg
-
-- type: soundCollection
   id: WeakHit
   files:
-  - /Audio/Effects/weak_hit.ogg
+  - /Audio/Effects/weak_hit1.ogg
+  - /Audio/Effects/weak_hit2.ogg
+
+- type: soundCollection
+  id: MetalSlam
+  files:
+  - /Audio/Effects/metal_slam1.ogg
+  - /Audio/Effects/metal_slam2.ogg
+  - /Audio/Effects/metal_slam3.ogg
+  - /Audio/Effects/metal_slam4.ogg

@@ -39,13 +39,26 @@
   - /Audio/Effects/wood_destroy_heavy3.ogg
 
 - type: soundCollection
-  id: MetalSlam
-  files:
-  - /Audio/Effects/metal_slam1.ogg
-  - /Audio/Effects/metal_slam2.ogg
-  - /Audio/Effects/metal_slam3.ogg
-
-- type: soundCollection
   id: MetalCrunch
   files:
   - /Audio/Effects/metal_crunch.ogg
+
+- type: soundCollection
+  id: MetalBreak
+  files:
+  - /Audio/Effects/metal_break1.ogg
+  - /Audio/Effects/metal_break2.ogg
+  - /Audio/Effects/metal_break3.ogg
+  - /Audio/Effects/metal_break4.ogg
+  - /Audio/Effects/metal_break5.ogg
+
+- type: soundCollection
+  id: MetalGlassBreak
+  files:
+  - /Audio/Effects/metal_glass_break1.ogg
+  - /Audio/Effects/metal_glass_break2.ogg
+
+- type: soundCollection
+  id: MetalBreakHeavy
+  files:
+  - /Audio/Effects/metal_break_heavy1.ogg
