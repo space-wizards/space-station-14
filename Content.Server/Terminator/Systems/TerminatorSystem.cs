@@ -66,11 +66,11 @@ public sealed class TerminatorSystem : SharedTerminatorSystem
             return;
 
         // give arnie gear
-        var gear = _proto.Index<StartingGearPrototype>(ent.Comp.CurseGear);
+        var gear = _proto.Index<StartingGearPrototype>(args.Gear);
         _stationSpawning.EquipStartingGear(ent, gear, profile: null);
 
         // apply the curse...
-        EnsureComp<ReplacementAccentComponent>(ent).Accent = ent.Comp.CurseAccent;
+        EnsureComp<ReplacementAccentComponent>(ent).Accent = args.Accent;
 
         _popup.PopupEntity(Loc.GetString("terminator-curse-popup"), ent, ent, PopupType.LargeCaution);
 

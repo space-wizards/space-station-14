@@ -32,21 +32,6 @@ public sealed partial class TerminatorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? CurseActionEntity;
-
-    /// <summary>
-    /// Starting gear to give when curse is used.
-    /// </summary>
-    [DataField]
-    public ProtoId<StartingGearPrototype> CurseGear = "ArnoldGear";
-
-    /// <summary>
-    /// Replacement accent to give when curse is used.
-    /// </summary>
-    /// <remarks>
-    /// Due to speech NiceCode being server only this cant be ProtoId in shared :(
-    /// </remarks>
-    [DataField]
-    public string CurseAccent = "ExterminatorCursed";
 }
 
 /// <summary>
@@ -54,4 +39,18 @@ public sealed partial class TerminatorComponent : Component
 /// </summary>
 public sealed partial class ExterminatorCurseEvent : InstantActionEvent
 {
+    /// <summary>
+    /// Starting gear to give when curse is used.
+    /// </summary>
+    [DataField(required: true)]
+    public ProtoId<StartingGearPrototype> Gear = string.Empty;
+
+    /// <summary>
+    /// Replacement accent to give when curse is used.
+    /// </summary>
+    /// <remarks>
+    /// Due to speech NiceCode being server only this cant be ProtoId in shared :(
+    /// </remarks>
+    [DataField(required: true)]
+    public string Accent = string.Empty;
 }

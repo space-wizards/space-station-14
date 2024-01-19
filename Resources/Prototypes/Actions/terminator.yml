@@ -8,6 +8,8 @@
     icon:
       sprite: Mobs/Species/Terminator/parts.rsi
       state: skull_icon
-    event: !type:ExterminatorCurseEvent {}
+    event: !type:ExterminatorCurseEvent
+      gear: ArnoldGear
+      accent: ExterminatorCursed
   - type: TimedDespawn
     lifetime: 60
