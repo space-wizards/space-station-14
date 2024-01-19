@@ -17,6 +17,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private string _windowName = Loc.GetString("store-ui-default-title");
 
+    [ViewVariables]
+    private string _search = "";
+
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
@@ -48,6 +51,12 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             SendMessage(new StoreRequestUpdateInterfaceMessage());
         };
+
+        _menu.SearchTextUpdated += (_, search) =>
+        {
+            _search = search.Trim().ToLowerInvariant();
+            SendMessage(new StoreRequestUpdateInterfaceMessage());
+        };
     }
     protected override void UpdateState(BoundUserInterfaceState state)
     {
@@ -56,12 +65,21 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         if (_menu == null)
             return;
 
+
+
         switch (state)
         {
             case StoreUpdateState msg:
                 _menu.UpdateBalance(msg.Balance);
-                _menu.PopulateStoreCategoryButtons(msg.Listings);
 
+                // Filter listings by search
+                if (!string.IsNullOrEmpty(_search))
+                {
+                    msg.Listings.RemoveWhere(listingData => !Loc.GetString(listingData.Name).Trim().ToLowerInvariant().Contains(_search) &&
+                                                                  !Loc.GetString(listingData.Description).Trim().ToLowerInvariant().Contains(_search));
+                }
+
+                _menu.PopulateStoreCategoryButtons(msg.Listings);
                 _menu.UpdateListing(msg.Listings.ToList());
                 _menu.SetFooterVisibility(msg.ShowFooter);
                 break;

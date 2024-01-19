@@ -27,6 +27,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private StoreWithdrawWindow? _withdrawWindow;
 
+    public event EventHandler<string>? SearchTextUpdated;
     public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
@@ -44,6 +45,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
         RefreshButton.OnButtonDown += OnRefreshButtonDown;
+        SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
         if (Window != null)
             Window.Title = name;
     }
@@ -77,7 +79,6 @@ public sealed partial class StoreMenu : DefaultWindow
     public void UpdateListing(List<ListingData> listings)
     {
         var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
-
 
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
@@ -235,13 +236,18 @@ public sealed partial class StoreMenu : DefaultWindow
 
         allCategories = allCategories.OrderBy(c => c.Priority).ToList();
 
+        // This will reset the Current Category selection if nothing matches the search.
+        if (allCategories.All(category => category.ID != CurrentCategory))
+            CurrentCategory = string.Empty;
+
         if (CurrentCategory == string.Empty && allCategories.Count > 0)
             CurrentCategory = allCategories.First().ID;
 
-        if (allCategories.Count <= 1)
-            return;
-
         CategoryListContainer.Children.Clear();
+        if (allCategories.Count < 1)
+        {
+            return;
+        }
 
         foreach (var proto in allCategories)
         {

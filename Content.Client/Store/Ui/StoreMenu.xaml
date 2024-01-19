@@ -23,7 +23,10 @@
                     HorizontalAlignment="Right"
                     Text="{Loc 'store-ui-default-withdraw-text'}" />
             </BoxContainer>
-            <PanelContainer VerticalExpand="True">
+            <BoxContainer Margin="4,4,4,4" Orientation="Horizontal">
+                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
+            </BoxContainer>
+                <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
                 </PanelContainer.PanelOverride>
