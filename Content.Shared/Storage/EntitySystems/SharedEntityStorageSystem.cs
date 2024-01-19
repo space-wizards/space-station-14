@@ -336,6 +336,14 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
         }
 
+        if (!component.CanOpen)
+        {
+            var msg = Loc.GetString("entity-storage-component-already-contains-user-message");
+            Popup.PopupEntity(msg, user, user);
+
+            return false;
+        }
+
         //Checks to see if the opening position, if offset, is inside of a wall.
         if (component.EnteringOffset != new Vector2(0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
         {
