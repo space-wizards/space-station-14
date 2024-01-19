@@ -103,7 +103,12 @@ namespace Content.Server.Kitchen.EntitySystems
                         if (fitsCount <= 0)
                             continue;
 
-                        solution.ScaleSolution(fitsCount);
+                        // Make a copy of the solution to scale
+                        // Otherwise we'll actually change the volume of the remaining stack too
+                        var scaledSolution = new Solution(solution);
+                        scaledSolution.ScaleSolution(fitsCount);
+                        solution = scaledSolution;
+
                         _stackSystem.SetCount(item, stack.Count - fitsCount); // Setting to 0 will QueueDel
                     }
                     else
