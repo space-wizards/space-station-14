@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed ninja calling in a dragon not actually spawning a dragon.
-    type: Fix
-  id: 5245
-  time: '2023-12-02T20:41:36.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Improvised explosive devices now have unreliable timers that can take
@@ -3777,3 +3771,13 @@
   id: 5745
   time: '2024-01-19T10:14:42.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24283
+- author: mirrorcult
+  changes:
+  - message: Destruction & impact sounds have been reworked in general, you should
+      expect better sounds/more variance/actually playing sounds when applicable
+    type: Add
+  - message: Melee hit sounds being cut off when an entity is destroyed has been fixed
+    type: Fix
+  id: 5746
+  time: '2024-01-19T15:33:08.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24282
