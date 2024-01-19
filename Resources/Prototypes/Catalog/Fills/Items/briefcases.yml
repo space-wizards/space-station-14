@@ -48,3 +48,21 @@
       - id: ClothingHandsGlovesCombat
       - id: ClothingMaskNeckGaiter
       - id: SyndieHandyFlag
+
+- type: entity
+  id: BriefcaseThiefBribingBundleFilled
+  name: brown briefcase
+  parent: BriefcaseSyndie
+  suffix: Spesos
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesSunglasses
+      - id: SpaceCash5000
+        amount: 4
+      - id: RubberStampTrader
+      - id: ClothingUniformJumpsuitTacticool
+      - id: ClothingOuterCoatJensen
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingMaskNeckGaiter
+      - id: ToyFigurineThief
