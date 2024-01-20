@@ -36,3 +36,6 @@ reagent-desc-soysauce = A salty soy-based flavoring.
 
 reagent-name-table-salt = table salt
 reagent-desc-table-salt = Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
+
+reagent-name-spices = spices
+reagent-desc-spices = Some strange mix of spices, you can't particularly put your finger on just one.

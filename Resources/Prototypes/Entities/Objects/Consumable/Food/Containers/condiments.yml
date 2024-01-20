@@ -632,3 +632,23 @@
   - type: Tag
     tags:
       - PepperShaker
+
+- type: entity
+  parent: BaseFoodShaker
+  id: FoodShakerSpices
+  name: spices shaker
+  description: A random mix of spices, quite spicy too!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Spices
+          Quantity: 20
+  - type: Sprite
+    state: shaker-spices
+  - type: Icon
+    state: shaker-spices
+  - type: Tag
+    tags:
+      - SpicesShaker

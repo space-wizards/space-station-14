@@ -888,4 +888,8 @@
   id: light
   flavorType: Complex
   description: flavor-complex-light
-  
+
+- type: flavor
+  id: spices
+  flavorType: Complex
+  description: flavor-complex-spices

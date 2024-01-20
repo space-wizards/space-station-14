@@ -56,6 +56,7 @@ flavor-base-terrible = terrible
 
 flavor-complex-nothing = like nothing
 flavor-complex-honey = like honey
+flavor-complex-spices = like spices
 
 # Food-specific flavors.
 
