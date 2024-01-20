@@ -292,13 +292,6 @@ public sealed partial class ChangelingSystem : EntitySystem
                 EntityManager.AddComponent(transformedUid.Value, copiedStoreComponent);
             }
 
-            if (TryComp(uid, out UserInterfaceComponent? uiComp))
-            {
-                var copiedUIComp = (Component) _serialization.CreateCopy(uiComp, notNullableOverride: true);
-                RemComp<UserInterfaceComponent>(transformedUid.Value);
-                EntityManager.AddComponent(transformedUid.Value, copiedUIComp);
-            }
-
             if (TryComp(uid, out StealthComponent? stealthComp)) // copy over stealth status
             {
                 if (TryComp(uid, out StealthOnMoveComponent? stealthOnMoveComp))
