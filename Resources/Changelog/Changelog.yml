@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Chronophylos
-  changes:
-  - message: Included missing damage type localization for armor examination.
-    type: Fix
-  id: 5252
-  time: '2023-12-04T12:57:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Storage now uses a grid-based system. You can drag around items in your
@@ -3785,3 +3779,10 @@
   id: 5752
   time: '2024-01-20T02:50:14.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24253
+- author: FairlySadPanda
+  changes:
+  - message: Lobby restart sound effects no longer cut-off.
+    type: Fix
+  id: 5753
+  time: '2024-01-20T03:40:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24044
