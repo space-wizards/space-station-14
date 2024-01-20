@@ -786,9 +786,16 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: crab
       sprite: Mobs/Animals/crab.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: crab-moving
+    noMovementLayers:
+      movement:
+        state: crab
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -1769,9 +1776,16 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: frog
       sprite: Mobs/Animals/frog.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: frog-moving
+    noMovementLayers:
+      movement:
+        state: frog
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2043,9 +2057,16 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: tarantula-moving
+    noMovementLayers:
+      movement:
+        state: tarantula
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2353,8 +2374,15 @@
     drawdepth: Mobs
     sprite: Mobs/Animals/fox.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: fox
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: fox-moving
+    noMovementLayers:
+      movement:
+        state: fox
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2888,8 +2916,15 @@
     drawdepth: SmallMobs
     sprite: Mobs/Animals/hamster.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: hamster-0
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: hamster-moving-0
+    noMovementLayers:
+      movement:
+        state: hamster-0
   - type: Item
     size: Tiny
   - type: Physics
