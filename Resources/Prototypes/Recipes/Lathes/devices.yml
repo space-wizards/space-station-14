@@ -166,36 +166,6 @@
     Uranium: 150
 
 - type: latheRecipe
-  id: WeaponCrusher
-  result: WeaponCrusher
-  category: Weapons
-  completetime: 5
-  materials:
-    Steel: 1000
-    Glass: 250
-    Plastic: 100
-
-- type: latheRecipe
-  id: WeaponCrusherDagger
-  result: WeaponCrusherDagger
-  category: Weapons
-  completetime: 5
-  materials:
-    Steel: 500
-    Glass: 250
-    Plastic: 50
-
-- type: latheRecipe
-  id: WeaponCrusherGlaive
-  result: WeaponCrusherGlaive
-  category: Weapons
-  completetime: 5
-  materials:
-    Steel: 1500
-    Glass: 250
-    Silver: 250
-
-- type: latheRecipe
   id: WeaponForceGun
   result: WeaponForceGun
   category: Tools
