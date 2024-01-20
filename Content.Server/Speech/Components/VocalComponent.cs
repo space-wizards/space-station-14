@@ -31,12 +31,6 @@ public sealed partial class VocalComponent : Component
     [DataField("wilhelmProbability")]
     public float WilhelmProbability = 0.0002f;
 
-    [DataField("screamAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ScreamAction = "ActionScream";
-
-    [DataField("screamActionEntity")]
-    public EntityUid? ScreamActionEntity;
-
     /// <summary>
     ///     Currently loaded emote sounds prototype, based on entity sex.
     ///     Null if no valid prototype for entity sex was found.

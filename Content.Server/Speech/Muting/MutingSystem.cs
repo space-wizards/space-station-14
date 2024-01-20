@@ -17,7 +17,6 @@ namespace Content.Server.Speech.Muting
             base.Initialize();
             SubscribeLocalEvent<MutedComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MutedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
-            SubscribeLocalEvent<MutedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
 
         private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteEvent args)
@@ -28,19 +27,6 @@ namespace Content.Server.Speech.Muting
             //still leaves the text so it looks like they are pantomiming a laugh
             if (args.Emote.Category.HasFlag(EmoteCategory.Vocal))
                 args.Handled = true;
-        }
-
-        private void OnScreamAction(EntityUid uid, MutedComponent component, ScreamActionEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (HasComp<MimePowersComponent>(uid))
-                _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
-
-            else
-                _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, uid);
-            args.Handled = true;
         }
 
 
