@@ -174,8 +174,4 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Oculine
-          Quantity: 2
-        - ReagentId: Tricordrazine
-          Quantity: 2
+          Quantity: 12
