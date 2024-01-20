@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: When ghosting from a critical state, the ghost command now kills with
-      damage relative to current health instead of flat 200.
-    type: Fix
-  id: 5254
-  time: '2023-12-04T23:06:11.0000000+00:00'
 - author: MACMAN2003
   changes:
   - message: Autolathes can now print the snazzy orange "sodium" and blue "exterior"
@@ -3785,3 +3778,10 @@
   id: 5754
   time: '2024-01-20T04:57:05.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20628
+- author: Blackern5000
+  changes:
+  - message: Crushers can no longer be researched.
+    type: Remove
+  id: 5755
+  time: '2024-01-20T05:11:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24319
