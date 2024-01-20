@@ -44,7 +44,7 @@
       collection: AlienClaw
     damage:
       types:
-        Pierce: 5
+        Piercing: 5
   # Visual & Audio
   - type: DamageVisuals
     damageOverlayGroups:

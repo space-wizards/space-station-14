@@ -23,6 +23,10 @@ namespace Content.Client.Chemistry.UI
         public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseEntered;
         public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseExited;
 
+        public event Action<BaseButton.ButtonEventArgs, EjectJugButton>? OnEjectJugButtonPressed;
+        public event Action<GUIMouseHoverEventArgs, EjectJugButton>? OnEjectJugButtonMouseEntered;
+        public event Action<GUIMouseHoverEventArgs, EjectJugButton>? OnEjectJugButtonMouseExited;
+
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the dispenser.
@@ -48,25 +52,25 @@ namespace Content.Client.Chemistry.UI
         /// Update the button grid of reagents which can be dispensed.
         /// </summary>
         /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
-        public void UpdateReagentsList(List<ReagentId> inventory)
+        public void UpdateReagentsList(List<KeyValuePair<string, KeyValuePair<string,string>>> inventory)
         {
             if (ChemicalList == null)
                 return;
 
             ChemicalList.Children.Clear();
 
-            foreach (var entry in inventory
-                .OrderBy(r => {_prototypeManager.TryIndex(r.Prototype, out ReagentPrototype? p); return p?.LocalizedName;}))
+            foreach (KeyValuePair<string, KeyValuePair<string, string>> entry in inventory)
             {
-                var localizedName = _prototypeManager.TryIndex(entry.Prototype, out ReagentPrototype? p)
-                    ? p.LocalizedName
-                    : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
-
-                var button = new DispenseReagentButton(entry, localizedName);
+                var button = new DispenseReagentButton(entry.Key, entry.Value.Key, entry.Value.Value);
                 button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(args, button);
                 button.OnMouseEntered += args => OnDispenseReagentButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnDispenseReagentButtonMouseExited?.Invoke(args, button);
                 ChemicalList.AddChild(button);
+                var ejectButton = new EjectJugButton(entry.Key);
+                ejectButton.OnPressed += args => OnEjectJugButtonPressed?.Invoke(args, ejectButton);
+                ejectButton.OnMouseEntered += args => OnEjectJugButtonMouseEntered?.Invoke(args, ejectButton);
+                ejectButton.OnMouseExited += args => OnEjectJugButtonMouseExited?.Invoke(args, ejectButton);
+                ChemicalList.AddChild(ejectButton);
             }
         }
 
@@ -121,9 +125,8 @@ namespace Content.Client.Chemistry.UI
         /// <para>Also highlights a reagent if it's dispense button is being mouse hovered.</para>
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>
-        /// <param name="highlightedReagentId">Prototype ID of the reagent whose dispense button is currently being mouse hovered,
         /// or null if no button is being hovered.</param>
-        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, ReagentId? highlightedReagentId = null)
+        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state)
         {
             ContainerInfo.Children.Clear();
 
@@ -161,12 +164,6 @@ namespace Content.Client.Chemistry.UI
                     StyleClasses = {StyleNano.StyleClassLabelSecondaryColor},
                 };
 
-                // Check if the reagent is being moused over. If so, color it green.
-                if (reagent == highlightedReagentId) {
-                    nameLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
-                    quantityLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
-                }
-
                 ContainerInfo.Children.Add(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
@@ -180,13 +177,27 @@ namespace Content.Client.Chemistry.UI
         }
     }
 
-    public sealed class DispenseReagentButton : Button {
-        public ReagentId ReagentId { get; }
+    public sealed class DispenseReagentButton : Button
+    {
+        public string ReagentId { get; }
 
-        public DispenseReagentButton(ReagentId reagentId, string text)
+        public DispenseReagentButton(string reagentId, string text, string amount)
         {
+            AddStyleClass("OpenRight");
             ReagentId = reagentId;
-            Text = text;
+            Text = text + " " + amount;
+        }
+    }
+
+    public sealed class EjectJugButton : Button
+    {
+        public string ReagentId { get; }
+
+        public EjectJugButton(string reagentId)
+        {
+            AddStyleClass("OpenLeft");
+            ReagentId = reagentId;
+            Text = "⏏";
         }
     }
 }
