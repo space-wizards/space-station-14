@@ -9,7 +9,7 @@
   source: "https://github.com/tgstation/tgstation/blob/b02b93ce2ab891164511a973493cdf951b4120f7/sound/effects/ninja_greeting.ogg"
 
 - files: ["thief_greeting.ogg"]
-  license: "CC BY-NC-SA 3.0"
+  license: "CC-BY-NC-SA 3.0"
   copyright: "Made by pigeonpeas via soundcloud.com."
   source: "https://soundcloud.com/pigeonbeans/major-thievery/s-ncAdGXp8FWp?si=c6751b939bf046f99912e5643ce86e6d&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
 
