@@ -4297,7 +4297,7 @@ entities:
     - type: Transform
       pos: 15.5,19.5
       parent: 179
-- proto: MachineArtifactAnalyzer
+- proto: MachineArtifactAnalyzerDebug
   entities:
   - uid: 1078
     components:

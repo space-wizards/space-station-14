@@ -211,3 +211,16 @@
       machine_parts: !type:Container
       entity_storage: !type:Container
       output_container: !type:Container
+
+- type: entity
+  id: MachineArtifactAnalyzerDebug
+  parent: MachineArtifactAnalyzer
+  name: artifact analyzer
+  suffix: DEBUG 
+  description: A platform capable of performing analysis on various types of artifacts.
+  components:
+  - type: ApcPowerReceiver
+    powerLoad: 0
+    needsPower: false #only turns on when scanning
+  - type: ArtifactAnalyzer
+    analysisDuration: 0

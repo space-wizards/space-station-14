@@ -247,3 +247,18 @@
     - behavior: Pulsing
       changeSound:
         path: /Audio/Items/change_drill.ogg
+
+- type: artifactEffect
+  id: EffectDash
+  targetDepth: 3
+  effectHint: artifact-effect-hint-displacement
+  whitelist:
+    components:
+    - Item
+  permanentComponents:
+  - type: DashAbility
+  - type: LimitedCharges
+    maxCharges: 1
+    charges: 1
+  - type: AutoRecharge
+    rechargeDuration: 15
