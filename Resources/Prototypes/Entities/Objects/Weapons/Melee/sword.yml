@@ -3,6 +3,7 @@
   parent: BaseItem
   id: BaseSword
   description: A sharp sword.
+  abstract: true
   components:
     - type: Sharp
     - type: Execution
