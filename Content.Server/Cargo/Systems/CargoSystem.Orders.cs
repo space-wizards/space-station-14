@@ -216,6 +216,7 @@ namespace Content.Server.Cargo.Systems
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
 
+            orderDatabase.Orders.Remove(order);
             DeductFunds(bank, cost);
             UpdateOrders(station.Value, orderDatabase);
         }
@@ -259,6 +260,9 @@ namespace Content.Server.Cargo.Systems
                 Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
                 return;
             }
+
+            if (!component.AllowedGroups.Contains(product.Group))
+                return;
 
             var data = GetOrderData(args, product, GenerateOrderId(orderDatabase));
 
@@ -312,7 +316,7 @@ namespace Content.Server.Cargo.Systems
 
         private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)
         {
-            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.PointCost, args.Amount, args.Requester, args.Reason);
+            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.Cost, args.Amount, args.Requester, args.Reason);
         }
 
         public static int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)

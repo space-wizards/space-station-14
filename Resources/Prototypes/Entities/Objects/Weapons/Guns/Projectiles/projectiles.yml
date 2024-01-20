@@ -255,7 +255,7 @@
       types:
         Heat: 5
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
+      collection: WeakHit
     forceSound: true
 
 - type: entity
@@ -295,7 +295,7 @@
       types:
         Heat: 1
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
+      collection: WeakHit
     forceSound: true
 
 - type: entity
@@ -866,7 +866,7 @@
       types:
         Heat: 2
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
+      collection: WeakHit
     forceSound: true
 
 - type: entity
