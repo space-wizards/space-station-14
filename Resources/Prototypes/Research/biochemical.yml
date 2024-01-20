@@ -16,6 +16,9 @@
   - ChemicalPayload
   - ClothingEyesGlassesChemical
   - Jug
+  radioChannels:
+    - Medical
+
 
 - type: technology
   id: SurgicalTools
@@ -33,6 +36,8 @@
   - Drill
   - Saw
   - Hemostat
+  radioChannels:
+    - Medical
 
 - type: technology
   id: BiochemicalStasis
@@ -47,6 +52,8 @@
   - CryostasisBeaker
   - StasisBedMachineCircuitboard
   - SyringeCryostasis
+  radioChannels:
+    - Medical
 
 - type: technology
   id: MechanizedTreatment
@@ -60,6 +67,9 @@
   recipeUnlocks:
   - BorgModuleDiagnosis
   - BorgModuleDefibrillator
+  radioChannels:
+    - Medical
+    - Binary
 
 # doesn't do anything right now
 #
@@ -89,6 +99,8 @@
   cost: 7500
   recipeUnlocks:
   - CryoPodMachineCircuitboard
+  radioChannels:
+    - Medical
 
 - type: technology
   id: Biofabrication
@@ -102,6 +114,8 @@
   recipeUnlocks:
   - BiofabricatorMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard
+  radioChannels:
+    - Medical
 
 - type: technology
   id: ChemicalDispensary
@@ -118,6 +132,8 @@
   - BorgModuleAdvancedTreatment
   technologyPrerequisites:
   - Chemistry
+  radioChannels:
+    - Medical
 
 - type: technology
   id: CrewMonitoring
@@ -130,6 +146,10 @@
   cost: 10000
   recipeUnlocks:
   - HandheldCrewMonitor
+  radioChannels:
+    - Medical
+    - Command
+    - Security
 
 # Tier 3
 
@@ -145,6 +165,8 @@
   recipeUnlocks:
   - BluespaceBeaker
   - SyringeBluespace
+  radioChannels:
+    - Medical
 
 # look into revisiting this later once medical isn't a hellhole
 #- type: technology

@@ -41,7 +41,13 @@ public sealed partial class ResearchSystem
         var message = Loc.GetString("research-console-unlock-technology-radio-broadcast",
             ("technology", Loc.GetString(technologyPrototype.Name)),
             ("amount", technologyPrototype.Cost));
+        // Send a radio message on the console's configured default channel
         _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+        // Send radio messages on additional channels depending on the technology
+        foreach (var additionalChannel in technologyPrototype.RadioChannels)
+        {
+            _radio.SendRadioMessage(uid, message, additionalChannel, uid, escapeMarkup: false);
+        }
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
     }
