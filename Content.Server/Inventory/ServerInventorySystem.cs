@@ -45,11 +45,16 @@ namespace Content.Server.Inventory
             if (!Resolve(source.Owner, ref source.Comp) || !Resolve(target.Owner, ref target.Comp))
                 return;
 
-            var enumerator = new InventorySlotEnumerator(source.Comp);
-            while (enumerator.NextItem(out var item, out var slot))
+            if (TryGetSlots(source, out var slotDefinitions))
             {
-                if (TryUnequip(source, slot.Name, true, true, inventory: source.Comp))
-                    TryEquip(target, item, slot.Name, true, true, inventory: target.Comp);
+                foreach (var slot in slotDefinitions)
+                {
+                    if (TryGetSlotEntity(source, slot.Name, out var item))
+                    {
+                        if (TryUnequip(source, slot.Name, true, force: true))
+                            TryEquip(target, item.Value, slot.Name, true, force: true);
+                    }
+                }
             }
         }
     }

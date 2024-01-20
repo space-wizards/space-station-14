@@ -320,6 +320,9 @@ public sealed partial class ChangelingSystem : EntitySystem
 
             if (newLingComponent.LingArmorActive)
                 SpawnLingArmor(transformedUid.Value, inventory);
+
+            if (newLingComponent.ArmBladeActive)
+                SpawnArmBlade(transformedUid.Value);
         }
     }
 }

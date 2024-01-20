@@ -252,15 +252,10 @@ public sealed partial class ChangelingSystem
             var armblade = Spawn(ArmBladeId, Transform(uid).Coordinates);
             EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
 
-            if (_handsSystem.TryPickupAnyHand(uid, armblade))
-            {
+            if (SpawnArmBlade(uid))
                 component.ArmBladeActive = true;
-            }
             else
-            {
                 _popup.PopupEntity(Loc.GetString("changeling-armblade-fail"), uid, uid);
-                QueueDel(armblade);
-            }
         }
         else
         {
@@ -292,6 +287,22 @@ public sealed partial class ChangelingSystem
         _inventorySystem.TryEquip(uid, helmet, HeadId, true, true, false, inventory);
         _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
         _inventorySystem.TryEquip(uid, armor, OuterClothingId, true, true, false, inventory);
+    }
+
+    public bool SpawnArmBlade(EntityUid uid)
+    {
+        var armblade = Spawn(ArmBladeId, Transform(uid).Coordinates);
+        EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
+
+        if (_handsSystem.TryPickupAnyHand(uid, armblade))
+        {
+            return true;
+        }
+        else
+        {
+            QueueDel(armblade);
+            return false;
+        }
     }
 
     public const string LingHelmetId = "ClothingHeadHelmetLing";
