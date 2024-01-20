@@ -26,82 +26,52 @@ namespace Content.Shared.Mind
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
     public sealed partial class MindComponent : Component
     {
-<<<<<<< HEAD
-        [DataField]
-=======
         [DataField, AutoNetworkedField]
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
         public List<EntityUid> Objectives = new();
 
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
-<<<<<<< HEAD
-        [DataField, Access(typeof(SharedMindSystem))]
-        public NetUserId? UserId;
-=======
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public NetUserId? UserId { get; set; }
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
+        public NetUserId? UserId;
 
         /// <summary>
         ///     The session ID of the original owner, if any.
         ///     May end up used for round-end information (as the owner may have abandoned Mind since)
         /// </summary>
-<<<<<<< HEAD
-        [DataField, Access(typeof(SharedMindSystem))]
-        public NetUserId? OriginalOwnerUserId;
-=======
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public NetUserId? OriginalOwnerUserId { get; set; }
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
+        public NetUserId? OriginalOwnerUserId;
 
         /// <summary>
         ///     The first entity that this mind controlled. Used for round end information.
         ///     Might be relevant if the player has ghosted since.
         /// </summary>
-<<<<<<< HEAD
-        [DataField]
-        public EntityUid? OriginalOwnedEntity;
-=======
         [DataField, AutoNetworkedField]
         public NetEntity? OriginalOwnedEntity;
         // This is a net entity, because this field currently ddoes not get set to null when this entity is deleted.
         // This is a lazy way to ensure that people check that the entity still exists.
         // TODO MIND Fix this properly by adding an OriginalMindContainerComponent or something like that.
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
-<<<<<<< HEAD
-        [DataField, Access(typeof(SharedMindSystem))]
-        public EntityUid? VisitingEntity;
-=======
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public EntityUid? VisitingEntity { get; set; }
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
+        public EntityUid? VisitingEntity;
 
         [ViewVariables]
         public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
-<<<<<<< HEAD
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public string? CharacterName;
-=======
         [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-        public string? CharacterName { get; set; }
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
+        public string? CharacterName;
 
         /// <summary>
         ///     The time of death for this Mind.
         ///     Can be null - will be null if the Mind is not considered "dead".
         /// </summary>
         [DataField]
-        public TimeSpan? TimeOfDeath { get; set; }
+        public TimeSpan? TimeOfDeath;
 
         /// <summary>
-<<<<<<< HEAD
         ///     The container component currently owned by this mind.
         ///     Can be null.
         /// </summary>
@@ -112,23 +82,13 @@ namespace Content.Shared.Mind
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        [ViewVariables, Access(typeof(SharedMindSystem))]
-        public EntityUid? OwnedEntity;
-=======
-        ///     The entity currently owned by this mind.
-        ///     Can be null.
-        /// </summary>
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public EntityUid? OwnedEntity { get; set; }
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
+        public EntityUid? OwnedEntity;
 
         /// <summary>
         ///     An enumerable over all the objective entities this mind has.
         /// </summary>
-<<<<<<< HEAD
-=======
         [ViewVariables, Obsolete("Use Objectives field")]
->>>>>>> efdc6f8d4c5dc8c593b6403c6592f0ddc6212266
         public IEnumerable<EntityUid> AllObjectives => Objectives;
 
         /// <summary>
