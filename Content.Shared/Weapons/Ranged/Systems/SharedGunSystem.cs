@@ -227,11 +227,17 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
-        if (gun.FireRate <= 0f)
+        if (gun.FireRate <= 0f ||
+            !_actionBlockerSystem.CanUseHeldEntity(user))
             return;
 
-        if (!_actionBlockerSystem.CanUseHeldEntity(user))
+
+        var toCoordinates = gun.ShootCoordinates;
+
+        if (toCoordinates == null)
             return;
+
+        var curTime = Timing.CurTime;
 
         // check if anything wants to prevent shooting
         var prevention = new ShotAttemptedEvent
@@ -246,13 +252,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         RaiseLocalEvent(user, ref prevention);
         if (prevention.Cancelled)
             return;
-
-        var toCoordinates = gun.ShootCoordinates;
-
-        if (toCoordinates == null)
-            return;
-
-        var curTime = Timing.CurTime;
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
@@ -309,9 +308,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
-        // if the user exists, we use its coordinates. Otherwise - coordinates of the weapon.
         var fromCoordinates = Transform(user).Coordinates;
-
         // Remove ammo
         var ev = new TakeAmmoEvent(shots, new List<(EntityUid? Entity, IShootable Shootable)>(), fromCoordinates, user);
 
@@ -337,7 +334,6 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
-
                 if (ev.Reason != null && Timing.IsFirstTimePredicted)
                 {
                     PopupSystem.PopupCursor(ev.Reason);
@@ -358,13 +354,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         var shotEv = new GunShotEvent(user, ev.Ammo);
         RaiseLocalEvent(gunUid, ref shotEv);
 
-        if (userImpulse)
+        if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
         {
-            if (TryComp<PhysicsComponent>(user, out var userPhysics)) // user impulse
-            {
-                if (_gravity.IsWeightless(user, userPhysics))
-                    CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
-            }
+            if (_gravity.IsWeightless(user, userPhysics))
+                CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
 
         Dirty(gunUid, gun);
