@@ -15,6 +15,10 @@ namespace Content.Shared.Toilet
         [AutoNetworkedField]
         public bool Plunged;
 
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [AutoNetworkedField]
+        public bool NeedsPlunger = false;
+
         /// <summary>
         /// A weighted random entity prototype containing the different loot that rummaging can provide.
         /// </summary>

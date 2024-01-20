@@ -52,6 +52,7 @@
   - type: Construction
     graph: Toilet
     node: toilet
+  - type: PlungerUse
   - type: Appearance
   - type: SecretStash
     secretPartName: secret-stash-part-toilet

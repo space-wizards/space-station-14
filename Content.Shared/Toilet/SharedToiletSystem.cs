@@ -54,7 +54,12 @@ namespace Content.Shared.Toilet
 
             if (_random.Prob(0.3f) == true)
             {
-                EnsureComp<PlungerUseComponent>(uid);
+                TryComp<PlungerUseComponent>(uid, out var plunger);
+
+                if (plunger == null)
+                    return;
+
+                plunger.NeedsPlunger = true;
             }
 
             UpdateAppearance(uid, component);

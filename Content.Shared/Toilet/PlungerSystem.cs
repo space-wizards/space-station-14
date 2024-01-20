@@ -38,6 +38,11 @@ public sealed class PlungerSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target || !HasComp<PlungerUseComponent>(args.Target))
             return;
 
+        TryComp<PlungerUseComponent>(args.Target, out var plunger);
+
+        if (plunger == null || !plunger.NeedsPlunger == false)
+            return;
+
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.PlungeDuration, new PlungerDoAfterEvent(), uid, target, uid)
         {
