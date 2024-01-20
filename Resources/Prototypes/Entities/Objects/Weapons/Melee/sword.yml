@@ -1,10 +1,19 @@
 - type: entity
-  name: captain's sabre
+  name: Sword
   parent: BaseItem
+  id: BaseSword
+  description: A sharp sword.
+  components:
+    - type: Sharp
+    - type: Execution
+    - type: DisarmMalus
+
+- type: entity
+  name: captain's sabre
+  parent: BaseSword
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
     state: icon
@@ -26,15 +35,13 @@
   - type: Tag
     tags:
     - CaptainSabre
-  - type: DisarmMalus
 
 - type: entity
   name: katana
-  parent: BaseItem
+  parent: BaseSword
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
-  - type: Sharp
   - type: Tag
     tags:
     - Katana
@@ -51,7 +58,6 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/katana.rsi
-  - type: DisarmMalus
 
 - type: entity
   name: energy katana
@@ -86,11 +92,10 @@
 
 - type: entity
   name: machete
-  parent: BaseItem
+  parent: BaseSword
   id: Machete
   description: A large, vicious looking blade.
   components:
-  - type: Sharp
   - type: Tag
     tags:
     - Machete
@@ -107,15 +112,13 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/machete.rsi
-  - type: DisarmMalus
 
 - type: entity
   name: claymore
-  parent: BaseItem
+  parent: BaseSword
   id: Claymore
   description: An ancient war blade.
   components:
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/claymore.rsi
     state: icon
@@ -133,15 +136,13 @@
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
     - back
-  - type: DisarmMalus
 
 - type: entity
   name: cutlass
-  parent: BaseItem
+  parent: BaseSword
   id: Cutlass
   description: A wickedly curved blade, often seen in the hands of space pirates.
   components:
-  - type: Sharp
   - type: Tag
     tags:
     - Machete
@@ -158,15 +159,13 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/cutlass.rsi
-  - type: DisarmMalus
 
 - type: entity
   name: The Throngler
-  parent: BaseItem
+  parent: BaseSword
   id: Throngler
   description: Why would you make this?
   components:
-    - type: Sharp
     - type: Sprite
       sprite: Objects/Weapons/Melee/Throngler2.rsi
       state: icon
@@ -190,4 +189,3 @@
     - type: Item
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
-    - type: DisarmMalus
