@@ -91,9 +91,9 @@
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_hos.rsi
+    sprite: DeltaV/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_hos.rsi
+    sprite: DeltaV/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
   - type: Tag
     tags:
     - ClothMade
@@ -284,9 +284,9 @@
   description: "There's a new sheriff in station."
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # Grey Station - Resprited
   - type: Tag
     tags:
     - ClothMade
@@ -468,11 +468,14 @@
   description: A police officer's Hat. This hat emphasizes that you are THE LAW
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/warden.rsi
+    sprite: GreyStation/Clothing/Head/Hats/warden.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Head/Hats/warden.rsi
+    sprite: GreyStation/Clothing/Head/Hats/warden.rsi # Grey Station - Resprited
   - type: StealTarget
     stealGroup: ClothingHeadHatWarden
+  - type: Tag # Grey Station
+    tags:
+    - HamsterWearable
 
 - type: entity
   parent: ClothingHeadBase
