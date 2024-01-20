@@ -1,6 +1,8 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -23,11 +25,15 @@ public abstract class SharedDoorBoltSystem : EntitySystem
 
     private void OnDoorPry(EntityUid uid, DoorBoltComponent component, ref BeforePryEvent args)
     {
-        if (component.BoltsDown && !args.Force)
-        {
-            Popup.PopupClient(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), uid, args.User);
-            args.Cancelled = true;
-        }
+        if (args.Cancelled)
+            return;
+
+        if (!component.BoltsDown || args.Force)
+            return;
+
+        args.Message = "airlock-component-cannot-pry-is-bolted-message";
+
+        args.Cancelled = true;
     }
 
     private void OnBeforeDoorOpened(EntityUid uid, DoorBoltComponent component, BeforeDoorOpenedEvent args)

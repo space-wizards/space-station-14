@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Fax;
 using Content.Server.Paper;
@@ -103,9 +102,16 @@ namespace Content.Server.Nuke
 
             var codesMessage = new FormattedMessage();
             // Find the first nuke that matches the passed location.
-            var query = EntityQuery<NukeComponent>().ToList();
-            _random.Shuffle(query);
-            foreach (var nuke in query)
+            var nukes = new List<Entity<NukeComponent>>();
+            var query = EntityQueryEnumerator<NukeComponent>();
+            while (query.MoveNext(out var nukeUid, out var nuke))
+            {
+                nukes.Add((nukeUid, nuke));
+            }
+
+            _random.Shuffle(nukes);
+
+            foreach (var (nukeUid, nuke) in nukes)
             {
                 if (!onlyCurrentStation &&
                     (owningStation == null &&
@@ -116,7 +122,7 @@ namespace Content.Server.Nuke
                 }
 
                 codesMessage.PushNewline();
-                codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code)));
+                codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nukeUid).EntityName), ("code", nuke.Code)));
                 break;
             }
 

@@ -8,7 +8,7 @@
     tags:
       - MagazineHeavyRifle
   - type: Item
-    size: 10
+    size: Small
   - type: BallisticAmmoProvider
     mayTransfer: true
     capacity: 100

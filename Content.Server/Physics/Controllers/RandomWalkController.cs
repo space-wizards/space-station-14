@@ -1,12 +1,13 @@
-using Robust.Server.GameObjects;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
-
+using System.Numerics;
 using Content.Server.Physics.Components;
 using Content.Shared.Follower.Components;
 using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -39,16 +40,17 @@ internal sealed class RandomWalkController : VirtualController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        foreach(var (randomWalk, physics) in EntityManager.EntityQuery<RandomWalkComponent, PhysicsComponent>())
+        var query = EntityQueryEnumerator<RandomWalkComponent, PhysicsComponent>();
+        while (query.MoveNext(out var uid, out var randomWalk, out var physics))
         {
-            if (EntityManager.HasComponent<ActorComponent>(randomWalk.Owner)
-            ||  EntityManager.HasComponent<ThrownItemComponent>(randomWalk.Owner)
-            ||  EntityManager.HasComponent<FollowerComponent>(randomWalk.Owner))
+            if (EntityManager.HasComponent<ActorComponent>(uid)
+            ||  EntityManager.HasComponent<ThrownItemComponent>(uid)
+            ||  EntityManager.HasComponent<FollowerComponent>(uid))
                 continue;
 
             var curTime = _timing.CurTime;
             if (randomWalk.NextStepTime <= curTime)
-                Update(randomWalk.Owner, randomWalk, physics);
+                Update(uid, randomWalk, physics);
         }
     }
 
@@ -65,14 +67,18 @@ internal sealed class RandomWalkController : VirtualController
 
         var curTime = _timing.CurTime;
         randomWalk.NextStepTime = curTime + TimeSpan.FromSeconds(_random.NextDouble(randomWalk.MinStepCooldown.TotalSeconds, randomWalk.MaxStepCooldown.TotalSeconds));
-        if(!Resolve(randomWalk.Owner, ref physics))
+        if(!Resolve(uid, ref physics))
             return;
 
-        var pushAngle = _random.NextAngle();
+        var pushVec = _random.NextAngle().ToVec();
+        pushVec += randomWalk.BiasVector;
+        pushVec.Normalize();
+        if (randomWalk.ResetBiasOnWalk)
+            randomWalk.BiasVector *= 0f;
         var pushStrength = _random.NextFloat(randomWalk.MinSpeed, randomWalk.MaxSpeed);
 
         _physics.SetLinearVelocity(uid, physics.LinearVelocity * randomWalk.AccumulatorRatio, body: physics);
-        _physics.ApplyLinearImpulse(uid, pushAngle.ToVec() * (pushStrength * physics.Mass), body: physics);
+        _physics.ApplyLinearImpulse(uid, pushVec * (pushStrength * physics.Mass), body: physics);
     }
 
     /// <summary>

@@ -398,6 +398,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignCourt
+  name: court sign
+  description: A sign labelling the courtroom.
+  components:
+  - type: Sprite
+    state: court
+
+- type: entity
+  parent: BaseSign
   id: SignDisposalSpace
   name: disposal sign
   description: A sign indicating a disposal area.
@@ -542,6 +551,24 @@
 
 - type: entity
   parent: BaseSign
+  id: SignJanitor
+  name: janitor sign
+  description: A sign labelling an area where the janitor works.
+  components:
+  - type: Sprite
+    state: janitor
+
+- type: entity
+  parent: BaseSign
+  id: SignLawyer
+  name: lawyer sign
+  description: A sign labelling an area where the Lawyers work.
+  components:
+  - type: Sprite
+    state: law
+
+- type: entity
+  parent: BaseSign
   id: SignLibrary
   name: library sign
   description: A sign indicating the library.
@@ -602,6 +629,15 @@
   components:
   - type: Sprite
     state: prison
+
+- type: entity
+  parent: BaseSign
+  id: SignPsychology
+  name: psychology sign
+  description: A sign labelling an area where the Psychologist works.
+  components:
+  - type: Sprite
+    state: psychology
 
 - type: entity
   parent: BaseSign

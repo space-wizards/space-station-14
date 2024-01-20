@@ -1,0 +1,29 @@
+- type: constructionGraph
+  id: GrilleDiagonal
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: grilleDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+
+    - node: grilleDiagonal
+      entity: GrilleDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:AdminLog
+              message: "A grille was cut"
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:DeleteEntity
+          steps:
+            - tool: Cutting
+              doAfter: 0.25

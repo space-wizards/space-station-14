@@ -21,8 +21,8 @@
 - type: cargoProduct
   id: TrackingImplant
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateTrackingImplants
   cost: 1000
   category: Armory
@@ -41,7 +41,7 @@
 - type: cargoProduct
   id: ArmoryLaser
   icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
   product: CrateArmoryLaser
   cost: 4800

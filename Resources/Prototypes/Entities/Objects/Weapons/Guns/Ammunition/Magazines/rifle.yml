@@ -9,7 +9,7 @@
     tags:
       - MagazineRifle
   - type: Item
-    size: 5
+    size: Small
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
@@ -71,6 +71,20 @@
   - type: Sprite
     layers:
     - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleUranium
+  name: "magazine (.20 rifle uranium)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleUranium
+  - type: Sprite
+    layers:
+    - state: uranium
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

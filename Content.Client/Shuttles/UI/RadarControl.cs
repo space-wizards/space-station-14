@@ -3,9 +3,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
-using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
@@ -13,7 +11,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 
@@ -56,6 +53,8 @@ public sealed class RadarControl : MapGridControl
     /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
     /// </summary>
     public Action<EntityCoordinates>? OnRadarClick;
+
+    private List<Entity<MapGridComponent>> _grids = new();
 
     public RadarControl() : base(64f, 256f, 256f)
     {
@@ -198,9 +197,11 @@ public sealed class RadarControl : MapGridControl
 
         var shown = new HashSet<EntityUid>();
 
+        _grids.Clear();
+        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector), ref _grids);
+
         // Draw other grids... differently
-        foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID,
-                     new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector)))
+        foreach (var grid in _grids)
         {
             var gUid = grid.Owner;
             if (gUid == ourGridId || !fixturesQuery.HasComponent(gUid))
@@ -240,7 +241,7 @@ public sealed class RadarControl : MapGridControl
                 (iff == null && IFFComponent.ShowIFFDefault ||
                  (iff.Flags & IFFFlags.HideLabel) == 0x0))
             {
-                var gridBounds = grid.LocalAABB;
+                var gridBounds = grid.Comp.LocalAABB;
                 Label label;
 
                 if (!_iffControls.TryGetValue(gUid, out var control))

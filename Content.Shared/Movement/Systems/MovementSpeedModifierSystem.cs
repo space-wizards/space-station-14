@@ -25,7 +25,7 @@ namespace Content.Shared.Movement.Systems
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
-            Dirty(move);
+            Dirty(uid, move);
         }
 
         public void ChangeBaseSpeed(EntityUid uid, float baseWalkSpeed, float baseSprintSpeed, float acceleration, MovementSpeedModifierComponent? move = null)
@@ -36,7 +36,19 @@ namespace Content.Shared.Movement.Systems
             move.BaseWalkSpeed = baseWalkSpeed;
             move.BaseSprintSpeed = baseSprintSpeed;
             move.Acceleration = acceleration;
-            Dirty(move);
+            Dirty(uid, move);
+        }
+
+        // We might want to create separate RefreshMovementFrictionModifiersEvent and RefreshMovementFrictionModifiers function that will call it
+        public void ChangeFriction(EntityUid uid, float friction, float? frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
+        {
+            if (!Resolve(uid, ref move, false))
+                return;
+
+            move.Friction = friction;
+            move.FrictionNoInput = frictionNoInput;
+            move.Acceleration = acceleration;
+            Dirty(uid, move);
         }
     }
 

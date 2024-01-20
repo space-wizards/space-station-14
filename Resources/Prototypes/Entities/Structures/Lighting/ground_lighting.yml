@@ -41,7 +41,7 @@
       - !type:EmptyAllContainersBehaviour
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
 
 - type: entity
   parent: BaseLightStructure
@@ -124,6 +124,8 @@
     damage:
       types:
         Heat: 20
+  - type: PointLight
+    enabled: true
   - type: StaticPrice
     price: 25
   - type: AmbientOnPowered

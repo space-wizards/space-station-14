@@ -13,7 +13,7 @@
     sprite: Objects/Misc/bedsheets.rsi
     noRot: true
   - type: Item
-    size: 10
+    size: Small
   - type: Clothing
     quickEquip: true
     slots:
@@ -61,6 +61,8 @@
     state: sheetcaptain
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/captain.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetCE
@@ -72,6 +74,8 @@
     state: sheetce
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/ce.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetCentcom
@@ -83,6 +87,8 @@
     state: sheetcentcom
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/centcom.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetClown
@@ -105,6 +111,8 @@
     state: sheetcmo
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/cmo.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetCosmos
@@ -158,6 +166,8 @@
     state: sheethop
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hop.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetHOS
@@ -169,11 +179,13 @@
     state: sheethos
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hos.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetIan
   parent: BedsheetBase
-  name: Ian bedsheet
+  name: Ian's bedsheet
   components:
   - type: Sprite
     state: sheetian
@@ -242,6 +254,8 @@
     state: sheetqm
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/qm.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetRainbow
@@ -263,11 +277,13 @@
     state: sheetrd
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rd.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetBrigmedic
   parent: BedsheetBase
-  name: Brigmedic's bedsheet
+  name: brigmedic's bedsheet
   description: Not worse than cotton.
   components:
   - type: Sprite
@@ -288,7 +304,7 @@
 - type: entity
   id: BedsheetSyndie
   parent: BedsheetBase
-  name: Syndie bedsheet
+  name: syndicate bedsheet
   description: It has a syndicate emblem and it has an aura of evil.
   components:
   - type: Sprite

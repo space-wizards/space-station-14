@@ -33,7 +33,7 @@ public sealed partial class AccessOverriderComponent : Component
         }
     }
 
-    [DataField, AutoNetworkedField(true)]
+    [DataField, AutoNetworkedField]
     public List<ProtoId<AccessLevelPrototype>> AccessLevels = new();
 
     [ViewVariables(VVAccess.ReadWrite)]

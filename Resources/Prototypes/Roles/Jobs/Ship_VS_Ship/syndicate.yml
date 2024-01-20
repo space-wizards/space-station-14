@@ -12,7 +12,7 @@
     gloves: ClothingHandsGlovesColorBlack
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-  innerclothingskirt: ClothingUniformJumpsuitRecruitSyndie #Wearing a jumpskirt into combat is a little unfitting and silly, so there is no jumpskirt counterpart for any of the Ship VS. Ship suits.
+  innerClothingSkirt: ClothingUniformJumpsuitRecruitSyndie #Wearing a jumpskirt into combat is a little unfitting and silly, so there is no jumpskirt counterpart for any of the Ship VS. Ship suits.
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -29,7 +29,7 @@
     eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetAltCommand #Should use the "alt" engineering headset sprite.
-  innerclothingskirt: ClothingUniformJumpsuitRepairmanSyndie
+  innerClothingSkirt: ClothingUniformJumpsuitRepairmanSyndie
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -45,7 +45,7 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesLatex
     belt: ClothingBeltMedicalFilled
-  innerclothingskirt: ClothingUniformJumpsuitParamedicSyndie
+  innerClothingSkirt: ClothingUniformJumpsuitParamedicSyndie
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -57,12 +57,12 @@
     head: ClothingHeadHatHardhatArmored
     jumpsuit: ClothingUniformJumpsuitChiefEngineerSyndie
     back: ClothingBackpackFilled #In a running theme, the default station job backpack still continues to look strange in comparison to the regular one. It's not as bad as on the syndicate engineer here, though.
-    shoes: ClothingShoesBootsJack 
+    shoes: ClothingShoesBootsJack
     gloves: ClothingHandsGlovesCombat
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltUtilityEngineering
-  innerclothingskirt: ClothingUniformJumpsuitChiefEngineerSyndie
+  innerClothingSkirt: ClothingUniformJumpsuitChiefEngineerSyndie
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

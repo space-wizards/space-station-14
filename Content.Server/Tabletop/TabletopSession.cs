@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
-using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Tabletop
 {
@@ -17,7 +17,7 @@ namespace Content.Server.Tabletop
         /// <summary>
         ///     The set of players currently playing this tabletop game.
         /// </summary>
-        public readonly Dictionary<IPlayerSession, TabletopSessionPlayerData> Players = new();
+        public readonly Dictionary<ICommonSession, TabletopSessionPlayerData> Players = new();
 
         /// <summary>
         ///     All entities bound to this session. If you create an entity for this session, you have to add it here.

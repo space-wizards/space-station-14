@@ -19,10 +19,10 @@ public sealed partial class ThirstComponent : Component
     [AutoNetworkedField]
     public float ActualDecayRate;
 
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public ThirstThreshold CurrentThirstThreshold;
 
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public ThirstThreshold LastThirstThreshold;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -45,7 +45,7 @@ public sealed partial class ThirstComponent : Component
     public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
 
     [DataField("thresholds")]
-    [AutoNetworkedField(cloneData: true)]
+    [AutoNetworkedField]
     public Dictionary<ThirstThreshold, float> ThirstThresholds = new()
     {
         {ThirstThreshold.OverHydrated, 600.0f},

@@ -39,7 +39,7 @@ public sealed class SpawnPointSystem : EntitySystem
 
             if (_gameTicker.RunLevel != GameRunLevel.InRound &&
                 spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job?.ID == args.Job.PrototypeId))
+                (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype))
             {
                 possiblePositions.Add(xform.Coordinates);
             }

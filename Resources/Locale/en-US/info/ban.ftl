@@ -76,6 +76,7 @@ ban-panel-years = Years
 ban-panel-permanent = Permanent
 ban-panel-ip-hwid-tooltip = Leave empty and check the checkbox below to use last connection's details
 ban-panel-severity = Severity:
+ban-panel-erase = Erase chat messages and player from round
 
 # Ban string
 server-ban-string = {$admin} created a {$severity} severity server ban that expires {$expires} for [{$name}, {$ip}, {$hwid}], with reason: {$reason}

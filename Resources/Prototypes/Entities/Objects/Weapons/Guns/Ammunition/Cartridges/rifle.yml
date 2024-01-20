@@ -17,8 +17,6 @@
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
   - type: SpentAmmoVisuals
-  - type: StaticPrice
-    price: 10
 
 - type: entity
   id: CartridgeRifle
@@ -51,3 +49,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletRifleIncendiary
+
+- type: entity
+  id: CartridgeRifleUranium
+  name: cartridge (.20 rifle uranium)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleUranium

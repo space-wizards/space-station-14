@@ -84,8 +84,8 @@
     - type: WiresVisuals
     - type: WiresPanel
     - type: Wires
-      BoardName: wires-board-name-firelock
-      LayoutId: Firelock
+      boardName: wires-board-name-firelock
+      layoutId: Firelock
     - type: UserInterface
       interfaces:
         - key: enum.WiresUiKey.Key

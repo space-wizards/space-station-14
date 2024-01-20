@@ -12,6 +12,7 @@ namespace Content.Shared.Clothing.EntitySystems;
 public sealed class StealthClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -21,6 +22,13 @@ public sealed class StealthClothingSystem : EntitySystem
         SubscribeLocalEvent<StealthClothingComponent, ToggleStealthEvent>(OnToggleStealth);
         SubscribeLocalEvent<StealthClothingComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<StealthClothingComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<StealthClothingComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, StealthClothingComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+        Dirty(uid, component);
     }
 
     /// <summary>

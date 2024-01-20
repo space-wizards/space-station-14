@@ -51,6 +51,8 @@ public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force)
 
     public readonly bool Force = Force;
 
+    public string? Message;
+
     public bool Cancelled;
 }
 

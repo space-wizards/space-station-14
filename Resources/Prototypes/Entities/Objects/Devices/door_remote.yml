@@ -7,8 +7,12 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/door_remote.rsi
+  - type: Item
+    storedRotation: -90
   - type: Access
   - type: DoorRemote
+  - type: StealTarget
+    stealGroup: DoorRemote
 
 - type: entity
   parent: DoorRemoteDefault
@@ -172,3 +176,5 @@
   - type: Access
     groups:
     - AllAccess
+    tags:
+    - CentralCommand

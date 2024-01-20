@@ -11,14 +11,14 @@ public sealed partial class StepTriggerComponent : Component
     /// <summary>
     ///     List of entities that are currently colliding with the entity.
     /// </summary>
-    [ViewVariables, AutoNetworkedField(true)]
+    [ViewVariables, AutoNetworkedField]
     public HashSet<EntityUid> Colliding = new();
 
     /// <summary>
     ///     The list of entities that are standing on this entity,
     /// which shouldn't be able to trigger it again until stepping off.
     /// </summary>
-    [ViewVariables, AutoNetworkedField(true)]
+    [ViewVariables, AutoNetworkedField]
     public HashSet<EntityUid> CurrentlySteppedOn = new();
 
     /// <summary>

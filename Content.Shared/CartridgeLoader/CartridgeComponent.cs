@@ -11,7 +11,7 @@ namespace Content.Shared.CartridgeLoader;
 public sealed partial class CartridgeComponent : Component
 {
     [DataField(required: true)]
-    public string ProgramName = "default-program-name";
+    public LocId ProgramName = "default-program-name";
 
     [DataField]
     public SpriteSpecifier? Icon;

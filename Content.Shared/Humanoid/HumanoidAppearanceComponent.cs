@@ -19,7 +19,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField]
     public Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> BaseLayers = new();
 
-    [DataField, AutoNetworkedField(true)]
+    [DataField, AutoNetworkedField]
     public HashSet<HumanoidVisualLayers> PermanentlyHidden = new();
 
     // Couldn't these be somewhere else?
@@ -36,7 +36,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     ///     Stored on the server, this is merged in the client into
     ///     all layer settings.
     /// </summary>
-    [DataField, AutoNetworkedField(true)]
+    [DataField, AutoNetworkedField]
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
 
     /// <summary>
@@ -62,7 +62,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     ///     Visual layers currently hidden. This will affect the base sprite
     ///     on this humanoid layer, and any markings that sit above it.
     /// </summary>
-    [DataField, AutoNetworkedField(true)]
+    [DataField, AutoNetworkedField]
     public HashSet<HumanoidVisualLayers> HiddenLayers = new();
 
     [DataField, AutoNetworkedField]
