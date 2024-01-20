@@ -523,7 +523,12 @@ namespace Content.Client.Preferences.UI
             _jobCategories.Clear();
             var firstCategory = true;
 
-            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+            var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>()
+                .OrderByDescending(department => department.Weight)
+                .ThenBy(department => Loc.GetString($"department-{department.ID}"))
+                .ToList();
+
+            foreach (var department in departments)
             {
                 var departmentName = Loc.GetString($"department-{department.ID}");
 
