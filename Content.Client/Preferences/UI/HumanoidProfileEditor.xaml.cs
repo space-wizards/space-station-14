@@ -81,9 +81,7 @@ namespace Content.Client.Preferences.UI
         private BoxContainer _jobList => CJobList;
         private BoxContainer _antagList => CAntagList;
         private BoxContainer _traitsList => CTraitsList;
-        private Label _loadoutPointsLabelB => LoadoutPointsLabelB; // "B"efore
-        private Label _loadoutPointsLabelI => LoadoutPointsLabelI; // "I"nner
-        private Label _loadoutPointsLabelA => LoadoutPointsLabelA; // "A"fter
+        private Label _loadoutPointsLabel => LoadoutPointsLabel;
         private ProgressBar _loadoutPointsBar => LoadoutPointsBar; // The above labels' names are referencing their position relative to this element
         private Button _loadoutsShowUnusableButton => CHideShowUnusableButton;
         private BoxContainer _loadoutsTab => CLoadoutsTab;
@@ -1348,7 +1346,7 @@ namespace Content.Client.Preferences.UI
         {
             var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
             _loadoutPointsBar.Value = points;
-            _loadoutPointsLabelI.Text = points.ToString();
+            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", points), ("max", points));
 
             foreach (var preferenceSelector in _loadoutPreferences)
             {
@@ -1361,7 +1359,7 @@ namespace Content.Client.Preferences.UI
                 {
                     points -= preferenceSelector.Loadout.Cost;
                     _loadoutPointsBar.Value = points;
-                    _loadoutPointsLabelI.Text = points.ToString();
+                    _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", points), ("max", _loadoutPointsBar.MaxValue));
                 }
             }
         }
@@ -1370,9 +1368,7 @@ namespace Content.Client.Preferences.UI
         {
             // Reset loadout points so you don't get -14 points or something for no reason
             var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
-            _loadoutPointsLabelB.Text = "0";
-            _loadoutPointsLabelI.Text = points.ToString();
-            _loadoutPointsLabelA.Text = points.ToString();
+            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", points), ("max", points));
             _loadoutPointsBar.MaxValue = points;
             _loadoutPointsBar.Value = points;
 
@@ -1484,14 +1480,14 @@ namespace Content.Client.Preferences.UI
                             preference = false;
                         else
                         {
+                            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", temp), ("max", _loadoutPointsBar.MaxValue));
                             _loadoutPointsBar.Value = temp;
-                            _loadoutPointsLabelI.Text = temp.ToString();
                         }
                     }
                     else
                     {
+                        _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", _loadoutPointsBar.Value), ("max", _loadoutPointsBar.MaxValue));
                         _loadoutPointsBar.Value += loadout.Cost;
-                        _loadoutPointsLabelI.Text = _loadoutPointsBar.Value.ToString();
                     }
 
                     // Update Preference
@@ -1519,14 +1515,14 @@ namespace Content.Client.Preferences.UI
                             preference = false;
                         else
                         {
+                            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", temp), ("max", _loadoutPointsBar.MaxValue));
                             _loadoutPointsBar.Value = temp;
-                            _loadoutPointsLabelI.Text = temp.ToString();
                         }
                     }
                     else
                     {
+                        _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", _loadoutPointsBar.Value), ("max", _loadoutPointsBar.MaxValue));
                         _loadoutPointsBar.Value += loadout.Cost;
-                        _loadoutPointsLabelI.Text = _loadoutPointsBar.Value.ToString();
                     }
 
                     // Update Preference
