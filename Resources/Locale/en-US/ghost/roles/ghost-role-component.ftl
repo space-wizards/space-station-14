@@ -22,7 +22,7 @@ ghost-role-information-hamlet-description = Lives in the station bridge, has a b
 
 ghost-role-information-slimes-name = Slime
 ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
-ghost-role-information-angry-slimes-description = Everything around you irritates your instincts, destroy them!
+ghost-role-information-angry-slimes-description = Everyone around you irritates your instincts, destroy them!
 
 ghost-role-information-smile-name = Smile the Slime
 ghost-role-information-smile-description = The sweetest creature in the world. Smile Slime!
@@ -89,13 +89,13 @@ ghost-role-information-supplybot-name = SupplyBot
 ghost-role-information-supplybot-description = Deliver goods around the station.
 
 ghost-role-information-space-bear-name = Space bear
-ghost-role-information-space-bear-description = You're a bear! Do bear things.
+ghost-role-information-space-bear-description = Your tummy rumbles, and these people look really yummy... What a feast!
 
 ghost-role-information-salvage-bear-name = Space bear on salvage wreck
 ghost-role-information-salvage-bear-description = Defend the loot inside the salvage wreck!
 
 ghost-role-information-space-kangaroo-name = Space kangaroo
-ghost-role-information-space-kangaroo-description = You're a kangaroo! Do kangaroo things.
+ghost-role-information-space-kangaroo-description = Give the crew a taste of your sharp claws!
 
 ghost-role-information-salvage-kangaroo-name = Space kangaroo on salvage wreck
 ghost-role-information-salvage-kangaroo-description = Defend the loot inside the salvage wreck!
@@ -154,7 +154,7 @@ ghost-role-information-remilia-name = Remilia, the chaplain's familiar
 ghost-role-information-remilia-description = Obey your master. Eat fruit.
 ghost-role-information-remilia-rules = You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
 
-ghost-role-information-cerberus-name = Cerberus, Evil Famili
+ghost-role-information-cerberus-name = Cerberus, Evil Familiar
 ghost-role-information-cerberus-description = Obey your master. Spread chaos.
 ghost-role-information-cerberus-rules = You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
 
