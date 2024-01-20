@@ -869,6 +869,17 @@
     sprite: Clothing/Head/Hats/party_blue.rsi
 
 - type: entity
+  parent: ClothingHeadHatPartyRed
+  id: ClothingHeadHatPartyWaterCup
+  name: water cup party hat
+  description: Not as fulfilling as you had hoped...
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/party_water_cup.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/party_water_cup.rsi
+
+- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGreyFlatcap
   name: grey flatcap

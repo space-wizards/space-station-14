@@ -330,5 +330,14 @@
   - type: Tag
     tags:
     - Trash
+    - DroneUsable
+    - WhitelistChameleon
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: Clothing
+    slots:
+    - HEAD
+    sprite: Clothing/Head/Hats/party_water_cup.rsi
+  #- type: Item
+  #  size: Small
+  #  storedRotation: -90
