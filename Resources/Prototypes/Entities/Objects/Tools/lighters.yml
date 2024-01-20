@@ -177,6 +177,10 @@
         - ReagentId: WeldingFuel
           Quantity: 12
         maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
+  - type: Welder
+    fuelConsumption: 0.01
+    fuelLitCost: 0.1
+    tankSafe: true
   - type: ToggleableLightVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
