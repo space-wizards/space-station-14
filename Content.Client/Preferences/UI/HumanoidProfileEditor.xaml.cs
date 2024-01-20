@@ -567,8 +567,11 @@ namespace Content.Client.Preferences.UI
                     _jobList.AddChild(category);
                 }
 
-                var jobs = department.Roles.Select(o => _prototypeManager.Index<JobPrototype>(o)).Where(o => o.SetPreference).ToList();
-                jobs.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
+                var jobs = department.Roles.Select(jobId => _prototypeManager.Index<JobPrototype>(jobId))
+                    .Where(job => job.SetPreference)
+                    .OrderByDescending(job => job.Weight)
+                    .ThenBy(job => job.LocalizedName)
+                    .ToList();
 
                 foreach (var job in jobs)
                 {
