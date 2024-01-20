@@ -249,9 +249,6 @@ public sealed partial class ChangelingSystem
 
         if (!component.ArmBladeActive)
         {
-            var armblade = Spawn(ArmBladeId, Transform(uid).Coordinates);
-            EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
-
             if (SpawnArmBlade(uid))
                 component.ArmBladeActive = true;
             else

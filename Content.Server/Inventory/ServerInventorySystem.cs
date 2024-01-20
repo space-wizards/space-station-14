@@ -48,7 +48,8 @@ namespace Content.Server.Inventory
             var enumerator = new InventorySlotEnumerator(source.Comp);
             while (enumerator.NextItem(out var item, out var slot))
             {
-                TryEquip(target, item, slot.Name, true, force: true);
+                if (!TryEquip(target, item, slot.Name, true, force: true))
+                    TryUnequip(source, slot.Name, true, force: true);
             }
         }
     }
