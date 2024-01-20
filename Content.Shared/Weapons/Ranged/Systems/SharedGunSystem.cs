@@ -211,34 +211,46 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         gun.ShootCoordinates = toCoordinates;
 
-        AttemptShoot(user, gunUid, gun);
+        if (user != null)
+            AttemptShoot(user.Value, gunUid, gun);
+        else
+            AttemptShoot(gunUid, gunUid, gun);
+
         gun.ShotCounter = 0;
     }
 
-    private void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun)
+    //Shoot without user
+    private void AttemptShoot(EntityUid gunUid, GunComponent gun)
+    {
+        AttemptShoot(gunUid, gunUid, gun);
+    }
+
+    private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
         if (gun.FireRate <= 0f)
             return;
 
-        if (user != null)
+        if (!_actionBlockerSystem.CanUseHeldEntity(user))
+            return;
+
+        // check if anything wants to prevent shooting
+        var prevention = new ShotAttemptedEvent
         {
-            if (!_actionBlockerSystem.CanUseHeldEntity(user.Value))
-                return;
+            User = user,
+            Used = gunUid
+        };
+        RaiseLocalEvent(gunUid, ref prevention);
+        if (prevention.Cancelled)
+            return;
 
-            // check if anything wants to prevent shooting
-            var prevention = new ShotAttemptedEvent
-            {
-                User = user.Value,
-                Used = gunUid
-            };
-            RaiseLocalEvent(gunUid, ref prevention);
-            if (prevention.Cancelled)
-                return;
+        RaiseLocalEvent(user, ref prevention);
+        if (prevention.Cancelled)
+            return;
 
-            RaiseLocalEvent(user.Value, ref prevention);
-            if (prevention.Cancelled)
-                return;
-        }
+        var toCoordinates = gun.ShootCoordinates;
+
+        if (toCoordinates == null)
+            return;
 
         var curTime = Timing.CurTime;
 
@@ -288,9 +300,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (attemptEv.Cancelled)
         {
-            if (attemptEv.Message != null && user != null)
+            if (attemptEv.Message != null)
             {
-                PopupSystem.PopupClient(attemptEv.Message, gunUid, user.Value);
+                PopupSystem.PopupClient(attemptEv.Message, gunUid, user);
             }
 
             gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
@@ -298,7 +310,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // if the user exists, we use its coordinates. Otherwise - coordinates of the weapon.
-        var fromCoordinates = (user != null) ? Transform(user.Value).Coordinates : Transform(gunUid).Coordinates;
+        var fromCoordinates = Transform(user).Coordinates;
 
         // Remove ammo
         var ev = new TakeAmmoEvent(shots, new List<(EntityUid? Entity, IShootable Shootable)>(), fromCoordinates, user);
@@ -348,15 +360,10 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (userImpulse)
         {
-            if (user != null && TryComp<PhysicsComponent>(user, out var userPhysics)) // user impulse
+            if (TryComp<PhysicsComponent>(user, out var userPhysics)) // user impulse
             {
-                if (_gravity.IsWeightless(user.Value, userPhysics))
-                    CauseImpulse(fromCoordinates, toCoordinates.Value, user.Value, userPhysics);
-            }
-            else if (TryComp<PhysicsComponent>(gunUid, out var gunPhysics)) // gun impulse
-            {
-                if (_gravity.IsWeightless(gunUid, gunPhysics))
-                    CauseImpulse(fromCoordinates, toCoordinates.Value, gunUid, gunPhysics);
+                if (_gravity.IsWeightless(user, userPhysics))
+                    CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
             }
         }
 
