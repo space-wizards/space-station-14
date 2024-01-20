@@ -254,13 +254,3 @@
     contents:
       - id: MobKangaroo
 
-- type: entity
-  id: CrateNPCMothroach
-  parent: CrateLivestock
-  name: crate of mothroaches
-  description: A crate containing four mothroaches.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MobMothroach
-        amount: 4
