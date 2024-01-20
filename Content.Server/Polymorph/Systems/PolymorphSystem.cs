@@ -351,8 +351,6 @@ namespace Content.Server.Polymorph.Systems
 
             if (_container.TryGetContainingContainer(user, out var cont))
                 _container.Insert(target, cont);
-
-            SendToPausesdMap(user, userTransform);
         }
 
         /// <summary>
