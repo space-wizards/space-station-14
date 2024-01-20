@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Repo
-  changes:
-  - message: Doors can close over conveyor belts.
-    type: Fix
-  id: 5257
-  time: '2023-12-04T23:07:48.0000000+00:00'
-- author: 27alaing
-  changes:
-  - message: Pun Pun can become a revolutionary again
-    type: Tweak
-  id: 5258
-  time: '2023-12-04T23:09:36.0000000+00:00'
 - author: Bhijn and Myr
   changes:
   - message: Speech bubbles now display the name of whatever or whoever spoke them!
@@ -3789,3 +3777,17 @@
   id: 5757
   time: '2024-01-20T18:02:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24092
+- author: Nimfar11
+  changes:
+  - message: Adds snake kebab and its recipe.
+    type: Add
+  id: 5758
+  time: '2024-01-20T23:38:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24341
+- author: Alekshhh
+  changes:
+  - message: Cerberus now has a wideswing that works similarly to spears.
+    type: Tweak
+  id: 5759
+  time: '2024-01-20T23:38:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24328
