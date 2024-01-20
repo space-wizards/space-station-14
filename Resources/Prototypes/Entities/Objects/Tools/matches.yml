@@ -41,14 +41,6 @@
     unlitIcon: match_unlit
     litIcon: match_lit
     burntIcon: match_burnt
-  - type: Extractable
-    grindableSolutionName: matchstick
-  - type: SolutionContainerManager
-    solutions:
-      matchstick:
-        reagents:
-        - ReagentId: Phosphorus
-          Quantity: 2
 
 - type: entity
   parent: Matchstick

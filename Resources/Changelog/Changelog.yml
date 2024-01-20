@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Doru991
-  changes:
-  - message: Skeletons now regain more health when coming in contact with milk.
-    type: Tweak
-  id: 5248
-  time: '2023-12-04T02:32:05.0000000+00:00'
-- author: joshepvodka
-  changes:
-  - message: CentCom officers now finally have a jumpsuit that matches the ever stylish
-      green hue of CentCom equipment.
-    type: Tweak
-  id: 5249
-  time: '2023-12-04T02:32:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Roller skates are slower and have less friction and acceleration.
-    type: Tweak
-  - message: Speed boots give a much more pronounced speed boost. Research them today!
-    type: Tweak
-  id: 5250
-  time: '2023-12-04T04:31:11.0000000+00:00'
 - author: Slava0135
   changes:
   - message: Gas tanks now deal damage when thrown. Be sure to hold them when opening
@@ -3785,3 +3764,24 @@
   id: 5748
   time: '2024-01-20T00:45:04.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24247
+- author: Scribbles0
+  changes:
+  - message: Added a new trait, the Unrevivable trait.
+    type: Add
+  id: 5749
+  time: '2024-01-20T02:22:15.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24226
+- author: Drayff
+  changes:
+  - message: Animations for ToolBoxes!
+    type: Add
+  id: 5750
+  time: '2024-01-20T02:29:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24305
+- author: Agoichi
+  changes:
+  - message: Rebalanced Lobbying Bundle
+    type: Tweak
+  id: 5751
+  time: '2024-01-20T02:35:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24303
