@@ -58,6 +58,13 @@ flavor-complex-nothing = like nothing
 flavor-complex-honey = like honey
 flavor-complex-spices = like spices
 
+# Condiments
+
+flavor-complex-ketchunaise = like tomatoes and mayonnaise
+flavor-complex-mayonnaise = like mayonnaise
+flavor-complex-mustard = like mustard
+
+
 # Food-specific flavors.
 
 ## Food chemicals. In case you get something that has this inside.
