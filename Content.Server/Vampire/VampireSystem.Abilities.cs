@@ -28,29 +28,196 @@ using Content.Shared.Stunnable;
 using Content.Shared.Vampire;
 using Content.Shared.Vampire.Components;
 using Content.Shared.Weapons.Melee;
+using FastAccessors;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
+using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Vampire;
 
 public sealed partial class VampireSystem
 {
-    /// <summary>
-    /// Upon using any power that does not require a target
-    /// </summary>
-    private void OnUseSelfPower(EntityUid uid, VampireComponent component, VampireSelfPowerEvent args)
-        => args.Handled = TriggerPower((uid, component), args.Details);
+    private FrozenDictionary<string, VampirePowerProtype> _powerCache = default!;
+    private FrozenDictionary<string, VampirePassiveProtype> _passiveCache = default!;
 
-    /// <summary>
-    /// Upon using any power that requires a target
-    /// </summary>
-    private void OnUseTargetedPower(EntityUid uid, VampireComponent component, VampireTargetedPowerEvent args)
-        => args.Handled = TriggerPower((uid, component), args.Details, args.Target);
-
-    private bool TriggerPower(Entity<VampireComponent> vampire, VampirePowerDetails def, EntityUid? target = null)
+    private void InitializePowers()
     {
-        if (!IsAbilityUnlocked(vampire, def.Type))
+        _powerCache = BuildPowerCache();
+        _passiveCache = BuildPassiveCache();
+
+        //Abilities
+        SubscribeLocalEvent<VampireComponent, VampireSummonHeirloomEvent>(OnVampireSummonHeirloom);
+        SubscribeLocalEvent<VampireComponent, VampireToggleFangsEvent>(OnVampireToggleFangs);
+        SubscribeLocalEvent<VampireComponent, VampireGlareEvent>(OnVampireGlare);
+        SubscribeLocalEvent<VampireComponent, VampireScreechEvent>(OnVampireScreech);
+        SubscribeLocalEvent<VampireComponent, VampirePolymorphEvent>(OnVampirePolymorph);
+        SubscribeLocalEvent<VampireComponent, VampireHypnotiseEvent>(OnVampireHypnotise);
+        SubscribeLocalEvent<VampireComponent, VampireBloodStealEvent>(OnVampireBloodSteal);
+        SubscribeLocalEvent<VampireComponent, VampireCloakOfDarknessEvent>(OnVampireCloakOfDarkness);
+
+        //Hypnotise
+        SubscribeLocalEvent<VampireComponent, VampireHypnotiseDoAfterEvent>(HypnotiseDoAfter);
+
+        //Drink Blood
+        SubscribeLocalEvent<VampireComponent, BeforeInteractHandEvent>(OnInteractHandEvent);
+        SubscribeLocalEvent<VampireComponent, VampireDrinkBloodDoAfterEvent>(DrinkDoAfter);
+
+        //Deaths embrace
+        SubscribeLocalEvent<VampireDeathsEmbraceComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
+        SubscribeLocalEvent<VampireDeathsEmbraceComponent, EntGotRemovedFromContainerMessage>(OnRemovedFromContainer);
+        SubscribeLocalEvent<VampireDeathsEmbraceComponent, MobStateChangedEvent>(OnVampireStateChanged);
+
+    }
+
+    #region Ability Entry Points
+    private void OnVampireSummonHeirloom(EntityUid entity, VampireComponent component, VampireSummonHeirloomEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        SummonHeirloom(vampire);
+
+        ev.Handled = true;
+    }
+    private void OnVampireToggleFangs(EntityUid entity, VampireComponent component, VampireToggleFangsEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        var actionEntity = GetPowerEntity(vampire, def.ID);
+        if (actionEntity == null)
+            return;
+
+        var toggled = ToggleFangs(vampire);
+
+        _action.SetToggled(actionEntity, toggled);
+
+        ev.Handled = true;
+    }
+    private void OnVampireGlare(EntityUid entity, VampireComponent component, VampireGlareEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        Glare(vampire, ev.Target, def.Duration, def.Damage);
+
+        ev.Handled = true;
+    }
+    private void OnVampireScreech(EntityUid entity, VampireComponent component, VampireScreechEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        Screech(vampire, def.Duration, def.Damage);
+
+        ev.Handled = true;
+    }
+    private void OnVampirePolymorph(EntityUid entity, VampireComponent component, VampirePolymorphEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        PolymorphSelf(vampire, def.PolymorphTarget);
+
+        ev.Handled = true;
+    }
+    private void OnVampireHypnotise(EntityUid entity, VampireComponent component, VampireHypnotiseEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        ev.Handled = TryHypnotise(vampire, ev.Target, def.Duration, def.DoAfterDelay);
+    }
+    private void OnVampireBloodSteal(EntityUid entity, VampireComponent component, VampireBloodStealEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        BloodSteal(vampire);
+
+        ev.Handled = true;
+    }
+    private void OnVampireCloakOfDarkness(EntityUid entity, VampireComponent component, VampireCloakOfDarknessEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+
+        var actionEntity = GetPowerEntity(vampire.Comp, def.ID);
+        if (actionEntity == null)
+            return;
+
+        var toggled = CloakOfDarkness(vampire, def.Upkeep, 0.75f, -0.5f);
+
+        _action.SetToggled(actionEntity, toggled);
+
+        ev.Handled = true;
+    }
+    private void OnInteractHandEvent(EntityUid uid, VampireComponent component, BeforeInteractHandEvent args)
+    {
+        if (!HasComp<HumanoidAppearanceComponent>(args.Target))
+            return;
+
+        if (args.Target == uid)
+            return;
+
+        if (!TryGetPowerDefinition(VampireComponent.DrinkBloodPrototype, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(uid, component);
+
+        args.Handled = TryDrink(vampire, args.Target, def.DoAfterDelay!.Value);
+    }
+    #endregion
+
+
+    private bool TryGetPowerDefinition(string name, [NotNullWhen(true)] out VampirePowerProtype? definition)
+        => _powerCache.TryGetValue(name, out definition);
+
+    private bool IsAbilityUsable(Entity<VampireComponent> vampire, VampirePowerProtype def)
+    {
+        if (!IsPowerUnlocked(vampire, def.ID))
             return false;
 
         //Block if we are cuffed
@@ -88,68 +255,12 @@ public sealed partial class VampireSystem
             return false;
         }
 
-        var success = true;
-
-        //TODO: Rewrite when a magic effect system is introduced (like reagents)
-        switch (def.Type)
-        {
-            case VampirePowerKey.SummonHeirloom:
-                {
-                    SummonHeirloom(vampire);
-                    break;
-                }
-            case VampirePowerKey.ToggleFangs:
-                {
-                    ToggleFangs(vampire);
-                    break;
-                }
-            case VampirePowerKey.DeathsEmbrace:
-                {
-                    success = TryMoveToCoffin(vampire);
-                    break;
-                }
-            case VampirePowerKey.Glare:
-                {
-                    Glare(vampire, target, def.Duration, def.Damage);
-                    break;
-                }
-            case VampirePowerKey.Screech:
-                {
-                    Screech(vampire, def.Duration, def.Damage);
-                    break;
-                }
-            case VampirePowerKey.Polymorph:
-                {
-                    PolymorphSelf(vampire, def.PolymorphTarget);
-                    break;
-                }
-            case VampirePowerKey.Hypnotise:
-                {
-                    success = TryHypnotise(vampire, target, def.Duration, def.DoAfterDelay);
-                    break;
-                }
-            case VampirePowerKey.BloodSteal:
-                {
-                    BloodSteal(vampire);
-                    break;
-                }
-            case VampirePowerKey.CloakOfDarkness:
-                {
-                    CloakOfDarkness(vampire, def.Upkeep, -1, 1);
-                    break;
-                }
-            default:
-                break;
-        }
-
-
-        //if (success)
-        //   _action.StartUseDelay(GetAbilityEntity(vampire, powerType));
-        return success;
+        return true;
     }
 
+
     #region Passive Powers
-    private void UnnaturalStrength(Entity<VampireComponent> vampire, VampirePowerDetails def)
+    /*private void UnnaturalStrength(Entity<VampireComponent> vampire, VampirePowerDetails def)
     {
         if (def.Damage is null)
             return;
@@ -168,7 +279,7 @@ public sealed partial class VampireSystem
 
         var meleeComp = EnsureComp<MeleeWeaponComponent>(vampire);
         meleeComp.Damage += def.Damage;
-    }
+    }*/
     #endregion
 
     #region Other Powers
@@ -299,22 +410,18 @@ public sealed partial class VampireSystem
         //Update abilities, add new unlocks
         //UpdateAbilities(vampire);
     }
-    private void CloakOfDarkness(Entity<VampireComponent> vampire, float upkeep, float passiveVisibilityRate, float movementVisibilityRate)
+    private bool CloakOfDarkness(Entity<VampireComponent> vampire, float upkeep, float passiveVisibilityRate, float movementVisibilityRate)
     {
-        var actionEntity = GetAbilityEntity(vampire.Comp, VampirePowerKey.CloakOfDarkness);
-        if (IsAbilityActive(vampire.Comp, VampirePowerKey.CloakOfDarkness))
+        if (HasComp<VampireSealthComponent>(vampire))
         {
-            SetAbilityActive(vampire.Comp, VampirePowerKey.CloakOfDarkness, false);
-            _action.SetToggled(actionEntity, false);
             RemComp<StealthOnMoveComponent>(vampire);
             RemComp<StealthComponent>(vampire);
             RemComp<VampireSealthComponent>(vampire);
             _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), vampire, vampire);
+            return false;
         }
         else
         {
-            SetAbilityActive(vampire.Comp, VampirePowerKey.CloakOfDarkness, true);
-            _action.SetToggled(actionEntity, true);
             EnsureComp<StealthComponent>(vampire);
             var stealthMovement = EnsureComp<StealthOnMoveComponent>(vampire);
             stealthMovement.PassiveVisibilityRate = passiveVisibilityRate;
@@ -322,6 +429,7 @@ public sealed partial class VampireSystem
             var vampireStealth = EnsureComp<VampireSealthComponent>(vampire);
             vampireStealth.Upkeep = upkeep;
             _popup.PopupEntity(Loc.GetString("vampire-cloak-enable"), vampire, vampire);
+            return true;
         }
     }
     #endregion
@@ -339,7 +447,7 @@ public sealed partial class VampireSystem
             return false;
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, vampire, delay ?? TimeSpan.FromSeconds(5),
-        new VampireHypnotiseEvent() { Duration = duration },
+        new VampireHypnotiseDoAfterEvent() { Duration = duration },
         eventTarget: vampire,
         target: target,
         used: target)
@@ -362,7 +470,7 @@ public sealed partial class VampireSystem
         }
         return true;
     }
-    private void HypnotiseDoAfter(Entity<VampireComponent> vampire, ref VampireHypnotiseEvent args)
+    private void HypnotiseDoAfter(Entity<VampireComponent> vampire, ref VampireHypnotiseDoAfterEvent args)
     {
         if (!args.Target.HasValue)
             return;
@@ -378,34 +486,24 @@ public sealed partial class VampireSystem
     /// <summary>
     /// When the vampire dies, attempt to activate the Deaths Embrace power
     /// </summary>
-    private void OnVampireStateChanged(EntityUid uid, VampireComponent component, MobStateChangedEvent args)
+    private void OnVampireStateChanged(EntityUid uid, VampireDeathsEmbraceComponent component, MobStateChangedEvent args)
     {
         if (args.OldMobState != MobState.Dead && args.NewMobState == MobState.Dead)
         {
-            var action = GetAbilityEntity(component, VampirePowerKey.DeathsEmbrace);
-            if (action == null)
-                return;
-
-            if (!TryComp<InstantActionComponent>(action, out var instantActionComponent))
-                return;
-
-            var def = instantActionComponent.Event as VampireSelfPowerEvent;
-            if (def == null)
-                return;
-
-            OnUseSelfPower(uid, component, def);
+            //Home still exists?
+            TryMoveToCoffin((uid, component));
         }
     }
-
     /// <summary>
     /// When the vampire is inserted into a container (ie locker, crate etc) check for a coffin, and bind their home to it
     /// </summary>
-    private void OnInsertedIntoContainer(EntityUid uid, VampireComponent component, EntGotInsertedIntoContainerMessage args)
+    private void OnInsertedIntoContainer(EntityUid uid, VampireDeathsEmbraceComponent component, EntGotInsertedIntoContainerMessage args)
     {
         if (HasComp<CoffinComponent>(args.Container.Owner))
         {
             component.HomeCoffin = args.Container.Owner;
-            EnsureComp<VampireHealingComponent>(args.Entity);
+            var vhComp = EnsureComp<VampireHealingComponent>(args.Entity);
+            vhComp.Healing = component.CoffinHealing;
             _popup.PopupEntity(Loc.GetString("vampire-deathsembrace-bind"), uid, uid);
             _admin.Add(LogType.Damaged, LogImpact.Low, $"{ToPrettyString(uid):user} bound a new coffin");
 
@@ -414,15 +512,14 @@ public sealed partial class VampireSystem
     /// <summary>
     /// When leaving a container, remove the healing component
     /// </summary>
-    private void OnRemovedFromContainer(EntityUid uid, VampireComponent component, EntGotRemovedFromContainerMessage args)
+    private void OnRemovedFromContainer(EntityUid uid, VampireDeathsEmbraceComponent component, EntGotRemovedFromContainerMessage args)
     {
-        //Presence check is done upstream
         RemComp<VampireHealingComponent>(args.Entity);
     }
     /// <summary>
     /// Attempt to move the vampire to their bound coffin
     /// </summary>
-    private bool TryMoveToCoffin(Entity<VampireComponent> vampire)
+    private bool TryMoveToCoffin(Entity<VampireDeathsEmbraceComponent> vampire)
     {
         if (!vampire.Comp.HomeCoffin.HasValue)
             return false;
@@ -463,6 +560,9 @@ public sealed partial class VampireSystem
     /// </summary>
     private void DoCoffinHeal(EntityUid vampire, VampireHealingComponent healing)
     {
+        if (healing.Healing == null)
+            return;
+
         _damageableSystem.TryChangeDamage(vampire, healing.Healing, true, origin: vampire);
 
         //If they are dead and we are below the death threshold - revive
@@ -488,57 +588,34 @@ public sealed partial class VampireSystem
 
     #region Blood Drinking
     /// <summary>
-    /// Check and start drinking blood from a humanoid
+    /// Toggle if fangs are extended
     /// </summary>
-    /*private void OnInteractWithHumanoid(EntityUid uid, HumanoidAppearanceComponent component, InteractHandEvent args)
+    private bool ToggleFangs(Entity<VampireComponent> vampire)
     {
-        if (args.Handled)
-            return;
-
-        if (args.Target == args.User)
-            return;
-
-        if (!TryComp<VampireComponent>(args.User, out var vampireComponent))
-            return;
-
-        args.Handled = TryDrink((args.User, vampireComponent), args.Target, TimeSpan.FromSeconds(1));
-    }*/
-    private void OnInteractHandEvent(EntityUid uid, VampireComponent component, BeforeInteractHandEvent args)
-    {
-        if (!HasComp<HumanoidAppearanceComponent>(args.Target))
-            return;
-
-        if (args.Target == uid)
-            return;
-
-        args.Handled = TryDrink((uid, component), args.Target, TimeSpan.FromSeconds(1));
-    }
-
-    private void ToggleFangs(Entity<VampireComponent> vampire)
-    {
-        var actionEntity = GetAbilityEntity(vampire.Comp, VampirePowerKey.ToggleFangs);
-        var popupText = string.Empty;
-        if (IsAbilityActive(vampire, VampirePowerKey.ToggleFangs))
+        if (HasComp<VampireFangsExtendedComponent>(vampire))
         {
-            SetAbilityActive(vampire.Comp, VampirePowerKey.ToggleFangs, false);
-            _action.SetToggled(actionEntity, false);
-            popupText = Loc.GetString("vampire-fangs-retracted");
+            RemComp<VampireFangsExtendedComponent>(vampire);
+            var popupText = Loc.GetString("vampire-fangs-retracted");
             _admin.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(vampire):user} retracted their fangs");
+            _popup.PopupEntity(popupText, vampire.Owner, vampire.Owner);
+            return false;
         }
         else
         {
-            SetAbilityActive(vampire.Comp, VampirePowerKey.ToggleFangs, true);
-            _action.SetToggled(vampire.Comp.UnlockedPowers[VampirePowerKey.ToggleFangs], true);
-            popupText = Loc.GetString("vampire-fangs-extended");
+            EnsureComp<VampireFangsExtendedComponent>(vampire);
+            var popupText = Loc.GetString("vampire-fangs-extended");
             _admin.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(vampire):user} extended their fangs");
+            _popup.PopupEntity(popupText, vampire.Owner, vampire.Owner);
+            return true;
         }
-        _popup.PopupEntity(popupText, vampire.Owner, vampire.Owner);
     }
-
+    /// <summary>
+    /// Check and start drinking blood from a humanoid
+    /// </summary>
     private bool TryDrink(Entity<VampireComponent> vampire, EntityUid target, TimeSpan doAfterDelay)
     {
         //Do a precheck
-        if (!IsAbilityActive(vampire.Comp, VampirePowerKey.ToggleFangs))
+        if (!HasComp<VampireFangsExtendedComponent>(vampire))
             return false;
 
         if (!_interaction.InRangeUnobstructed(vampire, target, popup: true))
@@ -549,12 +626,12 @@ public sealed partial class VampireSystem
 
         if (_rotting.IsRotten(target))
         {
-            _popup.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), vampire, vampire, Shared.Popups.PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), vampire, vampire, PopupType.SmallCaution);
             return false;
         }
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, vampire, doAfterDelay,
-        new VampireDrinkBloodEvent() { Volume = 5 },
+        new VampireDrinkBloodDoAfterEvent() { Volume = vampire.Comp.MouthVolume },
         eventTarget: vampire,
         target: target,
         used: target)
@@ -571,21 +648,18 @@ public sealed partial class VampireSystem
         _doAfter.TryStartDoAfter(doAfterEventArgs);
         return true;
     }
-    private void DrinkDoAfter(Entity<VampireComponent> entity, ref VampireDrinkBloodEvent args)
+    private void DrinkDoAfter(Entity<VampireComponent> entity, ref VampireDrinkBloodDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!args.Target.HasValue)
+        if (!HasComp<VampireFangsExtendedComponent>(entity))
             return;
 
-        if (!IsAbilityActive(entity.Comp, VampirePowerKey.ToggleFangs))
+        if (_food.IsMouthBlocked(entity, entity))
             return;
 
-        if (_food.IsMouthBlocked(args.Target.Value, entity))
-            return;
-
-        if (_rotting.IsRotten(args.Target.Value))
+        if (_rotting.IsRotten(args.Target!.Value))
         {
             _popup.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), args.User, args.User, PopupType.SmallCaution);
             return;
@@ -663,30 +737,54 @@ public sealed partial class VampireSystem
     }
     #endregion
 
-    private bool IsAbilityUnlocked(VampireComponent vampire, VampirePowerKey ability)
+    private bool IsPowerUnlocked(VampireComponent vampire, string name)
     {
-        return vampire.UnlockedPowers.ContainsKey(ability);
+        return vampire.UnlockedPowers.ContainsKey(name);
     }
-    private bool IsAbilityActive(VampireComponent vampire, VampirePowerKey ability)
+    /*private bool IsPowerActive(VampireComponent vampire, VampirePowerProtype def) => IsPowerActive(vampire, def.ID);
+    private bool IsPowerActive(VampireComponent vampire, string name)
     {
-        return vampire.AbilityStates.Contains(ability);
+        return vampire.ActivePowers.Contains(name);
     }
-    private bool SetAbilityActive(VampireComponent vampire, VampirePowerKey ability, bool active)
+    private bool SetPowerActive(VampireComponent vampire, string name, bool active)
     {
         if (active)
         {
-            return vampire.AbilityStates.Add(ability);
+            return vampire.ActivePowers.Add(name);
         }
         else
         {
-            return vampire.AbilityStates.Remove(ability);
+            return vampire.ActivePowers.Remove(name);
         }
-    }
-    private EntityUid? GetAbilityEntity(VampireComponent vampire, VampirePowerKey ability)
+    }*/
+    /// <summary>
+    /// Gets the Action EntityUid for a specific power
+    /// </summary>
+    private EntityUid? GetPowerEntity(VampireComponent vampire, string name)
     {
-        if (IsAbilityUnlocked(vampire, ability))
-            return vampire.UnlockedPowers[ability];
-        return null;
+        if (!vampire.UnlockedPowers.TryGetValue(name, out var ability))
+            return null;
+
+        return ability;
     }
 
+    /// <summary>
+    /// Cache all power prototypes in a dictionary by keyed by ID
+    /// </summary>
+    /// <returns></returns>
+    private FrozenDictionary<string, VampirePowerProtype> BuildPowerCache()
+    {
+        var protos = _prototypeManager.EnumeratePrototypes<VampirePowerProtype>();
+        return protos.ToFrozenDictionary(x => x.ID);
+    }
+
+    /// <summary>
+    /// Cache all passive prototypes in a dictionary by keyed by listing id
+    /// </summary>
+    /// <returns></returns>
+    private FrozenDictionary<string, VampirePassiveProtype> BuildPassiveCache()
+    {
+        var protos = _prototypeManager.EnumeratePrototypes<VampirePassiveProtype>();
+        return protos.ToFrozenDictionary(x => x.CatalogEntry);
+    }
 }

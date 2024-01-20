@@ -27,34 +27,46 @@ vampire-bloodsteal-other = You feel blood being ripped from your body!
 vampire-hypnotise-other = {CAPITALIZE(THE($user))} stares deeply into {MAKEPLURAL(THE($target))} eyes!
 
 store-currency-display-blood-essence = Blood Essence
+store-category-vampirepowers = Powers
+store-category-vampirepassives = Passives
 
-#Abilities
-vampire-ability-summonheirloom = Summon Heirloom
-vampire-ability-summonheirloom-description = Summon a family heirloom, gifted by lilith herself.
+#Powers
+vampire-power-summonheirloom = Summon Heirloom
+vampire-power-summonheirloom-description = Summon a family heirloom, gifted by lilith herself.
 
-vampire-ability-blessing = Blessing of Lilith
-vampire-ability-blessing-description = Swear your soul to Lilith, receive her blessing, and feast upon the bounty around you.
+vampire-power-blessing = Blessing of Lilith
+vampire-power-blessing-description = Swear your soul to Lilith, receive her blessing, and feast upon the bounty around you.
 
-vampire-ability-togglefangs = Toggle Fangs
-vampire-ability-togglefangs-description = Extend or retract your fangs. Walking around with your fangs out might reveal your true nature.
+vampire-power-togglefangs = Toggle Fangs
+vampire-power-togglefangs-description = Extend or retract your fangs. Walking around with your fangs out might reveal your true nature.
 
-vampire-ability-glare = Glare
-vampire-ability-glare-description = Release a blinding flash from your eyes, stunning a unprotected mortal for 10 seconds. Activation Cost: 20 Essence. Cooldown: 60 Seconds
+vampire-power-glare = Glare
+vampire-power-glare-description = Release a blinding flash from your eyes, stunning a unprotected mortal for 10 seconds. Activation Cost: 20 Essence. Cooldown: 60 Seconds
 
-vampire-ability-hypnotise = Hypnotise
-vampire-ability-hypnotise-description = Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
+vampire-power-hypnotise = Hypnotise
+vampire-power-hypnotise-description = Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
 
-vampire-ability-screech = Screech
-vampire-ability-screech-description = Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
+vampire-power-screech = Screech
+vampire-power-screech-description = Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
 
-vampire-ability-bloodsteal = Blood Steal
-vampire-ability-bloodsteal-description = Wrench the blood from all bodies nearby - living or dead. Activation Cost: 20 Essence. Cooldown: 60 Seconds
+vampire-power-bloodsteal = Blood Steal
+vampire-power-bloodsteal-description = Wrench the blood from all bodies nearby - living or dead. Activation Cost: 20 Essence. Cooldown: 60 Seconds
 
-vampire-ability-batform = Bat Form
-vampire-ability-batform-description = Assume for form of a bat. Fast, Hard to Hit, Likes fruit. Activation Cost: 20 Essence. Cooldown: 30 Seconds
+vampire-power-batform = Bat Form
+vampire-power-batform-description = Assume for form of a bat. Fast, Hard to Hit, Likes fruit. Activation Cost: 20 Essence. Cooldown: 30 Seconds
 
-vampire-ability-mouseform = Mouse Form
-vampire-ability-mouseform-description = Assume for form of a mouse. Fast, Small, Immune to doors. Activation Cost: 20 Essence. Cooldown: 30 Seconds
+vampire-power-mouseform = Mouse Form
+vampire-power-mouseform-description = Assume for form of a mouse. Fast, Small, Immune to doors. Activation Cost: 20 Essence. Cooldown: 30 Seconds
 
-vampire-ability-cloakofdarkness = Cloak of Darkness
-vampire-ability-cloakofdarkness-description = Cloak yourself from mortal eyes, rendering you invisible while stationary. Activation Cost: 30 Essence. Upkeep: 1 Essence/Second Cooldown: 10 Seconds
+vampire-power-cloakofdarkness = Cloak of Darkness
+vampire-power-cloakofdarkness-description = Cloak yourself from mortal eyes, rendering you invisible while stationary. Activation Cost: 30 Essence. Upkeep: 1 Essence/Second Cooldown: 10 Seconds
+
+#Passives
+vampire-passive-unholystrength = Unholy Strength
+vampire-passive-unholystrength-description = Infuse your upper body muscles with essence, granting you claws and increased strength. Effect: 10 Slash per hit
+
+vampire-passive-supernaturalstrength = Supernatural Strength
+vampire-passive-supernaturalstrength-description = Increase your upper body muscles strength further, no barrier shall stand in your way. Effect: 15 Slash per hit, able to pry open doors by hand.
+
+vampire-passive-deathsembrace = Deaths Embrace
+vampire-passive-deathsembrace-description = Embrace death and it shall pass you over. Effect: Heal when in a coffin, automatically return to your coffin upon death for 100 blood essence.

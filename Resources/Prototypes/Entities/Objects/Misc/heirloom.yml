@@ -14,7 +14,8 @@
       type: StoreBoundUserInterface
   - type: Store
     categories:
-    - VampireAbilities
+    - VampirePowers
+    - VampirePassives
     currencyWhitelist:
     - BloodEssence
   - type: VampireHeirloom

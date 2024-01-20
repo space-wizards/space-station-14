@@ -1,7 +1,7 @@
 - type: entity
   id: ActionVampireSummonHeirloom
-  name: vampire-ability-summonheirloom
-  description: vampire-ability-summonheirloom-description
+  name: vampire-power-summonheirloom
+  description: vampire-power-summonheirloom-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -9,17 +9,14 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: summonheirloom
     event:
-      !type:VampireSelfPowerEvent
-      details:
-        type: SummonHeirloom
-        usableWhileCuffed: false
-        usableWhileStunned: false
+      !type:VampireSummonHeirloomEvent
+      definitionName: SummonHeirloom
     useDelay: 60
 
 - type: entity
   id: ActionVampireToggleFangs
-  name: vampire-ability-togglefangs
-  description: vampire-ability-togglefangs-description
+  name: vampire-power-togglefangs
+  description: vampire-power-togglefangs-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -32,14 +29,13 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: fangs_extended
     event: 
-      !type:VampireSelfPowerEvent
-      details:
-        type: ToggleFangs
+      !type:VampireToggleFangsEvent
+      definitionName: ToggleFangs
 
 - type: entity
   id: ActionVampireGlare
-  name: vampire-ability-glare
-  description: vampire-ability-glare-description
+  name: vampire-power-glare
+  description: vampire-power-glare-description
   noSpawn: true
   components:
   - type: EntityTargetAction
@@ -53,16 +49,14 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/Vampire/glare.ogg
     event: 
-      !type:VampireTargetedPowerEvent
-        details:
-          type: Glare
-          duration: 10
+      !type:VampireGlareEvent
+      definitionName: Glare
     useDelay: 60
 
 - type: entity
   id: ActionVampireHypnotise
-  name: vampire-ability-hypnotise
-  description: vampire-ability-hypnotise-description
+  name: vampire-power-hypnotise
+  description: vampire-power-hypnotise-description
   noSpawn: true
   components:
   - type: EntityTargetAction
@@ -76,17 +70,14 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: hypnotise
     event: 
-      !type:VampireTargetedPowerEvent
-        details:
-          type: Hypnotise
-          duration: 60
-          doAfterDelay: 5
+      !type:VampireHypnotiseEvent
+      definitionName: Hypnotise
     useDelay: 300
 
 - type: entity
   id: ActionVampireScreech
-  name: vampire-ability-screech
-  description: vampire-ability-screech-description
+  name: vampire-power-screech
+  description: vampire-power-screech-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -98,22 +89,14 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/Vampire/screech_tone.ogg
     event: 
-      !type:VampireSelfPowerEvent
-        details:
-          type: Screech
-          duration: 3
-          damage:
-            types:
-              Blunt: 10
-              Structural: 40
-          usableWhileMuffled: false
-          activationCost: 10
+      !type:VampireScreechEvent
+      definitionName: Screech
     useDelay: 60
 
 - type: entity
   id: ActionVampireBloodSteal
-  name: vampire-ability-bloodsteal
-  description: vampire-ability-bloodsteal-description
+  name: vampire-power-bloodsteal
+  description: vampire-power-bloodsteal-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -125,18 +108,14 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/demon_consume.ogg
     event: 
-      !type:VampireSelfPowerEvent
-        details:
-          type: BloodSteal
-          usableWhileStunned: false
-          usableWhileCuffed: false
-          activationCost: 20
+      !type:VampireBloodStealEvent
+      definitionName: BloodSteal
     useDelay: 60
 
 - type: entity
   id: ActionVampireBatform
-  name: vampire-ability-batform
-  description: vampire-ability-batform-description
+  name: vampire-power-batform
+  description: vampire-power-batform-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -148,19 +127,14 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/teleport_arrival.ogg
     event: 
-      !type:VampireSelfPowerEvent
-        details:
-          type: Polymorph
-          usableWhileStunned: false
-          usableWhileCuffed: false
-          polymorphTarget: mobBatVampire
-          activationCost: 20
+      !type:VampirePolymorphEvent
+      definitionName: PolymorphBat
     useDelay: 30
 
 - type: entity
   id: ActionVampireMouseform
-  name: vampire-ability-mouseform
-  description: vampire-ability-mouseform-description
+  name: vampire-power-mouseform
+  description: vampire-power-mouseform-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -172,19 +146,14 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/teleport_arrival.ogg
     event: 
-      !type:VampireSelfPowerEvent
-        details:
-          type: Polymorph
-          usableWhileStunned: false
-          usableWhileCuffed: false
-          polymorphTarget: MobMouse
-          activationCost: 20
+      !type:VampirePolymorphEvent
+      definitionName: PolymorphMouse
     useDelay: 30
 
 - type: entity
   id: ActionVampireCloakOfDarkness
-  name: vampire-ability-cloakofdarkness
-  description: vampire-ability-cloakofdarkness-description
+  name: vampire-power-cloakofdarkness
+  description: vampire-power-cloakofdarkness-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -194,10 +163,6 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: cloakofdarkness
     event: 
-      !type:VampireSelfPowerEvent
-        details:
-          type: CloakOfDarkness
-          usableWhileStunned: false
-          activationCost: 30
-          upkeep: 1
+      !type:VampireCloakOfDarknessEvent
+      definitionName: CloakOfDarkness
     useDelay: 10

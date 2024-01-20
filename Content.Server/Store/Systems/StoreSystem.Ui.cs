@@ -157,11 +157,14 @@ public sealed partial class StoreSystem
             component.Balance[currency.Key] -= currency.Value;
         }
 
+        var ev = new StorePurchasedListingEvent() { Purchaser = buyer, Listing = listing };
+
         //spawn entity
         if (listing.ProductEntity != null)
         {
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
             _hands.PickupOrDrop(buyer, product);
+            ev.Item = product;
         }
 
         //give action
@@ -170,18 +173,17 @@ public sealed partial class StoreSystem
             // I guess we just allow duplicate actions?
             var actionUid = _actions.AddAction(buyer, listing.ProductAction);
 
-            //Raise a purchase event for handling downstream
-            if (actionUid != null)
-                RaiseLocalEvent(uid, new StorePurchasedActionEvent(buyer, actionUid.Value));
+            ev.Action = actionUid;
         }
 
         //broadcast event
         if (listing.ProductEvent != null)
         {
-            var ev = new StoreProductEvent(buyer, listing, listing.ProductEvent);
-            RaiseLocalEvent(uid, ev);
-            RaiseLocalEvent(buyer, ev);
+            RaiseLocalEvent(listing.ProductEvent);
         }
+
+        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(buyer, ev);
 
         //log dat shit.
         _admin.Add(LogType.StorePurchase, LogImpact.Low,

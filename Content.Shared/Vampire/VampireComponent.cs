@@ -49,6 +49,8 @@ public sealed partial class VampireComponent : Component
 
     [ValidatePrototypeId<EntityPrototype>]
     public static readonly string SummonActionPrototype = "ActionVampireSummonHeirloom";
+    [ValidatePrototypeId<VampirePowerProtype>]
+    public static readonly string DrinkBloodPrototype = "DrinkBlood";
 
     /// <summary>
     /// Total blood drank, counter for end of round screen
@@ -63,18 +65,9 @@ public sealed partial class VampireComponent : Component
     public float MouthVolume = 5;
 
     /// <summary>
-    /// Uid of the last coffin the vampire slept in
-    /// TODO: UI prompt client side to set this
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid? HomeCoffin = default!;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public HashSet<VampirePowerKey> AbilityStates = new();
-    /// <summary>
     /// All unlocked abilities
     /// </summary>
-    public Dictionary<VampirePowerKey, EntityUid?> UnlockedPowers = new();
+    public Dictionary<string, EntityUid?> UnlockedPowers = new();
 
     /// <summary>
     /// Link to the vampires heirloom
@@ -94,11 +87,14 @@ public sealed partial class VampireComponent : Component
 /// <summary>
 /// Contains all details about the ability and its effects or restrictions
 /// </summary>
-[DataDefinition
-public sealed partial class VampirePowerProtype
+[DataDefinition]
+[Prototype("vampirePower")]
+public sealed partial class VampirePowerProtype : IPrototype
 {
-    [DataField(required: true)]
-    public VampirePowerKey Type;
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; }
+
     [DataField]
     public float ActivationCost = 0;
     [DataField]
@@ -119,50 +115,67 @@ public sealed partial class VampirePowerProtype
     public float Upkeep = 0;
 }
 
+[DataDefinition]
+[Prototype("vampirePassive")]
+public sealed partial class VampirePassiveProtype : IPrototype
+{
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; }
+
+    [DataField(required: true)]
+    public string CatalogEntry = string.Empty;
+
+    [DataField]
+    public ComponentRegistry CompsToAdd = new();
+
+    [DataField]
+    public ComponentRegistry CompsToRemove = new();
+}
+
 /// <summary>
 /// Marks an entity as taking damage when hit by a bible, rather than being healed
 /// </summary>
 [RegisterComponent]
-public sealed partial class UnholyComponent : Component
-{
-}
+public sealed partial class UnholyComponent : Component { }
 
 /// <summary>
 /// Marks a container as a coffin, for the purposes of vampire healing
 /// </summary>
 [RegisterComponent]
-public sealed partial class CoffinComponent : Component
-{
-}
+public sealed partial class CoffinComponent : Component { }
+
 [RegisterComponent]
 public sealed partial class VampireHeirloomComponent : Component
 {
     //Use of the heirloom is limited to this entity
     public EntityUid? VampireOwner = default!;
 }
+
 [RegisterComponent]
+public sealed partial class VampireFangsExtendedComponent : Component { }
+
+/// <summary>
+/// When added, heals the entity by the specified amount
+/// </summary>
 public sealed partial class VampireHealingComponent : Component
 {
-    public double NextHealTick = 0;
-
-    public DamageSpecifier Healing = new DamageSpecifier()
-    {
-        DamageDict = new Dictionary<string, FixedPoint2>()
-        {
-            { "Blunt", 2 },
-            { "Slash", 2 },
-            { "Pierce", 2 },
-            { "Heat", 1 },
-            { "Cold", 2 },
-            { "Shock", 2 },
-            { "Caustic", 2 },
-            { "Airloss", 2 },
-            { "Bloodloss", 2 },
-            { "Genetic", 2 }
-        }
-    };
+    public DamageSpecifier? Healing = default!;
 }
 
+[RegisterComponent]
+public sealed partial class VampireDeathsEmbraceComponent : Component
+{
+    [ViewVariables()]
+    public EntityUid? HomeCoffin = default!;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public float Cost = 0;
+
+    [DataField]
+    public DamageSpecifier CoffinHealing = default!;
+}
 [RegisterComponent]
 public sealed partial class VampireSealthComponent : Component
 {
@@ -173,7 +186,7 @@ public sealed partial class VampireSealthComponent : Component
     public float Upkeep = 0;
 }
 
-[Serializable, NetSerializable]
+/*[Serializable, NetSerializable]
 public enum VampirePowerKey : byte
 {
     ToggleFangs,
@@ -191,4 +204,4 @@ public enum VampirePowerKey : byte
     //Passives
     UnnaturalStrength,
     SupernaturalStrength
-}
+}*/

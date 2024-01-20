@@ -6,7 +6,7 @@
     BloodEssence: 0
   productAction: ActionVampireToggleFangs
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -19,7 +19,7 @@
     BloodEssence: 20
   productAction: ActionVampireGlare
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -35,7 +35,7 @@
     BloodEssence: 60
   productAction: ActionVampireHypnotise
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -51,7 +51,7 @@
     BloodEssence: 120
   productAction: ActionVampireScreech
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -67,7 +67,7 @@
     BloodEssence: 120
   productAction: ActionVampireBloodSteal
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -83,7 +83,7 @@
     BloodEssence: 200
   productAction: ActionVampireBatform
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -101,7 +101,7 @@
     BloodEssence: 200
   productAction: ActionVampireMouseform
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -119,7 +119,7 @@
     BloodEssence: 400
   productAction: ActionVampireCloakOfDarkness
   categories:
-  - VampireAbilities
+  - VampirePowers
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -129,19 +129,16 @@
 
 #Passives
 - type: listing
-  id: VampireUnnaturalStrength
-  name: vampire-ability-unnaturalstrength
-  description: vampire-ability-unnaturalstrength-description
+  id: VampireUnholyStrength
+  name: vampire-passive-unholystrength
+  description: vampire-passive-unholystrength-description
+  icon:
+    sprite: Interface/Actions/actions_vampire.rsi
+    state: uhholystrength
   cost:
     BloodEssence: 20
-  productEvent: 
-    !type:VampirePowerDetails
-    type: UnnaturalStrength
-    damage:
-      types:
-        Slash: 5
   categories:
-  - VampireAbilities
+  - VampirePassives
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -151,24 +148,36 @@
 
 - type: listing
   id: VampireSupernaturalStrength
-  name: vampire-ability-supernaturalstrength
-  description: vampire-ability-supernaturalstrength-description
+  name: vampire-passive-supernaturalstrength
+  description: vampire-passive-supernaturalstrength-description
+  icon:
+    sprite: Interface/Actions/actions_vampire.rsi
+    state: supernaturalstrength
   cost:
     BloodEssence: 400
-  productEvent: 
-    !type:VampirePowerDetails
-    type: SupernaturalStrength
-    damage:
-      types:
-        Slash: 5
   categories:
-  - VampireAbilities
+  - VampirePassives
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
   - !type:BuyBeforeCondition
     whitelist:
     - VampireUnnaturalStrength
+
+- type: listing
+  id: VampireDeathsEmbrace
+  name: vampire-passive-deathsembrace
+  description: vampire-passive-deathsembrace-description
+  icon:
+    sprite: Interface/Actions/actions_vampire.rsi
+    state: deathsembrace
+  cost:
+    BloodEssence: 160
+  categories:
+  - VampirePassives
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 #- type: listing
 #  id: VampireSupernaturalStrength
@@ -178,7 +187,7 @@
 #  cost:
 #    BloodEssence: 400
 #  categories:
-#  - VampireAbilities
+#  - VampirePowers
 #  conditions:
 #  - !type:ListingLimitedStockCondition
 #    stock: 1

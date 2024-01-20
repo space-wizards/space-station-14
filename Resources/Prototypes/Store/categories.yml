@@ -70,5 +70,9 @@
 
 #vampire
 - type: storeCategory
-  id: VampireAbilities
-  name: store-category-abilities
+  id: VampirePowers
+  name: store-category-vampirepowers
+
+- type: storeCategory
+  id: VampirePassives
+  name: store-category-vampirepassives

@@ -38,6 +38,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Store;
 
 namespace Content.Server.Vampire;
 
@@ -78,22 +79,18 @@ public sealed partial class VampireSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<VampireComponent, ComponentStartup>(OnComponentStartup);
 
-        SubscribeLocalEvent<VampireComponent, BeforeInteractHandEvent>(OnInteractHandEvent);
-        SubscribeLocalEvent<VampireComponent, VampireDrinkBloodEvent>(DrinkDoAfter);
-        SubscribeLocalEvent<VampireComponent, VampireHypnotiseEvent>(HypnotiseDoAfter);
-        SubscribeLocalEvent<VampireComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
-        SubscribeLocalEvent<VampireComponent, EntGotRemovedFromContainerMessage>(OnRemovedFromContainer);
-        SubscribeLocalEvent<VampireComponent, MobStateChangedEvent>(OnVampireStateChanged);
-        SubscribeLocalEvent<VampireComponent, VampireSelfPowerEvent>(OnUseSelfPower);
-        SubscribeLocalEvent<VampireComponent, VampireTargetedPowerEvent>(OnUseTargetedPower);
+        //SubscribeLocalEvent<VampireComponent, VampireSelfPowerEvent>(OnUseSelfPower);
+        //SubscribeLocalEvent<VampireComponent, VampireTargetedPowerEvent>(OnUseTargetedPower);
         SubscribeLocalEvent<VampireComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<VampireComponent, StoreProductEvent>(OnStorePurchasePassive);
+        //SubscribeLocalEvent<VampireComponent, StoreProductEvent>(OnStorePurchasePassive);
 
         SubscribeLocalEvent<VampireHeirloomComponent, UseInHandEvent>(OnUseHeirloom);
-        SubscribeLocalEvent<VampireHeirloomComponent, StorePurchasedActionEvent>(OnStorePurchase);
+        SubscribeLocalEvent<VampireHeirloomComponent, StorePurchasedListingEvent>(OnStorePurchase);
+
+        InitializePowers();
     }
 
-    private void OnStorePurchasePassive(EntityUid uid, VampireComponent component, StoreProductEvent args)
+    /*private void OnStorePurchasePassive(EntityUid uid, VampireComponent component, StoreProductEvent args)
     {
         if (args.Ev is not VampirePowerDetails)
             return;
@@ -117,7 +114,7 @@ public sealed partial class VampireSystem : EntitySystem
                     break;
                 }
         }
-    }
+    }*/
 
     /// <summary>
     /// Handles healing and damaging in space
@@ -139,7 +136,7 @@ public sealed partial class VampireSystem : EntitySystem
         }
 
         var healingQuery = EntityQueryEnumerator<VampireComponent, VampireHealingComponent>();
-        while (healingQuery.MoveNext(out var uid, out var vampire, out var healing))
+        while (healingQuery.MoveNext(out var uid, out _, out var healing))
         {
             if (healing.NextHealTick <= 0)
             {
@@ -186,48 +183,59 @@ public sealed partial class VampireSystem : EntitySystem
         _store.ToggleUi(args.User, uid);
     }
 
-    private void OnStorePurchase(EntityUid uid, VampireHeirloomComponent component, ref StorePurchasedActionEvent ev)
-    => OnStorePurchase(ev.Purchaser, ev.Action);
-    private void OnStorePurchase(EntityUid purchaser, EntityUid purchasedAction)
+    private void OnStorePurchase(EntityUid uid, VampireHeirloomComponent component, ref StorePurchasedListingEvent ev)
     {
-        if (!TryComp<VampireComponent>(purchaser, out var vampireComponent))
+        if (!TryComp<VampireComponent>(ev.Purchaser, out var vampireComponent))
             return;
 
+        var vampire = new Entity<VampireComponent>(ev.Purchaser, vampireComponent);
+
+        if (ev.Action != null)
+        {
+            OnStorePurchaseActive(vampire, ev.Action.Value);
+        }
+        else
+        {
+            //Its a passive
+            OnStorePurchasePassive(vampire, ev.Listing);
+        }
+    }
+    private void OnStorePurchaseActive(Entity<VampireComponent> purchaser, EntityUid purchasedAction)
+    {
         if (TryComp<InstantActionComponent>(purchasedAction, out var instantAction) && instantAction.Event != null && instantAction.Event is VampireSelfPowerEvent)
         {
             var vampirePower = instantAction.Event as VampireSelfPowerEvent;
             if (vampirePower == null) return;
-            vampireComponent.UnlockedPowers[vampirePower.Details.Type] = purchasedAction;
+            purchaser.Comp.UnlockedPowers[vampirePower.DefinitionName] = purchasedAction;
             return;
         }
         if (TryComp<EntityTargetActionComponent>(purchasedAction, out var targetAction) && targetAction.Event != null && targetAction.Event is VampireTargetedPowerEvent)
         {
             var vampirePower = targetAction.Event as VampireTargetedPowerEvent;
             if (vampirePower == null) return;
-            vampireComponent.UnlockedPowers[vampirePower.Details.Type] = purchasedAction;
+            purchaser.Comp.UnlockedPowers[vampirePower.DefinitionName] = purchasedAction;
             return;
         }
 
-        UpdateBloodDisplay((purchaser, vampireComponent));
+        UpdateBloodDisplay(purchaser);
     }
 
-
-    /// <summary>
-    /// Called by the store when a new passive ability is purchased
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <param name="args"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    /*private void OnUnlockPassive(EntityUid uid, VampireComponent component, VampireUnlockPassiveEvent args)
+    private void OnStorePurchasePassive(Entity<VampireComponent> purchaser, ListingData purchasedPassive)
     {
-        throw new NotImplementedException();
-    }*/
+        if (!_passiveCache.TryGetValue(purchasedPassive.ID, out var passiveDef))
+            return;
 
+        //I am so going to hell for this
+        foreach (var compToRemove in passiveDef.CompsToRemove.Values)
+            RemComp(purchaser, compToRemove.Component.GetType());
+
+        foreach (var compToAdd in passiveDef.CompsToAdd.Values)
+            AddComp(purchaser, compToAdd.Component, true);
+    }
 
     private void OnExamined(EntityUid uid, VampireComponent component, ExaminedEvent args)
     {
-        if (IsAbilityActive(component, VampirePowerKey.ToggleFangs) && args.IsInDetailsRange && !_food.IsMouthBlocked(uid))
+        if (HasComp<VampireFangsExtendedComponent>(uid) && args.IsInDetailsRange && !_food.IsMouthBlocked(uid))
             args.AddMarkup($"{Loc.GetString("vampire-fangs-extended-examine")}{Environment.NewLine}");
     }
     private bool AddBloodEssence(Entity<VampireComponent> vampire, FixedPoint2 quantity)
@@ -267,7 +275,7 @@ public sealed partial class VampireSystem : EntitySystem
             return;
 
         var chargeDisplay = (int) Math.Round((decimal) balance);
-        var summonAction = GetAbilityEntity(vampire, VampirePowerKey.SummonHeirloom);
+        var summonAction = GetPowerEntity(vampire, VampireComponent.SummonActionPrototype);
 
         if (summonAction == null)
             return;

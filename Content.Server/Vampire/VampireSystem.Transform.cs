@@ -1,12 +1,14 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Vampire;
 using Content.Shared.Vampire.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -32,13 +34,6 @@ public sealed partial class VampireSystem
         if (TryComp<TemperatureComponent>(vampire, out var temperatureComponent))
             temperatureComponent.ColdDamageThreshold = Atmospherics.TCMB;
 
-        //
-        if (TryComp<MeleeWeaponComponent>(vampire, out var melee))
-        {
-            melee.Damage = VampireComponent.MeleeDamage;
-            melee.Animation = "WeaponArcClaw";
-            melee.HitSound = new SoundPathSpecifier("/Audio/Weapons/slash.ogg");
-        }
         MakeVulnerableToHoly(vampire);
 
         //Initialise currency
@@ -96,11 +91,20 @@ public sealed partial class VampireSystem
     private void AddStartingAbilities(Entity<VampireComponent> vampire)
     {
         var action = _action.AddAction(vampire, VampireComponent.SummonActionPrototype);
-        if (action.HasValue)
-        {
-            OnStorePurchase(vampire, action.Value);
-            vampire.Comp.UnlockedPowers[VampirePowerKey.SummonHeirloom] = action;
-        }
+        if (!action.HasValue)
+            return;
+
+        if (!TryComp<InstantActionComponent>(action, out var instantActionComponent))
+            return;
+
+        var actionEvent = instantActionComponent.Event as VampireSelfPowerEvent;
+
+        if (actionEvent == null)
+            return;
+
+        vampire.Comp.UnlockedPowers.Add(actionEvent.DefinitionName, action);
+
+        UpdateBloodDisplay(vampire);
     }
 
     //Remove weakeness to holy items
