@@ -1,4 +1,3 @@
-using Content.Shared.Interaction;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
@@ -106,10 +105,10 @@ public sealed class ExecutionSystem : EntitySystem
 
     }
 
-    private bool CanExecuteWithAny(EntityUid weapon, EntityUid victim, EntityUid attacker)
+    private bool CanExecuteWithAny(EntityUid victim, EntityUid attacker)
     {
         // No point executing someone if they can't take damage
-        if (!TryComp<DamageableComponent>(victim, out var damage))
+        if (!TryComp<DamageableComponent>(victim, out _))
             return false;
 
         // You can't execute something that cannot die
@@ -134,7 +133,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private bool CanExecuteWithMelee(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteWithAny(weapon, victim, user))
+        if (!CanExecuteWithAny(victim, user))
             return false;
 
         // We must be able to actually hurt people with the weapon
@@ -146,7 +145,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private bool CanExecuteWithGun(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanExecuteWithAny(weapon, victim, user))
+        if (!CanExecuteWithAny(victim, user))
             return false;
 
         // We must be able to actually fire the gun
@@ -195,7 +194,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void OnDoafterGun(EntityUid uid, GunComponent comp, DoAfterEvent args)
     {
-        if (!TryComp<ExecutionComponent>(uid, out var executionComp))
+        if (!HasComp<ExecutionComponent>(uid))
             return;
 
         if (!TryComp<TransformComponent>(args.Target, out var xform))
