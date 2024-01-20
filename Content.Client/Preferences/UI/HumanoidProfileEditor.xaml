@@ -148,9 +148,7 @@
 
                     <Button Name="CHideShowUnusableButton" Text="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button'}" ToolTip="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button-tooltip'}" ToggleMode="True" Margin="0 0 0 5" />
 
-                    <ScrollContainer VerticalExpand="True">
-                        <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />
-                    </ScrollContainer>
+                    <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />
                 </BoxContainer>
                 <BoxContainer Name="CMarkingsTab" Orientation="Vertical" Margin="10">
                     <!-- Markings -->

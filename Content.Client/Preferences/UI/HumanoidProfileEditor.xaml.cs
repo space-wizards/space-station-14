@@ -1417,7 +1417,7 @@ namespace Content.Client.Preferences.UI
             _loadoutsTabs.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-loadouts-uncategorized-tab"));
 
             // Make categories
-            var currentCategory = 1;
+            var currentCategory = 1; // 1 because we already made 0 as Uncategorized, I am not not zero-indexing
             foreach (var loadout in loadouts.OrderBy(l => l.Category))
             {
                 // Check for existing category
@@ -1439,7 +1439,26 @@ namespace Content.Client.Preferences.UI
                 {
                     Orientation = LayoutOrientation.Vertical,
                     VerticalExpand = true,
-                    Name = $"{loadout.Category}_{currentCategory}"
+                    Name = $"{loadout.Category}_{currentCategory}",
+                    // I hate ScrollContainers
+                    Children =
+                    {
+                        new ScrollContainer
+                        {
+                            HScrollEnabled = false,
+                            HorizontalExpand = true,
+                            VerticalExpand = true,
+                            Children =
+                            {
+                                new BoxContainer
+                                {
+                                    Orientation = LayoutOrientation.Vertical,
+                                    HorizontalExpand = true,
+                                    VerticalExpand = true
+                                }
+                            }
+                        }
+                    }
                 };
 
                 _loadoutsTabs.AddChild(box);
@@ -1458,12 +1477,13 @@ namespace Content.Client.Preferences.UI
                 {
                     if (match != null || child.Name == null)
                         continue;
+
                     if (child.Name.Split("_")[0] == loadout.Category)
-                        match = (BoxContainer) child;
+                        match = (BoxContainer) child.Children.First().Children.First();
                 }
 
                 // If there is no category put it in Uncategorized
-                if (match?.Name == null)
+                if (match?.Parent?.Parent?.Name == null)
                     uncategorized.AddChild(selector);
                 else
                     match.AddChild(selector);
