@@ -341,8 +341,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             if (_container.TryGetOuterContainer(target,Transform(target) ,out var container) &&
                 !HasComp<HandsComponent>(container.Owner))
             {
-                if (_net.IsServer)
-                    Popup.PopupEntity(Loc.GetString("entity-storage-component-already-contains-user-message"), user, user);
+                Popup.PopupClient(Loc.GetString("entity-storage-component-already-contains-user-message"), user, user);
 
                 return false;
             }
