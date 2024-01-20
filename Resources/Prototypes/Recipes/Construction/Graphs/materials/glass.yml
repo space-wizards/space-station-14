@@ -102,10 +102,10 @@
       entity: SheetRPGlass
 
     - node: SheetRPGlass0
-      entity: SheetRPGlass0
+      entity: SheetRPGlass
 
     - node: SheetRPGlass1
-      entity: SheetRPGlass1
+      entity: SheetRPGlass
 
     - node: SheetUGlass
       entity: SheetUGlass
@@ -114,7 +114,7 @@
       entity: SheetRUGlass
 
     - node: SheetRUGlass0
-      entity: SheetRUGlass0
+      entity: SheetRUGlass
 
     - node: SheetRUGlass1
-      entity: SheetRUGlass1
+      entity: SheetRUGlass
