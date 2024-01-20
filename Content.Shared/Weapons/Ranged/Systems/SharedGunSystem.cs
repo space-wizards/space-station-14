@@ -220,9 +220,6 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun)
     {
-        if (!gun.CanShootWithoutUser && user == null)
-            return;
-
         if (gun.FireRate <= 0f)
             return;
 

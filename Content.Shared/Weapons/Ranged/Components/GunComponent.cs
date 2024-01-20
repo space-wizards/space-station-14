@@ -82,13 +82,6 @@ public partial class GunComponent : Component
     #endregion
 
     /// <summary>
-    /// Determines whether the weapon can fire "independently", through various signals or interactions
-    /// that do not involve beings activating the weapon with their hands
-    /// </summary>
-    [DataField]
-    public bool CanShootWithoutUser = false;
-
-    /// <summary>
     /// Whether this gun is shot via the use key or the alt-use key.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("useKey"), AutoNetworkedField]
