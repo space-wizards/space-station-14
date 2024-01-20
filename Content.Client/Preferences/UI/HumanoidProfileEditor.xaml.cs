@@ -605,6 +605,11 @@ namespace Content.Client.Preferences.UI
 
                 }
             }
+
+            if (Profile is not null)
+            {
+                UpdateJobPriorities();
+            }
         }
 
         private void OnFlavorTextChange(string content)
