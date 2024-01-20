@@ -345,40 +345,34 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null)
+        if (component.InsertingTimeRemaining > 0)
         {
-
-            if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+            if(HasComp<MobStateComponent>(component.PaperSlot.Item))
             {
-
-                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster"))
+                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster") == true)
                 {
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
                 }
 
-                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach"))
-                {
-                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
-
-                }
-
-                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse"))
+                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse") == true)
                 {
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
                 }
+
+                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach") == true)
+                {
+                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
+                }
+
             }
             else
                 _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
         }
-
-        if (component.PrintingTimeRemaining > 0)
-        {
+        else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
-        }
         else
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Normal);
     }
-
     private void UpdateUserInterface(EntityUid uid, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -447,9 +441,7 @@ public sealed class FaxSystem : EntitySystem
 
         if (HasComp<MobStateComponent>(sendEntity))
         {
-            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Brute"), 300);
-            _damageable.TryChangeDamage(sendEntity, damageSpec);
-            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
+            CrushMob(uid);
             return;
         }
 
@@ -472,6 +464,22 @@ public sealed class FaxSystem : EntitySystem
         // will start immediately.
 
         UpdateUserInterface(uid, component);
+    }
+
+    public void CrushMob(EntityUid uid, FaxMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var sendEntity = component.PaperSlot.Item;
+        if (sendEntity == null)
+            return;
+
+        var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Brute"), 300);
+        _damageable.TryChangeDamage(sendEntity, damageSpec);
+        _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
+        return;
+
     }
 
     /// <summary>
@@ -499,10 +507,7 @@ public sealed class FaxSystem : EntitySystem
 
         if (HasComp<MobStateComponent>(sendEntity))
         {
-            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Brute"), 300);
-            _damageable.TryChangeDamage(sendEntity, damageSpec);
-            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(sender != null ? ToPrettyString(sender.Value) : "Unknown"):user} tried to send foreign object from \"{component.FaxName}\" {ToPrettyString(uid)} to {faxName} ({component.DestinationFaxAddress}): {paper.Content}");
+            CrushMob(uid);
             return;
         }
 
