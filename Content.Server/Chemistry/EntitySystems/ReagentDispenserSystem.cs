@@ -127,8 +127,6 @@ namespace Content.Server.Chemistry.EntitySystems
                 inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(reagentLabel, storedAmount)));
             }
 
-            //Sort inventory by reagentLabel
-            inventory.Sort((x, y) => x.Value.Key.CompareTo(y.Value.Key));
             return inventory;
         }
 
