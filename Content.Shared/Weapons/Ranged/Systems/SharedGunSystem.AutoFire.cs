@@ -24,4 +24,9 @@ public partial class SharedGunSystem
             AttemptShoot(null, uid, gun, null);
         }
     }
+
+    public void SetEnabled(EntityUid uid, AutoShootGunComponent component, bool status)
+    {
+        component.Enabled = status;
+    }
 }
