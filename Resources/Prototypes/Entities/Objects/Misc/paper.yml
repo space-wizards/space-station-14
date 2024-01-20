@@ -56,14 +56,6 @@
               max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Extractable
-    grindableSolutionName: paper
-  - type: SolutionContainerManager
-    solutions:
-      paper:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 3
 
 - type: entity
   name: paper scrap
@@ -278,16 +270,6 @@
     damage:
       types:
         Piercing: 3
-  - type: Extractable
-    grindableSolutionName: pen
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        reagents:
-        - ReagentId: Iron
-          Quantity: 2
-        - ReagentId: Iodine
-          Quantity: 1
 
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
@@ -424,14 +406,6 @@
         prob: 0.2
       - id: Paper
         prob: 0.2
-  - type: Extractable
-    grindableSolutionName: folder
-  - type: SolutionContainerManager
-    solutions:
-      folder:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 4 #a little more rigid then paper so it yields slightly more
 
 - type: entity
   id: BoxFolderRed
@@ -528,16 +502,6 @@
     layers:
     - state: folder-centcom
     - state: folder-base
-  - type: Extractable
-    grindableSolutionName: centcommfolder
-  - type: SolutionContainerManager
-    solutions:
-      centcommfolder:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 4
-        - ReagentId: Gold
-          Quantity: 1
 
 - type: entity
   id: BoxFolderClipboard
@@ -597,14 +561,6 @@
     damage:
       types:
         Blunt: 6
-  - type: Extractable
-    grindableSolutionName: clipboard
-  - type: SolutionContainerManager
-    solutions:
-      clipboard:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 5
 
 - type: entity
   id: BoxFolderCentComClipboard
@@ -630,16 +586,6 @@
     slots: [belt]
     quickEquip: false
     sprite: Objects/Misc/cc-clipboard.rsi
-  - type: Extractable
-    grindableSolutionName: centcommclipboard
-  - type: SolutionContainerManager
-    solutions:
-      centcommclipboard:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 4
-        - ReagentId: Gold
-          Quantity: 1
 
 - type: entity
   id: BoxFolderQmClipboard
