@@ -1,6 +1,0 @@
-- type: antag
-  id: Terminator
-  name: roles-antag-terminator-name
-  antagonist: true
-  setPreference: false
-  objective: roles-antag-terminator-objective

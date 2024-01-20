@@ -1,0 +1,110 @@
+- type: species
+  id: Exterminator
+  name: Exterminator
+  roundStart: false
+  prototype: MobExterminatorEndoskeleton
+  sprites: MobExterminatorSprites
+  defaultSkinTone: "#fff9e2"
+  markingLimits: MobHumanMarkingLimits
+  maleFirstNames: skeletonNamesFirst
+  femaleFirstNames: skeletonNamesFirst
+  dollPrototype: MobSkeletonPersonDummy
+  skinColoration: TintedHues
+
+- type: speciesBaseSprites
+  id: MobExterminatorSprites
+  sprites:
+    Head: MobExterminatorHead
+    Chest: MobExterminatorTorso
+    LArm: MobExterminatorLArm
+    RArm: MobExterminatorRArm
+    LHand: MobExterminatorLHand
+    RHand: MobExterminatorRHand
+    LLeg: MobExterminatorLLeg
+    RLeg: MobExterminatorRLeg
+    LFoot: MobExterminatorLFoot
+    RFoot: MobExterminatorRFoot
+
+- type: humanoidBaseSprite
+  id: MobExterminatorHead
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobExterminatorHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobExterminatorHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobExterminatorTorso
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobExterminatorTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobExterminatorTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobExterminatorLLeg
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobExterminatorLArm
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobExterminatorLHand
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobExterminatorLFoot
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobExterminatorRLeg
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobExterminatorRArm
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobExterminatorRHand
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobExterminatorRFoot
+  baseSprite:
+    sprite: Mobs/Species/Exterminator/parts.rsi
+    state: r_foot

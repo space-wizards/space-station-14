@@ -1,12 +1,12 @@
 using Content.Shared.Actions;
-using Content.Shared.Terminator.Components;
+using Content.Shared.Exterminator.Components;
 
-namespace Content.Shared.Terminator.Systems;
+namespace Content.Shared.Exterminator.Systems;
 
 /// <summary>
 /// Handles curse action adding but not action usage.
 /// </summary>
-public abstract class SharedTerminatorSystem : EntitySystem
+public abstract class SharedExterminatorSystem : EntitySystem
 {
     [Dependency] protected readonly SharedActionsSystem _actions = default!;
 
@@ -14,10 +14,10 @@ public abstract class SharedTerminatorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TerminatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ExterminatorComponent, MapInitEvent>(OnMapInit);
     }
 
-    protected virtual void OnMapInit(Entity<TerminatorComponent> ent, ref MapInitEvent args)
+    protected virtual void OnMapInit(Entity<ExterminatorComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent, ref ent.Comp.CurseActionEntity, ent.Comp.CurseAction);
     }

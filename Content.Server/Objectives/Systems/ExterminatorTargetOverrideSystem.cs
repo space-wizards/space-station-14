@@ -1,14 +1,14 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Terminator.Components;
+using Content.Shared.Exterminator.Components;
 
 namespace Content.Server.Objectives.Systems;
 
 /// <summary>
 /// Handles copying the exterminator's target override to this objective.
 /// </summary>
-public sealed class TerminatorTargetOverrideSystem : EntitySystem
+public sealed class ExterminatorTargetOverrideSystem : EntitySystem
 {
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
@@ -16,10 +16,10 @@ public sealed class TerminatorTargetOverrideSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TerminatorTargetOverrideComponent, ObjectiveAssignedEvent>(OnAssigned);
+        SubscribeLocalEvent<ExterminatorTargetOverrideComponent, ObjectiveAssignedEvent>(OnAssigned);
     }
 
-    private void OnAssigned(EntityUid uid, TerminatorTargetOverrideComponent comp, ref ObjectiveAssignedEvent args)
+    private void OnAssigned(EntityUid uid, ExterminatorTargetOverrideComponent comp, ref ObjectiveAssignedEvent args)
     {
         if (args.Mind.OwnedEntity == null)
         {
@@ -28,14 +28,14 @@ public sealed class TerminatorTargetOverrideSystem : EntitySystem
         }
 
         var user = args.Mind.OwnedEntity.Value;
-        if (!TryComp<TerminatorComponent>(user, out var terminator))
+        if (!TryComp<ExterminatorComponent>(user, out var exterminator))
         {
             args.Cancelled = true;
             return;
         }
 
         // this exterminator has a target override so set its objective target accordingly
-        if (terminator.Target != null)
-            _target.SetTarget(uid, terminator.Target.Value);
+        if (exterminator.Target is {} target)
+            _target.SetTarget(uid, target);
     }
 }

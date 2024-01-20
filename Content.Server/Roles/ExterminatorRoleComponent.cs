@@ -3,6 +3,6 @@
 namespace Content.Server.Roles;
 
 [RegisterComponent]
-public sealed partial class TerminatorRoleComponent : AntagonistRoleComponent
+public sealed partial class ExterminatorRoleComponent : AntagonistRoleComponent
 {
 }

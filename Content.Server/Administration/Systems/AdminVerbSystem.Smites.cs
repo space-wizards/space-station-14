@@ -18,7 +18,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
-using Content.Server.Terminator.Systems;
+using Content.Server.Exterminator.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
@@ -74,7 +74,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
-    [Dependency] private readonly TerminatorSystem _terminator = default!;
+    [Dependency] private readonly ExterminatorSystem _exterminator = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
@@ -829,7 +829,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Terminate",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ("Mobs/Species/Terminator/parts.rsi"), "skull_icon"),
+            Icon = new SpriteSpecifier.Rsi(new ("Mobs/Species/Exterminator/parts.rsi"), "skull_icon"),
             Act = () =>
             {
                 if (!TryComp<MindContainerComponent>(args.Target, out var mindContainer) || mindContainer.Mind == null)
@@ -837,7 +837,7 @@ public sealed partial class AdminVerbSystem
 
                 var coords = Transform(args.Target).Coordinates;
                 var mindId = mindContainer.Mind.Value;
-                _terminator.CreateSpawner(coords, mindId);
+                _exterminator.CreateSpawner(coords, mindId);
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-terminate-prompt"), args.Target,
                     args.Target, PopupType.LargeCaution);

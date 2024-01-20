@@ -6,7 +6,7 @@
   components:
   - type: InstantAction
     icon:
-      sprite: Mobs/Species/Terminator/parts.rsi
+      sprite: Mobs/Species/Exterminator/parts.rsi
       state: skull_icon
     event: !type:ExterminatorCurseEvent
       gear: ArnoldGear

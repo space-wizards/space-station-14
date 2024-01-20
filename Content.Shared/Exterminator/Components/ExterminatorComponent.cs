@@ -1,16 +1,16 @@
 using Content.Shared.Actions;
 using Content.Shared.Roles;
-using Content.Shared.Terminator.Systems;
+using Content.Shared.Exterminator.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Terminator.Components;
+namespace Content.Shared.Exterminator.Components;
 
 /// <summary>
 /// Main exterminator component, handles the target, if any, and adding the curse action.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedTerminatorSystem))]
-public sealed partial class TerminatorComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedExterminatorSystem))]
+public sealed partial class ExterminatorComponent : Component
 {
     /// <summary>
     /// Used to force the terminate objective's target.
