@@ -31,18 +31,18 @@ public sealed partial class PaintComponent : Component
     /// <summary>
     /// Color that the painting entity will instruct the painted entity to be.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Color Color = Color.FromHex("#c62121");
 
     /// <summary>
     /// Reagent consumption per use.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public FixedPoint2 ConsumptionUnit = FixedPoint2.New(5);
 
     /// <summary>
     /// Duration per unit
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(6);
 }

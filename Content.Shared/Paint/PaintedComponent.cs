@@ -11,13 +11,13 @@ public sealed partial class PaintedComponent : Component
     /// <summary>
     ///  Color of the paint.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Color Color = Color.FromHex("#2cdbd5");
 
     /// <summary>
     ///  Used to remove the color when component removed.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Color BeforeColor;
 
     /// <summary>

@@ -34,9 +34,7 @@ public sealed class PaintSystem : SharedPaintSystem
             return;
 
         if (!TryComp(args.Used, out PaintComponent? component))
-        {
             return;
-        }
 
         if (TryPaint(entity, target, args.User, args.Used))
         {
@@ -48,9 +46,7 @@ public sealed class PaintSystem : SharedPaintSystem
             AddComp<AppearanceComponent>(target);
 
             if (!TryComp(target, out PaintedComponent? paint))
-            {
                 return;
-            }
             else
             {
                 paint.Color = component.Color; // set the target color to the color specified in the spray paint yml.
