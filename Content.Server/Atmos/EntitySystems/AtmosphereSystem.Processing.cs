@@ -406,9 +406,10 @@ namespace Content.Server.Atmos.EntitySystems
 
             var time = _gameTiming.CurTime;
             var number = 0;
+            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime());
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                RaiseLocalEvent(device, new AtmosDeviceUpdateEvent(RealAtmosTime()));
+                RaiseLocalEvent(device, ref ev);
                 device.Comp.LastProcess = time;
 
                 if (number++ < LagCheckIterations)

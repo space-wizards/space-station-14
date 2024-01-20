@@ -19,7 +19,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     back: ClothingBackpackMusicianFilled
-    eyes: ClothingEyesGlassesCosmeticSunglasses
+    eyes: ClothingEyesGlassesSunglasses
     shoes: ClothingShoesBootsLaceup
     id: MusicianPDA
     ears: ClothingHeadsetService

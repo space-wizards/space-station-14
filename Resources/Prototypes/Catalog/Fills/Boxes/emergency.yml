@@ -8,10 +8,10 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
-      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -27,10 +27,10 @@
     contents:
       - id: ClothingMaskBreath
       - id: ExtendedEmergencyOxygenTankFilled
-      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -47,10 +47,10 @@
     contents:
       - id: ClothingMaskGasSecurity
       - id: EmergencyOxygenTankFilled
-      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -67,10 +67,10 @@
     contents:
       - id: ClothingMaskBreathMedical
       - id: EmergencyOxygenTankFilled
-      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -91,11 +91,11 @@
   - type: StorageFill
     contents:
       - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-      - id: SpaceMedipen
+      - id: EmergencyFunnyOxygenTankFilled
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Tag
     tags:
       - BoxHug
@@ -110,7 +110,6 @@
     contents:
       - id: ClothingMaskGasSyndicate
       - id: ExtendedEmergencyOxygenTankFilled
-      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE

@@ -8,12 +8,14 @@ using Robust.Shared.Random;
 using System.Linq;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems;
 
 public sealed class CursedEntityStorageSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -48,7 +50,7 @@ public sealed class CursedEntityStorageSystem : EntitySystem
 
         foreach (var entity in storage.Contents.ContainedEntities.ToArray())
         {
-            storage.Contents.Remove(entity);
+            _container.Remove(entity, storage.Contents);
             _entityStorage.AddToContents(entity, lockerEnt);
         }
 

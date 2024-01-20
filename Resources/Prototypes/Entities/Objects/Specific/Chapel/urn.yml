@@ -1,5 +1,5 @@
 - type: entity
-  name: Urn
+  name: urn
   description: Store the Dead smart and Compact since 2300
   parent: BaseStorageItem
   id: Urn

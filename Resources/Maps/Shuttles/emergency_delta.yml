@@ -2844,6 +2844,13 @@ entities:
     - pos: -0.5,-19.5
       parent: 1
       type: Transform
+- proto: GravityGeneratorMini
+  entities:
+  - uid: 759
+    components:
+    - pos: 0.5,-20.5
+      parent: 1
+      type: Transform
 - proto: Grille
   entities:
   - uid: 60

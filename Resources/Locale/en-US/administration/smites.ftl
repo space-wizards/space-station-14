@@ -12,7 +12,8 @@ admin-smite-turned-ash-other = {CAPITALIZE($name)} turns into a pile of ash!
 admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
 admin-smite-super-speed-prompt = You move at mach 0.8!
-admin-smite-lung-removal-self = You can't breath!
+admin-smite-lung-removal-self = You can't breathe!
+admin-smite-terminate-prompt = I'll be back
 
 
 ## Smite descriptions
@@ -57,6 +58,7 @@ admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time 
 admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize what they remind you of.
 admin-smite-super-bonk-description = Slams them on every single table on the Station and beyond.
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
+admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 
 ## Tricks descriptions
 

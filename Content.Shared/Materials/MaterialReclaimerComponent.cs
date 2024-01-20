@@ -1,5 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
-using Content.Shared.Construction.Prototypes;
+﻿using Content.Shared.Construction.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -83,12 +82,6 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string SolutionContainerId = "output";
-
-    /// <summary>
-    /// The solution itself.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public Solution OutputSolution = default!;
 
     /// <summary>
     /// a whitelist for what entities can be inserted into this reclaimer

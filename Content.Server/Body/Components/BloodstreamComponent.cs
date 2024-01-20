@@ -34,52 +34,52 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
-        [DataField("bleedReductionAmount")]
+        [DataField]
         public float BleedReductionAmount = 1.0f;
 
         /// <summary>
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
-        [DataField("maxBleedAmount")]
+        [DataField]
         public float MaxBleedAmount = 10.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
         /// </summary>
-        [DataField("bloodlossThreshold")]
+        [DataField]
         public float BloodlossThreshold = 0.9f;
 
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
         ///     The default values are defined per mob/species in YML.
         /// </summary>
-        [DataField("bloodlossDamage", required: true)]
+        [DataField(required: true)]
         public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
         ///     The default values are defined per mob/species in YML.
         /// </summary>
-        [DataField("bloodlossHealDamage", required: true)]
+        [DataField(required: true)]
         public DamageSpecifier BloodlossHealDamage = new();
 
         /// <summary>
         ///     How frequently should this bloodstream update, in seconds?
         /// </summary>
-        [DataField("updateInterval")]
+        [DataField]
         public float UpdateInterval = 3.0f;
 
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
         /// <summary>
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
-        [DataField("bloodRefreshAmount")]
+        [DataField]
         public float BloodRefreshAmount = 1.0f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
         /// </summary>
-        [DataField("bleedPuddleThreshold")]
+        [DataField]
         public FixedPoint2 BleedPuddleThreshold = 1.0f;
 
         /// <summary>
@@ -89,19 +89,19 @@ namespace Content.Server.Body.Components
         /// <remarks>
         ///     For example, piercing damage is increased while poison damage is nullified entirely.
         /// </remarks>
-        [DataField("damageBleedModifiers", customTypeSerializer:typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
+        [DataField(customTypeSerializer:typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
         public string DamageBleedModifiers = "BloodlossHuman";
 
         /// <summary>
         ///     The sound to be played when a weapon instantly deals blood loss damage.
         /// </summary>
-        [DataField("instantBloodSound")]
+        [DataField]
         public SoundSpecifier InstantBloodSound = new SoundCollectionSpecifier("blood");
 
         /// <summary>
         ///     The sound to be played when some damage actually heals bleeding rather than starting it.
         /// </summary>
-        [DataField("bloodHealedSound")]
+        [DataField]
         public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
         // TODO probably damage bleed thresholds.
@@ -109,14 +109,14 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Max volume of internal chemical solution storage
         /// </summary>
-        [DataField("chemicalMaxVolume")]
+        [DataField]
         public FixedPoint2 ChemicalMaxVolume = FixedPoint2.New(250);
 
         /// <summary>
         ///     Max volume of internal blood storage,
         ///     and starting level of blood.
         /// </summary>
-        [DataField("bloodMaxVolume")]
+        [DataField]
         public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
 
         /// <summary>
@@ -125,29 +125,40 @@ namespace Content.Server.Body.Components
         /// <remarks>
         ///     Slime-people might use slime as their blood or something like that.
         /// </remarks>
-        [DataField("bloodReagent")]
+        [DataField]
         public string BloodReagent = "Blood";
 
-        /// <summary>
-        ///     Internal solution for reagent storage
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(BloodstreamSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-        public Solution ChemicalSolution = default!;
+        /// <summary>Name/Key that <see cref="BloodSolution"/> is indexed by.</summary>
+        [DataField]
+        public string BloodSolutionName = DefaultBloodSolutionName;
+
+        /// <summary>Name/Key that <see cref="ChemicalSolution"/> is indexed by.</summary>
+        [DataField]
+        public string ChemicalSolutionName = DefaultChemicalsSolutionName;
+
+        /// <summary>Name/Key that <see cref="TemporarySolution"/> is indexed by.</summary>
+        [DataField]
+        public string BloodTemporarySolutionName = DefaultBloodTemporarySolutionName;
 
         /// <summary>
         ///     Internal solution for blood storage
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Solution BloodSolution = default!;
+        [DataField]
+        public Entity<SolutionComponent>? BloodSolution = null;
+
+        /// <summary>
+        ///     Internal solution for reagent storage
+        /// </summary>
+        [DataField]
+        public Entity<SolutionComponent>? ChemicalSolution = null;
 
         /// <summary>
         ///     Temporary blood solution.
         ///     When blood is lost, it goes to this solution, and when this
         ///     solution hits a certain cap, the blood is actually spilled as a puddle.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Solution BloodTemporarySolution = default!;
+        [DataField]
+        public Entity<SolutionComponent>? TemporarySolution = null;
 
         /// <summary>
         /// Variable that stores the amount of status time added by having a low blood level.

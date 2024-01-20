@@ -1,6 +1,7 @@
 - type: latheRecipe
   id: Scalpel
   result: Scalpel
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -8,6 +9,7 @@
 - type: latheRecipe
   id: Retractor
   result: Retractor
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -15,6 +17,7 @@
 - type: latheRecipe
   id: Cautery
   result: Cautery
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -22,6 +25,7 @@
 - type: latheRecipe
   id: Drill
   result: Drill
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -30,6 +34,7 @@
 - type: latheRecipe
   id: Saw
   result: Saw
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -37,6 +42,7 @@
 - type: latheRecipe
   id: Hemostat
   result: Hemostat
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -65,8 +71,16 @@
     Plastic: 25
 
 - type: latheRecipe
+  id: Gauze
+  result: Gauze1
+  completetime: 1
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
   id: HandheldCrewMonitor
   result: HandheldCrewMonitorEmpty
+  category: Tools
   completetime: 2
   materials:
     Glass: 1200
@@ -76,6 +90,7 @@
 - type: latheRecipe
   id: HandheldHealthAnalyzer
   result: HandheldHealthAnalyzerEmpty
+  category: Tools
   completetime: 4
   materials:
     Glass: 500
@@ -193,6 +208,7 @@
 - type: latheRecipe
   id: HandLabeler
   result: HandLabeler
+  category: Tools
   completetime: 2
   materials:
     Plastic: 100
@@ -211,7 +227,7 @@
   materials:
     Steel: 500
     Plastic: 300
-    
+
 - type: latheRecipe
   id: RollerBedSpawnFolded
   result: RollerBedSpawnFolded

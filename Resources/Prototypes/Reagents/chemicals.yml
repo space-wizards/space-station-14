@@ -82,6 +82,64 @@
           min: 5
 
 - type: reagent
+  id: Benzene
+  name: reagent-name-benzene
+  desc: reagent-desc-benzene
+  physicalDesc: reagent-physical-desc-acidic
+  color: "#E7EA91"
+  boilingPoint: 353.2
+  meltingPoint: 278.7
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 1 #it's a carcinogen, reckon this is fine
+
+- type: reagent
+  id: Hydroxide
+  name: reagent-name-hydroxide
+  desc: reagent-desc-hydroxide
+  physicalDesc: reagent-physical-desc-alkaline
+  color: "white"
+  boilingPoint: 1661.0
+  meltingPoint: 596.0
+
+- type: reagent
+  id: SodiumHydroxide
+  name: reagent-name-sodium-hydroxide
+  desc: reagent-desc-sodium-hydroxide
+  physicalDesc: reagent-physical-desc-alkaline
+  color: "white"
+  boilingPoint: 1661.0
+  meltingPoint: 596.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1.5
+    Medicine:
+      effects:
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        probability: 0.1
+
+- type: reagent
+  id: Fersilicite
+  name: reagent-name-fersilicite
+  desc: reagent-desc-fersilicite
+  physicalDesc: reagent-physical-desc-crystalline
+  flavor: metallic
+  color: "#434b4d"
+  boilingPoint: 2962.0
+  meltingPoint: 1638.0
+
+- type: reagent
   id: SodiumPolyacrylate
   name: reagent-name-sodium-polyacrylate
   desc: reagent-desc-sodium-polyacrylate

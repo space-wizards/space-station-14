@@ -910,6 +910,12 @@ namespace Content.Client.Stylesheets
                     new StyleProperty("font", notoSansItalic12),
                 }),
 
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassLabelKeyText}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansBold12),
+                    new StyleProperty( Control.StylePropertyModulateSelf, NanoGold)
+                }),
+
                 // alert tooltip
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertTitle}, null, null), new[]
                 {

@@ -1,0 +1,622 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseThiefObjective
+  components:
+  - type: Objective
+    issuer: thief
+  - type: RoleRequirement
+    roles:
+      components:
+      - ThiefRole
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealObjective
+  components:
+  - type: StealCondition
+    verifyMapExistance: false
+    descriptionText: objective-condition-thief-description
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealCollectionObjective
+  components:
+  - type: StealCondition
+    verifyMapExistance: true
+    descriptionText: objective-condition-thief-description
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealStructureObjective
+  components:
+  - type: StealCondition
+    verifyMapExistance: true
+    descriptionText: objective-condition-thief-description
+  - type: Objective
+    difficulty: 2 # it's hard to hide
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealAnimalObjective
+  components:
+  - type: StealCondition
+    verifyMapExistance: false
+    checkAlive: true
+    objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
+    descriptionText: objective-condition-thief-animal-description
+  - type: Objective
+    difficulty: 2 # it's hard to hide
+
+# Collections
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: FigurineStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: Figurines
+    minCollectionSize: 10
+    maxCollectionSize: 50 #will be limited to the number of figures on the station anyway.
+  - type: Objective
+    difficulty: 0.25
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: HeadCloakStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: HeadCloak
+    minCollectionSize: 3
+    maxCollectionSize: 6
+  - type: Objective
+    difficulty: 1.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: HeadBedsheetStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: HeadBedsheet
+    minCollectionSize: 3
+    maxCollectionSize: 6
+  - type: Objective
+    difficulty: 1.0
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: StampStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: Stamp
+    minCollectionSize: 5
+    maxCollectionSize: 15
+  - type: Objective
+    difficulty: 1.0
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: DoorRemoteStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: DoorRemote
+    minCollectionSize: 2
+    maxCollectionSize: 5
+  - type: Objective
+    difficulty: 1.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: TechnologyDiskStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: TechnologyDisk
+    minCollectionSize: 5
+    maxCollectionSize: 15
+    verifyMapExistance: false
+  - type: Objective
+    difficulty: 0.8
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: IDCardsStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: IDCard
+    minCollectionSize: 5
+    maxCollectionSize: 15
+    verifyMapExistance: false
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: CannabisStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: Botanist
+  - type: StealCondition
+    stealGroup: Cannabis
+    minCollectionSize: 20
+    maxCollectionSize: 30
+    verifyMapExistance: false
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: LAMPStealCollectionObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+    - Moth
+  - type: StealCondition
+    stealGroup: LAMP
+    minCollectionSize: 1
+    maxCollectionSize: 10
+    verifyMapExistance: true
+  - type: Objective
+    difficulty: 0.5 # just for fun, collectings LAMP on Moth
+
+# steal item
+
+- type: entity                                      #Security subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ForensicScannerStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: ForensicScanner
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: FlippoEngravedLighterStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: FlippoEngravedLighter
+  - type: Objective
+    difficulty: 0.8
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingHeadHatWardenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ClothingHeadHatWarden
+  - type: Objective
+    difficulty: 1.2
+
+- type: entity                                      #Medical subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingOuterHardsuitVoidParamedStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Paramedic
+  - type: StealCondition
+    stealGroup: ClothingOuterHardsuitVoidParamed
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: MedicalTechFabCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: MedicalDoctor
+  - type: StealCondition
+    stealGroup: MedicalTechFabCircuitboard
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingHeadsetAltMedicalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefMedicalOfficer
+  - type: StealCondition
+    stealGroup: ClothingHeadsetAltMedical
+  - type: Objective
+    difficulty: 1
+
+- type: entity                                      #Engineering subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: FireAxeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: FireAxe
+  - type: Objective
+    difficulty: 0.8
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: AmePartStealObjective
+  components:
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: StealCondition
+    stealGroup: AmePart
+  - type: Objective
+    difficulty: 1
+
+- type: entity                                      #Cargo subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ExpeditionsCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: SalvageExpeditionsComputerCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: CargoShuttleCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: CargoShuttleConsoleCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: SalvageShuttleCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: SalvageShuttleConsoleCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity                                      #Service subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingEyesHudBeerStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Bartender
+  - type: StealCondition
+    stealGroup: ClothingEyesHudBeer
+  - type: Objective
+    difficulty: 0.3
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: BibleStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    stealGroup: Bible
+  - type: Objective
+    difficulty: 0.4
+
+- type: entity                                      #Other subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckGoldmedalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    stealGroup: ClothingNeckGoldmedal
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckClownmedalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: ClothingNeckClownmedal
+  - type: Objective
+    difficulty: 1
+
+# Structures
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: NuclearBombStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: NuclearBomb
+  - type: Objective
+    difficulty: 2.5 #Good luck
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: FaxMachineCaptainStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: FaxMachineCaptain
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: VehicleSecwayStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SecurityOfficer
+  - type: StealCondition
+    stealGroup: VehicleSecway
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: ChemDispenserStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chemist
+  - type: StealCondition
+    stealGroup: ChemDispenser
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: XenoArtifactStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: XenoArtifact
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: FreezerHeaterStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: FreezerHeater
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: TegStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: Teg
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: BoozeDispenserStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Bartender
+  - type: StealCondition
+    stealGroup: BoozeDispenser
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: AltarNanotrasenStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    stealGroup: AltarNanotrasen
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: PlantRDStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: PlantRD
+  - type: Objective
+    difficulty: 0.8
+
+# Animal
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: IanStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    stealGroup: AnimalIan
+  - type: Objective
+    difficulty: 2.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: BingusStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: AnimalBingus
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: McGriffStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: AnimalMcGriff
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: WalterStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chemist
+  - type: StealCondition
+    stealGroup: AnimalWalter
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: MortyStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: AnimalMorty
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: RenaultStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: AnimalRenault
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: HamletStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: AnimalHamlet
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: ShivaStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SecurityOfficer
+  - type: StealCondition
+    stealGroup: AnimalShiva
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: SmileStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: AnimalSmile
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: PunPunStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Bartender
+  - type: StealCondition
+    stealGroup: AnimalPunPun
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: TropicoStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: AnimalTropico
+  - type: Objective
+    difficulty: 1
+
+# Escape
+
+- type: entity
+  noSpawn: true
+  parent: [BaseThiefObjective, BaseLivingObjective]
+  id: EscapeThiefShuttleObjective
+  name: Escape to centcom alive and unrestrained.
+  description: You don't want your illegal activities to be discovered by anyone, do you?
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition

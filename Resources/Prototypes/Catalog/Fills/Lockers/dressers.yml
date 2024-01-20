@@ -1,0 +1,99 @@
+- type: entity
+  id: DresserCaptainFilled
+  parent: Dresser
+  suffix: Filled, Captain
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatCaptain
+      - id: ClothingHeadHatCapcap
+      - id: ClothingNeckCloakCap
+      - id: ClothingNeckCloakCapFormal
+      - id: ClothingUniformJumpsuitCapFormal
+      - id: ClothingUniformJumpskirtCapFormalDress
+      - id: ClothingHandsGlovesCaptain
+
+- type: entity
+  id: DresserChiefEngineerFilled
+  parent: Dresser
+  suffix: Filled, Chief Engineer
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitChiefEngineerTurtle
+      - id: ClothingUniformJumpskirtChiefEngineerTurtle
+      - id: ClothingNeckCloakCe
+      - id: ClothingHeadHatBeretEngineering
+
+- type: entity
+  id: DresserChiefMedicalOfficerFilled
+  parent: Dresser
+  suffix: Filled, Chief Medical Officer
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingCloakCmo
+      - id: ClothingOuterCoatLabCmo
+      - id: ClothingHeadHatBeretCmo
+
+- type: entity
+  id: DresserHeadOfPersonnelFilled
+  parent: Dresser
+  suffix: Filled, Head Of Personnel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckCloakHop
+      - id: ClothingHeadHatHopcap
+      - id: ClothingOuterWinterHoP
+
+- type: entity
+  id: DresserHeadOfSecurityFilled
+  parent: Dresser
+  suffix: Filled, Head Of Security
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatBeretHoS
+      - id: ClothingHeadHatHoshat
+      - id: ClothingNeckCloakHos
+      - id: ClothingUniformJumpskirtHoSAlt
+      - id: ClothingUniformJumpsuitHoSAlt
+      - id: ClothingUniformJumpskirtHosFormal
+      - id: ClothingUniformJumpsuitHosFormal
+      - id: ClothingMaskNeckGaiter
+
+- type: entity
+  id: DresserQuarterMasterFilled
+  parent: Dresser
+  suffix: Filled, Quarter Master
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckCloakQm
+      - id: ClothingHeadsetCargo
+      - id: ClothingUniformJumpsuitQMTurtleneck
+      - id: ClothingUniformJumpskirtQMTurtleneck
+      - id: ClothingHandsGlovesColorBrown
+
+- type: entity
+  id: DresserResearchDirectorFilled
+  parent: Dresser
+  suffix: Filled, Research Director
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckCloakRd
+      - id: ClothingHeadHatBeretRND
+      - id: ClothingHandsGlovesColorPurple
+      - id: ClothingHeadsetAltScience
+
+- type: entity
+  id: DresserWardenFilled
+  parent: Dresser
+  suffix: Filled, Warden
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatWarden
+      - id: ClothingHeadHatBeretWarden

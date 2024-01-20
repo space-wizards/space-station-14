@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: baseball bat
   id: bat
   graph: WoodenBat
@@ -121,6 +121,19 @@
   description: "A coronet of fresh and fragrant flowers."
   icon:
     sprite: Clothing/Head/Misc/flower-crown.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: flower wreath
+  id: flowerwreath
+  graph: flowerwreath
+  startNode: start
+  targetNode: flowerwreath
+  category: construction-category-clothing
+  description: "A wreath of colourful flowers."
+  icon:
+    sprite: Clothing/Neck/Misc/flower-wreath.rsi
     state: icon
   objectType: Item
 

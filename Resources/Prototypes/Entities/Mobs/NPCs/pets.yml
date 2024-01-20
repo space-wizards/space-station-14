@@ -34,6 +34,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalIan
 
 - type: entity
   name: Old Ian
@@ -238,6 +240,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalBingus
 
 - type: entity
   name: McGriff
@@ -301,6 +305,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalMcGriff
 
 - type: entity
   name: Paperwork
@@ -398,6 +404,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalWalter
 
 - type: entity
   name: Morty
@@ -420,6 +428,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalMorty
 
 - type: entity
   name: Morty
@@ -534,6 +544,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalRenault
 
 - type: entity
   name: Hamlet
@@ -545,8 +557,15 @@
     drawdepth: SmallMobs
     sprite: Mobs/Pets/hamlet.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: hamster-0
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: hamster-moving-0
+    noMovementLayers:
+      movement:
+        state: hamster-0
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -574,6 +593,8 @@
     - CannotSuicide
     - Hamster
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalHamlet
 
 - type: entity
   name: Shiva
@@ -594,35 +615,26 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: shiva-moving
+    noMovementLayers:
+      movement:
+        state: shiva
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
   - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 130
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
         Base: shiva
       Dead:
         Base: shiva_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatSpider
-      amount: 2
-  - type: CombatMode
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -636,11 +648,6 @@
       types:
         Piercing: 8
         Poison: 8
-  - type: ReplacementAccent
-    accent: xeno
-  - type: NoSlip
-  - type: Spider
-  - type: IgnoreSpiderWeb
   - type: Grammar
     attributes:
       proper: true
@@ -649,6 +656,10 @@
     tags:
     - CannotSuicide
     - VimPilot
+    - DoorBumpOpener
+    - FootstepSound
+  - type: StealTarget
+    stealGroup: AnimalShiva
 
 - type: entity
   name: Willow
@@ -747,6 +758,8 @@
     attributes:
       proper: true
       gender: female
+  - type: StealTarget
+    stealGroup: AnimalSmile
 
 - type: entity
   name: Pun Pun
@@ -781,3 +794,32 @@
     attributes:
       proper: true
       gender: male
+  - type: StealTarget
+    stealGroup: AnimalPunPun
+
+- type: entity
+  name: Tropico
+  parent: MobCrab
+  id: MobCrabAtmos
+  description: The noble and stalwart defender of Atmosia. Viva!
+  components:
+#  - type: GhostRole
+#    prob: 1
+#    makeSentient: true
+#    allowSpeech: true
+#    allowMovement: true
+#    name: ghost-role-information-tropico-name
+#    description: ghost-role-information-tropico-description
+#  - type: GhostTakeoverAvailable
+#  - type: Flashable
+  - type: Tag
+    tags:
+    - VimPilot
+    - CannotSuicide
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+#  - type: AlwaysRevolutionaryConvertible
+  - type: StealTarget
+    stealGroup: AnimalTropico

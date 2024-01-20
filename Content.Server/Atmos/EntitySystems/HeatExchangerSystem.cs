@@ -20,6 +20,7 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     float tileLoss;
 
@@ -43,7 +44,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         tileLoss = val;
     }
 
-    private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, ref AtmosDeviceUpdateEvent args)
     {
         if (!TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !TryComp(uid, out AtmosDeviceComponent? device)
@@ -51,6 +52,17 @@ public sealed class HeatExchangerSystem : EntitySystem
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
         {
             return;
+        }
+
+        // make sure that the tile the device is on isn't blocked by a wall or something similar.
+        var xform = Transform(uid);
+        if (_transform.TryGetGridTilePosition(uid, out var tile))
+        {
+            // TryGetGridTilePosition() already returns false if GridUid is null, but the null checker isn't smart enough yet
+            if (xform.GridUid != null && _atmosphereSystem.IsTileAirBlocked(xform.GridUid.Value, tile))
+            {
+                return;
+            }
         }
 
         var dt = args.dt;
