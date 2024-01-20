@@ -11,7 +11,6 @@ namespace Content.Shared.Pinpointer;
 public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
@@ -51,19 +50,13 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         if (component.StoredTargets.Count >= component.MaxTargets)
         {
-            if (_net.IsServer)
-            {
-                _popup.PopupEntity(Loc.GetString("target-pinpointer-full"),args.User,args.User);
-            }
+            _popup.PopupClient(Loc.GetString("target-pinpointer-full"),args.User,args.User);
             return;
         }
 
-        StoreTarget(component.Target.Value, uid, component);
+        StoreTarget(component.Target.Value, uid, component, args.User);
 
-        if (_net.IsServer)
-        {
-            _popup.PopupEntity(Loc.GetString("target-pinpointer-stored", ("target", component.Target.Value)), args.User, args.User);
-        }
+        _popup.PopupClient(Loc.GetString("target-pinpointer-stored", ("target", component.Target.Value)), args.User, args.User);
 
         if (component.UpdateTargetName)
             component.TargetName = component.Target == null ? null : Identity.Name(component.Target.Value, EntityManager);
@@ -126,12 +119,13 @@ public abstract class SharedPinpointerSystem : EntitySystem
     {
         if (target == null)
         {
-            if(user != null && _net.IsServer)
+            if (user != null)
                 _popup.PopupEntity(Loc.GetString("targeting-pinpointer-failed"), user.Value, user.Value);
+
             return;
         }
 
-        if(component.StoredTargets.Contains(target.Value))
+        if (component.StoredTargets.Contains(target.Value))
             return;
 
         component.StoredTargets.Add(target.Value);

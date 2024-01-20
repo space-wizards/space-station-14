@@ -12,7 +12,6 @@ namespace Content.Shared.Pinpointer;
 [Access(typeof(SharedPinpointerSystem))]
 public sealed partial class PinpointerComponent : Component
 {
-    // TODO: Type serializer oh god
     /// <summary>
     ///     A list of components that will be searched for when selected from the verb menu.
     ///     The closest entities found with one of the components in this list will be added to the StoredTargets.
@@ -32,12 +31,22 @@ public sealed partial class PinpointerComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MaxTargets = 10;
 
+    /// <summary>
+    ///     The arrow's colour is red when the tile distance to the target is higher than this value and blue when below.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MediumDistance = 16f;
 
+    /// <summary>
+    ///     The arrow's colour is blue when the tile distance to the target is higher than this value and green when below.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CloseDistance = 8f;
 
+    /// <summary>
+    ///     The arrow's colour is green when the tile distance to the target is higher than this value and the arrow
+    ///     turns into a black dot when below this value.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ReachedDistance = 1f;
 
@@ -65,15 +74,27 @@ public sealed partial class PinpointerComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanRetarget;
 
+    /// <summary>
+    ///     The current target.
+    /// </summary>
     [ViewVariables]
     public EntityUid? Target = null;
 
+    /// <summary>
+    ///     If the pinpointer is turned on.
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public bool IsActive = false;
 
+    /// <summary>
+    ///     The angle the arrow is pointing at.
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Angle ArrowAngle;
 
+    /// <summary>
+    ///     The distance towards the target.
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Distance DistanceToTarget = Distance.Unknown;
 

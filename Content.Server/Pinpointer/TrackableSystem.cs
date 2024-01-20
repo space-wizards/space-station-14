@@ -23,7 +23,7 @@ public sealed class TrackableSystem : EntitySystem
         {
             if (TryComp<PinpointerComponent>(entity, out var pinpointer))
             {
-                _pinpointerSystem.RemoveDeletedTargets(uid, pinpointer);
+                _pinpointerSystem.RemoveTarget(uid, pinpointer);
             }
         }
     }

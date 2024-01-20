@@ -122,11 +122,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!Resolve(uid, ref pinpointer))
             return;
 
-        if (pinpointer.Target == target)
-        {
-            UpdateDirectionToTarget(uid, pinpointer);
+        if (pinpointer.Target == target || target == null)
             return;
-        }
 
         pinpointer.Target = target;
 
@@ -167,11 +164,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (target == null || !EntityManager.EntityExists(target.Value))
         {
             //Updates appearance when currently tracking entity gets deleted or moves off-station
-            if (pinpointer.DistanceToTarget != Distance.Unknown)
-            {
-                SetDistance(uid, Distance.Unknown, pinpointer);
-                UpdateAppearance(uid,pinpointer);
-            }
+            if (pinpointer.DistanceToTarget == Distance.Unknown)
+                return;
+
+            SetDistance(uid, Distance.Unknown, pinpointer);
+            UpdateAppearance(uid,pinpointer);
             return;
         }
 
@@ -233,7 +230,26 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// </summary>
     private void RemoveAllStoredTargets(EntityUid uid, PinpointerComponent component, EntityUid? user)
     {
-        component.StoredTargets.Clear();
+        foreach (var target in component.StoredTargets)
+        {
+            if (!TryComp<TrackableComponent>(target, out var trackable))
+                continue;
+
+            //Remove the Trackable component if no other entity is tracking the target.
+            if (trackable.TrackedBy.Count == 1)
+                RemCompDeferred<TrackableComponent>(target);
+            //Remove the pinpointer from the target's TrackedBy list and
+            //remove the target from the pinpointer's target list.
+            else
+            {
+                trackable.TrackedBy.Remove(uid);
+                RemoveTarget(target, component);
+            }
+        }
+
+        //Set the current target to null so the arrow doesn't keep pointing towards the last selected target.
+        component.Target = null;
+
         if (component.IsActive)
         {
             TogglePinpointer(uid, component);
@@ -241,9 +257,9 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     }
 
     /// <summary>
-    /// Removes a target from the target list if the Trackable component is removed.
+    ///     Removes a target from the target list.
     /// </summary>
-    public void RemoveDeletedTargets(EntityUid uid, PinpointerComponent component)
+    public void RemoveTarget(EntityUid uid, PinpointerComponent component)
     {
         component.StoredTargets.Remove(uid);
     }
@@ -293,7 +309,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
                 args.Verbs.Add(new Verb()
                 {
-                    Text = storedPrefix + Identity.Name(target, EntityManager),
+                    Text = storedPrefix + " " + Identity.Name(target, EntityManager),
                     Act = () => SetTarget(uid, target, component, args.User),
                     Priority = 50,
                     Category = VerbCategory.SelectTarget
@@ -302,7 +318,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
 
         //Adds the stored target reset verb if there is at least 1 stored target,
-        //no need to reset if there is no stored targets.
+        //no need to reset if there are no stored targets.
         if (component.StoredTargets.Count > 0)
         {
             args.Verbs.Add(new Verb()
