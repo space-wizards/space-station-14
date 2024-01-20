@@ -115,5 +115,11 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: True }
           False: { visible: False }
+  - type: ItemSlots
+    slots:
+      mixer:
+        whitelist:
+          tags:
+            - CentrifugeCompatible
   - type: Machine
     board: CentrifugeMachineCircuitboard

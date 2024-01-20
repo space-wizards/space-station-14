@@ -115,6 +115,28 @@
 
 - type: entity
   parent: ClothingHeadBaseButcherable
+  id: ClothingHeadHatBlacksoft
+  name: black cap
+  description: "It's a baseball hat in a tasteless black colour."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/blacksoft.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/blacksoft.rsi
+
+- type: entity
+  parent: ClothingHeadBaseButcherable
+  id: ClothingHeadHatBlacksoftFlipped
+  name: black cap flipped
+  description: "It's a baseball hat in a tasteless black colour. Flipped."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/blacksoft_flipped.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/blacksoft_flipped.rsi
+
+- type: entity
+  parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatGreysoft
   name: grey cap
   description: "It's a baseball hat in a tasteless grey colour."

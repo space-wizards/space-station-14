@@ -58,6 +58,7 @@ namespace Content.Client.GameTicking.Managers
 
             SubscribeNetworkEvent<TickerJoinLobbyEvent>(JoinLobby);
             SubscribeNetworkEvent<TickerJoinGameEvent>(JoinGame);
+            SubscribeNetworkEvent<TickerConnectionStatusEvent>(ConnectionStatus);
             SubscribeNetworkEvent<TickerLobbyStatusEvent>(LobbyStatus);
             SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
             SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
@@ -68,7 +69,6 @@ namespace Content.Client.GameTicking.Managers
             });
             SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(RoundRestartCleanup);
 
             _initialized = true;
         }
@@ -110,6 +110,11 @@ namespace Content.Client.GameTicking.Managers
         private void JoinLobby(TickerJoinLobbyEvent message)
         {
             _stateManager.RequestStateChange<LobbyState>();
+        }
+
+        private void ConnectionStatus(TickerConnectionStatusEvent message)
+        {
+            RoundStartTimeSpan = message.RoundStartTimeSpan;
         }
 
         private void LobbyStatus(TickerLobbyStatusEvent message)
@@ -155,23 +160,6 @@ namespace Content.Client.GameTicking.Managers
 
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
             _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
-        }
-
-        private void RoundRestartCleanup(RoundRestartCleanupEvent ev)
-        {
-            if (string.IsNullOrEmpty(RestartSound))
-                return;
-
-            if (!_configManager.GetCVar(CCVars.RestartSoundsEnabled))
-            {
-                RestartSound = null;
-                return;
-            }
-
-            _audio.PlayGlobal(RestartSound, Filter.Local(), false);
-
-            // Cleanup the sound, we only want it to play when the round restarts after it ends normally.
-            RestartSound = null;
         }
     }
 }
