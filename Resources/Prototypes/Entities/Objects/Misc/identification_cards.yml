@@ -575,6 +575,7 @@
     - JobIconSeniorOfficer
     - JobIconSeniorEngineer
     - JobIconSeniorResearcher
+    - JobIconCoroner
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
