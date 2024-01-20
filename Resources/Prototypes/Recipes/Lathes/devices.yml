@@ -152,32 +152,33 @@
     Plasma: 1500
     Uranium: 150
 
-- type: latheRecipe
-  id: WeaponCrusher
-  result: WeaponCrusher
-  completetime: 5
-  materials:
-    Steel: 1000
-    Glass: 250
-    Plastic: 100
+# Sci has no reason to be able to print these after they got buffed. Leaving it here as a comment in case they get nerfed again and printing them would be alright.
+#- type: latheRecipe
+#  id: WeaponCrusher
+#  result: WeaponCrusher
+#  completetime: 5
+#  materials:
+#    Steel: 1000
+#    Glass: 250
+#    Plastic: 100
 
-- type: latheRecipe
-  id: WeaponCrusherDagger
-  result: WeaponCrusherDagger
-  completetime: 5
-  materials:
-    Steel: 500
-    Glass: 250
-    Plastic: 50
+#- type: latheRecipe
+#  id: WeaponCrusherDagger
+#  result: WeaponCrusherDagger
+#  completetime: 5
+#  materials:
+#    Steel: 500
+#    Glass: 250
+#    Plastic: 50
 
-- type: latheRecipe
-  id: WeaponCrusherGlaive
-  result: WeaponCrusherGlaive
-  completetime: 5
-  materials:
-    Steel: 1500
-    Glass: 250
-    Silver: 250
+#- type: latheRecipe
+#  id: WeaponCrusherGlaive
+#  result: WeaponCrusherGlaive
+#  completetime: 5
+#  materials:
+#    Steel: 1500
+#    Glass: 250
+#    Silver: 250
 
 - type: latheRecipe
   id: WeaponForceGun
