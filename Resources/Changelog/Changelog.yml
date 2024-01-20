@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Storage now uses a grid-based system. You can drag around items in your
-      bag, left click to remove them, and use right click to rotate them while dragging.
-    type: Add
-  - message: The storage window is now a fixed singleton above the hands. You can
-      make it moveable by toggling "Static storage UI" in the controls menu.
-    type: Add
-  id: 5253
-  time: '2023-12-04T23:04:39.0000000+00:00'
 - author: qwerltaz
   changes:
   - message: When ghosting from a critical state, the ghost command now kills with
@@ -3786,3 +3776,12 @@
   id: 5753
   time: '2024-01-20T03:40:01.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24044
+- author: casperr04
+  changes:
+  - message: Fixed players being able to re-anchor items after fultoning them.
+    type: Fix
+  - message: Changed which objects can be fultoned.
+    type: Tweak
+  id: 5754
+  time: '2024-01-20T04:57:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20628
