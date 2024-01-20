@@ -207,12 +207,9 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
-    public void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, EntityCoordinates? toCoordinates = null)
+    public void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
     {
-        if (toCoordinates == null)
-            gun.ShootCoordinates = new EntityCoordinates(gunUid, new Vector2(0, -1)); //Forward vector
-        else
-            gun.ShootCoordinates = toCoordinates;
+        gun.ShootCoordinates = toCoordinates;
 
         AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
@@ -242,11 +239,6 @@ public abstract partial class SharedGunSystem : EntitySystem
             if (prevention.Cancelled)
                 return;
         }
-
-        var toCoordinates = gun.ShootCoordinates;
-
-        if (toCoordinates == null)
-            return;
 
         var curTime = Timing.CurTime;
 

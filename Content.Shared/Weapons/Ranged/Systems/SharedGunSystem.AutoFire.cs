@@ -1,5 +1,7 @@
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using System.Numerics;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -21,7 +23,9 @@ public partial class SharedGunSystem
             if (gun.NextFire > _timing.CurTime)
                 continue;
 
-            AttemptShoot(null, uid, gun, null);
+            var targetCoord = new EntityCoordinates(uid, new Vector2(0, -1)); //Forward vector
+
+            AttemptShoot(null, uid, gun, targetCoord);
         }
     }
 

@@ -1,8 +1,9 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceLinking.Events;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Map;
+using System.Numerics;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -27,8 +28,10 @@ public sealed partial class GunSignalControlSystem : EntitySystem
         if (!TryComp<GunComponent>(gunControl, out var gun))
             return;
 
+        var targetCoord = new EntityCoordinates(gunControl, new Vector2(0, -1)); //Forward vector
+
         if (args.Port == gunControl.Comp.TriggerPort)
-            _gun.AttemptShoot(null, gunControl, gun);
+            _gun.AttemptShoot(null, gunControl, gun, targetCoord);
 
 
         if (!TryComp<AutoShootGunComponent>(gunControl, out var autoShoot))
