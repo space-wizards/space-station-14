@@ -21,6 +21,6 @@
     qualities:
     - Prying
     - Slicing
-    speed: 0.5
+    speed: 0.25
   - type: Prying
     pryPowered: true
