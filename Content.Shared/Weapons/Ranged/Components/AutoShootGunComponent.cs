@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -6,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// allows GunSystem to automatically fire while this component is enabled
 /// </summary>
 
-[RegisterComponent, Access(typeof(SharedGunSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedGunSystem))]
 public sealed partial class AutoShootGunComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]

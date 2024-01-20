@@ -37,23 +37,23 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly   ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly   INetManager _netManager = default!;
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly ExamineSystemShared Examine = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly RechargeBasicEntityAmmoSystem _recharge = default!;
+    [Dependency] private readonly   ItemSlotsSystem _slots = default!;
+    [Dependency] private readonly   RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
+    [Dependency] private readonly   SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly   SharedGravitySystem _gravity = default!;
     [Dependency] protected readonly SharedPointLightSystem Lights = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;

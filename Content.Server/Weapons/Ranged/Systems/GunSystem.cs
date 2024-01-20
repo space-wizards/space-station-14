@@ -213,8 +213,8 @@ public sealed partial class GunSystem : SharedGunSystem
                     var fromEffect = fromCoordinates;
                     var dir = mapDirection.Normalized();
 
-                    EntityUid? lastUser = (user != null) ? user : gunUid; //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
-
+                    //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
+                    var lastUser = user ?? gunUid;
 
                     if (hitscan.Reflective != ReflectType.None)
                     {
@@ -327,9 +327,8 @@ public sealed partial class GunSystem : SharedGunSystem
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
-        Projectiles.SetShooter(uid, projectile, (user != null) ? //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
-            user.Value :
-            uid);
+        //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
+        Projectiles.SetShooter(uid, projectile, user ?? uid);
         projectile.Weapon = gunUid;
 
 
