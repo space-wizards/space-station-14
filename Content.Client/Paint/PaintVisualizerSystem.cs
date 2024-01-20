@@ -4,8 +4,6 @@ using static Robust.Client.GameObjects.SpriteComponent;
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Paint;
-using Content.Shared.Humanoid;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Paint
 {
@@ -43,14 +41,7 @@ namespace Content.Client.Paint
         private void OnHeldVisualsUpdated(EntityUid uid, PaintedComponent component, HeldVisualsUpdatedEvent args)
         {
             if (args.RevealedLayers.Count == 0)
-            {
                 return;
-            }
-
-            if (HasComp<HumanoidAppearanceComponent>(uid))
-            {
-                return;
-            }
 
             if (!TryComp(args.User, out SpriteComponent? sprite))
                 return;
@@ -74,9 +65,7 @@ namespace Content.Client.Paint
         private void OnEquipmentVisualsUpdated(EntityUid uid, PaintedComponent component, EquipmentVisualsUpdatedEvent args)
         {
             if (args.RevealedLayers.Count == 0)
-            {
                 return;
-            }
 
             if (!TryComp(args.Equipee, out SpriteComponent? sprite))
                 return;
