@@ -129,7 +129,7 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/hatch_maint.rsi
- 
+
 # Glass
 
 - type: entity
@@ -140,8 +140,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmack
   - type: Door
     occludes: false
   - type: Occluder

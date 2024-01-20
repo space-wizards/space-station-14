@@ -12452,7 +12452,7 @@ entities:
       pos: -9.5,60.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -4087.5586
+      secondsUntilStateChange: -4120.8013
       state: Opening
   - uid: 160
     components:
@@ -14187,7 +14187,7 @@ entities:
       pos: 0.5,-22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -85528.24
+      secondsUntilStateChange: -85561.484
       state: Opening
   - uid: 439
     components:
@@ -14574,7 +14574,7 @@ entities:
       pos: -1.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108488.555
+      secondsUntilStateChange: -108521.8
       state: Opening
 - proto: AirlockResearchDirectorLocked
   entities:
@@ -14587,7 +14587,7 @@ entities:
       pos: -2.5,11.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108488.19
+      secondsUntilStateChange: -108521.43
       state: Opening
 - proto: AirlockSalvageGlassLocked
   entities:
@@ -14629,7 +14629,7 @@ entities:
       pos: 24.5,72.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -107042.32
+      secondsUntilStateChange: -107075.56
       state: Opening
   - uid: 501
     components:
@@ -14664,7 +14664,7 @@ entities:
       pos: 18.5,68.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -122915.74
+      secondsUntilStateChange: -122948.984
       state: Opening
   - uid: 505
     components:
@@ -14683,7 +14683,7 @@ entities:
       pos: 23.5,72.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -107042.76
+      secondsUntilStateChange: -107076
       state: Opening
   - uid: 507
     components:
@@ -14717,7 +14717,7 @@ entities:
       pos: 10.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108491.12
+      secondsUntilStateChange: -108524.36
       state: Opening
   - uid: 511
     components:
@@ -14725,7 +14725,7 @@ entities:
       pos: -0.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108484.82
+      secondsUntilStateChange: -108518.06
       state: Opening
   - uid: 512
     components:
@@ -14735,7 +14735,7 @@ entities:
       pos: 2.5,7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -107945.79
+      secondsUntilStateChange: -107979.03
       state: Opening
   - uid: 513
     components:
@@ -14744,7 +14744,7 @@ entities:
       pos: 11.5,3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -145706.19
+      secondsUntilStateChange: -145739.44
       state: Opening
   - uid: 514
     components:
@@ -14752,7 +14752,7 @@ entities:
       pos: 5.5,19.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108500.92
+      secondsUntilStateChange: -108534.164
       state: Opening
   - uid: 515
     components:
@@ -14760,7 +14760,7 @@ entities:
       pos: -0.5,16.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108485.055
+      secondsUntilStateChange: -108518.3
       state: Opening
   - uid: 516
     components:
@@ -14768,7 +14768,7 @@ entities:
       pos: 13.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108499.35
+      secondsUntilStateChange: -108532.59
       state: Opening
   - uid: 517
     components:
@@ -14776,7 +14776,7 @@ entities:
       pos: 14.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108499.66
+      secondsUntilStateChange: -108532.9
       state: Opening
 - proto: AirlockScienceLocked
   entities:
@@ -14788,7 +14788,7 @@ entities:
       pos: 27.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108461.16
+      secondsUntilStateChange: -108494.4
       state: Opening
   - uid: 519
     components:
@@ -14798,7 +14798,7 @@ entities:
       pos: 30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108459.586
+      secondsUntilStateChange: -108492.83
       state: Opening
   - uid: 520
     components:
@@ -14809,7 +14809,7 @@ entities:
       pos: 17.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108498.32
+      secondsUntilStateChange: -108531.56
       state: Opening
   - uid: 521
     components:
@@ -14819,7 +14819,7 @@ entities:
       pos: 30.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108459.85
+      secondsUntilStateChange: -108493.09
       state: Opening
   - uid: 522
     components:
@@ -14829,7 +14829,7 @@ entities:
       pos: 27.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108461.45
+      secondsUntilStateChange: -108494.695
       state: Opening
   - uid: 523
     components:
@@ -14839,7 +14839,7 @@ entities:
       pos: 15.5,19.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -149792.03
+      secondsUntilStateChange: -149825.28
       state: Opening
   - uid: 524
     components:
@@ -14849,7 +14849,7 @@ entities:
       pos: 11.5,19.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108502.72
+      secondsUntilStateChange: -108535.96
       state: Opening
   - uid: 525
     components:
@@ -14860,7 +14860,7 @@ entities:
       pos: 17.5,14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108498.586
+      secondsUntilStateChange: -108531.83
       state: Opening
   - uid: 526
     components:
@@ -14871,7 +14871,7 @@ entities:
       pos: 22.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108496.85
+      secondsUntilStateChange: -108530.09
       state: Opening
   - uid: 527
     components:
@@ -14882,7 +14882,7 @@ entities:
       pos: 22.5,14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -108496.586
+      secondsUntilStateChange: -108529.83
       state: Opening
 - proto: AirlockSecurity
   entities:
@@ -66187,249 +66187,6 @@ entities:
     - type: Transform
       pos: 1.5,40.5
       parent: 2
-- proto: ClosetBase
-  entities:
-  - uid: 10229
-    components:
-    - type: Transform
-      pos: 0.5,-31.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10230
-    components:
-    - type: Transform
-      pos: 5.5,-31.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10231
-    components:
-    - type: Transform
-      pos: 14.5,-31.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10232
-    components:
-    - type: Transform
-      pos: 10.5,-38.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10233
-    components:
-    - type: Transform
-      pos: 17.5,-39.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10234
-    components:
-    - type: Transform
-      pos: 4.5,-38.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10235
-    components:
-    - type: Transform
-      pos: -2.5,-37.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10236
-    components:
-    - type: Transform
-      pos: 35.5,57.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 10237
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 10238
-    components:
-    - type: Transform
-      pos: 24.5,53.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 10239
-    components:
-    - type: Transform
-      pos: 23.5,53.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: ClosetBombFilled
   entities:
   - uid: 10240
@@ -68615,6 +68372,249 @@ entities:
     - type: Transform
       pos: -22.5,66.5
       parent: 2
+- proto: ClosetSteelBase
+  entities:
+  - uid: 10229
+    components:
+    - type: Transform
+      pos: 0.5,-31.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10230
+    components:
+    - type: Transform
+      pos: 5.5,-31.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10231
+    components:
+    - type: Transform
+      pos: 14.5,-31.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10232
+    components:
+    - type: Transform
+      pos: 10.5,-38.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10233
+    components:
+    - type: Transform
+      pos: 17.5,-39.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10234
+    components:
+    - type: Transform
+      pos: 4.5,-38.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10235
+    components:
+    - type: Transform
+      pos: -2.5,-37.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10236
+    components:
+    - type: Transform
+      pos: 35.5,57.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 10237
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 10238
+    components:
+    - type: Transform
+      pos: 24.5,53.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 10239
+    components:
+    - type: Transform
+      pos: 23.5,53.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.6971024
+        - 6.3843384
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
 - proto: ClosetToolFilled
   entities:
   - uid: 10351
@@ -72896,6 +72896,12 @@ entities:
       parent: 2
 - proto: DefibrillatorCabinetFilled
   entities:
+  - uid: 1386
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 52.5,-14.5
+      parent: 2
   - uid: 10863
     components:
     - type: Transform
@@ -72930,12 +72936,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 84.5,-4.5
-      parent: 2
-  - uid: 10869
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 53.5,-14.5
       parent: 2
   - uid: 10870
     components:
@@ -86157,7 +86157,7 @@ entities:
       pos: 19.5,62.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -146287.4
+      secondsUntilStateChange: -146320.66
       state: Closing
   - uid: 12990
     components:
@@ -123650,7 +123650,7 @@ entities:
       pos: 29.5,63.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -122058.04
+      secondsUntilStateChange: -122091.28
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
