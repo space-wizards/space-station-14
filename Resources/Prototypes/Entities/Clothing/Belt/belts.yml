@@ -387,6 +387,7 @@
         - Packet
         - Skewer
         - MonkeyCube
+        - Mayo
       components:
         - Mousetrap
         - Smokable

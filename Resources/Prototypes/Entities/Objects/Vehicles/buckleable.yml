@@ -37,7 +37,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
 
 - type: entity
@@ -125,7 +125,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
         spawn:
@@ -402,7 +402,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
 
 - type: entity
   parent: VehicleUnicycle

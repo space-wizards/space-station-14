@@ -1,6 +1,7 @@
 - type: latheRecipe
   id: PowerCellSmall
   result: PowerCellSmallPrinted
+  category: Parts
   completetime: 1
   materials:
     Steel: 100
@@ -9,6 +10,7 @@
 - type: latheRecipe
   id: PowerCellMedium
   result: PowerCellMediumPrinted
+  category: Parts
   completetime: 6
   materials:
     Steel: 300
@@ -19,6 +21,7 @@
 - type: latheRecipe
   id: PowerCellHigh
   result: PowerCellHighPrinted
+  category: Parts
   completetime: 10
   materials:
     Steel: 300
@@ -29,6 +32,7 @@
 - type: latheRecipe
   id: PowerCellMicroreactor
   result: PowerCellMicroreactorPrinted
+  category: Parts
   completetime: 10
   materials:
     Steel: 500

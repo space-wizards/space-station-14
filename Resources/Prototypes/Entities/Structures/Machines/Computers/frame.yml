@@ -90,7 +90,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
           params:
             volume: -6
       - !type:SpawnEntitiesBehavior
