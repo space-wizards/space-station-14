@@ -70,15 +70,15 @@
       types:
         Heat: -0.2
   - type: NoSlip
+  - type: Pullable
   - type: ZombieImmune
   - type: NameIdentifier
     group: GenericNumber
   - type: GhostTakeoverAvailable
   - type: PointLight
-    color: "#e4de6c"
-    radius: 8
-    softness: 2
-    energy: 5
+    radius: 3.0
+    energy: 4.5
+    color: "#6270bb"
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBells

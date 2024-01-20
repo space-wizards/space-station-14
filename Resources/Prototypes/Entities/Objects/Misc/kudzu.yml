@@ -104,6 +104,50 @@
       spreadChance: 0.3
 
 - type: entity
+  id: KudzuFlowerFriendly
+  parent: Kudzu
+  components:
+    - type: Sprite
+      drawdepth: FloorObjects
+      sprite: Objects/Misc/kudzuflower.rsi
+      state: kudzu_11
+    - type: Kudzu
+      spriteVariants: 5
+      spreadChance: 0.1
+    - type: SlowContacts
+      walkSpeedModifier: 0.7
+      sprintSpeedModifier: 0.7
+      ignoreWhitelist:
+        components:
+        - IgnoreKudzu
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: RandomSpawner
+      deleteSpawnerAfterSpawn: false
+      rareChance: 0.05
+      offset: 0.5
+      chance: 0.1
+      prototypes:
+      - FloraTree01
+      - FloraTree02
+      - FloraTree03
+      - FloraTree04
+      - FloraTree05
+      - FloraTree06
+      - FloraTreeLarge01
+      - FloraTreeLarge02
+      - FloraTreeLarge03
+      - CrystalCyan
+      rarePrototypes:
+      - AnomalyFloraBulb
+
+- type: entity
   id: FleshKudzu
   name: tendons
   description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
