@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatGreatcoat
+  name: greatcoat
+  description: A drab and rugged greatcoat, padded for protection against the elements.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/OuterClothing/Coats/greatcoat.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/OuterClothing/Coats/greatcoat.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.6
+        Heat: 0.75

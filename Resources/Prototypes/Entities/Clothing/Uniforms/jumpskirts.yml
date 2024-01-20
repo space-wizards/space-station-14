@@ -170,9 +170,9 @@
   description: It's bright red and rather crisp, much like security's victims tend to be. Its sturdy fabric provides minor protection from slash and pierce damage.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/hos.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/hos.rsi # Grey Station - Resprited
 
 - type: entity
   parent: ClothingUniformSkirtBase

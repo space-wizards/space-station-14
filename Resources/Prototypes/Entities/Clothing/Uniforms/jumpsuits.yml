@@ -326,9 +326,9 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/hos.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/hos.rsi # Grey Station - Resprited
 
 - type: entity
   parent: ClothingUniformBase
