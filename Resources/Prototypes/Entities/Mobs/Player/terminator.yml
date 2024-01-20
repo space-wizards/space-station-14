@@ -80,6 +80,11 @@
         popup: terminator-endoskeleton-gib-popup
         popupType: LargeCaution
       - !type:GibBehavior
+  # dont need to eat
+  - type: Hunger
+    baseDecayRate: 0
+  - type: Thirst
+    baseDecayRate: 0
   # faster than humans when damaged
   - type: SlowOnDamage
     speedModifierThresholds:
