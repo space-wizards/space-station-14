@@ -3,7 +3,8 @@ using Content.Shared.Exterminator.Systems;
 namespace Content.Shared.Exterminator.Components;
 
 /// <summary>
-/// Sets <see cref="ExterminatorComponent.Target"/> after the ghost role spawns.
+/// Forces kill objective target after the ghost role spawns.
+/// Gets transferred from the spawner to the exterminator.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedExterminatorSystem))]
 public sealed partial class ExterminatorTargetComponent : Component

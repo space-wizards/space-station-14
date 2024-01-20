@@ -19,7 +19,7 @@ public sealed class ExterminatorTargetOverrideSystem : EntitySystem
         SubscribeLocalEvent<ExterminatorTargetOverrideComponent, ObjectiveAssignedEvent>(OnAssigned);
     }
 
-    private void OnAssigned(EntityUid uid, ExterminatorTargetOverrideComponent comp, ref ObjectiveAssignedEvent args)
+    private void OnAssigned(Entity<ExterminatorTargetOverrideComponent> ent, ref ObjectiveAssignedEvent args)
     {
         if (args.Mind.OwnedEntity == null)
         {
@@ -27,15 +27,13 @@ public sealed class ExterminatorTargetOverrideSystem : EntitySystem
             return;
         }
 
+        // use random target when spawned naturally
         var user = args.Mind.OwnedEntity.Value;
-        if (!TryComp<ExterminatorComponent>(user, out var exterminator))
-        {
-            args.Cancelled = true;
+        if (!TryComp<ExterminatorTargetComponent>(user, out var target) || target.Target == null)
             return;
-        }
 
-        // this exterminator has a target override so set its objective target accordingly
-        if (exterminator.Target is {} target)
-            _target.SetTarget(uid, target);
+        // force target when admin smite is used
+        _target.SetTarget(ent, target.Target.Value);
+        RemComp<ExterminatorTargetComponent>(user);
     }
 }

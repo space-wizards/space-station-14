@@ -36,18 +36,20 @@ public sealed class ExterminatorSystem : SharedExterminatorSystem
         base.OnMapInit(ent, ref args);
 
         // cyborg doesn't need to breathe
+        // TODO: something else
         RemComp<RespiratorComponent>(ent);
     }
 
-    private void OnSpawned(EntityUid uid, ExterminatorComponent comp, GhostRoleSpawnerUsedEvent args)
+    private void OnSpawned(Entity<ExterminatorComponent> ent, ref GhostRoleSpawnerUsedEvent args)
     {
         if (!TryComp<ExterminatorTargetComponent>(args.Spawner, out var target))
             return;
 
-        comp.Target = target.Target;
+        // objective will check this
+        EnsureComp<ExterminatorTargetComponent>(ent).Target = target.Target;
     }
 
-    private void OnCreated(EntityUid uid, ExterminatorComponent comp, ref GenericAntagCreatedEvent args)
+    private void OnCreated(Entity<ExterminatorComponent> ent, ref GenericAntagCreatedEvent args)
     {
         var mindId = args.MindId;
         var mind = args.Mind;

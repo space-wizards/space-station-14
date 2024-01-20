@@ -7,18 +7,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Exterminator.Components;
 
 /// <summary>
-/// Main exterminator component, handles the target, if any, and adding the curse action.
+/// Main exterminator component, handles setup and adding the curse action.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedExterminatorSystem))]
 public sealed partial class ExterminatorComponent : Component
 {
-    /// <summary>
-    /// Used to force the terminate objective's target.
-    /// If null it will be a random person.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? Target;
-
     /// <summary>
     /// Action to use for arnie's curse.
     /// </summary>
