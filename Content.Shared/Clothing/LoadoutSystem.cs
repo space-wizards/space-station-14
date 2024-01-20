@@ -36,6 +36,13 @@ public sealed class LoadoutSystem : EntitySystem
     }
 
 
+    /// <inheritdoc cref="ApplyCharacterLoadout(Robust.Shared.GameObjects.EntityUid,string,Content.Shared.Preferences.HumanoidCharacterProfile,System.Collections.Generic.Dictionary{string,System.TimeSpan}?)"/>
+    public List<EntityUid> ApplyCharacterLoadout(EntityUid uid, string job, HumanoidCharacterProfile profile, Dictionary<string, TimeSpan>? playTimes = null)
+    {
+        var jobPrototype = _prototype.Index<JobPrototype>(job);
+        return ApplyCharacterLoadout(uid, jobPrototype, profile, playTimes);
+    }
+
     /// <summary>
     ///     Equips entities from a <see cref="HumanoidCharacterProfile"/>'s loadout preferences to a given entity
     /// </summary>
