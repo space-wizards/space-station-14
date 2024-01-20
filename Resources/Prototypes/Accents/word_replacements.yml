@@ -311,23 +311,3 @@
     chatsan-word-41: chatsan-replacement-41
     chatsan-word-42: chatsan-replacement-42
 
-- type: accent
-  id: french
-  wordReplacements:
-    accent-french-replaced-1: accent-french-replacement-1
-    accent-french-replaced-2: accent-french-replacement-2
-    accent-french-replaced-3: accent-french-replacement-3
-    accent-french-replaced-4: accent-french-replacement-4
-    accent-french-replaced-5: accent-french-replacement-5
-    accent-french-replaced-6: accent-french-replacement-6
-    accent-french-replaced-7: accent-french-replacement-7
-    accent-french-replaced-8: accent-french-replacement-8
-    accent-french-replaced-9: accent-french-replacement-9
-    accent-french-replaced-10: accent-french-replacement-10
-    accent-french-replaced-11: accent-french-replacement-11
-    accent-french-replaced-12: accent-french-replacement-12
-    accent-french-replaced-13: accent-french-replacement-13
-    accent-french-replaced-14: accent-french-replacement-14
-    accent-french-replaced-15: accent-french-replacement-15
-    accent-french-replaced-16: accent-french-replacement-16
-
