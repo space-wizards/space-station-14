@@ -41,7 +41,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -96,7 +98,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:
@@ -139,7 +141,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -178,7 +182,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -214,7 +220,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -259,13 +267,16 @@
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/glass_break2.ogg
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -278,6 +289,9 @@
   - type: Construction
     graph: Table
     node: TableGlass
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepTile
 
 - type: entity
   id: TableReinforcedGlass
@@ -305,13 +319,16 @@
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
     - trigger:
         !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/glass_break2.ogg
+          collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: TableFrame
       - !type:SpawnEntitiesBehavior
@@ -327,6 +344,9 @@
   - type: Construction
     graph: Table
     node: TableReinforcedGlass
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepTile
 
 - type: entity
   id: TablePlasmaGlass
@@ -354,13 +374,16 @@
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
     - trigger:
         !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/glass_break2.ogg
+          collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: TableFrame
       - !type:SpawnEntitiesBehavior
@@ -376,6 +399,9 @@
   - type: Construction
     graph: Table
     node: TablePlasmaGlass
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepTile
 
 - type: entity
   id: TableWood
@@ -397,13 +423,16 @@
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
     - trigger:
         !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -417,6 +446,9 @@
   - type: Tag
     tags:
     - Wooden
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
 
 - type: entity
   id: TableCarpet
@@ -438,7 +470,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -455,6 +487,9 @@
   - type: Tag
     tags:
     - Wooden
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
 
 - type: entity
   id: TableStone
@@ -477,6 +512,9 @@
           path: /Audio/Effects/picaxe2.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepFloor
 
 - type: entity
   id: TableWeb
@@ -506,6 +544,9 @@
   - type: Construction
     graph: WebStructures
     node: table
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
 
 - type: entity
   id: TableDebug
@@ -560,7 +601,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:
@@ -571,6 +612,9 @@
   - type: Construction
     graph: Table
     node: CounterWood
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
 
 - type: entity
   id: TableCounterMetal
@@ -600,7 +644,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

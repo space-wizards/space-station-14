@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -22,7 +23,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GeneratorSystem _generator = default!;
-    [Dependency] private readonly PowerSwitchableGeneratorSystem _switchableGenerator = default!;
+    [Dependency] private readonly PowerSwitchableSystem _switchable = default!;
 
     public override void Initialize()
     {
@@ -36,6 +37,8 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStartMessage>(GeneratorStartMessage);
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStopMessage>(GeneratorStopMessage);
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorSwitchOutputMessage>(GeneratorSwitchOutputMessage);
+
+        SubscribeLocalEvent<FuelGeneratorComponent, SwitchPowerCheckEvent>(OnSwitchPowerCheck);
     }
 
     private void GeneratorSwitchOutputMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorSwitchOutputMessage args)
@@ -47,7 +50,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (fuelGenerator.On)
             return;
 
-        _switchableGenerator.ToggleActiveOutput(uid, args.Session.AttachedEntity.Value);
+        _switchable.Cycle(uid, args.Session.AttachedEntity.Value);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)
@@ -95,7 +98,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         var clogged = _generator.GetIsClogged(uid);
 
         var sound = empty ? component.StartSoundEmpty : component.StartSound;
-        _audio.Play(sound, Filter.Pvs(uid), uid, true);
+        _audio.PlayEntity(sound, Filter.Pvs(uid), uid, true);
 
         if (!clogged && !empty && _random.Prob(component.StartChance))
         {
@@ -162,6 +165,12 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
             args.Verbs.Add(verb);
         }
+    }
+
+    private void OnSwitchPowerCheck(EntityUid uid, FuelGeneratorComponent comp, ref SwitchPowerCheckEvent args)
+    {
+        if (comp.On)
+            args.DisableMessage = Loc.GetString("fuel-generator-verb-disable-on");
     }
 
     public override void Update(float frameTime)

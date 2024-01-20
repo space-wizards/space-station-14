@@ -7,10 +7,10 @@ namespace Content.Server.Forensics
     [RegisterComponent]
     public sealed partial class FiberComponent : Component
     {
-        [DataField("fiberMaterial")]
-        public string FiberMaterial = "fibers-synthetic";
+        [DataField]
+        public LocId FiberMaterial = "fibers-synthetic";
 
-        [DataField("fiberColor")]
+        [DataField]
         public string? FiberColor;
     }
 }

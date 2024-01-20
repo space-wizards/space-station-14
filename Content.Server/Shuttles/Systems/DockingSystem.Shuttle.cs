@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
@@ -140,6 +139,7 @@ public sealed partial class DockingSystem
         var isMap = HasComp<MapComponent>(targetGrid);
 
         var validDockConfigs = new List<DockingConfig>();
+        var grids = new List<Entity<MapGridComponent>>();
         if (shuttleDocks.Count > 0)
         {
            // We'll try all combinations of shuttle docks and see which one is most suitable
@@ -174,8 +174,9 @@ public sealed partial class DockingSystem
                    var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetAngle, spawnPosition.Position);
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
-                   if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
-                           dockedBounds).Any(o => o.Owner != targetGrid))
+                   grids.Clear();
+                   _mapManager.FindGridsIntersecting(targetGridXform.MapID, dockedBounds, ref grids);
+                   if (grids.Any(o => o.Owner != targetGrid && o.Owner != targetGridXform.MapUid))
                    {
                        continue;
                    }

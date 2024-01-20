@@ -8,7 +8,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
-    size: 30
+    size: Normal
   - type: Tag
     tags:
     - Sheet
@@ -23,6 +23,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        canReact: false
 
 - type: entity
   parent: SheetOtherBase
@@ -37,6 +41,10 @@
     - paper
     - paper_2
     - paper_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 100
   - type: Sprite
     state: paper_3
     layers:
@@ -45,6 +53,15 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: paper
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 3
+
 
 - type: entity
   parent: SheetPaper
@@ -56,8 +73,6 @@
     state: paper
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -92,6 +107,7 @@
         reagents:
         - ReagentId: Plasma
           Quantity: 10
+        canReact: false
   - type: Tag
     tags:
     - Sheet
@@ -106,8 +122,6 @@
     state: plasma
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -138,8 +152,18 @@
       map: ["base"]
   - type: Item
     heldPrefix: plastic
-    size: 30
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: plastic
+  - type: SolutionContainerManager
+    solutions:
+      plastic:
+        reagents:
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Phosphorus
+          Quantity: 5
+        canReact: false
 
 - type: entity
   parent: SheetPlastic
@@ -149,8 +173,6 @@
   components:
   - type: Sprite
     state: plastic
-  - type: Item
-    size: 10
   - type: Stack
     count: 10
 
@@ -162,8 +184,6 @@
   components:
   - type: Sprite
     state: plastic
-  - type: Item
-    size: 1
   - type: Stack
     count: 1
 
@@ -202,7 +222,10 @@
       food:
         reagents:
         - ReagentId: Uranium
-          Quantity: 10
+          Quantity: 8
+        - ReagentId: Radium
+          Quantity: 2
+        canReact: false
 
 - type: entity
   parent: SheetUranium
@@ -212,8 +235,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -244,7 +265,17 @@
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
-    - type: Appearance
+    - type: Extractable
+      grindableSolutionName: meatsheet
+    - type: SolutionContainerManager
+      solutions:
+        meatsheet:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 7
+          - ReagentId: Fat
+            Quantity: 3
+          canReact: false
 
 - type: entity
   parent: MaterialSheetMeat
@@ -255,5 +286,3 @@
       state: meat
     - type: Stack
       count: 1
-    - type: Item
-      size: 1

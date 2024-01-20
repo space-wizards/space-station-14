@@ -7,6 +7,8 @@ using Content.Shared.Light.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -18,6 +20,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedPointLightSystem _light = default!;
@@ -31,6 +34,13 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<UnpoweredFlashlightComponent, ToggleActionEvent>(OnToggleAction);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, GotEmaggedEvent>(OnGotEmagged);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, MapInitEvent>(OnMapInit);
+        }
+
+        private void OnMapInit(EntityUid uid, UnpoweredFlashlightComponent component, MapInitEvent args)
+        {
+            _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+            Dirty(uid, component);
         }
 
         private void OnToggleAction(EntityUid uid, UnpoweredFlashlightComponent component, ToggleActionEvent args)

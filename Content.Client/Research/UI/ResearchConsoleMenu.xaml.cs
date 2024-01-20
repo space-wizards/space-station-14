@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Components;
@@ -27,7 +28,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     private readonly TechnologyDatabaseComponent? _technologyDatabase;
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
-    private readonly AccessReaderSystem _accessReader = default!;
+    private readonly AccessReaderSystem _accessReader;
 
     public readonly EntityUid Entity;
 
@@ -48,16 +49,10 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
 
     public void  UpdatePanels(ResearchConsoleBoundInterfaceState state)
     {
-        var allTech = _research.GetAvailableTechnologies(Entity);
-        AvailableCardsContainer.Children.Clear();
         TechnologyCardsContainer.Children.Clear();
-        UnlockedCardsContainer.Children.Clear();
 
-        foreach (var tech in allTech)
-        {
-            var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech, false));
-            AvailableCardsContainer.AddChild(mini);
-        }
+        var availableTech = _research.GetAvailableTechnologies(Entity);
+        SyncTechnologyList(AvailableCardsContainer, availableTech);
 
         if (_technologyDatabase == null)
             return;
@@ -74,43 +69,13 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         foreach (var techId in _technologyDatabase.CurrentTechnologyCards)
         {
             var tech = _prototype.Index<TechnologyPrototype>(techId);
-            var cardControl = new TechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech), state.Points, hasAccess);
+            var cardControl = new TechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech, includeTier: false), state.Points, hasAccess);
             cardControl.OnPressed += () => OnTechnologyCardPressed?.Invoke(techId);
             TechnologyCardsContainer.AddChild(cardControl);
         }
 
-        foreach (var unlocked in _technologyDatabase.UnlockedTechnologies)
-        {
-            var tech = _prototype.Index<TechnologyPrototype>(unlocked);
-            var cardControl = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech, false));
-            UnlockedCardsContainer.AddChild(cardControl);
-        }
-    }
-
-    public FormattedMessage GetTechnologyDescription(TechnologyPrototype technology, bool includeCost = true)
-    {
-        var description = new FormattedMessage();
-        if (includeCost)
-        {
-            description.AddMarkup(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
-            description.PushNewline();
-        }
-        description.AddMarkup(Loc.GetString("research-console-unlocks-list-start"));
-        foreach (var recipe in technology.RecipeUnlocks)
-        {
-            var recipeProto = _prototype.Index<LatheRecipePrototype>(recipe);
-            description.PushNewline();
-            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry",
-                ("name",recipeProto.Name)));
-        }
-        foreach (var generic in technology.GenericUnlocks)
-        {
-            description.PushNewline();
-            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry-generic",
-                ("name", Loc.GetString(generic.UnlockDescription))));
-        }
-
-        return description;
+        var unlockedTech = _technologyDatabase.UnlockedTechnologies.Select(x => _prototype.Index<TechnologyPrototype>(x));
+        SyncTechnologyList(UnlockedCardsContainer, unlockedTech);
     }
 
     public void UpdateInformationPanel(ResearchConsoleBoundInterfaceState state)
@@ -170,6 +135,47 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
                 }
             };
             TierDisplayContainer.AddChild(control);
+        }
+    }
+
+    /// <summary>
+    ///     Synchronize a container for technology cards with a list of technologies,
+    ///     creating or removing UI cards as appropriate.
+    /// </summary>
+    /// <param name="container">The container which contains the UI cards</param>
+    /// <param name="technologies">The current set of technologies for which there should be cards</param>
+    private void SyncTechnologyList(BoxContainer container, IEnumerable<TechnologyPrototype> technologies)
+    {
+        // For the cards which already exist, build a map from technology prototype to the UI card
+        var currentTechControls = new Dictionary<TechnologyPrototype, Control>();
+        foreach (var child in container.Children)
+        {
+            if (child is MiniTechnologyCardControl)
+            {
+                currentTechControls.Add((child as MiniTechnologyCardControl)!.Technology, child);
+            }
+        }
+
+        foreach (var tech in technologies)
+        {
+            if (!currentTechControls.ContainsKey(tech))
+            {
+                // Create a card for any technology which doesn't already have one.
+                var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech));
+                container.AddChild(mini);
+            }
+            else
+            {
+                // The tech already exists in the UI; remove it from the set, so we won't revisit it below
+                currentTechControls.Remove(tech);
+            }
+        }
+
+        // Now, any items left in the dictionary are technologies which were previously
+        // available, but now are not. Remove them.
+        foreach (var (tech, techControl) in currentTechControls)
+        {
+            container.Children.Remove(techControl);
         }
     }
 }

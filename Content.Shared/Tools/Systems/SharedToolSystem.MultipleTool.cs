@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Shared.Interaction;
-using Content.Shared.Tools.Components;
 using Content.Shared.Prying.Components;
+using Content.Shared.Tools.Components;
 
-namespace Content.Shared.Tools;
+namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem : EntitySystem
 {

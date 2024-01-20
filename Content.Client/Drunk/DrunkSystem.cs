@@ -1,7 +1,7 @@
 using Content.Shared.Drunk;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 
 namespace Content.Client.Drunk;
 
@@ -19,18 +19,18 @@ public sealed class DrunkSystem : SharedDrunkSystem
         SubscribeLocalEvent<DrunkComponent, ComponentInit>(OnDrunkInit);
         SubscribeLocalEvent<DrunkComponent, ComponentShutdown>(OnDrunkShutdown);
 
-        SubscribeLocalEvent<DrunkComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<DrunkComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<DrunkComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<DrunkComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, DrunkComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, DrunkComponent component, LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, DrunkComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, DrunkComponent component, LocalPlayerDetachedEvent args)
     {
         _overlay.CurrentBoozePower = 0;
         _overlayMan.RemoveOverlay(_overlay);

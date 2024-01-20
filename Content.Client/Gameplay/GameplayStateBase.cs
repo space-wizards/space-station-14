@@ -16,7 +16,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Gameplay

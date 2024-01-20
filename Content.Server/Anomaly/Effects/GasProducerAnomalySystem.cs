@@ -65,7 +65,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
         if (tilerefs.Length == 0)
             return;
 
-        var mixture = _atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, _xform.GetGridOrMapTilePosition(uid, xform), true);
+        var mixture = _atmosphere.GetTileMixture((uid, xform), grid, true);
         if (mixture != null)
         {
             mixture.AdjustMoles(gas, mols);

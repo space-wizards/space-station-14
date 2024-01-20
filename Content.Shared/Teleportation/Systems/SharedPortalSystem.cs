@@ -6,6 +6,8 @@ using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Dynamics;
@@ -131,7 +133,7 @@ public abstract class SharedPortalSystem : EntitySystem
                 // if target is a portal, signal that they shouldn't be immediately portaled back
                 var timeout = EnsureComp<PortalTimeoutComponent>(subject);
                 timeout.EnteredPortal = uid;
-                Dirty(timeout);
+                Dirty(subject, timeout);
             }
 
             TeleportEntity(uid, subject, Transform(target).Coordinates, target);
@@ -142,7 +144,8 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
 
         // no linked entity--teleport randomly
-        TeleportRandomly(uid, subject, component);
+        if (component.RandomTeleport)
+            TeleportRandomly(uid, subject, component);
     }
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)

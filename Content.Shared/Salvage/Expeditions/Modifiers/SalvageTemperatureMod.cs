@@ -1,11 +1,10 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
 [Prototype("salvageTemperatureMod")]
-public sealed class SalvageTemperatureMod : IPrototype, IBiomeSpecificMod
+public sealed partial class SalvageTemperatureMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; } = default!;
 

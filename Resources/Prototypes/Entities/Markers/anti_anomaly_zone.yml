@@ -1,0 +1,33 @@
+- type: entity
+  name: anti anomaly zone
+  description: Anomalies will not be able to appear within a 10 block radius of this point.
+  id: AntiAnomalyZone
+  suffix: "range 10"
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    layers:
+      - state: anom
+      - sprite: Markers/cross.rsi
+        state: pink
+  - type: AntiAnomalyZone
+    zoneRadius: 10
+
+- type: entity
+  parent: AntiAnomalyZone
+  id: AntiAnomalyZone20
+  suffix: "range 20"
+  description: Anomalies will not be able to appear within a 20 block radius of this point.
+  components:
+  - type: AntiAnomalyZone
+    zoneRadius: 20
+    
+- type: entity
+  parent: AntiAnomalyZone
+  id: AntiAnomalyZone50
+  suffix: "range 50"
+  description: Anomalies will not be able to appear within a 50 block radius of this point.
+  components:
+  - type: AntiAnomalyZone
+    zoneRadius: 50

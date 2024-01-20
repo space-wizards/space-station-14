@@ -17,7 +17,7 @@ namespace Content.Tests.Shared
     public sealed class DamageTest : ContentUnitTest
     {
 
-        static private Dictionary<string, float> _resistanceCoefficientDict = new()
+        private static Dictionary<string, float> _resistanceCoefficientDict = new()
         {
             // "missing" blunt entry
             { "Piercing", -2 },// Turn Piercing into Healing
@@ -25,7 +25,7 @@ namespace Content.Tests.Shared
             { "Radiation", 1.5f },
         };
 
-        static private Dictionary<string, float> _resistanceReductionDict = new()
+        private static Dictionary<string, float> _resistanceReductionDict = new()
         {
             { "Blunt", - 5 },
             // "missing" piercing entry

@@ -1,15 +1,16 @@
-using Content.Server.NPC.Components;
-using Robust.Shared.Prototypes;
+using System.Collections.Frozen;
 using System.Linq;
+using Content.Server.NPC.Components;
+using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Systems;
 
 /// <summary>
 ///     Outlines faction relationships with each other.
 /// </summary>
-public sealed class NpcFactionSystem : EntitySystem
+public sealed partial class NpcFactionSystem : EntitySystem
 {
-    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
@@ -18,29 +19,23 @@ public sealed class NpcFactionSystem : EntitySystem
     /// <summary>
     /// To avoid prototype mutability we store an intermediary data class that gets used instead.
     /// </summary>
-    private Dictionary<string, FactionData> _factions = new();
+    private FrozenDictionary<string, FactionData> _factions = FrozenDictionary<string, FactionData>.Empty;
 
     public override void Initialize()
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("faction");
         SubscribeLocalEvent<NpcFactionMemberComponent, ComponentStartup>(OnFactionStartup);
-        _protoManager.PrototypesReloaded += OnProtoReload;
-        RefreshFactions();
-    }
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReload);
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _protoManager.PrototypesReloaded -= OnProtoReload;
+        InitializeException();
+        RefreshFactions();
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        if (!obj.ByType.ContainsKey(typeof(NpcFactionPrototype)))
-            return;
-
-        RefreshFactions();
+        if (obj.WasModified<NpcFactionPrototype>())
+            RefreshFactions();
     }
 
     private void OnFactionStartup(EntityUid uid, NpcFactionMemberComponent memberComponent, ComponentStartup args)
@@ -134,12 +129,15 @@ public sealed class NpcFactionSystem : EntitySystem
         if (TryComp<FactionExceptionComponent>(entity, out var factionException))
         {
             // ignore anything from enemy faction that we are explicitly friendly towards
-            return hostiles.Where(target => !_factionException.IsIgnored(factionException, target));
+            return hostiles
+                .Union(GetHostiles(entity, factionException))
+                .Where(target => !IsIgnored(entity, target, factionException));
         }
 
         return hostiles;
     }
 
+    [PublicAPI]
     public IEnumerable<EntityUid> GetNearbyFriendlies(EntityUid entity, float range, NpcFactionMemberComponent? component = null)
     {
         if (!Resolve(entity, ref component, false))
@@ -155,15 +153,15 @@ public sealed class NpcFactionSystem : EntitySystem
         if (!xformQuery.TryGetComponent(entity, out var entityXform))
             yield break;
 
-        foreach (var comp in _lookup.GetComponentsInRange<NpcFactionMemberComponent>(entityXform.MapPosition, range))
+        foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(entityXform.MapPosition, range))
         {
-            if (comp.Owner == entity)
+            if (ent.Owner == entity)
                 continue;
 
-            if (!factions.Overlaps(comp.Factions))
+            if (!factions.Overlaps(ent.Comp.Factions))
                 continue;
 
-            yield return comp.Owner;
+            yield return ent.Owner;
         }
     }
 
@@ -232,16 +230,15 @@ public sealed class NpcFactionSystem : EntitySystem
 
     private void RefreshFactions()
     {
-        _factions.Clear();
 
-        foreach (var faction in _protoManager.EnumeratePrototypes<NpcFactionPrototype>())
-        {
-            _factions[faction.ID] = new FactionData()
+        _factions = _protoManager.EnumeratePrototypes<NpcFactionPrototype>().ToFrozenDictionary(
+            faction => faction.ID,
+            faction =>  new FactionData
             {
                 Friendly = faction.Friendly.ToHashSet(),
-                Hostile = faction.Hostile.ToHashSet(),
-            };
-        }
+                Hostile = faction.Hostile.ToHashSet()
+
+            });
 
         foreach (var comp in EntityQuery<NpcFactionMemberComponent>(true))
         {

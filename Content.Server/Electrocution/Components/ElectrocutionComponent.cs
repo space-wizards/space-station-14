@@ -7,15 +7,18 @@
 [Access(typeof(ElectrocutionSystem))]
 public sealed partial class ElectrocutionComponent : Component
 {
-    [DataField("timeLeft")]
-    public float TimeLeft;
-
     [DataField("electrocuting")]
     public EntityUid Electrocuting;
+
+    [DataField("source")]
+    public EntityUid Source;
+
+    [DataField("timeLeft")]
+    public float TimeLeft;
 
     [DataField("accumDamage")]
     public float AccumulatedDamage;
 
-    [DataField("source")]
-    public EntityUid Source;
+    [DataField("baseDamage")]
+    public float BaseDamage = 20f;
 }

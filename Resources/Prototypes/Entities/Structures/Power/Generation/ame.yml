@@ -78,8 +78,11 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-#  - type: ApcPowerReceiver
-#  - type: ExtensionCableReceiver
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: input
+    sprite: Structures/Power/Generation/ame.rsi
+    state: static
   - type: PowerSupplier
     supplyRate: 0
   - type: ContainerContainer

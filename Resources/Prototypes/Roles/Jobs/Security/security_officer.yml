@@ -27,13 +27,13 @@
     jumpsuit: ClothingUniformJumpsuitSec
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHelmetBasic
     outerClothing: ClothingOuterArmorBasic
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
-  innerclothingskirt: ClothingUniformJumpskirtSec
+  innerClothingSkirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

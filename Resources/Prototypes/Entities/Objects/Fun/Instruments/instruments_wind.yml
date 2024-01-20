@@ -16,7 +16,7 @@
     sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/Instruments/saxophone.rsi
   - type: Tag
     tags:
@@ -45,7 +45,7 @@
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/Instruments/accordion.rsi
   - type: Tag
     tags:
@@ -62,7 +62,7 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Fun/Instruments/harmonica.rsi
   - type: Tag
     tags:
@@ -80,7 +80,7 @@
     sprite: Objects/Fun/Instruments/clarinet.rsi
     state: icon
   - type: Item
-    size: 20
+    size: Normal
     sprite: Objects/Fun/Instruments/clarinet.rsi
   - type: Tag
     tags:
@@ -98,7 +98,7 @@
     sprite: Objects/Fun/Instruments/flute.rsi
     state: icon
   - type: Item
-    size: 20
+    size: Normal
     sprite: Objects/Fun/Instruments/flute.rsi
   - type: Tag
     tags:
@@ -116,7 +116,7 @@
     sprite: Objects/Fun/Instruments/recorder.rsi
     state: icon
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/Instruments/recorder.rsi
   - type: Tag
     tags:
@@ -134,7 +134,7 @@
     sprite: Objects/Fun/Instruments/panflute.rsi
     state: icon
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Fun/Instruments/panflute.rsi
   - type: Tag
     tags:
@@ -153,7 +153,7 @@
     sprite: Objects/Fun/Instruments/ocarina.rsi
     state: icon
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Fun/Instruments/ocarina.rsi
   - type: Tag
     tags:
@@ -171,7 +171,7 @@
     sprite: Objects/Fun/Instruments/bagpipes.rsi
     state: icon
   - type: Item
-    size: 48
+    size: Large
     sprite: Objects/Fun/Instruments/bagpipes.rsi
   - type: Tag
     tags:

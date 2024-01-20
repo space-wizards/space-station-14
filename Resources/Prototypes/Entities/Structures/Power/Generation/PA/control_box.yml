@@ -23,8 +23,8 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-pa
-    LayoutId: ParticleAccelerator
+    boardName: wires-board-name-pa
+    layoutId: ParticleAccelerator
 
 # Unfinished
 

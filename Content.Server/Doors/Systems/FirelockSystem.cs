@@ -4,9 +4,7 @@ using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Remotes;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
@@ -14,11 +12,8 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Popups;
-using Microsoft.Extensions.Options;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Player;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Doors.Systems
 {
@@ -72,7 +67,8 @@ namespace Content.Server.Doors.Systems
             var appearanceQuery = GetEntityQuery<AppearanceComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
 
-            foreach (var (firelock, door) in EntityQuery<FirelockComponent, DoorComponent>())
+            var query = EntityQueryEnumerator<FirelockComponent, DoorComponent>();
+            while (query.MoveNext(out var uid, out var firelock, out var door))
             {
                 // only bother to check pressure on doors that are some variation of closed.
                 if (door.State != DoorState.Closed
@@ -82,7 +78,6 @@ namespace Content.Server.Doors.Systems
                     continue;
                 }
 
-                var uid = door.Owner;
                 if (airtightQuery.TryGetComponent(uid, out var airtight)
                     && xformQuery.TryGetComponent(uid, out var xform)
                     && appearanceQuery.TryGetComponent(uid, out var appearance))
@@ -128,9 +123,9 @@ namespace Content.Server.Doors.Systems
 
             if (door.State == DoorState.Open)
             {
-                if (_doorSystem.TryClose(door.Owner, door))
+                if (_doorSystem.TryClose(uid, door))
                 {
-                    return _doorSystem.OnPartialClose(door.Owner, door);
+                    return _doorSystem.OnPartialClose(uid, door);
                 }
             }
             return false;
@@ -275,7 +270,7 @@ namespace Content.Server.Doors.Systems
             if (airtight.AirBlockedDirection != AtmosDirection.All)
                 tiles.Add(pos);
 
-            var gasses = _atmosSystem.GetTileMixtures(gridAtmosphere.Owner, xform.MapUid, tiles);
+            var gasses = _atmosSystem.GetTileMixtures(xform.ParentUid, xform.MapUid, tiles);
             if (gasses == null)
                 return (false, false);
 

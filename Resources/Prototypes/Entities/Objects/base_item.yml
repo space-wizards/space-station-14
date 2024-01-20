@@ -4,13 +4,13 @@
   abstract: true
   components:
   - type: Item
-    size: 5
+    size: Small
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
   - type: EmitSoundOnCollide
     sound:
-      path: /Audio/Effects/wall_bonk.ogg
+      collection: WeakHit
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/drop.ogg
@@ -21,7 +21,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/hit_kick.ogg
+      collection: MetalThud
   - type: CollisionWake
   - type: TileFrictionModifier
     modifier: 0.5

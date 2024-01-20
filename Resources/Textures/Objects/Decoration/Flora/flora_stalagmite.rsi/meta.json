@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from TGMC at commit https://github.com/tgstation/TerraGov-Marine-Corps/commit/4bf5d1aafbcbbb7bd2a7d0f52ef87f28e2bbb384",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "stalagmite1"
+        },
+        {
+            "name": "stalagmite2"
+        },
+        {
+            "name": "stalagmite3"
+        },
+        {
+            "name": "stalagmite4"
+        },
+        {
+            "name": "stalagmite5"
+        },
+        {
+            "name": "stalagmite6"
+        }
+    ]
+}

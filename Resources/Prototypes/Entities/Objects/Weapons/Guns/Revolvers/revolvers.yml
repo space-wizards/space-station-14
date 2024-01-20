@@ -8,7 +8,10 @@
   - type: Sprite
     state: icon
   - type: Item
-    size: 10
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: Tag
     tags:
     - Sidearm
@@ -122,7 +125,7 @@
       params:
         volume: 2.25
 
-- type: entity 
+- type: entity
   name: Python
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.

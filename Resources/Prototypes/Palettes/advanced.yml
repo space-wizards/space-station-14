@@ -1,0 +1,53 @@
+﻿- type: palette
+  id: Advanced
+  name: Advanced
+  colors:
+    #light: "#000000"
+    #medium: "#000000"
+    #dark: "#000000"
+    #black: "#000000"
+    
+    commandlight: "#4B709C"
+    commandmedium: "#334E6D"
+    commanddark: "#203144"
+    commandblack: "#16212E"
+    
+    securitylight: "#FF5C5C"
+    securitymedium: "#DE3A3A"
+    securitydark: "#9C2020"
+    securityblack: "#571212"
+    
+    medicallight: "#96DAFF"
+    medicalmedium: "#52B4E9"
+    medicaldark: "#37789B"
+    medicalblack: "#1A394A"
+    
+    engineeringlight: "#FFA647"
+    engineeringmedium: "#FF9821"
+    engineeringdark: "#AE6716"
+    engineeringblack: "#663C0D"
+    
+    sciencelight: "#FBB2FF"
+    sciencemedium: "#F98AFF"
+    sciencedark: "#BE6BC3"
+    scienceblack: "#724276"
+    
+    cargolight: "#D69949"
+    cargomedium: "#BC863F"
+    cargodark: "#765428"
+    cargoblack: "#4A3519"
+    
+    salvagelight: "#CA7EF2"
+    salvagemedium: "#9A54BF"
+    salvagedark: "#774194"
+    salvageblack: "#4C2A5E"
+    
+    servicelight: "#C6FF91"
+    servicemedium: "#9FED58"
+    servicedark: "#639137"
+    serviceblack: "#446326"
+    
+    neutrallight: "#E6E6E6"
+    neutralmedium: "#B3B3B3"
+    neutraldark: "#999999"
+    neutralblack: "#808080"

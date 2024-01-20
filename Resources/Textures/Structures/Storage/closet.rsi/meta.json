@@ -107,6 +107,15 @@
       "name": "bomb_open"
     },
     {
+      "name": "janitor_bomb"
+    },
+    {
+      "name": "janitor_bomb_door"
+    },
+    {
+      "name": "janitor_bomb_open"
+    },
+    {
       "name": "cabinet"
     },
     {
@@ -315,6 +324,9 @@
       "name": "generic_open"
     },
     {
+      "name": "generic_icon"
+    },
+    {
       "name": "green_door"
     },
     {
@@ -513,6 +525,27 @@
     },
     {
       "name": "yellow_door"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "clown_door"
+    },
+    {
+      "name": "clown_open"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "mime_door"
+    },
+    {
+      "name": "mime_open"
+    },
+    {
+      "name": "representative_door"
     }
   ]
 }

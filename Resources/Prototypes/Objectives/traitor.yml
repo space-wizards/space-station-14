@@ -26,8 +26,12 @@
   parent: [BaseTraitorObjective, BaseStealObjective]
   id: BaseTraitorStealObjective
   components:
+  - type: StealCondition
+    verifyMapExistance: false
   - type: Objective
     difficulty: 2.75
+  - type: ObjectiveLimit
+    limit: 2 # there is usually only 1 of each steal objective, have 2 max for drama
 
 # state
 
@@ -63,6 +67,20 @@
       - EscapeShuttleCondition
       - StealCondition
   - type: DieCondition
+
+#- type: entity
+#  noSpawn: true
+#  parent: [BaseTraitorObjective, BaseLivingObjective]
+#  id: HijackShuttleObjective
+#  name: Hijack emergency shuttle
+#  description: Leave on the shuttle free and clear of the loyal Nanotrasen crew on board. Use ANY methods available to you. Syndicate agents, Nanotrasen enemies, and handcuffed hostages may remain alive on the shuttle. Ignore assistance from anyone other than a support agent.
+#  components:
+#    - type: Objective
+#      difficulty: 5 # insane, default config max difficulty
+#      icon:
+#        sprite: Objects/Tools/emag.rsi
+#        state: icon
+#    - type: HijackShuttleCondition
 
 # kill
 
@@ -136,36 +154,28 @@
   - type: NotJobRequirement
     job: ChiefMedicalOfficer
   - type: StealCondition
-    prototype: Hypospray
+    stealGroup: Hypospray
     owner: job-name-cmo
 
 ## rd
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseTraitorStealObjective
-  id: BaseRDObjective
+  id: RDHardsuitStealObjective
   components:
-  - type: NotJobRequirement
-    job: ResearchDirector
   - type: StealCondition
+    stealGroup: ClothingOuterHardsuitRd
     owner: job-name-rd
 
 - type: entity
   noSpawn: true
-  parent: BaseRDObjective
-  id: RDHardsuitStealObjective
-  components:
-  - type: StealCondition
-    prototype: ClothingOuterHardsuitRd
-
-- type: entity
-  noSpawn: true
-  parent: BaseRDObjective
+  parent: BaseTraitorStealObjective
   id: HandTeleporterStealObjective
   components:
   - type: StealCondition
-    prototype: HandTeleporter
+    stealGroup: HandTeleporter
+    owner: job-name-rd
 
 ## hos
 
@@ -180,7 +190,7 @@
   - type: NotJobRequirement
     job: HeadOfSecurity
   - type: StealCondition
-    prototype: BookSecretDocuments
+    stealGroup: BookSecretDocuments
     owner: job-name-hos
 
 ## ce
@@ -193,8 +203,21 @@
   - type: NotJobRequirement
     job: ChiefEngineer
   - type: StealCondition
-    prototype: ClothingShoesBootsMagAdv
+    stealGroup: ClothingShoesBootsMagAdv
     owner: job-name-ce
+
+## qm
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: ClipboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Quartermaster
+  - type: StealCondition
+    stealGroup: BoxFolderQmClipboard
+    owner: job-name-qm
 
 ## hop
 
@@ -205,8 +228,10 @@
   components:
   - type: NotJobRequirement
     job: HeadOfPersonnel
+  - type: ObjectiveLimit
+    limit: 3 # ian only has 2 slices, 3 obj for drama
   - type: StealCondition
-    prototype: FoodMeatCorgi
+    stealGroup: FoodMeatCorgi
     owner: objective-condition-steal-Ian
 
 ## cap
@@ -228,7 +253,7 @@
   id: CaptainIDStealObjective
   components:
   - type: StealCondition
-    prototype: CaptainIDCard
+    stealGroup: CaptainIDCard
 
 - type: entity
   noSpawn: true
@@ -236,7 +261,7 @@
   id: CaptainJetpackStealObjective
   components:
   - type: StealCondition
-    prototype: JetpackCaptainFilled
+    stealGroup: JetpackCaptainFilled
 
 - type: entity
   noSpawn: true
@@ -244,7 +269,7 @@
   id: CaptainGunStealObjective
   components:
   - type: StealCondition
-    prototype: WeaponAntiqueLaser
+    stealGroup: WeaponAntiqueLaser
     owner: job-name-captain
 
 - type: entity
@@ -259,5 +284,5 @@
     difficulty: 4
   - type: NotCommandRequirement
   - type: StealCondition
-    prototype: NukeDisk
+    stealGroup: NukeDisk
     owner: objective-condition-steal-station

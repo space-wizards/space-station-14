@@ -1,8 +1,8 @@
-using Content.Server.NodeContainer.Nodes;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.NodeContainer.EntitySystems
 {
@@ -51,7 +51,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             foreach (var (key, node) in component.Nodes)
             {
                 node.Name = key;
-                node.Initialize(component.Owner, EntityManager);
+                node.Initialize(uid, EntityManager);
             }
         }
 

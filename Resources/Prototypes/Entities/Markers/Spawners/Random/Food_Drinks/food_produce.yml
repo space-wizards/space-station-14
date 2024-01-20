@@ -1,0 +1,62 @@
+- type: entity
+  id: RandomProduce
+  name: random produce spawner
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Hydroponics/onion_red.rsi
+        state: produce
+  - type: RandomSpawner
+    prototypes:
+      - WheatBushel
+      - OatBushel
+      - Sugarcane
+      - Nettle
+      - FoodBanana
+      - FoodCarrot
+      - FoodCabbage
+      - FoodGarlic
+      - FoodLemon
+      - FoodLime
+      - FoodOrange
+      - FoodPineapple
+      - FoodPotato
+      - FoodTomato
+      - FoodEggplant
+      - FoodApple
+      - FoodCocoaPod
+      - FoodCorn
+      - FoodOnion
+      - FoodOnionRed
+      - FoodMushroom
+      - FoodChili
+      - FoodChilly
+      - FoodAloe
+      - FoodPoppy
+      - FoodLingzhi
+      - FoodAmbrosiaVulgaris
+      - RiceBushel
+      - FoodSoybeans
+      - FoodKoibean
+      - FoodWatermelon
+      - FoodGrape
+      - FoodBerries
+      - FoodBungo
+      - FoodPeaPod
+      - FoodPumpkin
+      - CottonBol
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - FoodBlueTomato
+      - FoodBloodTomato
+      - FoodAmbrosiaDeus
+      - FoodGalaxythistle
+      - FoodFlyAmanita
+      - DeathNettle
+    rareChance: 0.01

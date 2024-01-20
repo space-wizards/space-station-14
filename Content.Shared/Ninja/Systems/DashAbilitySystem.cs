@@ -6,8 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
@@ -24,6 +23,7 @@ public sealed class DashAbilitySystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -31,6 +31,13 @@ public sealed class DashAbilitySystem : EntitySystem
 
         SubscribeLocalEvent<DashAbilityComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<DashAbilityComponent, DashEvent>(OnDash);
+        SubscribeLocalEvent<DashAbilityComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, DashAbilityComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.DashActionEntity, component.DashAction);
+        Dirty(uid, component);
     }
 
     private void OnGetItemActions(EntityUid uid, DashAbilityComponent comp, GetItemActionsEvent args)
