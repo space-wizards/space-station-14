@@ -15,6 +15,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
@@ -48,6 +49,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         public override void Update(float frameTime)
         {
@@ -226,6 +228,11 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             component.CurrentExpectedYield = (int) Math.Max(0, physics.FixturesMass * component.YieldPerUnitMass);
             component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
+
+            if (_inventory.TryGetSlots(toProcess, out var slotDefinitions))
+                foreach (var slot in slotDefinitions)
+                    _inventory.TryUnequip(toProcess, slot.Name, true, true);
+
             QueueDel(toProcess);
         }
 
