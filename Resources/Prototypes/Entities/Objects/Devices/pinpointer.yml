@@ -103,10 +103,28 @@
   components:
   - type: Sprite
     layers:
-    - state: pinpointer-station
+    - state: pinpointer-way
   - type: Icon
-    state: pinpointer-station
+    state: pinpointer-way
   - type: Pinpointer
     components:
     - type: BecomesStation
       id: station
+
+- type: entity
+  parent: PinpointerStation
+  name: ninja pinpointer
+  description: A handheld tracking device that leads to the direction of any nearby station and any nearby research servers.
+  id: PinpointerNinja
+  suffix: Ninja
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-ninja
+  - type: Icon
+    state: pinpointer-ninja
+  - type: Pinpointer
+    components:
+    - type: BecomesStation
+      id: station
+    - type: ResearchServer

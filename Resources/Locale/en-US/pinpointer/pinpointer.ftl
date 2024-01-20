@@ -10,3 +10,4 @@ target-pinpointer-full = Pinpointer tracking storage is full
 name-pinpointer-component-NukeDisk= nuclear authentication disk
 name-pinpointer-component-Nuke = nuclear fission explosive
 name-pinpointer-component-BecomesStation = space station
+name-pinpointer-component-ResearchServer = research server
