@@ -4,7 +4,7 @@ namespace Content.Shared.Execution;
 public sealed partial class ExecutionComponent : Component
 {
     [DataField]
-    public float DoAfterDuration = 30f;
+    public float DoAfterDuration = 5f;
 
     [DataField]
     public float DamageModifier = 9f;

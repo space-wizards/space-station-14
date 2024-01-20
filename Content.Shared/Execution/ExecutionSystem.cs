@@ -219,21 +219,6 @@ public sealed class ExecutionSystem : EntitySystem
         RemCompDeferred<ActiveExecutionComponent>(uid);
         Dirty(uid, active);
 
-        string internalMsg;
-        string externalMsg;
-
-        if (attacker == victim)
-        {
-            internalMsg = executionComp.SuicidePopupCompleteInternal;
-            externalMsg = executionComp.SuicidePopupCompleteExternal;
-        }
-        else
-        {
-            internalMsg = executionComp.ExecutionPopupCompleteInternal;
-            externalMsg = executionComp.ExecutionPopupCompleteExternal;
-        }
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, weapon);
-        ShowExecutionExternalPopup(externalMsg, attacker, victim, weapon);
     }
 
     private void ShowExecutionInternalPopup(string locString,
@@ -261,7 +246,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void OnAmmoShot(EntityUid uid, ActiveExecutionComponent comp, AmmoShotEvent args)
     {
-        if (!TryComp<ExecutionComponent>(uid, out var executionComponent))
+        if (!TryComp<ExecutionComponent>(uid, out var executionComp))
             return;
 
         if (args.FiredProjectiles.Count < 1)
@@ -273,7 +258,28 @@ public sealed class ExecutionSystem : EntitySystem
         if (!TryComp<ProjectileComponent>(bullet, out var projComponent))
             return;
 
-        projComponent.Damage *= executionComponent.DamageModifier;
+        projComponent.Damage *= executionComp.DamageModifier;
+
+
+        string internalMsg;
+        string externalMsg;
+
+        var attacker = comp.Attacker;
+        var victim = comp.Victim;
+
+        if (attacker == victim)
+        {
+            internalMsg = executionComp.SuicidePopupCompleteInternal;
+            externalMsg = executionComp.SuicidePopupCompleteExternal;
+        }
+        else
+        {
+            internalMsg = executionComp.ExecutionPopupCompleteInternal;
+            externalMsg = executionComp.ExecutionPopupCompleteExternal;
+        }
+
+        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
+        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
     }
 }
 
