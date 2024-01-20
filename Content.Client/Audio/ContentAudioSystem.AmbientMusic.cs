@@ -26,7 +26,6 @@ public sealed partial class ContentAudioSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly RulesSystem _rules = default!;
@@ -67,7 +66,7 @@ public sealed partial class ContentAudioSystem
         _nextAudio = TimeSpan.MaxValue;
 
         SetupAmbientSounds();
-        _proto.PrototypesReloaded += OnProtoReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReload);
         _state.OnStateChanged += OnStateChange;
         // On round end summary OR lobby cut audio.
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEndMessage);
@@ -86,21 +85,14 @@ public sealed partial class ContentAudioSystem
     private void ShutdownAmbientMusic()
     {
         _configManager.UnsubValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged);
-        _proto.PrototypesReloaded -= OnProtoReload;
         _state.OnStateChanged -= OnStateChange;
         _ambientMusicStream = _audio.Stop(_ambientMusicStream);
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        if (!obj.ByType.ContainsKey(typeof(AmbientMusicPrototype)) &&
-            !obj.ByType.ContainsKey(typeof(RulesPrototype)))
-        {
-            return;
-        }
-
-        _ambientSounds.Clear();
-        SetupAmbientSounds();
+        if (obj.WasModified<AmbientMusicPrototype>() || obj.WasModified<RulesPrototype>())
+            SetupAmbientSounds();
     }
 
     private void OnStateChange(StateChangedEventArgs obj)
@@ -114,6 +106,7 @@ public sealed partial class ContentAudioSystem
 
     private void SetupAmbientSounds()
     {
+        _ambientSounds.Clear();
         foreach (var ambience in _proto.EnumeratePrototypes<AmbientMusicPrototype>())
         {
             var tracks = _ambientSounds.GetOrNew(ambience.ID);
@@ -159,8 +152,7 @@ public sealed partial class ContentAudioSystem
         // Update still runs in lobby so just ignore it.
         if (_state.CurrentState is not GameplayState)
         {
-            Audio.Stop(_ambientMusicStream);
-            _ambientMusicStream = null;
+            _ambientMusicStream = Audio.Stop(_ambientMusicStream);
             _musicProto = null;
             return;
         }

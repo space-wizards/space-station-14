@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
@@ -132,6 +133,27 @@ public sealed partial class GunSystem : SharedGunSystem
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
+                        if (gun.CompatibleAmmo != null &&
+                            !gun.CompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype))
+                            && user != null)
+                        {
+                            if (gun.DamageOnWrongAmmo != null)
+                                Damageable.TryChangeDamage(user, gun.DamageOnWrongAmmo, origin: user);
+                            _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
+
+                            Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
+
+                            PopupSystem.PopupEntity(Loc.GetString("gun-component-wrong-ammo"), user.Value);
+                            _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Shot wrong ammo by {ToPrettyString(user.Value)} deleted {ToPrettyString(gunUid)}");
+                            userImpulse = false;
+
+                            SetCartridgeSpent(ent!.Value, cartridge, true);
+                            MuzzleFlash(gunUid, cartridge, user);
+                            Del(gunUid);
+                            if (cartridge.DeleteOnSpawn)
+                                Del(ent.Value);
+                            return;
+                        }
                         if (cartridge.Count > 1)
                         {
                             var angles = LinearSpread(mapAngle - cartridge.Spread / 2,
@@ -289,26 +311,6 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeed);
-    }
-
-    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
-    {
-        var physics = EnsureComp<PhysicsComponent>(uid);
-        Physics.SetBodyStatus(physics, BodyStatus.InAir);
-
-        var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
-        var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
-        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
-        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
-
-        if (user != null)
-        {
-            var projectile = EnsureComp<ProjectileComponent>(uid);
-            Projectiles.SetShooter(uid, projectile, user.Value);
-            projectile.Weapon = gunUid;
-        }
-
-        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
     }
 
     /// <summary>

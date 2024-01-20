@@ -58,6 +58,17 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  name: paper scrap
+  parent: Paper
+  id: PaperScrap
+  description: 'A crumpled up piece of white paper.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: scrap
+
+- type: entity
   name: office paper
   parent: Paper
   id: PaperOffice
@@ -239,6 +250,7 @@
   - type: Tag
     tags:
     - Write
+    - Pen
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
@@ -249,23 +261,49 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+  - type: EmbeddableProjectile
+    offset: 0.3,0.0
+    removalTime: 0.0
+  - type: ThrowingAngle
+    angle: 315
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+
+#TODO: I want the luxury pen to write a cool font like Merriweather in the future.
+
+- type: entity
+  name: luxury pen
+  parent: Pen
+  id: LuxuryPen
+  description: A fancy and expensive pen that you only deserve to own if you're qualified to handle vast amounts of paperwork.
+  components:
+  - type: Sprite
+    state: luxury_pen
+  - type: Item
+    heldPrefix: luxury_pen
 
 - type: entity
   name: Cybersun pen
-  parent: BaseItem
+  parent: Pen
   id: CyberPen
   description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
   components:
   - type: Tag
     tags:
     - Write
+    - WriteIgnoreStamps
     - Pickaxe
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: overpriced_pen
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -45
+    damage:
+      types:
+        Piercing: 15
+  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 15
@@ -290,7 +328,7 @@
     state: pen_cap
 
 - type: entity
-  name: Centcom pen
+  name: CentCom pen
   parent: CyberPen
   id: PenCentcom
   description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
@@ -334,6 +372,7 @@
 #      white: "#e6e6e6"
 #      grey: "#999999"
 #      black: "#3f3f3f"
+#      green: "#43bc38"
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     size: Small
@@ -440,6 +479,31 @@
     - state: folder-base
 
 - type: entity
+  id: BoxFolderGreen
+  parent: BoxFolderBase
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#43bc38"
+    - state: folder-base
+
+- type: entity
+  id: BoxFolderCentCom
+  name: CentCom folder
+  parent: BoxFolderBase
+  suffix: DO NOT MAP
+  description: CentCom's miserable little pile of secrets!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-centcom
+    - state: folder-base
+
+- type: entity
   id: BoxFolderClipboard
   parent: BoxFolderBase
   name: clipboard
@@ -464,7 +528,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write
@@ -499,6 +563,31 @@
         Blunt: 6
 
 - type: entity
+  id: BoxFolderCentComClipboard
+  parent: BoxFolderClipboard
+  name: CentCom clipboard
+  description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentCom officials, seldom seen actually used.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cc-clipboard.rsi
+    layers:
+    - state: clipboard
+    - state: clipboard_paper
+      map: ["clipboard_paper"]
+      visible: false
+    - state: clipboard_pen
+      map: ["clipboard_pen"]
+      visible: false
+    - state: clipboard_over
+  - type: Item
+    sprite: Objects/Misc/cc-clipboard.rsi
+    size: Small
+  - type: Clothing
+    slots: [belt]
+    quickEquip: false
+    sprite: Objects/Misc/cc-clipboard.rsi
+
+- type: entity
   id: BoxFolderQmClipboard
   parent: BoxFolderBase
   name: requisition digi-board
@@ -523,7 +612,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write
@@ -568,266 +657,5 @@
     damage:
       types:
         Blunt: 10
-
-# Stamps
-- type: entity
-  name: generic rubber stamp
-  parent: BaseItem
-  id: RubberStampBase
-  description: A rubber stamp for stamping important documents.
-  abstract: true
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-default
-    stampState: "paper_stamp-generic"
-    stampedColor: "#a23e3e"
-    sound:
-      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
-      params:
-        volume: -2
-        maxDistance: 5
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-mime
-  - type: Item
-    size: Tiny
-
-- type: entity
-  name: alternate rubber stamp
-  parent: RubberStampBase
-  id: RubberStampBaseAlt
-  abstract: true
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-default
-    stampState: "paper_stamp-generic"
-    sound:
-      path: /Audio/Items/Stamp/automatic_stamp.ogg
-      params:
-        volume: -2
-        maxDistance: 5
-
-- type: entity
-  name: captain's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampCaptain
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-captain
-    stampedColor: "#3681bb"
-    stampState: "paper_stamp-cap"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-cap
-
-- type: entity
-  name: CentCom rubber stamp
-  parent: RubberStampBase
-  id: RubberStampCentcom
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-centcom
-    stampedColor: "#006600"
-    stampState: "paper_stamp-centcom"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-centcom
-
-- type: entity
-  name: chaplain's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampChaplain
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-chaplain
-    stampedColor: "#d70601"
-    stampState: "paper_stamp-chaplain"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-chaplain
-
-- type: entity
-  name: clown's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampClown
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-clown
-    stampedColor: "#ff33cc"
-    stampState: "paper_stamp-clown"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-clown
-  - type: Tag
-    tags:
-      - ClownRubberStamp
-
-- type: entity
-  name: chief engineer's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampCE
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-ce
-    stampedColor: "#c69b17"
-    stampState: "paper_stamp-ce"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-ce
-
-- type: entity
-  name: chief medical officer's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampCMO
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-cmo
-    stampedColor: "#33ccff"
-    stampState: "paper_stamp-cmo"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-cmo
-
-- type: entity
-  name: head of personnel's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampHop
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-hop
-    stampedColor: "#6ec0ea"
-    stampState: "paper_stamp-hop"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-hop
-
-- type: entity
-  name: head of security's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampHos
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-hos
-    stampedColor: "#cc0000"
-    stampState: "paper_stamp-hos"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-hos
-
-- type: entity
-  name: mime's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampMime
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-mime
-    stampedColor: "#777777"
-    stampState: "paper_stamp-mime"
-    # TODO remove sound from mime's rubber stamp
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-mime
-
-- type: entity
-  name: quartermaster's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampQm
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-qm
-    stampedColor: "#a23e3e"
-    stampState: "paper_stamp-qm"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-qm
-
-- type: entity
-  name: research director's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampRd
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-rd
-    stampedColor: "#1f66a0"
-    stampState: "paper_stamp-rd"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-rd
-
-- type: entity
-  name: trader's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampTrader
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-trader
-    stampedColor: "#000000"
-    stampState: "paper_stamp-trader"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-trader
-
-- type: entity
-  name: syndicate rubber stamp
-  parent: RubberStampBase
-  id: RubberStampSyndicate
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-syndicate
-    stampedColor: "#850000"
-    stampState: "paper_stamp-syndicate"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-syndicate
-
-- type: entity
-  name: warden's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampWarden
-  suffix: DO NOT MAP
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-warden
-    stampedColor: "#5b0000"
-    stampState: "paper_stamp-warden"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-warden
-
-- type: entity
-  name: APPROVED rubber stamp
-  parent: RubberStampBaseAlt
-  id: RubberStampApproved
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-approved
-    stampedColor: "#00be00"
-    stampState: "paper_stamp-ok"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-ok
-
-- type: entity
-  name: DENIED rubber stamp
-  parent: RubberStampBaseAlt
-  id: RubberStampDenied
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-denied
-    stampedColor: "#a23e3e"
-    stampState: "paper_stamp-deny"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-deny
+  - type: StealTarget
+    stealGroup: BoxFolderQmClipboard

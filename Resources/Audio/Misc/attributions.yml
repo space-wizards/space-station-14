@@ -8,6 +8,11 @@
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/b02b93ce2ab891164511a973493cdf951b4120f7/sound/effects/ninja_greeting.ogg"
 
+- files: ["thief_greeting.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Taken from SergeQuadrado via freesound.org, edit and mono by TheShuEd"
+  source: "https://freesound.org/people/SergeQuadrado/sounds/683504/"
+
 - files: ["narsie_rises.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
