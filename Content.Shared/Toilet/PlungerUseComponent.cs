@@ -1,20 +1,26 @@
 using Robust.Shared.Audio;
-using Content.Shared.Tools;
 using Robust.Shared.GameStates;
-using Content.Shared.DoAfter;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Random;
 
 namespace Content.Shared.Toilet
 {
+    /// <summary>
+    /// Entity can interact with plungers.
+    /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class PlungerUseComponent : Component
     {
+        /// <summary>
+        /// If true entity has been plungered.
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         [AutoNetworkedField]
         public bool Plunged;
 
+        /// <summary>
+        /// If true entity can interact with plunger.
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         [AutoNetworkedField]
         public bool NeedsPlunger = false;

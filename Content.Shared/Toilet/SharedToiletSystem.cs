@@ -7,11 +7,9 @@ using Robust.Shared.Timing;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Shared.Hands.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Storage.Components;
 using Content.Shared.Examine;
-
 
 namespace Content.Shared.Toilet
 {
@@ -22,7 +20,6 @@ namespace Content.Shared.Toilet
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly SharedToolSystem _tool = default!;
@@ -48,9 +45,7 @@ namespace Content.Shared.Toilet
         private void OnComponentStartup(EntityUid uid, ToiletComponent component, ComponentStartup args)
         {
             if (_random.Prob(0.5f) == true)
-            {
                 component.ToggleSeat = true;
-            }
 
             if (_random.Prob(0.3f) == true)
             {
@@ -72,10 +67,8 @@ namespace Content.Shared.Toilet
                 return;
 
             // are player trying place or lift of cistern lid?
-            else if (_tool.UseTool(args.Used, args.User, uid, component.PryLidTime, component.PryingQuality, new ToiletPryDoAfterEvent()))
-            {
+            if (_tool.UseTool(args.Used, args.User, uid, component.PryLidTime, component.PryingQuality, new ToiletPryDoAfterEvent()))
                 args.Handled = true;
-            }
             // maybe player trying to hide something inside cistern?
             else if (component.ToggleLid)
             {
@@ -99,7 +92,6 @@ namespace Content.Shared.Toilet
                     return;
                 }
             }
-
             args.Handled = true;
         }
 
@@ -112,6 +104,7 @@ namespace Content.Shared.Toilet
             {
                 Act = () => ToggleToiletSeat(uid, args.User, component)
             };
+
             if (component.ToggleSeat)
             {
                 toggleVerb.Text = Loc.GetString("toilet-seat-close");
@@ -126,7 +119,6 @@ namespace Content.Shared.Toilet
             }
             args.Verbs.Add(toggleVerb);
         }
-
 
         public bool CanToggle(EntityUid uid)
         {
@@ -178,9 +170,7 @@ namespace Content.Shared.Toilet
             Dirty(uid, component, meta);
 
             if (_timing.IsFirstTimePredicted)
-            {
                 UpdateAppearance(uid, component);
-            }
         }
 
         private void OnExamine(EntityUid uid, ToiletComponent component, ExaminedEvent args)

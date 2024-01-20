@@ -3,17 +3,20 @@ using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Toilet
 {
+    /// <summary>
+    /// Toilets that can be flushed, seats toggled up and down, items hidden in cistern.
+    /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ToiletComponent : Component
     {
         /// <summary>
         /// Sound for toilet seat interaction.
         /// </summary>
-        [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField, AutoNetworkedField]
         public SoundSpecifier? Sound;
 
         /// <summary>
@@ -34,8 +37,8 @@ namespace Content.Shared.Toilet
         [DataField]
         public float PryLidTime = 1f;
 
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        public string PryingQuality = "Prying";
+        [DataField]
+        public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
         /// <summary>
         /// The state for when the toilet seat is up.

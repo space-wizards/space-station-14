@@ -12,18 +12,19 @@ using Content.Shared.Random;
 
 namespace Content.Shared.Toilet;
 
+/// <summary>
+/// Plungers can be used to unblock entities with PlungerUseComponent.
+/// </summary>
 public sealed class PlungerSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] private readonly SharedActionsSystem _action = default!;
+    [Dependency] protected readonly IPrototypeManager _proto = default!;
+    [Dependency] protected readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<PlungerComponent, AfterInteractEvent>(OnInteract);
@@ -42,7 +43,6 @@ public sealed class PlungerSystem : EntitySystem
 
         if (plunger == null || !plunger.NeedsPlunger == false)
             return;
-
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.PlungeDuration, new PlungerDoAfterEvent(), uid, target, uid)
         {
@@ -71,14 +71,13 @@ public sealed class PlungerSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("plunger-unblock", ("target", target)), args.User, args.User, PopupType.Medium);
             plunge.Plunged = true;
 
-            var spawn = PrototypeManager.Index<WeightedRandomEntityPrototype>(plunge.PlungerLoot).Pick(Random);
+            var spawn = _proto.Index<WeightedRandomEntityPrototype>(plunge.PlungerLoot).Pick(_random);
 
             if (_net.IsServer)
                 Spawn(spawn, Transform(target).Coordinates);
             RemComp<PlungerUseComponent>(target);
             Dirty(target, plunge);
         }
-
         args.Handled = true;
     }
 }
