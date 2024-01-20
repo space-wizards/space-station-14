@@ -218,12 +218,3 @@
   category: Livestock
   group: market
 
-- type: cargoProduct
-  id: LivestockMothroach
-  icon:
-    sprite: Mobs/Animals/mothroach.rsi
-    state: mothroach
-  product: CrateNPCMothroach
-  cost: 5000
-  category: Livestock
-  group: market
