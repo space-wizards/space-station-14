@@ -61,7 +61,6 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] protected readonly TagSystem TagSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
@@ -97,24 +96,6 @@ public abstract partial class SharedGunSystem : EntitySystem
 
 #if DEBUG
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        //Automatic firing without stopping if the AutoShootGunComponent component is exist and enabled
-        var query = EntityQueryEnumerator<AutoShootGunComponent, GunComponent>();
-        while (query.MoveNext(out var uid, out var autoShoot, out var gun))
-        {
-            if (!autoShoot.Enabled)
-                continue;
-
-            if (gun.NextFire > _timing.CurTime)
-                continue;
-
-            AttemptShoot(null, uid, gun, null);
-        }
     }
 
     private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
