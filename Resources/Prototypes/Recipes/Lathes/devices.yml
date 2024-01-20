@@ -171,8 +171,8 @@
   category: Weapons
   completetime: 5
   materials:
-    Steel: 1000
-    Glass: 250
+    Steel: 2000
+    Glass: 500
     Plastic: 100
 
 - type: latheRecipe
@@ -181,19 +181,21 @@
   category: Weapons
   completetime: 5
   materials:
-    Steel: 500
-    Glass: 250
+    Steel: 1000
+    Glass: 500
     Plastic: 50
 
 - type: latheRecipe
   id: WeaponCrusherGlaive
   result: WeaponCrusherGlaive
   category: Weapons
-  completetime: 5
+  completetime: 10
   materials:
-    Steel: 1500
-    Glass: 250
+    Steel: 3000
+    Glass: 750
+    Plastic: 500
     Silver: 250
+    Gold: 250
 
 - type: latheRecipe
   id: WeaponForceGun
@@ -220,8 +222,9 @@
   category: Weapons
   completetime: 5
   materials:
-    Steel: 1000
-    Glass: 500
+    Steel: 2500
+    Glass: 750
+    Plastic: 500
     Silver: 100
 
 - type: latheRecipe
