@@ -212,6 +212,8 @@ public sealed class ExecutionSystem : EntitySystem
             return;
 
         var active = EnsureComp<ActiveExecutionComponent>(uid);
+        active.Attacker = attacker;
+        active.Victim = victim;
         Dirty(uid, active);
 
         _gunSystem.AttemptShoot(args.User, uid, comp, xform.Coordinates);
