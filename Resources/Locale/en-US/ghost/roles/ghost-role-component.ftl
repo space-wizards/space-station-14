@@ -11,7 +11,7 @@ ghost-role-information-mothroach-name = Mothroach
 ghost-role-information-mothroach-description = A cute but mischievous mothroach.
 
 ghost-role-information-giant-spider-name = Giant spider
-ghost-role-information-giant-spider-description = Wreak havoc on the station's inhabitants!
+ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
 
@@ -22,7 +22,7 @@ ghost-role-information-hamlet-name = Hamlet the hamster.
 ghost-role-information-hamlet-description = Lives in the station bridge, has a bit of a temper and is always hungry.
 
 ghost-role-information-slimes-name = Slime
-ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
+ghost-role-information-slimes-description = Everyone around you irritates your instincts, destroy them!
 ghost-role-information-angry-slimes-description = Everyone around you irritates your instincts, destroy them!
 
 ghost-role-information-smile-name = Smile the Slime
