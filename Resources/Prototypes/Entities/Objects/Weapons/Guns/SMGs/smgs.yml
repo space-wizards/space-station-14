@@ -54,6 +54,15 @@
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
     price: 500
+  - type: Execution
+    suicidePopupInternal: suicide-popup-gun-initial-internal
+    suicidePopupExternal: suicide-popup-gun-external-external
+    suicidePopupCompleteInternal: suicide-popup-gun-complete-internal
+    suicidePopupCompleteExternal: suicide-popup-gun-complete-external
+    executionPopupInternal: execution-popup-gun-initial-internal
+    executionPopupExternal: execution-popup-gun-initial-external
+    executionPopupCompleteInternal: execution-popup-gun-complete-internal
+    executionPopupCompleteExternal: execution-popup-gun-complete-external
 
 - type: entity
   name: Atreides

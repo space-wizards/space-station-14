@@ -65,6 +65,15 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
+  - type: Execution
+    suicidePopupInternal: suicide-popup-gun-initial-internal
+    suicidePopupExternal: suicide-popup-gun-external-external
+    suicidePopupCompleteInternal: suicide-popup-gun-complete-internal
+    suicidePopupCompleteExternal: suicide-popup-gun-complete-external
+    executionPopupInternal: execution-popup-gun-initial-internal
+    executionPopupExternal: execution-popup-gun-initial-external
+    executionPopupCompleteInternal: execution-popup-gun-complete-internal
+    executionPopupCompleteExternal: execution-popup-gun-complete-external
 
 - type: entity
   name: viper
@@ -199,7 +208,7 @@
   name: N1984
   parent: BaseWeaponPistol
   id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber. 
+  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
