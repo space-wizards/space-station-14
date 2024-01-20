@@ -2,6 +2,7 @@
 - type: latheRecipe
   id: RipleyHarness
   result: RipleyHarness
+  category: Mech
   completetime: 10
   materials:
     Steel: 1500
@@ -10,6 +11,7 @@
 - type: latheRecipe
   id: RipleyLArm
   result: RipleyLArm
+  category: Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -18,6 +20,7 @@
 - type: latheRecipe
   id: RipleyLLeg
   result: RipleyLLeg
+  category: Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -26,6 +29,7 @@
 - type: latheRecipe
   id: RipleyRLeg
   result: RipleyRLeg
+  category: Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -34,6 +38,7 @@
 - type: latheRecipe
   id: RipleyRArm
   result: RipleyRArm
+  category: Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -42,6 +47,7 @@
 - type: latheRecipe
   id: MechEquipmentGrabber
   result: MechEquipmentGrabber
+  category: Mech
   completetime: 10
   materials:
     Steel: 500
@@ -51,6 +57,7 @@
 - type: latheRecipe
   id: HonkerHarness
   result: HonkerHarness
+  category: Mech
   completetime: 10
   materials:
     Steel: 3000
@@ -60,6 +67,7 @@
 - type: latheRecipe
   id: HonkerLArm
   result: HonkerLArm
+  category: Mech
   completetime: 10
   materials:
     Steel: 3000
@@ -69,6 +77,7 @@
 - type: latheRecipe
   id: HonkerLLeg
   result: HonkerLLeg
+  category: Mech
   completetime: 10
   materials:
     Steel: 3000
@@ -78,6 +87,7 @@
 - type: latheRecipe
   id: HonkerRLeg
   result: HonkerRLeg
+  category: Mech
   completetime: 10
   materials:
     Steel: 3000
@@ -87,6 +97,7 @@
 - type: latheRecipe
   id: HonkerRArm
   result: HonkerRArm
+  category: Mech
   completetime: 10
   materials:
     Steel: 3000
@@ -96,6 +107,7 @@
 - type: latheRecipe
   id: MechEquipmentHorn
   result: MechEquipmentHorn
+  category: Mech
   completetime: 10
   materials:
     Steel: 500
@@ -105,6 +117,7 @@
 - type: latheRecipe
   id: HamtrHarness
   result: HamtrHarness
+  category: Mech
   completetime: 10
   materials:
     Steel: 1200
@@ -113,6 +126,7 @@
 - type: latheRecipe
   id: HamtrLArm
   result: HamtrLArm
+  category: Mech
   completetime: 10
   materials:
     Steel: 800
@@ -121,6 +135,7 @@
 - type: latheRecipe
   id: HamtrLLeg
   result: HamtrLLeg
+  category: Mech
   completetime: 10
   materials:
     Steel: 800
@@ -129,6 +144,7 @@
 - type: latheRecipe
   id: HamtrRLeg
   result: HamtrRLeg
+  category: Mech
   completetime: 10
   materials:
     Steel: 800
@@ -137,6 +153,7 @@
 - type: latheRecipe
   id: HamtrRArm
   result: HamtrRArm
+  category: Mech
   completetime: 10
   materials:
     Steel: 800
@@ -145,6 +162,7 @@
 - type: latheRecipe
   id: MechEquipmentGrabberSmall
   result: MechEquipmentGrabberSmall
+  category: Mech
   completetime: 10
   materials:
     Steel: 400
@@ -154,6 +172,7 @@
 - type: latheRecipe
   id: VimHarness
   result: VimHarness
+  category: Mech
   completetime: 5
   materials:
     Steel: 500
