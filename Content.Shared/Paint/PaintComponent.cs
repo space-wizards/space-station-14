@@ -1,10 +1,8 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
-using Content.Shared.Decals;
+using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Paint;
 
@@ -12,7 +10,6 @@ namespace Content.Shared.Paint;
 [Access(typeof(SharedPaintSystem))]
 public sealed partial class PaintComponent : Component
 {
-
     /// <summary>
     /// Noise made when paint applied.
     /// </summary>
@@ -25,15 +22,11 @@ public sealed partial class PaintComponent : Component
     [DataField]
     public string Solution = "drink";
 
-    [DataField, AutoNetworkedField]
-    public bool Painter = true;
-
     /// <summary>
     /// Reagent that will be used as paint.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-    public string Reagent = "SpaceGlue";
-
+    [DataField, AutoNetworkedField]
+    public ProtoId<ReagentPrototype> Reagent = "SpaceGlue";
 
     /// <summary>
     /// Color that the painting entity will instruct the painted entity to be.

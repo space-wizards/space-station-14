@@ -3,11 +3,9 @@ using Robust.Client.GameObjects;
 using static Robust.Client.GameObjects.SpriteComponent;
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
-using Robust.Client.Graphics;
 using Content.Shared.Paint;
 using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
-using System.Reflection.Metadata;
 
 namespace Content.Client.Paint
 {
@@ -16,9 +14,6 @@ namespace Content.Client.Paint
         /// <summary>
         /// Visualizer for Paint which applies a shader and colors the entity.
         /// </summary>
-
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -28,18 +23,21 @@ namespace Content.Client.Paint
             SubscribeLocalEvent<PaintedComponent, EquipmentVisualsUpdatedEvent>(OnEquipmentVisualsUpdated);
         }
 
+        // Applies the shader and color to all sprite layers for the entity.
         protected override void OnAppearanceChange(EntityUid uid, PaintedComponent component, ref AppearanceChangeEvent args)
         {
             if (args.Sprite == null)
                 return;
 
-            var shader = _proto.Index<ShaderPrototype>("Colored").InstanceUnique();
+            if (!TryComp(uid, out SpriteComponent? sprite))
+                return;
 
-            shader.SetParameter("color", component.Color);
-            args.Sprite.PostShader = component.Enabled ? shader : null;
-
+            for (var layer = 0; layer < args.Sprite.AllLayers.Count(); ++layer)
+            {
+                sprite.LayerSetColor(layer, component.Color);
+                sprite.LayerSetShader(layer, component.ShaderName);
+            }
         }
-
 
         // Shader and Color for the held sprites.
         private void OnHeldVisualsUpdated(EntityUid uid, PaintedComponent component, HeldVisualsUpdatedEvent args)
@@ -62,7 +60,7 @@ namespace Content.Client.Paint
                 if (!sprite.LayerMapTryGet(revealed, out var layer) || sprite[layer] is not Layer notlayer)
                     continue;
 
-                if (component.Enabled == true)
+                if (component.Enabled)
                 {
                     sprite.LayerSetShader(layer, component.ShaderName);
                     sprite.LayerSetColor(layer, component.Color);
@@ -88,7 +86,7 @@ namespace Content.Client.Paint
                 if (!sprite.LayerMapTryGet(revealed, out var layer) || sprite[layer] is not Layer notlayer)
                     continue;
 
-                if (component.Enabled == true)
+                if (component.Enabled)
                 {
                     sprite.LayerSetShader(layer, component.ShaderName);
                     sprite.LayerSetColor(layer, component.Color);
@@ -97,16 +95,21 @@ namespace Content.Client.Paint
             }
         }
 
+        // Removes the shader and color from the sprite layers when component is removed. 
         private void OnShutdown(EntityUid uid, PaintedComponent component, ref ComponentShutdown args)
         {
             if (!TryComp(uid, out SpriteComponent? sprite))
                 return;
 
+            component.BeforeColor = sprite.Color;
+
             if (!Terminating(uid))
             {
-                var shader = _proto.Index<ShaderPrototype>("Colored").InstanceUnique();
-
-                sprite.PostShader = false ? shader : null;
+                for (var layer = 0; layer < sprite.AllLayers.Count(); ++layer)
+                {
+                    sprite.LayerSetShader(layer, null, null);
+                    sprite.LayerSetColor(layer, component.BeforeColor);
+                }
             }
         }
     }

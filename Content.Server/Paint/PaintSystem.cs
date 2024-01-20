@@ -1,15 +1,10 @@
 using Content.Shared.Popups;
-using System.Linq;
-using System.Numerics;
 using Content.Shared.Paint;
 using Content.Shared.Interaction;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Humanoid;
-using Content.Server.Decals;
 using Content.Shared.SubFloor;
-using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Paint;
 
@@ -21,9 +16,6 @@ public sealed class PaintSystem : SharedPaintSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly DecalSystem _decal = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-
 
     public override void Initialize()
     {
@@ -46,14 +38,12 @@ public sealed class PaintSystem : SharedPaintSystem
             return;
         }
 
-
-        if (TryPaint(entity, target, args.User, args.Used) && component.Painter == true)
+        if (TryPaint(entity, target, args.User, args.Used))
         {
 
             if (HasComp<AppearanceComponent>(target))
-            {
                 RemComp<AppearanceComponent>(target);
-            }
+
             EnsureComp<PaintedComponent>(target);
             AddComp<AppearanceComponent>(target);
 
@@ -72,9 +62,9 @@ public sealed class PaintSystem : SharedPaintSystem
                 return;
             }
         }
-        else
-            return;
 
+        if (!TryPaint(entity, target, args.User, args.Used))
+            return;
     }
 
     private bool TryPaint(Entity<PaintComponent> reagent, EntityUid target, EntityUid actor, EntityUid used)
@@ -85,7 +75,7 @@ public sealed class PaintSystem : SharedPaintSystem
             return false;
         }
 
-        if (HasComp<MobStateComponent>(target) || HasComp<SubFloorHideComponent>(target))
+        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("paint-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;
@@ -99,13 +89,13 @@ public sealed class PaintSystem : SharedPaintSystem
                 _popup.PopupEntity(Loc.GetString("paint-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
             }
-            else
+
+            if (quantity < 1)
             {
                 _popup.PopupEntity(Loc.GetString("paint-empty", ("used", used)), actor, actor, PopupType.Medium);
                 return false;
             }
         }
-
         return false;
     }
 }

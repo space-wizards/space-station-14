@@ -4,7 +4,6 @@ using Content.Shared.DoAfter;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
-
 namespace Content.Shared.Paint;
 
 /// <summary>
@@ -16,7 +15,6 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-
 
     public override void Initialize()
     {
@@ -63,9 +61,7 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
             _popup.PopupClient(Loc.GetString("you clean off the paint", ("target", target)), args.User, args.User, PopupType.Medium);
             RemComp<PaintedComponent>(target);
             Dirty(target, paint);
-
         }
-
         args.Handled = true;
     }
 }

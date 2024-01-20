@@ -1,7 +1,4 @@
 using Robust.Shared.GameStates;
-using Content.Shared.Decals;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Audio;
 
 namespace Content.Shared.Paint;
 
@@ -18,6 +15,12 @@ public sealed partial class PaintedComponent : Component
     public Color Color = Color.FromHex("#2cdbd5");
 
     /// <summary>
+    ///  Used to remove the color when component removed.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public Color BeforeColor;
+
+    /// <summary>
     /// If paint is enabled.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -28,6 +31,5 @@ public sealed partial class PaintedComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string ShaderName = "Greyscale";
-
 }
 
