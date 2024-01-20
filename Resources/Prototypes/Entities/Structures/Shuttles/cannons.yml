@@ -15,7 +15,6 @@
     bodyType: Static
   - type: ContainerContainer
   - type: Gun
-    canShootWithoutUser: true
   - type: Fixtures
     fixtures:
       fix1:
