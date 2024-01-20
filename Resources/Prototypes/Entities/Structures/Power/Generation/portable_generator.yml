@@ -72,7 +72,7 @@
           behaviors:
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalBreak
             - !type:ChangeConstructionNodeBehavior
               node: machineFrame
             - !type:DoActsBehavior
@@ -177,7 +177,7 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen0
-      
+
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -233,7 +233,7 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen1
-      
+
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -307,7 +307,7 @@
       nodes:
         output:
           !type:CableDeviceNode
-          nodeGroupID: Apc   
+          nodeGroupID: Apc
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
@@ -340,7 +340,7 @@
               solution: tank
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalBreak
             - !type:ChangeConstructionNodeBehavior
               node: machineFrame
             - !type:DoActsBehavior

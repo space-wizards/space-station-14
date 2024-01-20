@@ -12,10 +12,6 @@
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
   # These are roundstart but not replenishable for salvage
-  - WeaponCrusher
-  - WeaponCrusherDagger
-  # This is not roundstart since its a direct upgrade
-  - WeaponCrusherGlaive
 
 - type: technology
   id: DraconicMunitions
