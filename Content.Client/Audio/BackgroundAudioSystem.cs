@@ -144,6 +144,10 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         }
 
-        _audio.PlayGlobal(file, Filter.Local(), false, _lobbyParams.WithVolume(_lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume))));
+        var volume = _lobbyParams.WithVolume(_lobbyParams.Volume +
+                                             SharedAudioSystem.GainToVolume(
+                                                 _configManager.GetCVar(CCVars.LobbyMusicVolume)));
+
+        _audio.PlayGlobal(file, Filter.Local(), false, volume);
     }
 }
