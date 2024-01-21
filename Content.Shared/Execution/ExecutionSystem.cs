@@ -34,6 +34,23 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
+    private const string DefaultInternalMeleeSuicideMessage = "suicide-popup-melee-initial-internal";
+    private const string DefaultExternalMeleeSuicideMessage = "suicide-popup-melee-initial-external";
+    private const string DefaultInternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
+    private const string DefaultExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
+    private const string DefaultCompleteInternalMeleeSuicideMessage = "suicide-popup-melee-complete-internal";
+    private const string DefaultCompleteExternalMeleeSuicideMessage = "suicide-popup-melee-complete-external";
+    private const string DefaultCompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
+    private const string DefaultCompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
+    private const string DefaultInternalGunSuicideMessage = "suicide-popup-gun-initial-internal";
+    private const string DefaultExternalGunSuicideMessage = "suicide-popup-gun-initial-external";
+    private const string DefaultInternalGunExecutionMessage = "execution-popup-gun-initial-internal";
+    private const string DefaultExternalGunExecutionMessage = "execution-popup-gun-initial-external";
+    private const string DefaultCompleteInternalGunSuicideMessage = "suicide-popup-gun-complete-internal";
+    private const string DefaultCompleteExternalGunSuicideMessage = "suicide-popup-gun-complete-external";
+    private const string DefaultCompleteInternalGunExecutionMessage = "execution-popup-gun-complete-internal";
+    private const string DefaultCompleteExternalGunExecutionMessage = "execution-popup-gun-complete-external";
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -80,21 +97,35 @@ public sealed class ExecutionSystem : EntitySystem
         if (HasComp<MeleeWeaponComponent>(weapon) && !CanExecuteWithMelee(weapon, victim, attacker))
             return;
 
-        if (HasComp<GunComponent>(weapon) && !CanExecuteWithGun(weapon, victim, attacker))
-            return;
+        var defaultSuicideInternal = DefaultInternalMeleeSuicideMessage;
+        var defaultSuicideExternal = DefaultExternalMeleeSuicideMessage;
+        var defaultExecutionInternal = DefaultInternalMeleeExecutionMessage;
+        var defaultExecutionExternal = DefaultExternalMeleeExecutionMessage;
+
+        if (HasComp<GunComponent>(weapon))
+        {
+            if(!CanExecuteWithGun(weapon, victim, attacker))
+                return;
+
+            defaultSuicideExternal = DefaultExternalGunSuicideMessage;
+            defaultSuicideInternal = DefaultInternalGunSuicideMessage;
+            defaultExecutionExternal = DefaultInternalGunExecutionMessage;
+            defaultExecutionInternal = DefaultExternalGunExecutionMessage;
+        }
+
 
         string internalMsg;
         string externalMsg;
 
         if (attacker == victim)
         {
-            internalMsg = comp.SuicidePopupInternal;
-            externalMsg = comp.SuicidePopupExternal;
+            internalMsg = comp.SuicidePopupInternal ?? defaultSuicideInternal;
+            externalMsg = comp.SuicidePopupExternal ?? defaultSuicideExternal;
         }
         else
         {
-            internalMsg = comp.ExecutionPopupInternal;
-            externalMsg = comp.ExecutionPopupExternal;
+            internalMsg = comp.ExecutionPopupInternal ?? defaultExecutionInternal;
+            externalMsg = comp.ExecutionPopupExternal ?? defaultExecutionExternal;
         }
         ShowExecutionInternalPopup(internalMsg, attacker, victim, weapon);
         ShowExecutionExternalPopup(externalMsg, attacker, victim, weapon);
@@ -187,21 +218,23 @@ public sealed class ExecutionSystem : EntitySystem
 
         if (attacker == victim)
         {
-            internalMsg = executionComp.SuicidePopupCompleteInternal;
-            externalMsg = executionComp.SuicidePopupCompleteExternal;
+            internalMsg = executionComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalMeleeSuicideMessage;
+            externalMsg = executionComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalMeleeSuicideMessage;
         }
         else
         {
-            internalMsg = executionComp.ExecutionPopupCompleteInternal;
-            externalMsg = executionComp.ExecutionPopupCompleteExternal;
+            internalMsg = executionComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalMeleeExecutionMessage;
+            externalMsg = executionComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalMeleeExecutionMessage;
         }
         ShowExecutionInternalPopup(internalMsg, attacker, victim, weapon);
         ShowExecutionExternalPopup(externalMsg, attacker, victim, weapon);
+
+        args.Handled = true;
     }
 
     private void OnDoafterGun(EntityUid uid, GunComponent comp, DoAfterEvent args)
     {
-        if (!HasComp<ExecutionComponent>(uid))
+        if (!TryComp<ExecutionComponent>(uid, out var executionComponent))
             return;
 
         if (!TryComp<TransformComponent>(args.Target, out var xform))
@@ -230,6 +263,7 @@ public sealed class ExecutionSystem : EntitySystem
         active.Attacker = attacker;
         active.Victim = victim;
         active.Clumsy = clumsyShot;
+        active.FixtureId = executionComponent.FixtureId;
         Dirty(uid, active);
 
         EntityCoordinates coords;
@@ -249,6 +283,7 @@ public sealed class ExecutionSystem : EntitySystem
         RemCompDeferred<ActiveExecutionComponent>(uid);
         Dirty(uid, active);
 
+        args.Handled = true;
     }
 
     private void OnAmmoShot(EntityUid uid, ActiveExecutionComponent comp, AmmoShotEvent args)
@@ -277,6 +312,7 @@ public sealed class ExecutionSystem : EntitySystem
             execBulletComp.Target = comp.Victim;
             execBulletComp.Multiplier = executionComp.DamageModifier;
             execBulletComp.Clumsy = comp.Clumsy;
+            execBulletComp.FixtureId = comp.FixtureId;
 
             Dirty(bullet, execBulletComp);
         }
@@ -295,13 +331,13 @@ public sealed class ExecutionSystem : EntitySystem
         }
         else if (attacker == victim)
         {
-            internalMsg = executionComp.SuicidePopupCompleteInternal;
-            externalMsg = executionComp.SuicidePopupCompleteExternal;
+            internalMsg = executionComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalGunSuicideMessage;
+            externalMsg = executionComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalGunSuicideMessage;
         }
         else
         {
-            internalMsg = executionComp.ExecutionPopupCompleteInternal;
-            externalMsg = executionComp.ExecutionPopupCompleteExternal;
+            internalMsg = executionComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalGunExecutionMessage;
+            externalMsg = executionComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalGunExecutionMessage;
         }
 
         ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
@@ -356,4 +392,3 @@ public sealed class ExecutionSystem : EntitySystem
     }
 
 }
-

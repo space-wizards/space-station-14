@@ -10,26 +10,30 @@ public sealed partial class ExecutionComponent : Component
     public float DamageModifier = 9f;
 
     [DataField]
-    public string SuicidePopupInternal = "suicide-popup-melee-initial-internal";
+    public string? SuicidePopupInternal;
 
     [DataField]
-    public string SuicidePopupExternal = "suicide-popup-melee-initial-external";
+    public string? SuicidePopupExternal;
 
     [DataField]
-    public string ExecutionPopupInternal = "execution-popup-melee-initial-internal";
+    public string? ExecutionPopupInternal;
 
     [DataField]
-    public string ExecutionPopupExternal = "execution-popup-melee-initial-external";
+    public string? ExecutionPopupExternal;
 
     [DataField]
-    public string SuicidePopupCompleteInternal = "suicide-popup-melee-complete-internal";
+    public string? SuicidePopupCompleteInternal;
 
     [DataField]
-    public string SuicidePopupCompleteExternal = "suicide-popup-melee-complete-external";
+    public string? SuicidePopupCompleteExternal;
 
     [DataField]
-    public string ExecutionPopupCompleteInternal = "execution-popup-melee-complete-internal";
+    public string? ExecutionPopupCompleteInternal;
 
     [DataField]
-    public string ExecutionPopupCompleteExternal = "execution-popup-melee-complete-external";
+    public string? ExecutionPopupCompleteExternal;
+
+    [DataField]
+    public string FixtureId = "projectile";
+
 }

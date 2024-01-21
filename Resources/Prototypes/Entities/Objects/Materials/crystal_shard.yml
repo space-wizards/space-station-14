@@ -7,6 +7,7 @@
   components:
   - type: Sharp
   - type: Execution
+    doAfterDuration: 4.0
   - type: Sprite
     layers:
       - sprite: Objects/Materials/Shards/crystal.rsi
