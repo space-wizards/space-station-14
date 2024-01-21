@@ -53,7 +53,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         // Find fuel chamber first by scanning cardinals.
         var fuelQuery = GetEntityQuery<ParticleAcceleratorFuelChamberComponent>();
-        foreach (var adjacent in _mapSystem.GetCardinalNeighborCells(gridUid!.Value, grid, xform.Coordinates))
+        foreach (var adjacent in _mapSystem.GetCardinalNeighborCells(gridUid.Value, grid, xform.Coordinates))
         {
             if (fuelQuery.HasComponent(adjacent)
             && partQuery.TryGetComponent(adjacent, out var partState)
