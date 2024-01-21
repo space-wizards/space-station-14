@@ -34,9 +34,23 @@ namespace Content.Client.Chemistry.UI
             {
                 case MedipenRefillerUpdateState msg:
                     if (_window != null)
+                    {
                         _window.MedipenRecipes = msg.Recipes;
+                        _window!.InputContainerData = msg.InputContainerData;
+                        _window!.BufferData = msg.BufferData;
+                    }
                     _window?.UpdateRecipes();
+                    _window?.UpdateContainerInfo();
                     break;
+            }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _window?.Dispose();
             }
         }
     }

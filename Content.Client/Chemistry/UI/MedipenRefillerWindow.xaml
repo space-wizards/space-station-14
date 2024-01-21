@@ -4,8 +4,7 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:ui="clr-namespace:Content.Client.Materials.UI"
-    Title="{Loc 'medipen-refiller-bound-user-interface-title'}"
-    MinSize="600 600">
+    Title="{Loc 'medipen-refiller-bound-user-interface-title'}">
     <BoxContainer
         HorizontalExpand="True"
         Orientation="Horizontal"
@@ -14,6 +13,7 @@
         <!--  Left Col  -->
         <BoxContainer
             Margin="10"
+            MinWidth="250"
             HorizontalExpand="True"
             VerticalExpand="True">
             <BoxContainer
@@ -22,11 +22,11 @@
                 SeparationOverride="5"
                 VerticalExpand="True">
                 <BoxContainer Orientation="Horizontal"
-                    HorizontalExpand="True">
+                              HorizontalExpand="True">
                     <Label Text="{Loc 'medipen-refiller-window-medipen-list-label'}" />
                 </BoxContainer>
                 <BoxContainer
-                    MinHeight="225"
+                    Margin="0 5 0 0"
                     HorizontalExpand="True"
                     Orientation="Vertical"
                     SizeFlagsStretchRatio="4"
@@ -47,10 +47,11 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
-        <BoxContainer MinWidth="5" />
+        <BoxContainer MinWidth="5"/>
         <!--  Right Col  -->
         <BoxContainer
             Margin="0 10 10 10"
+            MinWidth="450"
             HorizontalExpand="True"
             Orientation="Vertical"
             SeparationOverride="5">
@@ -89,20 +90,6 @@
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'medipen-refiller-window-buffer-text'}" />
                 <Control HorizontalExpand="True" />
-                <Button
-                    Name="BufferTransferButton"
-                    Access="Public"
-                    MinSize="80 0"
-                    StyleClasses="OpenRight"
-                    Text="{Loc 'medipen-refiller-window-transfer-button'}"
-                    ToggleMode="True" />
-                <Button
-                    Name="BufferDiscardButton"
-                    Access="Public"
-                    MinSize="80 0"
-                    StyleClasses="OpenLeft"
-                    Text="{Loc 'medipen-refiller-window-discard-button'}"
-                    ToggleMode="True" />
             </BoxContainer>
 
             <!--  Buffer info  -->
