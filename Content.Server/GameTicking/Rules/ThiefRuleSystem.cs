@@ -5,13 +5,13 @@ using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Random;
 using Content.Shared.Roles;
 using Robust.Shared.Random;
 using System.Linq;
-using System.Text;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -22,6 +22,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     [ValidatePrototypeId<WeightedRandomPrototype>]
     const string BigObjectiveGroup = "ThiefBigObjectiveGroups";
@@ -51,7 +52,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
                 continue;
 
             //Get all players eligible for this role
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, allowMultipleAntagRoles: true);
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, allowMultipleAntagRoles: true, allowNonHumanoids: true);
 
             //Abort if there are none
             if (eligiblePlayers.Count == 0)
@@ -99,12 +100,12 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         _antagSelection.SendBriefing(thief, MakeBriefing(thief), null, thiefRule.GreetingSound);
 
         // Give starting items
-        _antagSelection.GiveAntagBagGear(thief, thiefRule.StarterItems);
+        _inventory.SpawnItemsOnEntity(thief, thiefRule.StarterItems);
 
         thiefRule.ThievesMinds.Add(mind);
     }
 
-    public void AdminMakeThief(MindComponent mind, bool addPacified)
+    public void AdminMakeThief(EntityUid entity, bool addPacified)
     {
         var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
         if (thiefRule == null)
@@ -113,13 +114,10 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
         }
 
-        if (!HasComp<ThiefRoleComponent>(mind.OwnedEntity))
-        {
-            if (mind.OwnedEntity != null)
-            {
-                MakeThief(mind.OwnedEntity.Value, thiefRule, addPacified);
-            }
-        }
+        if (HasComp<ThiefRoleComponent>(entity))
+            return;
+
+        MakeThief(entity, thiefRule, addPacified);
     }
 
     private void GenerateObjectives(EntityUid mindId, MindComponent mind, ThiefRuleComponent thiefRule)
@@ -165,12 +163,13 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     private string MakeBriefing(EntityUid thief)
     {
         var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
-        var sb = new StringBuilder();
-        sb.AppendLine(isHuman ? Loc.GetString("thief-role-greeting-human") : Loc.GetString("thief-role-greeting-animal"));
-        sb.AppendLine();
-        sb.AppendLine(Loc.GetString("thief-role-greeting-equipment"));
+        var briefing = "\n";
+        briefing = isHuman
+            ? Loc.GetString("thief-role-greeting-human")
+            : Loc.GetString("thief-role-greeting-animal");
 
-        return sb.ToString();
+        briefing += "\n \n" + Loc.GetString("thief-role-greeting-equipment") + "\n";
+        return briefing;
     }
 
     private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args)

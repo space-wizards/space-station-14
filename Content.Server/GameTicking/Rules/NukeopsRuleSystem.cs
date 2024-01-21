@@ -628,7 +628,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var agentEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.MedicRoleProto, false);
             var operativeEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.OperativeRoleProto, false);
 
-            var nukiesToSelect = 6;//_antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
+            var nukiesToSelect = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
 
             //Select Nukies
             //Select Commander, priority : commanderEligible, agentEligible, operativeEligible, all players
@@ -639,20 +639,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var selectedOperatives = _antagSelection.ChooseAntags(nukiesToSelect - 2, operativeEligible, ev.PlayerPool);
 
             //Create the team!
-            //Provide a player session if possible, otherwise spawn them as ghost roles
+            //If the session is null, they will be spawned as ghost roles (provided the cvar is set)
             var operatives = new List<NukieSpawn>();
             operatives.Add(new NukieSpawn(selectedCommander, NukieType.Commander));
-            operatives.Add(new NukieSpawn(selectedAgent, NukieType.Agent));
+            if (nukiesToSelect > 1) operatives.Add(new NukieSpawn(selectedAgent, NukieType.Agent));
 
-            //For each of the remaining slots, fill with operatives
             for (var i = 0; i < nukiesToSelect - 2; i++)
             {
-                //First fill with players
+                //Use up all available sessions first, then spawn the rest as ghost roles (if enabled)
                 if (selectedOperatives.Count > i)
                 {
                     operatives.Add(new NukieSpawn(selectedOperatives[i], NukieType.Operative));
                 }
-                //Then fill the remaining with ghost roles
                 else
                 {
                     operatives.Add(new NukieSpawn(null, NukieType.Operative));
@@ -960,22 +958,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     }
 
     //For admins forcing someone to nukeOps.
-    public void MakeLoneNukie(EntityUid mindId, MindComponent mind)
+    public void MakeLoneNukie(EntityUid entity)
     {
-        if (!mind.OwnedEntity.HasValue)
+        if (!_mind.TryGetMind(entity, out var mindId, out var mindComponent))
             return;
 
         //ok hardcoded value bad but so is everything else here
-        _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mind);
-        if (mind.CurrentEntity != null)
+        _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mindComponent);
+
+        foreach (var (nukeops, _) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
         {
-            foreach (var (nukeops, _) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
-            {
-                nukeops.OperativePlayers.Add(mind.CharacterName!, mindId);
-            }
+            nukeops.OperativePlayers.Add(mindComponent.CharacterName!, mindId);
         }
 
-        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
+        SetOutfitCommand.SetOutfit(entity, "SyndicateOperativeGearFull", EntityManager);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

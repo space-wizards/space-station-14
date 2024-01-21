@@ -70,16 +70,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// </summary>
     protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
     {
-        var now = Timing.CurTime;
-        if (gameRule.ScheduledTasks.Count > 0 && gameRule.ScheduledTasks.GetKeyAtIndex(0) <= now)
-        {
-            var task = gameRule.ScheduledTasks.GetValueAtIndex(0);
-            task.Action(uid, component, gameRule, frameTime);
-            gameRule.ScheduledTasks.RemoveAt(0);
 
-            if (!task.Oneshot && task.Interval.HasValue)
-                gameRule.ScheduledTasks.Add(now + task.Interval.Value, task);
-        }
     }
 
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
@@ -129,26 +120,5 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
 
             ActiveTick(uid, comp1, comp2, frameTime);
         }
-    }
-
-    /// <summary>
-    /// Schedule a task to run repeatedly every interval
-    /// </summary>
-    /// <param name="task">An action accepting : Rule entity, T Component, GameRuleComponent and frameTime</param>
-    /// <param name="interval">Timespan specifying the interval to run the task</param>
-    public void ScheduleRecurringTask(Action<EntityUid, IComponent, GameRuleComponent, float> task, TimeSpan interval, GameRuleComponent gameRule)
-    {
-        var now = Timing.CurTime;
-        gameRule.ScheduledTasks.Add(now + interval, new GameRuleTask(task, false, interval));
-    }
-    /// <summary>
-    /// Schedule a task to be run once after a delay
-    /// </summary>
-    /// <param name="task">An action accepting : Rule entity, T Component, GameRuleComponent and frameTime</param>
-    /// <param name="delay">Timespan specifying how long to delay before running the task</param>
-    public void ScheduleOneshotTask(Action<EntityUid, IComponent, GameRuleComponent, float> task, TimeSpan delay, GameRuleComponent gameRule)
-    {
-        var now = Timing.CurTime;
-        gameRule.ScheduledTasks.Add(now + delay, new GameRuleTask(task, true));
     }
 }

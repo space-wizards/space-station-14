@@ -20,6 +20,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using System.Globalization;
 
 namespace Content.Server.GameTicking.Rules;
@@ -39,6 +40,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -46,7 +48,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
         SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
@@ -58,31 +59,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         base.Added(uid, component, gameRule, args);
 
         gameRule.MinPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
-    }
-
-    /// <summary>
-    /// Check we have enough players to start this game mode, if not - cancel and announce
-    /// </summary>
-    private void OnStartAttempt(RoundStartAttemptEvent ev)
-    {
-        TryRoundStartAttempt(ev, Loc.GetString("zombie-title"));
-    }
-
-    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
-    {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out var comp, out var gameRule))
-        {
-            ScheduleOneshotTask((u, z, g, t) => InfectInitialPlayers((ZombieRuleComponent) z), _random.Next(comp.MinStartDelay, comp.MaxStartDelay), gameRule);
-            ScheduleRecurringTask((u, z, g, t) => CheckRoundEnd((ZombieRuleComponent) z), comp.EndCheckDelay, gameRule);
-        }
-    }
-
-    private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
-    {
-        _zombie.ZombifyEntity(uid);
-        if (component.Action != null)
-            Del(component.Action.Value);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -156,6 +132,47 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         // when everyone gets on the shuttle.
         if (GetInfectedFraction() >= 1) // Oops, all zombies
             _roundEnd.EndRound();
+    }
+
+    /// <summary>
+    /// Check we have enough players to start this game mode, if not - cancel and announce
+    /// </summary>
+    private void OnStartAttempt(RoundStartAttemptEvent ev)
+    {
+        TryRoundStartAttempt(ev, Loc.GetString("zombie-title"));
+    }
+
+    protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    {
+        base.Started(uid, component, gameRule, args);
+
+        var delay = _random.Next(component.MinStartDelay, component.MaxStartDelay);
+        component.StartTime = _timing.CurTime + delay;
+    }
+
+    protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    {
+        base.ActiveTick(uid, component, gameRule, frameTime);
+
+        if (component.StartTime.HasValue && component.StartTime < _timing.CurTime)
+        {
+            InfectInitialPlayers(component);
+            component.StartTime = null;
+            component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
+        }
+
+        if (component.NextRoundEndCheck.HasValue && component.NextRoundEndCheck < _timing.CurTime)
+        {
+            CheckRoundEnd(component);
+            component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
+        }
+    }
+
+    private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
+    {
+        _zombie.ZombifyEntity(uid);
+        if (component.Action != null)
+            Del(component.Action.Value);
     }
 
     /// <summary>

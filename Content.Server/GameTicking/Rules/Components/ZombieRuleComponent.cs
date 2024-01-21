@@ -1,6 +1,7 @@
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -15,10 +16,22 @@ public sealed partial class ZombieRuleComponent : Component
     public string PatientZeroPrototypeId = "InitialInfected";
 
     /// <summary>
+    /// When the round will next check for round end.
+    /// </summary>
+    [DataField("nextRoundEndCheck", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan? NextRoundEndCheck = default!;
+
+    /// <summary>
     /// The amount of time between each check for the end of the round.
     /// </summary>
     [DataField("endCheckDelay")]
     public TimeSpan EndCheckDelay = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// The time at which the initial infected will be chosen.
+    /// </summary>
+    [DataField("startTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan? StartTime = default!;
 
     /// <summary>
     /// The minimum amount of time after the round starts that the initial infected will be chosen.

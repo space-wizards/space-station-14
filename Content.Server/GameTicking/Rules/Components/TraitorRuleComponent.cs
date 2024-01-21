@@ -1,5 +1,6 @@
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -22,8 +23,16 @@ public sealed partial class TraitorRuleComponent : Component
         Started = 2,
     }
 
+    /// <summary>
+    /// Current state of the rule
+    /// </summary>
     public SelectionState SelectionStatus = SelectionState.WaitingForSpawn;
-    public TimeSpan AnnounceAt = TimeSpan.Zero;
+
+    /// <summary>
+    /// When should traitors be selected and the announcement made
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan? AnnounceAt;
 
     /// <summary>
     ///     Path to antagonist alert sound.

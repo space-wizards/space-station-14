@@ -1,33 +1,19 @@
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Roles.Jobs;
-using Content.Server.Preferences.Managers;
-using Content.Shared.Humanoid;
-using Content.Shared.Preferences;
-using Robust.Server.Player;
-using System.Linq;
 using Content.Server.Mind;
-using Robust.Shared.Random;
-using Robust.Shared.Map;
-using System.Numerics;
-using Content.Shared.Inventory;
-using Content.Server.Storage.EntitySystems;
-using Robust.Shared.Audio;
-using Robust.Server.GameObjects;
-using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
-using Robust.Shared.Containers;
-using Content.Shared.Mobs.Components;
-using Content.Server.Station.Systems;
-using Content.Server.Shuttles.Systems;
-using Content.Shared.Mobs;
-using Robust.Server.Audio;
-using Robust.Server.Containers;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using Content.Server.Preferences.Managers;
+using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Roles;
+using Content.Shared.Humanoid;
 using Content.Shared.Players;
+using Content.Shared.Preferences;
+using Content.Shared.Roles;
+using Robust.Server.Audio;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Antag;
 
@@ -35,16 +21,10 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly StorageSystem _storageSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
     #region Eligible Player Selection
     /// <summary>
@@ -57,13 +37,13 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
     /// <returns>List of all player entities that match the requirements</returns>
-    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         var eligiblePlayers = new List<EntityUid>();
 
         foreach (var player in playerSessions)
         {
-            if (IsEligible(player, antagPrototype, includeAllJobs, allowMultipleAntagRoles, ignorePreferences, customExcludeCondition))
+            if (IsEligible(player, antagPrototype, includeAllJobs, allowMultipleAntagRoles, ignorePreferences, allowNonHumanoids, customExcludeCondition))
                 eligiblePlayers.Add(player.AttachedEntity!.Value);
         }
 
@@ -101,7 +81,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A function, accepting an EntityUid and returning bool. Each player is tested against this, returning truw will exclude the player from eligibility</param>
     /// <returns>True if the player session matches the requirements, false otherwise</returns>
-    public bool IsEligible(ICommonSession session, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public bool IsEligible(ICommonSession session, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         if (!IsSessionEligible(session, antagPrototype, ignorePreferences))
             return false;
@@ -132,8 +112,8 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 return false;
         }
 
-        //Only allow humanoids
-        if (!HasComp<HumanoidAppearanceComponent>(session.AttachedEntity))
+        //Unless explictly allowed, ignore non humanoids (eg pets)
+        if (!allowNonHumanoids && !HasComp<HumanoidAppearanceComponent>(session.AttachedEntity))
             return false;
 
         //If a custom condition was provided, test it and exclude the player if it returns true
@@ -185,14 +165,38 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 
     #region Antag Selection
     /// <summary>
+    /// Selects a set number of entities from several lists, prioritising the first list till its empty, then second list etc
+    /// </summary>
+    /// <param name="eligiblePlayerLists">Array of lists, which are chosen from in order until the correct number of items are selected</param>
+    /// <param name="count">How many items to select</param>
+    /// <returns>Up to the specified count of elements from all provided lists</returns>
+    public List<EntityUid> ChooseAntags(int count, params List<EntityUid>[] eligiblePlayerLists)
+    {
+        var chosenPlayers = new List<EntityUid>();
+        foreach (var playerList in eligiblePlayerLists)
+        {
+            //Remove all chosen players from this list, to prevent duplicates
+            foreach (var chosenPlayer in chosenPlayers)
+                playerList.Remove(chosenPlayer);
+
+            //If we have reached the desired number of players, skip
+            if (chosenPlayers.Count >= count)
+                continue;
+
+            //Pick and choose a random number of players from this list
+            chosenPlayers.AddRange(ChooseAntags(count - chosenPlayers.Count, playerList));
+        }
+        return chosenPlayers;
+    }
+    /// <summary>
     /// Helper method to choose antags from a list
     /// </summary>
     /// <param name="eligiblePlayers">List of eligible players</param>
     /// <param name="count">How many to choose</param>
     /// <returns>Up to the specified count of elements from the provided list</returns>
-    public List<T> ChooseAntags<T>(int count, List<T> eligiblePlayers)
+    public List<EntityUid> ChooseAntags(int count, List<EntityUid> eligiblePlayers)
     {
-        var chosenPlayers = new List<T>();
+        var chosenPlayers = new List<EntityUid>();
 
         for (int i = 0; i < count; i++)
         {
@@ -206,15 +210,14 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     }
 
     /// <summary>
-    /// Selects a set number of players from several lists, prioritising the first list till its empty, then second list etc
+    /// Selects a set number of sessions from several lists, prioritising the first list till its empty, then second list etc
     /// </summary>
-    /// <typeparam name="T">The type of item you are choosing</typeparam>
     /// <param name="eligiblePlayerLists">Array of lists, which are chosen from in order until the correct number of items are selected</param>
     /// <param name="count">How many items to select</param>
     /// <returns>Up to the specified count of elements from all provided lists</returns>
-    public List<T> ChooseAntags<T>(int count, params List<T>[] eligiblePlayerLists)
+    public List<ICommonSession> ChooseAntags(int count, params List<ICommonSession>[] eligiblePlayerLists)
     {
-        var chosenPlayers = new List<T>();
+        var chosenPlayers = new List<ICommonSession>();
         foreach (var playerList in eligiblePlayerLists)
         {
             //Remove all chosen players from this list, to prevent duplicates
@@ -226,8 +229,28 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 continue;
 
             //Pick and choose a random number of players from this list
-            chosenPlayers.AddRange(ChooseAntags<T>(count - chosenPlayers.Count, playerList));
+            chosenPlayers.AddRange(ChooseAntags(count - chosenPlayers.Count, playerList));
         }
+        return chosenPlayers;
+    }
+    /// <summary>
+    /// Helper method to choose sessions from a list
+    /// </summary>
+    /// <param name="eligiblePlayers">List of eligible sessions</param>
+    /// <param name="count">How many to choose</param>
+    /// <returns>Up to the specified count of elements from the provided list</returns>
+    public List<ICommonSession> ChooseAntags(int count, List<ICommonSession> eligiblePlayers)
+    {
+        var chosenPlayers = new List<ICommonSession>();
+
+        for (int i = 0; i < count; i++)
+        {
+            if (eligiblePlayers.Count == 0)
+                break;
+
+            chosenPlayers.Add(_random.PickAndTake(eligiblePlayers));
+        }
+
         return chosenPlayers;
     }
     #endregion
@@ -296,91 +319,5 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
     }
     #endregion
-
-    /// <summary>
-    /// Will take a group of entities and check if they are all alive or dead
-    /// </summary>
-    /// <param name="list">The list of the entities</param>
-    /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them dead. (Won't check when emergency shuttle arrives just in case)</param>
-    /// <returns></returns>
-    public bool IsGroupDead(List<EntityUid> list, bool checkOffStation)
-    {
-        var dead = 0;
-        foreach (var entity in list)
-        {
-            if (TryComp<MobStateComponent>(entity, out var state))
-            {
-                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
-                {
-                    dead++;
-                }
-                else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
-                {
-                    dead++;
-                }
-            }
-            //If they don't have the MobStateComponent they might as well be dead.
-            else
-            {
-                dead++;
-            }
-        }
-
-        return dead == list.Count || list.Count == 0;
-    }
-
-    /// <summary>
-    /// Will attempt to spawn an item inside of a persons bag and then pockets.
-    /// </summary>
-    /// <param name="antag">The entity that you want to spawn an item on</param>
-    /// <param name="items">A list of prototype IDs that you want to spawn in the bag.</param>
-    public void GiveAntagBagGear(EntityUid antag, List<EntProtoId> items)
-    {
-        foreach (var item in items)
-        {
-            GiveAntagBagGear(antag, item);
-        }
-    }
-
-    /// <summary>
-    /// Will attempt to spawn an item inside of a persons bag and then pockets.
-    /// </summary>
-    /// <param name="antag">The entity that you want to spawn an item on</param>
-    /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
-    public void GiveAntagBagGear(EntityUid antag, string item)
-    {
-        var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
-        if (!_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out _))
-            return;
-
-        var bag = backSlot.ContainedEntity;
-        if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert(bag.Value, itemToSpawn, out _))
-        {
-            _storageSystem.Insert(bag.Value, itemToSpawn, out _);
-        }
-        else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out _) && jumpsuit.ContainedEntity != null)
-        {
-            if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1Slot, out _))
-            {
-                if (pocket1Slot.ContainedEntity == null)
-                {
-                    if (_containerSystem.CanInsert(itemToSpawn, pocket1Slot))
-                    {
-                        _containerSystem.Insert(itemToSpawn, pocket1Slot);
-                    }
-                }
-                else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2Slot, out _))
-                {
-                    if (pocket2Slot.ContainedEntity == null)
-                    {
-                        if (_containerSystem.CanInsert(itemToSpawn, pocket2Slot))
-                        {
-                            _containerSystem.Insert(itemToSpawn, pocket2Slot);
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
