@@ -562,3 +562,16 @@
       amount: 2
   products:
     Necrosol: 2
+
+- type: reaction
+  id: Aloxadone
+  impact: Medium
+  reactants:
+    Cryoxadone:
+      amount: 1
+    Aloe:
+      amount: 2
+    Sigynate:
+      amount: 2
+  products:
+      Aloxadone: 4

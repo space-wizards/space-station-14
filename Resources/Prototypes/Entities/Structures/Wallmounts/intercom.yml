@@ -23,6 +23,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
+  - type: WiresVisuals
   - type: ContainerFill
     containers:
       board: [ IntercomElectronics ]
@@ -46,6 +47,10 @@
       map: ["enum.RadioDeviceVisualLayers.Speaker"]
       shader: unshaded
       visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      shader: unshaded
+      visible: false
   - type: Transform
     noRot: false
     anchored: true
@@ -60,6 +65,8 @@
     interfaces:
       - key: enum.IntercomUiKey.Key
         type: IntercomBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: Construction
     graph: Intercom
     node: intercom
@@ -87,6 +94,10 @@
                 volume: -4
   - type: GenericVisualizer
     visuals:
+      enum.WiresVisualLayers.MaintenancePanel:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
