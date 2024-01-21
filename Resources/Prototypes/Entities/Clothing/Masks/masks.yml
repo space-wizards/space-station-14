@@ -260,6 +260,7 @@
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
   - type: Item
     storedRotation: -90
 
