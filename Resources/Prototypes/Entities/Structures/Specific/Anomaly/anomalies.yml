@@ -208,7 +208,6 @@
       types:
         Radiation: 10
 
-
 - type: entity
   id: AnomalyIce
   parent: BaseAnomaly
@@ -289,6 +288,86 @@
     superCriticalSpawns:
     - WallSpawnAsteroid
     - SpawnMobOreCrab
+
+- type: entity
+  id: AnomalyFlora
+  parent: BaseAnomaly
+  suffix: Flora
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Structures/Specific/Anomalies/flora_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 8.0
+    energy: 8.5
+    color: "#6270bb"
+  - type: Anomaly
+    animationTime: 6
+    offset: 0.05, 0
+    corePrototype: AnomalyCoreFlora
+    coreInertPrototype: AnomalyCoreFloraInert
+    anomalyContactDamage:
+      types:
+        Slash: 0
+  - type: TileSpawnAnomaly
+    floorTileId: FloorAstroGrass
+    spawnRange: 10
+  - type: EntitySpawnAnomaly
+    maxSpawnAmount: 30
+    spawnRange: 10
+    superCriticalSpawns:
+    - KudzuFlowerAngry
+    spawns:
+    - KudzuFlowerFriendly
+
+- type: entity
+  id: AnomalyFloraBulb
+  name: strange glowing berry
+  parent: BaseStructure
+  description: It's a beautiful strange glowing berry. It seems to have something growing inside it... 
+  suffix: Flora Anomaly
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Diona
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 1
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              EffectAnomalyFloraBulb:
+                min: 1
+                max: 1
+  - type: PointLight
+    radius: 2.0
+    energy: 4.5
+    color: "#6270bb"
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Specific/Anomalies/flora_anom.rsi
+    state: bulb
 
 - type: entity
   id: AnomalyLiquid

@@ -58,3 +58,47 @@
     state: crab_uranium
   - type: SpawnOnDespawn
     prototype: MobUraniumCrab
+
+- type: entity
+  id: EffectAnomalyFloraBulb
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+      - shader: unshaded
+        map: ["enum.EffectLayers.Unshaded"]
+        sprite: Effects/emp.rsi
+        state: emp_disable
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+  - type: RandomSpawner
+    deleteSpawnerAfterSpawn: false
+    rareChance: 0.2
+    offset: 0.5
+    chance: 1
+    prototypes:
+    - FoodAmbrosiaVulgaris
+    - FoodAmbrosiaDeus
+    - FoodBlueTomato
+    - FoodAloe
+    - FoodCabbage
+    - FoodCarrot
+    - FoodGalaxythistle
+    - FoodGatfruit
+    - FoodLemon
+    - FoodLemoon
+    - FoodLime
+    - FoodPeaPod
+    - FoodPineapple
+    - FoodOnionRed
+    - FoodWatermelon
+    rarePrototypes:
+    - MobLuminousEntity
+    - MobLuminousObject
