@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: JoeHammad
   changes:
-  - message: Paramedics are now available on barratry
-    type: Add
-  id: 5262
-  time: '2023-12-05T07:35:36.0000000+00:00'
-- author: JoeHammad
-  changes:
   - message: Paramedics are now available on marathon
     type: Add
   id: 5263
@@ -3792,3 +3786,10 @@
   id: 5762
   time: '2024-01-21T11:16:46.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/19649
+- author: metalgearsloth
+  changes:
+  - message: Fix shuttle docking highlights being inaccurate.
+    type: Fix
+  id: 5763
+  time: '2024-01-21T12:14:47.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24369
