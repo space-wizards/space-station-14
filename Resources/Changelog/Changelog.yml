@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: brainfood1183
-  changes:
-  - message: Clowns can now craft the Banana Clown outfit.
-    type: Add
-  id: 5260
-  time: '2023-12-04T23:12:02.0000000+00:00'
 - author: enumerate0
   changes:
   - message: Fixed Christmas tree bounding box
@@ -3787,3 +3781,13 @@
   id: 5760
   time: '2024-01-21T01:31:12.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24351
+- author: Menshin
+  changes:
+  - message: The PA control box should now properly detect the PA parts in all situations
+      (notably on Origin)
+    type: Fix
+  - message: The PA control box now automatically face the control box on part scanning
+    type: Tweak
+  id: 5761
+  time: '2024-01-21T09:17:17.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24356
