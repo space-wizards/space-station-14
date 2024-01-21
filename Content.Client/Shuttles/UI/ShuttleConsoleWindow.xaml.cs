@@ -234,7 +234,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
-        RadarScreen.HighlightedDock = _entManager.GetEntity(state.Entity);
+        RadarScreen.HighlightedDock = state.Entity;
     }
 
     private void OnDockMouseExited(GUIMouseHoverEventArgs obj, DockingInterfaceState state)

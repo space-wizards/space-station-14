@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: enumerate0
-  changes:
-  - message: Fixed Christmas tree bounding box
-    type: Fix
-  id: 5261
-  time: '2023-12-05T06:20:54.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: Paramedics are now available on barratry
-    type: Add
-  id: 5262
-  time: '2023-12-05T07:35:36.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: Paramedics are now available on marathon
-    type: Add
-  id: 5263
-  time: '2023-12-05T07:36:58.0000000+00:00'
 - author: Whisper
   changes:
   - message: Chloral Hydrate sleep effect will start at 11 units, down from 16.
@@ -3791,3 +3773,24 @@
   id: 5761
   time: '2024-01-21T09:17:17.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24356
+- author: metalgearsloth
+  changes:
+  - message: Fix revolver prediction.
+    type: Fix
+  id: 5762
+  time: '2024-01-21T11:16:46.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/19649
+- author: metalgearsloth
+  changes:
+  - message: Fix shuttle docking highlights being inaccurate.
+    type: Fix
+  id: 5763
+  time: '2024-01-21T12:14:47.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24369
+- author: icekot8
+  changes:
+  - message: Increased the size of flatpacks made by the Flatpacker 1001.
+    type: Tweak
+  id: 5764
+  time: '2024-01-21T17:07:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
