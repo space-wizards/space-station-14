@@ -1,9 +1,33 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-            MinSize="250 100"
-            SetSize="250 100">
-    <BoxContainer Orientation="Vertical">
-        <Label
-            Name="Diagnostics"
-            Text="{Loc health-analyzer-window-no-patient-data-text}"/>
-    </BoxContainer>
+    SetSize="250 100">
+    <ScrollContainer
+        VerticalExpand="True">
+        <BoxContainer
+            Name="RootContainer"
+            Orientation="Vertical">
+            <Label
+                Name="NoPatientDataText"
+                Text="{Loc health-analyzer-window-no-patient-data-text}" />
+            <BoxContainer
+                Name="PatientDataContainer"
+                Orientation="Vertical"
+                Margin="0 0 5 10">
+                <Label
+                    Name="PatientName"/>
+                <Label
+                    Name="Temperature"
+                    Margin="0 5 0 0"/>
+                <Label
+                    Name="BloodLevel"
+                    Margin="0 5 0 0"/>
+                <Label
+                    Name="patientDamageAmount"
+                    Margin="0 15 0 0"/>
+            </BoxContainer>
+            <BoxContainer
+                Name="GroupsContainer"
+                Orientation="Vertical">
+            </BoxContainer>
+        </BoxContainer>
+    </ScrollContainer>
 </DefaultWindow>

@@ -1,0 +1,56 @@
+- type: entity
+  id: SentientSlimesCore
+  parent: [BaseItem, OrganHumanBrain]
+  name: sentient slimes core
+  description: "The source of incredible, unending gooeyness."
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Slime/organs.rsi
+      state: brain-slime
+    - type: Stomach
+    - type: Metabolizer
+      maxReagents: 3
+      metabolizerTypes: [ Slime ]
+      removeEmpty: true
+      groups:
+        - id: Food
+        - id: Drink
+        - id: Medicine
+        - id: Poison
+        - id: Narcotic
+        - id: Alcohol
+          rateModifier: 0.2
+    - type: SolutionContainerManager
+      solutions:
+        stomach:
+          maxVol: 30.0
+
+- type: entity
+  id: OrganSlimesLungs
+  parent: BaseHumanOrgan
+  name: slimes gas sacs
+  description: "Collects nitrogen, which slime cells use for maintenance."
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Slime/organs.rsi
+      layers:
+        - state: lung-l-slime
+        - state: lung-r-slime
+    - type: Lung
+    - type: Metabolizer
+      removeEmpty: true
+      solutionOnBody: false
+      solution: "Lung"
+      metabolizerTypes: [ Slime ]
+      groups:
+      - id: Gas
+        rateModifier: 100.0
+    - type: SolutionContainerManager
+      solutions:
+        organ:
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 10
+        Lung:
+          maxVol: 100.0
+          canReact: false

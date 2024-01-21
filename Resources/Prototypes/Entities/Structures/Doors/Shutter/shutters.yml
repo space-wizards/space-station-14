@@ -32,6 +32,7 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+  - type: NavMapDoor
   - type: Door
     openDrawDepth: BlastDoors
     closedDrawDepth: BlastDoors
@@ -62,8 +63,8 @@
   - type: RadiationBlocker
     resistance: 2
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -139,6 +140,8 @@
     node: ShuttersRadiation
     containers:
     - board
+  - type: RadiationBlocker
+    resistance: 4
 
 - type: entity
   id: ShuttersRadiationOpen
@@ -172,6 +175,8 @@
     node: ShuttersWindow
     containers:
     - board
+  - type: RadiationBlocker
+    resistance: 1
 
 - type: entity
   id: ShuttersWindowOpen

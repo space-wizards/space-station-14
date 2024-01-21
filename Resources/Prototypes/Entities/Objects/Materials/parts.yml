@@ -26,9 +26,12 @@
 - type: entity
   parent: PartBase
   id: PartRodMetal
-  name: metal rods
+  name: metal rod
   suffix: Full
   components:
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50 #Half of a regular steel sheet to reflect the crafting recipe
   - type: Stack
     stackType: MetalRod
     baseLayer: base
@@ -44,7 +47,7 @@
     - state: rods_5
       map: ["base"]
   - type: Item
-    size: 30
+    size: Normal
 #    heldPrefix: rods
   - type: Construction
     graph: MetalRod
@@ -58,6 +61,16 @@
     price: 0
   - type: StackPrice
     price: 5
+  - type: Extractable
+    grindableSolutionName: rod
+  - type: SolutionContainerManager
+    solutions:
+      rod:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 4.5
+        - ReagentId: Carbon
+          Quantity: 0.5
 
 - type: entity
   parent: PartRodMetal
@@ -73,8 +86,6 @@
     state: rods
   - type: Stack
     count: 10
-  - type: Item
-    size: 10
 
 - type: entity
   parent: PartRodMetal
@@ -90,16 +101,21 @@
     state: rods
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: PartRodMetal
   id: PartRodMetalLingering0
   suffix: Lingering, 0
   components:
-  - type: Item
-    size: 0
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelLingering0
+  suffix: Lingering, 0
+  components:
   - type: Stack
     lingering: true
     count: 0

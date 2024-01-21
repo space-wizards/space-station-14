@@ -1,4 +1,4 @@
-﻿using Content.Server.Construction;
+using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 
@@ -20,6 +20,10 @@ public sealed class UpgradePowerSystem : EntitySystem
         SubscribeLocalEvent<UpgradePowerSupplierComponent, MapInitEvent>(OnSupplierMapInit);
         SubscribeLocalEvent<UpgradePowerSupplierComponent, RefreshPartsEvent>(OnSupplierRefreshParts);
         SubscribeLocalEvent<UpgradePowerSupplierComponent, UpgradeExamineEvent>(OnSupplierUpgradeExamine);
+
+        SubscribeLocalEvent<UpgradePowerSupplyRampingComponent, MapInitEvent>(OnSupplyRampingMapInit);
+        SubscribeLocalEvent<UpgradePowerSupplyRampingComponent, RefreshPartsEvent>(OnSupplyRampingRefreshParts);
+        SubscribeLocalEvent<UpgradePowerSupplyRampingComponent, UpgradeExamineEvent>(OnSupplyRampingUpgradeExamine);
     }
 
     private void OnMapInit(EntityUid uid, UpgradePowerDrawComponent component, MapInitEvent args)
@@ -76,7 +80,7 @@ public sealed class UpgradePowerSystem : EntitySystem
         switch (component.Scaling)
         {
             case MachineUpgradeScalingType.Linear:
-                supply += component.BaseSupplyRate * (rating - 1);
+                supply += component.PowerSupplyMultiplier * component.BaseSupplyRate * (rating - 1);
                 break;
             case MachineUpgradeScalingType.Exponential:
                 supply *= MathF.Pow(component.PowerSupplyMultiplier, rating - 1);
@@ -96,5 +100,40 @@ public sealed class UpgradePowerSystem : EntitySystem
     private void OnSupplierUpgradeExamine(EntityUid uid, UpgradePowerSupplierComponent component, UpgradeExamineEvent args)
     {
         args.AddPercentageUpgrade("upgrade-power-supply", component.ActualScalar);
+    }
+
+    private void OnSupplyRampingMapInit(EntityUid uid, UpgradePowerSupplyRampingComponent component, MapInitEvent args)
+    {
+        if (TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
+            component.BaseRampRate = battery.SupplyRampRate;
+    }
+
+    private void OnSupplyRampingRefreshParts(EntityUid uid, UpgradePowerSupplyRampingComponent component, RefreshPartsEvent args)
+    {
+        var rampRate = component.BaseRampRate;
+        var rating = args.PartRatings[component.MachinePartRampRate];
+        switch (component.Scaling)
+        {
+            case MachineUpgradeScalingType.Linear:
+                rampRate += component.SupplyRampingMultiplier * component.BaseRampRate * (rating - 1);
+                break;
+            case MachineUpgradeScalingType.Exponential:
+                rampRate *= MathF.Pow(component.SupplyRampingMultiplier, rating - 1);
+                break;
+            default:
+                Log.Error($"invalid power supply ramping type for {ToPrettyString(uid)}.");
+                rampRate = component.BaseRampRate;
+                break;
+        }
+
+        component.ActualScalar = rampRate / component.BaseRampRate;
+
+        if (TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
+            battery.SupplyRampRate = rampRate;
+    }
+
+    private void OnSupplyRampingUpgradeExamine(EntityUid uid, UpgradePowerSupplyRampingComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("upgrade-power-supply-ramping", component.ActualScalar);
     }
 }

@@ -39,5 +39,18 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Burn: 17
+      types:
+        Blunt: 3
+        Heat: 16
+
+- type: entity
+  id: BulletLightRifleUranium
+  parent: BaseBulletUranium
+  name: bullet (.20 rifle uranium)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 9
+        Piercing: 10

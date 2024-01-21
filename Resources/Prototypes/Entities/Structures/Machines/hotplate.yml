@@ -1,8 +1,8 @@
+# heats an entity or solution placed on it
 - type: entity
-  id: ChemistryHotplate
+  abstract: true
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: hotplate
-  description: "The descendent of the microwaves, our newest invention in beaker heating technology: the hotplate!"
+  id: BaseHeaterMachine
   components:
   - type: Transform
     anchored: true
@@ -19,6 +19,20 @@
         - MidImpassable
         - LowImpassable
         hard: false
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+
+- type: entity
+  parent: BaseHeaterMachine
+  id: ChemistryHotplate
+  name: hotplate
+  description: "The descendent of the microwaves, our newest invention in beaker heating technology: the hotplate!"
+  components:
   - type: Sprite
     sprite: Structures/Machines/hotplate.rsi
     drawdepth: SmallObjects
@@ -28,15 +42,6 @@
     - state: on
       map: ["enum.SolutionHeaterVisuals.IsOn"]
       shader: unshaded
-  - type: ApcPowerReceiver
-    powerLoad: 300
-  - type: ItemMapper
-    sprite: Structures/Machines/hotplate.rsi
-    mapLayers:
-      beaker:
-        whitelist:
-          components:
-          - FitsInDispenser
   - type: SolutionHeater
   - type: ItemPlacer
     whitelist:
@@ -47,11 +52,6 @@
     positionOffset: 0, 0.25
   - type: Machine
     board: HotplateMachineCircuitboard
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      machine_board: !type:Container
-      machine_parts: !type:Container
   - type: GenericVisualizer
     visuals:
       enum.SolutionHeaterVisuals.IsOn:

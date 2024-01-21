@@ -28,7 +28,7 @@ public sealed partial class OpenableComponent : Component
     /// Text shown when examining and its open.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string ExamineText = "drink-component-on-examine-is-opened";
+    public LocId ExamineText = "drink-component-on-examine-is-opened";
 
     /// <summary>
     /// The locale id for the popup shown when IsClosed is called and closed. Needs a "owner" entity argument passed to it.
@@ -36,7 +36,7 @@ public sealed partial class OpenableComponent : Component
     /// It's still generic enough that you should change it if you make openable non-drinks, i.e. unwrap it first, peel it first.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string ClosedPopup = "drink-component-try-use-drink-not-open";
+    public LocId ClosedPopup = "drink-component-try-use-drink-not-open";
 
     /// <summary>
     /// Sound played when opening.

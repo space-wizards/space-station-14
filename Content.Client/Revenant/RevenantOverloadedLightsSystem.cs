@@ -55,7 +55,7 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
         Dirty(uid, light);
     }
 
-    protected override void OnZap(RevenantOverloadedLightsComponent component)
+    protected override void OnZap(Entity<RevenantOverloadedLightsComponent> component)
     {
 
     }

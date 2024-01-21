@@ -55,7 +55,6 @@
     accent: dwarf
   - type: Speech
     speechSounds: Bass
-  - type: Perishable
 
 - type: entity
   parent: BaseSpeciesDummy

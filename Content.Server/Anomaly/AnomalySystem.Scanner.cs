@@ -3,7 +3,7 @@ using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Anomaly;
@@ -77,6 +77,8 @@ public sealed partial class AnomalySystem
         if (args.Target is not { } target)
             return;
         if (!HasComp<AnomalyComponent>(target))
+            return;
+        if (!args.CanReach)
             return;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)

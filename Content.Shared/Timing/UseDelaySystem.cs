@@ -1,133 +1,64 @@
-using System.Threading;
-using Content.Shared.Cooldown;
-using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Timing;
 
 public sealed class UseDelaySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-    private HashSet<UseDelayComponent> _activeDelays = new();
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     public override void Initialize()
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<UseDelayComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<UseDelayComponent, ComponentHandleState>(OnHandleState);
-
-        SubscribeLocalEvent<UseDelayComponent, EntityPausedEvent>(OnPaused);
         SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
-    private void OnPaused(EntityUid uid, UseDelayComponent component, ref EntityPausedEvent args)
+    private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
     {
-        // This entity just got paused, but wasn't before
-        if (component.DelayEndTime != null)
-            component.RemainingDelay = _gameTiming.CurTime - component.DelayEndTime;
-
-        _activeDelays.Remove(component);
-        Dirty(component);
+        // We got unpaused, resume the delay
+        ent.Comp.DelayStartTime += args.PausedTime;
+        ent.Comp.DelayEndTime += args.PausedTime;
+        Dirty(ent);
     }
 
-    private void OnUnpaused(EntityUid uid, UseDelayComponent component, ref EntityUnpausedEvent args)
+    public void SetDelay(Entity<UseDelayComponent> ent, TimeSpan delay)
     {
-        if (component.RemainingDelay == null)
+        if (ent.Comp.Delay == delay)
             return;
 
-        // We got unpaused, resume the delay/cooldown. Currently this takes for granted that ItemCooldownComponent
-        // handles the pausing on its own. I'm not even gonna check, because I CBF fixing it if it doesn't.
-        component.DelayEndTime = _gameTiming.CurTime + component.RemainingDelay;
-        Dirty(component);
-        _activeDelays.Add(component);
+        ent.Comp.Delay = delay;
+        Dirty(ent);
     }
 
-    private void OnHandleState(EntityUid uid, UseDelayComponent component, ref ComponentHandleState args)
+    /// <summary>
+    /// Returns true if the entity has a currently active UseDelay.
+    /// </summary>
+    public bool IsDelayed(Entity<UseDelayComponent> ent)
     {
-        if (args.Current is not UseDelayComponentState state)
-            return;
-
-        component.LastUseTime = state.LastUseTime;
-        component.Delay = state.Delay;
-        component.DelayEndTime = state.DelayEndTime;
-
-        if (component.DelayEndTime == null)
-            _activeDelays.Remove(component);
-        else
-            _activeDelays.Add(component);
+        return ent.Comp.DelayEndTime >= _gameTiming.CurTime;
     }
 
-    private void OnGetState(EntityUid uid, UseDelayComponent component, ref ComponentGetState args)
+    /// <summary>
+    /// Cancels the current delay.
+    /// </summary>
+    public void CancelDelay(Entity<UseDelayComponent> ent)
     {
-        args.State = new UseDelayComponentState(component.LastUseTime, component.Delay, component.DelayEndTime);
+        ent.Comp.DelayEndTime = _gameTiming.CurTime;
+        Dirty(ent);
     }
 
-    public override void Update(float frameTime)
+    /// <summary>
+    /// Resets the UseDelay entirely for this entity if possible.
+    /// </summary>
+    /// <param name="checkDelayed">Check if the entity has an ongoing delay, return false if it does, return true if it does not.</param>
+    public bool TryResetDelay(Entity<UseDelayComponent> ent, bool checkDelayed = false)
     {
-        base.Update(frameTime);
+        if (checkDelayed && IsDelayed(ent))
+            return false;
 
-        var toRemove = new RemQueue<UseDelayComponent>();
         var curTime = _gameTiming.CurTime;
-        var mQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
-
-        // TODO refactor this to use active components
-        foreach (var delay in _activeDelays)
-        {
-            if (delay.DelayEndTime == null ||
-                curTime > delay.DelayEndTime ||
-                Deleted(delay.Owner, mQuery))
-            {
-                toRemove.Add(delay);
-            }
-        }
-
-        foreach (var delay in toRemove)
-        {
-            delay.DelayEndTime = null;
-            _activeDelays.Remove(delay);
-            Dirty(delay);
-        }
-    }
-
-    public void BeginDelay(EntityUid uid, UseDelayComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
-            return;
-
-        if (component.ActiveDelay)
-            return;
-
-        DebugTools.Assert(!_activeDelays.Contains(component));
-        _activeDelays.Add(component);
-
-        var currentTime = _gameTiming.CurTime;
-        component.LastUseTime = currentTime;
-        component.DelayEndTime = currentTime + component.Delay;
-        Dirty(component);
-
-        // TODO just merge these components?
-        var cooldown = EnsureComp<ItemCooldownComponent>(component.Owner);
-        cooldown.CooldownStart = currentTime;
-        cooldown.CooldownEnd = component.DelayEndTime;
-    }
-
-    public bool ActiveDelay(EntityUid uid, UseDelayComponent? component = null)
-    {
-        return Resolve(uid, ref component, false) && component.ActiveDelay;
-    }
-
-    public void Cancel(UseDelayComponent component)
-    {
-        component.DelayEndTime = null;
-        _activeDelays.Remove(component);
-        Dirty(component);
-
-        if (TryComp<ItemCooldownComponent>(component.Owner, out var cooldown))
-        {
-            cooldown.CooldownEnd = _gameTiming.CurTime;
-        }
+        ent.Comp.DelayStartTime = curTime;
+        ent.Comp.DelayEndTime = curTime - _metadata.GetPauseTime(ent) + ent.Comp.Delay;
+        Dirty(ent);
+        return true;
     }
 }

@@ -20,10 +20,10 @@ public abstract class SharedRevenantOverloadedLightsSystem : EntitySystem
             if (comp.Accumulator < comp.ZapDelay)
                 continue;
 
-            OnZap(comp);
+            OnZap((uid, comp));
             RemCompDeferred(uid, comp);
         }
     }
 
-    protected abstract void OnZap(RevenantOverloadedLightsComponent component);
+    protected abstract void OnZap(Entity<RevenantOverloadedLightsComponent> component);
 }

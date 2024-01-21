@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -20,6 +21,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -35,7 +37,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly INetManager _netManager = default!;
@@ -212,6 +214,17 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
     }
 
+    /// <summary>
+    /// Shoots by assuming the gun is the user at default coordinates.
+    /// </summary>
+    public void AttemptShoot(EntityUid gunUid, GunComponent gun)
+    {
+        var coordinates = new EntityCoordinates(gunUid, new Vector2(0, -1));
+        gun.ShootCoordinates = coordinates;
+        AttemptShoot(gunUid, gunUid, gun);
+        gun.ShotCounter = 0;
+    }
+
     private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
         if (gun.FireRate <= 0f ||
@@ -320,9 +333,9 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
-                if (ev.Reason != null)
+                if (ev.Reason != null && Timing.IsFirstTimePredicted)
                 {
-                    PopupSystem.PopupClient(ev.Reason, gunUid, user);
+                    PopupSystem.PopupCursor(ev.Reason);
                 }
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
@@ -372,6 +385,23 @@ public abstract partial class SharedGunSystem : EntitySystem
         out bool userImpulse,
         EntityUid? user = null,
         bool throwItems = false);
+
+    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
+    {
+        var physics = EnsureComp<PhysicsComponent>(uid);
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
+
+        var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
+        var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
+        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
+
+        var projectile = EnsureComp<ProjectileComponent>(uid);
+        Projectiles.SetShooter(uid, projectile, user ?? gunUid);
+        projectile.Weapon = gunUid;
+
+        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
+    }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 

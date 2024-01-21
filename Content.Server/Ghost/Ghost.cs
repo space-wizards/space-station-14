@@ -1,7 +1,6 @@
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Ghost
@@ -17,7 +16,7 @@ namespace Content.Server.Ghost
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player == null)
             {
                 shell.WriteLine("You have no session, you can't ghost.");
@@ -27,8 +26,8 @@ namespace Content.Server.Ghost
             var minds = _entities.System<SharedMindSystem>();
             if (!minds.TryGetMind(player, out var mindId, out var mind))
             {
-                shell.WriteLine("You have no Mind, you can't ghost.");
-                return;
+                mindId = minds.CreateMind(player.UserId);
+                mind = _entities.GetComponent<MindComponent>(mindId);
             }
 
             if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mindId, true, true, mind))

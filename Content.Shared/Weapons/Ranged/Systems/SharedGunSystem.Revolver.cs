@@ -140,7 +140,7 @@ public partial class SharedGunSystem
                 }
 
                 component.AmmoSlots[index] = ent.Value;
-                component.AmmoContainer.Insert(ent.Value, EntityManager);
+                Containers.Insert(ent.Value, component.AmmoContainer);
                 SetChamber(index, component, uid);
 
                 if (ev.Ammo.Count == 0)
@@ -169,7 +169,7 @@ public partial class SharedGunSystem
             }
 
             component.AmmoSlots[index] = uid;
-            component.AmmoContainer.Insert(uid);
+            Containers.Insert(uid, component.AmmoContainer);
             SetChamber(index, component, uid);
             Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
@@ -304,7 +304,7 @@ public partial class SharedGunSystem
             else
             {
                 component.AmmoSlots[i] = null;
-                component.AmmoContainer.Remove(slot.Value);
+                Containers.Remove(slot.Value, component.AmmoContainer);
                 component.Chambers[i] = null;
 
                 if (!_netManager.IsClient)

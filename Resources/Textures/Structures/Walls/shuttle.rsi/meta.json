@@ -41,6 +41,24 @@
         {
             "name": "state7",
             "directions": 4
+        },
+        {
+            "name": "shuttle_construct-0"
+        },
+        {
+            "name": "shuttle_construct-1"
+        },
+        {
+            "name": "shuttle_construct-2"
+        },
+        {
+            "name": "shuttle_construct-3"
+        },
+        {
+            "name": "shuttle_construct-4"
+        },
+        {
+            "name": "shuttle_construct-5"
         }
     ]
 }

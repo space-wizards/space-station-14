@@ -64,7 +64,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
 
         var threats = _proto.Index<WeightedRandomPrototype>(comp.Threats);
         var threat = threats.Pick(_random);
-        CallInThreat(_proto.Index<ThreatPrototype>(threat));
+        CallInThreat(_proto.Index<NinjaHackingThreatPrototype>(threat));
 
         // prevent calling in multiple threats
         RemComp<CommsHackerComponent>(uid);
@@ -76,10 +76,10 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
     /// <summary>
     /// Makes announcement and adds game rule of the threat.
     /// </summary>
-    public void CallInThreat(ThreatPrototype threat)
+    public void CallInThreat(NinjaHackingThreatPrototype ninjaHackingThreat)
     {
-        _gameTicker.StartGameRule(threat.Rule, out _);
-        _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: true, colorOverride: Color.Red);
+        _gameTicker.StartGameRule(ninjaHackingThreat.Rule, out _);
+        _chat.DispatchGlobalAnnouncement(Loc.GetString(ninjaHackingThreat.Announcement), playSound: true, colorOverride: Color.Red);
     }
 }
 

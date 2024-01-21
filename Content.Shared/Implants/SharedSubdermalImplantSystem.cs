@@ -1,10 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 
@@ -47,11 +48,14 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
             {
                 if (_tag.HasTag(implant, "MicroBomb"))
                 {
-                    implantContainer.Remove(implant);
+                    _container.Remove(implant, implantContainer);
                     QueueDel(implant);
                 }
             }
         }
+
+        var ev = new ImplantImplantedEvent(uid, component.ImplantedEntity.Value);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnRemoveAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingRemovedAttemptEvent args)
@@ -120,7 +124,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         var implantContainer = implantedComp.ImplantContainer;
 
         component.ImplantedEntity = target;
-        implantContainer.Insert(implant);
+        _container.Insert(implant, implantContainer);
     }
 
     /// <summary>
@@ -128,7 +132,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// </summary>
     /// <param name="target">the implanted entity</param>
     /// <param name="implant">the implant</param>
-    /// <param name="component">the implant component</param>
+    [PublicAPI]
     public void ForceRemove(EntityUid target, EntityUid implant)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
@@ -136,7 +140,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         var implantContainer = implanted.ImplantContainer;
 
-        implantContainer.Remove(implant);
+        _container.Remove(implant, implantContainer);
         QueueDel(implant);
     }
 
@@ -144,6 +148,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// Removes and deletes implants by force
     /// </summary>
     /// <param name="target">The entity to have implants removed</param>
+    [PublicAPI]
     public void WipeImplants(EntityUid target)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
@@ -178,5 +183,25 @@ public sealed class ImplantRelayEvent<T> where T : notnull
     public ImplantRelayEvent(T ev)
     {
         Event = ev;
+    }
+}
+
+/// <summary>
+/// Event that is raised whenever someone is implanted with any given implant.
+/// Raised on the the implant entity.
+/// </summary>
+/// <remarks>
+/// implant implant implant implant
+/// </remarks>
+[ByRefEvent]
+public readonly struct ImplantImplantedEvent
+{
+    public readonly EntityUid Implant;
+    public readonly EntityUid? Implanted;
+
+    public ImplantImplantedEvent(EntityUid implant, EntityUid? implanted)
+    {
+        Implant = implant;
+        Implanted = implanted;
     }
 }

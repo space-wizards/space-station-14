@@ -17,7 +17,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controllers.Implementations;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -172,10 +172,12 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
             return;
         if (_sandbox.SandboxAllowed && _window.IsOpen != true)
         {
+            UIManager.ClickSound();
             _window.OpenCentered();
         }
         else
         {
+            UIManager.ClickSound();
             _window.Close();
         }
     }

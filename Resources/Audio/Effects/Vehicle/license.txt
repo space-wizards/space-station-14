@@ -1,7 +1,0 @@
-vehiclestartup.ogg and vehicleengineidle.ogg taken from user InspectorJ at https://freesound.org/people/InspectorJ/sounds/338954/
-
-carhorn.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a
-
-policesiren.ogg taken from freesound user blukotek at https://freesound.org/people/blukotek/sounds/431651/
-
-bicyclebell.ogg taken from freesound user 12gkopeckak at https://freesound.org/people/13gkopeckak/sounds/378911/

@@ -19,6 +19,16 @@
   group: market
 
 - type: cargoProduct
+  id: MedicalChemistryVials
+  icon:
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    state: vial
+  product: CrateChemistryVials
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: EmergencyBurnKit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
@@ -95,6 +105,16 @@
     state: icon
   product: CrateVirologyBiosuit
   cost: 800
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalMindShieldImplants
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  product: CrateMindShieldImplants
+  cost: 3000
   category: Medical
   group: market
 

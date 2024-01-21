@@ -1,6 +1,5 @@
-﻿<ContainerButton xmlns="https://spacestation14.io"
-                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-                 EnableAllKeybinds="True">
+﻿<Control xmlns="https://spacestation14.io"
+                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <PanelContainer Name="BackgroundColorPanel" Access="Public"/>
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True"
@@ -32,5 +31,11 @@
                ClipText="True"
                Text="{Loc player-tab-antagonist}"
                MouseFilter="Pass"/>
+        <Label Name="PlaytimeLabel"
+               SizeFlagsStretchRatio="2"
+               HorizontalExpand="True"
+               ClipText="True"
+               Text="{Loc player-tab-playtime}"
+               MouseFilter="Pass"/>
     </BoxContainer>
-</ContainerButton>
+</Control>

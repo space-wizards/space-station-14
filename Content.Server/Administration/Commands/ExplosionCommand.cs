@@ -3,7 +3,6 @@ using Content.Server.EUI;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Explosion;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -21,7 +20,7 @@ public sealed class OpenExplosionEui : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player as IPlayerSession;
+        var player = shell.Player;
         if (player == null)
         {
             shell.WriteError("This does not work from the server console.");

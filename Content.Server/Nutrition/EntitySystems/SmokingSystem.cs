@@ -1,16 +1,17 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Forensics;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
@@ -29,11 +30,13 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
 
         private const float UpdateTimer = 3f;
 
-        private float _timer = 0f;
+        private float _timer;
 
         /// <summary>
         ///     We keep a list of active smokables, because iterating all existing smokables would be dumb.
@@ -44,6 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
+            SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
 
             InitializeCigars();
             InitializePipes();
@@ -75,14 +79,22 @@ namespace Content.Server.Nutrition.EntitySystems
                 _active.Remove(uid);
         }
 
-        private void OnSmokableIsHotEvent(EntityUid uid, SmokableComponent component, IsHotEvent args)
+        private void OnSmokableIsHotEvent(Entity<SmokableComponent> entity, ref IsHotEvent args)
         {
-            args.IsHot = component.State == SmokableState.Lit;
+            args.IsHot = entity.Comp.State == SmokableState.Lit;
         }
 
-        private void OnSmokableShutdownEvent(EntityUid uid, SmokableComponent component, ComponentShutdown args)
+        private void OnSmokableShutdownEvent(Entity<SmokableComponent> entity, ref ComponentShutdown args)
         {
-            _active.Remove(uid);
+            _active.Remove(entity);
+        }
+
+        private void OnSmokeableEquipEvent(Entity<SmokableComponent> entity, ref GotEquippedEvent args)
+        {
+            if (args.Slot == "mask")
+            {
+                _forensics.TransferDna(entity.Owner, args.Equipee, false);
+            }
         }
 
         public override void Update(float frameTime)
@@ -101,7 +113,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
                 }
 
-                if (!_solutionContainerSystem.TryGetSolution(uid, smokable.Solution, out var solution))
+                if (!_solutionContainerSystem.TryGetSolution(uid, smokable.Solution, out var soln, out var solution))
                 {
                     _active.Remove(uid);
                     continue;
@@ -111,14 +123,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     var transform = Transform(uid);
 
-                    if (transform.GridUid is {} gridUid)
+                    if (transform.GridUid is { } gridUid)
                     {
                         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
                         _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);
                     }
                 }
 
-                var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
+                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, smokable.InhaleAmount * _timer);
 
                 if (solution.Volume == FixedPoint2.Zero)
                 {
@@ -130,8 +142,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
-                if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
-                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == smokable.Owner) ||
+                if (!_container.TryGetContainingContainer(uid, out var containerManager) ||
+                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == uid) ||
                     !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
                 {
                     continue;

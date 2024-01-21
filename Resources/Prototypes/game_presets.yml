@@ -20,6 +20,15 @@
   - BasicStationEventScheduler
 
 - type: gamePreset
+  id: Greenshift
+  alias:
+  - greenshift
+  - shittersafarideluxeedition
+  name: greenshift-title
+  showInVote: false #4boring4vote
+  description: greenshift-description
+
+- type: gamePreset
   id: Secret
   alias:
     - secret
@@ -74,6 +83,19 @@
   showInVote: false
   rules:
     - Nukeops
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Revolutionary
+  alias:
+    - rev
+    - revs
+    - revolutionaries
+  name: rev-title
+  description: rev-description
+  showInVote: false
+  rules:
+    - Revolutionary
     - BasicStationEventScheduler
 
 - type: gamePreset

@@ -22,32 +22,34 @@ namespace Content.Server.Atmos.EntitySystems
         [ViewVariables(VVAccess.ReadWrite)]
         public string? SpaceWindSound { get; private set; } = "/Audio/Effects/space_wind.ogg";
 
-        private HashSet<MovedByPressureComponent> _activePressures = new(8);
+        private readonly HashSet<Entity<MovedByPressureComponent>> _activePressures = new(8);
 
         private void UpdateHighPressure(float frameTime)
         {
-            var toRemove = new RemQueue<MovedByPressureComponent>();
+            var toRemove = new RemQueue<Entity<MovedByPressureComponent>>();
 
-            foreach (var comp in _activePressures)
+            foreach (var ent in _activePressures)
             {
-                var uid = comp.Owner;
+                var (uid, comp) = ent;
                 MetaDataComponent? metadata = null;
 
                 if (Deleted(uid, metadata))
                 {
-                    toRemove.Add(comp);
+                    toRemove.Add((uid, comp));
                     continue;
                 }
 
-                if (Paused(uid, metadata)) continue;
+                if (Paused(uid, metadata))
+                    continue;
 
                 comp.Accumulator += frameTime;
 
-                if (comp.Accumulator < 2f) continue;
+                if (comp.Accumulator < 2f)
+                    continue;
 
                 // Reset it just for VV reasons even though it doesn't matter
                 comp.Accumulator = 0f;
-                toRemove.Add(comp);
+                toRemove.Add(ent);
 
                 if (HasComp<MobStateComponent>(uid) &&
                     TryComp<PhysicsComponent>(uid, out var body))
@@ -86,10 +88,10 @@ namespace Content.Server.Atmos.EntitySystems
             // idk it's hard.
 
             component.Accumulator = 0f;
-            _activePressures.Add(component);
+            _activePressures.Add((uid, component));
         }
 
-        private void HighPressureMovements(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery, EntityQuery<MetaDataComponent> metas)
+        private void HighPressureMovements(Entity<GridAtmosphereComponent> gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery, EntityQuery<MetaDataComponent> metas)
         {
             // TODO ATMOS finish this
 
@@ -99,8 +101,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if(_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
                     var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
-                    SoundSystem.Play(SpaceWindSound, Filter.Pvs(coordinates),
-                        coordinates, AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                    _audio.PlayPvs(SpaceWindSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
 
@@ -118,7 +119,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
-            var gridWorldRotation = xforms.GetComponent(gridAtmosphere.Owner).WorldRotation;
+            var gridWorldRotation = xforms.GetComponent(gridAtmosphere).WorldRotation;
 
             // If we're using monstermos, smooth out the yeet direction to follow the flow
             if (MonstermosEqualization)
@@ -139,7 +140,10 @@ namespace Content.Server.Atmos.EntitySystems
                     tile.PressureSpecificTarget = curTile;
             }
 
-            foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices, 0f))
+            _entSet.Clear();
+            _lookup.GetLocalEntitiesIntersecting(tile.GridIndex, tile.GridIndices, _entSet, 0f);
+
+            foreach (var entity in _entSet)
             {
                 // Ideally containers would have their own EntityQuery internally or something given recursively it may need to slam GetComp<T> anyway.
                 // Also, don't care about static bodies (but also due to collisionwakestate can't query dynamic directly atm).
@@ -151,12 +155,12 @@ namespace Content.Server.Atmos.EntitySystems
                 if (_containers.IsEntityInContainer(entity, metas.GetComponent(entity))) continue;
 
                 var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
-                if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.UpdateCounter)
+                if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.Comp.UpdateCounter)
                 {
                     // tl;dr YEET
                     ExperiencePressureDifference(
-                        pressureMovements,
-                        gridAtmosphere.UpdateCounter,
+                        (entity, pressureMovements),
+                        gridAtmosphere.Comp.UpdateCounter,
                         tile.PressureDifference,
                         tile.PressureDirection, 0,
                         tile.PressureSpecificTarget?.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager) ?? EntityCoordinates.Invalid,
@@ -180,7 +184,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         public void ExperiencePressureDifference(
-            MovedByPressureComponent component,
+            Entity<MovedByPressureComponent> ent,
             int cycle,
             float pressureDifference,
             AtmosDirection direction,
@@ -190,12 +194,12 @@ namespace Content.Server.Atmos.EntitySystems
             TransformComponent? xform = null,
             PhysicsComponent? physics = null)
         {
-            var uid = component.Owner;
-
+            var (uid, component) = ent;
             if (!Resolve(uid, ref physics, false))
                 return;
 
-            if (!Resolve(uid, ref xform)) return;
+            if (!Resolve(uid, ref xform))
+                return;
 
             // TODO ATMOS stuns?
 

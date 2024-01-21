@@ -14,29 +14,6 @@
   - type: RandomSpawner
   #small item
     prototypes:
-      - DrinkColaBottleFull
-      - DrinkSpaceMountainWindBottleFull
-      - DrinkSpaceUpBottleFull
-      - DrinkWaterBottleFull
-      - DrinkColaCan
-      - DrinkIcedTeaCan
-      - DrinkLemonLimeCan
-      - DrinkGrapeCan
-      - DrinkRootBeerCan
-      - DrinkSodaWaterCan
-      - DrinkSpaceMountainWindCan
-      - DrinkSpaceUpCan
-      - DrinkStarkistCan
-      - DrinkTonicWaterCan
-      - DrinkFourteenLokoCan
-      - DrinkChangelingStingCan
-      - DrinkDrGibbCan
-      - DrinkEnergyDrinkCan
-      - DrinkHotCoco
-      - DrinkHotCoffee
-      - DrinkTeacup
-      - DrinkLean
-      - DrinkWaterCup
       - FoodSnackBoritos
       - FoodSnackCheesie
       - FoodSnackChips
@@ -52,5 +29,21 @@
       - FoodSnackCookieFortune
       - FoodSnackNutribrick
       - FoodSnackMREBrownie
+      - FoodFrozenSandwich
+      - FoodFrozenSandwichStrawberry
+      - FoodFrozenFreezy
+      - FoodFrozenSundae
+      - FoodFrozenCornuto
+      - FoodFrozenPopsicleOrange
+      - FoodFrozenPopsicleBerry
+      - FoodFrozenPopsicleJumbo
+      - FoodFrozenSnowcone
+      - FoodFrozenSnowconeBerry
+      - FoodFrozenSnowconeFruit
+      - FoodFrozenSnowconeClown
+      - FoodFrozenSnowconeMime
+      - FoodFrozenSnowconeRainbow
+      - FoodSnackPistachios
+      - FoodSnackSemki
     chance: 0.8
     offset: 0.0

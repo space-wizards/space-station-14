@@ -24,6 +24,7 @@
   - type: Tool
     qualities:
       - Prying
+  - type: Prying
   - type: MultipleTool
     statusShowBehavior: true
     entries:

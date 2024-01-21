@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Administration.Logs;
@@ -9,6 +10,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -123,14 +125,10 @@ public sealed class FloorTileSystem : EntitySystem
             if (mapGrid != null)
             {
                 var gridUid = mapGrid.Owner;
-                var ev = new FloorTileAttemptEvent();
-                RaiseLocalEvent(mapGrid);
 
-                if (HasComp<ProtectedGridComponent>(gridUid) || ev.Cancelled)
+                if (!CanPlaceTile(gridUid, mapGrid, out var reason))
                 {
-                    if (_netManager.IsClient && _timing.IsFirstTimePredicted)
-                        _popup.PopupEntity(Loc.GetString("invalid-floor-placement"), args.User);
-
+                    _popup.PopupClient(reason, args.User, args.User);
                     return;
                 }
 
@@ -177,9 +175,25 @@ public sealed class FloorTileSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        var variant = ((ContentTileDefinition) _tileDefinitionManager[tileId]).PickVariant();
+        // TODO: Proper predicted RNG.
+        var variant = (byte) (_timing.CurTick.Value % ((ContentTileDefinition) _tileDefinitionManager[tileId]).Variants);
         mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
 
-        _audio.PlayPredicted(placeSound, location, user, AudioHelpers.WithVariation(0.125f, _random));
+        _audio.PlayPredicted(placeSound, location, user);
+    }
+
+    public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, [NotNullWhen(false)] out string? reason)
+    {
+        var ev = new FloorTileAttemptEvent();
+        RaiseLocalEvent(gridUid, ref ev);
+
+        if (HasComp<ProtectedGridComponent>(gridUid) || ev.Cancelled)
+        {
+            reason = Loc.GetString("invalid-floor-placement");
+            return false;
+        }
+
+        reason = null;
+        return true;
     }
 }
