@@ -6,5 +6,5 @@ namespace Content.Shared.Power.Generator;
 public sealed partial class ActiveGeneratorRevvingComponent: Component
 {
     [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public TimeSpan CurrentTime = TimeSpan.FromSeconds(0);
+    public TimeSpan CurrentTime = TimeSpan.Zero;
 }
