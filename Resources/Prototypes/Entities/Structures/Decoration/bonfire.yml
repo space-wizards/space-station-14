@@ -30,6 +30,7 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  - type: NoPaintShader
 
 - type: entity
   id: LegionnaireBonfire

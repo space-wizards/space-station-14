@@ -93,3 +93,4 @@
     - RevenantTheme
   - type: Speech
     speechVerb: Ghost
+  - type: NoPaintShader

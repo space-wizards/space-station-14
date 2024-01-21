@@ -103,6 +103,7 @@
     - type: Tag
       tags:
         - CannotSuicide
+    - type: NoPaintShader
 
 # From the uplink injector
 - type: entity

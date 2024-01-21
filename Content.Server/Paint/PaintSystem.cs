@@ -71,7 +71,7 @@ public sealed class PaintSystem : SharedPaintSystem
             return false;
         }
 
-        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target))
+        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target) || HasComp<NoPaintShaderComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("paint-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;

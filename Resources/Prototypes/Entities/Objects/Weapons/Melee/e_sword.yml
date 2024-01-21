@@ -76,6 +76,7 @@
         shader: unshaded
   - type: DisarmMalus
     malus: 0
+  - type: NoPaintShader
   - type: Reflect
     enabled: false
 

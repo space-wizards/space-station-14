@@ -25,6 +25,7 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: NoPaintShader
 
 - type: entity
   id: HoloFan
