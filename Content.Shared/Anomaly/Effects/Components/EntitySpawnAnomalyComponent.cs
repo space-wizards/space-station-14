@@ -6,48 +6,67 @@ namespace Content.Shared.Anomaly.Effects.Components;
 public sealed partial class EntitySpawnAnomalyComponent : Component
 {
     /// <summary>
+    /// All types of entity spawns with their settings
+    /// </summary>
+    [DataField]
+    public List<EntitySpawnSettingsEntry> Entries = new();
+}
+
+[DataDefinition, Serializable]
+public readonly partial record struct EntitySpawnSettingsEntry()
+{
+    /// <summary>
     /// A list of entities that are random picked to be spawned on each pulse
     /// </summary>
     [DataField]
-    public List<EntProtoId> Spawns = new();
+    public List<EntProtoId> Spawns { get; init; } = new();
 
     /// <summary>
-    /// A list of entities that are random picked to be spawned when supercritical;
+    /// The minimum number of entities that spawn per pulse
     /// </summary>
     [DataField]
-    public List<EntProtoId> SuperCriticalSpawns = new();
+    public int MinAmount { get; init; } = 1;
 
     /// <summary>
     /// The maximum number of entities that spawn per pulse
     /// scales with severity.
     /// </summary>
-    [DataField("maxSpawnAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaxSpawnAmount = 7;
+    [DataField]
+    public int MaxAmount { get; init; } = 7;
+
+    /// <summary>
+    /// The distance from the anomaly in which the entities will not appear
+    /// </summary>
+    [DataField]
+    public float MinRange { get; init; } = 1f;
 
     /// <summary>
     /// The maximum radius the entities will spawn in.
-    /// Also governs the maximum reach of flesh tiles
-    /// scales with stability
     /// </summary>
-    [DataField("spawnRange"), ViewVariables(VVAccess.ReadWrite)]
-    public float SpawnRange = 5f;
+    [DataField]
+    public float MaxRange { get; init; } = 7f;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on Pulse
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool SpawnOnPulse = true;
+    [DataField]
+    public bool SpawnOnPulse { get; init; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on SuperCritical
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool SpawnOnSuperCritical = true;
+    [DataField]
+    public bool SpawnOnSuperCritical { get; init; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on StabilityChanged
-    /// The idea was to spawn entities either on Pulse/Supercritical OR StabilityChanged
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool SpawnOnStabilityChanged = false;
+    [DataField]
+    public bool SpawnOnStabilityChanged { get; init; } = false;
+
+    /// <summary>
+    /// Whether or not anomaly spawns entities on SeverityChanged
+    /// </summary>
+    [DataField]
+    public bool SpawnOnSeverityChanged { get; init; } = false;
 }
