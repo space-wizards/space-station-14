@@ -31,6 +31,9 @@ public partial class SharedGunSystem
 
     private void OnRevolverUse(EntityUid uid, RevolverAmmoProviderComponent component, UseInHandEvent args)
     {
+        if (!_useDelay.TryResetDelay(uid))
+            return;
+
         Cycle(component);
         UpdateAmmoCount(uid, prediction: false);
         Dirty(uid, component);
