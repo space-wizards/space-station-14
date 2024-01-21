@@ -24,8 +24,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Interaction.Components;
-using System.Threading.Tasks;
 using Content.Server.Forensics;
 using Content.Shared.Mindshield.Components;
 using Robust.Shared.Serialization.Manager;
@@ -309,8 +307,8 @@ namespace Content.Server.Polymorph.Systems
             _inventory.TransferEntityInventories(uid, child); // transfer the inventory all the time
             foreach (var hand in _hands.EnumerateHeld(uid))
             {
-                _hands.TryDrop(uid, hand, checkActionBlocker: false);
-                _hands.TryPickupAnyHand(child, hand);
+                if (!_hands.TryPickupAnyHand(child, hand))
+                    _hands.TryDrop(uid, hand, checkActionBlocker: false);
             }
 
             if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
