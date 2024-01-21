@@ -98,7 +98,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
             AddChild(new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -213,7 +213,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
 
             AddChild(new BoxContainer
             {
@@ -300,7 +300,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
 
             AddChild(new BoxContainer
             {
@@ -419,7 +419,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
             AddChild((_bulletsList = new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,

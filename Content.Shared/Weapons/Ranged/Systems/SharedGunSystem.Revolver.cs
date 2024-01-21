@@ -273,8 +273,7 @@ public partial class SharedGunSystem
 
     public void EmptyRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
-        var xform = Transform(revolverUid);
-        var mapCoordinates = xform.MapPosition;
+        var mapCoordinates = TransformSystem.GetMapCoordinates(revolverUid);
         var anyEmpty = false;
 
         for (var i = 0; i < component.Capacity; i++)
@@ -369,7 +368,7 @@ public partial class SharedGunSystem
                     if (!_netManager.IsClient)
                     {
                         component.AmmoSlots[index] = ent;
-                        component.AmmoContainer.Insert(ent.Value);
+                        Containers.Insert(ent.Value, component.AmmoContainer);
                     }
 
                     component.Chambers[index] = false;
@@ -399,8 +398,11 @@ public partial class SharedGunSystem
                 args.Ammo.Add((ent.Value, EnsureComp<AmmoComponent>(ent.Value)));
             }
 
-            // AmmoContainer should be handled elsewhere whenever shooting does container changes.
-            TransformSystem.SetCoordinates(ent.Value, args.Coordinates);
+            // Delete the cartridge entity on client
+            if (_netManager.IsClient)
+            {
+                QueueDel(ent);
+            }
         }
 
         UpdateAmmoCount(uid, prediction: false);
