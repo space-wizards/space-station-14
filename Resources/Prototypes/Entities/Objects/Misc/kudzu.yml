@@ -107,7 +107,7 @@
   id: KudzuFlowerFriendly
   name: floral carpet
   suffix: Friendly, Floral Anomaly
-  description: a colorful carpet of flowers sprawling in every direction. You're not sure whether to take it down or leave it up
+  description: A colorful carpet of flowers sprawling in every direction. You're not sure whether to take it down or leave it up.
   parent: Kudzu
   components:
     - type: Sprite
