@@ -169,6 +169,7 @@
        - MagazineBoxMagnum
        - MagazineBoxRifle
        - MagazineBoxLightRifle
+       - GrenadeBlast
     emagDynamicRecipes:
       - CartridgePistolRubber
       - CartridgeMagnumRubber
@@ -197,6 +198,12 @@
       - MagazineBoxMagnumUranium
       - MagazineBoxLightRifleUranium
       - MagazineBoxRifleUranium
+      - PowerCageSmall
+      - PowerCageMedium
+      - PowerCageHigh
+      - MagazineGrenadeEmpty
+      - GrenadeEMP
+      - GrenadeFlash
 
 - type: entity
   id: AutolatheHyperConvection
@@ -422,10 +429,12 @@
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
+      - PowerCageRechargerCircuitboard
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
+      - ShuttleGunKineticCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
@@ -691,6 +700,9 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxPistolRubber
       - MagazineBoxRifleRubber
+      - MagazineGrenadeEmpty
+      - GrenadeEMP
+      - GrenadeFlash
       - ShellShotgunBeanbag
       - ShellShotgunIncendiary
       - ShellShotgunUranium
@@ -706,6 +718,13 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - PowerCageSmall
+      - PowerCageMedium
+      - PowerCageHigh
+      - ShuttleGunSvalinnMachineGunCircuitboard
+      - ShuttleGunPerforatorCircuitboard
+      - ShuttleGunFriendshipCircuitboard
+      - ShuttleGunDusterCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

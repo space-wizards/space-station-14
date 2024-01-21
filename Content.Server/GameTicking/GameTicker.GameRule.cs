@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -59,6 +60,7 @@ public sealed partial class GameTicker
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -102,6 +104,7 @@ public sealed partial class GameTicker
 
         _allPreviousGameRules.Add((RoundDuration(), id));
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;
@@ -131,6 +134,7 @@ public sealed partial class GameTicker
         EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -227,6 +231,14 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
+            if (shell.Player != null)
+            {
+                _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.EventStarted, $"Unknown tried to add game rule [{rule}] via command");
+            }
             var ent = AddGameRule(rule);
 
             // Start rule if we're already in the middle of a round
@@ -250,6 +262,14 @@ public sealed partial class GameTicker
         {
             if (!NetEntity.TryParse(rule, out var ruleEntNet) || !TryGetEntity(ruleEntNet, out var ruleEnt))
                 continue;
+            if (shell.Player != null)
+            {
+                _adminLogger.Add(LogType.EventStopped, $"{shell.Player} tried to end game rule [{rule}] via command");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.EventStopped, $"Unknown tried to end game rule [{rule}] via command");
+            }
 
             EndGameRule(ruleEnt.Value);
         }
