@@ -250,14 +250,27 @@ public sealed class ExecutionSystem : EntitySystem
     }
 
     private void ShowExecutionInternalPopup(string locString,
-        EntityUid attacker, EntityUid victim, EntityUid weapon)
+        EntityUid attacker, EntityUid victim, EntityUid weapon, bool predict = true)
     {
-        _popupSystem.PopupClient(
-            Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
-            attacker,
-            attacker,
-            PopupType.Medium
+        if (predict)
+        {
+            _popupSystem.PopupClient(
+                Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+                attacker,
+                attacker,
+                PopupType.Medium
             );
+        }
+        else
+        {
+            _popupSystem.PopupEntity(
+                Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+                attacker,
+                Filter.Entities(attacker),
+                true,
+                PopupType.Medium
+            );
+        }
 
     }
 
@@ -319,7 +332,7 @@ public sealed class ExecutionSystem : EntitySystem
             externalMsg = executionComp.ExecutionPopupCompleteExternal;
         }
 
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
+        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
         ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
     }
 }
