@@ -6,6 +6,7 @@ using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
@@ -33,6 +34,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly IAfkManager _afkManager = default!;
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
@@ -483,19 +485,19 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
         }
 
-        // Returns all online admins with AHelp access
+        // Returns all online admins with AHelp access and are not afk
         private IList<INetChannel> GetTargetAdmins()
         {
             return _adminManager.ActiveAdmins
-               .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
-               .Select(p => p.ConnectedClient)
-               .ToList();
+                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) && !_afkManager.IsAfk(p))
+                .Select(p => p.ConnectedClient)
+                .ToList();
         }
 
         private static string GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool noReceivers = false)
         {
             var stringbuilder = new StringBuilder();
-            
+
             if (admin)
                 stringbuilder.Append(":outbox_tray:");
             else if (noReceivers)
