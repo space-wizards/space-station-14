@@ -4,7 +4,6 @@ using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Database;
-using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -27,8 +26,6 @@ namespace Content.Shared.Buckle;
 
 public abstract partial class SharedBuckleSystem
 {
-    [Dependency] private readonly FoldableSystem _foldable = default!;
-
     private void InitializeBuckle()
     {
         SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleComponentStartup);
@@ -270,12 +267,6 @@ public abstract partial class SharedBuckleSystem
             {
                 return false;
             }
-        }
-
-        // If foldable, must be unfolded (rollerbeds)
-        if (HasComp<FoldableComponent>(strapUid) && _foldable.IsFolded(strapUid))
-        {
-            return false;
         }
 
         if (!HasComp<HandsComponent>(userUid))
