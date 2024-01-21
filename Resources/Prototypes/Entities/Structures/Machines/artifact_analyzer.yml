@@ -215,9 +215,7 @@
 - type: entity
   id: MachineArtifactAnalyzerDebug
   parent: MachineArtifactAnalyzer
-  name: artifact analyzer
   suffix: DEBUG 
-  description: A platform capable of performing analysis on various types of artifacts.
   components:
   - type: ApcPowerReceiver
     powerLoad: 0
