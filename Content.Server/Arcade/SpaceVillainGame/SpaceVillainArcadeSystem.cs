@@ -114,15 +114,15 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         component.ShouldSayThankYou = false;
     }
 
-    private void OnBoundUIClosed(EntityUid uid, SpaceVillainArcadeComponent component, ref BoundUIClosedEvent args)
+    private void OnBoundUIClosed(Entity<SpaceVillainArcadeComponent> ent, ref BoundUIClosedEvent args)
     {
         if (args.UiKey is not SpaceVillainArcadeUiKey || (SpaceVillainArcadeUiKey) args.UiKey != SpaceVillainArcadeUiKey.Key)
             return;
 
-        if (component.ShouldSayThankYou && TryComp<AdvertiseComponent>(uid, out var advertise))
+        if (ent.Comp.ShouldSayThankYou && TryComp<AdvertiseComponent>(ent.Owner, out var advertise))
         {
-            _advertise.SayThankYou(uid, advertise);
-            component.ShouldSayThankYou = false;
+            _advertise.SayThankYou(ent.Owner, advertise);
+            ent.Comp.ShouldSayThankYou = false;
         }
     }
 }

@@ -14,17 +14,17 @@ public sealed partial class SpamEmitSoundRequirePowerSystem : EntitySystem
         SubscribeLocalEvent<SpamEmitSoundRequirePowerComponent, PowerNetBatterySupplyEvent>(OnPowerSupply);
     }
 
-    private void OnPowerChanged(EntityUid uid, SpamEmitSoundRequirePowerComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<SpamEmitSoundRequirePowerComponent> ent, ref PowerChangedEvent args)
     {
-        if (TryComp<SpamEmitSoundComponent>(uid, out var comp))
+        if (TryComp<SpamEmitSoundComponent>(ent.Owner, out var comp))
         {
             comp.Enabled = args.Powered;
         }
     }
 
-    private void OnPowerSupply(EntityUid uid, SpamEmitSoundRequirePowerComponent component, ref PowerNetBatterySupplyEvent args)
+    private void OnPowerSupply(Entity<SpamEmitSoundRequirePowerComponent> ent, ref PowerNetBatterySupplyEvent args)
     {
-        if (TryComp<SpamEmitSoundComponent>(uid, out var comp))
+        if (TryComp<SpamEmitSoundComponent>(ent.Owner, out var comp))
         {
             comp.Enabled = args.Supply;
         }

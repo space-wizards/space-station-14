@@ -55,10 +55,10 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         args.Handled = true;
     }
 
-    private void HandleSpamEmitSoundMapInit(EntityUid uid, SpamEmitSoundComponent component, MapInitEvent args)
+    private void HandleSpamEmitSoundMapInit(Entity<SpamEmitSoundComponent> ent, ref MapInitEvent args)
     {
-        component.MaxExtraInterval = Random.NextFloat(component.MaxExtraInterval);
+        ent.Comp.MaxExtraInterval = Random.NextFloat(ent.Comp.MaxExtraInterval);
         // Give the accumulator a random initial boost so they don't all start at once
-        component.Accumulator += Random.NextFloat(component.RollInterval + component.MaxExtraInterval);
+        ent.Comp.Accumulator += Random.NextFloat(ent.Comp.RollInterval + ent.Comp.MaxExtraInterval);
     }
 }
