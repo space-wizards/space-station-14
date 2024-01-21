@@ -1,11 +1,10 @@
+# Operations
 - type: rcd
   id: Deconstruct
   name: rcd-component-deconstruct
   category: Main
   sprite: /Textures/Interface/Radial/RCD/deconstruct.png
   mode: Deconstruct
-  cost: 8
-  delay: 4
   rotation: Camera
   fx: EffectRCDDeconstructSlow
   ghostSprite:
@@ -13,36 +12,24 @@
     state: deconstructPreview
 
 - type: rcd
-  id: WallSolid
-  name: rcd-component-wall-solid
-  category: WallsAndFlooring
-  sprite: /Textures/Interface/Radial/RCD/solid_wall.png
-  mode: ConstructObject
-  prototype: WallSolid 
-  cost: 4
-  delay: 2
-  collisionMask: FullTileMask
-  rotation: Fixed
-  fx: EffectRCDConstructNormal
-  ghostSprite:
-    sprite: Structures/Walls/solid.rsi
-    state: full
-  
-- type: rcd
-  id: FloorSteel
-  name: rcd-component-floor-steel
-  category: WallsAndFlooring
-  sprite: /Textures/Interface/Radial/RCD/metal_tile.png
-  mode: ConstructTile
-  prototype: FloorSteel
-  cost: 1
+  id: DeconstructSubfloorTile
+  category: None    # Hidden prototype - do not add to RCDs
+  mode: Deconstruct
+  cost: 2
   delay: 1
-  collisionMask: InteractImpassable
-  rules:
-    - CanBuildOnEmptyTile
-  fx: EffectRCDConstructFast
-  ghostSprite: /Textures/Tiles/steel_dirty.png
-  
+  rotation: Camera
+  fx: EffectRCDDeconstructSlow
+    
+- type: rcd
+  id: DeconstructFloorTile
+  category: None    # Hidden prototype - do not add to RCDs
+  mode: Deconstruct
+  cost: 4
+  delay: 4
+  rotation: Camera
+  fx: EffectRCDDeconstructSlow
+
+# Flooring 
 - type: rcd
   id: Plating
   name: rcd-component-plating
@@ -59,6 +46,21 @@
   ghostSprite: /Textures/Tiles/plating.png
   
 - type: rcd
+  id: FloorSteel
+  name: rcd-component-floor-steel
+  category: WallsAndFlooring
+  sprite: /Textures/Interface/Radial/RCD/metal_tile.png
+  mode: ConstructTile
+  prototype: FloorSteel
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+    - CanBuildOnEmptyTile
+  fx: EffectRCDConstructFast
+  ghostSprite: /Textures/Tiles/steel_dirty.png
+
+- type: rcd
   id: Catwalk
   name: rcd-component-catwalk
   category: WallsAndFlooring
@@ -74,8 +76,25 @@
   fx: EffectRCDConstructFast
   ghostSprite:
     sprite: Structures/catwalk.rsi
-    state: catwalk_preview
-  
+    state: catwalk_preview 
+
+# Walls
+- type: rcd
+  id: WallSolid
+  name: rcd-component-wall-solid
+  category: WallsAndFlooring
+  sprite: /Textures/Interface/Radial/RCD/solid_wall.png
+  mode: ConstructObject
+  prototype: WallSolid 
+  cost: 4
+  delay: 2
+  collisionMask: FullTileMask
+  rotation: Fixed
+  fx: EffectRCDConstructNormal
+  ghostSprite:
+    sprite: Structures/Walls/solid.rsi
+    state: full
+
 - type: rcd
   id: Grille
   name: rcd-component-grille
@@ -91,7 +110,8 @@
   ghostSprite:
     sprite: Structures/Walls/grille.rsi
     state: grille
-  
+
+# Windows
 - type: rcd
   id: Window
   name: rcd-component-window
@@ -99,7 +119,7 @@
   sprite: /Textures/Interface/Radial/RCD/window.png
   mode: ConstructObject
   prototype: Window
-  cost: 4
+  cost: 3
   delay: 2
   collisionMask: FullTileMask
   rules:
@@ -137,7 +157,7 @@
   mode: ConstructObject
   prototype: ReinforcedWindow
   cost: 4
-  delay: 2
+  delay: 3
   collisionMask: FullTileMask
   rules:
     - IsWindow
@@ -154,8 +174,8 @@
   sprite: /Textures/Interface/Radial/RCD/directional_reinforced.png
   mode: ConstructObject
   prototype: WindowReinforcedDirectional
-  cost: 2
-  delay: 1
+  cost: 3
+  delay: 2
   collisionMask: FullTileMask
   collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rules:
@@ -165,7 +185,8 @@
   ghostSprite:
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
-  
+
+# Airlocks
 - type: rcd
   id: Airlock
   name: rcd-component-airlock
@@ -174,7 +195,7 @@
   mode: ConstructObject
   prototype: Airlock
   cost: 4
-  delay: 2
+  delay: 4
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
@@ -190,7 +211,7 @@
   mode: ConstructObject
   prototype: AirlockGlass
   cost: 4
-  delay: 2
+  delay: 4
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
@@ -206,7 +227,7 @@
   mode: ConstructObject
   prototype: Firelock
   cost: 4
-  delay: 2
+  delay: 3
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstructNormal
@@ -214,6 +235,7 @@
     sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
     state: closed
 
+# Lighting
 - type: rcd
   id: TubeLight
   name: rcd-component-tube-light
@@ -247,7 +269,8 @@
   ghostSprite:
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
     state: base
-  
+
+# Electrical
 - type: rcd
   id: LVCable
   name: rcd-component-window-lv-cable

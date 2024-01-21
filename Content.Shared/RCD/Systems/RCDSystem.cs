@@ -147,20 +147,60 @@ public class RCDSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        // If not placing a tile on empty space, make the construction instant
+        // Get the starting cost, delay, and effect from the prototype
+        var cost = component.CachedPrototype.Cost;
         var delay = component.CachedPrototype.Delay;
         var effectPrototype = component.CachedPrototype.Effect;
-        var tile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
 
-        if (component.CachedPrototype.Mode == RcdMode.ConstructTile && !tile.Tile.IsEmpty)
+        #region: Operation modifiers
+
+        // Deconstruction modifiers
+        if (component.CachedPrototype.Mode == RcdMode.Deconstruct)
         {
-            delay = 0;
-            effectPrototype = "EffectRCDConstructInstant";
+            // Deconstructing an object
+            if (args.Target != null)
+            {
+                if (TryComp<RCDDeconstructibleComponent>(args.Target, out var destructible))
+                {
+                    cost = destructible.Cost;
+                    delay = destructible.Delay;
+                    effectPrototype = destructible.Effect;
+                }
+            }
+
+            // Deconstructing a tile
+            else
+            {
+                var tile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
+                var protoName = tile.Tile.GetContentTileDefinition().IsSubFloor ? "DeconstructSubfloorTile" : "DeconstructFloorTile";
+
+                if (_protoManager.TryIndex<RCDPrototype>(protoName, out var deconProto))
+                {
+                    cost = deconProto.Cost;
+                    delay = deconProto.Delay;
+                    effectPrototype = deconProto.Effect;
+                }
+            }
         }
+
+        // Tile construction modifiers
+        else if (component.CachedPrototype.Mode == RcdMode.ConstructTile)
+        {
+            // If replacing a tile, make the construction instant
+            var tile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
+
+            if (!tile.Tile.IsEmpty)
+            {
+                delay = 0;
+                effectPrototype = "EffectRCDConstructInstant";
+            }
+        }
+
+        #endregion
 
         // Try to start the do after
         var effect = Spawn(effectPrototype, mapGridData.Value.Location);
-        var ev = new RCDDoAfterEvent(GetNetCoordinates(mapGridData.Value.Location), component.ProtoId, EntityManager.GetNetEntity(effect));
+        var ev = new RCDDoAfterEvent(GetNetCoordinates(mapGridData.Value.Location), component.ProtoId, cost, EntityManager.GetNetEntity(effect));
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, target: args.Target, used: uid)
         {
@@ -222,7 +262,7 @@ public class RCDSystem : EntitySystem
 
         // Play audio and consume charges
         _audio.PlayPredicted(component.SuccessSound, uid, args.User);
-        _charges.UseCharges(uid, component.CachedPrototype.Cost);
+        _charges.UseCharges(uid, args.Cost);
     }
 
     private void OnRCDconstructionGhostRotationEvent(RCDConstructionGhostRotationEvent ev)
@@ -543,21 +583,25 @@ public struct MapGridData
 [Serializable, NetSerializable]
 public sealed partial class RCDDoAfterEvent : DoAfterEvent
 {
-    [DataField("location", required: true)]
+    [DataField(required: true)]
     public NetCoordinates Location { get; private set; } = default!;
 
-    [DataField("startingProtoId")]
+    [DataField]
     public ProtoId<RCDPrototype> StartingProtoId { get; private set; } = default!;
+
+    [DataField]
+    public int Cost { get; private set; } = 1;
 
     [DataField("fx")]
     public NetEntity? Effect { get; private set; } = null;
 
     private RCDDoAfterEvent() { }
 
-    public RCDDoAfterEvent(NetCoordinates location, ProtoId<RCDPrototype> startingProtoId, NetEntity? effect = null)
+    public RCDDoAfterEvent(NetCoordinates location, ProtoId<RCDPrototype> startingProtoId, int cost, NetEntity? effect = null)
     {
         Location = location;
         StartingProtoId = startingProtoId;
+        Cost = cost;
         Effect = effect;
     }
 

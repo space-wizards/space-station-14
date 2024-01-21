@@ -50,7 +50,7 @@ public sealed class RCDPrototype : IPrototype
     public int Cost { get; private set; } = 1;
 
     /// <summary>
-    /// The lenght of the operation 
+    /// The length of the operation 
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float Delay { get; private set; } = 1f;
