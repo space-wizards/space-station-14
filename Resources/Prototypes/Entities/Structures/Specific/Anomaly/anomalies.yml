@@ -317,10 +317,10 @@
         Slash: 0
   - type: TileSpawnAnomaly
     floorTileId: FloorAstroGrass
-    spawnRange: 10
+    spawnRange: 6
   - type: EntitySpawnAnomaly
-    maxSpawnAmount: 30
-    spawnRange: 10
+    maxSpawnAmount: 15
+    spawnRange: 6
     superCriticalSpawns:
     - KudzuFlowerAngry
     spawns:
