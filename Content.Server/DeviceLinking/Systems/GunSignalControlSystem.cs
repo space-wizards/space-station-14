@@ -28,11 +28,8 @@ public sealed partial class GunSignalControlSystem : EntitySystem
         if (!TryComp<GunComponent>(gunControl, out var gun))
             return;
 
-        var targetCoord = new EntityCoordinates(gunControl, new Vector2(0, -1)); //Forward vector
-
         if (args.Port == gunControl.Comp.TriggerPort)
-            _gun.AttemptShoot(null, gunControl, gun, targetCoord);
-
+            _gun.AttemptShoot(gunControl, gun);
 
         if (!TryComp<AutoShootGunComponent>(gunControl, out var autoShoot))
             return;

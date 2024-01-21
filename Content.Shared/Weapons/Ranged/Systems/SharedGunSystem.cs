@@ -207,22 +207,22 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
-    public void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
+    public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
     {
         gun.ShootCoordinates = toCoordinates;
-
-        if (user != null)
-            AttemptShoot(user.Value, gunUid, gun);
-        else
-            AttemptShoot(gunUid, gunUid, gun);
-
+        AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
     }
 
-    //Shoot without user
-    private void AttemptShoot(EntityUid gunUid, GunComponent gun)
+    /// <summary>
+    /// Shoots by assuming the gun is the user at default coordinates.
+    /// </summary>
+    public void AttemptShoot(EntityUid gunUid, GunComponent gun)
     {
+        var coordinates = new EntityCoordinates(gunUid, new Vector2(0, -1));
+        gun.ShootCoordinates = coordinates;
         AttemptShoot(gunUid, gunUid, gun);
+        gun.ShotCounter = 0;
     }
 
     private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
@@ -230,7 +230,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.FireRate <= 0f ||
             !_actionBlockerSystem.CanUseHeldEntity(user))
             return;
-
 
         var toCoordinates = gun.ShootCoordinates;
 
@@ -397,12 +396,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
-        if (user != null)
-        {
-            var projectile = EnsureComp<ProjectileComponent>(uid);
-            Projectiles.SetShooter(uid, projectile, user.Value);
-            projectile.Weapon = gunUid;
-        }
+        var projectile = EnsureComp<ProjectileComponent>(uid);
+        Projectiles.SetShooter(uid, projectile, user ?? gunUid);
+        projectile.Weapon = gunUid;
 
         TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
     }
@@ -518,7 +514,7 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// </summary>
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
-public record struct GunShotEvent(EntityUid? User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
 public enum EffectLayers : byte
 {
