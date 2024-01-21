@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Components;
@@ -24,7 +25,12 @@ public record struct GridSpawnGroup
     public int MaxCount = 1;
 
     /// <summary>
-    /// Hide the IFF of the grid.
+    /// Components to be added to any spawned grids.
+    /// </summary>
+    public ComponentRegistry AddComponents = new();
+
+    /// <summary>
+    /// Hide the IFF label of the grid.
     /// </summary>
     public bool Hide = false;
 

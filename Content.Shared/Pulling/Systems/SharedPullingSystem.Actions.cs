@@ -59,7 +59,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!_containerSystem.IsInSameOrNoContainer(puller, pulled))
+            if(_containerSystem.IsEntityInContainer(puller) || _containerSystem.IsEntityInContainer(pulled))
             {
                 return false;
             }

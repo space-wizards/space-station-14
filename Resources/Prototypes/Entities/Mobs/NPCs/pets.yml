@@ -557,8 +557,15 @@
     drawdepth: SmallMobs
     sprite: Mobs/Pets/hamlet.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: hamster-0
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: hamster-moving-0
+    noMovementLayers:
+      movement:
+        state: hamster-0
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -608,9 +615,16 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: shiva-moving
+    noMovementLayers:
+      movement:
+        state: shiva
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -807,3 +821,5 @@
       proper: true
       gender: male
 #  - type: AlwaysRevolutionaryConvertible
+  - type: StealTarget
+    stealGroup: AnimalTropico
