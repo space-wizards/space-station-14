@@ -310,8 +310,8 @@
   - type: Anomaly
     animationTime: 6
     offset: 0.05, 0
-    corePrototype: AnomalyCoreLiquid
-    coreInertPrototype: AnomalyCoreLiquidInert
+    corePrototype: AnomalyCoreFlora
+    coreInertPrototype: AnomalyCoreFloraInert
     anomalyContactDamage:
       types:
         Slash: 0
@@ -319,10 +319,10 @@
     floorTileId: FloorAstroGrass
     spawnRange: 10
   - type: EntitySpawnAnomaly
-    maxSpawnAmount: 10
+    maxSpawnAmount: 30
     spawnRange: 10
     superCriticalSpawns:
-    - KudzuFlowerFriendly
+    - KudzuFlowerAngry
     spawns:
     - KudzuFlowerFriendly
 
@@ -368,51 +368,6 @@
     noRot: true
     sprite: Structures/Specific/Anomalies/flora_anom.rsi
     state: bulb
-
-- type: entity
-  id: EffectAnomalyFloraBulb
-  noSpawn: true
-  components:
-  - type: TimedDespawn
-    lifetime: 0.4
-  - type: Sprite
-    drawdepth: Effects
-    noRot: true
-    layers:
-      - shader: unshaded
-        map: ["enum.EffectLayers.Unshaded"]
-        sprite: Effects/emp.rsi
-        state: emp_disable
-  - type: EffectVisuals
-  - type: Tag
-    tags:
-      - HideContextMenu
-  - type: AnimationPlayer
-  - type: RandomSpawner
-    deleteSpawnerAfterSpawn: false
-    rareChance: 0.3
-    offset: 0.5
-    chance: 1
-    prototypes:
-    - FoodAmbrosiaVulgaris
-    - FoodAmbrosiaDeus
-    - FoodBlueTomato
-    - FoodAloe
-    - FoodCabbage
-    - FoodCarrot
-    - FoodGalaxythistle
-    - FoodGatfruit
-    - FoodLemon
-    - FoodLemoon
-    - FoodLime
-    - FoodMealMemoryLeak
-    - FoodPeaPod
-    - FoodPineapple
-    - FoodOnionRed
-    - FoodWatermelon
-    rarePrototypes:
-    - MobLuminousEntity
-    - MobLuminousObject
 
 - type: entity
   id: AnomalyLiquid

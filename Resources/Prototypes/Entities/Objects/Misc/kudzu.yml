@@ -105,6 +105,9 @@
 
 - type: entity
   id: KudzuFlowerFriendly
+  name: floral carpet
+  suffix: Friendly, Floral Anomaly
+  description: a colorful carpet of flowers sprawling in every direction. You're not sure whether to take it down or leave it up
   parent: Kudzu
   components:
     - type: Sprite
@@ -113,25 +116,17 @@
       state: kudzu_11
     - type: Kudzu
       spriteVariants: 5
-      spreadChance: 0.1
+      spreadChance: 0.01
     - type: SlowContacts
-      walkSpeedModifier: 0.7
-      sprintSpeedModifier: 0.7
+      walkSpeedModifier: 0.8
+      sprintSpeedModifier: 0.8
       ignoreWhitelist:
         components:
         - IgnoreKudzu
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - type: RandomSpawner
       deleteSpawnerAfterSpawn: false
-      rareChance: 0.05
-      offset: 0.5
+      rareChance: 0.2
+      offset: 0.2
       chance: 0.1
       prototypes:
       - FloraTree01
@@ -146,6 +141,21 @@
       - CrystalCyan
       rarePrototypes:
       - AnomalyFloraBulb
+
+- type: entity
+  id: KudzuFlowerAngry
+  suffix: Angry, Floral Anomaly
+  parent: KudzuFlowerFriendly
+  components:
+    - type: Kudzu
+      spreadChance: 0.4
+    - type: RandomSpawner
+      rareChance: 0.3
+      chance: 0.3
+      rarePrototypes:
+      - AnomalyFloraBulb
+      - MobLuminousEntity
+      - MobLuminousObject
 
 - type: entity
   id: FleshKudzu
