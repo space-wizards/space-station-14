@@ -328,9 +328,9 @@
 
 - type: entity
   id: AnomalyFloraBulb
-  name: glowing strange berry
+  name: strange glowing berry
   parent: BaseStructure
-  description: It's a beautiful, glowing, strange berry. It seems to have something growing inside it... 
+  description: It's a beautiful strange glowing berry. It seems to have something growing inside it... 
   suffix: Flora Anomaly
   components:
   - type: Transform
