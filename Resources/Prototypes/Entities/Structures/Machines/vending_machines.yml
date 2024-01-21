@@ -99,6 +99,8 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+  - type: VendingMachine # GreyStation - Sound PR
+    soundVend: /Audio/SimpleStation14/Machines/machine_vend.ogg
 
 - type: entity
   parent: VendingMachine

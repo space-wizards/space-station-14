@@ -47,7 +47,11 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: EntityStorage
+  - type: EntityStorage # GreyStation - Sound PR
+    closeSound:
+      path: /Audio/SimpleStation14/Effects/closet_close.ogg
+    openSound:
+      path: /Audio/SimpleStation14/Effects/closet_open.ogg
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container

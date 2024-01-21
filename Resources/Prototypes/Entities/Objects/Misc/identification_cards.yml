@@ -1,5 +1,5 @@
 - type: entity
-  parent: Clothing
+  parent: BaseItem
   id: IDCardStandard
   name: identification card
   description: A card necessary to access various areas aboard the station.
@@ -24,6 +24,9 @@
     - WhitelistChameleon
   - type: StealTarget
     stealGroup: IDCard
+  - type: EmitSoundOnLand # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/multitool_drop.ogg
+
 
 #IDs with layers
 
