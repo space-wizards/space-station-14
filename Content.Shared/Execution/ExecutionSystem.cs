@@ -13,7 +13,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
@@ -48,17 +47,6 @@ public sealed class ExecutionSystem : EntitySystem
         SubscribeLocalEvent<ActiveExecutionComponent, AmmoShotEvent>(OnAmmoShot);
 
         SubscribeLocalEvent<ExecutionProjectileComponent, StartCollideEvent>(OnCollide);
-    }
-
-    private void OnCollide(EntityUid uid, ExecutionProjectileComponent comp, StartCollideEvent args)
-    {
-        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId || comp.Clumsy)
-            return;
-
-        if (!TryComp<ProjectileComponent>(uid, out var projectileComponent))
-            return;
-
-        projectileComponent.Damage *= comp.Multiplier;
     }
 
     private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
@@ -318,6 +306,17 @@ public sealed class ExecutionSystem : EntitySystem
 
         ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
         ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
+    }
+
+    private void OnCollide(EntityUid uid, ExecutionProjectileComponent comp, StartCollideEvent args)
+    {
+        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId || comp.Clumsy)
+            return;
+
+        if (!TryComp<ProjectileComponent>(uid, out var projectileComponent))
+            return;
+
+        projectileComponent.Damage *= comp.Multiplier;
     }
 
     private void ShowExecutionInternalPopup(string locString,
