@@ -2,7 +2,7 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
                       Title="{Loc 'shuttle-console-window-title'}"
-                      SetSize="1180 720"
+                      SetSize="960 720"
                       MinSize="788 320">
     <BoxContainer Orientation="Vertical">
         <!-- Top row mode buttons -->
@@ -49,48 +49,67 @@
                       HorizontalAlignment="Right"
                       MinWidth="256"
                       MaxWidth="256"
+                      Margin="10"
                       Orientation="Vertical">
-                    <controls:StripeBack>
-                        <Label Name="DisplayLabel" Text="{Loc 'shuttle-console-display-label'}" HorizontalAlignment="Center"/>
+                    <controls:StripeBack
+                        MinSize="48 48">
+                        <Label Name="NavDisplayLabel" Text="{Loc 'shuttle-console-display-label'}"
+                               VerticalExpand="True"
+                               HorizontalAlignment="Center"/>
                     </controls:StripeBack>
-                    <BoxContainer Name="ReadonlyDisplay">
-                        <GridContainer Columns="2"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Top">
-                            <Label Text="{Loc 'shuttle-console-ftl-state'}"/>
-                            <Label Name="FTLState"
-                                   Text="{Loc 'ftl-shuttle-console-available'}"
-                                   HorizontalAlignment="Right"/>
-                            <Label Text="{Loc 'shuttle-console-ftl-timer'}"/>
-                            <Label Name="FTLTimer"
-                                   Text="0.0"
-                                   HorizontalAlignment="Right"/>
-                            <Label Text="{Loc 'shuttle-console-max-radar'}"/>
-                            <Label Name="MaxRadarRange"
-                                   Text="0.0"
-                                   HorizontalAlignment="Right"/>
-                            <Label Text="{Loc 'shuttle-console-radar'}"/>
-                            <Label Name="RadarRange"
-                                   Text="0.0"
-                                   HorizontalAlignment="Right"/>
-                            <Label Text="{Loc 'shuttle-console-position'}"/>
-                            <Label Name="GridPosition"
-                                   Text="0.0, 0.0"
-                                   Align="Right"/>
-                            <Label Text="{Loc 'shuttle-console-orientation'}"/>
-                            <Label Name="GridOrientation"
-                                   Text="0.0"
-                                   Align="Right"/>
-                            <Label Text="{Loc 'shuttle-console-linear-velocity'}"/>
-                            <Label Name="GridLinearVelocity"
-                                   Text="0.0, 0.0"
-                                   Align="Right"/>
-                            <Label Text="{Loc 'shuttle-console-angular-velocity'}"/>
-                            <Label Name="GridAngularVelocity"
-                                   Text="0.0"
-                                   Align="Right"/>
-                        </GridContainer>
-                    </BoxContainer>
+                    <GridContainer Columns="2"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Top"
+                                   HorizontalExpand="True"
+                                   Margin="3"
+                                   Name="ReadonlyDisplay">
+                        <Label Text="{Loc 'shuttle-console-ftl-state'}"/>
+                        <Label Name="FTLState"
+                               Text="{Loc 'ftl-shuttle-console-available'}"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Right"/>
+                        <Label Text="{Loc 'shuttle-console-ftl-timer'}"/>
+                        <Label Name="FTLTimer"
+                               Text="0.0"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Right"/>
+                        <Label Text="{Loc 'shuttle-console-max-radar'}"/>
+                        <Label Name="MaxRadarRange"
+                               Text="0.0"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Right"/>
+                        <Label Text="{Loc 'shuttle-console-radar'}"/>
+                        <Label Name="RadarRange"
+                               Text="0.0"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Right"/>
+                        <Label Text="{Loc 'shuttle-console-position'}"/>
+                        <Label Name="GridPosition"
+                               Text="0.0, 0.0"
+                               HorizontalExpand="True"
+                               Align="Right"/>
+                        <Label Text="{Loc 'shuttle-console-orientation'}"/>
+                        <Label Name="GridOrientation"
+                               Text="0.0"
+                               HorizontalExpand="True"
+                               Align="Right"/>
+                        <Label Text="{Loc 'shuttle-console-linear-velocity'}"/>
+                        <Label Name="GridLinearVelocity"
+                               Text="0.0, 0.0"
+                               HorizontalExpand="True"
+                               Align="Right"/>
+                        <Label Text="{Loc 'shuttle-console-angular-velocity'}"/>
+                        <Label Name="GridAngularVelocity"
+                               Text="0.0"
+                               HorizontalExpand="True"
+                               Align="Right"/>
+                    </GridContainer>
+                    <controls:StripeBack
+                        MinSize="48 48">
+                        <Label Name="NavSettingsLabel" Text="{Loc 'shuttle-console-nav-settings'}"
+                               VerticalExpand="True"
+                               HorizontalAlignment="Center"/>
+                    </controls:StripeBack>
                     <Button Name="IFFToggle"
                             Text="{Loc 'shuttle-console-iff-toggle'}"
                             TextAlign="Center"
@@ -99,10 +118,6 @@
                             Text="{Loc 'shuttle-console-dock-toggle'}"
                             TextAlign="Center"
                             ToggleMode="True"/>
-                    <Button Name="UndockButton"
-                            Text="{Loc 'shuttle-console-undock'}"
-                            TextAlign="Center"
-                            Disabled="True"/>
                 </BoxContainer>
             </BoxContainer>
             <!-- MAP -->
@@ -112,15 +127,19 @@
                 <ui:ShuttleMapControl Name="MapRadar"
                                  MouseFilter="Stop"
                                  Margin="5"/>
+                <!-- Buffer -->
+                <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayMap"
                               VerticalAlignment="Top"
                               HorizontalAlignment="Right"
                               MinWidth="256"
                               MaxWidth="256"
+                              Margin="10"
                               Orientation="Vertical">
                     <BoxContainer Orientation="Vertical">
-                        <controls:StripeBack>
-                            <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}" HorizontalAlignment="Center"/>
+                        <controls:StripeBack MinSize="48 48">
+                            <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}"
+                                   HorizontalAlignment="Center"/>
                         </controls:StripeBack>
                         <BoxContainer Name="HyperspaceDestinations"
                                       Orientation="Vertical"/>
@@ -143,9 +162,10 @@
                               MinWidth="256"
                               MaxWidth="256"
                               Align="Center"
+                              Margin="10"
                               Orientation="Vertical">
                     <BoxContainer Orientation="Vertical">
-                        <controls:StripeBack>
+                        <controls:StripeBack MinSize="48 48">
                             <Label Name="DockingPortsLabel" Text="{Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
                         </controls:StripeBack>
                         <BoxContainer Name="DockPorts"

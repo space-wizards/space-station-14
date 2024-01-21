@@ -62,8 +62,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockToggle.OnToggled += OnDockTogglePressed;
         DockToggle.Pressed = NavRadar.ShowDocks;
 
-        UndockButton.OnPressed += OnUndockPressed;
-
         // Mode switching
         NavModeButton.OnPressed += NavPressed;
         MapModeButton.OnPressed += MapPressed;
@@ -124,12 +122,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         NavRadar.ShowDocks ^= true;
         args.Button.Pressed = NavRadar.ShowDocks;
-    }
-
-    private void OnUndockPressed(BaseButton.ButtonEventArgs args)
-    {
-        if (DockingScreen.ViewedDock == null) return;
-        UndockPressed?.Invoke(DockingScreen.ViewedDock.Value);
     }
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
