@@ -200,7 +200,7 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            if (WritingComponent != "Transform" && Prototype?.NoSpawn == false)
+            if (WritingComponent != "Transform" && (Prototype?.NoSpawn == false))
             {
                 // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
                 // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,
