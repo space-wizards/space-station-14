@@ -13,13 +13,13 @@
         map: [ "unshaded" ]
     - type: Projectile
       deleteOnCollide: false
-      canPenetrate: true
       impactEffect: null
       soundHit:
         path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
       damage:
         types:
           Radiation: 25
+    - type: CanPenetrate
     - type: Physics
     - type: Fixtures
       fixtures:
@@ -64,5 +64,18 @@
       state: particle0
       shader: unshaded
       map: [ "unshaded" ]
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: Projectile
+    deleteOnCollide: false
+    impactEffect: null
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    damage:
+      types:
+        Radiation: 10
+  - type: TimedDespawn
+    lifetime: 0.6
   - type: SinguloFood
     energy: -10

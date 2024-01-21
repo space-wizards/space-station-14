@@ -41,7 +41,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Oculine
-        amount: 0.15
+        amount: 0.5
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.5

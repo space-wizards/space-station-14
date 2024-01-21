@@ -30,6 +30,7 @@ public sealed class ActionContainerSystem : EntitySystem
         SubscribeLocalEvent<ActionsContainerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionsContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<ActionsContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<ActionsContainerComponent, ActionAddedEvent>(OnActionAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindRemovedMessage>(OnMindRemoved);
     }
@@ -38,7 +39,6 @@ public sealed class ActionContainerSystem : EntitySystem
     {
         if(!_mind.TryGetMind(uid, out var mindId, out _))
             return;
-
         if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionContainerComp))
             return;
 
@@ -175,6 +175,61 @@ public sealed class ActionContainerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Transfers an actions from one container to another, while changing the attached entity.
+    /// </summary>
+    /// <remarks>
+    /// This will actually remove and then re-grant the action.
+    /// Useful where you need to transfer from one container to another but also change the attached entity (ie spellbook > mind > user)
+    /// </remarks>
+    public void TransferActionWithNewAttached(
+        EntityUid actionId,
+        EntityUid newContainer,
+        EntityUid newAttached,
+        BaseActionComponent? action = null,
+        ActionsContainerComponent? container = null)
+    {
+        if (!_actions.ResolveActionData(actionId, ref action))
+            return;
+
+        if (action.Container == newContainer)
+            return;
+
+        var attached = newAttached;
+        if (!AddAction(newContainer, actionId, action, container))
+            return;
+
+        DebugTools.AssertEqual(action.Container, newContainer);
+        _actions.AddActionDirect(newAttached, actionId, action: action);
+
+        DebugTools.AssertEqual(action.AttachedEntity, attached);
+    }
+
+    /// <summary>
+    /// Transfers all actions from one container to another, while changing the attached entity.
+    /// </summary>
+    /// <remarks>
+    /// This will actually remove and then re-grant the action.
+    /// Useful where you need to transfer from one container to another but also change the attached entity (ie spellbook > mind > user)
+    /// </remarks>
+    public void TransferAllActionsWithNewAttached(
+        EntityUid from,
+        EntityUid to,
+        EntityUid newAttached,
+        ActionsContainerComponent? oldContainer = null,
+        ActionsContainerComponent? newContainer = null)
+    {
+        if (!Resolve(from, ref oldContainer) || !Resolve(to, ref newContainer))
+            return;
+
+        foreach (var action in oldContainer.Container.ContainedEntities.ToArray())
+        {
+            TransferActionWithNewAttached(action, to, newAttached, container: newContainer);
+        }
+
+        DebugTools.AssertEqual(oldContainer.Container.Count, 0);
+    }
+
+    /// <summary>
     /// Adds a pre-existing action to an action container. If the action is already in some container it will first remove it.
     /// </summary>
     public bool AddAction(EntityUid uid, EntityUid actionId, BaseActionComponent? action = null, ActionsContainerComponent? comp = null)
@@ -280,6 +335,12 @@ public sealed class ActionContainerSystem : EntitySystem
         var ev = new ActionRemovedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
         data.Container = null;
+    }
+
+    private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
+    {
+        if (TryComp<MindComponent>(uid, out var mindComp) && mindComp.OwnedEntity != null && HasComp<ActionsContainerComponent>(mindComp.OwnedEntity.Value))
+            _actions.GrantContainedAction(mindComp.OwnedEntity.Value, uid, args.Action);
     }
 }
 

@@ -528,9 +528,6 @@
   id: Shovel
   description: A large tool for digging and moving dirt.
   components:
-  - type: Tag
-    tags:
-    - Shovel
   - type: Sprite
     sprite: Objects/Tools/shovel.rsi
     state: icon
@@ -548,6 +545,7 @@
       Wood: 50
   - type: StaticPrice
     price: 25
+  - type: Shovel
 
 - type: entity
   parent: BaseItem

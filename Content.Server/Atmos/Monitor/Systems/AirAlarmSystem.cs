@@ -157,19 +157,23 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<AirAlarmComponent, AtmosAlarmEvent>(OnAtmosAlarm);
         SubscribeLocalEvent<AirAlarmComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmResyncAllDevicesMessage>(OnResyncAll);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
-        SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
         SubscribeLocalEvent<AirAlarmComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AirAlarmComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
+
+        Subs.BuiEvents<AirAlarmComponent>(SharedAirAlarmInterfaceKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnClose);
+            subs.Event<AirAlarmResyncAllDevicesMessage>(OnResyncAll);
+            subs.Event<AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
+            subs.Event<AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
+            subs.Event<AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
+            subs.Event<AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
+            subs.Event<AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
+            subs.Event<AirAlarmTabSetMessage>(OnTabChange);
+        });
     }
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)

@@ -14,7 +14,7 @@
                     <Button Visible="False" Name="Kick" Text="{Loc 'admin-player-actions-kick'}" StyleClasses="OpenBoth" />
                     <Button Visible="False" Name="Ban" Text="{Loc 'admin-player-actions-ban'}" StyleClasses="OpenBoth" />
                     <Button Visible="False" Name="Respawn" Text="{Loc 'admin-player-actions-respawn'}" StyleClasses="OpenBoth" />
-                    <Button Visible="False" Name="Teleport" Text="{Loc 'admin-player-actions-teleport'}" StyleClasses="OpenLeft" />
+                    <Button Visible="False" Name="Follow" Text="{Loc 'admin-player-actions-follow'}" StyleClasses="OpenLeft" />
                 </BoxContainer>
             </BoxContainer>
         </SplitContainer>
