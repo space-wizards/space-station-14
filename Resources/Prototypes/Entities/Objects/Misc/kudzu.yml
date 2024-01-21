@@ -125,7 +125,7 @@
         - IgnoreKudzu
     - type: RandomSpawner
       deleteSpawnerAfterSpawn: false
-      rareChance: 0.2
+      rareChance: 0.3
       offset: 0.2
       chance: 0.1
       prototypes:
@@ -150,8 +150,7 @@
     - type: Kudzu
       spreadChance: 0.4
     - type: RandomSpawner
-      rareChance: 0.3
-      chance: 0.3
+      chance: 0.2
       rarePrototypes:
       - AnomalyFloraBulb
       - MobLuminousEntity
