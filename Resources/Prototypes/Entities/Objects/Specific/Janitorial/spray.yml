@@ -149,15 +149,10 @@
         - Opaque
 
 - type: entity
-  name: mega spray bottle
   id: MegaSprayBottleArtifact
   parent: MegaSprayBottle
   suffix: ARTIFEXIUM DEBUG
-  description: A huge spray bottle, capable of unrivaled janitorial power.
   components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
-    state: cleaner_large
   - type: SolutionContainerManager
     solutions:
       spray:
@@ -165,10 +160,3 @@
         reagents:
         - ReagentId: Artifexium
           Quantity: 99999
-  - type: Spray
-    transferAmount: 5
-    sprayedPrototype: BigVapor
-    sprayVelocity: 3
-    sprayDistance: 4.5
-    spraySound:
-      path: /Audio/Effects/spray2.ogg
