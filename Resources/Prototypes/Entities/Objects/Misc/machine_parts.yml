@@ -12,6 +12,12 @@
     - type: GuideHelp
       guides:
       - MachineUpgrading
+    - type: EmitSoundOnPickup # GreyStation - Sound PR
+      sound: /Audio/SimpleStation14/Items/Handling/component_pickup.ogg
+    - type: EmitSoundOnDrop
+      sound: /Audio/SimpleStation14/Items/Handling/component_drop.ogg
+    - type: EmitSoundOnLand
+      sound: /Audio/SimpleStation14/Items/Handling/component_drop.ogg
 
 - type: entity
   id: CapacitorStockPart

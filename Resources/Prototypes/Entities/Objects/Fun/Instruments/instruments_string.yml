@@ -54,6 +54,12 @@
   - type: Tag
     tags:
     - StringInstrument
+  - type: MeleeWeapon
+    soundHit: # GreyStation - Sound PR
+      path: /Audio/Nyanotrasen/Weapons/electricguitarhit.ogg
+    damage:
+      types:
+        Blunt: 7
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -83,6 +89,8 @@
     tags:
     - StringInstrument
   - type: MeleeWeapon
+    soundHit: # GreyStation - Sound PR
+      path: /Audio/Nyanotrasen/Weapons/electricguitarhit.ogg
     wideAnimationRotation: 45
     damage:
       types:
@@ -128,7 +136,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 20
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -145,6 +153,8 @@
       types:
         Blunt: 20
   - type: MeleeWeapon
+    soundHit: # GreyStation - Sound PR
+      path: /Audio/Nyanotrasen/Weapons/guitarhit.ogg
     wideAnimationRotation: 45
     damage:
       types:
@@ -183,6 +193,12 @@
   - type: Tag
     tags:
     - StringInstrument
+  - type: MeleeWeapon # GreyStation - Sound PR
+    soundHit:
+      path: /Audio/SimpleStation14/Weapons/Melee/banjohit.ogg
+    damage:
+      types:
+        Blunt: 7
 
 - type: entity
   parent: BaseHandheldInstrument

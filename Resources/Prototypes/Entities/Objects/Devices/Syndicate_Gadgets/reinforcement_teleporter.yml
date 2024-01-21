@@ -15,7 +15,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgent
   - type: EmitSoundOnUse
-    sound: /Audio/Effects/Emotes/parp1.ogg
+    sound: /Audio/Effects/guardian_inject.ogg # GreyStation - Sound PR
   - type: UseDelay
     delay: 300
 
@@ -39,6 +39,8 @@
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
+  - type: EmitSoundOnUse
+    sound: /Audio/Effects/Emotes/parp1.ogg # GreyStation - Sound PR
 
 - type: entity
   parent: ReinforcementRadioSyndicateMonkey

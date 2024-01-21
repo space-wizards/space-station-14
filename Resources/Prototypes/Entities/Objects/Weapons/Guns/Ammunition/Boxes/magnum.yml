@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: BaseMagazineBox
   id: BaseMagazineBoxMagnum
   components:
   - type: BallisticAmmoProvider

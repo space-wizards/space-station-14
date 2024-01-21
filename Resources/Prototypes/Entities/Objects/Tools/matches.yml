@@ -59,6 +59,10 @@
   id: Matchbox
   description: A small box of Almost But Not Quite Plasma Premium Matches.
   components:
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/matchbox_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/matchbox_drop.ogg
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/matchbox_drop.ogg
