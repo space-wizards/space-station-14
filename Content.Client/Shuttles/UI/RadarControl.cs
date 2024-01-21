@@ -333,8 +333,6 @@ public sealed class RadarControl : MapGridControl
 
                 var color = HighlightedDock == state.Entity ? state.HighlightedColor : state.Color;
 
-                uiPosition.Y = -uiPosition.Y;
-
                 var verts = new[]
                 {
                     matrix.Transform(position + new Vector2(-DockScale, -DockScale)),

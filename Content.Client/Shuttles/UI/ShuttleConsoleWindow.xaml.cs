@@ -19,8 +19,10 @@ namespace Content.Client.Shuttles.UI;
 public sealed partial class ShuttleConsoleWindow : FancyWindow,
     IComputerWindow<ShuttleConsoleBoundInterfaceState>
 {
-    private readonly IEntityManager _entManager;
-    private readonly IGameTiming _timing;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    private ShuttleConsoleMode _mode = ShuttleConsoleMode.Nav;
 
     private EntityUid? _shuttleEntity;
 
@@ -49,8 +51,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public ShuttleConsoleWindow()
     {
         RobustXamlLoader.Load(this);
-        _entManager = IoCManager.Resolve<IEntityManager>();
-        _timing = IoCManager.Resolve<IGameTiming>();
+        IoCManager.InjectDependencies(this);
 
         WorldRangeChange(RadarScreen.WorldRange);
         RadarScreen.WorldRangeChanged += WorldRangeChange;
@@ -62,6 +63,50 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockToggle.Pressed = RadarScreen.ShowDocks;
 
         UndockButton.OnPressed += OnUndockPressed;
+
+        // Mode switching
+        NavModeButton.OnPressed += NavPressed;
+        MapModeButton.OnPressed += MapPressed;
+        DockModeButton.OnPressed += DockPressed;
+
+        NavModeButton.Pressed = true;
+        SetupMode(_mode);
+    }
+
+    private void ClearModes(ShuttleConsoleMode mode)
+    {
+        if (mode != ShuttleConsoleMode.Nav)
+        {
+            NavModeButton.Pressed = false;
+            NavContainer.Visible = false;
+        }
+
+        if (mode != ShuttleConsoleMode.Map)
+        {
+            MapModeButton.Pressed = false;
+            MapContainer.Visible = false;
+        }
+
+        if (mode != ShuttleConsoleMode.Dock)
+        {
+            DockModeButton.Pressed = false;
+            DockContainer.Visible = false;
+        }
+    }
+
+    private void NavPressed(BaseButton.ButtonEventArgs obj)
+    {
+        SwitchMode(ShuttleConsoleMode.Nav);
+    }
+
+    private void MapPressed(BaseButton.ButtonEventArgs obj)
+    {
+        SwitchMode(ShuttleConsoleMode.Map);
+    }
+
+    private void DockPressed(BaseButton.ButtonEventArgs obj)
+    {
+        SwitchMode(ShuttleConsoleMode.Dock);
     }
 
     private void WorldRangeChange(float value)
@@ -305,6 +350,46 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     #endregion
 
+    private void SetupMode(ShuttleConsoleMode mode)
+    {
+        switch (mode)
+        {
+            case ShuttleConsoleMode.Nav:
+                NavContainer.Visible = true;
+                break;
+            case ShuttleConsoleMode.Map:
+                MapContainer.Visible = true;
+                break;
+            case ShuttleConsoleMode.Dock:
+                DockContainer.Visible = true;
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    public void SwitchMode(ShuttleConsoleMode mode)
+    {
+        if (_mode == mode)
+            return;
+
+        _mode = mode;
+        ClearModes(mode);
+        SetupMode(_mode);
+    }
+
+    #region NAV
+
+    #endregion
+
+    #region MAP
+
+    #endregion
+
+    #region DOCK
+
+    #endregion
+
     protected override void Draw(DrawingHandleScreen handle)
     {
         base.Draw(handle);
@@ -336,5 +421,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         // Get linear velocity relative to the console entity
         GridLinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
         GridAngularVelocity.Text = $"{-gridBody.AngularVelocity:0.0}";
+    }
+
+    public enum ShuttleConsoleMode : byte
+    {
+        Nav,
+        Map,
+        Dock,
     }
 }
