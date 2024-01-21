@@ -6,6 +6,12 @@
                   HorizontalExpand="True"
                   MinHeight="200"
                   Access="Public" />
+        <Label Name="MessageLengthLabel"
+               Visible="False"
+               HorizontalExpand="True"
+               HorizontalAlignment="Right"
+               MouseFilter="Pass"
+               Access="Public" />
         <Button Name="WarButton"
                 Text="{Loc 'war-declarator-ui-war-button'}"
                 StyleClasses="Caution"
