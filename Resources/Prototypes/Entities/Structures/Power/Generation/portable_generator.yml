@@ -292,7 +292,8 @@
       fuelEfficiencyConstant: 0.3
     - type: ChemicalFuelGeneratorAdapter
       solution: tank
-      reagent: WeldingFuel
+      reagents:
+        WeldingFuel: 1
     - type: SolutionContainerManager
       solutions:
         tank:
