@@ -212,7 +212,9 @@ public sealed partial class GunSystem : SharedGunSystem
                     // can't use map coords above because funny FireEffects
                     var fromEffect = fromCoordinates;
                     var dir = mapDirection.Normalized();
-                    var lastUser = user;
+
+                    //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
+                    var lastUser = user ?? gunUid;
 
                     if (hitscan.Reflective != ReflectType.None)
                     {
