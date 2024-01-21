@@ -1,4 +1,4 @@
-﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
+# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
 # like turning the artifact into a tool, or gun, or whatever.
 - type: artifactEffect
   id: EffectIntercom
@@ -261,4 +261,4 @@
     maxCharges: 1
     charges: 1
   - type: AutoRecharge
-    rechargeDuration: 15
+    rechargeDuration: 30
