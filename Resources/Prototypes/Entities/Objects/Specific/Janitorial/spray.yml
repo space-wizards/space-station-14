@@ -147,16 +147,3 @@
         mask:
         - FullTileMask
         - Opaque
-
-- type: entity
-  id: MegaSprayBottleArtifact
-  parent: MegaSprayBottle
-  suffix: ARTIFEXIUM DEBUG
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      spray:
-        maxVol: 99999
-        reagents:
-        - ReagentId: Artifexium
-          Quantity: 99999
