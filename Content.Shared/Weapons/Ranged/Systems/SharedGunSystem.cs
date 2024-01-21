@@ -37,7 +37,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly INetManager _netManager = default!;
@@ -214,6 +214,17 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
     }
 
+    /// <summary>
+    /// Shoots by assuming the gun is the user at default coordinates.
+    /// </summary>
+    public void AttemptShoot(EntityUid gunUid, GunComponent gun)
+    {
+        var coordinates = new EntityCoordinates(gunUid, new Vector2(0, -1));
+        gun.ShootCoordinates = coordinates;
+        AttemptShoot(gunUid, gunUid, gun);
+        gun.ShotCounter = 0;
+    }
+
     private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
         if (gun.FireRate <= 0f ||
@@ -385,12 +396,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
-        if (user != null)
-        {
-            var projectile = EnsureComp<ProjectileComponent>(uid);
-            Projectiles.SetShooter(uid, projectile, user.Value);
-            projectile.Weapon = gunUid;
-        }
+        var projectile = EnsureComp<ProjectileComponent>(uid);
+        Projectiles.SetShooter(uid, projectile, user ?? gunUid);
+        projectile.Weapon = gunUid;
 
         TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
     }
