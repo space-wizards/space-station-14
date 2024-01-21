@@ -12,6 +12,8 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Execution;
@@ -40,6 +42,19 @@ public sealed class ExecutionSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, ExecutionDoAfterEvent>(OnDoafterGun);
 
         SubscribeLocalEvent<ActiveExecutionComponent, AmmoShotEvent>(OnAmmoShot);
+
+        SubscribeLocalEvent<ExecutionProjectileComponent, StartCollideEvent>(OnCollide);
+    }
+
+    private void OnCollide(EntityUid uid, ExecutionProjectileComponent comp, StartCollideEvent args)
+    {
+        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId)
+            return;
+
+        if (!TryComp<ProjectileComponent>(uid, out var projectileComponent))
+            return;
+
+        projectileComponent.Damage *= comp.Multiplier;
     }
 
     private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
@@ -215,7 +230,19 @@ public sealed class ExecutionSystem : EntitySystem
         active.Victim = victim;
         Dirty(uid, active);
 
-        _gunSystem.AttemptShoot(args.User, uid, comp, xform.Coordinates);
+        EntityCoordinates coords;
+        if (victim == attacker)
+        {
+            // Should I be creating EntityCoordinates out of thin air? Probably not but this is the best way I can think
+            // of to actually fire a projectile where the start and end positions aren't the same.
+            coords = new EntityCoordinates(EntityUid.Invalid, xform.Coordinates.X + 1, xform.Coordinates.Y);
+        }
+        else
+        {
+            coords = xform.Coordinates;
+        }
+
+        _gunSystem.AttemptShoot(args.User, uid, comp, coords);
 
         RemCompDeferred<ActiveExecutionComponent>(uid);
         Dirty(uid, active);
@@ -253,13 +280,26 @@ public sealed class ExecutionSystem : EntitySystem
         if (args.FiredProjectiles.Count < 1)
             return;
 
-        // We only care about the first bullet
-        var bullet = args.FiredProjectiles[0];
+        foreach (var bullet in args.FiredProjectiles)
+        {
 
-        if (!TryComp<ProjectileComponent>(bullet, out var projComponent))
-            return;
+            if (comp.Attacker == comp.Victim)
+            {
+                if (!TryComp<ProjectileComponent>(bullet, out var projComponent))
+                    return;
 
-        projComponent.Damage *= executionComp.DamageModifier;
+                projComponent.IgnoreShooter = false;
+
+                Dirty(bullet, projComponent);
+            }
+
+            EnsureComp<ExecutionProjectileComponent>(bullet, out var execBulletComp);
+
+            execBulletComp.Target = comp.Victim;
+            execBulletComp.Multiplier = executionComp.DamageModifier;
+
+            Dirty(bullet, execBulletComp);
+        }
 
 
         string internalMsg;
