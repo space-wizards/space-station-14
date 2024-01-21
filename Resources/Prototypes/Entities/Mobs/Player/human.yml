@@ -97,7 +97,7 @@
 - type: entity
   name: Pirate Captain
   parent: MobHuman
-  id: MobHumanLostPirate
+  id: MobHumanLostCaptainPirate
   components:
   - type: NpcFactionMember
     factions:
@@ -110,7 +110,7 @@
 - type: entity
   name: Firstmate Pirate
   parent: MobHuman
-  id: MobHumanLostPirate
+  id: MobHumanLostFirstmatePirate
   components:
   - type: NpcFactionMember
     factions:

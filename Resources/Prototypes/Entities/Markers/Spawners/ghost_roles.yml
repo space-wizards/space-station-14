@@ -112,18 +112,37 @@
       - sprite: Mobs/Species/Skeleton/parts.rsi
         state: skull_icon
 
-  - type: entity
+- type: entity
   id: SpawnPointLostCaptainPirate
   name: ghost role spawn point
-  suffix: pirate
+  suffix: pirate-captain
   parent: MarkerBase
   components:
   - type: GhostRole
-    name: ghost-role-information-lostpirate-name
-    description: ghost-role-information-lostpirate-description
-    rules: ghost-role-information-lostpirate-rules
+    name: ghost-role-information-lost-captain-pirate-name
+    description: ghost-role-information-lost-captain-pirate-description
+    rules: ghost-role-information-lost-captain-pirate-rules
   - type: GhostRoleMobSpawner
-    prototype: MobHumanLostPirate
+    prototype: MobHumanLostCaptainPirate
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Mobs/Species/Skeleton/parts.rsi
+        state: skull_icon
+
+- type: entity
+  id: SpawnPointLostFirstmate
+  name: ghost role spawn point
+  suffix: pirate-firstmate
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-lost-pirate-firstmate-name
+    description: ghost-role-information-lost-pirate-firstmate-description
+    rules: ghost-role-information-lost-pirate-firstmate-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanLostFistmatePirate
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

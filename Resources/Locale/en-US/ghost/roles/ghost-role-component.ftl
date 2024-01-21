@@ -32,7 +32,15 @@ ghost-role-information-punpun-description = An honorable member of the monkey so
 
 ghost-role-information-lostpirate-name = Lost Pirate
 ghost-role-information-lostpirate-description = You are a poor, lost pirate. Try to become rich! Or at least try to survive...
-ghost-role-information-lostpirate-rules = You do [color=red]NOT[/color] remember your pastlife. Do what you need to complete your tasks beggining with trading ending with bloodbath.
+ghost-role-information-lostpirate-rules = You do [color=red]NOT[/color] remember your pastlife. Do what you need to complete your tasks beggining with trading ending with bloodbath. Obey your captain.
+
+ghost-role-information-lost-captain-pirate-name = Lost Captain Pirate
+ghost-role-information-lost-captain-pirate-description = You are a poor, lost pirate. Try to become rich! Or at least try to survive...
+ghost-role-information-lost-captain-pirate-rules = You do [color=red]NOT[/color] remember your pastlife. Do what you need to complete your tasks beggining with trading ending with bloodbath. Lead your crew my friend, YAR!.
+
+ghost-role-information-lost-pirate-firstmate-name = Lost Firstmate Pirate
+ghost-role-information-lost-pirate-firstmate-description = You are a poor, lost pirate. Try to become rich! Or at least try to survive...
+ghost-role-information-lost-pirate-firstmate-rules = You do [color=red]NOT[/color] remember your pastlife. Do what you need to complete your tasks beggining with trading ending with bloodbath. Obey your captain or [color=red]become[/color] a new one.
 
 ghost-role-information-xeno-name = Xeno
 ghost-role-information-xeno-description = You are a xeno, co-operate with your hive to kill all crewmembers!
