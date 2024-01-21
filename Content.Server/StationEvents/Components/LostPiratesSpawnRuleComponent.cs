@@ -4,11 +4,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent, Access(typeof(LoneOpsSpawnRule))]
-public sealed partial class LoneOpsSpawnRuleComponent : Component
+[RegisterComponent, Access(typeof(LostPiratesSpawnRule))]
+public sealed partial class LostPiratesSpawnRuleComponent : Component
 {
-    [DataField("loneOpsShuttlePath")]
-    public string LoneOpsShuttlePath = "Maps/Shuttles/looser_pirates.yml";
+    [DataField("LostPiratesShuttlePath")]
+    public string LostPiratesShuttlePath = "Maps/Shuttles/looser_pirates.yml";
 
     [DataField("gameRuleProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string GameRuleProto = "Pirates";

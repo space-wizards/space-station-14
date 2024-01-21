@@ -19,7 +19,11 @@ public sealed class LostPiratesSpawnRule : StationEventSystem<LostPiratesSpawnRu
     protected override void Started(EntityUid uid, LostPiratesSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-
+        if (!_piratesRuleSystem.CheckLoneOpsSpawn())
+        {
+            ForceEndSelf(uid, gameRule);
+            return;
+        }
 
         var shuttleMap = _mapManager.CreateMap();
         var options = new MapLoadOptions
