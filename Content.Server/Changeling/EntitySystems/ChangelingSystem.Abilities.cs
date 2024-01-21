@@ -19,6 +19,8 @@ using Content.Shared.Humanoid;
 using Content.Server.Forensics;
 using Content.Shared.FixedPoint;
 using Content.Server.Store.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Server.Fluids.EntitySystems;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -33,6 +35,7 @@ public sealed partial class ChangelingSystem
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
 
     private void InitializeLingAbilities()
     {
@@ -250,9 +253,20 @@ public sealed partial class ChangelingSystem
         if (!component.ArmBladeActive)
         {
             if (SpawnArmBlade(uid))
+            {
                 component.ArmBladeActive = true;
+                _audioSystem.PlayPvs(component.SoundFlesh, uid);
+
+                var othersMessage = Loc.GetString("changeling-armblade-success-others", ("user", Identity.Entity(uid, EntityManager)));
+                _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.MediumCaution);
+
+                var selfMessage = Loc.GetString("changeling-armblade-success-self");
+                _popup.PopupEntity(selfMessage, uid, uid, PopupType.MediumCaution);
+            }
             else
+            {
                 _popup.PopupEntity(Loc.GetString("changeling-armblade-fail"), uid, uid);
+            }
         }
         else
         {
@@ -266,6 +280,13 @@ public sealed partial class ChangelingSystem
                         {
                             component.ArmBladeActive = false;
                             QueueDel(handContainer.ContainedEntity.Value);
+                            _audioSystem.PlayPvs(component.SoundFlesh, uid);
+
+                            var othersMessage = Loc.GetString("changeling-armblade-retract-others", ("user", Identity.Entity(uid, EntityManager)));
+                            _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.MediumCaution);
+
+                            var selfMessage = Loc.GetString("changeling-armblade-retract-self");
+                            _popup.PopupEntity(selfMessage, uid, uid, PopupType.MediumCaution);
                         }
                     }
                 }
@@ -315,14 +336,22 @@ public sealed partial class ChangelingSystem
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
+        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.LingArmorActive, component.LingArmorRegenCost))
+            return;
+
+        _audioSystem.PlayPvs(component.SoundFlesh, uid);
+
         if (!component.LingArmorActive)
         {
-            if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.LingArmorActive, component.LingArmorRegenCost))
-                return;
-
             args.Handled = true;
 
             SpawnLingArmor(uid, inventory);
+
+            var othersMessage = Loc.GetString("changeling-armor-success-others", ("user", Identity.Entity(uid, EntityManager)));
+            _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.MediumCaution);
+
+            var selfMessage = Loc.GetString("changeling-armor-success-self");
+            _popup.PopupEntity(selfMessage, uid, uid, PopupType.MediumCaution);
         }
         else
         {
@@ -335,7 +364,6 @@ public sealed partial class ChangelingSystem
                         if (prototype.ID == LingHelmetId)
                         {
                             _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
-                            QueueDel(headitem);
                         }
                     }
                 }
@@ -347,10 +375,19 @@ public sealed partial class ChangelingSystem
                         if (prototype.ID == LingArmorId)
                         {
                             _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
-                            QueueDel(outerclothingitem);
                         }
                     }
                 }
+
+                var othersMessage = Loc.GetString("changeling-armor-retract-others", ("user", Identity.Entity(uid, EntityManager)));
+                _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.MediumCaution);
+
+                var selfMessage = Loc.GetString("changeling-armor-retract-self");
+                _popup.PopupEntity(selfMessage, uid, uid, PopupType.MediumCaution);
+
+                var solution = new Solution();
+                solution.AddReagent("Blood", FixedPoint2.New(75));
+                _puddle.TrySpillAt(Transform(uid).Coordinates, solution, out _);
             }
         }
 

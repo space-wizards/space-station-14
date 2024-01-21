@@ -107,6 +107,11 @@
   license: "CC-BY-SA-3.0"
   source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
 
+- files: ["blobattack.ogg"]
+  copyright: '"blobattack.ogg" by /tg/station'
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/tgstation/tgstation/commit/662c08272acd7be79531550919f56f846726eabb"
+
 - files: ["bone_rattle.ogg"]
   copyright: '"Rattling Bones.wav" by spookymodem of Freesound.org'
   license: "CC0-1.0"

@@ -24,6 +24,15 @@ changeling-role-greeting-short =
 changeling-not-enough-chemicals = Not enough chemicals!
 
 changeling-armblade-fail = You have no free hands!
+changeling-armblade-success-others = A grotesque blade forms around {THE($user)}'s arm!
+changeling-armblade-success-self = Your arm twists and mutates, transforming it into a deadly blade.
+changeling-armblade-retract-others = {CAPITALIZE(THE($target))}'s arm blade reforms into an arm!
+changeling-armblade-retract-self = You assimilate the arm blade back into your body.
+
+changeling-armor-success-others = {CAPITALIZE(THE($target))}'s body inflates into a mass of armor!
+changeling-armor-success-self = Your body inflates into a mass of armor.
+changeling-armor-retract-others = {CAPITALIZE(THE($target))}'s armor bursts off! 
+changeling-armor-retract-self = Your armor bursts off.
 
 changeling-regenerate-others-success = {CAPITALIZE(THE($user))} rapidly regenerates their body, making a loud, grotesque sound!
 changeling-regenerate-self-success = You feel an itching, both inside and outside as your tissues knit and reknit!

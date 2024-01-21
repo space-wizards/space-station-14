@@ -124,6 +124,12 @@ public sealed partial class ChangelingComponent : Component
     };
     #endregion
 
+    [DataField]
+    public SoundSpecifier? SoundFlesh = new SoundPathSpecifier("/Audio/Effects/blobattack.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-3f),
+    };
+
     #region Armblade Ability
     /// <summary>
     /// If the ling has an active armblade or not.
