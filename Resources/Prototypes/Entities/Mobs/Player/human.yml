@@ -90,9 +90,9 @@
     factions:
       - Syndicate
   - type: RandomHumanoidAppearance
-    randomizeName: false
+    randomizeName: true
   - type: Loadout
     prototypes: [PierateGear]
-  - type: GenericAntag
+  
   
   
