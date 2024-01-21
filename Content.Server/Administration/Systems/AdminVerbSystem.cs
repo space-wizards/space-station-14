@@ -354,9 +354,10 @@ namespace Content.Server.Administration.Systems
                 args.Verbs.Add(new Verb()
                 {
                     Text = Loc.GetString("artifact-verb-activate"),
-                    Category = VerbCategory.Debug,
                     Act = () => _artifactSystem.ForceActivateArtifact(args.Target, component: artifact),
+                    Priority = 1,
                     Impact = LogImpact.High
+
                 });
             }
 
