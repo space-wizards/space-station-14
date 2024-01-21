@@ -3,6 +3,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -11,6 +13,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
@@ -30,6 +33,7 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -48,7 +52,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, ExecutionProjectileComponent comp, StartCollideEvent args)
     {
-        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId)
+        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId || comp.Clumsy)
             return;
 
         if (!TryComp<ProjectileComponent>(uid, out var projectileComponent))
@@ -221,6 +225,15 @@ public sealed class ExecutionSystem : EntitySystem
         var attacker = args.User;
         var weapon = args.Used.Value;
         var victim = args.Target.Value;
+        var clumsyShot = false;
+        // Clumsy people have a chance to shoot themselves
+        if (TryComp<ClumsyComponent>(attacker, out var clumsy) && comp.ClumsyProof == false)
+        {
+            if (_interactionSystem.TryRollClumsy(attacker, 0.333f, clumsy))
+            {
+                clumsyShot = true;
+            }
+        }
 
         if (!CanExecuteWithGun(weapon, victim, attacker))
             return;
@@ -228,10 +241,11 @@ public sealed class ExecutionSystem : EntitySystem
         var active = EnsureComp<ActiveExecutionComponent>(uid);
         active.Attacker = attacker;
         active.Victim = victim;
+        active.Clumsy = clumsyShot;
         Dirty(uid, active);
 
         EntityCoordinates coords;
-        if (victim == attacker)
+        if (victim == attacker || clumsyShot)
         {
             // Should I be creating EntityCoordinates out of thin air? Probably not but this is the best way I can think
             // of to actually fire a projectile where the start and end positions aren't the same.
@@ -247,6 +261,63 @@ public sealed class ExecutionSystem : EntitySystem
         RemCompDeferred<ActiveExecutionComponent>(uid);
         Dirty(uid, active);
 
+    }
+
+    private void OnAmmoShot(EntityUid uid, ActiveExecutionComponent comp, AmmoShotEvent args)
+    {
+        if (!TryComp<ExecutionComponent>(uid, out var executionComp))
+            return;
+
+        if (args.FiredProjectiles.Count < 1)
+            return;
+
+        foreach (var bullet in args.FiredProjectiles)
+        {
+
+            if (comp.Attacker == comp.Victim || comp.Clumsy)
+            {
+                if (!TryComp<ProjectileComponent>(bullet, out var projComponent))
+                    return;
+
+                projComponent.IgnoreShooter = false;
+
+                Dirty(bullet, projComponent);
+            }
+
+            EnsureComp<ExecutionProjectileComponent>(bullet, out var execBulletComp);
+
+            execBulletComp.Target = comp.Victim;
+            execBulletComp.Multiplier = executionComp.DamageModifier;
+            execBulletComp.Clumsy = comp.Clumsy;
+
+            Dirty(bullet, execBulletComp);
+        }
+
+
+        string internalMsg;
+        string externalMsg;
+
+        var attacker = comp.Attacker;
+        var victim = comp.Victim;
+
+        if (comp.Clumsy)
+        {
+            internalMsg = "execution-popup-gun-clumsy-internal";
+            externalMsg = "execution-popup-gun-clumsy-external";
+        }
+        else if (attacker == victim)
+        {
+            internalMsg = executionComp.SuicidePopupCompleteInternal;
+            externalMsg = executionComp.SuicidePopupCompleteExternal;
+        }
+        else
+        {
+            internalMsg = executionComp.ExecutionPopupCompleteInternal;
+            externalMsg = executionComp.ExecutionPopupCompleteExternal;
+        }
+
+        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
+        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
     }
 
     private void ShowExecutionInternalPopup(string locString,
@@ -285,55 +356,5 @@ public sealed class ExecutionSystem : EntitySystem
             );
     }
 
-    private void OnAmmoShot(EntityUid uid, ActiveExecutionComponent comp, AmmoShotEvent args)
-    {
-        if (!TryComp<ExecutionComponent>(uid, out var executionComp))
-            return;
-
-        if (args.FiredProjectiles.Count < 1)
-            return;
-
-        foreach (var bullet in args.FiredProjectiles)
-        {
-
-            if (comp.Attacker == comp.Victim)
-            {
-                if (!TryComp<ProjectileComponent>(bullet, out var projComponent))
-                    return;
-
-                projComponent.IgnoreShooter = false;
-
-                Dirty(bullet, projComponent);
-            }
-
-            EnsureComp<ExecutionProjectileComponent>(bullet, out var execBulletComp);
-
-            execBulletComp.Target = comp.Victim;
-            execBulletComp.Multiplier = executionComp.DamageModifier;
-
-            Dirty(bullet, execBulletComp);
-        }
-
-
-        string internalMsg;
-        string externalMsg;
-
-        var attacker = comp.Attacker;
-        var victim = comp.Victim;
-
-        if (attacker == victim)
-        {
-            internalMsg = executionComp.SuicidePopupCompleteInternal;
-            externalMsg = executionComp.SuicidePopupCompleteExternal;
-        }
-        else
-        {
-            internalMsg = executionComp.ExecutionPopupCompleteInternal;
-            externalMsg = executionComp.ExecutionPopupCompleteExternal;
-        }
-
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
-        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
-    }
 }
 

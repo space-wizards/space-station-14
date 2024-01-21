@@ -13,4 +13,7 @@ public sealed partial class ActiveExecutionComponent : Component
 
     [DataField]
     public EntityUid Victim;
+
+    [DataField]
+    public bool Clumsy;
 }

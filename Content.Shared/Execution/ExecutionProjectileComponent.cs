@@ -13,4 +13,7 @@ public sealed partial class ExecutionProjectileComponent : Component
 
     [DataField]
     public string FixtureId = "projectile";
+
+    [DataField]
+    public bool Clumsy = false;
 }
