@@ -111,7 +111,14 @@ public partial class InventorySystem
     /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
     public void SpawnItemOnEntity(EntityUid entity, EntProtoId item)
     {
-        var itemToSpawn = Spawn(item);
+        //Transform() throws error if not present
+        if (!HasComp<TransformComponent>(entity))
+            return;
+
+        var xform = Transform(entity);
+        var mapCoords = _transform.GetMapCoordinates(xform);
+
+        var itemToSpawn = Spawn(item, mapCoords);
 
         //Try insert into the backpack
         if (TryGetSlotContainer(entity, "back", out var backSlot, out _)
