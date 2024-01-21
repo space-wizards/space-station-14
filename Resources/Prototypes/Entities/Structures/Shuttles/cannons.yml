@@ -58,12 +58,12 @@
   description: Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/laser.rsi
+    sprite: Objects/Weapons/Guns/Shuttles/laser.rsi
     layers:
     - state: lse-400c
     - state: mag-unshaded-9
       map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded  
+      shader: unshaded
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
@@ -85,9 +85,9 @@
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
-    soundGunshot: 
+    soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-      params: 
+      params:
         variation: 0.05
   - type: MagazineVisuals
     magState: mag
@@ -114,7 +114,7 @@
   description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/laser.rsi
+    sprite: Objects/Weapons/Guns/Shuttles/laser.rsi
     layers:
     - state: lse-1200c
     - state: mag-unshaded-9
@@ -141,9 +141,9 @@
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
-    soundGunshot: 
+    soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
-      params: 
+      params:
         variation: 0.05
   - type: MagazineVisuals
     magState: mag
@@ -173,7 +173,7 @@
   description: A small stationary grenade launcher that holds 2 grenades.
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/launcher.rsi
+    sprite: Objects/Weapons/Guns/Shuttles/launcher.rsi
     layers:
     - state: exp-320g
     - state: mag-7
@@ -204,7 +204,7 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Items/Mining/fultext_launch.ogg
-      params: 
+      params:
         pitch: 0.8
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
@@ -226,10 +226,10 @@
   id: ShuttleGunDuster
   parent: [ShuttleGunBase, ConstructibleMachine]
   name: EXP-2100g "Duster"
-  description: A powerful stationary grenade launcher. A cartridge is required for use. 
+  description: A powerful stationary grenade launcher. A cartridge is required for use.
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/launcher.rsi
+    sprite: Objects/Weapons/Guns/Shuttles/launcher.rsi
     layers:
     - state: exp-2100g
     - state: mag-7
@@ -257,7 +257,7 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Items/Mining/fultext_launch.ogg
-      params: 
+      params:
         variation: 0.05
         pitch: 0.8
     soundEmpty:
@@ -277,7 +277,7 @@
         whitelist:
           tags:
           - MagazineGrenade
-        insertSound: 
+        insertSound:
           path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
           params:
             pitch: 2
@@ -290,7 +290,7 @@
   parent: ShuttleGunBase
   name: pirate ship cannon
   description: Kaboom!
-  components:   
+  components:
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -306,7 +306,7 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/pirate_cannon.rsi
+    sprite: Objects/Weapons/Guns/Shuttles/pirate_cannon.rsi
     layers:
     - state: base
   - type: Gun
@@ -329,7 +329,7 @@
   description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/kinetic.rsi
+    sprite: Objects/Weapons/Guns/Shuttles/kinetic.rsi
     layers:
     - state: ptk-800
     - state: mag-7
@@ -347,7 +347,7 @@
           node: machineFrame
         - !type:DoActsBehavior
           acts: ["Destruction"]
-  - type: Gun    
+  - type: Gun
     projectileSpeed: 20
     fireRate: 2
     selectedMode: SemiAuto
