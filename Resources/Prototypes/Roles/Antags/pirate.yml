@@ -1,6 +1,6 @@
 - type: antag
-  id: LostPierate
-  name: roles-antag-pierate-name
+  id: LostPirate
+  name: roles-antag-pirate-name
   antagonist: true
   setPreference: false
-  objective: roles-pierate-objective
+  objective: roles-pirate-objective

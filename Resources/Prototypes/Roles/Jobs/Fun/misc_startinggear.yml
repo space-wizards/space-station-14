@@ -359,7 +359,7 @@
 #Pierates
 
 - type: startingGear
-  id: PierateGear
+  id: PirateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
     back: ClothingBackpackPirateFilled
@@ -373,7 +373,7 @@
   duffelbag: ClothingBackpackPirateFilled
 
 - type: startingGear
-  id: PierateCaptainGear
+  id: PirateCaptainGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
     back: ClothingBackpackPirateFilled
@@ -389,7 +389,7 @@
   duffelbag: ClothingBackpackPirateFilled
 
 - type: startingGear
-  id: PierateFirstmateGear
+  id: PirateFirstmateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
     back: ClothingBackpackPirateFilled

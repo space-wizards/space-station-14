@@ -30,9 +30,9 @@ ghost-role-information-smile-description = The sweetest creature in the world. S
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
 
-ghost-role-information-lostpierate-name = Lost Pierate
-ghost-role-information-lostpierate-description = You are a poor, lost pierate. Try to become rich! Or at least try to survive...
-ghost-role-information-lostpierate-rules = You are a pierate. You don't know where you are but you see a place where you can get some cash. Do what you need to complete your tasks beggining with trading ending with bloodbath.
+ghost-role-information-lostpirate-name = Lost Pirate
+ghost-role-information-lostpirate-description = You are a poor, lost pirate. Try to become rich! Or at least try to survive...
+ghost-role-information-lostpirate-rules = You do [color=red]NOT[/color] remember your pastlife. Do what you need to complete your tasks beggining with trading ending with bloodbath.
 
 ghost-role-information-xeno-name = Xeno
 ghost-role-information-xeno-description = You are a xeno, co-operate with your hive to kill all crewmembers!

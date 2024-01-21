@@ -34,5 +34,5 @@ roles-antag-thief-objective = Add some NT property to your personal collection w
 roles-antag-terminator-name = Exterminator
 roles-antag-terminator-objective = Kill the target at all costs, the future depends on it.
 
-roles-antag-pierate-name = Pierate
-roles-antag-pierate-objective = Steal everything valuable from this stupied, big ship.. er.. station.
+roles-antag-pirate-name = Pirate
+roles-antag-pirate-objective = Steal everything valuable from this stupied big ship.. er.. station.
