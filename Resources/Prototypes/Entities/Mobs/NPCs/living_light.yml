@@ -90,7 +90,6 @@
   - type: Tag
     tags:
       - FootstepSound
-      - DoorBumpOpener
   - type: Destructible
     thresholds:
       - trigger:
