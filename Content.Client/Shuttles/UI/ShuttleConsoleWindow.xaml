@@ -31,25 +31,24 @@
                     Margin="5"/>
         </BoxContainer>
         <!-- Contents box -->
-        <GridContainer Columns="3"
-                       Name="Contents"
-                   HorizontalAlignment="Stretch"
-                   Margin="5 5 5 5">
+        <BoxContainer Name="Contents"
+                      HorizontalAlignment="Stretch"
+                      Margin="5 5 5 5">
             <!-- NAV -->
             <BoxContainer Name="NavContainer"
-                          Visible="False">
-                <ui:RadarControl Name="RadarScreen"
+                          Visible="False"
+                          HorizontalExpand="True">
+                <ui:RadarControl Name="NavRadar"
                                  MouseFilter="Stop"
-                                 Margin="5"
-                                 HorizontalExpand = "True"
-                                 VerticalExpand = "True"/>
+                                 Margin="5"/>
                 <!-- Nav controls -->
+                <!-- Buffer -->
+                <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayNav"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Right"
                       MinWidth="256"
                       MaxWidth="256"
-                      Align="Center"
                       Orientation="Vertical">
                     <controls:StripeBack>
                         <Label Name="DisplayLabel" Text="{Loc 'shuttle-console-display-label'}" HorizontalAlignment="Center"/>
@@ -108,18 +107,16 @@
             </BoxContainer>
             <!-- MAP -->
             <BoxContainer Name="MapContainer"
-                          Visible="False">
-                <ui:RadarControl Name="RadarScreen"
+                          Visible="False"
+                          HorizontalExpand="True">
+                <ui:ShuttleMapControl Name="MapRadar"
                                  MouseFilter="Stop"
-                                 Margin="5"
-                                 HorizontalExpand = "True"
-                                 VerticalExpand = "True"/>
+                                 Margin="5"/>
                 <BoxContainer Name="RightDisplayMap"
                               VerticalAlignment="Top"
-                              HorizontalAlignment="Left"
+                              HorizontalAlignment="Right"
                               MinWidth="256"
                               MaxWidth="256"
-                              Align="Center"
                               Orientation="Vertical">
                     <BoxContainer Orientation="Vertical">
                         <controls:StripeBack>
@@ -132,16 +129,17 @@
             </BoxContainer>
             <!-- DOCK -->
             <BoxContainer Name="DockContainer"
-                          Visible="False">
+                          Visible="False"
+                          HorizontalExpand="True">
                 <ui:DockingControl Name="DockingScreen"
                                    Visible="False"
                                    MouseFilter="Stop"
-                                   Margin="5"
-                                   HorizontalExpand = "True"
-                                   VerticalExpand = "True"/>
+                                   Margin="5"/>
+                <!-- Buffer -->
+                <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayDock"
                               VerticalAlignment="Top"
-                              HorizontalAlignment="Left"
+                              HorizontalAlignment="Right"
                               MinWidth="256"
                               MaxWidth="256"
                               Align="Center"
@@ -155,6 +153,6 @@
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>
-    </GridContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

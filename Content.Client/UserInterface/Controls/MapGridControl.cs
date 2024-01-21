@@ -36,7 +36,7 @@ public abstract class MapGridControl : Control
 
     public Vector2 MaxRadarRangeVector => new Vector2(MaxRadarRange, MaxRadarRange);
 
-    protected Vector2 MidpointVector => new Vector2(MidPoint, MidPoint);
+    protected Vector2 MidPointVector => new Vector2(MidPoint, MidPoint);
 
     protected int MidPoint => SizeFull / 2;
     protected int SizeFull => (int) ((UIDisplayRadius + MinimapMargin) * 2 * UIScale);
@@ -67,6 +67,11 @@ public abstract class MapGridControl : Control
     public void AddRadarRange(float value)
     {
         ActualRadarRange = Math.Clamp(ActualRadarRange + value, WorldMinRange, WorldMaxRange);
+    }
+
+    protected Vector2 ScalePosition(Vector2 value)
+    {
+        return value * MinimapScale + MidPointVector;
     }
 
     protected override void Draw(DrawingHandleScreen handle)

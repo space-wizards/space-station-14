@@ -53,14 +53,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        WorldRangeChange(RadarScreen.WorldRange);
-        RadarScreen.WorldRangeChanged += WorldRangeChange;
+        WorldRangeChange(NavRadar.WorldRange);
+        NavRadar.WorldRangeChanged += WorldRangeChange;
 
         IFFToggle.OnToggled += OnIFFTogglePressed;
-        IFFToggle.Pressed = RadarScreen.ShowIFF;
+        IFFToggle.Pressed = NavRadar.ShowIFF;
 
         DockToggle.OnToggled += OnDockTogglePressed;
-        DockToggle.Pressed = RadarScreen.ShowDocks;
+        DockToggle.Pressed = NavRadar.ShowDocks;
 
         UndockButton.OnPressed += OnUndockPressed;
 
@@ -116,14 +116,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
     {
-        RadarScreen.ShowIFF ^= true;
-        args.Button.Pressed = RadarScreen.ShowIFF;
+        NavRadar.ShowIFF ^= true;
+        args.Button.Pressed = NavRadar.ShowIFF;
     }
 
     private void OnDockTogglePressed(BaseButton.ButtonEventArgs args)
     {
-        RadarScreen.ShowDocks ^= true;
-        args.Button.Pressed = RadarScreen.ShowDocks;
+        NavRadar.ShowDocks ^= true;
+        args.Button.Pressed = NavRadar.ShowDocks;
     }
 
     private void OnUndockPressed(BaseButton.ButtonEventArgs args)
@@ -135,14 +135,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
     {
         _shuttleEntity = coordinates?.EntityId;
-        RadarScreen.SetMatrix(coordinates, angle);
+        NavRadar.SetMatrix(coordinates, angle);
     }
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         UpdateDocks(scc.Docks);
         UpdateFTL(scc.Destinations, scc.FTLState, scc.FTLTime);
-        RadarScreen.UpdateState(scc);
+        NavRadar.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
     }
 
@@ -279,12 +279,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
-        RadarScreen.HighlightedDock = state.Entity;
+        NavRadar.HighlightedDock = state.Entity;
     }
 
     private void OnDockMouseExited(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
-        RadarScreen.HighlightedDock = null;
+        NavRadar.HighlightedDock = null;
     }
 
     /// <summary>
@@ -314,7 +314,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
             UndockButton.Disabled = true;
             DockingScreen.Visible = false;
-            RadarScreen.Visible = true;
+            NavRadar.Visible = true;
         }
         else
         {
@@ -330,7 +330,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             }
 
             UndockButton.Disabled = false;
-            RadarScreen.Visible = false;
+            NavRadar.Visible = false;
             DockingScreen.Visible = true;
             DockingScreen.ViewedDock = state.Entity;
             StartAutodockPressed?.Invoke(state.Entity);

@@ -470,11 +470,11 @@ public sealed class RadarControl : MapGridControl
 
     private Vector2 ScalePosition(Vector2 value)
     {
-        return value * MinimapScale + MidpointVector;
+        return value * MinimapScale + MidPointVector;
     }
 
     private Vector2 InverseScalePosition(Vector2 value)
     {
-        return (value - MidpointVector) / MinimapScale;
+        return (value - MidPointVector) / MinimapScale;
     }
 }

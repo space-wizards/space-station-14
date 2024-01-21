@@ -14,7 +14,7 @@ namespace Content.Client.Shuttles.UI;
 /// Displays the docking view from a specific docking port
 /// </summary>
 [Virtual]
-public class DockingControl : Control
+public class DockingControl : MapGridControl
 {
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;
@@ -25,13 +25,6 @@ public class DockingControl : Control
     private Vector2 RangeVector => new Vector2(_range, _range);
 
     private const float GridLinesDistance = 32f;
-
-    private int MidPoint => SizeFull / 2;
-    private Vector2 MidPointVector => new Vector2(MidPoint, MidPoint);
-
-    private int SizeFull => (int) (MapGridControl.UIDisplayRadius * 2 * UIScale);
-    private int ScaledMinimapRadius => (int) (MapGridControl.UIDisplayRadius * UIScale);
-    private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
     public NetEntity? ViewedDock;
     public EntityUid? GridEntity;
@@ -46,7 +39,7 @@ public class DockingControl : Control
 
     private List<Entity<MapGridComponent>> _grids = new();
 
-    public DockingControl()
+    public DockingControl() : base(8f, 32f, 8f)
     {
         _entManager = IoCManager.Resolve<IEntityManager>();
         _mapManager = IoCManager.Resolve<IMapManager>();
@@ -263,10 +256,5 @@ public class DockingControl : Control
             }
         }
 
-    }
-
-    private Vector2 ScalePosition(Vector2 value)
-    {
-        return value * MinimapScale + MidPointVector;
     }
 }

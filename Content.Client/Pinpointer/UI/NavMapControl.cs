@@ -207,7 +207,7 @@ public partial class NavMapControl : MapGridControl
             var localPosition = args.PointerLocation.Position - GlobalPixelPosition;
 
             // Convert to a world position
-            var unscaledPosition = (localPosition - MidpointVector) / MinimapScale;
+            var unscaledPosition = (localPosition - MidPointVector) / MinimapScale;
             var worldPosition = _transformSystem.GetWorldMatrix(_xform).Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset);
 
             // Find closest tracked entity in range
@@ -317,7 +317,7 @@ public partial class NavMapControl : MapGridControl
                 {
                     var vert = poly.Vertices[i] - offset;
 
-                    verts[i] = Scale(new Vector2(vert.X, -vert.Y));
+                    verts[i] = ScalePosition(new Vector2(vert.X, -vert.Y));
                 }
 
                 handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts[..poly.VertexCount], TileColor);
@@ -348,8 +348,8 @@ public partial class NavMapControl : MapGridControl
 
                 foreach (var chunkedLine in chunkedLines)
                 {
-                    var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
-                    var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
+                    var start = ScalePosition(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
+                    var end = ScalePosition(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
 
                     walls.Add(start);
                     walls.Add(end);
@@ -375,7 +375,7 @@ public partial class NavMapControl : MapGridControl
         foreach (var airlock in _navMap.Airlocks)
         {
             var position = airlock.Position - offset;
-            position = Scale(position with { Y = -position.Y });
+            position = ScalePosition(position with { Y = -position.Y });
             airlockLines.Add(position + airlockBuffer);
             airlockLines.Add(position - airlockBuffer * foobarVec);
 
@@ -418,7 +418,7 @@ public partial class NavMapControl : MapGridControl
             foreach (var beacon in _navMap.Beacons)
             {
                 var position = beacon.Position - offset;
-                position = Scale(position with { Y = -position.Y });
+                position = ScalePosition(position with { Y = -position.Y });
 
                 var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
                 handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _backgroundColor);
@@ -440,7 +440,7 @@ public partial class NavMapControl : MapGridControl
                 if (mapPos.MapId != MapId.Nullspace)
                 {
                     var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
-                    position = Scale(new Vector2(position.X, -position.Y));
+                    position = ScalePosition(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
                 }
@@ -466,7 +466,7 @@ public partial class NavMapControl : MapGridControl
             if (mapPos.MapId != MapId.Nullspace)
             {
                 var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
-                position = Scale(new Vector2(position.X, -position.Y));
+                position = ScalePosition(new Vector2(position.X, -position.Y));
 
                 var scalingCoefficient = 2.5f;
                 var positionOffset = scalingCoefficient * float.Sqrt(MinimapScale);
@@ -628,14 +628,9 @@ public partial class NavMapControl : MapGridControl
         return decodedOutput;
     }
 
-    protected Vector2 Scale(Vector2 position)
-    {
-        return position * MinimapScale + MidpointVector;
-    }
-
     protected Vector2 GetOffset()
     {
-        return _offset + (_physics != null ? _physics.LocalCenter : new Vector2());
+        return _offset + (_physics?.LocalCenter ?? new Vector2());
     }
 }
 
