@@ -8,10 +8,10 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class LoneOpsSpawnRuleComponent : Component
 {
     [DataField("loneOpsShuttlePath")]
-    public string LoneOpsShuttlePath = "Maps/Shuttles/striker.yml";
+    public string LoneOpsShuttlePath = "Maps/Shuttles/looser_pirates.yml";
 
     [DataField("gameRuleProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string GameRuleProto = "Nukeops";
+    public string GameRuleProto = "Pirates";
 
     [DataField("additionalRule")]
     public EntityUid? AdditionalRule;

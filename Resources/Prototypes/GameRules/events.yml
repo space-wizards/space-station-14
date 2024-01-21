@@ -400,6 +400,19 @@
   - type: LoneOpsSpawnRule
 
 - type: entity
+  id: LostPiratesSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 30
+    weight: 5
+    minimumPlayers: 10
+    reoccurrenceDelay: 30
+    duration: 1
+  - type: LostPiratesSpawnRule
+
+- type: entity
   id: MassHallucinations
   parent: BaseGameRule
   noSpawn: true
