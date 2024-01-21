@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: Speech bubbles now display the name of whatever or whoever spoke them!
-      The options menu has a setting to disable this outright, or add a background
-      to the name for the sake of accessibility, for anyone who would like those options.
-    type: Add
-  - message: The bubbles associated with emotes and LOOC now display exactly what
-      the associated message prints in your chatbox.
-    type: Tweak
-  id: 5259
-  time: '2023-12-04T23:10:49.0000000+00:00'
 - author: brainfood1183
   changes:
   - message: Clowns can now craft the Banana Clown outfit.
@@ -3791,3 +3780,10 @@
   id: 5759
   time: '2024-01-20T23:38:27.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24328
+- author: TheShuEd
+  changes:
+  - message: Added new Floral anomaly!
+    type: Add
+  id: 5760
+  time: '2024-01-21T01:31:12.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24351
