@@ -190,7 +190,7 @@ public abstract class SharedChatSystem : EntitySystem
         var trimmed = message.Trim();
         if (maxLength > 0 && trimmed.Length > maxLength)
         {
-            trimmed = $"{message.Substring(0, maxLength)}...";
+            trimmed = $"{message[..maxLength]}...";
         }
 
         // No more than max newlines, other replaced to spaces
