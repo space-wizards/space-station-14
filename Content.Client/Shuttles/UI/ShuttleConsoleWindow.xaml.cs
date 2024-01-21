@@ -304,7 +304,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                 DockingScreen.ViewedDock = null;
             }
 
-            UndockButton.Disabled = true;
             DockingScreen.Visible = false;
             NavRadar.Visible = true;
         }
@@ -321,7 +320,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                 DockingScreen.Angle = null;
             }
 
-            UndockButton.Disabled = false;
             NavRadar.Visible = false;
             DockingScreen.Visible = true;
             DockingScreen.ViewedDock = state.Entity;

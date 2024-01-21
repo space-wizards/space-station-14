@@ -19,7 +19,7 @@ namespace Content.Client.Shuttles.UI;
 /// <summary>
 /// Displays nearby grids inside of a control.
 /// </summary>
-public sealed class RadarControl : MapGridControl
+public sealed class RadarControl : ShuttleControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -133,11 +133,6 @@ public sealed class RadarControl : MapGridControl
     protected override void Draw(DrawingHandleScreen handle)
     {
         base.Draw(handle);
-
-        var fakeAA = new Color(0.08f, 0.08f, 0.08f);
-
-        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         // No data
         if (_coordinates == null || _rotation == null)

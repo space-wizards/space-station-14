@@ -14,7 +14,7 @@ namespace Content.Client.Shuttles.UI;
 /// Displays the docking view from a specific docking port
 /// </summary>
 [Virtual]
-public class DockingControl : MapGridControl
+public class DockingControl : ShuttleControl
 {
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;
@@ -51,30 +51,12 @@ public class DockingControl : MapGridControl
     {
         base.Draw(handle);
 
-        var fakeAA = new Color(0.08f, 0.08f, 0.08f);
-
-        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
-
-        var gridLines = new Color(0.08f, 0.08f, 0.08f);
-        var gridLinesRadial = 8;
-        var gridLinesEquatorial = (int) Math.Floor(_range / GridLinesDistance);
-
-        for (var i = 1; i < gridLinesEquatorial + 1; i++)
-        {
-            handle.DrawCircle(new Vector2(MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
-        }
-
-        for (var i = 0; i < gridLinesRadial; i++)
-        {
-            Angle angle = (Math.PI / gridLinesRadial) * i;
-            var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, gridLines);
-        }
-
         if (Coordinates == null ||
             Angle == null ||
-            !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
+            !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform))
+        {
+            return;
+        }
 
         var rotation = Matrix3.CreateRotation(-Angle.Value + Math.PI);
         var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
