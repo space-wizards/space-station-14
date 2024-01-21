@@ -80,25 +80,33 @@
   - type: AnimationPlayer
   - type: RandomSpawner
     deleteSpawnerAfterSpawn: false
-    rareChance: 0.2
-    offset: 0.5
+    rareChance: 0.1
+    offset: 0.3
     chance: 1
     prototypes:
     - FoodAmbrosiaVulgaris
-    - FoodAmbrosiaDeus
-    - FoodBlueTomato
     - FoodAloe
     - FoodCabbage
     - FoodCarrot
     - FoodGalaxythistle
-    - FoodGatfruit
     - FoodLemon
-    - FoodLemoon
     - FoodLime
     - FoodPeaPod
     - FoodPineapple
     - FoodOnionRed
     - FoodWatermelon
+    - FoodAmbrosiaVulgaris
+    - FoodAloe
+    - FoodCabbage
+    - FoodCarrot
+    - FoodGalaxythistle
+    - FoodLemon
+    - FoodLime
+    - FoodPeaPod
+    - FoodPineapple
+    - FoodOnionRed
+    - FoodWatermelon
+    - FoodGatfruit
     rarePrototypes:
     - MobLuminousEntity
     - MobLuminousObject
