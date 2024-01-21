@@ -79,3 +79,20 @@
     nameSegments:
     - names_ninja_title
     - names_ninja
+
+# Lost Pierate
+- type: entity
+  name: Pierate
+  parent: MobHuman
+  id: MobHumanLostPierate
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Syndicate
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: Loadout
+    prototypes: [PierateGear]
+  - type: GenericAntag
+  
+  

@@ -94,6 +94,25 @@
         state: radiation
 
 - type: entity
+  noSpawn: true
+  id: SpawnPointLostPierate
+  name: ghost role spawn point
+  suffix: pirate
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-lostpierate-name
+    description: ghost-role-information-lostpierate-description
+    rules: ghost-role-information-lostpierate-name-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanLostPierate
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Mobs/Species/Skeleton/parts.rsi
+        state: skull_icon
+  
+- type: entity
   parent: MarkerBase
   id: SpawnPointGhostDragon
   noSpawn: true
