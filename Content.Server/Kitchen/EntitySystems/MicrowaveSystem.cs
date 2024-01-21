@@ -61,7 +61,6 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
-        private TimeSpan _targetTime = TimeSpan.Zero;
 
         public override void Initialize()
         {
@@ -431,8 +430,6 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid) || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
                 return;
-
-            _targetTime = _gameTiming.CurTime;
 
             var solidsDict = new Dictionary<string, int>();
             var reagentDict = new Dictionary<string, FixedPoint2>();
