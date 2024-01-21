@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: JoeHammad
-  changes:
-  - message: Paramedics are now available on marathon
-    type: Add
-  id: 5263
-  time: '2023-12-05T07:36:58.0000000+00:00'
 - author: Whisper
   changes:
   - message: Chloral Hydrate sleep effect will start at 11 units, down from 16.
@@ -3793,3 +3787,10 @@
   id: 5763
   time: '2024-01-21T12:14:47.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24369
+- author: icekot8
+  changes:
+  - message: Increased the size of flatpacks made by the Flatpacker 1001.
+    type: Tweak
+  id: 5764
+  time: '2024-01-21T17:07:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
