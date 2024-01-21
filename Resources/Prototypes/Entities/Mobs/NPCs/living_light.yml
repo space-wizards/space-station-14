@@ -33,7 +33,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      50: Dead
   - type: DamageStateVisuals
     states:
       Alive:
@@ -70,15 +70,15 @@
       types:
         Heat: -0.2
   - type: NoSlip
+  - type: Pullable
   - type: ZombieImmune
   - type: NameIdentifier
     group: GenericNumber
   - type: GhostTakeoverAvailable
   - type: PointLight
-    color: "#e4de6c"
-    radius: 8
-    softness: 2
-    energy: 5
+    radius: 3.0
+    energy: 4.5
+    color: "#6270bb"
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBells
@@ -105,7 +105,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 16
+        Heat: 10
     animation: WeaponArcFist
   - type: StaminaDamageOnHit
     damage: 16
@@ -127,7 +127,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      50: Dead
+      30: Dead
   - type: DamageStateVisuals
     states:
       Alive:
@@ -139,7 +139,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 8
+        Heat: 6
   - type: Destructible
     thresholds:
     - trigger:
@@ -167,7 +167,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      60: Dead
+      40: Dead
   - type: DamageStateVisuals
     states:
       Alive:
@@ -181,7 +181,7 @@
       types:
         Heat: 5
   - type: HitscanBatteryAmmoProvider
-    proto: Pulse
+    proto: RedLaser
     fireCost: 140
   - type: Battery
     maxCharge: 1000
