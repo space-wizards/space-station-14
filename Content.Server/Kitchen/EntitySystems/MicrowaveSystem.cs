@@ -398,26 +398,26 @@ namespace Content.Server.Kitchen.EntitySystems
         /// Handles the attempted cooking of unsafe objects
         /// </summary>
         /// <remarks>
-        /// Returns true if the microwave can continue to cook, false if it can't.
+        /// Returns false if the microwave didn't explode, true if it exploded.
         /// </remarks>
-        private bool HandleUnsafeItems(EntityUid uid, MicrowaveComponent component)
+        private bool RollExplode(EntityUid uid, MicrowaveComponent component)
         {
             if (!component.IsSparking)
             {
-                return true;
+                return false;
             }
 
             if (_random.Prob(.1f))
             {
                 _explosion.TriggerExplosive(uid);
-                return false;  // microwave is fucked, stop the cooking.
+                return true;  // microwave is fucked, stop the cooking.
             }
             if (_random.Prob(.75f))
             {
                 _lightning.ShootRandomLightnings(uid, 1.0f, 1, "Spark", triggerLightningEvents: false);
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -561,15 +561,16 @@ namespace Content.Server.Kitchen.EntitySystems
             {
 
                 active.CookTimeRemaining -= frameTime;
+                active.AccumulatedFrametime += frameTime;
 
-                if (_gameTiming.CurTime < _targetTime)
+                if (active.AccumulatedFrametime < microwave.SparkInterval)
                 {
                     continue;
                 }
 
-                _targetTime += TimeSpan.FromSeconds(1);
+                active.AccumulatedFrametime -= microwave.SparkInterval;
 
-                if (!HandleUnsafeItems(uid, microwave))
+                if (RollExplode(uid, microwave))
                 {
                     _destruction.BreakEntity(uid);
                     continue;

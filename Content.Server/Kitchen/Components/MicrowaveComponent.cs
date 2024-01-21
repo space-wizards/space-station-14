@@ -70,6 +70,12 @@ namespace Content.Server.Kitchen.Components
 
         public int CurrentCookTimeButtonIndex;
 
+        /// <summary>
+        ///     How frequently the microwave can spark.
+        /// </summary>
+        [DataField]
+        public float SparkInterval = 2.0f;
+
         public Container Storage = default!;
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]

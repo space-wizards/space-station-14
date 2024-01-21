@@ -14,6 +14,9 @@ public sealed partial class ActiveMicrowaveComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float TotalTime;
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float AccumulatedFrametime;
+
     [ViewVariables]
     public (FoodRecipePrototype?, int) PortionedRecipe;
 }
