@@ -81,7 +81,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     protected bool TryRoundStartAttempt(RoundStartAttemptEvent ev, string localizedPresetName)
     {
         var query = EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out var _, out var gameRule))
+        while (query.MoveNext(out var uid, out _, out _, out var gameRule))
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 return false;
@@ -90,7 +90,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
             {
                 ChatManager.DispatchServerAnnouncement(Loc.GetString("preset-no-one-ready", ("presetName", localizedPresetName)));
                 ev.Cancel();
-                continue;
+                break;
             }
 
             var minPlayers = gameRule.MinPlayers;
@@ -101,7 +101,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
                     ("minimumPlayers", minPlayers),
                     ("presetName", localizedPresetName)));
                 ev.Cancel();
-                continue;
+                break;
             }
         }
 

@@ -52,6 +52,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
                 continue;
 
             //Get all players eligible for this role
+            //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
             var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, allowMultipleAntagRoles: true, allowNonHumanoids: true);
 
             //Abort if there are none

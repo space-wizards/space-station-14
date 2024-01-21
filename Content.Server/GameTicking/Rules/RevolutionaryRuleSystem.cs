@@ -233,8 +233,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
         }
 
-        if (mind != null && mind.OwnedEntity.HasValue)
-            _antagSelection.SendBriefing(mind.OwnedEntity.Value, Loc.GetString("rev-role-greeting"), Color.Red, revComp.RevStartSound);
+        if (mind?.Session != null)
+            _antagSelection.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.Red, revComp.RevStartSound);
     }
 
     public void OnHeadRevAdmin(EntityUid entity)
