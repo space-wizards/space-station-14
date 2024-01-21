@@ -6,4 +6,4 @@
   - type: Metabolizer
     metabolizerTypes: [ Vox ]
   - type: Lung
-    Alert: ThisAlertTypeDoesNotExist
+    alert: LowNitrogen
