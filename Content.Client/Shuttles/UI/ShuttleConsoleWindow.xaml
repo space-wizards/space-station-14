@@ -2,8 +2,8 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
                       Title="{Loc 'shuttle-console-window-title'}"
-                      SetSize="960 720"
-                      MinSize="788 320">
+                      SetSize="960 756"
+                      MinSize="946 742">
     <BoxContainer Orientation="Vertical">
         <!-- Top row mode buttons -->
         <BoxContainer Name="ModeButtons"
@@ -33,23 +33,25 @@
         <!-- Contents box -->
         <BoxContainer Name="Contents"
                       HorizontalAlignment="Stretch"
-                      Margin="5 5 5 5">
+                      Margin="5">
             <!-- NAV -->
             <BoxContainer Name="NavContainer"
                           Visible="False"
                           HorizontalExpand="True">
                 <ui:RadarControl Name="NavRadar"
                                  MouseFilter="Stop"
-                                 Margin="5"/>
+                                 VerticalAlignment="Top"
+                                 Margin="5 4 5 5"/>
                 <!-- Nav controls -->
                 <!-- Buffer -->
                 <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayNav"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Right"
+                      VerticalExpand="True"
                       MinWidth="256"
                       MaxWidth="256"
-                      Margin="10"
+                      Margin="5 0 5 5"
                       Orientation="Vertical">
                     <controls:StripeBack
                         MinSize="48 48">
@@ -126,7 +128,7 @@
                           HorizontalExpand="True">
                 <ui:ShuttleMapControl Name="MapRadar"
                                  MouseFilter="Stop"
-                                 Margin="5"/>
+                                 Margin="5 4 5 5"/>
                 <!-- Buffer -->
                 <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayMap"
@@ -134,7 +136,7 @@
                               HorizontalAlignment="Right"
                               MinWidth="256"
                               MaxWidth="256"
-                              Margin="10"
+                              Margin="5 0 5 5"
                               Orientation="Vertical">
                     <BoxContainer Orientation="Vertical">
                         <controls:StripeBack MinSize="48 48">
@@ -153,7 +155,7 @@
                 <ui:DockingControl Name="DockingScreen"
                                    Visible="False"
                                    MouseFilter="Stop"
-                                   Margin="5"/>
+                                   Margin="5 4 5 5"/>
                 <!-- Buffer -->
                 <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayDock"
@@ -162,7 +164,7 @@
                               MinWidth="256"
                               MaxWidth="256"
                               Align="Center"
-                              Margin="10"
+                              Margin="5 0 5 5"
                               Orientation="Vertical">
                     <BoxContainer Orientation="Vertical">
                         <controls:StripeBack MinSize="48 48">

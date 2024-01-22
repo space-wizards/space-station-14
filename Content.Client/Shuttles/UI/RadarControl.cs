@@ -141,20 +141,31 @@ public sealed class RadarControl : ShuttleControl
             return;
         }
 
-        var gridLines = new Color(0.08f, 0.08f, 0.08f);
-        var gridLinesRadial = 8;
-        var gridLinesEquatorial = (int) Math.Floor(WorldRange / GridLinesDistance);
+        // Equatorial lines
+        var gridLines = Color.LightGray.WithAlpha(0.01f);
 
-        for (var i = 1; i < gridLinesEquatorial + 1; i++)
+        // Each circle is this x distance of the last one.
+        const float EquatorialMultiplier = 2f;
+
+        var minDistance = MathF.Pow(EquatorialMultiplier, EquatorialMultiplier * 1.5f);
+        var maxDistance = MathF.Pow(2f, EquatorialMultiplier * 4f);
+
+        for (var i = minDistance; i <= maxDistance; i *= EquatorialMultiplier)
         {
-            handle.DrawCircle(new Vector2(MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+            var color = Color.ToSrgb(gridLines).WithAlpha(0.05f);
+            handle.DrawCircle(new Vector2(MidPoint, MidPoint), MinimapScale * i, color, false);
         }
 
+        const int gridLinesRadial = 8;
+
+        // TODO: If bounds entirely within circle don't draw it goob.
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
-            var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, gridLines);
+            // TODO: Handle distance properly.
+            var aExtent = angle.ToVec() * ScaledMinimapRadius * 2f;
+            var lineColor = Color.MediumSpringGreen.WithAlpha(0.02f);
+            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, lineColor);
         }
 
         var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();

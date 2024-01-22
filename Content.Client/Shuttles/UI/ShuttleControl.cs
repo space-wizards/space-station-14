@@ -9,7 +9,7 @@ namespace Content.Client.Shuttles.UI;
 /// </summary>
 public abstract class ShuttleControl : MapGridControl
 {
-    protected static readonly Color BackingColor = Color.FromHex("#1e1e22");
+    protected static readonly Color BackingColor = new Color(0.08f, 0.08f, 0.08f);
 
     protected ShuttleControl(float minRange, float maxRange, float range) : base(minRange, maxRange, range)
     {
@@ -18,8 +18,8 @@ public abstract class ShuttleControl : MapGridControl
     protected override void Draw(DrawingHandleScreen handle)
     {
         base.Draw(handle);
-        var backing = Color.FromHex("#1e1e22");
-        handle.DrawRect(new UIBox2(0f, this.Height, this.Width, 0f), backing);
+        var backing = BackingColor;
+        handle.DrawRect(new UIBox2(0f, Height, Width, 0f), backing);
 
         var lineCount = 4f;
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
