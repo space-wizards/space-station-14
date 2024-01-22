@@ -26,26 +26,26 @@ public partial record struct TileSpawnSettingsEntry()
     /// The minimum number of tiles that spawn per pulse
     /// </summary>
     [DataField]
-    public int MinAmount { get; set; } = 1;
+    public int MinAmount { get; set; } = 0;
 
     /// <summary>
     /// The maximum number of tiles that spawn per pulse
     /// scales with severity.
     /// </summary>
     [DataField]
-    public int MaxAmount { get; set; } = 7;
+    public int MaxAmount { get; set; } = 1;
 
     /// <summary>
     /// The distance from the anomaly in which the tiles will not appear
     /// </summary>
     [DataField]
-    public float MinRange { get; set; } = 1f;
+    public float MinRange { get; set; } = 0f;
 
     /// <summary>
     /// The maximum radius the tiles will spawn in.
     /// </summary>
     [DataField]
-    public float MaxRange { get; set; } = 7f;
+    public float MaxRange { get; set; } = 1f;
 
     /// <summary>
     /// Whether or not anomaly spawns tiles on Pulse
