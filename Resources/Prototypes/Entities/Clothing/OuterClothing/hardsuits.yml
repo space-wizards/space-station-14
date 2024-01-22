@@ -918,7 +918,7 @@
 
 #Mime Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterHardsuitClown
   id: ClothingOuterHardsuitMime
   name: mime hardsuit
   description: A custom-made mime hardsuit.
@@ -927,22 +927,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 1000
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Caustic: 0.8
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
-  - type: HeldSpeedModifier
   - type: Construction
     graph: MimeHardsuit
     node: mimeHardsuit
