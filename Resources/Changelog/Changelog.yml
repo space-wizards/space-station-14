@@ -1,81 +1,4 @@
 ﻿Entries:
-- author: Repo
-  changes:
-  - message: Doors can close over conveyor belts.
-    type: Fix
-  id: 5257
-  time: '2023-12-04T23:07:48.0000000+00:00'
-- author: 27alaing
-  changes:
-  - message: Pun Pun can become a revolutionary again
-    type: Tweak
-  id: 5258
-  time: '2023-12-04T23:09:36.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - message: Speech bubbles now display the name of whatever or whoever spoke them!
-      The options menu has a setting to disable this outright, or add a background
-      to the name for the sake of accessibility, for anyone who would like those options.
-    type: Add
-  - message: The bubbles associated with emotes and LOOC now display exactly what
-      the associated message prints in your chatbox.
-    type: Tweak
-  id: 5259
-  time: '2023-12-04T23:10:49.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - message: Clowns can now craft the Banana Clown outfit.
-    type: Add
-  id: 5260
-  time: '2023-12-04T23:12:02.0000000+00:00'
-- author: enumerate0
-  changes:
-  - message: Fixed Christmas tree bounding box
-    type: Fix
-  id: 5261
-  time: '2023-12-05T06:20:54.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: Paramedics are now available on barratry
-    type: Add
-  id: 5262
-  time: '2023-12-05T07:35:36.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: Paramedics are now available on marathon
-    type: Add
-  id: 5263
-  time: '2023-12-05T07:36:58.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Chloral Hydrate sleep effect will start at 11 units, down from 16.
-    type: Tweak
-  id: 5264
-  time: '2023-12-05T08:52:47.0000000+00:00'
-- author: DangerRevolution
-  changes:
-  - message: Added Emergency Nitrogen Tanks
-    type: Add
-  - message: Added Nitrogen Tanks to Emergency Closets
-    type: Add
-  id: 5265
-  time: '2023-12-05T09:41:39.0000000+00:00'
-- author: Lazzi0706
-  changes:
-  - message: Added a new stomach for mice and "hunger thresholds" in mice's prototype
-    type: Add
-  - message: Fixed inadequate hunger in mice
-    type: Fix
-  id: 5266
-  time: '2023-12-05T10:39:09.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: Removed the spare paramedic clothes and EVA suit from the medidrobe
-    type: Remove
-  - message: added medical doctor jumpsuits and skirts to the medidrobe
-    type: Add
-  id: 5267
-  time: '2023-12-05T10:39:54.0000000+00:00'
 - author: ForestNoises
   changes:
   - message: The rejuvenate command/verb resets all action cooldowns.
@@ -3789,3 +3712,85 @@
   id: 5757
   time: '2024-01-20T18:02:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24092
+- author: Nimfar11
+  changes:
+  - message: Adds snake kebab and its recipe.
+    type: Add
+  id: 5758
+  time: '2024-01-20T23:38:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24341
+- author: Alekshhh
+  changes:
+  - message: Cerberus now has a wideswing that works similarly to spears.
+    type: Tweak
+  id: 5759
+  time: '2024-01-20T23:38:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24328
+- author: TheShuEd
+  changes:
+  - message: Added new Floral anomaly!
+    type: Add
+  id: 5760
+  time: '2024-01-21T01:31:12.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24351
+- author: Menshin
+  changes:
+  - message: The PA control box should now properly detect the PA parts in all situations
+      (notably on Origin)
+    type: Fix
+  - message: The PA control box now automatically face the control box on part scanning
+    type: Tweak
+  id: 5761
+  time: '2024-01-21T09:17:17.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24356
+- author: metalgearsloth
+  changes:
+  - message: Fix revolver prediction.
+    type: Fix
+  id: 5762
+  time: '2024-01-21T11:16:46.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/19649
+- author: metalgearsloth
+  changes:
+  - message: Fix shuttle docking highlights being inaccurate.
+    type: Fix
+  id: 5763
+  time: '2024-01-21T12:14:47.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24369
+- author: icekot8
+  changes:
+  - message: Increased the size of flatpacks made by the Flatpacker 1001.
+    type: Tweak
+  id: 5764
+  time: '2024-01-21T17:07:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
+- author: Nairodian
+  changes:
+  - message: All vent critter events now have a small delay and alert message before
+      they spawn.
+    type: Add
+  id: 5765
+  time: '2024-01-22T01:33:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24383
+- author: Flareguy
+  changes:
+  - message: The Research Director's hardsuit now uses its older sprites.
+    type: Tweak
+  id: 5766
+  time: '2024-01-22T01:52:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24377
+- author: SonicHDC
+  changes:
+  - message: Added reinforced diagonal!
+    type: Add
+  id: 5767
+  time: '2024-01-22T14:53:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24393
+- author: Alekshhh
+  changes:
+  - message: Hud eyepatches have been added to BarDrobes, MediDrobes and SecTechs.
+      They're just cooler looking huds.
+    type: Add
+  id: 5768
+  time: '2024-01-22T14:59:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24132
