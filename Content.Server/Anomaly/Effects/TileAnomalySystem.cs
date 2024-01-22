@@ -33,7 +33,7 @@ public sealed class TileAnomalySystem : EntitySystem
             if (!entry.SpawnOnPulse)
                 continue;
 
-            SpawnTiles(component, entry);
+            SpawnTiles(component, entry, args.Stability, args.Severity);
         }
     }
     private void OnSupercritical(Entity<TileSpawnAnomalyComponent> component, ref AnomalySupercriticalEvent args)
@@ -43,7 +43,7 @@ public sealed class TileAnomalySystem : EntitySystem
             if (!entry.SpawnOnSuperCritical)
                 continue;
 
-            SpawnTiles(component, entry);
+            SpawnTiles(component, entry, 1, 1);
         }
     }
 
@@ -54,7 +54,7 @@ public sealed class TileAnomalySystem : EntitySystem
             if (!entry.SpawnOnStabilityChanged)
                 continue;
 
-            SpawnTiles(component, entry);
+            SpawnTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
@@ -65,19 +65,19 @@ public sealed class TileAnomalySystem : EntitySystem
             if (!entry.SpawnOnSeverityChanged)
                 continue;
 
-            SpawnTiles(component, entry);
+            SpawnTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
     //TheShuEd:
     //I know it's a shitcode! I didn't write it! I just restructured the functions
-    private void SpawnTiles(Entity<TileSpawnAnomalyComponent> component, TileSpawnSettingsEntry entry)
+    private void SpawnTiles(Entity<TileSpawnAnomalyComponent> component, TileSpawnSettingsEntry entry, float stability, float severity)
     {
         var xform = Transform(component.Owner);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
-        var amount = (int) (MathHelper.Lerp(entry.MinAmount, entry.MaxAmount, 1) + 0.5f);
+        var amount = (int) (MathHelper.Lerp(entry.MinAmount, entry.MaxAmount, stability * severity) + 0.5f);
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(

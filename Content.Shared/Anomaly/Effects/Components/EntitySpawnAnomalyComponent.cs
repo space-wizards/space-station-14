@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Anomaly.Effects.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedEntityAnomalySystem))]
 public sealed partial class EntitySpawnAnomalyComponent : Component
 {
     /// <summary>

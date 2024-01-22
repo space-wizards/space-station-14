@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Anomaly.Effects.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedTileAnomalySystem))]
 public sealed partial class TileSpawnAnomalyComponent : Component
 {
     /// <summary>

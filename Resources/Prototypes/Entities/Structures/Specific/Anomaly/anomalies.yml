@@ -329,11 +329,11 @@
   suffix: Rock, Uranium
   components:
   - type: Sprite
-    color: "#ff66cc"
+    color: "#52ff39"
   - type: PointLight
     radius: 2.0
     energy: 7.5
-    color: "#ff66cc"
+    color: "#52ff39"
   - type: EntitySpawnAnomaly
     entries:
     - spawnOnPulse: true
@@ -561,7 +561,7 @@
       minAmount: 2
       maxAmount: 5
       minRange: 0
-      maxRange: 3
+      maxRange: 2
       spawns: 
       - KudzuFlowerFriendly
     - spawnOnSuperCritical: true

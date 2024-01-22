@@ -32,7 +32,7 @@ public sealed class EntityAnomalySystem : EntitySystem
             if (!entry.SpawnOnPulse)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry);
+            SpawnEntitesOnOpenTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
@@ -43,7 +43,7 @@ public sealed class EntityAnomalySystem : EntitySystem
             if (!entry.SpawnOnSuperCritical)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry);
+            SpawnEntitesOnOpenTiles(component, entry, 1, 1);
         }
     }
 
@@ -54,7 +54,7 @@ public sealed class EntityAnomalySystem : EntitySystem
             if (!entry.SpawnOnStabilityChanged)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry);
+            SpawnEntitesOnOpenTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
@@ -65,13 +65,13 @@ public sealed class EntityAnomalySystem : EntitySystem
             if (!entry.SpawnOnSeverityChanged)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry);
+            SpawnEntitesOnOpenTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
     //TheShuEd:
     //I know it's a shitcode! I didn't write it! I just restructured the functions
-    private void SpawnEntitesOnOpenTiles(Entity<EntitySpawnAnomalyComponent> component, EntitySpawnSettingsEntry entry)
+    private void SpawnEntitesOnOpenTiles(Entity<EntitySpawnAnomalyComponent> component, EntitySpawnSettingsEntry entry, float stability, float severity)
     {
         if (entry.Spawns.Count == 0)
             return;
@@ -80,7 +80,7 @@ public sealed class EntityAnomalySystem : EntitySystem
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
-        var amount = (int) (MathHelper.Lerp(entry.MinAmount, entry.MaxAmount, 1) + 0.5f);
+        var amount = (int) (MathHelper.Lerp(entry.MinAmount, entry.MaxAmount, severity * stability) + 0.5f);
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
