@@ -106,7 +106,7 @@ namespace Content.Server.Administration.Systems
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
-                RaiseNetworkEvent(updateEv, admin.ConnectedClient);
+                RaiseNetworkEvent(updateEv, admin.Channel);
             }
         }
 
@@ -121,7 +121,7 @@ namespace Content.Server.Administration.Systems
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
-                RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
+                RaiseNetworkEvent(playerInfoChangedEvent, admin.Channel);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Content.Server.Administration.Systems
 
             if (!obj.IsAdmin)
             {
-                RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.ConnectedClient);
+                RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.Channel);
                 return;
             }
 
@@ -210,7 +210,7 @@ namespace Content.Server.Administration.Systems
 
             ev.PlayersInfo = _playerList.Values.ToList();
 
-            RaiseNetworkEvent(ev, playerSession.ConnectedClient);
+            RaiseNetworkEvent(ev, playerSession.Channel);
         }
 
         private PlayerInfo GetPlayerInfo(SessionData data, ICommonSession? session)

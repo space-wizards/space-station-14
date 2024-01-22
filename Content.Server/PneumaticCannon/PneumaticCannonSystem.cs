@@ -78,8 +78,8 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (gas == null && component.GasUsage > 0f)
             return;
 
-        if(TryComp<StatusEffectsComponent>(args.User, out var status)
-           && component.Power == PneumaticCannonPower.High)
+        if (TryComp<StatusEffectsComponent>(args.User, out var status)
+            && component.Power == PneumaticCannonPower.High)
         {
             _stun.TryParalyze(args.User, TimeSpan.FromSeconds(component.HighPowerStunTime), true, status);
             Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-power-stun",

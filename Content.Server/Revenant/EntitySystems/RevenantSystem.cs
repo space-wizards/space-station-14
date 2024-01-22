@@ -120,7 +120,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (!HasComp<CorporealComponent>(uid) || args.DamageDelta == null)
             return;
 
-        var essenceDamage = args.DamageDelta.Total.Float() * component.DamageToEssenceCoefficient * -1;
+        var essenceDamage = args.DamageDelta.GetTotal().Float() * component.DamageToEssenceCoefficient * -1;
         ChangeEssenceAmount(uid, essenceDamage, component);
     }
 
