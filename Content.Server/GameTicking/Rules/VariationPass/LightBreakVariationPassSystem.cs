@@ -20,9 +20,7 @@ public sealed class LightBreakVariationPassSystem : VariationPassSystem<LightBre
             if (!IsMemberOfStation(uid, ref args))
                 continue;
 
-            var chance = (float) Random.NextGaussian(ent.Comp.LightBreakChanceAverage, ent.Comp.LightBreakChanceStdDev);
-
-            if (!Random.Prob(Math.Clamp(chance, 0.0f, 1.0f)))
+            if (!Random.Prob(ent.Comp.LightBreakChance))
                 continue;
 
             _poweredLight.TryDestroyBulb(uid, comp);
