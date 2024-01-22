@@ -5,18 +5,18 @@ namespace Content.Shared.Execution;
 /// <summary>
 /// Added to a gun when it's about to fire an execution shot.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ActiveExecutionComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid Attacker;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid Victim;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Clumsy;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string FixtureId = "projectile";
 }

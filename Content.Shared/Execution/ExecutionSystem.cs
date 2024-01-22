@@ -1,5 +1,6 @@
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -11,6 +12,7 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio.Systems;
@@ -29,10 +31,9 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
 
     private const string DefaultInternalMeleeSuicideMessage = "suicide-popup-melee-initial-internal";
     private const string DefaultExternalMeleeSuicideMessage = "suicide-popup-melee-initial-external";
@@ -62,6 +63,7 @@ public sealed class ExecutionSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, ExecutionDoAfterEvent>(OnDoafterGun);
 
         SubscribeLocalEvent<ActiveExecutionComponent, AmmoShotEvent>(OnAmmoShot);
+        SubscribeLocalEvent<ActiveExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
 
         SubscribeLocalEvent<ExecutionProjectileComponent, StartCollideEvent>(OnCollide);
     }
@@ -75,10 +77,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using.Value;
         var victim = args.Target;
 
-        if (HasComp<MeleeWeaponComponent>(weapon) && !CanExecuteWithMelee(weapon, victim, attacker))
-            return;
-
-        if (HasComp<GunComponent>(weapon) && !CanExecuteWithGun(weapon, victim, attacker))
+        if (!CanExecuteWithAny(victim, attacker))
             return;
 
         UtilityVerb verb = new()
@@ -94,7 +93,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void TryStartExecutionDoAfter(EntityUid weapon, EntityUid victim, EntityUid attacker, ExecutionComponent comp)
     {
-        if (HasComp<MeleeWeaponComponent>(weapon) && !CanExecuteWithMelee(weapon, victim, attacker))
+        if (!CanExecuteWithAny(victim, attacker))
             return;
 
         var defaultSuicideInternal = DefaultInternalMeleeSuicideMessage;
@@ -104,15 +103,11 @@ public sealed class ExecutionSystem : EntitySystem
 
         if (HasComp<GunComponent>(weapon))
         {
-            if(!CanExecuteWithGun(weapon, victim, attacker))
-                return;
-
             defaultSuicideExternal = DefaultExternalGunSuicideMessage;
             defaultSuicideInternal = DefaultInternalGunSuicideMessage;
             defaultExecutionExternal = DefaultInternalGunExecutionMessage;
             defaultExecutionInternal = DefaultExternalGunExecutionMessage;
         }
-
 
         string internalMsg;
         string externalMsg;
@@ -169,31 +164,6 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
 
-    private bool CanExecuteWithMelee(EntityUid weapon, EntityUid victim, EntityUid user)
-    {
-        if (!CanExecuteWithAny(victim, user))
-            return false;
-
-        // We must be able to actually hurt people with the weapon
-        if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) || melee.Damage.GetTotal() <= 0.0f)
-            return false;
-
-        return true;
-    }
-
-    private bool CanExecuteWithGun(EntityUid weapon, EntityUid victim, EntityUid user)
-    {
-        if (!CanExecuteWithAny(victim, user))
-            return false;
-
-        // We must be able to actually fire the gun
-        if (!TryComp<GunComponent>(weapon, out var gun) || _gunSystem.CanShoot(gun))
-            return false;
-
-        return true;
-    }
-
-
     private void OnDoafterMelee(EntityUid uid, MeleeWeaponComponent comp, DoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
@@ -206,47 +176,48 @@ public sealed class ExecutionSystem : EntitySystem
         var victim = args.Target.Value;
         var weapon = args.Used.Value;
 
-        if (!CanExecuteWithMelee(weapon, victim, attacker))
+        if (!TryComp<TransformComponent>(victim, out var xform))
             return;
 
-        _damageableSystem.TryChangeDamage(victim, comp.Damage * executionComp.DamageModifier, true);
+        if (!CanExecuteWithAny(victim, attacker))
+            return;
 
-        _audioSystem.PlayPredicted(comp.HitSound, weapon, attacker);
+        var execComp = EnsureComp<ActiveExecutionComponent>(weapon);
 
-        string internalMsg;
-        string externalMsg;
+        execComp.Attacker = attacker;
+        execComp.Victim = victim;
 
-        if (attacker == victim)
-        {
-            internalMsg = executionComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalMeleeSuicideMessage;
-            externalMsg = executionComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalMeleeSuicideMessage;
-        }
-        else
-        {
-            internalMsg = executionComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalMeleeExecutionMessage;
-            externalMsg = executionComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalMeleeExecutionMessage;
-        }
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, weapon);
-        ShowExecutionExternalPopup(externalMsg, attacker, victim, weapon);
+        Dirty(weapon, execComp);
+
+        // This is needed so the melee system does not stop it.
+        _combatSystem.SetInCombatMode(attacker, true);
+
+        var ev = new LightAttackEvent(GetNetEntity(victim), GetNetEntity(weapon), GetNetCoordinates(xform.Coordinates));
+        RaiseNetworkEvent(ev);
+
 
         args.Handled = true;
     }
 
     private void OnDoafterGun(EntityUid uid, GunComponent comp, DoAfterEvent args)
     {
+        if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
+            return;
+
         if (!TryComp<ExecutionComponent>(uid, out var executionComponent))
             return;
 
         if (!TryComp<TransformComponent>(args.Target, out var xform))
             return;
 
-        if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
+        var attacker = args.User;
+        var victim = args.Target.Value;
+
+        if (!CanExecuteWithAny(victim, attacker))
             return;
 
-        var attacker = args.User;
-        var weapon = args.Used.Value;
-        var victim = args.Target.Value;
         var clumsyShot = false;
+
         // Clumsy people have a chance to shoot themselves
         if (TryComp<ClumsyComponent>(attacker, out var clumsy) && comp.ClumsyProof == false)
         {
@@ -255,9 +226,6 @@ public sealed class ExecutionSystem : EntitySystem
                 clumsyShot = true;
             }
         }
-
-        if (!CanExecuteWithGun(weapon, victim, attacker))
-            return;
 
         var active = EnsureComp<ActiveExecutionComponent>(uid);
         active.Attacker = attacker;
@@ -320,7 +288,6 @@ public sealed class ExecutionSystem : EntitySystem
             }
         }
 
-
         string internalMsg;
         string externalMsg;
 
@@ -356,6 +323,9 @@ public sealed class ExecutionSystem : EntitySystem
             return;
 
         projectileComponent.Damage *= comp.Multiplier;
+
+        RemComp<ExecutionProjectileComponent>(uid);
+        Dirty(uid, comp);
     }
 
     private void ShowExecutionInternalPopup(string locString,
@@ -394,4 +364,42 @@ public sealed class ExecutionSystem : EntitySystem
             );
     }
 
+    private void OnGetMeleeDamage(EntityUid uid, ActiveExecutionComponent comp, ref GetMeleeDamageEvent args)
+    {
+        if (!TryComp<MeleeWeaponComponent>(uid, out var melee) || !TryComp<ExecutionComponent>(uid, out var execComp))
+        {
+            RemComp<ActiveExecutionComponent>(uid);
+            Dirty(uid, comp);
+            return;
+        }
+
+        var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
+
+        string internalMsg;
+        string externalMsg;
+
+        var attacker = comp.Attacker;
+        var victim = comp.Victim;
+
+        _combatSystem.SetInCombatMode(attacker, false);
+
+        if (attacker == victim)
+        {
+            internalMsg = execComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalMeleeSuicideMessage;
+            externalMsg = execComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalMeleeSuicideMessage;
+        }
+        else
+        {
+            internalMsg = execComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalMeleeExecutionMessage;
+            externalMsg = execComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalMeleeExecutionMessage;
+        }
+
+        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
+        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
+
+        args.Damage += bonus;
+
+        RemComp<ActiveExecutionComponent>(uid);
+        Dirty(uid, comp);
+    }
 }
