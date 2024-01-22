@@ -13,60 +13,60 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
 }
 
 [DataDefinition, Serializable]
-public readonly partial record struct EntitySpawnSettingsEntry()
+public partial record struct EntitySpawnSettingsEntry()
 {
     /// <summary>
     /// A list of entities that are random picked to be spawned on each pulse
     /// </summary>
     [DataField]
-    public List<EntProtoId> Spawns { get; init; } = new();
+    public List<EntProtoId> Spawns { get; set; } = new();
 
     /// <summary>
     /// The minimum number of entities that spawn per pulse
     /// </summary>
     [DataField]
-    public int MinAmount { get; init; } = 1;
+    public int MinAmount { get; set; } = 1;
 
     /// <summary>
     /// The maximum number of entities that spawn per pulse
     /// scales with severity.
     /// </summary>
     [DataField]
-    public int MaxAmount { get; init; } = 7;
+    public int MaxAmount { get; set; } = 7;
 
     /// <summary>
     /// The distance from the anomaly in which the entities will not appear
     /// </summary>
     [DataField]
-    public float MinRange { get; init; } = 1f;
+    public float MinRange { get; set; } = 1f;
 
     /// <summary>
     /// The maximum radius the entities will spawn in.
     /// </summary>
     [DataField]
-    public float MaxRange { get; init; } = 7f;
+    public float MaxRange { get; set; } = 7f;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on Pulse
     /// </summary>
     [DataField]
-    public bool SpawnOnPulse { get; init; } = false;
+    public bool SpawnOnPulse { get; set; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on SuperCritical
     /// </summary>
     [DataField]
-    public bool SpawnOnSuperCritical { get; init; } = false;
+    public bool SpawnOnSuperCritical { get; set; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on StabilityChanged
     /// </summary>
     [DataField]
-    public bool SpawnOnStabilityChanged { get; init; } = false;
+    public bool SpawnOnStabilityChanged { get; set; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on SeverityChanged
     /// </summary>
     [DataField]
-    public bool SpawnOnSeverityChanged { get; init; } = false;
+    public bool SpawnOnSeverityChanged { get; set; } = false;
 }

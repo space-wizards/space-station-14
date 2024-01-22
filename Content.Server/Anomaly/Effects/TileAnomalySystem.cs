@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -9,7 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class TileAnomalySystem : EntitySystem
+public sealed class TileAnomalySystem : SharedTileAnomalySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;

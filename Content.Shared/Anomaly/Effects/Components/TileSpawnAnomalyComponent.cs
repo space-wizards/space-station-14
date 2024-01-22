@@ -14,60 +14,60 @@ public sealed partial class TileSpawnAnomalyComponent : Component
 }
 
 [DataDefinition, Serializable]
-public readonly partial record struct TileSpawnSettingsEntry()
+public partial record struct TileSpawnSettingsEntry()
 {
     /// <summary>
     /// The tile that is spawned by the anomaly's effect
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<ContentTileDefinition> Floor { get; init; } = default!;
+    public ProtoId<ContentTileDefinition> Floor { get; set; } = default!;
 
     /// <summary>
     /// The minimum number of tiles that spawn per pulse
     /// </summary>
     [DataField]
-    public int MinAmount { get; init; } = 1;
+    public int MinAmount { get; set; } = 1;
 
     /// <summary>
     /// The maximum number of tiles that spawn per pulse
     /// scales with severity.
     /// </summary>
     [DataField]
-    public int MaxAmount { get; init; } = 7;
+    public int MaxAmount { get; set; } = 7;
 
     /// <summary>
     /// The distance from the anomaly in which the tiles will not appear
     /// </summary>
     [DataField]
-    public float MinRange { get; init; } = 1f;
+    public float MinRange { get; set; } = 1f;
 
     /// <summary>
     /// The maximum radius the tiles will spawn in.
     /// </summary>
     [DataField]
-    public float MaxRange { get; init; } = 7f;
+    public float MaxRange { get; set; } = 7f;
 
     /// <summary>
     /// Whether or not anomaly spawns tiles on Pulse
     /// </summary>
     [DataField]
-    public bool SpawnOnPulse { get; init; } = false;
+    public bool SpawnOnPulse { get; set; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns tiles on SuperCritical
     /// </summary>
     [DataField]
-    public bool SpawnOnSuperCritical { get; init; } = false;
+    public bool SpawnOnSuperCritical { get; set; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns tiles on StabilityChanged
     /// </summary>
     [DataField]
-    public bool SpawnOnStabilityChanged { get; init; } = false;
+    public bool SpawnOnStabilityChanged { get; set; } = false;
 
     /// <summary>
     /// Whether or not anomaly spawns tiles on StabilityChanged
     /// </summary>
     [DataField]
-    public bool SpawnOnSeverityChanged { get; init; } = false;
+    public bool SpawnOnSeverityChanged { get; set; } = false;
 }
