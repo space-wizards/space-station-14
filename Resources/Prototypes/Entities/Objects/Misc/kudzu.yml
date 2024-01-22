@@ -150,6 +150,11 @@
       - FloraTreeLarge06
       rarePrototypes:
       - AnomalyFloraBulb
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepGrass
+        params:
+          variations: 0.05
 
 - type: entity
   id: KudzuFlowerAngry
