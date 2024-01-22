@@ -21,18 +21,35 @@ public abstract class ShuttleControl : MapGridControl
         var backing = BackingColor;
         handle.DrawRect(new UIBox2(0f, Height, Width, 0f), backing);
 
-        var lineCount = 4f;
-        var gridLines = new Color(0.08f, 0.08f, 0.08f);
-        var zoom = MinimapScale;
-        lineCount /= zoom;
+        // Equatorial lines
+        var gridLines = Color.LightGray.WithAlpha(0.01f);
 
-        /*
-        for (var i = 1; i < lineCount; i++)
+        // Each circle is this x distance of the last one.
+        const float EquatorialMultiplier = 2f;
+
+        var minDistance = MathF.Pow(EquatorialMultiplier, EquatorialMultiplier * 1.5f);
+        var maxDistance = MathF.Pow(2f, EquatorialMultiplier * 6f);
+        var cornerDistance = MathF.Sqrt(WorldRange * WorldRange + WorldRange * WorldRange);
+
+        for (var radius = minDistance; radius <= maxDistance; radius *= EquatorialMultiplier)
         {
-            var origin = Width / lineCount * i;
-            handle.DrawLine(new Vector2(origin, 0f), new Vector2(origin, Height), gridLines);
-            handle.DrawLine(new Vector2(0f, origin), new Vector2(Width, origin), gridLines);
+            if (radius > cornerDistance)
+                continue;
+
+            var color = Color.ToSrgb(gridLines).WithAlpha(0.05f);
+            handle.DrawCircle(new Vector2(MidPoint, MidPoint), MinimapScale * radius, color, false);
         }
-        */
+
+        const int gridLinesRadial = 8;
+
+        // TODO: If bounds entirely within circle don't draw it goob.
+        for (var i = 0; i < gridLinesRadial; i++)
+        {
+            Angle angle = (Math.PI / gridLinesRadial) * i;
+            // TODO: Handle distance properly.
+            var aExtent = angle.ToVec() * ScaledMinimapRadius * 1.5f;
+            var lineColor = Color.MediumSpringGreen.WithAlpha(0.02f);
+            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, lineColor);
+        }
     }
 }

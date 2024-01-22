@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Computer;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
@@ -83,6 +84,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             MapModeButton.Pressed = false;
             MapContainer.Visible = false;
+            MapRadar.SetMap(MapId.Nullspace, Vector2.Zero);
         }
 
         if (mode != ShuttleConsoleMode.Dock)
@@ -349,6 +351,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                 break;
             case ShuttleConsoleMode.Map:
                 MapContainer.Visible = true;
+
+                // Centre map screen to the shuttle.
+                if (_shuttleEntity != null)
+                {
+                    var shuttleXform = _entManager.GetComponent<TransformComponent>(_shuttleEntity.Value);
+                    MapRadar.SetMap(shuttleXform.MapID, shuttleXform.WorldPosition);
+                }
+
                 break;
             case ShuttleConsoleMode.Dock:
                 DockContainer.Visible = true;
@@ -409,7 +419,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         var gridVelocity = gridBody.LinearVelocity;
         gridVelocity = displayRot.RotateVec(gridVelocity);
         // Get linear velocity relative to the console entity
-        GridLinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
+        GridLinearVelocity.Text = $"{gridVelocity.X + float.Epsilon:0.0}, {gridVelocity.Y + float.Epsilon:0.0}";
         GridAngularVelocity.Text = $"{-gridBody.AngularVelocity:0.0}";
     }
 

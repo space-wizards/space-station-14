@@ -1,6 +1,7 @@
 using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Shared.Input;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Controls;
@@ -12,10 +13,16 @@ public abstract class MapGridControl : Control
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
 
+    /* Dragging */
+    protected virtual bool Draggable { get; } = false;
+
     /// <summary>
-    /// Can the control be dragged around.
+    /// Control offset from whatever is being tracked.
     /// </summary>
-    protected bool Draggable = false;
+    public Vector2 Offset;
+    private bool _draggin;
+    protected Vector2 StartDragPosition;
+    protected bool Recentering;
 
     protected const float ScrollSensitivity = 8f;
 
@@ -28,6 +35,7 @@ public abstract class MapGridControl : Control
     protected float WorldMinRange;
     protected float WorldMaxRange;
     public float WorldRange;
+    public Vector2 WorldRangeVector => new Vector2(WorldRange, WorldRange);
 
     /// <summary>
     /// We'll lerp between the radarrange and actual range
@@ -63,6 +71,45 @@ public abstract class MapGridControl : Control
         WorldMaxRange = maxRange;
         WorldRange = range;
         ActualRadarRange = range;
+    }
+
+    public void ForceRecenter()
+    {
+        Recentering = true;
+    }
+
+    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindDown(args);
+
+        if (!Draggable)
+            return;
+
+        if (args.Function == EngineKeyFunctions.Use)
+        {
+            StartDragPosition = args.PointerLocation.Position;
+            _draggin = true;
+        }
+    }
+
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        if (!Draggable)
+            return;
+
+        if (args.Function == EngineKeyFunctions.Use)
+            _draggin = false;
+    }
+
+    protected override void MouseMove(GUIMouseMoveEventArgs args)
+    {
+        base.MouseMove(args);
+
+        if (!_draggin)
+            return;
+
+        Recentering = false;
+        Offset -= new Vector2(args.Relative.X, -args.Relative.Y) / MidPoint * WorldRange;
     }
 
     protected override void MouseWheel(GUIMouseWheelEventArgs args)

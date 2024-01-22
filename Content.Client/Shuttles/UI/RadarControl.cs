@@ -26,8 +26,6 @@ public sealed class RadarControl : ShuttleControl
     private SharedMapSystem _maps;
     private SharedTransformSystem _transform;
 
-    private const float GridLinesDistance = 32f;
-
     /// <summary>
     /// Used to transform all of the radar objects. Typically is a shuttle console parented to a grid.
     /// </summary>
@@ -141,37 +139,6 @@ public sealed class RadarControl : ShuttleControl
             return;
         }
 
-        // Equatorial lines
-        var gridLines = Color.LightGray.WithAlpha(0.01f);
-
-        // Each circle is this x distance of the last one.
-        const float EquatorialMultiplier = 2f;
-
-        var minDistance = MathF.Pow(EquatorialMultiplier, EquatorialMultiplier * 1.5f);
-        var maxDistance = MathF.Pow(2f, EquatorialMultiplier * 6f);
-        var cornerDistance = MathF.Sqrt(WorldRange * WorldRange + WorldRange * WorldRange);
-
-        for (var radius = minDistance; radius <= maxDistance; radius *= EquatorialMultiplier)
-        {
-            if (radius > cornerDistance)
-                continue;
-
-            var color = Color.ToSrgb(gridLines).WithAlpha(0.05f);
-            handle.DrawCircle(new Vector2(MidPoint, MidPoint), MinimapScale * radius, color, false);
-        }
-
-        const int gridLinesRadial = 8;
-
-        // TODO: If bounds entirely within circle don't draw it goob.
-        for (var i = 0; i < gridLinesRadial; i++)
-        {
-            Angle angle = (Math.PI / gridLinesRadial) * i;
-            // TODO: Handle distance properly.
-            var aExtent = angle.ToVec() * ScaledMinimapRadius * 1.5f;
-            var lineColor = Color.MediumSpringGreen.WithAlpha(0.02f);
-            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, lineColor);
-        }
-
         var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var fixturesQuery = _entManager.GetEntityQuery<FixturesComponent>();
@@ -196,7 +163,7 @@ public sealed class RadarControl : ShuttleControl
             var ourGridMatrix = _transform.GetWorldMatrix(ourGridId.Value);
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
 
-            DrawGrid(handle, matrix, (ourGridId.Value, ourGrid), Color.MediumSpringGreen, true);
+            DrawGrid(handle, matrix, (ourGridId.Value, ourGrid), Color.MediumSpringGreen);
             DrawDocks(handle, ourGridId.Value, matrix);
         }
 
@@ -316,7 +283,7 @@ public sealed class RadarControl : ShuttleControl
             if (!gridAABB.Intersects(viewAABB))
                 continue;
 
-            DrawGrid(handle, matty, grid, color, true);
+            DrawGrid(handle, matty, grid, color);
             DrawDocks(handle, gUid, matty);
         }
 
@@ -384,7 +351,7 @@ public sealed class RadarControl : ShuttleControl
         }
     }
 
-    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, Entity<MapGridComponent> grid, Color color, bool drawInterior)
+    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, Entity<MapGridComponent> grid, Color color)
     {
         var rator = _maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
         var edges = new ValueList<Vector2>();

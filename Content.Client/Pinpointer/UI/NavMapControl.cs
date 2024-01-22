@@ -32,6 +32,8 @@ public partial class NavMapControl : MapGridControl
     public EntityUid? Owner;
     public EntityUid? MapUid;
 
+    protected override bool Draggable => true;
+
     // Actions
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
     public event Action<DrawingHandleScreen>? PostWallDrawingAction;
@@ -55,14 +57,10 @@ public partial class NavMapControl : MapGridControl
     protected static float DefaultDisplayedRange = 48f;
 
     // Local variables
-    private Vector2 _offset;
-    private bool _draggin;
-    private Vector2 _startDragPosition = default!;
-    private bool _recentering = false;
     private float _updateTimer = 0.25f;
-    private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
-    public Color _backgroundColor;
-    public float _backgroundOpacity = 0.9f;
+    private Dictionary<Color, Color> _sRGBLookUp = new();
+    protected Color BackgroundColor;
+    protected float BackgroundOpacity = 0.9f;
     private int _targetFontsize = 8;
 
     // Components
@@ -102,7 +100,7 @@ public partial class NavMapControl : MapGridControl
         IoCManager.InjectDependencies(this);
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
-        _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
+        BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
 
         RectClipContent = true;
         HorizontalExpand = true;
@@ -144,15 +142,10 @@ public partial class NavMapControl : MapGridControl
 
         _recenter.OnPressed += args =>
         {
-            _recentering = true;
+            Recentering = true;
         };
 
         ForceNavMapUpdate();
-    }
-
-    public void ForceRecenter()
-    {
-        _recentering = true;
     }
 
     public void ForceNavMapUpdate()
@@ -166,28 +159,14 @@ public partial class NavMapControl : MapGridControl
     public void CenterToCoordinates(EntityCoordinates coordinates)
     {
         if (_physics != null)
-            _offset = new Vector2(coordinates.X, coordinates.Y) - _physics.LocalCenter;
+            Offset = new Vector2(coordinates.X, coordinates.Y) - _physics.LocalCenter;
 
         _recenter.Disabled = false;
-    }
-
-    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
-    {
-        base.KeyBindDown(args);
-
-        if (args.Function == EngineKeyFunctions.Use)
-        {
-            _startDragPosition = args.PointerLocation.Position;
-            _draggin = true;
-        }
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);
-
-        if (args.Function == EngineKeyFunctions.Use)
-            _draggin = false;
 
         if (args.Function == EngineKeyFunctions.UIClick)
         {
@@ -198,11 +177,11 @@ public partial class NavMapControl : MapGridControl
                 return;
 
             // If the cursor has moved a significant distance, exit
-            if ((_startDragPosition - args.PointerLocation.Position).Length() > MinDragDistance)
+            if ((StartDragPosition - args.PointerLocation.Position).Length() > MinDragDistance)
                 return;
 
             // Get the clicked position
-            var offset = _offset + _physics.LocalCenter;
+            var offset = Offset + _physics.LocalCenter;
             var localPosition = args.PointerLocation.Position - GlobalPixelPosition;
 
             // Convert to a world position
@@ -250,15 +229,8 @@ public partial class NavMapControl : MapGridControl
     {
         base.MouseMove(args);
 
-        if (!_draggin)
-            return;
-
-        _recentering = false;
-        _offset -= new Vector2(args.Relative.X, -args.Relative.Y) / MidPoint * WorldRange;
-
-        if (_offset != Vector2.Zero)
+        if (Offset != Vector2.Zero)
             _recenter.Disabled = false;
-
         else
             _recenter.Disabled = true;
     }
@@ -275,20 +247,20 @@ public partial class NavMapControl : MapGridControl
         _entManager.TryGetComponent(MapUid, out _fixtures);
 
         // Map re-centering
-        if (_recentering)
+        if (Recentering)
         {
             var frameTime = Timing.FrameTime;
-            var diff = _offset * (float) frameTime.TotalSeconds;
+            var diff = Offset * (float) frameTime.TotalSeconds;
 
-            if (_offset.LengthSquared() < RecenterMinimum)
+            if (Offset.LengthSquared() < RecenterMinimum)
             {
-                _offset = Vector2.Zero;
-                _recentering = false;
+                Offset = Vector2.Zero;
+                Recentering = false;
                 _recenter.Disabled = true;
             }
             else
             {
-                _offset -= diff * 5f;
+                Offset -= diff * 5f;
             }
         }
 
@@ -297,7 +269,7 @@ public partial class NavMapControl : MapGridControl
         if (_navMap == null || _xform == null)
             return;
 
-        var offset = _offset;
+        var offset = Offset;
 
         if (_physics != null)
             offset += _physics.LocalCenter;
@@ -420,7 +392,7 @@ public partial class NavMapControl : MapGridControl
                 position = ScalePosition(position with { Y = -position.Y });
 
                 var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
-                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _backgroundColor);
+                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), BackgroundColor);
                 handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
             }
         }
@@ -629,7 +601,7 @@ public partial class NavMapControl : MapGridControl
 
     protected Vector2 GetOffset()
     {
-        return _offset + (_physics?.LocalCenter ?? new Vector2());
+        return Offset + (_physics?.LocalCenter ?? new Vector2());
     }
 }
 
