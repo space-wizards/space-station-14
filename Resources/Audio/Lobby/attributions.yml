@@ -44,11 +44,6 @@
   copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted from MP3 to OGG."
   source: "https://www.youtube.com/watch?v=YKVmXn-Gv0M"
 
-- files: ["marhaba.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Marhaba by Ian Alex Mac. Converted from MP3 to OGG."
-  source: "https://freemusicarchive.org/music/Ian_Alex_Mac/Cues/Marhaba"
-
 - files: ["comet_haley.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Comet Haley by Stellardrone. Converted from MP3 to OGG."
@@ -83,3 +78,18 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["tintin2.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Tintin on the Moon by Fred Gray/Tomas Danko."
+  source: "https://www.youtube.com/watch?v=J6J7BAno_s4"
+
+- files: ["deja_vu.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Deja Vu by Mort Garson."
+  source: "https://www.youtube.com/watch?v=AumYP6Np1eI"
+
+- files: ["horse_steppin.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Horse Steppin’ by Sun Araw."
+  source: "https://www.youtube.com/watch?v=vXv9cjW9HR0"
