@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: JoeHammad
-  changes:
-  - message: Removed the spare paramedic clothes and EVA suit from the medidrobe
-    type: Remove
-  - message: added medical doctor jumpsuits and skirts to the medidrobe
-    type: Add
-  id: 5267
-  time: '2023-12-05T10:39:54.0000000+00:00'
 - author: ForestNoises
   changes:
   - message: The rejuvenate command/verb resets all action cooldowns.
@@ -3794,3 +3786,11 @@
   id: 5767
   time: '2024-01-22T14:53:19.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24393
+- author: Alekshhh
+  changes:
+  - message: Hud eyepatches have been added to BarDrobes, MediDrobes and SecTechs.
+      They're just cooler looking huds.
+    type: Add
+  id: 5768
+  time: '2024-01-22T14:59:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24132
