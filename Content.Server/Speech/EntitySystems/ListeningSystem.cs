@@ -18,10 +18,10 @@ public sealed class ListeningSystem : EntitySystem
 
     private void OnSpeak(EntitySpokeEvent ev)
     {
-        PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage);
+        PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage, ev.TelepathyTarget);
     }
 
-    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage)
+    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage, EntityUid? telepathyTarget)
     {
         // TODO whispering / audio volume? Microphone sensitivity?
         // for now, whispering just arbitrarily reduces the listener's max range.
@@ -38,6 +38,10 @@ public sealed class ListeningSystem : EntitySystem
         while(query.MoveNext(out var listenerUid, out var listener, out var xform))
         {
             if (xform.MapID != sourceXform.MapID)
+                continue;
+
+            // Telepathy check
+            if (telepathyTarget != null && listenerUid != telepathyTarget.Value)
                 continue;
 
             // range checks

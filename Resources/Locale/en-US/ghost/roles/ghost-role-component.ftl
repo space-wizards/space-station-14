@@ -221,3 +221,7 @@ ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagoni
 ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-horribletie-name = Horrific Necktie
+ghost-role-information-horribletie-description = You are the detective's favourite and strangely garish tie. You can speak, but only the Detective can hear you.
+ghost-role-information-horribletie-rules = You are the Detective's tie. Your task is to help the Detective think through cases, and engage them in conversations only they can hear.

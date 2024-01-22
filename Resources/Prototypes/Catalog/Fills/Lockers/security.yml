@@ -115,6 +115,10 @@
         prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
+        orGroup: DetTieGroup
+      - id: ClothingNeckTieHorrible
+        prob: 0.2
+        orGroup: DetTieGroup
       - id: ClothingOuterVestDetective
       - id: ClothingOuterCoatDetective
       - id: FlashlightSeclite

@@ -24,7 +24,7 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieSci
@@ -40,3 +40,32 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieHorrible
+  name: horrific necktie
+  description: Adorned with a garish and disturbingly vivid pattern. It's your friend now.
+  components:
+    - type: Sprite
+      sprite: Clothing/Neck/Ties/horribletie.rsi
+    - type: Clothing
+      sprite: Clothing/Neck/Ties/horribletie.rsi
+    - type: Tag
+      tags:
+        - ClothMade
+        - HamsterWearable
+    - type: MindContainer
+    - type: GhostTakeoverAvailable
+    - type: GhostRole
+      makeSentient: false
+      allowSpeech: false
+      prob: 0.5
+      name: ghost-role-information-horribletie-name
+      description: ghost-role-information-horribletie-description
+      rules: ghost-role-information-horribletie-rules
+    - type: Examiner
+    - type: NoRotateOnInteract
+    - type: NoRotateOnMove
+    - type: TargetedTelepathy
+    - type: TelepathicLinkOnEquip
