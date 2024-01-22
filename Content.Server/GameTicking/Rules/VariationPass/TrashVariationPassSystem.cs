@@ -1,8 +1,4 @@
-﻿using Content.Server.Fluids.EntitySystems;
-using Content.Server.GameTicking.Rules.VariationPass.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
+﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
@@ -24,7 +20,7 @@ public sealed class TrashVariationPassSystem : VariationPassSystem<TrashVariatio
             if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
                 continue;
 
-            SpawnAtPosition("RandomSpawner", coords);
+            SpawnAtPosition(ent.Comp.TrashSpawner, coords);
         }
     }
 }
