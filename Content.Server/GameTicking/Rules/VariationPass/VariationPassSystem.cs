@@ -22,7 +22,7 @@ public abstract class VariationPassSystem<T> : GameRuleSystem<T>
         SubscribeLocalEvent<T, StationVariationPassEvent>(ApplyVariation);
     }
 
-    protected bool MemberOfStation(EntityUid ent, ref StationVariationPassEvent args)
+    protected bool IsMemberOfStation(EntityUid ent, ref StationVariationPassEvent args)
     {
         return Stations.GetOwningStation(ent) == args.Station.Owner;
     }

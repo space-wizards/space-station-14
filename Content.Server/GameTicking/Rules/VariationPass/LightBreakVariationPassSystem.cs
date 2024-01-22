@@ -17,7 +17,7 @@ public sealed class LightBreakVariationPassSystem : VariationPassSystem<LightBre
         var query = AllEntityQuery<PoweredLightComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (!MemberOfStation(uid, ref args))
+            if (!IsMemberOfStation(uid, ref args))
                 continue;
 
             var chance = (float) Random.NextGaussian(ent.Comp.LightBreakChanceAverage, ent.Comp.LightBreakChanceStdDev);

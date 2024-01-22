@@ -1,12 +1,26 @@
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Station.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
 public abstract partial class GameRuleSystem<T> : EntitySystem where T : IComponent
 {
+    [Dependency] protected readonly IRobustRandom RobustRandom = default!;
     [Dependency] protected readonly IChatManager ChatManager = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
+
+    // Not protected, just to be used in utility methods
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -71,6 +85,8 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
 
     }
 
+    #region Utility Functions
+
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
     {
         return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
@@ -100,6 +116,103 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
 
         return !ev.Cancelled;
     }
+
+    /// <summary>
+    ///     Utility function for finding a random event-eligible station entity
+    /// </summary>
+    protected bool TryGetRandomStation([NotNullWhen(true)] out EntityUid? station, Func<EntityUid, bool>? filter = null)
+    {
+        var stations = new ValueList<EntityUid>(Count<StationEventEligibleComponent>());
+
+        filter ??= _ => true;
+        var query = AllEntityQuery<StationEventEligibleComponent>();
+
+        while (query.MoveNext(out var uid, out _))
+        {
+            if (!filter(uid))
+                continue;
+
+            stations.Add(uid);
+        }
+
+        if (stations.Count == 0)
+        {
+            station = null;
+            return false;
+        }
+
+        // TODO: Engine PR.
+        station = stations[RobustRandom.Next(stations.Count)];
+        return true;
+    }
+
+    protected bool TryFindRandomTile(out Vector2i tile,
+        [NotNullWhen(true)] out EntityUid? targetStation,
+        out EntityUid targetGrid,
+        out EntityCoordinates targetCoords)
+    {
+        tile = default;
+        targetStation = EntityUid.Invalid;
+        targetGrid = EntityUid.Invalid;
+        targetCoords = EntityCoordinates.Invalid;
+        if (TryGetRandomStation(out targetStation))
+        {
+            return TryFindRandomTileOnStation((targetStation.Value, Comp<StationDataComponent>(targetStation.Value)),
+                out tile,
+                out targetGrid,
+                out targetCoords);
+        }
+
+        return false;
+    }
+
+    protected bool TryFindRandomTileOnStation(Entity<StationDataComponent> station,
+        out Vector2i tile,
+        out EntityUid targetGrid,
+        out EntityCoordinates targetCoords)
+    {
+        tile = default;
+        targetCoords = EntityCoordinates.Invalid;
+        targetGrid = EntityUid.Invalid;
+
+        var possibleTargets = station.Comp.Grids;
+        if (possibleTargets.Count == 0)
+        {
+            targetGrid = EntityUid.Invalid;
+            return false;
+        }
+
+        targetGrid = RobustRandom.Pick(possibleTargets);
+
+        if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
+            return false;
+
+        var found = false;
+        var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(targetGrid);
+        var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
+
+        for (var i = 0; i < 10; i++)
+        {
+            var randomX = RobustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
+            var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+
+            tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
+            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile,
+                    mapGridComp: gridComp)
+                || _atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
+            {
+                continue;
+            }
+
+            found = true;
+            targetCoords = _map.GridTileToLocal(targetGrid, gridComp, tile);
+            break;
+        }
+
+        return found;
+    }
+
+    #endregion
 
     public override void Update(float frameTime)
     {

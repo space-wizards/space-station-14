@@ -63,4 +63,4 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
 /// </summary>
 /// <param name="Station">The new station that was added, and its config & grids.</param>
 [ByRefEvent]
-public record struct StationVariationPassEvent(Entity<StationDataComponent> Station);
+public readonly record struct StationVariationPassEvent(Entity<StationDataComponent> Station);
