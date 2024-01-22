@@ -85,5 +85,5 @@
   components:
   - type: PuddleMessVariationPass
     tilesPerSpillAverage: 150
-    tilesPerSpillStdDev: 1
+    tilesPerSpillStdDev: 10
     randomPuddleSolutionFill: RandomFillTrashPuddleBloodbath
