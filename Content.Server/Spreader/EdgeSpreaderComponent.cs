@@ -9,6 +9,6 @@ namespace Content.Server.Spreader;
 [RegisterComponent, Access(typeof(SpreaderSystem))]
 public sealed partial class EdgeSpreaderComponent : Component
 {
-    [DataField(required: true)]
+    [DataField(required:true)]
     public ProtoId<EdgeSpreaderPrototype> Id;
 }

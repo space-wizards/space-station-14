@@ -54,4 +54,3 @@ public sealed partial class KudzuComponent : Component
     [DataField]
     public int SpreadRadius = -1;
 }
-
