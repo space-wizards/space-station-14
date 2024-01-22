@@ -1,13 +1,8 @@
-using System.Linq;
 using System.Numerics;
-using Content.Server.Maps;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Maps;
-using Content.Shared.Physics;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
