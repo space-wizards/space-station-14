@@ -135,8 +135,8 @@
     - id: BasicPoweredLightVariationPass
     - id: BasicTrashVariationPass
     - id: BasicPuddleMessVariationPass
-      prob: 0.05
+      prob: 0.97
       orGroup: puddleMess
     - id: BloodbathPuddleMessVariationPass
-      prob: 0.95
+      prob: 0.03
       orGroup: puddleMess
