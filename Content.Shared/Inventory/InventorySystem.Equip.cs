@@ -154,7 +154,7 @@ public abstract partial class InventorySystem
         if (checkDoafter &&
             clothing != null &&
             clothing.EquipDelay > TimeSpan.Zero &&
-            clothing.Slots.HasFlag(slotDefinition.SlotFlags) &&
+            (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
             _containerSystem.CanInsert(itemUid, slotContainer))
         {
             var args = new DoAfterArgs(
@@ -175,8 +175,7 @@ public abstract partial class InventorySystem
                 NeedHand = true
             };
 
-            if (_gameTiming.IsFirstTimePredicted)
-                _doAfter.TryStartDoAfter(args);
+            _doAfter.TryStartDoAfter(args);
             return false;
         }
 
@@ -401,7 +400,7 @@ public abstract partial class InventorySystem
 
         if (checkDoafter &&
             Resolve(removedItem.Value, ref clothing, false) &&
-            clothing.Slots.HasFlag(slotDefinition.SlotFlags) &&
+            (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
             clothing.UnequipDelay > TimeSpan.Zero)
         {
             var args = new DoAfterArgs(
@@ -422,8 +421,7 @@ public abstract partial class InventorySystem
                 NeedHand = true
             };
 
-            if (_gameTiming.IsFirstTimePredicted)
-                _doAfter.TryStartDoAfter(args);
+            _doAfter.TryStartDoAfter(args);
             return false;
         }
 
