@@ -307,14 +307,17 @@ public sealed class ExecutionSystem : EntitySystem
                 Dirty(bullet, projComponent);
             }
 
-            EnsureComp<ExecutionProjectileComponent>(bullet, out var execBulletComp);
+            if (!comp.Clumsy)
+            {
+                EnsureComp<ExecutionProjectileComponent>(bullet, out var execBulletComp);
 
-            execBulletComp.Target = comp.Victim;
-            execBulletComp.Multiplier = executionComp.DamageModifier;
-            execBulletComp.Clumsy = comp.Clumsy;
-            execBulletComp.FixtureId = comp.FixtureId;
+                execBulletComp.Target = comp.Victim;
+                execBulletComp.Multiplier = executionComp.DamageModifier;
+                execBulletComp.Clumsy = comp.Clumsy;
+                execBulletComp.FixtureId = comp.FixtureId;
 
-            Dirty(bullet, execBulletComp);
+                Dirty(bullet, execBulletComp);
+            }
         }
 
 
@@ -346,7 +349,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, ExecutionProjectileComponent comp, StartCollideEvent args)
     {
-        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId || comp.Clumsy)
+        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId)
             return;
 
         if (!TryComp<ProjectileComponent>(uid, out var projectileComponent))
