@@ -44236,7 +44236,7 @@ entities:
     - type: Transform
       pos: 0.5,18.5
       parent: 1668
-- proto: WeldingFuelTankHighCapacity
+- proto: WeldingFuelTankHighCapacityFull
   entities:
   - uid: 6843
     components:

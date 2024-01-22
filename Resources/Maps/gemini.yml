@@ -182884,7 +182884,7 @@ entities:
     - type: Transform
       pos: 26.5,73.5
       parent: 2
-- proto: WeldingFuelTankHighCapacity
+- proto: WeldingFuelTankHighCapacityFull
   entities:
   - uid: 27064
     components:
