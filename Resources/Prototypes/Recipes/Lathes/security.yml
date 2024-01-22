@@ -640,4 +640,15 @@
      Steel: 150
      Plastic: 100
      Glass: 20
-     
+
+- type: latheRecipe
+  id: MindShieldImplanter
+  result: MindShieldImplanter
+  completetime: 8
+  applyMaterialDiscount: false #Making mindshields here should be a last resort option so punish accordingly
+  materials:
+    Steel: 400
+    Plastic: 200
+    Glass: 350
+    Silver: 300
+    Gold: 175
