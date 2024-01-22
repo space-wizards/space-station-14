@@ -83,9 +83,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         var query = EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out _, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                return false;
-
             if (ev.Players.Length == 0)
             {
                 ChatManager.DispatchServerAnnouncement(Loc.GetString("preset-no-one-ready", ("presetName", localizedPresetName)));
