@@ -1,24 +1,4 @@
 ﻿Entries:
-- author: JoeHammad
-  changes:
-  - message: Paramedics are now available on marathon
-    type: Add
-  id: 5263
-  time: '2023-12-05T07:36:58.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Chloral Hydrate sleep effect will start at 11 units, down from 16.
-    type: Tweak
-  id: 5264
-  time: '2023-12-05T08:52:47.0000000+00:00'
-- author: DangerRevolution
-  changes:
-  - message: Added Emergency Nitrogen Tanks
-    type: Add
-  - message: Added Nitrogen Tanks to Emergency Closets
-    type: Add
-  id: 5265
-  time: '2023-12-05T09:41:39.0000000+00:00'
 - author: Lazzi0706
   changes:
   - message: Added a new stomach for mice and "hunger thresholds" in mice's prototype
@@ -3793,3 +3773,25 @@
   id: 5763
   time: '2024-01-21T12:14:47.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24369
+- author: icekot8
+  changes:
+  - message: Increased the size of flatpacks made by the Flatpacker 1001.
+    type: Tweak
+  id: 5764
+  time: '2024-01-21T17:07:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
+- author: Nairodian
+  changes:
+  - message: All vent critter events now have a small delay and alert message before
+      they spawn.
+    type: Add
+  id: 5765
+  time: '2024-01-22T01:33:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24383
+- author: Flareguy
+  changes:
+  - message: The Research Director's hardsuit now uses its older sprites.
+    type: Tweak
+  id: 5766
+  time: '2024-01-22T01:52:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24377
