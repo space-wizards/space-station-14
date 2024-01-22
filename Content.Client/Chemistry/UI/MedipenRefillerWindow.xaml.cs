@@ -142,11 +142,11 @@ namespace Content.Client.Chemistry.UI
                 }
             }
 
-            if (reagents.Count == requiredReagents.Count)
+            if (reagents.Count.Equals(requiredReagents.Count))
             {
                 foreach (var reagent in reagents)
                 {
-                    if (!requiredReagents.ContainsKey(reagent.Key) || !requiredReagents.ContainsValue(reagent.Value))
+                    if (!(requiredReagents.ContainsKey(reagent.Key) && requiredReagents[reagent.Key].Equals(reagent.Value)))
                         return false;
                 }
                 return true;
