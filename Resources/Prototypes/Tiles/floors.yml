@@ -1740,7 +1740,6 @@
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: false
-  canAxe: false #You can't RCD these in SS13 apparently, so this is probably the next best thing
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel #probably should not be normally obtainable, but the game shits itself and dies when you try to put null here
@@ -1753,7 +1752,6 @@
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: false
-  canAxe: false
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel
@@ -1766,7 +1764,6 @@
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: false
-  canAxe: false
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemReinforced #same case as FloorHull

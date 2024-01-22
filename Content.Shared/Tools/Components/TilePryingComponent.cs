@@ -15,12 +15,6 @@ public sealed partial class TilePryingComponent : Component
     [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>)), AutoNetworkedField]
     public string QualityNeeded = "Prying";
 
-    /// <summary>
-    /// Whether this tool can pry tiles with CanAxe.
-    /// </summary>
-    [DataField("advanced"), AutoNetworkedField]
-    public bool Advanced = false;
-
     [DataField("delay"), AutoNetworkedField]
     public float Delay = 1f;
 }

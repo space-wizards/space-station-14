@@ -53,7 +53,7 @@ public abstract partial class SharedToolSystem
         }
 
         if (_netManager.IsServer)
-            _tiles.PryTile(tile, component.Advanced);
+            _tiles.PryTile(tile);
     }
 
     private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
@@ -72,7 +72,7 @@ public abstract partial class SharedToolSystem
 
         var tileDef = (ContentTileDefinition) _tileDefManager[tile.Tile.TypeId];
 
-        if (!tileDef.CanCrowbar && !(tileDef.CanAxe && component.Advanced))
+        if (!tileDef.CanCrowbar)
             return false;
 
         var ev = new TilePryingDoAfterEvent(GetNetCoordinates(coordinates));

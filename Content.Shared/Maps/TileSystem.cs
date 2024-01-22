@@ -50,13 +50,7 @@ public sealed class TileSystem : EntitySystem
         var tileRef = _maps.GetTileRef(gridId, grid, indices);
         return PryTile(tileRef);
     }
-
-	public bool PryTile(TileRef tileRef)
-    {
-        return PryTile(tileRef, false);
-    }
-
-    public bool PryTile(TileRef tileRef, bool pryPlating)
+    public bool PryTile(TileRef tileRef)
     {
         var tile = tileRef.Tile;
 
@@ -65,7 +59,7 @@ public sealed class TileSystem : EntitySystem
 
         var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
 
-        if (!tileDef.CanCrowbar && !(pryPlating && tileDef.CanAxe))
+        if (!tileDef.CanCrowbar)
             return false;
 
         return DeconstructTile(tileRef);
