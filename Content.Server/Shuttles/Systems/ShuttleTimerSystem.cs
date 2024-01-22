@@ -38,7 +38,7 @@ public sealed class ShuttleTimerSystem : EntitySystem
         args.Data.TryGetValue(ShuttleTimerMasks.SourceMap, out EntityUid? source);
         args.Data.TryGetValue(ShuttleTimerMasks.DestMap, out EntityUid? dest);
         args.Data.TryGetValue(ShuttleTimerMasks.Docked, out bool docked);
-        string?[] text = new string?[] { docked ? "ETD" : "ETA" };
+        string?[] text = new string?[] { docked ? Loc.GetString("shuttle-timer-etd") : Loc.GetString("shuttle-timer-eta")};
 
         switch (timerXform.MapUid)
         {
@@ -51,7 +51,7 @@ public sealed class ShuttleTimerSystem : EntitySystem
                 break;
             case var remote when remote == dest:
                 key = ShuttleTimerMasks.DestTime;
-                text = new string?[] { "ETA" };
+                text = new string?[] { Loc.GetString("shuttle-timer-eta") };
                 break;
             default:
                 return;

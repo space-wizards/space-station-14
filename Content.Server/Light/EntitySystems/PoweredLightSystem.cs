@@ -135,7 +135,7 @@ namespace Content.Server.Light.EntitySystems
 
                         var burnMsg = Loc.GetString("powered-light-component-burn-hand");
                         _popupSystem.PopupEntity(burnMsg, uid, userUid);
-                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
+                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.GetTotal():damage} damage");
                         _audio.PlayEntity(light.BurnHandSound, Filter.Pvs(uid), uid, true);
 
                         args.Handled = true;
