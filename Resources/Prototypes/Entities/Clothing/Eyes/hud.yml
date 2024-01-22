@@ -9,7 +9,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/diag.rsi
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Inorganic
     - Silicon
 
@@ -24,10 +24,10 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/med.rsi
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowHealthIcons
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: Tag
     tags:
@@ -111,10 +111,10 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medonion.rsi
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowHealthIcons
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowHungerIcons
 
@@ -129,10 +129,10 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medonionbeer.rsi
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowHealthIcons
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowHungerIcons
   - type: ShowThirstIcons
@@ -152,7 +152,7 @@
     node: medsecHud
   - type: ShowSecurityIcons
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Biological
 
 - type: entity
@@ -167,11 +167,11 @@
     sprite: Clothing/Eyes/Hud/medsecengi.rsi
   - type: ShowSecurityIcons
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Biological
     - Inorganic
   - type: ShowHealthIcons
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowSyndicateIcons
 
@@ -187,11 +187,11 @@
     sprite: Clothing/Eyes/Hud/omni.rsi
   - type: ShowSecurityIcons
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Biological
     - Inorganic
   - type: ShowHealthIcons
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowHungerIcons
   - type: ShowThirstIcons
@@ -216,3 +216,36 @@
   suffix: Syndicate
   components:
   - type: ShowSecurityIcons
+
+- type: entity
+  parent: ClothingEyesHudMedical
+  id: ClothingEyesEyepatchHudMedical
+  name: medical hud eyepatch
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their health status. For true patriots.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/medpatch.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/medpatch.rsi
+
+- type: entity
+  parent: ClothingEyesHudSecurity
+  id: ClothingEyesEyepatchHudSecurity
+  name: security hud eyepatch
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records. For true patriots.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/secpatch.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/secpatch.rsi
+
+- type: entity
+  parent: ClothingEyesHudBeer
+  id: ClothingEyesEyepatchHudBeer
+  name: beer hud eyepatch
+  description: A pair of sunHud outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion. For true patriots.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/beerpatch.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/beerpatch.rsi

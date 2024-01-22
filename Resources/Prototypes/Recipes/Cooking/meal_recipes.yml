@@ -1819,6 +1819,17 @@
     FoodKebabSkewer: 1
 
 - type: microwaveMealRecipe
+  id: RecipeSnakeKebab
+  name: snake kebab recipe
+  result: FoodMeatSnakeKebab
+  time: 15
+  reagents:
+    Wine: 5
+  solids:
+    FoodMeatSnake: 1
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
   id: RecipeFoodMealSoftTaco
   name: soft taco recipe
   result: FoodMealSoftTaco
