@@ -132,5 +132,11 @@
   components:
   - type: RoundstartStationVariationRule
     rules:
-    - id: PoweredLightVariationPass
-      prob: 1
+    - id: BasicPoweredLightVariationPass
+    - id: BasicTrashVariationPass
+    - id: BasicPuddleMessVariationPass
+      prob: 0.05
+      orGroup: puddleMess
+    - id: BloodbathPuddleMessVariationPass
+      prob: 0.95
+      orGroup: puddleMess

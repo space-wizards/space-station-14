@@ -11,8 +11,79 @@
 # Actual rules
 
 - type: entity
-  id: PoweredLightVariationPass
+  id: BasicPoweredLightVariationPass
   parent: BaseVariationPass
   noSpawn: true
   components:
   - type: PoweredLightVariationPass
+
+- type: entity
+  id: BasicTrashVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: TrashVariationPass
+
+- type: weightedRandomFillSolution
+  id: RandomFillTrashPuddle
+  fills:
+  - quantity: 80
+    weight: 5
+    reagents:
+    - Blood
+    - CopperBlood
+    - Slime
+    - Vomit
+    - InsectBlood
+  - quantity: 55
+    weight: 4
+    reagents:
+    - WeldingFuel
+    - Mold
+    - PlantBGone
+    - Potassium # :trollface:
+    - VentCrud
+    - Carbon
+    - Hydrogen
+    - Fat
+    - SpaceLube
+    - SpaceGlue
+    - Sulfur
+    - Acetone
+    - Bleach
+  - quantity: 25
+    weight: 1
+    reagents:
+    - Omnizine
+    - Desoxyephedrine
+    - Napalm
+    - Radium
+    - Gold
+    - Silver
+    - Sodium
+
+- type: weightedRandomFillSolution
+  id: RandomFillTrashPuddleBloodbath
+  fills:
+  - quantity: 75
+    weight: 1
+    reagents:
+    - Blood
+
+- type: entity
+  id: BasicPuddleMessVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: PuddleMessVariationPass
+    randomPuddleSolutionFill: RandomFillTrashPuddle
+
+- type: entity
+  id: BloodbathPuddleMessVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: PuddleMessVariationPass
+    tilesPerSpillAverage: 200
+    tilesPerSpillStdDev: 1
+    randomPuddleSolutionFill: RandomFillTrashPuddleBloodbath
