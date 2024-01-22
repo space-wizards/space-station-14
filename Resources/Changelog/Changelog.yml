@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Chloral Hydrate sleep effect will start at 11 units, down from 16.
-    type: Tweak
-  id: 5264
-  time: '2023-12-05T08:52:47.0000000+00:00'
 - author: DangerRevolution
   changes:
   - message: Added Emergency Nitrogen Tanks
@@ -3794,3 +3788,11 @@
   id: 5764
   time: '2024-01-21T17:07:59.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
+- author: Nairodian
+  changes:
+  - message: All vent critter events now have a small delay and alert message before
+      they spawn.
+    type: Add
+  id: 5765
+  time: '2024-01-22T01:33:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24383
