@@ -78,14 +78,12 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         // Save the user's existing voicemask if they have one
         var oldEnabled = true;
         var oldVoiceName = Loc.GetString("wire-listen-pulse-error-name");
-        var oldSpeechVerb = "";
-        var oldSpeechVerbEnabled = false;
+        string? oldSpeechVerb = null;
         if (EntityManager.TryGetComponent<VoiceMaskComponent>(user, out var oldMask))
         {
             oldEnabled = oldMask.Enabled;
             oldVoiceName = oldMask.VoiceName;
             oldSpeechVerb = oldMask.SpeechVerb;
-            oldSpeechVerbEnabled = oldMask.EnableSpeechVerbModification;
         }
 
         // Give the user a temporary voicemask component
@@ -93,7 +91,6 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         mask.Enabled = true;
         mask.VoiceName = Loc.GetString("wire-listen-pulse-identifier");
         mask.SpeechVerb = SpeechVerb;
-        mask.EnableSpeechVerbModification = true;
 
         var chars = Loc.GetString("wire-listen-pulse-characters").ToCharArray();
         var noiseMsg = _chat.BuildGibberishString(chars, NoiseLength);
@@ -114,7 +111,6 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
             mask.Enabled = oldEnabled;
             mask.VoiceName = oldVoiceName;
             mask.SpeechVerb = oldSpeechVerb;
-            mask.EnableSpeechVerbModification = oldSpeechVerbEnabled;
         }
 
         base.Pulse(user, wire);
