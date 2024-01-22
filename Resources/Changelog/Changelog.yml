@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Lazzi0706
-  changes:
-  - message: Added a new stomach for mice and "hunger thresholds" in mice's prototype
-    type: Add
-  - message: Fixed inadequate hunger in mice
-    type: Fix
-  id: 5266
-  time: '2023-12-05T10:39:09.0000000+00:00'
 - author: JoeHammad
   changes:
   - message: Removed the spare paramedic clothes and EVA suit from the medidrobe
@@ -3795,3 +3787,10 @@
   id: 5766
   time: '2024-01-22T01:52:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24377
+- author: SonicHDC
+  changes:
+  - message: Added reinforced diagonal!
+    type: Add
+  id: 5767
+  time: '2024-01-22T14:53:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24393
