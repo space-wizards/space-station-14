@@ -44,6 +44,11 @@
   copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted from MP3 to OGG."
   source: "https://www.youtube.com/watch?v=YKVmXn-Gv0M"
 
+- files: ["marhaba.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Marhaba by Ian Alex Mac. Converted from MP3 to OGG."
+  source: "https://freemusicarchive.org/music/Ian_Alex_Mac/Cues/Marhaba"
+
 - files: ["comet_haley.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Comet Haley by Stellardrone. Converted from MP3 to OGG."
