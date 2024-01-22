@@ -115,7 +115,7 @@
       sprite: Objects/Misc/kudzuflower.rsi
       state: kudzu_11
     - type: Kudzu
-      growthPower: 10
+      spreadRadius: 10
       spriteVariants: 5
       spreadChance: 0.01
     - type: SlowContacts
@@ -136,6 +136,18 @@
       - LightTree04
       - LightTree05
       - LightTree06
+      - FloraTree01
+      - FloraTree02
+      - FloraTree03
+      - FloraTree04
+      - FloraTree05
+      - FloraTree06
+      - FloraTreeLarge01
+      - FloraTreeLarge02
+      - FloraTreeLarge03
+      - FloraTreeLarge04
+      - FloraTreeLarge05
+      - FloraTreeLarge06
       rarePrototypes:
       - AnomalyFloraBulb
 

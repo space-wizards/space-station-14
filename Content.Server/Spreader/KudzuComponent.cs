@@ -48,9 +48,10 @@ public sealed partial class KudzuComponent : Component
     public int SpriteVariants = 3;
 
     /// <summary>
-    /// When an entity is spreaded, the copy gains -1 power. This way you can limit the kudza growth zone. If the power is set to -1, it is infinite
+    /// When an entity is spreaded, the copy gains -1 spread radius. Kudza with radius 0 cannot spreading.
+    /// This way you can limit the kudza growth zone. If the power is set to -1, it is infinite
     /// </summary>
     [DataField]
-    public int GrowthPower = -1;
+    public int SpreadRadius = -1;
 }
 
