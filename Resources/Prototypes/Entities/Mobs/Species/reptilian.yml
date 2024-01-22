@@ -60,6 +60,10 @@
       types:
         Heat : 1.5 #per second, scales with temperature & other constants
   - type: Wagging
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+    - Reptilian
 
 - type: entity
   parent: BaseSpeciesDummy

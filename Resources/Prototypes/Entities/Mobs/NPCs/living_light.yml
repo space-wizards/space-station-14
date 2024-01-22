@@ -15,7 +15,7 @@
         true
   - type: NpcFactionMember
     factions:
-    - SimpleHostile
+    - Nature
   - type: MovementIgnoreGravity
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5

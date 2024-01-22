@@ -119,6 +119,10 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_moth"
         visible: false
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+    - Moth
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -1,12 +1,12 @@
 - type: npcFaction
   id: Dragon
   hostile:
-    - NanoTrasen
-    - Syndicate
-    - Xeno
-    - PetsNT
-    - Zombie
-    - Revolutionary
+  - NanoTrasen
+  - Syndicate
+  - Xeno
+  - PetsNT
+  - Zombie
+  - Revolutionary
 
 - type: npcFaction
   id: NanoTrasen
@@ -20,7 +20,7 @@
 - type: npcFaction
   id: Mouse
   hostile:
-    - PetsNT
+  - PetsNT
 
 - type: npcFaction
   id: Passive
@@ -75,6 +75,7 @@
   - Passive
   - PetsNT
   - Revolutionary
+  - Nature
 
 - type: npcFaction
   id: Revolutionary
@@ -83,3 +84,56 @@
   - Zombie
   - SimpleHostile
   - Dragon
+
+- type: npcFaction
+  id: Nature
+  hostile:
+  - TechnogenicSpecies
+  - Zombie
+  - Vox
+  - Arachnid
+  - Dwarf
+  - Gingerbread
+  - Human
+  - Moth
+  - Reptilian
+  - Skeleton
+  - Slime
+  friendly:
+  - Dragon
+  - PetsNT
+  - Xeno
+  - Mouse
+  - Diona
+
+#Species factions
+
+- type: npcFaction
+  id: Arachnid
+  
+- type: npcFaction
+  id: Diona
+  
+- type: npcFaction
+  id: Dwarf
+  
+- type: npcFaction
+  id: Gingerbread
+  
+- type: npcFaction
+  id: Human
+  
+- type: npcFaction
+  id: Moth
+  
+- type: npcFaction
+  id: Reptilian
+  
+- type: npcFaction
+  id: Skeleton
+  
+- type: npcFaction
+  id: Slime
+  
+- type: npcFaction
+  id: Vox

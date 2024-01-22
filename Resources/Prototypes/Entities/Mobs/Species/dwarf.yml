@@ -63,3 +63,7 @@
   components:
   - type: Sprite
     scale: 1, 0.8
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+    - Dwarf

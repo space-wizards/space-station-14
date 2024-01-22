@@ -40,6 +40,10 @@
           - MobMask
         layer:
           - MobLayer
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+    - Gingerbread
 
 - type: entity
   parent: BaseSpeciesDummy
