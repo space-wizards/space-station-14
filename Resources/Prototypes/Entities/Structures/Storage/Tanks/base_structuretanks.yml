@@ -6,7 +6,9 @@
   abstract: true
   components:
   - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
     noRot: true
+  - type: Appearance
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -60,8 +62,12 @@
     solutions:
       tank:
         maxVol: 1500
+  - type: ExaminableSolution
+    solution: tank
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
   - type: Transform
     noRot: true
+  - type: StaticPrice
+    price: 500

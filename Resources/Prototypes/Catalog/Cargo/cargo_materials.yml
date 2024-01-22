@@ -87,7 +87,7 @@
   cost: 1500
   category: Materials
   group: market
-  
+
 - type: cargoProduct
   id: MaterialWaterTank
   icon:
@@ -95,5 +95,25 @@
     state: watertank
   product: WaterTankFull
   cost: 1000
+  category: Materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialHighCapacityFuelTank
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: highfueltank
+  product: WeldingFuelTankHighCapacityFull
+  cost: 8000
+  category: Materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialHighCapacityWaterTank
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: highwatertank
+  product: WaterTankHighCapacityFull
+  cost: 5000
   category: Materials
   group: market
