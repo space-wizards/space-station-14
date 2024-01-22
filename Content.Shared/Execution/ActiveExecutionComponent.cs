@@ -8,11 +8,15 @@ namespace Content.Shared.Execution;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ActiveExecutionComponent : Component
 {
+    [DataField]
     public EntityUid Attacker;
 
+    [DataField]
     public EntityUid Victim;
 
+    [DataField]
     public bool Clumsy;
 
+    [DataField]
     public string FixtureId = "projectile";
 }
