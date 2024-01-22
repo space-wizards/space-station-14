@@ -11,5 +11,5 @@ public sealed partial class TargetedTelepathyComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     [AutoNetworkedField]
-    public EntityUid Target;
+    public EntityUid? Target;
 }
