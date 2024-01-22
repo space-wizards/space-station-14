@@ -57,6 +57,10 @@
   - type: Construction
     graph: Railing
     node: railing
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
 
 - type: entity
   parent: BaseStructure
@@ -126,6 +130,10 @@
   - type: Construction
     graph: Railing
     node: railingCorner
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
 
 - type: entity
   parent: BaseStructure
@@ -186,7 +194,11 @@
   - type: Construction
     graph: Railing
     node: railingCornerSmall
-
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
+    
 - type: entity
   parent: BaseStructure
   id: RailingRound
@@ -261,3 +273,7 @@
   - type: Construction
     graph: Railing
     node: railingRound
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  

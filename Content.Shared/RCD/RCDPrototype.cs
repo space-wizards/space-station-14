@@ -14,28 +14,28 @@ public sealed class RCDPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// The name associated with the prototype
-    /// </summary>
-    [DataField("name", required: true), ViewVariables(VVAccess.ReadOnly)]
-    public string SetName { get; private set; } = string.Empty;
-
-    /// <summary>
-    /// The name of the radial container that this prototype will be listed under on the RCD menu
-    /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
-    public string Category { get; private set; } = string.Empty;
-
-    /// <summary>
-    /// Texture path for this prototypes menu icon
-    /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
-    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
-
-    /// <summary>
     /// The RCD mode associated with the operation
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public RcdMode Mode { get; private set; } = RcdMode.Invalid;
+
+    /// <summary>
+    /// The name associated with the prototype
+    /// </summary>
+    [DataField("name"), ViewVariables(VVAccess.ReadOnly)]
+    public string SetName { get; private set; } = "Unknown";
+
+    /// <summary>
+    /// The name of the radial container that this prototype will be listed under on the RCD menu
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string Category { get; private set; } = "Undefined";
+
+    /// <summary>
+    /// Texture path for this prototypes menu icon
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
 
     /// <summary>
     /// The entity prototype that will be constructed (mode dependent)

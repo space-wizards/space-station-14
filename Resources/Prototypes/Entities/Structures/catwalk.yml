@@ -51,3 +51,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  

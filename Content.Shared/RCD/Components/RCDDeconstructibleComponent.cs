@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.RCD.Components;
 
 [RegisterComponent]
-public sealed partial class RCDDeconstructibleComponent : Component
+public sealed partial class RCDDeconstructableComponent : Component
 {
     /// <summary>
     /// Number of charges consumed when the deconstruction is completed
