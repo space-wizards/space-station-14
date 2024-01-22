@@ -31,8 +31,6 @@ public sealed class LostPiratesSpawnRule : StationEventSystem<LostPiratesSpawnRu
         var lostpiratesEntity = _gameTicker.AddGameRule(component.GameRuleProto);
         component.AdditionalRule = lostpiratesEntity;
         var lostpiratesComp = EntityManager.GetComponent<PiratesRuleComponent>(lostpiratesEntity);
-        lostpiratesComp.SpawnOutpost = false;
-        lostpiratesComp.RoundEndBehavior = RoundEndBehavior.Nothing;
         _gameTicker.StartGameRule(lostpiratesEntity);
     }
 
