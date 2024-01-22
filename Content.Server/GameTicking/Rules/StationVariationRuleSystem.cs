@@ -2,6 +2,8 @@
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
+using Content.Shared.Storage;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -10,6 +12,8 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariationRuleComponent>
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -19,7 +23,8 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
 
     protected override void Added(EntityUid uid, StationVariationRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        foreach (var rule in component.Rules)
+        var spawns = EntitySpawnCollection.GetSpawns(component.Rules, _random);
+        foreach (var rule in spawns)
         {
             GameTicker.AddGameRule(rule);
         }
@@ -27,11 +32,11 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
 
     private void OnStationPostInit(ref StationPostInitEvent ev)
     {
-        // this is unlikely, but could happen if it was saved and reloaded, so check anyway
+        // this is unlikely, but could theoretically happen if it was saved and reloaded, so check anyway
         if (HasComp<StationVariationHasRunComponent>(ev.Station))
             return;
 
-        Log.Info($"Running station variation for station {ToPrettyString(ev.Station)}");
+        Log.Info($"Adding station variation rules for station {ToPrettyString(ev.Station)}");
 
         // raise the event on any passes that have been added
         var passEv = new StationVariationPassEvent(ev.Station);
@@ -54,7 +59,7 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
 
 /// <summary>
 ///     Raised directed on game rule entities which are added and marked as <see cref="StationVariationPassRuleComponent"/>
-///     when a new station is initialized that should be variantized.
+///     when a new station is initialized that should be varied.
 /// </summary>
 /// <param name="Station">The new station that was added, and its config & grids.</param>
 [ByRefEvent]

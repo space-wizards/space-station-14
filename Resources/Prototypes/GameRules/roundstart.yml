@@ -132,4 +132,5 @@
   components:
   - type: StationVariationRule
     rules:
-    - LightBreakVariationPass
+    - id: LightBreakVariationPass
+      prob: 1

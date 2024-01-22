@@ -1,10 +1,14 @@
-﻿- type: entity
+﻿# Base
+
+- type: entity
   id: BaseVariationPass
   parent: BaseGameRule
   abstract: true
   noSpawn: true
   components:
   - type: StationVariationPassRule
+
+# Actual rules
 
 - type: entity
   id: LightBreakVariationPass
