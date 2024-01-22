@@ -6,6 +6,7 @@ using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Station;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -35,6 +36,7 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -206,6 +208,23 @@ public sealed class StationSystem : EntitySystem
         }
 
         return largestGrid;
+    }
+
+    /// <summary>
+    /// Returns the total number of tiles contained in the station's grids.
+    /// </summary>
+    public int GetTileCount(StationDataComponent component)
+    {
+        var count = 0;
+        foreach (var gridUid in component.Grids)
+        {
+            if (!TryComp<MapGridComponent>(gridUid, out var grid))
+                continue;
+
+            count += _map.GetAllTiles(gridUid, grid).Count();
+        }
+
+        return count;
     }
 
     /// <summary>
