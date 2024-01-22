@@ -554,7 +554,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -576,7 +575,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, 0, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
