@@ -38,6 +38,13 @@
         collection: Paracusia
 
 - type: trait
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  components:
+    - type: Unrevivable
+
+- type: trait
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
