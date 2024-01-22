@@ -34,7 +34,11 @@ public sealed class MedipenRefillerSystem : EntitySystem
         SubscribeLocalEvent<MedipenRefillerComponent, BeforeActivatableUIOpenEvent>((uid, c, _) => UpdateUserInterfaceState(uid, c));
         SubscribeLocalEvent<MedipenRefillerComponent, EntInsertedIntoContainerMessage>((uid, c, _) => UpdateUserInterfaceState(uid, c));
         SubscribeLocalEvent<MedipenRefillerComponent, EntRemovedFromContainerMessage>((uid, c, _) => UpdateUserInterfaceState(uid, c));
+
+        SubscribeLocalEvent<MedipenRefillerComponent, MedipenRefillerTransferReagentMessage>(OnTransferButtonMessage);
+
         SubscribeLocalEvent<MedipenRefillerComponent, ComponentStartup>(OnComponentStartup);
+
         SubscribeLocalEvent<EmaggedComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<MedipenRefillerComponent, GotEmaggedEvent>(OnGotEmmaged);
     }
@@ -69,6 +73,14 @@ public sealed class MedipenRefillerSystem : EntitySystem
         UpdateRecipes(uid, refillerComponent);
     }
 
+    private void OnTransferButtonMessage(EntityUid uid, MedipenRefillerComponent component, MedipenRefillerTransferReagentMessage message)
+    {
+        if (!Resolve(uid, ref component!) || message.Amount <= 0)
+            return;
+
+        TransferReagent(uid, component, message.Id, message.Amount, message.IsBuffer);
+    }
+
     /// <summary>
     /// Deserializes the recipe prototype for medipens. If new medipen recipes are added, ensure that their ID is in the string list of the component.
     /// </summary>
@@ -90,10 +102,7 @@ public sealed class MedipenRefillerSystem : EntitySystem
         UpdateUserInterfaceState(uid, component);
     }
 
-    /// <summary>
-    /// If it's positive, transfer from the container to the buffer. If it's negative, transfer from the buffer to the container.
-    /// </summary>
-    private void TransferReagent(EntityUid uid, MedipenRefillerComponent component, ReagentId reagent, FixedPoint2 amount)
+    private void TransferReagent(EntityUid uid, MedipenRefillerComponent component, ReagentId reagent, FixedPoint2 amount, bool isBuffer)
     {
         var input = GetInputContainerSolution(uid, component);
         var buffer = GetBufferSolution(uid, component);
@@ -101,15 +110,18 @@ public sealed class MedipenRefillerSystem : EntitySystem
         if (input == null || buffer == null)
             return;
 
-        if (amount > 0 && input.GetReagentQuantity(reagent) <= amount)
+        if (isBuffer && buffer.GetReagentQuantity(reagent) > 0)
         {
-            input.RemoveReagent(reagent, amount, true);
-            buffer!.AddReagent(reagent, amount);
+            var clampedAmount = FixedPoint2.Min(input.MaxVolume - input.Volume, FixedPoint2.Min(buffer.GetReagentQuantity(reagent), amount));
+            buffer.RemoveReagent(reagent, clampedAmount, true);
+            input.AddReagent(reagent, clampedAmount);
         }
-        else if (amount < 0 && buffer!.GetReagentQuantity(reagent) <= FixedPoint2.Abs(amount))
+
+        else if (!isBuffer && input.GetReagentQuantity(reagent) > 0)
         {
-            buffer!.RemoveReagent(reagent, FixedPoint2.Abs(amount), true);
-            input.AddReagent(reagent, FixedPoint2.Abs(amount));
+            var clampedAmount = FixedPoint2.Min(buffer.MaxVolume - buffer.Volume, FixedPoint2.Min(input.GetReagentQuantity(reagent), amount));
+            input.RemoveReagent(reagent, clampedAmount, true);
+            buffer.AddReagent(reagent, clampedAmount);
         }
 
         UpdateUserInterfaceState(uid, component);

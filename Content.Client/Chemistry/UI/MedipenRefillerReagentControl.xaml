@@ -1,6 +1,7 @@
 <Control xmlns="https://spacestation14.io">
     <BoxContainer
         Margin="1"
+        Name="ReagentBoxContainer"
         HorizontalExpand="True"
         Orientation="Horizontal"
         SeparationOverride="1"
@@ -14,11 +15,5 @@
             StyleClasses="LabelSecondaryColor">
         </Label>
         <Control HorizontalExpand="True"/>
-        <Button Name="TransferButton01" Access="Public" Text="01" StyleClasses="OpenRight"/>
-        <Button Name="TransferButton05" Access="Public" Text="05" StyleClasses="OpenBoth"/>
-        <Button Name="TransferButton10" Access="Public" Text="10" StyleClasses="OpenBoth"/>
-        <Button Name="TransferButton15" Access="Public" Text="15" StyleClasses="OpenBoth"/>
-        <Button Name="TransferButton20" Access="Public" Text="20" StyleClasses="OpenBoth"/>
-        <Button Name="TransferButton25" Access="Public" Text="25" StyleClasses="OpenLeft"/>
     </BoxContainer>
 </Control>

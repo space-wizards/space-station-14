@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry;
+using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 
 namespace Content.Client.Chemistry.UI
@@ -24,6 +25,8 @@ namespace Content.Client.Chemistry.UI
 
             _window.OpenCentered();
             _window.OnClose += Close;
+            _window.OnTransferButtonPressed += args => SendMessage(new MedipenRefillerTransferReagentMessage(args.Id, args.Value, args.IsBuffer));
+            _window.InputEjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedMedipenRefiller.InputSlotName));
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -44,6 +47,7 @@ namespace Content.Client.Chemistry.UI
                     break;
             }
         }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

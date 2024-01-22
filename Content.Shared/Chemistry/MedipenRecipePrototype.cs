@@ -1,4 +1,5 @@
 
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -19,5 +20,5 @@ public sealed partial class MedipenRecipePrototype : IPrototype
     public bool LockedByEmag { get; set; } = false;
 
     [DataField("reagents", required: true)]
-    public Dictionary<string, int> ReagentsRequired { get; set; } = new();
+    public Dictionary<string, FixedPoint2> ReagentsRequired { get; set; } = new();
 }

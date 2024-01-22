@@ -64,7 +64,6 @@ public sealed class ContainerData
 public sealed class MedipenRefillerUpdateState : BoundUserInterfaceState
 {
     public List<MedipenRecipePrototype> Recipes;
-
     public ContainerData InputContainerData;
     public ContainerData BufferData;
     public MedipenRefillerUpdateState(List<MedipenRecipePrototype> recipes, ContainerData input, ContainerData buffer)
@@ -75,10 +74,17 @@ public sealed class MedipenRefillerUpdateState : BoundUserInterfaceState
     }
 }
 
-public enum MedipenRefillerReagentAmount
+[Serializable, NetSerializable]
+public sealed class MedipenRefillerTransferReagentMessage : BoundUserInterfaceMessage
 {
-    U1 = 1,
-    U5 = 5,
-    U10 = 10,
-    U25 = 25
+    public ReagentId Id;
+    public FixedPoint2 Amount;
+    public bool IsBuffer;
+
+    public MedipenRefillerTransferReagentMessage(ReagentId id, FixedPoint2 amount, bool isBuffer)
+    {
+        Id = id;
+        Amount = amount;
+        IsBuffer = isBuffer;
+    }
 }

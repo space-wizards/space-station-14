@@ -82,7 +82,8 @@
           - EmptyMedipen
   - type: SolutionContainerManager
     solutions:
-      buffer: {}
+      buffer:
+        maxVol: 30
   - type: DumpableSolution
     solution: buffer
-    unlimited: true
+    unlimited: false

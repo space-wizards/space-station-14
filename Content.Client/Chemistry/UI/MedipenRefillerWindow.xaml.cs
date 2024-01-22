@@ -1,8 +1,10 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Content.Client.Lathe.UI;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Anomaly;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -25,11 +27,12 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private IEntitySystemManager _entityManager = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
 
+        public event Action<TransferButton>? OnTransferButtonPressed;
+        public event Action<string>? OnMedipenButtonPressed;
+
         private readonly SpriteSystem _spriteSystem;
 
-
-        public IEnumerable<MedipenRecipePrototype>? MedipenRecipes;
-
+        public List<MedipenRecipePrototype>? MedipenRecipes;
         public ContainerData? InputContainerData;
         public ContainerData? BufferData;
 
@@ -59,7 +62,8 @@ namespace Content.Client.Chemistry.UI
                     tooltip.Append("\n");
                     tooltip.Append(Loc.GetString("medipen-refiller-window-tooltip-display", ("amount", reagent.Value), ("reagent", reagentProto.LocalizedName)));
                 }
-                Control control = new MedipenRecipeControl(medipenProto, true, tooltip.ToString(), _spriteSystem.Frame0(medipenProto));
+                var control = new MedipenRecipeControl(medipenProto, CanRefill(medipenProto.ID), tooltip.ToString(), _spriteSystem.Frame0(medipenProto));
+                control.OnMedipenButtonPressed += args => OnMedipenButtonPressed?.Invoke(args);
                 MedipenList.AddChild(control);
             }
         }
@@ -102,21 +106,61 @@ namespace Content.Client.Chemistry.UI
             foreach (var reagent in InputContainerData.ReagentQuantities)
             {
                 if (_prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var reagentProto))
-                    InputContainerInfo.AddChild(new MedipenRefillerReagentControl(reagentProto, reagent.Quantity, false));
+                {
+                    var control = new MedipenRefillerReagentControl(reagent.Reagent, reagentProto.LocalizedName, reagent.Quantity, false);
+                    control.OnTransferButtonPressed += args => OnTransferButtonPressed?.Invoke(args);
+                    InputContainerInfo.AddChild(control);
+                }
             }
 
             foreach (var reagent in BufferData.ReagentQuantities)
             {
                 if (_prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var reagentProto))
-                    BufferInfo.AddChild(new MedipenRefillerReagentControl(reagentProto, reagent.Quantity, false));
+                {
+                    var control = new MedipenRefillerReagentControl(reagent.Reagent, reagentProto.LocalizedName, reagent.Quantity, true);
+                    control.OnTransferButtonPressed += args => OnTransferButtonPressed?.Invoke(args);
+                    BufferInfo.AddChild(control);
+                }
             }
         }
+
+        private bool CanRefill(string id)
+        {
+            var reagents = new Dictionary<string, FixedPoint2>();
+            var requiredReagents = new Dictionary<string, FixedPoint2>();
+
+            foreach (var recipe in MedipenRecipes!)
+            {
+                if (recipe.ID.Equals(id))
+                {
+                    requiredReagents = recipe.ReagentsRequired;
+                    foreach (var reagent in BufferData!.ReagentQuantities)
+                    {
+                        if (_prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var reagentProto))
+                            reagents.Add(reagentProto.ID, reagent.Quantity);
+                    }
+                }
+            }
+
+            if (reagents.Count == requiredReagents.Count)
+            {
+                foreach (var reagent in reagents)
+                {
+                    if (!requiredReagents.ContainsKey(reagent.Key) || !requiredReagents.ContainsValue(reagent.Value))
+                        return false;
+                }
+                return true;
+            }
+            else
+                return false;
+        }
+
     }
 
     public sealed partial class ContainerDisplayControl : Control
     {
-        public Label ContainerName = new Label();
-        public Label ReagentAmount = new Label();
+        public Label ContainerName = new();
+        public Label ReagentAmount = new();
         public BoxContainer ContainerDisplay = new BoxContainer();
         public ContainerDisplayControl(string name, string currentVolume, string totalVolume)
         {
@@ -134,7 +178,8 @@ namespace Content.Client.Chemistry.UI
     [GenerateTypedNameReferences]
     public sealed partial class MedipenRecipeControl : Control
     {
-        public Action<string>? OnButtonPressed;
+        public Action<string>? OnMedipenButtonPressed;
+
         public string TooltipText;
 
         public MedipenRecipeControl(EntityPrototype medipen, bool canProduce, string tooltip, Texture texture)
@@ -150,7 +195,7 @@ namespace Content.Client.Chemistry.UI
 
             Button.OnPressed += (_) =>
             {
-                OnButtonPressed?.Invoke(medipen.ID);
+                OnMedipenButtonPressed?.Invoke(medipen.ID);
             };
         }
         private Control? SupplyTooltip(Control sender)
@@ -173,16 +218,43 @@ namespace Content.Client.Chemistry.UI
     [GenerateTypedNameReferences]
     public sealed partial class MedipenRefillerReagentControl : Control
     {
-        public bool IsBuffer { get; set; }
-        public ReagentPrototype Reagent { get; set; }
-        public MedipenRefillerReagentControl(ReagentPrototype reagent, FixedPoint2 amount, bool isBuffer)
+        public Action<TransferButton>? OnTransferButtonPressed;
+
+        public MedipenRefillerReagentControl(ReagentId reagent, string name, FixedPoint2 amount, bool isBuffer)
         {
             RobustXamlLoader.Load(this);
 
-            Reagent = reagent;
-            ReagentName.Text = Loc.GetString("medipen-refiller-window-reagent-name", ("name", reagent.LocalizedName));
+            ReagentName.Text = Loc.GetString("medipen-refiller-window-reagent-name", ("name", name));
             ReagentAmount.Text = Loc.GetString("medipen-refiller-window-reagent-amount", ("amount", amount.ToString()));
+            ReagentBoxContainer.AddChild(GenerateButton(reagent, "TransferButton01", "01", 1, isBuffer, StyleBase.ButtonOpenRight));
+            ReagentBoxContainer.AddChild(GenerateButton(reagent, "TransferButton05", "05", 5, isBuffer, StyleBase.ButtonOpenBoth));
+            ReagentBoxContainer.AddChild(GenerateButton(reagent, "TransferButton10", "10", 10, isBuffer, StyleBase.ButtonOpenBoth));
+            ReagentBoxContainer.AddChild(GenerateButton(reagent, "TransferButton15", "15", 15, isBuffer, StyleBase.ButtonOpenBoth));
+            ReagentBoxContainer.AddChild(GenerateButton(reagent, "TransferButton20", "20", 20, isBuffer, StyleBase.ButtonOpenLeft));
+        }
+
+        private TransferButton GenerateButton(ReagentId id, string name, string text, FixedPoint2 value, bool isBuffer, string style)
+        {
+            TransferButton button = new TransferButton(id, name, text, value, isBuffer, style);
+            button.OnPressed += _ => OnTransferButtonPressed?.Invoke(button);
+            return button;
+        }
+    }
+
+    public sealed partial class TransferButton : Button
+    {
+        public ReagentId Id;
+        public FixedPoint2 Value;
+        public bool IsBuffer;
+
+        public TransferButton(ReagentId id, string name, string text, FixedPoint2 value, bool isBuffer, string style)
+        {
+            Id = id;
+            Name = name;
+            Text = text;
+            Value = value;
             IsBuffer = isBuffer;
+            AddStyleClass(style);
         }
     }
 }
