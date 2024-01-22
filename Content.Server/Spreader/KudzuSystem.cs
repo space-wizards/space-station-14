@@ -51,6 +51,9 @@ public sealed class KudzuSystem : EntitySystem
         if (component.GrowthLevel < 3)
             return;
 
+        if (component.GrowthPower == 0)
+            return;
+
         if (args.NeighborFreeTiles.Count == 0)
         {
             RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
@@ -71,6 +74,12 @@ public sealed class KudzuSystem : EntitySystem
         foreach (var neighbor in args.NeighborFreeTiles)
         {
             var neighborUid = Spawn(prototype, neighbor.Grid.GridTileToLocal(neighbor.Tile));
+
+            if (TryComp<KudzuComponent>(neighborUid, out var neighComp))
+            {
+                neighComp.GrowthPower = component.GrowthPower - 1;
+            }
+
             DebugTools.Assert(HasComp<EdgeSpreaderComponent>(neighborUid));
             DebugTools.Assert(HasComp<ActiveEdgeSpreaderComponent>(neighborUid));
             DebugTools.Assert(Comp<EdgeSpreaderComponent>(neighborUid).Id == KudzuGroup);
