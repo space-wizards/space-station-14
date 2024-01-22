@@ -11,6 +11,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
@@ -22,6 +23,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed partial class ChemistrySystem
     {
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private void InitializeHypospray()
         {
@@ -123,6 +125,9 @@ namespace Content.Server.Chemistry.EntitySystems
             // BeginDelay function returns if item is already on delay
             if (delayComp != null)
                 _useDelay.TryResetDelay((uid, delayComp));
+
+            if (_tagSystem.HasTag(hypo.Owner, "Medipen"))
+                _tagSystem.TryAddTag(uid, "EmptyMedipen");
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);

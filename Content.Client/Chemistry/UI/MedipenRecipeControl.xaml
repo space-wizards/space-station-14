@@ -8,7 +8,7 @@
             <TextureRect
                 Name="RecipeTexture"
                 Margin="0 0 4 0"
-                MinSize="48 48"
+                MinSize="40 40"
                 Stretch="KeepAspectCentered" />
             <Label Name="RecipeName" HorizontalExpand="True" />
         </BoxContainer>

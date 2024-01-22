@@ -11,6 +11,7 @@ public sealed class SharedMedipenRefiller
     public const string BufferSolutionName = "buffer";
     public const string InputSlotName = "beakerSlot";
     public const string MedipenSlotName = "medipenSlot";
+    public const string MedipenSolutionName = "pen";
 
     [Serializable, NetSerializable]
     public enum MedipenRefillerUiKey
@@ -26,33 +27,36 @@ public sealed class SharedMedipenRefiller
 [NetSerializable, Serializable]
 public sealed class ContainerData
 {
+    public string? Name = null;
     /// <summary>
     /// A list with container reagents data.
     /// </summary>
-    public List<ReagentQuantity> ReagentQuantities;
+    public List<ReagentQuantity> ReagentQuantities = new();
     /// <summary>
     /// The volume of the container.
     /// </summary>
-    public FixedPoint2 CurrentVolume;
+    public FixedPoint2 CurrentVolume = 0;
     /// <summary>
     /// The total volume of reagents.
     /// </summary>
 
-    public FixedPoint2 TotalVolume;
+    public FixedPoint2 TotalVolume = 0;
     /// <summary>
     /// If there's a item loaded.
     /// </summary>
-    public bool HasContainer;
-    public string Name;
+    public bool HasContainer = false;
 
+    public ContainerData()
+    {
 
-    public ContainerData(List<ReagentQuantity> reagentQuantities, FixedPoint2 currentVolume, FixedPoint2 totalVolume, bool hasContainer = false, string name = "")
+    }
+    public ContainerData(string name, List<ReagentQuantity> reagentQuantities, FixedPoint2 currentVolume, FixedPoint2 totalVolume, bool hasContainer)
     {
         Name = name;
         ReagentQuantities = reagentQuantities;
         CurrentVolume = currentVolume;
         TotalVolume = totalVolume;
-        HasContainer = hasContainer;
+        HasContainer = true;
     }
 }
 

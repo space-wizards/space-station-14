@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
@@ -68,35 +69,65 @@ namespace Content.Client.Chemistry.UI
             InputContainerInfo.RemoveAllChildren();
             BufferInfo.RemoveAllChildren();
 
-            if (!InputContainerData!.HasContainer)
+            if (InputContainerData!.HasContainer)
             {
-                InputContainerInfo.AddChild(new LabelBuilder(Loc.GetString("medipen-refiller-window-no-container-loaded-text")));
+                InputContainerInfo.AddChild(new ContainerDisplayControl(InputContainerData.Name!,
+                                                                        InputContainerData.CurrentVolume.ToString(),
+                                                                        InputContainerData.TotalVolume.ToString()));
             }
             else
             {
-                Label displayName = new LabelBuilder(Loc.GetString("medipen-refiller-window-container-name", ("name", InputContainerData.Name)));
-                Label displayVolume = new LabelBuilder(Loc.GetString("medipen-refiller-window-container-volume",
-                ("amount", InputContainerData.CurrentVolume),
-                ("volume", InputContainerData.TotalVolume)));
-                displayVolume.AddStyleClass(StyleNano.StyleClassLabelSecondaryColor);
-                displayName.Margin = new Thickness(1);
-                displayVolume.Margin = new Thickness(1, 1, 1, 10);
-                InputContainerInfo.AddChild(displayName);
-                InputContainerInfo.AddChild(displayVolume);
-                foreach (var reagent in InputContainerData.ReagentQuantities)
+                Label label = new Label
                 {
-                    if (_prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var reagentProto))
-                        InputContainerInfo.AddChild(new MedipenRefillerReagentControl(reagentProto, reagent.Quantity, false));
-                }
+                    Text = Loc.GetString("medipen-refiller-window-no-container-loaded-text")
+                };
+                InputContainerInfo.AddChild(label);
+            }
+
+            if (BufferData!.HasContainer)
+            {
+                BufferInfo.AddChild(new ContainerDisplayControl(BufferData.Name!,
+                                                                BufferData.CurrentVolume.ToString(),
+                                                                BufferData.TotalVolume.ToString()));
+            }
+            else
+            {
+                Label label = new Label
+                {
+                    Text = Loc.GetString("medipen-refiller-window-no-medipen-loaded-text")
+                };
+                BufferInfo.AddChild(label);
+            }
+
+            foreach (var reagent in InputContainerData.ReagentQuantities)
+            {
+                if (_prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var reagentProto))
+                    InputContainerInfo.AddChild(new MedipenRefillerReagentControl(reagentProto, reagent.Quantity, false));
+            }
+
+            foreach (var reagent in BufferData.ReagentQuantities)
+            {
+                if (_prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var reagentProto))
+                    BufferInfo.AddChild(new MedipenRefillerReagentControl(reagentProto, reagent.Quantity, false));
             }
         }
     }
 
-    public sealed partial class LabelBuilder : Label
+    public sealed partial class ContainerDisplayControl : Control
     {
-        public LabelBuilder(string text)
+        public Label ContainerName = new Label();
+        public Label ReagentAmount = new Label();
+        public BoxContainer ContainerDisplay = new BoxContainer();
+        public ContainerDisplayControl(string name, string currentVolume, string totalVolume)
         {
-            Text = text;
+            ContainerName.Text = Loc.GetString("medipen-refiller-window-container-name", ("name", name));
+            ReagentAmount.Text = Loc.GetString("medipen-refiller-window-container-volume", ("amount", currentVolume), ("volume", totalVolume));
+            ReagentAmount.Margin = new Thickness(5, 0, 0, 0);
+            ReagentAmount.AddStyleClass(StyleNano.StyleClassLabelSecondaryColor);
+            ContainerDisplay.AddChild(ContainerName);
+            ContainerDisplay.AddChild(ReagentAmount);
+            AddChild(ContainerDisplay);
+            Margin = new Thickness(2, 0, 0, 10);
         }
     }
 

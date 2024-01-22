@@ -79,7 +79,7 @@
       medipenSlot:
         whitelist:
           tags:
-          - Medipen
+          - EmptyMedipen
   - type: SolutionContainerManager
     solutions:
       buffer: {}
