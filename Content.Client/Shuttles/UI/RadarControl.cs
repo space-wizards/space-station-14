@@ -148,12 +148,16 @@ public sealed class RadarControl : ShuttleControl
         const float EquatorialMultiplier = 2f;
 
         var minDistance = MathF.Pow(EquatorialMultiplier, EquatorialMultiplier * 1.5f);
-        var maxDistance = MathF.Pow(2f, EquatorialMultiplier * 4f);
+        var maxDistance = MathF.Pow(2f, EquatorialMultiplier * 6f);
+        var cornerDistance = MathF.Sqrt(WorldRange * WorldRange + WorldRange * WorldRange);
 
-        for (var i = minDistance; i <= maxDistance; i *= EquatorialMultiplier)
+        for (var radius = minDistance; radius <= maxDistance; radius *= EquatorialMultiplier)
         {
+            if (radius > cornerDistance)
+                continue;
+
             var color = Color.ToSrgb(gridLines).WithAlpha(0.05f);
-            handle.DrawCircle(new Vector2(MidPoint, MidPoint), MinimapScale * i, color, false);
+            handle.DrawCircle(new Vector2(MidPoint, MidPoint), MinimapScale * radius, color, false);
         }
 
         const int gridLinesRadial = 8;
@@ -163,7 +167,7 @@ public sealed class RadarControl : ShuttleControl
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             // TODO: Handle distance properly.
-            var aExtent = angle.ToVec() * ScaledMinimapRadius * 2f;
+            var aExtent = angle.ToVec() * ScaledMinimapRadius * 1.5f;
             var lineColor = Color.MediumSpringGreen.WithAlpha(0.02f);
             handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, lineColor);
         }
@@ -201,9 +205,22 @@ public sealed class RadarControl : ShuttleControl
         // Don't need to transform the InvWorldMatrix again as it's already offset to its position.
 
         // Draw radar position on the station
-        handle.DrawCircle(ScalePosition(invertedPosition), 5f, Color.Lime);
+        var radarPos = invertedPosition;
+        var radarVertRadius = 2f;
+
+        var radarPosVerts = new Vector2[]
+        {
+            ScalePosition(radarPos + new Vector2(0f, -radarVertRadius)),
+            ScalePosition(radarPos + new Vector2(radarVertRadius / 2f, 0f)),
+            ScalePosition(radarPos + new Vector2(0f, radarVertRadius)),
+            ScalePosition(radarPos + new Vector2(radarVertRadius / -2f, 0f)),
+        };
+
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, radarPosVerts, Color.Lime);
 
         var shown = new HashSet<EntityUid>();
+        var viewBounds = new Box2Rotated(new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(pos), rot, pos);
+        var viewAABB = viewBounds.CalcBoundingBox();
 
         _grids.Clear();
         _mapManager.FindGridsIntersecting(xform.MapID, new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
@@ -293,8 +310,13 @@ public sealed class RadarControl : ShuttleControl
             }
 
             // Detailed view
-            DrawGrid(handle, matty, grid, color, true);
+            var gridAABB = gridMatrix.TransformBox(grid.Comp.LocalAABB);
 
+            // Skip drawing if it's out of range.
+            if (!gridAABB.Intersects(viewAABB))
+                continue;
+
+            DrawGrid(handle, matty, grid, color, true);
             DrawDocks(handle, gUid, matty);
         }
 
@@ -458,7 +480,7 @@ public sealed class RadarControl : ShuttleControl
                         throw new NotImplementedException();
                 }
 
-                if (start.Length() > ActualRadarRange || end.Length() > ActualRadarRange)
+                if (start.Length() > CornerRadarRange && end.Length() > CornerRadarRange)
                     continue;
 
                 edges.Add(actualStart);

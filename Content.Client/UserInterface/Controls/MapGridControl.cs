@@ -12,6 +12,11 @@ public abstract class MapGridControl : Control
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
 
+    /// <summary>
+    /// Can the control be dragged around.
+    /// </summary>
+    protected bool Draggable = false;
+
     protected const float ScrollSensitivity = 8f;
 
     /// <summary>
@@ -28,6 +33,8 @@ public abstract class MapGridControl : Control
     /// We'll lerp between the radarrange and actual range
     /// </summary>
     protected float ActualRadarRange;
+
+    protected float CornerRadarRange => MathF.Sqrt(ActualRadarRange * ActualRadarRange + ActualRadarRange * ActualRadarRange);
 
     /// <summary>
     /// Controls the maximum distance that will display.

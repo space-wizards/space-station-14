@@ -128,7 +128,8 @@
                           HorizontalExpand="True">
                 <ui:ShuttleMapControl Name="MapRadar"
                                  MouseFilter="Stop"
-                                 Margin="5 4 5 5"/>
+                                 Margin="5 4 5 5"
+                                 VerticalAlignment="Top"/>
                 <!-- Buffer -->
                 <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayMap"
@@ -155,7 +156,8 @@
                 <ui:DockingControl Name="DockingScreen"
                                    Visible="False"
                                    MouseFilter="Stop"
-                                   Margin="5 4 5 5"/>
+                                   Margin="5 4 5 5"
+                                   VerticalAlignment="Top"/>
                 <!-- Buffer -->
                 <Control HorizontalExpand="True"/>
                 <BoxContainer Name="RightDisplayDock"

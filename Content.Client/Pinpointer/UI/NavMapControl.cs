@@ -25,6 +25,7 @@ namespace Content.Client.Pinpointer.UI;
 [UsedImplicitly, Virtual]
 public partial class NavMapControl : MapGridControl
 {
+    [Dependency] private IResourceCache _cache = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SharedTransformSystem _transformSystem;
 
@@ -63,7 +64,6 @@ public partial class NavMapControl : MapGridControl
     public Color _backgroundColor;
     public float _backgroundOpacity = 0.9f;
     private int _targetFontsize = 8;
-    private IResourceCache _cache;
 
     // Components
     private NavMapComponent? _navMap;
@@ -100,7 +100,6 @@ public partial class NavMapControl : MapGridControl
     public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
     {
         IoCManager.InjectDependencies(this);
-        _cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
         _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
