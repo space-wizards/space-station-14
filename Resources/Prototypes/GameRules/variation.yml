@@ -65,7 +65,7 @@
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddleBloodbath
   fills:
-  - quantity: 75
+  - quantity: 80
     weight: 1
     reagents:
     - Blood
@@ -84,6 +84,6 @@
   noSpawn: true
   components:
   - type: PuddleMessVariationPass
-    tilesPerSpillAverage: 200
+    tilesPerSpillAverage: 150
     tilesPerSpillStdDev: 1
     randomPuddleSolutionFill: RandomFillTrashPuddleBloodbath
