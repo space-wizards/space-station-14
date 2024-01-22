@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 
 namespace Content.Client.Shuttles.UI;
 
@@ -10,9 +11,11 @@ namespace Content.Client.Shuttles.UI;
 public abstract class ShuttleControl : MapGridControl
 {
     protected static readonly Color BackingColor = new Color(0.08f, 0.08f, 0.08f);
+    protected Font Font;
 
     protected ShuttleControl(float minRange, float maxRange, float range) : base(minRange, maxRange, range)
     {
+        Font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -31,13 +34,15 @@ public abstract class ShuttleControl : MapGridControl
         var maxDistance = MathF.Pow(2f, EquatorialMultiplier * 6f);
         var cornerDistance = MathF.Sqrt(WorldRange * WorldRange + WorldRange * WorldRange);
 
+        var origin = ScalePosition(-new Vector2(Offset.X, -Offset.Y));
+
         for (var radius = minDistance; radius <= maxDistance; radius *= EquatorialMultiplier)
         {
             if (radius > cornerDistance)
                 continue;
 
             var color = Color.ToSrgb(gridLines).WithAlpha(0.05f);
-            handle.DrawCircle(new Vector2(MidPoint, MidPoint), MinimapScale * radius, color, false);
+            handle.DrawCircle(origin, MinimapScale * radius, color, false);
         }
 
         const int gridLinesRadial = 8;
@@ -49,7 +54,7 @@ public abstract class ShuttleControl : MapGridControl
             // TODO: Handle distance properly.
             var aExtent = angle.ToVec() * ScaledMinimapRadius * 1.5f;
             var lineColor = Color.MediumSpringGreen.WithAlpha(0.02f);
-            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, lineColor);
+            handle.DrawLine(origin - aExtent, origin + aExtent, lineColor);
         }
     }
 }

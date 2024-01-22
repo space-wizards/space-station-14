@@ -2,8 +2,10 @@ using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
@@ -24,6 +26,7 @@ public sealed class RadarControl : ShuttleControl
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     private SharedMapSystem _maps;
+    private SharedShuttleSystem _shuttles;
     private SharedTransformSystem _transform;
 
     /// <summary>
@@ -32,11 +35,6 @@ public sealed class RadarControl : ShuttleControl
     private EntityCoordinates? _coordinates;
 
     private Angle? _rotation;
-
-    /// <summary>
-    /// Shows a label on each radar object.
-    /// </summary>
-    private Dictionary<EntityUid, Control> _iffControls = new();
 
     private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
 
@@ -58,6 +56,7 @@ public sealed class RadarControl : ShuttleControl
     public RadarControl() : base(64f, 256f, 256f)
     {
         _maps = _entManager.System<SharedMapSystem>();
+        _shuttles = _entManager.System<SharedShuttleSystem>();
         _transform = _entManager.System<SharedTransformSystem>();
     }
 
@@ -135,11 +134,9 @@ public sealed class RadarControl : ShuttleControl
         // No data
         if (_coordinates == null || _rotation == null)
         {
-            Clear();
             return;
         }
 
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var fixturesQuery = _entManager.GetEntityQuery<FixturesComponent>();
         var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
@@ -147,7 +144,6 @@ public sealed class RadarControl : ShuttleControl
         if (!xformQuery.TryGetComponent(_coordinates.Value.EntityId, out var xform)
             || xform.MapID == MapId.Nullspace)
         {
-            Clear();
             return;
         }
 
@@ -162,8 +158,9 @@ public sealed class RadarControl : ShuttleControl
         {
             var ourGridMatrix = _transform.GetWorldMatrix(ourGridId.Value);
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
+            var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
 
-            DrawGrid(handle, matrix, (ourGridId.Value, ourGrid), Color.MediumSpringGreen);
+            DrawGrid(handle, matrix, (ourGridId.Value, ourGrid), color);
             DrawDocks(handle, ourGridId.Value, matrix);
         }
 
@@ -202,7 +199,6 @@ public sealed class RadarControl : ShuttleControl
             var gridBody = bodyQuery.GetComponent(gUid);
             if (gridBody.Mass < 10f)
             {
-                ClearLabel(gUid);
                 continue;
             }
 
@@ -216,64 +212,39 @@ public sealed class RadarControl : ShuttleControl
             }
 
             shown.Add(gUid);
-            var name = metaQuery.GetComponent(gUid).EntityName;
-
-            if (name == string.Empty)
-                name = Loc.GetString("shuttle-console-unknown");
-
             var gridMatrix = _transform.GetWorldMatrix(gUid);
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
-            var color = iff?.Color ?? Color.Gold;
+            var color = _shuttles.GetIFFColor(grid, self: false, iff);
 
             // Others default:
             // Color.FromHex("#FFC000FF")
             // Hostile default: Color.Firebrick
+            var labelName = _shuttles.GetIFFLabel(grid, self: false, iff);
 
             if (ShowIFF &&
-                (iff == null && IFFComponent.ShowIFFDefault ||
-                 (iff.Flags & IFFFlags.HideLabel) == 0x0))
+                 labelName != null)
             {
                 var gridBounds = grid.Comp.LocalAABB;
-                Label label;
 
-                if (!_iffControls.TryGetValue(gUid, out var control))
-                {
-                    label = new Label()
-                    {
-                        HorizontalAlignment = HAlignment.Left,
-                    };
-
-                    _iffControls[gUid] = label;
-                    AddChild(label);
-                }
-                else
-                {
-                    label = (Label) control;
-                }
-
-                label.FontColorOverride = color;
                 var gridCentre = matty.Transform(gridBody.LocalCenter);
                 gridCentre.Y = -gridCentre.Y;
                 var distance = gridCentre.Length();
+                var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
+                    ("distance", $"{distance:0.0}"));
+                var labelDimensions = handle.GetDimensions(Font, labelText, UIScale);
 
                 // y-offset the control to always render below the grid (vertically)
                 var yOffset = Math.Max(gridBounds.Height, gridBounds.Width) * MinimapScale / 1.8f / UIScale;
 
                 // The actual position in the UI. We offset the matrix position to render it off by half its width
                 // plus by the offset.
-                var uiPosition = ScalePosition(gridCentre) / UIScale - new Vector2(label.Width / 2f, -yOffset);
+                var uiPosition = ScalePosition(gridCentre) / UIScale - new Vector2(labelDimensions.X / 2f, -yOffset);
 
                 // Look this is uggo so feel free to cleanup. We just need to clamp the UI position to within the viewport.
-                uiPosition = new Vector2(Math.Clamp(uiPosition.X, 0f, Width - label.Width),
-                    Math.Clamp(uiPosition.Y, 10f, Height - label.Height));
+                uiPosition = new Vector2(Math.Clamp(uiPosition.X, 0f, Width - labelDimensions.X),
+                    Math.Clamp(uiPosition.Y, 0f, Height - labelDimensions.Y));
 
-                label.Visible = true;
-                label.Text = Loc.GetString("shuttle-console-iff-label", ("name", name), ("distance", $"{distance:0.0}"));
-                LayoutContainer.SetPosition(label, uiPosition);
-            }
-            else
-            {
-                ClearLabel(gUid);
+                handle.DrawString(Font, uiPosition, labelText, color);
             }
 
             // Detailed view
@@ -286,29 +257,6 @@ public sealed class RadarControl : ShuttleControl
             DrawGrid(handle, matty, grid, color);
             DrawDocks(handle, gUid, matty);
         }
-
-        foreach (var (ent, _) in _iffControls)
-        {
-            if (shown.Contains(ent)) continue;
-            ClearLabel(ent);
-        }
-    }
-
-    private void Clear()
-    {
-        foreach (var (_, label) in _iffControls)
-        {
-            label.Dispose();
-        }
-
-        _iffControls.Clear();
-    }
-
-    private void ClearLabel(EntityUid uid)
-    {
-        if (!_iffControls.TryGetValue(uid, out var label)) return;
-        label.Dispose();
-        _iffControls.Remove(uid);
     }
 
     private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3 matrix)
