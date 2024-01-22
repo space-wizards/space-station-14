@@ -2,7 +2,6 @@ using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -12,8 +11,8 @@ public sealed partial class ZombieRuleComponent : Component
     [DataField("initialInfectedNames")]
     public Dictionary<string, string> InitialInfectedNames = new();
 
-    [DataField("patientZeroPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public string PatientZeroPrototypeId = "InitialInfected";
+    [DataField("patientZeroPrototypeId")]
+    public ProtoId<AntagPrototype> PatientZeroPrototypeId = "InitialInfected";
 
     /// <summary>
     /// When the round will next check for round end.
@@ -82,6 +81,6 @@ public sealed partial class ZombieRuleComponent : Component
     [DataField("zombieShuttleCallPercentage")]
     public float ZombieShuttleCallPercentage = 0.5f;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    public const string ZombifySelfActionPrototype = "ActionTurnUndead";
+    [DataField]
+    public EntProtoId ZombifySelfActionPrototype = "ActionTurnUndead";
 }

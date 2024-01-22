@@ -8,7 +8,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Random;
 using Content.Shared.Roles;
 using Robust.Shared.Random;
 using System.Linq;
@@ -24,14 +23,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
 
-    [ValidatePrototypeId<WeightedRandomPrototype>]
-    const string BigObjectiveGroup = "ThiefBigObjectiveGroups";
-    [ValidatePrototypeId<WeightedRandomPrototype>]
-    const string SmallObjectiveGroup = "ThiefObjectiveGroups";
-    [ValidatePrototypeId<WeightedRandomPrototype>]
-    const string EscapeObjectiveGroup = "ThiefEscapeObjectiveGroups";
-
-    private const float BigObjectiveChance = 0.7f;
     public override void Initialize()
     {
         base.Initialize();
@@ -76,13 +67,17 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             MakeThief(thief, thiefRule, addPacified);
         }
     }
+
     public void MakeThief(EntityUid thief, ThiefRuleComponent thiefRule, bool addPacified)
     {
-        if (!_mindSystem.TryGetMind(thief, out var mind, out var mindComponent))
+        if (!_mindSystem.TryGetMind(thief, out var mindId, out var mind))
+            return;
+
+        if (HasComp<ThiefRoleComponent>(mindId))
             return;
 
         // Assign thief roles
-        _roleSystem.MindAddRole(mind, new ThiefRoleComponent
+        _roleSystem.MindAddRole(mindId, new ThiefRoleComponent
         {
             PrototypeId = thiefRule.ThiefPrototypeId,
         }, silent: true);
@@ -95,7 +90,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
 
         //Generate objectives
-        GenerateObjectives(mind, mindComponent, thiefRule);
+        GenerateObjectives(mindId, mind, thiefRule);
 
         //Send briefing here to account for humanoid/animal
         _antagSelection.SendBriefing(thief, MakeBriefing(thief), null, thiefRule.GreetingSound);
@@ -103,7 +98,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         // Give starting items
         _inventory.SpawnItemsOnEntity(thief, thiefRule.StarterItems);
 
-        thiefRule.ThievesMinds.Add(mind);
+        thiefRule.ThievesMinds.Add(mindId);
     }
 
     public void AdminMakeThief(EntityUid entity, bool addPacified)
@@ -126,9 +121,9 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         // Give thieves their objectives
         var difficulty = 0f;
 
-        if (_random.Prob(BigObjectiveChance)) // 70% chance to 1 big objective (structure or animal)
+        if (_random.Prob(thiefRule.BigObjectiveChance)) // 70% chance to 1 big objective (structure or animal)
         {
-            var objective = _objectives.GetRandomObjective(mindId, mind, BigObjectiveGroup);
+            var objective = _objectives.GetRandomObjective(mindId, mind, thiefRule.BigObjectiveGroup);
             if (objective != null)
             {
                 _mindSystem.AddObjective(mindId, mind, objective.Value);
@@ -138,7 +133,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)  // Many small objectives
         {
-            var objective = _objectives.GetRandomObjective(mindId, mind, SmallObjectiveGroup);
+            var objective = _objectives.GetRandomObjective(mindId, mind, thiefRule.SmallObjectiveGroup);
             if (objective == null)
                 continue;
 
@@ -147,7 +142,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
 
         //Escape target
-        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, EscapeObjectiveGroup);
+        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, thiefRule.EscapeObjectiveGroup);
         if (escapeObjective != null)
             _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
     }

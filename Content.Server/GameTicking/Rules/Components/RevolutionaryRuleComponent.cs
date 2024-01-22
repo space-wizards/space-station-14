@@ -31,9 +31,6 @@ public sealed partial class RevolutionaryRuleComponent : Component
     [DataField]
     public ProtoId<AntagPrototype> HeadRevPrototypeId = "HeadRev";
 
-    [DataField]
-    public ProtoId<AntagPrototype> RevPrototypeId = "Rev";
-
     /// <summary>
     /// Min players needed for Revolutionary gamemode to start.
     /// </summary>

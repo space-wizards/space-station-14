@@ -111,7 +111,7 @@ public partial class InventorySystem
     /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
     public void SpawnItemOnEntity(EntityUid entity, EntProtoId item)
     {
-        //Transform() throws error if not present
+        //Transform() throws error if TransformComponent doesnt exist
         if (!HasComp<TransformComponent>(entity))
             return;
 

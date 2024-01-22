@@ -286,7 +286,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         EnsureComp<IncurableZombieComponent>(entity);
 
         //Add the zombify action
-        _action.AddAction(entity, ref pending.Action, ZombieRuleComponent.ZombifySelfActionPrototype, entity);
+        _action.AddAction(entity, ref pending.Action, component.ZombifySelfActionPrototype, entity);
 
         //Get names for the round end screen, incase they leave mid-round
         var inCharacterName = MetaData(entity).EntityName;

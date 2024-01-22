@@ -53,10 +53,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
 
-    [ValidatePrototypeId<NpcFactionPrototype>]
-    public const string RevolutionaryNpcFaction = "Revolutionary";
-    [ValidatePrototypeId<AntagPrototype>]
-    public const string RevolutionaryAntagRole = "Rev";
+    //Used in OnPostFlash, no reference to the rule component is available
+    public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
+    public readonly ProtoId<NpcFactionPrototype> RevPrototypeId = "Rev";
 
     public override void Initialize()
     {
@@ -230,7 +229,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
         {
-            _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
+            _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevPrototypeId });
         }
 
         if (mind?.Session != null)
@@ -249,7 +248,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             revRule = Comp<RevolutionaryRuleComponent>(ruleEnt);
         }
 
-        GiveHeadRev(entity, RevolutionaryAntagRole, revRule);
+        GiveHeadRev(entity, revRule.HeadRevPrototypeId, revRule);
     }
 
     //TODO: Enemies of the revolution

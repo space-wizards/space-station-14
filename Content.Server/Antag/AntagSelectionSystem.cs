@@ -12,6 +12,7 @@ using Content.Shared.Roles;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 
@@ -37,7 +38,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
     /// <returns>List of all player entities that match the requirements</returns>
-    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions, ProtoId<AntagPrototype> antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         var eligiblePlayers = new List<EntityUid>();
 
@@ -58,7 +59,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="antagPrototype">The prototype to get eligible players for</param>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <returns>List of all player sessions that match the requirements</returns>
-    public List<ICommonSession> GetEligibleSessions(IEnumerable<ICommonSession> playerSessions, string antagPrototype, bool ignorePreferences = false)
+    public List<ICommonSession> GetEligibleSessions(IEnumerable<ICommonSession> playerSessions, ProtoId<AntagPrototype> antagPrototype, bool ignorePreferences = false)
     {
         var eligibleSessions = new List<ICommonSession>();
 
@@ -81,7 +82,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A function, accepting an EntityUid and returning bool. Each player is tested against this, returning truw will exclude the player from eligibility</param>
     /// <returns>True if the player session matches the requirements, false otherwise</returns>
-    public bool IsEligible(ICommonSession session, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public bool IsEligible(ICommonSession session, ProtoId<AntagPrototype> antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         if (!IsSessionEligible(session, antagPrototype, ignorePreferences))
             return false;
@@ -131,7 +132,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="antagPrototype">Which antag prototype to check for</param>
     /// <param name="ignorePreferences">Ignore if the player has enabled this antag</param>
     /// <returns>True if the session matches the requirements, false otherwise</returns>
-    public bool IsSessionEligible(ICommonSession session, string antagPrototype, bool ignorePreferences = false)
+    public bool IsSessionEligible(ICommonSession session, ProtoId<AntagPrototype> antagPrototype, bool ignorePreferences = false)
     {
         //Exclude disconnected or zombie sessions
         //No point giving antag roles to them
@@ -144,7 +145,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         //Check the player has this antag preference selected
         //Unless we are ignoring preferences, in which case add them anyway
         var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(session.UserId).SelectedCharacter;
-        if (!pref.AntagPreferences.Contains(antagPrototype) && !ignorePreferences)
+        if (!pref.AntagPreferences.Contains(antagPrototype.Id) && !ignorePreferences)
             return false;
 
         return true;

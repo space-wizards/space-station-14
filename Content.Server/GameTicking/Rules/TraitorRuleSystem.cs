@@ -92,8 +92,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private void MakeCodewords(TraitorRuleComponent component)
     {
         var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
-        var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;
-        var verbs = _prototypeManager.Index<DatasetPrototype>("verbs").Values;
+        var adjectives = _prototypeManager.Index<DatasetPrototype>(component.CodewordAdjectives).Values;
+        var verbs = _prototypeManager.Index<DatasetPrototype>(component.CodewordVerbs).Values;
         var codewordPool = adjectives.Concat(verbs).ToList();
         var finalCodewordCount = Math.Min(codewordCount, codewordPool.Count);
         component.Codewords = new string[finalCodewordCount];
@@ -193,11 +193,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
         {
             Briefing = briefing.ToString()
-        }, mind);
+        }, mind, true);
 
         // Change the faction
-        _npcFaction.RemoveFaction(traitor, "NanoTrasen", false);
-        _npcFaction.AddFaction(traitor, "Syndicate");
+        _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction, false);
+        _npcFaction.AddFaction(traitor, component.SyndicateFaction);
 
         // Give traitors their objectives
         if (giveObjectives)
@@ -207,7 +207,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             var difficulty = 0f;
             for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
             {
-                var objective = _objectives.GetRandomObjective(mindId, mind, "TraitorObjectiveGroups");
+                var objective = _objectives.GetRandomObjective(mindId, mind, component.ObjectiveGroup);
                 if (objective == null)
                     continue;
 
