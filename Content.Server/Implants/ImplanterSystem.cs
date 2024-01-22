@@ -48,10 +48,17 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
                 if (implant == null)
                     return;
 
-                // show popup to the user saying implant failed
-                var name = Identity.Name(target, EntityManager, args.User);
-                var msg = Loc.GetString("implanter-component-implant-failed", ("implant", implant), ("target", name));
-                _popup.PopupEntity(msg, target, args.User);
+                // optionally, show popup to explain why the implant failed
+                var ev = new PopupAfterFailedImplantEvent(args.User, target, implant.Value);
+                RaiseLocalEvent(target, ev);
+                if (!ev.Handled)
+                {
+                    // show generic popup saying the implant failed
+                    var name = Identity.Name(target, EntityManager, args.User);
+                    var msg = Loc.GetString("implanter-component-implant-failed", ("implant", implant), ("target", name));
+                    _popup.PopupEntity(msg, target, args.User);
+                }
+
                 // prevent further interaction since popup was shown
                 args.Handled = true;
                 return;

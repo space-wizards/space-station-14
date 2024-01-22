@@ -225,3 +225,18 @@ public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
         Implanter = implanter;
     }
 }
+
+public sealed class PopupAfterFailedImplantEvent : CancellableEntityEventArgs
+{
+    public readonly EntityUid User;
+    public readonly EntityUid Target;
+    public readonly EntityUid Implant;
+    public bool Handled = false;
+
+    public PopupAfterFailedImplantEvent(EntityUid user, EntityUid target, EntityUid implant)
+    {
+        User = user;
+        Target = target;
+        Implant = implant;
+    }
+}

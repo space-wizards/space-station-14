@@ -31,6 +31,8 @@ rev-role-greeting =
 
 rev-briefing = Help your head revolutionaries kill every head to take over the station.
 
+rev-fail-self-mindshield = You cannot bring yourself to betray the revolution!
+
 ## General
 
 rev-title = Revolutionaries
