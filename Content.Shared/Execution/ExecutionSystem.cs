@@ -175,7 +175,7 @@ public sealed class ExecutionSystem : EntitySystem
             return false;
 
         // We must be able to actually hurt people with the weapon
-        if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) && melee!.Damage.GetTotal() > 0.0f)
+        if (!TryComp<MeleeWeaponComponent>(weapon, out var melee) || melee.Damage.GetTotal() <= 0.0f)
             return false;
 
         return true;
@@ -187,7 +187,7 @@ public sealed class ExecutionSystem : EntitySystem
             return false;
 
         // We must be able to actually fire the gun
-        if (!TryComp<GunComponent>(weapon, out var gun) && _gunSystem.CanShoot(gun!))
+        if (!TryComp<GunComponent>(weapon, out var gun) || _gunSystem.CanShoot(gun))
             return false;
 
         return true;
