@@ -35,10 +35,9 @@ public sealed class RoundstartStationVariationRuleSystem : GameRuleSystem<Rounds
     private void OnStationPostInit(ref StationPostInitEvent ev)
     {
         // as long as one is running
-        var rules = EntityQuery<RoundstartStationVariationRuleComponent>();
-        if (!rules.Any())
+        if (!GameTicker.IsGameRuleAdded<RoundstartStationVariationRuleComponent>())
             return;
-
+        
         // this is unlikely, but could theoretically happen if it was saved and reloaded, so check anyway
         if (HasComp<StationVariationHasRunComponent>(ev.Station))
             return;
