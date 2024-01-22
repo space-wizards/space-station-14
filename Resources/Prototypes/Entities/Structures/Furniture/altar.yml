@@ -8,6 +8,7 @@
   - type: Anchorable
   - type: Transform
   - type: Prayable
+    soundForGod: /Audio/Effects/gong.ogg
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
