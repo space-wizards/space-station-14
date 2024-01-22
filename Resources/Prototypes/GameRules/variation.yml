@@ -11,8 +11,8 @@
 # Actual rules
 
 - type: entity
-  id: LightBreakVariationPass
+  id: PoweredLightVariationPass
   parent: BaseVariationPass
   noSpawn: true
   components:
-  - type: LightBreakVariationPass
+  - type: PoweredLightVariationPass

@@ -130,7 +130,7 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-  - type: StationVariationRule
+  - type: RoundstartStationVariationRule
     rules:
-    - id: LightBreakVariationPass
+    - id: PoweredLightVariationPass
       prob: 1

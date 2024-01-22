@@ -1,8 +1,10 @@
-﻿using Content.Server.GameTicking.Rules.Components;
+﻿using System.Linq;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
@@ -10,7 +12,7 @@ namespace Content.Server.GameTicking.Rules;
 /// <summary>
 /// This handles starting various roundstart variation rules after a station has been loaded.
 /// </summary>
-public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariationRuleComponent>
+public sealed class RoundstartStationVariationRuleSystem : GameRuleSystem<RoundstartStationVariationRuleComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -21,7 +23,7 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
         SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit, after: new []{typeof(ShuttleSystem)});
     }
 
-    protected override void Added(EntityUid uid, StationVariationRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, RoundstartStationVariationRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         var spawns = EntitySpawnCollection.GetSpawns(component.Rules, _random);
         foreach (var rule in spawns)
@@ -32,11 +34,16 @@ public sealed class StationVariationRuleSystem : GameRuleSystem<StationVariation
 
     private void OnStationPostInit(ref StationPostInitEvent ev)
     {
+        // as long as one is running
+        var rules = EntityQuery<RoundstartStationVariationRuleComponent>();
+        if (!rules.Any())
+            return;
+
         // this is unlikely, but could theoretically happen if it was saved and reloaded, so check anyway
         if (HasComp<StationVariationHasRunComponent>(ev.Station))
             return;
 
-        Log.Info($"Adding station variation rules for station {ToPrettyString(ev.Station)}");
+        Log.Info($"Starting station variation for station {ToPrettyString(ev.Station)}");
 
         // raise the event on any passes that have been added
         var passEv = new StationVariationPassEvent(ev.Station);

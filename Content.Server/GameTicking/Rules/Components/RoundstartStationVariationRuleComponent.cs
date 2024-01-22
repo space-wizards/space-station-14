@@ -7,7 +7,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// This is used for...
 /// </summary>
 [RegisterComponent]
-public sealed partial class StationVariationRuleComponent : Component
+public sealed partial class RoundstartStationVariationRuleComponent : Component
 {
     /// <summary>
     ///     The list of rules that will be started once the map is spawned.

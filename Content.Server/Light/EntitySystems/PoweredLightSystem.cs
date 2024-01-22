@@ -215,6 +215,21 @@ namespace Content.Server.Light.EntitySystems
         }
 
         /// <summary>
+        ///     Replaces the spawned prototype of a pre-mapinit powered light with a different variant.
+        /// </summary>
+        public bool ReplaceSpawnedPrototype(Entity<PoweredLightComponent> light, string bulb)
+        {
+            if (light.Comp.LightBulbContainer.ContainedEntity != null)
+                return false;
+
+            if (LifeStage(light.Owner) >= EntityLifeStage.MapInitialized)
+                return false;
+
+            light.Comp.HasLampOnSpawn = bulb;
+            return true;
+        }
+
+        /// <summary>
         ///     Try to replace current bulb with a new one
         ///     If succeed old bulb just drops on floor
         /// </summary>
