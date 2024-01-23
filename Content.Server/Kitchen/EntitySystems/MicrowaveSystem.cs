@@ -36,7 +36,6 @@ using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-
 namespace Content.Server.Kitchen.EntitySystems
 {
     public sealed class MicrowaveSystem : EntitySystem
