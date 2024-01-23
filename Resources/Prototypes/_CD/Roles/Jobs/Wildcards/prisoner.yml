@@ -6,6 +6,10 @@
   startingGear: PrisonerGear
   icon: "JobIconPrisoner"
   supervisors: job-supervisors-security
+  special:
+  - !type:NotifyDepartmentSpecial
+    notify_text: job-prisoner-sec-notify-text
+    radio_channel: Security
 
 - type: startingGear
   id: PrisonerGear
