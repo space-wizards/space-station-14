@@ -337,9 +337,9 @@
       path: "/Audio/Items/drill_hit.ogg"
 
 - type: entity
-  name: RCD
+  id: RCD
   parent: BaseItem
-  id: rapid construction device
+  name: rapid construction device
   description: An advanced construction device which can place and remove various station structures and fixtures quickly. Requires compressed matter to function.
   components:
   - type: RCD
