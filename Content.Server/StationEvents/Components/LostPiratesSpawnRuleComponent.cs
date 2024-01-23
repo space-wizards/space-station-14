@@ -10,7 +10,7 @@ public sealed partial class LostPiratesSpawnRuleComponent : Component
     [DataField]
     public string LostPiratesShuttlePath = "Maps/Shuttles/lost_pirates.yml";
 
-    [DataField("gameRuleProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField]
     public string GameRuleProto = "Pirates";
 
     [DataField("additionalRule")]
