@@ -338,8 +338,6 @@ public sealed class ExecutionSystem : EntitySystem
         var attacker = comp.Attacker;
         var victim = comp.Victim;
 
-        _combatSystem.SetInCombatMode(attacker, false);
-
         // Hit is confirmed at this point so we do the popups now.
         if (attacker == victim)
         {
