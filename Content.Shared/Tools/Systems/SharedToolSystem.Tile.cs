@@ -7,6 +7,7 @@ using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
@@ -71,7 +72,7 @@ public abstract partial class SharedToolSystem
         var tileRef = _maps.GetTileRef(gridUid, mapGrid, clickLocation);
         var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
 
-        if (!tileDef.DeconstructTools.ContainsAll(tool.Qualities))
+        if (!tool.Qualities.ContainsAny(tileDef.DeconstructTools))
             return false;
 
         if (string.IsNullOrWhiteSpace(tileDef.BaseTurf))
@@ -85,14 +86,14 @@ public abstract partial class SharedToolSystem
             return false;
 
         var args = new TileToolDoAfterEvent(GetNetCoordinates(coordinates));
-        UseTool(ent, user, ent, comp.Delay, tileDef.DeconstructTools, args, out _, toolComponent: tool);
+        UseTool(ent, user, ent, comp.Delay, tool.Qualities, args, out _, toolComponent: tool);
         return true;
     }
 
-    public bool TryDeconstructWithToolQualities(TileRef tileRef, IEnumerable<string> withToolQualities)
+    public bool TryDeconstructWithToolQualities(TileRef tileRef, PrototypeFlags<ToolQualityPrototype> withToolQualities)
     {
         var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
-        if (tileDef.DeconstructTools.ContainsAll(withToolQualities))
+        if (withToolQualities.ContainsAny(tileDef.DeconstructTools))
         {
             // don't do this on the client or else the tile entity spawn mispredicts and looks horrible
             return _net.IsClient || _tiles.DeconstructTile(tileRef);
