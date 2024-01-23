@@ -227,7 +227,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         component.Stability = Math.Clamp(newVal, 0, 1);
         Dirty(component);
 
-        var ev = new AnomalyStabilityChangedEvent(uid, component.Stability, component.Severity);
+        var ev = new AnomalyStabilityChangedEvent(uid, component.Stability);
         RaiseLocalEvent(uid, ref ev, true);
     }
 
@@ -250,7 +250,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         component.Severity = Math.Clamp(newVal, 0, 1);
         Dirty(component);
 
-        var ev = new AnomalySeverityChangedEvent(uid, component.Stability, component.Severity);
+        var ev = new AnomalySeverityChangedEvent(uid, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
     }
 

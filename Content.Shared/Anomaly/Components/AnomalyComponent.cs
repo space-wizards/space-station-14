@@ -268,13 +268,13 @@ public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Super
 /// </summary>
 /// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
-public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
+public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Severity);
 
 /// <summary>
 /// Event broadcast when an anomaly's stability is changed.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
+public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability);
 
 /// <summary>
 /// Event broadcast when an anomaly's health is changed.
