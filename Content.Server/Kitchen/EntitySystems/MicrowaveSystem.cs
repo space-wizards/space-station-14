@@ -110,11 +110,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SetAppearance(ent.Owner, MicrowaveVisualState.Idle, microwaveComponent);
             microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
-
-            foreach (var solid in microwaveComponent.Storage.ContainedEntities)
-            {
-                RemComp<ActivelyMicrowavedComponent>(solid);
-            }
         }
 
         private void OnEntityUnpaused(Entity<ActiveMicrowaveComponent> ent, ref EntityUnpausedEvent args)
@@ -332,7 +327,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             ent.Comp.Broken = true;
             SetAppearance(ent, MicrowaveVisualState.Broken, ent.Comp);
-            StopCooking(ent, true);
+            StopCooking(ent);
             _container.EmptyContainer(ent.Comp.Storage);
             UpdateUserInterfaceState(ent, ent.Comp);
         }
@@ -342,7 +337,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!args.Powered)
             {
                 SetAppearance(ent, MicrowaveVisualState.Idle, ent.Comp);
-                StopCooking(ent, true);
+                StopCooking(ent);
             }
             UpdateUserInterfaceState(ent, ent.Comp);
         }
@@ -502,30 +497,13 @@ namespace Content.Server.Kitchen.EntitySystems
             UpdateUserInterfaceState(uid, component);
         }
 
-        public void StopCooking(Entity<MicrowaveComponent> ent, bool failure)
+        private void StopCooking(Entity<MicrowaveComponent> ent)
         {
-            if (!TryComp<ActiveMicrowaveComponent>(ent, out var activeMicrowave))
-                return;
-
-            EntityManager.RemoveComponentDeferred<ActiveMicrowaveComponent>(ent);
+            RemCompDeferred<ActiveMicrowaveComponent>(ent);
             foreach (var solid in ent.Comp.Storage.ContainedEntities)
-                EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(solid);
-
-            if (failure)
-                return;
-
-            if (activeMicrowave.PortionedRecipe.Item1 != null)
             {
-                var coords = Transform(ent).Coordinates;
-                for (var i = 0; i < activeMicrowave.PortionedRecipe.Item2; i++)
-                {
-                    SubtractContents(ent.Comp, activeMicrowave.PortionedRecipe.Item1);
-                    Spawn(activeMicrowave.PortionedRecipe.Item1.Result, coords);
-                }
+                RemCompDeferred<ActivelyMicrowavedComponent>(solid);
             }
-            _audio.PlayPvs(ent.Comp.FoodDoneSound, ent, AudioParams.Default.WithVolume(-1));
-            _sharedContainer.EmptyContainer(ent.Comp.Storage);
-            UpdateUserInterfaceState(ent, ent.Comp);
         }
 
         public static (FoodRecipePrototype, int) CanSatisfyRecipe(MicrowaveComponent component, FoodRecipePrototype recipe, Dictionary<string, int> solids, Dictionary<string, FixedPoint2> reagents)
@@ -591,7 +569,20 @@ namespace Content.Server.Kitchen.EntitySystems
                 //this means the microwave has finished cooking.
                 AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
 
-                StopCooking((uid, microwave), false);
+                if (active.PortionedRecipe.Item1 != null)
+                {
+                    var coords = Transform(uid).Coordinates;
+                    for (var i = 0; i < active.PortionedRecipe.Item2; i++)
+                    {
+                        SubtractContents(microwave, active.PortionedRecipe.Item1);
+                        Spawn(active.PortionedRecipe.Item1.Result, coords);
+                    }
+                }
+
+                _container.EmptyContainer(microwave.Storage);
+                UpdateUserInterfaceState(uid, microwave);
+                _audio.PlayPvs(microwave.FoodDoneSound, uid);
+                StopCooking((uid, microwave));
             }
         }
 
