@@ -41,7 +41,7 @@
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
     storedRotation: -90
-  - type: LatticeCutting
+  - type: ToolTileCompatible
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
@@ -172,7 +172,7 @@
       - Prying
     useSound:
       path: /Audio/Items/crowbar.ogg
-  - type: TilePrying
+  - type: ToolTileCompatible
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
@@ -451,7 +451,6 @@
   - type: Tag
     tags:
     - Multitool
-  - type: TilePrying
   - type: Prying
     enabled: false
   - type: Tool
@@ -459,7 +458,7 @@
       - Screwing
     speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
     useSound: /Audio/Items/drill_use.ogg
-  - type: LatticeCutting
+  - type: ToolTileCompatible
   - type: MultipleTool
     statusShowBehavior: true
     entries:

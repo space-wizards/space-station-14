@@ -184,3 +184,13 @@
   id: FootstepSlip
   files:
   - /Audio/Effects/slip.ogg
+
+- type: soundCollection
+  id: FootstepBlood
+  files:
+  - /Audio/Effects/Footsteps/gib_step.ogg
+  
+- type: soundCollection
+  id: FootstepSticky
+  files:
+  - /Audio/Effects/Footsteps/meatslap.ogg
