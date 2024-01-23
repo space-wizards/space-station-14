@@ -45,6 +45,39 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieIAA
+  name: Honako Mitsuma
+  description: #none
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_IAA
+  - type: StaticPrice
+    price: 299
+  - type: Storage
+    capacity: 10
+  - type: UserInterface
+    interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+# Chocovate
+- type: entity
+  parent: PlushieIAA
+  id: PlushieIAAGift
+  suffix: COMMUNITY,TOY,GIFT
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodSnackChocolate
+    - id: DrinkCafeRaf
+
+- type: entity
+  parent: BasePlushie
   id: PlushieChemist
   name: Sarah Morningstar
   description: The most furious follower of the great god Kum'Ar. So furious that even the toy seems to be saturated with drugs... NanoTrasen, seriously?

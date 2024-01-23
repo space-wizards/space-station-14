@@ -44,3 +44,24 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: bottle-2-
+
+- type: entity
+  parent: DrinkCafeLatte
+  id: DrinkCafeRaf
+  name: Cafe raf
+  description: A nice, strong and tasty beverage while you are reading.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CafeLatte
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 4
+        - ReagentId: IceCream
+          Quantity: 4
+        - ReagentId: IcedCoffee
+          Quantity: 4
+        - ReagentId: CocoaPowder
+          Quantity: 4

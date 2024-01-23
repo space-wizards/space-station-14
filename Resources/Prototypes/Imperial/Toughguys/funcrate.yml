@@ -9,6 +9,7 @@
       - id: PlushieBartenderGift
       - id: PlushieChemistGift
       - id: PlushieSOGift
+      - id: PlushieIAAGift
 # Gift end
       - id: PlushieCapitan
       - id: PlushieEngineer
@@ -26,6 +27,6 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   product: CrateFunPlushieCommunity
-  cost: 2999
+  cost: 2500
   category: Fun
   group: market
