@@ -84,6 +84,7 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
 
     //TheShuEd:
     //I know it's a shitcode! I didn't write it! I just restructured the functions
+    // To Do: make it reusable with EntityAnomalySustem
     private void SpawnTiles(Entity<TileSpawnAnomalyComponent> component, TileSpawnSettingsEntry entry, float stability, float severity)
     {
         var xform = Transform(component.Owner);
