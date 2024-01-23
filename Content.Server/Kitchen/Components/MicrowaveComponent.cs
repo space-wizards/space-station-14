@@ -13,12 +13,16 @@ namespace Content.Server.Kitchen.Components
     {
         [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float CookTimeMultiplier = 1;
+
         [DataField("machinePartCookTimeMultiplier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string MachinePartCookTimeMultiplier = "Capacitor";
+
         [DataField("cookTimeScalingConstant")]
         public float CookTimeScalingConstant = 0.5f;
+
         [DataField("baseHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float BaseHeatMultiplier = 100;
+
         [DataField("objectHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float ObjectHeatMultiplier = 100;
 
@@ -28,10 +32,13 @@ namespace Content.Server.Kitchen.Components
         #region  audio
         [DataField("beginCookingSound")]
         public SoundSpecifier StartCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
+
         [DataField("foodDoneSound")]
         public SoundSpecifier FoodDoneSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
+
         [DataField("clickSound")]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
         [DataField("ItemBreakSound")]
         public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
@@ -70,25 +77,30 @@ namespace Content.Server.Kitchen.Components
 
         public int CurrentCookTimeButtonIndex;
 
-        /// <summary>
-        ///     How frequently the microwave can spark.
-        /// </summary>
-        [DataField]
-        public float SparkInterval = 2.0f;
-
         public Container Storage = default!;
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
 
-        /// <summary>
-        ///     If the microwave currently contains a metalic object or item that can cause it to explode.
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public bool IsSparking = false;
-
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
+
+        /// <summary>
+        /// How frequently the microwave can malfunction.
+        /// </summary>
+        [DataField]
+        public float MalfunctionInterval = 1.0f;
+
+        /// <summary>
+        /// Chance of an explosion occurring when we microwave a metallic object
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public float ExplosionChance = .1f;
+
+        /// <summary>
+        /// Chance of lightning occurring when we microwave a metallic object
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public float LightningChance = .75f;
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs

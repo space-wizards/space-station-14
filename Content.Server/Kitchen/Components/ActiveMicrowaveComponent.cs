@@ -1,4 +1,5 @@
 using Content.Shared.Kitchen;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Kitchen.Components;
 
@@ -15,7 +16,8 @@ public sealed partial class ActiveMicrowaveComponent : Component
     public float TotalTime;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float AccumulatedFrametime;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan MalfunctionTime = TimeSpan.Zero;
 
     [ViewVariables]
     public (FoodRecipePrototype?, int) PortionedRecipe;
