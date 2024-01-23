@@ -45,7 +45,6 @@
   cost: 7500
   recipeUnlocks:
   - Signaller
-  - SignallerAdvanced
   - SignalTrigger
   - VoiceTrigger
   - TimerTrigger

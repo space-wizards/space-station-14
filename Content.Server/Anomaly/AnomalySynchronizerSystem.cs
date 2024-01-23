@@ -25,6 +25,8 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
 
+    private const float AttachRange = 0.15f; // The radius of one tile. It must not be set higher, otherwise the anomaly can be moved from tile to tile.
+
     public override void Initialize()
     {
         base.Initialize();
@@ -53,7 +55,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         }
 
         var coords = _transform.GetMapCoordinates(ent);
-        var anomaly = _entityLookup.GetEntitiesInRange<AnomalyComponent>(coords, ent.Comp.AttachRange).FirstOrDefault();
+        var anomaly = _entityLookup.GetEntitiesInRange<AnomalyComponent>(coords, AttachRange).FirstOrDefault();
 
         if (anomaly.Owner is {Valid: false}) // no anomaly in range
         {
@@ -75,6 +77,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (!TryComp<AnomalyComponent>(ent.Comp.ConnectedAnomaly, out var anomaly))
             return;
 
+        _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
         DisconneсtFromAnomaly(ent, anomaly);
     }
 
@@ -114,9 +117,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         var targetXform = _transform.GetWorldPosition(ent);
         _transform.SetWorldPosition(anomaly, targetXform);
 
-        if (ent.Comp.PulseOnConnect)
-            _anomaly.DoAnomalyPulse(anomaly, anomaly);
-
+        _anomaly.DoAnomalyPulse(anomaly, anomaly);
         _popup.PopupEntity(Loc.GetString("anomaly-sync-connected"), ent, PopupType.Medium);
         _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
     }
@@ -128,9 +129,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (ent.Comp.ConnectedAnomaly == null)
             return;
 
-        if (ent.Comp.PulseOnDisconnect)
-            _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
-
+        _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
         _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), ent, PopupType.Large);
         _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
 

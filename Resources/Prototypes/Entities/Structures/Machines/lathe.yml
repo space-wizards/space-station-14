@@ -286,7 +286,6 @@
       - ChemicalPayload
       - FlashPayload
       - Signaller
-      - SignallerAdvanced
       - SignalTrigger
       - VoiceTrigger
       - Igniter

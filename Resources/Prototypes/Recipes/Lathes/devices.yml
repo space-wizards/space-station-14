@@ -76,16 +76,6 @@
     Steel: 100
     Plastic: 200
     Glass: 100
-    
-- type: latheRecipe
-  id: SignallerAdvanced
-  result: RemoteSignallerAdvanced
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 100
-    Plastic: 200
-    Plasma: 100
 
 - type: latheRecipe
   id: AnomalyLocator
