@@ -490,7 +490,7 @@ namespace Content.Server.Administration.Systems
         {
             return _adminManager.ActiveAdmins
                 .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) && !_afkManager.IsAfk(p))
-                .Select(p => p.ConnectedClient)
+                .Select(p => p.Channel)
                 .ToList();
         }
 
