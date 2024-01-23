@@ -1257,6 +1257,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Config for when the restart vote should be allowed to be called regardless with less than this amount of players.
+        /// </summary>
+        public static readonly CVarDef<int> VoteRestartMaxPlayers =
+            CVarDef.Create("vote.restart_max_players", 20, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Config for when the restart vote should be allowed to be called based on percentage of ghosts.
+        ///
+        public static readonly CVarDef<int> VoteRestartGhostPercentage =
+            CVarDef.Create("vote.restart_ghost_percentage", 75, CVar.SERVERONLY);
+
+        /// <summary>
         ///     See vote.enabled, but specific to preset votes
         /// </summary>
         public static readonly CVarDef<bool> VotePresetEnabled =
@@ -1585,6 +1597,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
+
+        public static readonly CVarDef<int> ChatMaxAnnouncementLength =
+            CVarDef.Create("chat.max_announcement_length", 256, CVar.SERVER | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);

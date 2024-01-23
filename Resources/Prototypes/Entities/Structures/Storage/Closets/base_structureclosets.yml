@@ -33,7 +33,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -75,7 +75,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -6
       - !type:SpawnEntitiesBehavior
@@ -163,7 +163,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -6
       - !type:SpawnEntitiesBehavior
@@ -230,7 +230,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -271,7 +271,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -6
       - !type:SpawnEntitiesBehavior
