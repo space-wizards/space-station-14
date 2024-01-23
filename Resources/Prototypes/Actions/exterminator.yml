@@ -5,6 +5,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    priority: -19
     icon:
       sprite: Mobs/Species/Exterminator/parts.rsi
       state: skull_icon
@@ -13,3 +14,18 @@
       accent: ExterminatorCursed
   - type: TimedDespawn
     lifetime: 60
+
+- type: entity
+  id: ActionExterminatorFreedom
+  name: Break Free
+  description: Use your superhuman strength to break out of any hand restraints.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Actions/Implants/implants.rsi
+      state: freedom
+    event: !type:UseFreedomImplantEvent

@@ -5,6 +5,11 @@
   components:
   - type: ZombieImmune # yeah no
   - type: FlashImmunity # no brain to brainwash, eyes are robotic
+  # 4x stamina, faster recovery
+  - type: Stamina
+    decay: 6
+    cooldown: 1
+    critThreshold: 400
 
 - type: entity
   parent: [MobHuman, MobExterminatorBase]
@@ -15,16 +20,14 @@
   - type: Exterminator
   - type: GenericAntag
     rule: Exterminator
+  - type: DefaultActions
+    defaultActions:
+    - id: ActionExterminatorFreedom
   # reduced barotrauma damage
   - type: Barotrauma
     damage:
       types:
         Blunt: 0.1
-  # 4x stamina, faster recovery
-  - type: Stamina
-    decay: 6
-    cooldown: 1
-    critThreshold: 400
   # immune to space drugs, pax, temporary blindness
   - type: StatusEffects
     allowed:
