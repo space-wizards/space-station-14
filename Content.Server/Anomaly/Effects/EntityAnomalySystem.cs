@@ -72,6 +72,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
 
     //TheShuEd:
     //I know it's a shitcode! I didn't write it! I just restructured the functions
+    // To Do: make it reusable with TileAnomalySystem
     private void SpawnEntitesOnOpenTiles(Entity<EntitySpawnAnomalyComponent> component, EntitySpawnSettingsEntry entry, float stability, float severity)
     {
         if (entry.Spawns.Count == 0)
