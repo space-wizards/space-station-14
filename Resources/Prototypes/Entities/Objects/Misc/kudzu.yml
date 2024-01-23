@@ -154,7 +154,7 @@
       footstepSoundCollection:
         collection: FootstepGrass
         params:
-          variations: 0.05
+          variation: 0.05
 
 - type: entity
   id: KudzuFlowerAngry
