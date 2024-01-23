@@ -50,29 +50,47 @@ public sealed class ShuttleMapControl : ShuttleControl
 
         // Draw background texture
         var tex = _backgroundTexture;
-        var scale = Vector2.One * MinimapScale;
+
+        // Size of the texture in world units.
+        var size = tex.Size * MinimapScale;
+
+        var position = ScalePosition(new Vector2(-Offset.X, Offset.Y));
         var slowness = 1f;
 
-        var texSize = (tex.Size.X * (int) Size.X, tex.Size.Y * (int) Size.X) * scale.Floored() / 1920;
-        var ourSize = PixelSize;
+        // The "home" position is the effective origin of this layer.
+        // Parallax shifting is relative to the home, and shifts away from the home and towards the Eye centre.
+        // The effects of this are such that a slowness of 1 anchors the layer to the centre of the screen, while a slowness of 0 anchors the layer to the world.
+        // (For values 0.0 to 1.0 this is in effect a lerp, but it's deliberately unclamped.)
+        // The ParallaxAnchor adapts the parallax for station positioning and possibly map-specific tweaks.
+        var home = Vector2.Zero;
+        var scrolled = Vector2.Zero;
 
-        var offset = Offset;
+        // Origin - start with the parallax shift itself.
+        var originBL = (position - home) * slowness + scrolled;
 
-        // Multiply offset by slowness to match normal parallax
-        var scaledOffset = (offset * slowness).Floored();
+        // Place at the home.
+        originBL += home;
 
-        // Then modulo the scaled offset by the size to prevent drawing a bunch of offscreen tiles for really small images.
-        scaledOffset.X %= texSize.X;
-        scaledOffset.Y %= texSize.Y;
+        // Centre the image.
+        originBL -= size / 2;
 
-        // Note: scaledOffset must never be below 0 or there will be visual issues.
-        // It could be allowed to be >= texSize on a given axis but that would be wasteful.
+        // Remove offset so we can floor.
+        var botLeft = new Vector2(0f, 0f);
+        var topRight = botLeft + Size;
 
-        for (var x = -scaledOffset.X; x < ourSize.X; x += texSize.X)
+        var flooredBL = botLeft - originBL;
+
+        // Floor to background size.
+        flooredBL = (flooredBL / size).Floored() * size;
+
+        // Re-offset.
+        flooredBL += originBL;
+
+        for (var x = flooredBL.X; x < topRight.X; x += size.X)
         {
-            for (var y = -scaledOffset.Y; y < ourSize.Y; y += texSize.Y)
+            for (var y = flooredBL.Y; y < topRight.Y; y += size.Y)
             {
-                handle.DrawTextureRect(tex, UIBox2.FromDimensions(new Vector2(x, y), texSize));
+                handle.DrawTextureRect(tex, new UIBox2(x, y, x + size.X, y + size.Y));
             }
         }
 
