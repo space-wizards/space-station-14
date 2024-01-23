@@ -3124,6 +3124,32 @@ entities:
     - type: Transform
       pos: 6.5,-20.5
       parent: 2
+- proto: Screen
+  entities:
+  - uid: 161
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-21.5
+      parent: 2
+  - uid: 196
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 10.5,-16.5
+      parent: 2
+  - uid: 197
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 11.5,-2.5
+      parent: 2
+  - uid: 198
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,-2.5
+      parent: 2
 - proto: ShotGunCabinetFilled
   entities:
   - uid: 609
@@ -3628,6 +3654,14 @@ entities:
       parent: 2
 - proto: WallShuttle
   entities:
+  - uid: 3
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-2.5
+      parent: 2
   - uid: 316
     components:
     - type: MetaData
@@ -3781,13 +3815,6 @@ entities:
       flags: PvsPriority
     - type: Transform
       pos: 14.5,-11.5
-      parent: 2
-  - uid: 482
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      pos: 6.5,-2.5
       parent: 2
   - uid: 483
     components:

@@ -156,6 +156,17 @@ public sealed partial class ShuttleSystem
                         var name = path.FilenameWithoutExtension;
                         _metadata.SetEntityName(ent[0], name);
                     }
+
+                    foreach (var compReg in group.AddComponents.Values)
+                    {
+                        var compType = compReg.Component.GetType();
+
+                        if (HasComp(ent[0], compType))
+                            continue;
+
+                        var comp = _factory.GetComponent(compType);
+                        AddComp(ent[0], comp, true);
+                    }
                 }
                 else
                 {

@@ -5623,11 +5623,6 @@ entities:
     - type: Transform
       pos: -1.5,-11.5
       parent: 407
-  - uid: 1753
-    components:
-    - type: Transform
-      pos: 2.5,1.5
-      parent: 407
   - uid: 1754
     components:
     - type: Transform
@@ -6393,6 +6388,14 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-2.5
+      parent: 407
+- proto: CryogenicSleepUnitSpawnerLateJoin
+  entities:
+  - uid: 1753
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,1.5
       parent: 407
 - proto: DefaultStationBeaconArrivals
   entities:
@@ -9953,6 +9956,11 @@ entities:
     - type: Transform
       pos: 26.518682,2.5202096
       parent: 407
+  - uid: 2277
+    components:
+    - type: Transform
+      pos: -16.322409,-2.5030437
+      parent: 407
 - proto: NitrogenCanister
   entities:
   - uid: 1533
@@ -11236,6 +11244,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -19.5,-0.5
       parent: 407
+    - type: DeviceLinkSink
+      links:
+      - 1255
   - uid: 1253
     components:
     - type: MetaData
@@ -11244,6 +11255,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -19.5,0.5
       parent: 407
+    - type: DeviceLinkSink
+      links:
+      - 1255
   - uid: 1254
     components:
     - type: MetaData
@@ -11252,6 +11266,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -19.5,1.5
       parent: 407
+    - type: DeviceLinkSink
+      links:
+      - 1255
 - proto: ShuttersWindowOpen
   entities:
   - uid: 1650
@@ -11691,6 +11708,14 @@ entities:
     - type: Transform
       pos: -19.5,2.5
       parent: 407
+    - type: DeviceLinkSource
+      linkedPorts:
+        1254:
+        - Pressed: Toggle
+        1253:
+        - Pressed: Toggle
+        1252:
+        - Pressed: Toggle
 - proto: SignalButtonDirectional
   entities:
   - uid: 1759

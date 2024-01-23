@@ -210,7 +210,7 @@
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
-    soundForce: true
+    forceSound: true
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -255,8 +255,8 @@
       types:
         Heat: 5
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+      collection: WeakHit
+    forceSound: true
 
 - type: entity
   name : disabler bolt practice
@@ -295,8 +295,8 @@
       types:
         Heat: 1
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+      collection: WeakHit
+    forceSound: true
 
 - type: entity
   name: emitter bolt
@@ -419,6 +419,32 @@
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4
+
+- type: entity
+  id: BulletKineticShuttle
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 30
+        Structural: 35
+  - type: Ammo
+    muzzleFlash: HitscanEffect
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: PointLight
+    radius: 2.5
+    color: white
+    energy: 0.5
 
 - type: entity
   id: BulletCharge
@@ -693,6 +719,27 @@
     maxIntensity: 10
 
 - type: entity
+  id: BulletGrenadeEMP
+  name: EMP rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: EmpOnTrigger
+    range: 5
+    energyConsumption: 50000
+    disableDuration: 10
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 3.5
+    color: blue
+    energy: 0.5 
+
+- type: entity
   id: BulletCap
   name: cap bullet
   parent: BaseBullet
@@ -754,14 +801,16 @@
         maxVol: 50
   - type: Fixtures
     fixtures:
-      fix1:
+      projectile:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.10,-0.30,0.10,0.15"
         hard: false
         mask:
-        - FullTileMask
-        - Opaque
+        - Impassable
+        - BulletImpassable
+  - type: CanPenetrate
+    penetrationLayer: MobLayer
   - type: Vapor
     active: true
   - type: Appearance
@@ -864,8 +913,8 @@
       types:
         Heat: 2
     soundHit:
-      path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+      collection: WeakHit
+    forceSound: true
 
 - type: entity
   name: tesla gun lightning
