@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: You can now make the storage window opaque with the "enable opaque storage
-      window" toggle in the graphics menu.
-    type: Add
-  id: 5272
-  time: '2023-12-05T23:38:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - message: Reverted duffel bags to their original storage capacity.
     type: Fix
   id: 5273
@@ -3799,3 +3792,10 @@
   id: 5772
   time: '2024-01-23T12:49:19.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24446
+- author: '0x6273'
+  changes:
+  - message: Hotplates now work again
+    type: Fix
+  id: 5773
+  time: '2024-01-23T13:06:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24450
