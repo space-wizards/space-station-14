@@ -183,7 +183,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             return;
 
         var cardId = idUid.Value;
-        if (TryComp(idUid, out PdaComponent? pdaComponent) && pdaComponent.ContainedId != null)
+        if (TryComp<PdaComponent>(idUid, out var pdaComponent) && pdaComponent.ContainedId != null)
             cardId = pdaComponent.ContainedId.Value;
 
         if (!TryComp<IdCardComponent>(cardId, out var card))
