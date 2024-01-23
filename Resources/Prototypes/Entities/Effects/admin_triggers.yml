@@ -9,15 +9,16 @@
     state: icon
   - type: TriggerOnSpawn
 
-- type: entity
-  id: AdminInstantEffectEMP
-  suffix: EMP
-  parent: AdminInstantEffectBase
-  components:
-  - type: EmpOnTrigger
-    range: 4
-    energyConsumption: 50000
-  - type: DeleteOnTrigger
+# for some unknown reason breaks checks. TO DO - fix
+#- type: entity
+#  id: AdminInstantEffectEMP
+#  suffix: EMP
+#  parent: AdminInstantEffectBase
+#  components:
+#  - type: EmpOnTrigger
+#    range: 4
+#    energyConsumption: 50000
+#  - type: DeleteOnTrigger
 
 - type: entity
   id: AdminInstantEffectFlash
