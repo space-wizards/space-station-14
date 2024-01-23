@@ -110,7 +110,8 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
 
     private void OnGunRefreshModifiers(Entity<PneumaticCannonComponent> ent, ref GunRefreshModifiersEvent args)
     {
-
+        if (ent.Comp.ProjectileSpeed is { } speed)
+            args.ProjectileSpeed = speed;
     }
 
     /// <summary>
