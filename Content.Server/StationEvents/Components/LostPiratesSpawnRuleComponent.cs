@@ -13,6 +13,6 @@ public sealed partial class LostPiratesSpawnRuleComponent : Component
     [DataField]
     public EntProtoId GameRuleProto = "Pirates";
 
-    [DataField("additionalRule")]
+    [DataField]
     public EntityUid? AdditionalRule;
 }
