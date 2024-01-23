@@ -10,7 +10,7 @@ public sealed partial class GravityAnomalyComponent : Component
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MaxGravityWellRange = 8f;
+    public float MaxGravityWellRange = 10f;
 
     /// <summary>
     /// The maximum distance from which the anomaly
@@ -38,28 +38,28 @@ public sealed partial class GravityAnomalyComponent : Component
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MinAccel = 1f;
+    public float MinAccel = 2f;
 
     /// <summary>
     /// The maximum acceleration value for GravityWellComponent
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MaxAccel = 5f;
+    public float MaxAccel = 7f;
 
     /// <summary>
     /// The minimum acceleration value for GravityWellComponent
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MinRadialAccel = 0f;
+    public float MinRadialAccel = 2f;
 
     /// <summary>
     /// The maximum acceleration value for GravityWellComponent
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MaxRadialAccel = 3f;
+    public float MaxRadialAccel = 5f;
 
     /// <summary>
     /// The range around the anomaly that will be spaced on supercritical.
