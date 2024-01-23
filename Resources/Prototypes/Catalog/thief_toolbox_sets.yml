@@ -109,3 +109,23 @@
   - SmokeGrenade
   - SmokeGrenade
   - SmokeGrenade
+  
+- type: thiefBackpackSet
+  id: DenSet
+  name: thief-backpack-category-den-name
+  description: thief-backpack-category-den-description
+  sprite:
+    sprite: Structures/Walls/solid.rsi
+    state: full
+  content:
+  - PowerCellSmall
+  - PowerCellSmall
+  - SheetSteel
+  - PartRodMetal
+  - Wrench
+  - Screwdriver
+  - CableApcStack
+  - ClothingHeadHatWeldingMaskPainted
+  - ClothingHandsGlovesColorYellow
+  - WelderIndustrialAdvanced
+  - trayScanner
