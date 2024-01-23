@@ -115,7 +115,7 @@
 - type: entity
   id: SpawnPointLostCaptainPirate
   name: ghost role spawn point
-  suffix: pirate-captain
+  suffix: pirate
   parent: MarkerBase
   components:
   - type: GhostRole
@@ -134,7 +134,7 @@
 - type: entity
   id: SpawnPointLostFirstmate
   name: ghost role spawn point
-  suffix: pirate-firstmate
+  suffix: pirate
   parent: MarkerBase
   components:
   - type: GhostRole
@@ -142,7 +142,7 @@
     description: ghost-role-information-lost-pirate-firstmate-description
     rules: ghost-role-information-lost-pirate-firstmate-rules
   - type: GhostRoleMobSpawner
-    prototype: MobHumanLostFistmatePirate
+    prototype: MobHumanLostFirstmatePirate
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
