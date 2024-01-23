@@ -68,9 +68,13 @@
           types:
             Poison:
               1
-      # Cant be added until I add metabolism effects on reagent removal
-      #- !type:AdjustAlert
-      #  alertType: Toxins
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+          - !type:ReagentThreshold
+            min: 1.5
+        autoRemove: True
+        time: 6
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

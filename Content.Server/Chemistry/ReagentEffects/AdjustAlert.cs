@@ -13,9 +13,15 @@ public sealed partial class AdjustAlert : ReagentEffect
     [DataField]
     public bool Clear;
 
+    // Show a cooldown progress over the alert
     [DataField]
     public bool Cooldown;
 
+    // The alert will be removed automatically after <Time> seconds
+    [DataField]
+    public bool AutoRemove;
+
+    // The length (in seconds) of the cooldown and/or the delay before autoremove.
     [DataField]
     public float Time;
 
@@ -33,13 +39,20 @@ public sealed partial class AdjustAlert : ReagentEffect
             }
             else
             {
+                var timing = IoCManager.Resolve<IGameTiming>();
                 (TimeSpan, TimeSpan)? cooldown = null;
+                TimeSpan? autoRemove = null;
+
                 if (Cooldown)
                 {
-                    var timing = IoCManager.Resolve<IGameTiming>();
                     cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
                 }
-                alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown);
+
+                if (AutoRemove)
+                {
+                    autoRemove = (timing.CurTime + TimeSpan.FromSeconds(Time));
+                }
+                alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: autoRemove);
             }
         }
     }

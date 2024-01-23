@@ -2,6 +2,7 @@ using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Alert;
 
@@ -74,7 +75,8 @@ public abstract class AlertsSystem : EntitySystem
     /// <param name="severity">severity, if supported by the alert</param>
     /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
     ///     be erased if there is currently a cooldown for the alert)</param>
-    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
+    /// /// <param name="autoRemove">the time when the alert will be removed automatically</param>
+    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null, TimeSpan? autoRemove = null)
     {
         if (!TryComp(euid, out AlertsComponent? alertsComponent))
             return;
@@ -95,7 +97,7 @@ public abstract class AlertsSystem : EntitySystem
             alertsComponent.Alerts.Remove(alert.AlertKey);
 
             alertsComponent.Alerts[alert.AlertKey] = new AlertState
-                { Cooldown = cooldown, Severity = severity, Type = alertType };
+                { Cooldown = cooldown, AutoRemove = autoRemove, Severity = severity, Type = alertType };
 
             AfterShowAlert((euid, alertsComponent));
 
@@ -174,6 +176,30 @@ public abstract class AlertsSystem : EntitySystem
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(HandlePrototypesReloaded);
         LoadPrototypes();
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<AlertsComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            foreach (var (alertKey,  alertState) in comp.Alerts)
+            {
+                if (alertState.AutoRemove is not null)
+                {
+                    var timing = IoCManager.Resolve<IGameTiming>();
+
+                    if (alertState.AutoRemove <= timing.CurTime)
+                    {
+                        comp.Alerts.Remove(alertKey);
+                        Dirty(uid, comp);
+                    }
+                }
+            }
+
+        }
     }
 
     protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
