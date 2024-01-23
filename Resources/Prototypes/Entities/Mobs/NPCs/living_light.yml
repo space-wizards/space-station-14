@@ -18,8 +18,8 @@
     - SimpleHostile
   - type: MovementIgnoreGravity
   - type: MovementSpeedModifier
-    baseWalkSpeed: 5.5
-    baseSprintSpeed: 5.5
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 3.5
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Elemental/living_light/luminous_person.rsi
@@ -34,6 +34,9 @@
     thresholds:
       0: Alive
       50: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      20: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -87,16 +90,17 @@
   - type: Tag
     tags:
       - FootstepSound
-      - DoorBumpOpener
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: GlassBreak
 
 - type: entity
   id: MobLuminousPerson
@@ -127,7 +131,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      30: Dead
+      50: Dead
   - type: DamageStateVisuals
     states:
       Alive:
@@ -140,15 +144,6 @@
     damage:
       types:
         Heat: 6
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 80
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   id: MobLuminousEntity
@@ -200,12 +195,3 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
     soundEmpty:
       path: /Audio/Items/Lighters/lighter_off.ogg
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]

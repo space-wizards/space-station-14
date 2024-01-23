@@ -26,7 +26,7 @@
     drawdepth: Objects
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageModifierSet: Electronic
   - type: Destructible
     thresholds:
     - trigger:

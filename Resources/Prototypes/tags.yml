@@ -251,6 +251,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannonBall
+  
+- type: Tag
   id: CannonRestrict
 
 - type: Tag
@@ -785,6 +788,9 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
+  id: MagazineGrenade
+
+- type: Tag
   id: MailingUnitElectronics
 
 - type: Tag
@@ -939,6 +945,9 @@
 
 - type: Tag
   id: PowerCellSmall
+
+- type: Tag
+  id: PowerCage
 
 - type: Tag
   id: Powerdrill
