@@ -443,8 +443,15 @@
   - type: Sprite
     sprite: Mobs/Animals/mothroach.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mothroach
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: mothroach-moving
+    noMovementLayers:
+      movement:
+        state: mothroach
   - type: Item
     size: Normal
   - type: Clothing

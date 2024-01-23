@@ -605,3 +605,39 @@
     Steel: 1000
     Glass: 500
     Plastic: 500
+     
+- type: latheRecipe
+  id: MagazineGrenadeEmpty
+  result: MagazineGrenadeEmpty
+  completetime: 3
+  materials:
+     Steel: 150
+     Plastic: 50
+     
+- type: latheRecipe
+  id: GrenadeEMP
+  result: GrenadeEMP
+  completetime: 3
+  materials:
+     Steel: 150
+     Plastic: 100
+     Glass: 20
+     
+- type: latheRecipe
+  id: GrenadeBlast
+  result: GrenadeBlast
+  completetime: 3
+  materials:
+     Steel: 150
+     Plastic: 100
+     Gold: 50
+     
+- type: latheRecipe
+  id: GrenadeFlash
+  result: GrenadeFlash
+  completetime: 3
+  materials:
+     Steel: 150
+     Plastic: 100
+     Glass: 20
+     
