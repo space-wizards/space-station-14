@@ -60,6 +60,12 @@ public partial record struct TileSpawnSettingsEntry()
     public bool SpawnOnSuperCritical { get; set; } = false;
 
     /// <summary>
+    /// Whether or not anomaly spawns entities when destroyed
+    /// </summary>
+    [DataField]
+    public bool SpawnOnShutdown { get; set; } = false;
+
+    /// <summary>
     /// Whether or not anomaly spawns tiles on StabilityChanged
     /// </summary>
     [DataField]

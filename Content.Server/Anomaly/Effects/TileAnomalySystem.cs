@@ -20,11 +20,11 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-
         SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
         SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
+        SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalyShutdownEvent>(OnShutdown);
     }
 
     private void OnPulse(Entity<TileSpawnAnomalyComponent> component, ref AnomalyPulseEvent args)
@@ -37,11 +37,23 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
             SpawnTiles(component, entry, args.Stability, args.Severity);
         }
     }
+
     private void OnSupercritical(Entity<TileSpawnAnomalyComponent> component, ref AnomalySupercriticalEvent args)
     {
         foreach (var entry in component.Comp.Entries)
         {
             if (!entry.SpawnOnSuperCritical)
+                continue;
+
+            SpawnTiles(component, entry, 1, 1);
+        }
+    }
+
+    private void OnShutdown(Entity<TileSpawnAnomalyComponent> component, ref AnomalyShutdownEvent args)
+    {
+        foreach (var entry in component.Comp.Entries)
+        {
+            if (!entry.SpawnOnShutdown || args.Supercritical)
                 continue;
 
             SpawnTiles(component, entry, 1, 1);

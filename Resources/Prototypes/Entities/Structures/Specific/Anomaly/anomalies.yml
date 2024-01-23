@@ -199,6 +199,15 @@
       maxRange: 10
       spawns:
       - FleshKudzu
+    - spawnOnShutdown: true
+      maxAmount: 2
+      maxRange: 1
+      spawns:
+      - MobFleshJared
+      - MobFleshGolem
+      - MobFleshClamp
+      - MobFleshLover
+      - FleshKudzu
 
 - type: entity
   id: AnomalyBluespace

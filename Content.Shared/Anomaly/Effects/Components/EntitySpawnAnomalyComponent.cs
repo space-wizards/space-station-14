@@ -59,6 +59,12 @@ public partial record struct EntitySpawnSettingsEntry()
     public bool SpawnOnSuperCritical { get; set; } = false;
 
     /// <summary>
+    /// Whether or not anomaly spawns entities when destroyed
+    /// </summary>
+    [DataField]
+    public bool SpawnOnShutdown { get; set; } = false;
+
+    /// <summary>
     /// Whether or not anomaly spawns entities on StabilityChanged
     /// </summary>
     [DataField]

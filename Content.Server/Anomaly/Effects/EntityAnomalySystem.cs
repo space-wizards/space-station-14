@@ -24,6 +24,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
+        SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyShutdownEvent>(OnShutdown);
     }
 
     private void OnPulse(Entity<EntitySpawnAnomalyComponent> component, ref AnomalyPulseEvent args)
@@ -42,6 +43,17 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
         foreach (var entry in component.Comp.Entries)
         {
             if (!entry.SpawnOnSuperCritical)
+                continue;
+
+            SpawnEntitesOnOpenTiles(component, entry, 1, 1);
+        }
+    }
+
+    private void OnShutdown(Entity<EntitySpawnAnomalyComponent> component, ref AnomalyShutdownEvent args)
+    {
+        foreach (var entry in component.Comp.Entries)
+        {
+            if (!entry.SpawnOnShutdown || args.Supercritical)
                 continue;
 
             SpawnEntitesOnOpenTiles(component, entry, 1, 1);
