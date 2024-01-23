@@ -3,7 +3,6 @@ using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
 using Content.Shared.Lightning;
-using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
@@ -21,10 +20,6 @@ public sealed class LightningSystem : SharedLightningSystem
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
-    private List<Entity<LightningTargetComponent>> _lookupTargetsList = new();
-    private HashSet<Entity<LightningTargetComponent>> _lookupTargets = new();
 
     public override void Initialize()
     {
