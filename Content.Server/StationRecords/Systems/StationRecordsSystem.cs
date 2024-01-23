@@ -310,7 +310,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     /// <summary>
     /// Build a record listing of id to name for a station and filter.
     /// </summary>
-    public Dictionary<uint, string> BuildListing(Entity<StationRecordsComponent> station, StationRecordsFilter filter?)
+    public Dictionary<uint, string> BuildListing(Entity<StationRecordsComponent> station, StationRecordsFilter? filter)
     {
         var listing = new Dictionary<uint, string>();
 
