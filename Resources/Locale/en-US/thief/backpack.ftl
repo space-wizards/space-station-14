@@ -67,4 +67,4 @@ thief-backpack-category-den-description =
     A kit for those who want to live in the walls.
     Includes a stack of steel, rods, cables, and
     two powercells to make hidden doors.
-    Also includes the necessary saftey equipment.
+    Also includes the necessary safety equipment.
