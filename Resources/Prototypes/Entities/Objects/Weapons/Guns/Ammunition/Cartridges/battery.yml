@@ -1,0 +1,42 @@
+#abstract cartridges for battery weapon tricks
+
+- type: entity
+  id: BaseCartridgeEnergy
+  name: cartridge (energy)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/capgun_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: SpentAmmoVisuals
+  - type: Appearance
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  id: CartridgeEnergyShotgunWide
+  name: energy shotgun cartridge
+  parent: BaseCartridgeEnergy
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLaserHeavy
+    count: 5
+    spread: 30
+
+- type: entity
+  id: CartridgeEnergyShotgunNarrow
+  name: energy shotgun cartridge
+  parent: BaseCartridgeEnergy
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLaserHeavy
+    count: 3
+    spread: 10 #narrower but way less damage
