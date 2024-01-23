@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Predict helmet toggling.
-    type: Fix
-  id: 5274
-  time: '2023-12-06T06:59:31.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Fixed emagged medibots not injecting healthy people with chloral hydrate.
@@ -3800,3 +3794,10 @@
   id: 5774
   time: '2024-01-23T18:08:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24457
+- author: icekot8
+  changes:
+  - message: The bounty of briefcases has been removed
+    type: Remove
+  id: 5775
+  time: '2024-01-23T18:26:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24392
