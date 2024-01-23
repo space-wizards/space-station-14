@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: Ghosts now have speech bubbles again
-    type: Fix
-  id: 5270
-  time: '2023-12-05T21:40:03.0000000+00:00'
 - author: tgrkzus
   changes:
   - message: Paper cups are now available at water coolers.
@@ -3796,3 +3790,11 @@
   id: 5770
   time: '2024-01-23T04:18:33.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24406
+- author: TheShuEd
+  changes:
+  - message: 'Flesh and Rock anom reworked: It should be easier to maintain them now
+      (I guess)'
+    type: Tweak
+  id: 5771
+  time: '2024-01-23T12:32:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24381
