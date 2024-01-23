@@ -366,6 +366,7 @@
     head: ClothingHeadBandBlack
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
+    ears: ClothingHeadsetFreelance
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
   innerClothingSkirt: ClothingUniformJumpsuitPirate
@@ -380,6 +381,7 @@
     head: ClothingHeadHatPirate
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
+    ears: ClothingHeadsetAltFreelancer
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     pocket2: EnergyCutlass
@@ -396,6 +398,7 @@
     head: ClothingHeadHatPirateTricord
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
+    ears: ClothingHeadsetFreelance
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
