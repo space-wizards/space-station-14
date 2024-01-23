@@ -1620,7 +1620,7 @@
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
-    collection: BarestepCarpet
+    collection: FootstepBlood
   itemDrop: FloorTileItemFlesh
   friction: 0.05 #slippy
   heatCapacity: 10000
