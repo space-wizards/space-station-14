@@ -11,7 +11,7 @@ public sealed partial class LostPiratesSpawnRuleComponent : Component
     public string LostPiratesShuttlePath = "Maps/Shuttles/lost_pirates.yml";
 
     [DataField]
-    public string GameRuleProto = "Pirates";
+    public EntProtoId GameRuleProto = "Pirates";
 
     [DataField("additionalRule")]
     public EntityUid? AdditionalRule;
