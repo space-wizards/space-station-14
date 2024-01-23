@@ -74,6 +74,7 @@
       - FoodMeatLizardtailKebab
       - FoodMeatRatKebab
       - FoodMeatRatdoubleKebab
+      - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
       - FoodTacoRat
     rareChance: 0.05
