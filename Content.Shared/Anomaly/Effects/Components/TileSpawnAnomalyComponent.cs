@@ -1,71 +1,72 @@
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Anomaly.Effects.Components;
 
-[RegisterComponent, Access(typeof(SharedEntityAnomalySystem))]
-public sealed partial class EntitySpawnAnomalyComponent : Component
+[RegisterComponent, Access(typeof(SharedTileAnomalySystem))]
+public sealed partial class TileSpawnAnomalyComponent : Component
 {
     /// <summary>
-    /// All types of entity spawns with their settings
+    /// All types of floors spawns with their settings
     /// </summary>
     [DataField]
-    public List<EntitySpawnSettingsEntry> Entries = new();
+    public List<TileSpawnSettingsEntry> Entries = new();
 }
 
 [DataDefinition, Serializable]
-public partial record struct EntitySpawnSettingsEntry()
+public partial record struct TileSpawnSettingsEntry()
 {
     /// <summary>
-    /// A list of entities that are random picked to be spawned on each pulse
+    /// The tile that is spawned by the anomaly's effect
     /// </summary>
-    [DataField]
-    public List<EntProtoId> Spawns { get; set; } = new();
+    [DataField(required: true)]
+    public ProtoId<ContentTileDefinition> Floor { get; set; } = default!;
 
     /// <summary>
-    /// The minimum number of entities that spawn per pulse
+    /// The minimum number of tiles that spawn per pulse
     /// </summary>
     [DataField]
     public int MinAmount { get; set; } = 0;
 
     /// <summary>
-    /// The maximum number of entities that spawn per pulse
+    /// The maximum number of tiles that spawn per pulse
     /// scales with severity.
     /// </summary>
     [DataField]
     public int MaxAmount { get; set; } = 1;
 
     /// <summary>
-    /// The distance from the anomaly in which the entities will not appear
+    /// The distance from the anomaly in which the tiles will not appear
     /// </summary>
     [DataField]
     public float MinRange { get; set; } = 0f;
 
     /// <summary>
-    /// The maximum radius the entities will spawn in.
+    /// The maximum radius the tiles will spawn in.
     /// </summary>
     [DataField]
     public float MaxRange { get; set; } = 1f;
 
     /// <summary>
-    /// Whether or not anomaly spawns entities on Pulse
+    /// Whether or not anomaly spawns tiles on Pulse
     /// </summary>
     [DataField]
     public bool SpawnOnPulse { get; set; } = false;
 
     /// <summary>
-    /// Whether or not anomaly spawns entities on SuperCritical
+    /// Whether or not anomaly spawns tiles on SuperCritical
     /// </summary>
     [DataField]
     public bool SpawnOnSuperCritical { get; set; } = false;
 
     /// <summary>
-    /// Whether or not anomaly spawns entities on StabilityChanged
+    /// Whether or not anomaly spawns tiles on StabilityChanged
     /// </summary>
     [DataField]
     public bool SpawnOnStabilityChanged { get; set; } = false;
 
     /// <summary>
-    /// Whether or not anomaly spawns entities on SeverityChanged
+    /// Whether or not anomaly spawns tiles on StabilityChanged
     /// </summary>
     [DataField]
     public bool SpawnOnSeverityChanged { get; set; } = false;
