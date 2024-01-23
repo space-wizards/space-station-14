@@ -22,6 +22,7 @@ using Content.Shared.Weapons.Reflect;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -224,7 +225,23 @@ public sealed partial class GunSystem : SharedGunSystem
                             if (!rayCastResults.Any())
                                 break;
 
-                            var result = rayCastResults[0];
+                            var entityIndex = 0;
+
+                            foreach (var entity in rayCastResults)
+                            {
+                                if (!TryComp<PhysicsComponent>(entity.HitEntity, out var physics))
+                                    continue;
+
+                                if (physics.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer &&
+                                    gun.Target != entity.HitEntity)
+                                    entityIndex++;
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            var result = rayCastResults[entityIndex];
                             var hit = result.HitEntity;
                             lastHit = hit;
 

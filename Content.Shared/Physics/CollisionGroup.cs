@@ -32,7 +32,7 @@ public enum CollisionGroup
     // Humanoids, etc.
     MobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
     MobLayer = Opaque | BulletImpassable,
-    LayingDownMobLayer = MidImpassable | LowImpassable,
+    LayingDownMobLayer = Opaque | LowImpassable,
     LayingDownMobMask = Opaque | LowImpassable,
     // Mice, drones
     SmallMobMask = Impassable | LowImpassable,
