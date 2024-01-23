@@ -38,21 +38,21 @@ public sealed partial class GravityAnomalyComponent : Component
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MinAccel = 2f;
+    public float MinAccel = 0f;
 
     /// <summary>
     /// The maximum acceleration value for GravityWellComponent
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MaxAccel = 7f;
+    public float MaxAccel = 5f;
 
     /// <summary>
     /// The minimum acceleration value for GravityWellComponent
     /// Is scaled linearly with stability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MinRadialAccel = 2f;
+    public float MinRadialAccel = 0f;
 
     /// <summary>
     /// The maximum acceleration value for GravityWellComponent
