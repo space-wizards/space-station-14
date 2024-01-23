@@ -1,6 +1,8 @@
 - type: entity
   id: CrateFunPlushie
   parent: CrateGenericSteel
+  name: plushie crate
+  description: A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
   components:
   - type: StorageFill
     contents:
@@ -30,6 +32,8 @@
 - type: entity
   id: CrateFunLizardPlushieBulk
   parent: CrateGenericSteel
+  name: bulk lizard plushie crate
+  description: A buncha soft lizard plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
   components:
   - type: StorageFill
     contents:
@@ -41,6 +45,8 @@
 - type: entity
   id: CrateFunInstrumentsVariety
   parent: CrateGenericSteel
+  name: variety instrument collection
+  description: Get your sad station movin' and groovin' with this catch-all variety pack! Contains seven different instruments.
   components:
   - type: StorageFill
     contents:
@@ -55,6 +61,8 @@
 - type: entity
   id: CrateFunInstrumentsBrass
   parent: CrateGenericSteel
+  name: brass instrument ensemble crate
+  description: Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play.
   components:
   - type: StorageFill
     contents:
@@ -72,6 +80,8 @@
 - type: entity
   id: CrateFunInstrumentsString
   parent: CrateGenericSteel
+  name: string instrument ensemble crate
+  description: Pluck or pick, slap or shred! Play a smooth melody or melt peoples' faces with this package of stringed instruments.
   components:
   - type: StorageFill
     contents:
@@ -88,6 +98,8 @@
 - type: entity
   id: CrateFunInstrumentsWoodwind
   parent: CrateGenericSteel
+  name: woodwind instrument ensemble crate
+  description: If atmos is good at their job, use air to play music with these woodwind instruments! Real wood not guaranteed with every item.
   components:
   - type: StorageFill
     contents:
@@ -104,6 +116,8 @@
 - type: entity
   id: CrateFunInstrumentsKeyedPercussion
   parent: CrateGenericSteel
+  name: keyed/percussion instrument ensemble crate
+  description: Hit some keys with some sticks or your hands, with this Keyed and Percussion instrument ensemble crate.
   components:
   - type: StorageFill
     contents:
@@ -121,6 +135,8 @@
 - type: entity
   id: CrateFunInstrumentsSpecial
   parent: CrateGenericSteel
+  name: special instrument collector's crate
+  description: Create some noise with this special collection of arguably-instruments! Centcomm is not responsible for any trauma caused by the contents.
   components:
   - type: StorageFill
     contents:
@@ -138,6 +154,8 @@
 - type: entity
   id: CrateFunArtSupplies
   parent: CrateGenericSteel
+  name: art supplies
+  description: Make some happy little accidents with lots of crayons!
   components:
   - type: StorageFill
     contents:
@@ -146,6 +164,8 @@
 - type: entity
   id: CrateFunBoardGames
   parent: CrateGenericSteel
+  name: board game crate
+  description: Game nights have been proven to either decrease boredom or increase murderous rage depending on the game.
   components:
   - type: StorageFill
     contents:
@@ -164,6 +184,8 @@
 - type: entity
   id: CrateFunATV
   parent: CrateLivestock
+  name: ATV crate
+  description: An Absolutely Taxable Vehicle to help cargo with hauling.
   components:
   - type: StorageFill
     contents:
@@ -173,6 +195,8 @@
 - type: entity
   id: CrateFunSadTromboneImplants
   parent: CrateGenericSteel
+  name: sad trombone implants
+  description: Death's never been so fun before! Implant these to make dying a bit more happy.
   components:
   - type: StorageFill
     contents:
@@ -182,6 +206,8 @@
 - type: entity
   id: CrateFunLightImplants
   parent: CrateGenericSteel
+  name: light implants
+  description: Light up your skin with these implants!
   components:
   - type: StorageFill
     contents:
@@ -191,6 +217,8 @@
 - type: entity
   id: CrateFunParty
   parent: CrateGenericSteel
+  name: party crate
+  description: An entire party just waiting for you to open it. Includes party favors, party beverages, and even a cake.
   components:
   - type: StorageFill
     contents:
@@ -220,6 +248,8 @@
 - type: entity
   id: CrateFunWaterGuns
   parent: CratePlastic
+  name: water gun crate
+  description: A summer special with a variety of brightly colored water guns. Water not included.
   components:
   - type: StorageFill
     contents:
@@ -231,6 +261,8 @@
 - type: entity
   id: CrateFunSyndicateSegway
   parent: CrateLivestock
+  name: Syndicate segway crate
+  description: A crate containing a two-wheeler that will help you escape from the security officers. Or not.
   components:
     - type: StorageFill
       contents:
@@ -240,6 +272,8 @@
 - type: entity
   id: CrateFunBoxing
   parent: CrateGenericSteel
+  name: boxing crate
+  description: Want to set up an underground fight club or host a tournament amongst station crew? This crate is for you!
   components:
   - type: StorageFill
     contents:
@@ -255,6 +289,7 @@
 - type: entity
   id: CrateFunPirate
   parent: CratePirate
+  suffix: Filled
   components:
   - type: StorageFill
     contents:
@@ -294,6 +329,8 @@
 - type: entity
   id: CrateFunBikeHornImplants
   parent: CrateGenericSteel
+  name: bike horn implants
+  description: A thousand honks a day keeps security officers away!
   components:
   - type: StorageFill
     contents:
@@ -303,6 +340,8 @@
 - type: entity
   id: CrateFunMysteryFigurines
   parent: CratePlastic
+  name: mystery figure crate
+  description: A collection of 10 Mystery Figurine boxes. Duplicates non refundable.
   components:
   - type: StorageFill
     contents:
@@ -313,7 +352,7 @@
         prob: 0.05
 
 - type: entity
-  name: Dartboard Box Set
+  name: dartboard box set
   description: A box with everything you need for a fun game of darts.
   id: CrateFunDartsSet
   parent: CratePlastic

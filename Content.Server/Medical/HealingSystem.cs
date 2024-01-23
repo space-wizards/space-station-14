@@ -84,7 +84,7 @@ public sealed class HealingSystem : EntitySystem
         if (healed == null && healing.BloodlossModifier != 0)
             return;
 
-        var total = healed?.Total ?? FixedPoint2.Zero;
+        var total = healed?.GetTotal() ?? FixedPoint2.Zero;
 
         // Re-verify that we can heal the damage.
 

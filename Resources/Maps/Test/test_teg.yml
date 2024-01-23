@@ -2545,8 +2545,6 @@ entities:
     - ShutdownSubscribers:
       - 433
       type: DeviceNetwork
-    missingComponents:
-    - UpgradeBattery
 - proto: SpawnPointChiefEngineer
   entities:
   - uid: 145
