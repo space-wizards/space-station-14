@@ -107,11 +107,9 @@
     bodyStatus: InAir
   - type: CanMoveInAir
   - type: RandomWalk
-    maxSpeed: 0.5
-    minSpeed: 0.1
   - type: SingularityDistortion
-    intensity: 500
-    falloffPower: 2.6
+    intensity: 1000
+    falloffPower: 2.7
 
 - type: entity
   id: AnomalyElectricity

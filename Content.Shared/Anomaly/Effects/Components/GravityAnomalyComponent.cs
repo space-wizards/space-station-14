@@ -62,6 +62,26 @@ public sealed partial class GravityAnomalyComponent : Component
     public float MaxRadialAccel = 5f;
 
     /// <summary>
+    /// The maximum speed for RandomWalkComponent
+    /// Is scaled linearly with severity.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float MinSpeed = 0.1f;
+
+    /// <summary>
+    /// The maximum speed for RandomWalkComponent
+    /// Is scaled linearly with severity.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float MaxSpeed = 1.0f;
+
+    /// <summary>
+    /// Random +- speed modifier
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float SpeedVariation = 0.1f;
+
+    /// <summary>
     /// The range around the anomaly that will be spaced on supercritical.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
