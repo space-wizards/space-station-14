@@ -17,8 +17,7 @@
     quickEquip: false
     slots:
       - Belt
-  - type: TilePrying
-  - type: LatticeCutting
+  - type: ToolTileCompatible
   - type: Tool
     qualities:
       - Prying

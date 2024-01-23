@@ -82,7 +82,7 @@
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -91,4 +91,4 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud

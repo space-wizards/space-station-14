@@ -170,7 +170,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -186,7 +185,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, 0, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-drain-battery-description"),
@@ -556,7 +554,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -578,7 +575,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, 0, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
