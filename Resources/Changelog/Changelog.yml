@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Empty hot cocoa can go in trash bags
-    type: Fix
-  id: 5269
-  time: '2023-12-05T21:39:26.0000000+00:00'
 - author: Bhijn and Myr
   changes:
   - message: Ghosts now have speech bubbles again
@@ -3795,3 +3789,10 @@
   id: 5769
   time: '2024-01-23T02:11:09.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24420
+- author: themias
+  changes:
+  - message: Added different footstep sounds for blood, soda and juice
+    type: Add
+  id: 5770
+  time: '2024-01-23T04:18:33.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24406
