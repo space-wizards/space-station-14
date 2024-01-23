@@ -12,8 +12,8 @@ public sealed partial class DefaultActionsComponent : Component
     /// <summary>
     /// Action id and entity to be added on mapinit.
     /// </summary>
-    [DataField]
-    public List<ActionPair> Actions;
+    [DataField(required: true)]
+    public List<ActionPair> Actions = new();
 }
 
 [DataDefinition]
@@ -22,8 +22,8 @@ public sealed partial class ActionPair
     /// <summary>
     /// Action entity prototype to be added.
     /// </summary>
-    [DataField]
-    public EntProtoId Id;
+    [DataField(required: true)]
+    public EntProtoId Id = string.Empty;
 
     /// <summary>
     /// Action entity that has been added.
