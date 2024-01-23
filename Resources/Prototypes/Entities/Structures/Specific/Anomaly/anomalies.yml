@@ -147,58 +147,16 @@
     color: "#cb5b7e"
     castShadows: false
   - type: TileSpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      spawnOnStabilityChanged: true
-      minAmount: 3
-      maxAmount: 7
-      maxRange: 4
-      floor: FloorFlesh
-    - spawnOnSuperCritical: true
-      minAmount: 10
-      maxAmount: 30
-      maxRange: 10
-      floor: FloorFlesh
+    floorTileId: FloorFlesh
   - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 1
-      maxAmount: 4
-      minRange: 1.5
-      maxRange: 2.5
-      spawns:
-      - FleshBlocker
-    - spawnOnPulse: true
-      maxAmount: 3
-      minRange: 3
-      maxRange: 4.5
-      spawns:
-      - MobFleshJared
-      - MobFleshGolem
-      - MobFleshClamp
-      - MobFleshLover
-    - spawnOnSuperCritical: true
-      minAmount: 10
-      maxAmount: 15
-      minRange: 5
-      maxRange: 15
-      spawns:
-      - FleshBlocker
-    - spawnOnSuperCritical: true
-      minAmount: 5
-      maxAmount: 10
-      maxRange: 8
-      spawns:
-      - MobFleshJared
-      - MobFleshGolem
-      - MobFleshClamp
-      - MobFleshLover
-    - spawnOnSuperCritical: true
-      minAmount: 5
-      maxAmount: 8
-      maxRange: 10
-      spawns:
-      - FleshKudzu
+    superCriticalSpawns:
+    - FleshKudzu
+    spawns:
+    - MobFleshJared
+    - MobFleshGolem
+    - MobFleshClamp
+    - MobFleshLover
+    - FleshBlocker
 
 - type: entity
   id: AnomalyBluespace
@@ -283,13 +241,12 @@
     projectilePrototype: ProjectileIcicle
     targetNonSentientChance: 0.1
   - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnStabilityChanged: true
-      minAmount: 5
-      maxAmount: 15
-      maxRange: 4
-      spawns:
-      - IceCrust
+    spawns:
+    - IceCrust
+    maxSpawnAmount: 17
+    spawnOnPulse: false
+    spawnOnSuperCritical: false
+    spawnOnStabilityChanged: true
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000
@@ -299,9 +256,8 @@
     spawnRadius: 0
 
 - type: entity
-  id: AnomalyRockBase
+  id: AnomalyRock
   parent: BaseAnomaly
-  abstract: true
   suffix: Rock
   components:
   - type: Anomaly
@@ -320,201 +276,18 @@
     color: "#5ca8cb"
     castShadows: false
   - type: TileSpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 15
-      maxAmount: 20
-      maxRange: 7.5
-      floor: FloorAsteroidTile
-    - spawnOnSuperCritical: true
-      minAmount: 30
-      maxAmount: 50
-      maxRange: 12
-      floor: FloorAsteroidTile
-
-- type: entity
-  id: AnomalyRockUranium
-  parent: AnomalyRockBase
-  suffix: Rock, Uranium
-  components:
-  - type: Sprite
-    color: "#52ff39"
-  - type: PointLight
-    radius: 2.0
-    energy: 7.5
-    color: "#52ff39"
+    floorTileId: FloorAsteroidTile
+    spawnChance: 0.8
   - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 8
-      maxAmount: 15
-      minRange: 4.5
-      maxRange: 7.5
-      spawns:
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidUranium
-      - WallSpawnAsteroidUraniumCrab
-    - spawnOnPulse: true
-      maxAmount: 3
-      minRange: 2.5
-      maxRange: 4.5
-      spawns:
-      - CrystalGreen
-    - spawnOnSuperCritical: true
-      minAmount: 30
-      maxAmount: 40
-      minRange: 5
-      maxRange: 15
-      spawns:
-      - CrystalGreen
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidUraniumCrab
-    - spawnOnSuperCritical: true
-      minAmount: 6
-      maxAmount: 10
-      maxRange: 5
-      spawns:
-      - MobSpawnCrabUranium
-
-- type: entity
-  id: AnomalyRockQuartz
-  parent: AnomalyRockBase
-  suffix: Rock, Quartz
-  components:
-  - type: Sprite
-    color: "#fb4747"
-  - type: PointLight
-    radius: 2.0
-    energy: 7.5
-    color: "#fb4747"
-  - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 8
-      maxAmount: 15
-      minRange: 4.5
-      maxRange: 7.5
-      spawns:
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidQuartz
-      - WallSpawnAsteroidQuartzCrab
-    - spawnOnPulse: true
-      maxAmount: 3
-      minRange: 2.5
-      maxRange: 4.5
-      spawns:
-      - CrystalGrey
-    - spawnOnSuperCritical: true
-      minAmount: 30
-      maxAmount: 40
-      minRange: 5
-      maxRange: 15
-      spawns:
-      - CrystalGrey
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidQuartzCrab
-    - spawnOnSuperCritical: true
-      minAmount: 6
-      maxAmount: 10
-      maxRange: 5
-      spawns:
-      - MobSpawnCrabQuartz
-
-- type: entity
-  id: AnomalyRockSilver
-  parent: AnomalyRockBase
-  suffix: Rock, Silver
-  components:
-  - type: Sprite
-    color: "#47f8ff"
-  - type: PointLight
-    radius: 2.0
-    energy: 7.5
-    color: "#47f8ff"
-  - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 8
-      maxAmount: 15
-      minRange: 4.5
-      maxRange: 7.5
-      spawns:
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidSilver
-      - WallSpawnAsteroidSilverCrab
-    - spawnOnPulse: true
-      maxAmount: 3
-      minRange: 2.5
-      maxRange: 4.5
-      spawns:
-      - CrystalCyan
-    - spawnOnSuperCritical: true
-      minAmount: 30
-      maxAmount: 40
-      minRange: 5
-      maxRange: 15
-      spawns:
-      - CrystalCyan
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidSilverCrab
-    - spawnOnSuperCritical: true
-      minAmount: 6
-      maxAmount: 10
-      maxRange: 5
-      spawns:
-      - MobSpawnCrabSilver
-
-- type: entity
-  id: AnomalyRockIron
-  parent: AnomalyRockBase
-  suffix: Rock, Iron
-  components:
-  - type: Sprite
-    color: "#ff8227"
-  - type: PointLight
-    radius: 2.0
-    energy: 7.5
-    color: "#ff8227"
-  - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 8
-      maxAmount: 15
-      minRange: 4.5
-      maxRange: 7.5
-      spawns:
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidIron
-      - WallSpawnAsteroidIronCrab
-    - spawnOnPulse: true
-      maxAmount: 3
-      minRange: 2.5
-      maxRange: 4.5
-      spawns:
-      - CrystalOrange
-    - spawnOnSuperCritical: true
-      minAmount: 30
-      maxAmount: 40
-      minRange: 5
-      maxRange: 15
-      spawns:
-      - CrystalOrange
-      - WallSpawnAsteroid
-      - WallSpawnAsteroid
-      - WallSpawnAsteroidIronCrab
-    - spawnOnSuperCritical: true
-      minAmount: 6
-      maxAmount: 10
-      maxRange: 5
-      spawns:
-      - MobSpawnCrabIron
+    maxSpawnAmount: 50
+    spawnRange: 10
+    spawns:
+    - WallSpawnAsteroid
+    - RockAnomCrabSpawner
+    - CrystalSpawner
+    superCriticalSpawns:
+    - WallSpawnAsteroid
+    - SpawnMobOreCrab
 
 - type: entity
   id: AnomalyFlora
@@ -543,31 +316,15 @@
       types:
         Slash: 0
   - type: TileSpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 3
-      maxAmount: 7
-      maxRange: 5
-      floor: FloorAstroGrass
-    - spawnOnSuperCritical: true
-      minAmount: 10
-      maxAmount: 30
-      maxRange: 15
-      floor: FloorAstroGrass
+    floorTileId: FloorAstroGrass
+    spawnRange: 6
   - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnPulse: true
-      minAmount: 2
-      maxAmount: 5
-      maxRange: 2
-      spawns: 
-      - KudzuFlowerFriendly
-    - spawnOnSuperCritical: true
-      minAmount: 5
-      maxAmount: 10
-      maxRange: 6
-      spawns: 
-      - KudzuFlowerAngry
+    maxSpawnAmount: 15
+    spawnRange: 6
+    superCriticalSpawns:
+    - KudzuFlowerAngry
+    spawns:
+    - KudzuFlowerFriendly
 
 - type: entity
   id: AnomalyFloraBulb
@@ -643,13 +400,10 @@
       types:
         Slash: 1
   - type: EntitySpawnAnomaly
-    entries:
-    - spawnOnSuperCritical: true
-      minAmount: 3
-      maxAmount: 8
-      maxRange: 2
-      spawns:
-      - ReagentSlimeSpawner
+    superCriticalSpawns:
+    - ReagentSlimeSpawner
+    spawns:
+      - PuddleSparkle
   - type: SolutionContainerManager
     solutions:
       anomaly:

@@ -10,7 +10,8 @@
     - type: MeleeSound
       soundGroups:
         Brute:
-          collection: GlassBreak
+          path:
+            "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/ice_crust.rsi
       layers:
