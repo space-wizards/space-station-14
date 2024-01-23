@@ -48,6 +48,9 @@
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
+  blacklist:
+    components:
+      - BorgChassis
   components:
     - type: Muted
 
