@@ -27,8 +27,8 @@ public sealed class SpriteMovementSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var oldMoving = SharedMoverController.GetNormalizedMovement(args.OldMovement) != MoveButtons.None;
-        var moving = SharedMoverController.GetNormalizedMovement(args.Component.HeldMoveButtons) != MoveButtons.None;
+        var oldMoving = (SharedMoverController.GetNormalizedMovement(args.OldMovement) & MoveButtons.AllDirections) != 0;
+        var moving = (SharedMoverController.GetNormalizedMovement(args.Component.HeldMoveButtons) & MoveButtons.AllDirections) != 0;
 
         if (oldMoving == moving || !_spriteQuery.TryGetComponent(uid, out var sprite))
             return;
