@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
@@ -9,7 +9,9 @@ using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Station.Systems;
@@ -84,13 +86,14 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     #region Public API
 
-    /// <inheritdoc cref="TryAssignJob(Robust.Shared.GameObjects.EntityUid,string,Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <inheritdoc cref="TryAssignJob(Robust.Shared.GameObjects.EntityUid,string,NetUserId,Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to assign a job on.</param>
     /// <param name="job">Job to assign.</param>
+    /// <param name="netUserId">The net user ID of the player we're assigning this job to.</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
-    public bool TryAssignJob(EntityUid station, JobPrototype job, StationJobsComponent? stationJobs = null)
+    public bool TryAssignJob(EntityUid station, JobPrototype job, NetUserId netUserId, StationJobsComponent? stationJobs = null)
     {
-        return TryAssignJob(station, job.ID, stationJobs);
+        return TryAssignJob(station, job.ID, netUserId, stationJobs);
     }
 
     /// <summary>
@@ -98,12 +101,21 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// </summary>
     /// <param name="station">Station to assign a job on.</param>
     /// <param name="jobPrototypeId">Job prototype ID to assign.</param>
+    /// <param name="netUserId">The net user ID of the player we're assigning this job to.</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
     /// <returns>Whether or not assignment was a success.</returns>
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
-    public bool TryAssignJob(EntityUid station, string jobPrototypeId, StationJobsComponent? stationJobs = null)
+    public bool TryAssignJob(EntityUid station, string jobPrototypeId, NetUserId netUserId, StationJobsComponent? stationJobs = null)
     {
-        return TryAdjustJobSlot(station, jobPrototypeId, -1, false, false, stationJobs);
+        if (!Resolve(station, ref stationJobs, false))
+            return false;
+
+        if (!TryAdjustJobSlot(station, jobPrototypeId, -1, false, false, stationJobs))
+            return false;
+
+        stationJobs.PlayerJobs.TryAdd(netUserId, new());
+        stationJobs.PlayerJobs[netUserId].Add(jobPrototypeId);
+        return true;
     }
 
     /// <inheritdoc cref="TryAdjustJobSlot(Robust.Shared.GameObjects.EntityUid,string,int,bool,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
@@ -181,6 +193,28 @@ public sealed partial class StationJobsSystem : EntitySystem
                 UpdateJobsAvailable();
                 return true;
         }
+    }
+
+    public bool TryGetPlayerJobs(EntityUid station,
+        NetUserId userId,
+        [NotNullWhen(true)] out List<ProtoId<JobPrototype>>? jobs,
+        StationJobsComponent? jobsComponent = null)
+    {
+        jobs = null;
+        if (!Resolve(station, ref jobsComponent, false))
+            return false;
+
+        return jobsComponent.PlayerJobs.TryGetValue(userId, out jobs);
+    }
+
+    public bool TryRemovePlayerJobs(EntityUid station,
+        NetUserId userId,
+        StationJobsComponent? jobsComponent = null)
+    {
+        if (!Resolve(station, ref jobsComponent, false))
+            return false;
+
+        return jobsComponent.PlayerJobs.Remove(userId);
     }
 
     /// <inheritdoc cref="TrySetJobSlot(Robust.Shared.GameObjects.EntityUid,string,int,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
@@ -488,7 +522,7 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
     {
-        RaiseNetworkEvent(_cachedAvailableJobs, ev.PlayerSession.ConnectedClient);
+        RaiseNetworkEvent(_cachedAvailableJobs, ev.PlayerSession.Channel);
     }
 
     private void OnStationRenamed(EntityUid uid, StationJobsComponent component, StationRenamedEvent args)
