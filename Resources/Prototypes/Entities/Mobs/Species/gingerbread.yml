@@ -43,7 +43,7 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
-    - Gingerbread
+    - GingerbreadSpecies
 
 - type: entity
   parent: BaseSpeciesDummy

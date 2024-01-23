@@ -100,7 +100,7 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
-    - Diona
+    - DionaSpecies
 
 - type: entity
   parent: BaseSpeciesDummy

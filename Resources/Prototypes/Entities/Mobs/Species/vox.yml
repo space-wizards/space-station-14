@@ -110,7 +110,7 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
-    - Vox
+    - VoxSpecies
 
 - type: entity
   parent: BaseSpeciesDummy

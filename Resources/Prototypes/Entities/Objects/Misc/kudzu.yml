@@ -115,9 +115,9 @@
       sprite: Objects/Misc/kudzuflower.rsi
       state: kudzu_11
     - type: Kudzu
-      spreadRadius: 10
+      spreadRadius: 3
       spriteVariants: 5
-      spreadChance: 0.01
+      spreadChance: 0.1
     - type: SlowContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
@@ -162,6 +162,7 @@
   parent: KudzuFlowerFriendly
   components:
     - type: Kudzu
+      spreadRadius: 10
       spreadChance: 0.4
     - type: RandomSpawner
       chance: 0.1

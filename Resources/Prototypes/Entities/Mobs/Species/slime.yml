@@ -79,7 +79,7 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
-    - Slime
+    - SlimeSpecies
 
 - type: entity
   parent: MobHumanDummy

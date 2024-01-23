@@ -116,7 +116,7 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
-    - Arachnid
+    - ArachnidSpecies
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -63,7 +63,7 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
-    - Reptilian
+    - ReptilianSpecies
 
 - type: entity
   parent: BaseSpeciesDummy

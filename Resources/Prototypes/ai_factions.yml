@@ -89,50 +89,50 @@
   id: Nature
   hostile:
   - Zombie
-  - Vox
-  - Arachnid
-  - Dwarf
-  - Gingerbread
-  - Human
-  - Moth
-  - Reptilian
-  - Skeleton
-  - Slime
+  - VoxSpecies
+  - ArachnidSpecies
+  - DwarfSpecies
+  - GingerbreadSpecies
+  - HumanSpecies
+  - MothSpecies
+  - ReptilianSpecies
+  - SkeletonSpecies
+  - SlimeSpecies
   friendly:
   - Dragon
   - PetsNT
   - Xeno
   - Mouse
-  - Diona
+  - DionaSpecies
 
 #Species factions
 
 - type: npcFaction
-  id: Arachnid
+  id: ArachnidSpecies
   
 - type: npcFaction
-  id: Diona
+  id: DionaSpecies
   
 - type: npcFaction
-  id: Dwarf
+  id: DwarfSpecies
   
 - type: npcFaction
-  id: Gingerbread
+  id: GingerbreadSpecies
   
 - type: npcFaction
-  id: Human
+  id: HumanSpecies
   
 - type: npcFaction
-  id: Moth
+  id: MothSpecies
   
 - type: npcFaction
-  id: Reptilian
+  id: ReptilianSpecies
   
 - type: npcFaction
-  id: Skeleton
+  id: SkeletonSpecies
   
 - type: npcFaction
-  id: Slime
+  id: SlimeSpecies
   
 - type: npcFaction
-  id: Vox
+  id: VoxSpecies

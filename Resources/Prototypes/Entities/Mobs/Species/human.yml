@@ -22,7 +22,7 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
-    - Human
+    - HumanSpecies
 
 - type: entity
   parent: BaseSpeciesDummy
