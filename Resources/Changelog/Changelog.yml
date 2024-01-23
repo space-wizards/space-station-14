@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: Speech bubbles for the living now again have names when fancy speech
-      bubbles are enabled
-    type: Fix
-  id: 5278
-  time: '2023-12-06T21:58:53.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - message: Pickaxes have a more accurate shape in storage.
@@ -3804,3 +3797,11 @@
   id: 5778
   time: '2024-01-23T22:15:48.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24203
+- author: Tin-Man-Tim
+  changes:
+  - message: Attempting to microwave metal now can cause the microwave to spark and
+      explode.
+    type: Tweak
+  id: 5779
+  time: '2024-01-23T22:59:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23887
