@@ -163,9 +163,6 @@
       materialWhiteList: [Plasma]
     - type: PortableGenerator
       startChance: 0.8
-    - type: UpgradePowerSupplier
-      powerSupplyMultiplier: 1.25
-      scaling: Exponential
     - type: GeneratorExhaustGas
       gasType: CarbonDioxide
       # 2 moles of gas for every sheet of plasma.
@@ -223,9 +220,6 @@
       storageLimit: 3000
       materialWhiteList: [Uranium]
     - type: PortableGenerator
-    - type: UpgradePowerSupplier
-      powerSupplyMultiplier: 1.25
-      scaling: Exponential
     - type: PowerMonitoringDevice
       group: Generator
       loadNodes:

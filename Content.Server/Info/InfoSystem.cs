@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.Info;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -31,6 +31,6 @@ public sealed class InfoSystem : EntitySystem
             Logger.ErrorS("info", "Could not read server rules file.");
         }
         var response = new RulesMessage(title, rules);
-        RaiseNetworkEvent(response, eventArgs.SenderSession.ConnectedClient);
+        RaiseNetworkEvent(response, eventArgs.SenderSession.Channel);
     }
 }
