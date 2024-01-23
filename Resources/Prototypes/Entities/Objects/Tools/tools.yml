@@ -339,8 +339,8 @@
 - type: entity
   id: RCD
   parent: BaseItem
-  name: rapid construction device
-  description: An advanced construction device which can place and remove various station structures and fixtures quickly. Requires compressed matter to function.
+  name: RCD
+  description: The rapid construction device can be used to quickly place and remove various station structures and fixtures. Requires compressed matter to function.
   components:
   - type: RCD
     availablePrototypes:   
@@ -415,7 +415,7 @@
 - type: entity
   id: RCDRecharging
   parent: RCD
-  name: experimental rapid construction device
+  name: experimental RCD
   description: A bluespace-enhanced rapid construction device that passively generates its own compressed matter.
   suffix: AutoRecharge
   components:
@@ -429,17 +429,17 @@
   id: RCDExperimental
   parent: RCD
   suffix: Admeme
-  name: experimental rapid construction device
+  name: experimental RCD
   description: A bluespace-enhanced rapid construction device that passively generates its own compressed matter.
   components:
   - type: AutoRecharge
     rechargeDuration: 1
 
 - type: entity
-  name: compressed matter cartridge
+  name: compressed matter
   parent: BaseItem
   id: RCDAmmo
-  description: Raw matter compacted by bluespace technology. Used by rapid construction devices.
+  description: A cartridge of raw matter compacted by bluespace technology. Used in rapid construction devices.
   components:
   - type: RCDAmmo
   - type: Sprite
