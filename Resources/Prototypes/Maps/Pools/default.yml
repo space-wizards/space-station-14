@@ -1,18 +1,18 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
-  - Aspid
-  - Atlas
+  #- Aspid
+  #- Atlas
   - Bagel
   - Box
-  - Cluster
-  - Core
+  #- Cluster
+  #- Core
   - Fland
-  - Gemini
+  #- Gemini
   - Marathon
   - Meta
-  - Omega
-  - Origin
-  - Saltern
-  - Packed
-  - Reach
+  #- Omega
+  #- Origin
+  #- Saltern
+  #- Packed
+  #- Reach
