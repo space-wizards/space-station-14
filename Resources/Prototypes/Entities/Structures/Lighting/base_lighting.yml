@@ -355,3 +355,72 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
+
+#Coloured lights
+
+- type: entity
+  id: PoweredlightCyan
+  suffix: Cyan
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeCrystalCyan
+    damage:
+      types:
+        Heat: 5
+
+- type: entity
+  id: PoweredlightBlue
+  suffix: Blue
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeCrystalBlue
+    damage:
+      types:
+        Heat: 5
+
+- type: entity
+  id: PoweredlightPink
+  suffix: Pink
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeCrystalPink
+    damage:
+      types:
+        Heat: 5
+
+- type: entity
+  id: PoweredlightOrange
+  suffix: Orange
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeCrystalOrange
+    damage:
+      types:
+        Heat: 5
+
+- type: entity
+  id: PoweredlightRed
+  suffix: Red
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeCrystalRed
+    damage:
+      types:
+        Heat: 5
+
+- type: entity
+  id: PoweredlightGreen
+  suffix: Green
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeCrystalGreen
+    damage:
+      types:
+        Heat: 5
+

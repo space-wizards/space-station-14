@@ -1,13 +1,16 @@
-﻿using Content.Shared.NukeOps;
+﻿using Content.Shared.CCVar;
+using Content.Shared.Chat;
+using Content.Shared.NukeOps;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Shared.Timing;
+using Robust.Shared.Configuration;
 
 namespace Content.Client.NukeOps;
 
 [UsedImplicitly]
 public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
     [ViewVariables]
     private WarDeclaratorWindow? _window;
 
@@ -44,6 +47,8 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
 
     private void OnWarDeclaratorActivated(string message)
     {
-        SendMessage(new WarDeclaratorActivateMessage(message));
+        var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+        var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
+        SendMessage(new WarDeclaratorActivateMessage(msg));
     }
 }

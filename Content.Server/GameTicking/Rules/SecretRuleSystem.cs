@@ -1,8 +1,10 @@
+using Content.Server.Administration.Logs;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
@@ -14,6 +16,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     protected override void Started(EntityUid uid, SecretRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -38,6 +41,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
         var presetString = _configurationManager.GetCVar(CCVars.SecretWeightPrototype);
         var preset = _prototypeManager.Index<WeightedRandomPrototype>(presetString).Pick(_random);
         Logger.InfoS("gamepreset", $"Selected {preset} for secret.");
+        _adminLogger.Add(LogType.EventStarted, $"Selected {preset} for secret.");
 
         var rules = _prototypeManager.Index<GamePresetPrototype>(preset).Rules;
         foreach (var rule in rules)

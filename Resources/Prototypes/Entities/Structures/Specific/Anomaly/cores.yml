@@ -135,6 +135,19 @@
     castShadows: false
   - type: Electrified
 
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreFlora
+  suffix: Flora
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#6270bb"
+    castShadows: false
+
 # Inert cores
 
 - type: entity
@@ -254,4 +267,17 @@
     radius: 1.5
     energy: 2.0
     color: "#ffffaa"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreFloraInert
+  suffix: Flora, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#6270bb"
     castShadows: false

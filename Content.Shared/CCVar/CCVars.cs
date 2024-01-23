@@ -1598,6 +1598,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
 
+        public static readonly CVarDef<int> ChatMaxAnnouncementLength =
+            CVarDef.Create("chat.max_announcement_length", 256, CVar.SERVER | CVar.REPLICATED);
+
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
