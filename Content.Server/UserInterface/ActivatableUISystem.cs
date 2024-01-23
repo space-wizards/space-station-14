@@ -1,6 +1,4 @@
 using Content.Server.Administration.Managers;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
@@ -17,7 +15,6 @@ namespace Content.Server.UserInterface;
 
 public sealed partial class ActivatableUISystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -95,9 +92,6 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.InHandsOnly)
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var accessReader) && !_access.IsAllowed(args.User, uid, accessReader))
-            return;
-
         args.Handled = InteractUI(args.User, uid, component);
     }
 
@@ -107,9 +101,6 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
 
         if (component.rightClickOnly)
-            return;
-
-        if (TryComp<AccessReaderComponent>(uid, out var accessReader) && !_access.IsAllowed(args.User, uid, accessReader))
             return;
 
         args.Handled = InteractUI(args.User, uid, component);
