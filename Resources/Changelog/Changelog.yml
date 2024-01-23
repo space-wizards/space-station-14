@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Reverted duffel bags to their original storage capacity.
-    type: Fix
-  id: 5273
-  time: '2023-12-06T03:11:01.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Predict helmet toggling.
@@ -3799,3 +3793,10 @@
   id: 5773
   time: '2024-01-23T13:06:14.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24450
+- author: Boaz1111
+  changes:
+  - message: Lizards can now properly eat fruit cakes and banana cream pie slices.
+    type: Fix
+  id: 5774
+  time: '2024-01-23T18:08:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24457
