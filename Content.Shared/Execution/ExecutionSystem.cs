@@ -15,7 +15,6 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -34,6 +33,7 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
+    [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
 
     private const string DefaultInternalMeleeSuicideMessage = "suicide-popup-melee-initial-internal";
     private const string DefaultExternalMeleeSuicideMessage = "suicide-popup-melee-initial-external";
@@ -169,15 +169,12 @@ public sealed class ExecutionSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return;
 
-        if (!TryComp<ExecutionComponent>(uid, out var executionComp))
+        if (!HasComp<ExecutionComponent>(uid))
             return;
 
         var attacker = args.User;
         var victim = args.Target.Value;
         var weapon = args.Used.Value;
-
-        if (!TryComp<TransformComponent>(victim, out var xform))
-            return;
 
         if (!CanExecuteWithAny(victim, attacker))
             return;
@@ -190,11 +187,15 @@ public sealed class ExecutionSystem : EntitySystem
         Dirty(weapon, execComp);
 
         // This is needed so the melee system does not stop it.
+        var prev = _combatSystem.IsInCombatMode(attacker);
         _combatSystem.SetInCombatMode(attacker, true);
 
-        var ev = new LightAttackEvent(GetNetEntity(victim), GetNetEntity(weapon), GetNetCoordinates(xform.Coordinates));
-        RaiseNetworkEvent(ev);
+        _meleeSystem.AttemptLightAttack(attacker, weapon, comp, victim);
 
+        RemComp<ActiveExecutionComponent>(uid);
+        Dirty(uid, comp);
+
+        _combatSystem.SetInCombatMode(attacker, prev);
 
         args.Handled = true;
     }
@@ -259,9 +260,6 @@ public sealed class ExecutionSystem : EntitySystem
         if (!TryComp<ExecutionComponent>(uid, out var executionComp))
             return;
 
-        if (args.FiredProjectiles.Count < 1)
-            return;
-
         foreach (var bullet in args.FiredProjectiles)
         {
 
@@ -281,7 +279,6 @@ public sealed class ExecutionSystem : EntitySystem
 
                 execBulletComp.Target = comp.Victim;
                 execBulletComp.Multiplier = executionComp.DamageModifier;
-                execBulletComp.Clumsy = comp.Clumsy;
                 execBulletComp.FixtureId = comp.FixtureId;
 
                 Dirty(bullet, execBulletComp);
@@ -316,7 +313,7 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, ExecutionProjectileComponent comp, StartCollideEvent args)
     {
-        if (!(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId)
+        if (!args.OtherBody.Hard || !(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId)
             return;
 
         if (!TryComp<ProjectileComponent>(uid, out var projectileComponent))
@@ -326,6 +323,39 @@ public sealed class ExecutionSystem : EntitySystem
 
         RemComp<ExecutionProjectileComponent>(uid);
         Dirty(uid, comp);
+    }
+
+    private void OnGetMeleeDamage(EntityUid uid, ActiveExecutionComponent comp, ref GetMeleeDamageEvent args)
+    {
+        if (!TryComp<MeleeWeaponComponent>(uid, out var melee) || !TryComp<ExecutionComponent>(uid, out var execComp))
+            return;
+
+        var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
+
+        string internalMsg;
+        string externalMsg;
+
+        var attacker = comp.Attacker;
+        var victim = comp.Victim;
+
+        _combatSystem.SetInCombatMode(attacker, false);
+
+        // Hit is confirmed at this point so we do the popups now.
+        if (attacker == victim)
+        {
+            internalMsg = execComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalMeleeSuicideMessage;
+            externalMsg = execComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalMeleeSuicideMessage;
+        }
+        else
+        {
+            internalMsg = execComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalMeleeExecutionMessage;
+            externalMsg = execComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalMeleeExecutionMessage;
+        }
+
+        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
+        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
+
+        args.Damage += bonus;
     }
 
     private void ShowExecutionInternalPopup(string locString,
@@ -364,42 +394,4 @@ public sealed class ExecutionSystem : EntitySystem
             );
     }
 
-    private void OnGetMeleeDamage(EntityUid uid, ActiveExecutionComponent comp, ref GetMeleeDamageEvent args)
-    {
-        if (!TryComp<MeleeWeaponComponent>(uid, out var melee) || !TryComp<ExecutionComponent>(uid, out var execComp))
-        {
-            RemComp<ActiveExecutionComponent>(uid);
-            Dirty(uid, comp);
-            return;
-        }
-
-        var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
-
-        string internalMsg;
-        string externalMsg;
-
-        var attacker = comp.Attacker;
-        var victim = comp.Victim;
-
-        _combatSystem.SetInCombatMode(attacker, false);
-
-        if (attacker == victim)
-        {
-            internalMsg = execComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalMeleeSuicideMessage;
-            externalMsg = execComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalMeleeSuicideMessage;
-        }
-        else
-        {
-            internalMsg = execComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalMeleeExecutionMessage;
-            externalMsg = execComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalMeleeExecutionMessage;
-        }
-
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
-        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
-
-        args.Damage += bonus;
-
-        RemComp<ActiveExecutionComponent>(uid);
-        Dirty(uid, comp);
-    }
 }
