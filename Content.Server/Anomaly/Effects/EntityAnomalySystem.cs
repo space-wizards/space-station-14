@@ -34,7 +34,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.SpawnOnPulse)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry, args.Stability, args.Severity);
+            SpawnEntitiesOnOpenTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
@@ -45,7 +45,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.SpawnOnSuperCritical)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry, 1, 1);
+            SpawnEntitiesOnOpenTiles(component, entry, 1, 1);
         }
     }
 
@@ -56,7 +56,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.SpawnOnShutdown || args.Supercritical)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry, 1, 1);
+            SpawnEntitiesOnOpenTiles(component, entry, 1, 1);
         }
     }
 
@@ -67,7 +67,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.SpawnOnStabilityChanged)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry, args.Stability, args.Severity);
+            SpawnEntitiesOnOpenTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
@@ -78,14 +78,14 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.SpawnOnSeverityChanged)
                 continue;
 
-            SpawnEntitesOnOpenTiles(component, entry, args.Stability, args.Severity);
+            SpawnEntitiesOnOpenTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
     //TheShuEd:
     //I know it's a shitcode! I didn't write it! I just restructured the functions
     // To Do: make it reusable with TileAnomalySystem
-    private void SpawnEntitesOnOpenTiles(Entity<EntitySpawnAnomalyComponent> component, EntitySpawnSettingsEntry entry, float stability, float severity)
+    private void SpawnEntitiesOnOpenTiles(Entity<EntitySpawnAnomalyComponent> component, EntitySpawnSettingsEntry entry, float stability, float severity)
     {
         if (entry.Spawns.Count == 0)
             return;

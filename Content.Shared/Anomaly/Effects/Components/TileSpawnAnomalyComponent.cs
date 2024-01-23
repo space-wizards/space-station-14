@@ -13,7 +13,7 @@ public sealed partial class TileSpawnAnomalyComponent : Component
     public List<TileSpawnSettingsEntry> Entries = new();
 }
 
-[DataDefinition, Serializable]
+[DataDefinition, Serializable, DataRecord]
 public partial record struct TileSpawnSettingsEntry()
 {
     /// <summary>
