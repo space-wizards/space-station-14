@@ -318,6 +318,8 @@
   - type: WiresVisuals
   - type: StaticPrice
     price: 5000
+  - type: AccessReader
+    access: [["Research"]]
   - type: GuideHelp
     guides:
     - AnomalousResearch
