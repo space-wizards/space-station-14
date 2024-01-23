@@ -1,18 +1,6 @@
 ﻿Entries:
 - author: deltanedas
   changes:
-  - message: Fixed emagged medibots not injecting healthy people with chloral hydrate.
-    type: Fix
-  id: 5275
-  time: '2023-12-06T21:30:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.
-    type: Fix
-  id: 5276
-  time: '2023-12-06T21:56:03.0000000+00:00'
-- author: deltanedas
-  changes:
   - message: Combat boots and friends use a slot for sidearms instead of a storage
       window.
     type: Tweak
@@ -3801,3 +3789,18 @@
   id: 5775
   time: '2024-01-23T18:26:28.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24392
+- author: Errant
+  changes:
+  - message: '"Not enough oxygen" hud alerts now indicate the proper gas for nitrogen
+      breathers.'
+    type: Fix
+  id: 5776
+  time: '2024-01-23T20:17:41.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24373
+- author: themias
+  changes:
+  - message: Cyborgs can no longer spawn with the Wheelchair Bound or Muted trait
+    type: Fix
+  id: 5777
+  time: '2024-01-23T20:18:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24459
