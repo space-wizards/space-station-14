@@ -154,6 +154,7 @@
 - type: entity
   id: AirlockRCDResistant
   parent: Airlock
+  abstract: true
   components:
   - type: RCDDeconstructable
     deconstructable: false

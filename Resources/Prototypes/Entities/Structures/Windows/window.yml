@@ -95,6 +95,7 @@
 - type: entity
   id: WindowRCDResistant
   parent: Window
+  abstract: true
   components:
   - type: RCDDeconstructable
     deconstructable: false
@@ -195,8 +196,9 @@
     price: 10
 
 - type: entity
-  id: WindowDirectionalRCDResistant
+  id: WindowDirectionalRCDResistant  
   parent: WindowDirectional
+  abstract: true
   components:
   - type: RCDDeconstructable
     deconstructable: false

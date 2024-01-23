@@ -19,9 +19,10 @@ rcd-component-insufficient-ammo-message = The RCD doesn't have enough charges le
 rcd-component-tile-indestructible-message = That tile can't be destructed!
 rcd-component-deconstruct-target-not-on-whitelist-message = You can't deconstruct that!
 rcd-component-nothing-to-deconstruct-message = There's nothing to deconstruct!
-rcd-component-tile-obstructed-message = You can't deconstruct tilea when there's something on top of them!
+rcd-component-tile-obstructed-message = You can't deconstruct tiles when there's something on top of them!
 
 # Construction
+rcd-component-no-valid-grid = You're too far into open space to build here!
 rcd-component-cannot-build-on-non-empty-tile-message = A foundation already exists here!
 rcd-component-cannot-build-on-empty-tile-message = You can't build that without a foundation!
 rcd-component-cannot-build-as-space-is-occupied-message = You can't build here, the space is already occupied!

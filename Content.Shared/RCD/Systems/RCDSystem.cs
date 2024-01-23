@@ -139,7 +139,10 @@ public class RCDSystem : EntitySystem
             return;
 
         if (!TryGetMapGridData(location, out var mapGridData))
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-no-valid-grid"), uid, user);
             return;
+        }
 
         if (!IsRCDOperationStillValid(uid, component, mapGridData.Value, args.Target, args.User))
             return;
@@ -160,7 +163,7 @@ public class RCDSystem : EntitySystem
             // Deconstructing an object
             if (args.Target != null)
             {
-                if (TryComp<RCDDeconstructibleComponent>(args.Target, out var destructible))
+                if (TryComp<RCDDeconstructableComponent>(args.Target, out var destructible))
                 {
                     cost = destructible.Cost;
                     delay = destructible.Delay;
@@ -192,7 +195,7 @@ public class RCDSystem : EntitySystem
             if (!tile.Tile.IsEmpty)
             {
                 delay = 0;
-                effectPrototype = "EffectRCDConstructInstant";
+                effectPrototype = "EffectRCDConstruct0";
             }
         }
 
@@ -307,7 +310,7 @@ public class RCDSystem : EntitySystem
         }
 
         // Exit if the target / target location is obstructed
-        var unobstructed = target == null
+        var unobstructed = (target == null)
             ? _interaction.InRangeUnobstructed(user, _mapSystem.GridTileToWorld(mapGridData.GridUid, mapGridData.Component, mapGridData.Position), popup: popMsgs)
             : _interaction.InRangeUnobstructed(user, target.Value, popup: popMsgs);
 
@@ -374,28 +377,37 @@ public class RCDSystem : EntitySystem
         var isWindow = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
         var constructionAngle = (component.CachedPrototype.Rotation == RcdRotation.User) ? component.ConstructionDirection.ToAngle() : Direction.South.ToAngle();
 
-        foreach (var ent in _lookup.GetEntitiesIntersecting(mapGridData.Tile, -0.1f, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Static))
+        foreach (var ent in _lookup.GetLocalEntitiesIntersecting(mapGridData.Tile, -0.05f, LookupFlags.Uncontained))
         {
-            if (!TryComp<FixturesComponent>(ent, out var fixtures))
-                continue;
-
             if (isWindow && HasComp<SharedCanBuildWindowOnTopComponent>(ent))
                 continue;
 
-            for (int i = 0; i < fixtures.FixtureCount; i++)
+            if (TryComp<FixturesComponent>(ent, out var fixtures))
             {
-                (var _, var fixture) = fixtures.Fixtures.ElementAt(i);
+                for (int i = 0; i < fixtures.FixtureCount; i++)
+                {
+                    (var _, var fixture) = fixtures.Fixtures.ElementAt(i);
 
-                // No collision possible
-                if (Prototype(ent)?.ID != component.CachedPrototype.Prototype &&
-                    (fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0))
-                    continue;
+                    // No collision possible
+                    if (Prototype(ent)?.ID != component.CachedPrototype.Prototype &&
+                        (fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0))
+                        continue;
 
-                // Check for custom collision bounds
-                if (component.CachedPrototype.CollisionBounds != null &&
-                    !DoesCustomBoundsIntersectWithFixture(component.CachedPrototype.CollisionBounds.Value, constructionAngle, fixture))
-                    continue;
+                    // Check for custom collision bounds
+                    if (component.CachedPrototype.CollisionBounds != null &&
+                        !DoesCustomBoundsIntersectWithFixture(component.CachedPrototype.CollisionBounds.Value, constructionAngle, ent, fixture))
+                        continue;
 
+                    // Collision detected
+                    if (popMsgs)
+                        _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-space-is-occupied-message"), uid, user);
+
+                    return false;
+                }
+            }
+
+            else if (Prototype(ent)?.ID == component.CachedPrototype.Prototype)
+            {
                 // Collision detected
                 if (popMsgs)
                     _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-space-is-occupied-message"), uid, user);
@@ -432,6 +444,7 @@ public class RCDSystem : EntitySystem
 
             // The tile cannot be destroyed
             var tileDef = (ContentTileDefinition) _tileDefMan[mapGridData.Tile.Tile.TypeId];
+
             if (tileDef.Indestructible)
             {
                 if (popMsgs)
@@ -445,7 +458,7 @@ public class RCDSystem : EntitySystem
         else
         {
             // The object is not in the whitelist
-            if (!_tag.HasTag(target.Value, "RCDDeconstructWhitelist"))
+            if (!TryComp<RCDDeconstructableComponent>(target, out var deconstructible) || !deconstructible.Deconstructable)
             {
                 if (popMsgs)
                     _popup.PopupClient(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), uid, user);
@@ -539,10 +552,10 @@ public class RCDSystem : EntitySystem
         return true;
     }
 
-    public bool DoesCustomBoundsIntersectWithFixture(Box2 boundingBox, Angle boundingBoxAngle, Fixture fixture)
+    public bool DoesCustomBoundsIntersectWithFixture(Box2 boundingBox, Angle boundingBoxAngle, EntityUid fixtureOwner, Fixture fixture)
     {
-        var (entWorldPos, entWorldRot) = _transformSystem.GetWorldPositionRotation(Transform(fixture.Owner));
-        var entXform = new Transform(entWorldPos, entWorldRot);
+        var entXformComp = Transform(fixtureOwner);
+        var entXform = new Transform(entXformComp.LocalPosition, entXformComp.LocalRotation);
 
         var verts = new ValueList<Vector2>()
         {
@@ -555,7 +568,7 @@ public class RCDSystem : EntitySystem
         var poly = new PolygonShape();
         poly.Set(verts.Span, 4);
 
-        var polyXform = new Transform(entWorldPos, (float) boundingBoxAngle);
+        var polyXform = new Transform(entXformComp.LocalPosition, (float) boundingBoxAngle);
         return poly.ComputeAABB(polyXform, 0).Intersects(fixture.Shape.ComputeAABB(entXform, 0));
     }
 
