@@ -7,18 +7,18 @@
     sprite: /Textures/Objects/Fun/goldbikehorn.rsi
     visible: false
     state: icon
-  - type: TriggerOnSpawn
+  - type: TriggerOnSpawn   
+  - type: TimedDespawn
+    lifetime: 5
 
-# for some unknown reason breaks checks. TO DO - fix
-#- type: entity
-#  id: AdminInstantEffectEMP
-#  suffix: EMP
-#  parent: AdminInstantEffectBase
-#  components:
-#  - type: EmpOnTrigger
-#    range: 4
-#    energyConsumption: 50000
-#  - type: DeleteOnTrigger
+- type: entity
+  id: AdminInstantEffectEMP
+  suffix: EMP
+  parent: AdminInstantEffectBase
+  components:
+  - type: EmpOnTrigger
+    range: 4
+    energyConsumption: 50000
 
 - type: entity
   id: AdminInstantEffectFlash
@@ -29,7 +29,6 @@
     range: 7
   - type: SpawnOnTrigger 
     proto: GrenadeFlashEffect
-  - type: DeleteOnTrigger
   
 - type: entity
   id: AdminInstantEffectSmoke3
@@ -44,7 +43,6 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/Smoke-grenade.ogg
-  - type: DeleteOnTrigger
   
 - type: entity
   id: AdminInstantEffectSmoke10
@@ -59,7 +57,6 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/Smoke-grenade.ogg
-  - type: DeleteOnTrigger
   
 - type: entity
   id: AdminInstantEffectSmoke30
@@ -74,7 +71,6 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/Smoke-grenade.ogg
-  - type: DeleteOnTrigger
 
 - type: entity
   id: AdminInstantEffectTearGas
@@ -88,15 +84,12 @@
       reagents:
       - ReagentId: TearGas
         Quantity: 50
-  - type: DeleteOnTrigger
 
 - type: entity
   id: AdminInstantEffectGravityWell
   suffix: Gravity Well
   parent: AdminInstantEffectBase
-  components:    
-  - type: TimedDespawn
-    lifetime: 7
+  components: 
   - type: SoundOnTrigger
     removeOnTrigger: true
     sound:
