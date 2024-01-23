@@ -315,6 +315,9 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnPlayerSpawn(PlayerSpawningEvent ev)
     {
+        if (ev.SpawnResult != null)
+            return;
+
         // Only works on latejoin even if enabled.
         if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
             return;

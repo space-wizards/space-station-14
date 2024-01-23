@@ -14,7 +14,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/hit_kick.ogg
+      collection: MetalThud
   - type: CombatMode
   - type: NoSlip
   - type: StaticPrice
@@ -159,7 +159,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain

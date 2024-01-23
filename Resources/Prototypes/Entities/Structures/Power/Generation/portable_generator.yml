@@ -72,7 +72,7 @@
           behaviors:
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalBreak
             - !type:ChangeConstructionNodeBehavior
               node: machineFrame
             - !type:DoActsBehavior
@@ -163,9 +163,6 @@
       materialWhiteList: [Plasma]
     - type: PortableGenerator
       startChance: 0.8
-    - type: UpgradePowerSupplier
-      powerSupplyMultiplier: 1.25
-      scaling: Exponential
     - type: GeneratorExhaustGas
       gasType: CarbonDioxide
       # 2 moles of gas for every sheet of plasma.
@@ -177,7 +174,7 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen0
-      
+
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -223,9 +220,6 @@
       storageLimit: 3000
       materialWhiteList: [Uranium]
     - type: PortableGenerator
-    - type: UpgradePowerSupplier
-      powerSupplyMultiplier: 1.25
-      scaling: Exponential
     - type: PowerMonitoringDevice
       group: Generator
       loadNodes:
@@ -233,7 +227,7 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen1
-      
+
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -292,7 +286,8 @@
       fuelEfficiencyConstant: 0.3
     - type: ChemicalFuelGeneratorAdapter
       solution: tank
-      reagent: WeldingFuel
+      reagents:
+        WeldingFuel: 1
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -307,7 +302,7 @@
       nodes:
         output:
           !type:CableDeviceNode
-          nodeGroupID: Apc   
+          nodeGroupID: Apc
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
@@ -340,7 +335,7 @@
               solution: tank
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalBreak
             - !type:ChangeConstructionNodeBehavior
               node: machineFrame
             - !type:DoActsBehavior

@@ -63,6 +63,12 @@ public sealed partial class AccessReaderComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int AccessLogLimit = 20;
+
+    /// <summary>
+    /// Whether or not emag interactions have an effect on this.
+    /// </summary>
+    [DataField]
+    public bool BreakOnEmag = true;
 }
 
 [DataDefinition, Serializable, NetSerializable]
