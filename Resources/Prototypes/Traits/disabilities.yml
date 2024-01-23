@@ -12,7 +12,7 @@
 - type: trait
   id: Narcolepsy
   name: trait-narcolepsy-name
-  description: trait-narcolepsy-decs
+  description: trait-narcolepsy-desc
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -21,6 +21,7 @@
 - type: trait
   id: Pacifist
   name: trait-pacifist-name
+  description: trait-pacifist-desc
   components:
     - type: Pacified
 
@@ -37,6 +38,13 @@
         collection: Paracusia
 
 - type: trait
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  components:
+    - type: Unrevivable
+
+- type: trait
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
@@ -48,7 +56,8 @@
   name: trait-wheelchair-bound-name
   description: trait-wheelchair-bound-desc
   components:
-    - type: WheelchairBound
+    - type: BuckleOnMapInit
+      prototype: VehicleWheelchair
     - type: LegsParalyzed
 
 - type: trait

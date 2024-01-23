@@ -79,7 +79,7 @@ public sealed partial class ZombieRuleComponent : Component
     /// After this amount of the crew become zombies, the shuttle will be automatically called.
     /// </summary>
     [DataField("zombieShuttleCallPercentage")]
-    public float ZombieShuttleCallPercentage = 0.5f;
+    public float ZombieShuttleCallPercentage = 0.7f;
 
     [DataField]
     public EntProtoId ZombifySelfActionPrototype = "ActionTurnUndead";
