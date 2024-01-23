@@ -17,15 +17,15 @@ public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
         SubscribeLocalEvent<ActivatableUIRequiresAccessComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
     }
 
-    private void OnUIOpenAttempt(Entity<ActivatableUIRequiresAccessComponent> component, ref ActivatableUIOpenAttemptEvent args)
+    private void OnUIOpenAttempt(Entity<ActivatableUIRequiresAccessComponent> activatableUI, ref ActivatableUIOpenAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryComp<AccessReaderComponent>(component, out var accessReader) && !_access.IsAllowed(args.User, component, accessReader))
+        if (!_access.IsAllowed(args.User, activatableUI))
         {
             args.Cancel();
-            _popupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), component, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), activatableUI, args.User);
         }
     }
 }
