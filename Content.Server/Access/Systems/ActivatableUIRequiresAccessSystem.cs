@@ -1,4 +1,3 @@
-using Content.Server.Lock.Components;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Server.Access.Components;
@@ -9,7 +8,6 @@ namespace Content.Server.Access.Systems;
 public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
