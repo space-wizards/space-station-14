@@ -10,8 +10,8 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -19,11 +19,9 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -303,6 +301,14 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user)
     {
+        if (gun.Target != null && TryComp<FixturesComponent>(uid, out var fixtures))
+        {
+            var fixture = fixtures.Fixtures.First();
+            Physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) CollisionGroup.LayingDownMobMask);
+            var target = EnsureComp<TargetedProjectileComponent>(uid);
+            target.Target = gun.Target;
+        }
+
         // Do a throw
         if (!HasComp<ProjectileComponent>(uid))
         {

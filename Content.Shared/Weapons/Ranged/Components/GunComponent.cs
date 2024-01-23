@@ -14,16 +14,16 @@ public partial class GunComponent : Component
 {
     #region Sound
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundGunshot")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundEmpty")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public SoundSpecifier? SoundEmpty = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
 
     /// <summary>
     /// Sound played when toggling the <see cref="SelectedMode"/> for this gun.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundMode")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public SoundSpecifier? SoundModeToggle = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
 
     #endregion
@@ -36,46 +36,46 @@ public partial class GunComponent : Component
     /// A scalar value applied to the vector governing camera recoil.
     /// If 0, there will be no camera recoil.
     /// </summary>
-    [DataField("cameraRecoilScalar"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float CameraRecoilScalar = 1f;
 
     /// <summary>
     /// Last time the gun fired.
     /// Used for recoil purposes.
     /// </summary>
-    [DataField("lastFire")]
+    [DataField]
     public TimeSpan LastFire = TimeSpan.Zero;
 
     /// <summary>
     /// What the current spread is for shooting. This gets changed every time the gun fires.
     /// </summary>
-    [DataField("currentAngle")]
+    [DataField]
     [AutoNetworkedField]
     public Angle CurrentAngle;
 
     /// <summary>
     /// How much the spread increases every time the gun fires.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("angleIncrease")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public Angle AngleIncrease = Angle.FromDegrees(0.5);
 
     /// <summary>
     /// How much the <see cref="CurrentAngle"/> decreases per second.
     /// </summary>
-    [DataField("angleDecay")]
+    [DataField]
     public Angle AngleDecay = Angle.FromDegrees(4);
 
     /// <summary>
     /// The maximum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("maxAngle")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     [AutoNetworkedField]
     public Angle MaxAngle = Angle.FromDegrees(2);
 
     /// <summary>
     /// The minimum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("minAngle")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     [AutoNetworkedField]
     public Angle MinAngle = Angle.FromDegrees(1);
 
@@ -84,7 +84,7 @@ public partial class GunComponent : Component
     /// <summary>
     /// Whether this gun is shot via the use key or the alt-use key.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("useKey"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool UseKey = true;
 
     /// <summary>
@@ -103,53 +103,53 @@ public partial class GunComponent : Component
     /// <summary>
     /// How many times it shoots per second.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     [AutoNetworkedField]
     public float FireRate = 8f;
 
     /// <summary>
     /// Starts fire cooldown when equipped if true.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("resetOnHandSelected")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool ResetOnHandSelected = true;
 
     /// <summary>
     /// Type of ammo the gun can work with
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("compatibleAmmo")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public List<ProtoId<TagPrototype>>? CompatibleAmmo;
 
     /// <summary>
     /// Damage the gun deals when used with wrong ammo
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("damageOnWrongAmmo")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public DamageSpecifier? DamageOnWrongAmmo = null;
 
     /// <summary>
     /// How fast the projectile moves.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("projectileSpeed")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public float ProjectileSpeed = 25f;
 
     /// <summary>
     /// When the gun is next available to be shot.
     /// Can be set multiple times in a single tick due to guns firing faster than a single tick time.
     /// </summary>
-    [DataField("nextFire", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
     [AutoNetworkedField]
     public TimeSpan NextFire = TimeSpan.Zero;
 
     /// <summary>
     /// What firemodes can be selected.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("availableModes")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     [AutoNetworkedField]
     public SelectiveFire AvailableModes = SelectiveFire.SemiAuto;
 
     /// <summary>
     /// What firemode is currently selected.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("selectedMode")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     [AutoNetworkedField]
     public SelectiveFire SelectedMode = SelectiveFire.SemiAuto;
 
@@ -157,15 +157,21 @@ public partial class GunComponent : Component
     /// Whether or not information about
     /// the gun will be shown on examine.
     /// </summary>
-    [DataField("showExamineText")]
+    [DataField]
     public bool ShowExamineText = true;
 
     /// <summary>
     /// Whether or not someone with the
     /// clumsy trait can shoot this
     /// </summary>
-    [DataField("clumsyProof"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool ClumsyProof = false;
+
+    /// <summary>
+    /// The entity the cursor is hovering over when shooting the gun
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid? Target;
 }
 
 [Flags]

@@ -4,6 +4,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -30,6 +31,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
             || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
+
+        // Don't collide if the laying down entity is not our target.
+        if (TryComp<TargetedProjectileComponent>(uid, out var targetedProjectile))
+        {
+            if(args.OtherEntity != targetedProjectile.Target &&
+               args.OtherFixture.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer)
+                return;
+        }
 
         var target = args.OtherEntity;
         // it's here so this check is only done once before possible hit

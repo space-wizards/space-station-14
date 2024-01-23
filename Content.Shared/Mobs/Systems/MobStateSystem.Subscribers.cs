@@ -1,4 +1,5 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿using System.Linq;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Emoting;
@@ -9,11 +10,13 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Physics;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Mobs.Systems;
@@ -48,18 +51,15 @@ public partial class MobStateSystem
         switch (state)
         {
             case MobState.Alive:
-                //unused
+                //Store the CollisionLayer the entity originally had while alive.
+                if (TryComp<PhysicsComponent>(target, out var physics) && component.AliveCollisionLayer == null)
+                    component.AliveCollisionLayer = physics.CollisionLayer;
                 break;
             case MobState.Critical:
                 _standing.Stand(target);
                 break;
             case MobState.Dead:
-                RemComp<CollisionWakeComponent>(target);
                 _standing.Stand(target);
-                if (!_standing.IsDown(target) && TryComp<PhysicsComponent>(target, out var physics))
-                {
-                    _physics.SetCanCollide(target, true, body: physics);
-                }
 
                 break;
             case MobState.Invalid:
@@ -83,21 +83,17 @@ public partial class MobStateSystem
             case MobState.Alive:
                 _standing.Stand(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Alive);
+                SetCollisionLayer(target, component, MobState.Alive);
                 break;
             case MobState.Critical:
                 _standing.Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
+                SetCollisionLayer(target, component);
                 break;
             case MobState.Dead:
-                EnsureComp<CollisionWakeComponent>(target);
                 _standing.Down(target);
-
-                if (_standing.IsDown(target) && TryComp<PhysicsComponent>(target, out var physics))
-                {
-                    _physics.SetCanCollide(target, false, body: physics);
-                }
-
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
+                SetCollisionLayer(target, component);
                 break;
             case MobState.Invalid:
                 //unused;
@@ -105,6 +101,20 @@ public partial class MobStateSystem
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    private void SetCollisionLayer(EntityUid target, MobStateComponent component, MobState? state = null)
+    {
+        if (!HasComp<PhysicsComponent>(target) ||
+            !TryComp<FixturesComponent>(target, out var fixtures))
+            return;
+
+        var collisionGroup = (int) CollisionGroup.LayingDownMobLayer;
+        if (state == MobState.Alive && component.AliveCollisionLayer != null)
+            collisionGroup = component.AliveCollisionLayer.Value;
+
+        var fixture = fixtures.Fixtures.First();
+        _physics.SetCollisionLayer(target, fixture.Key, fixture.Value, collisionGroup);
     }
 
     #region Event Subscribers
