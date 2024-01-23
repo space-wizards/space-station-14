@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: ForestNoises
-  changes:
-  - message: The rejuvenate command/verb resets all action cooldowns.
-    type: Add
-  id: 5268
-  time: '2023-12-05T21:00:03.0000000+00:00'
 - author: themias
   changes:
   - message: Empty hot cocoa can go in trash bags
@@ -3794,3 +3788,10 @@
   id: 5768
   time: '2024-01-22T14:59:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24132
+- author: CrigCrag
+  changes:
+  - message: Removed the revolutionaries gamemode pending a rework.
+    type: Remove
+  id: 5769
+  time: '2024-01-23T02:11:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24420
