@@ -72,3 +72,9 @@ public sealed class StoreRequestWithdrawMessage : BoundUserInterfaceMessage
         Amount = amount;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class StoreRequestRefundMessage : BoundUserInterfaceMessage
+{
+
+}

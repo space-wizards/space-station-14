@@ -63,9 +63,12 @@ public sealed partial class StoreComponent : Component
     ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
     /// </summary>
     [ViewVariables]
-    public List<EntityUid> BoughtEntities = new();
+    public Dictionary<EntityUid, FixedPoint2> BoughtEntities = new();
 
-    // TODO: Refund button
+    [ViewVariables]
+    public bool RefundAllowed;
+
+    // TODO: Refund timer
 
     #region audio
     /// <summary>

@@ -14,6 +14,7 @@ using Content.Shared.Store;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Store.Systems;
@@ -35,6 +36,7 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>(OnRequestUpdate);
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
+        SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
     }
 
     /// <summary>
@@ -124,6 +126,8 @@ public sealed partial class StoreSystem
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
         var listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
+        FixedPoint2 totalValue = 0;
+
         if (listing == null) //make sure this listing actually exists
         {
             Log.Debug("listing does not exist");
@@ -159,6 +163,11 @@ public sealed partial class StoreSystem
         foreach (var currency in listing.Cost)
         {
             component.Balance[currency.Key] -= currency.Value;
+
+            // TODO: Figure out a better way to refund
+            // For refunds, currently only allowed with a single type of currency
+            if (listing.Cost.Count == 1)
+                totalValue += currency.Value;
         }
 
         //spawn entity
@@ -167,8 +176,19 @@ public sealed partial class StoreSystem
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
             _hands.PickupOrDrop(buyer, product);
 
-            // TODO: For refunds- If entity comes in a container like the e-pen, get the entities inside too
-            component.BoughtEntities.Add(product);
+            // TODO: Add a comp to each of these to track bought ents so they can be removed from the list if deleted.
+            component.BoughtEntities.Add(product, totalValue);
+
+            var xForm = Transform(product);
+
+            if (xForm.ChildCount > 0)
+            {
+                var childEnumerator = xForm.ChildEnumerator;
+                while (childEnumerator.MoveNext(out var child))
+                {
+                    component.BoughtEntities.Add(child.Value, 0); // don't include a price for contained entities
+                }
+            }
         }
 
         //give action
@@ -186,7 +206,7 @@ public sealed partial class StoreSystem
             // And then add that action entity to the relevant product upgrade listing, if applicable
             if (actionId != null)
             {
-                component.BoughtEntities.Add(actionId.Value);
+                component.BoughtEntities.Add(actionId.Value, totalValue);
 
                 if (listing.ProductUpgradeID != null)
                 {
@@ -205,13 +225,20 @@ public sealed partial class StoreSystem
 
         if (listing is { ProductUpgradeID: not null, ProductActionEntity: not null })
         {
-            if (listing.ProductActionEntity != null && component.BoughtEntities.Contains(listing.ProductActionEntity.Value))
+            FixedPoint2 originalPrice = 0;
+
+            if (listing.ProductActionEntity != null && component.BoughtEntities.ContainsKey(listing.ProductActionEntity.Value))
+            {
+                originalPrice = component.BoughtEntities[listing.ProductActionEntity.Value];
                 component.BoughtEntities.Remove(listing.ProductActionEntity.Value);
+            }
+
+            totalValue += originalPrice;
 
             if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity, out var upgradeActionId))
             {
                 if (listing.ProductActionEntity != null)
-                    component.BoughtEntities.Add(listing.ProductActionEntity.Value);
+                    component.BoughtEntities.Add(listing.ProductActionEntity.Value, totalValue);
 
                 return;
             }
@@ -219,7 +246,7 @@ public sealed partial class StoreSystem
             listing.ProductActionEntity = upgradeActionId;
 
             if (upgradeActionId != null)
-                component.BoughtEntities.Add(upgradeActionId.Value);
+                component.BoughtEntities.Add(upgradeActionId.Value, totalValue);
         }
 
         //broadcast event
@@ -227,6 +254,10 @@ public sealed partial class StoreSystem
         {
             RaiseLocalEvent(listing.ProductEvent);
         }
+
+        // TODO:
+        if (component.BoughtEntities.Any())
+            component.RefundAllowed = true;
 
         //log dat shit.
         _admin.Add(LogType.StorePurchase, LogImpact.Low,
@@ -277,5 +308,40 @@ public sealed partial class StoreSystem
 
         component.Balance[msg.Currency] -= msg.Amount;
         UpdateUserInterface(buyer, uid, component);
+    }
+
+    private void OnRequestRefund(EntityUid uid, StoreComponent component, StoreRequestRefundMessage args)
+    {
+        // TODO: Remove guardian/holopara
+
+        FixedPoint2 refundValue = 0;
+
+        if (!component.RefundAllowed || !component.BoughtEntities.Any())
+        {
+            // TODO: Message here
+            return;
+        }
+
+        foreach (var purchase in component.BoughtEntities.ToList())
+        {
+            if (purchase.Key.Valid)
+            {
+                refundValue += purchase.Value;
+
+                component.BoughtEntities.Remove(purchase.Key);
+
+                if (_actions.TryGetActionData(purchase.Key, out var actionComponent))
+                {
+                    _actionContainer.RemoveAction(purchase.Key, actionComponent);
+                    EntityManager.DeleteEntity(purchase.Key);
+                }
+                else
+                {
+                    EntityManager.DeleteEntity(purchase.Key);
+                }
+            }
+        }
+
+        // TODO: reset balance
     }
 }

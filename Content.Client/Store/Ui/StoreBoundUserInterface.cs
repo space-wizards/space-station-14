@@ -48,6 +48,11 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             SendMessage(new StoreRequestUpdateInterfaceMessage());
         };
+
+        _menu.OnRefundAttempt += (_) =>
+        {
+            SendMessage(new StoreRequestRefundMessage());
+        };
     }
     protected override void UpdateState(BoundUserInterfaceState state)
     {
