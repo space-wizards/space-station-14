@@ -7,7 +7,7 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(LostPiratesSpawnRule))]
 public sealed partial class LostPiratesSpawnRuleComponent : Component
 {
-    [DataField("lostPiratesShuttlePath")]
+    [DataField]
     public string LostPiratesShuttlePath = "Maps/Shuttles/lost_pirates.yml";
 
     [DataField("gameRuleProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
