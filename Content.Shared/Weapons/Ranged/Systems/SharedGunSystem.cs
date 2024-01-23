@@ -230,7 +230,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
         if (gun.FireRate <= 0f ||
-            !_actionBlockerSystem.CanUseHeldEntity(user))
+            !_actionBlockerSystem.CanAttack(user))
             return;
 
         var toCoordinates = gun.ShootCoordinates;
