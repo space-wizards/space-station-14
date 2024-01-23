@@ -12,6 +12,10 @@
         {
             "name": "signaller",
             "directions": 1
+        },
+        {
+            "name": "signaller2",
+            "directions": 1
         }
     ]
 }
