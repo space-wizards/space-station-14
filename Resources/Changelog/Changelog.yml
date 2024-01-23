@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: Ghosts now have speech bubbles again
-    type: Fix
-  id: 5270
-  time: '2023-12-05T21:40:03.0000000+00:00'
-- author: tgrkzus
-  changes:
-  - message: Paper cups are now available at water coolers.
-    type: Add
-  id: 5271
-  time: '2023-12-05T21:47:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: You can now make the storage window opaque with the "enable opaque storage
-      window" toggle in the graphics menu.
-    type: Add
-  id: 5272
-  time: '2023-12-05T23:38:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Reverted duffel bags to their original storage capacity.
-    type: Fix
-  id: 5273
-  time: '2023-12-06T03:11:01.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Predict helmet toggling.
@@ -3796,3 +3771,32 @@
   id: 5770
   time: '2024-01-23T04:18:33.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24406
+- author: TheShuEd
+  changes:
+  - message: 'Flesh and Rock anom reworked: It should be easier to maintain them now
+      (I guess)'
+    type: Tweak
+  id: 5771
+  time: '2024-01-23T12:32:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24381
+- author: metalgearsloth
+  changes:
+  - message: Fix thrusters.
+    type: Fix
+  id: 5772
+  time: '2024-01-23T12:49:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24446
+- author: '0x6273'
+  changes:
+  - message: Hotplates now work again
+    type: Fix
+  id: 5773
+  time: '2024-01-23T13:06:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24450
+- author: Boaz1111
+  changes:
+  - message: Lizards can now properly eat fruit cakes and banana cream pie slices.
+    type: Fix
+  id: 5774
+  time: '2024-01-23T18:08:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24457
