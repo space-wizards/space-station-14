@@ -88,11 +88,11 @@ public sealed partial class AdminNotesLine : BoxContainer
         else if (Note.ExpiryTime is not null)
         {
             // Notes should never be visible when expired, bans should
-            if (Note.ExpiryTime.Value > DateTime.UtcNow)
+            if (Note.ExpiryTime.Value > DateTimeOffset.Now) //fix time DateTimeOffset.Now
             {
                 ExpiresLabel.Text = Loc.GetString("admin-note-editor-expiry-label-params",
                     ("date", Note.ExpiryTime.Value.ToString("yyyy-MM-dd HH:mm:ss")),
-                    ("expiresIn", (Note.ExpiryTime.Value - DateTime.UtcNow).ToString("d'd 'hh':'mm")));
+                    ("expiresIn", (Note.ExpiryTime.Value - DateTimeOffset.Now).ToString("d'd 'hh':'mm"))); //fix time DateTimeOffset.Now
                 ExpiresLabel.Modulate = Color.FromHex("#86DC3D");
             }
             else
