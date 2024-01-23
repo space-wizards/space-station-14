@@ -9,7 +9,6 @@ namespace Content.Server.StationRecords.Systems;
 public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly RecordsConsoleSystem _recordsConsole = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
@@ -34,7 +33,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     // TODO: instead of copy paste shitcode for each record console, have a shared records console comp they all use
     // then have this somehow play nicely with creating ui state
-    // if that gets done put it in RecordsConsoleSystem :)
+    // if that gets done put it in StationRecordsSystem console helpers section :)
     private void OnKeySelected(Entity<GeneralStationRecordConsoleComponent> ent, ref SelectStationRecord msg)
     {
         ent.Comp.ActiveKey = msg.SelectedKey;
@@ -62,18 +61,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             return;
         }
 
-        var consoleRecords =
-            _stationRecords.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecords);
-
-        var listing = new Dictionary<uint, string>();
-
-        foreach (var pair in consoleRecords)
-        {
-            if (_recordsConsole.IsSkipped(console.Filter, pair.Item2))
-                continue;
-
-            listing.Add(pair.Item1, pair.Item2.Name);
-        }
+        var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
         switch (listing.Count)
         {

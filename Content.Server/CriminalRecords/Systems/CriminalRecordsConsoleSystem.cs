@@ -23,7 +23,6 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly RecordsConsoleSystem _recordsConsole = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -153,17 +152,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             return;
         }
 
-        var consoleRecords =
-            _stationRecords.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecords);
-
-        var listing = new Dictionary<uint, string>();
-        foreach (var pair in consoleRecords)
-        {
-            if (_recordsConsole.IsSkipped(console.Filter, pair.Item2))
-                continue;
-
-            listing.Add(pair.Item1, pair.Item2.Name);
-        }
+        var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
         // when there is only 1 record automatically select it
         switch (listing.Count)
