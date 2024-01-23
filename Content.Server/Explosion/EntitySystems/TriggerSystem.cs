@@ -191,7 +191,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
-            //Don't trigger if we collide with a layingdown entity that is not our target.
+            //Don't trigger if we collide with an entity that's laying down and is not our target.
             if (TryComp<TargetedProjectileComponent>(uid, out var targetedProjectile) &&
                 args.OtherFixture.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer &&
                 targetedProjectile.Target != args.OtherEntity)

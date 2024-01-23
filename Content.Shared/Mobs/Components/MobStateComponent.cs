@@ -29,6 +29,12 @@ namespace Content.Shared.Mobs.Components
                 MobState.Dead
             };
 
+        /// <summary>
+        /// The CollisonLayer the entity has while alive.
+        /// <remarks>
+        /// Stored so it can be returned to it's original value when the entities is alive again.
+        /// </remarks>
+        /// </summary>
         [DataField]
         public int? AliveCollisionLayer;
     }

@@ -33,10 +33,10 @@ public enum CollisionGroup
     MobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
     MobLayer = Opaque | BulletImpassable,
     LayingDownMobLayer = Opaque | LowImpassable,
-    LayingDownMobMask = Opaque | LowImpassable,
+    LayingDownMobMask =  Opaque | Impassable | LowImpassable | BulletImpassable,
     // Mice, drones
     SmallMobMask = Impassable | LowImpassable,
-    SmallMobLayer = Opaque | BulletImpassable,
+    SmallMobLayer = Opaque | LayingDownMobLayer,
     // Birds/other small flyers
     FlyingMobMask = Impassable | HighImpassable,
     FlyingMobLayer = Opaque | BulletImpassable,
