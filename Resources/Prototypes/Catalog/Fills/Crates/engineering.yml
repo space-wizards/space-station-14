@@ -166,8 +166,8 @@
 - type: entity
   id: CrateRCDAmmo
   parent: CrateEngineering
-  name: RCD ammo crate
-  description: 3 RCD ammo, each restoring 5 charges.
+  name: compressed matter crate
+  description: Contains three compressed matter cartridges.
   components:
   - type: StorageFill
     contents:
@@ -178,7 +178,7 @@
   id: CrateRCD
   parent: CrateEngineeringSecure
   name: RCD crate
-  description: A crate containing a single Rapid Construction Device.
+  description: A crate containing a single rapid construction device.
   components:
   - type: StorageFill
     contents:
