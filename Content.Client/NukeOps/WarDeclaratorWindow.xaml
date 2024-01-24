@@ -1,17 +1,14 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'war-declarator-ui-header'}">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="440">
         <TextEdit Name="MessageEdit"
                   HorizontalExpand="True"
                   MinHeight="200"
                   Access="Public" />
-        <Label Name="MessageLengthLabel"
-               Visible="False"
-               HorizontalExpand="True"
-               HorizontalAlignment="Right"
-               MouseFilter="Pass"
-               Access="Public" />
+        <controls:CharacterCounter Name="MessageLengthCounter"
+                                   Access="Public" />
         <Button Name="WarButton"
                 Text="{Loc 'war-declarator-ui-war-button'}"
                 StyleClasses="Caution"

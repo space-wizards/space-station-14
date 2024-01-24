@@ -14,5 +14,3 @@ war-declarator-boost-declared-delay = War declared! Shuttle departure temporaril
 war-declarator-boost-timer = Time left: {$minutes} minutes and {$seconds} seconds
 war-declarator-default-message = A syndicate fringe group has declared their intent to utterly destroy station with a nuclear device, and dares the crew to try and stop them.
 war-declarator-message-placeholder = Write a custom declaration of war here...
-war-declarator-message-length-remaining-tooltip = {$remaining} characters remaining
-war-declarator-message-length-too-long-tooltip = declaration is too long
