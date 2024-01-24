@@ -7,9 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
-/// <summary>
-/// This handles...
-/// </summary>
+/// <inheritdoc cref="PuddleMessVariationPassComponent"/>
 public sealed class PuddleMessVariationPassSystem : VariationPassSystem<PuddleMessVariationPassComponent>
 {
     [Dependency] private readonly PuddleSystem _puddle = default!;

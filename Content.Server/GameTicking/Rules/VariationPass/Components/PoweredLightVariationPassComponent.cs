@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Rules.VariationPass.Components;
 
 /// <summary>
-/// This is used for...
+/// This handle randomly destroying lights, causing them to flicker endlessly, or replacing their tube/bulb with different variants.
 /// </summary>
 [RegisterComponent]
 public sealed partial class PoweredLightVariationPassComponent : Component

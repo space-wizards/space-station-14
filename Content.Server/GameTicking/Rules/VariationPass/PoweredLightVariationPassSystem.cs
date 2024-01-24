@@ -6,9 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
-/// <summary>
-/// This handle randomly destroying lights, causing them to flicker endlessly, or replacing their tube/bulb with different variants.
-/// </summary>
+/// <inheritdoc cref="PoweredLightVariationPassComponent"/>
 public sealed class PoweredLightVariationPassSystem : VariationPassSystem<PoweredLightVariationPassComponent>
 {
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;

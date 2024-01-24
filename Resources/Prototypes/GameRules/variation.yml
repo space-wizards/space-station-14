@@ -22,7 +22,9 @@
   parent: BaseVariationPass
   noSpawn: true
   components:
-  - type: TrashVariationPass
+  - type: EntitySpawnVariationPass
+    entities:
+    - id: RandomSpawner
 
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddle

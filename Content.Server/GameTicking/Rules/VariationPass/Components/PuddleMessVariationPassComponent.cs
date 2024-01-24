@@ -3,6 +3,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules.VariationPass.Components;
 
+/// <summary>
+///     Handles spilling puddles with various reagents randomly around the station.
+/// </summary>
 [RegisterComponent]
 public sealed partial class PuddleMessVariationPassComponent : Component
 {

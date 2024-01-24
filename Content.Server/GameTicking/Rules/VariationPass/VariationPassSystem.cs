@@ -1,6 +1,4 @@
-﻿using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
+﻿using Content.Server.Station.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
