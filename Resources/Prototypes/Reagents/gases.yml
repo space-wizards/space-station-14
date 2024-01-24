@@ -74,7 +74,7 @@
           - !type:ReagentThreshold
             min: 1.5
         autoRemove: True
-        time: 6
+        time: 3.95
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

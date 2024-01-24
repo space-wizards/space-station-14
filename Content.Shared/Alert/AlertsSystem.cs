@@ -10,6 +10,8 @@ public abstract class AlertsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private readonly IGameTiming _timing = IoCManager.Resolve<IGameTiming>();
+
     private FrozenDictionary<AlertType, AlertPrototype> _typeToAlert = default!;
 
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
@@ -187,18 +189,15 @@ public abstract class AlertsSystem : EntitySystem
         {
             foreach (var (alertKey,  alertState) in comp.Alerts)
             {
-                if (alertState.AutoRemove is not null)
-                {
-                    var timing = IoCManager.Resolve<IGameTiming>();
+                if (alertState.AutoRemove is null)
+                    continue;
 
-                    if (alertState.AutoRemove <= timing.CurTime)
-                    {
-                        comp.Alerts.Remove(alertKey);
-                        Dirty(uid, comp);
-                    }
-                }
+                if (alertState.AutoRemove >= _timing.CurTime)
+                    continue;
+
+                comp.Alerts.Remove(alertKey);
+                Dirty(uid, comp);
             }
-
         }
     }
 
