@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: Speech bubbles for the living now again have names when fancy speech
-      bubbles are enabled
-    type: Fix
-  id: 5278
-  time: '2023-12-06T21:58:53.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - message: Pickaxes have a more accurate shape in storage.
-    type: Tweak
-  id: 5279
-  time: '2023-12-07T00:52:57.0000000+00:00'
-- author: Nairodian
-  changes:
-  - message: Added a new lizard chest marking, an underbelly.
-    type: Add
-  id: 5280
-  time: '2023-12-07T01:05:43.0000000+00:00'
 - author: Nimfar11
   changes:
   - message: Adds Space Cobras, invisible at rest and venom blind.
@@ -3804,3 +3785,25 @@
   id: 5778
   time: '2024-01-23T22:15:48.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24203
+- author: Tin-Man-Tim
+  changes:
+  - message: Attempting to microwave metal now can cause the microwave to spark and
+      explode.
+    type: Tweak
+  id: 5779
+  time: '2024-01-23T22:59:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23887
+- author: DrMelon
+  changes:
+  - message: The Microwave works as intended after power outages again.
+    type: Fix
+  id: 5780
+  time: '2024-01-24T01:14:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23997
+- author: Krunk
+  changes:
+  - message: To prevent accidental spills, buckets can no longer be quick-equipped.
+    type: Fix
+  id: 5781
+  time: '2024-01-24T02:35:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24472

@@ -172,7 +172,7 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref bodyComp, false))
             return;
 
-        if (component.IsVital && !GetBodyChildrenOfType(parent, component.PartType, bodyComp).Any())
+        if (_timing.IsFirstTimePredicted && component.IsVital && !GetBodyChildrenOfType(parent, component.PartType, bodyComp).Any())
         {
             // TODO BODY SYSTEM KILL : remove this when wounding and required parts are implemented properly
             var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
