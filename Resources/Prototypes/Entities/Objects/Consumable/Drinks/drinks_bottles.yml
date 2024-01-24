@@ -509,6 +509,7 @@
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
     layers:
       - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
       - state: icon-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
