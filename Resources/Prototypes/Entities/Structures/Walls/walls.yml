@@ -568,6 +568,7 @@
     key: walls
     base: reinf_over
 
+  type: entity
   parent: WallShuttleDiagonal
   id: WallReinforcedDiagonal
   name: reinforced wall
@@ -893,7 +894,7 @@
     state: state0
 
 - type: entity
-  parent: BaseWall
+  parent: WallSolid
   id: WallSolidRust
   name: solid wall
   suffix: rusted
