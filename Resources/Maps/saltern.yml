@@ -26890,8 +26890,6 @@ entities:
     - type: EntityStorage
       open: True
       removedMasks: 20
-    - type: PlaceableSurface
-      isPlaceable: True
   - uid: 11244
     components:
     - type: Transform

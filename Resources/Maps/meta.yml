@@ -74744,8 +74744,6 @@ entities:
           showEnts: False
           occludes: True
           ents: []
-    - type: PlaceableSurface
-      isPlaceable: False
   - uid: 22815
     components:
     - type: Transform

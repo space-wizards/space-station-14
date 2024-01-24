@@ -29024,8 +29024,6 @@ entities:
           hard: True
           restitution: 0
           friction: 0.4
-    - type: PlaceableSurface
-      isPlaceable: True
 - proto: CrateNPCHamlet
   entities:
   - uid: 7180

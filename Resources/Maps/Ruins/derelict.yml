@@ -5355,8 +5355,6 @@ entities:
     - type: EntityStorage
       open: True
       removedMasks: 20
-    - type: PlaceableSurface
-      isPlaceable: True
   - uid: 2356
     components:
     - type: Transform
@@ -5388,8 +5386,6 @@ entities:
     - type: EntityStorage
       open: True
       removedMasks: 20
-    - type: PlaceableSurface
-      isPlaceable: True
   - uid: 2357
     components:
     - type: Transform
@@ -5421,8 +5417,6 @@ entities:
     - type: EntityStorage
       open: True
       removedMasks: 20
-    - type: PlaceableSurface
-      isPlaceable: True
   - uid: 2358
     components:
     - type: Transform
@@ -5454,8 +5448,6 @@ entities:
     - type: EntityStorage
       open: True
       removedMasks: 20
-    - type: PlaceableSurface
-      isPlaceable: True
 - proto: SuitStorageNTSRA
   entities:
   - uid: 2353
