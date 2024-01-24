@@ -69,7 +69,7 @@ namespace Content.Shared.Standing
                 {
                     if (fixture.CollisionLayer == (int) CollisionGroup.MobLayer)
                     {
-                        standingState.StandingCollisionLayers.Add(key, fixture.CollisionLayer);
+                        standingState.StandingCollisionLayers.TryAdd(key, fixture.CollisionLayer);
                         standingState.LayerChangedFixtures.Add(key);
 
                         _physics.SetCollisionLayer(uid, key, fixture,
