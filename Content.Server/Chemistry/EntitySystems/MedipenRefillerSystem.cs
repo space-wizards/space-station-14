@@ -4,15 +4,12 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Mobs;
-using Content.Shared.Tag;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -133,12 +130,14 @@ public sealed class MedipenRefillerSystem : EntitySystem
         if (input is null || buffer is null || entity.Comp.IsActivated)
             return;
 
+        // Buffer -> Input, since this is buffer button message
         if (isBuffer)
         {
             var clampedAmount = FixedPoint2.Min(input.Item2.MaxVolume - input.Item2.Volume, FixedPoint2.Min(buffer.GetReagentQuantity(reagent), amount));
             buffer.RemoveReagent(reagent, clampedAmount, true);
             _solutionContainerSystem.TryAddReagent(input.Item1!.Value, reagent, clampedAmount, out var _);
         }
+        // Input -> Buffer, since this is input button message
         else
         {
             var clampedAmount = FixedPoint2.Min(buffer.MaxVolume - buffer.Volume, FixedPoint2.Min(input.Item2.GetReagentQuantity(reagent), amount));
@@ -198,13 +197,21 @@ public sealed class MedipenRefillerSystem : EntitySystem
     {
         var ui = _uiSys.GetUi(entity, SharedMedipenRefiller.MedipenRefillerUiKey.Key);
 
+        string resultName = "";
+
+        if (_prototypeManager.TryIndex<EntityPrototype>(entity.Comp.Result, out var proto))
+            resultName = proto.Name;
+
         var state = new MedipenRefillerUpdateState(entity.Comp.MedipenRecipes, BuildInputContainerData(entity.Owner), BuildBufferData(entity.Owner),
-                                                   entity.Comp.IsActivated, entity.Comp.Result, (int) entity.Comp.RemainingTime);
+                                                   entity.Comp.IsActivated, resultName, (int) entity.Comp.RemainingTime);
 
         _uiSys.SetUiState(ui, state);
     }
     #endregion
 
+    /// <summary>
+    /// Search for active components to tick it. If the time runs out, the entity will spawn.
+    /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

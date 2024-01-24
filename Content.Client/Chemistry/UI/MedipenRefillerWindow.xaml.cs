@@ -30,9 +30,8 @@ namespace Content.Client.Chemistry.UI
         public ContainerData? InputContainerData;
         public ContainerData? BufferData;
 
-        public bool IsActivated;
         public string? CurrentRecipe;
-
+        public bool IsActivated;
         public int RemainingTime;
 
         public MedipenRefillerWindow()
@@ -43,6 +42,9 @@ namespace Content.Client.Chemistry.UI
             _spriteSystem = _entityManager.GetEntitySystem<SpriteSystem>();
         }
 
+        /// <summary>
+        /// Iterate over recipes to display them
+        /// </summary>
         public void UpdateRecipes()
         {
             MedipenList.RemoveAllChildren();
@@ -70,6 +72,9 @@ namespace Content.Client.Chemistry.UI
         private bool CanRefill(string id)
             => SharedMedipenRefiller.CanRefill(id, MedipenRecipes!, BufferData!.ReagentQuantities, _prototypeManager, BufferData!.HasContainer);
 
+        /// <summary>
+        /// Updates interface about reagents information.
+        /// </summary>
         public void UpdateContainerInfo()
         {
             InputContainerInfo.RemoveAllChildren();
@@ -98,6 +103,7 @@ namespace Content.Client.Chemistry.UI
                 BufferInfo.AddChild(new ContainerDisplayControl(BufferData.Name!,
                                                                 BufferData.CurrentVolume.ToString(),
                                                                 BufferData.TotalVolume.ToString(),
+                                                                CurrentRecipe!,
                                                                 IsActivated,
                                                                 RemainingTime.ToString()));
                 MedipenEjectButton.Text = Loc.GetString("medipen-refiller-window-eject-button");
@@ -139,11 +145,11 @@ namespace Content.Client.Chemistry.UI
         public Label ContainerName = new();
         public Label ReagentAmount = new();
         public BoxContainer ContainerDisplay = new BoxContainer();
-        public ContainerDisplayControl(string name, string currentVolume, string totalVolume, bool isActivated = false, string remainingTime = "0")
+        public ContainerDisplayControl(string name, string currentVolume, string totalVolume, string recipe = "", bool isActivated = false, string remainingTime = "0")
         {
             if (isActivated)
             {
-                ContainerName.Text = Loc.GetString("medipen-refiller-window-filling-text", ("name", name.ToUpper()));
+                ContainerName.Text = Loc.GetString("medipen-refiller-window-filling-text", ("name", recipe.ToUpper()));
                 ReagentAmount.Text = Loc.GetString("medipen-refiller-window-time-text", ("time", remainingTime));
             }
             if (!isActivated)

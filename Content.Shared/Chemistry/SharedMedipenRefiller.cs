@@ -1,5 +1,3 @@
-using System.Linq;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -20,6 +18,10 @@ public sealed class SharedMedipenRefiller
         Key
     }
 
+    /// <summary>
+    /// Compare the contents of the buffer with what is in the recipe, performing a small conversion for this.
+    /// If it's EXACTILY the same reagents and there is a medipen inserted, it will be possible to make a new one.
+    /// </summary>
     public static bool CanRefill(string id, List<MedipenRecipePrototype> recipes, List<ReagentQuantity> content, IPrototypeManager prototypeManager, bool isInserted)
     {
         if (!isInserted)
@@ -76,7 +78,7 @@ public sealed class ContainerData
 
     public FixedPoint2 TotalVolume = 0;
     /// <summary>
-    /// If there's a item loaded.
+    /// If there's a item loaded. If it's the input, it refers to the container, if it's the buffer, it refers to medipen.
     /// </summary>
     public bool HasContainer = false;
 
@@ -103,7 +105,8 @@ public sealed class MedipenRefillerUpdateState : BoundUserInterfaceState
     public bool IsActivated;
     public string CurrentRecipe;
     public int RemainingTime;
-    public MedipenRefillerUpdateState(List<MedipenRecipePrototype> recipes, ContainerData input, ContainerData buffer, bool isActivated, string currentRecipe, int remainingTime)
+    public MedipenRefillerUpdateState(List<MedipenRecipePrototype> recipes, ContainerData input, ContainerData buffer,
+                                      bool isActivated, string currentRecipe, int remainingTime)
     {
         Recipes = recipes;
         InputContainerData = input;

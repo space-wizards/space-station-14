@@ -31,6 +31,7 @@
                     Orientation="Vertical"
                     SizeFlagsStretchRatio="4"
                     VerticalExpand="True">
+                    <!-- Medipen List -->
                     <PanelContainer StyleClasses="OpenRight" VerticalExpand="True">
                         <PanelContainer.PanelOverride>
                             <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
@@ -55,7 +56,7 @@
             HorizontalExpand="True"
             Orientation="Vertical"
             SeparationOverride="5">
-            <!--  Input container info  -->
+            <!-- Input -->
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'medipen-refiller-window-container-label'}" />
                 <Control HorizontalExpand="True" />
@@ -72,7 +73,7 @@
                 </PanelContainer.PanelOverride>
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
-                    <!--  Initially empty, when server sends state data this will have container contents and fill volume.  -->
+                    <!--  Input reagent list  -->
                     <BoxContainer
                         Name="InputContainerInfo"
                         Margin="3"
@@ -86,7 +87,7 @@
             <!--  Padding  -->
             <Control MinSize="0 10" />
 
-            <!--  Buffer  -->
+            <!--  Buffer info -->
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'medipen-refiller-window-buffer-text'}" />
                 <Control HorizontalExpand="True" />
@@ -97,7 +98,6 @@
                     Text="{Loc 'medipen-refiller-window-insert-button'}" />
             </BoxContainer>
 
-            <!--  Buffer info  -->
             <PanelContainer MinSize="0 200" VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />

@@ -179,7 +179,7 @@
         - ReagentId: Epinephrine
           Quantity: 5
   - type: Tag
-    tags: [ "Medipen", "EmptyMedipen" ]
+    tags: [ "Medipen" ]
 
 - type: entity
   name: brute auto-injector
