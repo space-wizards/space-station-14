@@ -20,5 +20,5 @@ public sealed partial class MedipenRecipePrototype : IPrototype
     public bool LockedByEmag { get; set; } = false;
 
     [DataField("reagents", required: true)]
-    public Dictionary<string, FixedPoint2> ReagentsRequired { get; set; } = new();
+    public Dictionary<string, FixedPoint2> RequiredReagents { get; set; } = new();
 }

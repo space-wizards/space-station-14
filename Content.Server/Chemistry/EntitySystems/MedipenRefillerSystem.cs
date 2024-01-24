@@ -7,11 +7,13 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Coordinates;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -25,17 +27,18 @@ public sealed class MedipenRefillerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MedipenRefillerComponent, BeforeActivatableUIOpenEvent>((uid, c, _) => UpdateUserInterfaceState(uid, c));
-        SubscribeLocalEvent<MedipenRefillerComponent, EntInsertedIntoContainerMessage>((uid, c, _) => UpdateUserInterfaceState(uid, c));
-        SubscribeLocalEvent<MedipenRefillerComponent, EntRemovedFromContainerMessage>((uid, c, _) => UpdateUserInterfaceState(uid, c));
+        SubscribeLocalEvent<MedipenRefillerComponent, BeforeActivatableUIOpenEvent>((uid, c, _) => UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, c)));
+        SubscribeLocalEvent<MedipenRefillerComponent, EntInsertedIntoContainerMessage>((uid, c, _) => UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, c)));
+        SubscribeLocalEvent<MedipenRefillerComponent, EntRemovedFromContainerMessage>((uid, c, _) => UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, c)));
 
         SubscribeLocalEvent<MedipenRefillerComponent, MedipenRefillerTransferReagentMessage>(OnTransferButtonMessage);
+        SubscribeLocalEvent<MedipenRefillerComponent, MedipenRefillerActivateMessage>(OnActivateMessage);
 
         SubscribeLocalEvent<MedipenRefillerComponent, ComponentStartup>(OnComponentStartup);
 
@@ -43,125 +46,123 @@ public sealed class MedipenRefillerSystem : EntitySystem
         SubscribeLocalEvent<MedipenRefillerComponent, GotEmaggedEvent>(OnGotEmmaged);
     }
 
-    private void OnGotEmmaged(EntityUid uid, MedipenRefillerComponent component, ref GotEmaggedEvent args)
+    private void OnGotEmmaged(Entity<MedipenRefillerComponent> entity, ref GotEmaggedEvent args)
     {
-        if (!Resolve(uid, ref component!) || _entityManager.HasComponent<EmaggedComponent>(uid))
+        if (_entityManager.HasComponent<EmaggedComponent>(entity.Owner))
             return;
 
         args.Handled = true;
     }
 
     /// <summary>
-    /// Inserts data from fabricable medipens as soon as the entity is initialized.
+    /// Inserts data from refillable medipens as soon as the entity is initialized.
     /// </summary>
-    private void OnComponentStartup(EntityUid uid, MedipenRefillerComponent component, ComponentStartup args)
+    private void OnComponentStartup(Entity<MedipenRefillerComponent> entity, ref ComponentStartup args)
     {
-        if (!Resolve(uid, ref component!))
-            return;
-
-        UpdateRecipes(uid, component);
+        UpdateRecipes(entity);
     }
 
     /// <summary>
     /// Make sure that the recipes are updated when the entity is emagged, as it wouldn't be desirable to update every time the interface is opened by the client.
     /// </summary>
-    private void OnComponentStartup(EntityUid uid, EmaggedComponent component, ComponentStartup args)
+    private void OnComponentStartup(EntityUid uid, EmaggedComponent _, ComponentStartup __)
     {
-        if (!Resolve(uid, ref component!) || !_entityManager.TryGetComponent<MedipenRefillerComponent>(uid, out var refillerComponent))
+        if (!_entityManager.TryGetComponent<MedipenRefillerComponent>(uid, out var component))
             return;
 
-        UpdateRecipes(uid, refillerComponent);
+        UpdateRecipes(new Entity<MedipenRefillerComponent>(uid, component));
     }
 
-    private void OnTransferButtonMessage(EntityUid uid, MedipenRefillerComponent component, MedipenRefillerTransferReagentMessage message)
+    private void OnTransferButtonMessage(Entity<MedipenRefillerComponent> entity, ref MedipenRefillerTransferReagentMessage message)
     {
-        if (!Resolve(uid, ref component!) || message.Amount <= 0)
+        if (message.Amount <= 0)
             return;
 
-        TransferReagent(uid, component, message.Id, message.Amount, message.IsBuffer);
+        TransferReagent(entity, message.Id, message.Amount, message.IsBuffer);
+    }
+
+    private void OnActivateMessage(Entity<MedipenRefillerComponent> entity, ref MedipenRefillerActivateMessage message)
+    {
+        if (GetBufferSolution(entity.Owner) == null || !CanRefill(entity, GetBufferSolution(entity.Owner)!, message.MedipenRecipe.ID))
+            return;
+
+        var solution = GetBufferSolution(entity.Owner)!;
+        entity.Comp.RemainingTime = entity.Comp.CompletionTime;
+        entity.Comp.IsActivated = true;
+        entity.Comp.Result = message.MedipenRecipe.Result!;
+        _itemSlotsSystem.SetLock(entity.Owner, SharedMedipenRefiller.MedipenSlotName, true);
+        solution.RemoveAllSolution();
+        _audioSystem.PlayPvs(entity.Comp.MachineNoise, entity.Owner);
+        UpdateUserInterfaceState(entity);
+    }
+
+    private bool CanRefill(Entity<MedipenRefillerComponent> entity, Solution buffer, string id)
+    {
+        if (!_itemSlotsSystem.TryGetSlot(entity.Owner, SharedMedipenRefiller.MedipenSlotName, out var slot))
+            return false;
+
+        return SharedMedipenRefiller.CanRefill(id, entity.Comp.MedipenRecipes, buffer.Contents, _prototypeManager, slot.HasItem);
     }
 
     /// <summary>
     /// Deserializes the recipe prototype for medipens. If new medipen recipes are added, ensure that their ID is in the string list of the component.
     /// </summary>
-    private void UpdateRecipes(EntityUid uid, MedipenRefillerComponent component)
+    private void UpdateRecipes(Entity<MedipenRefillerComponent> entity)
     {
         var recipeList = new List<MedipenRecipePrototype>();
 
-        foreach (var medipen in component.MedipenList)
+        foreach (var medipen in entity.Comp.MedipenList)
         {
             if (!_prototypeManager.HasIndex<MedipenRecipePrototype>(medipen))
                 continue;
 
             var recipe = _prototypeManager.Index<MedipenRecipePrototype>(medipen);
-            if (!recipe.LockedByEmag || _entityManager.HasComponent<EmaggedComponent>(uid))
+            if (!recipe.LockedByEmag || _entityManager.HasComponent<EmaggedComponent>(entity.Owner))
                 recipeList.Add(recipe);
         }
 
-        component.MedipenRecipes = recipeList;
-        UpdateUserInterfaceState(uid, component);
+        entity.Comp.MedipenRecipes = recipeList;
+        UpdateUserInterfaceState(entity);
     }
 
-    private void TransferReagent(EntityUid uid, MedipenRefillerComponent component, ReagentId reagent, FixedPoint2 amount, bool isBuffer)
+    private void TransferReagent(Entity<MedipenRefillerComponent> entity, ReagentId reagent, FixedPoint2 amount, bool isBuffer)
     {
-        var input = GetInputContainerSolution(uid, component);
-        var buffer = GetBufferSolution(uid, component);
+        var input = GetInputContainerSolution(entity.Owner);
+        var buffer = GetBufferSolution(entity.Owner);
 
-        if (input == null || buffer == null)
+        if (input is null || buffer is null || entity.Comp.IsActivated)
             return;
 
-        if (isBuffer && buffer.GetReagentQuantity(reagent) > 0)
+        if (isBuffer)
         {
-            var clampedAmount = FixedPoint2.Min(input.MaxVolume - input.Volume, FixedPoint2.Min(buffer.GetReagentQuantity(reagent), amount));
+            var clampedAmount = FixedPoint2.Min(input.Item2.MaxVolume - input.Item2.Volume, FixedPoint2.Min(buffer.GetReagentQuantity(reagent), amount));
             buffer.RemoveReagent(reagent, clampedAmount, true);
-            input.AddReagent(reagent, clampedAmount);
+            _solutionContainerSystem.TryAddReagent(input.Item1!.Value, reagent, clampedAmount, out var _);
         }
-
-        else if (!isBuffer && input.GetReagentQuantity(reagent) > 0)
+        else
         {
-            var clampedAmount = FixedPoint2.Min(buffer.MaxVolume - buffer.Volume, FixedPoint2.Min(input.GetReagentQuantity(reagent), amount));
-            input.RemoveReagent(reagent, clampedAmount, true);
+            var clampedAmount = FixedPoint2.Min(buffer.MaxVolume - buffer.Volume, FixedPoint2.Min(input.Item2.GetReagentQuantity(reagent), amount));
+            _solutionContainerSystem.RemoveReagent(input.Item1!.Value, reagent, clampedAmount);
             buffer.AddReagent(reagent, clampedAmount);
         }
 
-        UpdateUserInterfaceState(uid, component);
+        UpdateUserInterfaceState(entity);
     }
 
-    private ItemSlot? GetInputSlot(EntityUid uid, MedipenRefillerComponent component)
+    private Tuple<Entity<SolutionComponent>?, Solution>? GetInputContainerSolution(EntityUid uid)
     {
-        if (!Resolve(uid, ref component!)
-            || !_itemSlotsSystem.TryGetSlot(uid, SharedMedipenRefiller.InputSlotName, out var inputSlot))
+        if (!_itemSlotsSystem.TryGetSlot(uid, SharedMedipenRefiller.InputSlotName, out var inputSlot) || !inputSlot.HasItem)
             return null;
 
-        return inputSlot;
+        if (!_solutionContainerSystem.TryGetFitsInDispenser(inputSlot.Item!.Value, out var soln, out var solution))
+            return null;
+
+        return Tuple.Create(soln, solution);
     }
 
-    private ItemSlot? GetMedipenSlot(EntityUid uid, MedipenRefillerComponent component)
+    private Solution? GetBufferSolution(EntityUid uid)
     {
-        if (!Resolve(uid, ref component!)
-            || !_itemSlotsSystem.TryGetSlot(uid, SharedMedipenRefiller.MedipenSlotName, out var medipenSlot))
-            return null;
-
-        return medipenSlot;
-    }
-
-    private Solution? GetInputContainerSolution(EntityUid uid, MedipenRefillerComponent component)
-    {
-        if (!Resolve(uid, ref component!)
-            || !_itemSlotsSystem.TryGetSlot(uid, SharedMedipenRefiller.InputSlotName, out var inputSlot)
-            || !inputSlot.HasItem)
-            return null;
-
-        if (!_solutionContainerSystem.TryGetFitsInDispenser(inputSlot.Item!.Value, out var _, out var solution))
-            return null;
-
-        return solution;
-    }
-
-    private Solution? GetBufferSolution(EntityUid uid, MedipenRefillerComponent component)
-    {
-        if (!Resolve(uid, ref component!)
-            || !_solutionContainerSystem.TryGetSolution(uid, SharedMedipenRefiller.BufferSolutionName, out var _, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, SharedMedipenRefiller.BufferSolutionName, out var _, out var solution))
             return null;
 
         return solution;
@@ -169,7 +170,8 @@ public sealed class MedipenRefillerSystem : EntitySystem
 
     private ContainerData BuildInputContainerData(EntityUid uid)
     {
-        if (_itemSlotsSystem.TryGetSlot(uid, SharedMedipenRefiller.InputSlotName, out var inputSlot) && inputSlot!.HasItem
+        if (_itemSlotsSystem.TryGetSlot(uid, SharedMedipenRefiller.InputSlotName, out var inputSlot)
+            && inputSlot!.HasItem
             && _solutionContainerSystem.TryGetFitsInDispenser(inputSlot.Item!.Value, out var _, out var solution))
             return new ContainerData(Name(inputSlot.Item.Value), solution.Contents, solution.Volume, solution.MaxVolume, true);
 
@@ -192,16 +194,37 @@ public sealed class MedipenRefillerSystem : EntitySystem
     }
 
     #region UI Messages
-    public void UpdateUserInterfaceState(EntityUid uid, MedipenRefillerComponent component)
+    public void UpdateUserInterfaceState(Entity<MedipenRefillerComponent> entity)
     {
-        if (!Resolve(uid, ref component!))
-            return;
+        var ui = _uiSys.GetUi(entity, SharedMedipenRefiller.MedipenRefillerUiKey.Key);
 
-        var ui = _uiSys.GetUi(uid, SharedMedipenRefiller.MedipenRefillerUiKey.Key);
-
-        var state = new MedipenRefillerUpdateState(component.MedipenRecipes, BuildInputContainerData(uid), BuildBufferData(uid));
+        var state = new MedipenRefillerUpdateState(entity.Comp.MedipenRecipes, BuildInputContainerData(entity.Owner), BuildBufferData(entity.Owner),
+                                                   entity.Comp.IsActivated, entity.Comp.Result, (int) entity.Comp.RemainingTime);
 
         _uiSys.SetUiState(ui, state);
     }
     #endregion
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<MedipenRefillerComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            if (component.IsActivated)
+            {
+                component.RemainingTime -= frameTime;
+                if (component.RemainingTime <= 0 && _prototypeManager.HasIndex<EntityPrototype>(component.Result))
+                {
+                    _entityManager.DeleteEntity(_itemSlotsSystem.GetItemOrNull(uid, SharedMedipenRefiller.MedipenSlotName));
+                    _itemSlotsSystem.SetLock(uid, SharedMedipenRefiller.MedipenSlotName, false);
+                    _entityManager.SpawnEntity(component.Result, uid.ToCoordinates());
+                    component.IsActivated = false;
+                    component.RemainingTime = 0;
+                    component.Result = "";
+                }
+            }
+        }
+    }
 }

@@ -1,5 +1,4 @@
 
-using Content.Shared.Chemistry;
 using Robust.Shared.Audio;
 
 namespace Content.Client.Chemistry.Components;

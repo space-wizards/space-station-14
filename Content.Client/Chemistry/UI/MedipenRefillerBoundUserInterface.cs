@@ -25,8 +25,10 @@ namespace Content.Client.Chemistry.UI
 
             _window.OpenCentered();
             _window.OnClose += Close;
+            _window.OnMedipenButtonPressed += id => SendMessage(new MedipenRefillerActivateMessage(id));
             _window.OnTransferButtonPressed += args => SendMessage(new MedipenRefillerTransferReagentMessage(args.Id, args.Value, args.IsBuffer));
             _window.InputEjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedMedipenRefiller.InputSlotName));
+            _window.MedipenEjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedMedipenRefiller.MedipenSlotName));
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -39,8 +41,11 @@ namespace Content.Client.Chemistry.UI
                     if (_window != null)
                     {
                         _window.MedipenRecipes = msg.Recipes;
-                        _window!.InputContainerData = msg.InputContainerData;
-                        _window!.BufferData = msg.BufferData;
+                        _window.InputContainerData = msg.InputContainerData;
+                        _window.BufferData = msg.BufferData;
+                        _window.IsActivated = msg.IsActivated;
+                        _window.CurrentRecipe = msg.CurrentRecipe;
+                        _window.RemainingTime = msg.RemainingTime;
                     }
                     _window?.UpdateRecipes();
                     _window?.UpdateContainerInfo();

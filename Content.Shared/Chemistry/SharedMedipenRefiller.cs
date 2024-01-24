@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry;
@@ -19,6 +20,39 @@ public sealed class SharedMedipenRefiller
         Key
     }
 
+    public static bool CanRefill(string id, List<MedipenRecipePrototype> recipes, List<ReagentQuantity> content, IPrototypeManager prototypeManager, bool isInserted)
+    {
+        if (!isInserted)
+            return false;
+
+        var reagents = new Dictionary<string, FixedPoint2>();
+        var requiredReagents = new Dictionary<string, FixedPoint2>();
+
+        foreach (var recipe in recipes!)
+        {
+            if (recipe.ID.Equals(id))
+            {
+                requiredReagents = recipe.RequiredReagents;
+                foreach (var reagent in content)
+                {
+                    if (prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var reagentProto))
+                        reagents.Add(reagentProto.ID, reagent.Quantity);
+                }
+            }
+        }
+
+        if (reagents.Count.Equals(requiredReagents.Count))
+        {
+            foreach (var reagent in reagents)
+            {
+                if (!(requiredReagents.ContainsKey(reagent.Key) && requiredReagents[reagent.Key].Equals(reagent.Value)))
+                    return false;
+            }
+            return true;
+        }
+        else
+            return false;
+    }
 }
 
 /// <summary>
@@ -56,7 +90,7 @@ public sealed class ContainerData
         ReagentQuantities = reagentQuantities;
         CurrentVolume = currentVolume;
         TotalVolume = totalVolume;
-        HasContainer = true;
+        HasContainer = hasContainer;
     }
 }
 
@@ -66,11 +100,17 @@ public sealed class MedipenRefillerUpdateState : BoundUserInterfaceState
     public List<MedipenRecipePrototype> Recipes;
     public ContainerData InputContainerData;
     public ContainerData BufferData;
-    public MedipenRefillerUpdateState(List<MedipenRecipePrototype> recipes, ContainerData input, ContainerData buffer)
+    public bool IsActivated;
+    public string CurrentRecipe;
+    public int RemainingTime;
+    public MedipenRefillerUpdateState(List<MedipenRecipePrototype> recipes, ContainerData input, ContainerData buffer, bool isActivated, string currentRecipe, int remainingTime)
     {
         Recipes = recipes;
         InputContainerData = input;
         BufferData = buffer;
+        IsActivated = isActivated;
+        CurrentRecipe = currentRecipe;
+        RemainingTime = remainingTime;
     }
 }
 
@@ -86,5 +126,15 @@ public sealed class MedipenRefillerTransferReagentMessage : BoundUserInterfaceMe
         Id = id;
         Amount = amount;
         IsBuffer = isBuffer;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class MedipenRefillerActivateMessage : BoundUserInterfaceMessage
+{
+    public MedipenRecipePrototype MedipenRecipe;
+    public MedipenRefillerActivateMessage(MedipenRecipePrototype medipenRecipe)
+    {
+        MedipenRecipe = medipenRecipe;
     }
 }

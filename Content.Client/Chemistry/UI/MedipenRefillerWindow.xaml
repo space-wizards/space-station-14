@@ -63,7 +63,7 @@
                     Name="InputEjectButton"
                     Access="Public"
                     MinSize="80 0"
-                    Text="{Loc 'medipen-refiller-window-eject-button'}" />
+                    Text="{Loc 'medipen-refiller-window-insert-button'}" />
             </BoxContainer>
 
             <PanelContainer MinSize="0 200" VerticalExpand="True">
@@ -90,6 +90,11 @@
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'medipen-refiller-window-buffer-text'}" />
                 <Control HorizontalExpand="True" />
+                <Button
+                    Name="MedipenEjectButton"
+                    Access="Public"
+                    MinSize="80 0"
+                    Text="{Loc 'medipen-refiller-window-insert-button'}" />
             </BoxContainer>
 
             <!--  Buffer info  -->
