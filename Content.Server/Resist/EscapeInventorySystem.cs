@@ -42,9 +42,7 @@ public sealed class EscapeInventorySystem : EntitySystem
             return;
 
         // Make sure there's nothing stopped the removal (like being glued)
-        var removeAttemptEv = new ContainerGettingRemovedAttemptEvent(container, uid);
-        RaiseLocalEvent(uid, removeAttemptEv);
-        if (removeAttemptEv.Cancelled)
+        if (!_containerSystem.CanRemove(uid, container))
         {
             _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
             return;
