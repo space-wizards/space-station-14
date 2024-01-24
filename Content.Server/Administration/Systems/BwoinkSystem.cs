@@ -473,7 +473,8 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, admins.Count == 0));
+                var nonAfkAdmins = GetNonAfkAdmins();
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, nonAfkAdmins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -485,11 +486,18 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(starMuteMsg, senderSession.Channel);
         }
 
-        // Returns all online admins with AHelp access and are not afk
-        private IList<INetChannel> GetTargetAdmins()
+        private IList<INetChannel> GetNonAfkAdmins()
         {
             return _adminManager.ActiveAdmins
                 .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) && !_afkManager.IsAfk(p))
+                .Select(p => p.Channel)
+                .ToList();
+        }
+
+        private IList<INetChannel> GetTargetAdmins()
+        {
+            return _adminManager.ActiveAdmins
+                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
                 .Select(p => p.Channel)
                 .ToList();
         }
