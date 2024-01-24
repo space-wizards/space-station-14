@@ -112,6 +112,14 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         if (!_prototypeManager.TryIndex<JobPrototype>(jobId, out var jobPrototype))
             throw new ArgumentException($"Invalid job prototype ID: {jobId}");
 
+        // when adding a record that already exists use the old one
+        // this happens when respawning as the same character
+        if (GetRecordByName(station, name, records) is {} id)
+        {
+            SetIdKey(idUid, new StationRecordKey(id, station));
+            return;
+        }
+
         var record = new GeneralStationRecord()
         {
             Name = name,
@@ -133,21 +141,26 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             return;
         }
 
-        if (idUid != null)
-        {
-            var keyStorageEntity = idUid;
-            if (TryComp(idUid, out PdaComponent? pdaComponent) && pdaComponent.ContainedId != null)
-            {
-                keyStorageEntity = pdaComponent.IdSlot.Item;
-            }
-
-            if (keyStorageEntity != null)
-            {
-                _keyStorage.AssignKey(keyStorageEntity.Value, key);
-            }
-        }
+        SetIdKey(idUid, key);
 
         RaiseLocalEvent(new AfterGeneralRecordCreatedEvent(key, record, profile));
+    }
+
+    /// <summary>
+    /// Set the station records key for an id/pda.
+    /// </summary>
+    public void SetIdKey(EntityUid? uid, StationRecordKey key)
+    {
+        if (uid is not {} idUid)
+            return;
+
+        var keyStorageEntity = idUid;
+        if (TryComp<PdaComponent>(idUid, out var pda) && pda.ContainedId is {} id)
+        {
+            keyStorageEntity = id;
+        }
+
+        _keyStorage.AssignKey(keyStorageEntity, key);
     }
 
     /// <summary>
@@ -188,6 +201,26 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             return false;
 
         return records.Records.TryGetRecordEntry(key.Id, out entry);
+    }
+
+    /// <summary>
+    /// Returns an id if a record with the same name exists.
+    /// </summary>
+    /// <remarks>
+    /// Linear search so O(n) time complexity.
+    /// </remarks>
+    public uint? GetRecordByName(EntityUid station, string name, StationRecordsComponent? records = null)
+    {
+        if (!Resolve(station, ref records))
+            return null;
+
+        foreach (var (id, record) in GetRecordsOfType<GeneralStationRecord>(station, records))
+        {
+            if (record.Name == name)
+                return id;
+        }
+
+        return null;
     }
 
     /// <summary>
