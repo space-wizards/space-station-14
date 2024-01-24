@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
@@ -52,6 +53,22 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
+
+        if (stationEvent.BlacklistRules != null)
+        {
+            foreach (var blockedRule in stationEvent.BlacklistRules)
+            {
+                if (EntityManager.ComponentFactory.TryGetRegistration(blockedRule, out var reg))
+                {
+                    if (EntityManager.GetAllComponents(reg.Type).Any())
+                    {
+                        AdminLogManager.Add(LogType.EventStopped, $"The {ToPrettyString(uid)} is not started because there is already a {blockedRule} in the game.");
+                        ForceEndSelf(uid, gameRule);
+                        return;
+                    }
+                }
+            }
+        }
 
         AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
 
