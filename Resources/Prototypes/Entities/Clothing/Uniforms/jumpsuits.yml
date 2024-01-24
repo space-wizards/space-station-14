@@ -496,7 +496,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitQMFormal
-  name: quartermasters's formal attire
+  name: quartermasters's formal suit
   description: Inspired by the quartermasters of military's past, the perfect outfit for supplying a formal occasion.
   components:
     - type: Sprite
