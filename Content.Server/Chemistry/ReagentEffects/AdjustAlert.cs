@@ -17,7 +17,7 @@ public sealed partial class AdjustAlert : ReagentEffect
     [DataField]
     public bool Cooldown;
 
-    // The alert will be removed automatically after <Time> seconds
+    // Automatically remove the alert after a time
     [DataField]
     public bool AutoRemove;
 
