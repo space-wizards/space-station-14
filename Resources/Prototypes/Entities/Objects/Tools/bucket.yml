@@ -21,6 +21,7 @@
     sprite: Objects/Tools/bucket.rsi
     slots:
     - HEAD
+    quickEquip: false
   - type: SolutionContainerManager
     solutions:
       bucket:
