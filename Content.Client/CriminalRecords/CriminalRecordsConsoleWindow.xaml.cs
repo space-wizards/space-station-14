@@ -85,12 +85,6 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             FilterListingOfRecords(StationRecordsFiltersValue.Text);
         };
 
-        StationRecordsFiltersReset.OnPressed += _ =>
-        {
-            StationRecordsFiltersValue.Text = "";
-            FilterListingOfRecords();
-        };
-
         ArrestButton.OnPressed += e => OnArrestButtonPressed?.Invoke(e, ReasonLineEdit.Text, _recordName);
 
         StatusOptionButton.OnItemSelected += args =>

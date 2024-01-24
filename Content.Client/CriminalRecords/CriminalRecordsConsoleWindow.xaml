@@ -8,7 +8,6 @@
             <LineEdit Name="StationRecordsFiltersValue"
                 PlaceHolder="{Loc 'criminal-records-filter-placeholder'}" HorizontalExpand="True"/>
             <Button Name="StationRecordsFilters" Text="{Loc 'criminal-records-console-search-records'}"/>
-            <Button Name="StationRecordsFiltersReset" Text="{Loc 'criminal-records-console-reset-filters'}"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <BoxContainer VerticalExpand="True">
