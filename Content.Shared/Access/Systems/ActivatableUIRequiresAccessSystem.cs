@@ -1,14 +1,12 @@
-using Content.Server.Popups;
-using Content.Server.UserInterface;
-using Content.Server.Access.Components;
+using Content.Shared.Popups;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 
-namespace Content.Server.Access.Systems;
+namespace Content.Shared.Access.Systems;
 public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -25,7 +23,7 @@ public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
         if (!_access.IsAllowed(args.User, activatableUI))
         {
             args.Cancel();
-            _popupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), activatableUI, args.User);
+            _popup.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), activatableUI, args.User);
         }
     }
 }
