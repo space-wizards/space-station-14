@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: TemporalOroboros
-  changes:
-  - message: Pickaxes have a more accurate shape in storage.
-    type: Tweak
-  id: 5279
-  time: '2023-12-07T00:52:57.0000000+00:00'
 - author: Nairodian
   changes:
   - message: Added a new lizard chest marking, an underbelly.
@@ -3805,3 +3799,10 @@
   id: 5779
   time: '2024-01-23T22:59:10.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23887
+- author: DrMelon
+  changes:
+  - message: The Microwave works as intended after power outages again.
+    type: Fix
+  id: 5780
+  time: '2024-01-24T01:14:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23997
