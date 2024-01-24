@@ -19,13 +19,16 @@ public sealed class UnknownShuttleSpawnRule : StationEventSystem<UnknownShuttleS
     {
         base.Started(uid, component, gameRule, args);
 
+        if (component.ShuttleVariants == null || component.ShuttleVariants.Count == 0)
+            return;
+
         var shuttleMap = _mapManager.CreateMap();
         var options = new MapLoadOptions
         {
             LoadMap = true,
         };
 
-        _map.TryLoad(shuttleMap, component.ShuttlePath, out _, options);
+        _map.TryLoad(shuttleMap, _random.Pick(component.ShuttleVariants), out _, options);
 
         if (component.GameRuleProto != null)
         {

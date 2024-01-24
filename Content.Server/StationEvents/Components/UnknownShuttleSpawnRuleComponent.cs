@@ -7,7 +7,7 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class UnknownShuttleSpawnRuleComponent : Component
 {
     [DataField]
-    public string ShuttlePath = "Maps/Shuttles/shittle.yml";
+    public List<string>? ShuttleVariants = new();
 
     [DataField]
     public EntProtoId? GameRuleProto;

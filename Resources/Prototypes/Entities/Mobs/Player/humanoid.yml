@@ -472,3 +472,76 @@
       description: ghost-role-information-cluwne-description
     - type: GhostTakeoverAvailable
     - type: Cluwne
+
+## Lost Cargo technical
+
+- type: entity
+  name: lost cargo techical spawner
+  id: LostCargoTechnicalSpawner
+  suffix: 10% Traitor chance
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/appraisal-tool.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidLostCargoTechnical
+      chance: 1
+      rarePrototypes:
+      - RandomHumanoidLostCargoTechnicalTraitor
+      rareChance: 0.1
+
+- type: entity
+  id: RandomHumanoidLostCargoTechnical
+  name: lost cargo technical
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: LostCargoTechnical
+
+- type: entity
+  id: RandomHumanoidLostCargoTechnicalTraitor
+  parent: RandomHumanoidLostCargoTechnical
+  name: lost cargo technical
+  suffix: Traitor
+  components:
+    - type: RandomHumanoidSpawner
+      settings: LostCargoTechnicalTraitor
+
+- type: randomHumanoidSettings
+  id: LostCargoTechnical
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-technical-name
+      description: ghost-role-information-lost-cargo-technical-description
+      rules: ghost-role-information-lost-cargo-technical-rules
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ CargoTechGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: LostCargoTechnicalTraitor
+  randomizeName: false
+  components:
+    - type: AutoTraitor
+    - type: GhostRole
+      name: ghost-role-information-lost-cargo-traitor-technical-name
+      description: ghost-role-information-lost-cargo-traitor-technical-description
+      rules: ghost-role-information-lost-cargo-traitor-technical-rules
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ CargoTechGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last

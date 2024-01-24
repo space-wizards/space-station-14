@@ -221,3 +221,11 @@ ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagoni
 ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-lost-cargo-technical-name = Lost Cargo technical
+ghost-role-information-lost-cargo-technical-description = Something went wrong and your cargo shuttle with the goods was beamed into the sector to another station.
+ghost-role-information-lost-cargo-technical-rules = You're a regular cargo technical from another station. Do what regular cargo do.
+
+ghost-role-information-lost-cargo-traitor-technical-name = Traitor Cargo technical
+ghost-role-information-lost-cargo-traitor-technical-description = You're a traitor, undercover as a lost cargo technical. Fulfill your objectives.
+ghost-role-information-lost-cargo-traitor-technical-rules = Normal syndicate antagonist rules apply.

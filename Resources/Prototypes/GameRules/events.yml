@@ -425,9 +425,6 @@
   noSpawn: true
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 45
     weight: 5
     minimumPlayers: 10
@@ -436,8 +433,25 @@
     blacklistRules:
     - NukeopsRule
   - type: UnknownShuttleSpawnRule
-    shuttlePath: /Maps/Shuttles/striker.yml
+    shuttleVariants: 
+    - /Maps/Shuttles/UnknownShuttleEvent/striker.yml
     gameRuleProto: LoneNukeopsRule
+
+- type: entity
+  id: LostCargoTechicalShuttleSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 5
+    reoccurrenceDelay: 30
+    duration: 1
+  - type: UnknownShuttleSpawnRule
+    shuttleVariants: 
+    - /Maps/Shuttles/UnknownShuttleEvent/cargo_lost.yml
 
 - type: entity
   id: MassHallucinations
