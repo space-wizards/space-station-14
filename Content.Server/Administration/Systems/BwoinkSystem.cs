@@ -329,7 +329,7 @@ namespace Content.Server.Administration.Systems
                 username += $" ({characterName})";
 
             // If no admins are online, set embed color to red. Otherwise green
-            var color = GetTargetAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
+            var color = GetNonAfkAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
 
             // Limit server name to 1500 characters, in case someone tries to be a little funny
             var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
