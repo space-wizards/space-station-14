@@ -71,6 +71,9 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
 
+    [DataField, AutoNetworkedField]
+    public Color SpeakerColor = Color.White;
+
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings
     /// </summary>
