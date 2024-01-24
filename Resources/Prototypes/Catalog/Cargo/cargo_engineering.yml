@@ -49,6 +49,16 @@
   group: market
 
 - type: cargoProduct
+  id: StationBeaconBundle
+  icon:
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  product: CrateEngineeringStationBeaconBundle
+  cost: 500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: EngineeringJetpack
   icon:
     sprite: Objects/Tanks/Jetpacks/blue.rsi
@@ -107,3 +117,14 @@
   cost: 800
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: EngineeringParticleDecelerators
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
+  product: CrateParticleDecelerators
+  cost: 15000
+  category: Engineering
+  group: market
+  

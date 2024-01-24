@@ -1,20 +1,21 @@
-using System.Linq;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
-using Content.Shared.Forensics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -26,33 +27,33 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
-            SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<HyposprayComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
         }
 
-        private void OnHypoGetState(EntityUid uid, HyposprayComponent component, ref ComponentGetState args)
+        private void OnHypoGetState(Entity<HyposprayComponent> entity, ref ComponentGetState args)
         {
-            args.State = _solutions.TryGetSolution(uid, component.SolutionName, out var solution)
+            args.State = _solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out _, out var solution)
                 ? new HyposprayComponentState(solution.Volume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
 
-        private void OnUseInHand(EntityUid uid, HyposprayComponent component, UseInHandEvent args)
+        private void OnUseInHand(Entity<HyposprayComponent> entity, ref UseInHandEvent args)
         {
             if (args.Handled)
                 return;
 
-            TryDoInject(uid, args.User, args.User);
+            TryDoInject(entity, args.User, args.User);
             args.Handled = true;
         }
 
-        private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangedEvent args)
+        private void OnSolutionChange(Entity<HyposprayComponent> entity, ref SolutionContainerChangedEvent args)
         {
-            Dirty(component);
+            Dirty(entity);
         }
 
-        public void OnAfterInteract(EntityUid uid, HyposprayComponent component, AfterInteractEvent args)
+        public void OnAfterInteract(Entity<HyposprayComponent> entity, ref AfterInteractEvent args)
         {
             if (!args.CanReach)
                 return;
@@ -60,27 +61,30 @@ namespace Content.Server.Chemistry.EntitySystems
             var target = args.Target;
             var user = args.User;
 
-            TryDoInject(uid, target, user);
+            TryDoInject(entity, target, user);
         }
 
-        public void OnAttack(EntityUid uid, HyposprayComponent component, MeleeHitEvent args)
+        public void OnAttack(Entity<HyposprayComponent> entity, ref MeleeHitEvent args)
         {
             if (!args.HitEntities.Any())
                 return;
 
-            TryDoInject(uid, args.HitEntities.First(), args.User);
+            TryDoInject(entity, args.HitEntities.First(), args.User);
         }
 
-        public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component=null)
+        public bool TryDoInject(Entity<HyposprayComponent> hypo, EntityUid? target, EntityUid user)
         {
-            if (!Resolve(uid, ref component))
-                return false;
+            var (uid, component) = hypo;
 
             if (!EligibleEntity(target, _entMan, component))
                 return false;
 
-            if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.ActiveDelay(uid, delayComp))
-                return false;
+            if (TryComp(uid, out UseDelayComponent? delayComp))
+            {
+                if (_useDelay.IsDelayed((uid, delayComp)))
+                    return false;
+            }
+
 
             string? msgFormat = null;
 
@@ -92,15 +96,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 target = user;
             }
 
-            _solutions.TryGetSolution(uid, component.SolutionName, out var hypoSpraySolution);
-
-            if (hypoSpraySolution == null || hypoSpraySolution.Volume == 0)
+            if (!_solutionContainers.TryGetSolution(uid, component.SolutionName, out var hypoSpraySoln, out var hypoSpraySolution) || hypoSpraySolution.Volume == 0)
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-component-empty-message"), user);
                 return true;
             }
 
-            if (!_solutions.TryGetInjectableSolution(target.Value, out var targetSolution))
+            if (!_solutionContainers.TryGetInjectableSolution(target.Value, out var targetSoln, out var targetSolution))
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, _entMan))), user);
                 return false;
@@ -119,25 +121,25 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Medipens and such use this system and don't have a delay, requiring extra checks
             // BeginDelay function returns if item is already on delay
-            if (delayComp is not null)
-                _useDelay.BeginDelay(uid, delayComp);
+            if (delayComp != null)
+                _useDelay.TryResetDelay((uid, delayComp));
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {
-                _popup.PopupCursor(Loc.GetString("hypospray-component-transfer-already-full-message",("owner", target)), user);
+                _popup.PopupCursor(Loc.GetString("hypospray-component-transfer-already-full-message", ("owner", target)), user);
                 return true;
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = _solutions.SplitSolution(uid, hypoSpraySolution, realTransferAmount);
+            var removedSolution = _solutionContainers.SplitSolution(hypoSpraySoln.Value, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
                 return true;
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
-            _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
+            _solutionContainers.TryAddSolution(targetSoln.Value, removedSolution);
 
             var ev = new TransferDnaEvent { Donor = target.Value, Recipient = uid };
             RaiseLocalEvent(target.Value, ref ev);

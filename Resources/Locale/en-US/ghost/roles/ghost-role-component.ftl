@@ -44,6 +44,9 @@ ghost-role-information-kangaroo-description = You're a kangaroo! Do whatever kan
 ghost-role-information-monkey-name = Monkey
 ghost-role-information-monkey-description = Ook ook!
 
+ghost-role-information-kobold-name = Kobold
+ghost-role-information-kobold-description = Be the little gremlin you are, yell at people and beg for meat!
+
 ghost-role-information-rat-king-name = Rat King
 ghost-role-information-rat-king-description = You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
 ghost-role-information-rat-king-rules = You are an antagonist, scavenge, attack, and grow your hoard!
@@ -108,6 +111,9 @@ ghost-role-information-space-cobra-description = Space cobras really don't like 
 
 ghost-role-information-salvage-cobra-name = Space cobra on salvage wreck
 ghost-role-information-salvage-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
+
+ghost-role-information-salvage-flesh-name = Aberrant flesh on salvage wreck
+ghost-role-information-salvage-flesh-description = Defend the loot inside the salvage wreck!
 
 ghost-role-information-tropico-name = Tropico
 ghost-role-information-tropico-description = The noble companion of Atmosia, and its most stalwart defender. Viva!
@@ -182,8 +188,15 @@ ghost-role-information-loneop-rules = You are a syndicate operative tasked with 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
 
+ghost-role-information-hellspawn-name = Hellspawn
+ghost-role-information-hellspawn-description = You are an antagonist, bring death to those who do not follow the great god Nar'Sie.
+
 ghost-role-information-Death-Squad-name = Death Squad Operative
 ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.
+
+ghost-role-information-SyndiCat-name = SyndiCat
+ghost-role-information-SyndiCat-description = You're the faithful trained pet of nuclear operatives with a microbomb. Serve your master to the death!
+ghost-role-information-SyndiCat-rules = You're the faithful trained pet of nuclear operatives with a microbomb. Serve your master to the death!
 
 ghost-role-information-Cak-name = Cak
 ghost-role-information-Cak-description = You are the chef's favorite child. You're a living cake cat.
@@ -196,3 +209,15 @@ ghost-role-information-BreadDog-rules = You're an edible dog made of bread. Your
 ghost-role-information-exterminator-name = Exterminator
 ghost-role-information-exterminator-description = You been been sent back in time to terminate a target with high importance to the future.
 ghost-role-information-exterminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.
+
+ghost-role-information-space-ninja-name = Space Ninja
+ghost-role-information-space-ninja-description = Use stealth and deception to sabotage the station.
+ghost-role-information-space-ninja-rules = You are an elite mercenary of the Spider Clan. You aren't required to follow your objectives, yet your NINJA HONOR demands you try.
+
+ghost-role-information-syndicate-reinforcement-name = Syndicate Agent
+ghost-role-information-syndicate-reinforcement-description = Someone needs reinforcements. You, the first person the syndicate could find, will help them.
+ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
+ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
+ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.

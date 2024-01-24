@@ -20,10 +20,9 @@
           False: { visible: false }
   - type: Item
     size: Normal
-  - type: ItemCooldown
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:
-      collection: RadiationPulse 
+      collection: RadiationPulse
   - type: UseDelay
     delay: 2
   - type: AnomalyCore
@@ -136,6 +135,19 @@
     castShadows: false
   - type: Electrified
 
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreFlora
+  suffix: Flora
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#6270bb"
+    castShadows: false
+
 # Inert cores
 
 - type: entity
@@ -143,8 +155,15 @@
   id: BaseAnomalyInertCore
   abstract: true
   components:
+  - type: Sprite
+    layers:
+    - state: core
+    - state: pulse
+      visible: false
+      map: ["decay"]
   - type: AnomalyCore
-    timeToDecay: 1 #decay very fast
+    timeToDecay: 0
+    isDecayed: true
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -248,4 +267,17 @@
     radius: 1.5
     energy: 2.0
     color: "#ffffaa"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreFloraInert
+  suffix: Flora, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#6270bb"
     castShadows: false

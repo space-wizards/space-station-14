@@ -70,7 +70,7 @@ namespace Content.Server.Administration.Systems
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _timing.CurTime.ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel).Length;
+            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel).Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
@@ -431,7 +431,7 @@ namespace Content.Server.Administration.Systems
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
-                if (!admins.Contains(session.ConnectedClient))
+                if (!admins.Contains(session.Channel))
                 {
                     // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
                     if (_overrideClientName != string.Empty)
@@ -451,10 +451,10 @@ namespace Content.Server.Administration.Systems
                             overrideMsgText = $"{senderSession.Name}: {escapedText}"; // Not an admin, name is not overridden.
                         }
 
-                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.ConnectedClient);
+                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.Channel);
                     }
                     else
-                        RaiseNetworkEvent(msg, session.ConnectedClient);
+                        RaiseNetworkEvent(msg, session.Channel);
                 }
             }
 
@@ -471,7 +471,7 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _timing.CurTime.ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, admins.Count == 0));
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, admins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -480,7 +480,7 @@ namespace Content.Server.Administration.Systems
             // No admin online, let the player know
             var systemText = Loc.GetString("bwoink-system-starmute-message-no-other-users");
             var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
-            RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
+            RaiseNetworkEvent(starMuteMsg, senderSession.Channel);
         }
 
         // Returns all online admins with AHelp access
@@ -488,7 +488,7 @@ namespace Content.Server.Administration.Systems
         {
             return _adminManager.ActiveAdmins
                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
-               .Select(p => p.ConnectedClient)
+               .Select(p => p.Channel)
                .ToList();
         }
 

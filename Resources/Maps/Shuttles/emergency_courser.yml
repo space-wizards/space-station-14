@@ -692,8 +692,7 @@ entities:
     - pos: 0.5,10.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 322
     components:
     - pos: 0.5,11.5
@@ -844,8 +843,7 @@ entities:
     - pos: -2.5,6.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 352
     components:
     - pos: -1.5,6.5
@@ -871,8 +869,7 @@ entities:
     - pos: 2.5,6.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 357
     components:
     - pos: 3.5,6.5
@@ -903,8 +900,7 @@ entities:
     - pos: 2.5,-3.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 363
     components:
     - pos: 3.5,-3.5
@@ -1280,8 +1276,7 @@ entities:
     - pos: -0.5,-10.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 438
     components:
     - pos: -0.5,-9.5
@@ -1392,8 +1387,7 @@ entities:
     - pos: -3.5,-12.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 460
     components:
     - pos: -0.5,-14.5
@@ -1434,8 +1428,7 @@ entities:
     - pos: 0.5,-10.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 468
     components:
     - pos: 2.5,-12.5
@@ -1446,8 +1439,7 @@ entities:
     - pos: 3.5,-12.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 470
     components:
     - pos: -2.5,-14.5
@@ -1515,8 +1507,7 @@ entities:
     - pos: 0.5,-10.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableMV
   entities:
   - uid: 289
@@ -1524,15 +1515,13 @@ entities:
     - pos: 0.5,-10.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 290
     components:
     - pos: -0.5,-10.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 291
     components:
     - pos: 0.5,-9.5
@@ -1588,8 +1577,7 @@ entities:
     - pos: 2.5,-3.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 304
     components:
     - pos: 3.5,-2.5
@@ -1675,8 +1663,7 @@ entities:
     - pos: 0.5,10.5
       parent: 656
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableTerminal
   entities:
   - uid: 279
@@ -2553,72 +2540,63 @@ entities:
       pos: -0.5,-12.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 550
     components:
     - rot: 3.141592653589793 rad
       pos: 3.5,-10.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 551
     components:
     - rot: 3.141592653589793 rad
       pos: -3.5,-10.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 552
     components:
     - rot: 1.5707963267948966 rad
       pos: -4.5,-0.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 553
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,-0.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 573
     components:
     - rot: -1.5707963267948966 rad
       pos: 2.5,11.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 574
     components:
     - rot: 1.5707963267948966 rad
       pos: -2.5,11.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 580
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,8.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 589
     components:
     - rot: 1.5707963267948966 rad
       pos: -4.5,8.5
       parent: 656
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
 - proto: GeneratorBasic15kW
   entities:
   - uid: 66

@@ -70,7 +70,8 @@ public sealed class SpreaderSystem : EntitySystem
 
         foreach (var neighbor in neighbors)
         {
-            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+            if (!TerminatingOrDeleted(neighbor))
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
         }
     }
 
@@ -312,7 +313,7 @@ public sealed class SpreaderSystem : EntitySystem
         if (position == null)
         {
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridUid, out grid))
+            if (!_mapManager.TryGetGrid(transform.GridUid, out grid) || TerminatingOrDeleted(transform.GridUid.Value))
                 return neighbors;
             tile = grid.TileIndicesFor(transform.Coordinates);
         }
@@ -337,7 +338,7 @@ public sealed class SpreaderSystem : EntitySystem
             while (directionEnumerator.MoveNext(out var ent))
             {
                 DebugTools.Assert(Transform(ent.Value).Anchored);
-                if (spreaderQuery.HasComponent(ent))
+                if (spreaderQuery.HasComponent(ent) && !TerminatingOrDeleted(ent.Value))
                     neighbors.Add(ent.Value);
             }
         }

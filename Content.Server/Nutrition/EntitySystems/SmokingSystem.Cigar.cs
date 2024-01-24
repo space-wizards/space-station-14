@@ -1,6 +1,6 @@
 using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 
@@ -16,27 +16,27 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<CigarComponent, AfterInteractEvent>(OnCigarAfterInteract);
         }
 
-        private void OnCigarActivatedEvent(EntityUid uid, CigarComponent component, ActivateInWorldEvent args)
+        private void OnCigarActivatedEvent(Entity<CigarComponent> entity, ref ActivateInWorldEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
+            if (!EntityManager.TryGetComponent(entity, out SmokableComponent? smokable))
                 return;
 
             if (smokable.State != SmokableState.Lit)
                 return;
 
-            SetSmokableState(uid, SmokableState.Burnt, smokable);
+            SetSmokableState(entity, SmokableState.Burnt, smokable);
             args.Handled = true;
         }
 
-        private void OnCigarInteractUsingEvent(EntityUid uid, CigarComponent component, InteractUsingEvent args)
+        private void OnCigarInteractUsingEvent(Entity<CigarComponent> entity, ref InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
+            if (!EntityManager.TryGetComponent(entity, out SmokableComponent? smokable))
                 return;
 
             if (smokable.State != SmokableState.Unlit)
@@ -48,16 +48,16 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            SetSmokableState(uid, SmokableState.Lit, smokable);
+            SetSmokableState(entity, SmokableState.Lit, smokable);
             args.Handled = true;
         }
 
-        public void OnCigarAfterInteract(EntityUid uid, CigarComponent component, AfterInteractEvent args)
+        public void OnCigarAfterInteract(Entity<CigarComponent> entity, ref AfterInteractEvent args)
         {
             var targetEntity = args.Target;
             if (targetEntity == null ||
                 !args.CanReach ||
-                !EntityManager.TryGetComponent(uid, out SmokableComponent? smokable) ||
+                !EntityManager.TryGetComponent(entity, out SmokableComponent? smokable) ||
                 smokable.State == SmokableState.Lit)
                 return;
 
@@ -67,13 +67,13 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            SetSmokableState(uid, SmokableState.Lit, smokable);
+            SetSmokableState(entity, SmokableState.Lit, smokable);
             args.Handled = true;
         }
 
-        private void OnCigarSolutionEmptyEvent(EntityUid uid, CigarComponent component, SmokableSolutionEmptyEvent args)
+        private void OnCigarSolutionEmptyEvent(Entity<CigarComponent> entity, ref SmokableSolutionEmptyEvent args)
         {
-            SetSmokableState(uid, SmokableState.Burnt);
+            SetSmokableState(entity, SmokableState.Burnt);
         }
     }
 }

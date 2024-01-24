@@ -99,8 +99,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         {
             GenerateDestination(uid, generator);
         }
-
-        Dirty(uid, generator);
     }
 
     private void GenerateDestination(EntityUid uid, GatewayGeneratorComponent? generator = null)

@@ -5,6 +5,7 @@ using Content.Shared.Audio;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.Movement.Components;
@@ -37,7 +38,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedHandVirtualItemSystem _virtualItemSystem = default!;
+    [Dependency] private readonly SharedVirtualItemSystem _virtualItemSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
@@ -73,6 +74,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         {
             if (!vehicle.AutoAnimate)
                 continue;
+
+            // Why is this updating appearance data every tick, instead of when it needs to be updated???
 
             if (_mover.GetVelocityInput(mover).Sprinting == Vector2.Zero)
             {
@@ -144,6 +147,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
             _joints.ClearJoints(args.BuckledEntity);
 
+            _tagSystem.AddTag(uid, "DoorBumpOpener");
+
             return;
         }
 
@@ -159,6 +164,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // Entity is no longer riding
         RemComp<RiderComponent>(args.BuckledEntity);
         RemComp<RelayInputMoverComponent>(args.BuckledEntity);
+        _tagSystem.RemoveTag(uid, "DoorBumpOpener");
 
         Appearance.SetData(uid, VehicleVisuals.HideRider, false);
         // Reset component
@@ -203,7 +209,6 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
         // Audiovisual feedback
         _ambientSound.SetAmbience(uid, true);
-        _tagSystem.AddTag(uid, "DoorBumpOpener");
         _modifier.RefreshMovementSpeedModifiers(uid);
     }
 
@@ -218,7 +223,6 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // Disable vehicle
         component.HasKey = false;
         _ambientSound.SetAmbience(uid, false);
-        _tagSystem.RemoveTag(uid, "DoorBumpOpener");
         _modifier.RefreshMovementSpeedModifiers(uid);
     }
 

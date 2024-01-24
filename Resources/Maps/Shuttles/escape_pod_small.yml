@@ -130,8 +130,7 @@ entities:
     - pos: -1.5,0.5
       parent: 29
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 24
     components:
     - pos: -0.5,0.5
@@ -149,8 +148,7 @@ entities:
     - pos: -1.5,-0.5
       parent: 29
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 17
     components:
     - pos: -0.5,-0.5
@@ -161,8 +159,7 @@ entities:
     - pos: 0.5,-0.5
       parent: 29
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableMV
   entities:
   - uid: 19
@@ -170,8 +167,7 @@ entities:
     - pos: 0.5,-0.5
       parent: 29
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 20
     components:
     - pos: -0.5,-0.5
@@ -187,8 +183,7 @@ entities:
     - pos: -1.5,0.5
       parent: 29
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: ChairPilotSeat
   entities:
   - uid: 26

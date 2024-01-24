@@ -3,6 +3,8 @@
 - type: entity
   id: WeldingFuelTank
   parent: StorageTank
+  name: fuel tank
+  description: A fuel tank. It's used to store high amounts of fuel.
   suffix: Empty
   components:
   - type: StaticPrice
@@ -28,6 +30,7 @@
     weldingDamage:
       types:
         Heat: 10
+  - type: PacifismDangerousAttack
   - type: Explosive
     explosionType: Default
     totalIntensity: 120 # ~ 5 tile radius
@@ -47,6 +50,8 @@
 - type: entity
   parent: WeldingFuelTank
   id: WeldingFuelTankHighCapacity
+  name: high-capacity fuel tank
+  description: A highly pressurized fuel tank made to hold gargantuan amounts of welding fuel.
   suffix: Full
   components:
   - type: StaticPrice
@@ -77,6 +82,8 @@
 - type: entity
   id: WaterTank
   parent: StorageTank
+  name: water tank
+  description: A water tank. It's used to store high amounts of water.
   suffix: Empty
   components:
   - type: StaticPrice
@@ -110,6 +117,8 @@
 - type: entity
   parent: WaterTankFull
   id: WaterCooler
+  name: water cooler
+  description: Seems like a good place to stand and waste time. It has a stock of paper cups on the side.
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
@@ -152,6 +161,8 @@
 - type: entity
   parent: StorageTank
   id: WaterTankHighCapacity
+  name: high-capacity water tank
+  description: A highly pressurized water tank made to hold gargantuan amounts of water.
   suffix: Full
   components:
   - type: Sprite
