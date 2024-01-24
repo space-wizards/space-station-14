@@ -1,121 +1,4 @@
 ﻿Entries:
-- author: JoeHammad
-  changes:
-  - message: Paramedics are now available on marathon
-    type: Add
-  id: 5263
-  time: '2023-12-05T07:36:58.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Chloral Hydrate sleep effect will start at 11 units, down from 16.
-    type: Tweak
-  id: 5264
-  time: '2023-12-05T08:52:47.0000000+00:00'
-- author: DangerRevolution
-  changes:
-  - message: Added Emergency Nitrogen Tanks
-    type: Add
-  - message: Added Nitrogen Tanks to Emergency Closets
-    type: Add
-  id: 5265
-  time: '2023-12-05T09:41:39.0000000+00:00'
-- author: Lazzi0706
-  changes:
-  - message: Added a new stomach for mice and "hunger thresholds" in mice's prototype
-    type: Add
-  - message: Fixed inadequate hunger in mice
-    type: Fix
-  id: 5266
-  time: '2023-12-05T10:39:09.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: Removed the spare paramedic clothes and EVA suit from the medidrobe
-    type: Remove
-  - message: added medical doctor jumpsuits and skirts to the medidrobe
-    type: Add
-  id: 5267
-  time: '2023-12-05T10:39:54.0000000+00:00'
-- author: ForestNoises
-  changes:
-  - message: The rejuvenate command/verb resets all action cooldowns.
-    type: Add
-  id: 5268
-  time: '2023-12-05T21:00:03.0000000+00:00'
-- author: themias
-  changes:
-  - message: Empty hot cocoa can go in trash bags
-    type: Fix
-  id: 5269
-  time: '2023-12-05T21:39:26.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - message: Ghosts now have speech bubbles again
-    type: Fix
-  id: 5270
-  time: '2023-12-05T21:40:03.0000000+00:00'
-- author: tgrkzus
-  changes:
-  - message: Paper cups are now available at water coolers.
-    type: Add
-  id: 5271
-  time: '2023-12-05T21:47:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: You can now make the storage window opaque with the "enable opaque storage
-      window" toggle in the graphics menu.
-    type: Add
-  id: 5272
-  time: '2023-12-05T23:38:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Reverted duffel bags to their original storage capacity.
-    type: Fix
-  id: 5273
-  time: '2023-12-06T03:11:01.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Predict helmet toggling.
-    type: Fix
-  id: 5274
-  time: '2023-12-06T06:59:31.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Fixed emagged medibots not injecting healthy people with chloral hydrate.
-    type: Fix
-  id: 5275
-  time: '2023-12-06T21:30:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.
-    type: Fix
-  id: 5276
-  time: '2023-12-06T21:56:03.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Combat boots and friends use a slot for sidearms instead of a storage
-      window.
-    type: Tweak
-  id: 5277
-  time: '2023-12-06T21:58:25.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - message: Speech bubbles for the living now again have names when fancy speech
-      bubbles are enabled
-    type: Fix
-  id: 5278
-  time: '2023-12-06T21:58:53.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - message: Pickaxes have a more accurate shape in storage.
-    type: Tweak
-  id: 5279
-  time: '2023-12-07T00:52:57.0000000+00:00'
-- author: Nairodian
-  changes:
-  - message: Added a new lizard chest marking, an underbelly.
-    type: Add
-  id: 5280
-  time: '2023-12-07T01:05:43.0000000+00:00'
 - author: Nimfar11
   changes:
   - message: Adds Space Cobras, invisible at rest and venom blind.
@@ -3793,3 +3676,134 @@
   id: 5763
   time: '2024-01-21T12:14:47.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24369
+- author: icekot8
+  changes:
+  - message: Increased the size of flatpacks made by the Flatpacker 1001.
+    type: Tweak
+  id: 5764
+  time: '2024-01-21T17:07:59.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
+- author: Nairodian
+  changes:
+  - message: All vent critter events now have a small delay and alert message before
+      they spawn.
+    type: Add
+  id: 5765
+  time: '2024-01-22T01:33:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24383
+- author: Flareguy
+  changes:
+  - message: The Research Director's hardsuit now uses its older sprites.
+    type: Tweak
+  id: 5766
+  time: '2024-01-22T01:52:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24377
+- author: SonicHDC
+  changes:
+  - message: Added reinforced diagonal!
+    type: Add
+  id: 5767
+  time: '2024-01-22T14:53:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24393
+- author: Alekshhh
+  changes:
+  - message: Hud eyepatches have been added to BarDrobes, MediDrobes and SecTechs.
+      They're just cooler looking huds.
+    type: Add
+  id: 5768
+  time: '2024-01-22T14:59:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24132
+- author: CrigCrag
+  changes:
+  - message: Removed the revolutionaries gamemode pending a rework.
+    type: Remove
+  id: 5769
+  time: '2024-01-23T02:11:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24420
+- author: themias
+  changes:
+  - message: Added different footstep sounds for blood, soda and juice
+    type: Add
+  id: 5770
+  time: '2024-01-23T04:18:33.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24406
+- author: TheShuEd
+  changes:
+  - message: 'Flesh and Rock anom reworked: It should be easier to maintain them now
+      (I guess)'
+    type: Tweak
+  id: 5771
+  time: '2024-01-23T12:32:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24381
+- author: metalgearsloth
+  changes:
+  - message: Fix thrusters.
+    type: Fix
+  id: 5772
+  time: '2024-01-23T12:49:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24446
+- author: '0x6273'
+  changes:
+  - message: Hotplates now work again
+    type: Fix
+  id: 5773
+  time: '2024-01-23T13:06:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24450
+- author: Boaz1111
+  changes:
+  - message: Lizards can now properly eat fruit cakes and banana cream pie slices.
+    type: Fix
+  id: 5774
+  time: '2024-01-23T18:08:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24457
+- author: icekot8
+  changes:
+  - message: The bounty of briefcases has been removed
+    type: Remove
+  id: 5775
+  time: '2024-01-23T18:26:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24392
+- author: Errant
+  changes:
+  - message: '"Not enough oxygen" hud alerts now indicate the proper gas for nitrogen
+      breathers.'
+    type: Fix
+  id: 5776
+  time: '2024-01-23T20:17:41.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24373
+- author: themias
+  changes:
+  - message: Cyborgs can no longer spawn with the Wheelchair Bound or Muted trait
+    type: Fix
+  id: 5777
+  time: '2024-01-23T20:18:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24459
+- author: Nimfar11
+  changes:
+  - message: Adds solo comfy benches in different colors.
+    type: Add
+  id: 5778
+  time: '2024-01-23T22:15:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24203
+- author: Tin-Man-Tim
+  changes:
+  - message: Attempting to microwave metal now can cause the microwave to spark and
+      explode.
+    type: Tweak
+  id: 5779
+  time: '2024-01-23T22:59:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23887
+- author: DrMelon
+  changes:
+  - message: The Microwave works as intended after power outages again.
+    type: Fix
+  id: 5780
+  time: '2024-01-24T01:14:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23997
+- author: Krunk
+  changes:
+  - message: To prevent accidental spills, buckets can no longer be quick-equipped.
+    type: Fix
+  id: 5781
+  time: '2024-01-24T02:35:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24472
