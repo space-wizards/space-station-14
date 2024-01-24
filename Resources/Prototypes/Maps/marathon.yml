@@ -2,7 +2,7 @@
   id: Marathon
   mapName: 'Marathon Station'
   mapPath: /Maps/marathon.yml
-  minPlayers: 0 # GreyStation - Map Change
+  minPlayers: 10 # GreyStation - Map Change
   maxPlayers: 70
   stations:
     Marathon:

@@ -2,7 +2,7 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 0 # GreyStation - Map Change
+  minPlayers: 10 # GreyStation - Map Change
   maxPlayers: 76
   stations:
     Bagel:

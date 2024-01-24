@@ -2,7 +2,7 @@
   id: Fland
   mapName: 'Fland Installation'
   mapPath: /Maps/fland.yml
-  minPlayers: 30 # GreyStation - Map Change
+  minPlayers: 15 # GreyStation - Map Change
   stations:
     Fland:
       stationProto: StandardNanotrasenStation
