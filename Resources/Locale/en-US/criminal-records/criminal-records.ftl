@@ -53,7 +53,7 @@ criminal-records-console-not-wanted = {$name} is not wanted anymore {$hasReason 
 ## Filters
 
 criminal-records-filter-placeholder = Input text and press "Enter"
-criminal-records-name-filter = Name of person
+criminal-records-name-filter = Name
 criminal-records-prints-filter = Fingerprints
 criminal-records-dna-filter = DNA
 criminal-records-console-search-records = Search
