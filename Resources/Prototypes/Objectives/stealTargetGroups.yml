@@ -77,6 +77,13 @@
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: WeaponEnergyShotgun
+  name: energy shotgun
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    state: base
+
 # Thief Collection
 
 - type: stealTargetGroup
@@ -420,3 +427,5 @@
   sprite:
     sprite: Mobs/Animals/crab.rsi
     state: crab
+
+

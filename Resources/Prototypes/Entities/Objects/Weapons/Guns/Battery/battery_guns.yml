@@ -713,7 +713,7 @@
   description: An unique energy shotgun, often used by the Head of Security. It uses multiple configurations, mainly lethal, non-lethal and ion. 
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/laser_shotgun.rsi
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -721,7 +721,7 @@
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/laser_shotgun.rsi
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
   - type: Gun
     fireRate: 2
     soundGunshot:
@@ -743,8 +743,10 @@
     size: Normal
     shape:
     - 0,0,4,0
-    sprite: Objects/Weapons/Guns/Battery/laser_shotgun.rsi/inhands_64x.rsi
-    heldPrefix: laser
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi/inhands_64x.rsi
+    heldPrefix: energy
   - type: Tag
     tags:
     - HighRiskItem
+  - type: StealTarget
+    stealGroup: WeaponEnergyShotgun
