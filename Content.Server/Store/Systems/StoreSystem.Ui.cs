@@ -342,6 +342,9 @@ public sealed partial class StoreSystem
             }
         }
 
-        // TODO: reset balance
+        // TODO: Replace with a loop for each currency
+        component.Balance["WizCoin"] += refundValue;
+        // Reset store back to its original state
+        RefreshAllListings(component);
     }
 }
