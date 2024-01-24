@@ -12,6 +12,7 @@
       - id: ClothingUniformJumpsuitCapFormal
       - id: ClothingUniformJumpskirtCapFormalDress
       - id: ClothingHandsGlovesCaptain
+      - id: ClothingNeckMantleCap
 
 - type: entity
   id: DresserChiefEngineerFilled
@@ -20,6 +21,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleCE
       - id: ClothingUniformJumpsuitChiefEngineerTurtle
       - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: ClothingNeckCloakCe
@@ -32,6 +34,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleCMO
       - id: ClothingCloakCmo
       - id: ClothingOuterCoatLabCmo
       - id: ClothingHeadHatBeretCmo
@@ -43,6 +46,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleHOP
       - id: ClothingNeckCloakHop
       - id: ClothingHeadHatHopcap
       - id: ClothingOuterWinterHoP
@@ -54,6 +58,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleHOS
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
@@ -75,6 +80,7 @@
       - id: ClothingUniformJumpsuitQMTurtleneck
       - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
+      - id: ClothingNeckMantleQM
 
 - type: entity
   id: DresserResearchDirectorFilled
@@ -83,6 +89,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleRD
       - id: ClothingNeckCloakRd
       - id: ClothingHeadHatBeretRND
       - id: ClothingHandsGlovesColorPurple
