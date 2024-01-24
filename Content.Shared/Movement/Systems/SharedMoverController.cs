@@ -249,7 +249,7 @@ namespace Content.Shared.Movement.Systems
             var worldRot = _transform.GetWorldRotation(xform);
 
             var backwardsModifier = 1f;
-            if (moveSpeedComponent != null)
+            if (!weightless && moveSpeedComponent != null)
             {
                 var velocityAngle = physicsComponent.LinearVelocity.ToWorldAngle();
                 var rot = worldRot.Opposite().Reduced();
