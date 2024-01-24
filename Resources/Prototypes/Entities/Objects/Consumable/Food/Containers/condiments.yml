@@ -399,6 +399,12 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: bottle-alpha-
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "bottle-open"}
+          False: {state: "bottle-empty"}
   - type: PhysicalComposition
     materialComposition:
       Glass: 50
@@ -418,6 +424,7 @@
   - type: Sprite
     layers:
     - state: bottle-empty
+      map: ["enum.OpenableVisuals.Layer"]
     - state: label-c
     - state: bottle-alpha-6
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -443,6 +450,7 @@
   - type: Sprite
     layers:
     - state: bottle-empty
+      map: ["enum.OpenableVisuals.Layer"]
     - state: label-e
     - state: bottle-alpha-6
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -468,6 +476,7 @@
   - type: Sprite
     layers:
     - state: bottle-empty
+      map: ["enum.OpenableVisuals.Layer"]
     - state: label-v
     - state: bottle-alpha-6
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -490,6 +499,7 @@
   - type: Sprite
     layers:
     - state: bottle-empty
+      map: ["enum.OpenableVisuals.Layer"]
     - state: label-h
     - state: bottle-alpha-6
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -515,6 +525,7 @@
   - type: Sprite
     layers:
     - state: bottle-empty
+      map: ["enum.OpenableVisuals.Layer"]
     - state: label-k
     - state: bottle-alpha-6
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -540,6 +551,7 @@
   - type: Sprite
     layers:
     - state: bottle-empty
+      map: ["enum.OpenableVisuals.Layer"]
     - state: label-b
     - state: bottle-alpha-6
       map: ["enum.SolutionContainerLayers.Fill"]
