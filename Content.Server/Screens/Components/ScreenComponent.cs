@@ -11,8 +11,8 @@ public sealed partial class ScreenComponent : Component
 /// </summary>
 public sealed class ScreenMasks
 {
-    public static readonly string Text = "Text";
-    public static readonly string Color = "Color";
+    public static readonly string Text = Loc.GetString("screen-text");
+    public static readonly string Color = Loc.GetString("screen-color");
 }
 
 /// <summary>
@@ -20,16 +20,16 @@ public sealed class ScreenMasks
 /// </summary>
 public sealed class ShuttleTimerMasks
 {
-    public static readonly string ShuttleTime = "ShuttleTime";
-    public static readonly string DestTime = "DestTime";
-    public static readonly string SourceTime = "SourceTime";
-    public static readonly string ShuttleMap = "ShuttleMap";
-    public static readonly string SourceMap = "SourceMap";
-    public static readonly string DestMap = "DestMap";
-    public static readonly string Docked = "Docked";
-    public static readonly string ETA = "ETA";
-    public static readonly string ETD = "ETD";
-    public static readonly string Bye = "BYE!";
-    public static readonly string Kill = "KILL";
+    public static readonly string ShuttleTime = Loc.GetString("shuttle-timer-shuttle-time");
+    public static readonly string DestTime = Loc.GetString("shuttle-timer-dest-time");
+    public static readonly string SourceTime = Loc.GetString("shuttle-timer-source-time");
+    public static readonly string ShuttleMap = Loc.GetString("shuttle-timer-shuttle-map");
+    public static readonly string SourceMap = Loc.GetString("shuttle-timer-source-map");
+    public static readonly string DestMap = Loc.GetString("shuttle-timer-dest-map");
+    public static readonly string Docked = Loc.GetString("shuttle-timer-docked");
+    public static readonly string ETA = Loc.GetString("shuttle-timer-eta");
+    public static readonly string ETD = Loc.GetString("shuttle-timer-etd");
+    public static readonly string Bye = Loc.GetString("shuttle-timer-bye");
+    public static readonly string Kill = Loc.GetString("shuttle-timer-kill");
 }
 
