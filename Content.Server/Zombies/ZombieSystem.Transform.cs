@@ -15,7 +15,6 @@ using Content.Server.NPC.Systems;
 using Content.Server.Roles;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
-using Content.Server.Traits.Assorted;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
@@ -31,10 +30,8 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
-using Robust.Shared.Audio;
 using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
@@ -107,7 +104,6 @@ namespace Content.Server.Zombies
             RemComp<ThirstComponent>(target);
             RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
-            RemComp<WheelchairBoundComponent>(target);
             RemComp<LegsParalyzedComponent>(target);
 
             //funny voice
