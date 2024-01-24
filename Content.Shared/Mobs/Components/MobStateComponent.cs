@@ -1,6 +1,5 @@
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Physics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -18,25 +17,14 @@ namespace Content.Shared.Mobs.Components
     public sealed partial class MobStateComponent : Component
     {
         //default mobstate is always the lowest state level
-        [DataField, ViewVariables]
-        public MobState CurrentState { get; set; } = MobState.Alive;
+        [ViewVariables] public MobState CurrentState { get; set; } = MobState.Alive;
 
-        [DataField]
-        public HashSet<MobState> AllowedStates = new()
+        [DataField("allowedStates")] public HashSet<MobState> AllowedStates = new()
             {
                 MobState.Alive,
                 MobState.Critical,
                 MobState.Dead
             };
-
-        /// <summary>
-        /// The CollisonLayer the entity has while alive.
-        /// <remarks>
-        /// Stored so it can be returned to it's original value when the entity is alive again.
-        /// </remarks>
-        /// </summary>
-        [DataField]
-        public int? AliveCollisionLayer;
     }
 
     [Serializable, NetSerializable]

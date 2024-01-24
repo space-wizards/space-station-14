@@ -320,10 +320,12 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         if (gun.Target != null && TryComp<FixturesComponent>(uid, out var fixtures))
         {
-            var fixture = fixtures.Fixtures.First();
-            Physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) CollisionGroup.LayingDownMobMask);
-            var target = EnsureComp<TargetedProjectileComponent>(uid);
-            target.Target = gun.Target;
+            foreach (var (key, fixture) in fixtures.Fixtures)
+            {
+                Physics.SetCollisionMask(uid, key, fixture, (int) CollisionGroup.LayingDownMobMask);
+                var target = EnsureComp<TargetedProjectileComponent>(uid);
+                target.Target = gun.Target;
+            }
         }
 
         // Do a throw

@@ -1,7 +1,6 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -67,10 +66,20 @@ namespace Content.Shared.Standing
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
+                    if (fixture.CollisionLayer == (int) CollisionGroup.MobLayer)
+                    {
+                        standingState.StandingCollisionLayers.Add(key, fixture.CollisionLayer);
+                        standingState.LayerChangedFixtures.Add(key);
+
+                        _physics.SetCollisionLayer(uid, key, fixture,
+                            (int) CollisionGroup.LayingDownMobLayer,
+                            manager: fixtureComponent);
+                    }
+
                     if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
                         continue;
 
-                    standingState.ChangedFixtures.Add(key);
+                    standingState.MaskChangedFixtures.Add(key);
                     _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
                 }
             }
@@ -120,13 +129,25 @@ namespace Content.Shared.Standing
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var key in standingState.ChangedFixtures)
+                foreach (var key in standingState.MaskChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
                         _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
                 }
+
+                foreach (var key in standingState.LayerChangedFixtures)
+                {
+                    if (!fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
+                        continue;
+
+                    _physics.SetCollisionLayer(uid, key, fixture,
+                        standingState.StandingCollisionLayers[key],
+                        manager: fixtureComponent);
+                }
             }
-            standingState.ChangedFixtures.Clear();
+            standingState.MaskChangedFixtures.Clear();
+            standingState.LayerChangedFixtures.Clear();
+            standingState.StandingCollisionLayers.Clear();
 
             return true;
         }
