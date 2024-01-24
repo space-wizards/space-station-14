@@ -837,7 +837,7 @@ namespace Content.Shared.CCVar
         /// How long a admin client can go without any input before being considered AFK.
         /// </summary>
         public static readonly CVarDef<float> AdminAfkTime =
-            CVarDef.Create("admin.afk_time", 300f, CVar.SERVERONLY);
+            CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
 
         /*
          * Explosions
