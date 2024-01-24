@@ -18,9 +18,9 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-    protected override void Started(EntityUid uid, SecretRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Added(EntityUid uid, SecretRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Added(uid, component, gameRule, args);
         PickRule(component);
     }
 
@@ -40,13 +40,13 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
         // but currently there's no way to know anyway as they use cvars.
         var presetString = _configurationManager.GetCVar(CCVars.SecretWeightPrototype);
         var preset = _prototypeManager.Index<WeightedRandomPrototype>(presetString).Pick(_random);
-        Logger.InfoS("gamepreset", $"Selected {preset} for secret.");
+        Log.Info($"Selected {preset} for secret.");
         _adminLogger.Add(LogType.EventStarted, $"Selected {preset} for secret.");
 
         var rules = _prototypeManager.Index<GamePresetPrototype>(preset).Rules;
         foreach (var rule in rules)
         {
-            GameTicker.StartGameRule(rule, out var ruleEnt);
+            var ruleEnt = GameTicker.AddGameRule(rule);
             component.AdditionalGameRules.Add(ruleEnt);
         }
     }
