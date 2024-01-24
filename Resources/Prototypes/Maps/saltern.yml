@@ -4,7 +4,7 @@
   mapPath: /Maps/saltern.yml
   minPlayers: 0
   maxPlayers: 35
-  fallback: false # GreyStation - Map Change
+  fallback: true
   stations:
     Saltern:
       stationProto: StandardNanotrasenStation
