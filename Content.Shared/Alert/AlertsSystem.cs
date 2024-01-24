@@ -189,10 +189,7 @@ public abstract class AlertsSystem : EntitySystem
         {
             foreach (var (alertKey,  alertState) in comp.Alerts)
             {
-                if (alertState.AutoRemove is null)
-                    continue;
-
-                if (alertState.AutoRemove >= _timing.CurTime)
+                if (alertState.AutoRemove is null || alertState.AutoRemove >= _timing.CurTime)
                     continue;
 
                 comp.Alerts.Remove(alertKey);

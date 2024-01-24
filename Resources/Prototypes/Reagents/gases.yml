@@ -107,9 +107,13 @@
           types:
             Radiation:
               1
-      # Cant be added until I add metabolism effects on reagent removal
-      #- !type:AdjustAlert
-      #  alertType: Toxins
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+          - !type:ReagentThreshold
+            min: 1.5
+        autoRemove: True
+        time: 3.95
 
 - type: reagent
   id: CarbonDioxide
@@ -146,7 +150,7 @@
           type: Plant
           shouldHave: false
         factor: -4
-      # Cant be added until I add metabolism effects on reagent removal
+      # soonTM
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide
 
