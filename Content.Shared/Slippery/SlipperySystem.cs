@@ -1,9 +1,11 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -18,6 +20,7 @@ public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -62,6 +65,13 @@ public sealed class SlipperySystem : EntitySystem
     {
         if (HasComp<KnockedDownComponent>(other))
             return;
+
+        if (HasComp<ThrownItemComponent>(uid))
+        {
+            // This popup is here so people don't just think the game broke, it can probably be removed later
+            _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), other);
+            return;
+        }
 
         var attemptEv = new SlipAttemptEvent();
         RaiseLocalEvent(other, attemptEv);
