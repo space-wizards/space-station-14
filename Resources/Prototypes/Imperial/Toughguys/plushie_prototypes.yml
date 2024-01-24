@@ -1,7 +1,7 @@
 - type: entity
   parent: BasePlushie
   id: BasePlushieCharacter
-  name:
+  name: BasePlushieCharacter
   description:
   suffix: COMMUNITY,TOY
   components:
