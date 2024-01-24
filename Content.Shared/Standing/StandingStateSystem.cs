@@ -62,6 +62,7 @@ namespace Content.Shared.Standing
             _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
             // Change collision masks to allow going under certain entities like flaps and tables
+            // Also change layers to projectiles will pass over laying down entities.
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)

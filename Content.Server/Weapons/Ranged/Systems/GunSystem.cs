@@ -226,7 +226,8 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
 
                             var entityIndex = 0;
-
+                            
+                            //Check if entity is laying down
                             foreach (var entity in rayCastResults)
                             {
                                 if (!TryComp<PhysicsComponent>(entity.HitEntity, out var physics))
