@@ -227,7 +227,7 @@
 - type: startingGear
   id: ERTCallDeadSquadSecurityGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitDeathSquad
     back: ClothingBackpackDeadSquadSecurityFilled
     mask: ClothingMaskGasSwat
     eyes: ClothingEyesGlassesSecurity
