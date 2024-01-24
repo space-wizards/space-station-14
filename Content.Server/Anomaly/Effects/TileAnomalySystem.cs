@@ -95,9 +95,9 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + new Vector2(-entry.MaxRange, -entry.MaxRange), localpos + new Vector2(entry.MaxRange, entry.MaxRange))).ToArray();
+            new Box2(localpos + new Vector2(-entry.MaxRange, -entry.MaxRange), localpos + new Vector2(entry.MaxRange, entry.MaxRange))).ToList();
 
-        if (tilerefs.Length == 0)
+        if (tilerefs.Count == 0)
             return;
 
         _random.Shuffle(tilerefs);
