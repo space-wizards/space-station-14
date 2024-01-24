@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
@@ -12,8 +13,7 @@ namespace Content.Server.Anomaly.Effects;
 
 public sealed class TileAnomalySystem : SharedTileAnomalySystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
     [Dependency] private readonly ITileDefinitionManager _tiledef = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 
@@ -31,7 +31,7 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
     {
         foreach (var entry in component.Comp.Entries)
         {
-            if (!entry.SpawnOnPulse)
+            if (!entry.Settings.SpawnOnPulse)
                 continue;
 
             SpawnTiles(component, entry, args.Stability, args.Severity);
@@ -42,7 +42,7 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
     {
         foreach (var entry in component.Comp.Entries)
         {
-            if (!entry.SpawnOnSuperCritical)
+            if (!entry.Settings.SpawnOnSuperCritical)
                 continue;
 
             SpawnTiles(component, entry, 1, 1);
@@ -53,7 +53,7 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
     {
         foreach (var entry in component.Comp.Entries)
         {
-            if (!entry.SpawnOnShutdown || args.Supercritical)
+            if (!entry.Settings.SpawnOnShutdown || args.Supercritical)
                 continue;
 
             SpawnTiles(component, entry, 1, 1);
@@ -64,7 +64,7 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
     {
         foreach (var entry in component.Comp.Entries)
         {
-            if (!entry.SpawnOnStabilityChanged)
+            if (!entry.Settings.SpawnOnStabilityChanged)
                 continue;
 
             SpawnTiles(component, entry, args.Stability, args.Severity);
@@ -75,50 +75,27 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
     {
         foreach (var entry in component.Comp.Entries)
         {
-            if (!entry.SpawnOnSeverityChanged)
+            if (!entry.Settings.SpawnOnSeverityChanged)
                 continue;
 
             SpawnTiles(component, entry, args.Stability, args.Severity);
         }
     }
 
-    //TheShuEd:
-    //I know it's a shitcode! I didn't write it! I just restructured the functions
-    // To Do: make it reusable with EntityAnomalySustem
-    private void SpawnTiles(Entity<TileSpawnAnomalyComponent> component, TileSpawnSettingsEntry entry, float stability, float severity)
+    private void SpawnTiles(Entity<TileSpawnAnomalyComponent> anomaly, TileSpawnSettingsEntry entry, float stability, float severity)
     {
-        var xform = Transform(component.Owner);
+        var xform = Transform(anomaly);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
-        var amount = (int) (MathHelper.Lerp(entry.MinAmount, entry.MaxAmount, stability * severity) + 0.5f);
-
-        var localpos = xform.Coordinates.Position;
-        var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + new Vector2(-entry.MaxRange, -entry.MaxRange), localpos + new Vector2(entry.MaxRange, entry.MaxRange))).ToList();
-
-        if (tilerefs.Count == 0)
+        var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings);
+        if (tiles == null)
             return;
 
-        _random.Shuffle(tilerefs);
-        var amountCounter = 0;
-
-        foreach (var tileref in tilerefs)
+        foreach (var tileref in tiles)
         {
-            //cut outer circle
-            if (MathF.Sqrt(MathF.Pow(tileref.X - xform.LocalPosition.X, 2) + MathF.Pow(tileref.Y - xform.LocalPosition.Y, 2)) > entry.MaxRange)
-                continue;
-
-            //cut inner circle
-            if (MathF.Sqrt(MathF.Pow(tileref.X - xform.LocalPosition.X, 2) + MathF.Pow(tileref.Y - xform.LocalPosition.Y, 2)) < entry.MinRange)
-                continue;
-
-            amountCounter++;
             var tile = (ContentTileDefinition) _tiledef[entry.Floor];
             _tile.ReplaceTile(tileref, tile);
-
-            if (amountCounter >= amount)
-                return;
         }
     }
 }
