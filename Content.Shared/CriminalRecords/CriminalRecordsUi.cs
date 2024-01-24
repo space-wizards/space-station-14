@@ -34,18 +34,15 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     /// <summary>
     /// Currently selected crewmember record key.
     /// </summary>
-    public readonly uint? SelectedKey;
+    public uint? SelectedKey = null;
 
-    public readonly CriminalRecord? CriminalRecord;
-    public readonly GeneralStationRecord? StationRecord;
+    public CriminalRecord? CriminalRecord = null;
+    public GeneralStationRecord? StationRecord = null;
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
 
-    public CriminalRecordsConsoleState(uint? key, GeneralStationRecord? stationRecord, CriminalRecord? criminalRecord, Dictionary<uint, string>? recordListing, StationRecordsFilter? newFilter)
+    public CriminalRecordsConsoleState(Dictionary<uint, string>? recordListing, StationRecordsFilter? newFilter)
     {
-        SelectedKey = key;
-        StationRecord = stationRecord;
-        CriminalRecord = criminalRecord;
         RecordListing = recordListing;
         Filter = newFilter;
     }
@@ -53,7 +50,7 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     /// <summary>
     /// Default state for opening the console
     /// </summary>
-    public CriminalRecordsConsoleState() : this(null, null, null, null, null)
+    public CriminalRecordsConsoleState() : this(null, null)
     {
     }
 

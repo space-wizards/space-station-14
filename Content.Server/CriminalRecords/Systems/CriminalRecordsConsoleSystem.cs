@@ -154,29 +154,17 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
 
         var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
-        // when there is only 1 record automatically select it
-        switch (listing.Count)
+        var state = new CriminalRecordsConsoleState(listing, console.Filter);
+        if (console.ActiveKey is {} id)
         {
-            case 0:
-                _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
-                return;
-            case 1:
-                console.ActiveKey = listing.Keys.First();
-                break;
+            // get records to display when a crewmember is selected
+            var key = new StationRecordKey(id, owningStation.Value);
+            _stationRecords.TryGetRecord<GeneralStationRecord>(key, out state.StationRecord, stationRecords);
+            _stationRecords.TryGetRecord<CriminalRecord>(key, out state.CriminalRecord, stationRecords);
+            state.SelectedKey = id;
         }
 
-        // get records to display when a crewmember is selected
-        if (console.ActiveKey is not { } id)
-            return;
-
-        Log.Debug($"Selected id is {id}");
-        var key = new StationRecordKey(id, owningStation.Value);
-        _stationRecords.TryGetRecord<GeneralStationRecord>(key, out var stationRecord, stationRecords);
-        _stationRecords.TryGetRecord<CriminalRecord>(key, out var criminalRecord, stationRecords);
-        Log.Debug($"Record {stationRecord} {criminalRecord}");
-
-        CriminalRecordsConsoleState newState = new(id, stationRecord, criminalRecord, listing, console.Filter);
-        _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, newState);
+        _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, state);
     }
 
     /// <summary>
