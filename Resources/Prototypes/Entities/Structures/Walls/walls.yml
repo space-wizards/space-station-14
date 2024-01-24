@@ -568,7 +568,7 @@
     key: walls
     base: reinf_over
 
-  type: entity
+- type: entity
   parent: WallShuttleDiagonal
   id: WallReinforcedDiagonal
   name: reinforced wall
