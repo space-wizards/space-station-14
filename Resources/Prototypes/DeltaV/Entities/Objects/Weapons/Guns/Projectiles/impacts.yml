@@ -1,0 +1,18 @@
+- type: entity
+  id: BulletImpactEffectRedDisabler
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.2
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: impact_laser_greyscale
+      color: red
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
