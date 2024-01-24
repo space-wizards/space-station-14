@@ -83,12 +83,12 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSalvageSpecialist
   name: salvage specialist's jumpsuit
-  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
+  description: A standard issue uniform for operating in hazardous environments. It's very dirty.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/explorer.rsi # GreyStation - Resprited
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/explorer.rsi # GreyStation - Resprited
 
 - type: entity
   parent: ClothingUniformBase
