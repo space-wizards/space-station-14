@@ -6,7 +6,6 @@
   - type: StorageFill
     contents:
       - id: BoxFolderQmClipboard
-      - id: ClothingNeckMantleQM
       - id: CargoRequestComputerCircuitboard
       - id: CargoShuttleComputerCircuitboard
       - id: CargoShuttleConsoleCircuitboard
@@ -27,7 +26,6 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterArmorCaptainCarapace
-      - id: ClothingNeckMantleCap
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
@@ -56,7 +54,6 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterArmorCaptainCarapace
-      - id: ClothingNeckMantleCap
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
@@ -83,7 +80,6 @@
   - type: StorageFill
     contents:
       - id: HoPIDCard
-      - id: ClothingNeckMantleHOP
       - id: ClothingHeadsetCommand
       - id: BoxPDA
       - id: BoxID
@@ -111,7 +107,6 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitEngineeringWhite
-      - id: ClothingNeckMantleCE
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
@@ -138,7 +133,6 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesMeson
-      - id: ClothingNeckMantleCE
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase
@@ -159,7 +153,6 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-      - id: ClothingNeckMantleCMO
       - id: ClothingHandsGlovesNitrile
       - id: ClothingEyesHudMedical
       - id: ClothingHeadsetAltMedical
@@ -184,7 +177,6 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-      - id: ClothingNeckMantleCMO
       - id: ClothingHandsGlovesNitrile
       - id: ClothingEyesHudMedical
       - id: ClothingHeadsetAltMedical
@@ -204,7 +196,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckMantleRD
       - id: ResearchComputerCircuitboard
       - id: ProtolatheMachineCircuitboard
       - id: CircuitImprinterMachineCircuitboard
@@ -223,7 +214,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckMantleRD
       - id: ResearchComputerCircuitboard
       - id: ProtolatheMachineCircuitboard
       - id: CircuitImprinterMachineCircuitboard
@@ -242,7 +232,6 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesHudSecurity
-      - id: ClothingNeckMantleHOS
       - id: WeaponDisabler
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingOuterHardsuitSecurityRed
@@ -269,7 +258,6 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesHudSecurity
-      - id: ClothingNeckMantleHOS
       - id: WeaponDisabler
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingBeltSecurityFilled
