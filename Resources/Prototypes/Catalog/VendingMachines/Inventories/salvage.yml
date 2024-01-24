@@ -1,6 +1,13 @@
 ﻿- type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
+    ClothingBackpackSalvage: 3 # GreyStation
+    ClothingBackpackSatchelSalvage: 3 # GreyStation
+    ClothingBackpackDuffelSalvage: 3 # GreyStation
+    ClothingUniformJumpsuitSalvageSpecialist: 3 # GreyStation
+    ClothingShoesBootsSalvage: 3 # GreyStation
+    ClothingMaskGasExplorer: 4 # GreyStation
+    ClothingBeltSalvageWebbing: 5 # GreyStation
     Crowbar: 2
     Pickaxe: 4
     OreBag: 4
