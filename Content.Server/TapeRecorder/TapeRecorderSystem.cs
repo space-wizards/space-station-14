@@ -48,6 +48,10 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
+        //Dont allow mode changes when the mode is active
+        if (component.Active)
+            return;
+
         //If no tape is loaded, show no options
         var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
         if (cassette == null)
@@ -57,12 +61,8 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
             return;
 
-        //Dont allow mode changes when the mode is active
-        if (component.Active)
-            return;
-
         //If we have tape capacity remaining
-        if (tapeCassetteComponent.MaxCapacity > tapeCassetteComponent.CurrentPosition)
+        if (tapeCassetteComponent.MaxCapacity.TotalSeconds > tapeCassetteComponent.CurrentPosition)
         {
 
             if (component.Mode != TapeRecorderMode.Recording)
@@ -75,7 +75,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
                         component.Mode = TapeRecorderMode.Recording;
                         Dirty(uid, component);
                     },
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
+                    Icon = component.RecordIcon,
                     Priority = 1
                 });
             }
@@ -90,7 +90,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
                         component.Mode = TapeRecorderMode.Playing;
                         Dirty(uid, component);
                     },
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/playarrow.svg.192dpi.png")),
+                    Icon = component.PlayIcon,
                     Priority = 2
                 });
             }
@@ -107,7 +107,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
                     component.Mode = TapeRecorderMode.Rewinding;
                     Dirty(uid, component);
                 },
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rewindarrow.svg.192dpi.png")),
+                Icon = component.RewindIcon,
                 Priority = 3
             });
         }
@@ -138,7 +138,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     /// <summary>
     /// Start recording if we are not already recording
     /// </summary>
-    protected override bool StartRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    /*protected override bool StartRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (!base.StartRecording(tapeRecorder, component, user))
             return false;
@@ -158,51 +158,24 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     /// </summary>
     protected override bool StopRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (!base.StopRecording(tapeRecorder, component, user))
-            return false;
-
-        if (!user.HasValue)
-        {
-            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
-        }
-
-        return true;
-    }
+        return base.StopRecording(tapeRecorder, component, user);
+    }*/
 
     /// <summary>
     /// Start playback if we are not already playing
     /// </summary>
     protected override bool StartPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (!base.StartPlayback(tapeRecorder, component, user))
-            return false;
-
         EnsureComp<VoiceMaskComponent>(tapeRecorder);
-
-        if (!user.HasValue)
-        {
-            _audioSystem.PlayPvs(component.PlaySound, tapeRecorder);
-        }
-
-        return true;
+        return base.StartPlayback(tapeRecorder, component, user);
     }
 
     /// <summary>
     /// Stop playback if we are playing
     /// </summary>
-    protected override bool StopPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    /*protected override bool StopPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (!base.StopPlayback(tapeRecorder, component, user))
-            return false;
-
-        RemComp<VoiceMaskComponent>(tapeRecorder);
-
-        if (!user.HasValue)
-        {
-            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
-        }
-
-        return true;
+        return base.StopPlayback(tapeRecorder, component, user);
     }
 
     /// <summary>
@@ -235,5 +208,5 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         }
 
         return true;
-    }
+    }*/
 }

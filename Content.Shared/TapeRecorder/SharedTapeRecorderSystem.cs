@@ -55,79 +55,108 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         var recorderQuery = EntityQueryEnumerator<RecordingTapeRecorderComponent, TapeRecorderComponent>();
         while (recorderQuery.MoveNext(out var uid, out var component, out var tapeRecorderComponent))
         {
-            //Check if this recorder has a tape inserted
-            //It shouldnt be possible to trigger this check, but i have seen stranger things
-            var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
-            if (cassette == null)
-                continue;
-
-            //Sanity check, this is a tape yea?
-            if (TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
-            {
-                //Calculate the current segment of tape
-                var currentTime = tapeCassetteComponent.CurrentPosition + frameTime;
-
-                //'Flushed' in this context is a mark indicating the message was not added between the last update and this update
-                //Remove any flushed messages in the segment we just recorded over (ie old messages)
-                tapeCassetteComponent.RecordedData.RemoveAll(x => x.Timestamp > tapeCassetteComponent.CurrentPosition && x.Timestamp <= currentTime && x.Flushed);
-
-                //Mark all messages in this segment as flushed so they can be overwritten next time
-                foreach (var recordedMessage in tapeCassetteComponent.RecordedData.Where(x => x.Timestamp <= tapeCassetteComponent.CurrentPosition && !x.Flushed))
-                    recordedMessage.Flushed = true;
-
-                //Update the tape's current time
-                tapeCassetteComponent.CurrentPosition = currentTime;
-                //If we have reached the end of the tape - stop
-                if (tapeCassetteComponent.CurrentPosition >= tapeCassetteComponent.MaxCapacity)
-                    StopRecording(uid, tapeRecorderComponent);
-            }
+            if (!ProcessRecordingTapeRecorder(uid, tapeRecorderComponent, frameTime))
+                StopRecording(uid, tapeRecorderComponent);
         }
 
         //Get all playing tape recorders, increment cassette position and play any messages from the interval
         var playerQuery = EntityQueryEnumerator<PlayingTapeRecorderComponent, TapeRecorderComponent>();
         while (playerQuery.MoveNext(out var uid, out var component, out var tapeRecorderComponent))
         {
-            var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
-            if (cassette == null)
-                continue;
-
-            if (TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
-            {
-                //Get the segment of the tape to be played
-                //And any messages within that time period
-                var currentTime = tapeCassetteComponent.CurrentPosition + frameTime;
-                ReplayMessagesInSegment(uid, tapeRecorderComponent, tapeCassetteComponent, tapeCassetteComponent.CurrentPosition, currentTime);
-
-                //Update the tape's position
-                tapeCassetteComponent.CurrentPosition = currentTime;
-
-                //Stop when we reach the end of the tape
-                if (tapeCassetteComponent.CurrentPosition >= tapeCassetteComponent.MaxCapacity)
-                    StopPlayback(uid, tapeRecorderComponent);
-            }
+            if (!ProcessPlayingTapeRecorder(uid, tapeRecorderComponent, frameTime))
+                StopPlayback(uid, tapeRecorderComponent);
         }
 
         //Get all rewinding tape recorders
         var rewindingQuery = EntityQueryEnumerator<RewindingTapeRecorderComponent, TapeRecorderComponent>();
         while (rewindingQuery.MoveNext(out var uid, out var component, out var tapeRecorderComponent))
         {
-            var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
-            if (cassette == null)
-                continue;
-
-            if (TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
-            {
-                //Calculate how far we have rewound
-                var rewindTime = frameTime * tapeRecorderComponent.RewindSpeed;
-                //Update the current time, clamp to 0
-                var currentTime = Math.Max(0, tapeCassetteComponent.CurrentPosition - rewindTime);
-                tapeCassetteComponent.CurrentPosition = currentTime;
-
-                //If we have reached the beginning of the tape, stop
-                if (tapeCassetteComponent.CurrentPosition <= float.Epsilon)
-                    StopRewinding(uid, tapeRecorderComponent);
-            }
+            if (!ProcessRewindingTapeRecorder(uid, tapeRecorderComponent, frameTime))
+                StopRewinding(uid, tapeRecorderComponent);
         }
+    }
+
+    protected bool ProcessRecordingTapeRecorder(EntityUid uid, TapeRecorderComponent tapeRecorderComponent, float frameTime)
+    {
+        //Check if this recorder has a tape inserted
+        //It shouldnt be possible to trigger this check, but i have seen stranger things
+        var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
+        if (cassette == null)
+            return false;
+
+        //Sanity check, this is a tape yea?
+        if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
+            return false;
+
+        var currentTime = tapeCassetteComponent.CurrentPosition + frameTime;
+
+        //'Flushed' in this context is a mark indicating the message was not added between the last update and this update
+        //Remove any flushed messages in the segment we just recorded over (ie old messages)
+        tapeCassetteComponent.RecordedData.RemoveAll(x => x.Timestamp > tapeCassetteComponent.CurrentPosition && x.Timestamp <= currentTime && x.Flushed);
+
+        //Mark all messages as flushed so they can be overwritten next time
+        tapeCassetteComponent.RecordedData.ForEach(x => x.Flushed = true);
+
+        //Update the tape's current time
+        tapeCassetteComponent.CurrentPosition = currentTime;
+
+        //If we have reached the end of the tape - stop
+        if (tapeCassetteComponent.CurrentPosition >= tapeCassetteComponent.MaxCapacity.TotalSeconds)
+            return false;
+
+        return true;
+    }
+
+    protected bool ProcessPlayingTapeRecorder(EntityUid uid, TapeRecorderComponent tapeRecorderComponent, float frameTime)
+    {
+        //Check if this recorder has a tape inserted
+        //It shouldnt be possible to trigger this check, but i have seen stranger things
+        var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
+        if (cassette == null)
+            return false;
+
+        //Sanity check, this is a tape yea?
+        if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
+            return false;
+
+        //Get the segment of the tape to be played
+        //And any messages within that time period
+        var currentTime = tapeCassetteComponent.CurrentPosition + frameTime;
+        ReplayMessagesInSegment(uid, tapeRecorderComponent, tapeCassetteComponent, tapeCassetteComponent.CurrentPosition, currentTime);
+
+        //Update the tape's position
+        tapeCassetteComponent.CurrentPosition = currentTime;
+
+        //Stop when we reach the end of the tape
+        if (tapeCassetteComponent.CurrentPosition >= tapeCassetteComponent.MaxCapacity.TotalSeconds)
+            return false;
+
+        return true;
+    }
+
+    protected bool ProcessRewindingTapeRecorder(EntityUid uid, TapeRecorderComponent tapeRecorderComponent, float frameTime)
+    {
+        //Check if this recorder has a tape inserted
+        //It shouldnt be possible to trigger this check, but i have seen stranger things
+        var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
+        if (cassette == null)
+            return false;
+
+        //Sanity check, this is a tape yea?
+        if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
+            return false;
+
+        //Calculate how far we have rewound
+        var rewindTime = frameTime * tapeRecorderComponent.RewindSpeed;
+        //Update the current time, clamp to 0
+        var currentTime = Math.Max(0, tapeCassetteComponent.CurrentPosition - rewindTime);
+        tapeCassetteComponent.CurrentPosition = currentTime;
+
+        //If we have reached the beginning of the tape, stop
+        if (tapeCassetteComponent.CurrentPosition <= float.Epsilon)
+            return false;
+
+        return true;
     }
 
     /// <summary>
@@ -223,7 +252,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         {
             if (HasComp<FitsInTapeRecorderComponent>(uid))
             {
-                var positionPercentage = Math.Floor(tapeCassetteComponent.CurrentPosition / tapeCassetteComponent.MaxCapacity * 100);
+                var positionPercentage = Math.Floor(tapeCassetteComponent.CurrentPosition / tapeCassetteComponent.MaxCapacity.TotalSeconds * 100);
                 var tapePosMsg = Loc.GetString("tape-cassette-position",
                     ("position", positionPercentage)
                     );
@@ -269,7 +298,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
                 //Sanity check, this IS a tape cassette right?
                 if (TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
                 {
-                    var positionPercentage = Math.Floor(tapeCassetteComponent.CurrentPosition / tapeCassetteComponent.MaxCapacity * 100);
+                    var positionPercentage = Math.Floor(tapeCassetteComponent.CurrentPosition / tapeCassetteComponent.MaxCapacity.TotalSeconds * 100);
                     var tapePosMsg = Loc.GetString("tape-cassette-position",
                         ("position", positionPercentage)
                         );
@@ -297,9 +326,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
                 break;
         }
 
-        component.Mode = TapeRecorderMode.Empty;
-        Dirty(uid, component);
-        UpdateAppearance(uid, component);
+        SetMode(uid, component, TapeRecorderMode.Empty, false);
     }
 
     /// <summary>
@@ -307,11 +334,12 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     /// </summary>
     protected void OnCassetteInserted(EntityUid uid, TapeRecorderComponent component, EntInsertedIntoContainerMessage args)
     {
-        component.Mode = TapeRecorderMode.Stopped;
-        Dirty(uid, component);
-        UpdateAppearance(uid, component);
+        SetMode(uid, component, TapeRecorderMode.Stopped);
     }
 
+    /// <summary>
+    /// Update the appearance of the tape recorder, optionally ignoring the components mode
+    /// </summary>
     protected void UpdateAppearance(EntityUid uid, TapeRecorderComponent component, TapeRecorderMode? modeOverride = null)
     {
         _appearanceSystem.SetData(uid, TapeRecorderVisuals.Status, modeOverride.HasValue ? modeOverride : component.Mode);
@@ -320,7 +348,6 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     /// <summary>
     /// Choose a random recorded entry on the cassette, replace some of the letters to make it unintellegable - also change the name
     /// </summary>
-    /// <param name="component"></param>
     protected void CorruptRandomEntry(TapeCassetteComponent component)
     {
         if (component.RecordedData.Count == 0)
@@ -376,10 +403,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
         //Play predicted if we know which user triggered this method
         //Auto stop when reaching the end of the tape doesnt have a user for example
-        if (user.HasValue)
-        {
-            _audioSystem.PlayPredicted(component.PlaySound, tapeRecorder, user);
-        }
+        _audioSystem.PlayPredicted(component.PlaySound, tapeRecorder, user);
 
         return true;
     }
@@ -398,10 +422,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
 
-        if (user.HasValue)
-        {
-            _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
-        }
+        _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
 
         return true;
     }
@@ -430,10 +451,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
         UpdateAppearance(tapeRecorder, component);
 
-        if (user.HasValue)
-        {
-            _audioSystem.PlayPredicted(component.PlaySound, tapeRecorder, user);
-        }
+        _audioSystem.PlayPredicted(component.PlaySound, tapeRecorder, user);
 
         return true;
     }
@@ -451,10 +469,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
 
-        if (user.HasValue)
-        {
-            _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
-        }
+        _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
 
         return true;
     }
@@ -483,10 +498,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
         UpdateAppearance(tapeRecorder, component);
 
-        if (user.HasValue)
-        {
-            _audioSystem.PlayPredicted(component.RewindSound, tapeRecorder, user);
-        }
+        _audioSystem.PlayPredicted(component.RewindSound, tapeRecorder, user);
 
         return true;
     }
@@ -504,11 +516,18 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
 
-        if (user.HasValue)
-        {
-            _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
-        }
+        _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
 
         return true;
+    }
+
+    protected void SetMode(EntityUid tapeRecorder, TapeRecorderComponent component, TapeRecorderMode mode, bool updateAppearance = true)
+    {
+        if (mode == component.Mode)
+            return;
+
+        component.Mode = mode;
+        Dirty(tapeRecorder, component);
+        if (updateAppearance) UpdateAppearance(tapeRecorder, component);
     }
 }

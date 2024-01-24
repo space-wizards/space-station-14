@@ -1,0 +1,17 @@
+- files:
+    - "sound_items_taperecorder_taperecorder_play.ogg"
+  license: "CC0"
+  copyright: "Taken from cassette tape deck open, close +tape handling.aif on freesound.org"
+  source: "https://freesound.org/people/kyles/sounds/450525/"
+
+- files:
+    - "sound_items_taperecorder_taperecorder_stop.ogg"
+  license: "CC SAMPLING+ 1.0 Deed"
+  copyright: "Taken from Tape Recorder.wav on freesound.org"
+  source: "https://freesound.org/people/Pogotron/sounds/61075/"
+
+- files:
+    - "sound_items_taperecorder_taperecorder_rewind.ogg"
+  license: "CC BY-NC 4.0"
+  copyright: "Taken from mechanical on freesound.org"
+  source: "https://freesound.org/people/acclivity/sounds/23393/"
