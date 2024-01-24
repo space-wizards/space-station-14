@@ -103431,18 +103431,6 @@ entities:
     - type: Transform
       pos: -20.370735,-69.56265
       parent: 30
-- proto: MagazinePistolSubMachineGunTopMounted
-  entities:
-  - uid: 1999
-    components:
-    - type: Transform
-      pos: -22.54349,53.796127
-      parent: 30
-  - uid: 2001
-    components:
-    - type: Transform
-      pos: -22.54349,53.796127
-      parent: 30
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 9199
@@ -149199,13 +149187,6 @@ entities:
     components:
     - type: Transform
       pos: -41.445473,54.621906
-      parent: 30
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 2000
-    components:
-    - type: Transform
-      pos: -22.590364,53.546127
       parent: 30
 - proto: WeaponTurretSyndicateBroken
   entities:

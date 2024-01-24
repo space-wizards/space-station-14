@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Polaris at https://github.com/PolarisSS13/Polaris/commit/9ded73fb85b9106d6bbf1c9a34d1d2fa27ee0e2e, backpack sprite by Peptide, backpack sling sprite edited by Boaz1111",
+    "copyright": "Icon sprite made by Papermaker48 for SS14, the rest is made by Boaz1111 based on that sprite.",
     "size": {
         "x": 32,
         "y": 32
@@ -24,14 +24,6 @@
 	},
 	{
 		"name": "mag-unshaded-4"
-	},
-	{
-		"name": "inhand-left",
-		"directions": 4
-	},
-	{
-		"name": "inhand-right",
-		"directions": 4
 	},
     {
       "name": "equipped-BACKPACK",

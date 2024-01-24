@@ -88942,18 +88942,6 @@ entities:
     - type: Transform
       pos: -16.5,64.5
       parent: 1
-- proto: MagazinePistolSubMachineGunTopMounted
-  entities:
-  - uid: 6824
-    components:
-    - type: Transform
-      pos: -16.587696,59.206833
-      parent: 1
-  - uid: 6825
-    components:
-    - type: Transform
-      pos: -16.388914,59.03654
-      parent: 1
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 7444
@@ -124353,13 +124341,6 @@ entities:
     components:
     - type: Transform
       pos: 15.523123,-26.506323
-      parent: 1
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 6823
-    components:
-    - type: Transform
-      pos: -16.502504,59.51904
       parent: 1
 - proto: WeaponWaterBlaster
   entities:

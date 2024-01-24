@@ -119731,22 +119731,6 @@ entities:
     - type: Transform
       pos: -44.5,-21.5
       parent: 5350
-- proto: MagazinePistolSubMachineGunTopMounted
-  entities:
-  - uid: 10438
-    components:
-    - type: Transform
-      pos: 12.5892,46.75028
-      parent: 5350
-    - type: BallisticAmmoProvider
-      unspawnedCount: 30
-  - uid: 10439
-    components:
-    - type: Transform
-      pos: 12.5892,46.53153
-      parent: 5350
-    - type: BallisticAmmoProvider
-      unspawnedCount: 30
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 2082
@@ -172072,13 +172056,6 @@ entities:
       parent: 5350
     - type: BallisticAmmoProvider
       unspawnedCount: 2
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 10437
-    components:
-    - type: Transform
-      pos: 12.542325,46.203403
-      parent: 5350
 - proto: WeaponTurretSyndicateBroken
   entities:
   - uid: 26416

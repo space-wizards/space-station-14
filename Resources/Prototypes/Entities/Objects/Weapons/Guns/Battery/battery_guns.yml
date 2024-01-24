@@ -710,7 +710,7 @@
   name: energy shotgun
   parent: BaseWeaponBattery
   id: WeaponEnergyShotgun
-  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  description: An unique energy shotgun, often used by the Head of Security. It uses multiple configurations, mainly lethal, non-lethal and ion. 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_shotgun.rsi
@@ -725,7 +725,7 @@
   - type: Gun
     fireRate: 2
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg #wawa
   - type: ProjectileBatteryAmmoProvider
     proto: CartridgeEnergyShotgunWide
     fireCost: 100
@@ -735,3 +735,16 @@
       fireCost: 100
     - proto: CartridgeEnergyShotgunNarrow
       fireCost: 100
+    - proto: CartridgeEnergyShotgunDisabler
+      fireCost: 100
+    - proto: CartridgeEnergyShotgunIon
+      fireCost: 100
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+    sprite: Objects/Weapons/Guns/Battery/laser_shotgun.rsi/inhands_64x.rsi
+    heldPrefix: laser
+  - type: Tag
+    tags:
+    - HighRiskItem

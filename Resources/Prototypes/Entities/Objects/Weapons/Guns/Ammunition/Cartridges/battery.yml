@@ -23,7 +23,7 @@
 
 - type: entity
   id: CartridgeEnergyShotgunWide
-  name: energy shotgun cartridge
+  name: wide fire configuration #named like this because of how it's used
   parent: BaseCartridgeEnergy
   components:
   - type: CartridgeAmmo
@@ -33,10 +33,28 @@
 
 - type: entity
   id: CartridgeEnergyShotgunNarrow
-  name: energy shotgun cartridge
+  name: narrow fire configuration 
   parent: BaseCartridgeEnergy
   components:
   - type: CartridgeAmmo
     proto: BulletLaserHeavy
     count: 3
     spread: 10 #narrower but way less damage
+
+- type: entity
+  id: CartridgeEnergyShotgunDisabler
+  name: disabling configuration 
+  parent: BaseCartridgeEnergy
+  components:
+  - type: CartridgeAmmo
+    proto: BulletDisablerSmg
+    count: 3 
+    spread: 5 #technically stronger than disabler if you aim properly
+
+- type: entity
+  id: CartridgeEnergyShotgunIon
+  name: ion configuration
+  parent: BaseCartridgeEnergy
+  components:
+  - type: CartridgeAmmo
+    proto: BulletIonRifle

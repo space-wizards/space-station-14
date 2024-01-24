@@ -110015,18 +110015,6 @@ entities:
     - type: Transform
       pos: -24.563257,2.6569912
       parent: 60
-- proto: MagazinePistolSubMachineGunTopMounted
-  entities:
-  - uid: 13800
-    components:
-    - type: Transform
-      pos: -21.437603,0.8355694
-      parent: 60
-  - uid: 16678
-    components:
-    - type: Transform
-      pos: -21.437603,0.8355694
-      parent: 60
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 1463
@@ -158663,13 +158651,6 @@ entities:
       name: Old War AKMS
     - type: Transform
       pos: -24.45179,2.5628066
-      parent: 60
-- proto: WeaponSubMachineGunWt550
-  entities:
-  - uid: 21074
-    components:
-    - type: Transform
-      pos: -21.459091,0.5840763
       parent: 60
 - proto: WeaponTurretSyndicateBroken
   entities:
