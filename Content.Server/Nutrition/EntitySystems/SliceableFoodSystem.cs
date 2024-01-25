@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -17,6 +18,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly TransformSystem _xformSystem = default!;
 
         public override void Initialize()
         {
@@ -76,7 +78,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // If someone makes food proto with 1 slice...
             if (component.Count < 1)
             {
-                DeleteFood(uid, user);
+                DeleteFood(uid, user, food);
                 return true;
             }
 
@@ -89,7 +91,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // Fill last slice with the rest of the solution
             FillSlice(sliceUid, solution);
 
-            DeleteFood(uid, user);
+            DeleteFood(uid, user, food);
             return true;
         }
 
@@ -102,32 +104,54 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!Resolve(uid, ref comp, ref transform))
                 return EntityUid.Invalid;
 
-            var sliceUid = Spawn(comp.Slice, transform.Coordinates);
-            var inCont = _containerSystem.IsEntityInContainer(uid);
-            if (inCont)
+            var sliceUid = Spawn(comp.Slice, _xformSystem.GetMapCoordinates(uid));
+
+            // try putting the slice into the container if the food being sliced is in a container!
+            // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
+            if (_containerSystem.TryGetContainingContainer(uid, out var container) && _containerSystem.CanInsert(sliceUid, container))
             {
-                _handsSystem.PickupOrDrop(user, sliceUid);
+                _containerSystem.Insert(sliceUid, container);
             }
-            else
+            else // puts it down "right-side up"
             {
-                var xform = Transform(sliceUid);
-                _containerSystem.AttachParentToContainerOrGrid((sliceUid, xform));
-                xform.LocalRotation = 0;
+                _xformSystem.AttachToGridOrMap(sliceUid);
+                _xformSystem.SetLocalRotation(sliceUid, 0);
             }
 
             return sliceUid;
         }
 
-        private void DeleteFood(EntityUid uid, EntityUid user)
+        private void DeleteFood(EntityUid uid, EntityUid user, FoodComponent foodComp)
         {
             var ev = new BeforeFullySlicedEvent
             {
                 User = user
             };
             RaiseLocalEvent(uid, ev);
+            if (ev.Cancelled)
+                return;
 
-            if (!ev.Cancelled)
-                Del(uid);
+            if (string.IsNullOrEmpty(foodComp.Trash))
+            {
+                QueueDel(uid);
+                return;
+            }
+
+            // Locate the sliced food and spawn its trash
+            var trashUid = Spawn(foodComp.Trash, _xformSystem.GetMapCoordinates(uid));
+
+            // try putting the trash in the food's container too, to be consistent with slice spawning?
+            if (_containerSystem.TryGetContainingContainer(uid, out var container) && _containerSystem.CanInsert(trashUid, container))
+            {
+                _containerSystem.Insert(trashUid, container);
+            }
+            else // puts it down "right-side up"
+            {
+                _xformSystem.AttachToGridOrMap(trashUid);
+                _xformSystem.SetLocalRotation(trashUid, 0);
+            }
+
+            QueueDel(uid);
         }
 
         private void FillSlice(EntityUid sliceUid, Solution solution)

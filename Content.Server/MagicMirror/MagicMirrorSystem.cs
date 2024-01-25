@@ -29,11 +29,15 @@ public sealed class MagicMirrorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MagicMirrorComponent, ActivatableUIOpenAttemptEvent>(OnOpenUIAttempt);
-        SubscribeLocalEvent<MagicMirrorComponent, BoundUIClosedEvent>(OnUIClosed);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorSelectMessage>(OnMagicMirrorSelect);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorChangeColorMessage>(OnTryMagicMirrorChangeColor);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorAddSlotMessage>(OnTryMagicMirrorAddSlot);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorRemoveSlotMessage>(OnTryMagicMirrorRemoveSlot);
+
+        Subs.BuiEvents<MagicMirrorComponent>(MagicMirrorUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnUIClosed);
+            subs.Event<MagicMirrorSelectMessage>(OnMagicMirrorSelect);
+            subs.Event<MagicMirrorChangeColorMessage>(OnTryMagicMirrorChangeColor);
+            subs.Event<MagicMirrorAddSlotMessage>(OnTryMagicMirrorAddSlot);
+            subs.Event<MagicMirrorRemoveSlotMessage>(OnTryMagicMirrorRemoveSlot);
+        });
 
         SubscribeLocalEvent<MagicMirrorComponent, AfterInteractEvent>(OnMagicMirrorInteract);
 
@@ -78,6 +82,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorSelectDoAfterEvent()
         {
             Category = message.Category,
@@ -94,8 +101,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
 
+        component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
 
@@ -131,6 +139,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorChangeColorDoAfterEvent()
         {
             Category = message.Category,
@@ -146,7 +157,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
+
+        component.DoAfter = doAfterId;
     }
     private void OnChangeColorDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorChangeColorDoAfterEvent args)
     {
@@ -181,6 +194,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorRemoveSlotDoAfterEvent()
         {
             Category = message.Category,
@@ -196,8 +212,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
 
+        component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
 
@@ -236,6 +253,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (message.Session.AttachedEntity == null)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorAddSlotDoAfterEvent()
         {
             Category = message.Category,
@@ -249,8 +269,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
 
+        component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
     private void OnAddSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorAddSlotDoAfterEvent args)

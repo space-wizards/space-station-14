@@ -8,6 +8,7 @@
     OreSilver: 0.25
     OrePlasma: 0.15
     OreUranium: 0.15
+    OreArtifactFragment: 0.15
 
 # Large asteroids, typically 1
 - type: dungeonConfig
@@ -16,7 +17,7 @@
   generator: !type:NoiseDunGen
     tileCap: 1500
     capStd: 32
-    iterations: 1
+    iterations: 3
     layers:
       - tile: FloorAsteroidSand
         threshold: 0.30

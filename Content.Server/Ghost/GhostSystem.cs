@@ -264,7 +264,7 @@ namespace Content.Server.Ghost
             }
 
             var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
-            RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
+            RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)

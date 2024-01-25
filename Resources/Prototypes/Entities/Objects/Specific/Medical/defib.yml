@@ -38,7 +38,7 @@
     - type: DoAfter
     - type: UseDelay
     - type: StaticPrice
-      price: 100
+      price: 30
     - type: GuideHelp
       guides:
       - Medical Doctor
