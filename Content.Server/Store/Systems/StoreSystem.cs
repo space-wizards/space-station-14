@@ -36,6 +36,7 @@ public sealed partial class StoreSystem : EntitySystem
 
         InitializeUi();
         InitializeCommand();
+        InitializeRefund();
     }
 
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)
