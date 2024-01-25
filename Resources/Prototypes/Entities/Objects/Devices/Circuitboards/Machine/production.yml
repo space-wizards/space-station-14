@@ -1356,5 +1356,5 @@
     tagRequirements:
         AnomalyCore:
           Amount: 1
-          DefaultPrototype: AnomalyCore
+          DefaultPrototype: AnomalyCoreGravityInert
           ExamineName: Anomaly Core
