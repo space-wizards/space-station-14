@@ -42,7 +42,6 @@ public sealed class MedipenRefillerSystem : EntitySystem
         SubscribeLocalEvent<EmaggedComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<MedipenRefillerComponent, GotEmaggedEvent>(OnGotEmmaged);
     }
-
     private void OnGotEmmaged(Entity<MedipenRefillerComponent> entity, ref GotEmaggedEvent args)
     {
         if (_entityManager.HasComponent<EmaggedComponent>(entity.Owner))
@@ -91,6 +90,16 @@ public sealed class MedipenRefillerSystem : EntitySystem
         solution.RemoveAllSolution();
         _audioSystem.PlayPvs(entity.Comp.MachineNoise, entity.Owner);
         UpdateUserInterfaceState(entity);
+    }
+
+    private void FinishRefilling(EntityUid uid, MedipenRefillerComponent component)
+    {
+        _entityManager.DeleteEntity(_itemSlotsSystem.GetItemOrNull(uid, SharedMedipenRefiller.MedipenSlotName));
+        _itemSlotsSystem.SetLock(uid, SharedMedipenRefiller.MedipenSlotName, false);
+        _entityManager.SpawnEntity(component.Result, uid.ToCoordinates());
+        component.IsActivated = false;
+        component.RemainingTime = 0;
+        component.Result = "";
     }
 
     private bool CanRefill(Entity<MedipenRefillerComponent> entity, Solution buffer, string id)
@@ -225,12 +234,7 @@ public sealed class MedipenRefillerSystem : EntitySystem
                 component.RemainingTime -= frameTime;
                 if (component.RemainingTime <= 0 && _prototypeManager.HasIndex<EntityPrototype>(component.Result))
                 {
-                    _entityManager.DeleteEntity(_itemSlotsSystem.GetItemOrNull(uid, SharedMedipenRefiller.MedipenSlotName));
-                    _itemSlotsSystem.SetLock(uid, SharedMedipenRefiller.MedipenSlotName, false);
-                    _entityManager.SpawnEntity(component.Result, uid.ToCoordinates());
-                    component.IsActivated = false;
-                    component.RemainingTime = 0;
-                    component.Result = "";
+                    FinishRefilling(uid, component);
                 }
             }
         }
