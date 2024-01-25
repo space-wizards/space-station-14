@@ -147,8 +147,8 @@
   name: medipen (empty)
   completetime: 2
   materials:
-    Plasteel: 300
-    Steel: 200
+    Plasteel: 150
+    Steel: 100
 
 - type: latheRecipe
   id: MedkitBurn
