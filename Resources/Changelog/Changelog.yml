@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Adds Space Cobras, invisible at rest and venom blind.
-    type: Add
-  - message: Adds snake meat and fancy snakeskin boots.
-    type: Add
-  - message: The too weak space spider has been strengthened.
-    type: Tweak
-  id: 5281
-  time: '2023-12-07T01:25:57.0000000+00:00'
 - author: CrigCrag
   changes:
   - message: Added three new specialized brute healing chemicals and a guidebook entry
@@ -3807,3 +3797,10 @@
   id: 5781
   time: '2024-01-24T02:35:37.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24472
+- author: lzk228
+  changes:
+  - message: Fixed escaping from locked artifact crate.
+    type: Fix
+  id: 5782
+  time: '2024-01-25T00:46:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24442
