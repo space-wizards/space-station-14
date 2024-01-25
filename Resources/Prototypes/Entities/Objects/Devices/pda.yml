@@ -653,6 +653,8 @@
         - Write
   - type: PdaBorderColor
     borderColor: "#00842e"
+  - type: Icon
+    state: pda-centcom
 
 - type: entity
   parent: CentcomPDA
