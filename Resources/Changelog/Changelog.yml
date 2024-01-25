@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Aexxie
-  changes:
-  - message: Paramed no longer has external access.
-    type: Remove
-  id: 5285
-  time: '2023-12-07T23:27:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Hovering over an item in storage now shows a tooltip with the name.
@@ -3804,3 +3798,12 @@
   id: 5785
   time: '2024-01-25T01:37:11.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24481
+- author: Minty642
+  changes:
+  - message: Fixed Reinforced Glass Recipe in Ore Processor!
+    type: Fix
+  - message: Added Premium Material that can only be processed by Industrial Ore Processor!
+    type: Add
+  id: 5786
+  time: '2024-01-25T08:33:56.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24345
