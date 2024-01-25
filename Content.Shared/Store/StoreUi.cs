@@ -36,12 +36,10 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
 public sealed class StoreInitializeState : BoundUserInterfaceState
 {
     public readonly string Name;
-    public readonly bool AllowRefund;
 
-    public StoreInitializeState(string name, bool allowRefund)
+    public StoreInitializeState(string name)
     {
         Name = name;
-        AllowRefund = allowRefund;
     }
 }
 

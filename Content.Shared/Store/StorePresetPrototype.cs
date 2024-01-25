@@ -38,7 +38,4 @@ public sealed partial class StorePresetPrototype : IPrototype
     /// </summary>
     [DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
     public HashSet<string> CurrencyWhitelist { get; private set; } = new();
-
-    [DataField("allowRefund")]
-    public bool AllowRefund;
 }
