@@ -11,7 +11,6 @@ namespace Content.Server.StationEvents.Events;
 public sealed class UnknownShuttleSpawnRule : StationEventSystem<UnknownShuttleSpawnRuleComponent>
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly GridPreloaderSystem _preloadShuttle = default!;
@@ -29,6 +28,7 @@ public sealed class UnknownShuttleSpawnRule : StationEventSystem<UnknownShuttleS
         var mapId = _mapManager.GetMapEntityId(shuttleMap);
         var coord = Transform(mapId).Coordinates;
         var loadedShuttle = _preloadShuttle.TryGetPreloadedGrid(_random.Pick(component.ShuttleVariants), coord);
+        //To do: If there are no pre-loaded shuttles left, the alert will still go off! This is a problem, but it seems to be necessary to make an Event Handler with Canceled fields.
         if (loadedShuttle == null)
             return;
 
@@ -49,5 +49,4 @@ public sealed class UnknownShuttleSpawnRule : StationEventSystem<UnknownShuttleS
         if (component.SpawnedGameRule != null)
             GameTicker.EndGameRule(component.SpawnedGameRule.Value);
     }
-
 }
