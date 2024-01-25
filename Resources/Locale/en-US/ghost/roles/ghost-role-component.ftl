@@ -226,10 +226,10 @@ ghost-role-information-lost-cargo-technical-name = Lost Cargo technical
 ghost-role-information-lost-cargo-technical-description = Something went wrong and your cargo shuttle with the goods was beamed into the sector to another station.
 ghost-role-information-lost-cargo-technical-rules = You're a regular cargo technical from another station. Do what regular cargo do.
 
-ghost-role-information-lost-cargo-traitor-technical-name = Traitor Cargo technical
-ghost-role-information-lost-cargo-traitor-technical-description = You're a traitor, undercover as a lost cargo technical. Fulfill your objectives.
-ghost-role-information-lost-cargo-traitor-technical-rules = Normal syndicate antagonist rules apply.
-
 ghost-role-information-clown-troupe-name = Space clown
 ghost-role-information-clown-troupe-description = You and your troupe have come to cheer up this station with the best jokes. Honk!
-ghost-role-information-clown-troupe-rules = The usual rules of a regular clown. 
+ghost-role-information-clown-troupe-rules = Normal station crew rules apply.
+
+ghost-role-information-traveling-chef-name = Traveling chef
+ghost-role-information-traveling-chef-description = You are a chef on a traveling shuttle of exotic cuisine. Delight the station with delicious food!
+ghost-role-information-traveling-chef-rules = Normal station crew rules apply.

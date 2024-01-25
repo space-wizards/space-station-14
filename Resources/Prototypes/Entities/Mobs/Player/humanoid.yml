@@ -478,7 +478,6 @@
 - type: entity
   name: lost cargo techical spawner
   id: LostCargoTechnicalSpawner
-  suffix: 10% Traitor chance
   parent: MarkerBase
   components:
     - type: Sprite
@@ -490,13 +489,10 @@
       prototypes:
       - RandomHumanoidLostCargoTechnical
       chance: 1
-      rarePrototypes:
-      - RandomHumanoidLostCargoTechnicalTraitor
-      rareChance: 0.1
 
 - type: entity
   id: RandomHumanoidLostCargoTechnical
-  name: lost cargo technical
+  name: lost cargo technical ghost role
   components:
     - type: Sprite
       sprite: Objects/Tools/appraisal-tool.rsi
@@ -504,40 +500,16 @@
     - type: RandomHumanoidSpawner
       settings: LostCargoTechnical
 
-- type: entity
-  id: RandomHumanoidLostCargoTechnicalTraitor
-  parent: RandomHumanoidLostCargoTechnical
-  name: lost cargo technical
-  suffix: Traitor
-  components:
-    - type: RandomHumanoidSpawner
-      settings: LostCargoTechnicalTraitor
-
 - type: randomHumanoidSettings
   id: LostCargoTechnical
   randomizeName: false
   components:
+    - type: AutoTraitor
+      prob: 0.05
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
       description: ghost-role-information-lost-cargo-technical-description
       rules: ghost-role-information-lost-cargo-technical-rules
-    - type: GhostTakeoverAvailable
-    - type: Loadout
-      prototypes: [ CargoTechGear ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_first
-      - names_last
-
-- type: randomHumanoidSettings
-  id: LostCargoTechnicalTraitor
-  randomizeName: false
-  components:
-    - type: AutoTraitor
-    - type: GhostRole
-      name: ghost-role-information-lost-cargo-traitor-technical-name
-      description: ghost-role-information-lost-cargo-traitor-technical-description
-      rules: ghost-role-information-lost-cargo-traitor-technical-rules
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CargoTechGear ]
@@ -561,14 +533,13 @@
     - type: RandomSpawner
       prototypes:
       - RandomHumanoidClownTroupe
-      chance: 1
       rarePrototypes:
       - RandomHumanoidClownTroupeBanana
       rareChance: 0.3
 
 - type: entity
   id: RandomHumanoidClownTroupe
-  name: clown troupe 
+  name: clown troupe ghost role
   components:
     - type: Sprite
       sprite: Objects/Tools/appraisal-tool.rsi
@@ -588,6 +559,8 @@
   id: ClownTroupe
   randomizeName: false
   components:
+    - type: AutoTraitor
+      prob: 0.05
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
@@ -603,6 +576,8 @@
   id: ClownTroupeBanana
   randomizeName: false
   components:
+    - type: AutoTraitor
+      prob: 0.05
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
@@ -610,6 +585,49 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ BananaClown ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_clown
+
+# Traveling exotic chef
+
+- type: entity
+  name: traveling chef spawner
+  id: TravelingChefSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidTravelingChef
+      
+- type: entity
+  id: RandomHumanoidTravelingChef
+  name: traveling chef ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: JapaneseTravelingChef
+
+- type: randomHumanoidSettings
+  id: JapaneseTravelingChef
+  randomizeName: false
+  components:
+    - type: AutoTraitor
+      prob: 0.05
+    - type: GhostRole
+      name: ghost-role-information-traveling-chef-name
+      description: ghost-role-information-traveling-chef-description
+      rules: ghost-role-information-traveling-chef-rules
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChefGear ]
     - type: RandomMetadata
       nameSegments:
       - names_first

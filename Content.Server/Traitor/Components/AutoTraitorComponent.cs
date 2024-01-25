@@ -19,4 +19,10 @@ public sealed partial class AutoTraitorComponent : Component
     /// </summary>
     [DataField("giveObjectives"), ViewVariables(VVAccess.ReadWrite)]
     public bool GiveObjectives = true;
+
+    /// <summary>
+    /// the probability of the target becoming the antagonist
+    /// </summary>
+    [DataField]
+    public float Prob = 1f;
 }

@@ -438,7 +438,7 @@
     - ShuttleStriker
 
 - type: entity
-  id: LostCargoTechicalShuttleSpawn
+  id: NanotrasenRandomShuttleSpawn
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -452,6 +452,7 @@
   - type: UnknownShuttleSpawnRule
     shuttleVariants: 
     - ShuttleCargoLost
+    - TravelingCuisin
 
 - type: entity
   id: MassHallucinations

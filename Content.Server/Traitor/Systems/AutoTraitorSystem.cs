@@ -1,7 +1,9 @@
+using Content.Server.Administration.Commands;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Traitor.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Traitor.Systems;
 
@@ -11,6 +13,7 @@ namespace Content.Server.Traitor.Systems;
 public sealed class AutoTraitorSystem : EntitySystem
 {
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -22,12 +25,18 @@ public sealed class AutoTraitorSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, AutoTraitorComponent comp, MapInitEvent args)
     {
-        TryMakeTraitor(uid, comp);
+        if (_random.Prob(comp.Prob))
+            TryMakeTraitor(uid, comp);
+        else
+            EntityManager.RemoveComponent(uid, comp);
     }
 
     private void OnMindAdded(EntityUid uid, AutoTraitorComponent comp, MindAddedMessage args)
     {
-        TryMakeTraitor(uid, comp);
+        if (_random.Prob(comp.Prob))
+            TryMakeTraitor(uid, comp);
+        else
+            EntityManager.RemoveComponent(uid, comp);
     }
 
     /// <summary>
