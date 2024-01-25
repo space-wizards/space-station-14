@@ -5,27 +5,25 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "TG Station",
+  "copyright": "Made by DoutorWhite (Github) for Space Station 14",
   "states": [
     {
       "name": "base"
     },
-    {
-      "name": "running",
+	{
+      "name": "powered",
       "delays": [
         [
-          1.0,
-          1.0,
-		  1.0,
-		  1.0,
-		  1.0,
-		  1.0,
-		  1.0
+          0.1,
+          0.1,
+		  0.1,
+		  0.1,
+		  0.1,
+		  0.1,
+		  0.1,
+		  0.1
         ]
       ]
-    },
-	{
-      "name": "powered"
     }
   ]
 }
