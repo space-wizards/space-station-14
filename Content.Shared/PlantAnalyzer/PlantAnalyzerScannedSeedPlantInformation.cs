@@ -42,7 +42,7 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string Endurance = "";
 
     public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedChem, string plantHarvestType,
-        string exudeGases, string potency, string yield, string seedMutations, Boolean isTray, string plantSpeciation, string tolerances, string generalTraits, Boolean scanMode)
+        string exudeGases, string seedMutations, Boolean isTray, string plantSpeciation, string tolerances, string generalTraits, Boolean scanMode)
     {
         TargetEntity = targetEntit;
         ScanMode = scanMode;
@@ -51,13 +51,20 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
         SeedChem = seedChem;
         Repeat = plantHarvestType;
         ExudeGases = exudeGases;
-        SeedYield = yield;
-        SeedPotency = potency;
 
         IsTray = isTray;
 
         SeedMutations = seedMutations;
         PlantSpeciation = plantSpeciation;
+
+        String[] arrGeneral = generalTraits.Split(";");
+        //SeedName = arrGeneral[0];
+        Endurance = arrGeneral[1];
+        SeedYield = arrGeneral[2];
+        Lifespan = arrGeneral[3];
+        Maturation = arrGeneral[4];
+        GrowthStages = arrGeneral[5];
+        SeedPotency = arrGeneral[6];
 
         if (scanMode || SeedName.Contains("NanoTrasen")) //advanced scan mode OR its a roundstart prototype seed
         {
@@ -73,16 +80,10 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
             HighPressureTolerance = arrTol[8];
             PestTolerance = arrTol[9];
             WeedTolerance = arrTol[10];
-
-            String[] arrGeneral = generalTraits.Split(";");
-            //SeedName = arrGeneral[0];
-            Endurance = arrGeneral[1];
-            SeedYield = arrGeneral[2];
-            Lifespan = arrGeneral[3];
-            Maturation = arrGeneral[4];
-            GrowthStages = arrGeneral[5];
-            SeedPotency = arrGeneral[6];
         }
+
+
+
     }
 }
 

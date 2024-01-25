@@ -5,9 +5,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.PlantAnalyzer;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Botany.Systems;
 
@@ -56,12 +56,11 @@ public sealed class PlantAnalyzerSystem : EntitySystem
                 NeedHand = true
             });
         }
-
     }
 
     private void OnDoAfter(EntityUid uid, PlantAnalyzerComponent component, DoAfterEvent args)
     {
-        if (component.AdvancedScan) //double charge use for advanced scan to 80 usage which is of ~22% small cell
+        if (component.AdvancedScan) //double charge use for advanced scan
         {
             if (!_cell.TryUseActivatableCharge(uid, user: args.User))
                 return;
@@ -94,8 +93,8 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         TryComp<SeedComponent>(target, out var seedcomponent);
 
         var state = default(PlantAnalyzerScannedSeedPlantInformation);
-        var seedData = default(SeedData);   // data of a unique Seed
-        var seedProtoId = default(SeedPrototype);   // data of base seed prototype
+        var seedData = default(SeedData);   //data of a unique Seed
+        var seedProtoId = default(SeedPrototype);   //data of base seed prototype
 
         if (seedcomponent != null)
         {
@@ -104,19 +103,20 @@ public sealed class PlantAnalyzerSystem : EntitySystem
                 seedData = seedcomponent.Seed;
                 state = ObtainingGeneDataSeed(seedData, target, false);
             }
-            else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed)) // getting the protoype seed
+            else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed))    //getting the protoype seed
             {
                 seedProtoId = protoSeed;
                 state = ObtainingGeneDataSeedProt(protoSeed, target);
             }
         }
-        else if (plantcomp != null)    //where check if we poke the plantholder, it checks the plantholder seed
+        else if (plantcomp != null) //where check if we poke the plantholder, it checks the plantholder seed
         {
             _plantHolder = plantcomp;
             seedData = plantcomp.Seed;
             if (seedData != null)
             {
-                state = ObtainingGeneDataSeed(seedData, target, true); //seedData is a unique seed in a tray
+                //if (plantcomp.Health > 10) plantcomp.Health -= 10;
+                state = ObtainingGeneDataSeed(seedData, target, true);  //seedData is a unique seed in a tray
             }
         }
 
@@ -131,14 +131,12 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     /// </summary>
     public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeedProt(SeedPrototype comp, EntityUid target)
     {
-        var seedName = "\r\n  NanoTrasen owned prototype: \r\n  " + Loc.GetString(comp.DisplayName) + " (tm)";
-        //var seedName = comp.Name;
+        var seedName = "\r\n  ";
+        seedName = seedName + Loc.GetString("plant-analyzer-window-label-trademark") + "\r\n    " + Loc.GetString(comp.DisplayName);
 
         var seedChem = "\r\n   ";
         var plantHarvestType = "";
         var exudeGases = "";
-        var potency = comp.Potency;
-        var yield = comp.Yield;
 
         var plantSpeciation = "";
         var plantMutations = "";
@@ -160,20 +158,20 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         }
         else
         {
-            exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
+            exudeGases = Loc.GetString("plant-analyzer-plant-gasses-no");
         }
 
         plantSpeciation += String.Join(", \r\n", comp.MutationPrototypes.Select(item => item.ToString()));
         plantMutations = CheckAllMutations(comp, plantMutations);
         tolerances = CheckAllTolerances(comp, tolerances);
 
-        generalTraits = CheckAllGeneralTraits(comp, generalTraits);
+        generalTraits = CheckGeneralTraits(comp, generalTraits);
 
         return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName,
-            seedChem, plantHarvestType, exudeGases, potency.ToString(), yield.ToString(), plantMutations, false, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), _scanMode);
+            seedChem, plantHarvestType, exudeGases, plantMutations, false, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), _scanMode);
     }
 
-    /// <summary>
+    /// <summary>potency.ToString(), yield.ToString(),
     ///     Analysis of unique seed.
     /// </summary>
     public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeed(SeedData comp, EntityUid target, bool trayChecker)
@@ -183,8 +181,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var seedChem = "\r\n   ";
         var plantHarvestType = "";
         var exudeGases = "";
-        var potency = comp.Potency;
-        var yield = comp.Yield;
 
         var plantSpeciation = "";
         var plantMutations = "";
@@ -195,7 +191,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         if (comp.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-ephemeral");
         if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = Loc.GetString("plant-analyzer-harvest-autoharvest");
 
-        seedChem += String.Join("\r\n   ", comp.Chemicals.Select(item => item.Key.ToString()));
+        seedChem += string.Join("\r\n   ", comp.Chemicals.Select(item => item.Key.ToString()));
 
         if (comp.ExudeGasses.Count > 0)
         {
@@ -206,7 +202,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         }
         else
         {
-            exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
+            exudeGases = Loc.GetString("plant-analyzer-plant-gasses-no");
         }
 
         if (_scanMode)
@@ -216,16 +212,16 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             tolerances = CheckAllTolerances(comp, tolerances);
         }
 
-        generalTraits = CheckAllGeneralTraits(comp, generalTraits);
+        generalTraits = CheckGeneralTraits(comp, generalTraits);
 
         return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName,
-            seedChem, plantHarvestType, exudeGases, potency.ToString(), yield.ToString(), plantMutations, false, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), _scanMode);
+            seedChem, plantHarvestType, exudeGases, plantMutations, false, plantSpeciation, tolerances.ToString(), generalTraits.ToString(), _scanMode);
     }
 
     /// <summary>
     ///     Returns information about the seed.
     /// </summary>
-    public string CheckAllGeneralTraits(SeedData plant, string generalTraits)
+    public string CheckGeneralTraits(SeedData plant, string generalTraits)
     {
         var name = Loc.GetString(plant.DisplayName);
         var endurance = plant.Endurance;

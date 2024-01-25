@@ -38,13 +38,15 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
     {
         var target = _entityManager.GetEntity(msg.TargetEntity);
         Title = Loc.GetString("plant-analyzer-interface-title");
+        
         if (target == null)
         {
+            NoData.Visible = true;
             return;
         }
         NoData.Visible = false;
 
-        if (msg.ScanMode)//switch display to msg setting from msg
+        if (msg.ScanMode)   //switch display to the settings of the received msg
         {
             OnButton.ToggleMode = true;
             OnButton.Pressed = true;
@@ -61,26 +63,28 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         Yield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
         Potency.Text = Loc.GetString("plant-analyzer-plant-potency-text", ("seedPotency", msg.SeedPotency));
         Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", msg.Repeat));
+        Endurance.Text = Loc.GetString("plant-analyzer-plant-endurance-text", ("seedEndurance", msg.Endurance));
         Chemicals.Text = Loc.GetString("plant-analyzer-plant-chemistry-text", ("seedChem", msg.SeedChem));
         Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases));
-        Lifespan.Text = "Lifespan: " + msg.Lifespan;
-        Maturation.Text = "Maturation: " + msg.Maturation;
-        GrowthStages.Text = "GrowthStages: " + msg.GrowthStages;
-        //Tolerances       
-        NutrientUsage.Text = "Nutrient usage: " + msg.NutrientConsumption;
-        WaterUsage.Text = "Water usage: " + msg.WaterConsumption;
-        IdealHeat.Text = "Ideal heat: " + msg.IdealHeat;
-        HeatTolerance.Text = "HeatTolerance: " + msg.HeatTolerance;
-        IdealLight.Text = "IdealLight: " + msg.IdealLight;
-        LightTolerance.Text = "Lighttolerance: " + msg.LightTolerance;
-        ToxinsTolerance.Text = "ToxinsTolerance: " + msg.ToxinsTolerance;
-        LowPressureTolerance.Text = "LowPressureTolerance: " + msg.LowPresssureTolerance;
-        HighPressureTolerance.Text = "HighPressureTolerance: " + msg.HighPressureTolerance;
-        PestTolerance.Text = "PestTolerance: " + msg.PestTolerance;
-        WeedTolerance.Text = "WeedTolerance: " + msg.WeedTolerance;
+        Lifespan.Text = Loc.GetString("plant-analyzer-plant-lifespan-text", ("lifespan", msg.Lifespan));
+        Maturation.Text = Loc.GetString("plant-analyzer-plant-maturation-text", ("maturation", msg.Maturation));
+        GrowthStages.Text = Loc.GetString("plant-analyzer-plant-growthstages-text", ("growthStages", msg.GrowthStages));
+        //Tolerances
+        NutrientUsage.Text = Loc.GetString("plant-analyzer-tolerance-nutrientusage", ("nutrientUsage", msg.NutrientConsumption));
+        WaterUsage.Text = Loc.GetString("plant-analyzer-tolerance-waterusage", ("waterUsage", msg.WaterConsumption));
+        IdealHeat.Text = Loc.GetString("plant-analyzer-tolerance-idealheat", ("idealHeat", msg.IdealHeat));
+        HeatTolerance.Text = Loc.GetString("plant-analyzer-tolerance-heattoler", ("heatTolerance", msg.HeatTolerance));
+        IdealLight.Text = Loc.GetString("plant-analyzer-tolerance-ideallight", ("idealLight", msg.IdealLight));
+        LightTolerance.Text = Loc.GetString("plant-analyzer-tolerance-lighttoler", ("lighttolerance", msg.LightTolerance));
+        ToxinsTolerance.Text = Loc.GetString("plant-analyzer-tolerance-toxinstoler", ("toxinsTolerance", msg.ToxinsTolerance));
+        LowPressureTolerance.Text = Loc.GetString("plant-analyzer-tolerance-lowpress", ("lowPressureTolerance", msg.LowPresssureTolerance));
+        HighPressureTolerance.Text = Loc.GetString("plant-analyzer-tolerance-highpress", ("highPressureTolerance", msg.HighPressureTolerance));
+        PestTolerance.Text = Loc.GetString("plant-analyzer-tolerance-pesttoler", ("pestTolerance", msg.PestTolerance));
+        WeedTolerance.Text = Loc.GetString("plant-analyzer-tolerance-weedtoler", ("weedTolerance", msg.WeedTolerance));
         //Misc
         Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
-        PlantSpeciation.Text = "Possible subtypes: " + msg.PlantSpeciation;
+        PlantSpeciation.Text = Loc.GetString("plant-analyzer-plant-speciation-text", ("speciation", msg.PlantSpeciation));
+        ExtraInfo.Text = "";
     }
 
 }
