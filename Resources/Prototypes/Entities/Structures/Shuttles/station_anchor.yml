@@ -1,0 +1,46 @@
+﻿- type: entity
+  id: StationAnchor
+  parent: BaseStructure
+  name: station anchor
+  description: A station anchor
+  components:
+    - type: StationAnchor
+    - type: Anchorable # TODO: StationAnchorSystem disables unanchoring when active
+    - type: AmbientSound
+      enabled: false
+      range: 4
+      volume: -4
+      sound:
+        path: /Audio/Effects/shuttle_thruster.ogg # TODO: Replace with https://freesound.org/people/peridactyloptrix/sounds/213528/
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Structures/Shuttles/thruster.rsi
+      layers:
+        - state: base
+          map: [ "enum.ThrusterVisualLayers.Base" ]
+        - state: thrust
+          map: [ "enum.ThrusterVisualLayers.ThrustOn" ]
+          shader: unshaded
+          visible: false
+        - state: thrust_burn_unshaded
+          map: [ "enum.ThrusterVisualLayers.ThrustingUnshaded" ]
+          shader: unshaded
+          visible: false
+          offset: 0, 1
+    - type: Appearance
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+    - type: StaticPrice
+      price: 10000
