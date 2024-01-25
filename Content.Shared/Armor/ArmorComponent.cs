@@ -20,7 +20,7 @@ public sealed partial class ArmorComponent : Component
     /// A multiplier applied to the calculated point value
     /// to determine the monetary value of the armor
     /// </summary>
-    [DataField("priceMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float PriceMultiplier = 1;
 }
 
