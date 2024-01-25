@@ -83,3 +83,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Clown.wmv by Admiral Hippie."
   source: "https://www.youtube.com/watch?v=9whQIbNmu9s"
+
+- files: ["Monument.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Monument by Six Umbrellas."
+  source: "https://sixumbrellas.bandcamp.com/album/the-psychedelic-and"
