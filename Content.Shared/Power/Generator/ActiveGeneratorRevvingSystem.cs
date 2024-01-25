@@ -27,9 +27,10 @@ public sealed class ActiveGeneratorRevvingSystem: EntitySystem
     /// Used for remotely activating a generator.
     /// </summary>
     /// <param name="uid">Uid of the generator entity.</param>
-    public void StartAutoRevving(EntityUid uid)
+    /// <param name="component">ActiveGeneratorRevvingComponent of the generator entity.</param>
+    public void StartAutoRevving(EntityUid uid, ActiveGeneratorRevvingComponent? component = null)
     {
-        if (TryComp<ActiveGeneratorRevvingComponent>(uid, out var component))
+        if (Resolve(uid, ref component))
         {
             // reset the revving
             component.CurrentTime = TimeSpan.FromSeconds(0);
