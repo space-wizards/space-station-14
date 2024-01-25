@@ -190,7 +190,8 @@
     - id: Card_Dispo_Train2
     - id: Card_Dispo_Train3
     - id: Card_Dispo_Train4
-    composite: true
+
+  
 
 #Card---pasager-----------------------------------
 
