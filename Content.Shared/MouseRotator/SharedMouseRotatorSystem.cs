@@ -9,7 +9,6 @@ namespace Content.Shared.MouseRotator;
 public abstract class SharedMouseRotatorSystem : EntitySystem
 {
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -69,9 +68,7 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
             return;
         }
 
-        // make sure to offset the cardinal direction based on the parent's rotation so we are grid-aligned.
-        var parentRotation = Transform(ent).GridUid is { } grid ? _transform.GetWorldRotation(grid) : Angle.Zero;
-        rotator.GoalRotation = ev.Direction.ToAngle() + parentRotation;
+        rotator.GoalRotation = ev.Direction.ToAngle();
         Dirty(ent, rotator);
     }
 }
