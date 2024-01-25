@@ -5,13 +5,16 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Store.Systems;
@@ -21,6 +24,9 @@ public sealed partial class StoreSystem
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly ActionUpgradeSystem _actionUpgrade = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -30,6 +36,16 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>(OnRequestUpdate);
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
+        SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
+        SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
+    }
+
+    private void OnRefundEntityDeleted(EntityUid uid, StoreComponent component, RefundEntityDeletedEvent args)
+    {
+        if (component.BoughtEntities.Contains(args.Uid))
+        {
+            component.BoughtEntities.Remove(args.Uid);
+        }
     }
 
     /// <summary>
@@ -97,9 +113,14 @@ public sealed partial class StoreSystem
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
         // stores/listings, this needs to use session specific BUI states.
 
+        var xform = Transform(store);
+
+        if (component.StartingMap != xform.MapID)
+            component.RefundAllowed = false;
+
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter);
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
         _ui.SetUiState(ui, state);
     }
 
@@ -119,6 +140,7 @@ public sealed partial class StoreSystem
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
         var listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
+
         if (listing == null) //make sure this listing actually exists
         {
             Log.Debug("listing does not exist");
@@ -154,6 +176,11 @@ public sealed partial class StoreSystem
         foreach (var currency in listing.Cost)
         {
             component.Balance[currency.Key] -= currency.Value;
+
+            if (!component.BalanceSpent.ContainsKey(currency.Key))
+                component.BalanceSpent.Add(currency.Key, FixedPoint2.Zero);
+
+            component.BalanceSpent[currency.Key] += currency.Value;
         }
 
         //spawn entity
@@ -161,13 +188,72 @@ public sealed partial class StoreSystem
         {
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
             _hands.PickupOrDrop(buyer, product);
+
+            HandleRefundComp(uid, component, product);
+
+            var xForm = Transform(product);
+
+            if (xForm.ChildCount > 0)
+            {
+                var childEnumerator = xForm.ChildEnumerator;
+                while (childEnumerator.MoveNext(out var child))
+                {
+                    component.BoughtEntities.Add(child);
+                }
+            }
         }
 
         //give action
         if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {
+            EntityUid? actionId;
             // I guess we just allow duplicate actions?
-            _actions.AddAction(buyer, listing.ProductAction);
+            // Allow duplicate actions and just have a single list buy for the buy-once ones.
+            if (!_mind.TryGetMind(buyer, out var mind, out _))
+                actionId = _actions.AddAction(buyer, listing.ProductAction);
+            else
+                actionId = _actionContainer.AddAction(mind, listing.ProductAction);
+
+            // Add the newly bought action entity to the list of bought entities
+            // And then add that action entity to the relevant product upgrade listing, if applicable
+            if (actionId != null)
+            {
+                HandleRefundComp(uid, component, actionId.Value);
+
+                if (listing.ProductUpgradeID != null)
+                {
+                    foreach (var upgradeListing in component.Listings)
+                    {
+                        if (upgradeListing.ID == listing.ProductUpgradeID)
+                        {
+                            upgradeListing.ProductActionEntity = actionId.Value;
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        if (listing is { ProductUpgradeID: not null, ProductActionEntity: not null })
+        {
+            if (listing.ProductActionEntity != null && component.BoughtEntities.Contains(listing.ProductActionEntity.Value))
+            {
+                component.BoughtEntities.Remove(listing.ProductActionEntity.Value);
+            }
+
+            if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity, out var upgradeActionId))
+            {
+                if (listing.ProductActionEntity != null)
+                    HandleRefundComp(uid, component, listing.ProductActionEntity.Value);
+
+                return;
+            }
+
+            listing.ProductActionEntity = upgradeActionId;
+
+            if (upgradeActionId != null)
+                HandleRefundComp(uid, component, upgradeActionId.Value);
         }
 
         //broadcast event
@@ -225,5 +311,50 @@ public sealed partial class StoreSystem
 
         component.Balance[msg.Currency] -= msg.Amount;
         UpdateUserInterface(buyer, uid, component);
+    }
+
+    private void OnRequestRefund(EntityUid uid, StoreComponent component, StoreRequestRefundMessage args)
+    {
+        // TODO: Remove guardian/holopara
+
+        if (!component.RefundAllowed || !component.BoughtEntities.Any())
+            return;
+
+        if (args.Session.AttachedEntity is not { Valid: true } buyer)
+            return;
+
+        foreach (var purchase in component.BoughtEntities.ToList())
+        {
+            if (purchase.Valid)
+            {
+                component.BoughtEntities.Remove(purchase);
+
+                if (_actions.TryGetActionData(purchase, out var actionComponent))
+                {
+                    _actionContainer.RemoveAction(purchase, actionComponent);
+                    EntityManager.DeleteEntity(purchase);
+                }
+                else
+                {
+                    EntityManager.DeleteEntity(purchase);
+                }
+            }
+        }
+        foreach (var currency in component.BalanceSpent)
+        {
+            component.Balance[currency.Key] += currency.Value;
+        }
+        // Reset store back to its original state
+        RefreshAllListings(component);
+        component.BalanceSpent = new();
+        component.RefundAllowed = false;
+        UpdateUserInterface(buyer, uid, component);
+    }
+
+    private void HandleRefundComp(EntityUid uid, StoreComponent component, EntityUid purchase)
+    {
+        component.BoughtEntities.Add(purchase);
+        var refundComp = EnsureComp<StoreRefundComponent>(purchase);
+        refundComp.StoreEntity = uid;
     }
 }

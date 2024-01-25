@@ -1,6 +1,7 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -59,6 +60,22 @@ public sealed partial class StoreComponent : Component
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
 
+    /// <summary>
+    ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
+    /// </summary>
+    [ViewVariables]
+    public List<EntityUid> BoughtEntities = new();
+
+    /// <summary>
+    ///     The total balance spent in this store. Used for refunds.
+    /// </summary>
+    public Dictionary<string, FixedPoint2> BalanceSpent = new();
+
+    [ViewVariables]
+    public bool RefundAllowed;
+
+    [ViewVariables]
+    public MapId StartingMap;
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
@@ -78,3 +95,13 @@ public readonly record struct StoreAddedEvent;
 /// </summary>
 [ByRefEvent]
 public readonly record struct StoreRemovedEvent;
+
+public sealed partial class RefundEntityDeletedEvent : EventArgs
+{
+    public EntityUid Uid { get; }
+
+    public RefundEntityDeletedEvent(EntityUid uid)
+    {
+        Uid = uid;
+    }
+}

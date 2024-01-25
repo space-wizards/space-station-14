@@ -31,6 +31,7 @@ public sealed partial class StoreMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
     public event Action<BaseButton.ButtonEventArgs>? OnRefreshButtonPressed;
+    public event Action<BaseButton.ButtonEventArgs>? OnRefundAttempt;
 
     public Dictionary<string, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
@@ -44,6 +45,8 @@ public sealed partial class StoreMenu : DefaultWindow
 
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
         RefreshButton.OnButtonDown += OnRefreshButtonDown;
+        RefundButton.OnButtonDown += OnRefundButtonDown;
+
         if (Window != null)
             Window.Title = name;
     }
@@ -114,6 +117,11 @@ public sealed partial class StoreMenu : DefaultWindow
 
         _withdrawWindow.CreateCurrencyButtons(Balance);
         _withdrawWindow.OnWithdrawAttempt += OnWithdrawAttempt;
+    }
+
+    private void OnRefundButtonDown(BaseButton.ButtonEventArgs args)
+    {
+        OnRefundAttempt?.Invoke(args);
     }
 
     private void AddListingGui(ListingData listing)
@@ -260,6 +268,11 @@ public sealed partial class StoreMenu : DefaultWindow
     {
         base.Close();
         _withdrawWindow?.Close();
+    }
+
+    public void UpdateRefund(bool allowRefund)
+    {
+        RefundButton.Disabled = !allowRefund;
     }
 
     private sealed class StoreCategoryButton : Button
