@@ -25,18 +25,12 @@ public sealed class AutoTraitorSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, AutoTraitorComponent comp, MapInitEvent args)
     {
-        if (_random.Prob(comp.Prob))
-            TryMakeTraitor(uid, comp);
-        else
-            EntityManager.RemoveComponent(uid, comp);
+        TryMakeTraitor(uid, comp, comp.Prob);
     }
 
     private void OnMindAdded(EntityUid uid, AutoTraitorComponent comp, MindAddedMessage args)
     {
-        if (_random.Prob(comp.Prob))
-            TryMakeTraitor(uid, comp);
-        else
-            EntityManager.RemoveComponent(uid, comp);
+        TryMakeTraitor(uid, comp, comp.Prob);
     }
 
     /// <summary>
@@ -64,8 +58,14 @@ public sealed class AutoTraitorSystem : EntitySystem
     /// <summary>
     /// Checks if there is a mind, then makes it a traitor using the options.
     /// </summary>
-    public bool TryMakeTraitor(EntityUid uid, AutoTraitorComponent? comp = null)
+    public bool TryMakeTraitor(EntityUid uid, AutoTraitorComponent? comp = null, float prob = 1f)
     {
+        if (_random.Prob(prob))
+        {
+            RemComp<AutoTraitorComponent>(uid);
+            return false;
+        }
+
         if (!Resolve(uid, ref comp))
             return false;
 

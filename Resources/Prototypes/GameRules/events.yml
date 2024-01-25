@@ -452,7 +452,7 @@
   - type: UnknownShuttleSpawnRule
     shuttleVariants: 
     - ShuttleCargoLost
-    - TravelingCuisin
+    - TravelingCuisine
 
 - type: entity
   id: MassHallucinations

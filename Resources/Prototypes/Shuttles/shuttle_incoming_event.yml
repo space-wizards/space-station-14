@@ -9,6 +9,6 @@
   copies: 2
 
 - type: preloadedGrid
-  id: TravelingCuisin
-  path: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisin.yml
+  id: TravelingCuisine
+  path: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisine.yml
   copies: 2
