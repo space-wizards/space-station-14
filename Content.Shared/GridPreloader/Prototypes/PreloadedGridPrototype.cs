@@ -1,9 +1,9 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Shuttles.Prototypes;
+namespace Content.Shared.GridPreloader.Prototypes;
 
-[Prototype("preloadedShuttle")]
-public sealed partial class PreloadedShuttlePrototype : IPrototype
+[Prototype("preloadedGrid")]
+public sealed partial class PreloadedGridPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 

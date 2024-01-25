@@ -435,7 +435,7 @@
   - type: UnknownShuttleSpawnRule
     gameRuleProto: LoneNukeopsRule
     shuttleVariants: 
-    - Striker
+    - ShuttleStriker
 
 - type: entity
   id: LostCargoTechicalShuttleSpawn
@@ -451,7 +451,7 @@
     duration: 1
   - type: UnknownShuttleSpawnRule
     shuttleVariants: 
-    - CargoLost
+    - ShuttleCargoLost
 
 - type: entity
   id: MassHallucinations
