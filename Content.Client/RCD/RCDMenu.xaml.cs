@@ -62,15 +62,19 @@ public sealed partial class RCDMenu : RadialMenu
                 ProtoId = protoId,
             };
 
-            var tex = new TextureRect()
+            if (proto.Sprite != null)
             {
-                VerticalAlignment = VAlignment.Center,
-                HorizontalAlignment = HAlignment.Center,
-                Texture = _spriteSystem.Frame0(proto.Sprite),
-                TextureScale = new Vector2(2f, 2f),
-            };
+                var tex = new TextureRect()
+                {
+                    VerticalAlignment = VAlignment.Center,
+                    HorizontalAlignment = HAlignment.Center,
+                    Texture = _spriteSystem.Frame0(proto.Sprite),
+                    TextureScale = new Vector2(2f, 2f),
+                };
 
-            button.AddChild(tex);
+                button.AddChild(tex);
+            }
+
             parent.AddChild(button);
 
             // Ensure that the button that transitions the menu to the associated category layer

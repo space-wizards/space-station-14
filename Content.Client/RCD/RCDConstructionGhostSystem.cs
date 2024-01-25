@@ -71,7 +71,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             _protoManager.TryIndex(rcd!.ProtoId, out _cachedPrototype);
         }
 
-        if (_cachedPrototype == null)
+        if (_cachedPrototype?.GhostSprite == null)
         {
             DeleteConstructionGhost();
             return;

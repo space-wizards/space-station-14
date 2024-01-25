@@ -35,13 +35,13 @@ public sealed class RCDPrototype : IPrototype
     /// Texture path for this prototypes menu icon
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
+    public SpriteSpecifier? Sprite { get; private set; } = null;
 
     /// <summary>
     /// The entity prototype that will be constructed (mode dependent)
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public string? Prototype { get; private set; }
+    public string? Prototype { get; private set; } = string.Empty;
 
     /// <summary>
     /// Number of charges consumed when the operation is completed
@@ -59,7 +59,7 @@ public sealed class RCDPrototype : IPrototype
     /// The visual effect that plays during this operation
     /// </summary>
     [DataField("fx"), ViewVariables(VVAccess.ReadOnly)]
-    public EntProtoId? Effect { get; private set; }
+    public EntProtoId? Effect { get; private set; } = null;
 
     /// <summary>
     /// A list of rules that govern where the entity prototype can be contructed
@@ -71,7 +71,7 @@ public sealed class RCDPrototype : IPrototype
     /// The collision mask used for determining whether the entity prototype will fit into a target tile
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public CollisionGroup CollisionMask { get; private set; } = CollisionGroup.MobMask;
+    public CollisionGroup CollisionMask { get; private set; } = CollisionGroup.None;
 
     /// <summary>
     /// Specifies a set of custom collision bounds for determining whether the entity prototype will fit into a target tile 
@@ -93,7 +93,7 @@ public sealed class RCDPrototype : IPrototype
     /// The sprite to be used for the RCD construction ghost 
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public SpriteSpecifier GhostSprite { get; private set; } = SpriteSpecifier.Invalid;
+    public SpriteSpecifier? GhostSprite { get; private set; } = null;
 }
 
 public enum RcdMode : byte

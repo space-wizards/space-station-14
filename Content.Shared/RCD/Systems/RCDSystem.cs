@@ -382,6 +382,8 @@ public class RCDSystem : EntitySystem
             return true;
         }
 
+        // Object specific rules
+
         // Check rule: The tile is unoccupied
         var isWindow = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
         var constructionAngle = (component.CachedPrototype.Rotation == RcdRotation.User) ? component.ConstructionDirection.ToAngle() : Direction.South.ToAngle();
@@ -391,7 +393,7 @@ public class RCDSystem : EntitySystem
             if (isWindow && HasComp<SharedCanBuildWindowOnTopComponent>(ent))
                 continue;
 
-            if (TryComp<FixturesComponent>(ent, out var fixtures))
+            if (component.CachedPrototype.CollisionMask != CollisionGroup.None && TryComp<FixturesComponent>(ent, out var fixtures))
             {
                 for (int i = 0; i < fixtures.FixtureCount; i++)
                 {
