@@ -195,7 +195,8 @@ public sealed class MedipenRefillerSystem : EntitySystem
     #region UI Messages
     public void UpdateUserInterfaceState(Entity<MedipenRefillerComponent> entity)
     {
-        var ui = _uiSys.GetUi(entity, SharedMedipenRefiller.MedipenRefillerUiKey.Key);
+        if (!_uiSys.TryGetUi(entity.Owner, SharedMedipenRefiller.MedipenRefillerUiKey.Key, out var ui))
+            return;
 
         string resultName = "";
 

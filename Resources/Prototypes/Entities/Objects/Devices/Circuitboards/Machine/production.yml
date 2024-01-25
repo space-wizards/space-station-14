@@ -577,11 +577,9 @@
       prototype: MedipenRefiller
       requirements:
         MatterBin: 1
-        Capacitor: 1
       materialRequirements:
-        Glass: 2
-        Cable: 3
         Steel: 5
+        Glass: 2
       tagRequirements:
         GlassBeaker:
           Amount: 1

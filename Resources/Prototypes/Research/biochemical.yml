@@ -61,9 +61,9 @@
   - BorgModuleDiagnosis
   - BorgModuleDefibrillator
 
-  - type: technology
-  id: MedipenFabrication
-  name: research-technology-medipen-fabrication
+- type: technology
+  id: MedipenRefilling
+  name: research-technology-medipen-refilling
   icon:
     sprite: Structures/Machines/medipen_refiller.rsi
     state: base
