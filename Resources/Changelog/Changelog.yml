@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: CrigCrag
-  changes:
-  - message: Added three new specialized brute healing chemicals and a guidebook entry
-      on how to safely use them.
-    type: Add
-  - message: Added Razorium, which is basically liquid razor blades.
-    type: Add
-  id: 5282
-  time: '2023-12-07T03:05:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Speed penalties for duffels and hardsuits now apply when held, not just
@@ -3804,3 +3795,10 @@
   id: 5782
   time: '2024-01-25T00:46:07.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24442
+- author: Krunk
+  changes:
+  - message: Players will once again spawn at arrivals instead of cryostorage.
+    type: Fix
+  id: 5783
+  time: '2024-01-25T00:48:58.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24476
