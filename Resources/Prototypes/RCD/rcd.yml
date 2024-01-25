@@ -11,7 +11,7 @@
     state: deconstructPreview
 
 - type: rcd
-  id: DeconstructSubfloorTile   # Hidden prototype - do not add to RCDs  
+  id: DeconstructLattice   # Hidden prototype - do not add to RCDs  
   mode: Deconstruct
   cost: 2
   delay: 1
@@ -19,7 +19,7 @@
   fx: EffectRCDDeconstruct2
     
 - type: rcd
-  id: DeconstructFloorTile      # Hidden prototype - do not add to RCDs
+  id: DeconstructTile      # Hidden prototype - do not add to RCDs
   mode: Deconstruct
   cost: 4
   delay: 4

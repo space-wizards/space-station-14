@@ -27,6 +27,7 @@ rcd-component-cannot-build-on-non-empty-tile-message = A foundation already exis
 rcd-component-cannot-build-on-empty-tile-message = You can't build that without a foundation!
 rcd-component-cannot-build-as-space-is-occupied-message = You can't build here, the space is already occupied!
 rcd-component-cannot-build-as-subfloor-not-exposed-message = You can only build that on exposed subfloor!
+rcd-component-cannot-build-as-tiles-are-identical = That tile already exists there!
 
 
 ### Category names
