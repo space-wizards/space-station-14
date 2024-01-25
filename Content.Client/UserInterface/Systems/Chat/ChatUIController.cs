@@ -757,6 +757,9 @@ public sealed class ChatUIController : UIController
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
+        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && !_cfg.GetCVar(CCVars.ChatEnableColorName))
+            msg = RemoveMessageTag(msg, "color");
+
         // Log all incoming chat to repopulate when filter is un-toggled
         if (!msg.HideChat)
         {
@@ -843,6 +846,23 @@ public sealed class ChatUIController : UIController
         {
             chat.Repopulate();
         }
+    }
+
+    public ChatMessage RemoveMessageTag(ChatMessage message, string tag)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStartFirst = rawmsg.IndexOf($"[{tag}");
+        if (tagStartFirst < 0)
+            return message;
+
+        var tagStartLast = rawmsg.IndexOf("]", tagStartFirst);
+        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
+        if (tagStartLast < 0 || tagEnd < 0)
+            return message;
+
+        message.WrappedMessage = rawmsg.Replace($"[/{tag}]", "").Replace(rawmsg.Substring(tagStartFirst, tagStartLast - tagStartFirst + 1), "");
+
+        return message;
     }
 
     private readonly record struct SpeechBubbleData(ChatMessage Message, SpeechBubble.SpeechType Type);
