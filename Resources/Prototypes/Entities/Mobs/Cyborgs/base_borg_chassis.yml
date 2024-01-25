@@ -250,3 +250,5 @@
         - Syndicate
     - type: ShowSyndicateIcons
     - type: MovementAlwaysTouching
+    - type: TypingIndicator
+      proto: syndibot
