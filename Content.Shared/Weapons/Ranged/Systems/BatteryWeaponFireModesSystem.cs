@@ -6,8 +6,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
-using BatteryWeaponFireMode = Content.Shared.Weapons.Ranged.Components.BatteryWeaponFireMode;
-using BatteryWeaponFireModesComponent = Content.Shared.Weapons.Ranged.Components.BatteryWeaponFireModesComponent;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 

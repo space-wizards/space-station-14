@@ -1,6 +1,7 @@
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -27,7 +28,7 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     public int CurrentFireMode;
 }
 
-[DataDefinition]
+[DataDefinition, Serializable, NetSerializable]
 public sealed partial class BatteryWeaponFireMode
 {
     /// <summary>
