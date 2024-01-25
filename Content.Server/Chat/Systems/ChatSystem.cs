@@ -13,7 +13,9 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Decals;
 using Content.Shared.Ghost;
+using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
@@ -25,6 +27,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -67,6 +70,10 @@ public sealed partial class ChatSystem : SharedChatSystem
     private bool _critLoocEnabled;
     private readonly bool _adminLoocEnabled = true;
 
+    [ValidatePrototypeId<ColorPalettePrototype>]
+    private const string _chatNamePalette = "Material";
+    private string[] _chatNameColors = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -76,6 +83,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         _configurationManager.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
+
+        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(_chatNamePalette).Colors.Values.ToArray();
+        _chatNameColors = new string[nameColors.Length];
+        for (var i = 0; i < nameColors.Length; i++)
+        {
+            _chatNameColors[i] = nameColors[i].ToHex();
+        }
     }
 
     public override void Shutdown()
@@ -409,6 +423,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         name = FormattedMessage.EscapeText(name);
+
+        // color the name unless it's something like "the old man"
+        if (!TryComp<GrammarComponent>(source, out var grammar) || grammar.ProperNoun == true)
+            name = $"[color={GetNameColor(name)}]{name}[/color]";
+
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
             ("entityName", name),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
@@ -478,6 +497,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             name = nameEv.Name;
         }
         name = FormattedMessage.EscapeText(name);
+
+        // color the name unless it's something like "the old man"
+        if (!TryComp<GrammarComponent>(source, out var grammar) || grammar.ProperNoun == true)
+            name = $"[color={GetNameColor(name)}]{name}[/color]";
 
         var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
             ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
@@ -618,6 +641,17 @@ public sealed partial class ChatSystem : SharedChatSystem
     #endregion
 
     #region Utility
+
+    /// <summary>
+    /// Returns the chat name color for a mob
+    /// </summary>
+    /// <param name="name">Name of the mob</param>
+    /// <returns>Hex value of the color</returns>
+    public string GetNameColor(string name)
+    {
+        var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Length);
+        return _chatNameColors[colorIdx];
+    }
 
     private enum MessageRangeCheckResult
     {
