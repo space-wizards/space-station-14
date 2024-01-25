@@ -237,11 +237,6 @@ public sealed partial class StoreSystem
                 component.BoughtEntities.Remove(listing.ProductActionEntity.Value);
             }
 
-            /*foreach (var currency in listing.Cost)
-            {
-                component.BalanceSpent[currency.Key] += currency.Value;
-            }*/
-
             if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity, out var upgradeActionId))
             {
                 if (listing.ProductActionEntity != null)
@@ -327,6 +322,9 @@ public sealed partial class StoreSystem
             return;
         }
 
+        if (args.Session.AttachedEntity is not { Valid: true } buyer)
+            return;
+
         foreach (var purchase in component.BoughtEntities.ToList())
         {
             if (purchase.Valid)
@@ -351,6 +349,7 @@ public sealed partial class StoreSystem
         // Reset store back to its original state
         RefreshAllListings(component);
         component.BalanceSpent = new();
+        UpdateUserInterface(buyer, uid, component);
     }
 
     private void HandleRefundComp(EntityUid uid, StoreComponent component, EntityUid purchase)

@@ -11,9 +11,10 @@ public sealed partial class StoreSystem
 
     private void OnRefundShutdown(EntityUid uid, StoreRefundComponent component, ComponentShutdown args)
     {
-        // TODO: Check if an entity is being deleted with metadata
-
-        var ev = new RefundEntityDeletedEvent(uid);
-        RaiseLocalEvent(component.StoreEntity, ev);
+        if (MetaData(uid).EntityLifeStage == EntityLifeStage.Terminating)
+        {
+            var ev = new RefundEntityDeletedEvent(uid);
+            RaiseLocalEvent(component.StoreEntity, ev);
+        }
     }
 }
