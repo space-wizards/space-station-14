@@ -122,8 +122,8 @@
     tags: [ "Medipen", "EmptyMedipen" ]
   - type: PhysicalComposition
     materialComposition:
-      Plasteel: 300
-      Steel: 200
+      Plasteel: 100
+      Steel: 50
   - type: StaticPrice
     price: 100
 
