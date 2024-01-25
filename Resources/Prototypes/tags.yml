@@ -269,6 +269,9 @@
   id: Cartridge
 
 - type: Tag
+  id: CardNanopolia
+
+- type: Tag
   id: CartridgeAntiMateriel
 
 - type: Tag

@@ -1,4 +1,4 @@
-# Parchís board item (normal in game item you can hold in your hand)
+# Nanopolia board item (normal in game item you can hold in your hand)
 - type: entity
   parent: BaseBoardEntity
   id: NanopoliaBoard
@@ -15,7 +15,7 @@
       !type:TabletopNanopoliaSetup
       boardPrototype: NanopoliaBoardTabletop
 
-# Parchís tabletop item (item only visible in tabletop game)
+# Nanopolia tabletop item (item only visible in tabletop game)
 - type: entity
   id: NanopoliaBoardTabletop
   name: nanopolia
