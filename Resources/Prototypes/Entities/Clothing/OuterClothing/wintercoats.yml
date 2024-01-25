@@ -12,11 +12,6 @@
     coefficient: 0.1
   - type: Item
     size: Normal
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -115,8 +110,15 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterCentcom
+  - type: StaticPrice
+    price: 70
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -138,12 +140,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Caustic: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterChem
 
@@ -156,12 +152,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Caustic: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterCMO
 
@@ -196,12 +186,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Caustic: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
@@ -250,12 +234,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.9
-        Caustic: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterJani
 
@@ -268,12 +246,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Caustic: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterMed
 
@@ -310,12 +282,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.75
-        Caustic: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterPara
 
@@ -341,12 +307,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Caustic: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterRD
 
@@ -372,12 +332,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Caustic: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
@@ -402,12 +356,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Caustic: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
@@ -441,8 +389,15 @@
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecap.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecap.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSyndie
+  - type: StaticPrice
+    price: 70
 
 - type: entity
   parent: ClothingOuterWinterWarden
@@ -467,8 +422,15 @@
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/wintercoatsyndie.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/wintercoatsyndie.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSyndie
+  - type: StaticPrice
+    price: 70
 
 - type: entity
   parent: ClothingOuterWinterCoat
