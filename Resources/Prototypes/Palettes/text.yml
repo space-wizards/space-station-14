@@ -38,8 +38,8 @@
   id: Daltonic
   name: Daltonic
   colors:
-    fuchsia: "#fe0095"
-    violet: "#a800ff"
-    chatreuse: "#e1ff00"
-    cyan: "#00c0ff"
-    orange: "#ff9d51"
+    fuchsia: "#f5489c"
+    violet: "#993fe8"
+    chatreuse: "#d6eb63"
+    cyan: "#26a3f0"
+    orange: "#f5964e"
