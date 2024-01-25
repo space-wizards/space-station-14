@@ -6,7 +6,6 @@ using Content.Shared.Hands;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Chemistry.Visualizers;
 
