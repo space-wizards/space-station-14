@@ -30,18 +30,24 @@ public sealed class MedipenRefillerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MedipenRefillerComponent, BeforeActivatableUIOpenEvent>((uid, c, _) => UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, c)));
+        SubscribeLocalEvent<MedipenRefillerComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUIOpen);
         SubscribeLocalEvent<MedipenRefillerComponent, EntInsertedIntoContainerMessage>((uid, c, _) => UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, c)));
         SubscribeLocalEvent<MedipenRefillerComponent, EntRemovedFromContainerMessage>((uid, c, _) => UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, c)));
 
         SubscribeLocalEvent<MedipenRefillerComponent, MedipenRefillerTransferReagentMessage>(OnTransferButtonMessage);
         SubscribeLocalEvent<MedipenRefillerComponent, MedipenRefillerActivateMessage>(OnActivateMessage);
 
-        SubscribeLocalEvent<MedipenRefillerComponent, ComponentStartup>(OnComponentStartup);
 
         SubscribeLocalEvent<EmaggedComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<MedipenRefillerComponent, GotEmaggedEvent>(OnGotEmmaged);
     }
+
+    private void BeforeActivatableUIOpen(EntityUid uid, MedipenRefillerComponent component, BeforeActivatableUIOpenEvent args)
+    {
+        UpdateRecipes(uid, component);
+        UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, component));
+    }
+
     private void OnGotEmmaged(Entity<MedipenRefillerComponent> entity, ref GotEmaggedEvent args)
     {
         if (_entityManager.HasComponent<EmaggedComponent>(entity.Owner))
@@ -50,23 +56,12 @@ public sealed class MedipenRefillerSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Inserts data from refillable medipens as soon as the entity is initialized.
-    /// </summary>
-    private void OnComponentStartup(Entity<MedipenRefillerComponent> entity, ref ComponentStartup args)
-    {
-        UpdateRecipes(entity);
-    }
-
-    /// <summary>
-    /// Make sure that the recipes are updated when the entity is emagged, as it wouldn't be desirable to update every time the interface is opened by the client.
-    /// </summary>
     private void OnComponentStartup(EntityUid uid, EmaggedComponent _, ComponentStartup __)
     {
         if (!_entityManager.TryGetComponent<MedipenRefillerComponent>(uid, out var component))
             return;
 
-        UpdateRecipes(new Entity<MedipenRefillerComponent>(uid, component));
+        UpdateRecipes(uid, component);
     }
 
     private void OnTransferButtonMessage(Entity<MedipenRefillerComponent> entity, ref MedipenRefillerTransferReagentMessage message)
@@ -113,22 +108,22 @@ public sealed class MedipenRefillerSystem : EntitySystem
     /// <summary>
     /// Deserializes the recipe prototype for medipens. If new medipen recipes are added, ensure that their ID is in the string list of the component.
     /// </summary>
-    private void UpdateRecipes(Entity<MedipenRefillerComponent> entity)
+    private void UpdateRecipes(EntityUid uid, MedipenRefillerComponent component)
     {
         var recipeList = new List<MedipenRecipePrototype>();
 
-        foreach (var medipen in entity.Comp.MedipenList)
+        foreach (var medipen in component.MedipenList)
         {
             if (!_prototypeManager.HasIndex<MedipenRecipePrototype>(medipen))
                 continue;
 
             var recipe = _prototypeManager.Index<MedipenRecipePrototype>(medipen);
-            if (!recipe.LockedByEmag || _entityManager.HasComponent<EmaggedComponent>(entity.Owner))
+            if (!recipe.LockedByEmag || _entityManager.HasComponent<EmaggedComponent>(uid))
                 recipeList.Add(recipe);
         }
 
-        entity.Comp.MedipenRecipes = recipeList;
-        UpdateUserInterfaceState(entity);
+        component.MedipenRecipes = recipeList;
+        UpdateUserInterfaceState(new Entity<MedipenRefillerComponent>(uid, component));
     }
 
     private void TransferReagent(Entity<MedipenRefillerComponent> entity, ReagentId reagent, FixedPoint2 amount, bool isBuffer)
