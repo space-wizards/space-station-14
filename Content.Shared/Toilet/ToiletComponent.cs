@@ -70,6 +70,7 @@ namespace Content.Shared.Toilet
     {
     }
 
+    [Serializable, NetSerializable]
     public enum ToiletVisualLayers
     {
         Door,

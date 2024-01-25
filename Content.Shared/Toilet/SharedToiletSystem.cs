@@ -57,7 +57,7 @@ namespace Content.Shared.Toilet
                 plunger.NeedsPlunger = true;
             }
 
-            UpdateAppearance(uid, component);
+            ToggleToiletSeat(uid, uid, component);
             Dirty(uid, component);
         }
 
