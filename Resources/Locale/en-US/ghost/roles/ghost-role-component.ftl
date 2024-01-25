@@ -229,3 +229,7 @@ ghost-role-information-lost-cargo-technical-rules = You're a regular cargo techn
 ghost-role-information-lost-cargo-traitor-technical-name = Traitor Cargo technical
 ghost-role-information-lost-cargo-traitor-technical-description = You're a traitor, undercover as a lost cargo technical. Fulfill your objectives.
 ghost-role-information-lost-cargo-traitor-technical-rules = Normal syndicate antagonist rules apply.
+
+ghost-role-information-clown-troupe-name = Space clown
+ghost-role-information-clown-troupe-description = You and your troupe have come to cheer up this station with the best jokes. Honk!
+ghost-role-information-clown-troupe-rules = The usual rules of a regular clown. 
