@@ -104,7 +104,6 @@
     grid:
     - 0,0,4,4
     maxItemSize: Huge
-    maxTotalWeight: 40
   - type: Item
     sprite: Objects/Fun/Tabletop/nanofigure.rsi
     heldPrefix: box
@@ -192,9 +191,6 @@
     - id: Card_Dispo_Train3
     - id: Card_Dispo_Train4
     composite: true
-  - type: Appearance
-
-
 
 #Card---pasager-----------------------------------
 
