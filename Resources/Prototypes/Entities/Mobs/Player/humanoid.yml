@@ -588,7 +588,6 @@
   id: ClownTroupe
   randomizeName: false
   components:
-    - type: AutoTraitor
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
@@ -604,7 +603,6 @@
   id: ClownTroupeBanana
   randomizeName: false
   components:
-    - type: AutoTraitor
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
