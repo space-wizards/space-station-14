@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: When viewing a storage container, the item that will be removed via smart-equip
-      is now marked with a small star icon.
-    type: Add
-  id: 5290
-  time: '2023-12-08T18:43:58.0000000+00:00'
 - author: Whisper
   changes:
   - message: Rat king and his servants properly heal from miasma.
@@ -3809,3 +3802,10 @@
   id: 5790
   time: '2024-01-25T14:08:29.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24480
+- author: Dutch-VanDerLinde
+  changes:
+  - message: To prevent accidental spills, paper cups can no longer be quick-equipped.
+    type: Fix
+  id: 5791
+  time: '2024-01-25T22:04:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24560
