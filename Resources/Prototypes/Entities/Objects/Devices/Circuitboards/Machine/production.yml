@@ -576,10 +576,17 @@
     - type: MachineBoard
       prototype: MedipenRefiller
       requirements:
+        MatterBin: 1
         Capacitor: 1
       materialRequirements:
-        Glass: 5
-        Steel: 3
+        Glass: 2
+        Cable: 3
+        Steel: 5
+      tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
 
 - type: entity
   id: BiomassReclaimerMachineCircuitboard
