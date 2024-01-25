@@ -19699,13 +19699,6 @@ entities:
       canCollide: False
 - proto: DefaultStationBeacon
   entities:
-  - uid: 5552
-    components:
-    - type: Transform
-      pos: -40.5,-16.5
-      parent: 30
-    - type: NavMapBeacon
-      text: cryogenics
   - uid: 6039
     components:
     - type: Transform
@@ -19838,6 +19831,13 @@ entities:
     components:
     - type: Transform
       pos: 11.5,-6.5
+      parent: 30
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 5552
+    components:
+    - type: Transform
+      pos: -40.5,-16.5
       parent: 30
 - proto: DefaultStationBeaconDisposals
   entities:
