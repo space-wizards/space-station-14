@@ -97,8 +97,16 @@ public abstract class AlertsSystem : EntitySystem
             // In the case we're changing the alert type but not the category, we need to remove it first.
             alertsComponent.Alerts.Remove(alert.AlertKey);
 
-            alertsComponent.Alerts[alert.AlertKey] = new AlertState
+            var state = new AlertState
                 { Cooldown = cooldown, AutoRemove = autoRemove, Severity = severity, Type = alertType };
+
+            alertsComponent.Alerts[alert.AlertKey] = state;
+
+            if (alertsComponent.Alerts[alert.AlertKey].AutoRemove is not null )
+            {
+                var autoComp = EnsureComp<AlertAutoRemoveComponent>(euid);
+                autoComp.Alerts.Add(alert.AlertKey, state);
+            }
 
             AfterShowAlert((euid, alertsComponent));
 
@@ -183,16 +191,23 @@ public abstract class AlertsSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<AlertsComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        var query = EntityQueryEnumerator<AlertAutoRemoveComponent>();
+        while (query.MoveNext(out var uid, out var autoComp))
         {
-            foreach (var (alertKey,  alertState) in comp.Alerts)
+            if (autoComp.Alerts.Count <= 0 || !TryComp<AlertsComponent>(uid, out var alertComp))
+            {
+                EntityManager.RemoveComponent<AlertAutoRemoveComponent>(uid);
+                continue;
+            }
+
+            foreach (var (alertKey,  alertState) in autoComp.Alerts)
             {
                 if (alertState.AutoRemove is null || alertState.AutoRemove >= _timing.CurTime)
                     continue;
 
-                comp.Alerts.Remove(alertKey);
-                Dirty(uid, comp);
+                autoComp.Alerts.Remove(alertKey);
+                alertComp.Alerts.Remove(alertKey);
+                Dirty(uid, alertComp);
             }
         }
     }
@@ -221,7 +236,7 @@ public abstract class AlertsSystem : EntitySystem
             if (!dict.TryAdd(alert.AlertType, alert))
             {
                 Log.Error("Found alert with duplicate alertType {0} - all alerts must have" +
-                          " a unique alerttype, this one will be skipped", alert.AlertType);
+                          " a unique alertType, this one will be skipped", alert.AlertType);
             }
         }
 
