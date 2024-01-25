@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: V and shift-V can now be used to open the bag and belt, respectively.
-    type: Add
-  - message: Interacting with a storage item now has context-sensitive logic based
-      on whether or not the window is open or focused.
-    type: Fix
-  id: 5289
-  time: '2023-12-08T18:43:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - message: When viewing a storage container, the item that will be removed via smart-equip
       is now marked with a small star icon.
     type: Add
@@ -3810,3 +3801,11 @@
   id: 5789
   time: '2024-01-25T14:01:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24488
+- author: mirrorcult
+  changes:
+  - message: Atomic Amnesia MMX, Vibe Ace, Monument and Marhaba have been removed
+      as lobby music tracks
+    type: Remove
+  id: 5790
+  time: '2024-01-25T14:08:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24480
