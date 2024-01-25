@@ -175,19 +175,6 @@
 # Tier 3
 
 - type: technology
-  id: BluespaceCargoTransport
-  name: research-technology-bluespace-cargo-transport
-  icon:
-    sprite: Structures/cargo_telepad.rsi
-    state: display
-  discipline: CivilianServices
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - CargoTelepadMachineCircuitboard
-  - SalvageMagnetMachineCircuitboard
-
-- type: technology
   id: QuantumFiberWeaving
   name: research-technology-quantum-fiber-weaving
   icon:
