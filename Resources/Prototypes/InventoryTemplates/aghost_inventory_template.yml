@@ -1,9 +1,9 @@
 ﻿- type: inventoryTemplate
   id: aghost
   slots:
-    - name: id
-      slotTexture: id
-      slotFlags: IDCARD
+    - name: back
+      slotTexture: back
+      slotFlags: BACK
       slotGroup: SecondHotbar
       stripTime: 6
       uiWindowPos: 2,1
