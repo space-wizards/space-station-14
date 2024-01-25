@@ -1025,8 +1025,7 @@
 - type: Tag
   id: ShellShotgun
 
-- type: Tag
-  id: CardNanopolia
+
 
 - type: Tag
   id: PelletShotgunFlare
