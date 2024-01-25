@@ -35,6 +35,7 @@ public abstract class ShuttleControl : MapGridControl
         var cornerDistance = MathF.Sqrt(WorldRange * WorldRange + WorldRange * WorldRange);
 
         var origin = ScalePosition(-new Vector2(Offset.X, -Offset.Y));
+        var distOffset = -24f;
 
         for (var radius = minDistance; radius <= maxDistance; radius *= EquatorialMultiplier)
         {
@@ -42,17 +43,21 @@ public abstract class ShuttleControl : MapGridControl
                 continue;
 
             var color = Color.ToSrgb(gridLines).WithAlpha(0.05f);
-            handle.DrawCircle(origin, MinimapScale * radius, color, false);
+            var scaledRadius = MinimapScale * radius;
+            var text = $"{radius:0}m";
+            var textDimensions = handle.GetDimensions(Font, text, UIScale);
+
+            handle.DrawCircle(origin, scaledRadius, color, false);
+            handle.DrawString(Font, ScalePosition(new Vector2(0f, -radius)) - new Vector2(0f, textDimensions.Y), text, color);
         }
 
         const int gridLinesRadial = 8;
 
-        // TODO: If bounds entirely within circle don't draw it goob.
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             // TODO: Handle distance properly.
-            var aExtent = angle.ToVec() * ScaledMinimapRadius * 1.5f;
+            var aExtent = angle.ToVec() * ScaledMinimapRadius * 1.42f;
             var lineColor = Color.MediumSpringGreen.WithAlpha(0.02f);
             handle.DrawLine(origin - aExtent, origin + aExtent, lineColor);
         }

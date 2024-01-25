@@ -25,13 +25,15 @@ public sealed class ShuttleMapControl : ShuttleControl
 
     private List<Entity<MapGridComponent>> _grids = new();
 
-    public ShuttleMapControl() : base(128f, 2048f, 2048f)
+    private const float MaxRange = 2048f;
+
+    public ShuttleMapControl() : base(256f, 512f, 512f)
     {
         _shuttles = _entManager.System<SharedShuttleSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
-        _backgroundTexture = cache.GetResource<TextureResource>("/Textures/Parallaxes/KettleParallaxBG.png");
+        _backgroundTexture = cache.GetResource<TextureResource>("/Textures/Parallaxes/space_map2.png");
     }
 
     public void SetMap(MapId mapId, Vector2 offset)
@@ -52,7 +54,7 @@ public sealed class ShuttleMapControl : ShuttleControl
         var tex = _backgroundTexture;
 
         // Size of the texture in world units.
-        var size = tex.Size * MinimapScale;
+        var size = tex.Size * MinimapScale * 1f;
 
         var position = ScalePosition(new Vector2(-Offset.X, Offset.Y));
         var slowness = 1f;
@@ -96,6 +98,8 @@ public sealed class ShuttleMapControl : ShuttleControl
 
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
 
+        // TODO: Do the edge drawing like radarcontrol for these.
+        // TODO: Range drawing for nav computer.
         _grids.Clear();
         _mapManager.FindGridsIntersecting(ViewingMap, viewBox, ref _grids, approx: true, includeMap: false);
         var matty = Matrix3.CreateInverseTransform(Offset, Angle.Zero);

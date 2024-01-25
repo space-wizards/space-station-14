@@ -70,6 +70,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         NavModeButton.Pressed = true;
         SetupMode(_mode);
+
     }
 
     private void ClearModes(ShuttleConsoleMode mode)
