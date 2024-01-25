@@ -5,7 +5,7 @@ gun-selector-verb = Change to {$mode}
 gun-selected-mode = Selected {$mode}
 gun-disabled = You can't use guns!
 gun-clumsy = The gun blows up in your face!
-gun-set-fire-mode = Set to [color={$color}]{$mode}[/color]
+gun-set-fire-mode = Set to {$mode}
 gun-component-wrong-ammo = Wrong ammo!
 
 # SelectiveFire

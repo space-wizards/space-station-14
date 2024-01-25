@@ -33,7 +33,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var proto))
             return;
 
-        args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", proto.Name), ("color", SharedGunSystem.ModeExamineColor)));
+        args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", proto.Name)));
     }
 
     private BatteryWeaponFireMode GetMode(BatteryWeaponFireModesComponent component)
@@ -106,10 +106,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
             if (user != null)
             {
-                _popupSystem.PopupClient(
-                    Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name), ("color", SharedGunSystem.ModeExamineColor)),
-                    uid,
-                    user.Value);
+                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
             }
         }
     }
