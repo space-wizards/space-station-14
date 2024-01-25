@@ -1218,7 +1218,7 @@
   description: uplink-clothing-no-slips-shoes-desc
   productEntity: ClothingShoesChameleonNoSlips
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
   - UplinkArmor
 
@@ -1343,7 +1343,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
   productEntity: EnergyShield
   cost:
-    Telecrystal: 6
+    Telecrystal: 12
   categories:
   - UplinkMisc
 
