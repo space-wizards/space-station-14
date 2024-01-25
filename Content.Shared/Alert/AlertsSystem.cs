@@ -9,8 +9,7 @@ namespace Content.Shared.Alert;
 public abstract class AlertsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-    private readonly IGameTiming _timing = IoCManager.Resolve<IGameTiming>();
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private FrozenDictionary<AlertType, AlertPrototype> _typeToAlert = default!;
 
