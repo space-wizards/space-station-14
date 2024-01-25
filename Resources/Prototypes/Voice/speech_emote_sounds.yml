@@ -264,6 +264,8 @@
   params:
     variation: 0.125
   sounds:
+    Buzz:
+      path: /Audio/Voice/Moth/moth_scream.ogg
     Scream:
       path: /Audio/Voice/Moth/moth_scream.ogg
     Laugh:
