@@ -35,11 +35,14 @@
     amber-accent-4: "#996700"
 
 - type: palette
-  id: Daltonic
-  name: Daltonic
+  id: ChatNames
+  name: ChatNames
   colors:
-    fuchsia: "#f44c77"
-    violet: "#993fe8"
-    chatreuse: "#d6eb63"
-    cyan: "#26a3f0"
-    orange: "#f5964e"
+    daltonicfuchsia: "#f44c77"
+    daltonicviolet: "#993fe8"
+    daltonicchatreuse: "#d6eb63"
+    daltoniccyan: "#26a3f0"
+    daltonicorange: "#f5964e"
+    green: "#5ef05a"
+    lightblue: "#85e6da"
+    gold: "#e6b940"

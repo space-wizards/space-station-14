@@ -71,7 +71,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     private readonly bool _adminLoocEnabled = true;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
-    private const string _chatNamePalette = "Daltonic";
+    private const string _chatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
 
     public override void Initialize()
