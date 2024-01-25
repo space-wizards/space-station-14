@@ -1,6 +1,7 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -73,8 +74,8 @@ public sealed partial class StoreComponent : Component
     [ViewVariables]
     public bool RefundAllowed;
 
-    // TODO: Refund timer
-
+    [ViewVariables]
+    public MapId StartingMap;
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
