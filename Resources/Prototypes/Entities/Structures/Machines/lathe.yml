@@ -386,6 +386,7 @@
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
       - BiomassReclaimerMachineCircuitboard
+      - MedicalTechFabCircuitboard
       - BiofabricatorMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
       - SurveillanceCameraMonitorCircuitboard
@@ -843,6 +844,8 @@
       - SyringeBluespace
       - Jug
       - SyringeCryostasis
+      - MedicatedSuture
+      - RegenerativeMesh
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

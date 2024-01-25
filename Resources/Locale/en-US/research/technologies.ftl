@@ -33,6 +33,8 @@ research-technology-biofabrication = Biofabrication
 research-technology-crew-monitoring = Crew Monitoring
 research-technology-bluespace-chemistry = Bluespace Chemistry
 research-technology-cloning = Cloning
+research-technology-medical-fabrication = Medical Fabrication
+research-technology-advanced-treatment = Advanced Treatment
 
 research-technology-salvage-weapons = Salvage Weapons
 research-technology-draconic-munitions = Draconic Munitions

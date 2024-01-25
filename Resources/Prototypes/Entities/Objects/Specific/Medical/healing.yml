@@ -47,7 +47,7 @@
     price: 5
 
 - type: entity
-  id: Ointment1
+  id:   
   parent: Ointment
   suffix: Single
   components:
@@ -97,12 +97,21 @@
     price: 20
 
 - type: entity
-  id: OintmentAdvanced1
+  id: RegenerativeMesh1
   parent: RegenerativeMesh
   components:
   - type: Stack
     stackType: RegenerativeMesh
     count: 1
+
+- type: entity
+  id: RegenerativeMesh10Lingering
+  parent: RegenerativeMesh
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   name: bruise pack
@@ -181,12 +190,21 @@
     price: 20
 
 - type: entity
-  id: BrutepackAdvanced1
+  id: MedicatedSuture1
   parent: MedicatedSuture
   components:
   - type: Stack
     stackType: MedicatedSuture
     count: 1
+
+- type: entity
+  id: MedicatedSuture10Lingering
+  parent: MedicatedSuture
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   name: blood pack

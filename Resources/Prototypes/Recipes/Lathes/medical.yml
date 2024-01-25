@@ -252,3 +252,18 @@
     Steel: 600
     Plastic: 300
 
+- type: latheRecipe
+  id: MedicatedSuture
+  result: MedicatedSuture1
+  completetime: 1
+  materials:
+    Steel: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: RegenerativeMesh
+  result: RegenerativeMesh1
+  completetime: 1
+  materials:
+    Glass: 100
+    Plastic: 100

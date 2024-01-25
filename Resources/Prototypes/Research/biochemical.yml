@@ -146,6 +146,31 @@
   - BluespaceBeaker
   - SyringeBluespace
 
+- type: technology
+  id: MedicalFabrication
+  name: research-technology-medical-fabrication
+  icon:
+    sprite: Structures/Machines/techfab.rsi
+    state: medfabicon
+  discipline: Biochemical
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - MedicalTechFabCircuitboard
+
+- type: technology
+  id: AdvancedTreatment
+  name: research-technology-advanced-treatment
+  icon:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medicated-suture
+  discipline: Biochemical
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - MedicatedSuture
+  - RegenerativeMesh
+
 # look into revisiting this later once medical isn't a hellhole
 #- type: technology
 #  id: Cloning
