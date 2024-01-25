@@ -23,10 +23,6 @@
       nameSegments:
       - SpecialOfficerName
       - names_last
-    - type: Sprite
-      netsync: false
-      sprite: Markers/imperial_jobs.rsi
-      state: SpecialOfficer
     - type: Loadout
       prototypes: [ SpecialOfficerGear ]
     - type: RandomHumanoidAppearance
