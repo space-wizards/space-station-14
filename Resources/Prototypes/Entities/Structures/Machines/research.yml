@@ -65,7 +65,7 @@
   id: BaseResearchAndDevelopmentPointSource
   parent: BaseMachinePowered
   name: "base R&D point source"
-    # We should make this abstract once there are actual point sources.
+  # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
     sprite: Structures/Machines/rndpointsource.rsi
