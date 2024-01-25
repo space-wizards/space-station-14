@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Weapons.Ranged.Components;
@@ -6,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// <summary>
 /// Allows battery weapons to fire different types of projectiles
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(BatteryWeaponFireModesSystem))]
 [AutoGenerateComponentState]
 public sealed partial class BatteryWeaponFireModesComponent : Component
