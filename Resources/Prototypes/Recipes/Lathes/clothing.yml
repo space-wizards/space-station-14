@@ -632,7 +632,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 500
 
 - type: latheRecipe
   id: ClothingOuterWinterHoP
@@ -664,7 +664,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 400
 
 - type: latheRecipe
   id: ClothingNeckMantleCap
@@ -761,7 +761,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 400
 
 - type: latheRecipe
   id: ClothingOuterWinterBar
@@ -825,7 +825,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 400
 
 - type: latheRecipe
   id: ClothingOuterWinterPara
@@ -833,7 +833,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 450
 
 - type: latheRecipe
   id: ClothingOuterWinterChem
@@ -841,7 +841,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 500
 
 - type: latheRecipe
   id: ClothingOuterWinterGen
@@ -849,7 +849,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 400
 
 - type: latheRecipe
   id: ClothingOuterWinterViro
@@ -857,7 +857,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 400
 
 - type: latheRecipe
   id: ClothingOuterWinterSci
@@ -865,7 +865,7 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 300
+    Durathread: 400
 
 - type: latheRecipe
   id: ClothingOuterWinterRobo

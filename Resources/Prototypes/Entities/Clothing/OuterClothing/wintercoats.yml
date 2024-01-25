@@ -147,7 +147,7 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.75
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterChem
 
@@ -166,7 +166,7 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.75
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterCMO
 
@@ -207,7 +207,7 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
@@ -262,7 +262,7 @@
         Slash: 0.95
         Heat: 0.9
         Caustic: 0.9
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterJani
 
@@ -281,7 +281,7 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterMed
 
@@ -324,7 +324,7 @@
         Slash: 0.95
         Heat: 0.75
         Caustic: 0.9
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterPara
 
@@ -356,7 +356,7 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterRD
 
@@ -388,7 +388,7 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
@@ -419,7 +419,7 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-    priceMultiplier: 0
+    priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
