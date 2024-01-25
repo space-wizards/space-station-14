@@ -12,3 +12,8 @@
   id: TravelingCuisine
   path: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisine.yml
   copies: 2
+
+- type: preloadedGrid
+  id: DisasterEvacpod
+  path: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
+  copies: 3

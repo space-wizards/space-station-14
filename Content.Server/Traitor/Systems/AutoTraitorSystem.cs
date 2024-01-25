@@ -60,7 +60,7 @@ public sealed class AutoTraitorSystem : EntitySystem
     /// </summary>
     public bool TryMakeTraitor(EntityUid uid, AutoTraitorComponent? comp = null, float prob = 1f)
     {
-        if (_random.Prob(prob))
+        if (!_random.Prob(prob))
         {
             RemComp<AutoTraitorComponent>(uid);
             return false;

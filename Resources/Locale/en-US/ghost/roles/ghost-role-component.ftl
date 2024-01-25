@@ -233,3 +233,7 @@ ghost-role-information-clown-troupe-rules = Normal station crew rules apply.
 ghost-role-information-traveling-chef-name = Traveling chef
 ghost-role-information-traveling-chef-description = You are a chef on a traveling shuttle of exotic cuisine. Delight the station with delicious food!
 ghost-role-information-traveling-chef-rules = Normal station crew rules apply.
+
+ghost-role-information-disaster-victim-name = Disaster Victim
+ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
+ghost-role-information-disaster-victim-rules = Normal station crew rules apply.

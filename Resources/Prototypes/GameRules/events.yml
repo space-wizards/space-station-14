@@ -453,6 +453,7 @@
     shuttleVariants: 
     - ShuttleCargoLost
     - TravelingCuisine
+    - DisasterEvacpod
 
 - type: entity
   id: MassHallucinations
