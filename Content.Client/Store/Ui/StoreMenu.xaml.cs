@@ -270,6 +270,11 @@ public sealed partial class StoreMenu : DefaultWindow
         _withdrawWindow?.Close();
     }
 
+    public void UpdateRefund(bool allowRefund)
+    {
+        RefundButton.Disabled = !allowRefund;
+    }
+
     private sealed class StoreCategoryButton : Button
     {
         public string? Id;

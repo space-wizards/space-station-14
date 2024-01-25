@@ -184,7 +184,7 @@ public sealed partial class StoreSystem : EntitySystem
         var ui = _ui.GetUiOrNull(uid, StoreUiKey.Key);
         if (ui != null)
         {
-            _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
+            _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName, preset.AllowRefund));
         }
     }
 }

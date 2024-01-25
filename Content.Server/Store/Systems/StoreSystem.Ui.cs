@@ -115,7 +115,7 @@ public sealed partial class StoreSystem
 
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter);
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
         _ui.SetUiState(ui, state);
     }
 
@@ -349,6 +349,7 @@ public sealed partial class StoreSystem
         // Reset store back to its original state
         RefreshAllListings(component);
         component.BalanceSpent = new();
+        component.RefundAllowed = false;
         UpdateUserInterface(buyer, uid, component);
     }
 

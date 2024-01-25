@@ -69,6 +69,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
                 _menu.UpdateListing(msg.Listings.ToList());
                 _menu.SetFooterVisibility(msg.ShowFooter);
+                _menu.UpdateRefund(msg.AllowRefund);
                 break;
             case StoreInitializeState msg:
                 _windowName = msg.Name;
