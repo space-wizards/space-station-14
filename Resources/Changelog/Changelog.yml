@@ -1,36 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Adds Space Cobras, invisible at rest and venom blind.
-    type: Add
-  - message: Adds snake meat and fancy snakeskin boots.
-    type: Add
-  - message: The too weak space spider has been strengthened.
-    type: Tweak
-  id: 5281
-  time: '2023-12-07T01:25:57.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - message: Added three new specialized brute healing chemicals and a guidebook entry
-      on how to safely use them.
-    type: Add
-  - message: Added Razorium, which is basically liquid razor blades.
-    type: Add
-  id: 5282
-  time: '2023-12-07T03:05:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Speed penalties for duffels and hardsuits now apply when held, not just
-      when worn.
-    type: Add
-  id: 5283
-  time: '2023-12-07T03:41:29.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Fixed explosion resistance being ignored.
-    type: Fix
-  id: 5284
-  time: '2023-12-07T18:51:46.0000000+00:00'
 - author: Aexxie
   changes:
   - message: Paramed no longer has external access.
@@ -3807,3 +3775,32 @@
   id: 5781
   time: '2024-01-24T02:35:37.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24472
+- author: lzk228
+  changes:
+  - message: Fixed escaping from locked artifact crate.
+    type: Fix
+  id: 5782
+  time: '2024-01-25T00:46:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24442
+- author: Krunk
+  changes:
+  - message: Players will once again spawn at arrivals instead of cryostorage.
+    type: Fix
+  id: 5783
+  time: '2024-01-25T00:48:58.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24476
+- author: Krunk
+  changes:
+  - message: Paper cups can now be worn as party hats!
+    type: Add
+  id: 5784
+  time: '2024-01-25T01:02:33.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24334
+- author: Blackern5000
+  changes:
+  - message: Botany's hatchet, spade, and hoe have received a damage decrease to 10,
+      10, and 6 damage respectively.
+    type: Tweak
+  id: 5785
+  time: '2024-01-25T01:37:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24481
