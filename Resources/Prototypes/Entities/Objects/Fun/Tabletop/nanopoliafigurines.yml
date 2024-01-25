@@ -157,9 +157,7 @@
       tags:
       - CardNanopolia
   - type: Item
-    sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: Small
-    heldPrefix: box
   - type: StorageFill
     contents:
     - id: Card_Arive
