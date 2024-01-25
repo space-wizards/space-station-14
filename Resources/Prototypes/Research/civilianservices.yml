@@ -185,7 +185,6 @@
   cost: 15000
   recipeUnlocks:
   - CargoTelepadMachineCircuitboard
-  - SalvageMagnetMachineCircuitboard
 
 - type: technology
   id: QuantumFiberWeaving

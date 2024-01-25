@@ -12,9 +12,6 @@
 
 - type: Tag
   id: Ambrosia
-
-- type: Tag
-  id: AnomalyCore
   
 - type: Tag
   id: AppraisalTool

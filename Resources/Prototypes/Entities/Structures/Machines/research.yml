@@ -63,9 +63,9 @@
 
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: BaseMachinePowered
   name: "base R&D point source"
-  description: A safe container for an anomaly core, which feeds research directly into the R&D server.
+  # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
     sprite: Structures/Machines/rndpointsource.rsi
@@ -78,8 +78,6 @@
   - type: ResearchPointSource
     pointspersecond: 25
     active: true
-  - type: Machine
-    board: BaseResearchAndDevelopmentPointSourceCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6

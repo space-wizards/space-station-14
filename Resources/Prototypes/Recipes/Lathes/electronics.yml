@@ -860,16 +860,6 @@
     Gold: 100
 
 - type: latheRecipe
-  id: SalvageMagnetMachineCircuitboard
-  result: SalvageMagnetMachineCircuitboard
-  category: Circuitry
-  completetime: 4
-  materials:
-    Steel: 100
-    Glass: 900
-    Silver: 100
-
-- type: latheRecipe
   id: SodaDispenserMachineCircuitboard
   result: SodaDispenserMachineCircuitboard
   category: Circuitry
@@ -952,16 +942,6 @@
   id: ShuttleGunDusterCircuitboard
   result: ShuttleGunDusterCircuitboard
   completetime: 12
-  materials:
-     Steel: 100
-     Glass: 900
-     Gold: 100
-
-- type: latheRecipe
-  id: BaseResearchAndDevelopmentPointSourceCircuitboard
-  result: BaseResearchAndDevelopmentPointSourceCircuitboard
-  category: Circuitry
-  completetime: 6
   materials:
      Steel: 100
      Glass: 900
