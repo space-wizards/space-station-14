@@ -33,3 +33,13 @@
     amber-darken-2: "#cc8000"
     amber-accent-2: "#7c6200"
     amber-accent-4: "#996700"
+
+- type: palette
+  id: Daltonic
+  name: Daltonic
+  colors:
+    fuchsia: "#fe0095"
+    violet: "#a800ff"
+    chatreuse: "#e1ff00"
+    cyan: "#00c0ff"
+    orange: "#ff9d51"
