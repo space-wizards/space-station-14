@@ -32,6 +32,7 @@
             <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
             <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
             <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />
+            <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
             <Label Text="{Loc 'ui-options-general-cursor'}"
                    FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>
