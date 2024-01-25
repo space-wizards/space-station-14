@@ -565,10 +565,10 @@
 
 - type: Tag
   id: Goat
-  
+
 - type: Tag
   id: GPS
-  
+
 - type: Tag
   id: Grenade
 
@@ -797,7 +797,7 @@
   id: Matchstick
 
 - type: Tag
-  id: Mayo  
+  id: Mayo
 
 - type: Tag
   id: Meat
@@ -807,12 +807,6 @@
 
 - type: Tag
   id: Metal
-
-- type: Tag
-  id: MicrowaveMachineUnsafe
-
-- type: Tag
-  id: MicrowaveSelfUnsafe
 
 - type: Tag
   id: MindShield

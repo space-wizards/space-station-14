@@ -19,7 +19,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: Item
-    size: Normal
+    size: Tiny
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:
       collection: RadiationPulse
