@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Adds a bed for the psychologist's office.
-    type: Add
-  id: 5287
-  time: '2023-12-08T05:24:35.0000000+00:00'
-- author: Emisse
-  changes:
-  - message: Chemical explosions are powerful again.
-    type: Tweak
-  id: 5288
-  time: '2023-12-08T10:58:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: V and shift-V can now be used to open the bag and belt, respectively.
-    type: Add
-  - message: Interacting with a storage item now has context-sensitive logic based
-      on whether or not the window is open or focused.
-    type: Fix
-  id: 5289
-  time: '2023-12-08T18:43:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: When viewing a storage container, the item that will be removed via smart-equip
-      is now marked with a small star icon.
-    type: Add
-  id: 5290
-  time: '2023-12-08T18:43:58.0000000+00:00'
 - author: Whisper
   changes:
   - message: Rat king and his servants properly heal from miasma.
@@ -3808,3 +3780,32 @@
   id: 5787
   time: '2024-01-25T09:51:26.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24546
+- author: metalgearsloth
+  changes:
+  - message: Add title2.ogg to space ambience tracks.
+    type: Tweak
+  id: 5788
+  time: '2024-01-25T13:59:49.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24501
+- author: Tayrtahn
+  changes:
+  - message: Glued mobs can no longer struggle free from their captor's hands.
+    type: Tweak
+  id: 5789
+  time: '2024-01-25T14:01:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24488
+- author: mirrorcult
+  changes:
+  - message: Atomic Amnesia MMX, Vibe Ace, Monument and Marhaba have been removed
+      as lobby music tracks
+    type: Remove
+  id: 5790
+  time: '2024-01-25T14:08:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24480
+- author: Dutch-VanDerLinde
+  changes:
+  - message: To prevent accidental spills, paper cups can no longer be quick-equipped.
+    type: Fix
+  id: 5791
+  time: '2024-01-25T22:04:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24560
