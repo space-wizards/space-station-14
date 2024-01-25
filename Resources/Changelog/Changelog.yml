@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Hovering over an item in storage now shows a tooltip with the name.
-    type: Add
-  id: 5286
-  time: '2023-12-08T02:38:07.0000000+00:00'
 - author: Nimfar11
   changes:
   - message: Adds a bed for the psychologist's office.
@@ -3807,3 +3801,10 @@
   id: 5786
   time: '2024-01-25T08:33:56.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24345
+- author: Blackern5000
+  changes:
+  - message: Smoking now causes mild lung cancer in the form of cellular damage.
+    type: Tweak
+  id: 5787
+  time: '2024-01-25T09:51:26.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24546
