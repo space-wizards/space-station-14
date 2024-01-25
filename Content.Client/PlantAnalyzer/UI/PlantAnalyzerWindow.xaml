@@ -45,7 +45,7 @@
                     <Label Name="WeedTolerance" Margin="0 5 0 5"/>
                 </BoxContainer>
             </ScrollContainer>
-            <ScrollContainer Name="{Loc 'plant-analyzer-window-tab-mutations'}" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True">
+            <ScrollContainer Name="{Loc 'plant-analyzer-window-tab-mutations'}"  HorizontalExpand="True" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True">
                     <Label Name="PlantSpeciation" Margin="0 5 0 5"/>
                     <Label Name="Traits" Margin="0 5 0 5"/>
@@ -53,10 +53,7 @@
                     <Label Name="ExtraInfo" Margin="0 5 0 5"/>
                 </BoxContainer>
             </ScrollContainer>
-
         </TabContainer>
-
-
 
     </GridContainer>
 </controls:FancyWindow>

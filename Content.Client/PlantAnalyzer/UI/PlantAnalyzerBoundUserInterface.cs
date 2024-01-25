@@ -1,6 +1,5 @@
 using Content.Shared.PlantAnalyzer;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.PlantAnalyzer.UI;
 
@@ -19,7 +18,6 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         base.Open();
         _window = new PlantAnalyzerWindow(this)
         {
-            //Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
             Title = Loc.GetString("plant-analyzer-interface-title"),
         };
         _window.SetHeight = 350;

@@ -10,8 +10,6 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
 {
     public readonly NetEntity? TargetEntity;
 
-    public Boolean ScanMode;
-
     public string SeedName = "";
     public string SeedYield = "";
     public string SeedPotency = "";
@@ -20,6 +18,7 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string SeedMutations = "";
     public string ExudeGases = "";
     public Boolean IsTray;
+    public Boolean ScanMode;
 
     public string NutrientConsumption = "";
     public string WaterConsumption = "";
@@ -81,9 +80,6 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
             PestTolerance = arrTol[9];
             WeedTolerance = arrTol[10];
         }
-
-
-
     }
 }
 
@@ -91,7 +87,6 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
 public sealed class PlantAnalyzerSetMode : BoundUserInterfaceMessage
 {
     public bool AdvancedScan { get; }
-
     public PlantAnalyzerSetMode(bool advancedScan)
     {
         AdvancedScan = advancedScan;

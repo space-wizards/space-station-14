@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.PowerCell;
 using Content.Shared.DoAfter;
@@ -6,8 +5,9 @@ using Content.Shared.Interaction;
 using Content.Shared.PlantAnalyzer;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Botany.Systems;
 

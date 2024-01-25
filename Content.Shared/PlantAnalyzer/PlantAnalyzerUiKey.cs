@@ -7,4 +7,3 @@ public enum PlantAnalyzerUiKey : byte
 {
     Key
 }
-
