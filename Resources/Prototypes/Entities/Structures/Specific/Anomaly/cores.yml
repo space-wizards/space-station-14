@@ -5,6 +5,9 @@
   name: anomaly core
   description: The core of a destroyed incomprehensible object.
   components:
+  - type: Tag
+    tags: 
+    - AnomalyCore
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
     layers:

@@ -164,3 +164,15 @@
   cost: 10000
   recipeUnlocks:
   - DeviceQuantumSpinInverter
+
+- type: technology
+  id: PointGeneration
+  name: research-technology-point-generation
+  icon:
+    sprite: Structures/Machines/rndpointsource.rsi
+    state: rndpointsource-icon
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - BaseResearchAndDevelopmentPointSourceCircuitboard
