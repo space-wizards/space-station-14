@@ -1,0 +1,9 @@
+- type: preloadedShuttle
+  id: Striker
+  path: /Maps/Shuttles/UnknownShuttleEvent/striker.yml
+  copies: 1
+
+- type: preloadedShuttle
+  id: CargoLost
+  path: /Maps/Shuttles/UnknownShuttleEvent/cargo_lost.yml
+  copies: 3

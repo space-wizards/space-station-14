@@ -1,4 +1,5 @@
 using Content.Server.StationEvents.Events;
+using Content.Shared.Shuttles.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Components;
@@ -7,7 +8,7 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class UnknownShuttleSpawnRuleComponent : Component
 {
     [DataField]
-    public List<string>? ShuttleVariants = new();
+    public List<ProtoId<PreloadedShuttlePrototype>>? ShuttleVariants = new();
 
     [DataField]
     public EntProtoId? GameRuleProto;

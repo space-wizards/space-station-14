@@ -5,6 +5,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Robust.Shared.Random;
+using Content.Server.Shuttles.Systems;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -14,6 +15,7 @@ public sealed class UnknownShuttleSpawnRule : StationEventSystem<UnknownShuttleS
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ShuttlePreloaderSystem _preloadShuttle = default!;
 
     protected override void Started(EntityUid uid, UnknownShuttleSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -23,12 +25,13 @@ public sealed class UnknownShuttleSpawnRule : StationEventSystem<UnknownShuttleS
             return;
 
         var shuttleMap = _mapManager.CreateMap();
-        var options = new MapLoadOptions
-        {
-            LoadMap = true,
-        };
+        _mapManager.AddUninitializedMap(shuttleMap);
 
-        _map.TryLoad(shuttleMap, _random.Pick(component.ShuttleVariants), out _, options);
+        var loadedShuttle = _preloadShuttle.TryGetPreloadedShuttle(_random.Pick(component.ShuttleVariants), shuttleMap);
+        if (loadedShuttle == null)
+            return;
+
+        _mapManager.DoMapInitialize(shuttleMap);
 
         if (component.GameRuleProto != null)
         {

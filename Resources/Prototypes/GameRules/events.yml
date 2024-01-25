@@ -433,9 +433,9 @@
     blacklistRules:
     - NukeopsRule
   - type: UnknownShuttleSpawnRule
-    shuttleVariants: 
-    - /Maps/Shuttles/UnknownShuttleEvent/striker.yml
     gameRuleProto: LoneNukeopsRule
+    shuttleVariants: 
+    - Striker
 
 - type: entity
   id: LostCargoTechicalShuttleSpawn
@@ -451,7 +451,7 @@
     duration: 1
   - type: UnknownShuttleSpawnRule
     shuttleVariants: 
-    - /Maps/Shuttles/UnknownShuttleEvent/cargo_lost.yml
+    - CargoLost
 
 - type: entity
   id: MassHallucinations

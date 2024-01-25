@@ -54,7 +54,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        if (stationEvent.BlacklistRules != null)
+        if (stationEvent.BlacklistRules != null && stationEvent.BlacklistRules.Count() >0 )
         {
             foreach (var blockedRule in stationEvent.BlacklistRules)
             {
