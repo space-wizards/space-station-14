@@ -270,24 +270,6 @@ public abstract partial class SharedToolSystem : EntitySystem
 
         public override DoAfterEvent Clone() => this;
     }
-
-    [Serializable, NetSerializable]
-    protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
-    {
-        [DataField("coordinates", required: true)]
-        public NetCoordinates Coordinates;
-
-        private TilePryingDoAfterEvent()
-        {
-        }
-
-        public TilePryingDoAfterEvent(NetCoordinates coordinates)
-        {
-            Coordinates = coordinates;
-        }
-
-        public override DoAfterEvent Clone() => this;
-    }
 }
 
 [Serializable, NetSerializable]
