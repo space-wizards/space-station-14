@@ -34,7 +34,7 @@ public sealed partial class BatteryWeaponFireMode
     /// <summary>
     /// The projectile prototype associated with this firing mode
     /// </summary>
-    [DataField(required: true)]
+    [DataField("proto", required: true)]
     public EntProtoId Prototype = default!;
 
     /// <summary>
