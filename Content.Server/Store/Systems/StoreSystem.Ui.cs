@@ -37,6 +37,15 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
         SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
+        SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
+    }
+
+    private void OnRefundEntityDeleted(EntityUid uid, StoreComponent component, RefundEntityDeletedEvent args)
+    {
+        if (component.BoughtEntities.Contains(args.Uid))
+        {
+            component.BoughtEntities.Remove(args.Uid);
+        }
     }
 
     /// <summary>
@@ -126,7 +135,6 @@ public sealed partial class StoreSystem
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
         var listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
-        FixedPoint2 totalValue = 0;
 
         if (listing == null) //make sure this listing actually exists
         {
@@ -164,10 +172,10 @@ public sealed partial class StoreSystem
         {
             component.Balance[currency.Key] -= currency.Value;
 
-            // TODO: Figure out a better way to refund
-            // For refunds, currently only allowed with a single type of currency
-            if (listing.Cost.Count == 1)
-                totalValue += currency.Value;
+            if (!component.BalanceSpent.ContainsKey(currency.Key))
+                component.BalanceSpent.Add(currency.Key, FixedPoint2.Zero);
+
+            component.BalanceSpent[currency.Key] += currency.Value;
         }
 
         //spawn entity
@@ -176,8 +184,7 @@ public sealed partial class StoreSystem
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
             _hands.PickupOrDrop(buyer, product);
 
-            // TODO: Add a comp to each of these to track bought ents so they can be removed from the list if deleted.
-            component.BoughtEntities.Add(product, totalValue);
+            HandleRefundComp(uid, component, product);
 
             var xForm = Transform(product);
 
@@ -186,7 +193,7 @@ public sealed partial class StoreSystem
                 var childEnumerator = xForm.ChildEnumerator;
                 while (childEnumerator.MoveNext(out var child))
                 {
-                    component.BoughtEntities.Add(child.Value, 0); // don't include a price for contained entities
+                    component.BoughtEntities.Add(child.Value);
                 }
             }
         }
@@ -206,7 +213,7 @@ public sealed partial class StoreSystem
             // And then add that action entity to the relevant product upgrade listing, if applicable
             if (actionId != null)
             {
-                component.BoughtEntities.Add(actionId.Value, totalValue);
+                HandleRefundComp(uid, component, actionId.Value);
 
                 if (listing.ProductUpgradeID != null)
                 {
@@ -225,20 +232,20 @@ public sealed partial class StoreSystem
 
         if (listing is { ProductUpgradeID: not null, ProductActionEntity: not null })
         {
-            FixedPoint2 originalPrice = 0;
-
-            if (listing.ProductActionEntity != null && component.BoughtEntities.ContainsKey(listing.ProductActionEntity.Value))
+            if (listing.ProductActionEntity != null && component.BoughtEntities.Contains(listing.ProductActionEntity.Value))
             {
-                originalPrice = component.BoughtEntities[listing.ProductActionEntity.Value];
                 component.BoughtEntities.Remove(listing.ProductActionEntity.Value);
             }
 
-            totalValue += originalPrice;
+            /*foreach (var currency in listing.Cost)
+            {
+                component.BalanceSpent[currency.Key] += currency.Value;
+            }*/
 
             if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity, out var upgradeActionId))
             {
                 if (listing.ProductActionEntity != null)
-                    component.BoughtEntities.Add(listing.ProductActionEntity.Value, totalValue);
+                    HandleRefundComp(uid, component, listing.ProductActionEntity.Value);
 
                 return;
             }
@@ -246,7 +253,7 @@ public sealed partial class StoreSystem
             listing.ProductActionEntity = upgradeActionId;
 
             if (upgradeActionId != null)
-                component.BoughtEntities.Add(upgradeActionId.Value, totalValue);
+                HandleRefundComp(uid, component, upgradeActionId.Value);
         }
 
         //broadcast event
@@ -255,7 +262,7 @@ public sealed partial class StoreSystem
             RaiseLocalEvent(listing.ProductEvent);
         }
 
-        // TODO:
+        // TODO: timer?
         if (component.BoughtEntities.Any())
             component.RefundAllowed = true;
 
@@ -314,8 +321,6 @@ public sealed partial class StoreSystem
     {
         // TODO: Remove guardian/holopara
 
-        FixedPoint2 refundValue = 0;
-
         if (!component.RefundAllowed || !component.BoughtEntities.Any())
         {
             // TODO: Message here
@@ -324,27 +329,34 @@ public sealed partial class StoreSystem
 
         foreach (var purchase in component.BoughtEntities.ToList())
         {
-            if (purchase.Key.Valid)
+            if (purchase.Valid)
             {
-                refundValue += purchase.Value;
+                component.BoughtEntities.Remove(purchase);
 
-                component.BoughtEntities.Remove(purchase.Key);
-
-                if (_actions.TryGetActionData(purchase.Key, out var actionComponent))
+                if (_actions.TryGetActionData(purchase, out var actionComponent))
                 {
-                    _actionContainer.RemoveAction(purchase.Key, actionComponent);
-                    EntityManager.DeleteEntity(purchase.Key);
+                    _actionContainer.RemoveAction(purchase, actionComponent);
+                    EntityManager.DeleteEntity(purchase);
                 }
                 else
                 {
-                    EntityManager.DeleteEntity(purchase.Key);
+                    EntityManager.DeleteEntity(purchase);
                 }
             }
         }
-
-        // TODO: Replace with a loop for each currency
-        component.Balance["WizCoin"] += refundValue;
+        foreach (var currency in component.BalanceSpent)
+        {
+            component.Balance[currency.Key] += currency.Value;
+        }
         // Reset store back to its original state
         RefreshAllListings(component);
+        component.BalanceSpent = new();
+    }
+
+    private void HandleRefundComp(EntityUid uid, StoreComponent component, EntityUid purchase)
+    {
+        component.BoughtEntities.Add(purchase);
+        var refundComp = EnsureComp<StoreRefundComponent>(purchase);
+        refundComp.StoreEntity = uid;
     }
 }

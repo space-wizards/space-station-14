@@ -63,7 +63,12 @@ public sealed partial class StoreComponent : Component
     ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
     /// </summary>
     [ViewVariables]
-    public Dictionary<EntityUid, FixedPoint2> BoughtEntities = new();
+    public List<EntityUid> BoughtEntities = new();
+
+    /// <summary>
+    ///     The total balance spent in this store. Used for refunds.
+    /// </summary>
+    public Dictionary<string, FixedPoint2> BalanceSpent = new();
 
     [ViewVariables]
     public bool RefundAllowed;
@@ -89,3 +94,13 @@ public readonly record struct StoreAddedEvent;
 /// </summary>
 [ByRefEvent]
 public readonly record struct StoreRemovedEvent;
+
+public sealed partial class RefundEntityDeletedEvent : EventArgs
+{
+    public EntityUid Uid { get; }
+
+    public RefundEntityDeletedEvent(EntityUid uid)
+    {
+        Uid = uid;
+    }
+}
