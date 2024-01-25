@@ -54,13 +54,16 @@ namespace Content.Shared.Kitchen.Components
         public int ActiveButtonIndex;
         public uint CurrentCookTime;
 
+        public float CurrentCookTimerElapsedTime;
+
         public MicrowaveUpdateUserInterfaceState(NetEntity[] containedSolids,
-            bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime)
+            bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime, float currentCookTimerElapsedTime)
         {
             ContainedSolids = containedSolids;
             IsMicrowaveBusy = isMicrowaveBusy;
             ActiveButtonIndex = activeButtonIndex;
             CurrentCookTime = currentCookTime;
+            CurrentCookTimerElapsedTime = currentCookTimerElapsedTime;
         }
 
     }

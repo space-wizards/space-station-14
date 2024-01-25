@@ -100,14 +100,12 @@ namespace Content.Client.Kitchen.UI
             //Set the cook time info label
             var cookTime = cState.ActiveButtonIndex == 0
                 ? Loc.GetString("microwave-menu-instant-button")
-                : cState.CurrentCookTime.ToString();
+                : cState.CurrentCookTimerElapsedTime.ToString();
             _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
                                                          ("time", cookTime));
             _menu.StartButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
             _menu.EjectButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
 
-              _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                         ("time", cState.CurrentCookTime));
 
             //Set the correct button active button
             if (cState.ActiveButtonIndex == 0)

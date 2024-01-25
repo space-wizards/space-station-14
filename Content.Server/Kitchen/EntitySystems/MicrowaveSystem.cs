@@ -369,7 +369,8 @@ namespace Content.Server.Kitchen.EntitySystems
                 GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
-                component.CurrentCookTimerTime
+                component.CurrentCookTimerTime,
+                component.CurrentCookTimerElapsedTime
             ));
         }
 
@@ -557,11 +558,16 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 active.CookTimeRemaining -= frameTime;
 
-                RollMalfunction((uid, active,microwave));
+
+
+                RollMalfunction((uid, active, microwave));
 
                 //check if there's still cook time left
                 if (active.CookTimeRemaining > 0)
                 {
+                    microwave.CurrentCookTimerElapsedTime = (float) Math.Floor(active.CookTimeRemaining);
+                    UpdateUserInterfaceState(uid, microwave);
+
                     AddTemperature(microwave, frameTime);
                     continue;
                 }
@@ -617,6 +623,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
             ent.Comp.CurrentCookTimerTime = args.NewCookTime;
+            ent.Comp.CurrentCookTimerElapsedTime = ent.Comp.CurrentCookTimerTime;
             _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
             UpdateUserInterfaceState(ent, ent.Comp);
         }
