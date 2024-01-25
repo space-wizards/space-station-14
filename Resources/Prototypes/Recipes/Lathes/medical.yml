@@ -257,13 +257,13 @@
   result: MedicatedSuture1
   completetime: 1
   materials:
-    Steel: 100
-    Plastic: 100
+    Steel: 300
+    Plastic: 300
 
 - type: latheRecipe
   id: RegenerativeMesh
   result: RegenerativeMesh1
   completetime: 1
   materials:
-    Glass: 100
-    Plastic: 100
+    Glass: 300
+    Plastic: 300
