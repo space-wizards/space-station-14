@@ -209,3 +209,18 @@
   - PowerCellMicroreactor
   technologyPrerequisites:
   - AdvancedPowercells
+
+- type: technology
+  id: RenewablePower
+  name: research-technology-renewable-power
+  icon:
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg
+  discipline: Industrial
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - BasicGeneratorCircuitboard
+  - RTGCircuitboard
+  technologyPrerequisites:
+  - PowerGeneration

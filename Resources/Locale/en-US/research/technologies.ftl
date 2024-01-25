@@ -20,6 +20,7 @@ research-technology-advanced-tools = Advanced Tools
 research-technology-super-powercells = Super Powercells
 research-technology-bluespace-storage = Bluespace Storage
 research-technology-portable-fission = Portable Fission
+research-technology-renewable-power = Renewable Power
 
 research-technology-chemistry = Chemistry
 research-technology-surgical-tools = Surgical Tools

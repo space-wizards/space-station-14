@@ -966,3 +966,23 @@
      Steel: 100
      Glass: 900
      Gold: 100
+
+- type: latheRecipe
+  id: BasicGeneratorCircuitboard
+  result: BasicGeneratorCircuitboard
+  category: Circuitry
+  completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+     Silver: 100
+
+- type: latheRecipe
+  id: RTGCircuitboard
+  result: RTGCircuitboard
+  category: Circuitry
+  completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100

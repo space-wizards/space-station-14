@@ -1358,3 +1358,35 @@
           Amount: 1
           DefaultPrototype: AnomalyCore
           ExamineName: Anomaly Core
+
+- type: entity
+  id: BasicGeneratorCircuitboard
+  parent: BaseMachineCircuitboard
+  name: thermoelectric generator board
+  description: A machine printed circuit board for a high-efficiency thermoelectric generator.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: GeneratorBasic15kW
+    requirements:
+     Capacitor: 4
+    materialRequirements:
+      Steel: 5
+      Coal: 4
+     
+- type: entity
+  id: RTGCircuitboard
+  parent: BaseMachineCircuitboard
+  name: RTG circuit board
+  description: A machine printed circuit board for a radioisotope thermoelectric generator.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: GeneratorRTG
+    requirements:
+     Capacitor: 4
+    materialRequirements:
+      Steel: 5
+      Uranium: 10        

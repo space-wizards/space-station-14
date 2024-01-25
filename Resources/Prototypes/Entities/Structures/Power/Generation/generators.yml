@@ -179,10 +179,12 @@
     supplyRate: 3000
 
 - type: entity
-  parent: BaseGenerator
+  parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorBasic15kW
   suffix: Basic, 15kW
   components:
+    - type: Machine
+      board: BasicGeneratorCircuitboard
     - type: PowerSupplier
       supplyRate: 15000
 
@@ -229,12 +231,14 @@
 # RTG - no fuel requirement
 
 - type: entity
-  parent: BaseGenerator
+  parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorRTG
   name: RTG
   description: A Radioisotope Thermoelectric Generator for long term power.
   suffix: 10kW
   components:
+  - type: Machine
+    board: RTGCircuitboard
   - type: PowerSupplier
     supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
   - type: Sprite
