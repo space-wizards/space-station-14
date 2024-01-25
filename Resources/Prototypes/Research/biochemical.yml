@@ -147,18 +147,6 @@
   - SyringeBluespace
 
 - type: technology
-  id: MedicalFabrication
-  name: research-technology-medical-fabrication
-  icon:
-    sprite: Structures/Machines/techfab.rsi
-    state: medfabicon
-  discipline: Biochemical
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - MedicalTechFabCircuitboard
-
-- type: technology
   id: AdvancedTreatment
   name: research-technology-advanced-treatment
   icon:
