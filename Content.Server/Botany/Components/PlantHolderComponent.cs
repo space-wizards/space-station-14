@@ -56,9 +56,6 @@ public sealed partial class PlantHolderComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("harvest")]
     public bool Harvest;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("sampled")]
-    public bool Sampled;
-
     [ViewVariables(VVAccess.ReadWrite), DataField("yieldMod")]
     public int YieldMod = 1;
 

@@ -250,12 +250,6 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            if (component.Sampled)
-            {
-                _popup.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
-                return;
-            }
-
             if (component.Dead)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
@@ -268,15 +262,12 @@ public sealed class PlantHolderSystem : EntitySystem
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-            component.Health -= (_random.Next(3, 5) * 10);
+            component.Health -= _random.Next(30, 50);
 
             if (component.Seed != null && component.Seed.CanScream)
             {
                 _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
             }
-
-            if (_random.Prob(0.3f))
-                component.Sampled = true;
 
             // Just in case.
             CheckLevelSanity(uid, component);
@@ -766,7 +757,6 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Seed = null;
         component.Dead = false;
         component.Age = 0;
-        component.Sampled = false;
         component.Harvest = false;
         component.ImproperLight = false;
         component.ImproperPressure = false;
