@@ -1,5 +1,18 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
+  id: ClothingHeadBandBase
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5 # one bite
+
+- type: entity
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandBlack
   name: black bandana
   description: A black bandana to make you look cool.
@@ -12,7 +25,7 @@
     transformProto: ClothingMaskBandBlack
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandBlue
   name: blue bandana
   description: A blue bandana to make you look cool.
@@ -25,7 +38,7 @@
     transformProto: ClothingMaskBandBlue    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandBotany
   name: botany bandana
   description: A botany bandana to make you look cool, made from natural fibers.
@@ -43,7 +56,7 @@
     transformProto: ClothingMaskBandBotany    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandGold
   name: gold bandana
   description: A gold bandana to make you look cool.
@@ -56,7 +69,7 @@
     transformProto: ClothingMaskBandGold    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandGreen
   name: green bandana
   description: A green bandana to make you look cool.
@@ -69,7 +82,7 @@
     transformProto: ClothingMaskBandGreen    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandGrey
   name: grey bandana
   description: A grey bandana to make you look cool.
@@ -82,7 +95,7 @@
     transformProto: ClothingMaskBandGrey    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandRed
   name: red bandana
   description: A red bandana to make you look cool.
@@ -95,7 +108,7 @@
     transformProto: ClothingMaskBandRed    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandSkull
   name: skull bandana
   description: A bandana with a skull to make you look even cooler.
@@ -108,7 +121,7 @@
     transformProto: ClothingMaskBandSkull    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandMerc
   name: mercenary bandana
   description: To protect the head from the sun, insects and other dangers of the higher path.
@@ -121,7 +134,7 @@
     transformProto: ClothingMaskBandMerc    
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: ClothingHeadBandBase
   id: ClothingHeadBandBrown
   name: brown bandana
   description: A brown bandana to make you look cool.

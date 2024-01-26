@@ -1,10 +1,18 @@
 - type: entity
-  parent: ClothingMaskPullableBase
+  parent: ClothingMaskBaseButcherable
   id: ClothingMaskBandanaBase
   abstract: true
   components:
   - type: Sprite
     state: icon_mask
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5 # one bite
+  - type: Mask
   - type: IngestionBlocker
   #- type: IdentityBlocker
   # not until separate eye/mouth blocker
