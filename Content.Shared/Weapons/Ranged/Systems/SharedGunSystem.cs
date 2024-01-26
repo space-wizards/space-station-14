@@ -11,9 +11,9 @@ using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Standing;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -144,13 +144,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         //Only aim at the ground if the target has the LayingDownLayer
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
         var target = GetEntity(msg.Target);
-        if (TryComp<PhysicsComponent>(target, out var physics) &&
-            physics.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer)
-            gun.Target = target;
-        else
-        {
-            gun.Target = null;
-        }
+        gun.Target = HasComp<StandingStateComponent>(target) ? target : null;
 
         Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
         AttemptShoot(user.Value, ent, gun);

@@ -1,3 +1,4 @@
+using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -29,12 +30,15 @@ namespace Content.Shared.Standing
         public List<string> LayerChangedFixtures = new();
 
         /// <summary>
-        ///     List of collision layers the entity's changed fixtures had.
-        /// <remarks>
-        ///     Stored so they can be returned to their original value when the entity stands up again.
-        /// </remarks>
+        ///     The CollisionLayer that will be subtracted from the entity's CollisionLayer when it falls down.
         /// </summary>
         [DataField]
-        public Dictionary<string, int> StandingCollisionLayers = new();
+        public CollisionGroup StandingLayer = CollisionGroup.BulletImpassable | CollisionGroup.Opaque;
+
+        /// <summary>
+        ///     The CollisionLayer that will be added to the entity's CollisionLayer when it falls down.
+        /// </summary>
+        [DataField]
+        public CollisionGroup LayingDownLayer = CollisionGroup.LowImpassable;
     }
 }

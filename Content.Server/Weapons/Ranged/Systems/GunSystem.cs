@@ -6,13 +6,14 @@ using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
+using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Physics;
 using Content.Shared.Projectiles;
+using Content.Shared.Standing;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -22,7 +23,6 @@ using Content.Shared.Weapons.Reflect;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -41,6 +41,8 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
@@ -219,30 +221,34 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
                         {
-                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
+                            //Add the gun target's LayingDownLayer to the mask of the hitscan.
+                            var collisionMask = hitscan.CollisionMask;
+                            if (gun.Target != null && TryComp<StandingStateComponent>(gun.Target, out var standingState))
+                                collisionMask = hitscan.CollisionMask | (int) standingState.LayingDownLayer;
+
+                            var ray = new CollisionRay(from.Position, dir, collisionMask);
                             var rayCastResults =
                                 Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
                             if (!rayCastResults.Any())
                                 break;
 
-                            var entityIndex = 0;
-                            
-                            //Check if entity is laying down
-                            foreach (var entity in rayCastResults)
-                            {
-                                if (!TryComp<PhysicsComponent>(entity.HitEntity, out var physics))
-                                    continue;
+                            var result = rayCastResults[0];
 
-                                if (physics.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer &&
-                                    gun.Target != entity.HitEntity)
-                                    entityIndex++;
-                                else
+                            //Check if an entity is laying down.
+                            if (gun.Target != null)
+                            {
+                                foreach (var target in rayCastResults)
                                 {
+                                    if (_standing.IsDown(target.HitEntity) &&
+                                        !_buckle.IsBuckled(target.HitEntity) &&
+                                        gun.Target != target.HitEntity)
+                                        continue;
+
+                                    result = target;
                                     break;
                                 }
                             }
 
-                            var result = rayCastResults[entityIndex];
                             var hit = result.HitEntity;
                             lastHit = hit;
 
@@ -319,11 +325,11 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user)
     {
-        if (gun.Target != null && TryComp<FixturesComponent>(uid, out var fixtures))
+        if (gun.Target != null && TryComp<FixturesComponent>(uid, out var fixtures) && TryComp<StandingStateComponent>(gun.Target, out var standingState))
         {
             foreach (var (key, fixture) in fixtures.Fixtures)
             {
-                Physics.SetCollisionMask(uid, key, fixture, (int) CollisionGroup.LayingDownMobMask);
+                Physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | (int) standingState.LayingDownLayer);
                 var target = EnsureComp<TargetedProjectileComponent>(uid);
                 target.Target = gun.Target;
             }

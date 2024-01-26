@@ -32,13 +32,11 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
-        // Don't collide if the laying down entity is not our target.
-        if (TryComp<TargetedProjectileComponent>(uid, out var targetedProjectile))
-        {
-            if(args.OtherEntity != targetedProjectile.Target &&
-               args.OtherFixture.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer)
-                return;
-        }
+        //Checks if the colliding entity is laying on the floor.
+        var projectileCollideEvent = new ProjectileCollideEvent(args.OtherEntity);
+        RaiseLocalEvent(uid, ref projectileCollideEvent);
+        if(projectileCollideEvent.Cancelled)
+            return;
 
         var target = args.OtherEntity;
         // it's here so this check is only done once before possible hit

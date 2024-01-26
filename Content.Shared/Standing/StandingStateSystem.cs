@@ -64,20 +64,19 @@ namespace Content.Shared.Standing
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    if (fixture.CollisionLayer == (int) CollisionGroup.MobLayer && dropHeldItems)
+                    if ((fixture.CollisionLayer & (int)standingState.StandingLayer) != 0 && dropHeldItems)
                     {
-                        standingState.StandingCollisionLayers.TryAdd(key, fixture.CollisionLayer);
                         standingState.LayerChangedFixtures.Add(key);
 
                         _physics.SetCollisionLayer(uid, key, fixture,
-                            (int) CollisionGroup.LayingDownMobLayer,
+                            (fixture.CollisionLayer & ~(int) standingState.StandingLayer) | (int) standingState.LayingDownLayer,
                             manager: fixtureComponent);
                     }
                     //Returns CollisionLayer to the original one if laid down on something while already being down.
-                    else if (fixture.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer && !dropHeldItems)
+                    else if ((fixture.CollisionLayer & (int)standingState.LayingDownLayer) != 0 && !dropHeldItems)
                     {
                         _physics.SetCollisionLayer(uid, key, fixture,
-                            standingState.StandingCollisionLayers[key],
+                            (fixture.CollisionLayer & ~(int) standingState.LayingDownLayer) | (int) standingState.StandingLayer,
                             manager: fixtureComponent);
                     }
 
@@ -146,13 +145,12 @@ namespace Content.Shared.Standing
                         continue;
 
                     _physics.SetCollisionLayer(uid, key, fixture,
-                        standingState.StandingCollisionLayers[key],
+                        (fixture.CollisionLayer & ~(int) standingState.LayingDownLayer) | (int) standingState.StandingLayer,
                         manager: fixtureComponent);
                 }
             }
             standingState.MaskChangedFixtures.Clear();
             standingState.LayerChangedFixtures.Clear();
-            standingState.StandingCollisionLayers.Clear();
 
             return true;
         }
