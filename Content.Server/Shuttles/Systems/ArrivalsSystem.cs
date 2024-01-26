@@ -11,7 +11,6 @@ using Content.Server.Salvage;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
-using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -81,10 +80,6 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
-        if (_cfgManager.GetCVar(CCVars.StationSpawningPrioritizeArrivals))
-            SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawn, before: new[] { typeof(SpawnPointSystem), typeof(ContainerSpawnPointSystem) });
-        else
-            SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawn, before: new[] { typeof(SpawnPointSystem) }, after: new[] { typeof(ContainerSpawnPointSystem) });
         SubscribeLocalEvent<StationArrivalsComponent, ComponentStartup>(OnArrivalsStartup);
 
         SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
@@ -316,7 +311,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void OnPlayerSpawn(PlayerSpawningEvent ev)
+    public void HandlePlayerSpawning(PlayerSpawningEvent ev)
     {
         if (ev.SpawnResult != null)
             return;

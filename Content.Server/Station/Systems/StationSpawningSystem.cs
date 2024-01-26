@@ -4,6 +4,8 @@ using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind.Commands;
 using Content.Server.PDA;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -44,6 +46,9 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
+    [Dependency] private readonly ArrivalsSystem _arrivalsSystem = default!;
+    [Dependency] private readonly ContainerSpawnPointSystem _containerSpawnPointSystem = default!;
+
     private bool _randomizeCharacters;
 
     /// <inheritdoc/>
@@ -69,7 +74,17 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (station != null && !Resolve(station.Value, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
+        var prioritizeArrivals = _configurationManager.GetCVar(CCVars.StationSpawningPrioritizeArrivals);
         var ev = new PlayerSpawningEvent(job, profile, station);
+
+        if (station != null && prioritizeArrivals)
+            _arrivalsSystem.HandlePlayerSpawning(ev);
+
+        _containerSpawnPointSystem.HandlePlayerSpawning(ev);
+
+        if (station != null && !prioritizeArrivals)
+            _arrivalsSystem.HandlePlayerSpawning(ev);
+
         RaiseLocalEvent(ev);
 
         DebugTools.Assert(ev.SpawnResult is { Valid: true } or null);

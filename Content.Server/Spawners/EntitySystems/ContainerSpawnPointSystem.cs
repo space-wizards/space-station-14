@@ -15,12 +15,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, before: new[] { typeof(SpawnPointSystem) });
-    }
-
-    private void OnSpawnPlayer(PlayerSpawningEvent args)
+    public void HandlePlayerSpawning(PlayerSpawningEvent args)
     {
         if (args.SpawnResult != null)
             return;
