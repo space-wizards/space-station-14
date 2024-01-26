@@ -4,7 +4,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Tabletop
 {
-    [UsedImplicitly]
     public sealed partial class TabletopNanopoliaSetup : TabletopSetup
     {
 
@@ -42,8 +41,8 @@ namespace Content.Server.Tabletop
             var center = session.Position;
 
             // Cat pieces.
-            EntityUid tempQualifier = entityManager.SpawnEntity(FigurineCatPrototype, center.Offset(-x1, y1));
-            session.Entities.Add(tempQualifier);
+            EntityUid tempQualifier0 = entityManager.SpawnEntity(FigurineCatPrototype, center.Offset(-x1, y1));
+            session.Entities.Add(tempQualifier0);
 
             // Laceup pieces.
             EntityUid tempQualifier1 = entityManager.SpawnEntity(FigurineLaceupsPrototype, center.Offset(-x1, y2));
@@ -58,38 +57,31 @@ namespace Content.Server.Tabletop
             session.Entities.Add(tempQualifier3);
 
             // GreenAutolat pieces.
-            EntityUid tempQualifier4 = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(-5.25f, y3_1));
-            session.Entities.Add(tempQualifier4);
 
-            EntityUid tempQualifier5 = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(-4.25f, y3_1));
-            session.Entities.Add(tempQualifier5);
+            for (float x = -5.25f; x <= -3.25f; x += 1f)
+            {
+                EntityUid tempQualifier = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(x, y3_1));
+                session.Entities.Add(tempQualifier);
+            }
 
-            EntityUid tempQualifier6 = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(-3.25f, y3_1));
-            session.Entities.Add(tempQualifier6);
-
-            EntityUid tempQualifier7 = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(-5.25f, y3_2));
-            session.Entities.Add(tempQualifier7);
-
-            EntityUid tempQualifier8 = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(-4.25f, y3_2));
-            session.Entities.Add(tempQualifier8);
-
-            EntityUid tempQualifier9 = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(-3.25f, y3_2));
-            session.Entities.Add(tempQualifier9);
+            for (float x = -5.25f; x <= -3.25f; x += 1f)
+            {
+                EntityUid tempQualifier = entityManager.SpawnEntity(FigurineGreenAutolatPrototype, center.Offset(x, y3_2));
+                session.Entities.Add(tempQualifier);
+            }
 
             // RedProtolat pieces.
-            EntityUid tempQualifier10 = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(5.25f, y3_1));
-            session.Entities.Add(tempQualifier10);
-            EntityUid tempQualifier11 = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(4.25f, y3_1));
-            session.Entities.Add(tempQualifier11);
-            EntityUid tempQualifier12 = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(3.25f, y3_1));
-            session.Entities.Add(tempQualifier12);
+            for (float x = 3.25f; x <= 5.25f; x += 1f)
+            {
+                EntityUid tempQualifier = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(x, y3_1));
+                session.Entities.Add(tempQualifier);
+            }
 
-            EntityUid tempQualifier13 = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(5.25f, y3_2));
-            session.Entities.Add(tempQualifier13);
-            EntityUid tempQualifier14 = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(4.25f, y3_2));
-            session.Entities.Add(tempQualifier14);
-            EntityUid tempQualifier15 = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(3.25f, y3_2));
-            session.Entities.Add(tempQualifier15);
+            for (float x = 3.25f; x <= 5.25f; x += 1f)
+            {
+                EntityUid tempQualifier = entityManager.SpawnEntity(FigurineRedProtolatdPrototype, center.Offset(x, y3_2));
+                session.Entities.Add(tempQualifier);
+            }
         }
     }
 }
