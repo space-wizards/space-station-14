@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Removed upgrades from the anomaly vessel.
-    type: Remove
-  - message: Added the experimental anomaly vessel, which researches twice as fast
-      at the cost of being radioactive.
-    type: Add
-  id: 5293
-  time: '2023-12-08T18:50:41.0000000+00:00'
 - author: PJB3005
   changes:
   - message: Opening the chat channel selector works again.
@@ -3811,3 +3802,10 @@
   id: 5793
   time: '2024-01-26T01:40:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24572
+- author: mirrorcult
+  changes:
+  - message: We lied Atomic Amnesia MMX is back
+    type: Add
+  id: 5794
+  time: '2024-01-26T05:48:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24575
