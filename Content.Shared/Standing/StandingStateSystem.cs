@@ -36,9 +36,6 @@ namespace Content.Shared.Standing
             // Optional component.
             Resolve(uid, ref appearance, ref hands, false);
 
-            if (!standingState.Standing)
-                return true;
-
             // This is just to avoid most callers doing this manually saving boilerplate
             // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
             // We do this BEFORE downing because something like buckle may be blocking downing but we want to drop hand items anyway
@@ -62,7 +59,7 @@ namespace Content.Shared.Standing
             _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
             // Change collision masks to allow going under certain entities like flaps and tables
-            // Also change layers to projectiles will pass over laying down entities.
+            // Also change layers so projectiles will pass over laying down entities.
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
@@ -74,6 +71,13 @@ namespace Content.Shared.Standing
 
                         _physics.SetCollisionLayer(uid, key, fixture,
                             (int) CollisionGroup.LayingDownMobLayer,
+                            manager: fixtureComponent);
+                    }
+                    //Returns CollisionLayer to the original one if laid down on something while already being down.
+                    else if (fixture.CollisionLayer == (int) CollisionGroup.LayingDownMobLayer && !dropHeldItems)
+                    {
+                        _physics.SetCollisionLayer(uid, key, fixture,
+                            standingState.StandingCollisionLayers[key],
                             manager: fixtureComponent);
                     }
 
