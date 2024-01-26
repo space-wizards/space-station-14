@@ -1221,26 +1221,6 @@
     Telecrystal: 2
   categories:
   - UplinkArmor
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
-
-- type: listing
-  id: UplinkClothingNoSlipsShoesNukie
-  name: uplink-clothing-no-slips-shoes-name
-  description: uplink-clothing-no-slips-shoes-desc
-  productEntity: ClothingShoesChameleonNoSlips
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkArmor
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
 
 - type: listing
   id: UplinkgClothingThievingGloves
@@ -1357,29 +1337,13 @@
   - UplinkMisc
 
 - type: listing
-  id: UplinkEshield
-  name: uplink-eshield-name
-  description: uplink-eshield-desc
-  icon: { sprite: /Textures/Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
-  productEntity: EnergyShield
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkMisc
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
-
-- type: listing
   id: UplinkEshieldNukie
   name: uplink-eshield-name
   description: uplink-eshield-desc
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
   productEntity: EnergyShield
   cost:
-    Telecrystal: 12
+    Telecrystal: 8
   categories:
   - UplinkMisc
   conditions:
