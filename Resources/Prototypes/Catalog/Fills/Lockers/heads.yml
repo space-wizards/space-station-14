@@ -240,8 +240,8 @@
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSunglasses
       - id: ClothingShoesBootsJack
+      - id: FlippoZeppelinLighter
       - id: CigarGoldCase
-        prob: 0.50
       - id: DoorRemoteSecurity
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
@@ -265,8 +265,8 @@
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSunglasses
       - id: ClothingShoesBootsJack
+      - id: FlippoZeppelinLighter
       - id: CigarGoldCase
-        prob: 0.50
       - id: DoorRemoteSecurity
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard

@@ -17,6 +17,7 @@
       - id: BoxHug
       - id: RubberStampClown
       - id: CrayonRainbow
+      - id: ClothingNeckSunflowerSpray # GreyStation
 
 - type: entity
   noSpawn: true

@@ -43,6 +43,8 @@ namespace Content.Server.Chat
             if (SuicideAttemptBlocked(victim, suicideEvent))
                 return false;
 
+            return false; // DeltaV - Prevent Suicide. We allow the event to go out anyways in case anything relies on the event for a message or whatever.
+
             bool environmentSuicide = false;
             // If you are critical, you wouldn't be able to use your surroundings to suicide, so you do the default suicide
             if (!_mobState.IsCritical(victim, mobState))

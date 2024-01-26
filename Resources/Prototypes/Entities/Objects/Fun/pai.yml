@@ -101,6 +101,8 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+  - type: TypingIndicator
+    proto: syndibot
 
 - type: entity
   parent: PersonalAI
