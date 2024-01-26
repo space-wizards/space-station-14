@@ -243,7 +243,7 @@
   id: UplinkSyndicateBombNukeops
   name: uplink-exploding-syndicate-bomb-name
   description: uplink-exploding-syndicate-bomb-desc
-  productEntity: SyndicateBombNukeops
+  productEntity: SyndicateBomb
   cost:
     Telecrystal: 11
   categories:

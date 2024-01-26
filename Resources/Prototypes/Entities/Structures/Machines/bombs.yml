@@ -129,10 +129,6 @@
 
 - type: entity
   parent: SyndicateBomb
-  id: SyndicateBombNukeops
-
-- type: entity
-  parent: SyndicateBomb
   id: DebugHardBomb
   name: debug bomb
   suffix: DEBUG
