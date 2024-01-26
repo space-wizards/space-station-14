@@ -1,29 +1,29 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by DoutorWhite (Github) for Space Station 14",
-  "states": [
-    {
-      "name": "base"
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
     },
-	{
-      "name": "powered",
-      "delays": [
-        [
-          0.1,
-          0.1,
-		  0.1,
-		  0.1,
-		  0.1,
-		  0.1,
-		  0.1,
-		  0.1
-        ]
-      ]
-    }
-  ]
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by DoutorWhite (Github) for Space Station 14",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "powered",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
 }
