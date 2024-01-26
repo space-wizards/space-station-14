@@ -12,7 +12,6 @@ plant-holder-component-empty-message = {$owner} is empty!
 plant-holder-component-spray-message = You spray {$owner}.
 plant-holder-component-transfer-message = You transfer {$amount}u to {$owner}.
 plant-holder-component-nothing-to-sample-message = There is nothing to take a sample of!
-plant-holder-component-already-sampled-message = This plant has already been sampled.
 plant-holder-component-dead-plant-message = This plant is dead.
 plant-holder-component-take-sample-message = You take a sample from the {$seedName}.
 plant-holder-component-compost-message = You compost {$usingItem} into {$owner}.
