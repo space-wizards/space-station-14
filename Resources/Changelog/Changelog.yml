@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Command staff has brig access.
-    type: Tweak
-  id: 5292
-  time: '2023-12-08T18:50:07.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Removed upgrades from the anomaly vessel.
@@ -3810,3 +3804,10 @@
   id: 5792
   time: '2024-01-26T00:13:42.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24570
+- author: yathxyz
+  changes:
+  - message: Updated nixpkgs input
+    type: Tweak
+  id: 5793
+  time: '2024-01-26T01:40:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24572
