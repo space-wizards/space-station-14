@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Opening the chat channel selector works again.
-    type: Fix
-  id: 5294
-  time: '2023-12-09T02:15:07.0000000+00:00'
 - author: JoeHammad
   changes:
   - message: Some knives now deal some damage when thrown
@@ -3809,3 +3803,10 @@
   id: 5794
   time: '2024-01-26T05:48:29.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24575
+- author: EmoGarbage404
+  changes:
+  - message: Cigarettes no longer deal cellular damage when smoked.
+    type: Remove
+  id: 5795
+  time: '2024-01-26T09:50:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24568
