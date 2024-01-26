@@ -1337,7 +1337,7 @@
   - UplinkMisc
 
 - type: listing
-  id: UplinkEshieldNukie
+  id: UplinkEshield
   name: uplink-eshield-name
   description: uplink-eshield-desc
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
