@@ -616,3 +616,11 @@
   - type: NavMapBeacon
     text: station-beacon-disposals
 
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconCryosleep
+  suffix: Cryosleep
+  components:
+  - type: NavMapBeacon
+    text: station-beacon-cryosleep
+
