@@ -1233,7 +1233,7 @@
   description: uplink-clothing-no-slips-shoes-desc
   productEntity: ClothingShoesChameleonNoSlips
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkArmor
   conditions:
