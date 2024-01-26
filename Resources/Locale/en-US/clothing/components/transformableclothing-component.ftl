@@ -1,0 +1,1 @@
+transform-clothing-verb-text = Transform
