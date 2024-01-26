@@ -1,8 +1,6 @@
 using System.Numerics;
-using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -14,7 +12,7 @@ namespace Content.Client.Shuttles.UI;
 /// Displays the docking view from a specific docking port
 /// </summary>
 [Virtual]
-public class DockingControl : ShuttleControl
+public class DockingControl : BaseShuttleControl
 {
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;

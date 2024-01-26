@@ -8,19 +8,18 @@ namespace Content.Client.Shuttles.UI;
 /// <summary>
 /// Provides common functionality for radar-like displays on shuttle consoles.
 /// </summary>
-public abstract class ShuttleControl : MapGridControl
+public abstract class BaseShuttleControl : MapGridControl
 {
     protected static readonly Color BackingColor = new Color(0.08f, 0.08f, 0.08f);
     protected Font Font;
 
-    protected ShuttleControl(float minRange, float maxRange, float range) : base(minRange, maxRange, range)
+    protected BaseShuttleControl(float minRange, float maxRange, float range) : base(minRange, maxRange, range)
     {
         Font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
     }
 
-    protected override void Draw(DrawingHandleScreen handle)
+    protected void DrawCircles(DrawingHandleScreen handle)
     {
-        base.Draw(handle);
         var backing = BackingColor;
         handle.DrawRect(new UIBox2(0f, Height, Width, 0f), backing);
 

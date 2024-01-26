@@ -3,6 +3,7 @@ using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using ShuttleConsoleWindow = Content.Client.Shuttles.UI.ShuttleConsoleWindow;
 
 namespace Content.Client.Shuttles.BUI;
 

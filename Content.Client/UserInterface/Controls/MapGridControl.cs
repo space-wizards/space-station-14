@@ -1,6 +1,7 @@
 using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
 
@@ -70,6 +71,7 @@ public abstract class MapGridControl : Control
 
     public MapGridControl(float minRange, float maxRange, float range)
     {
+        RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         SetSize = new Vector2(SizeFull, SizeFull);
         RectClipContent = true;

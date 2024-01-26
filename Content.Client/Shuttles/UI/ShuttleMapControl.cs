@@ -1,15 +1,20 @@
 using System.Numerics;
 using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
 
-public sealed class ShuttleMapControl : ShuttleControl
+/// <summary>
+/// Handles the radar drawing part of the shuttle map.
+/// </summary>
+public sealed class ShuttleMapControl : BaseShuttleControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -25,8 +30,6 @@ public sealed class ShuttleMapControl : ShuttleControl
 
     private List<Entity<MapGridComponent>> _grids = new();
 
-    private const float MaxRange = 2048f;
-
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
         _shuttles = _entManager.System<SharedShuttleSystem>();
@@ -41,6 +44,73 @@ public sealed class ShuttleMapControl : ShuttleControl
         ViewingMap = mapId;
         Offset = offset;
         Recentering = false;
+    }
+
+    protected void DrawDottedLine(DrawingHandleScreen screen, Vector2 from, Vector2 to, Color color, float offset = 0f, float dashSize = 8f, float gapSize = 2f)
+    {
+        var lineVector = (to - from);
+
+        // No drawing for you.
+        if (lineVector.LengthSquared() < 10f * float.Epsilon)
+            return;
+
+        var lineAndGap = gapSize + dashSize;
+        var lines = new ValueList<Vector2>();
+
+        // Minimum distance.
+        if (lineVector.Length() < lineAndGap)
+        {
+            lines.Add(from);
+            lines.Add(to);
+        }
+        else
+        {
+            var maxLength = lineVector.Length();
+            var normalizedLine = lineVector.Normalized();
+            var dashVector = normalizedLine * dashSize;
+            var gapVector = normalizedLine * gapSize;
+
+            var position = from;
+            offset %= (dashSize + gapSize);
+            var length = offset;
+            var dashLength = dashSize;
+
+            // If offset is less than gap size then start with a gap
+            // otherwise start with a partial line
+            if (offset > 0f)
+            {
+                if (offset < gapSize)
+                {
+                    position += normalizedLine * offset;
+                    length += offset;
+                }
+                else
+                {
+                    dashLength = (offset - gapSize);
+                }
+            }
+
+            while (length < maxLength)
+            {
+                lines.Add(position);
+
+                position += normalizedLine * dashLength;
+                var lengthFromStart = (position - from).Length();
+
+                // if over length then cap the thing.
+                if (lengthFromStart > maxLength)
+                {
+                    position = to;
+                }
+
+                lines.Add(position);
+                dashLength = dashVector.Length();
+                position += gapVector;
+                length = (position - from).Length();
+            }
+        }
+
+        screen.DrawPrimitives(DrawPrimitiveTopology.LineList, lines.Span, color);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -110,6 +180,25 @@ public sealed class ShuttleMapControl : ShuttleControl
         // Constant size diamonds
         var diamondRadius = WorldRange / 40f;
 
+        // If mouse highlighting a grid then show a highlight and support clicks
+        var inputManager = IoCManager.Resolve<IInputManager>();
+        // inputManager.MouseScreenPosition.;
+
+        // TODO:
+        // Split each screen to its own control
+        // Need a common method for buildmapobjects + drawing so they show same shit
+        // Map objects looks good just need xaml
+        // Maybe have the below as controls to get click support and hover
+        // Need to open a special context menu for the grid (atm needs dock button)
+        // Need per-map support for parallax textures (use component for path or default if none found), use nukies for planets
+        // Remove the FTL stuff so it doesn't force rebuilds
+        // need FTL button
+        // Rebuild should play a ping.
+        // Need pre-vis for shuttle arrival spot
+        // Need circular buffers for FTL
+
+        var realTime = IoCManager.Resolve<IGameTiming>().RealTime;
+
         foreach (var grid in _grids)
         {
             var gridColor = _shuttles.GetIFFColor(grid);
@@ -127,6 +216,9 @@ public sealed class ShuttleMapControl : ShuttleControl
             var right = ScalePosition(gridRelativePos + new Vector2(diamondRadius, 0f));
             var top = ScalePosition(gridRelativePos + new Vector2(0f, 2f * diamondRadius));
             var left = ScalePosition(gridRelativePos + new Vector2(-diamondRadius, 0f));
+
+            var offset = (float) realTime.TotalSeconds * 30f;
+            DrawDottedLine(handle, gridUiPos, MidPointVector, Color.Orange, offset: offset);
 
             // Diamond interior
             existingVerts.Add(bottom);
