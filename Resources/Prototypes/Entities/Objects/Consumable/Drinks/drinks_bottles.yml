@@ -631,7 +631,7 @@
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkCreamCartonXL
   name: Milk Cream XL
   description: It's cream. Made from milk. What else did you think you'd find in there?

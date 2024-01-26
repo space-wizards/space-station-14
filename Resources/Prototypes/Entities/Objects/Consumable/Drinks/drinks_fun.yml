@@ -149,3 +149,13 @@
     weightedRandomId: RandomFillMopwata
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mopwata.rsi
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}

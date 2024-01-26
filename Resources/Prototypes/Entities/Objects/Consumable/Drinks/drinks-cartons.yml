@@ -97,7 +97,7 @@
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 - type: entity
-  parent: DrinkCartonBaseFull
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkCreamCarton
   name: milk cream
   description: It's cream. Made from milk. What else did you think you'd find in there?
