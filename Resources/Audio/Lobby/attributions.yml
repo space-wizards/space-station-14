@@ -19,6 +19,11 @@
   copyright: "Absconditus by ZhayTee. Converted from MP3 to OGG."
   source: "https://bandcamp.zhaytee.net/track/absconditus"
 
+- files: ["atomicamnesiammx.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Atomic Amnesia MMX by Phillip Dyer. Converted from MP3 to OGG."
+  source: "https://soundcloud.com/3kliksphilip/atomic-amnesia-mmx-1"
+
 - files: ["singuloose.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Singuloose by Janis Schiedková. Converted from MP3 to OGG."
