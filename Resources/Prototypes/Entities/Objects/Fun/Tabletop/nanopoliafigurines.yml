@@ -102,7 +102,7 @@
   # TODO make the item appear
   - type: Storage
     grid:
-    - 0,0,5,5
+    - 0,0,4,4
     maxItemSize: Huge
   - type: Item
     sprite: Objects/Fun/Tabletop/nanofigure.rsi
@@ -126,7 +126,6 @@
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
   - type: StorageFill
- 
     contents:
     - id: NanopoliaBoard
     - id: FigurineRedProtolatheBox
