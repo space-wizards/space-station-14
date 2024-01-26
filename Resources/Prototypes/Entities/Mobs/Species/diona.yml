@@ -97,6 +97,7 @@
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu
+  - type: NoSlip
 
 - type: entity
   parent: BaseSpeciesDummy
