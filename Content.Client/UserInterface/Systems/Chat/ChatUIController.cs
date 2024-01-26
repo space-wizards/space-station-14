@@ -15,10 +15,12 @@ using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Decals;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Radio;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -27,9 +29,11 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -42,9 +46,11 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IChatManager _manager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
+    [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
@@ -54,6 +60,10 @@ public sealed class ChatUIController : UIController
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
+
+    [ValidatePrototypeId<ColorPalettePrototype>]
+    private const string _chatNamePalette = "Material";
+    private string[] _chatNameColors = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -212,6 +222,13 @@ public sealed class ChatUIController : UIController
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+
+        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(_chatNamePalette).Colors.Values.ToArray();
+        _chatNameColors = new string[nameColors.Length];
+        for (var i = 0; i < nameColors.Length; i++)
+        {
+            _chatNameColors[i] = nameColors[i].ToHex();
+        }
     }
 
     public void OnScreenLoad()
@@ -757,8 +774,13 @@ public sealed class ChatUIController : UIController
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
-        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && !_cfg.GetCVar(CCVars.ChatEnableColorName))
-            msg = RemoveMessageTag(msg, "color");
+        // color the name unless it's something like "the old man"
+        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _cfg.GetCVar(CCVars.ChatEnableColorName))
+        {
+            var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
+            if (grammar != null && grammar.ProperNoun == true)
+                msg.WrappedMessage = InjectTagInsideTag(msg, "Name", "color", GetNameColor(GetStringInsideTag(msg, "Name")));
+        }
 
         // Log all incoming chat to repopulate when filter is un-toggled
         if (!msg.HideChat)
@@ -848,21 +870,43 @@ public sealed class ChatUIController : UIController
         }
     }
 
-    public ChatMessage RemoveMessageTag(ChatMessage message, string tag)
+    /// <summary>
+    /// Returns the chat name color for a mob
+    /// </summary>
+    /// <param name="name">Name of the mob</param>
+    /// <returns>Hex value of the color</returns>
+    public string GetNameColor(string name)
+    {
+        var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Length);
+        return _chatNameColors[colorIdx];
+    }
+
+    public string GetStringInsideTag(ChatMessage message, string tag)
     {
         var rawmsg = message.WrappedMessage;
-        var tagStartFirst = rawmsg.IndexOf($"[{tag}");
-        if (tagStartFirst < 0)
-            return message;
-
-        var tagStartLast = rawmsg.IndexOf("]", tagStartFirst);
+        var tagStart = rawmsg.IndexOf($"[{tag}]");
         var tagEnd = rawmsg.IndexOf($"[/{tag}]");
-        if (tagStartLast < 0 || tagEnd < 0)
-            return message;
+        if (tagStart < 0 || tagEnd < 0)
+            return "";
+        tagStart += tag.Length + 2;
+        return rawmsg.Substring(tagStart, tagEnd - tagStart);
+    }
 
-        message.WrappedMessage = rawmsg.Replace($"[/{tag}]", "").Replace(rawmsg.Substring(tagStartFirst, tagStartLast - tagStartFirst + 1), "");
+    public string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{outerTag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{outerTag}]");
+        if (tagStart < 0 || tagEnd < 0) //If the outer tag is not found, the injection is not performed
+            return rawmsg;
+        tagStart += outerTag.Length + 2;
 
-        return message;
+        string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
+
+        rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
+        rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
+
+        return rawmsg;
     }
 
     private readonly record struct SpeechBubbleData(ChatMessage Message, SpeechBubble.SpeechType Type);
