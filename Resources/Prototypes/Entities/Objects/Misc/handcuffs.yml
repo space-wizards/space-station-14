@@ -157,13 +157,3 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
-
-- type: entity
-  parent: Handcuffs
-  id: Handcuffs2Lingering
-  suffix: 2, Lingering
-  components:
-  - type: Stack
-    lingering: true
-    count: 2
-    stackType: Handcuffs
