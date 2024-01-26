@@ -1,5 +1,8 @@
 ﻿using Content.Server.DoAfter;
+using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
@@ -24,6 +27,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GeneratorSystem _generator = default!;
     [Dependency] private readonly PowerSwitchableSystem _switchable = default!;
+    [Dependency] private readonly PowerNetSystem _powerNet = default!;
 
     public override void Initialize()
     {
@@ -31,6 +35,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
         // Update UI after main system runs.
         UpdatesAfter.Add(typeof(GeneratorSystem));
+        UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<PortableGeneratorComponent, GetVerbsEvent<AlternativeVerb>>(GetAlternativeVerb);
         SubscribeLocalEvent<PortableGeneratorComponent, GeneratorStartedEvent>(GeneratorTugged);
@@ -175,15 +180,19 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<PortableGeneratorComponent, FuelGeneratorComponent, AppearanceComponent>();
+        var query = EntityQueryEnumerator<PortableGeneratorComponent, FuelGeneratorComponent, PowerSupplierComponent>();
 
-        while (query.MoveNext(out var uid, out var portGen, out var fuelGen, out var xform))
+        while (query.MoveNext(out var uid, out var portGen, out var fuelGen, out var powerSupplier))
         {
-            UpdateUI(uid, portGen, fuelGen);
+            UpdateUI(uid, portGen, fuelGen, powerSupplier);
         }
     }
 
-    private void UpdateUI(EntityUid uid, PortableGeneratorComponent comp, FuelGeneratorComponent fuelComp)
+    private void UpdateUI(
+        EntityUid uid,
+        PortableGeneratorComponent comp,
+        FuelGeneratorComponent fuelComp,
+        PowerSupplierComponent powerSupplier)
     {
         if (!_uiSystem.IsUiOpen(uid, GeneratorComponentUiKey.Key))
             return;
@@ -191,9 +200,13 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         var fuel = _generator.GetFuel(uid);
         var clogged = _generator.GetIsClogged(uid);
 
+        (float, float)? networkStats = null;
+        if (powerSupplier.Net is { IsConnectedNetwork: true } net)
+            networkStats = (net.NetworkNode.LastCombinedLoad, net.NetworkNode.LastCombinedSupply);
+
         _uiSystem.TrySetUiState(
             uid,
             GeneratorComponentUiKey.Key,
-            new PortableGeneratorComponentBuiState(fuelComp, fuel, clogged));
+            new PortableGeneratorComponentBuiState(fuelComp, fuel, clogged, networkStats));
     }
 }
