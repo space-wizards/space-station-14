@@ -67,7 +67,7 @@ namespace Content.Shared.Standing
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    if (fixture.CollisionLayer == (int) CollisionGroup.MobLayer)
+                    if (fixture.CollisionLayer == (int) CollisionGroup.MobLayer && dropHeldItems)
                     {
                         standingState.StandingCollisionLayers.TryAdd(key, fixture.CollisionLayer);
                         standingState.LayerChangedFixtures.Add(key);
