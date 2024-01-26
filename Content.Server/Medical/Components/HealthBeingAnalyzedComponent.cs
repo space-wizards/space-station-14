@@ -1,20 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Medical.Components;
 
 [RegisterComponent]
-public sealed partial class HealthBeingAnalyzedComponent : Component
+[Access(typeof(HealthAnalyzerSystem))]
+public sealed partial class ActiveHealthMonitoredComponent : Component
 {
     /// <summary>
     /// Set of health analyzers currently monitoring this component's parent entity
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public HashSet<Entity<HealthAnalyzerComponent>> ActiveAnalyzers = new HashSet<Entity<HealthAnalyzerComponent>>();
+    [ViewVariables]
+    [DataField]
+    public HashSet<EntityUid> ActiveAnalyzers = new();
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float TimeSinceLastUpdate = 0f;
+    /// <summary>
+    /// When should the next update be sent for this patient
+    /// </summary>
+    [ViewVariables]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
+
+    /// <summary>
+    /// The delay between patient health updates
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+
 }
