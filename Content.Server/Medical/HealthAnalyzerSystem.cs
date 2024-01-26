@@ -221,8 +221,8 @@ namespace Content.Server.Medical
         /// <summary>
         /// Send an update for the target to the healthAnalyzer
         /// </summary>
-        /// <param name="healthAnalyzer"></param>
-        /// <param name="target"></param>
+        /// <param name="healthAnalyzer">The health analyzer</param>
+        /// <param name="target">The entity being scanned</param>
         /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
         public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
         {
