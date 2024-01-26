@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameTicking;
-using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Server.Containers;
@@ -18,7 +17,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, before: new[] { typeof(SpawnPointSystem) }, after: new[] { typeof(ArrivalsSystem) });
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, before: new[] { typeof(SpawnPointSystem) });
     }
 
     private void OnSpawnPlayer(PlayerSpawningEvent args)
