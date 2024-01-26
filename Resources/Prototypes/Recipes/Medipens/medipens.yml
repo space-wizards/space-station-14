@@ -1,42 +1,35 @@
 - type: medipenRecipe
   id: EmergencyMedipen
-  result: EmergencyMedipen
   reagents:
     Epinephrine: 12
     TranexamicAcid: 3
 
 - type: medipenRecipe
   id: AntiPoisonMedipen
-  result: AntiPoisonMedipen
   reagents:
     Ultravasculine: 10
     Epinephrine: 5
 
 - type: medipenRecipe
   id: BruteAutoInjector
-  result: BruteAutoInjector
   reagents:
     Bicaridine: 15
     TranexamicAcid: 5
 
 - type: medipenRecipe
   id: BurnAutoInjector
-  result: BurnAutoInjector
   reagents:
     Dermaline: 10
     Leporazine: 10
 
 - type: medipenRecipe
   id: RadAutoInjector
-  result: RadAutoInjector
   reagents:
     Arithrazine: 15
     Bicaridine: 5
 
 - type: medipenRecipe
   id: CombatMedipen
-  result: CombatMedipen
-  lockedByEmag: true
   reagents:
     Omnizine: 25
     TranexamicAcid: 5

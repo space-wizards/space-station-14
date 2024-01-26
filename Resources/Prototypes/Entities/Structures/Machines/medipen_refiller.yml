@@ -1,10 +1,8 @@
 - type: entity
   id: MedipenRefiller
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: Medipen Refiller
+  name: medipen refiller
   description: A machine that refill medipens.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
     snapCardinals: true
@@ -16,21 +14,6 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Appearance
   - type: MedipenRefiller
-    isEmmaged: false
-  - type: Transform
-    anchored: true
-    noRot: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.4"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

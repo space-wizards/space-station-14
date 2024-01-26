@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed partial class ChemistrySystem
     {
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly TagSystem _tag = default!;
 
         private void InitializeHypospray()
         {
@@ -126,8 +126,8 @@ namespace Content.Server.Chemistry.EntitySystems
             if (delayComp != null)
                 _useDelay.TryResetDelay((uid, delayComp));
 
-            if (_tagSystem.HasTag(hypo.Owner, "Medipen"))
-                _tagSystem.TryAddTag(uid, "EmptyMedipen");
+            if (_tag.HasTag(uid, "Medipen"))
+                _tag.TryAddTag(uid, "EmptyMedipen");
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
