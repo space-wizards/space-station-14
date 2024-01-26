@@ -232,11 +232,11 @@
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
     A small generator capable of powering individual rooms, in case of emergencies.
-    Runs off welding fuel and is rated for up to 5 kW.
+    Runs off welding fuel and is rated for up to 8 kW.
     Rated ages 3 and up.
   parent: PortableGeneratorBase
   id: PortableGeneratorJrPacman
-  suffix: Welding Fuel, 5 kW
+  suffix: Welding Fuel, 8 kW
   components:
     - type: AmbientSound
       range: 4
@@ -276,10 +276,10 @@
     - type: Machine
       board: PortableGeneratorJrPacmanMachineCircuitboard
     - type: FuelGenerator
-      targetPower: 2000
-      minTargetPower: 1000
-      optimalPower: 5000
-      maxTargetPower: 5000
+      targetPower: 5000
+      minTargetPower: 4000
+      optimalPower: 8000
+      maxTargetPower: 8000
       # 7.5 minutes at full tank.
       optimalBurnRate: 0.11111111
       # Shallow curve that allows you to just barely eek out 12 minutes at lowest.
