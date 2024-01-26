@@ -310,7 +310,7 @@ public sealed class RadarControl : ShuttleControl
         {
             // TODO: Short-circuit interior chunk nodes
             // This can be optimised a lot more if required.
-            var tileVec = _maps.TileToVector(grid, tileRef.Value.GridIndices);
+            var tileVec = _maps.TileCenterToVector(grid, tileRef.Value.GridIndices);
 
             /*
              * You may be wondering what the fuck is going on here.

@@ -50,7 +50,6 @@ public partial class NavMapControl : MapGridControl
     // Constants
     protected float UpdateTime = 1.0f;
     protected float MaxSelectableDistance = 10f;
-    protected float RecenterMinimum = 0.05f;
     protected float MinDragDistance = 5f;
     protected static float MinDisplayedRange = 8f;
     protected static float MaxDisplayedRange = 128f;
@@ -247,22 +246,7 @@ public partial class NavMapControl : MapGridControl
         _entManager.TryGetComponent(MapUid, out _fixtures);
 
         // Map re-centering
-        if (Recentering)
-        {
-            var frameTime = Timing.FrameTime;
-            var diff = Offset * (float) frameTime.TotalSeconds;
-
-            if (Offset.LengthSquared() < RecenterMinimum)
-            {
-                Offset = Vector2.Zero;
-                Recentering = false;
-                _recenter.Disabled = true;
-            }
-            else
-            {
-                Offset -= diff * 5f;
-            }
-        }
+        _recenter.Disabled = DrawRecenter();
 
         _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange ):0.0}"));
 

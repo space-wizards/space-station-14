@@ -146,17 +146,19 @@
                             <Label Name="SettingsLabel" Text="{Loc 'shuttle-console-map-settings'}"
                                    HorizontalAlignment="Center"/>
                         </controls:StripeBack>
-                        <Button Name="MapRecentreButton"
-                                Text="{Loc 'shuttle-console-map-recentre'}"
-                                TextAlign="Center"
-                                Disabled="True"/>
+                        <Button Name="MapRebuildButton"
+                                Text="{Loc 'shuttle-console-map-rebuild'}"
+                                TextAlign="Center"/>
                         <!-- Map objects -->
                         <controls:StripeBack MinSize="48 48">
                             <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-map-objects'}"
                                    HorizontalAlignment="Center"/>
                         </controls:StripeBack>
-                        <BoxContainer Name="HyperspaceDestinations"
-                                      Orientation="Vertical"/>
+                        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                            <BoxContainer Name="HyperspaceDestinations"
+                                          Orientation="Vertical"
+                                          VerticalExpand="True"/>
+                        </ScrollContainer>
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>

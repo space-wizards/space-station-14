@@ -1,5 +1,5 @@
 <BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
-    <Collapsible Orientation="Vertical">
+    <Collapsible>
         <CollapsibleHeading Name="SensorAddress" />
         <CollapsibleBody Margin="20 2 2 2">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
@@ -10,7 +10,7 @@
                     <RichTextLabel Name="TemperatureLabel" />
                     <Control Name="TemperatureThresholdContainer" Margin="20 0 2 0" />
                 </BoxContainer>
-                <Collapsible Orientation="Vertical" Margin="2">
+                <Collapsible Margin="2">
                     <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-gases'}" />
                     <CollapsibleBody Margin="20 0 0 0">
                         <BoxContainer Name="GasContainer" Orientation="Vertical" Margin="2" />

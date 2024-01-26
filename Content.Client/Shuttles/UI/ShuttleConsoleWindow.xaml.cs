@@ -10,6 +10,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -21,7 +22,9 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     IComputerWindow<ShuttleConsoleBoundInterfaceState>
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    private SharedTransformSystem _xformSystem = default!;
 
     private ShuttleConsoleMode _mode = ShuttleConsoleMode.Nav;
 
@@ -54,6 +57,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _xformSystem = _entManager.System<SharedTransformSystem>();
+
         WorldRangeChange(NavRadar.WorldRange);
         NavRadar.WorldRangeChanged += WorldRangeChange;
 
@@ -71,6 +76,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         NavModeButton.Pressed = true;
         SetupMode(_mode);
 
+        MapRebuildButton.OnPressed += MapRebuildPressed;
+    }
+
+    private void MapRebuildPressed(BaseButton.ButtonEventArgs obj)
+    {
+        BuildMapObjects();
     }
 
     private void ClearModes(ShuttleConsoleMode mode)
@@ -360,6 +371,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     MapRadar.SetMap(shuttleXform.MapID, shuttleXform.WorldPosition);
                 }
 
+                BuildMapObjects();
+
                 break;
             case ShuttleConsoleMode.Dock:
                 DockContainer.Visible = true;
@@ -379,21 +392,93 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         SetupMode(_mode);
     }
 
-    #region NAV
+    #region Map
 
-    #endregion
+    private void BuildMapObjects()
+    {
+        HyperspaceDestinations.DisposeAllChildren();
+        var mapComps = _entManager.AllEntityQueryEnumerator<MapComponent>();
 
-    #region MAP
+        while (mapComps.MoveNext(out var mapUid, out var mapComp))
+        {
+            var mapName = _entManager.GetComponent<MetaDataComponent>(mapUid).EntityName;
 
-    #endregion
+            var heading = new CollapsibleHeading(mapName);
 
-    #region DOCK
+            heading.MinHeight = 32f;
+            heading.AddStyleClass(ContainerButton.StyleClassButton);
+            heading.HorizontalAlignment = HAlignment.Stretch;
+            heading.Label.HorizontalAlignment = HAlignment.Center;
+            heading.Label.HorizontalExpand = true;
+            heading.HorizontalExpand = true;
+
+            var body = new CollapsibleBody()
+            {
+                HorizontalAlignment = HAlignment.Stretch,
+                VerticalAlignment = VAlignment.Top,
+                HorizontalExpand = true,
+            };
+
+            var mapButton = new Collapsible(heading, body);
+
+            foreach (var grid in _mapManager.GetAllMapGrids(mapComp.MapId))
+            {
+                var gridButton = new Button()
+                {
+                    Text = _entManager.GetComponent<MetaDataComponent>(grid.Owner).EntityName,
+                    HorizontalExpand = true,
+                    MinHeight = 32f,
+                };
+
+                var gridContainer = new BoxContainer()
+                {
+                    Children =
+                    {
+                        new Control()
+                        {
+                            MinWidth = 32f,
+                        },
+                        gridButton
+                    }
+                };
+
+                body.AddChild(gridContainer);
+
+                gridButton.OnPressed += args =>
+                {
+                    OnGridPress(grid.Owner);
+                };
+            }
+
+            HyperspaceDestinations.AddChild(mapButton);
+
+            // Zoom in to our map
+            if (mapComp.MapId == MapRadar.ViewingMap)
+            {
+                mapButton.BodyVisible = true;
+            }
+        }
+    }
+
+    private void OnGridPress(EntityUid gridUid)
+    {
+        var worldPos = _xformSystem.GetWorldPosition(gridUid);
+        MapRadar.TargetOffset = worldPos;
+        MapRadar.ForceRecenter();
+    }
 
     #endregion
 
     protected override void Draw(DrawingHandleScreen handle)
     {
         base.Draw(handle);
+
+        switch (_mode)
+        {
+            case ShuttleConsoleMode.Map:
+                MapRadar.DrawRecenter();
+                break;
+        }
 
         if (!_entManager.TryGetComponent<PhysicsComponent>(_shuttleEntity, out var gridBody) ||
             !_entManager.TryGetComponent<TransformComponent>(_shuttleEntity, out var gridXform))

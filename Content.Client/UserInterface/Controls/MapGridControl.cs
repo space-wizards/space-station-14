@@ -20,11 +20,19 @@ public abstract class MapGridControl : Control
     /// Control offset from whatever is being tracked.
     /// </summary>
     public Vector2 Offset;
+
+    /// <summary>
+    /// If the control is being recentered what is the target offset to reach.
+    /// </summary>
+    public Vector2 TargetOffset;
+
     private bool _draggin;
     protected Vector2 StartDragPosition;
     protected bool Recentering;
 
     protected const float ScrollSensitivity = 8f;
+
+    protected float RecenterMinimum = 0.05f;
 
     /// <summary>
     /// UI pixel radius.
@@ -126,6 +134,33 @@ public abstract class MapGridControl : Control
     protected Vector2 ScalePosition(Vector2 value)
     {
         return value * MinimapScale + MidPointVector;
+    }
+
+    /// <summary>
+    /// Handles re-centering the control's offset.
+    /// </summary>
+    /// <returns></returns>
+    public bool DrawRecenter()
+    {
+        // Map re-centering
+        if (Recentering)
+        {
+            var frameTime = Timing.FrameTime;
+            var diff = (TargetOffset - Offset) * (float) frameTime.TotalSeconds;
+
+            if (Offset.LengthSquared() < RecenterMinimum)
+            {
+                Offset = TargetOffset;
+                Recentering = false;
+            }
+            else
+            {
+                Offset += diff * 5f;
+                return false;
+            }
+        }
+
+        return Offset == TargetOffset;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
