@@ -87,9 +87,9 @@ namespace Content.Server.Medical
         /// <summary>
         /// Sets the next update time
         /// </summary>
-        private void OnActiveHealthMonitoredStartup(EntityUid uid, ActiveHealthMonitoredComponent component, ComponentStartup args)
+        private void OnActiveHealthMonitoredStartup(Entity<ActiveHealthMonitoredComponent> entity, ref ComponentStartup args)
         {
-            component.NextUpdate = _timing.CurTime + component.UpdateInterval;
+            entity.Comp.NextUpdate = _timing.CurTime + entity.Comp.UpdateInterval;
         }
 
         /// <summary>
@@ -194,6 +194,7 @@ namespace Content.Server.Medical
         /// </summary>
         /// <param name="target">The entity to analyzing</param>
         /// <param name="healthAnalyzer">The health analyzer that was receiving the updates</param>
+        /// <param name="healthMonitoredComponent">Optional active health monitored component from the target</param>
         /// <param name="healthAnalyzerComponent">Optional health analyzer component</param>
         private void StopAnalyzingEntity(EntityUid target, EntityUid healthAnalyzer, ActiveHealthMonitoredComponent? healthMonitoredComponent = null, HealthAnalyzerComponent? healthAnalyzerComponent = null)
         {
