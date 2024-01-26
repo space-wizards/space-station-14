@@ -23,6 +23,7 @@
   components:
   - type: Storage
     maxItemSize: Normal
+    defaultStorageOrientation: Vertical
     grid:
     - 0,0,7,1
   - type: Item

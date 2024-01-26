@@ -33,7 +33,7 @@
   weights:
     EscapeShuttleObjective: 1
     DieObjective: 0.05
-    HijackShuttleObjective: 0.02
+    #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial
@@ -71,7 +71,6 @@
     TechnologyDiskStealCollectionObjective: 1        #rnd
     FigurineStealCollectionObjective: 0.3          #service
     IDCardsStealCollectionObjective: 1
-    EncryptionKeyStealCollectionObjective: 1
     CannabisStealCollectionObjective: 1
     LAMPStealCollectionObjective: 2 #only for moth
 
@@ -80,7 +79,6 @@
   weights:
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
-    AmmoTechFabCircuitboardStealObjective: 1
     ClothingHeadHatWardenStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
@@ -94,7 +92,7 @@
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
-    
+
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
   weights:
@@ -122,7 +120,8 @@
     ShivaStealObjective: 1
     SmileStealObjective: 1
     PunPunStealObjective: 1
-    
+    TropicoStealObjective: 1
+
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape
   weights:

@@ -1,9 +1,7 @@
 using Content.Client.Clothing;
 using Content.Client.Examine;
 using Content.Client.Verbs.UI;
-using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
@@ -48,8 +46,6 @@ namespace Content.Client.Inventory
                 _equipEventsQueue.Enqueue((comp, args)));
             SubscribeLocalEvent<InventorySlotsComponent, DidUnequipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
-
-            SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
         }
 
         public override void Update(float frameTime)
@@ -72,14 +68,6 @@ namespace Content.Client.Inventory
                         throw new InvalidOperationException($"Received queued event of unknown type: {args.GetType()}");
                 }
             }
-        }
-
-        private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
-        {
-            if (args.Handled || !component.QuickEquip)
-                return;
-
-            QuickEquip(uid, component, args);
         }
 
         private void OnDidUnequip(InventorySlotsComponent component, DidUnequipEvent args)

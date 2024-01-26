@@ -8,6 +8,13 @@ public abstract class SharedNavMapSystem : EntitySystem
 {
     public const byte ChunkSize = 4;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<NavMapBeaconComponent, MapInitEvent>(OnNavMapBeaconMapInit);
+    }
+
     /// <summary>
     /// Converts the chunk's tile into a bitflag for the slot.
     /// </summary>
@@ -31,14 +38,26 @@ public abstract class SharedNavMapSystem : EntitySystem
         return new Vector2i(x, y);
     }
 
+    private void OnNavMapBeaconMapInit(EntityUid uid, NavMapBeaconComponent component, MapInitEvent args)
+    {
+        component.Text ??= string.Empty;
+        component.Text = Loc.GetString(component.Text);
+        Dirty(uid, component);
+    }
+
     [Serializable, NetSerializable]
     protected sealed class NavMapComponentState : ComponentState
     {
         public Dictionary<Vector2i, int> TileData = new();
 
         public List<NavMapBeacon> Beacons = new();
+
+        public List<NavMapAirlock> Airlocks = new();
     }
 
     [Serializable, NetSerializable]
     public readonly record struct NavMapBeacon(Color Color, string Text, Vector2 Position);
+
+    [Serializable, NetSerializable]
+    public readonly record struct NavMapAirlock(Vector2 Position);
 }

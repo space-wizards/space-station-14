@@ -13,6 +13,7 @@ namespace Content.Server.Communications
         /// Remaining cooldown between making announcements.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float AnnouncementCooldownRemaining;
 
         /// <summary>
@@ -36,6 +37,13 @@ namespace Content.Server.Communications
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public int Delay = 90;
+
+        /// <summary>
+        /// Time in seconds of announcement cooldown when a new console is created on a per-console basis
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public int InitialDelay = 30;
 
         /// <summary>
         /// Can call or recall the shuttle

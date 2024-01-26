@@ -101,7 +101,8 @@
   forced: true
   transferName: true
   revertOnDeath: true
-
+  inventory: Drop
+  cooldown: 160
 
 # this is the monkey polymorph for artifact.
 - type: polymorph

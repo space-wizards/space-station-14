@@ -338,7 +338,10 @@ dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
 resharper_braces_for_ifelse = required_for_multiline
 resharper_keep_existing_attribute_arrangement = true
 
-[*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets}]
+[*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props}]
+indent_size = 2
+
+[nuget.config]
 indent_size = 2
 
 [{*.yaml,*.yml}]
