@@ -1,0 +1,10 @@
+admin-player-actions-window-title = Дії гравців
+admin-player-actions-window-ban = Бани
+admin-player-actions-window-admin-ghost = Адмін. Привид
+admin-player-actions-window-teleport = Телепорт
+admin-player-actions-window-permissions = Дозвіли
+admin-player-actions-window-announce = Повідомити
+admin-player-actions-window-shuttle = Ви/Від-кликати шатл
+admin-player-actions-window-admin-logs = Логі
+admin-player-actions-window-admin-notes = Нотатки
+admin-player-actions-window-admin-fax = Факс

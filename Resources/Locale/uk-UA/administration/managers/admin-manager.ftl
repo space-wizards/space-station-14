@@ -1,0 +1,9 @@
+admin-manager-self-de-admin-message = {$exAdminName} вимкнув привелеї адміністратора.
+admin-manager-self-re-admin-message = {$newAdminName} увимкнули привелеї адміністратора.
+admin-manager-became-normal-player-message = Ви тепер звичайний гравець.
+admin-manager-became-admin-message = Ви тепер адміністратор.
+admin-manager-no-longer-admin-message = Ви більше не адміністратор.
+admin-manager-admin-permissions-updated-message = Ваш список доступів адміністратора змінено.
+admin-manager-admin-logout-message = Адмін від'єднався: {$name}
+admin-manager-admin-login-message = Адмін під'єднався: {$name}
+admin-manager-admin-data-host-title = Хост

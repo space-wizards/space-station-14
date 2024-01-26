@@ -1,0 +1,29 @@
+hud-chatbox-info = {$talk-key} щоб казати, {$cycle-key} щоб перемикати канали.
+
+hud-chatbox-select-name-prefixed = {$prefix} {$name}
+hud-chatbox-select-channel-Admin = Адмін
+hud-chatbox-select-channel-Console = Консоль
+hud-chatbox-select-channel-Dead = Мертві
+hud-chatbox-select-channel-Emotes = Емоції
+hud-chatbox-select-channel-Local = Локальний
+hud-chatbox-select-channel-Whisper = Шептати
+hud-chatbox-select-channel-LOOC = LOOC
+hud-chatbox-select-channel-OOC = OOC
+hud-chatbox-select-channel-Damage = Шкода
+hud-chatbox-select-channel-Visual = Дії
+hud-chatbox-select-channel-Radio = Рація
+
+hud-chatbox-channel-Admin = Admin Misc
+hud-chatbox-channel-AdminAlert = Admin Alert
+hud-chatbox-channel-AdminChat = Admin Chat
+hud-chatbox-channel-Dead = Мертві
+hud-chatbox-channel-Emotes = Емоції
+hud-chatbox-channel-Local = Локальний
+hud-chatbox-channel-Whisper = Шепот
+hud-chatbox-channel-LOOC = LOOC
+hud-chatbox-channel-OOC = OOC
+hud-chatbox-channel-Radio = Рація
+hud-chatbox-channel-Server = Сервер
+hud-chatbox-channel-Visual = Дії
+hud-chatbox-channel-Damage = Шкоди
+hud-chatbox-channel-Unspecified = Необрано

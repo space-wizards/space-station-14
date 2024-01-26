@@ -1,0 +1,12 @@
+﻿construction-category-all = Усі
+construction-category-furniture = Фурнітура
+construction-category-storage = Сховищя
+construction-category-tools = Інструменти
+construction-category-materials = Матеріали
+construction-category-structures = Структури
+construction-category-machines = Машини
+construction-category-weapons = Зброя
+construction-category-tiles = Тайли
+construction-category-utilities = Utilities
+construction-category-misc = Інше
+construction-category-clothing = Одяг
