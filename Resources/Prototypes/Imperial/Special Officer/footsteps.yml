@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: FootstepSpecialOfficer
+  files:
+  - /Audio/Imperial/SpecialOfficer/Resources_Audio_Effects_Footsteps_SpecialOfficer1.ogg
+  - /Audio/Imperial/SpecialOfficer/Resources_Audio_Effects_Footsteps_SpecialOfficer2.ogg
+  - /Audio/Imperial/SpecialOfficer/Resources_Audio_Effects_Footsteps_SpecialOfficer3.ogg
+  - /Audio/Imperial/SpecialOfficer/Resources_Audio_Effects_Footsteps_SpecialOfficer4.ogg
