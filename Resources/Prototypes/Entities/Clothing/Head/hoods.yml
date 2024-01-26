@@ -179,6 +179,21 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatHoodXenos
+  noSpawn: true
+  name: xenos hood
+  description: Rawr, im a xeno, fear me.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/xenos_suit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/xenos_suit.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHoodMoth
   name: moth mask
   description: A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.

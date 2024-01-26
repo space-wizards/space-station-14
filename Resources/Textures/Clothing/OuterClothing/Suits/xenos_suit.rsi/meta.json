@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/master/icons/obj/clothing/suits/costume.dmi, https://github.com/tgstation/tgstation/blob/master/icons/mob/inhands/clothing/suits_righthand.dmi, https://github.com/tgstation/tgstation/blob/cdef5147a659a36d88047c2c041ba62c10a8e3e4/icons/mob/inhands/clothing/suits_lefthand.dmi, https://github.com/tgstation/tgstation/blob/72120766beeea2c427af30823f5fb942e1da2f45/icons/mob/clothing/suits/costume.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    }
+  ]
+}

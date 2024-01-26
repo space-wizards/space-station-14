@@ -235,3 +235,21 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitXenos
+  name: xenos suit
+  description: A suit made out of chitinous alien hide.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/xenos_suit.rsi
+  - type: Item
+    size: Normal
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/xenos_suit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodXenos
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
