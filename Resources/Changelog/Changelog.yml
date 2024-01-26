@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Rat king and his servants properly heal from miasma.
-    type: Fix
-  - message: Rat king no longer rummages from an infinite distance.
-    type: Fix
-  - message: Rat king generates more miasma to fill larger rooms.
-    type: Tweak
-  id: 5291
-  time: '2023-12-08T18:46:28.0000000+00:00'
 - author: Emisse
   changes:
   - message: Command staff has brig access.
@@ -3809,3 +3799,14 @@
   id: 5791
   time: '2024-01-25T22:04:31.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24560
+- author: Agoichi
+  changes:
+  - message: Bio hoods hiding your face now
+    type: Tweak
+  - message: Bio hoods now can be used as a breath mask
+    type: Tweak
+  - message: You can not eat while you wearing bio hood
+    type: Tweak
+  id: 5792
+  time: '2024-01-26T00:13:42.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24570
