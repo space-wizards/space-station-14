@@ -103,7 +103,8 @@
   - type: Storage
     grid:
     - 0,0,4,4
-    maxItemSize: Huge
+    maxItemSize: Normal
+    maxTotalWeight: 60
   - type: Item
     sprite: Objects/Fun/Tabletop/nanofigure.rsi
     heldPrefix: box
