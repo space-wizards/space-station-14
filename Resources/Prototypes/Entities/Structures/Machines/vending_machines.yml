@@ -53,6 +53,9 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 8
   - type: ActivatableUI
     key: enum.VendingMachineUiKey.Key
   - type: ActivatableUIRequiresPower
