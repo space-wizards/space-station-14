@@ -8,22 +8,22 @@ public sealed partial class TabletopNanopoliaSetup : TabletopSetup
 {
 
     [DataField]
-    public EntProtoid figurineCatPrototype = "FigurineCat";
+    public EntProtoId figurineCatPrototype = "FigurineCat";
 
     [DataField]
-    public EntProtoid figurineLaceupsPrototype = "FigurineLaceups";
+    public EntProtoId figurineLaceupsPrototype = "FigurineLaceups";
 
     [DataField]
-    public EntProtoid figurineMcgriffPrototype = "FigurineMcgriff";
+    public EntProtoId figurineMcgriffPrototype = "FigurineMcgriff";
 
     [DataField]
-    public EntProtoid figurineTopHatPrototype = "FigurineTopHat";
+    public EntProtoId figurineTopHatPrototype = "FigurineTopHat";
 
     [DataField]
-    public EntProtoid figurineGreenAutolatPrototype = "FigurineGreenAutolathe";
+    public EntProtoId figurineGreenAutolatPrototype = "FigurineGreenAutolathe";
 
     [DataField]
-    public EntProtoid figurineRedProtolatdPrototype = "FigurineRedProtolathe";
+    public EntProtoId figurineRedProtolatdPrototype = "FigurineRedProtolathe";
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
