@@ -7,23 +7,23 @@ namespace Content.Server.Tabletop;
 public sealed partial class TabletopNanopoliaSetup : TabletopSetup
 {
 
-    [DataField("figurineCatPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string figurineCatPrototype { get; private set; } = "FigurineCat";
+    [DataField]
+    public EntProtoid figurineCatPrototype = "FigurineCat";
 
-    [DataField("figurineLaceupsPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string figurineLaceupsPrototype { get; private set; } = "FigurineLaceups";
+    [DataField]
+    public EntProtoid figurineLaceupsPrototype = "FigurineLaceups";
 
-    [DataField("figurineMcgriffPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string figurineMcgriffPrototype { get; private set; } = "FigurineMcgriff";
+    [DataField]
+    public EntProtoid figurineMcgriffPrototype = "FigurineMcgriff";
 
-    [DataField("figurineTopHatPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string figurineTopHatPrototype { get; private set; } = "FigurineTopHat";
+    [DataField]
+    public EntProtoid figurineTopHatPrototype = "FigurineTopHat";
 
-    [DataField("figurineGreenAutolatPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string figurineGreenAutolatPrototype { get; private set; } = "FigurineGreenAutolathe";
+    [DataField]
+    public EntProtoid figurineGreenAutolatPrototype = "FigurineGreenAutolathe";
 
-    [DataField("figurineRedProtolatdPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string figurineRedProtolatdPrototype { get; private set; } = "FigurineRedProtolathe";
+    [DataField]
+    public EntProtoid figurineRedProtolatdPrototype = "FigurineRedProtolathe";
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
