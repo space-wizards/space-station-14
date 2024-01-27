@@ -127,8 +127,8 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [DataField("breakOnDamage")]
     public bool BreakOnDamage;
-	
-	/// <summary>
+    
+    /// <summary>
     ///     Whether a change to the target sleep state will cancel the DoAfter.
     /// </summary>
     [DataField("breakOnTargetWake")]
