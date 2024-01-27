@@ -1003,6 +1003,8 @@
   components:
     - type: PriorityDock
       tag: DockArrivals
+    - type: AntiAnomalyZone
+      zoneRadius: 10
 
 - type: entity
   parent: AirlockGlassShuttle
