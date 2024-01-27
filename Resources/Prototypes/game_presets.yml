@@ -40,6 +40,24 @@
     - Secret
 
 - type: gamePreset
+  id: SecretExtended
+  alias:
+    - secretextended
+  name: secret-title
+  showInVote: false
+  description: secret-description
+  rules:
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: SecretGreenshift
+  alias:
+  - secretgreenshift
+  name: secret-title
+  showInVote: false #4boring4vote
+  description: secret-description
+
+- type: gamePreset
   id: Sandbox
   alias:
     - sandbox
