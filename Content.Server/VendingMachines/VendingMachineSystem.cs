@@ -158,7 +158,8 @@ namespace Content.Server.VendingMachines
         {
             vendComponent.Broken = true;
             TryUpdateVisualState(uid, vendComponent);
-            EnsureComp<WeldableComponent>(uid);
+            var weldable = EnsureComp<WeldableComponent>(uid);
+            weldable.WeldingTime = TimeSpan.FromSeconds(8);
         }
 
         private void OnWeldChanged(EntityUid uid, VendingMachineComponent component, WeldableChangedEvent args)
