@@ -1,0 +1,32 @@
+#license: CLA
+#copyright: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterVestHeavyBlack
+  name: black heavyvest
+  description: A hard-boiled compound armor vest with  outstanding protection qualities and a limited movement ability.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/armorvest_black.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/armorvest_black.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.8
+        Radiation: 0.9
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: StaminaProtection
+    coefficient: 0.7
+  - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+    - WhitelistChameleon

@@ -1,0 +1,34 @@
+#license: CLA
+#copiryght: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesGoldenEra
+  name: guilded force gloves
+  description: A pair of heavy-duty black metal and durathread gloves decorated with gold.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Hands/Gloves/goldenera.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Hands/Gloves/goldenera.rsi
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-black
+  - type: Insulated
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: MeleeWeapon
+    attackRate: 1.2
+    damage:
+      types:
+       Blunt: 6
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+  - type: FingerprintMask
+  - type: StaticPrice
+    price: 1200
+  - type: StaminaDamageOnHit
+    damage: 18
+  - type: Tag
+    tags:
+    - WhitelistChameleon

@@ -1,0 +1,15 @@
+#license: CLA
+#copityght: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetHeavyBlack
+  name: black heavyhelmet
+  description: Reinforced armoured helmet suited for combat. Very durable, but not too light.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Head/black_helmet.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Head/black_helmet.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

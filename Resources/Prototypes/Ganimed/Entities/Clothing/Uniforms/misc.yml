@@ -10,6 +10,9 @@
     sprite: Ganimed/Clothing/Uniforms/bridgeofficer.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/bridgeofficer.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -21,6 +24,9 @@
     sprite: Ganimed/Clothing/Uniforms/military.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/military.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformJumpskirtCapFormalDress
@@ -32,6 +38,9 @@
     sprite: Ganimed/Clothing/Uniforms/capformaldress.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/capformaldress.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -43,6 +52,9 @@
     sprite: Ganimed/Clothing/Uniforms/Jumpsuit/coroner.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/Jumpsuit/coroner.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -54,6 +66,9 @@
     sprite: Ganimed/Clothing/Uniforms/Jumpskirt/coroner.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/Jumpskirt/coroner.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -65,6 +80,9 @@
     sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackcoroner.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackcoroner.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -76,6 +94,9 @@
     sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackcoroner.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackcoroner.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -87,6 +108,9 @@
     sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackbrigmedic.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackbrigmedic.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -98,6 +122,9 @@
     sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackbrigmedic.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackbrigmedic.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -117,6 +144,9 @@
         Piercing: 0.85
   - type: StaminaProtection
     coefficient: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -136,3 +166,28 @@
         Piercing: 0.85
   - type: StaminaProtection
     coefficient: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGoldenEra
+  name: golden era uniform
+  description: Heavily stylish orange suit with a coat decorated in gold and an interiour vital organs protection.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/goldenerasuit.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/goldenerasuit.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.85
+        Piercing: 0.85
+  - type: StaminaProtection
+    coefficient: 0.8
+  - type: Tag
+    tags:
+    - WhitelistChameleon

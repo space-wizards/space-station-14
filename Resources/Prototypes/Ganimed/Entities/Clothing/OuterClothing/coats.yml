@@ -108,3 +108,17 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatGoldenEraShortcoat
+  name: golden era shortcoat
+  description: A shortened version of an official black coat is made of durable fabric with gilded golden patterns.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Coats/goldenera_shortcoat.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Coats/goldenera_shortcoat.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
