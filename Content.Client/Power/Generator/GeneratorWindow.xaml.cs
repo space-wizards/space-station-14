@@ -115,6 +115,22 @@ public sealed partial class GeneratorWindow : FancyWindow
         }
 
         CloggedLabel.Visible = state.Clogged;
+
+        if (state.NetworkStats is { } netStats)
+        {
+            NetworkStats.Text = Loc.GetString(
+                "portable-generator-ui-network-stats-value",
+                ("load", netStats.Load),
+                ("supply", netStats.Supply));
+
+            var good = netStats.Load <= netStats.Supply;
+            NetworkStats.SetOnlyStyleClass(good ? "Good" : "Caution");
+        }
+        else
+        {
+            NetworkStats.Text = Loc.GetString("portable-generator-ui-network-stats-not-connected");
+            NetworkStats.StyleClasses.Clear();
+        }
     }
 
     private bool TryGetStartProgress(out float progress)

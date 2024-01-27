@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseShellShotgun
   name: shell (.50)
   parent: BaseCartridge
@@ -47,8 +47,8 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
-    count: 4
-    spread: 5
+    count: 1
+    spread: 0
   - type: SpentAmmoVisuals
     state: "slug"
 
