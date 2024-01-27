@@ -33,21 +33,9 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     private BaseButton? _selectedDock;
 
     /// <summary>
-    /// Stored by grid entityid then by states
-    /// </summary>
-    private readonly Dictionary<NetEntity, List<DockingInterfaceState>> _docks = new();
-
-    private readonly Dictionary<BaseButton, NetEntity> _destinations = new();
-
-    /// <summary>
     /// Next FTL state change.
     /// </summary>
     public TimeSpan FTLTime;
-
-    public Action<NetEntity>? UndockPressed;
-    public Action<NetEntity>? StartAutodockPressed;
-    public Action<NetEntity>? StopAutodockPressed;
-    public Action<NetEntity>? DestinationPressed;
 
     public ShuttleConsoleWindow()
     {
@@ -75,7 +63,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             MapModeButton.Pressed = false;
             MapContainer.Visible = false;
-            MapRadar.SetMap(MapId.Nullspace, Vector2.Zero);
+            MapContainer.SetMap(MapId.Nullspace, Vector2.Zero);
         }
 
         if (mode != ShuttleConsoleMode.Dock)
@@ -114,136 +102,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
     }
 
-    private void UpdateFTL(List<(NetEntity Entity, string Destination, bool Enabled)> destinations, FTLState state, TimeSpan time)
-    {
-        HyperspaceDestinations.DisposeAllChildren();
-        _destinations.Clear();
-
-        if (destinations.Count == 0)
-        {
-            HyperspaceDestinations.AddChild(new Label()
-            {
-                Text = Loc.GetString("shuttle-console-hyperspace-none"),
-                HorizontalAlignment = HAlignment.Center,
-            });
-        }
-        else
-        {
-            destinations.Sort((x, y) => string.Compare(x.Destination, y.Destination, StringComparison.Ordinal));
-
-            foreach (var destination in destinations)
-            {
-                var button = new Button()
-                {
-                    Disabled = !destination.Enabled,
-                    Text = destination.Destination,
-                };
-
-                _destinations[button] = destination.Entity;
-                button.OnPressed += OnHyperspacePressed;
-                HyperspaceDestinations.AddChild(button);
-            }
-        }
-
-        string stateText;
-
-        switch (state)
-        {
-            case Shared.Shuttles.Systems.FTLState.Available:
-                stateText = Loc.GetString("shuttle-console-ftl-available");
-                break;
-            case Shared.Shuttles.Systems.FTLState.Starting:
-                stateText = Loc.GetString("shuttle-console-ftl-starting");
-                break;
-            case Shared.Shuttles.Systems.FTLState.Travelling:
-                stateText = Loc.GetString("shuttle-console-ftl-travelling");
-                break;
-            case Shared.Shuttles.Systems.FTLState.Cooldown:
-                stateText = Loc.GetString("shuttle-console-ftl-cooldown");
-                break;
-            case Shared.Shuttles.Systems.FTLState.Arriving:
-                stateText = Loc.GetString("shuttle-console-ftl-arriving");
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(state), state, null);
-        }
-
-        FTLState.Text = stateText;
-        // Add a buffer due to lag or whatever
-        time += TimeSpan.FromSeconds(0.3);
-        FTLTime = time;
-        FTLTimer.Text = GetFTLText();
-    }
-
-    private string GetFTLText()
-    {
-        return $"{Math.Max(0, (FTLTime - _timing.CurTime).TotalSeconds):0.0}";
-    }
-
-    private void OnHyperspacePressed(BaseButton.ButtonEventArgs obj)
-    {
-        var ent = _destinations[obj.Button];
-        DestinationPressed?.Invoke(ent);
-    }
-
     #region Docking
-
-    private void UpdateDocks(List<DockingInterfaceState> docks)
-    {
-        // TODO: We should check for changes so any existing highlighted doesn't delete.
-        // We also need to make up some pseudonumber as well for these.
-        _docks.Clear();
-
-        foreach (var dock in docks)
-        {
-            var grid = _docks.GetOrNew(dock.Coordinates.NetEntity);
-            grid.Add(dock);
-        }
-
-        DockPorts.DisposeAllChildren();
-        DockingScreen.Docks = _docks;
-        var shuttleNetEntity = _entManager.GetNetEntity(_shuttleEntity);
-
-        if (shuttleNetEntity != null && _docks.TryGetValue(shuttleNetEntity.Value, out var gridDocks))
-        {
-            var index = 1;
-
-            foreach (var state in gridDocks)
-            {
-                var pressed = state.Entity == DockingScreen.ViewedDock;
-
-                string suffix;
-
-                if (state.Connected)
-                {
-                    suffix = Loc.GetString("shuttle-console-docked", ("index", index));
-                }
-                else
-                {
-                    suffix = $"{index}";
-                }
-
-                var button = new Button()
-                {
-                    Text = Loc.GetString("shuttle-console-dock-button", ("suffix", suffix)),
-                    ToggleMode = true,
-                    Pressed = pressed,
-                    Margin = new Thickness(0f, 1f),
-                };
-
-                if (pressed)
-                {
-                    _selectedDock = button;
-                }
-
-                button.OnMouseEntered += args => OnDockMouseEntered(args, state);
-                button.OnMouseExited += args => OnDockMouseExited(args, state);
-                button.OnToggled += args => OnDockToggled(args, state);
-                DockPorts.AddChild(button);
-                index++;
-            }
-        }
-    }
 
     private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
@@ -305,15 +164,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
     }
 
-    public override void Close()
-    {
-        base.Close();
-        if (DockingScreen.ViewedDock != null)
-        {
-            StopAutodockPressed?.Invoke(DockingScreen.ViewedDock.Value);
-        }
-    }
-
     #endregion
 
     private void SetupMode(ShuttleConsoleMode mode)
@@ -352,46 +202,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         _mode = mode;
         ClearModes(mode);
         SetupMode(_mode);
-    }
-
-    protected override void Draw(DrawingHandleScreen handle)
-    {
-        base.Draw(handle);
-
-        switch (_mode)
-        {
-            case ShuttleConsoleMode.Map:
-                MapRadar.DrawRecenter();
-                break;
-        }
-
-        if (!_entManager.TryGetComponent<PhysicsComponent>(_shuttleEntity, out var gridBody) ||
-            !_entManager.TryGetComponent<TransformComponent>(_shuttleEntity, out var gridXform))
-        {
-            return;
-        }
-
-        if (_entManager.TryGetComponent<MetaDataComponent>(_shuttleEntity, out var metadata) && metadata.EntityPaused)
-        {
-            FTLTime += _timing.FrameTime;
-        }
-
-        FTLTimer.Text = GetFTLText();
-
-        var (_, worldRot, worldMatrix) = gridXform.GetWorldPositionRotationMatrix();
-        var worldPos = worldMatrix.Transform(gridBody.LocalCenter);
-
-        // Get the positive reduced angle.
-        var displayRot = -worldRot.Reduced();
-
-        GridPosition.Text = $"{worldPos.X:0.0}, {worldPos.Y:0.0}";
-        GridOrientation.Text = $"{displayRot.Degrees:0.0}";
-
-        var gridVelocity = gridBody.LinearVelocity;
-        gridVelocity = displayRot.RotateVec(gridVelocity);
-        // Get linear velocity relative to the console entity
-        GridLinearVelocity.Text = $"{gridVelocity.X + float.Epsilon:0.0}, {gridVelocity.Y + float.Epsilon:0.0}";
-        GridAngularVelocity.Text = $"{-gridBody.AngularVelocity:0.0}";
     }
 
     public enum ShuttleConsoleMode : byte
