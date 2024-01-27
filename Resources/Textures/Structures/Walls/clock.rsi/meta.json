@@ -14,35 +14,35 @@
 	  "name": "wall_gear"
 	},
     {
-      "name": "clockwork_wall-0"
+      "name": "clock0"
 	  "directions": 4
     },
     {
-      "name": "clockwork_wall-1"
+      "name": "clock1"
 	  "directions": 4
     },
     {
-      "name": "clockwork_wall-2"
+      "name": "clock2"
 	  "directions": 4
     },
     {
-      "name": "clockwork_wall-3"
+      "name": "clock3"
 	  "directions": 4
     },
     {
-      "name": "clockwork_wall-4"
+      "name": "clock4"
 	  "directions": 4
     },
     {
-      "name": "clockwork_wall-5"
+      "name": "clock5"
 	  "directions": 4
     },
     {
-      "name": "clockwork_wall-6"
+      "name": "clock6"
 	  "directions": 4
     },
     {
-      "name": "clockwork_wall-7"
+      "name": "clock7"
 	  "directions": 4
     }
   ]
