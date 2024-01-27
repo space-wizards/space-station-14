@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/b8fc9b367ebb26def792a68bcb25294e518698d8/icons/obj/smooth_structures/clockwork_window.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+	  "name": "full"
+	},
+    {
+      "name": "clockwork_window-0"
+	  "directions": 4
+    },
+    {
+      "name": "clockwork_window-1"
+	  "directions": 4
+    },
+    {
+      "name": "clockwork_window-2"
+	  "directions": 4
+    },
+    {
+      "name": "clockwork_window-3"
+	  "directions": 4
+    },
+    {
+      "name": "clockwork_window-4"
+	  "directions": 4
+    },
+    {
+      "name": "clockwork_window-5"
+	  "directions": 4
+    },
+    {
+      "name": "clockwork_window-6"
+	  "directions": 4
+    },
+    {
+      "name": "clockwork_window-7"
+	  "directions": 4
+    }
+  ]
+}

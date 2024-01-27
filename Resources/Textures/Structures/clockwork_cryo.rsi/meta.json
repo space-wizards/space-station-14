@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/e9cff525dc5b57153af3b4bb9039de08d6823805/icons/obj/machines/sleeper.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sleeper_clockwork",
+      "directions": 4
+    },
+    {
+      "name": "sleeper_clockwork-anim",
+      "directions": 4
+    },
+    {
+      "name": "sleeper_clockwork-open",
+      "directions": 4
+    },
+    {
+      "name": "sleeper_clockwork-o",
+      "directions": 4
+    }
+  ]
+}
