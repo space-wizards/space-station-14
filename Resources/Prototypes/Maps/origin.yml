@@ -2,7 +2,7 @@
   id: Origin
   mapName: 'Origin'
   mapPath: /Maps/origin.yml
-  minPlayers: 50
+  minPlayers: 10 # GreyStation - Map Change
   stations:
     Origin:
       stationProto: StandardNanotrasenStation
