@@ -31,6 +31,8 @@
     - type: GasMiner
       maxExternalPressure: 300
       spawnAmount: 200
+    - type: AntiAnomalyZone
+      zoneRadius: 5
 
 - type: entity
   name: O2 gas miner
