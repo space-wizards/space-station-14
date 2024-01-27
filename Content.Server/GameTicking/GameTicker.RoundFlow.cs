@@ -251,6 +251,9 @@ namespace Content.Server.GameTicking
             AnnounceRound();
             UpdateInfoText();
             SendRoundStartedDiscordMessage();
+			
+			var roundStartedEvent = new RoundStartedEvent(RoundId);
+			RaiseLocalEvent(roundStartedEvent);
 
 #if EXCEPTION_TOLERANCE
             }
