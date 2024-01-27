@@ -99,7 +99,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = Loc.GetString("admin-verb-text-make-head-rev"),
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadRevolutionary.png")),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "HeadRevolutionary"),
             Act = () =>
             {
                 _revolutionaryRule.OnHeadRevAdmin(args.Target);

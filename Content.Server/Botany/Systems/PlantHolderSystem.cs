@@ -766,6 +766,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Seed = null;
         component.Dead = false;
         component.Age = 0;
+        component.LastProduce = 0;
         component.Sampled = false;
         component.Harvest = false;
         component.ImproperLight = false;

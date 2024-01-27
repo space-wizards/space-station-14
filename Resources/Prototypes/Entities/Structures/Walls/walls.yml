@@ -551,6 +551,24 @@
     resistance: 5
 
 - type: entity
+  parent: WallReinforced
+  id: WallReinforcedRust
+  name: reinforced wall
+  suffix: rusted
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/solid_rust.rsi
+  - type: Icon
+    sprite: Structures/Walls/solid_rust.rsi
+    state: rgeneric
+  - type: Construction
+    graph: Girder
+    node: reinforcedWall
+  - type: IconSmooth
+    key: walls
+    base: reinf_over
+
+- type: entity
   parent: WallShuttleDiagonal
   id: WallReinforcedDiagonal
   name: reinforced wall
@@ -876,44 +894,22 @@
     state: state0
 
 - type: entity
-  parent: BaseWall
+  parent: WallSolid
   id: WallSolidRust
   name: solid wall
   suffix: rusted
   components:
   - type: Sprite
-    sprite: Structures/Walls/solidrust.rsi
+    sprite: Structures/Walls/solid_rust.rsi
   - type: Icon
-    sprite: Structures/Walls/solidrust.rsi
+    sprite: Structures/Walls/solid_rust.rsi
     state: full
   - type: Construction
     graph: Girder
     node: wallrust
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
-    base: solidrust
+    base: solid
 
 - type: entity
   parent: BaseWall
