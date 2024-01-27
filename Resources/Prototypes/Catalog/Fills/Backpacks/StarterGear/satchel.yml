@@ -285,3 +285,15 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampMime
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelHolding
+  id: ClothingBackpackSatchelHoldingAdmin
+  components:
+  - type: StorageFill
+    contents:
+    - id: AdminPDA
+    - id: GasAnalyzer
+    - id: trayScanner
+  - type: Unremoveable
