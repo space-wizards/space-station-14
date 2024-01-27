@@ -16,6 +16,12 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// Currently active station record key.
     /// There is no station parameter as the console uses the current station.
     /// </summary>
+    /// <remarks>
+    /// TODO: in the future this should be clientside instead of something players can fight over.
+    /// Client selects a record and tells the server the key it wants records for.
+    /// Server then sends a state with just the records, not the listing or filter, and the client updates just that.
+    /// I don't know if it's possible to have multiple bui states right now.
+    /// </remarks>
     [DataField]
     public uint? ActiveKey;
 
