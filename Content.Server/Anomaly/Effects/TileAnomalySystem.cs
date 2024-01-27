@@ -1,41 +1,101 @@
+using System.Linq;
 using System.Numerics;
+using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class TileAnomalySystem : EntitySystem
+public sealed class TileAnomalySystem : SharedTileAnomalySystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
     [Dependency] private readonly ITileDefinitionManager _tiledef = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnSeverityChanged);
+        SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
+        SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
+        SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
+        SubscribeLocalEvent<TileSpawnAnomalyComponent, AnomalyShutdownEvent>(OnShutdown);
     }
 
-    private void OnSeverityChanged(EntityUid uid, TileSpawnAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
+    private void OnPulse(Entity<TileSpawnAnomalyComponent> component, ref AnomalyPulseEvent args)
     {
-        var xform = Transform(uid);
-        if (!_map.TryGetGrid(xform.GridUid, out var grid))
+        foreach (var entry in component.Comp.Entries)
+        {
+            if (!entry.Settings.SpawnOnPulse)
+                continue;
+
+            SpawnTiles(component, entry, args.Stability, args.Severity);
+        }
+    }
+
+    private void OnSupercritical(Entity<TileSpawnAnomalyComponent> component, ref AnomalySupercriticalEvent args)
+    {
+        foreach (var entry in component.Comp.Entries)
+        {
+            if (!entry.Settings.SpawnOnSuperCritical)
+                continue;
+
+            SpawnTiles(component, entry, 1, 1);
+        }
+    }
+
+    private void OnShutdown(Entity<TileSpawnAnomalyComponent> component, ref AnomalyShutdownEvent args)
+    {
+        foreach (var entry in component.Comp.Entries)
+        {
+            if (!entry.Settings.SpawnOnShutdown || args.Supercritical)
+                continue;
+
+            SpawnTiles(component, entry, 1, 1);
+        }
+    }
+
+    private void OnStabilityChanged(Entity<TileSpawnAnomalyComponent> component, ref AnomalyStabilityChangedEvent args)
+    {
+        foreach (var entry in component.Comp.Entries)
+        {
+            if (!entry.Settings.SpawnOnStabilityChanged)
+                continue;
+
+            SpawnTiles(component, entry, args.Stability, args.Severity);
+        }
+    }
+
+    private void OnSeverityChanged(Entity<TileSpawnAnomalyComponent> component, ref AnomalySeverityChangedEvent args)
+    {
+        foreach (var entry in component.Comp.Entries)
+        {
+            if (!entry.Settings.SpawnOnSeverityChanged)
+                continue;
+
+            SpawnTiles(component, entry, args.Stability, args.Severity);
+        }
+    }
+
+    private void SpawnTiles(Entity<TileSpawnAnomalyComponent> anomaly, TileSpawnSettingsEntry entry, float stability, float severity)
+    {
+        var xform = Transform(anomaly);
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
-        var radius = component.SpawnRange * args.Stability;
-        var fleshTile = (ContentTileDefinition) _tiledef[component.FloorTileId];
-        var localpos = xform.Coordinates.Position;
-        var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + new Vector2(-radius, -radius), localpos + new Vector2(radius, radius)));
-        foreach (var tileref in tilerefs)
+        var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings);
+        if (tiles == null)
+            return;
+
+        foreach (var tileref in tiles)
         {
-            if (!_random.Prob(component.SpawnChance))
-                continue;
-            _tile.ReplaceTile(tileref, fleshTile);
+            var tile = (ContentTileDefinition) _tiledef[entry.Floor];
+            _tile.ReplaceTile(tileref, tile);
         }
     }
 }
