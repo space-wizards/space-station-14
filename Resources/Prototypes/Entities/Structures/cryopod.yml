@@ -42,8 +42,6 @@
         base:
           True: { state: sleeper_1 }
           False: { state: sleeper_0 }
-  - type: AntiAnomalyZone
-    zoneRadius: 15
 
 # This one handles all spawns, latejoin and roundstart.
 - type: entity
@@ -58,8 +56,10 @@
 - type: entity
   parent: CryogenicSleepUnit
   id: CryogenicSleepUnitSpawnerLateJoin
-  suffix: Spawner, LateJoin
+  suffix: Spawner, LateJoin, Anti-Anomaly
   components:
     - type: ContainerSpawnPoint
       containerId: storage
       spawnType: LateJoin
+    - type: AntiAnomalyZone
+      zoneRadius: 15
