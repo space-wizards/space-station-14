@@ -27,7 +27,7 @@ namespace Content.Server.Labels
             base.Initialize();
 
             SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnLabelCompMapInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
@@ -35,7 +35,7 @@ namespace Content.Server.Labels
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void OnMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
+        private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
         {
             component.CurrentLabel ??= string.Empty;
             component.CurrentLabel = Loc.GetString(component.CurrentLabel);
