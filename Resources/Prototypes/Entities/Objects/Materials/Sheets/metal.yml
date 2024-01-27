@@ -108,6 +108,7 @@
   parent: SheetMetalBase
   id: SheetBrass
   name: brass
+  description: A sheet of brass, primarily used by clockwork enthusiasts and the remnants of Ratvarian cults.
   suffix: Full
   components:
   - type: Material
@@ -128,6 +129,7 @@
       map: ["base"]
   - type: Item
     heldPrefix: brass
+  - type: Appearance
   - type: FloorTile
     outputs:
     - PlatingBrass

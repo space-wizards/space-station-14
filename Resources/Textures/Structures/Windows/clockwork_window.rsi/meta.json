@@ -11,35 +11,35 @@
 	  "name": "full"
 	},
     {
-      "name": "clockwork_window-0",
+      "name": "cwindow0",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-1",
+      "name": "cwindow1",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-2",
+      "name": "cwindow2",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-3",
+      "name": "cwindow3",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-4",
+      "name": "cwindow4",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-5",
+      "name": "cwindow5",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-6",
+      "name": "cwindow6",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-7",
+      "name": "cwindow7",
 	  "directions": 4
     }
   ]

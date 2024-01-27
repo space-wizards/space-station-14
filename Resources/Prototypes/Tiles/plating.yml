@@ -87,7 +87,7 @@
 - type: tile
   id: ClockworkLattice
   name: tiles-clockwork-lattice
-  sprite: /Textures/Tiles/Misc/clockwork/clockwork_lattice.rsi/clock-lattice.png
+  sprite: /Textures/Tiles/Misc/clockwork/clockwork_lattice.rsi/clock_lattice.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds: 

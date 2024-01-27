@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "clockwork_wall-open",
+      "name": "open",
 	  "directions": 1,      
 	  "delays": [
         [
@@ -17,7 +17,7 @@
       ]
     },        
 	{
-      "name": "clockwork_wall-closed",
+      "name": "closed",
 	  "directions": 1,
       "delays": [
         [
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "name": "clockwork_wall-opening",
+      "name": "opening",
 	  "directions": 1,
       "delays": [
         [
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "name": "clockwork_wall-closing",
+      "name": "closing",
 	  "directions": 1,
       "delays": [
         [
@@ -52,7 +52,6 @@
 		  0.2
         ]
       ]
-    }
     }
   ]
 }
