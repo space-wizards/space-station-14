@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Updated the crew monitoring console user interface
-    type: Tweak
-  id: 5300
-  time: '2023-12-10T05:38:51.0000000+00:00'
 - author: ElectroJr
   changes:
   - message: Add color picker to color selection, e.g. for character colors.
@@ -3816,3 +3810,12 @@
   id: 5800
   time: '2024-01-27T02:53:44.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24604
+- author: Blackern5000
+  changes:
+  - message: Shotgun slugs can now be printed in the security techfab.
+    type: Add
+  - message: Shotgun slugs now fire a single strong projectile when fired.
+    type: Tweak
+  id: 5801
+  time: '2024-01-27T02:56:57.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24196
