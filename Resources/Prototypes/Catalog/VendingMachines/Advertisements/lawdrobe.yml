@@ -2,5 +2,7 @@
   id: LawDrobeAds
   advertisements:
     - advertisement-lawdrobe-1
+    - advertisement-lawdrobe-2
+    - advertisement-lawdrobe-3
   thankyous:
     - vending-machine-thanks

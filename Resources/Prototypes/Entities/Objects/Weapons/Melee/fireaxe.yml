@@ -37,7 +37,7 @@
   - type: Tool
     qualities:
       - Prying
-  - type: TilePrying
+  - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
     delay: 1

@@ -3,9 +3,14 @@ using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
+using Content.Server.Screens;
+using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
@@ -27,6 +32,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly InteractionSystem _interaction = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -49,6 +55,7 @@ namespace Content.Server.Communications
             // Messages from the BUI
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleAnnounceMessage>(OnAnnounceMessage);
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleBroadcastMessage>(OnBroadcastMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallEmergencyShuttleMessage>(OnCallShuttleMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>(OnRecallShuttleMessage);
 
@@ -162,6 +169,7 @@ namespace Content.Server.Communications
 
             _uiSystem.SetUiState(ui, new CommunicationsConsoleInterfaceState(
                 CanAnnounce(comp),
+                CanBroadcast(comp),
                 CanCallOrRecall(comp),
                 levels,
                 currentLevel,
@@ -171,6 +179,11 @@ namespace Content.Server.Communications
         }
 
         private static bool CanAnnounce(CommunicationsConsoleComponent comp)
+        {
+            return comp.AnnouncementCooldownRemaining <= 0f;
+        }
+
+        private static bool CanBroadcast(CommunicationsConsoleComponent comp)
         {
             return comp.AnnouncementCooldownRemaining <= 0f;
         }
@@ -276,6 +289,19 @@ namespace Content.Server.Communications
 
             if (message.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following station announcement: {msg}");
+        }
+
+        private void OnBroadcastMessage(EntityUid uid, CommunicationsConsoleComponent component, CommunicationsConsoleBroadcastMessage message)
+        {
+            if (!TryComp<DeviceNetworkComponent>(uid, out var net))
+                return;
+
+            var payload = new NetworkPayload
+            {
+                [ScreenMasks.Text] = message.Message
+            };
+
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, net.TransmitFrequency);
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
