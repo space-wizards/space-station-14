@@ -425,11 +425,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         name = FormattedMessage.EscapeText(name);
 
         // color the name unless it's something like "the old man"
+        string coloredName = name;
         if (!TryComp<GrammarComponent>(source, out var grammar) || grammar.ProperNoun == true)
-            name = $"[color={GetNameColor(name)}]{name}[/color]";
+            coloredName = $"[color={GetNameColor(name)}]{name}[/color]";
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
-            ("entityName", name),
+            ("entityName", coloredName),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
