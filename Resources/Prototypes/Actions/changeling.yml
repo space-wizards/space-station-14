@@ -68,7 +68,7 @@
 - type: entity
   id: ActionLingStingExtract
   name: Extract DNA Sting
-  description: Extracts the DNA of the target victim. It will not inform the victim they have been stung. Uses 25 chemicals.
+  description: Extracts the DNA of the target victim. The victim should not know they've been stung, unless they're another changeling. Uses 25 chemicals.
   noSpawn: true
   components:
   - type: EntityTargetAction
@@ -79,6 +79,23 @@
       components:
       - Body
     event: !type:LingStingExtractActionEvent
+    useDelay: 30
+    canTargetSelf: false
+
+- type: entity
+  id: ActionLingStingTHC
+  name: Hallucination Sting
+  description: Injects large doses of hallucinogenic chemicals into the victim. The victim should not know they've been stung, unless they're another changeling.
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: sting_hallucination
+    whitelist:
+      components:
+      - Body
+    event: !type:LingStingTHCActionEvent
     useDelay: 30
     canTargetSelf: false
 

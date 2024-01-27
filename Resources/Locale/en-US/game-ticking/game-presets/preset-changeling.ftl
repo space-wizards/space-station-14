@@ -59,6 +59,7 @@ changeling-dna-switchdna = Switched to {$target}'s DNA.
 changeling-transform-activate = You transform into {$target}.
 changeling-transform-fail = You're already morphed as {$target}!
 
+changeling-sting-success-self = You sting {THE($target)}.
 changeling-sting-fail-self = The sting was ineffective on {THE($target)}!
 changeling-sting-fail-target = You feel a slight sting.
 

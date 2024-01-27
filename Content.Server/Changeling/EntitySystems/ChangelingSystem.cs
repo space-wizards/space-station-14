@@ -24,6 +24,10 @@ using Robust.Shared.Serialization.Manager;
 using Content.Shared.Alert;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -39,6 +43,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainers = default!;
 
     public override void Initialize()
     {
@@ -133,6 +138,23 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         return true;
+    }
+
+    private void TryReagentStingTarget(EntityUid uid, EntityUid target, ChangelingComponent component, string reagentId, FixedPoint2 reagentAmount)
+    {
+        if (TryStingTarget(uid, target, component))
+        {
+            var solution = new Solution();
+            solution.AddReagent(reagentId, reagentAmount);
+
+            if (!_solutionContainers.TryGetInjectableSolution(target, out var targetSoln, out var targetSolution))
+                return;
+
+            if (!targetSolution.CanAddSolution(solution))
+                return;
+
+            _solutionContainers.TryAddSolution(targetSoln.Value, solution);
+        }
     }
 
     private void OnMapInit(EntityUid uid, ChangelingComponent component, MapInitEvent args)

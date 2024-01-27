@@ -47,7 +47,9 @@ public sealed partial class ChangelingSystem
         SubscribeLocalEvent<ChangelingComponent, LingArmorActionEvent>(OnLingArmorAction);
         SubscribeLocalEvent<ChangelingComponent, LingInvisibleActionEvent>(OnLingInvisible);
         SubscribeLocalEvent<ChangelingComponent, LingEMPActionEvent>(OnLingEmp);
+
         SubscribeLocalEvent<ChangelingComponent, LingStingExtractActionEvent>(OnLingDNASting);
+        SubscribeLocalEvent<ChangelingComponent, LingStingTHCActionEvent>(OnLingTHCSting);
     }
 
     private void StartAbsorbing(EntityUid uid, ChangelingComponent component, LingAbsorbActionEvent args)
@@ -488,5 +490,21 @@ public sealed partial class ChangelingSystem
             var selfMessageSuccess = Loc.GetString("changeling-dna-sting", ("target", Identity.Entity(target, EntityManager)));
             _popup.PopupEntity(selfMessageSuccess, uid, uid);
         }
+    }
+
+    private void OnLingTHCSting(EntityUid uid, ChangelingComponent component, LingStingTHCActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var target = args.Target;
+
+        if (!TryUseAbility(uid, component, component.ChemicalsCostTwentyFive))
+            return;
+
+        TryReagentStingTarget(uid, target, component, "THC", FixedPoint2.New(50));
+
+        var selfMessageSuccess = Loc.GetString("changeling-sting-success-self", ("target", Identity.Entity(target, EntityManager)));
+        _popup.PopupEntity(selfMessageSuccess, uid, uid);
     }
 }

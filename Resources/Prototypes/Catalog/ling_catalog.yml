@@ -62,3 +62,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: ChangelingDNAExtract
+  name: Hallucination Sting
+  description: Silently injects the victim with hallucinogenic chemicals. Uses 5 chemicals on sting.
+  productAction: ActionLingStingTHC
+  cost:
+    EvolutionPoints: 1
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
