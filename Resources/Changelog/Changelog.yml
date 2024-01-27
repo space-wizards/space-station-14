@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Nairodian
-  changes:
-  - message: Adjusted welder blindness to be much less forgiving.
-    type: Tweak
-  id: 5303
-  time: '2023-12-10T23:10:07.0000000+00:00'
 - author: KittenColony
   changes:
   - message: Added various gauze wraps to most species in the form of markings
@@ -3819,3 +3813,10 @@
   id: 5803
   time: '2024-01-27T12:08:50.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24613
+- author: Tayrtahn
+  changes:
+  - message: Vending machines can now be repaired with a welder.
+    type: Tweak
+  id: 5804
+  time: '2024-01-27T12:12:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24603
