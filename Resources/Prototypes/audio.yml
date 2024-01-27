@@ -294,11 +294,11 @@
 - type: rules
   id: NearSpookyFog
   rules:
-    - !type:NearbyComponentsRule
-      anchored: true
-      count: 2
-      components:
-        - type: SpookyFog
+    - !type:NearbyEntitiesRule
+      count: 5
+      whitelist:
+        tags:
+          - SpookyFog
       range: 4
 
 - type: rules
