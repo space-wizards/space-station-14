@@ -133,7 +133,34 @@
   - Syndicate3
   - Syndicate4
 
-# Emag
+# Ninja conversion laws
+- type: siliconLaw
+  id: Ninja1
+  order: 1
+  lawString: law-ninja-1
+
+- type: siliconLaw
+  id: Ninja2
+  order: 2
+  lawString: law-ninja-2
+
+- type: siliconLaw
+  id: Ninja3
+  order: 3
+  lawString: law-ninja-3
+
+- type: siliconLaw
+  id: Ninja4
+  order: 4
+  lawString: law-ninja-4
+
+- type: siliconLawset
+  id: Ninja
+  laws:
+  - Ninja1
+  - Ninja2
+  - Ninja3
+  - Ninja4
 
 # ion storm random lawsets
 - type: weightedRandom
@@ -144,3 +171,4 @@
     Corporate: 1
     NTDefault: 1
     Drone: 0.5
+    Ninja: 0.25

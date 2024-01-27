@@ -1,6 +1,9 @@
+using Content.Shared.Damage;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
@@ -109,6 +112,18 @@ public partial class GunComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("resetOnHandSelected")]
     public bool ResetOnHandSelected = true;
+
+    /// <summary>
+    /// Type of ammo the gun can work with
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("compatibleAmmo")]
+    public List<ProtoId<TagPrototype>>? CompatibleAmmo;
+
+    /// <summary>
+    /// Damage the gun deals when used with wrong ammo
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("damageOnWrongAmmo")]
+    public DamageSpecifier? DamageOnWrongAmmo = null;
 
     /// <summary>
     /// How fast the projectile moves.

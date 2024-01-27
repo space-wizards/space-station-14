@@ -158,10 +158,28 @@ public sealed class PryingSystem : EntitySystem
         if (args.Target is null)
             return;
 
-        PryingComponent? comp = null;
+        TryComp<PryingComponent>(args.Used, out var comp);
 
-        if (args.Used != null && Resolve(args.Used.Value, ref comp))
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+        if (!CanPry(uid, args.User, out var message, comp))
+        {
+            if (message != null)
+                Popup.PopupEntity(Loc.GetString(message), uid, args.User);
+            return;
+        }
+
+        // TODO: When we get airlock prediction make this fully predicted.
+        // When that happens also fix the checking function in the Client AirlockSystem.
+        if (args.Used != null && comp != null)
+        {
+            if (HasComp<AirlockComponent>(uid))
+            {
+                _audioSystem.PlayPvs(comp.UseSound, args.Used.Value);
+            }
+            else
+            {
+                _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+            }
+        }
 
         var ev = new PriedEvent(args.User);
         RaiseLocalEvent(uid, ref ev);

@@ -1,6 +1,6 @@
 - type: entity
   id: PresentBase
-  name: Present
+  name: present
   description: A little box with incredible surprises inside.
   abstract: true
   components:
@@ -20,7 +20,7 @@
 - type: entity
   id: PresentRandomUnsafe
   parent: [PresentBase, BaseItem]
-  suffix: Filled Unsafe
+  suffix: Filled, any item
   components:
   - type: RandomGift
     wrapper: PresentTrash
@@ -35,7 +35,7 @@
 - type: entity
   id: PresentRandomInsane
   parent: PresentRandomUnsafe
-  suffix: Filled Insane
+  suffix: Filled, any entity
   components:
     - type: RandomGift
       insaneMode: true
@@ -87,6 +87,8 @@
       - id: ToyAmongPequeno
         orGroup: GiftPool
       - id: PlushieDiona
+        orGroup: GiftPool
+      - id: PlushieArachind
         orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool
@@ -324,11 +326,15 @@
         orGroup: GiftPool
       - id: ClothingHeadHatCatEars
         orGroup: GiftPool
+      - id: ClothingHeadHatDogEars
+        orGroup: GiftPool
       - id: ToySword
         orGroup: GiftPool
       - id: RevolverCapGun
         orGroup: GiftPool
       - id: Ash
+        orGroup: GiftPool
+      - id: Coal1
         orGroup: GiftPool
       - id: MiningDrill
         orGroup: GiftPool
@@ -352,10 +358,57 @@
         orGroup: GiftPool
       - id: BalloonSyn
         orGroup: GiftPool
-      - id: WeaponPulseCarbine
+      - id: RGBStaff
+        orGroup: GiftPool
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: PresentRandomAsh
+  parent: [PresentBase, BaseItem]
+  suffix: Filled Ash
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrash
+      - id: Ash # No coal yet!
+        orGroup: GiftPool
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: PresentRandomCash
+  parent: [PresentBase, BaseItem]
+  suffix: Filled Cash
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrash
+      - id: SpaceCash
+        prob: .01
+        orGroup: GiftPool
+      - id: SpaceCash10
+        prob: .1
+        orGroup: GiftPool
+      - id: SpaceCash100
+        prob: .5
+        orGroup: GiftPool
+      - id: SpaceCash500
+        orGroup: GiftPool
+      - id: SpaceCash1000
+        prob: .01
+        orGroup: GiftPool
+      - id: SpaceCash2500
+        prob: .004
+        orGroup: GiftPool
+      - id: SpaceCash5000
+        prob: .002
+        orGroup: GiftPool
+      - id: SpaceCash10000
         prob: .001
         orGroup: GiftPool
-      - id: RGBStaff
+      - id: SpaceCash1000000
+        prob: .000001
         orGroup: GiftPool
     sound:
       path: /Audio/Effects/unwrap.ogg

@@ -44,6 +44,9 @@ flavor-base-sharp = sharp
 flavor-base-syrupy = syrupy
 flavor-base-spaceshroom = mysterious
 flavor-base-clean = clean
+flavor-base-alkaline = alkaline
+flavor-base-holy = holy
+flavor-base-horrible = horrible
 
 # lmao
 flavor-base-terrible = terrible
@@ -53,6 +56,13 @@ flavor-base-terrible = terrible
 
 flavor-complex-nothing = like nothing
 flavor-complex-honey = like honey
+
+# Condiments
+
+flavor-complex-ketchunaise = like tomatoes and mayonnaise
+flavor-complex-mayonnaise = like mayonnaise
+flavor-complex-mustard = like mustard
+
 
 # Food-specific flavors.
 
@@ -154,6 +164,7 @@ flavor-complex-plastic = like plastic
 flavor-complex-glue = like glue
 flavor-complex-spaceshroom-cooked = like space umami
 flavor-complex-lost-friendship = like lost friendship
+flavor-complex-light = like a light gone out
 
 # Drink-specific flavors.
 
@@ -181,6 +192,7 @@ flavor-complex-coffee = like coffee
 flavor-complex-milk = like milk
 flavor-complex-tea = like tea
 flavor-complex-ice = like ice
+flavor-complex-mopwata = like stagnant, dirty water
 
 ## Cocktails
 flavor-complex-long-island = suspiciously like iced tea

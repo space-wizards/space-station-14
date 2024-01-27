@@ -24,6 +24,12 @@ public sealed partial class ItemSizePrototype : IPrototype, IComparable<ItemSize
     [DataField]
     public readonly LocId Name;
 
+    /// <summary>
+    /// The default inventory shape associated with this item size.
+    /// </summary>
+    [DataField(required: true)]
+    public IReadOnlyList<Box2i> DefaultShape = new List<Box2i>();
+
     public int CompareTo(ItemSizePrototype? other)
     {
         if (other is not { } otherItemSize)

@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Install dependencies
-      run: sudo apt-get install -y python3-paramiko
+      run: sudo apt-get install -y python3-paramiko python3-lxml
 
     - uses: actions/checkout@v3.6.0
       with:
@@ -22,7 +22,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3.2.0
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
 
     - name: Get Engine Tag
       run: |

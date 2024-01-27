@@ -16,9 +16,13 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
         SubscribeLocalEvent<BlockGameArcadeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
-        SubscribeLocalEvent<BlockGameArcadeComponent, BoundUIClosedEvent>(OnAfterUiClose);
         SubscribeLocalEvent<BlockGameArcadeComponent, PowerChangedEvent>(OnBlockPowerChanged);
-        SubscribeLocalEvent<BlockGameArcadeComponent, BlockGameMessages.BlockGamePlayerActionMessage>(OnPlayerAction);
+
+        Subs.BuiEvents<BlockGameArcadeComponent>(BlockGameUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnAfterUiClose);
+            subs.Event<BlockGameMessages.BlockGamePlayerActionMessage>(OnPlayerAction);
+        });
     }
 
     public override void Update(float frameTime)

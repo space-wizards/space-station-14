@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
@@ -102,11 +103,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
     private void OnExploded(Entity<EntityStorageComponent> ent, ref BeforeExplodeEvent args)
     {
-        if (ent.Comp.ExplosionDamageCoefficient <= 0)
-            return;
-
         args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
-        args.DamageCoefficient *= ent.Comp.ExplosionDamageCoefficient;
     }
 
     protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)

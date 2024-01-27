@@ -23,6 +23,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        canReact: false
 
 - type: entity
   parent: SheetOtherBase
@@ -49,6 +53,15 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: paper
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 3
+
 
 - type: entity
   parent: SheetPaper
@@ -94,6 +107,7 @@
         reagents:
         - ReagentId: Plasma
           Quantity: 10
+        canReact: false
   - type: Tag
     tags:
     - Sheet
@@ -139,6 +153,17 @@
   - type: Item
     heldPrefix: plastic
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: plastic
+  - type: SolutionContainerManager
+    solutions:
+      plastic:
+        reagents:
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Phosphorus
+          Quantity: 5
+        canReact: false
 
 - type: entity
   parent: SheetPlastic
@@ -197,7 +222,10 @@
       food:
         reagents:
         - ReagentId: Uranium
-          Quantity: 10
+          Quantity: 8
+        - ReagentId: Radium
+          Quantity: 2
+        canReact: false
 
 - type: entity
   parent: SheetUranium
@@ -237,7 +265,17 @@
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
-    - type: Appearance
+    - type: Extractable
+      grindableSolutionName: meatsheet
+    - type: SolutionContainerManager
+      solutions:
+        meatsheet:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 7
+          - ReagentId: Fat
+            Quantity: 3
+          canReact: false
 
 - type: entity
   parent: MaterialSheetMeat

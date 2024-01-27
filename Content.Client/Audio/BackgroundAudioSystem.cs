@@ -1,6 +1,7 @@
 using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client;
 using Robust.Client.State;
@@ -14,6 +15,9 @@ namespace Content.Client.Audio;
 [UsedImplicitly]
 public sealed class BackgroundAudioSystem : EntitySystem
 {
+    /*
+     * TODO: Nuke this system and merge into contentaudiosystem
+     */
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -22,7 +26,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
-    private EntityUid? _lobbyStream;
+    public EntityUid? LobbyStream;
 
     public override void Initialize()
     {
@@ -36,6 +40,8 @@ public sealed class BackgroundAudioSystem : EntitySystem
         _client.PlayerLeaveServer += OnLeave;
 
         _gameTicker.LobbySongUpdated += LobbySongUpdated;
+
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(PlayRestartSound);
     }
 
     public override void Shutdown()
@@ -109,7 +115,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     public void StartLobbyMusic()
     {
-        if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+        if (LobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
             return;
 
         var file = _gameTicker.LobbySong;
@@ -118,12 +124,30 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         }
 
-        _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), false,
-            _lobbyParams.WithVolume(_lobbyParams.Volume + _configManager.GetCVar(CCVars.LobbyMusicVolume)))?.Entity;
+        LobbyStream = _audio.PlayGlobal(file, Filter.Local(), false,
+            _lobbyParams.WithVolume(_lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume))))?.Entity;
     }
 
     private void EndLobbyMusic()
     {
-        _lobbyStream = _audio.Stop(_lobbyStream);
+        LobbyStream = _audio.Stop(LobbyStream);
+    }
+
+    private void PlayRestartSound(RoundRestartCleanupEvent ev)
+    {
+        if (!_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            return;
+
+        var file = _gameTicker.RestartSound;
+        if (string.IsNullOrEmpty(file))
+        {
+            return;
+        }
+
+        var volume = _lobbyParams.WithVolume(_lobbyParams.Volume +
+                                             SharedAudioSystem.GainToVolume(
+                                                 _configManager.GetCVar(CCVars.LobbyMusicVolume)));
+
+        _audio.PlayGlobal(file, Filter.Local(), false, volume);
     }
 }

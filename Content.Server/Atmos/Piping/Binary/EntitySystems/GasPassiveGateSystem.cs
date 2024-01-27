@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasPassiveGateComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, AtmosDeviceUpdateEvent args)
+        private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, ref AtmosDeviceUpdateEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;

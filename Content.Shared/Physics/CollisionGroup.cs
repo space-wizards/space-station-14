@@ -22,6 +22,7 @@ public enum CollisionGroup
     GhostImpassable    = 1 << 5, // 32 Things impassible by ghosts/observers, ie blessed tiles or forcefields
     BulletImpassable   = 1 << 6, // 64 Can be hit by bullets
     InteractImpassable = 1 << 7, // 128 Blocks interaction/InRangeUnobstructed
+    DoorPassable       = 1 << 8, // 256 Allows door to close over top, Like blast doors over conveyors for disposals rooms/cargo.
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
@@ -45,6 +46,7 @@ public enum CollisionGroup
     // Machines, computers
     MachineMask = Impassable | MidImpassable | LowImpassable,
     MachineLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable,
+    ConveyorMask = Impassable | MidImpassable | LowImpassable | DoorPassable,
 
     // Tables that SmallMobs can go under
     TableMask = Impassable | MidImpassable,

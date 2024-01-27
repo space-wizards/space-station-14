@@ -10,12 +10,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     [DataDefinition]
     public sealed partial class SolutionExplosionBehavior : IThresholdBehavior
     {
-        [DataField("solution", required: true)]
+        [DataField(required: true)]
         public string Solution = default!;
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            if (system.SolutionContainerSystem.TryGetSolution(owner, Solution, out var explodingSolution)
+            if (system.SolutionContainerSystem.TryGetSolution(owner, Solution, out _, out var explodingSolution)
                 && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))
             {
                 // Don't explode if there's no solution
