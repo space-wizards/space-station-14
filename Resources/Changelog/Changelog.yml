@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: TheKilk
-  changes:
-  - message: Added 7 new winter boots textures!
-    type: Add
-  id: 5306
-  time: '2023-12-11T03:19:28.0000000+00:00'
 - author: Sirionaut
   changes:
   - message: Animals now require a more reasonable amount of satiation before producing
@@ -3822,3 +3816,10 @@
   id: 5806
   time: '2024-01-27T17:43:45.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24612
+- author: Boaz1111
+  changes:
+  - message: The PKA shuttle gun now breaks rocks in one hit.
+    type: Tweak
+  id: 5807
+  time: '2024-01-27T17:47:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24627
