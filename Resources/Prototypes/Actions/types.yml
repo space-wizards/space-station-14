@@ -1,3 +1,14 @@
+# base actions
+
+- type: entity
+  id: BaseSuicideAction
+  abstract: true
+  components:
+  - type: ConfirmableAction
+    popup: suicide-action-popup
+
+# actions
+
 - type: entity
   id: ActionScream
   name: Scream
@@ -47,6 +58,7 @@
     event: !type:OpenStorageImplantEvent
 
 - type: entity
+  parent: BaseSuicideAction
   id: ActionActivateMicroBomb
   name: Activate Microbomb
   description: Activates your internal microbomb, completely destroying you and your equipment
@@ -62,6 +74,7 @@
     event: !type:ActivateImplantEvent
 
 - type: entity
+  parent: BaseSuicideAction
   id: ActionActivateDeathAcidifier
   name: Activate Death-Acidifier
   description: Activates your death-acidifier, completely melting you and your equipment
