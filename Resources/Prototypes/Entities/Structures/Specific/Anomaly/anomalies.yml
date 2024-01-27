@@ -102,6 +102,14 @@
   - type: GravityAnomaly
   - type: GravityWell
   - type: RadiationSource
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: RandomWalk
+  - type: SingularityDistortion
+    intensity: 1000
+    falloffPower: 2.7
 
 - type: entity
   id: AnomalyElectricity
