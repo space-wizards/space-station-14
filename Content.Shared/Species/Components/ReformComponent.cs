@@ -10,8 +10,8 @@ public sealed partial class ReformComponent : Component
     /// <summary>
     /// The action to use.
     /// </summary>
-    [DataField("actionPrototype", required: true)]
-    public EntProtoId ActionPrototype;
+    [DataField(required: true)]
+    public EntProtoId? ActionPrototype;
 
     [DataField, AutoNetworkedField] 
     public EntityUid? ActionEntity;

@@ -39,8 +39,7 @@ public sealed partial class GibActionSystem : EntitySystem
             if(allowedState == MobState.CurrentState)
             {
                 // The mob should never have more than 1 state so I don't see this being an issue
-                var GibAction = Spawn(comp.ActionPrototype);
-                _actionsSystem.AddAction(uid, GibAction, uid);
+                _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.ActionPrototype);
                 return;
             }
         }

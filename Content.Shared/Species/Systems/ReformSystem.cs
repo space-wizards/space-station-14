@@ -40,7 +40,7 @@ public sealed partial class ReformSystem : EntitySystem
     private void OnCompInit(EntityUid uid, ReformComponent comp, ComponentInit args)
     {
         // When the component is initialized, give them the action
-        if (!_protoManager.TryIndex<EntityPrototype>(comp.ActionPrototype, out var actionProto))
+        if (comp.ActionPrototype != null && !_protoManager.TryIndex<EntityPrototype>(comp.ActionPrototype, out var actionProto))
             return;
 
         _actionsSystem.AddAction(uid, ref comp.ActionEntity, out var reformAction, comp.ActionPrototype);
