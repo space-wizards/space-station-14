@@ -51653,6 +51653,13 @@ entities:
     - type: Transform
       pos: 10.5,30.5
       parent: 1
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 8410
+    components:
+    - type: Transform
+      pos: 11.5,41.5
+      parent: 1
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
   - uid: 9377

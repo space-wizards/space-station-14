@@ -5,9 +5,11 @@ using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Interaction;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -35,7 +37,28 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
             SubscribeLocalEvent<CargoOrderConsoleComponent, BoundUIOpenedEvent>(OnOrderUIOpened);
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             Reset();
+        }
+
+        private void OnInteractUsing(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
+        {
+            if (!HasComp<CashComponent>(args.Used))
+                return;
+
+            var price = _pricing.GetPrice(args.Used);
+
+            if (price == 0)
+                return;
+
+            var stationUid = _station.GetOwningStation(args.Used);
+
+            if (!TryComp(stationUid, out StationBankAccountComponent? bank))
+                return;
+
+            _audio.PlayPvs(component.ConfirmSound, uid);
+            UpdateBankAccount(stationUid.Value, bank, (int) price);
+            QueueDel(args.Used);
         }
 
         private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)
@@ -193,6 +216,7 @@ namespace Content.Server.Cargo.Systems
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
 
+            orderDatabase.Orders.Remove(order);
             DeductFunds(bank, cost);
             UpdateOrders(station.Value, orderDatabase);
         }
@@ -236,6 +260,9 @@ namespace Content.Server.Cargo.Systems
                 Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
                 return;
             }
+
+            if (!component.AllowedGroups.Contains(product.Group))
+                return;
 
             var data = GetOrderData(args, product, GenerateOrderId(orderDatabase));
 
@@ -289,7 +316,7 @@ namespace Content.Server.Cargo.Systems
 
         private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)
         {
-            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.PointCost, args.Amount, args.Requester, args.Reason);
+            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.Cost, args.Amount, args.Requester, args.Reason);
         }
 
         public static int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)

@@ -38,9 +38,19 @@
         collection: Paracusia
 
 - type: trait
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  components:
+    - type: Unrevivable
+
+- type: trait
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
+  blacklist:
+    components:
+      - BorgChassis
   components:
     - type: Muted
 
@@ -48,8 +58,12 @@
   id: WheelchairBound
   name: trait-wheelchair-bound-name
   description: trait-wheelchair-bound-desc
+  blacklist:
+    components:
+      - BorgChassis
   components:
-    - type: WheelchairBound
+    - type: BuckleOnMapInit
+      prototype: VehicleWheelchair
     - type: LegsParalyzed
 
 - type: trait
