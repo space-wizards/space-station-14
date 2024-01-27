@@ -17,3 +17,13 @@
   id: DisasterEvacpod
   path: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
   copies: 3
+
+- type: preloadedGrid
+  id: Honki
+  path: /Maps/Shuttles/ShuttleEvent/honki.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: SyndieEvacpod
+  path: /Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml
+  copies: 2

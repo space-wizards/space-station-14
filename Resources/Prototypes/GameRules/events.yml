@@ -454,6 +454,8 @@
     - ShuttleCargoLost
     - TravelingCuisine
     - DisasterEvacpod
+    - Honki
+    - SyndieEvacpod
 
 - type: entity
   id: MassHallucinations

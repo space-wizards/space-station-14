@@ -650,6 +650,7 @@
     - RandomHumanoidDisasterVictimRD
     - RandomHumanoidDisasterVictimCMO
     - RandomHumanoidDisasterVictimCaptain
+    - MobSkeletonCloset
 
 - type: entity
   id: RandomHumanoidDisasterVictimRD
@@ -720,6 +721,51 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CaptainGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+# Syndie Disaster Victim
+
+- type: entity
+  name: syndie disaster victim spawner
+  id: SyndieDisasterVictimSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSyndieDisasterVictim
+
+- type: entity
+  id: RandomHumanoidSyndieDisasterVictim
+  name: syndie disaster victim ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieDisasterVictim
+
+- type: randomHumanoidSettings
+  id: SyndieDisasterVictim
+  randomizeName: false
+  components:
+    - type: NpcFactionMember
+      factions: 
+      - Syndicate
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-syndie-disaster-victim-rules
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ RecruitSyndieGear ]
     - type: RandomMetadata
       nameSegments:
       - names_first
