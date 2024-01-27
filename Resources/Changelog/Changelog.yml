@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Reduced MIDI audio range so it's easier to reduce the volume to a comfortable
-      level.
-    type: Tweak
-  id: 5298
-  time: '2023-12-09T04:18:15.0000000+00:00'
 - author: nok-ko
   changes:
   - message: Entities without hands (like mice and mothroaches) are now forbidden
@@ -3812,3 +3805,11 @@
   id: 5798
   time: '2024-01-27T02:29:40.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24582
+- author: TheShuEd
+  changes:
+  - message: Flesh and Rock anomalies have been reworked to place entities more dynamically
+      when spawning.
+    type: Tweak
+  id: 5799
+  time: '2024-01-27T02:52:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24449
