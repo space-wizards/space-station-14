@@ -20,9 +20,7 @@ namespace Content.Client.Kitchen.UI
         public MicrowaveMenu(MicrowaveBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
-
             CookTimeButtonGroup = new ButtonGroup();
-
             InstantCookButton.Group = CookTimeButtonGroup;
             InstantCookButton.OnPressed += args =>
             {
@@ -51,9 +49,7 @@ namespace Content.Client.Kitchen.UI
                 CookTimeButtonVbox.AddChild(newButton);
                 newButton.OnPressed += args =>
                 {
-
                     OnCookTimeSelected?.Invoke(args, i);
-                    //InstantCookButton.Pressed = false;
                 };
             }
         }

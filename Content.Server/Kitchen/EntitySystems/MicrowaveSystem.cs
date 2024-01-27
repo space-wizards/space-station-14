@@ -558,8 +558,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 active.CookTimeRemaining -= frameTime;
 
-
-
                 RollMalfunction((uid, active, microwave));
 
                 //check if there's still cook time left

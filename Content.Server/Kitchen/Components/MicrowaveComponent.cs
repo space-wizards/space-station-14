@@ -59,7 +59,7 @@ namespace Content.Server.Kitchen.Components
         /// <summary>
         /// Tracks the elapsed time of the current cook timer.
         /// </summary>
-        [DataField("currentCookTimerElapsedTime"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCookTimerElapsedTime = 0;
 
         /// <summary>
