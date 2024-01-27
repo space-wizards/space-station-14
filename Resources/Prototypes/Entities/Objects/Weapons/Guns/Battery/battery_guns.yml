@@ -743,7 +743,7 @@
     size: Normal
     shape:
     - 0,0,4,0
-    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi/inhands_64x.rsi
+    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
   - type: Tag
     tags:
