@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Add color picker to color selection, e.g. for character colors.
-    type: Add
-  - message: Fix drag-drop interaction outline not updating properly.
-    type: Fix
-  id: 5301
-  time: '2023-12-10T10:43:06.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Removed gas tank throwing damage.
@@ -3819,3 +3811,10 @@
   id: 5801
   time: '2024-01-27T02:56:57.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24196
+- author: I-JustUser-I
+  changes:
+  - message: Zombie Outbreak event now has a minimum limit of 15 players.
+    type: Tweak
+  id: 5802
+  time: '2024-01-27T03:53:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24577
