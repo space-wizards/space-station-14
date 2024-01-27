@@ -90,7 +90,7 @@
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombatFilled
-    pocket1: BaseUplinkRadio40TC
+    pocket1: BaseUplinkRadio48TC
     id: SyndiPDA
   innerClothingSkirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
@@ -106,11 +106,11 @@
     eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndie
+    outerClothing: ClothingOuterHardsuitSyndicate # this is the softsuit. the id names for these suck, a bloodred is ClothingOuterHardsuitSyndie
     shoes: ClothingShoesBootsCombatFilled
     id: SyndiPDA
     pocket1: DoubleEmergencyOxygenTankFilled
-    pocket2: BaseUplinkRadio40TC
+    pocket2: BaseUplinkRadio48TC
     belt: ClothingBeltMilitaryWebbing
   innerClothingSkirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
