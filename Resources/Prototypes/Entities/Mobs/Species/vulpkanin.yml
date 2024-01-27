@@ -51,7 +51,7 @@
     maxZoom: "1.125, 1.125"
   - type: GrowlingAccent
   - type: Speech
-    speechSounds: Vulpkanin
+    speechSounds: Bass
   - type: MeleeWeapon
     animation: WeaponArcClaw
     soundHit:

@@ -122,13 +122,3 @@
   askSound:
     path: /Audio/Animals/dog_bark3.ogg
   exclaimSound:
-    path: /Audio/Animals/dog_bark2.ogg
-
-- type: speechSounds
-  id: Vulpkanin
-  saySound:
-    path: /Audio/Voice/Talk/speech_4.ogg
-  askSound:
-    path: /Audio/Voice/Talk/speech_4_ask.ogg
-  exclaimSound:
-    path: /Audio/Voice/Talk/speech_4_exclaim.ogg 
