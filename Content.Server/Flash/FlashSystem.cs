@@ -156,6 +156,10 @@ namespace Content.Server.Flash
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
+                //cut to a circle.
+                if (MathF.Sqrt(MathF.Pow(mapPosition.X - Transform(entity).MapPosition.X, 2) + MathF.Pow(mapPosition.Y - Transform(entity).MapPosition.Y, 2)) > range)
+                    continue;
+
                 if (!flashableQuery.HasComponent(entity))
                     continue;
 
@@ -164,9 +168,12 @@ namespace Content.Server.Flash
 
             foreach (var entity in flashableEntities)
             {
-                // Check for unobstructed entities while ignoring the mobs with flashable components.
-                if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e) || e == source))
-                    continue;
+                if (flashableQuery.GetComponent(entity).CheckObstruct)
+                {
+                    // Check for unobstructed entities while ignoring the mobs with flashable components.
+                    if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e) || e == source))
+                        continue;
+                }
 
                 // They shouldn't have flash removed in between right?
                 Flash(entity, user, source, duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));

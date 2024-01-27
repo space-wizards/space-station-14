@@ -9,6 +9,9 @@ namespace Content.Shared.Flash
         public float Duration;
         public TimeSpan LastFlash;
 
+        [DataField]
+        public bool CheckObstruct = true;
+
         public override bool SendOnlyToOwner => true;
     }
 

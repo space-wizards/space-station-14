@@ -148,6 +148,21 @@
     color: "#6270bb"
     castShadows: false
 
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreShadow
+  suffix: Shadow
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#793a80"
+    castShadows: false
+  - type: DestroyedByFlashing
+  - type: Flashable
+
 # Inert cores
 
 - type: entity
@@ -281,3 +296,18 @@
     energy: 2.0
     color: "#6270bb"
     castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreShadowInert
+  suffix: Shadow, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#793a80"
+    castShadows: false
+  - type: DestroyedByFlashing
+  - type: Flashable
