@@ -1,0 +1,2 @@
+ghost-role-information-vasquez-name = Vasquez the Xeno Maid
+ghost-role-information-vasquez-description = You are a xeno maid tasked to serve the crew and do domestic chores such as cleaning, cooking and laundry.

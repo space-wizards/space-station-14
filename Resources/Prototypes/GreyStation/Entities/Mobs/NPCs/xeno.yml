@@ -1,5 +1,5 @@
 - type: entity
-  name: Xeno Maid
+  name: Vasquez
   description: A rather small xeno wearing a maid outfit. Stop asking them to lay eggs for you.
   parent:
   - BaseSimpleMob
@@ -9,13 +9,6 @@
   id: MobXenoMaid
   suffix: AI
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: GreyStation/Mobs/Aliens/Xenos/xenomaid.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: running
-    scale: 1.4, 1.3
   - type: InstantAction
     useDelay: 10
     icon: Interface/Actions/scream.png
@@ -49,6 +42,13 @@
     availableModes:
       - FullAuto
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: GreyStation/Mobs/Aliens/Xenos/xenomaid.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+    scale: 1.4, 1.3
   - type: Fixtures
     fixtures:
       fix1:
@@ -60,6 +60,25 @@
         - MobMask
         layer:
         - MobLayer
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: running
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
   - type: Hands
   - type: Puller
     needsHands: false
@@ -70,9 +89,9 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
+    name: ghost-role-information-vasquez-name
+    description: ghost-role-information-vasquez-description
   - type: GhostTakeoverAvailable
-  - type: InteractionPopup
-    successChance: 1
   - type: Butcherable
     spawned:
     - id: FoodMeatXeno
@@ -100,6 +119,13 @@
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
   - type: Temperature
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-vasquez
+    interactFailureString: petting-failure-vasquez
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
   - type: Tag
     tags:
       - CannotSuicide
