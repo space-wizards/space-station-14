@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fixed a bug where the audio slider can get saved at 50% audio with no
-      sound. Unfortunately this means your audio sliders will reset.
-    type: Fix
-  - message: Fix crash on options menu while game sim not running.
-    type: Fix
-  id: 5296
-  time: '2023-12-09T03:03:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Radiation now works again.
@@ -3811,3 +3802,10 @@
   id: 5796
   time: '2024-01-26T14:43:50.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24198
+- author: icekot8
+  changes:
+  - message: Correct display of syndicate jaws of life in hand
+    type: Add
+  id: 5797
+  time: '2024-01-27T02:27:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24583
