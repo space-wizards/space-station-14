@@ -51,7 +51,7 @@
   unit: materials-unit-bill
   stackEntity: Nanobucks
   icon: { sprite: /Textures/Objects/Fun/Tabletop/nanobucks.rsi, state: nanocash } 
-  price: 1
+  price: 0
 
 - type: stack
   id: TabletopCredit
