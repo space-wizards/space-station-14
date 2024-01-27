@@ -37158,6 +37158,18 @@ entities:
     - type: Transform
       pos: 10.307261,18.27204
       parent: 30
+- proto: MagazinePistolSubMachineGunTopMounted
+  entities:
+  - uid: 2025
+    components:
+    - type: Transform
+      pos: 2.5563116,17.625486
+      parent: 30
+  - uid: 5523
+    components:
+    - type: Transform
+      pos: 2.3375616,17.766111
+      parent: 30
 - proto: MagazineRiflePractice
   entities:
   - uid: 3597
@@ -53621,6 +53633,13 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+- proto: WeaponSubMachineGunWt550
+  entities:
+  - uid: 1550
+    components:
+    - type: Transform
+      pos: 2.3688116,17.453611
+      parent: 30
 - proto: Welder
   entities:
   - uid: 2379

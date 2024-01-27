@@ -57583,6 +57583,18 @@ entities:
     - type: Transform
       pos: 18.77011,15.612514
       parent: 1
+- proto: MagazinePistolSubMachineGunTopMounted
+  entities:
+  - uid: 5386
+    components:
+    - type: Transform
+      pos: 27.431211,14.508017
+      parent: 1
+  - uid: 5387
+    components:
+    - type: Transform
+      pos: 27.431211,14.367392
+      parent: 1
 - proto: MagazineRifle
   entities:
   - uid: 5432
@@ -85009,6 +85021,13 @@ entities:
     components:
     - type: Transform
       pos: 18.660734,15.690639
+      parent: 1
+- proto: WeaponSubMachineGunWt550
+  entities:
+  - uid: 5385
+    components:
+    - type: Transform
+      pos: 27.524961,14.648642
       parent: 1
 - proto: WeaponTurretSyndicateBroken
   entities:

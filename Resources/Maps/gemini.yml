@@ -126113,6 +126113,18 @@ entities:
     - type: Transform
       pos: 60.632725,-20.369614
       parent: 2
+- proto: MagazinePistolSubMachineGunTopMounted
+  entities:
+  - uid: 18697
+    components:
+    - type: Transform
+      pos: 60.522236,-9.739233
+      parent: 2
+  - uid: 18698
+    components:
+    - type: Transform
+      pos: 60.647236,-9.905901
+      parent: 2
 - proto: MailingUnit
   entities:
   - uid: 18699
@@ -182678,6 +182690,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: WeaponSubMachineGunWt550
+  entities:
+  - uid: 27029
+    components:
+    - type: Transform
+      pos: 60.550014,-9.211455
+      parent: 2
 - proto: WeaponTurretSyndicateBroken
   entities:
   - uid: 27030

@@ -125547,6 +125547,22 @@ entities:
     - type: Transform
       pos: -52.5,5.5
       parent: 8364
+- proto: MagazinePistolSubMachineGunTopMounted
+  entities:
+  - uid: 534
+    components:
+    - type: Transform
+      pos: 16.383898,41.80004
+      parent: 8364
+    - type: BallisticAmmoProvider
+      unspawnedCount: 30
+  - uid: 535
+    components:
+    - type: Transform
+      pos: 16.383898,41.80004
+      parent: 8364
+    - type: BallisticAmmoProvider
+      unspawnedCount: 30
 - proto: MailingUnit
   entities:
   - uid: 8179
@@ -180939,6 +180955,13 @@ entities:
     components:
     - type: Transform
       pos: 21.462696,34.988297
+      parent: 8364
+- proto: WeaponSubMachineGunWt550
+  entities:
+  - uid: 536
+    components:
+    - type: Transform
+      pos: 16.540148,41.51879
       parent: 8364
 - proto: WeaponTurretSyndicateBroken
   entities:
