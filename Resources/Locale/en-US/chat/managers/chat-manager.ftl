@@ -119,3 +119,7 @@ chat-speech-verb-amphibian-2 = ribbits
 chat-speech-verb-amphibian-3 = rasps
 
 chat-speech-verb-bird-1 = chirps
+
+chat-speech-verb-electricity-1 = crackles
+chat-speech-verb-electricity-2 = buzzes
+chat-speech-verb-electricity-3 = screeches

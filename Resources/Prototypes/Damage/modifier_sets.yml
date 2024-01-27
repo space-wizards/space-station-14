@@ -60,6 +60,16 @@
     Heat: 5
     Piercing: 10
 
+# for fragile electronics like consoles or shuttle engines.
+- type: damageModifierSet
+  id: Electronic
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.5
+    Piercing: 0.7
+    Shock: 2
+    Heat: 3
+    
 # Like metallic, but without flat reduction so it can be damaged with fists.
 - type: damageModifierSet
   id: FlimsyMetallic

@@ -86,7 +86,7 @@
 
 - type: entity
   id: PuddleSparkle
-  name: Sparkle
+  name: sparkle
   placement:
     mode: SnapgridCenter
   components:
@@ -112,11 +112,6 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepWater
-      params:
-        volume: 6
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: Transform
@@ -160,6 +155,8 @@
     solution: puddle
     examinable: false
   - type: ExaminableSolution
+    solution: puddle
+  - type: DrawableSolution
     solution: puddle
   - type: BadDrink
   - type: IgnoresFingerprints
