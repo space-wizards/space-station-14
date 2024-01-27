@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Simyon
-  changes:
-  - message: Moths that are turned into zombies will now prefer cloth instead of brains.
-    type: Tweak
-  id: 5305
-  time: '2023-12-11T03:17:55.0000000+00:00'
 - author: TheKilk
   changes:
   - message: Added 7 new winter boots textures!
@@ -3821,3 +3815,10 @@
   id: 5805
   time: '2024-01-27T13:51:25.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24189
+- author: mirrorcult
+  changes:
+  - message: Lights are now shaded with the same color that they glow.
+    type: Tweak
+  id: 5806
+  time: '2024-01-27T17:43:45.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24612
