@@ -88,6 +88,26 @@
     - type: AnimationPlayer
 
 - type: entity
+  id: ClockworkGrille
+  parent: Grille
+  name: clockwork grille
+  description: a flimsy framework of iron rods. Arranged in traditional Ratvarian fashion.
+  components:
+    - type: Sprite
+      drawdepth: Walls
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: ratvargrille
+      layers:
+        - state: ratvargrille
+    - type: Icon
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: ratvargrille
+    - type: Construction
+      graph: ClockGrille
+      node: clockGrille
+      deconstructionTarget: start
+
+- type: entity
   id: GrilleBroken
   parent: BaseStructure
   name: grille
@@ -124,6 +144,23 @@
               node: start
             - !type:DoActsBehavior
               acts: ["Destruction"]
+
+- type: entity
+  id: ClockworkGrilleBroken
+  parent: GrilleBroken
+  name: clockwork grille
+  description: A flimsy framework of iron rods. Arranged in traditional Ratvarian fashion. It has seen better days.
+  components:
+    - type: Sprite
+      drawdepth: Walls
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: brokenratvargrille
+    - type: Icon
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: brokenratvargrille
+    - type: Construction
+      graph: ClockGrille
+      node: clockGrilleBroken
 
 - type: entity
   id: GrilleDiagonal

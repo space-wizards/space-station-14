@@ -57,6 +57,7 @@
     outputs:
       - Plating
       - FloorSteel
+      - FloorSteelOnClockwork #oh god, is this the only way to get tiles to work on different platings?
   - type: Stack
     stackType: FloorTileSteel
   - type: Construction
@@ -119,6 +120,7 @@
     outputs:
       - Plating
       - FloorWood
+      - FloorWoodOnClockwork
   - type: Stack
     stackType: FloorTileWood
   - type: Construction
@@ -138,6 +140,7 @@
     outputs:
       - Plating
       - FloorWhite
+      - FloorWhiteOnClockwork
   - type: Stack
     stackType: FloorTileWhite
   - type: Construction
@@ -157,6 +160,7 @@
     outputs:
       - Plating
       - FloorDark
+      - FloorDarkOnClockwork
   - type: Stack
     stackType: FloorTileDark
   - type: Construction
@@ -192,6 +196,7 @@
     outputs:
       - Plating
       - FloorReinforced
+      - FloorReinforcedOnClockwork
   - type: Stack
     stackType: FloorTileReinforced
 
@@ -759,6 +764,7 @@
     outputs:
       - Plating
       - FloorGold
+      - FloorGoldOnClockwork
   - type: Stack
     stackType: FloorTileGold
 
@@ -978,6 +984,7 @@
     outputs:
     - Plating
     - FloorAstroGrass
+    - FloorAstroGrassOnClockwork
   - type: Stack
     stackType: FloorTileAstroGrass
 
@@ -995,5 +1002,6 @@
     outputs:
     - Plating
     - FloorAstroIce
+    - FloorAstroIceOnClockwork
   - type: Stack
     stackType: FloorTileAstroIce

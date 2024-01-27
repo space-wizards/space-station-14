@@ -17,6 +17,11 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorSteelOnClockwork
+  parent: FloorSteel
+  baseTurf: PlatingBrass
+
+- type: tile
   id: FloorSteelCheckerLight
   name: tiles-steel-floor-checker-light
   sprite: /Textures/Tiles/cafeteria.png
@@ -227,6 +232,11 @@
     collection: BarestepWood
   itemDrop: FloorTileItemWood
   heatCapacity: 10000
+  
+- type: tile
+  id: FloorWoodOnClockwork
+  parent: FloorWood
+  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorWhite
@@ -245,6 +255,11 @@
     collection: FootstepTile
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
+
+- type: tile
+  id: FloorWhiteOnClockwork
+  parent: FloorWhite
+  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorWhiteMini
@@ -419,6 +434,11 @@
     collection: FootstepTile
   itemDrop: FloorTileItemDark
   heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkOnClockwork
+  parent: FloorDark
+  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorDarkMini
@@ -599,6 +619,11 @@
     collection: FootstepHull
   itemDrop: FloorTileItemReinforced
   heatCapacity: 10000
+
+- type: tile
+  id: FloorReinforcedOnClockwork
+  parent: FloorReinforced
+  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorMono
@@ -1254,6 +1279,11 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorGoldOnClockwork
+  parent: FloorGold
+  baseTurf: PlatingBrass
+
+- type: tile
   id: FloorSilver
   name: tiles-silver-tile
   sprite: /Textures/Tiles/silver.png
@@ -1781,6 +1811,11 @@
   itemDrop: FloorTileItemAstroGrass
   heatCapacity: 10000
 
+- type: tile
+  id: FloorAstroGrassOnClockwork
+  parent: FloorAstroGrass
+  baseTurf: PlatingBrass
+
 # Ice
 - type: tile
   id: FloorAstroIce
@@ -1795,3 +1830,8 @@
   mobFrictionNoInput: 0.05
   mobAcceleration: 2
   itemDrop: FloorTileItemAstroIce
+
+- type: tile
+  id: FloorAstroIceOnClockwork
+  parent: FloorAstroIce
+  baseTurf: PlatingBrass

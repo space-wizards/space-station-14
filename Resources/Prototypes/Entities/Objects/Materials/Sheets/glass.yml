@@ -455,3 +455,52 @@
   - type: Stack
     stackType: ReinforcedUraniumGlass
     count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetClockworkGlass
+  name: clockwork glass
+  description: A sheet of brass-hardened glass, primarily used by clockwork enthusiasts and remnants of Ratvarian cults.
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      BrassGlass: 100
+  - type: Stack
+    stackType: ClockworkGlass
+    baseLayer: base
+    layerStates:
+    - cglass
+    - cglass_2
+    - cglass_3
+  - type: Sprite
+    state: cglass_3
+    layers:
+    - state: cglass_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: cglass
+  - type: Extractable
+    grindableSolutionName: brassglass
+  - type: SolutionContainerManager
+    solutions:
+      cglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+        - ReagentId: Zinc
+          Quantity: 3.3
+        - ReagentId: Copper
+          Quantity: 6.7
+
+- type: entity
+  parent: SheetClockworkGlass
+  id: SheetClockworkGlass1
+  name: clockwork glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cglass
+  - type: Stack
+    stackType: ClockworkGlass
+    count: 1

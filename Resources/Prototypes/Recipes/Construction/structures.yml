@@ -287,6 +287,24 @@
   canRotate: false
 
 - type: construction
+  name: clockwork grille
+  id: ClockGrille
+  graph: ClockGrille
+  startNode: start
+  targetNode: clockGrille
+  category: construction-category-structures
+  description: A flimsy framework of iron rods assembled in traditional ratvarian fashion.
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  icon:
+    sprite: Structures/Walls/clockwork_grille.rsi
+    state: ratvargrille
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: diagonal grille
   id: GrilleDiagonal
   graph: GrilleDiagonal

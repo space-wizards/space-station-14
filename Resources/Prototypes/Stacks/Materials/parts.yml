@@ -5,3 +5,11 @@
   spawn: PartRodMetal1
   maxCount: 30
   itemSize: 1
+
+- type: stack
+  id: ClockRod
+  name: rods
+  icon: { sprite: /Textures/Objects/Materials/parts.rsi, state: clockrods }
+  spawn: PartRodClock1
+  maxCount: 30
+  itemSize: 1

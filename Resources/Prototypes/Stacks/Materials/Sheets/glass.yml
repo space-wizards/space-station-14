@@ -45,3 +45,11 @@
   spawn: SheetRUGlass1
   maxCount: 30
   itemSize: 1
+
+- type: stack
+  id: ClockworkGlass
+  name: clockwork Glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: cglass }
+  spawn: SheetCGlass1
+  maxCount: 30
+  itemSize: 1

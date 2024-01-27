@@ -90,9 +90,10 @@
   sprite: /Textures/Tiles/Misc/clockwork/clockwork_lattice.rsi/clock_lattice.png
   baseTurf: Space
   isSubfloor: true
+  deconstructTools: [ Cutting ]
   footstepSounds: 
     collection: FootstepPlating
   friction: 0.3
   isSpace: true
-  itemDrop: PartRodMetal1
+  itemDrop: PartRodClock1
   heatCapacity: 10000

@@ -112,6 +112,75 @@
     count: 0
 
 - type: entity
+  parent: PartBase
+  id: PartRodClock
+  name: clockwork rod
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50 #Half of a regular steel sheet to reflect the crafting recipe
+  - type: Stack
+    stackType: ClockRod
+    baseLayer: base
+    layerStates:
+    - clockrods
+    - clockrods_2
+    - clockrods_3
+    - clockrods_4
+    - clockrods_5
+  - type: Sprite
+    state: clockrods_5
+    layers:
+    - state: clockrods_5
+      map: ["base"]
+  - type: Item
+    size: Normal
+  - type: Construction
+    graph: ClockRod
+    node: ClockRod
+  - type: Appearance
+  - type: FloorTile
+    outputs:
+    - ClockworkLattice
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 5
+  - type: Extractable
+    grindableSolutionName: clockrod
+  - type: SolutionContainerManager
+    solutions:
+      rod:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 4.5
+        - ReagentId: Carbon
+          Quantity: 0.5
+
+- type: entity
+  parent: PartRodClock
+  id: PartRodClock10
+  name: clockwork rod
+  suffix: 10
+  components:
+  - type: Sprite
+    state: clockrods
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: PartRodClock
+  id: PartRodClock1
+  name: clockwork rod
+  suffix: Single
+  components:
+  - type: Sprite
+    state: clockrods
+  - type: Stack
+    count: 1
+
+- type: entity
   parent: FloorTileItemSteel
   id: FloorTileItemSteelLingering0
   suffix: Lingering, 0
