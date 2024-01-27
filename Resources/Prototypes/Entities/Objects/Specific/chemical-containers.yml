@@ -58,7 +58,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: carbon
+      currentLabel: default-label-chemical-containers-carbon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -73,7 +73,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: iodine
+      currentLabel: default-label-chemical-containers-iodine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -88,7 +88,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: fluorine
+      currentLabel: default-label-chemical-containers-fluorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -103,7 +103,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: chlorine
+      currentLabel: default-label-chemical-containers-chlorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -118,7 +118,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: aluminium
+      currentLabel: default-label-chemical-containers-aluminium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -133,7 +133,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: phosphorus
+      currentLabel: default-label-chemical-containers-phosphorus
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -148,7 +148,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: sulfur
+      currentLabel: default-label-chemical-containers-sulfur
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -163,7 +163,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: silicon
+      currentLabel: default-label-chemical-containers-silicon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -178,7 +178,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: hydrogen
+      currentLabel: default-label-chemical-containers-hydrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -193,7 +193,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: lithium
+      currentLabel: default-label-chemical-containers-lithium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -208,7 +208,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: sodium
+      currentLabel: default-label-chemical-containers-sodium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -223,7 +223,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: potassium
+      currentLabel: default-label-chemical-containers-potassium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -238,7 +238,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: radium
+      currentLabel: default-label-chemical-containers-radium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -253,7 +253,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: iron
+      currentLabel: default-label-chemical-containers-iron
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -268,7 +268,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: copper
+      currentLabel: default-label-chemical-containers-copper
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -283,7 +283,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: gold
+      currentLabel: default-label-chemical-containers-gold
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -298,7 +298,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: mercury
+      currentLabel: default-label-chemical-containers-mercury
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -313,7 +313,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: silver
+      currentLabel: default-label-chemical-containers-silver
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -328,7 +328,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: ethanol
+      currentLabel: default-label-chemical-containers-ethanol
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -343,7 +343,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: sugar
+      currentLabel: default-label-chemical-containers-sugar
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -358,7 +358,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: nitrogen
+      currentLabel: default-label-chemical-containers-nitrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -373,7 +373,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: oxygen
+      currentLabel: default-label-chemical-containers-oxygen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -388,7 +388,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Plant-B-Gone
+      currentLabel: default-label-chemical-containers-Plant-B-Gone
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -403,7 +403,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: welding fuel
+      currentLabel: default-label-chemical-containers-welding-fuel
     - type: SolutionContainerManager
       solutions:
         beaker:
