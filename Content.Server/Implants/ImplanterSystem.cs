@@ -113,7 +113,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
                 BreakOnUserMove = true,
                 BreakOnTargetMove = true,
                 BreakOnDamage = true,
-			    BreakOnTargetWake = true,
+                BreakOnTargetWake = true,
                 NeedHand = true,
             };
             
