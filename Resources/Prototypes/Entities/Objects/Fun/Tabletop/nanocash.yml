@@ -10,8 +10,6 @@
     storedOffset: 0,-2
   - type: Material
   - type: PhysicalComposition
-    materialComposition:
-      Credit: 1
   - type: StaticPrice
     price: 0
   - type: Stack
