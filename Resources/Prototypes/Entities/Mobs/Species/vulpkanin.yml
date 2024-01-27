@@ -40,7 +40,7 @@
       Dead: 0
     baseDecayRate: 0.15
   - type: Icon
-    sprite: Corvax/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
     state: full
   - type: Body
     prototype: Vulpkanin
