@@ -438,7 +438,7 @@
     - ShuttleStriker
 
 - type: entity
-  id: NanotrasenRandomShuttleSpawn
+  id: UnknownShuttleSpawn
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -446,7 +446,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 10
     reoccurrenceDelay: 30
     duration: 1
   - type: UnknownShuttleSpawnRule
