@@ -42,6 +42,8 @@
         base:
           True: { state: sleeper_1 }
           False: { state: sleeper_0 }
+  - type: AntiAnomalyZone
+    zoneRadius: 15
 
 # This one handles all spawns, latejoin and roundstart.
 - type: entity
