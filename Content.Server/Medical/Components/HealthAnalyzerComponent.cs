@@ -22,7 +22,7 @@ public sealed partial class HealthAnalyzerComponent : Component
     public EntityUid? ScannedEntity;
 
     /// <summary>
-    /// The maximum range in tiles at which the analyzer can read an entities vitals
+    /// The maximum range in tiles at which the analyzer can receive continuous updates
     /// </summary>
     [DataField]
     public float MaxScanRange = 2.5f;
