@@ -1,2 +1,2 @@
-ent-ClothingHandsGlovesPaws = золочёные силовые перчатки
+ent-ClothingHandsGlovesGoldenEra = золочёные силовые перчатки
     .desc = Пара прочных перчаток из металла и дюраткани, украшенная золотом.
