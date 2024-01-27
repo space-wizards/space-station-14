@@ -29,6 +29,7 @@
     - Document
     - Trash
   - type: Appearance
+  - type: FaxableObject
   - type: PaperVisuals
   - type: Flammable
     fireSpread: true

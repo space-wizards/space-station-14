@@ -439,6 +439,8 @@
   - type: Speech
     speechVerb: Moth
     speechSounds: Squeak
+  - type: FaxableObject
+    identity: mothroach
   - type: MothAccent
   - type: Sprite
     sprite: Mobs/Animals/mothroach.rsi
@@ -496,7 +498,6 @@
     accent: mothroach
   - type: ZombieAccentOverride
     accent: zombieMoth
-  - type: Paper
   - type: Vocal
     sounds:
       Male: UnisexMoth
@@ -510,7 +511,6 @@
     - Trash
     - CannotSuicide
     - VimPilot
-    - MothRoach
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
@@ -1481,7 +1481,8 @@
     rootTask:
       task: MouseCompound
   - type: Physics
-  - type: Paper
+  - type: FaxableObject
+    identity: mouse
   - type: Fixtures
     fixtures:
       fix1:
@@ -2931,6 +2932,8 @@
   - type: Item
     size: Tiny
   - type: Physics
+  - type: FaxableObject
+    identity: hamster
   - type: Fixtures
     fixtures:
       fix1:
@@ -2944,7 +2947,6 @@
         - SmallMobLayer
   - type: MobState
   - type: Deathgasp
-  - type: Paper
   - type: MobStateActions
     actions:
       Critical:

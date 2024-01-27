@@ -42,7 +42,7 @@
       ejectSound: /Audio/Machines/tray_eject.ogg
       whitelist:
         components:
-          - Paper
+          - FaxableObject #used to be PaperComponent - brainfood1183
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

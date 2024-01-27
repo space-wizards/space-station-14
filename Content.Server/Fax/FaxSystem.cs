@@ -39,6 +39,7 @@ using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
 using Content.Server.Nutrition.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Weapons.Melee.Events;
 
 
 namespace Content.Server.Fax;
@@ -345,28 +346,29 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        if (!TryComp<FaxableObjectComponent>(component.PaperSlot.Item, out var faxable))
+            return;
+
+        if (component.PaperSlot.Item == null)
+            return;
+
         if (component.InsertingTimeRemaining > 0)
         {
-            if(HasComp<MobStateComponent>(component.PaperSlot.Item))
+            switch (faxable.Identity)
             {
-                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster") == true)
-                {
+                case "hamster":
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
-                }
-
-                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse") == true)
-                {
+                    break;
+                case "mouse":
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
-                }
-
-                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach") == true)
-                {
+                    break;
+                case "mothroach":
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
-                }
-
+                    break;
+                default:
+                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
+                    break;
             }
-            else
-                _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
         }
         else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
@@ -441,7 +443,7 @@ public sealed class FaxSystem : EntitySystem
 
         if (HasComp<MobStateComponent>(sendEntity))
         {
-            CrushMob(uid);
+            Faxecute(uid, component);
             return;
         }
 
@@ -466,16 +468,13 @@ public sealed class FaxSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    public void CrushMob(EntityUid uid, FaxMachineComponent? component = null)
+    public void Faxecute(EntityUid uid, FaxMachineComponent component, DamageOnFaxecuteEvent? args = null)
     {
-        if (!Resolve(uid, ref component))
-            return;
-
         var sendEntity = component.PaperSlot.Item;
         if (sendEntity == null)
             return;
 
-        var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Brute"), 300);
+        var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>(component.DamageType), component.Damage);
         _damageable.TryChangeDamage(sendEntity, damageSpec);
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
         return;
@@ -501,15 +500,15 @@ public sealed class FaxSystem : EntitySystem
         if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
             return;
 
+        if (HasComp<MobStateComponent>(sendEntity) && HasComp<FaxableObjectComponent>(sendEntity))
+        {
+            Faxecute(uid, component);
+            return;
+        }
+
         if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
            !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
-
-        if (HasComp<MobStateComponent>(sendEntity))
-        {
-            CrushMob(uid);
-            return;
-        }
 
         var payload = new NetworkPayload()
         {

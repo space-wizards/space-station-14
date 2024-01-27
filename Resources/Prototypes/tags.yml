@@ -830,9 +830,6 @@
   id: MopBasic
 
 - type: Tag
-  id: MothRoach
-
-- type: Tag
   id: Mouse
 
 - type: Tag
