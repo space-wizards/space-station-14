@@ -728,17 +728,17 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg #wawa
   - type: ProjectileBatteryAmmoProvider
     proto: CartridgeEnergyShotgunWide
-    fireCost: 100
+    fireCost: 200
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: CartridgeEnergyShotgunWide
-      fireCost: 100
+      fireCost: 200
     - proto: CartridgeEnergyShotgunNarrow
-      fireCost: 100
+      fireCost: 200
     - proto: CartridgeEnergyShotgunDisabler
-      fireCost: 100
+      fireCost: 200
     - proto: CartridgeEnergyShotgunIon
-      fireCost: 100
+      fireCost: 200
   - type: Item
     size: Normal
     shape:
