@@ -17,10 +17,11 @@ public sealed record CriminalRecord
     public SecurityStatus Status = SecurityStatus.None;
 
     /// <summary>
-    /// Reason of the current status.
+    /// When Status is Wanted, the reason for it.
+    /// Should never be set otherwise.
     /// </summary>
     [DataField]
-    public string Reason = string.Empty;
+    public string? Reason;
 
     /// <summary>
     /// Criminal history of the person.

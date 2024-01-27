@@ -27,49 +27,33 @@ public sealed class CriminalRecordsSystem : EntitySystem
 
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
-        var record = new CriminalRecord()
-        {
-            Status = SecurityStatus.None,
-            Reason = string.Empty
-        };
-
-        _stationRecords.AddRecordEntry(ev.Key, record);
+        _stationRecords.AddRecordEntry(ev.Key, new CriminalRecord());
         _stationRecords.Synchronize(ev.Key);
     }
 
     /// <summary>
-    /// Tries to change the status of the record found by the StationRecordKey
+    /// Tries to change the status of the record found by the StationRecordKey.
+    /// Reason should only be passed if status is Wanted.
+    /// The previous status is returned in the oldStatus out param.
     /// </summary>
     /// <returns>True if the status is changed, false if not</returns>
     public bool TryChangeStatus(StationRecordKey key, SecurityStatus status,
-        [NotNullWhen(true)] out SecurityStatus? updatedStatus, string? reason)
+        string? reason, [NotNullWhen(true)] out SecurityStatus? oldStatus)
     {
-        updatedStatus = null;
+        oldStatus = null;
 
         if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record)
             || status == record.Status)
             return false;
 
-        record.Reason = (status == SecurityStatus.None ? string.Empty : reason)!;
-        record.Status = status;
+        oldStatus = record.Status;
 
-        updatedStatus = record.Status;
+        record.Status = status;
+        record.Reason = reason;
 
         _stationRecords.Synchronize(key);
 
         return true;
-    }
-
-    /// <summary>
-    /// Tries to change the status of the record to Detained or None found by the StationRecordKey
-    /// </summary>
-    /// <returns>True if the status is changed, false if not</returns>
-    public bool TryArrest(StationRecordKey key, [NotNullWhen(true)] out SecurityStatus? updatedStatus, string? reason)
-    {
-        updatedStatus = null;
-
-        return TryChangeStatus(key, SecurityStatus.Detained, out updatedStatus, reason)
-               || TryChangeStatus(key, SecurityStatus.None, out updatedStatus, reason);
     }
 
     /// <summary>
