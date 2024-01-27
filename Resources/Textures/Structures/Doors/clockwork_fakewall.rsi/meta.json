@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "clockwork_wall-open"
+      "name": "clockwork_wall-open",
 	  "directions": 1,      
 	  "delays": [
         [

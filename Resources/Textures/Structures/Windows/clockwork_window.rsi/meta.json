@@ -11,35 +11,35 @@
 	  "name": "full"
 	},
     {
-      "name": "clockwork_window-0"
+      "name": "clockwork_window-0",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-1"
+      "name": "clockwork_window-1",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-2"
+      "name": "clockwork_window-2",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-3"
+      "name": "clockwork_window-3",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-4"
+      "name": "clockwork_window-4",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-5"
+      "name": "clockwork_window-5",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-6"
+      "name": "clockwork_window-6",
 	  "directions": 4
     },
     {
-      "name": "clockwork_window-7"
+      "name": "clockwork_window-7",
 	  "directions": 4
     }
   ]
