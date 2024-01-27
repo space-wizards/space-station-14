@@ -145,7 +145,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperativeMedic
     mask: ClothingMaskGasSyndicate
-    eyes: ClothingEyesHudSyndicate
+    eyes: ClothingEyesHudSyndicateMed
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieMedic

@@ -211,6 +211,22 @@
   - type: ShowSecurityIcons
 
 - type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudSyndicateMed
+  name: syndicate medical visor
+  description: An upgraded syndicate visor with automatic health readings, designed for better detection of humanoids and their subsequent elimination.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/syndmed.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/syndmed.rsi
+  - type: ShowSyndicateIcons
+  - type: ShowSecurityIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+
+- type: entity
   parent: ClothingEyesGlassesSunglasses
   id: ClothingEyesGlassesHiddenSecurity
   suffix: Syndicate
