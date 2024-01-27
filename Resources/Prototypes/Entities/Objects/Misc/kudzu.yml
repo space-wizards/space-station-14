@@ -300,6 +300,7 @@
     - type: Tag
       tags:
         - HideContextMenu
+        - SpookyFog
 
 - type: entity
   name: Haze

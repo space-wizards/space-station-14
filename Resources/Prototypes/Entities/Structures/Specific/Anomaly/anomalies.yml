@@ -824,3 +824,6 @@
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg
     departureSound: /Audio/Items/hiss.ogg
+    - type: Tag
+      tags:
+        - SpookyFog
