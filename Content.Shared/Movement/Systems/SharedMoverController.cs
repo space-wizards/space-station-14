@@ -54,6 +54,7 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<PhysicsComponent> PhysicsQuery;
         protected EntityQuery<RelayInputMoverComponent> RelayQuery;
         protected EntityQuery<SharedPullableComponent> PullableQuery;
+        protected EntityQuery<SharedPullerComponent> PullerQuery;
         protected EntityQuery<TransformComponent> XformQuery;
         protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
         protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
@@ -86,6 +87,7 @@ namespace Content.Shared.Movement.Systems
             PhysicsQuery = GetEntityQuery<PhysicsComponent>();
             RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
             PullableQuery = GetEntityQuery<SharedPullableComponent>();
+            PullerQuery = GetEntityQuery<SharedPullerComponent>();
             XformQuery = GetEntityQuery<TransformComponent>();
             NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
             CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
@@ -250,10 +252,17 @@ namespace Content.Shared.Movement.Systems
             {
                 if (!NoRotateQuery.HasComponent(uid))
                 {
+                    var worldRot = _transform.GetWorldRotation(xform);
+
+                    // reverse rotation if we're pulling something
+                    // (i.e. look towards what we're pulling)
+                    var angle = xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot;
+                    if (PullerQuery.TryGetComponent(uid, out var puller) && puller.Pulling != null)
+                        angle = angle.Opposite();
+
                     // TODO apparently this results in a duplicate move event because "This should have its event run during
                     // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
-                    var worldRot = _transform.GetWorldRotation(xform);
-                    _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
+                    _transform.SetLocalRotation(uid, angle, xform);
                 }
 
                 if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&

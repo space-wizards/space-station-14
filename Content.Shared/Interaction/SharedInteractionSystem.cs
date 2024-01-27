@@ -188,6 +188,9 @@ namespace Content.Shared.Interaction
             if (!TryComp(uid, out SharedPullableComponent? pull))
                 return false;
 
+            if (!ValidateInteractAndFace(userEntity.Value, coords))
+                return false;
+
             _pullSystem.TogglePull(userEntity.Value, pull);
             return false;
         }
