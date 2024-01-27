@@ -40,7 +40,7 @@
               acts: ["Destruction"]
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalBreak
     - type: Appearance
     - type: UserInterface
       interfaces:
@@ -67,7 +67,7 @@
     #      startingItem: PowerCellMedium
 
 - type: entity
-  name: Hot Food Cart
+  name: hot food cart
   id: FoodCartHot
   parent: FoodCartBase
   description: Get out there and slang some dogs.
@@ -88,7 +88,7 @@
     - type: ItemSlots
       slots:
         coldsauce_slot:
-          name: Cold Sauce
+          name: foodcart-slot-component-slot-name-coldsauce
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
@@ -96,7 +96,7 @@
               - Coldsauce
           priority: 6
         hotsauce_slot:
-          name: Hot Sauce
+          name: foodcart-slot-component-slot-name-hotsauce
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
@@ -104,7 +104,7 @@
               - Hotsauce
           priority: 5
         bbqsauce_slot:
-          name: BBQ Sauce
+          name: foodcart-slot-component-slot-name-bbqsauce
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
@@ -112,7 +112,7 @@
               - BBQsauce
           priority: 4
         ketchup_slot:
-          name: Ketchup
+          name: foodcart-slot-component-slot-name-ketchup
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
@@ -148,7 +148,7 @@
         ketchup_slot: !type:ContainerSlot {}
 
 - type: entity
-  name: Cold Food Cart
+  name: cold food cart
   id: FoodCartCold
   parent: FoodCartBase
   description: It's the Ice Cream Man! It's the Ice Cream Man!

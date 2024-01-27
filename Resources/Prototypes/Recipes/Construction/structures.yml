@@ -214,7 +214,6 @@
   conditions:
     - !type:TileNotBlocked
 
-
 - type: construction
   name: diagonal shuttle wall
   id: DiagonalShuttleWall
@@ -716,6 +715,21 @@
   canBuildInImpassable: true
 
 - type: construction
+  name: blast door
+  id: BlastDoor
+  graph: BlastDoor
+  startNode: start
+  targetNode: blastdoor
+  category: construction-category-structures
+  description: This one says 'BLAST DONGER'.
+  icon:
+    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
   name: catwalk
   id: Catwalk
   graph: Catwalk
@@ -1045,7 +1059,7 @@
   description: A wall light fixture. Use light tubes.
   icon:
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
-    state: off
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -1065,7 +1079,7 @@
   description: A wall light fixture. Use light bulbs.
   icon:
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
-    state: off
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

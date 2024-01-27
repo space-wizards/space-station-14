@@ -1,6 +1,8 @@
 - type: entity
   id: CrateServiceJanitorialSupplies
   parent: CratePlastic
+  name: janitorial supplies crate
+  description: Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag.
   components:
   - type: StorageFill
     contents:
@@ -21,6 +23,8 @@
 - type: entity
   id: CrateServiceReplacementLights
   parent: CrateGenericSteel
+  name: replacement lights crate
+  description: May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
   components:
   - type: StorageFill
     contents:
@@ -30,6 +34,8 @@
 - type: entity
   id: CrateMousetrapBoxes
   parent: CrateGenericSteel
+  name: mousetraps crate
+  description: Mousetraps, for when all of service is being haunted by an entire horde of rats. Use sparingly... or not.
   components:
     - type: StorageFill
       contents:
@@ -38,6 +44,8 @@
 - type: entity
   id: CrateServiceSmokeables
   parent: CrateGenericSteel
+  name: smokeables crate
+  description: Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!
   components:
   - type: StorageFill
     contents:
@@ -62,6 +70,8 @@
 - type: entity
   id: CrateServiceTheatre
   parent: CrateGenericSteel
+  name: theatrical performances crate
+  description: Contains a moth cloak, barber scissors, maid uniform, clown and mime attributes, and other performance charms.
   components:
   - type: StorageFill
     contents:
@@ -81,6 +91,8 @@
 - type: entity
   id: CrateServiceCustomSmokable
   parent: CrateGenericSteel
+  name: DIY smokeables crate
+  description: Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own cigarettes.
   components:
   - type: StorageFill
     contents:
@@ -95,6 +107,8 @@
 - type: entity
   id: CrateServiceBureaucracy
   parent: CrateGenericSteel
+  name: bureaucracy crate
+  description: Several stacks of paper and a few pens, what more can you ask for.
   components:
   - type: StorageFill
     contents:
@@ -103,7 +117,7 @@
     - id: Pen
       amount: 2
     - id: BoxFolderClipboard
-      amount: 2  
+      amount: 2
     - id: HandLabeler
     - id: BoxFolderBlue
     - id: BoxFolderRed
@@ -112,6 +126,8 @@
 - type: entity
   id: CrateServicePersonnel
   parent: CrateCommandSecure
+  name: personnel crate
+  description: Contains a box of blank ID cards and PDAs.
   components:
   - type: StorageFill
     contents:
@@ -121,6 +137,8 @@
 - type: entity
   id: CrateServiceBooks
   parent: CrateGenericSteel
+  name: books crate
+  description: Contains 10 empty books of random appearance.
   components:
     - type: StorageFill
       contents:
@@ -130,6 +148,8 @@
 - type: entity
   id: CrateServiceGuidebooks
   parent: CrateGenericSteel
+  name: guidebooks crate
+  description: Contains guidebooks.
   components:
     - type: StorageFill
       contents:
@@ -148,8 +168,58 @@
       - id: BookChemicalCompendium
 
 - type: entity
+  id: CrateServiceSodaDispenser
+  parent: CrateGenericSteel
+  name: soda dispenser refill crate
+  description: Contains refills for soda dispensers.
+  components:
+    - type: StorageFill
+      contents:
+      - id: DrinkCoffeeJug
+      - id: DrinkColaBottleFull
+      - id: DrinkCreamCartonXL
+      - id: DrinkDrGibbJug
+      - id: DrinkEnergyDrinkJug
+      - id: DrinkGreenTeaJug
+      - id: DrinkIceJug
+      - id: DrinkJuiceLimeCartonXL
+      - id: DrinkJuiceOrangeCartonXL
+      - id: DrinkLemonLimeJug
+      - id: DrinkRootBeerJug
+      - id: DrinkSodaWaterBottleFull
+      - id: DrinkSpaceMountainWindBottleFull
+      - id: DrinkSpaceUpBottleFull
+      - id: DrinkSugarJug
+      - id: DrinkTeaJug
+      - id: DrinkTonicWaterBottleFull
+      - id: DrinkWaterMelonJuiceJug
+
+- type: entity
+  id: CrateServiceBoozeDispenser
+  parent: CrateGenericSteel
+  name: booze dispenser refill crate
+  description: Contains refills for booze dispensers.
+  components:
+    - type: StorageFill
+      contents:
+      - id: DrinkAleBottleFullGrowler
+      - id: DrinkBeerGrowler
+      - id: DrinkCoffeeLiqueurBottleFull
+      - id: DrinkCognacBottleFull
+      - id: DrinkGinBottleFull
+      - id: DrinkMeadJug
+      - id: DrinkRumBottleFull
+      - id: DrinkTequilaBottleFull
+      - id: DrinkVermouthBottleFull
+      - id: DrinkVodkaBottleFull
+      - id: DrinkWhiskeyBottleFull
+      - id: DrinkWineBottleFull
+
+- type: entity
   id: CrateServiceBox
   parent: CratePlastic
+  name: boxes crate
+  description: Contains 6 empty multipurpose boxes.
   components:
     - type: StorageFill
       contents:
@@ -159,6 +229,8 @@
 - type: entity
   id: CrateJanitorBiosuit
   parent: CratePlastic
+  name: janitor bio suit crate
+  description: Contains 2 biohazard suits to ensure that no disease will distract you from cleaning.
   components:
   - type: StorageFill
     contents:
@@ -247,6 +319,8 @@
 - type: entity
   id: CrateJanitorExplosive
   parent: ClosetJanitorBomb
+  name: janitorial bomb suit crate
+  description: Supplies a bomb suit for cleaning up any explosive compounds, buy one today!
   components:
   - type: StorageFill
     contents:

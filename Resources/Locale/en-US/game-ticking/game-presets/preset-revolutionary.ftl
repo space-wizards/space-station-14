@@ -55,7 +55,21 @@ rev-headrev-count = {$initialCount ->
     *[other] There were {$initialCount} Head Revolutionaries:
 }
 
-rev-headrev-player = {$title} converted {$count} {$count ->
+rev-headrev-name-user = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) converted {$count} {$count ->
     [one] person
     *[other] people
-}.
+}
+
+rev-headrev-name = [color=#5e9cff]{$name}[/color] converted {$count} {$count ->
+    [one] person
+    *[other] people
+}
+
+## Deconverted window
+
+rev-deconverted-title = Deconverted!
+rev-deconverted-text =
+    As the last headrev has died, the revolution is over.
+
+    You are no longer a revolutionary, so be nice.
+rev-deconverted-confirm = Confirm

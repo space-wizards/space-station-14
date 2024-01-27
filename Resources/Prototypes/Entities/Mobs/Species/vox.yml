@@ -97,7 +97,6 @@
   - type: Inventory
     speciesId: vox
   - type: InventorySlots
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:

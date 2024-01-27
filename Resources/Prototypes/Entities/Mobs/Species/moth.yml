@@ -28,12 +28,18 @@
     speechVerb: Moth
   - type: TypingIndicator
     proto: moth
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 5
+  - type: Bloodstream
+    bloodReagent: InsectBlood
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#808A51"
   - type: MothAccent
   - type: Vocal
     sounds:
@@ -47,9 +53,9 @@
   - type: Flammable
     damage:
       types:
-        Heat: 1.5 # moths burn more easily
+        Heat: 4.5 # moths burn more easily
   - type: Temperature # Moths hate the heat and thrive in the cold.
-    heatDamageThreshold: 335
+    heatDamageThreshold: 320
     coldDamageThreshold: 230
     currentTemperature: 310.15
     specificHeat: 46
@@ -58,7 +64,7 @@
         Cold : 0.05 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.2 #per second, scales with temperature & other constants
+        Heat : 3 #per second, scales with temperature & other constants
   - type: Sprite # sprite again because we want different layer ordering
     noRot: true
     drawdepth: Mobs

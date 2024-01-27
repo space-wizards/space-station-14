@@ -89,6 +89,32 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatTrench
+  name: trench coat
+  description: A comfy trench coat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLab
   name: lab coat
   description: A suit that protects against minor chemical spills.

@@ -34,6 +34,12 @@
   source: "https://github.com/tgstation/tgstation/tree/f8ee37afc00bce1ad421615eaa0e4cbddd5eea90/sound/effects"
 
 - files:
+  - largethud.ogg
+  license: "CC0-1.0"
+  copyright: "Made by philRacoIndie freesound.org, modified by brainfood1183 (github)"
+  source: "https://freesound.org/people/philRacoIndie/sounds/512483/"
+
+- files:
   - snake1.ogg
   - snake2.ogg
   - snake3.ogg
@@ -50,3 +56,11 @@
   license: "CC-BY-SA-4.0"
   copyright: "Taken and modified from el1n freesound.org"
   source: "https://freesound.org/people/el1n/sounds/442746/"
+
+- files:
+  - gib_step.ogg
+  - meatslap.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/tgstation/tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/34d5ab2e46e3fb4dd9d7475f587d33441df9651c/sound/effects"
+  
