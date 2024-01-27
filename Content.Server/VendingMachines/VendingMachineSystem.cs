@@ -25,6 +25,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.VendingMachines
 {
@@ -39,6 +41,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AdvertiseSystem _advertise = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -69,6 +72,8 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, RestockDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
+
+            SubscribeLocalEvent<VendingMachineComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
         private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
@@ -153,6 +158,21 @@ namespace Content.Server.VendingMachines
         {
             vendComponent.Broken = true;
             TryUpdateVisualState(uid, vendComponent);
+            EnsureComp<WeldableComponent>(uid);
+        }
+
+        private void OnWeldChanged(EntityUid uid, VendingMachineComponent component, WeldableChangedEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
+                return;
+
+            if (component.Broken)
+            {
+                component.Broken = false;
+                TryUpdateVisualState(uid, component);
+                EntityManager.RemoveComponent<WeldableComponent>(uid);
+                _damageableSystem.SetAllDamage(uid, damageable, 0); // Repair all damage
+            }
         }
 
         private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
