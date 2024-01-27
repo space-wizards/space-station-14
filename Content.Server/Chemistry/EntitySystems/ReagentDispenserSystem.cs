@@ -97,31 +97,21 @@ namespace Content.Server.Chemistry.EntitySystems
                 var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
                 var storedContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, storageSlotId);
 
-                // Add volume remaining label and prepare solution contents string
-                FixedPoint2 quantity = 0f;
-                string solContents = "";
-                if (storedContainer != null && _solutionContainerSystem.TryGetDrainableSolution(storedContainer.Value, out _, out var sol))
-                {
-                    quantity = sol.Volume;
-                    solContents = string.Join("-", sol.Contents.Select(x =>
-                        {
-                            return (_prototypeManager.TryIndex(x.Reagent.Prototype, out ReagentPrototype? p) ? p.LocalizedName
-                            : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text"));
-                        })
-                    );
-                }
-
-                // Set label from manually-applied label, the solution contents or metadata if unavailable
+                // Set label from manually-applied label, or metadata if unavailable
                 string reagentLabel;
                 if (TryComp<LabelComponent>(storedContainer, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
                     reagentLabel = label.CurrentLabel;
-                else if (solContents != "")
-                    reagentLabel = solContents;
                 else if (storedContainer != null)
                     reagentLabel = Name(storedContainer.Value);
                 else
                     continue;
 
+                // Add volume remaining label
+                FixedPoint2 quantity = 0f;
+                if (storedContainer != null && _solutionContainerSystem.TryGetDrainableSolution(storedContainer.Value, out _, out var sol))
+                {
+                    quantity = sol.Volume;
+                }
                 var storedAmount = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity));
 
                 inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(reagentLabel, storedAmount)));
