@@ -57,31 +57,19 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     public bool IsEmpty() => SelectedKey == null && StationRecord == null && CriminalRecord == null && RecordListing == null;
 }
 
+/// <summary>
+/// Used to change status, respecting the wanted/reason nullability rules in <see cref="CriminalRecord"/>.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class CriminalRecordArrestButtonPressed : BoundUserInterfaceMessage
-{
-    public readonly string Reason;
-    public readonly string Name;
-
-    public CriminalRecordArrestButtonPressed(string reason, string name)
-    {
-        Reason = reason;
-        Name = name;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessage
+public sealed class CriminalRecordChangeStatus : BoundUserInterfaceMessage
 {
     public readonly SecurityStatus Status;
-    public readonly string Reason;
-    public readonly string Name;
+    public readonly string? Reason;
 
-    public CriminalStatusOptionButtonSelected(SecurityStatus status, string reason, string name)
+    public CriminalRecordChangeStatus(SecurityStatus status, string? reason)
     {
         Status = status;
         Reason = reason;
-        Name = name;
     }
 }
 
@@ -110,18 +98,5 @@ public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
     public CriminalRecordDeleteHistory(uint index)
     {
         Index = index;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class CriminalRecordConsoleDataUIMessage
-{
-    public readonly GeneralStationRecord StationRecord;
-    public readonly CriminalRecord CriminalRecord;
-
-    public CriminalRecordConsoleDataUIMessage(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
-    {
-        StationRecord = stationRecord;
-        CriminalRecord = criminalRecord;
     }
 }

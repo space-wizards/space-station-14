@@ -1,46 +1,35 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'criminal-records-console-window-title'}"
-               MinSize="850 500">
+               MinSize="750 500">
     <BoxContainer Orientation="Vertical">
+        <!-- Record search bar
+             TODO: make this into a control shared with general records -->
         <BoxContainer Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
-            <OptionButton Name="StationRecordsFilterType" MinWidth="200" Margin="0 0 10 0"/>
-            <LineEdit Name="StationRecordsFiltersValue"
+            <OptionButton Name="FilterType" MinWidth="200" Margin="0 0 10 0"/> <!-- Populated in constructor -->
+            <LineEdit Name="FilterText"
                 PlaceHolder="{Loc 'criminal-records-filter-placeholder'}" HorizontalExpand="True"/>
-            <Button Name="StationRecordsFilters" Text="{Loc 'criminal-records-console-search-records'}"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <BoxContainer VerticalExpand="True">
-                <!-- Record listing -->
-                <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
-                    <Label Name="RecordListingStatus" Visible="False" />
-                    <ScrollContainer VerticalExpand="True">
-                        <ItemList Name="RecordListing" />
-                    </ScrollContainer>
-                </BoxContainer>
-                <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5">
-                    <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'criminal-records-console-select-record-info'}"/>
-                    <BoxContainer Name="RecordContainer" Orientation="Vertical" />
-                    <PanelContainer Name="CriminalDivider" StyleClasses="LowDivider" Visible="False" Margin="0 5 0 5" />
-                    <BoxContainer Name="StatusEditing" Orientation="Vertical" Margin="5 5 5 5">
-                        <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" PlaceHolder="{Loc 'criminal-records-reason-placeholder'}"/>
-                        <BoxContainer Orientation="Horizontal" Margin="5 5 5 5" >
-                            <Button Name="ArrestButton" HorizontalExpand="True" />
-                            <OptionButton Name="StatusOptionButton" HorizontalExpand="True" />
-                        </BoxContainer>
-                    </BoxContainer>
-                </BoxContainer>
-            </BoxContainer>
-            <!-- Crime history -->
-            <BoxContainer Name="HistoryContainer" Orientation="Vertical" HorizontalExpand="True" Margin="5">
-                <BoxContainer Name="HistoryEditing" Orientation="Horizontal" HorizontalExpand="True" Margin="5">
-                    <LineEdit Name="HistoryLineEdit" HorizontalExpand="True" PlaceHolder="{Loc 'criminal-records-history-placeholder'}"/>
-                    <Button Name="AddHistoryButton" Text="{Loc 'criminal-records-add-history'}"/>
-                    <Button Name="DeleteHistoryButton" Text="{Loc 'criminal-records-delete-history'}" Disabled="True"/>
-                </BoxContainer>
+            <!-- Record listing -->
+            <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
+                <Label Name="NoRecords" Text="{Loc 'criminal-records-console-no-records'}"/>
                 <ScrollContainer VerticalExpand="True">
-                    <ItemList Name="History"/>
+                    <ItemList Name="RecordListing"/> <!-- Populated when loading state -->
                 </ScrollContainer>
+            </BoxContainer>
+            <Label Name="RecordUnselected" Text="{Loc 'criminal-records-console-select-record-info'}"/>
+            <!-- Selected record info -->
+            <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5" Visible="False">
+                <Label Name="PersonName" StyleClasses="LabelBig"/>
+                <Label Name="PersonPrints"/>
+                <Label Name="PersonDna"/>
+                <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5" />
+                <BoxContainer Orientation="Horizontal" Margin="5 5 5 5">
+                    <Label Text="{Loc 'criminal-records-console-status'}"/>
+                    <OptionButton Name="StatusOptionButton"/> <!-- Populated in constructor -->
+                </BoxContainer>
+                <Button Name="HistoryButton" Text="{Loc 'criminal-records-console-crime-history'}"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

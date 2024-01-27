@@ -36,8 +36,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
             subs.Event<SelectStationRecord>(OnKeySelected);
             subs.Event<SetStationRecordFilter>(OnFiltersChanged);
-            subs.Event<CriminalRecordArrestButtonPressed>(OnButtonPressed);
-            subs.Event<CriminalStatusOptionButtonSelected>(OnStatusSelected);
+            subs.Event<CriminalRecordChangeStatus>(OnChangeStatus);
             subs.Event<CriminalRecordAddHistory>(OnAddHistory);
             subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
         });
@@ -66,44 +65,50 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         }
     }
 
-    private void OnButtonPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordArrestButtonPressed msg)
+    private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
+        // prevent malf client violating wanted/reason nullability
+        if ((msg.Status == SecurityStatus.Wanted) != (msg.Reason != null))
+            return;
+
         if (!CheckSelected(ent, msg.Session, out var mob, out var key))
             return;
 
-        if (!_criminalRecords.TryArrest(key.Value, out var status, msg.Reason))
-            return;
-
-        (string, object)[] args =
+        // validate the reason
+        string? reason = null;
+        if (msg.Reason != null)
         {
-            ("name", msg.Name), ("reason", msg.Reason),
-            ("officer", Name(mob.Value)), ("hasReason", msg.Reason.Length)
-        };
+            reason = msg.Reason.Trim();
+            if (reason.Length < 1 || reason.Length > ent.Comp.MaxStringLength)
+                return;
+        }
 
-        var message = status == SecurityStatus.Detained ? "detained" : "released";
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel, ent);
-
-        UpdateUserInterface(ent);
-    }
-
-    private void OnStatusSelected(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalStatusOptionButtonSelected msg)
-    {
-        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
+        // invalid key or status wasn't actually changed, do nothing
+        if (!_criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, out var oldStatus))
             return;
 
-        if (!_criminalRecords.TryChangeStatus(key.Value, msg.Status, out var status, msg.Reason))
-            return;
+        var name = RecordName(key.Value);
+        var officer = Name(mob.Value);
+        (string, object)[] args;
+        if (reason != null)
+            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason) };
+        else
+            args = new (string, object)[] { ("name", name), ("officer", officer) };
 
-        if (msg.Reason.Length > ent.Comp.MaxStringLength)
-            return;
-
-        (string, object)[] args =
+        // figure out which radio message to send depending on transition
+        var message = (oldStatus, msg.Status) switch
         {
-            ("name", msg.Name), ("reason", msg.Reason),
-            ("officer", Name(mob.Value)), ("hasReason", msg.Reason.Length)
+            // going from wanted or detained on the spot
+            (_, SecurityStatus.Detained) => "detained",
+            // prisoner did their time
+            (SecurityStatus.Detained, SecurityStatus.None) => "released",
+            // going from wanted to none, must have been a mistake
+            (_, SecurityStatus.None) => "not-wanted",
+            // going from none or detained, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
+            (_, SecurityStatus.Wanted) => "wanted",
+            // this is impossible
+            _ => "not-wanted"
         };
-
-        var message = status == SecurityStatus.Wanted ? "wanted" : "not-wanted";
         _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
@@ -115,7 +120,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             return;
 
         var line = msg.Line.Trim();
-        if (string.IsNullOrEmpty(line) || line.Length > ent.Comp.MaxStringLength)
+        if (line.Length < 1 || line.Length > ent.Comp.MaxStringLength)
             return;
 
         var now = _timing.CurTime;
@@ -168,7 +173,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Boilerplate that most buttons use, if they require that a record be selected.
+    /// Boilerplate that most actions use, if they require that a record be selected.
     /// Obviously shouldn't be used for selecting records.
     /// </summary>
     private bool CheckSelected(Entity<CriminalRecordsConsoleComponent> ent, ICommonSession session,
@@ -195,5 +200,16 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         key = new StationRecordKey(id, station);
         mob = user;
         return true;
+    }
+
+    /// <summary>
+    /// Gets the name from a record, or empty string if this somehow fails.
+    /// </summary>
+    private string RecordName(StationRecordKey key)
+    {
+        if (!_stationRecords.TryGetRecord<GeneralStationRecord>(key, out var record))
+            return "";
+
+        return record.Name;
     }
 }
