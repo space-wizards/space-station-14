@@ -172,6 +172,10 @@
       - creamy
   - type: Sprite
     state: bananapie-slice
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
 # Tastes like pie, cream, banana.
 
 - type: entity
