@@ -238,6 +238,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
             var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
             var difficulty = 0f;
+            Log.Debug($"Attempting {maxPicks} objective picks with {maxDifficulty} difficulty");
             for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
             {
                 var objective = _objectives.GetRandomObjective(mindId, mind, "TraitorObjectiveGroups");
@@ -245,7 +246,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
                     continue;
 
                 _mindSystem.AddObjective(mindId, mind, objective.Value);
-                difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
+                var adding = Comp<ObjectiveComponent>(objective.Value).Difficulty;
+                difficulty += adding;
+                Log.Debug($"Added objective {ToPrettyString(objective):objective} with {adding} difficulty");
             }
         }
 

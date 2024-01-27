@@ -123,9 +123,8 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public float PricePerUnit;
 
-        // TODO: Pick the highest reagent for sounds and add sticky to cola, juice, etc.
         [DataField]
-        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater");
+        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume)
         {

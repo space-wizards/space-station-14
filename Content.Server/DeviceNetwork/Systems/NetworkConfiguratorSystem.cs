@@ -532,6 +532,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OnUiClosed(EntityUid uid, NetworkConfiguratorComponent component, BoundUIClosedEvent args)
     {
+        if (!args.UiKey.Equals(NetworkConfiguratorUiKey.Configure)
+            && !args.UiKey.Equals(NetworkConfiguratorUiKey.Link)
+            && !args.UiKey.Equals(NetworkConfiguratorUiKey.List))
+        {
+            return;
+        }
+
         if (TryComp(component.ActiveDeviceList, out DeviceListComponent? list))
         {
             list.Configurators.Remove(uid);

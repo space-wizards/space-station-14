@@ -129,6 +129,7 @@ DrinkGoldschlagerBottleFull: DrinkGildlagerBottleFull
 DrinkGoldschlagerGlass: DrinkGildlagerGlass
 
 # 2024-01-07
+ClosetBase: ClosetSteelBase
 MonkeyCubeBox: VariantCubeBox
 
 # 2024-01-08
@@ -155,3 +156,12 @@ TransmitterSubspaceStockPart: null
 
 # 2024-01-10
 ClothingHeadHatHoodRad: null
+
+# 2024-01-12
+SpaceMedipen: null
+
+# 2024-01-18
+ClothingHeadHelmetVoidParamed: null
+
+# 2024-01-19
+DefaultStationBeaconTeslaEngine: null

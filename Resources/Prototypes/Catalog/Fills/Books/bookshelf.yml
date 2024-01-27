@@ -69,3 +69,29 @@
         prob: 0.1
       - id: BookInspiration
         prob: 0.1
+      - id: BookSpaceEncyclopedia
+        orGroup: BookPool
+      - id: BookTheBookOfControl
+        orGroup: BookPool
+      - id: BookBartendersManual
+        orGroup: BookPool
+      - id: BookChefGaming
+        orGroup: BookPool
+      - id: BookLeafLoversSecret
+        orGroup: BookPool
+      - id: BookEngineersHandbook
+        orGroup: BookPool
+      - id: BookScientistsGuidebook
+        orGroup: BookPool
+      - id: BookSecurity
+        orGroup: BookPool
+      - id: BookHowToKeepStationClean
+        orGroup: BookPool
+      - id: BookHowToRockAndStone
+        orGroup: BookPool
+      - id: BookMedicalReferenceBook
+        orGroup: BookPool
+      - id: BookHowToSurvive
+        orGroup: BookPool
+      - id: BookChemicalCompendium
+        orGroup: BookPool
