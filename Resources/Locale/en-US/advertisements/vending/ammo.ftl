@@ -6,3 +6,6 @@ advertisement-ammo-5 = Float like an astronaut, sting like a bullet!
 advertisement-ammo-6 = Express your second amendment today!
 advertisement-ammo-7 = Guns don't kill people, but you can!
 advertisement-ammo-8 = Who needs responsibilities when you have guns?
+advertisement-ammo-9 = Murdering people is fun!
+advertisement-ammo-10 = Go shoot 'em up!
+

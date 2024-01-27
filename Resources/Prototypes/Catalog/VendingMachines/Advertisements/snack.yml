@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: GetmoreChocolateCorpAds
   advertisements:
   - advertisement-snack-1
@@ -13,9 +13,14 @@
   - advertisement-snack-10
   - advertisement-snack-11
   - advertisement-snack-12
+  - advertisement-snack-13
+  - advertisement-snack-14
+  - advertisement-snack-15
   thankyous:
   - vending-machine-thanks
   - thankyou-snack-1
   - thankyou-snack-2
   - thankyou-snack-3
   - thankyou-snack-4
+  - thankyou-snack-5
+  - thankyou-snack-6
