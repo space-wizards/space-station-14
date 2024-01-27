@@ -1,3 +1,3 @@
-marking-FoxTail = Лисий хвост
-marking-FoxTail-tail_fox = Лисий хвост
-marking-FoxTail-tail_fox_end = Лисий хвост
+marking-AnimatedFoxTail = Лисий хвост
+marking-AnimatedFoxTail-tail_fox = Лисий хвост
+marking-AnimatedFoxTail-tail_fox_end = Лисий хвост

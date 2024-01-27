@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Occulus-Eris (https://github.com/Occulus-Server/Occulus-Eris)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "square",
+            "directions": 4
+        },
+        {
+            "name": "pawsocks",
+            "directions": 4
+        },
+        {
+            "name": "vulp_tail",
+            "directions": 4
+        },
+        {
+            "name": "vulp_ear",
+            "directions": 4
+        },
+        {
+            "name": "vulp_ear_inner",
+            "directions": 4
+        },
+        {
+            "name": "vulp_belly-torso",
+            "directions": 4
+        },
+        {
+            "name": "vulp_face",
+            "directions": 4
+        },
+        {
+            "name": "wolf_tail",
+            "directions": 4
+        },
+        {
+            "name": "wolf_tail_inner",
+            "directions": 4
+        }
+    ]
+}

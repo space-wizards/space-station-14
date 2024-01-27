@@ -1,0 +1,83 @@
+- type: entity
+  save: false
+  name: Urist McVulp
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobVulpkanin
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Vulpkanin
+  - type: Hunger # on 1.5x more
+    thresholds:
+      Overfed: 250
+      Okay: 200
+      Peckish: 150
+      Starving: 100
+      Dead: 0
+    baseDecayRate: 0.02
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.95
+    baseSprintSpeed: 4.9
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 245
+    currentTemperature: 340.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.15 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.2 #per second, scales with temperature & other constants
+  - type: ThermalRegulator
+    normalBodyTemperature: 340.15
+  - type: Thirst # on 1.5x more
+    thresholds:
+      OverHydrated: 650
+      Okay: 500
+      Thirsty: 350
+      Parched: 200
+      Dead: 0
+    baseDecayRate: 0.15
+  - type: Icon
+    sprite: Corvax/Mobs/Species/Vulpkanin/parts.rsi
+    state: full
+  - type: Body
+    prototype: Vulpkanin
+    requiredLegs: 2
+  - type: Inventory
+  - type: ContentEye
+    targetZoom: "1.125, 1.125"
+    maxZoom: "1.125, 1.125"
+  - type: GrowlingAccent
+  - type: Speech
+    speechSounds: Vulpkanin
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Slash: 5
+  - type: LightweightDrunk
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Vulpkanin
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2.0
+    damageRecovery:
+      types:
+        Asphyxiation: -2.0
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobVulpkaninDummy
+  noSpawn: true
+  description: A dummy vulpkanin meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Vulpkanin

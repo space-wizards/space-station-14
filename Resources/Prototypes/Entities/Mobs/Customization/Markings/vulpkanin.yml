@@ -1,0 +1,57 @@
+- type: marking
+  id: PawSocks
+  markingCategory: Overlay
+  bodyPart: RFoot #highest possible layer
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: pawsocks
+
+- type: marking
+  id: FoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: vulp_tail
+
+- type: marking
+  id: FoxEar
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: vulp_ear
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: vulp_ear_inner
+
+- type: marking
+  id: WolfTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: wolf_tail
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: wolf_tail_inner
+
+- type: marking
+  id: FoxBelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: vulp_belly-torso
+
+- type: marking
+  id: FoxSnout
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Mobs/Customization/vulpkanin.rsi
+      state: vulp_face

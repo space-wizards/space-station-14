@@ -1,10 +1,10 @@
 #license: CLA
 #copiryght: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
 - type: marking
-  id: FoxTail
+  id: AnimatedFoxTail
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Vulpkanin]
   sprites:
   - sprite:  Ganimed/Mobs/Customization/fox_parts.rsi
     state:  tail_fox

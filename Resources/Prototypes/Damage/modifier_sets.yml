@@ -238,6 +238,13 @@
     Caustic: 0.0
 
 - type: damageModifierSet
+  id: Vulpkanin # Because of fur is more flammable and more resistant to cold. Blunt resist as a bonus.
+  coefficients:
+    Cold: 0.5
+    Heat: 1.5
+    Blunt: 0.8
+
+- type: damageModifierSet
   id: HellSpawn
   coefficients:
     Heat: 0.0
