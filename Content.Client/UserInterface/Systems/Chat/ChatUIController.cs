@@ -779,7 +779,7 @@ public sealed class ChatUIController : UIController
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
             if (grammar != null && grammar.ProperNoun == true)
-                msg.WrappedMessage = InjectTagInsideTag(msg, "Name", "color", GetNameColor(GetStringInsideTag(msg, "Name")));
+                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
 
         // Log all incoming chat to repopulate when filter is un-toggled
@@ -879,34 +879,6 @@ public sealed class ChatUIController : UIController
     {
         var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Length);
         return _chatNameColors[colorIdx];
-    }
-
-    public string GetStringInsideTag(ChatMessage message, string tag)
-    {
-        var rawmsg = message.WrappedMessage;
-        var tagStart = rawmsg.IndexOf($"[{tag}]");
-        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
-        if (tagStart < 0 || tagEnd < 0)
-            return "";
-        tagStart += tag.Length + 2;
-        return rawmsg.Substring(tagStart, tagEnd - tagStart);
-    }
-
-    public string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
-    {
-        var rawmsg = message.WrappedMessage;
-        var tagStart = rawmsg.IndexOf($"[{outerTag}]");
-        var tagEnd = rawmsg.IndexOf($"[/{outerTag}]");
-        if (tagStart < 0 || tagEnd < 0) //If the outer tag is not found, the injection is not performed
-            return rawmsg;
-        tagStart += outerTag.Length + 2;
-
-        string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
-
-        rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
-        rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
-
-        return rawmsg;
     }
 
     private readonly record struct SpeechBubbleData(ChatMessage Message, SpeechBubble.SpeechType Type);
