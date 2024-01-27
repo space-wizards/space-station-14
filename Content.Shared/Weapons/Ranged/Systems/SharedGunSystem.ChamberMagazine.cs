@@ -290,7 +290,7 @@ public abstract partial class SharedGunSystem
         if (entity == null)
             return false;
 
-        container.Remove(entity.Value);
+        Containers.Remove(entity.Value, container);
         return true;
     }
 
@@ -316,7 +316,7 @@ public abstract partial class SharedGunSystem
     {
         return Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
                container is ContainerSlot slot &&
-               slot.Insert(ammo);
+               Containers.Insert(ammo, slot);
     }
 
     private void OnChamberAmmoCount(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ref GetAmmoCountEvent args)

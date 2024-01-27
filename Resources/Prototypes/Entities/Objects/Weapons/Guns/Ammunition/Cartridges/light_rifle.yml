@@ -51,3 +51,12 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleIncendiary
+
+- type: entity
+  id: CartridgeLightRifleUranium
+  name: cartridge (.30 rifle uranium)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRifleUranium
+

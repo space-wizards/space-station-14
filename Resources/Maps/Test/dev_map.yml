@@ -755,6 +755,13 @@ entities:
       pos: -5.5,-14.5
       parent: 179
       type: Transform
+- proto: ArrivalsShuttleTimer
+  entities:
+  - uid: 1191
+    components:
+    - pos: -7.5,5.5
+      parent: 179
+      type: Transform
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 992
@@ -4813,6 +4820,13 @@ entities:
   - uid: 431
     components:
     - pos: -1.235331,4.739151
+      parent: 179
+      type: Transform
+- proto: Screen
+  entities:
+  - uid: 1192
+    components:
+    - pos: 4.5,-14.5
       parent: 179
       type: Transform
 - proto: SeedExtractor

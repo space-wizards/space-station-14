@@ -1,5 +1,7 @@
 ent-ClosetBase = шкаф
     .desc = Стандартное хранилище Nanotrasen.
+ent-ClosetSteelBase = { ent-ClosetBase }
+    .desc = { ent-ClosetBase.desc }
 ent-BaseWallCloset = настенный шкаф
     .desc = Стандартное хранилище Nanotrasen, теперь и на стене.
 ent-BaseWallLocker = { ent-BaseWallCloset }

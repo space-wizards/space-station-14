@@ -63,8 +63,7 @@ entities:
     - pos: -0.5,-3.5
       parent: 37
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
     - loadingNetworkDemand: 20
       supplyRampPosition: 0.010999783
       type: PowerNetworkBattery
@@ -113,15 +112,13 @@ entities:
     - pos: -0.5,-3.5
       parent: 37
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 56
     components:
     - pos: 2.5,0.5
       parent: 37
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: ClothingHeadHatTophat
   entities:
   - uid: 41

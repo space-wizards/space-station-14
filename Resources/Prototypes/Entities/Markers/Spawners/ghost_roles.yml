@@ -130,3 +130,20 @@
     - state: green
     - sprite: Objects/Weapons/Melee/energykatana.rsi
       state: icon
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostTerminator
+  name: terminator spawn point
+  components:
+  - type: GhostRole
+    name: ghost-role-information-exterminator-name
+    description: ghost-role-information-exterminator-description
+    rules: ghost-role-information-exterminator-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanTerminator
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Terminator/parts.rsi
+      state: full

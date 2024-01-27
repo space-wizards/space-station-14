@@ -121,3 +121,5 @@ ent-TrashBakedBananaPeel = запечённая банановая кожура
     .desc = { ent-TrashBananaPeel.desc }
 ent-FoodLemoon = Лунный лимон
     .desc = Говорят, луна сделана из сыра. На самом деле, она сделана из молока и лавровых листьев.
+ent-FoodCocoaPod = стручок какао-боба
+    .desc = Шоколада много не бывает!

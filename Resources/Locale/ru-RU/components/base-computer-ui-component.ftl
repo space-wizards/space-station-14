@@ -1,1 +1,1 @@
-base-computer-ui-component-not-powered = Устройство не получает питание.
+base-computer-ui-component-not-powered = Устройство не получает питания.

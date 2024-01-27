@@ -1,11 +1,20 @@
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
+using Content.Server.Discord;
+using Content.Server.GameTicking;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Voting;
+using Robust.Server.Player;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
 namespace Content.Server.Voting
@@ -61,6 +70,11 @@ namespace Content.Server.Voting
     public sealed class CreateCustomCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly DiscordWebhook _discord = default!;
+
+        private ISawmill _sawmill = default!;
 
         private const int MaxArgCount = 10;
 
@@ -68,8 +82,15 @@ namespace Content.Server.Voting
         public string Description => Loc.GetString("cmd-customvote-desc");
         public string Help => Loc.GetString("cmd-customvote-help");
 
+        // Webhook stuff
+        private string _webhookUrl = string.Empty;
+        private ulong _webhookId;
+        private WebhookIdentifier? _webhookIdentifier;
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            _sawmill = Logger.GetSawmill("vote");
+
             if (args.Length < 3 || args.Length > MaxArgCount)
             {
                 shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 3), ("upper", 10)));
@@ -90,6 +111,41 @@ namespace Content.Server.Voting
             {
                 options.Options.Add((args[i], i));
             }
+
+            // Set up the webhook payload
+            string _serverName = _cfg.GetCVar(CVars.GameHostName);
+            _webhookUrl = _cfg.GetCVar(CCVars.DiscordVoteWebhook);
+
+
+            var _gameTicker = _entitySystem.GetEntitySystem<GameTicker>();
+
+            var payload = new WebhookPayload()
+            {
+                Username = Loc.GetString("custom-vote-webhook-name"),
+                Embeds = new List<WebhookEmbed>
+                {
+                    new()
+                    {
+                        Title = $"{shell.Player}",
+                        Color = 13438992,
+                        Description = options.Title,
+                        Footer = new WebhookEmbedFooter
+                        {
+                            Text = $"{_serverName} {_gameTicker.RoundId} {_gameTicker.RunLevel}",
+                        },
+
+                        Fields = new List<WebhookEmbedField> {},
+                    },
+                },
+            };
+
+            foreach (var voteOption in options.Options)
+            {
+                var NewVote = new WebhookEmbedField() { Name = voteOption.text,  Value = "0"};
+                payload.Embeds[0].Fields.Add(NewVote);
+            }
+
+            WebhookMessage(payload);
 
             options.SetInitiatorOrServer(shell.Player);
 
@@ -114,6 +170,18 @@ namespace Content.Server.Voting
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
                 }
+
+                for (int i = 0; i < eventArgs.Votes.Count - 1; i++)
+                {
+                    var oldName = payload.Embeds[0].Fields[i].Name;
+                    var newValue = eventArgs.Votes[i].ToString();
+                    var newEmbed = payload.Embeds[0];
+                    newEmbed.Color = 2353993;
+                    payload.Embeds[0] = newEmbed;
+                    payload.Embeds[0].Fields[i] = new WebhookEmbedField() { Name = oldName, Value = newValue, Inline =  true};
+                }
+
+                WebhookMessage(payload, _webhookId);
             };
         }
 
@@ -127,6 +195,38 @@ namespace Content.Server.Voting
 
             var n = args.Length - 1;
             return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
+        }
+
+        // Sends the payload's message.
+        private async void WebhookMessage(WebhookPayload payload)
+        {
+            if (string.IsNullOrEmpty(_webhookUrl))
+                return;
+
+            if (await _discord.GetWebhook(_webhookUrl) is not { } identifier)
+                return;
+
+            _webhookIdentifier = identifier.ToIdentifier();
+
+            _sawmill.Debug(JsonSerializer.Serialize(payload));
+
+            var request = await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            var content = await request.Content.ReadAsStringAsync();
+            _webhookId = ulong.Parse(JsonNode.Parse(content)?["id"]!.GetValue<string>()!);
+        }
+
+        // Edits a pre-existing payload message, given an ID
+        private async void WebhookMessage(WebhookPayload payload, ulong id)
+        {
+            if (string.IsNullOrEmpty(_webhookUrl))
+                return;
+
+            if (await _discord.GetWebhook(_webhookUrl) is not { } identifier)
+                return;
+
+            _webhookIdentifier = identifier.ToIdentifier();
+
+            var request = await _discord.EditMessage(_webhookIdentifier.Value, id, payload);
         }
     }
 

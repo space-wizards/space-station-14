@@ -15,7 +15,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
-    [Dependency] protected readonly SharedSpaceNinjaSystem _ninja = default!;
+    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly StealthClothingSystem StealthClothing = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
@@ -112,8 +112,8 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         _audio.PlayPredicted(comp.RevealSound, uid, user);
         // all abilities check for a usedelay on the ninja
         var useDelay = EnsureComp<UseDelayComponent>(user);
-        useDelay.Delay = comp.DisableTime;
-        UseDelay.BeginDelay(user, useDelay);
+        UseDelay.SetDelay((user, useDelay), comp.DisableTime);
+        UseDelay.TryResetDelay((user, useDelay));
     }
 
     // TODO: modify PowerCellDrain

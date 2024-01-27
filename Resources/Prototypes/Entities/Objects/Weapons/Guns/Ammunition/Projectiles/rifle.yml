@@ -42,4 +42,16 @@
       types:
         Blunt: 2
         Heat: 15
+  
+- type: entity
+  id: BulletRifleUranium
+  parent: BaseBullet
+  name: bullet (0.20 rifle uranium)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 7
+        Piercing: 8
         

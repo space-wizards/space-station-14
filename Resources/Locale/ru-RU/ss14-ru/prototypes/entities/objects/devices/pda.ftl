@@ -1,5 +1,7 @@
 ent-BasePDA = КПК
     .desc = Ассистент по персональным данным.
+ent-BaseMedicalPDA = { ent-BasePDA }
+    .desc = { ent-BasePDA.desc }
 ent-PassengerPDA = КПК пассажира
     .desc = Почему он не серый?
 ent-TechnicalAssistantPDA = КПК технического ассистента

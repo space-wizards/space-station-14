@@ -47,3 +47,20 @@
             Level3: {state: particle3}
     - type: GuideHelp
       guides: [ Singularity, Power ]
+
+- type: entity
+  name: anti particles
+  description: Accelerated negative particles.
+  id: AntiParticlesProjectile
+  parent: ParticlesProjectile
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Structures/Power/Generation/PA/particle.rsi
+      color: red
+      state: particle0
+      shader: unshaded
+      map: [ "unshaded" ]
+  - type: SinguloFood
+    energy: -10

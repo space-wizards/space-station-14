@@ -126,3 +126,21 @@
     whitelist:
       tags:
         - BodyBag
+
+- type: entity
+  name: vial box
+  parent: BoxCardboard
+  id: BoxVial
+  description: A box full of vials.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: StorageFill
+    contents:
+      - id: BaseChemistryEmptyVial
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: vials

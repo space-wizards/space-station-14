@@ -1,4 +1,4 @@
-ent-PelletShotgunSlug = дробина (.50 пуля)
+ent-PelletShotgunSlug = дробина (.50 картечь)
     .desc = { ent-BaseBullet.desc }
 ent-PelletShotgunBeanbag = дробина (.50)
     .desc = { ent-BaseBullet.desc }
@@ -13,4 +13,10 @@ ent-PelletShotgunImprovised = самодельная дробина (.50)
 ent-PelletShotgunTranquilizer = дробина (.50 транквилизатор)
     .desc = { ent-BaseBulletPractice.desc }
 ent-PelletShotgunFlare = дробина (.50 фальшфейер)
+    .desc = { ent-BaseBullet.desc }
+ent-PelletShotgunUranium = дробина (.50 урановая)
+    .desc = { ent-BaseBullet.desc }
+ent-PelletGrapeshot = картечина
+    .desc = { ent-BaseBullet.desc }
+ent-PelletGlass = стеклянный осколок
     .desc = { ent-BaseBullet.desc }

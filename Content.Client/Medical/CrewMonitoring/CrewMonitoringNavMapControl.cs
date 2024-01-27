@@ -15,7 +15,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 
     public CrewMonitoringNavMapControl() : base()
     {
-        WallColor = new Color(250, 146, 255);
+        WallColor = new Color(192, 122, 196);
         TileColor = new(71, 42, 72);
 
         _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));

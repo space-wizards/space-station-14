@@ -1,3 +1,2 @@
-ent-RandomBoard = случайный спавнер плата
-    .suffix = { "" }
+ent-RandomBoard = случайный спавнер машинная плата
     .desc = { ent-MarkerBase.desc }

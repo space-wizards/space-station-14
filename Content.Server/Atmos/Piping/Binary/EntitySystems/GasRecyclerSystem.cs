@@ -33,7 +33,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasRecyclerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
-        private void OnEnabled(EntityUid uid, GasRecyclerComponent comp, AtmosDeviceEnabledEvent args)
+        private void OnEnabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceEnabledEvent args)
         {
             UpdateAppearance(uid, comp);
         }
@@ -109,7 +109,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             return alpha * (float)Math.Sqrt(inlet.Pressure - outlet.Pressure);
         }
 
-        private void OnDisabled(EntityUid uid, GasRecyclerComponent comp, AtmosDeviceDisabledEvent args)
+        private void OnDisabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceDisabledEvent args)
         {
             comp.Reacting = false;
             UpdateAppearance(uid, comp);

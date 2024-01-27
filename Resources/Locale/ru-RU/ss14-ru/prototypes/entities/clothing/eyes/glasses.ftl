@@ -28,3 +28,6 @@ ent-ClothingEyesGlassesJamjar = очки ботаника
     .desc = Также известны как ревнители девственности.
 ent-ClothingEyesGlassesJensen = очки дженсена
     .desc = Пара складывающихся очков с жёлтыми линзами. Появляются тогда, когда они нужны.
+ent-ClothingEyesGlassesHiddenSecurity = { ent-ClothingEyesGlassesSecurity }
+    .desc = { ent-ClothingEyesGlassesSecurity.desc }
+    .suffix = Скрытые

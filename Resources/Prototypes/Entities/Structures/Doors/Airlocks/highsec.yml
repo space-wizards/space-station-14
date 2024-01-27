@@ -82,8 +82,8 @@
     fixVacuum: true
   - type: Occluder
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:

@@ -10,6 +10,8 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
+  access:
+  - CentralCommand
 
 - type: startingGear
   id: CentcomGear

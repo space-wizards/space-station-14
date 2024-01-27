@@ -8,6 +8,5 @@ ent-SpawnVehicleMotobike = спавнер мотоцикл
     .desc = { ent-MarkerBase.desc }
 ent-SpawnVehicleWheelchair = спавнер кресло-коляска
     .desc = { ent-MarkerBase.desc }
-ent-SpawnVehicleWheelchairFolded = спавнер кресло-коляска
+ent-SpawnVehicleWheelchairFolded = спавнер кресло-коляска [Сложенный]
     .desc = { ent-MarkerBase.desc }
-    .suffix = Сложенная

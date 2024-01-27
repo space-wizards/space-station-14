@@ -5,7 +5,7 @@ ui-options-tab-graphics = Графика
 ui-options-tab-controls = Управление
 ui-options-tab-audio = Аудио
 ui-options-tab-network = Сеть
-ui-options-tab-misc = Основное
+ui-options-tab-misc = Основные
 ui-options-apply = Применить
 ui-options-reset-all = Сбросить всё
 ui-options-default = По-умолчанию
@@ -13,10 +13,12 @@ ui-options-default = По-умолчанию
 # Misc/General menu
 
 ui-options-discordrich = Включить Discord Rich Presence
+ui-options-general-ui-style = Стиль UI
 ui-options-general-discord = Discord
 ui-options-general-cursor = Курсор
 ui-options-general-speech = Речь
-ui-options-general-storage = Хранилище
+ui-options-general-storage = Инвентарь
+ui-options-general-accessibility = Доступность
 
 ## Audio menu
 
@@ -25,6 +27,7 @@ ui-options-midi-volume = Громкость MIDI (Муз. инструменты
 ui-options-ambient-music-volume = Громкость музыки окружения:
 ui-options-ambience-volume = Громкость окружения:
 ui-options-lobby-volume = Громкость лобби и окончания раунда:
+ui-options-interface-volume = Громкость интерфейса:
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
 ui-options-lobby-music = Музыка в лобби
 ui-options-restart-sounds = Звуки перезапуска раунда
@@ -35,11 +38,13 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
 
-ui-options-show-held-item = Показать удерживаемый элемент рядом с курсором?
-ui-options-show-combat-mode-indicators = Показать индикатор боевого режима рядом с курсором?
-ui-options-show-looc-on-head = Показать LOOC сообщения над головой персонажа?
-ui-options-fancy-speech = Показывать имена в сообщениях над головой персонажа?
-ui-options-fancy-name-background = Добавить задний фон к именам над головой персонажа?
+ui-options-show-held-item = Показать удерживаемый элемент рядом с курсором
+ui-options-show-combat-mode-indicators = Показать индикатор боевого режима рядом с курсором
+ui-options-opaque-storage-window = Непрозрачность окна хранилища
+ui-options-show-looc-on-head = Показывать LOOC-чат над головами персонажей
+ui-options-fancy-speech = Показывать имена в облачках с текстом
+ui-options-fancy-name-background = Добавить фон облачкам с текстом
+ui-options-reduced-motion = Снижение интенсивности визуальных эффектов
 ui-options-vsync = Вертикальная синхронизация
 ui-options-fullscreen = Полный экран
 ui-options-lighting-label = Качество освещения:
@@ -57,8 +62,12 @@ ui-options-scale-175 = 175%
 ui-options-scale-200 = 200%
 ui-options-hud-theme = Тема HUD:
 ui-options-hud-theme-default = По умолчанию
-ui-options-hud-theme-modernized = Модернизированная
-ui-options-hud-theme-classic = Классическая
+ui-options-hud-theme-plasmafire = Плазма
+ui-options-hud-theme-slimecore = Слаймоядро
+ui-options-hud-theme-clockwork = Механизм
+ui-options-hud-theme-retro = Ретро
+ui-options-hud-theme-minimalist = Минимализм
+ui-options-hud-theme-eris = Эрис
 ui-options-vp-stretch = Растянуть изображение для соответствия окну игры
 ui-options-vp-scale = Фиксированный масштаб окна игры: x{ $scale }
 ui-options-vp-integer-scaling = Использовать целочисленное масштабирование (может вызывать появление чёрных полос/обрезания)
@@ -115,11 +124,13 @@ ui-options-function-alt-activate-item-in-world = Альтернативно ис
 ui-options-function-drop = Положить предмет
 ui-options-function-examine-entity = Осмотреть
 ui-options-function-swap-hands = Поменять руки
-ui-options-function-move-stored-item = Двигать предмет в меню хранилища
-ui-options-function-rotate-stored-item = Вращать предмет в меню хранилища
-ui-options-static-storage-ui = Статическое меню хранилища
+ui-options-function-move-stored-item = Переместить хранящийся объект
+ui-options-function-rotate-stored-item = Повернуть хранящийся объект
+ui-options-static-storage-ui = Закрепить интерфейс хранилища на хотбаре
 ui-options-function-smart-equip-backpack = Умная экипировка в рюкзак
 ui-options-function-smart-equip-belt = Умная экипировка на пояс
+ui-options-function-open-backpack = Открыть рюкзак
+ui-options-function-open-belt = Открыть пояс
 ui-options-function-throw-item-in-hand = Бросить предмет
 ui-options-function-try-pull-object = Тянуть объект
 ui-options-function-move-pulled-object = Тянуть объект в сторону

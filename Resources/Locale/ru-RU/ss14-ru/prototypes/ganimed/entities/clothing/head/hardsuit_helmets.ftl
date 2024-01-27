@@ -50,5 +50,5 @@ ent-ClothingOuterHardsuitRdAlter2 = скафандр научного руков
     .desc = Высокотехнологичный шлем, не сковывающий движений головы.
 ent-ClothingHeadHelmetHardsuitMedicalAlter2 = шлем скафандра главного врача
     .desc = Ударопрочный шлем медицинского скафандра, не сковывающий движений головы.
-ent-ClothingHeadHelmetHardsuitMedicalAlter2 = шлем синего офицерского скафандра
+ent-ClothingHeadHelmetHardsuitHop = шлем синего офицерского скафандра
     .desc = Шлем, выделяющий из толпы. Даёт знать, кто здесь дёргает за ниточки.

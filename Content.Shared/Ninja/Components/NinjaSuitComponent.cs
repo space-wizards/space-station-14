@@ -13,7 +13,7 @@ namespace Content.Shared.Ninja.Components;
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem)), AutoGenerateComponentState]
 public sealed partial class NinjaSuitComponent : Component
 {
     /// <summary>

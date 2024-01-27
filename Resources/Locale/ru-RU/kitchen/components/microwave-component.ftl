@@ -3,13 +3,15 @@
 microwave-component-interact-using-no-power = У неё нет электричества!
 microwave-component-interact-using-broken = Она сломана!
 microwave-component-interact-using-container-full = Контейнер заполнен
-microwave-component-interact-using-transfer-success = Перенесено { $amount } ю
+microwave-component-interact-using-transfer-success = Перенесено { $amount } ед.
 microwave-component-interact-using-transfer-fail = Это не сработает!
 microwave-component-suicide-multi-head-others-message = { $victim } пытается зажарить свои головы!
 microwave-component-suicide-others-message = { $victim } пытается зажарить свою голову!
 microwave-component-suicide-multi-head-message = Вы зажариваете свои головы!
 microwave-component-suicide-message = Вы зажариваете свою голову!
 microwave-component-upgrade-cook-time = время готовки
+microwave-component-interact-full = Она заполнена.
+microwave-component-interact-item-too-big = { CAPITALIZE($item) } не может поместиться в микроволновой печи из-за размера!
 
 ## Bound UI
 

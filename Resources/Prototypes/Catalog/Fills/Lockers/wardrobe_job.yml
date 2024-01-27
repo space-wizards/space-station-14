@@ -16,12 +16,6 @@
          amount: 2
        - id: ClothingMaskMuzzle
 
-#- type: entity
-#  id: WardrobePajamaFilled
-#  suffix: Filled
-#  parent: WardrobeWhite
-#  name: pajama wardrobe
-
  - type: entity
    id: WardrobeRoboticsFilled
    suffix: Filled
@@ -96,7 +90,7 @@
        - id: ClothingUniformJumpskirtScientist
        - id: ClothingEyesGlasses
          prob: 0.5
-       - id: CrowbarRed #The jojoke - hit video game Half-Life
+       - id: CrowbarRed
          prob: 0.1
 
 
@@ -114,7 +108,7 @@
        - id: ClothingOuterApronBotanist
        - id: ClothingUniformJumpskirtHydroponics
        - id: ClothingUniformOveralls
-       - id: ClothingHeadHatTrucker #the hat itself is a subtle joke
+       - id: ClothingHeadHatTrucker
          prob: 0.15
        - id: ClothingHandsGlovesLeather
          prob: 0.5
@@ -133,7 +127,6 @@
        - id: ClothingOuterCoatLab
        - id: ClothingUniformJumpskirtMedicalDoctor
        - id: ClothingHandsGlovesLatex
-         prob: 0.4
        - id: ClothingEyesGlasses
          prob: 0.3
 
@@ -144,7 +137,7 @@
    description: "You have to look presentable for your flock."
    components:
    - type: StorageFill
-     contents: # todo chaplain backpack
+     contents:
        - id: ClothingUniformJumpsuitChaplain
        - id: ClothingShoesColorBlack
        - id: ClothingUniformJumpskirtChaplain
@@ -159,7 +152,7 @@
      contents:
        - id: ClothingUniformJumpsuitSec
        - id: ClothingBackpackSecurity
-       - id: ClothingShoesBootsJackSecFilled
+       - id: ClothingShoesBootsJackSec
        - id: ClothingEyesGlassesSecurity
        - id: ClothingHeadHelmetBasic
        - id: ClothingOuterArmorBasic

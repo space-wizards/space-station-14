@@ -1,0 +1,19 @@
+- type: entity
+  name: Urn
+  description: Store the Dead smart and Compact since 2300
+  parent: BaseStorageItem
+  id: Urn
+  components:
+  - type: Storage
+    grid:
+      - 0,0,0,1
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/chaplainurn.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Chapel/chaplainurn.rsi

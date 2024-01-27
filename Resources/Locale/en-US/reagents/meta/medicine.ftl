@@ -26,10 +26,10 @@ reagent-name-dexalin = dexalin
 reagent-desc-dexalin = Used for treating minor oxygen deprivation. A required reagent for dexalin plus.
 
 reagent-name-dexalin-plus = dexalin plus
-reagent-desc-dexalin-plus = Used in treatment of extreme cases of oxygen deprivation and bloodloss. Flushes lexorin out the blood stream.
+reagent-desc-dexalin-plus = Used in treatment of extreme cases of oxygen deprivation and bloodloss. Flushes heartbreaker toxin out of the blood stream.
 
 reagent-name-epinephrine = epinephrine
-reagent-desc-epinephrine = An effective stabilizing chemical used to keep a critical person from dying to asphyxiation while patching up minor damage during crit. Flushes lexorin out the blood stream at the cost of more epinephrine, but may add histamine. Helps reduce stun time. Commonly found in the form of emergency medipens.
+reagent-desc-epinephrine = An effective stabilizing chemical used to keep a critical person from dying to asphyxiation while patching up minor damage during crit. Flushes heartbreaker toxin out the blood stream at the cost of more epinephrine, but may add histamine. Helps reduce stun time. Commonly found in the form of emergency medipens.
 
 reagent-name-hyronalin = hyronalin
 reagent-desc-hyronalin = A weak treatment for radiation damage. A precursor to arithrazine and phalanximine. Can cause vomitting.
@@ -114,3 +114,6 @@ reagent-desc-puncturase = A fizzy chemical that helps rebuild trauma caused by p
 
 reagent-name-bruizine = bruizine
 reagent-desc-bruizine = Originally developed as a cough medicine, it turns out this chemical is wildly effective at treating blunt force trauma.
+
+reagent-name-holywater = holy water
+reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.

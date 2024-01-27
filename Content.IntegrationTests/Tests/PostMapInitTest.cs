@@ -75,7 +75,8 @@ namespace Content.IntegrationTests.Tests
 			"CorvaxAvrite",
             "Gemini",
             "MeteorArena",
-            "Atlas"
+            "Atlas",
+            "Reach"    
         };
 
         /// <summary>

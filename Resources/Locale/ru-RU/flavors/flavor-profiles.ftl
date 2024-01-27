@@ -44,8 +44,11 @@ flavor-base-sharp = резко
 flavor-base-syrupy = сиропово
 flavor-base-spaceshroom = таинственно
 flavor-base-clean = чисто
+flavor-base-alkaline = щёлочно
+flavor-base-holy = свято
+flavor-base-horrible = ужасно
 # lmao
-flavor-base-terrible = ужасно
+flavor-base-terrible = ужасающе
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -89,7 +92,7 @@ flavor-complex-dough = как тесто
 flavor-complex-sweet-dough = как сладкое тесто
 flavor-complex-tofu = как тофу
 flavor-complex-miso = как мисо
-flavor-complex-lemoon = как лавровый лист
+flavor-complex-lemoon = как лавр
 flavor-complex-muffin = как маффин
 flavor-complex-peas = как горох
 flavor-complex-pineapple = как ананас
@@ -104,6 +107,7 @@ flavor-complex-tomato = как помидоры
 flavor-complex-corn = как кукуруза
 flavor-complex-banana = как бананы
 flavor-complex-apple = как яблоки
+flavor-complex-cotton = как хлопок
 flavor-complex-bungo = как бунго
 flavor-complex-raisins = как сушеный виноград
 flavor-complex-orange = как апельсины
@@ -115,7 +119,6 @@ flavor-complex-meatballs = как фрикадельки
 flavor-complex-nettles = как крапива
 flavor-complex-jungle = как джунгли
 flavor-complex-vegetables = как овощи
-flavor-complex-cotton = как хлопок
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
@@ -158,7 +161,7 @@ flavor-complex-parents = как чьи-то родители
 flavor-complex-plastic = как пластик
 flavor-complex-glue = как клей
 flavor-complex-spaceshroom-cooked = как космический умами
-flavor-complex-lost-friendship = как потерянная дружба
+flavor-complex-lost-friendship = как прошедшая дружба
 
 ## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
 
@@ -189,6 +192,7 @@ flavor-complex-ice = как лёд
 
 ## Cocktails
 
+flavor-complex-mopwata = как застоявшаяся грязная вода
 flavor-complex-long-island = подозрительно похож на холодный чай
 flavor-complex-three-mile-island = как чай, заваренный в ядерных отходах
 flavor-complex-whiskey-cola = как газированная патока

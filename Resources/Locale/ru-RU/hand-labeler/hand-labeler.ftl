@@ -1,3 +1,4 @@
+hand-labeler-ui-header = Ручной этикетировщик
 # The content of the label in the UI above the text entry input.
 hand-labeler-current-text-label = Этикетка:
 # When the hand labeler applies a label successfully

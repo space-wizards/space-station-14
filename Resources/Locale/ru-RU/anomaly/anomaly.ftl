@@ -20,6 +20,31 @@ anomaly-scanner-particle-danger = - [color=crimson]Опасный тип:[/color
 anomaly-scanner-particle-unstable = - [color=plum]Нестабильный тип:[/color] { $type }
 anomaly-scanner-particle-containment = - [color=goldenrod]Сдерживающий тип:[/color] { $type }
 anomaly-scanner-pulse-timer = Время до следующего импульса: [color=gray]{ $time }[/color]
+anomaly-gorilla-core-slot-name = Ядро аномалии
+anomaly-gorilla-charge-none = Внутри нет [bold]ядра аномалии[/bold].
+anomaly-gorilla-charge-limit =
+    { $count ->
+        [one] Остался
+       *[other] Осталось
+    } [color={ $count ->
+        [3] green
+        [2] yellow
+        [1] orange
+        [0] red
+       *[other] purple
+    }]{ $count } { $count ->
+        [one] заряд
+        [few] заряда
+       *[other] зарядов
+    }[/color].
+anomaly-gorilla-charge-infinite = Осталось [color=gold]бесконечное количество зарядов[/color]. [italic]Пока что...[/italic]
+anomaly-sync-connected = Аномалия успешно привязана
+anomaly-sync-disconnected = Соединение с аномалией было потеряно!
+anomaly-sync-no-anomaly = Отсутствует аномалия в пределах диапазона.
+anomaly-sync-examine-connected = Он [color=darkgreen]присоединён[/color] к аномалии.
+anomaly-sync-examine-not-connected = Он [color=darkred]не присоединён[/color] к аномалии.
+anomaly-sync-connect-verb-text = Присоединить аномалию
+anomaly-sync-connect-verb-message = Присоединить близлежащую аномалию к { $machine }.
 anomaly-generator-ui-title = генератор аномалий
 anomaly-generator-fuel-display = Топливо:
 anomaly-generator-cooldown = Перезарядка: [color=gray]{ $time }[/color]
@@ -39,11 +64,3 @@ anomaly-command-supercritical = Целевая аномалия переходи
 # Flavor text on the footer
 anomaly-generator-flavor-left = Аномалия может возникнуть внутри оператора.
 anomaly-generator-flavor-right = v1.1
-
-anomaly-sync-connected = Аномалия успешно соединена
-anomaly-sync-disconnected = Соединение с аномалией потеряно!
-anomaly-sync-no-anomaly = Не найдено аномалий поблизости.
-anomaly-sync-examine-connected = Оно [color=darkgreen]соединено[/color] с аномалией.
-anomaly-sync-examine-not-connected = Оно [color=darkred]не соединено[/color] с аномалией.
-anomaly-sync-connect-verb-text = Соединить с аномалией
-anomaly-sync-connect-verb-message = Соединить {$machine} и ближайшую аномалию.

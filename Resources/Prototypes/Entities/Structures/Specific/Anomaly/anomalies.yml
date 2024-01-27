@@ -321,7 +321,7 @@
       types:
         Slash: 1
   - type: EntitySpawnAnomaly
-    superCriticalSpawns: 
+    superCriticalSpawns:
     - ReagentSlimeSpawner
     spawns:
       - PuddleSparkle

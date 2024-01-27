@@ -5,6 +5,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -17,6 +18,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -142,6 +144,9 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         if (aui.SingleUser && (aui.CurrentSingleUser != null) && (actor.PlayerSession != aui.CurrentSingleUser))
         {
+            string message = Loc.GetString("machine-already-in-use", ("machine", uiEntity));
+            _popupSystem.PopupEntity(message, uiEntity, user);
+
             // If we get here, supposedly, the object is in use.
             // Check with BUI that it's ACTUALLY in use just in case.
             // Since this could brick the object if it goes wrong.

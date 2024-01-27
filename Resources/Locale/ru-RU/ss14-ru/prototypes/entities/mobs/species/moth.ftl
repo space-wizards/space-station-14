@@ -1,4 +1,5 @@
-ent-BaseMobMoth = Урист МакМоль
-    .desc = { ent-BaseMobOrganic.desc }
-ent-MobMothDummy = Урист МакМоль
-    .desc = Манекен-моль, используемый при создании персонажа.
+ent-BaseMobMoth = Урист МакФлафф
+    .desc = { ent-BaseMobSpeciesOrganic.desc }
+    .suffix = Моль
+ent-MobMothDummy = { ent-BaseSpeciesDummy }
+    .desc = { ent-BaseSpeciesDummy.desc }

@@ -82,6 +82,8 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
+              params:
+                volume: -4
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

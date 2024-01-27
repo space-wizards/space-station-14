@@ -18,7 +18,7 @@ reagent-effect-guidebook-create-entity-reaction-effect =
         [1] Создаёт
        *[other] создают
     } { $amount ->
-        [1] { INDEFINITE($entname) }
+        [1] { $entname }
        *[other] { $amount } { $entname }
     }
 reagent-effect-guidebook-explosion-reaction-effect =

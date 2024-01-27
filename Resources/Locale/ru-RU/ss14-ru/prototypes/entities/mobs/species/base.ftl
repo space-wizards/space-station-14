@@ -1,4 +1,6 @@
-ent-BaseMobOrganic = Урист МакХэндс
+ent-BaseMobSpecies = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-BaseMobSpeciesOrganic = { ent-BaseMobSpecies }
+    .desc = { ent-BaseMobSpecies.desc }
+ent-BaseSpeciesDummy = { "" }
     .desc = { "" }
-ent-BaseMobOrganicDummy = Урист МакХэндс
-    .desc = Манекен-человек, используемый при создании персонажа.

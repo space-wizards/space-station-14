@@ -64,6 +64,19 @@
     verbImage: null
 
 - type: entity
+  parent: PhoneInstrument
+  id: PhoneInstrumentSyndicate
+  name: blood-red phone
+  description: For evil people to call their friends.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/blood_red_phone.rsi
+    state: icon
+  - type: Prayable
+    sentMessage: prayer-popup-notify-syndicate-sent
+    notifiactionPrefix: prayer-chat-notify-syndicate
+
+- type: entity
   parent: BaseHandheldInstrument
   id: HelicopterInstrument
   name: toy helicopter

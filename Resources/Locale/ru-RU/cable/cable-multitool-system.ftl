@@ -4,7 +4,7 @@ cable-multitool-system-verb-name = Питание
 cable-multitool-system-verb-tooltip = Используйте мультитул для просмотра статистики питания.
 cable-multitool-system-statistics =
     Ваш мультитул показывает статистику:
-    Текущее питание: { POWERWATTS($supplyc) }
+    Источник тока: { POWERWATTS($supplyc) }
     От батарей: { POWERWATTS($supplyb) }
     Теоретическое снабжение: { POWERWATTS($supplym) }
     Идеальное потребление: { POWERWATTS($consumption) }

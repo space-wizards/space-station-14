@@ -257,3 +257,29 @@
   - type: ConditionalSpawner
     prototypes:
     - MobCobraSpaceSalvage
+
+- type: entity
+  name: Salvage Flesh Spawner
+  id: SalvageFleshSpawner
+  parent: SalvageMobSpawner
+  suffix: 100
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Aliens/flesh.rsi
+          state: jared
+    - type: RandomSpawner
+      rarePrototypes:
+      - MobSharkSalvage
+      rareChance: 0
+      prototypes:
+      - MobFleshJaredSalvage
+      - MobFleshGolemSalvage
+      - MobFleshGolemSalvage
+      - MobFleshClampSalvage
+      - MobFleshClampSalvage
+      - MobFleshLoverSalvage
+      - MobFleshLoverSalvage
+      chance: 1
+      offset: 0.2

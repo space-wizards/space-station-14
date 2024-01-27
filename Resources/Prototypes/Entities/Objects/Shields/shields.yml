@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: base shield
   parent: BaseItem
   id: BaseShield
@@ -316,7 +316,11 @@
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
-    - type: Blocking #Mirror shield should reflect heat/laser eventually, but be relatively weak to everything else.
+    - type: Reflect
+      reflectProb: 0.95
+      reflects:
+        - Energy
+    - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
       passiveBlockModifier:
         coefficients:
           Blunt: 1.2
@@ -356,12 +360,17 @@
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
     - type: ItemToggle
-      activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/ebladeoff.ogg
-      offSize: Small
+    - type: ItemToggleActiveSound
+      activeSound:
+        path: /Audio/Weapons/ebladehum.ogg
+    - type: ItemToggleSize
+      activatedSize: Huge
+    - type: ItemToggleDisarmMalus
+      activatedDisarmMalus: 0.6
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -461,16 +470,18 @@
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
     - type: ItemToggle
-      activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/telescopicon.ogg
         params:
           volume: -5
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-      offSize: Small
+    - type: ItemToggleDisarmMalus
+      activatedDisarmMalus: 0.6
+    - type: ItemToggleSize
+      activatedSize: Huge
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:

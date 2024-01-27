@@ -1,3 +1,2 @@
-ent-RandomDrinkSoda = спавнер случайный напиток
-    .suffix = Банка
+ent-RandomDrinkSoda = спавнер случайный газировка
     .desc = { ent-MarkerBase.desc }

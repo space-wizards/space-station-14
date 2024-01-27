@@ -344,3 +344,15 @@
     solutions:
       drink:
         maxVol: 100
+
+- type: entity
+  name: oat milk carton
+  parent: DrinkCartonBaseEmpty
+  id: DrinkCartonOatMilk
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/oatmilk.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100

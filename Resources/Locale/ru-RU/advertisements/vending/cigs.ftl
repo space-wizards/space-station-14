@@ -9,3 +9,5 @@ advertisement-cigs-8 = Не бросайте курить, купите ещё!
 advertisement-cigs-9 = Никотиновый рай.
 advertisement-cigs-10 = Лучшие сигареты с 2150 года.
 advertisement-cigs-11 = Сигареты с множеством наград.
+thankyou-cigs-1 = Сделал дело - кури смело!
+thankyou-cigs-2 = Скорее всего, вы не пожалеете!

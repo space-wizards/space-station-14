@@ -12,6 +12,7 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -31,6 +32,7 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -72,6 +74,7 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -92,6 +95,7 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
       - state: internals
@@ -112,11 +116,12 @@
   - type: StorageFill
     contents:
       - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
+      - id: EmergencyFunnyOxygenTankFilled
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
   - type: Tag
     tags:
       - BoxHug

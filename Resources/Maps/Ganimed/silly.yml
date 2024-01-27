@@ -10141,7 +10141,6 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - type: ItemCooldown
     - type: InsideEntityStorage
 - proto: ClothingBeltBandolier
   entities:

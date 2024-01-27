@@ -6,6 +6,7 @@ fax-machine-popup-name-set = Имя факса было обновлено
 fax-machine-dialog-rename = Переименовать
 fax-machine-dialog-field-name = Имя
 fax-machine-ui-window = Факс
+fax-machine-ui-copy-button = Копировать
 fax-machine-ui-send-button = Отправить
 fax-machine-ui-refresh-button = Обновить
 fax-machine-ui-no-peers = Нет получателей

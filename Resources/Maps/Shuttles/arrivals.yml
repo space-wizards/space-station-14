@@ -44,6 +44,8 @@ entities:
       type: BecomesStation
     - type: OccluderTree
     - type: Shuttle
+    - type: DeviceNetwork
+      transmitFrequencyId: ArrivalsShuttleTimer
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -233,6 +235,18 @@ entities:
       pos: -0.5,3.5
       parent: 292
       type: Transform
+- proto: ArrivalsShuttleTimer
+  entities:
+  - uid: 294
+    components:
+    - pos: -4.5,3.5
+      parent: 292
+      type: Transform
+  - uid: 295
+    components:
+    - pos: 3.5,3.5
+      parent: 292
+      type: Transform
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 164
@@ -270,8 +284,7 @@ entities:
     - pos: -0.5,3.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 124
     components:
     - pos: -0.5,4.5
@@ -417,43 +430,37 @@ entities:
     - pos: 0.5,-4.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 153
     components:
     - pos: 1.5,-4.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 154
     components:
     - pos: -1.5,-4.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 155
     components:
     - pos: -2.5,-4.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 156
     components:
     - pos: -2.5,-5.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 157
     components:
     - pos: 1.5,-5.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 158
     components:
     - pos: -1.5,8.5
@@ -496,15 +503,13 @@ entities:
     - pos: 1.5,7.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 81
     components:
     - pos: 1.5,6.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 82
     components:
     - pos: -0.5,7.5
@@ -640,29 +645,25 @@ entities:
     - pos: -1.5,-4.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 110
     components:
     - pos: -1.5,-5.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 111
     components:
     - pos: 0.5,-5.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 112
     components:
     - pos: 0.5,-4.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 113
     components:
     - pos: 0.5,-3.5
@@ -675,8 +676,7 @@ entities:
     - pos: 1.5,6.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 118
     components:
     - pos: 1.5,5.5
@@ -702,8 +702,7 @@ entities:
     - pos: -0.5,3.5
       parent: 292
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableTerminal
   entities:
   - uid: 84
@@ -1233,16 +1232,14 @@ entities:
     - pos: -0.5,-2.5
       parent: 292
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 213
     components:
     - rot: 3.141592653589793 rad
       pos: -0.5,4.5
       parent: 292
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
 - proto: GeneratorBasic15kW
   entities:
   - uid: 114

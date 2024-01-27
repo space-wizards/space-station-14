@@ -107,3 +107,11 @@
   icon: { sprite: Objects/Materials/materials.rsi, state: bones }
   color: "#896f5e"
   price: 0
+
+- type: material
+  id: Coal
+  name: materials-coal
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/ore.rsi, state: coal }
+  color: "#404040"
+  price: 0

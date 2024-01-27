@@ -413,7 +413,7 @@
 - type: entity
   name: lead-lined box
   parent: BoxCardboard
-  suffix: Debug
+  suffix: DEBUG
   id: BoxLeadLined
   description: This box stymies the transmission of harmful radiation.
   components:

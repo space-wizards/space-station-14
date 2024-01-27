@@ -22,6 +22,7 @@ public abstract class SharedItemCabinetSystem : EntitySystem
         SubscribeLocalEvent<ItemCabinetComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<ItemCabinetComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<ItemCabinetComponent, AfterAutoHandleStateEvent>(OnComponentHandleState);
 
         SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<ItemCabinetComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleOpenVerb);
@@ -46,6 +47,11 @@ public abstract class SharedItemCabinetSystem : EntitySystem
     {
         UpdateAppearance(uid, cabinet);
         _itemSlots.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
+    }
+
+    private void OnComponentHandleState(Entity<ItemCabinetComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateAppearance(ent, ent);
     }
 
     protected virtual void UpdateAppearance(EntityUid uid, ItemCabinetComponent? cabinet = null)

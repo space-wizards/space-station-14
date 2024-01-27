@@ -116,6 +116,7 @@
         prob: 0.3
       - id: BoxPillCanister
       - id: BoxBottle
+      - id: BoxVial
       - id: ChemBag
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical

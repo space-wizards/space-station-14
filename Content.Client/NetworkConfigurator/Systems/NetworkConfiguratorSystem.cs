@@ -102,17 +102,6 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         _overlay.RemoveOverlay(overlay);
     }
 
-    // hacky solution related to mapping
-    public void SetActiveDeviceList(EntityUid tool, EntityUid list, NetworkConfiguratorComponent? component = null)
-    {
-        if (!Resolve(tool, ref component))
-        {
-            return;
-        }
-
-        component.ActiveDeviceList = list;
-    }
-
     private sealed class StatusControl : Control
     {
         private readonly RichTextLabel _label;

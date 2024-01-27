@@ -269,3 +269,5 @@ ent-ClothingUniformJumpsuitClownBanana = костюм банана-клоуна
     .desc = { ent-ClothingUniformJumpsuitClown.desc }
 ent-ClothingUniformJumpsuitFamilyGuy = знакомая одежда
     .desc = Заставляет вспоминать каждый раз, когда вы делаете что-то смешное.
+ent-ClothingUniformJumpsuitCentcomAgent = адвокатский костюм Центком
+    .desc = Зелёный костюм в широком употреблении среди белых воротников командования. Он пахнет горелым кофе и дедлайнами.

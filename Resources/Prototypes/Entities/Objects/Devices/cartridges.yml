@@ -70,4 +70,25 @@
         state: server
     - type: NetProbeCartridge
 
-
+- type: entity
+  parent: BaseItem
+  id: LogProbeCartridge
+  name: LogProbe cartridge
+  description: A program for getting access logs from devices
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-log
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-log
+    - type: UIFragment
+      ui: !type:LogProbeUi
+    - type: Cartridge
+      programName: log-probe-program-name
+      icon:
+        sprite: Structures/Doors/Airlocks/Standard/security.rsi
+        state: closed
+    - type: LogProbeCartridge
+      guides:
+        - Forensics

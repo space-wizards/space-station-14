@@ -1,12 +1,12 @@
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -38,7 +38,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -70,10 +70,12 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnExamine(EntityUid uid, PlantHolderComponent component, ExaminedEvent args)
+    private void OnExamine(Entity<PlantHolderComponent> entity, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
+
+        var (_, component) = entity;
 
         if (component.Seed == null)
         {
@@ -131,8 +133,10 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnInteractUsing(EntityUid uid, PlantHolderComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<PlantHolderComponent> entity, ref InteractUsingEvent args)
     {
+        var (uid, component) = entity;
+
         if (TryComp(args.Used, out SeedComponent? seeds))
         {
             if (component.Seed == null)
@@ -203,8 +207,8 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_solutionSystem.TryGetDrainableSolution(args.Used, out var solution)
-            && _solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var targetSolution)
+        if (_solutionContainerSystem.TryGetDrainableSolution(args.Used, out var solution, out _)
+            && _solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution)
             && TryComp(args.Used, out SprayComponent? spray))
         {
             var amount = FixedPoint2.New(1);
@@ -214,7 +218,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
             _audio.PlayPvs(spray.SpraySound, args.Used, AudioParams.Default.WithVariation(0.125f));
 
-            var split = _solutionSystem.Drain(solutionEntity, solution, amount);
+            var split = _solutionContainerSystem.Drain(solutionEntity, solution.Value, amount);
 
             if (split.Volume == 0)
             {
@@ -227,7 +231,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 ("owner", uid),
                 ("amount", split.Volume)), args.User, PopupType.Medium);
 
-            _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
+            _solutionContainerSystem.TryAddSolution(component.SoilSolution.Value, split);
 
             ForceUpdateByExternalCause(uid, component);
 
@@ -290,16 +294,15 @@ public sealed class PlantHolderSystem : EntitySystem
                 ("usingItem", args.Used),
                 ("owner", uid)), uid, Filter.PvsExcept(args.User), true);
 
-            if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
+            if (_solutionContainerSystem.TryGetSolution(args.Used, produce.SolutionName, out var soln2, out var solution2))
             {
-                if (_solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution1))
+                if (_solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution, out var solution1))
                 {
                     // We try to fit as much of the composted plant's contained solution into the hydroponics tray as we can,
                     // since the plant will be consumed anyway.
 
                     var fillAmount = FixedPoint2.Min(solution2.Volume, solution1.AvailableVolume);
-                    _solutionSystem.TryAddSolution(uid, solution1,
-                        _solutionSystem.SplitSolution(args.Used, solution2, fillAmount));
+                    _solutionContainerSystem.TryAddSolution(component.SoilSolution.Value, _solutionContainerSystem.SplitSolution(soln2.Value, fillAmount));
 
                     ForceUpdateByExternalCause(uid, component);
                 }
@@ -314,9 +317,9 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnInteractHand(EntityUid uid, PlantHolderComponent component, InteractHandEvent args)
+    private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
-        DoHarvest(uid, args.User, component);
+        DoHarvest(entity, args.User, entity.Comp);
     }
 
     public void WeedInvasion()
@@ -819,13 +822,13 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!_solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution))
+        if (!_solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution, out var solution))
             return;
 
         if (solution.Volume > 0 && component.MutationLevel < 25)
         {
             var amt = FixedPoint2.New(1);
-            foreach (var entry in _solutionSystem.RemoveEachReagent(uid, solution, amt))
+            foreach (var entry in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
                 reagentProto.ReactionPlant(uid, entry, solution);

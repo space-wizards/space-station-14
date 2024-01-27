@@ -267,7 +267,7 @@
   name: tether gun
   parent: BaseItem
   id: WeaponTetherGunAdmin
-  suffix: admin
+  suffix: Admeme
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
     - type: TetherGun
@@ -306,7 +306,7 @@
   name: force gun
   parent: BaseItem
   id: WeaponForceGunAdmin
-  suffix: Admin
+  suffix: Admeme
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
     - type: ForceGun

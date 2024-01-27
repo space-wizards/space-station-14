@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
 
 namespace Content.Server.Physics.Controllers
 {

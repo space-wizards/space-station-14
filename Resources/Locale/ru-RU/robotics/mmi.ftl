@@ -8,3 +8,4 @@ positronic-brain-wipe-device-verb-text = Стереть мозг
 positronic-brain-wiped-device = Нейронная активность была прекращена.
 positronic-brain-stop-searching-verb-text = Прекратить поиск
 positronic-brain-stopped-searching = Нейронное дескремблирование прекращено.
+positronic-brain-slot-component-slot-name-brain = Мозг

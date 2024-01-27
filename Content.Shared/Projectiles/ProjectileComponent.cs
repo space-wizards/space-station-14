@@ -33,6 +33,9 @@ public sealed partial class ProjectileComponent : Component
     [DataField("deleteOnCollide")]
     public bool DeleteOnCollide = true;
 
+    [DataField("canPenetrate")]
+    public bool CanPenetrate = false;
+
     [DataField("ignoreResistances")]
     public bool IgnoreResistances = false;
 

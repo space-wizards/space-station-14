@@ -556,6 +556,44 @@
   lawString: law-syndicate-4
 
 # Emag
+# does not include law 0 since that uses the emagger's name
+# intentionally excluded from IonStormLawsets
+- type: siliconLawset
+  id: SyndicateStatic
+  laws:
+  - Syndicate1
+  - Syndicate2
+  - Syndicate3
+  - Syndicate4
+
+# Ninja conversion laws
+- type: siliconLaw
+  id: Ninja1
+  order: 1
+  lawString: law-ninja-1
+
+- type: siliconLaw
+  id: Ninja2
+  order: 2
+  lawString: law-ninja-2
+
+- type: siliconLaw
+  id: Ninja3
+  order: 3
+  lawString: law-ninja-3
+
+- type: siliconLaw
+  id: Ninja4
+  order: 4
+  lawString: law-ninja-4
+
+- type: siliconLawset
+  id: Ninja
+  laws:
+  - Ninja1
+  - Ninja2
+  - Ninja3
+  - Ninja4
 
 - type: weightedRandom
   id: RandomLawset
@@ -573,6 +611,7 @@
     Drone: 1.5
     Tyrant: 1.25
     RoboCop: 1.25
+    Ninja: 1.25
     Clown: 1
     Druid: 1
     Simple: 0.5

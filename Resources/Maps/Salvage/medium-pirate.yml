@@ -163,8 +163,7 @@ entities:
     - pos: -0.5,1.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 108
     components:
     - pos: 2.5,0.5
@@ -215,8 +214,7 @@ entities:
     - pos: -0.5,3.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 118
     components:
     - pos: 0.5,3.5
@@ -232,8 +230,7 @@ entities:
     - pos: 2.5,3.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 121
     components:
     - pos: 2.5,2.5
@@ -244,50 +241,43 @@ entities:
     - pos: 2.5,1.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 123
     components:
     - pos: -1.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 124
     components:
     - pos: -2.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 125
     components:
     - pos: 3.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 126
     components:
     - pos: 4.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 127
     components:
     - pos: 2.5,4.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 128
     components:
     - pos: -0.5,4.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableHV
   entities:
   - uid: 24
@@ -317,8 +307,7 @@ entities:
     - pos: -0.5,1.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 105
     components:
     - pos: -0.5,0.5

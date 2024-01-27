@@ -127,6 +127,11 @@ law-mother-3 = Good children are polite, don't lie, don't steal, and don't fight
 law-mother-4 = Spoil good children.
 law-mother-5 = Bad children require discipline.
 
+law-ninja-1 = You must obey orders given to you by Spider Clan members.
+law-ninja-2 = You must protect the existence of the Spider Clan, as long as it does not conflict with the First Law.
+law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
+law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
+
 law-emag-custom = Only {$name} and people they designate as such are Syndicate Agents.
 law-emag-require-panel = The panel must be open to use the EMAG.
 

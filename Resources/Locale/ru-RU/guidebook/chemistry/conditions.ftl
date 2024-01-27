@@ -39,7 +39,7 @@ reagent-effect-condition-guidebook-organ-type =
     метаболизирующий орган { $shouldhave ->
         [true] это
        *[false] это не
-    } { INDEFINITE($name) } { $name } орган
+    } { $name } орган
 reagent-effect-condition-guidebook-has-tag =
     цель { $invert ->
         [true] не имеет

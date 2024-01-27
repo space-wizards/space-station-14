@@ -1,6 +1,4 @@
 mime-cant-speak = Данный вами обет молчания не позволяет вам говорить.
-ent-ActionMimeInvisibleWall = Создать невидимую стену
-    .desc = Создаёт перед вами невидимую стену, если хватает места.
 mime-invisible-wall-popup = { CAPITALIZE($mime) } упирается в невидимую стену!
 mime-invisible-wall-failed = Вы не можете создать здесь невидимую стену.
 mime-not-ready-repent = Вы ещё не готовы покаяться за нарушенный обет.

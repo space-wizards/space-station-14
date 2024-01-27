@@ -16,4 +16,4 @@ ent-GasPipeFourway = { ent-GasPipeBase }
     .suffix = Четверная
     .desc = { ent-GasPipeBase.desc }
 ent-GasPipeBroken = сломанная труба
-    .desc = Когда-то содержала газ.
+    .desc = Раньше в ней содержался газ.

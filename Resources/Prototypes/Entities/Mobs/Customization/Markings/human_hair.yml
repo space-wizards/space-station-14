@@ -1852,3 +1852,11 @@
   sprites:
     - sprite: Corvax/Mobs/Customization/human_hair.rsi
       state: ziegler
+
+- type: marking
+  id: HumanHairUneven
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: uneven

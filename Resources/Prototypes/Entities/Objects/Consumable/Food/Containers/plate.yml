@@ -34,6 +34,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -8
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodPlateTrash:
@@ -84,6 +86,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -8
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodPlateSmallTrash:

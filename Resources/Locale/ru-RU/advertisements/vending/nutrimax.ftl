@@ -4,3 +4,4 @@ advertisement-nutrimax-3 = Самые зелёные кнопки на свет�
 advertisement-nutrimax-4 = Мы любим большие растения.
 advertisement-nutrimax-5 = Мягкая почва...
 advertisement-nutrimax-6 = Теперь и с вёдрами!
+thankyou-nutrimax-1 = Пора сажать!

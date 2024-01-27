@@ -1,6 +1,6 @@
-ent-BaseArrow = стрела
-    .desc = Вы чувствуете, как вас переполняет сила степей.
-ent-ArrowRegular = { ent-BaseArrow }
-    .desc = { ent-BaseArrow.desc }
-ent-ArrowImprovised = осколковая стрела
-    .desc = Стрела грейтайдера.
+ent-BaseArrow = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-ArrowRegular = стрела
+    .desc = Вы чувствуете в себе силу степей.
+ent-ArrowImprovised = стрела из осколка стекла
+    .desc = Любимый метательный снаряд серорубашечников.

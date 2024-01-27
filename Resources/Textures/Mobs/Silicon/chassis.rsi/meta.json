@@ -41,6 +41,10 @@
     },
     {
       "name": "janitor",
+      "directions": 4
+    },
+    {
+      "name": "janitor_moving",
       "directions": 4,
       "delays": [
         [
@@ -108,6 +112,32 @@
       ]
     },
     {
+      "name": "medical_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "medical_e",
       "directions": 4
     },
@@ -121,6 +151,10 @@
     },
     {
       "name": "miner",
+      "directions": 4
+    },
+    {
+      "name": "miner_moving",
       "directions": 4,
       "delays": [
         [

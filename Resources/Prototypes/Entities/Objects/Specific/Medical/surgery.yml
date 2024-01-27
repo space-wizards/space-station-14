@@ -22,7 +22,6 @@
     state: cautery
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
        types:
@@ -43,7 +42,6 @@
     state: drill
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/drill.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -69,7 +67,6 @@
     state: scalpel
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -128,7 +125,6 @@
     state: retractor
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
-  - type: ItemCooldown
 
 - type: entity
   name: hemostat
@@ -164,7 +160,6 @@
     state: saw
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
-  - type: ItemCooldown
   - type: Tool
     qualities:
       - Sawing

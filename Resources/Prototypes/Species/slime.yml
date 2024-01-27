@@ -37,10 +37,7 @@
     FacialHair:
       points: 1
       required: false
-    Tail:
-      points: 1
-      required: false
-    HeadTop:
+    Chest:
       points: 1
       required: false
     Legs:

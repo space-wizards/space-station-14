@@ -9,14 +9,21 @@
       - id: WeaponDisabler
         prob: 0.3
       - id: ClothingHeadHatWarden
+        orGroup: WardenHat
       - id: ClothingHeadHatBeretWarden
+        orGroup: WardenHat
+      - id: ClothingHeadHatCapWardenAlt
+        orGroup: WardenHat
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHeadsetAltSecurity
       - id: ClothingHandsGlovesKravMaga
-      - id: ClothingShoesBootsJack
+      - id: ClothingShoesBootsJackSec
       - id: ClothingOuterCoatWarden
+        orGroup: WardenCoat
+      - id: ClothingOuterCoatWardenAlt
+        orGroup: WardenCoat
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
@@ -35,17 +42,22 @@
       - id: WeaponDisabler
         prob: 0.3
       - id: ClothingHeadHatWarden
+        orGroup: WardenHat
       - id: ClothingHeadHatBeretWarden
-      - id: ClothingHeadHatCapWardenAlt # Corvax-SecFashion
+        orGroup: WardenHat
+      - id: ClothingHeadHatCapWardenAlt
+        orGroup: WardenHat
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHeadsetAltSecurity
       - id: ClothingHandsGlovesKravMaga
-      - id: ClothingShoesBootsJack
+      - id: ClothingShoesBootsJackSec
       - id: ClothingOuterCoatWarden
+        orGroup: WardenCoat
+      - id: ClothingOuterCoatWardenAlt
+        orGroup: WardenCoat
       - id: ClothingOuterWinterWarden
-      - id: ClothingOuterCoatWardenAlt # Corvax-SecFashion
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
@@ -59,22 +71,16 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
-        prob: 0.8
-      - id: ClothingUniformJumpsuitSecGrey
-        prob: 0.3
       - id: ClothingHeadHelmetBasic
       - id: ClothingOuterArmorBasic
       - id: ClothingBeltSecurityFilled
       - id: Flash
-        prob: 0.5
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
-      - id: ClothingShoesBootsJack
+      - id: ClothingShoesBootsJackSec
       - id: WeaponMeleeNeedle
-        prob: 0.1
-      - id: ClothingOuterCoatSecurityOvercoat # Corvax-SecFashion
-        prob: 0.2
+      - id: ClothingOuterCoatSecurityOvercoat
       - id: ClothingEyesHudSecurity
 
 - type: entity
@@ -91,11 +97,21 @@
       - id: ClothingOuterHardsuitBrigmedic
       - id: BoxSterileMask
       - id: ClothingHeadHatBeretBrigmedic
+        orGroup: BrigmedicHelmet
+      - id: ClothingHeadHelmetSecurityMedic
+        orGroup: BrigmedicHelmet
       - id: ClothingOuterCoatAMG
+        orGroup: BrigmedicCoat
+      - id: ClothingOuterCoatLabSecurityMedic
+        orGroup: BrigmedicCoat
+      - id: ClothingOuterVestSecurityMedic
+        orGroup: BrigmedicCoat
       - id: ClothingUniformJumpsuitBrigmedic
+        orGroup: BrigmedicClothing
       - id: ClothingUniformJumpskirtBrigmedic
+        orGroup: BrigmedicClothing
       - id: ClothingUniformJumpskirtOfLife
-        prob: 0.1
+        orGroup: BrigmedicClothing
       - id: MedkitFilled
       - id: MedkitCombatFilled
         prob: 0.6
@@ -109,13 +125,6 @@
         prob: 0.3
       - id: MedkitBurnFilled
         prob: 0.7
-      - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
-        prob: 0.15
-      - id: ClothingHeadHelmetSecurityMedic # Corvax-Resprite
-      - id: ClothingOuterVestSecurityMedic # Corvax-Resprite
-        prob: 0.5
-      - id: ClothingOuterCoatLabSecurityMedic # Corvax-Resprite
-        prob: 0.5
 
 - type: entity
   id: LockerDetectiveFilled
@@ -125,17 +134,18 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesHudSecurity
-        prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
+        orGroup: DetectiveCoat
       - id: ClothingOuterCoatDetective
+        orGroup: DetectiveCoat
       - id: FlashlightSeclite
       - id: ForensicScanner
+      - id: LogProbeCartridge
       - id: BoxForensicPad
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
-      - id: BookBusido # Corvax-Books
 
 - type: entity
   id: ClosetBombFilled
@@ -146,7 +156,6 @@
     contents:
       - id: ClothingHeadHelmetBombSuit
       - id: ClothingOuterSuitBomb
-      # NT is cheap, what can you do...
       - id: Wirecutter
         prob: 0.9
       - id: Screwdriver

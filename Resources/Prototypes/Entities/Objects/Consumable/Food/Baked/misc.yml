@@ -184,11 +184,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           tendie: ""
-      - enum.DamageStateVisualLayers.Base:
           lizard: ""
-      - enum.DamageStateVisualLayers.Base:
           star: ""
-      - enum.DamageStateVisualLayers.Base:
           corgi: ""
   - type: SolutionContainerManager
     solutions:

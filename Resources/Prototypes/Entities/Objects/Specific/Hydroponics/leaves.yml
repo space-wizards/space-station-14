@@ -17,6 +17,8 @@
         reagents:
         - ReagentId: THC
           Quantity: 15
+  - type: StealTarget
+    stealGroup: Cannabis
 
 - type: entity
   name: dried cannabis leaves
@@ -36,6 +38,8 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cannabis.rsi # Corvax-Resprite: Fix path
     state: dried
+  - type: StealTarget
+    stealGroup: Cannabis
 
 - type: entity
   name: ground cannabis
@@ -64,6 +68,8 @@
       - Smokable
   - type: Item
     size: Tiny
+  - type: StealTarget
+    stealGroup: Cannabis
 
 - type: entity
   name: tobacco leaves

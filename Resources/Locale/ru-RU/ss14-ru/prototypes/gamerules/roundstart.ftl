@@ -1,6 +1,6 @@
 ent-BaseGameRule = { "" }
     .desc = { "" }
-ent-DeathMatch = { ent-BaseGameRule }
+ent-DeathMatch31 = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
 ent-InactivityTimeRestart = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
@@ -11,6 +11,8 @@ ent-Nukeops = { ent-BaseGameRule }
 ent-Pirates = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
 ent-Traitor = { ent-BaseGameRule }
+    .desc = { ent-BaseGameRule.desc }
+ent-Revolutionary = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
 ent-Sandbox = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }

@@ -54,3 +54,11 @@
   spawn: BananiumOre1
   maxCount: 30
   itemSize: 2
+
+- type: stack
+  id: Coal
+  name: coal
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: coal }
+  spawn: Coal1
+  maxCount: 30
+  itemSize: 2

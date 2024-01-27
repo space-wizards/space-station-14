@@ -38,6 +38,8 @@ namespace Content.Shared.Examine
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
 
+        protected const float ExamineBlurrinessMult = 2.5f;
+
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
         /// </summary>
@@ -125,7 +127,7 @@ namespace Content.Shared.Examine
                     return CritExamineRange;
 
                 if (TryComp<BlurryVisionComponent>(examiner, out var blurry))
-                    return Math.Clamp(ExamineRange - blurry.Magnitude, 2, ExamineRange);
+                    return Math.Clamp(ExamineRange - blurry.Magnitude * ExamineBlurrinessMult, 2, ExamineRange);
             }
             return ExamineRange;
         }

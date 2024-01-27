@@ -1,0 +1,119 @@
+- type: entity
+  id: BaseTabletopChemicalMachine
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  abstract: true
+  components:
+  - type: Transform
+    anchored: true
+  - type: SolutionContainerMixer
+  - type: ReactionMixer
+  - type: Sprite
+    drawdepth: SmallObjects
+    snapCardinals: true
+  - type: Appearance
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.17,0,0.20,0.4"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: ItemSlots
+    slots:
+      mixer:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: Machine
+  - type: Wires
+    layoutId: chem
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: ContainerContainer
+    containers:
+      mixer: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+
+- type: entity
+  id: MachineElectrolysisUnit
+  parent: BaseTabletopChemicalMachine
+  name: electrolysis unit
+  description: The latest in medicinal electrocution technology.
+  components:
+  - type: SolutionContainerMixer
+    mixDuration: 5
+    mixingSound:
+      path: /Audio/Machines/buzz_loop.ogg
+      params:
+        volume: -5
+  - type: ReactionMixer
+    reactionTypes:
+    - Electrolysis
+  - type: Sprite
+    sprite: Structures/Machines/Medical/electrolysis.rsi
+    offset: "0.0,0.4"
+    layers:
+    - state: base
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.SolutionContainerMixerVisuals.Mixing:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {state: "spinning"}
+          False: {state: "unshaded"}
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: True }
+          False: { visible: False }
+  - type: Machine
+    board: ElectrolysisUnitMachineCircuitboard
+
+- type: entity
+  id: MachineCentrifuge
+  parent: BaseTabletopChemicalMachine
+  name: tabletop centrifuge
+  description: Around and around it goes...
+  components:
+  - type: SolutionContainerMixer
+    mixDuration: 10
+    mixingSound:
+      path: /Audio/Machines/spinning.ogg
+      params:
+        volume: -4
+  - type: ReactionMixer
+    reactionTypes:
+    - Centrifuge
+  - type: Sprite
+    sprite: Structures/Machines/Medical/centrifuge.rsi
+    offset: "0.0,0.4"
+    layers:
+    - state: base
+      map: ["beyblade"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.SolutionContainerMixerVisuals.Mixing:
+        beyblade:
+          True: {state: "base-spinning"}
+          False: {state: "base"}
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: True }
+          False: { visible: False }
+  - type: Machine
+    board: CentrifugeMachineCircuitboard

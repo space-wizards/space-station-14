@@ -143,3 +143,13 @@
   - accent-words-slimes-3
   - accent-words-slimes-4
   - accent-words-slimes-5
+
+- type: accent
+  id: crab
+  fullReplacements:
+  - accent-words-crab-1
+  - accent-words-crab-2
+  - accent-words-crab-3
+  - accent-words-crab-4
+  - accent-words-crab-5
+  - accent-words-crab-6

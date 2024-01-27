@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a, ball made by brainfood1183 (Github) for ss14",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a, ball made by brainfood1183 (Github) for ss14, the uranium sprite is a modified version of the buckshot pellet by Boaz1111",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,9 @@
     },
     {
       "name": "buckshot-flare"
+    },
+    { 
+      "name": "depleted-uranium"
     },
     {
       "name": "ball"

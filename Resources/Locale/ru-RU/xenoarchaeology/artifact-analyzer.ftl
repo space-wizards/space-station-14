@@ -18,6 +18,7 @@ analysis-console-info-trigger = СТИМУЛЯТОР: { $trigger }
 analysis-console-info-edges = КРАЯ: { $edges }
 analysis-console-info-value = НЕИЗВЛЕЧЁННЫЕ_О.И.: { $value }
 analysis-console-info-scanner = Сканирование...
+analysis-console-info-scanner-paused = Приостановлено.
 analysis-console-progress-text =
     { $seconds ->
         [one] T-{ $seconds } секунда

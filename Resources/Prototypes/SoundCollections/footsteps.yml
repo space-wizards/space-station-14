@@ -167,6 +167,11 @@
   - /Audio/Corvax/Effects/Footsteps/boots3.ogg
 
 - type: soundCollection
+  id: FootstepThud
+  files:
+  - /Audio/Effects/Footsteps/largethud.ogg
+
+- type: soundCollection
   id: FootstepSnake
   files:
   - /Audio/Effects/Footsteps/snake1.ogg

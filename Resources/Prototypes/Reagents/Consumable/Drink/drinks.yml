@@ -17,24 +17,10 @@
         amount: 0.05
 
 - type: reagent
-  id: Cream
-  name: reagent-name-cream
-  group: Drinks
-  desc: reagent-desc-cream
-  physicalDesc: reagent-physical-desc-creamy
-  flavor: creamy
-  color: "#DFD7AF"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 1
-
-- type: reagent
   id: HotCocoa
-  name: reagent-name-cocoa
+  name: reagent-name-hot-cocoa
   parent: BaseDrink
-  desc: reagent-desc-cocoa
+  desc: reagent-desc-hot-cocoa
   physicalDesc: reagent-physical-desc-aromatic
   flavor: chocolate
   color: "#664300"
@@ -47,6 +33,20 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+
+- type: reagent
+  id: Cream
+  name: reagent-name-cream
+  group: Drinks
+  desc: reagent-desc-cream
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
+  color: "#DFD7AF"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
 
 - type: reagent
   id: CafeLatte

@@ -12,10 +12,10 @@ namespace Content.Shared.Item;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-[Access(typeof(SharedItemSystem))]
+[Access(typeof(SharedItemSystem)), AutoGenerateComponentState(true)]
 public sealed partial class ItemComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     [Access(typeof(SharedItemSystem))]
     public ProtoId<ItemSizePrototype> Size = "Small";
 
@@ -25,7 +25,7 @@ public sealed partial class ItemComponent : Component
 
     [Access(typeof(SharedItemSystem))]
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? HeldPrefix;
 
     /// <summary>
@@ -54,19 +54,6 @@ public sealed partial class ItemComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float StoredRotation = 0;
-}
-
-[Serializable, NetSerializable]
-public sealed class ItemComponentState : ComponentState
-{
-    public ProtoId<ItemSizePrototype> Size { get; }
-    public string? HeldPrefix { get; }
-
-    public ItemComponentState(ProtoId<ItemSizePrototype> size, string? heldPrefix)
-    {
-        Size = size;
-        HeldPrefix = heldPrefix;
-    }
 }
 
 /// <summary>

@@ -62,7 +62,7 @@
       ]
     },
     {
-      "name": "off",
+      "name": "base",
       "directions": 4,
       "delays": [
         [
@@ -80,22 +80,8 @@
       ]
     },
     {
-      "name": "on",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "name": "glow",
+      "directions": 4
     }
   ]
 }

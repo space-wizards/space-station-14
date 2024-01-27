@@ -48,3 +48,5 @@ ent-DrinkCartonMilk = молоко
     .desc = Пустая коробка из-под напитка.
 ent-DrinkCartonSoyMilk = соевое молоко
     .desc = Пустая коробка из-под напитка.
+ent-DrinkCartonOatMilk = овсяное молоко
+    .desc = Пустая коробка из-под напитка.

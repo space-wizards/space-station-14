@@ -308,8 +308,7 @@ entities:
     - pos: 0.5,-1.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 110
     components:
     - pos: 0.5,-2.5
@@ -335,8 +334,7 @@ entities:
     - pos: 3.5,1.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 115
     components:
     - pos: 3.5,0.5
@@ -347,8 +345,7 @@ entities:
     - pos: 3.5,-0.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 117
     components:
     - pos: 3.5,-1.5
@@ -359,36 +356,31 @@ entities:
     - pos: 3.5,-2.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 119
     components:
     - pos: 3.5,-3.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 120
     components:
     - pos: 3.5,-4.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 121
     components:
     - pos: 3.5,-5.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 122
     components:
     - pos: -4.5,5.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 123
     components:
     - pos: -4.5,4.5
@@ -424,8 +416,7 @@ entities:
     - pos: -4.5,-1.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 130
     components:
     - pos: -4.5,-2.5
@@ -518,8 +509,7 @@ entities:
     - pos: -4.5,5.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 96
     components:
     - pos: -4.5,2.5
@@ -570,8 +560,7 @@ entities:
     - pos: 0.5,-1.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 106
     components:
     - pos: 1.5,1.5
@@ -587,8 +576,7 @@ entities:
     - pos: 3.5,1.5
       parent: 222
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: Catwalk
   entities:
   - uid: 140

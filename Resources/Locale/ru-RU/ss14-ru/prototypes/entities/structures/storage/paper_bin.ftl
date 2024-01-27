@@ -7,3 +7,6 @@ ent-PaperBin5 = { ent-PaperBin }
 ent-PaperBin10 = { ent-PaperBin }
     .suffix = 10
     .desc = { ent-PaperBin.desc }
+ent-PaperBin20 = { ent-PaperBin }
+    .suffix = 20
+    .desc = { ent-PaperBin.desc }

@@ -45,7 +45,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
-        private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
+        private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, ref AtmosDeviceUpdateEvent args)
         {
             if (_weldable.IsWelded(uid))
             {

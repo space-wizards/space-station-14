@@ -1,5 +1,5 @@
-﻿using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
+﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -20,11 +20,17 @@ public sealed partial class ChemicalFuelGeneratorAdapterComponent : Component
     public string Reagent = "WeldingFuel";
 
     /// <summary>
-    /// The solution on the <see cref="SolutionContainerManagerComponent"/> to use.
+    /// The name of <see cref="Solution"/>.
     /// </summary>
     [DataField("solution")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string Solution = "tank";
+    public string SolutionName = "tank";
+
+    /// <summary>
+    /// The solution on the <see cref="SolutionContainerManagerComponent"/> to use.
+    /// </summary>
+    [DataField("solutionRef")]
+    public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
     /// Value to multiply reagent amount by to get fuel amount.

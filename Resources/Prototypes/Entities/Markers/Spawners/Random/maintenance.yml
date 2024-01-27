@@ -123,6 +123,7 @@
         - ClothingOuterFlannelGreen
         - ClothingOuterVestHazard
         - ClothingShoesBootsJack
+        - ClothingShoesHighheelBoots
         - ClothingShoesBootsLaceup
         - ClothingShoesLeather
         - ClothingShoesBootsSalvage
@@ -158,7 +159,10 @@
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
+        - ToolboxArtisticFilled
         - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
+        - EmergencyFunnyOxygenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -231,6 +235,8 @@
         - FlashlightLantern
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
+        - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - Lighter
         - Matchbox
         - Crowbar

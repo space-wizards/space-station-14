@@ -12,7 +12,6 @@
     - state: base
     - state: green_bit
       shader: unshaded
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
