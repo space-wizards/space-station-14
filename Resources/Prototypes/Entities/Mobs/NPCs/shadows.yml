@@ -59,6 +59,7 @@
     successChance: 0.01 # you cant pet shadow cat... almost
     interactSuccessString: petting-success-cat
     interactFailureString: petting-failure-shadow
+    interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
   - type: Grammar
