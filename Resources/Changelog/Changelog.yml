@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nok-ko
-  changes:
-  - message: Entities without hands (like mice and mothroaches) are now forbidden
-      from operating Syndicate Bombs, C4, and other timed explosives.
-    type: Fix
-  id: 5299
-  time: '2023-12-10T03:13:00.0000000+00:00'
 - author: chromiumboy
   changes:
   - message: Updated the crew monitoring console user interface
@@ -3813,3 +3806,13 @@
   id: 5799
   time: '2024-01-27T02:52:07.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24449
+- author: PJB3005
+  changes:
+  - message: PACMAN-type portable generators now show power statistics for the network
+      they're connected to.
+    type: Add
+  - message: JRPACMAN has been buffed from 5 kW to 8 kW.
+    type: Tweak
+  id: 5800
+  time: '2024-01-27T02:53:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24604
