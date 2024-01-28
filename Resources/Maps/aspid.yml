@@ -46624,31 +46624,6 @@ entities:
     - type: Transform
       pos: -5.5,24.5
       parent: 1
-- proto: ClosetBase
-  entities:
-  - uid: 9867
-    components:
-    - type: Transform
-      pos: -34.5,-21.5
-      parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: ClosetBombFilled
   entities:
   - uid: 8170
@@ -49136,6 +49111,31 @@ entities:
     components:
     - type: Transform
       pos: 28.5,-16.5
+      parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 3.4430928
+        - 12.952587
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+- proto: ClosetSteelBase
+  entities:
+  - uid: 9867
+    components:
+    - type: Transform
+      pos: -34.5,-21.5
       parent: 1
     - type: EntityStorage
       air:
@@ -51650,6 +51650,13 @@ entities:
     components:
     - type: Transform
       pos: 10.5,30.5
+      parent: 1
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 8410
+    components:
+    - type: Transform
+      pos: 11.5,41.5
       parent: 1
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
