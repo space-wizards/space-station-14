@@ -1,13 +1,4 @@
 - type: marking
-  id: PawSocks
-  markingCategory: Overlay
-  bodyPart: RFoot #highest possible layer
-  speciesRestriction: [Vulpkanin]
-  sprites:
-    - sprite: Mobs/Customization/vulpkanin.rsi
-      state: pawsocks
-
-- type: marking
   id: FoxTail
   bodyPart: Tail
   markingCategory: Tail
