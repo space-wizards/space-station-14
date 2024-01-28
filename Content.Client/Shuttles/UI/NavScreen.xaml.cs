@@ -12,7 +12,7 @@ namespace Content.Client.Shuttles.UI;
 public sealed partial class NavScreen : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private SharedTransformSystem _xformSystem = default!;
+    private SharedTransformSystem _xformSystem;
 
     private EntityUid? _shuttleEntity;
 
