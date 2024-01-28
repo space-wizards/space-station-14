@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Anomaly.Prototypes;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -226,6 +227,9 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? CoreInertPrototype;
+
+    [DataField]
+    public ProtoId<AnomalyBehaviourPrototype> CurrentBehaviour;
 
     #region Floating Animation
     /// <summary>

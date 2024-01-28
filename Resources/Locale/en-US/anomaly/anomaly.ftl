@@ -66,3 +66,8 @@ anomaly-command-supercritical = Makes a target anomaly go supercritical
 # Flavor text on the footer
 anomaly-generator-flavor-left = Anomaly may spawn inside the operator.
 anomaly-generator-flavor-right = v1.1
+
+anomaly-read-error = [Data unreadable]
+
+anomaly-behaviour-balanced = The anomaly's behavior is stable.
+anomaly-behaviour-accelerated = Accelerated pulse rate detected.

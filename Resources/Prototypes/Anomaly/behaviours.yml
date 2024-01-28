@@ -1,0 +1,7 @@
+- type: anomalyBehaviour
+  id: Balanced
+  description: anomaly-behaviour-balanced
+  
+- type: anomalyBehaviour
+  id: Accelerated
+  description: anomaly-behaviour-accelerated

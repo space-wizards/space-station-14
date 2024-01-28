@@ -1,4 +1,4 @@
-﻿using Content.Server.Anomaly.Components;
+using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
@@ -138,9 +138,9 @@ public sealed partial class AnomalySystem
         if (anomalyComp.Stability < anomalyComp.DecayThreshold)
             stateLoc = Loc.GetString("anomaly-scanner-stability-low");
         else if (anomalyComp.Stability > anomalyComp.GrowthThreshold)
-            stateLoc =  Loc.GetString("anomaly-scanner-stability-high");
+            stateLoc = Loc.GetString("anomaly-scanner-stability-high");
         else
-            stateLoc =  Loc.GetString("anomaly-scanner-stability-medium");
+            stateLoc = Loc.GetString("anomaly-scanner-stability-medium");
         msg.AddMarkup(stateLoc);
         msg.PushNewline();
 
@@ -155,6 +155,11 @@ public sealed partial class AnomalySystem
         msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-unstable", ("type", GetParticleLocale(anomalyComp.DestabilizingParticleType))));
         msg.PushNewline();
         msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-containment", ("type", GetParticleLocale(anomalyComp.WeakeningParticleType))));
+
+        msg.PushNewline();
+        msg.PushNewline();
+        var behaviour = _prototype.Index(anomalyComp.CurrentBehaviour);
+        msg.AddMarkup(Loc.GetString(behaviour.Description));
 
         //The timer at the end here is actually added in the ui itself.
         return msg;
