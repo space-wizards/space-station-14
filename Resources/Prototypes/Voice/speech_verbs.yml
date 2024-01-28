@@ -121,3 +121,11 @@
   - chat-speech-verb-ghost-3
   - chat-speech-verb-ghost-4
   - chat-speech-verb-mumble
+
+- type: speechVerb
+  id: Vulpkanine
+  speechVerbStrings:
+  - chat-speech-verb-vulpkanine-1
+  - chat-speech-verb-vulpkanine-2
+  - chat-speech-verb-vulpkanine-3
+  - chat-speech-verb-vulpkanine-4

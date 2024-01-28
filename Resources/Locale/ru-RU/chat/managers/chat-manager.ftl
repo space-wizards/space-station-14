@@ -92,7 +92,7 @@ chat-speech-verb-skeleton-2 = трещит
 chat-speech-verb-skeleton-3 = скрежещет
 
 chat-speech-verb-canine-1 = гавкает
-chat-speech-verb-canine-2 = тяфкает
+chat-speech-verb-canine-2 = тявкает
 chat-speech-verb-canine-3 = воет
 
 chat-speech-verb-small-mob-1 = пищит
@@ -114,3 +114,9 @@ chat-speech-verb-ghost-1 = ропщет
 chat-speech-verb-ghost-2 = вздыхает
 chat-speech-verb-ghost-3 = напевает
 chat-speech-verb-ghost-4 = бурчит
+
+
+chat-speech-verb-vulpkanine-1 = рычит
+chat-speech-verb-vulpkanine-2 = лает
+chat-speech-verb-vulpkanine-3 = тявкает
+chat-speech-verb-vulpkanine-4 = фыркает

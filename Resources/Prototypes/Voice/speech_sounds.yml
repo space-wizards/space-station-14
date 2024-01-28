@@ -122,3 +122,4 @@
   askSound:
     path: /Audio/Animals/dog_bark3.ogg
   exclaimSound:
+    path: /Audio/Animals/dog_bark2.ogg

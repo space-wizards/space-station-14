@@ -52,6 +52,7 @@
   - type: GrowlingAccent
   - type: Speech
     speechSounds: Bass
+    speechVerb: Vulpkanin
   - type: MeleeWeapon
     animation: WeaponArcClaw
     soundHit:
