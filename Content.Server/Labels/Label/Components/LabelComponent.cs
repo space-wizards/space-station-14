@@ -8,7 +8,7 @@ namespace Content.Server.Labels.Components
     {
         /// <summary>
         /// The actual text on the label
-        /// Entity Prototypes pre-configured with a label can resolve a localization string entered here, when the entity spawns.
+        /// Entity Prototypes pre-configured with a label will resolve a localization string entered here, when the entity spawns.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("currentLabel")]
