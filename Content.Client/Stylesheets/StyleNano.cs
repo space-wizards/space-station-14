@@ -998,7 +998,6 @@ namespace Content.Client.Stylesheets
                         itemListBackgroundSelected)
                 }),
 
-
                  new StyleRule(new SelectorElement(typeof(ItemList), new[] {"transparentBackgroundItemList"}, null, null), new[]
                 {
                    new StyleProperty(ItemList.StylePropertyBackground,

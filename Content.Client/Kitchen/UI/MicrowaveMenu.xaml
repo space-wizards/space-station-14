@@ -25,7 +25,7 @@
                     StyleClasses="transparentBackgroundItemList"
                     SelectMode="Button"
                     SizeFlagsStretchRatio="3"
-
+                    ItemSeparation="5"
                     MinSize="100 128">
                     <!-- Ingredients are added here by code -->
                 </ItemList>
