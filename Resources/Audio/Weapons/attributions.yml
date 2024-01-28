@@ -13,6 +13,16 @@
   copyright: "https://www.soundjay.com/tos.html"
   source: "https://www.soundjay.com/chainsaw-sound-effect.html"
 
+- files: ["chainsaw_start.ogg"]
+  license: "CC0-1.0"
+  copyright: "Adapted from 8 Chainsaw Pulls.wav by Stefan021"
+  source: "https://freesound.org/s/431740/"
+
+- files: ["chainsaw_stop.ogg"]
+  license: "CC0-1.0"
+  copyright: "Adapted from kyles chainsaw sawing short cuts +stop.flac"
+  source: "https://freesound.org/people/kyles/sounds/453256/"
+
 - files: ["guitarsmash.ogg"]
   license: "CC0-1.0"
   copyright: "User Mystovski on freesound.org. Modified by LankLTE on github."

@@ -4,15 +4,19 @@
   id: Chainsaw
   description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
-  - type: Wieldable
-    wieldSound: !type:SoundPathSpecifier
-      path: /Audio/Weapons/chainsawwield.ogg
-      params:
-        volume: -3
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
-    state: icon
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { state: chainsaw_on }
+          False: { state: icon }
+  - type: Wieldable
+  - type: Sharp
   - type: MeleeWeapon
     autoAttack: true
     angle: 0
@@ -23,18 +27,45 @@
         Slash: 2
         Blunt: 2
         Structural: 4
-    soundHit:
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 6
+        Structural: 8
+    activatedSoundOnHit:
       path: /Audio/Weapons/chainsaw.ogg
       params:
         volume: -3
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Slash: 4
-        Structural: 4
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/chainsaw.rsi
+  - type: ItemToggleSize
+    activatedSize: Ginormous
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      path: /Audio/Weapons/chainsaw_start.ogg
+      params:
+        volume: -3
+        variation: 0.1
+    soundDeactivate:
+      path: /Audio/Weapons/chainsaw_stop.ogg
+      params:
+        volume: -3
+        variation: 0.1
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/chainsawidle.ogg
+      params:
+        volume: -6
+  - type: ToggleableLightVisuals
+    spriteLayer: on
+    inhandVisuals:
+      left:
+      - state: wielded-inhand-left-on
+      right:
+      - state: wielded-inhand-right-on
+  - type: Appearance
   - type: DisarmMalus
   - type: RefillableSolution
     solution: Welder
@@ -44,6 +75,9 @@
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 300
-        maxVol: 300
+  - type: Welder
+    fuelConsumption: 3
+    fuelLitCost: 2
+    tankSafe: true
   - type: UseDelay
-    delay: 1
+    delay: 0.75
