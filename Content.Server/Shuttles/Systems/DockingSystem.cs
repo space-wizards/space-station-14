@@ -60,6 +60,23 @@ namespace Content.Server.Shuttles.Systems
             UpdateAutodock();
         }
 
+        /// <summary>
+        /// Sets the docks for the provided entity as enabled or disabled.
+        /// </summary>
+        public void SetDocks(EntityUid uid, bool enabled)
+        {
+            var query = AllEntityQuery<DockingComponent, TransformComponent>();
+
+            while (query.MoveNext(out var dockUid, out var dock, out var xform))
+            {
+                if (xform.ParentUid != uid || dock.Enabled == enabled)
+                    continue;
+
+                Undock(dockUid, dock);
+                dock.Enabled = enabled;
+            }
+        }
+
         private void OnAutoClose(EntityUid uid, DockingComponent component, BeforeDoorAutoCloseEvent args)
         {
             // We'll just pin the door open when docked.

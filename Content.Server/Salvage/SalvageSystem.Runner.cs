@@ -186,7 +186,7 @@ public sealed partial class SalvageSystem
                             if (shuttleXform.MapUid != uid || HasComp<FTLComponent>(shuttleUid))
                                 continue;
 
-                            _shuttle.FTLTravel(shuttleUid, shuttle, member, ftlTime);
+                            _shuttle.FTLToDock(shuttleUid, shuttle, member, ftlTime);
                         }
 
                         break;

@@ -37,9 +37,13 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
+    private EntityQuery<MetaDataComponent> _metaQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _metaQuery = GetEntityQuery<MetaDataComponent>();
 
         SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(OnConsoleShutdown);
         SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
@@ -102,7 +106,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         var docks = GetAllDocks();
         var query = AllEntityQuery<ShuttleConsoleComponent>();
 
-        while (query.MoveNext(out var uid, out var _))
+        while (query.MoveNext(out var uid, out _))
         {
             UpdateState(uid, docks);
         }
@@ -239,8 +243,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         if (entity != null && shuttleGridUid != null &&
             (!TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) || shuttleBody.Mass < 1000f))
         {
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-
             // Can't go anywhere when in FTL.
             var locked = shuttleFtl != null || Paused(shuttleGridUid.Value);
 
@@ -258,7 +260,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                     continue;
                 }
 
-                var meta = metaQuery.GetComponent(destUid);
+                var meta = _metaQuery.GetComponent(destUid);
                 var name = meta.EntityName;
 
                 if (string.IsNullOrEmpty(name))
