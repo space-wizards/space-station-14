@@ -78,7 +78,7 @@
 # Civilian
 
 - type: entity
-  id: SpawnPointAssistant # TODO rename, but requires map changes.
+  id: SpawnPointPassenger
   parent: SpawnPointJobBase
   name: passenger
   components:
@@ -91,7 +91,7 @@
 
 - type: entity
   id: SpawnPointTechnicalAssistant
-  parent: SpawnPointAssistant
+  parent: SpawnPointJobBase
   name: technical assistant
   components:
   - type: SpawnPoint
@@ -103,7 +103,7 @@
 
 - type: entity
   id: SpawnPointMedicalIntern
-  parent: SpawnPointAssistant
+  parent: SpawnPointJobBase
   name: medical intern
   components:
   - type: SpawnPoint
@@ -115,7 +115,7 @@
 
 - type: entity
   id: SpawnPointSecurityCadet
-  parent: SpawnPointAssistant
+  parent: SpawnPointJobBase
   name: security cadet
   components:
   - type: SpawnPoint
@@ -127,7 +127,7 @@
 
 - type: entity
   id: SpawnPointResearchAssistant
-  parent: SpawnPointAssistant
+  parent: SpawnPointJobBase
   name: research assistant
   components:
   - type: SpawnPoint
@@ -139,7 +139,7 @@
 
 - type: entity
   id: SpawnPointServiceWorker
-  parent: SpawnPointAssistant
+  parent: SpawnPointJobBase
   name: service worker
   components:
   - type: SpawnPoint

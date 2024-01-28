@@ -14,6 +14,7 @@
     params:
       variation: 0.03
       volume: 3
+    onActivate: true
   - type: EmitSoundOnUse
     sound:
       collection: DeskBell
@@ -32,7 +33,6 @@
       params:
           variation: 0.03
           volume: 3
-  - type: ItemCooldown
   - type: UseDelay
     delay: 0.5
   - type: MeleeWeapon

@@ -2,6 +2,8 @@ using Content.Shared.Item;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
+using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleComponent;
 
 namespace Content.Server.Item;
 
@@ -11,10 +13,10 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ItemToggleComponent, ItemToggleDoneEvent>(Toggle);
+        SubscribeLocalEvent<ItemToggleComponent, ItemToggledEvent>(Toggle);
     }
 
-    private void Toggle(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDoneEvent args)
+    private void Toggle(EntityUid uid, ItemToggleComponent comp, ref ItemToggledEvent args)
     {
         if (args.Activated == true)
         {

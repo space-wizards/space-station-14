@@ -33,11 +33,27 @@
           type: Bloodsucker
         damage:
           groups:
-            Brute: -4
-            Burn: -2
+            Brute: -3
+            Burn: -1.25
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
+
+- type: reagent
+  parent: Blood
+  id: InsectBlood
+  name: reagent-name-insect-blood
+  group: Biological
+  desc: reagent-desc-insect-blood
+  flavor: horrible
+  color: "#808A51"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-slimy
+  slippery: false
 
 - type: reagent
   id: Slime
@@ -58,6 +74,10 @@
       effects:
       - !type:SatiateHunger
         factor: 1.5
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
 
 - type: reagent
   parent: Blood
@@ -124,6 +144,10 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 0.5
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
 
 - type: reagent
   id: Fat
@@ -134,6 +158,10 @@
   color: "#d8d8b0"
   physicalDesc: reagent-physical-desc-exotic-smelling
   slippery: false
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
 
 - type: reagent
   id: Vomit
@@ -152,3 +180,7 @@
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.1
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

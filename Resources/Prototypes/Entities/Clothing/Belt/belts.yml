@@ -30,6 +30,7 @@
         - Multitool
         - AppraisalTool
         - JawsOfLife
+        - GPS
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -219,6 +220,9 @@
         - TrashBag
         - WetFloorSign
         - HolosignProjector
+        - Plunger
+        - LightReplacer
+        - JanicartKeys
       components:
         - LightReplacer
   - type: ItemMapper
@@ -383,6 +387,7 @@
         - Packet
         - Skewer
         - MonkeyCube
+        - Mayo
       components:
         - Mousetrap
         - Smokable
@@ -451,6 +456,7 @@
         - Radio
         - Sidearm
         - MagazinePistol
+        - MagazineMagnum
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -633,6 +639,8 @@
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
     size: Huge
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBeltBase

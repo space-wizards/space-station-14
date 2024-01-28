@@ -460,6 +460,8 @@
   - type: Access
     groups:
     - AllAccess
+    tags:
+    - CentralCommand
 
 - type: entity
   parent: CentcomIDCard
@@ -478,7 +480,7 @@
 - type: entity
   parent: ERTLeaderIDCard
   id: ERTChaplainIDCard
-  name: ERT Chaplain ID card
+  name: ERT chaplain ID card
   components:
   - type: Sprite
     layers:
@@ -492,7 +494,7 @@
 - type: entity
   parent: ERTChaplainIDCard
   id: ERTEngineerIDCard
-  name: ERT Engineer ID card
+  name: ERT engineer ID card
   components:
   - type: Sprite
     layers:
@@ -504,7 +506,7 @@
 - type: entity
   parent: ERTChaplainIDCard
   id: ERTJanitorIDCard
-  name: ERT Janitor ID card
+  name: ERT janitor ID card
   components:
   - type: Sprite
     layers:
@@ -516,7 +518,7 @@
 - type: entity
   parent: ERTChaplainIDCard
   id: ERTMedicIDCard
-  name: ERT Medic ID card
+  name: ERT medic ID card
   components:
   - type: Sprite
     layers:
@@ -528,7 +530,7 @@
 - type: entity
   parent: ERTChaplainIDCard
   id: ERTSecurityIDCard
-  name: ERT Security ID card
+  name: ERT security ID card
   components:
   - type: Sprite
     layers:

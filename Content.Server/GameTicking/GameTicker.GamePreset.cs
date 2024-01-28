@@ -107,8 +107,8 @@ namespace Content.Server.GameTicking
                 return;
 
             Preset = preset;
-            UpdateInfoText();
             ValidateMap();
+            UpdateInfoText();
 
             if (force)
             {

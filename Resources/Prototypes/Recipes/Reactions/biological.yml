@@ -1,5 +1,6 @@
 - type: reaction
   id: BloodBreakdown
+  source: true
   requiredMixerCategories:
   - Centrifuge
   reactants:
@@ -14,6 +15,7 @@
 
 - type: reaction
   id: SlimeBloodBreakdown
+  source: true
   requiredMixerCategories:
   - Centrifuge
   reactants:
@@ -25,6 +27,7 @@
 
 - type: reaction
   id: CopperBloodBreakdown
+  source: true
   requiredMixerCategories:
   - Centrifuge
   reactants:
@@ -39,6 +42,7 @@
 
 - type: reaction
   id: ZombieBloodBreakdown
+  source: true
   requiredMixerCategories:
   - Centrifuge
   reactants:

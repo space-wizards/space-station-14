@@ -4,6 +4,9 @@
   abstract: true
   components:
   - type: Sprite
+    layers:
+      - map: [ base ]
+        state: icon
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg
@@ -13,7 +16,6 @@
     - 0,0,6,3
   - type: Item
     size: Ginormous
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -24,6 +26,13 @@
     tags:
     - DroneUsable
     - Toolbox
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+  - type: Appearance
 
 - type: entity
   name: emergency toolbox

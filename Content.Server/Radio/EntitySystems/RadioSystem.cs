@@ -7,6 +7,7 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Content.Shared.Speech;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -51,7 +52,7 @@ public sealed class RadioSystem : EntitySystem
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
         if (TryComp(uid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
+            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
     }
 
     /// <summary>
@@ -79,7 +80,17 @@ public sealed class RadioSystem : EntitySystem
 
         name = FormattedMessage.EscapeText(name);
 
-        var speech = _chat.GetSpeechVerb(messageSource, message);
+        SpeechVerbPrototype speech;
+        if (mask != null
+            && mask.Enabled
+            && mask.SpeechVerb != null
+            && _prototype.TryIndex<SpeechVerbPrototype>(mask.SpeechVerb, out var proto))
+        {
+            speech = proto;
+        }
+        else
+            speech = _chat.GetSpeechVerb(messageSource, message);
+
         var content = escapeMarkup
             ? FormattedMessage.EscapeText(message)
             : message;

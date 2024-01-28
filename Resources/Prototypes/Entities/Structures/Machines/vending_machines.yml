@@ -52,7 +52,9 @@
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
+  - type: Repairable
+    doAfterDelay: 8
   - type: ActivatableUI
     key: enum.VendingMachineUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -103,7 +105,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCondiments
-  name: Condiment Station
+  name: condiment station
   description: Slather these thick gooey substances on your food for a full flavor effect.
   components:
   - type: VendingMachine
@@ -135,7 +137,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineAmmo
-  name: Liberation Station
+  name: liberation station
   description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
   components:
   - type: VendingMachine
@@ -1894,6 +1896,8 @@
     radius: 1.5
     energy: 1.6
     color: "#48CF48"
+  - type: AccessReader
+    access: [["CentralCommand"]]
 
 - type: entity
   parent: VendingMachine
@@ -1936,7 +1940,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
-  name: Gas Tank Dispenser
+  name: gas tank dispenser
   description: A vendor for dispensing gas tanks.
   components:
   - type: VendingMachine
@@ -1949,7 +1953,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
-  name: Gas Tank Dispenser
+  name: gas tank dispenser
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
   - type: VendingMachine

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos
 {
@@ -58,8 +59,9 @@ namespace Content.Server.Atmos
             get => _temperature;
             set
             {
+                DebugTools.Assert(!float.IsNaN(_temperature));
                 if (Immutable) return;
-                _temperature = MathF.Max(value, Atmospherics.TCMB);
+                _temperature = MathF.Min(MathF.Max(value, Atmospherics.TCMB), Atmospherics.Tmax);
             }
         }
 
