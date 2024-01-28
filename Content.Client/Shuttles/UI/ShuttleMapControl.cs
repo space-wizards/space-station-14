@@ -1,8 +1,11 @@
 using System.Numerics;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -16,6 +19,8 @@ namespace Content.Client.Shuttles.UI;
 public sealed class ShuttleMapControl : BaseShuttleControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IInputManager _inputs = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     private SharedShuttleSystem _shuttles;
     private SharedTransformSystem _xformSystem;
@@ -24,10 +29,19 @@ public sealed class ShuttleMapControl : BaseShuttleControl
 
     public MapId ViewingMap = MapId.Nullspace;
 
+    private EntityUid? _shuttleEntity;
+
     private Font _font;
     private Texture _backgroundTexture;
 
     private List<Entity<MapGridComponent>> _grids = new();
+
+    /// <summary>
+    /// Toggles FTL mode on. This shows a pre-vis for FTLing a grid.
+    /// </summary>
+    public bool FtlMode;
+
+    private Angle _ftlAngle;
 
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
@@ -45,12 +59,26 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         Recentering = false;
     }
 
-    protected override void Draw(DrawingHandleScreen handle)
+    public void SetShuttle(EntityUid? entity)
     {
-        base.Draw(handle);
+        _shuttleEntity = entity;
+    }
 
-        if (ViewingMap == MapId.Nullspace)
+    protected override void MouseWheel(GUIMouseWheelEventArgs args)
+    {
+        // Scroll handles FTL rotation if you're in FTL mode.
+        if (FtlMode)
+        {
+            _ftlAngle += Angle.FromDegrees(15f) * args.Delta.Y;
             return;
+        }
+
+        base.MouseWheel(args);
+    }
+
+    private void DrawParallax(DrawingHandleScreen handle)
+    {
+        // TODO: Move this garbage to parallaxsystem or the likes.
 
         // Draw background texture
         var tex = _backgroundTexture;
@@ -97,14 +125,54 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                 handle.DrawTextureRect(tex, new UIBox2(x, y, x + size.X, y + size.Y));
             }
         }
+    }
 
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        base.Draw(handle);
+
+        if (ViewingMap == MapId.Nullspace)
+            return;
+
+        DrawRecenter();
+        DrawParallax(handle);
+
+        var matty = Matrix3.CreateInverseTransform(Offset, Angle.Zero);
+        var realTime = _timing.RealTime;
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
-
-        // TODO: Do the edge drawing like radarcontrol for these.
-        // TODO: Range drawing for nav computer.
         _grids.Clear();
         _mapManager.FindGridsIntersecting(ViewingMap, viewBox, ref _grids, approx: true, includeMap: false);
-        var matty = Matrix3.CreateInverseTransform(Offset, Angle.Zero);
+
+        // Draw our FTL range + no FTL zones
+        // Do it up here because we want this layered below most things.
+        if (FtlMode)
+        {
+            foreach (var grid in _grids)
+            {
+                var position = _xformSystem.GetWorldPosition(grid);
+
+                var gridRelativePos = matty.Transform(position);
+                gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
+                var gridUiPos = ScalePosition(gridRelativePos);
+
+                if (grid.Owner == _shuttleEntity)
+                {
+                    var range = 1024f;
+                    range *= MinimapScale;
+                    handle.DrawCircle(gridUiPos, range, Color.Gold, filled: false);
+                }
+                else
+                {
+                    var localAABB = grid.Comp.LocalAABB;
+                    var maxExtent = localAABB.MaxExtent;
+                    var range = maxExtent + 32f;
+                    range *= MinimapScale;
+                    handle.DrawCircle(gridUiPos, range, Color.Magenta.WithAlpha(0.01f));
+                    handle.DrawCircle(gridUiPos, range, Color.Magenta, filled: false);
+                }
+            }
+        }
+
         var verts = new Dictionary<Color, List<Vector2>>();
         var edges = new Dictionary<Color, List<Vector2>>();
         var strings = new Dictionary<Color, List<(Vector2, string)>>();
@@ -113,27 +181,30 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         var diamondRadius = WorldRange / 40f;
 
         // If mouse highlighting a grid then show a highlight and support clicks
-        var inputManager = IoCManager.Resolve<IInputManager>();
-        // inputManager.MouseScreenPosition.;
 
         // TODO:
-        // Split each screen to its own control
-        // Need a common method for buildmapobjects + drawing so they show same shit
         // Map objects looks good just need xaml
         // Maybe have the below as controls to get click support and hover
         // Need to open a special context menu for the grid (atm needs dock button)
         // Need per-map support for parallax textures (use component for path or default if none found), use nukies for planets
-        // Remove the FTL stuff so it doesn't force rebuilds
         // need FTL button
         // Rebuild should play a ping.
         // Need pre-vis for shuttle arrival spot
         // Need circular buffers for FTL
 
-        var realTime = IoCManager.Resolve<IGameTiming>().RealTime;
-
         foreach (var grid in _grids)
         {
-            var gridColor = _shuttles.GetIFFColor(grid);
+            IFFComponent? iffComp = null;
+
+            // Rudimentary IFF for now, if IFF hiding on then we don't show on the map at all
+            if (grid.Owner != _shuttleEntity &&
+                _entManager.TryGetComponent(grid, out iffComp) &&
+                (iffComp.Flags & (IFFFlags.Hide | IFFFlags.HideLabel)) != 0x0)
+            {
+                continue;
+            }
+
+            var gridColor = _shuttles.GetIFFColor(grid, self: _shuttleEntity == grid.Owner, component: iffComp);
 
             var existingVerts = verts.GetOrNew(gridColor);
             var existingEdges = edges.GetOrNew(gridColor);
@@ -148,9 +219,6 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             var right = ScalePosition(gridRelativePos + new Vector2(diamondRadius, 0f));
             var top = ScalePosition(gridRelativePos + new Vector2(0f, 2f * diamondRadius));
             var left = ScalePosition(gridRelativePos + new Vector2(-diamondRadius, 0f));
-
-            var offset = (float) realTime.TotalSeconds * 30f;
-            handle.DrawDottedLine(gridUiPos, MidPointVector, Color.Orange, offset: offset);
 
             // Diamond interior
             existingVerts.Add(bottom);
@@ -172,7 +240,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             existingEdges.Add(bottom);
 
             // Text
-            var iffText = _shuttles.GetIFFLabel(grid);
+            var iffText = _shuttles.GetIFFLabel(grid, component: iffComp);
 
             if (string.IsNullOrEmpty(iffText))
                 continue;
@@ -199,6 +267,56 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             {
                 var textWidth = handle.GetDimensions(_font, iffText, UIScale);
                 handle.DrawString(_font, gridUiPos + new Vector2(-textWidth.X / 2f, textWidth.Y), iffText, color);
+            }
+        }
+
+        // Draw dotted line from our own shuttle entity to mouse.
+        if (FtlMode)
+        {
+            var mousePos = _inputs.MouseScreenPosition;
+
+            if (mousePos.Window != WindowId.Invalid)
+            {
+                var mouseLocalPos = GetLocalPosition(mousePos);
+                var controlBounds = GlobalPixelRect;
+
+                // If mouse inbounds then draw it.
+                if (_shuttleEntity != null && controlBounds.Contains(mousePos.Position.Floored()))
+                {
+                    var shuttleMapCoordinates = _xformSystem.GetMapCoordinates(_shuttleEntity.Value);
+                    var color = _shuttles.GetIFFColor(_shuttleEntity.Value, self: true);
+
+                    // Draw line from our shuttle to target (assuming same map).
+                    if (shuttleMapCoordinates.MapId == ViewingMap)
+                    {
+                        var gridRelativePos = matty.Transform(shuttleMapCoordinates.Position);
+                        gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
+                        var gridUiPos = ScalePosition(gridRelativePos);
+
+                        // Might need to clip the line if it's too far? But my brain wasn't working so F.
+                        handle.DrawDottedLine(gridUiPos, mouseLocalPos, color, (float) realTime.TotalSeconds * 30f);
+                    }
+
+                    // TODO: Check if the target spot is in a forbidden zone.
+
+                    // Draw shuttle pre-vis
+                    var mouseVerts = new ValueList<Vector2>(4)
+                    {
+                        mouseLocalPos + _ftlAngle.RotateVec(new Vector2(0f, -2f * diamondRadius)) * MinimapScale,
+                        mouseLocalPos + _ftlAngle.RotateVec(new Vector2(diamondRadius, 0f)) * MinimapScale,
+                        mouseLocalPos + _ftlAngle.RotateVec(new Vector2(0f, 2f * diamondRadius)) * MinimapScale,
+                        mouseLocalPos + _ftlAngle.RotateVec(new Vector2(-diamondRadius, 0f)) * MinimapScale,
+                    };
+
+                    handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, mouseVerts.Span, color.WithAlpha(0.05f));
+                    handle.DrawPrimitives(DrawPrimitiveTopology.LineLoop, mouseVerts.Span, color);
+
+                    // Draw a notch indicating direction.
+                    var ftlLength = diamondRadius + 16f;
+                    var ftlEnd = mouseLocalPos + _ftlAngle.RotateVec(new Vector2(0f, -ftlLength));
+
+                    handle.DrawLine(mouseLocalPos, ftlEnd, color);
+                }
             }
         }
     }

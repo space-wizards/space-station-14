@@ -27,6 +27,13 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         MapModeButton.OnPressed += MapPressed;
         DockModeButton.OnPressed += DockPressed;
 
+        // Modes are exclusive
+        var group = new ButtonGroup();
+
+        NavModeButton.Group = group;
+        MapModeButton.Group = group;
+        DockModeButton.Group = group;
+
         NavModeButton.Pressed = true;
         SetupMode(_mode);
     }
@@ -114,5 +121,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         var coordinates = _entManager.GetCoordinates(cState.Coordinates);
         NavContainer.SetShuttle(coordinates?.EntityId);
         MapContainer.SetShuttle(coordinates?.EntityId);
+        MapContainer.UpdateState(cState);
     }
 }

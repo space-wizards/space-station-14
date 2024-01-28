@@ -22,9 +22,9 @@ public sealed partial class RadarControl : BaseShuttleControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    private SharedMapSystem _maps;
-    private SharedShuttleSystem _shuttles;
-    private SharedTransformSystem _transform;
+    private readonly SharedMapSystem _maps;
+    private readonly SharedShuttleSystem _shuttles;
+    private readonly SharedTransformSystem _transform;
 
     /// <summary>
     /// Used to transform all of the radar objects. Typically is a shuttle console parented to a grid.
@@ -33,7 +33,7 @@ public sealed partial class RadarControl : BaseShuttleControl
 
     private Angle? _rotation;
 
-    private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
+    private readonly Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;

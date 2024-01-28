@@ -17,26 +17,39 @@
                           Margin="5 0 5 5"
                           Orientation="Vertical"
                           VerticalExpand="True">
+                <controls1:StripeBack
+                    MinSize="48 48">
+                    <controls:Label Name="MapDisplayLabel" Text="{controls:Loc 'shuttle-console-ftl-label'}"
+                                    VerticalExpand="True"
+                                    HorizontalAlignment="Center"/>
+                </controls1:StripeBack>
+                <controls:ProgressBar Name="FTLBar" HorizontalExpand="True"
+                                      Margin="5"
+                                      Value="1.0"/>
                 <controls:BoxContainer Orientation="Vertical">
-                    <!-- Normal buttons -->
-                    <controls1:StripeBack MinSize="48 48">
-                        <controls:Label Name="SettingsLabel" Text="{controls:Loc 'shuttle-console-map-settings'}"
-                               HorizontalAlignment="Center"/>
-                    </controls1:StripeBack>
-                    <controls:Button Name="MapRebuildButton"
-                            Text="{controls:Loc 'shuttle-console-map-rebuild'}"
-                            TextAlign="Center"/>
-                    <!-- Map objects -->
-                    <controls1:StripeBack MinSize="48 48">
-                        <controls:Label Name="HyperspaceLabel" Text="{controls:Loc 'shuttle-console-map-objects'}"
-                               HorizontalAlignment="Center"/>
-                    </controls1:StripeBack>
-                    <controls:ScrollContainer VerticalExpand="True" HScrollEnabled="False"
-                                     ReturnMeasure="True">
-                        <controls:BoxContainer Name="HyperspaceDestinations"
-                                      Orientation="Vertical"
-                                      VerticalExpand="True"/>
-                    </controls:ScrollContainer>
-                </controls:BoxContainer>
+                <!-- Normal buttons -->
+                <controls1:StripeBack MinSize="48 48">
+                    <controls:Label Name="SettingsLabel" Text="{controls:Loc 'shuttle-console-map-settings'}"
+                           HorizontalAlignment="Center"/>
+                </controls1:StripeBack>
+                <controls:Button Name="MapFTLButton"
+                                 ToggleMode="True"
+                                 Text="{controls:Loc 'shuttle-console-ftl-button'}"
+                                 TextAlign="Center"/>
+                <controls:Button Name="MapRebuildButton"
+                        Text="{controls:Loc 'shuttle-console-map-rebuild'}"
+                        TextAlign="Center"/>
+                <!-- Map objects -->
+                <controls1:StripeBack MinSize="48 48">
+                    <controls:Label Name="HyperspaceLabel" Text="{controls:Loc 'shuttle-console-map-objects'}"
+                           HorizontalAlignment="Center"/>
+                </controls1:StripeBack>
+                <controls:ScrollContainer VerticalExpand="True" HScrollEnabled="False"
+                                 ReturnMeasure="True">
+                    <controls:BoxContainer Name="HyperspaceDestinations"
+                                  Orientation="Vertical"
+                                  VerticalExpand="True"/>
+                </controls:ScrollContainer>
             </controls:BoxContainer>
+        </controls:BoxContainer>
 </controls:BoxContainer>

@@ -16,19 +16,11 @@ public sealed partial class NavScreen : BoxContainer
 
     private EntityUid? _shuttleEntity;
 
-    /// <summary>
-    /// Stored by grid entityid then by states
-    /// </summary>
-    private readonly Dictionary<NetEntity, List<DockingInterfaceState>> _docks = new();
-
     public NavScreen()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _xformSystem = _entManager.System<SharedTransformSystem>();
-
-        WorldRangeChange(NavRadar.WorldRange);
-        NavRadar.WorldRangeChanged += WorldRangeChange;
 
         IFFToggle.OnToggled += OnIFFTogglePressed;
         IFFToggle.Pressed = NavRadar.ShowIFF;
@@ -40,11 +32,6 @@ public sealed partial class NavScreen : BoxContainer
     public void SetShuttle(EntityUid? shuttle)
     {
         _shuttleEntity = shuttle;
-    }
-
-    private void WorldRangeChange(float value)
-    {
-        RadarRange.Text = $"{value:0}";
     }
 
     private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
@@ -62,7 +49,6 @@ public sealed partial class NavScreen : BoxContainer
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         NavRadar.UpdateState(scc);
-        MaxRadarRange.Text = $"{scc.MaxRange:0}";
     }
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
@@ -93,7 +79,7 @@ public sealed partial class NavScreen : BoxContainer
         var gridVelocity = gridBody.LinearVelocity;
         gridVelocity = displayRot.RotateVec(gridVelocity);
         // Get linear velocity relative to the console entity
-        GridLinearVelocity.Text = $"{gridVelocity.X + float.Epsilon:0.0}, {gridVelocity.Y + float.Epsilon:0.0}";
-        GridAngularVelocity.Text = $"{-gridBody.AngularVelocity:0.0}";
+        GridLinearVelocity.Text = $"{gridVelocity.X + 10f * float.Epsilon:0.0}, {gridVelocity.Y + 10f * float.Epsilon:0.0}";
+        GridAngularVelocity.Text = $"{-gridBody.AngularVelocity + 10f * float.Epsilon:0.0}";
     }
 }
