@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Added black gloves to the clothesmate
-    type: Add
-  id: 5312
-  time: '2023-12-11T09:23:51.0000000+00:00'
 - author: mirrorcult
   changes:
   - message: Emergency lights no longer make sound
@@ -3828,3 +3822,10 @@
   id: 5812
   time: '2024-01-28T10:46:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24657
+- author: mirrorcult
+  changes:
+  - message: Speech sounds are now quieter
+    type: Tweak
+  id: 5813
+  time: '2024-01-28T10:49:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24579
