@@ -17,7 +17,7 @@
                 max: 1
   - type: Flashable
     collisionGroup:
-    - None
+    - InteractImpassable
   - type: DamagedByFlashing
     flashDamage:
       types:

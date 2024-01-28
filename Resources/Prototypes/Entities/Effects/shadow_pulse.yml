@@ -11,8 +11,8 @@
       - shader: unshaded
         map: ["enum.EffectLayers.Unshaded"]
         color: "#793a80dd"
-        sprite: Effects/emp.rsi
-        state: emp_pulse
+        sprite: Fluids/wet_floor_sparkles.rsi
+        state: sparkles
   - type: EffectVisuals
   - type: PointLight
     color: "#793a80dd"
