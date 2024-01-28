@@ -1,6 +1,7 @@
 - type: latheRecipe
   id: FirelockElectronics
   result: FirelockElectronics
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 100
@@ -9,6 +10,7 @@
 - type: latheRecipe
   id: MailingUnitElectronics
   result: MailingUnitElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 50
@@ -17,6 +19,7 @@
 - type: latheRecipe
   id: CellRechargerCircuitboard
   result: CellRechargerCircuitboard
+  category: Circuitry
   completetime: 2
   materials:
     Steel: 50
@@ -25,6 +28,7 @@
 - type: latheRecipe
   id: BorgChargerCircuitboard
   result: BorgChargerCircuitboard
+  category: Circuitry
   completetime: 2
   materials:
     Steel: 50
@@ -33,14 +37,26 @@
 - type: latheRecipe
   id: WeaponCapacitorRechargerCircuitboard
   result: WeaponCapacitorRechargerCircuitboard
+  category: Circuitry
   completetime: 2
   materials:
     Steel: 50
     Plastic: 50
 
 - type: latheRecipe
+  id: TurboItemRechargerCircuitboard
+  result: TurboItemRechargerCircuitboard
+  category: Circuitry
+  completetime: 2
+  materials:
+    Steel: 500
+    Plastic: 500
+    Gold: 100
+
+- type: latheRecipe
   id: DoorElectronics
   result: DoorElectronics
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 50
@@ -49,6 +65,7 @@
 - type: latheRecipe
   id: AirAlarmElectronics
   result: AirAlarmElectronics
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 100
@@ -57,6 +74,7 @@
 - type: latheRecipe
   id: StationMapElectronics
   result: StationMapCircuitboard
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 50
@@ -65,6 +83,7 @@
 - type: latheRecipe
   id: IntercomElectronics
   result: IntercomElectronics
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 50
@@ -73,6 +92,7 @@
 - type: latheRecipe
   id: FireAlarmElectronics
   result: FireAlarmElectronics
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 100
@@ -81,6 +101,7 @@
 - type: latheRecipe
   id: SignalTimerElectronics
   result: SignalTimerElectronics
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 50
@@ -89,6 +110,7 @@
 - type: latheRecipe
   id: CloningPodMachineCircuitboard
   result: CloningPodMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -98,6 +120,17 @@
 - type: latheRecipe
   id: ThermomachineFreezerMachineCircuitBoard
   result: ThermomachineFreezerMachineCircuitBoard
+  category: Circuitry
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
+  id: HellfireFreezerMachineCircuitBoard
+  result: HellfireFreezerMachineCircuitBoard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 150
@@ -107,6 +140,7 @@
 - type: latheRecipe
   id: CondenserMachineCircuitBoard
   result: CondenserMachineCircuitBoard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -115,6 +149,7 @@
 - type: latheRecipe
   id: PortableScrubberMachineCircuitBoard
   result: PortableScrubberMachineCircuitBoard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 150
@@ -124,6 +159,7 @@
 - type: latheRecipe
   id: MedicalScannerMachineCircuitboard
   result: MedicalScannerMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -132,6 +168,7 @@
 - type: latheRecipe
   id: CryoPodMachineCircuitboard
   result: CryoPodMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -141,6 +178,7 @@
 - type: latheRecipe
   id: ChemMasterMachineCircuitboard
   result: ChemMasterMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -149,6 +187,7 @@
 - type: latheRecipe
   id: ChemDispenserMachineCircuitboard
   result: ChemDispenserMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -158,6 +197,17 @@
 - type: latheRecipe
   id: BiomassReclaimerMachineCircuitboard
   result: BiomassReclaimerMachineCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: BiofabricatorMachineCircuitboard
+  result: BiofabricatorMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -167,6 +217,7 @@
 - type: latheRecipe
   id: HydroponicsTrayMachineCircuitboard
   result: HydroponicsTrayMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -175,6 +226,7 @@
 - type: latheRecipe
   id: AutolatheMachineCircuitboard
   result: AutolatheMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -183,14 +235,36 @@
 - type: latheRecipe
   id: ProtolatheMachineCircuitboard
   result: ProtolatheMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
      Glass: 900
 
 - type: latheRecipe
+  id: AutolatheHyperConvectionMachineCircuitboard
+  result: AutolatheHyperConvectionMachineCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: ProtolatheHyperConvectionMachineCircuitboard
+  result: ProtolatheHyperConvectionMachineCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: CircuitImprinterMachineCircuitboard
   result: CircuitImprinterMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -199,6 +273,7 @@
 - type: latheRecipe
   id: ExosuitFabricatorMachineCircuitboard
   result: ExosuitFabricatorMachineCircuitboard
+  category: Circuitry
   completetime: 5
   materials:
      Steel: 100
@@ -207,6 +282,7 @@
 - type: latheRecipe
   id: UniformPrinterMachineCircuitboard
   result: UniformPrinterMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -215,6 +291,7 @@
 - type: latheRecipe
   id: VaccinatorMachineCircuitboard
   result: VaccinatorMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -224,6 +301,7 @@
 - type: latheRecipe
   id: DiagnoserMachineCircuitboard
   result: DiagnoserMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -233,6 +311,7 @@
 - type: latheRecipe
   id: ArtifactAnalyzerMachineCircuitboard
   result: ArtifactAnalyzerMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -242,6 +321,7 @@
 - type: latheRecipe
   id: TraversalDistorterMachineCircuitboard
   result: TraversalDistorterMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -251,6 +331,7 @@
 - type: latheRecipe
   id: ArtifactCrusherMachineCircuitboard
   result: ArtifactCrusherMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -260,6 +341,7 @@
 - type: latheRecipe
   id: AnomalyVesselCircuitboard
   result: AnomalyVesselCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -268,6 +350,7 @@
 - type: latheRecipe
   id: AnomalyVesselExperimentalCircuitboard
   result: AnomalyVesselExperimentalCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -277,16 +360,17 @@
 - type: latheRecipe
   id: AnomalySynchronizerCircuitboard
   result: AnomalySynchronizerCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
-     Steel: 500
+     Steel: 100
      Glass: 700
-     Gold: 200
      Silver: 100
 
 - type: latheRecipe
   id: APECircuitboard
   result: APECircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -295,6 +379,7 @@
 - type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
   result: ReagentGrinderMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -303,6 +388,7 @@
 - type: latheRecipe
   id: HotplateMachineCircuitboard
   result: HotplateMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -311,6 +397,7 @@
 - type: latheRecipe
   id: AnalysisComputerCircuitboard
   result: AnalysisComputerCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -320,6 +407,7 @@
 - type: latheRecipe
   id: TechDiskComputerCircuitboard
   result: TechDiskComputerCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -329,6 +417,7 @@
 - type: latheRecipe
   id: ShuttleConsoleCircuitboard
   result: ShuttleConsoleCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -338,6 +427,7 @@
 - type: latheRecipe
   id: RadarConsoleCircuitboard
   result: RadarConsoleCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -346,6 +436,7 @@
 - type: latheRecipe
   id: DawInstrumentMachineCircuitboard
   result: DawInstrumentMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -354,6 +445,7 @@
 - type: latheRecipe
   id: StasisBedMachineCircuitboard
   result: StasisBedMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -363,6 +455,7 @@
 - type: latheRecipe
   id: ElectrolysisUnitMachineCircuitboard
   result: ElectrolysisUnitMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -371,6 +464,7 @@
 - type: latheRecipe
   id: CentrifugeMachineCircuitboard
   result: CentrifugeMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -379,6 +473,7 @@
 - type: latheRecipe
   id: MaterialReclaimerMachineCircuitboard
   result: MaterialReclaimerMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -387,6 +482,16 @@
 - type: latheRecipe
   id: OreProcessorMachineCircuitboard
   result: OreProcessorMachineCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: OreProcessorIndustrialMachineCircuitboard
+  result: OreProcessorIndustrialMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -396,6 +501,7 @@
 - type: latheRecipe
   id: RipleyCentralElectronics
   result: RipleyCentralElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -405,6 +511,7 @@
 - type: latheRecipe
   id: RipleyPeripheralsElectronics
   result: RipleyPeripheralsElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -414,6 +521,7 @@
 - type: latheRecipe
   id: HonkerCentralElectronics
   result: HonkerCentralElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -423,6 +531,7 @@
 - type: latheRecipe
   id: HonkerPeripheralsElectronics
   result: HonkerPeripheralsElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -432,6 +541,7 @@
 - type: latheRecipe
   id: HonkerTargetingElectronics
   result: HonkerTargetingElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -441,6 +551,7 @@
 - type: latheRecipe
   id: HamtrCentralElectronics
   result: HamtrCentralElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -450,6 +561,7 @@
 - type: latheRecipe
   id: HamtrPeripheralsElectronics
   result: HamtrPeripheralsElectronics
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -460,6 +572,7 @@
 - type: latheRecipe
   id: APCElectronics
   result: APCElectronics
+  category: Circuitry
   completetime: 2
   materials:
      Steel: 50
@@ -468,6 +581,7 @@
 - type: latheRecipe
   id: SubstationMachineCircuitboard
   result: SubstationMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 50
@@ -476,6 +590,7 @@
 - type: latheRecipe
   id: WallmountSubstationElectronics
   result: WallmountSubstationElectronics
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 50
@@ -484,6 +599,7 @@
 - type: latheRecipe
   id: SMESMachineCircuitboard
   result: SMESMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -492,6 +608,7 @@
 - type: latheRecipe
   id: PortableGeneratorPacmanMachineCircuitboard
   result: PortableGeneratorPacmanMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 50
@@ -500,6 +617,7 @@
 - type: latheRecipe
   id: PortableGeneratorSuperPacmanMachineCircuitboard
   result: PortableGeneratorSuperPacmanMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 50
@@ -508,6 +626,7 @@
 - type: latheRecipe
   id: PortableGeneratorJrPacmanMachineCircuitboard
   result: PortableGeneratorJrPacmanMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 50
@@ -516,6 +635,7 @@
 - type: latheRecipe
   id: WallmountGeneratorElectronics
   result: WallmountGeneratorElectronics
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 50
@@ -524,6 +644,7 @@
 - type: latheRecipe
   id: WallmountGeneratorAPUElectronics
   result: WallmountGeneratorAPUElectronics
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 50
@@ -532,6 +653,7 @@
 - type: latheRecipe
   id: SolarControlComputerCircuitboard
   result: SolarControlComputerCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -540,6 +662,7 @@
 - type: latheRecipe
   id: SolarTrackerElectronics
   result: SolarTrackerElectronics
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 150
@@ -548,6 +671,7 @@
 - type: latheRecipe
   id: PowerComputerCircuitboard
   result: PowerComputerCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -556,6 +680,7 @@
 - type: latheRecipe
   id: CloningConsoleComputerCircuitboard
   result: CloningConsoleComputerCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -564,6 +689,7 @@
 - type: latheRecipe
   id: MicrowaveMachineCircuitboard
   result: MicrowaveMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -572,6 +698,7 @@
 - type: latheRecipe
   id: ElectricGrillMachineCircuitboard
   result: ElectricGrillMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -580,14 +707,26 @@
 - type: latheRecipe
   id: FatExtractorMachineCircuitboard
   result: FatExtractorMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
      Glass: 900
 
 - type: latheRecipe
+  id: FlatpackerMachineCircuitboard
+  result: FlatpackerMachineCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: SheetifierMachineCircuitboard
   result: SheetifierMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -596,6 +735,7 @@
 - type: latheRecipe
   id: SurveillanceCameraRouterCircuitboard
   result: SurveillanceCameraRouterCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -604,6 +744,7 @@
 - type: latheRecipe
   id: SurveillanceCameraWirelessRouterCircuitboard
   result: SurveillanceCameraWirelessRouterCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -612,6 +753,7 @@
 - type: latheRecipe
   id: SurveillanceWirelessCameraAnchoredCircuitboard
   result: SurveillanceWirelessCameraAnchoredCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -620,6 +762,7 @@
 - type: latheRecipe
   id: SurveillanceWirelessCameraMovableCircuitboard
   result: SurveillanceWirelessCameraMovableCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -628,6 +771,7 @@
 - type: latheRecipe
   id: SurveillanceCameraMonitorCircuitboard
   result: SurveillanceCameraMonitorCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -636,6 +780,7 @@
 - type: latheRecipe
   id: SurveillanceWirelessCameraMonitorCircuitboard
   result: SurveillanceWirelessCameraMonitorCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -644,6 +789,7 @@
 - type: latheRecipe
   id: ComputerTelevisionCircuitboard
   result: ComputerTelevisionCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -652,6 +798,7 @@
 - type: latheRecipe
   id: EmitterCircuitboard
   result: EmitterCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -660,6 +807,7 @@
 - type: latheRecipe
   id: ThrusterMachineCircuitboard
   result: ThrusterMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -668,6 +816,7 @@
 - type: latheRecipe
   id: GyroscopeMachineCircuitboard
   result: GyroscopeMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -676,6 +825,7 @@
 - type: latheRecipe
   id: GasRecyclerMachineCircuitboard
   result: GasRecyclerMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -684,6 +834,7 @@
 - type: latheRecipe
   id: SeedExtractorMachineCircuitboard
   result: SeedExtractorMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -692,6 +843,7 @@
 - type: latheRecipe
   id: BoozeDispenserMachineCircuitboard
   result: BoozeDispenserMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -700,6 +852,7 @@
 - type: latheRecipe
   id: CargoTelepadMachineCircuitboard
   result: CargoTelepadMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
     Steel: 100
@@ -709,6 +862,7 @@
 - type: latheRecipe
   id: SodaDispenserMachineCircuitboard
   result: SodaDispenserMachineCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -717,6 +871,7 @@
 - type: latheRecipe
   id: TelecomServerCircuitboard
   result: TelecomServerCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -725,6 +880,7 @@
 - type: latheRecipe
   id: MassMediaCircuitboard
   result: ComputerMassMediaCircuitboard
+  category: Circuitry
   completetime: 4
   materials:
      Steel: 100
@@ -733,7 +889,59 @@
 - type: latheRecipe
   id: MiniGravityGeneratorCircuitboard
   result: MiniGravityGeneratorCircuitboard
+  category: Circuitry
   completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: PowerCageRechargerCircuitboard
+  result: PowerCageRechargerCircuitboard
+  completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: ShuttleGunSvalinnMachineGunCircuitboard
+  result: ShuttleGunSvalinnMachineGunCircuitboard
+  completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+     
+- type: latheRecipe
+  id: ShuttleGunPerforatorCircuitboard
+  result: ShuttleGunPerforatorCircuitboard
+  completetime: 10
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+     
+- type: latheRecipe
+  id: ShuttleGunKineticCircuitboard
+  result: ShuttleGunKineticCircuitboard
+  completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+     
+- type: latheRecipe
+  id: ShuttleGunFriendshipCircuitboard
+  result: ShuttleGunFriendshipCircuitboard
+  completetime: 8
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 50
+     
+- type: latheRecipe
+  id: ShuttleGunDusterCircuitboard
+  result: ShuttleGunDusterCircuitboard
+  completetime: 12
   materials:
      Steel: 100
      Glass: 900

@@ -31,3 +31,19 @@
         amount: 2
       - id: BaseChemistryEmptyVial
       - id: SyringeStimulants
+
+- type: entity
+  id: Observationskit
+  parent: BoxCardboard
+  name: observations kit
+  suffix: Filled
+  components:
+    - type: StorageFill
+      contents:
+        - id: SyndiCrewMonitorEmpty
+          amount: 1
+        - id: PowerCellHigh
+          amount: 1
+        - id: ClothingEyesGlassesHiddenSecurity
+          amount: 1
+

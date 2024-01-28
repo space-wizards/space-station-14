@@ -17,13 +17,8 @@
       shader: unshaded
     - state: full
       shader: unshaded
-  - type: UpgradeBattery
-    maxChargeMultiplier: 2
-    baseMaxCharge: 2500000
-  - type: UpgradePowerSupplyRamping
-    scaling: Linear
-    supplyRampingMultiplier: 1
   - type: Battery
+    maxCharge: 2500000
     startingCharge: 0
   - type: ExaminableBattery
   - type: PointLight
@@ -40,6 +35,13 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    collectionName: substation
+    sprite: Structures/Power/substation.rsi
+    state: substation_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -52,6 +54,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
+  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
@@ -68,7 +71,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -166,6 +169,12 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    sprite: Structures/Power/substation.rsi
+    state: substation_wall_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -178,6 +187,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
@@ -195,7 +205,7 @@
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
   - type: Construction
     graph: WallmountSubstation
     node: substation

@@ -47,7 +47,7 @@ public sealed class RadarControl : MapGridControl
     /// <summary>
     /// Currently hovered docked to show on the map.
     /// </summary>
-    public EntityUid? HighlightedDock;
+    public NetEntity? HighlightedDock;
 
     /// <summary>
     /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
@@ -198,7 +198,7 @@ public sealed class RadarControl : MapGridControl
         var shown = new HashSet<EntityUid>();
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector), ref _grids);
+        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
 
         // Draw other grids... differently
         foreach (var grid in _grids)
@@ -325,14 +325,13 @@ public sealed class RadarControl : MapGridControl
         {
             foreach (var state in docks)
             {
-                var ent = _entManager.GetEntity(state.Entity);
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
                 if (uiPosition.Length() > WorldRange - DockScale)
                     continue;
 
-                var color = HighlightedDock == ent ? state.HighlightedColor : state.Color;
+                var color = HighlightedDock == state.Entity ? state.HighlightedColor : state.Color;
 
                 uiPosition.Y = -uiPosition.Y;
 

@@ -15,18 +15,21 @@ public abstract class SharedWiresSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)
     {
-        if (!component.Open)
+        using (args.PushGroup(nameof(WiresPanelComponent)))
         {
-            args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-closed"));
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-open"));
-
-            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
-                wiresPanelSecurity.Examine != null)
+            if (!component.Open)
             {
-                args.PushMarkup(Loc.GetString(wiresPanelSecurity.Examine));
+                args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-closed"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-open"));
+
+                if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                    wiresPanelSecurity.Examine != null)
+                {
+                    args.PushMarkup(Loc.GetString(wiresPanelSecurity.Examine));
+                }
             }
         }
     }

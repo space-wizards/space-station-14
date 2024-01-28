@@ -54,6 +54,9 @@
   id: PinpointerSyndicateNuclear
   parent: PinpointerBase
   components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-syndicate
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
@@ -66,11 +69,14 @@
   id: PinpointerUniversal
   parent: PinpointerBase
   components:
-   - type: Icon
-     state: pinpointer-way
-   - type: Pinpointer
-     updateTargetName: true
-     canRetarget: true
+  - type: Sprite
+    layers:
+    - state: pinpointer-way
+  - type: Icon
+    state: pinpointer-way
+  - type: Pinpointer
+    updateTargetName: true
+    canRetarget: true
 
 - type: entity
   parent: PinpointerBase
@@ -79,6 +85,9 @@
   id: PinpointerStation
   suffix: Station
   components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-station
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer

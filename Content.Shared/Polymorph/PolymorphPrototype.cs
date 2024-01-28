@@ -97,6 +97,14 @@ namespace Content.Shared.Polymorph
 
         [DataField("allowRepeatedMorphs", serverOnly: true)]
         public bool AllowRepeatedMorphs = false;
+
+        /// <summary>
+        /// The amount of time that should pass after this polymorph has ended, before a new one
+        /// can occur.
+        /// </summary>
+        [DataField("cooldown", serverOnly: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan Cooldown = TimeSpan.Zero;
     }
 
     public enum PolymorphInventoryChange : byte

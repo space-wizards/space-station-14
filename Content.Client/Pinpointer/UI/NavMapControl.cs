@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Input;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -25,17 +26,19 @@ namespace Content.Client.Pinpointer.UI;
 public partial class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private readonly SharedTransformSystem _transformSystem = default!;
+    private readonly SharedTransformSystem _transformSystem;
 
+    public EntityUid? Owner;
     public EntityUid? MapUid;
 
     // Actions
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
+    public event Action<DrawingHandleScreen>? PostWallDrawingAction;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<NetEntity, NavMapBlip> TrackedEntities = new();
-    public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
+    public Dictionary<Vector2i, List<NavMapLine>>? TileGrid = default!;
 
     // Default colors
     public Color WallColor = new(102, 217, 102);
@@ -46,16 +49,21 @@ public partial class NavMapControl : MapGridControl
     protected float MaxSelectableDistance = 10f;
     protected float RecenterMinimum = 0.05f;
     protected float MinDragDistance = 5f;
+    protected static float MinDisplayedRange = 8f;
+    protected static float MaxDisplayedRange = 128f;
+    protected static float DefaultDisplayedRange = 48f;
 
     // Local variables
     private Vector2 _offset;
     private bool _draggin;
     private Vector2 _startDragPosition = default!;
     private bool _recentering = false;
-    private readonly Font _font;
     private float _updateTimer = 0.25f;
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
-    private Color _beaconColor;
+    public Color _backgroundColor;
+    public float _backgroundOpacity = 0.9f;
+    private int _targetFontsize = 8;
+    private IResourceCache _cache;
 
     // Components
     private NavMapComponent? _navMap;
@@ -86,17 +94,16 @@ public partial class NavMapControl : MapGridControl
         Margin = new Thickness(4f, 0f),
         VerticalAlignment = VAlignment.Center,
         HorizontalAlignment = HAlignment.Center,
-        Pressed = false,
+        Pressed = true,
     };
 
-    public NavMapControl() : base(8f, 128f, 48f)
+    public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
     {
         IoCManager.InjectDependencies(this);
-        var cache = IoCManager.Resolve<IResourceCache>();
+        _cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
-        _beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
+        _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
 
         RectClipContent = true;
         HorizontalExpand = true;
@@ -183,11 +190,11 @@ public partial class NavMapControl : MapGridControl
         if (args.Function == EngineKeyFunctions.Use)
             _draggin = false;
 
-        if (TrackedEntitySelectedAction == null)
-            return;
-
-        if (args.Function == EngineKeyFunctions.Use)
+        if (args.Function == EngineKeyFunctions.UIClick)
         {
+            if (TrackedEntitySelectedAction == null)
+                return;
+
             if (_xform == null || _physics == null || TrackedEntities.Count == 0)
                 return;
 
@@ -205,7 +212,6 @@ public partial class NavMapControl : MapGridControl
 
             // Find closest tracked entity in range
             var closestEntity = NetEntity.Invalid;
-            var closestCoords = new EntityCoordinates();
             var closestDistance = float.PositiveInfinity;
 
             foreach ((var currentEntity, var blip) in TrackedEntities)
@@ -219,7 +225,6 @@ public partial class NavMapControl : MapGridControl
                     continue;
 
                 closestEntity = currentEntity;
-                closestCoords = blip.Coordinates;
                 closestDistance = currentDistance;
             }
 
@@ -232,8 +237,13 @@ public partial class NavMapControl : MapGridControl
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
             // Clear current selection with right click
-            if (TrackedEntitySelectedAction != null)
-                TrackedEntitySelectedAction.Invoke(null);
+            TrackedEntitySelectedAction?.Invoke(null);
+        }
+
+        else if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            // Toggle beacon labels
+            _beacons.Pressed = !_beacons.Pressed;
         }
     }
 
@@ -258,7 +268,7 @@ public partial class NavMapControl : MapGridControl
     {
         base.Draw(handle);
 
-        // Get the components necessary for drawing the navmap 
+        // Get the components necessary for drawing the navmap
         _entManager.TryGetComponent(MapUid, out _navMap);
         _entManager.TryGetComponent(MapUid, out _grid);
         _entManager.TryGetComponent(MapUid, out _xform);
@@ -283,7 +293,7 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
-        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
+        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange ):0.0}"));
 
         if (_navMap == null || _xform == null)
             return;
@@ -316,7 +326,7 @@ public partial class NavMapControl : MapGridControl
 
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
 
-        // Drawing lines can be rather expensive due to the number of neighbors that need to be checked in order  
+        // Drawing lines can be rather expensive due to the number of neighbors that need to be checked in order
         // to figure out where they should be drawn. However, we don't *need* to do check these every frame.
         // Instead, lets periodically update where to draw each line and then store these points in a list.
         // Then we can just run through the list each frame and draw the lines without any extra computation.
@@ -358,19 +368,61 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
+        var airlockBuffer = Vector2.One * (MinimapScale / 2.25f) * 0.75f;
+        var airlockLines = new ValueList<Vector2>();
+        var foobarVec = new Vector2(1, -1);
+
+        foreach (var airlock in _navMap.Airlocks)
+        {
+            var position = airlock.Position - offset;
+            position = Scale(position with { Y = -position.Y });
+            airlockLines.Add(position + airlockBuffer);
+            airlockLines.Add(position - airlockBuffer * foobarVec);
+
+            airlockLines.Add(position + airlockBuffer);
+            airlockLines.Add(position + airlockBuffer * foobarVec);
+
+            airlockLines.Add(position - airlockBuffer);
+            airlockLines.Add(position + airlockBuffer * foobarVec);
+
+            airlockLines.Add(position - airlockBuffer);
+            airlockLines.Add(position - airlockBuffer * foobarVec);
+
+            airlockLines.Add(position + airlockBuffer * -Vector2.UnitY);
+            airlockLines.Add(position - airlockBuffer * -Vector2.UnitY);
+        }
+
+        if (airlockLines.Count > 0)
+        {
+            if (!_sRGBLookUp.TryGetValue(WallColor, out var sRGB))
+            {
+                sRGB = Color.ToSrgb(WallColor);
+                _sRGBLookUp[WallColor] = sRGB;
+            }
+
+            handle.DrawPrimitives(DrawPrimitiveTopology.LineList, airlockLines.Span, sRGB);
+        }
+
+        if (PostWallDrawingAction != null)
+            PostWallDrawingAction.Invoke(handle);
+
         // Beacons
         if (_beacons.Pressed)
         {
             var rectBuffer = new Vector2(5f, 3f);
+
+            // Calculate font size for current zoom level
+            var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize , 0);
+            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
 
             foreach (var beacon in _navMap.Beacons)
             {
                 var position = beacon.Position - offset;
                 position = Scale(position with { Y = -position.Y });
 
-                var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
-                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _beaconColor);
-                handle.DrawString(_font, position - textDimensions / 2, beacon.Text, beacon.Color);
+                var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
+                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _backgroundColor);
+                handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
             }
         }
 
@@ -455,7 +507,7 @@ public partial class NavMapControl : MapGridControl
         }
     }
 
-    private void UpdateNavMap()
+    protected virtual void UpdateNavMap()
     {
         if (_navMap == null || _grid == null)
             return;

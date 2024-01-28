@@ -83,14 +83,12 @@
       amount: 1
     Acetone:
       amount: 1
-    Oxygen:
-      amount: 1
     Chlorine:
       amount: 1
-    Hydrogen:
+    Hydroxide:
       amount: 1
   products:
-    Epinephrine: 5
+    Epinephrine: 4
 
 - type: reaction
   id: Dermaline
@@ -186,9 +184,9 @@
 - type: reaction
   id: Leporazine
   reactants:
-    Silicon:
-      amount: 1
     Copper:
+      amount: 1
+    Fersilicite:
       amount: 1
     Plasma:
       amount: 1
@@ -344,10 +342,8 @@
       amount: 1
     Blood:
       amount: 1
-    Carbon:
-      amount: 1
-    Hydrogen:
-      amount: 1
+    Hydroxide:
+      amount: 2
   products:
     Oculine: 4
 
@@ -380,6 +376,8 @@
   reactants:
     SodiumCarbonate:
       amount: 1
+    SodiumHydroxide:
+      amount: 1
     Kelotane:
       amount: 1
     Water:
@@ -406,7 +404,7 @@
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
-    Water:
+    Benzene:
       amount: 1
   products:
     Lacerinol: 2
@@ -418,7 +416,7 @@
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
-    Carbon:
+    Hydroxide:
       amount: 1
   products:
     Puncturase: 2
@@ -501,3 +499,79 @@
       amount: 1
   products:
     Razorium: 1
+
+- type: reaction
+  id: Diphenhydramine
+  impact: Medium
+  minTemp: 377.59
+  reactants:
+    Diethylamine:
+      amount: 1
+    Oil:
+      amount: 1
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Diphenhydramine: 3
+
+- type: reaction
+  id: Pyrazine
+  impact: Medium
+  minTemp: 540
+  reactants:
+    Leporazine:
+      amount: 1
+    Dermaline:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Pyrazine: 3
+
+- type: reaction
+  id: Insuzine
+  impact: Medium
+  minTemp: 433
+  reactants:
+    Leporazine:
+      amount: 1
+    Kelotane:
+      amount: 1
+    Silicon:
+      amount: 1
+    Benzene:
+      amount: 1
+  products:
+    Insuzine: 3
+    Ash: 1
+
+- type: reaction
+  id: Necrosol
+  impact: Medium
+  minTemp: 370
+  reactants:
+    Blood:
+      amount: 3
+    Omnizine:
+      amount: 1
+    Cryoxadone:
+      amount: 2
+  products:
+    Necrosol: 2
+
+- type: reaction
+  id: Aloxadone
+  impact: Medium
+  reactants:
+    Cryoxadone:
+      amount: 1
+    Aloe:
+      amount: 2
+    Sigynate:
+      amount: 2
+  products:
+      Aloxadone: 4

@@ -92,7 +92,7 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
-        _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, 3), appearance);
+        _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, component.SpriteVariants), appearance);
         _appearance.SetData(uid, KudzuVisuals.GrowthLevel, 1, appearance);
     }
 

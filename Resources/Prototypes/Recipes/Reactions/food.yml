@@ -300,23 +300,37 @@
 
 - type: reaction
   id: BananaBreakdown
+  source: true
   requiredMixerCategories:
   - Centrifuge
   reactants:
     JuiceBanana:
       amount: 10
   products:
-    Sugar: 9
-    Potassium: 1
+    Sugar: 5
+    Potassium: 5
 
 - type: reaction
-  id: SugarBreakdown
-  minTemp: 520
+  id: OilBreakdown
+  requiredMixerCategories:
+  - Centrifuge
   reactants:
-    Sugar:
-      amount: 4
+    Oil:
+      amount: 10
   products:
-    Carbon: 1
-    Oxygen: 1
-    Hydrogen: 2
+    Fat: 6
+    Water: 3
+    Protein: 1 #water & protein represent aqueous proteins
+
+#- type: reaction
+#  id: SugarBreakdown
+#  source: true
+#  minTemp: 520
+#  reactants:
+#    Sugar:
+#      amount: 4
+#  products:
+#    Carbon: 1
+#    Oxygen: 1
+#    Hydrogen: 2
 

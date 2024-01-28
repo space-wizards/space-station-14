@@ -258,12 +258,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (component.Open)
         {
-            TransformSystem.SetWorldPosition(toInsert, TransformSystem.GetWorldPosition(container));
+            TransformSystem.DropNextTo(toInsert, container);
             return true;
         }
 
         _joints.RecursiveClearJoints(toInsert);
-        if (!component.Contents.Insert(toInsert, EntityManager))
+        if (!_container.Insert(toInsert, component.Contents))
             return false;
 
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
@@ -280,7 +280,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
-        component.Contents.Remove(toRemove, EntityManager);
+        _container.Remove(toRemove, component.Contents);
         var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
         TransformSystem.SetWorldPosition(toRemove, pos);
         return true;
@@ -334,6 +334,17 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 Popup.PopupClient(Loc.GetString("entity-storage-component-welded-shut-message"), target, user);
 
             return false;
+        }
+
+        if (_container.IsEntityInContainer(target))
+        {
+            if (_container.TryGetOuterContainer(target,Transform(target) ,out var container) &&
+                !HasComp<HandsComponent>(container.Owner))
+            {
+                Popup.PopupClient(Loc.GetString("entity-storage-component-already-contains-user-message"), user, user);
+
+                return false;
+            }
         }
 
         //Checks to see if the opening position, if offset, is inside of a wall.

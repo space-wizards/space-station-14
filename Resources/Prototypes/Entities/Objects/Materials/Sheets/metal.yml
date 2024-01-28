@@ -27,6 +27,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        canReact: false
 
 - type: entity
   parent: SheetMetalBase
@@ -137,6 +141,7 @@
           Quantity: 9
         - ReagentId: Carbon
           Quantity: 1
+        canReact: false
 
 - type: entity
   parent: SheetPlasteel

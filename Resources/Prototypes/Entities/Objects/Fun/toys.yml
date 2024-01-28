@@ -19,7 +19,6 @@
   - type: EmitSoundOnLand
     sound:
       collection: ToyFall
-  - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
@@ -168,6 +167,7 @@
   components:
   - type: Sprite
     state: plushie_rouny
+  - type: Rotatable
 
 - type: entity
   parent: BasePlushie
@@ -181,6 +181,28 @@
     radius: 1.5
     energy: 2
     netsync: false
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieArachind
+  name: arachnid plushie
+  description: An adorable stuffed toy that resembles an arachnid. It feels silky..
+  components:
+  - type: Sprite
+    state: plushie_arachnid
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
 
 - type: entity
   parent: BasePlushie
@@ -708,7 +730,7 @@
     size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
-  - type: ItemCooldown
+  - type: UseDelay
 
 # MISC
 
@@ -824,6 +846,32 @@
 
 - type: entity
   parent: BaseItem
+  id: TeslaToy
+  name: Teddy Tesla
+  description: The favorite toy of the great engineer Nikola Tesla.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    shader: unshaded
+    layers:
+    - state: tesla_projectile
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080FF"
+  - type: Electrified
+    shockDamage: 2
+    shockTime: 0.8
+    requirePower: false
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.65
+        volume: -10
+    
+- type: entity
+  parent: BaseItem
   id: PonderingOrb
   name: pondering orb
   description: Ponderous, man... Really ponderous.
@@ -852,6 +900,14 @@
       isSharp: false
       colorOptions:
         - DodgerBlue
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Weapons/ebladeon.ogg
+      soundDeactivate:
+        path: /Audio/Weapons/ebladeoff.ogg
+    - type: ItemToggleActiveSound
+      activeSound:
+        path: /Audio/Weapons/ebladehum.ogg
     - type: Sprite
       sprite: Objects/Fun/toy_sword.rsi
       layers:
@@ -890,6 +946,19 @@
       damage:
         types:
           Blunt: 0
+    - type: ItemToggleMeleeWeapon
+      activatedSoundOnHit:
+        path: /Audio/Weapons/eblade1.ogg
+        params:
+          variation: 0.250
+      activatedSoundOnHitNoDamage:
+        path: /Audio/Weapons/eblade1.ogg
+        params:
+          variation: 0.250
+      activatedSoundOnSwing:
+        path: /Audio/Weapons/eblademiss.ogg
+        params:
+          variation: 0.125
 
 - type: entity
   parent: BasePlushie
@@ -998,7 +1067,6 @@
     sprite: Objects/Fun/whoopie.rsi
     state: icon
     quickEquip: false
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       collection: Parp
@@ -1122,3 +1190,24 @@
   components:
   - type: Sprite
     state: plushie_penguin
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieHuman
+  name: human plushie
+  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
+  components:
+  - type: Sprite
+    state: plushie_human
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Human/malescream_1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Human/malescream_2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Human/malescream_3.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Human/malescream_4.ogg

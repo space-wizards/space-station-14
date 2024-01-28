@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   noSpawn: true
@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 8  # Should have the same or less damage than a regular pellet
+        Piercing: 28
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -40,7 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 12
+        Piercing: 10
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -54,8 +54,10 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 1
+        Blunt: 3
         Heat: 7
+  - type: IgnitionSource
+    ignited: true
 
 - type: entity
   id: PelletShotgunPractice
@@ -118,30 +120,27 @@
   name: pellet (.50 flare)
   noSpawn: true
   components:
-  - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
   - type: Fixtures
     fixtures:
-      fix1:
+      projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        density: 20
+          bounds: "-0.1,-0.1,0.1,0.1"
         mask:
-          - ItemMask
-        restitution: 0.3
-        friction: 0.2
+        - BulletImpassable
   - type: Tag
     tags:
-      - PelletShotgunFlare
+    - PelletShotgunFlare
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
   - type: IgnitionSource
+    ignited: true
     temperature: 1000
   - type: TimedDespawn
     lifetime: 240
@@ -160,6 +159,11 @@
     color: "#FF8080"
     radius: 15.0
     energy: 9.0
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Heat: 5
 
 - type: entity
   id: PelletShotgunUranium
@@ -173,5 +177,43 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 3
+        Radiation: 5
         Piercing: 5
+
+- type: entity
+  id: PelletGrapeshot #tally fucking ho
+  name: grapeshot pellet
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grapeshot
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 25
+        Structural: 5
+
+- type: entity
+  id: PelletGlass
+  name: glass shard
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: shard
+      shader: unshaded
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Slash: 25

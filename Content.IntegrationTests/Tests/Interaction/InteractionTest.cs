@@ -5,13 +5,14 @@ using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.IntegrationTests.Pair;
 using Content.Server.Body.Systems;
+using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Body.Part;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Server.Item;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Client.Input;
@@ -23,6 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
+using Content.Shared.Item.ItemToggle;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -64,6 +66,9 @@ public abstract partial class InteractionTest
     /// </summary>
     protected NetEntity Player;
 
+    protected EntityUid SPlayer => ToServer(Player);
+    protected EntityUid CPlayer => ToClient(Player);
+
     protected ICommonSession ClientSession = default!;
     protected ICommonSession ServerSession = default!;
 
@@ -79,6 +84,9 @@ public abstract partial class InteractionTest
     /// </remarks>
     protected NetEntity? Target;
 
+    protected EntityUid? STarget => ToServer(Target);
+    protected EntityUid? CTarget => ToClient(Target);
+
     /// <summary>
     /// When attempting to start construction, this is the client-side ID of the construction ghost.
     /// </summary>
@@ -91,12 +99,13 @@ public abstract partial class InteractionTest
     protected IPrototypeManager ProtoMan = default!;
     protected IGameTiming STiming = default!;
     protected IComponentFactory Factory = default!;
-    protected SharedHandsSystem HandSys = default!;
+    protected HandsSystem HandSys = default!;
     protected StackSystem Stack = default!;
     protected SharedInteractionSystem InteractSys = default!;
     protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
     protected SharedDoAfterSystem DoAfterSys = default!;
     protected ToolSystem ToolSys = default!;
+    protected SharedItemToggleSystem ItemToggleSys = default!;
     protected InteractionTestSystem STestSystem = default!;
     protected SharedTransformSystem Transform = default!;
     protected ISawmill SLogger = default!;
@@ -149,9 +158,10 @@ public abstract partial class InteractionTest
         ProtoMan = Server.ResolveDependency<IPrototypeManager>();
         Factory = Server.ResolveDependency<IComponentFactory>();
         STiming = Server.ResolveDependency<IGameTiming>();
-        HandSys = SEntMan.System<SharedHandsSystem>();
+        HandSys = SEntMan.System<HandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
+        ItemToggleSys = SEntMan.System<SharedItemToggleSystem>();
         DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
         Transform = SEntMan.System<SharedTransformSystem>();
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
