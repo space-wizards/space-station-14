@@ -166,6 +166,12 @@ public sealed partial class AnomalyComponent : Component
     [DataField]
     public AnomalousParticleType WeakeningParticleType;
 
+    /// <summary>
+    /// The particle type that change anomaly behaviour.
+    /// </summary>
+    [DataField]
+    public AnomalousParticleType TransformationParticleType;
+
     #region Points and Vessels
     /// <summary>
     /// The vessel that the anomaly is connceted to. Stored so that multiple

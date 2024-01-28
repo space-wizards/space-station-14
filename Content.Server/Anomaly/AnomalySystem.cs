@@ -54,17 +54,24 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeCommands();
     }
 
-    private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<AnomalyComponent> anomaly, ref MapInitEvent args)
     {
-        component.NextPulseTime = Timing.CurTime + GetPulseLength(component) * 3; // longer the first time
-        ChangeAnomalyStability(uid, Random.NextFloat(component.InitialStabilityRange.Item1 , component.InitialStabilityRange.Item2), component);
-        ChangeAnomalySeverity(uid, Random.NextFloat(component.InitialSeverityRange.Item1, component.InitialSeverityRange.Item2), component);
+        anomaly.Comp.NextPulseTime = Timing.CurTime + GetPulseLength(anomaly.Comp) * 3; // longer the first time
+        ChangeAnomalyStability(anomaly, Random.NextFloat(anomaly.Comp.InitialStabilityRange.Item1 , anomaly.Comp.InitialStabilityRange.Item2), anomaly.Comp);
+        ChangeAnomalySeverity(anomaly, Random.NextFloat(anomaly.Comp.InitialSeverityRange.Item1, anomaly.Comp.InitialSeverityRange.Item2), anomaly.Comp);
 
+        ShuffleParticlesEffect(anomaly);
+    }
+
+    private void ShuffleParticlesEffect(Entity<AnomalyComponent> anomaly)
+    {
         var particles = new List<AnomalousParticleType>
-            { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta };
-        component.SeverityParticleType = Random.PickAndTake(particles);
-        component.DestabilizingParticleType = Random.PickAndTake(particles);
-        component.WeakeningParticleType = Random.PickAndTake(particles);
+            { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta, AnomalousParticleType.Sigma };
+
+        anomaly.Comp.SeverityParticleType = Random.PickAndTake(particles);
+        anomaly.Comp.DestabilizingParticleType = Random.PickAndTake(particles);
+        anomaly.Comp.WeakeningParticleType = Random.PickAndTake(particles);
+        anomaly.Comp.TransformationParticleType = Random.PickAndTake(particles);
     }
 
     private void OnShutdown(EntityUid uid, AnomalyComponent component, ComponentShutdown args)
@@ -95,6 +102,10 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         {
             ChangeAnomalyHealth(uid, VaryValue(particle.HealthPerWeakeningeHit), component);
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerWeakeningeHit), component);
+        }
+        if (particle.ParticleType == component.TransformationParticleType || particle.TransmutationOverride)
+        {
+
         }
     }
 
@@ -133,6 +144,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             AnomalousParticleType.Delta => Loc.GetString("anomaly-particles-delta"),
             AnomalousParticleType.Epsilon => Loc.GetString("anomaly-particles-epsilon"),
             AnomalousParticleType.Zeta => Loc.GetString("anomaly-particles-zeta"),
+            AnomalousParticleType.Sigma => Loc.GetString("anomaly-particles-sigma"),
             _ => throw new ArgumentOutOfRangeException()
         };
     }
