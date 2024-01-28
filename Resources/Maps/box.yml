@@ -72701,6 +72701,13 @@ entities:
     - type: Transform
       pos: 31.5,-35.5
       parent: 8364
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 9541
+    components:
+    - type: Transform
+      pos: 24.5,18.5
+      parent: 8364
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
   - uid: 27719
@@ -72902,13 +72909,6 @@ entities:
     components:
     - type: Transform
       pos: -13.5,-53.5
-      parent: 8364
-- proto: DefaultStationBeaconTeslaEngine
-  entities:
-  - uid: 27258
-    components:
-    - type: Transform
-      pos: 0.5,-73.5
       parent: 8364
 - proto: DefaultStationBeaconToolRoom
   entities:
