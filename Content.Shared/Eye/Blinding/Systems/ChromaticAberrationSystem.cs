@@ -103,6 +103,8 @@ public sealed class ChromaticAberrationSystem : EntitySystem
 			PickColorBlindness(component);
 		if(component.SetPreset == "Random")
 			RandomiseColorBlindness(component);
+		
+		component.SetPreset = null;
 		Dirty(component);
     }
 }
