@@ -38,6 +38,8 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: Inventory
+    speciesId: reptilian
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Weapons/pierce.ogg

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by belay5 (Discord) | equipped-MASK-vox sprited by PuroSlavKing (Github), digi made by kuro(388673708753027083)",
+  "copyright": "Sprited by belay5 (Discord) | equipped-MASK-vox sprited by PuroSlavKing (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,10 +12,6 @@
     },
     {
       "name": "equipped-MASK",
-      "directions": 4
-    },
-    {
-      "name": "equipped-MASK-digi",
       "directions": 4
     },
     {
