@@ -42,8 +42,8 @@
   - type: Explosive
     explosionType: Default
     maxIntensity: 100
-    intensitySlope: 0.7
-    totalIntensity: 3.2
+    intensitySlope: 0.1
+    totalIntensity: 0.3
     maxTileBreak: 0
 
 - type: entity
