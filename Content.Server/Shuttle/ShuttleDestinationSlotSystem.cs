@@ -1,5 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Server.Shuttle.Components;
+using Content.Server.Shuttles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -103,7 +104,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
             }
         }
     }
-    
+
     private EntityUid? GetDiskDestination(EntityUid disk)
     {
         ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
