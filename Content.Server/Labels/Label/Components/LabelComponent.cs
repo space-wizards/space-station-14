@@ -7,8 +7,8 @@ namespace Content.Server.Labels.Components
     public sealed partial class LabelComponent : Component
     {
         /// <summary>
-        /// The actual text on the label
-        /// Entity Prototypes pre-configured with a label will resolve a localization string entered here, when the entity spawns.
+        /// Current text on the label. If set before map init, during map init this string will be localized.
+        /// This permits localized preset labels with fallback to the text written on the label.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("currentLabel")]

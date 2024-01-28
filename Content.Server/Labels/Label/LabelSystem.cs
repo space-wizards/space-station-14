@@ -37,7 +37,7 @@ namespace Content.Server.Labels
 
         private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
         {
-            if(!string.IsNullOrEmpty(component.CurrentLabel))
+            if (!string.IsNullOrEmpty(component.CurrentLabel))
                 component.CurrentLabel = Loc.GetString(component.CurrentLabel);
         }
 
