@@ -6,5 +6,6 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent]
 public sealed partial class FTLMapComponent : Component
 {
-
+    [DataField]
+    public string Parallax = "FastSpace";
 }

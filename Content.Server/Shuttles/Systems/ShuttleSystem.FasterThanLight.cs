@@ -3,10 +3,8 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Station.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Doors.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Maps;
 using Content.Shared.Parallax;
@@ -22,7 +20,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
@@ -67,7 +64,7 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private const int FTLProximityIterations = 3;
 
-    private HashSet<EntityUid> _lookupEnts = new();
+    private readonly HashSet<EntityUid> _lookupEnts = new();
 
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<BuckleComponent> _buckleQuery;
@@ -94,11 +91,20 @@ public sealed partial class ShuttleSystem
         var query = AllEntityQuery<FTLMapComponent>();
 
         while (query.MoveNext(out var uid, out _))
+        {
             return uid;
+        }
 
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
-        AddComp<FTLMapComponent>(mapUid);
+        var ftlMap = AddComp<FTLMapComponent>(mapUid);
+
+        _metadata.SetEntityName(mapUid, "FTL");
+        Log.Debug($"Setup hyperspace map at {mapUid}");
+        DebugTools.Assert(!_mapManager.IsMapPaused(mapId));
+        var parallax = EnsureComp<ParallaxComponent>(mapUid);
+        parallax.Parallax = ftlMap.Parallax;
+
         return mapUid;
     }
 
@@ -260,10 +266,13 @@ public sealed partial class ShuttleSystem
         }
 
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
-        SetupHyperspace();
+        EnsureFTLMap();
         return true;
     }
 
+    /// <summary>
+    /// Transitions shuttle to FTL map.
+    /// </summary>
     private void UpdateFTLStarting(Entity<FTLComponent> entity)
     {
         var uid = entity.Owner;
@@ -277,20 +286,25 @@ public sealed partial class ShuttleSystem
         var fromRotation = _transform.GetWorldRotation(xform);
 
         var width = Comp<MapGridComponent>(uid).LocalAABB.Width;
-        xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value),
-            new Vector2(_index + width / 2f, 0f));
+        var ftlMap = EnsureFTLMap();
+        var body = _physicsQuery.GetComponent(entity);
+        var shuttleCenter = body.LocalCenter;
+
+        // Offset the start by buffer range just to avoid overlap.
+        var ftlStart = new EntityCoordinates(ftlMap, new Vector2(_index + width / 2f, 0f) - shuttleCenter);
+
+        _transform.SetCoordinates(entity.Owner, ftlStart);
+
+        // Reset rotation so they always face the same direction.
         xform.LocalRotation = Angle.Zero;
         _index += width + Buffer;
         comp.Accumulator += comp.TravelTime - DefaultArrivalTime;
 
-        if (TryComp(uid, out PhysicsComponent? body))
-        {
-            Enable(uid, component: body);
-            _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
-            _physics.SetAngularVelocity(uid, 0f, body: body);
-            _physics.SetLinearDamping(body, 0f);
-            _physics.SetAngularDamping(body, 0f);
-        }
+        Enable(uid, component: body);
+        _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
+        _physics.SetAngularVelocity(uid, 0f, body: body);
+        _physics.SetLinearDamping(body, 0f);
+        _physics.SetAngularDamping(body, 0f);
 
         _dockSystem.SetDockBolts(uid, true);
         _console.RefreshShuttleConsoles(uid);
@@ -301,6 +315,7 @@ public sealed partial class ShuttleSystem
         var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
         RaiseLocalEvent(uid, ref ev, true);
 
+        // Audio
         var wowdio = _audio.PlayPvs(comp.TravelSound, uid);
         comp.TravelStream = wowdio?.Entity;
         if (wowdio?.Component != null)
@@ -314,6 +329,9 @@ public sealed partial class ShuttleSystem
         }
     }
 
+    /// <summary>
+    /// Shuttle arriving.
+    /// </summary>
     private void UpdateFTLTravelling(Entity<FTLComponent> entity)
     {
         comp.Accumulator += DefaultArrivalTime;
@@ -330,104 +348,107 @@ public sealed partial class ShuttleSystem
         _console.RefreshShuttleConsoles(uid);
     }
 
+    /// <summary>
+    ///  Shuttle arrived.
+    /// </summary>
     private void UpdateFTLArriving(Entity<FTLComponent> entity)
     {
         DoTheDinosaur(xform);
-            SetDockBolts(uid, false);
-            SetDocks(uid, true);
+        SetDockBolts(uid, false);
+        SetDocks(uid, true);
 
-            if (TryComp(uid, out body))
-            {
-                _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
-                _physics.SetAngularVelocity(uid, 0f, body: body);
-                if (shuttle != null)
-                {
-                    _physics.SetLinearDamping(body, shuttle.LinearDamping);
-                    _physics.SetAngularDamping(body, shuttle.AngularDamping);
-                }
-            }
-
-            MapId mapId;
-
-            if (comp.TargetUid != null && shuttle != null)
-            {
-                if (!Deleted(comp.TargetUid))
-                {
-                    if (comp.Dock)
-                        TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
-                    else
-                        TryFTLProximity(uid, comp.TargetUid.Value);
-
-                    mapId = Transform(comp.TargetUid.Value).MapID;
-                }
-                // oh boy, fallback time
-                else
-                {
-                    // Pick earliest map?
-                    var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
-                    var map = maps.Min(o => o.GetHashCode());
-
-                    mapId = new MapId(map);
-                    TryFTLProximity(uid, _mapManager.GetMapEntityId(mapId));
-                }
-            }
-            else
-            {
-                xform.Coordinates = comp.TargetCoordinates;
-                mapId = comp.TargetCoordinates.GetMapId(EntityManager);
-            }
-
-            if (TryComp(uid, out body))
-            {
-                _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
-                _physics.SetAngularVelocity(uid, 0f, body: body);
-
-                // Disable shuttle if it's on a planet; unfortunately can't do this in parent change messages due
-                // to event ordering and awake body shenanigans (at least for now).
-                if (HasComp<MapGridComponent>(xform.MapUid))
-                {
-                    Disable(uid, component: body);
-                }
-                else if (shuttle != null)
-                {
-                    Enable(uid, component: body, shuttle: shuttle);
-                }
-            }
-
+        if (TryComp(uid, out body))
+        {
+            _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
+            _physics.SetAngularVelocity(uid, 0f, body: body);
             if (shuttle != null)
             {
-                _thruster.DisableLinearThrusters(shuttle);
+                _physics.SetLinearDamping(body, shuttle.LinearDamping);
+                _physics.SetAngularDamping(body, shuttle.AngularDamping);
             }
+        }
 
-            comp.TravelStream = _audio.Stop(comp.TravelStream);
-            var audio = _audio.PlayPvs(_arrivalSound, uid);
-            audio.Value.Component.Flags |= AudioFlags.GridAudio;
-            // TODO: Shitcode til engine fix
+        MapId mapId;
 
-            if (_physicsQuery.TryGetComponent(uid, out var gridPhysics))
+        if (comp.TargetUid != null && shuttle != null)
+        {
+            if (!Deleted(comp.TargetUid))
             {
-                _transform.SetLocalPosition(audio.Value.Entity, gridPhysics.LocalCenter);
-            }
+                if (comp.Dock)
+                    TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
+                else
+                    TryFTLProximity(uid, comp.TargetUid.Value);
 
-            if (TryComp<FTLDestinationComponent>(uid, out var dest))
+                mapId = Transform(comp.TargetUid.Value).MapID;
+            }
+            // oh boy, fallback time
+            else
             {
-                dest.Enabled = true;
+                // Pick earliest map?
+                var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
+                var map = maps.Min(o => o.GetHashCode());
+
+                mapId = new MapId(map);
+                TryFTLProximity(uid, _mapManager.GetMapEntityId(mapId));
             }
+        }
+        else
+        {
+            xform.Coordinates = comp.TargetCoordinates;
+            mapId = comp.TargetCoordinates.GetMapId(EntityManager);
+        }
 
-            comp.State = FTLState.Cooldown;
-            comp.Accumulator += FTLCooldown;
-            _console.RefreshShuttleConsoles(uid);
-            _mapManager.SetMapPaused(mapId, false);
-            Smimsh(uid, xform: xform);
+        if (TryComp(uid, out body))
+        {
+            _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
+            _physics.SetAngularVelocity(uid, 0f, body: body);
 
-            var ftlEvent = new FTLCompletedEvent(uid, _mapManager.GetMapEntityId(mapId));
-            RaiseLocalEvent(uid, ref ftlEvent, true);
+            // Disable shuttle if it's on a planet; unfortunately can't do this in parent change messages due
+            // to event ordering and awake body shenanigans (at least for now).
+            if (HasComp<MapGridComponent>(xform.MapUid))
+            {
+                Disable(uid, component: body);
+            }
+            else if (shuttle != null)
+            {
+                Enable(uid, component: body, shuttle: shuttle);
+            }
+        }
+
+        if (shuttle != null)
+        {
+            _thruster.DisableLinearThrusters(shuttle);
+        }
+
+        comp.TravelStream = _audio.Stop(comp.TravelStream);
+        var audio = _audio.PlayPvs(_arrivalSound, uid);
+        audio.Value.Component.Flags |= AudioFlags.GridAudio;
+        // TODO: Shitcode til engine fix
+
+        if (_physicsQuery.TryGetComponent(uid, out var gridPhysics))
+        {
+            _transform.SetLocalPosition(audio.Value.Entity, gridPhysics.LocalCenter);
+        }
+
+        if (TryComp<FTLDestinationComponent>(uid, out var dest))
+        {
+            dest.Enabled = true;
+        }
+
+        comp.State = FTLState.Cooldown;
+        comp.Accumulator += FTLCooldown;
+        _console.RefreshShuttleConsoles(uid);
+        _mapManager.SetMapPaused(mapId, false);
+        Smimsh(uid, xform: xform);
+
+        var ftlEvent = new FTLCompletedEvent(uid, _mapManager.GetMapEntityId(mapId));
+        RaiseLocalEvent(uid, ref ftlEvent, true);
     }
 
     private void UpdateFTLCooldown(Entity<FTLComponent> entity)
     {
-        RemComp<FTLComponent>(uid);
-        _console.RefreshShuttleConsoles(uid);
+        RemComp<FTLComponent>(entity);
+        _console.RefreshShuttleConsoles(entity);
     }
 
     private void UpdateHyperspace(float frameTime)
@@ -474,20 +495,6 @@ public sealed partial class ShuttleSystem
             return 4f;
 
         return MathF.Max(grid.LocalAABB.Width, grid.LocalAABB.Height) + 12.5f;
-    }
-
-    private void SetupHyperspace()
-    {
-        // TODO: Fix this shit.
-        if (_hyperSpaceMap != null)
-            return;
-
-        _hyperSpaceMap = _mapManager.CreateMap();
-        _metadata.SetEntityName(_mapManager.GetMapEntityId(_hyperSpaceMap.Value), "FTL");
-        Log.Debug($"Setup hyperspace map at {_hyperSpaceMap.Value}");
-        DebugTools.Assert(!_mapManager.IsMapPaused(_hyperSpaceMap.Value));
-        var parallax = EnsureComp<ParallaxComponent>(_mapManager.GetMapEntityId(_hyperSpaceMap.Value));
-        parallax.Parallax = "FastSpace";
     }
 
     private void CleanupHyperspace()
