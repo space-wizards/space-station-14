@@ -3,10 +3,16 @@ criminal-records-console-select-record-info = Select a record on the left.
 criminal-records-console-no-records = No records found!
 criminal-records-console-no-record-found = No record was found for the selected person.
 
+## Status
+
 criminal-records-console-status = Status
 criminal-records-status-none = None
 criminal-records-status-wanted = Wanted
 criminal-records-status-detained = Detained
+
+criminal-records-console-wanted-reason = Wanted Reason: {$reason}
+
+## Crime History
 
 criminal-records-console-crime-history = Crime History
 criminal-records-history-placeholder = Write the crime here
@@ -29,3 +35,7 @@ criminal-records-filter-placeholder = Input text and press "Enter"
 criminal-records-name-filter = Name
 criminal-records-prints-filter = Fingerprints
 criminal-records-dna-filter = DNA
+
+## Arrest auto history lines
+criminal-records-console-auto-history = ARRESTED: {$reason}
+criminal-records-console-unspecified-reason = <unspecified reason>

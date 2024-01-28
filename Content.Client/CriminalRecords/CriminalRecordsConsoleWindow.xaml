@@ -29,6 +29,7 @@
                     <Label Text="{Loc 'criminal-records-console-status'}"/>
                     <OptionButton Name="StatusOptionButton"/> <!-- Populated in constructor -->
                 </BoxContainer>
+                <Label Name="WantedReason" Visible="False"/>
                 <Button Name="HistoryButton" Text="{Loc 'criminal-records-console-crime-history'}"/>
             </BoxContainer>
         </BoxContainer>

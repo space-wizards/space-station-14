@@ -3,7 +3,7 @@
                Title="{Loc 'criminal-records-console-crime-history'}"
                MinSize="650 500">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5">
-        <BoxContainer Name="Editing" Orientation="Horizontal" HorizontalExpand="True" Margin="5">
+        <BoxContainer Name="Editing" Orientation="Horizontal" HorizontalExpand="True" Align="Center" Margin="5">
             <Button Name="AddButton" Text="{Loc 'criminal-records-add-history'}"/>
             <Button Name="DeleteButton" Text="{Loc 'criminal-records-delete-history'}" Disabled="True"/>
         </BoxContainer>

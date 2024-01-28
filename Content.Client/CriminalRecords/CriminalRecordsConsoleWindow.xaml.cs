@@ -171,7 +171,17 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         PersonName.Text = stationRecord.Name;
         PersonPrints.Text = Loc.GetString("general-station-record-console-record-fingerprint", ("fingerprint", stationRecord.Fingerprint ?? na));
         PersonDna.Text = Loc.GetString("general-station-record-console-record-dna", ("dna", stationRecord.DNA ?? na));
+
         StatusOptionButton.SelectId((int) criminalRecord.Status);
+        if (criminalRecord.Reason is {} reason)
+        {
+            WantedReason.Text = Loc.GetString("criminal-records-console-wanted-reason", ("reason", reason));
+            WantedReason.Visible = true;
+        }
+        else
+        {
+            WantedReason.Visible = false;
+        }
     }
 
     private void AddStatusSelect(SecurityStatus status)

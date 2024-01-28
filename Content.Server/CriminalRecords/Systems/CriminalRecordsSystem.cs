@@ -3,6 +3,7 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
+using Robust.Shared.Timing;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -16,6 +17,7 @@ namespace Content.Server.CriminalRecords.Systems;
 /// </summary>
 public sealed class CriminalRecordsSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
     public override void Initialize()
@@ -34,19 +36,14 @@ public sealed class CriminalRecordsSystem : EntitySystem
     /// <summary>
     /// Tries to change the status of the record found by the StationRecordKey.
     /// Reason should only be passed if status is Wanted.
-    /// The previous status is returned in the oldStatus out param.
     /// </summary>
     /// <returns>True if the status is changed, false if not</returns>
-    public bool TryChangeStatus(StationRecordKey key, SecurityStatus status,
-        string? reason, [NotNullWhen(true)] out SecurityStatus? oldStatus)
+    public bool TryChangeStatus(StationRecordKey key, SecurityStatus status, string? reason)
     {
-        oldStatus = null;
-
+        // don't do anything if its the same status
         if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record)
             || status == record.Status)
             return false;
-
-        oldStatus = record.Status;
 
         record.Status = status;
         record.Reason = reason;
@@ -60,13 +57,22 @@ public sealed class CriminalRecordsSystem : EntitySystem
     /// Tries to add a history entry to a criminal record.
     /// </summary>
     /// <returns>True if adding succeeded, false if not</returns>
-    public bool TryAddHistory(StationRecordKey key, CrimeHistory line)
+    public bool TryAddHistory(StationRecordKey key, CrimeHistory entry)
     {
         if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record))
             return false;
 
-        record.History.Add(line);
+        record.History.Add(entry);
         return true;
+    }
+
+    /// <summary>
+    /// Creates and tries to add a history entry using the current time.
+    /// </summary>
+    public bool TryAddHistory(StationRecordKey key, string line)
+    {
+        var entry = new CrimeHistory(_timing.CurTime, line);
+        return TryAddHistory(key, entry);
     }
 
     /// <summary>
