@@ -40,21 +40,21 @@
     - Secret
 
 - type: gamePreset
-  id: SecretExtended
+  id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
   alias:
     - secretextended
   name: secret-title
-  showInVote: false
+  showInVote: false #Admin Use
   description: secret-description
   rules:
     - BasicStationEventScheduler
 
 - type: gamePreset
-  id: SecretGreenshift
+  id: SecretGreenshift #For Admin Use: Runs Greenshift but shows "Secret" in lobby.
   alias:
   - secretgreenshift
   name: secret-title
-  showInVote: false #4boring4vote
+  showInVote: false #Admin Use
   description: secret-description
 
 - type: gamePreset
