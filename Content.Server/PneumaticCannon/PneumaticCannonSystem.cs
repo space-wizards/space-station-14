@@ -2,12 +2,14 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.PneumaticCannon;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 
@@ -17,6 +19,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
+    [Dependency] private readonly GunSystem _gun = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
 
@@ -27,6 +30,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing, before: new []{ typeof(StorageSystem) });
         SubscribeLocalEvent<PneumaticCannonComponent, GunShotEvent>(OnShoot);
         SubscribeLocalEvent<PneumaticCannonComponent, ContainerIsInsertingAttemptEvent>(OnContainerInserting);
+        SubscribeLocalEvent<PneumaticCannonComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
     }
 
     private void OnInteractUsing(EntityUid uid, PneumaticCannonComponent component, InteractUsingEvent args)
@@ -47,10 +51,9 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-change-power",
             ("power", component.Power.ToString())), uid, args.User);
 
+        component.ProjectileSpeed = GetProjectileSpeedFromPower(component);
         if (TryComp<GunComponent>(uid, out var gun))
-        {
-            gun.ProjectileSpeed = GetProjectileSpeedFromPower(component);
-        }
+            _gun.RefreshModifiers((uid, gun));
 
         args.Handled = true;
     }
@@ -103,6 +106,12 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
 
         // eject gas tank
         _slots.TryEject(uid, PneumaticCannonComponent.TankSlotId, args.User, out _);
+    }
+
+    private void OnGunRefreshModifiers(Entity<PneumaticCannonComponent> ent, ref GunRefreshModifiersEvent args)
+    {
+        if (ent.Comp.ProjectileSpeed is { } speed)
+            args.ProjectileSpeed = speed;
     }
 
     /// <summary>
