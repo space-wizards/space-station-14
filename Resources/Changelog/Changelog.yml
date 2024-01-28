@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: nok-ko
-  changes:
-  - message: "Fixed taking damage mid-sentence not activating \u201Cglorfcode\u201D"
-    type: Fix
-  id: 5310
-  time: '2023-12-11T08:53:10.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Added two eye scar markings for humans and dwarves.
-    type: Add
-  id: 5311
-  time: '2023-12-11T09:18:20.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Added black gloves to the clothesmate
-    type: Add
-  id: 5312
-  time: '2023-12-11T09:23:51.0000000+00:00'
 - author: mirrorcult
   changes:
   - message: Emergency lights no longer make sound
@@ -3826,3 +3808,24 @@
   id: 5810
   time: '2024-01-28T03:23:16.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24299
+- author: shampunj
+  changes:
+  - message: A new game preset! Can only be selected by admins. All at once.
+    type: Add
+  id: 5811
+  time: '2024-01-28T10:41:36.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23171
+- author: Doctor-Cpu
+  changes:
+  - message: 3kliksphilips name.
+    type: Fix
+  id: 5812
+  time: '2024-01-28T10:46:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24657
+- author: mirrorcult
+  changes:
+  - message: Speech sounds are now quieter
+    type: Tweak
+  id: 5813
+  time: '2024-01-28T10:49:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24579
