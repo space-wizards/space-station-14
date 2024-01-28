@@ -155,11 +155,18 @@ public sealed partial class AnomalySystem
         msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-unstable", ("type", GetParticleLocale(anomalyComp.DestabilizingParticleType))));
         msg.PushNewline();
         msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-containment", ("type", GetParticleLocale(anomalyComp.WeakeningParticleType))));
+        msg.PushNewline();
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-transformation", ("type", GetParticleLocale(anomalyComp.TransformationParticleType))));
 
-        msg.PushNewline();
-        msg.PushNewline();
-        var behaviour = _prototype.Index(anomalyComp.CurrentBehaviour);
-        msg.AddMarkup(Loc.GetString(behaviour.Description));
+        if (anomalyComp.CurrentBehaviour != null)
+        {
+            msg.PushNewline();
+            msg.PushNewline();
+            msg.AddMarkup(Loc.GetString("anomaly-behaviour"));
+            msg.PushNewline();
+            var behaviour = _prototype.Index(anomalyComp.CurrentBehaviour.Value);
+            msg.AddMarkup(Loc.GetString(behaviour.Description));
+        }
 
         //The timer at the end here is actually added in the ui itself.
         return msg;

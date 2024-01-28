@@ -14,6 +14,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -33,6 +34,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     private ISawmill _sawmill = default!;
@@ -301,7 +303,16 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         DebugTools.Assert(component.MaxPulseLength > component.MinPulseLength);
         var modifier = Math.Clamp((component.Stability - component.GrowthThreshold) /  component.GrowthThreshold, 0, 1);
-        return (component.MaxPulseLength - component.MinPulseLength) * modifier + component.MinPulseLength;
+
+        var lenght = (component.MaxPulseLength - component.MinPulseLength) * modifier + component.MinPulseLength;
+
+        //Apply behaviour modifier
+        if (component.CurrentBehaviour != null)
+        {
+            var behaviour = _prototype.Index(component.CurrentBehaviour.Value);
+            lenght *= behaviour.PulseFrequencyModifier;
+        }
+        return lenght;
     }
 
     /// <summary>

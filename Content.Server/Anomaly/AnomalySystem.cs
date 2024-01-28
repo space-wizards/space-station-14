@@ -68,7 +68,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         ChangeAnomalySeverity(anomaly, Random.NextFloat(anomaly.Comp.InitialSeverityRange.Item1, anomaly.Comp.InitialSeverityRange.Item2), anomaly.Comp);
 
         ShuffleParticlesEffect(anomaly);
-        anomaly.Comp.CurrentBehaviour = _random.Pick(_behaviourList).ID;
+        SetBehaviour(anomaly, _random.Pick(_behaviourList).ID);
     }
 
     private void ShuffleParticlesEffect(Entity<AnomalyComponent> anomaly)
@@ -139,6 +139,13 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
         //penalty of up to 50% based on health
         multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
+
+        //Apply behaviour modifier
+        if (component.CurrentBehaviour != null)
+        {
+            var behaviour = _prototype.Index(component.CurrentBehaviour.Value);
+            multiplier *= behaviour.EarnPointModifier;
+        }
 
         var severityValue = 1 / (1 + MathF.Pow(MathF.E, -7 * (component.Severity - 0.5f)));
 

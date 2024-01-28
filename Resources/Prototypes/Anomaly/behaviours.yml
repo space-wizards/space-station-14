@@ -1,7 +1,34 @@
+# Easy x0.5 point production
+
+- type: anomalyBehaviour
+  id: Slow
+  pulseFrequencyModifier: 2
+  earnPointModifier: 0.5
+  description: anomaly-behaviour-slow
+
+# Balanced x1 point production
+
 - type: anomalyBehaviour
   id: Balanced
   description: anomaly-behaviour-balanced
   
+#- type: anomalyBehaviour
+#  id: Fleeting
+#  description: anomaly-behaviour-fleeting
+#  
+#- type: anomalyBehaviour
+#  id: Massive
+#  description: anomaly-behaviour-massive
+
+# Hard x2 point production
+
+#- type: anomalyBehaviour
+#  id: Powerful
+#  earnPointModifier: 2
+#  description: anomaly-behaviour-powerful
+  
 - type: anomalyBehaviour
-  id: Accelerated
-  description: anomaly-behaviour-accelerated
+  id: Fast
+  earnPointModifier: 2
+  pulseFrequencyModifier: 0.5
+  description: anomaly-behaviour-fast

@@ -23,6 +23,7 @@ anomaly-scanner-particle-readout = Particle Reaction Analysis:
 anomaly-scanner-particle-danger = - [color=crimson]Danger type:[/color] {$type}
 anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
+anomaly-scanner-particle-transformation = - [color=#6b75fa]Transformation type:[/color] {$type}
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
 
 anomaly-gorilla-core-slot-name = Anomaly core
@@ -69,5 +70,13 @@ anomaly-generator-flavor-right = v1.1
 
 anomaly-read-error = [Data unreadable]
 
-anomaly-behaviour-balanced = The anomaly's behavior is stable.
-anomaly-behaviour-accelerated = Accelerated pulse rate detected.
+anomaly-behaviour = Behaviour deviation analysis:
+
+anomaly-behaviour-slow = - [color=darkgreen]Safe behaviour[/color]: The frequency of pulsations is much less frequent. The production of points has been decreased.
+
+anomaly-behaviour-balanced = - No behaviour deviations detected.
+anomaly-behaviour-fleeting = - A tendency towards more frequent and weaker pulsations was detected.
+anomaly-behaviour-massive = - A tendency towards rarer and more powerful pulsations was detected.
+
+anomaly-behaviour-powerful = - [color=crimson]Dangerous behaviour[/color]: The pulsation power is strongly increased. The production of points has been increased.
+anomaly-behaviour-fast = - [color=crimson]Dangerous behaviour[/color]: The pulsation frequency is strongly increased. The production of points has been increased.

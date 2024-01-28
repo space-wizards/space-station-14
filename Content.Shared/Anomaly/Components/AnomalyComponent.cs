@@ -229,7 +229,7 @@ public sealed partial class AnomalyComponent : Component
     public EntProtoId? CoreInertPrototype;
 
     [DataField]
-    public ProtoId<AnomalyBehaviourPrototype> CurrentBehaviour;
+    public ProtoId<AnomalyBehaviourPrototype>? CurrentBehaviour;
 
     #region Floating Animation
     /// <summary>
