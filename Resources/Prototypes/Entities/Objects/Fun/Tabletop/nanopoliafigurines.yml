@@ -2,6 +2,7 @@
   id: NanapoliaTabletopPiece
   parent: BaseTabletopPiece
   abstract: true
+  description: A figurine from nanopolia
   components:
   - type: Sprite
     noRot: true
@@ -9,7 +10,7 @@
 
 - type: entity
   id: FigurineCat
-  name: Cat
+  name: Cat Figurine
   parent: NanapoliaTabletopPiece
   components:
   - type: Sprite
@@ -18,8 +19,7 @@
 - type: entity
   parent: NanapoliaTabletopPiece
   id: FigurineLaceups
-  name: Laceups
-  description: A figurine from nanopolia
+  name: Laceups Figurine
   components:
   - type: Sprite
     state: laceups
@@ -27,8 +27,7 @@
 - type: entity
   parent: NanapoliaTabletopPiece
   id: FigurineMcgriff
-  name: Mcgriff
-  description: A figurine from nanopolia
+  name: Mcgriff Figurine
   components:
   - type: Sprite
     state: mcgriff
@@ -36,8 +35,7 @@
 - type: entity
   parent: NanapoliaTabletopPiece
   id: FigurineTopHat
-  name: Top Hat
-  description: A figurine from nanopolia
+  name: Top Hat Figurine
   components:
   - type: Sprite
     state: top_Hat
@@ -45,8 +43,7 @@
 - type: entity
   parent: NanapoliaTabletopPiece
   id: FigurineGreenAutolathe
-  name: Figurine Green Autolat
-  description: A figurine from nanopolia
+  name: Green Autolathe Figurine
   components:
   - type: Sprite
     state: autolat_figure
@@ -54,36 +51,12 @@
 - type: entity
   parent: NanapoliaTabletopPiece
   id: FigurineRedProtolathe
-  name: Figurine Red Protolat
-  description: A figurine from nanopolia
+  name: Red Protolat Figurine
   components:
   - type: Sprite
-    state: protolat_figure
-
-- type: entity
-  parent: BaseItem
-  id: FigurineGreenAutolatheBox
-  name: Spare Figurine Green Autolat
-  description: A figurine from nanopolia
-  abstract: false
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Tabletop/nanofigure.rsi
-    state: autolat_figure
-
-- type: entity
-  parent: BaseItem
-  id: FigurineRedProtolatheBox
-  name: Spare Figurine Red Protolat
-  description: A figurine from nanopolia
-  abstract: false
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Tabletop/nanofigure.rsi
     state: protolat_figure
     
-
-#Box----------------------------------------------------------------------------
+#Game box
 
 - type: entity
   parent: BoxCardboard
@@ -115,7 +88,6 @@
     price: 0
 
 - type: entity
-  name: Nanopolia Box Tabletop
   parent: NanopoliaBox
   id: NanopoliaBoxFilled
   suffix: Filled
@@ -128,22 +100,22 @@
   - type: StorageFill
     contents:
     - id: NanopoliaBoard
-    - id: FigurineRedProtolatheBox
-    - id: FigurineGreenAutolatheBox
+    - id: FigurineRedProtolathe
+    - id: FigurineGreenAutolathe
     - id: Nanobucks151400
     - id: d6Dice
     - id: d6Dice
     - id: d6Dice
-    - id: Card_Nanopolia_Box
+    - id: NanopoliaCardBox
 
 
 
-#Box2-------------------28----------------------------------------------------------------------------
+#Box for card game
 
 - type: entity
   parent: BoxCardboard
-  id: Card_Nanopolia_Box
-  name: Card Nanopolia Box
+  id: NanopoliaCardBox
+  name: Nanopolia Card Box
   description: Coleccion card from Nanopolia
   components:
   - type: Sprite
@@ -190,7 +162,7 @@
 
   
 
-#Card---pasager-----------------------------------
+#Card passengers
 
 - type: entity
   parent: BaseItem
@@ -239,7 +211,7 @@
     size: Tiny
 
 
-#Card---service-----------------------------------------------------------------------------------
+#Card service
 
 - type: entity
   parent: BaseItem
@@ -313,7 +285,7 @@
   - type: Item
     size: Tiny
 
-#Card---engenireng--------------------------------------------------------------------------------------------
+#Card engineering
 
 - type: entity
   parent: BaseItem
@@ -391,7 +363,7 @@
 
 
 
-#Card---medical--------------------------------------------------------------------------------------------
+#Card medical
 
 - type: entity
   parent: BaseItem
@@ -468,7 +440,7 @@
     size: Tiny
 
 
-#Card---RND--------------------------------------------------------------------------------------------
+#Card Research
 
 - type: entity
   parent: BaseItem
@@ -545,7 +517,7 @@
     size: Tiny
 
 
-#Card---cargo--------------------------------------------------------------------------------------------
+#Card Cargo
 
 - type: entity
   parent: BaseItem
@@ -622,7 +594,7 @@
     size: Tiny
 
 
-#Card---secure--------------------------------------------------------------------------------------------
+#Card security
 
 - type: entity
   parent: BaseItem
@@ -699,7 +671,7 @@
     size: Tiny
 
 
-#Card---comand--------------------------------------------------------------------------------------------
+#Card command
 
 - type: entity
   parent: BaseItem
@@ -751,7 +723,7 @@
     size: Tiny
 
 
-#Card---another1--------------------------------------------------------------------------------------------
+#Card other fields
 - type: entity
   parent: BaseItem
   id: Card_Elec
@@ -795,6 +767,10 @@
   id: Card_Dispo_Train1
   name: Card Disposal Train 1
   description: |
+      Rent - 25
+      2 Disposal Train - 50;                                                                     
+      3 Disposal Train - 100;  
+      4 Disposal Train - 200;  
       Collateral value - 25
   abstract: false
   components:
@@ -809,72 +785,38 @@
 
 
 - type: entity
-  parent: BaseItem
+  parent: Card_Dispo_Train1
   id: Card_Dispo_Train2
   name: Card Disposal Train 2
-  description: |
-      Rent - 25
-      2 Disposal Train - 50;                                                                     
-      3 Disposal Train - 100;  
-      4 Disposal Train - 200;  
-      Collateral value 100
-  abstract: false
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/nanofigure.rsi
     state: card_train
-  - type: Tag
-    tags:
-    - CardNanopolia
-  - type: Item
-    size: Tiny
+
 
 
 - type: entity
-  parent: BaseItem
+  parent: Card_Dispo_Train1
   id: Card_Dispo_Train3
   name: Card Disposal Train 3 
-  description: |
-      Rent - 25
-      2 Disposal Train - 50;                                                                     
-      3 Disposal Train - 100;  
-      4 Disposal Train - 200;  
-      Collateral value 100
-  abstract: false
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/nanofigure.rsi
     state: card_train
-  - type: Tag
-    tags:
-    - CardNanopolia
-  - type: Item
-    size: Tiny
+
 
 
 - type: entity
-  parent: BaseItem
+  parent: Card_Dispo_Train1
   id: Card_Dispo_Train4
   name: Card Disposal Train 4
-  description: |
-      Rent - 25
-      2 Disposal Train - 50;                                                                     
-      3 Disposal Train - 100;  
-      4 Disposal Train - 200;  
-      Collateral value 100
-  abstract: false
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/nanofigure.rsi
     state: card_train
-  - type: Tag
-    tags:
-    - CardNanopolia
-  - type: Item
-    size: Tiny
 
 
-#Card---another2--------------------------------------------------------------------------------------------
+#Card "chance"
 
 - type: entity
   parent: BaseItem
