@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Pipes now leak their contents when destroyed. Make sure to drain pipes
-      before removing them.
-    type: Tweak
-  id: 5308
-  time: '2023-12-11T07:51:45.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Janitors can now buy their own bomb suit for cleaning chemical spills.
@@ -3823,3 +3816,10 @@
   id: 5808
   time: '2024-01-27T23:14:09.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24633
+- author: PJB3005
+  changes:
+  - message: Security barriers need 5 seconds to lock and unlock.
+    type: Tweak
+  id: 5809
+  time: '2024-01-28T00:28:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24637
