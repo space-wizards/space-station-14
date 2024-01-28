@@ -1,1 +1,2 @@
-antihypospray-cant-inject = Вы не можете проколоть скафандр
+antihypo-inject-slow = Вы пытаетесь сделать укол через аварийный порт.
+antihypo-locked = Отсек экстренной помощи закрыт.

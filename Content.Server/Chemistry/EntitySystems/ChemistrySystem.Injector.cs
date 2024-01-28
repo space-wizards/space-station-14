@@ -19,6 +19,9 @@ using Robust.Server.GameObjects;
 using Content.Shared.Popups;
 //anti hypo begin
 using Content.Shared.AntiHypo;
+using Content.Shared.Inventory;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Clothing.Components;
 //anti hypo end
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -30,6 +33,7 @@ public sealed partial class ChemistrySystem
     ///     Default transfer amounts for the set-transfer verb.
     /// </summary>
     public static readonly List<int> TransferAmounts = new() {1, 5, 10, 15};
+    private readonly IEntityManager _entityManager = default!;
     private void InitializeInjector()
     {
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
@@ -45,16 +49,16 @@ public sealed partial class ChemistrySystem
     {
         if (component.CanPenetrate)
         {
-            return true;
+            return false;
         }
         var ev = new AntiHyposprayEvent(true);
         RaiseLocalEvent(target, ev);
         if (ev.Inject != true)
         {
-            _popup.PopupCursor(Loc.GetString("antihypospray-cant-inject"), user);
-            return false;
+            return true;
         }
-        return true;
+        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+        return false;
     }
     // anti hypo end
     private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -232,12 +236,8 @@ public sealed partial class ChemistrySystem
     private void InjectDoAfter(InjectorComponent component, EntityUid user, EntityUid target, EntityUid injector)
     {
         // anti hypo begin
-        if (!CanInject(target, user, component))
-            return;
+        var slower = CanInject(target, user, component);
         // anti hypo end
-        // Create a pop-up for the user
-        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
-
         if (!_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution))
             return;
 
@@ -245,7 +245,26 @@ public sealed partial class ChemistrySystem
 
         // Injections take 0.5 seconds longer per additional 5u
         actualDelay += (float) component.TransferAmount / component.Delay - 0.5f;
-
+        // anti hypo start
+        if (slower)
+        {
+            actualDelay += 5;
+            if (!TryComp<InventoryComponent>(target, out var inventory))
+                return;
+            if (!EntityManager.System<InventorySystem>().TryGetSlotEntity(target, "outerClothing", out var slot, inventory))
+                return;
+            if (!TryComp<ItemSlotsComponent>(slot, out var itemslots))
+                return;
+            if (!TryComp<InjectComponent>(slot, out var containerlock))
+                return;
+            if (containerlock.Locked)
+            {
+                _popup.PopupEntity(Loc.GetString("antihypo-locked"), target, user);
+                return;
+            }
+            _popup.PopupEntity(Loc.GetString("antihypo-inject-slow"), target, user);
+        }
+        // anti hypo end
         var isTarget = user != target;
 
         if (isTarget)
