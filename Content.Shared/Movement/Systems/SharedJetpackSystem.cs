@@ -126,7 +126,8 @@ public abstract class SharedJetpackSystem : EntitySystem
     private bool CanEnableOnGrid(EntityUid? gridUid)
     {
         return gridUid == null ||
-               (!HasComp<GravityComponent>(gridUid));
+               TryComp<GravityComponent>(gridUid, out var gravity) &&
+               !gravity.Enabled;
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
