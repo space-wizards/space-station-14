@@ -22,6 +22,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
     [Dependency] private readonly SiliconLawSystem _siliconLaw = default!;
 
     // funny
+    //GreyStation Re-Added
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Threats = "IonStormThreats";
     [ValidatePrototypeId<DatasetPrototype>]
@@ -52,6 +53,8 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
     private const string Allergies = "IonStormAllergies";
     [ValidatePrototypeId<DatasetPrototype>]
     private const string AllergySeverities = "IonStormAllergySeverities";
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string Species = "IonStormSpecies";
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Concepts = "IonStormConcepts";
     [ValidatePrototypeId<DatasetPrototype>]
