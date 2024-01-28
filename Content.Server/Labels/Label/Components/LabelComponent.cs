@@ -7,12 +7,17 @@ namespace Content.Server.Labels.Components
     public sealed partial class LabelComponent : Component
     {
         /// <summary>
-        /// The actual text in the label
+        /// The actual text on the label
+        /// Entity Prototypes pre-configured with a label can resolve a localization string entered here, when the entity spawns.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("currentLabel")]
         public string? CurrentLabel { get; set; }
 
+        /// <summary>
+        ///  The original name of the entity
+        ///  Used for reverting the modified entity name when the label is removed
+        /// </summary>
         [DataField("originalName")]
         public string? OriginalName { get; set; }
     }
