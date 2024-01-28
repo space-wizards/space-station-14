@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Janitors can now buy their own bomb suit for cleaning chemical spills.
-    type: Add
-  id: 5309
-  time: '2023-12-11T08:41:54.0000000+00:00'
 - author: nok-ko
   changes:
   - message: "Fixed taking damage mid-sentence not activating \u201Cglorfcode\u201D"
@@ -3823,3 +3817,12 @@
   id: 5809
   time: '2024-01-28T00:28:02.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24637
+- author: themias
+  changes:
+  - message: Added cowboy hats and boots to autodrobe, secdrobe, and maints
+    type: Add
+  - message: Added cowboy accent
+    type: Add
+  id: 5810
+  time: '2024-01-28T03:23:16.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24299
