@@ -133,8 +133,8 @@ public sealed partial class GunSystem : SharedGunSystem
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
-                        if (gun.CompatibleAmmo != null &&
-                            !gun.CompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype))
+                        if (((gun.CompatibleAmmo != null && !gun.CompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype))) ||
+                            (gun.IncompatibleAmmo != null && gun.IncompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype)))) //better to have a blacklist option since were using prototypes.
                             && user != null)
                         {
                             if (gun.DamageOnWrongAmmo != null)
