@@ -240,7 +240,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: UplinkSyndicateBombNukeops
+  id: UplinkSyndicateBombNukie
   name: uplink-exploding-syndicate-bomb-name
   description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
