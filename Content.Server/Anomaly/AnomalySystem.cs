@@ -92,8 +92,14 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (args.OtherFixtureId != particle.FixtureId)
             return;
 
+        var behaviourMod = 1f;
+        if (anomaly.Comp.CurrentBehaviour != null)
+        {
+            var b = _prototype.Index(anomaly.Comp.CurrentBehaviour.Value);
+            behaviourMod = b.ParticleSensivity;
+        }
         // small function to randomize because it's easier to read like this
-        float VaryValue(float v) => v * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
+        float VaryValue(float v) => v * behaviourMod * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
         if (particle.ParticleType == anomaly.Comp.DestabilizingParticleType || particle.DestabilzingOverride)
         {
@@ -112,7 +118,10 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         {
             ChangeAnomalySeverity(anomaly, VaryValue(particle.SeverityPerSeverityHit), anomaly.Comp);
             if (_random.Prob(anomaly.Comp.Continuity))
+            {
                 SetBehaviour(anomaly, GetRandomBehaviour());
+                RefreshPulseTimer(anomaly);
+            }
         }
     }
 

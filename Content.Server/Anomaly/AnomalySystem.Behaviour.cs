@@ -8,12 +8,21 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Server.Anomaly;
 public sealed partial class AnomalySystem
 {
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
     private List<AnomalyBehaviourPrototype> _behaviourList = new();
     private void InitializeBehaviour()
     {
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
         //Cache all behaviors into a list at the beginning of the round
+        _behaviourList.AddRange(_prototype.EnumeratePrototypes<AnomalyBehaviourPrototype>());
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
+    {
+        _behaviourList.Clear();
         _behaviourList.AddRange(_prototype.EnumeratePrototypes<AnomalyBehaviourPrototype>());
     }
 

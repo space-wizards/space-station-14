@@ -11,34 +11,75 @@
 
 - type: anomalyBehaviour
   id: Balanced
-  weight: 2.5
+  weight: 2
+  earnPointModifier: 1
   description: anomaly-behaviour-balanced
   
 - type: anomalyBehaviour
-  id: Fleeting
+  id: BalancedSecretParticle
   weight: 1
-  description: anomaly-behaviour-fleeting
+  earnPointModifier: 1.2
+  description: anomaly-behaviour-secret
+  components:
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 2
+    randomStartSecretMax: 3
+
+- type: anomalyBehaviour
+  id: Reflect
+  weight: 1
+  earnPointModifier: 1.1
+  particleSensivity: 0.5
+  description: anomaly-behaviour-reflect
+  components:
+  - type: Reflect
+    reflectProb: 0.5
+    reflects:
+      - Energy
+
+- type: anomalyBehaviour
+  id: NonSensivity
+  weight: 0.5
+  earnPointModifier: 0.8
+  particleSensivity: 0.5
+  description: anomaly-behaviour-nonsensivity
   
 - type: anomalyBehaviour
-  id: Massive
-  weight: 1
-  description: anomaly-behaviour-massive
-  components:
-  - type: SingularityDistortion
-    intensity: 10
-    falloffPower: 1.5
+  id: Sensivity
+  weight: 0.5
+  earnPointModifier: 1.2
+  particleSensivity: 1.5
+  description: anomaly-behaviour-sensivity
 
 # Hard x2 point production
 
 - type: anomalyBehaviour
-  id: Powerful
-  weight: 0.5
-  earnPointModifier: 2
-  description: anomaly-behaviour-powerful
-  
-- type: anomalyBehaviour
   id: Fast
   weight: 0.5
-  earnPointModifier: 2
+  earnPointModifier: 1.9
   pulseFrequencyModifier: 0.5
   description: anomaly-behaviour-fast
+
+- type: anomalyBehaviour
+  id: Moving
+  weight: 0.5
+  earnPointModifier: 2.2
+  description: anomaly-behaviour-moving
+  components:
+  - type: RandomWalk
+    minSpeed: 0
+    maxSpeed: 0.5
+  - type: CanMoveInAir
+
+- type: anomalyBehaviour
+  id: Jumping
+  weight: 0.5
+  earnPointModifier: 1.8
+  description: anomaly-behaviour-moving
+  components:
+  - type: ChaoticJump
+    jumpMinInterval: 15
+    jumpMaxInterval: 25
+    rangeMin: 1
+    rangeMax: 4
+    effect: PuddleSparkle

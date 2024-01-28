@@ -518,6 +518,9 @@
         Heat: 5
   - type: TimedDespawn
     lifetime: 3
+  - type: Reflective
+    reflective:
+    - Energy
 
 
 - type: entity

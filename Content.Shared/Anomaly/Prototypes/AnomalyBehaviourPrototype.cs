@@ -32,6 +32,12 @@ public sealed partial class AnomalyBehaviourPrototype : IPrototype
     public float PulseFrequencyModifier = 1f;
 
     /// <summary>
+    /// how much the particles will affect the anomaly
+    /// </summary>
+    [DataField]
+    public float ParticleSensivity = 1f;
+
+    /// <summary>
     /// Components that are added to the anomaly when this behavior is selected, and removed when another behavior is selected.
     /// </summary>
     [DataField(serverOnly: true)]

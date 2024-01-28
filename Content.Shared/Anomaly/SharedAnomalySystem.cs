@@ -117,8 +117,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             return;
 
         DebugTools.Assert(component.MinPulseLength > TimeSpan.FromSeconds(3)); // this is just to prevent lagspikes mispredicting pulses
-        var variation = Random.NextFloat(-component.PulseVariation, component.PulseVariation) + 1;
-        component.NextPulseTime = Timing.CurTime + GetPulseLength(component) * variation;
+        RefreshPulseTimer(uid, component);
 
         if (_net.IsServer)
             _sawmill.Info($"Performing anomaly pulse. Entity: {ToPrettyString(uid)}");
@@ -144,6 +143,15 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
+    }
+
+    public void RefreshPulseTimer(EntityUid uid, AnomalyComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var variation = Random.NextFloat(-component.PulseVariation, component.PulseVariation) + 1;
+        component.NextPulseTime = Timing.CurTime + GetPulseLength(component) * variation;
     }
 
     /// <summary>

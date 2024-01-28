@@ -20,7 +20,8 @@
   - type: Transform
     anchored: false
   - type: Physics
-    bodyType: Static
+    bodyType: Dynamic
+    bodyStatus: InAir
   - type: Fixtures
     fixtures:
       fix1:
@@ -47,6 +48,9 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 0
+    randomStartSecretMax: 1
 
 - type: entity
   id: AnomalyPyroclastic
@@ -102,11 +106,6 @@
   - type: GravityAnomaly
   - type: GravityWell
   - type: RadiationSource
-  - type: Physics
-    bodyType: Dynamic
-    bodyStatus: InAir
-  - type: CanMoveInAir
-  - type: RandomWalk
   - type: SingularityDistortion
     intensity: 1000
     falloffPower: 2.7

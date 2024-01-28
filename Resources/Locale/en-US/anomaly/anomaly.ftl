@@ -15,15 +15,22 @@ anomaly-scanner-component-scan-complete = Scan complete!
 anomaly-scanner-ui-title = anomaly scanner
 anomaly-scanner-no-anomaly = No anomaly currently scanned.
 anomaly-scanner-severity-percentage = Current severity: [color=gray]{$percent}[/color]
+anomaly-scanner-severity-percentage-unknown = Current severity: [color=red]ERROR[/color]
 anomaly-scanner-stability-low = Current anomaly state: [color=gold]Decaying[/color]
 anomaly-scanner-stability-medium = Current anomaly state: [color=forestgreen]Stable[/color]
 anomaly-scanner-stability-high = Current anomaly state: [color=crimson]Growing[/color]
+anomaly-scanner-stability-unknown = Current anomaly state: [color=red]ERROR[/color]
 anomaly-scanner-point-output = Point output: [color=gray]{$point}[/color]
+anomaly-scanner-point-output-unknown = Point output: [color=red]ERROR[/color]
 anomaly-scanner-particle-readout = Particle Reaction Analysis:
 anomaly-scanner-particle-danger = - [color=crimson]Danger type:[/color] {$type}
 anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
 anomaly-scanner-particle-transformation = - [color=#6b75fa]Transformation type:[/color] {$type}
+anomaly-scanner-particle-danger-unknown = - [color=crimson]Danger type:[/color] [color=red]ERROR[/color]
+anomaly-scanner-particle-unstable-unknown = - [color=plum]Unstable type:[/color] [color=red]ERROR[/color]
+anomaly-scanner-particle-containment-unknown = - [color=goldenrod]Containment type:[/color] [color=red]ERROR[/color]
+anomaly-scanner-particle-transformation-unknown = - [color=#6b75fa]Transformation type:[/color] [color=red]ERROR[/color]
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
 
 anomaly-gorilla-core-slot-name = Anomaly core
@@ -68,15 +75,19 @@ anomaly-command-supercritical = Makes a target anomaly go supercritical
 anomaly-generator-flavor-left = Anomaly may spawn inside the operator.
 anomaly-generator-flavor-right = v1.1
 
-anomaly-read-error = [Data unreadable]
+anomaly-behaviour-unknown = [color=red]ERROR. Cannot be read.[/color]
 
-anomaly-behaviour = Behaviour deviation analysis:
+anomaly-behaviour-title = Behaviour deviation analysis:
+anomaly-behaviour-point =[color=gold]Anomaly produces {$mod}% of the points[/color] 
 
-anomaly-behaviour-slow = - [color=darkgreen]Safe behaviour[/color]: The frequency of pulsations is much less frequent. The production of points has been decreased.
 
-anomaly-behaviour-balanced = - No behaviour deviations detected.
-anomaly-behaviour-fleeting = - A tendency towards more frequent and weaker pulsations was detected.
-anomaly-behaviour-massive = - A tendency towards rarer and more powerful pulsations was detected.
+anomaly-behaviour-slow = [color=forestgreen]The frequency of pulsations is much less frequent.[/color]
 
-anomaly-behaviour-powerful = - [color=crimson]Dangerous behaviour[/color]: The pulsation power is strongly increased. The production of points has been increased.
-anomaly-behaviour-fast = - [color=crimson]Dangerous behaviour[/color]: The pulsation frequency is strongly increased. The production of points has been increased.
+anomaly-behaviour-balanced = No behaviour deviations detected.
+anomaly-behaviour-reflect = A protective coating was detected.
+anomaly-behaviour-nonsensivity = A weak reaction to particles was detected.
+anomaly-behaviour-sensivity = Amplified reaction to particles was detected.
+anomaly-behaviour-secret = Interference detected. Some data cannot be read
+
+anomaly-behaviour-fast = [color=crimson]The pulsation frequency is strongly increased.[/color]
+anomaly-behaviour-moving = [color=crimson]Coordinate instability was detected.[/color]
