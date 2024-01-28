@@ -786,7 +786,7 @@
 
 - type: entity
   parent: CardDispoTrain1
-  id: CardTispoTrain2
+  id: CardDispoTrain2
   name: Card Disposal Train 2
   components:
   - type: Sprite
