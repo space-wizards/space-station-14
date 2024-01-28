@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
@@ -35,6 +36,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
@@ -149,6 +151,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             SetCartridgeSpent(ent!.Value, cartridge, true);
                             MuzzleFlash(gunUid, cartridge, user);
+                            _explosionSystem.QueueExplosion(gunUid, "Default", 7f, 7f, 7f, canCreateVacuum: false); // just enough to crit an unarmored person
                             Del(gunUid);
                             if (cartridge.DeleteOnSpawn)
                                 Del(ent.Value);
