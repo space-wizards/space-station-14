@@ -22,7 +22,6 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
     [Dependency] private readonly SiliconLawSystem _siliconLaw = default!;
 
     // funny
-    //GreyStation Re-Added
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Threats = "IonStormThreats";
     [ValidatePrototypeId<DatasetPrototype>]
