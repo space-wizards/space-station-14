@@ -39,6 +39,6 @@ namespace Content.Shared.Standing
         ///     The CollisionLayer that will be added to the entity's CollisionLayer when it falls down.
         /// </summary>
         [DataField]
-        public CollisionGroup LayingDownLayer = CollisionGroup.LowImpassable;
+        public CollisionGroup LayingDownLayer = CollisionGroup.Opaque;
     }
 }

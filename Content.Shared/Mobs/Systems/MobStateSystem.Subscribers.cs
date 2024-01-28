@@ -48,7 +48,7 @@ public partial class MobStateSystem
                 //unused
                 break;
             case MobState.Critical:
-                _standing.Stand(target);
+                //unused
                 break;
             case MobState.Dead:
                 _standing.Stand(target);
