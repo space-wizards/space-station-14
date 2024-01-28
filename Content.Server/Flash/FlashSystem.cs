@@ -31,6 +31,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly SharedChargesSystem _charges = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
@@ -150,14 +151,15 @@ namespace Content.Server.Flash
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
             var transform = EntityManager.GetComponent<TransformComponent>(source);
-            var mapPosition = transform.MapPosition;
+            var mapPosition = _transform.GetMapCoordinates(transform);
             var flashableEntities = new List<EntityUid>();
             var flashableQuery = GetEntityQuery<FlashableComponent>();
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
+                var entPosition = _transform.GetMapCoordinates(entity);
                 //cut to a circle.
-                if (MathF.Sqrt(MathF.Pow(mapPosition.X - Transform(entity).MapPosition.X, 2) + MathF.Pow(mapPosition.Y - Transform(entity).MapPosition.Y, 2)) > range)
+                if (MathF.Sqrt(MathF.Pow(mapPosition.X - entPosition.X, 2) + MathF.Pow(mapPosition.Y - entPosition.Y, 2)) > range)
                     continue;
 
                 if (!flashableQuery.HasComponent(entity))
