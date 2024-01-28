@@ -1,11 +1,8 @@
 - type: entity
   id: BaseShadowMob
   abstract: true
-  parent: BaseMob
+  parent: [ BaseMob, BaseShadow ]
   components:
-  - type: Flashable
-  - type: DestroyedByFlashing
-    lifeCount: 2
   - type: Sprite
     color: "#793a80dd"
   - type: PointLight

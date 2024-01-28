@@ -263,7 +263,7 @@
 - type: entity
   name: dark haze
   id: ShadowKudzu
-  parent: BaseKudzu
+  parent: [ BaseKudzu, BaseShadow ]
   components:
     - type: Physics
       canCollide: false
@@ -286,10 +286,6 @@
       rarePrototypes:
       - ShadowPortal
       - ShadowKudzuLootSpawner
-    - type: DestroyedByFlashing
-    - type: Flashable
-      collisionGroup:
-      - None
     - type: Tag
       tags:
         - HideContextMenu

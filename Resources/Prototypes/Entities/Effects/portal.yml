@@ -73,7 +73,7 @@
   id: ShadowPortal
   name: shadow rift
   description: Looks unstable.
-  parent: BasePortal
+  parent: [ BasePortal, BaseShadow ]
   components:
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg
@@ -86,8 +86,6 @@
     radius: 3
     energy: 1
     netsync: false
-  - type: DestroyedByFlashing
-  - type: Flashable
   - type: AmbientSound
     range: 6
     volume: -3
