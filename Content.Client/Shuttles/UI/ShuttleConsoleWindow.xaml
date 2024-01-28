@@ -35,9 +35,9 @@
                       HorizontalAlignment="Stretch"
                       VerticalExpand="True"
                       Margin="5">
-            <ui:NavScreen Name="NavContainer"/>
-            <ui:MapScreen Name="MapContainer"/>
-            <ui:DockingScreen Name="DockContainer"/>
+            <ui:NavScreen Name="NavContainer" Visible="False"/>
+            <ui:MapScreen Name="MapContainer" Visible="False"/>
+            <controls:MapGridControl Name="DockContainer" Visible="False"/>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
