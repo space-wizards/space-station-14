@@ -38,7 +38,7 @@
       Thirsty: 350
       Parched: 200
       Dead: 0
-    baseDecayRate: 0.15
+    baseDecayRate: 0.1
   - type: Icon
     sprite: Mobs/Species/Vulpkanin/parts.rsi
     state: full
