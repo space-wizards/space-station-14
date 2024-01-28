@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -53,8 +54,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
         SubscribeLocalEvent<SiliconLawProviderComponent, IonStormLawsEvent>(OnIonStormLaws);
-        SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsEvent>(OnDirectedEmagGetLaws);
-        SubscribeLocalEvent<EmagSiliconLawComponent, IonStormLawsEvent>(OnEmagIonStormLaws);
+        SubscribeLocalEvent<SiliconLawProviderComponent, GotEmaggedEvent>(OnEmagLawsAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindAddedMessage>(OnEmagMindAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindRemovedMessage>(OnEmagMindRemoved);
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
@@ -121,9 +121,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnIonStormLaws(EntityUid uid, SiliconLawProviderComponent component, ref IonStormLawsEvent args)
     {
-        if (HasComp<EmaggedComponent>(uid))
-            return;
-
         component.Lawset = args.Lawset;
 
         // gotta tell player to check their laws
@@ -134,38 +131,23 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             EnsureEmaggedRole(uid, emag);
     }
 
-    private void OnDirectedEmagGetLaws(EntityUid uid, EmagSiliconLawComponent component, ref GetSiliconLawsEvent args)
+    private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref GotEmaggedEvent args)
     {
-        if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
+        if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.Lawset != null)
             return;
 
-        if (component.Lawset == null)
+        // Add the first emag law before the others
+        component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
-            // Add new emagged laws
-            component.Lawset = GetLawset(component.EmagLaws);
+            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.UserUid)), ("title", component.Lawset.ObeysTo)),
+            Order = 0
+        });
 
-            // Add the first emag law before the others
-            component.Lawset.Laws.Insert(0, new SiliconLaw
-            {
-                LawString = Loc.GetString("law-emag-custom", ("name", component.OwnerName)),
-                Order = 0
-            });
-        }
-
-        args.Laws = component.Lawset;
-
-        args.Handled = true;
-    }
-
-    private void OnEmagIonStormLaws(EntityUid uid, EmagSiliconLawComponent component, ref IonStormLawsEvent args)
-    {
-        if (!HasComp<EmaggedComponent>(uid))
-            return;
-
-        component.Lawset = args.Lawset;
-
-        // gotta tell player to check their laws
-        NotifyLawsChanged(uid);
+        //Add the secrecy law after the others
+        component.Lawset?.Laws.Append(new SiliconLaw
+        {
+            LawString = Loc.GetString("law-emag-secrecy")
+        });
     }
 
     private void OnExamined(EntityUid uid, EmagSiliconLawComponent component, ExaminedEvent args)

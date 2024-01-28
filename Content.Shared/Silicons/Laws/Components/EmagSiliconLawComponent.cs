@@ -31,13 +31,6 @@ public sealed partial class EmagSiliconLawComponent : Component
     public ProtoId<SiliconLawsetPrototype> EmagLaws = string.Empty;
 
     /// <summary>
-    /// Lawset created from the prototype id and law 0.
-    /// Cached when getting laws and only modified during an ion storm event.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SiliconLawset? Lawset;
-
-    /// <summary>
     /// How long the borg is stunned when it's emagged. Setting to 0 will disable it.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
