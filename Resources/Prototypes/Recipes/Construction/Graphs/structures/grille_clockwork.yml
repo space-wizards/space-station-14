@@ -39,7 +39,7 @@
             - !type:DeleteEntity
           steps:
             - tool: Cutting
-        - to: grille
+        - to: clockGrille
           steps:
             - material: ClockRod
               amount: 1
