@@ -592,6 +592,16 @@
     Telecrystal: 5
   categories:
     - UplinkUtility
+  
+- type: listing
+  id: UplinkCrateSecretStorage
+  name: uplink-syndicate-crate-secret-storage
+  description: uplink-syndicate-crate-secret-storage-desc
+  productEntity: CrateSecretStorage
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkUtility
 # Implants
 
 - type: listing
