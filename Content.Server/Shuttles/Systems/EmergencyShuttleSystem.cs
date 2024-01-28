@@ -209,7 +209,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             {
                 [ShuttleTimerMasks.ShuttleMap] = uid,
                 [ShuttleTimerMasks.SourceMap] = args.FromMapUid,
-                [ShuttleTimerMasks.DestMap] = args.TargetCoordinates.GetMapUid(_entityManager),
+                [ShuttleTimerMasks.DestMap] = args.TargetMap.GetMapUid(_entityManager),
                 [ShuttleTimerMasks.ShuttleTime] = ftlTime,
                 [ShuttleTimerMasks.SourceTime] = ftlTime,
                 [ShuttleTimerMasks.DestTime] = ftlTime

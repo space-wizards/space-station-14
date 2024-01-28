@@ -253,7 +253,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         // Mass too large
         if (entity != null && shuttleGridUid != null &&
-            (!TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) || shuttleBody.Mass < 1000f))
+            (!TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) || shuttleBody.Mass < ShuttleSystem.FTLMassLimit))
         {
             // Can't go anywhere when in FTL.
             var locked = shuttleFtl != null || Paused(shuttleGridUid.Value);

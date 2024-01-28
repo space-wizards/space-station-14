@@ -217,7 +217,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
-                payload.Add(ShuttleTimerMasks.DestMap, Transform(args.TargetCoordinates.EntityId).MapUid);
+                payload.Add(ShuttleTimerMasks.DestMap, Transform(args.TargetMap.EntityId).MapUid);
                 payload.Add(ShuttleTimerMasks.DestTime, ftlTime);
             }
             else

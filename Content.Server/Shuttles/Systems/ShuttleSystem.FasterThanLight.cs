@@ -34,6 +34,7 @@ public sealed partial class ShuttleSystem
     public const float DefaultTravelTime = 20f;
     public const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 10f;
+    public const float FTLMassLimit = 1000f;
 
     // I'm too lazy to make CVars.
 
@@ -109,33 +110,6 @@ public sealed partial class ShuttleSystem
     }
 
     /// <summary>
-    /// Returns true if the grid can FTL. Used to block protected shuttles like the emergency shuttle.
-    /// </summary>
-    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason)
-    {
-        if (HasComp<PreventPilotComponent>(uid))
-        {
-            reason = Loc.GetString("shuttle-console-prevent");
-            return false;
-        }
-
-        if (uid != null)
-        {
-            var ev = new ConsoleFTLAttemptEvent(uid.Value, false, string.Empty);
-            RaiseLocalEvent(uid.Value, ref ev, true);
-
-            if (ev.Cancelled)
-            {
-                reason = ev.Reason;
-                return false;
-            }
-        }
-
-        reason = null;
-        return true;
-    }
-
-    /// <summary>
     /// Updates the whitelist for this FTL destination.
     /// </summary>
     /// <param name="entity"></param>
@@ -180,6 +154,46 @@ public sealed partial class ShuttleSystem
             return;
 
         _console.RefreshShuttleConsoles();
+    }
+
+    /// <summary>
+    /// Returns true if the grid can FTL. Used to block protected shuttles like the emergency shuttle.
+    /// </summary>
+    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason)
+    {
+        if (HasComp<PreventPilotComponent>(uid))
+        {
+            reason = Loc.GetString("shuttle-console-prevent");
+            return false;
+        }
+
+        if (uid != null)
+        {
+            var ev = new ConsoleFTLAttemptEvent(uid.Value, false, string.Empty);
+            RaiseLocalEvent(uid.Value, ref ev, true);
+
+            if (ev.Cancelled)
+            {
+                reason = ev.Reason;
+                return false;
+            }
+        }
+
+        reason = null;
+        return true;
+    }
+
+    /// <summary>
+    /// Returns whether an entity can FTL to the specified map.
+    /// </summary>
+    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap)
+    {
+        var mapUid = _mapManager.GetMapEntityId(targetMap);
+
+        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination))
+            return false;
+
+        return destination.Whitelist?.IsValid(shuttleUid, EntityManager) != false;
     }
 
     /// <summary>
@@ -308,11 +322,9 @@ public sealed partial class ShuttleSystem
 
         _dockSystem.SetDockBolts(uid, true);
         _console.RefreshShuttleConsoles(uid);
-        var target = comp.TargetUid != null
-            ? new MapCoordinates(comp.TargetUid.Value, Vector2.Zero)
-            : comp.TargetCoordinates;
+        var targetMap = comp.TargetCoordinates.MapId;
 
-        var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
+        var ev = new FTLStartedEvent(uid, targetMap, fromMapUid, fromMatrix, fromRotation);
         RaiseLocalEvent(uid, ref ev, true);
 
         // Audio
@@ -334,18 +346,17 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void UpdateFTLTravelling(Entity<FTLComponent> entity)
     {
+        var shuttle = entity.Comp2;
+        var comp = entity.Comp1;
         comp.Accumulator += DefaultArrivalTime;
         comp.State = FTLState.Arriving;
         // TODO: Arrival effects
         // For now we'll just use the ss13 bubbles but we can do fancier.
 
-        if (shuttle != null)
-        {
-            _thruster.DisableLinearThrusters(shuttle);
-            _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
-        }
+        _thruster.DisableLinearThrusters(shuttle);
+        _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
 
-        _console.RefreshShuttleConsoles(uid);
+        _console.RefreshShuttleConsoles(entity.Owner);
     }
 
     /// <summary>
@@ -353,20 +364,16 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void UpdateFTLArriving(Entity<FTLComponent> entity)
     {
+        var xform = _xformQuery.GetComponent(entity);
+        var body = _physicsQuery.GetComponent(entity);
         DoTheDinosaur(xform);
-        SetDockBolts(uid, false);
-        SetDocks(uid, true);
+        _dockSystem.SetDockBolts(entity, false);
+        _dockSystem.SetDocks(entity, true);
 
-        if (TryComp(uid, out body))
-        {
-            _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
-            _physics.SetAngularVelocity(uid, 0f, body: body);
-            if (shuttle != null)
-            {
-                _physics.SetLinearDamping(body, shuttle.LinearDamping);
-                _physics.SetAngularDamping(body, shuttle.AngularDamping);
-            }
-        }
+        _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
+        _physics.SetAngularVelocity(uid, 0f, body: body);
+        _physics.SetLinearDamping(body, shuttle.LinearDamping);
+        _physics.SetAngularDamping(body, shuttle.AngularDamping);
 
         MapId mapId;
 
@@ -497,18 +504,6 @@ public sealed partial class ShuttleSystem
         return MathF.Max(grid.LocalAABB.Width, grid.LocalAABB.Height) + 12.5f;
     }
 
-    private void CleanupHyperspace()
-    {
-        _index = 0f;
-        if (_hyperSpaceMap == null || !_mapManager.MapExists(_hyperSpaceMap.Value))
-        {
-            _hyperSpaceMap = null;
-            return;
-        }
-        _mapManager.DeleteMap(_hyperSpaceMap.Value);
-        _hyperSpaceMap = null;
-    }
-
     /// <summary>
     /// Puts everyone unbuckled on the floor, paralyzed.
     /// </summary>
@@ -576,8 +571,8 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool TryFTLDock(EntityUid shuttleUid, ShuttleComponent component, EntityUid targetUid, string? priorityTag = null)
     {
-        if (!TryComp<TransformComponent>(shuttleUid, out var shuttleXform) ||
-            !TryComp<TransformComponent>(targetUid, out var targetXform) ||
+        if (!_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform) ||
+            !_xformQuery.TryGetComponent(targetUid, out var targetXform) ||
             targetXform.MapUid == null ||
             !targetXform.MapUid.Value.IsValid())
         {
@@ -588,7 +583,7 @@ public sealed partial class ShuttleSystem
 
         if (config != null)
         {
-            FTLDock(config, shuttleXform);
+            FTLDock((shuttleUid, shuttleXform), config);
             return true;
         }
 
@@ -717,16 +712,18 @@ public sealed partial class ShuttleSystem
         }
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
+        Angle angle;
 
         if (!HasComp<MapComponent>(targetXform.GridUid))
         {
-            _transform.SetLocalRotation(xform, _random.NextAngle());
+            angle = _random.NextAngle();
         }
         else
         {
-            _transform.SetLocalRotation(xform, Angle.Zero);
+            angle = Angle.Zero;
         }
 
+        _transform.SetLocalRotation(shuttleUid, angle, xform);
         return true;
     }
 
