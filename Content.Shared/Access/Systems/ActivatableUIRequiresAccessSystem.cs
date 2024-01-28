@@ -23,7 +23,8 @@ public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
         if (!_access.IsAllowed(args.User, activatableUI))
         {
             args.Cancel();
-            _popup.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), activatableUI, args.User);
+            if (activatableUI.Comp.PopupMessage != null)
+                _popup.PopupClient(Loc.GetString(activatableUI.Comp.PopupMessage), activatableUI, args.User);
         }
     }
 }
