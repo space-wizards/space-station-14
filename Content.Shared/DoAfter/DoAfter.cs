@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
- 
+
 [Serializable, NetSerializable]
 [DataDefinition]
 [Access(typeof(SharedDoAfterSystem))]
