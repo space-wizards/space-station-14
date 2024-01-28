@@ -57,6 +57,7 @@
   parent: Ampula
   name: Ampula
   id: AmpulaTric
+  suffix: Tricordrazine
   components:
   - type: SolutionContainerManager
     solutions:
@@ -71,6 +72,7 @@
   parent: Ampula
   name: Ampula
   id: AmpulaBica
+  suffix: Bicaridine
   components:
   - type: SolutionContainerManager
     solutions:
@@ -85,6 +87,7 @@
   parent: Ampula
   name: Ampula
   id: AmpulaDerm
+  suffix: Dermaline
   components:
   - type: SolutionContainerManager
     solutions:
@@ -99,6 +102,7 @@
   parent: Ampula
   name: Ampula
   id: AmpulaDylo
+  suffix: Dylovene
   components:
   - type: SolutionContainerManager
     solutions:
@@ -113,6 +117,7 @@
   parent: Ampula
   name: Ampula
   id: AmpulaDexa
+  suffix: Dexalin
   components:
   - type: SolutionContainerManager
     solutions:
@@ -127,6 +132,7 @@
   parent: Ampula
   name: Ampula
   id: AmpulaHyro
+  suffix: Hyronalin
   components:
   - type: SolutionContainerManager
     solutions:
