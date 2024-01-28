@@ -70,11 +70,13 @@ public sealed class PresetIdCardSystem : EntitySystem
     {
         if (id.JobName is not null)
 		{
-			var color = _prototypeManager.TryIndex(id.JobName, out JobPrototype? job) && job.Color is not null ? job.Color
-						: _jobSystem.TryGetDepartment(id.JobName, out var department) ? department.Color 
-						: Color.FromHex("#FFFFFF");
+			var color = id.JobName is null ? null
+						: _prototypeManager.TryIndex(id.JobName, out JobPrototype? job) && job.Color is not null ? job.Color
+						: job is not null && _jobSystem.TryGetDepartment(job.ID, out var department) ? department.Color 
+						: null;
 			
-			_cardSystem.TryChangeColor(uid, color);
+			if (color is not null)
+				_cardSystem.TryChangeColor(uid, color);
 		}
     }
 

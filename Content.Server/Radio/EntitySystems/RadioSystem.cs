@@ -91,10 +91,9 @@ public sealed class RadioSystem : EntitySystem
 					("jobTitle", job[0].ToString().ToUpper() + job.Substring(1)), 
 					("name", name));
 			
-			if (color is not null)
-				name = Loc.GetString("chat-radio-format-name-by-color", 
-					("jobColor", color.Value.ToHex()), 
-					("name", name));
+			name = Loc.GetString("chat-radio-format-name-by-color", 
+				("jobColor", color.ToHex()), 
+				("name", name));
 		}
 
         var speech = _chat.GetSpeechVerb(messageSource, message);

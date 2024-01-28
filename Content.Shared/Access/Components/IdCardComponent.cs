@@ -21,10 +21,10 @@ public sealed partial class IdCardComponent : Component
     [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite), ViewVariables(VVAccess.ReadWrite)]
     public string? JobTitle;
 
-	[DataField("jobColor")]
+	[DataField("jobColor"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
-    public Color? JobColor;
+    public Color JobColor { get; set; } = Color.FromHex("#FFFFFF");
 
         
     /// <summary>

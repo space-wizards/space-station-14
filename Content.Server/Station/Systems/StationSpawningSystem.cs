@@ -192,11 +192,12 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
 		
-		var color =  jobPrototype.Color is not null ? jobPrototype.Color
-						: _jobSystem.TryGetDepartment(jobPrototype.Name, out var department) ? department.Color 
-						: Color.FromHex("#FFFFFF");
-			
-		_cardSystem.TryChangeColor(cardId, color);
+		var color = jobPrototype.Color is not null ? jobPrototype.Color
+					: _jobSystem.TryGetDepartment(jobPrototype.ID, out var department) ? department.Color 
+					: null;
+		
+		if (color is not null)
+			_cardSystem.TryChangeColor(cardId, color);
 
         if (_prototypeManager.TryIndex<StatusIconPrototype>(jobPrototype.Icon, out var jobIcon))
         {
