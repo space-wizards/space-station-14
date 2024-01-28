@@ -13,6 +13,7 @@
 - type: entity
   id: WindoorClockwork
   parent: BaseClockworkWindoor
+  name: clockwork windoor
   description: It's a sturdy window and a sliding door. Wow!
 
 # TODO remove these with parameterized prototypes/whatever we end up doing
