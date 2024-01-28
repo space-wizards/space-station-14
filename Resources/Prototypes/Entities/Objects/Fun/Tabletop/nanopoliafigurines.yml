@@ -151,7 +151,7 @@
     - id: CardLawyerOffice
     - id: CardBrig
     - id: CardArmory
-    - id: CardAi_Core
+    - id: CardAiCore
     - id: CardNuclearStorag
     - id: CardElec
     - id: CardFun
@@ -786,7 +786,7 @@
 
 - type: entity
   parent: CardDispoTrain1
-  id: Card_Dispo_Train2
+  id: CardTispoTrain2
   name: Card Disposal Train 2
   components:
   - type: Sprite
@@ -797,7 +797,7 @@
 
 - type: entity
   parent: CardDispoTrain1
-  id: Card_Dispo_Train3
+  id: CardDispoTrain3
   name: Card Disposal Train 3 
   components:
   - type: Sprite
@@ -808,7 +808,7 @@
 
 - type: entity
   parent: CardDispoTrain1
-  id: Card_Dispo_Train4
+  id: CardDispoTrain4
   name: Card Disposal Train 4
   components:
   - type: Sprite
