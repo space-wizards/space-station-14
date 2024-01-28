@@ -8,6 +8,18 @@
       totalPrice: 50
 
 - type: entity
+  id: CrateSecretStorage
+  parent: CrateSyndicate
+  name: secret storage crate
+  description: A box full of riddles...
+  components:
+    - type: Stealth
+      hadOutline: true
+    - type: StealthOnMove
+      passiveVisibilityRate: -0.10
+      movementVisibilityRate: 0.10
+      
+- type: entity
   id: CrateSyndicateSuperSurplusBundle
   parent: CrateSyndicate
   name: Syndicate super surplus crate
