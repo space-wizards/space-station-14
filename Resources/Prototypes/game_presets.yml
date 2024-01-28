@@ -9,9 +9,9 @@
     - RampingStationEventScheduler
 
 - type: gamePreset
-  id: Allatonce
-  name: allatonce-title
-  description: allatonce-description
+  id: AllAtOnce
+  name: all-at-once-title
+  description: all-at-once-description
   showInVote: false
   rules:
     - Nukeops
