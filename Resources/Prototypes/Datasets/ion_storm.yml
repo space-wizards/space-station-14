@@ -814,6 +814,8 @@
   - HUMANS
   - MONKEYS
   - SKELETONS
+  - MALES
+  - FEMALES
 
 # Specific actions that either harm humans or must be done to not
 # harm humans. Make sure they're plural and "not" can be tacked
