@@ -55,9 +55,9 @@
     - type: Muted
 
 - type: trait
-  id: WheelchairBound
-  name: trait-wheelchair-bound-name
-  description: trait-wheelchair-bound-desc
+  id: WheelchairUser
+  name: trait-wheelchair-user-name
+  description: trait-wheelchair-user-desc
   blacklist:
     components:
       - BorgChassis
