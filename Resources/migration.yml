@@ -108,3 +108,60 @@ ReagentContainerMilkOat: DrinkOatMilkCarton
 
 # 2023-12-20
 MiasmaCanister: AmmoniaCanister
+
+# 2023-12-28
+WarpPointBeaconBar: null
+WarpPointBeaconCargo: null
+WarpPointBeaconCommand: null
+WarpPointBeaconEngineering: null
+WarpPointBeaconMedical: null
+WarpPointBeaconNeutral: null
+WarpPointBeaconScience: null
+WarpPointBeaconSecurity: null
+WarpPointBeaconService: null
+
+# 2023-12-30
+ClothingEyesGlassesCosmeticSunglasses: ClothingEyesGlassesSunglasses
+SpawnPointAssistant: SpawnPointPassenger
+
+# 2024-01-05
+DrinkGoldschlagerBottleFull: DrinkGildlagerBottleFull
+DrinkGoldschlagerGlass: DrinkGildlagerGlass
+
+# 2024-01-07
+ClosetBase: ClosetSteelBase
+MonkeyCubeBox: VariantCubeBox
+
+# 2024-01-08
+SalvagePartsT4Spawner: SalvageLootSpawner
+SalvagePartsT3Spawner: SalvageLootSpawner
+SalvagePartsT3T4Spawner: SalvageLootSpawner
+SalvagePartsT2Spawner: SalvageLootSpawner
+AdvancedCapacitorStockPart: CapacitorStockPart
+SuperCapacitorStockPart: CapacitorStockPart
+QuadraticCapacitorStockPart: CapacitorStockPart
+NanoManipulatorStockPart: MicroManipulatorStockPart
+PicoManipulatorStockPart: MicroManipulatorStockPart
+FemtoManipulatorStockPart: MicroManipulatorStockPart
+AdvancedMatterBinStockPart: MatterBinStockPart
+SuperMatterBinStockPart: MatterBinStockPart
+BluespaceMatterBinStockPart: MatterBinStockPart
+AnsibleSubspaceStockPart: null
+FilterSubspaceStockPart: null
+AmplifierSubspaceStockPart: null
+TreatmentSubspaceStockPart: null
+AnalyzerSubspaceStockPart: null
+CrystalSubspaceStockPart: null
+TransmitterSubspaceStockPart: null
+
+# 2024-01-10
+ClothingHeadHatHoodRad: null
+
+# 2024-01-12
+SpaceMedipen: null
+
+# 2024-01-18
+ClothingHeadHelmetVoidParamed: null
+
+# 2024-01-19
+DefaultStationBeaconTeslaEngine: null

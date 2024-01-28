@@ -44,9 +44,12 @@
       maxFillLevels: 6
       fillBaseName: jug
     - type: StaticPrice
-      price: 80
+      price: 60
     - type: Label
       originalName: jug
+    - type: Tag
+      tags:
+      - ChemDispensable
 
 - type: entity
   parent: Jug

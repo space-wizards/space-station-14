@@ -149,13 +149,6 @@
   parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-    - type: GhostRole
-      prob: 0.33
-      name: ghost-role-information-salvage-carp-name
-      allowMovement: true
-      allowSpeech: true
-      description: ghost-role-information-salvage-carp-description
-    - type: GhostTakeoverAvailable
     - type: SalvageMobRestrictions
 
 - type: entity
@@ -249,11 +242,4 @@
   parent: MobShark
   suffix: "Salvage Ruleset"
   components:
-    - type: GhostRole
-      prob: 0.2
-      name: ghost-role-information-salvage-shark-name
-      allowMovement: true
-      allowSpeech: true
-      description: ghost-role-information-salvage-shark-description
-    - type: GhostTakeoverAvailable
     - type: SalvageMobRestrictions

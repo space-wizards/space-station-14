@@ -602,3 +602,63 @@
         noiseType: OpenSimplex2
         frequency: 2
       tile: FloorAsteroidSand
+
+# Asteroid
+- type: biomeTemplate
+  id: Asteroid
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 2
+        noiseType: OpenSimplex2
+        fractalType: PingPong
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - CrystalGreen
+        - CrystalPink
+        - CrystalOrange
+        - CrystalBlue
+        - CrystalCyan
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        frequency: 1
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - FloraStalagmite1
+        - FloraStalagmite2
+        - FloraStalagmite3
+        - FloraStalagmite4
+        - FloraStalagmite5
+        - FloraStalagmite6
+    - !type:BiomeEntityLayer
+      threshold: -0.6
+      invert: true
+      noise:
+        seed: 0
+        noiseType: Perlin
+        fractalType: Ridged
+        octaves: 1
+        frequency: 0.1
+        gain: 0.5
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - AsteroidRock
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: FloorAsteroidSand
+      variants:
+        - 0
+    - !type:BiomeTileLayer
+      threshold: 0.5
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        frequency: 2
+      tile: FloorAsteroidSand

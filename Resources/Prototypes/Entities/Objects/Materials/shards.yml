@@ -14,11 +14,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           shard1: ""
-      - enum.DamageStateVisualLayers.Base:
           shard2: ""
-      - enum.DamageStateVisualLayers.Base:
           shard3: ""
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -108,6 +105,9 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 5 #Half of the value of regular glass. TECHNICALLY, welding a single shard of glass gives you the full thing back with just 1 sheet, but that is stupid so I am making it half.
+  - type: Construction
+    graph: Shiv
+    node: start
 
 - type: entity
   parent: ShardBase
@@ -137,6 +137,9 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 5 #I don't care enough to divide all of the reinforced glass materials by 2 because reinforced glass shards are due for removal anyways.
+  - type: Construction
+    graph: ReinforcedShiv
+    node: start
 
 - type: entity
   parent: ShardBase
@@ -168,6 +171,9 @@
           Quantity: 5
         - ReagentId: Plasma
           Quantity: 5
+  - type: Construction
+    graph: PlasmaShiv
+    node: start
 
 - type: entity
   parent: ShardBase
@@ -200,3 +206,6 @@
           Quantity: 5
         - ReagentId: Uranium
           Quantity: 5
+  - type: Construction
+    graph: UraniumShiv
+    node: start

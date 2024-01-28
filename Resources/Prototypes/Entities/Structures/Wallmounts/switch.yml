@@ -91,14 +91,14 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalBreak
               params:
                 volume: -8
 
 - type: entity
   id: ApcNetSwitch
   name: apc net switch
-  description: Its a switch for toggling lights that are connected to the same apc.
+  description: It's a switch for toggling lights that are connected to the same apc.
   placement:
     mode: SnapgridCenter
     snap:

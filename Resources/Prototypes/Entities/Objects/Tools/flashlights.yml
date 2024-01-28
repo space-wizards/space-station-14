@@ -69,6 +69,11 @@
     price: 40
   - type: StealTarget
     stealGroup: LAMP
+  - type: Clothing
+    sprite: Objects/Tools/flashlight.rsi
+    quickEquip: false
+    slots:
+      - Belt
 
 - type: entity
   name: seclite
@@ -111,6 +116,11 @@
   - type: PointLight
     enabled: false
     radius: 8
+  - type: Clothing
+    sprite: Objects/Tools/seclite.rsi
+    quickEquip: false
+    slots:
+      - Belt
 
 - type: entity
   parent: FlashlightLantern
