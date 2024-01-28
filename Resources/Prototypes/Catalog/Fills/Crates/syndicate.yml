@@ -11,7 +11,7 @@
   id: CrateSecretStorage
   parent: CrateSyndicate
   name: secret storage crate
-  description: A box full of riddles...
+  description: A crate full of riddles...
   components:
     - type: Stealth
       hadOutline: true
