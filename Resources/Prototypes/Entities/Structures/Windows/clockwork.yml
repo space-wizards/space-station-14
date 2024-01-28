@@ -43,7 +43,7 @@
   - type: IconSmooth
     base: cwindow
   - type: Construction
-    graph: ClockworkWindow
+    graph: Window
     node: clockworkWindow
   - type: Appearance
   - type: DamageVisuals
@@ -99,3 +99,43 @@
         acts: [ "Destruction" ]
   - type: StaticPrice
     price: 22
+
+- type: entity
+  parent: ClockworkWindow
+  id: ClockworkWindowDiagonal
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/clockwork_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: state
+  - type: Icon
+    sprite: Structures/Windows/clockwork_diagonal.rsi
+    state: state0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: DamageVisuals
+    damageOverlay:
+      sprite: Structures/Windows/cracks_diagonal.rsi
+  - type: Construction
+    graph: WindowDiagonal
+    node: clockworkWindowDiagonal

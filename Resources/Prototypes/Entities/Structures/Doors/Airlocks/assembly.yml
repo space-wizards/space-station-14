@@ -42,3 +42,19 @@
     node: assembly
   placement:
     mode: SnapgridCenter
+
+- type: entity
+  id: ClockworkAirlockAssembly
+  name: airlock assembly
+  parent: AirlockAssembly
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
+    state: "assembly"
+  - type: Construction
+    graph: ClockworkAirlock
+    node: assembly
+  placement:
+    mode: SnapgridCenter

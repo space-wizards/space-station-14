@@ -324,6 +324,9 @@
   id: Cleaver
 
 - type: Tag
+  id: ClockworkGlassShard
+
+- type: Tag
   id: ClothMade
 
 - type: Tag
@@ -991,6 +994,9 @@
 
 - type: Tag
   id: RipleyRArm
+
+- type: Tag
+  id: RodClock1
 
 - type: Tag
   id: RodMetal1

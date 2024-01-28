@@ -164,6 +164,10 @@
   name: clockwork rod
   suffix: 10
   components:
+  - type: Tag
+    tags:
+    - RodClock1
+    - DroneUsable
   - type: Sprite
     state: clockrods
   - type: Stack
@@ -175,6 +179,10 @@
   name: clockwork rod
   suffix: Single
   components:
+  - type: Tag
+    tags:
+    - RodClock1
+    - DroneUsable
   - type: Sprite
     state: clockrods
   - type: Stack

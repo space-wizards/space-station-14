@@ -48,7 +48,7 @@
 
 - type: stack
   id: ClockworkGlass
-  name: clockwork Glass
+  name: clockwork glass
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: cglass }
   spawn: SheetCGlass1
   maxCount: 30

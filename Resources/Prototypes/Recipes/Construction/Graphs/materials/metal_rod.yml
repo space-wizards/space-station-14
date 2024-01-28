@@ -11,6 +11,16 @@
           steps:
             - material: Steel
               amount: 1
+        - to: ClockRod
+          completed:
+            - !type:SetStackCount
+              amount: 2
+          steps:
+            - material: Steel
+              amount: 1
 
     - node: MetalRod
       entity: PartRodMetal
+    
+    - node: ClockRod
+      entity: PartRodClock

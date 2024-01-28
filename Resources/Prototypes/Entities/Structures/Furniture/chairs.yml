@@ -108,6 +108,24 @@
     node: stoolBar
 
 - type: entity
+  name: brass chair
+  id: ChairBrass
+  parent: SeatBase
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Sprite
+    state: brass_chair
+  - type: Construction
+    graph: Seat
+    node: chairBrass
+
+- type: entity
   name: white office chair
   id: ChairOfficeLight
   parent: SeatBase

@@ -10,6 +10,11 @@
   name: secure windoor
   description: It's a sturdy window and a sliding door. Wow!
 
+- type: entity
+  id: WindoorClockwork
+  parent: BaseClockworkWindoor
+  description: It's a sturdy window and a sliding door. Wow!
+
 # TODO remove these with parameterized prototypes/whatever we end up doing
 # Windoors (alphabetical)
 

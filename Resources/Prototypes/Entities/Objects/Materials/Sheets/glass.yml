@@ -458,7 +458,7 @@
 
 - type: entity
   parent: SheetGlassBase
-  id: SheetClockworkGlass
+  id: SheetCGlass
   name: clockwork glass
   description: A sheet of brass-hardened glass, primarily used by clockwork enthusiasts and remnants of Ratvarian cults.
   suffix: Full
@@ -480,6 +480,33 @@
       map: ["base"]
   - type: Item
     heldPrefix: cglass
+  - type: Construction
+    graph: Glass
+    node: SheetCGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassClockwork:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Extractable
     grindableSolutionName: brassglass
   - type: SolutionContainerManager
@@ -494,8 +521,8 @@
           Quantity: 6.7
 
 - type: entity
-  parent: SheetClockworkGlass
-  id: SheetClockworkGlass1
+  parent: SheetCGlass
+  id: SheetCGlass1
   name: clockwork glass
   suffix: Single
   components:

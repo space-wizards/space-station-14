@@ -8,7 +8,7 @@
 
 - type: stack
   id: ClockRod
-  name: rods
+  name: clockwork rods
   icon: { sprite: /Textures/Objects/Materials/parts.rsi, state: clockrods }
   spawn: PartRodClock1
   maxCount: 30

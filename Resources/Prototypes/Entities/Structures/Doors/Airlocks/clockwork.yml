@@ -1,0 +1,23 @@
+- type: entity
+  parent: Airlock
+  id: ClockworkAirlock
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
+  - type: Construction
+    graph: ClockworkAirlock
+    node: airlock
+    containers:
+    - board
+
+- type: entity
+  parent: AirlockGlass
+  id: ClockworkAirlockGlass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
+  - type: Construction
+    graph: ClockworkAirlock
+    node: glassAirlock
+    containers:
+    - board

@@ -53,6 +53,15 @@
               amount: 1
             - material: MetalRod
               amount: 1
+        - to: SheetCGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Brass
+              amount: 1
 
     - node: SheetGlass
       entity: SheetGlass
@@ -71,4 +80,7 @@
 
     - node: SheetRUGlass
       entity: SheetRUGlass
+      
+    - node: SheetCGlass
+      entity: SheetCGlass
 
