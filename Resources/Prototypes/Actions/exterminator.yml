@@ -5,7 +5,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    priority: -19
+    priority: 19
     icon:
       sprite: Mobs/Species/Exterminator/parts.rsi
       state: skull_icon
@@ -24,8 +24,8 @@
   - type: InstantAction
     checkCanInteract: false
     itemIconStyle: BigAction
-    priority: -20
+    priority: 18
     icon:
       sprite: Actions/Implants/implants.rsi
       state: freedom
-    event: !type:UseFreedomImplantEvent
+    event: !type:BreakFreeEvent

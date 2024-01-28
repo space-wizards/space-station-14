@@ -20,9 +20,8 @@
   - type: Exterminator
   - type: GenericAntag
     rule: Exterminator
-  - type: DefaultActions
-    defaultActions:
-    - id: ActionExterminatorFreedom
+  - type: Freedom
+    action: ActionExterminatorFreedom
   # reduced barotrauma damage
   - type: Barotrauma
     damage:
