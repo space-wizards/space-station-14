@@ -86146,7 +86146,7 @@ entities:
     - type: Transform
       pos: 34.5,-53.5
       parent: 8364
-- proto: FoodBoxDonkpocketBerry
+- proto: FoodBoxDonkpocketGondola
   entities:
   - uid: 27155
     components:
