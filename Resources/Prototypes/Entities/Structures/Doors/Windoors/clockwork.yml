@@ -78,7 +78,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardClockworkGlass:
+          ShardGlassClockwork:
             min: 1
             max: 2
           SheetBrass1:
