@@ -5,12 +5,12 @@ criminal-records-console-no-record-found = No record was found for the selected 
 
 ## Status
 
-criminal-records-console-status = Status
+criminal-records-console-status = [color=gray]Status[/color]
 criminal-records-status-none = None
 criminal-records-status-wanted = Wanted
 criminal-records-status-detained = Detained
 
-criminal-records-console-wanted-reason = Wanted Reason: {$reason}
+criminal-records-console-wanted-reason = [color=gray]Wanted Reason[/color]
 
 ## Crime History
 
