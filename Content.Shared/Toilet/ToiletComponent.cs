@@ -13,11 +13,6 @@ namespace Content.Shared.Toilet
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ToiletComponent : Component
     {
-        /// <summary>
-        /// Sound for toilet seat interaction.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public SoundSpecifier? Sound;
 
         /// <summary>
         /// Toggles seat state.
@@ -32,6 +27,12 @@ namespace Content.Shared.Toilet
         public bool ToggleLid;
 
         /// <summary>
+        /// Sound to play when toggling toilet seat.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier SeatSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
+
+        /// <summary>
         /// Prying the lid.
         /// </summary>
         [DataField]
@@ -39,30 +40,6 @@ namespace Content.Shared.Toilet
 
         [DataField]
         public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
-
-        /// <summary>
-        /// The state for when the toilet seat is up.
-        /// </summary>
-        [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-        public string? SeatUp;
-
-        /// <summary>
-        /// The state for when the toilet seat is down.
-        /// </summary>
-        [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-        public string? SeatDown;
-
-        /// <summary>
-        /// The state for when the lid is open.
-        /// </summary>
-        [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-        public string? LidOpen;
-
-        /// <summary>
-        /// The state for when the lid is closed.
-        /// </summary>
-        [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-        public string? LidClosed;
     }
 
     [Serializable, NetSerializable]
@@ -71,9 +48,24 @@ namespace Content.Shared.Toilet
     }
 
     [Serializable, NetSerializable]
-    public enum ToiletVisualLayers
+    public enum ToiletVisuals : byte
     {
-        Door,
-        Lid
+        SeatVisualState,
+        LidVisualState
+    }
+
+    [Serializable, NetSerializable]
+    public enum LidVisualState : byte
+    {
+        LidOpen,
+        LidClosed
+    }
+
+    [Serializable, NetSerializable]
+    public enum SeatVisualState : byte
+    {
+        SeatUp,
+        SeatDown
     }
 }
+

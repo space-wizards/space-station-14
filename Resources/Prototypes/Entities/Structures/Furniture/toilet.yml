@@ -22,10 +22,8 @@
       map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
     - state: dispover-handle
       map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
-    - state: disposal-open
-      map: [ "enum.ToiletVisualLayers.Lid" ]
-    - state: disposal-up
-      map: [ "enum.ToiletVisualLayers.Door" ]
+    - map: [ "LidVisualState.LidOpen" ]
+    - map: [ "SeatVisualState.SeatUp" ]
   - type: Rotatable
   - type: Transform
     noRot: false
@@ -38,11 +36,6 @@
     humanoidCanEnter: false
     soundInsert: /Audio/Effects/Fluids/splash.ogg
   - type: Toilet
-    sound: /Audio/Effects/toilet_seat_down.ogg
-    seatUp: disposal-up
-    seatDown: disposal-down
-    lidOpen: disposal-open
-    lidClosed: disposal-closed
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
@@ -82,6 +75,16 @@
   - type: ReagentTank
   - type: DumpableSolution
     solution: drainBuffer
+  - type: GenericVisualizer
+    visuals:
+      enum.ToiletVisuals.SeatVisualState:
+        SeatVisualState.SeatUp:
+          SeatUp: { state: disposal-up }
+          SeatDown: { state: disposal-down }
+      enum.ToiletVisuals.LidVisualState:
+        LidVisualState.LidOpen:
+          LidOpen: { state: disposal-open }
+          LidClosed: { state: disposal-closed }
 
 - type: entity
   id: ToiletDirtyWater

@@ -1,8 +1,8 @@
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Random;
@@ -23,6 +23,8 @@ namespace Content.Shared.Toilet
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly SharedToolSystem _tool = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -44,6 +46,13 @@ namespace Content.Shared.Toilet
         }
         private void OnComponentStartup(EntityUid uid, ToiletComponent component, ComponentStartup args)
         {
+            OnToiletSetup(uid);
+        }
+        private void OnToiletSetup(EntityUid uid, ToiletComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
             if (_random.Prob(0.5f) == true)
                 component.ToggleSeat = true;
 
@@ -57,7 +66,7 @@ namespace Content.Shared.Toilet
                 plunger.NeedsPlunger = true;
             }
 
-            ToggleToiletSeat(uid, uid, component);
+            UpdateAppearance(uid);
             Dirty(uid, component);
         }
 
@@ -95,6 +104,11 @@ namespace Content.Shared.Toilet
             args.Handled = true;
         }
 
+        public bool CanToggle(EntityUid uid)
+        {
+            return TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count == 0;
+        }
+
         private void OnToggleSeatVerb(EntityUid uid, ToiletComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess || !CanToggle(uid) || args.Hands == null)
@@ -120,11 +134,6 @@ namespace Content.Shared.Toilet
             args.Verbs.Add(toggleVerb);
         }
 
-        public bool CanToggle(EntityUid uid)
-        {
-            return TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count == 0;
-        }
-
         private void OnActivateInWorld(EntityUid uid, ToiletComponent comp, ActivateInWorldEvent args)
         {
             if (args.Handled)
@@ -142,15 +151,22 @@ namespace Content.Shared.Toilet
             component.ToggleSeat = !component.ToggleSeat;
             Dirty(uid, component, meta);
 
+
+
             if (_timing.IsFirstTimePredicted)
             {
+                _audio.PlayPvs(component.SeatSound, uid);
                 UpdateAppearance(uid, component);
-                _audio.PlayPredicted(component.Sound, uid, user, AudioParams.Default.WithVariation(0.15f));
             }
         }
 
-        protected virtual void UpdateAppearance(EntityUid uid, ToiletComponent? component = null)
+        private void UpdateAppearance(EntityUid uid, ToiletComponent ? component = null)
         {
+            if (!Resolve(uid, ref component))
+                return;
+
+            _appearance.SetData(uid, ToiletVisuals.SeatVisualState, component.ToggleSeat ? SeatVisualState.SeatUp : SeatVisualState.SeatDown);
+            _appearance.SetData(uid, ToiletVisuals.LidVisualState, component.ToggleLid ? LidVisualState.LidOpen : LidVisualState.LidClosed);
         }
 
         private void OnToiletPried(EntityUid uid, ToiletComponent component, ToiletPryDoAfterEvent args)
