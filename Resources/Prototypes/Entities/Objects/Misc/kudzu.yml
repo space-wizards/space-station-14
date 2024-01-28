@@ -265,6 +265,8 @@
   id: ShadowKudzu
   parent: BaseKudzu
   components:
+    - type: Physics
+      canCollide: false
     - type: Occluder
     - type: Sprite
       drawdepth: Effects
