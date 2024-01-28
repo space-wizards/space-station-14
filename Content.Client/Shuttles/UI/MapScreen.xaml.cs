@@ -15,6 +15,8 @@ public sealed partial class MapScreen : BoxContainer
     [Dependency] private readonly IMapManager _mapManager = default!;
     private SharedTransformSystem _xformSystem;
 
+    private EntityUid? _shuttleEntity;
+
     public MapScreen()
     {
         RobustXamlLoader.Load(this);
@@ -23,6 +25,28 @@ public sealed partial class MapScreen : BoxContainer
         _xformSystem = _entManager.System<SharedTransformSystem>();
 
         MapRebuildButton.OnPressed += MapRebuildPressed;
+
+        OnVisibilityChanged += OnVisChange;
+    }
+
+    public void SetShuttle(EntityUid? shuttle)
+    {
+        _shuttleEntity = shuttle;
+    }
+
+    private void OnVisChange(Control obj)
+    {
+        if (obj.Visible)
+        {
+            // Centre map screen to the shuttle.
+            if (_shuttleEntity != null)
+            {
+                var mapPos = _xformSystem.GetMapCoordinates(_shuttleEntity.Value);
+                MapRadar.SetMap(mapPos.MapId, mapPos.Position);
+            }
+
+            BuildMapObjects();
+        }
     }
 
     private void MapRebuildPressed(BaseButton.ButtonEventArgs obj)

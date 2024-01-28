@@ -3,7 +3,6 @@ using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -44,73 +43,6 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         ViewingMap = mapId;
         Offset = offset;
         Recentering = false;
-    }
-
-    protected void DrawDottedLine(DrawingHandleScreen screen, Vector2 from, Vector2 to, Color color, float offset = 0f, float dashSize = 8f, float gapSize = 2f)
-    {
-        var lineVector = (to - from);
-
-        // No drawing for you.
-        if (lineVector.LengthSquared() < 10f * float.Epsilon)
-            return;
-
-        var lineAndGap = gapSize + dashSize;
-        var lines = new ValueList<Vector2>();
-
-        // Minimum distance.
-        if (lineVector.Length() < lineAndGap)
-        {
-            lines.Add(from);
-            lines.Add(to);
-        }
-        else
-        {
-            var maxLength = lineVector.Length();
-            var normalizedLine = lineVector.Normalized();
-            var dashVector = normalizedLine * dashSize;
-            var gapVector = normalizedLine * gapSize;
-
-            var position = from;
-            offset %= (dashSize + gapSize);
-            var length = offset;
-            var dashLength = dashSize;
-
-            // If offset is less than gap size then start with a gap
-            // otherwise start with a partial line
-            if (offset > 0f)
-            {
-                if (offset < gapSize)
-                {
-                    position += normalizedLine * offset;
-                    length += offset;
-                }
-                else
-                {
-                    dashLength = (offset - gapSize);
-                }
-            }
-
-            while (length < maxLength)
-            {
-                lines.Add(position);
-
-                position += normalizedLine * dashLength;
-                var lengthFromStart = (position - from).Length();
-
-                // if over length then cap the thing.
-                if (lengthFromStart > maxLength)
-                {
-                    position = to;
-                }
-
-                lines.Add(position);
-                dashLength = dashVector.Length();
-                position += gapVector;
-                length = (position - from).Length();
-            }
-        }
-
-        screen.DrawPrimitives(DrawPrimitiveTopology.LineList, lines.Span, color);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -218,7 +150,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             var left = ScalePosition(gridRelativePos + new Vector2(-diamondRadius, 0f));
 
             var offset = (float) realTime.TotalSeconds * 30f;
-            DrawDottedLine(handle, gridUiPos, MidPointVector, Color.Orange, offset: offset);
+            handle.DrawDottedLine(gridUiPos, MidPointVector, Color.Orange, offset: offset);
 
             // Diamond interior
             existingVerts.Add(bottom);
