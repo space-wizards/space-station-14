@@ -236,7 +236,7 @@
     state: box
   - type: Storage
     grid:
-    - 0,0,6,0
+    - 0,0,7,0
     maxItemSize: Tiny
   - type: Item
     sprite: Objects/Fun/crayons.rsi
@@ -251,6 +251,7 @@
     - id: CrayonBlue
     - id: CrayonPurple
     - id: CrayonBlack
+    - id: CrayonWhite
   - type: ItemMapper
     mapLayers:
       black_box:
@@ -281,4 +282,8 @@
         whitelist:
           tags:
           - CrayonYellow
+      white_box:
+        whitelist:
+          tags:
+          - CrayonWhite
   - type: Appearance

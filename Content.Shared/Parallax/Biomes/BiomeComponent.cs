@@ -12,6 +12,12 @@ namespace Content.Shared.Parallax.Biomes;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(SharedBiomeSystem))]
 public sealed partial class BiomeComponent : Component
 {
+    /// <summary>
+    /// Do we load / deload.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), Access(Other = AccessPermissions.ReadWriteExecute)]
+    public bool Enabled = true;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("seed")]
     [AutoNetworkedField]
     public int Seed = -1;

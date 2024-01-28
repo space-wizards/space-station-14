@@ -45,6 +45,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      glass: 
+        canReact: false
 
 - type: entity
   parent: SheetGlassBase
@@ -81,7 +85,7 @@
       glass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
 
 - type: entity
   parent: SheetGlass
@@ -187,12 +191,12 @@
       rglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Iron
-          Quantity: 11
+          Quantity: 4.5
         - ReagentId: Carbon
-          Quantity: 1
-
+          Quantity: 0.5
+        canReact: false
 - type: entity
   parent: SheetGlassBase
   id: SheetPGlass
@@ -263,9 +267,10 @@
       pglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Plasma
           Quantity: 10
+        canReact: false
 
 - type: entity
   parent: SheetPGlass
@@ -301,13 +306,14 @@
       rpglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Plasma
           Quantity: 10
         - ReagentId: Iron
-          Quantity: 11
+          Quantity: 4.5
         - ReagentId: Carbon
-          Quantity: 1
+          Quantity: 0.5
+        canReact: false
 
 - type: entity
   parent: SheetRPGlass
@@ -379,9 +385,10 @@
       uglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Uranium
           Quantity: 10
+        canReact: false
 
 - type: entity
   parent: SheetUGlass
@@ -428,13 +435,15 @@
       ruglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Uranium
           Quantity: 10
         - ReagentId: Iron
-          Quantity: 11
+          Quantity: 4.5
         - ReagentId: Carbon
-          Quantity: 1
+          Quantity: 0.5
+        canReact: false 
+    
 - type: entity
   parent: SheetRUGlass
   id: SheetRUGlass1

@@ -350,3 +350,49 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+
+- type: reagent
+  id: TearGas
+  name: reagent-name-tear-gas
+  group: Narcotics
+  desc: reagent-desc-tear-gas
+  physicalDesc: reagent-physical-desc-milky
+  flavor: salty
+  color: "#96a8b5"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        probability: 0.08
+        messages:
+        - generic-reagent-effect-burning-eyes
+        - generic-reagent-effect-burning-eyes-a-bit
+        - generic-reagent-effect-tearing-up
+        - norepinephricacid-effect-eyelids
+        - norepinephricacid-effect-eyes-itch
+        - norepinephricacid-effect-vision-fade
+        - norepinephricacid-effect-vision-fail
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        probability: 0.03
+        messages:
+        - norepinephricacid-effect-eye-disconnect
+        - norepinephricacid-effect-eye-pain
+        - norepinephricacid-effect-darkness
+        - norepinephricacid-effect-blindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+      - !type:Emote
+        emote: Scream
+        probability: 0.08
+      - !type:GenericStatusEffect
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20

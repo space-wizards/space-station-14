@@ -3,7 +3,6 @@ anomaly-component-contact-damage = The anomaly sears off your skin!
 anomaly-vessel-component-anomaly-assigned = Anomaly assigned to vessel.
 anomaly-vessel-component-not-assigned = This vessel is not assigned to any anomaly. Try using a scanner on it.
 anomaly-vessel-component-assigned = This vessel is currently assigned to an anomaly.
-anomaly-vessel-component-upgrade-output = point output
 
 anomaly-particles-delta = Delta particles
 anomaly-particles-epsilon = Epsilon particles
@@ -24,6 +23,20 @@ anomaly-scanner-particle-danger = - [color=crimson]Danger type:[/color] {$type}
 anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
+
+anomaly-gorilla-core-slot-name = Anomaly core
+anomaly-gorilla-charge-none = It has no [bold]anomaly core[/bold] inside of it.
+anomaly-gorilla-charge-limit = It has [color={$count ->
+    [3]green
+    [2]yellow
+    [1]orange
+    [0]red
+    *[other]purple
+}]{$count} {$count ->
+    [one]charge
+    *[other]charges
+}[/color] remaining.
+anomaly-gorilla-charge-infinite = It has [color=gold]infinite charges[/color]. [italic]For now...[/italic]
 
 anomaly-sync-connected = Anomaly successfully attached
 anomaly-sync-disconnected = The connection to the anomaly has been lost!

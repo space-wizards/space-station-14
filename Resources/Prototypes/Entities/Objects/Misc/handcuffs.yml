@@ -52,6 +52,14 @@
   - type: Construction
     graph: makeshifthandcuffs
     node: cuffscable
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: inhand-left
+          color: forestgreen
+      right:
+        - state: inhand-right
+          color: forestgreen
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
@@ -63,6 +71,9 @@
   id: Zipties
   parent: Handcuffs
   components:
+  - type: Item
+    size: Tiny
+    storedRotation: 0
   - type: Handcuff
     breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
@@ -117,6 +128,14 @@
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff-broken
     color: forestgreen
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: inhand-left
+          color: forestgreen
+      right:
+        - state: inhand-right
+          color: forestgreen
 
 - type: entity
   parent: Handcuffs

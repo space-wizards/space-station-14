@@ -47,12 +47,12 @@ public sealed class AtmosMonitorSystem : EntitySystem
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceEnabledEvent>(OnAtmosDeviceEnterAtmosphere);
     }
 
-    private void OnAtmosDeviceLeaveAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, AtmosDeviceDisabledEvent args)
+    private void OnAtmosDeviceLeaveAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceDisabledEvent args)
     {
         atmosMonitor.TileGas = null;
     }
 
-    private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, AtmosDeviceEnabledEvent args)
+    private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceEnabledEvent args)
     {
         atmosMonitor.TileGas = _atmosphereSystem.GetContainingMixture(uid, true);
     }
@@ -198,7 +198,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         }
     }
 
-    private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, ref AtmosDeviceUpdateEvent args)
     {
         if (!this.IsPowered(uid, EntityManager))
             return;

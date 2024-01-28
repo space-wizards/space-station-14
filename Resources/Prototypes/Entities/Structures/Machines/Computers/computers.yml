@@ -140,6 +140,8 @@
     color: "#c94242"
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
+  - type: StealTarget
+    stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -168,6 +170,8 @@
       color: "#c94242"
     - type: Computer
       board: SalvageShuttleConsoleCircuitboard
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -239,6 +243,7 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: NodeContainer
     examinable: true
     nodes:
@@ -246,6 +251,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ActivatableUI
+    singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:
@@ -319,7 +325,7 @@
     board: StationRecordsComputerCircuitboard
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
 
 - type: entity
   parent: BaseComputer
@@ -480,6 +486,7 @@
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
   - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -541,6 +548,8 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
+  - type: DeviceNetwork
+    transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: UserInterface
@@ -854,6 +863,8 @@
       color: "#b89f25"
     - type: AccessReader
       access: [["Salvage"]]
+    - type: StealTarget
+      stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer

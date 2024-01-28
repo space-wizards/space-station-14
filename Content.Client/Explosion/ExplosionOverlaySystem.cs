@@ -3,8 +3,8 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Explosion;
 
@@ -18,6 +18,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
     public override void Initialize()
     {
@@ -51,7 +52,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
     private void OnCompRemove(EntityUid uid, ExplosionVisualsComponent component, ComponentRemove args)
     {
-        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
+        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures) && !Deleted(textures.LightEntity))
             QueueDel(textures.LightEntity);
     }
 
@@ -65,15 +66,20 @@ public sealed class ExplosionOverlaySystem : EntitySystem
             return;
         }
 
-        // spawn in a client-side light source at the epicenter
-        var lightEntity = Spawn("ExplosionLight", component.Epicenter);
-        var light = _lights.EnsureLight(lightEntity);
+        // Map may have been deleted.
+        if (_mapMan.MapExists(component.Epicenter.MapId))
+        {
+            // spawn in a client-side light source at the epicenter
+            var lightEntity = Spawn("ExplosionLight", component.Epicenter);
+            var light = _lights.EnsureLight(lightEntity);
 
-        _lights.SetRadius(lightEntity, component.Intensity.Count, light);
-        _lights.SetEnergy(lightEntity, component.Intensity.Count, light);
-        _lights.SetColor(lightEntity, type.LightColor, light);
+            _lights.SetRadius(lightEntity, component.Intensity.Count, light);
+            _lights.SetEnergy(lightEntity, component.Intensity.Count, light);
+            _lights.SetColor(lightEntity, type.LightColor, light);
+            textures.LightEntity = lightEntity;
+        }
 
-        textures.LightEntity = lightEntity;
+
         textures.FireColor = type.FireColor;
         textures.IntensityPerState = type.IntensityPerState;
 

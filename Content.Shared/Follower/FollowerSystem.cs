@@ -162,8 +162,6 @@ public sealed class FollowerSystem : EntitySystem
         if (TryComp<JointComponent>(follower, out var joints))
             _jointSystem.ClearJoints(follower, joints);
 
-        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
-
         var xform = Transform(follower);
         _containerSystem.AttachParentToContainerOrGrid((follower, xform));
 
@@ -172,6 +170,8 @@ public sealed class FollowerSystem : EntitySystem
         {
             _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), rotation: Angle.Zero);
         }
+
+        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         EnsureComp<OrbitVisualsComponent>(follower);
 

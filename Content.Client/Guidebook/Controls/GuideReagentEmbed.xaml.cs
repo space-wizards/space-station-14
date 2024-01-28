@@ -53,7 +53,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
 
     public void SetHiddenState(bool state, string query)
     {
-        this.Visible = CheckMatchesSearch(query) ? state : !state;
+        Visible = CheckMatchesSearch(query) ? state : !state;
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
@@ -97,7 +97,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
 
         #region Recipe
         var reactions = _prototype.EnumeratePrototypes<ReactionPrototype>()
-            .Where(p => p.Products.ContainsKey(reagent.ID))
+            .Where(p => !p.Source && p.Products.ContainsKey(reagent.ID))
             .OrderBy(p => p.Priority)
             .ThenBy(p => p.Products.Count)
             .ToList();
@@ -106,8 +106,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         {
             foreach (var reactionPrototype in reactions)
             {
-                var ctrl = GetRecipeGuide(reactionPrototype);
-                RecipesDescriptionContainer.AddChild(ctrl);
+                RecipesDescriptionContainer.AddChild(new GuideReagentReaction(reactionPrototype, _prototype, _systemManager));
             }
         }
         else
@@ -157,6 +156,8 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         }
         #endregion
 
+        GenerateSources(reagent);
+
         FormattedMessage description = new();
         description.AddText(reagent.LocalizedDescription);
         description.PushNewline();
@@ -165,43 +166,45 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         ReagentDescription.SetMessage(description);
     }
 
-    private GuideReagentReaction GetRecipeGuide(ReactionPrototype reactionPrototype)
+    private void GenerateSources(ReagentPrototype reagent)
     {
-        var control = new GuideReagentReaction();
-
-        var reactantMsg = new FormattedMessage();
-        var reactantsCount = reactionPrototype.Reactants.Count;
-        var i = 0;
-        foreach (var (product, reactant) in reactionPrototype.Reactants)
+        var sources = _chemistryGuideData.GetReagentSources(reagent.ID);
+        if (sources.Count == 0)
         {
-            reactantMsg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                ("reagent", _prototype.Index<ReagentPrototype>(product).LocalizedName), ("ratio", reactant.Amount)));
-            i++;
-            if (i < reactantsCount)
-                reactantMsg.PushNewline();
+            SourcesContainer.Visible = false;
+            return;
         }
-        reactantMsg.Pop();
-        control.ReactantsLabel.SetMessage(reactantMsg);
+        SourcesContainer.Visible = true;
 
-        if (reactionPrototype.MinimumTemperature > 0.0f)
+        var orderedSources = sources
+            .OrderBy(o => o.OutputCount)
+            .ThenBy(o => o.IdentifierString);
+        foreach (var source in orderedSources)
         {
-            control.MixLabel.Text = Loc.GetString("guidebook-reagent-recipes-mix-and-heat",
-                ("temperature", reactionPrototype.MinimumTemperature));
+            if (source is ReagentEntitySourceData entitySourceData)
+            {
+                SourcesDescriptionContainer.AddChild(new GuideReagentReaction(
+                    entitySourceData.SourceEntProto,
+                    entitySourceData.Solution,
+                    entitySourceData.MixingType,
+                    _prototype,
+                    _systemManager));
+            }
+            else if (source is ReagentReactionSourceData reactionSourceData)
+            {
+                SourcesDescriptionContainer.AddChild(new GuideReagentReaction(
+                    reactionSourceData.ReactionPrototype,
+                    _prototype,
+                    _systemManager));
+            }
+            else if (source is ReagentGasSourceData gasSourceData)
+            {
+                SourcesDescriptionContainer.AddChild(new GuideReagentReaction(
+                    gasSourceData.GasPrototype,
+                    gasSourceData.MixingType,
+                    _prototype,
+                    _systemManager));
+            }
         }
-
-        var productMsg = new FormattedMessage();
-        var productCount = reactionPrototype.Products.Count;
-        var u = 0;
-        foreach (var (product, ratio) in reactionPrototype.Products)
-        {
-            productMsg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                ("reagent", _prototype.Index<ReagentPrototype>(product).LocalizedName), ("ratio", ratio)));
-            u++;
-            if (u < productCount)
-                productMsg.PushNewline();
-        }
-        productMsg.Pop();
-        control.ProductsLabel.SetMessage(productMsg);
-        return control;
     }
 }

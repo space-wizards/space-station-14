@@ -18,7 +18,7 @@ namespace Content.Server.Body.Components
         ///     How often to metabolize reagents, in seconds.
         /// </summary>
         /// <returns></returns>
-        [DataField("updateFrequency")]
+        [DataField]
         public float UpdateFrequency = 1.0f;
 
         /// <summary>
@@ -33,13 +33,13 @@ namespace Content.Server.Body.Components
         /// <remarks>
         ///     Most things will use the parent entity (bloodstream).
         /// </remarks>
-        [DataField("solutionOnBody")]
+        [DataField]
         public bool SolutionOnBody = true;
 
         /// <summary>
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<MetabolizerTypePrototype>))]
+        [DataField(customTypeSerializer:typeof(PrototypeIdHashSetSerializer<MetabolizerTypePrototype>))]
         [Access(typeof(MetabolizerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public HashSet<string>? MetabolizerTypes = null;
 
@@ -47,7 +47,7 @@ namespace Content.Server.Body.Components
         ///     Should this metabolizer remove chemicals that have no metabolisms defined?
         ///     As a stop-gap, basically.
         /// </summary>
-        [DataField("removeEmpty")]
+        [DataField]
         public bool RemoveEmpty = false;
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Content.Server.Body.Components
     [DataDefinition]
     public sealed partial class MetabolismGroupEntry
     {
-        [DataField("id", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
+        [DataField(required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
         public string Id = default!;
 
         [DataField("rateModifier")]

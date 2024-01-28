@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/dannno/-tg-station/blob/a51c5a85d327f562004cef2f36c081ad0d95fd9a/icons/obj/clothing/masks.dmi",
+  "copyright": "Taken from tgstation at commit https://github.com/dannno/-tg-station/blob/a51c5a85d327f562004cef2f36c081ad0d95fd9a/icons/obj/clothing/masks.dmi. Reptilian edit by Nairod(Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -16,6 +16,10 @@
     },
     {
       "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-reptilian",
       "directions": 4
     }
   ]

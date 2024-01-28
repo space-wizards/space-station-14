@@ -1,9 +1,9 @@
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
@@ -11,7 +11,6 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -42,7 +41,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
-                if (_solutions.TryGetSolution(uid, foodComp.Solution, out var solution))
+                if (_solutions.TryGetSolution(uid, foodComp.Solution, out _, out var solution))
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }
@@ -56,9 +55,9 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityManager.QueueDeleteEntity(uid);
         }
 
-        private void OnInteractUsing(EntityUid uid, CreamPieComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(Entity<CreamPieComponent> entity, ref InteractUsingEvent args)
         {
-            ActivatePayload(uid);
+            ActivatePayload(entity);
         }
 
         private void ActivatePayload(EntityUid uid)
@@ -89,12 +88,12 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", uid),("thrower", args.Thrown)), uid, otherPlayers, false);
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", uid), ("thrower", args.Thrown)), uid, otherPlayers, false);
         }
 
-        private void OnRejuvenate(EntityUid uid, CreamPiedComponent component, RejuvenateEvent args)
+        private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)
         {
-            SetCreamPied(uid, component, false);
+            SetCreamPied(entity, entity.Comp, false);
         }
     }
 }
