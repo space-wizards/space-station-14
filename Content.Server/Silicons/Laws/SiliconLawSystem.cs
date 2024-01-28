@@ -133,8 +133,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref GotEmaggedEvent args)
     {
-        if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.Lawset != null)
-            return;
+
+        if (component.Lawset == null)
+            component.Lawset = GetLawset(component.Laws);
 
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
