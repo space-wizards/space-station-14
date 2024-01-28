@@ -271,16 +271,6 @@
       sprite: Effects/spookysmoke.rsi
       state: spookysmoke
       color: "#793a80dd"
-    - type: Fixtures
-      fixtures:
-        fix1:
-          hard: false
-          density: 7
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
-          - Opaque
     - type: Kudzu
       growthTickChance: 0.2
       spreadChance: 0.99
@@ -296,7 +286,8 @@
       - ShadowKudzuLootSpawner
     - type: DestroyedByFlashing
     - type: Flashable
-      checkObstruct: false
+      collisionGroup:
+      - None
     - type: Tag
       tags:
         - HideContextMenu

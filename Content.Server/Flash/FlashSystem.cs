@@ -168,12 +168,11 @@ namespace Content.Server.Flash
 
             foreach (var entity in flashableEntities)
             {
-                if (flashableQuery.GetComponent(entity).CheckObstruct)
-                {
-                    // Check for unobstructed entities while ignoring the mobs with flashable components.
-                    if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e) || e == source))
-                        continue;
-                }
+                var flashable = flashableQuery.GetComponent(entity);
+
+                // Check for unobstructed entities while ignoring the mobs with flashable components.
+                if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, flashable.CollisionGroup, (e) => flashableEntities.Contains(e) || e == source))
+                    continue;
 
                 // They shouldn't have flash removed in between right?
                 Flash(entity, user, source, duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));

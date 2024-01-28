@@ -775,7 +775,7 @@
     solution: beaker
 
 - type: entity
-  id: ShadowAnomaly
+  id: AnomalyShadow
   parent: BaseAnomaly
   suffix: Shadow
   components:  

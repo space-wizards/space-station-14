@@ -1,3 +1,4 @@
+using Content.Shared.Physics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -10,7 +11,7 @@ namespace Content.Shared.Flash
         public TimeSpan LastFlash;
 
         [DataField]
-        public bool CheckObstruct = true;
+        public CollisionGroup CollisionGroup = CollisionGroup.Opaque;
 
         public override bool SendOnlyToOwner => true;
     }
