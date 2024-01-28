@@ -64,13 +64,16 @@ public sealed class NearsightedSystem : EntitySystem
     {
         var comp = EnsureComp<TagComponent>(args.Equipment);
 
-        if (comp.Tags.Contains("GlassesNearsight") && args.SlotFlags == SlotFlags.EYES) UpdateShaderGlasses(component);
-        else if (args.SlotFlags is not SlotFlags.EYES) UpdateShader(component);
+        if (comp.Tags.Contains("GlassesNearsight") && args.SlotFlags == SlotFlags.EYES) 
+			UpdateShaderGlasses(component);
     }
 	
 	private void DidUnequip(EntityUid uid, NearsightedComponent component, DidUnequipEvent args)
     {
-        UpdateShader(component);
+        var comp = EnsureComp<TagComponent>(args.Equipment);
+		
+		if (comp.Tags.Contains("GlassesNearsight") && args.Slot == "eyes") 
+			UpdateShader(component);
     }
 
     private void UpdateShader(NearsightedComponent component)

@@ -65,13 +65,16 @@ public sealed class MonochromacySystem : EntitySystem
     {
         var comp = EnsureComp<TagComponent>(args.Equipment);
 
-        if (comp.Tags.Contains("GlassesMonochromacy") && args.SlotFlags == SlotFlags.EYES) UpdateShaderGlasses(component);
-        else if (args.SlotFlags is not SlotFlags.EYES) UpdateShader(component);
+        if (comp.Tags.Contains("GlassesMonochromacy") && args.SlotFlags == SlotFlags.EYES) 
+			UpdateShaderGlasses(component);
     }
 	
 	private void DidUnequip(EntityUid uid, MonochromacyComponent component, DidUnequipEvent args)
     {
-        UpdateShader(component);
+        var comp = EnsureComp<TagComponent>(args.Equipment);
+		
+		if (comp.Tags.Contains("GlassesMonochromacy") && args.Slot == "eyes") 
+			UpdateShader(component);
     }
 	
 	private void UpdateShader(MonochromacyComponent component)

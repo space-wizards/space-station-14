@@ -66,13 +66,16 @@ public sealed class ChromaticAberrationSystem : EntitySystem
     {
         var comp = EnsureComp<TagComponent>(args.Equipment);
 
-        if (comp.Tags.Contains("GlassesChromaticAberration") && args.SlotFlags == SlotFlags.EYES) UpdateShaderGlasses(component);
-        else if (args.SlotFlags is not SlotFlags.EYES) UpdateShader(component);
+        if (comp.Tags.Contains("GlassesChromaticAberration") && args.SlotFlags == SlotFlags.EYES) 
+			UpdateShaderGlasses(component);
     }
 	
 	private void DidUnequip(EntityUid uid, ChromaticAberrationComponent component, DidUnequipEvent args)
     {
-        UpdateShader(component);
+        var comp = EnsureComp<TagComponent>(args.Equipment);
+		
+		if (comp.Tags.Contains("GlassesChromaticAberration") && args.Slot == "eyes") 
+			UpdateShader(component);
     }
 	
 	private float[][] ExtractMatrix(ChromaticAberrationComponent component)
