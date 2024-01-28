@@ -23,6 +23,10 @@
   id: Massive
   weight: 1
   description: anomaly-behaviour-massive
+  components:
+  - type: SingularityDistortion
+    intensity: 10
+    falloffPower: 1.5
 
 # Hard x2 point production
 

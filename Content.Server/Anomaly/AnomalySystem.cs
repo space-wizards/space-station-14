@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
@@ -9,7 +8,6 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Anomaly.Prototypes;
 using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -43,7 +41,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     public const float MinParticleVariation = 0.8f;
     public const float MaxParticleVariation = 1.2f;
 
-    private List<AnomalyBehaviourPrototype> _behaviourList = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -57,9 +54,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeScanner();
         InitializeVessel();
         InitializeCommands();
-
-        //Cache all behaviors into a list at the beginning of the round
-        _behaviourList.AddRange(_prototype.EnumeratePrototypes<AnomalyBehaviourPrototype>());
+        InitializeBehaviour();
     }
 
     private void OnMapInit(Entity<AnomalyComponent> anomaly, ref MapInitEvent args)
@@ -68,44 +63,20 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         ChangeAnomalyStability(anomaly, Random.NextFloat(anomaly.Comp.InitialStabilityRange.Item1 , anomaly.Comp.InitialStabilityRange.Item2), anomaly.Comp);
         ChangeAnomalySeverity(anomaly, Random.NextFloat(anomaly.Comp.InitialSeverityRange.Item1, anomaly.Comp.InitialSeverityRange.Item2), anomaly.Comp);
 
+        ShuffleParticlesEffect(anomaly.Comp);
         anomaly.Comp.Continuity = _random.NextFloat(anomaly.Comp.MinContituty, anomaly.Comp.MaxContituty);
-        ShuffleParticlesEffect(anomaly);
-        SetRandomBehaviour(anomaly);
+        SetBehaviour(anomaly, GetRandomBehaviour());
     }
 
-    private void ShuffleParticlesEffect(Entity<AnomalyComponent> anomaly)
+    public void ShuffleParticlesEffect(AnomalyComponent anomaly)
     {
         var particles = new List<AnomalousParticleType>
             { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta, AnomalousParticleType.Sigma };
 
-        anomaly.Comp.SeverityParticleType = Random.PickAndTake(particles);
-        anomaly.Comp.DestabilizingParticleType = Random.PickAndTake(particles);
-        anomaly.Comp.WeakeningParticleType = Random.PickAndTake(particles);
-        anomaly.Comp.TransformationParticleType = Random.PickAndTake(particles);
-    }
-
-    private void SetRandomBehaviour(Entity<AnomalyComponent> anomaly)
-    {
-        var totalWeight = _behaviourList.Sum(x => x.Weight);
-        var randomValue = _random.NextFloat(totalWeight);
-
-        foreach (var b in _behaviourList)
-        {
-            if (randomValue < b.Weight)
-            {
-                SetBehaviour(anomaly, _random.Pick(_behaviourList).ID);
-                return;
-            }
-
-            randomValue -= b.Weight;
-        }
-        // Shouldn't happen
-        throw new InvalidOperationException($"Invalid weighted variantize anomaly behaviour pick for {anomaly}!");
-    }
-
-    private void SetBehaviour(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviourPrototype> behaviour)
-    {
-        anomaly.Comp.CurrentBehaviour = behaviour;
+        anomaly.SeverityParticleType = Random.PickAndTake(particles);
+        anomaly.DestabilizingParticleType = Random.PickAndTake(particles);
+        anomaly.WeakeningParticleType = Random.PickAndTake(particles);
+        anomaly.TransformationParticleType = Random.PickAndTake(particles);
     }
 
     private void OnShutdown(Entity<AnomalyComponent> anomaly, ref ComponentShutdown args)
@@ -141,7 +112,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         {
             ChangeAnomalySeverity(anomaly, VaryValue(particle.SeverityPerSeverityHit), anomaly.Comp);
             if (_random.Prob(anomaly.Comp.Continuity))
-                SetRandomBehaviour(anomaly);
+                SetBehaviour(anomaly, GetRandomBehaviour());
         }
     }
 

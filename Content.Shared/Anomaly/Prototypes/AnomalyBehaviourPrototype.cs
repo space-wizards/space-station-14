@@ -32,12 +32,6 @@ public sealed partial class AnomalyBehaviourPrototype : IPrototype
     public float PulseFrequencyModifier = 1f;
 
     /// <summary>
-    /// Pulsation amplification multiplier
-    /// </summary>
-    [DataField]
-    public float PulsePowerModifier = 1f;
-
-    /// <summary>
     /// Components that are added to the anomaly when this behavior is selected, and removed when another behavior is selected.
     /// </summary>
     [DataField(serverOnly: true)]
