@@ -22,6 +22,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly PathfindingSystem _pathfinding = default!;
         [Dependency] private readonly ShuttleConsoleSystem _console = default!;
@@ -34,6 +35,9 @@ namespace Content.Server.Shuttles.Systems
         private const float DockingRadius = 0.20f;
 
         private EntityQuery<PhysicsComponent> _physicsQuery;
+
+        private HashSet<Entity<DockingComponent>> _dockingSet = new();
+        private HashSet<Entity<DockingComponent, DoorBoltComponent>> _dockingBoltSet = new();
 
         public override void Initialize()
         {
@@ -63,17 +67,27 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// Sets the docks for the provided entity as enabled or disabled.
         /// </summary>
-        public void SetDocks(EntityUid uid, bool enabled)
+        public void SetDocks(EntityUid gridUid, bool enabled)
         {
-            var query = AllEntityQuery<DockingComponent, TransformComponent>();
+            _dockingSet.Clear();
+            _lookup.GetEntitiesParented(gridUid, _dockingSet);
 
-            while (query.MoveNext(out var dockUid, out var dock, out var xform))
+            foreach (var dock in _dockingSet)
             {
-                if (xform.ParentUid != uid || dock.Enabled == enabled)
-                    continue;
+                Undock(dock);
+                dock.Comp.Enabled = enabled;
+            }
+        }
 
-                Undock(dockUid, dock);
-                dock.Enabled = enabled;
+        public void SetDockBolts(EntityUid gridUid, bool enabled)
+        {
+            _dockingBoltSet.Clear();
+            _lookup.GetEntitiesParented(gridUid, _dockingBoltSet);
+
+            foreach (var entity in _dockingBoltSet)
+            {
+                _doorSystem.TryClose(entity);
+                _bolts.SetBoltsWithAudio(entity.Owner, entity.Comp2, enabled);
             }
         }
 
@@ -254,7 +268,7 @@ namespace Content.Server.Shuttles.Systems
             _console.RefreshShuttleConsoles();
         }
 
-        private void OnDockingReAnchor(EntityUid uid, DockingComponent component, ref ReAnchorEvent args)
+        private void OnDockingReAnchor(Entity<DockingComponent> entity, ref ReAnchorEvent args)
         {
             if (!component.Docked)
                 return;
@@ -267,7 +281,7 @@ namespace Content.Server.Shuttles.Systems
             _console.RefreshShuttleConsoles();
         }
 
-        private void DisableDocking(EntityUid uid, DockingComponent component)
+        private void DisableDocking(Entity<DockingComponent> entity)
         {
             if (!component.Enabled)
                 return;
@@ -471,14 +485,14 @@ namespace Content.Server.Shuttles.Systems
             Dock(dockAUid, dockA, dockB, dockB);
         }
 
-        public void Undock(EntityUid dockUid, DockingComponent dock)
+        public void Undock(Entity<DockingComponent> dock)
         {
-            if (dock.DockedWith == null)
+            if (dock.Comp.DockedWith == null)
                 return;
 
-            OnUndock(dockUid, dock.DockedWith.Value);
-            OnUndock(dock.DockedWith.Value, dockUid);
-            Cleanup(dockUid, dock);
+            OnUndock(dock.Owner, dock.Comp.DockedWith.Value);
+            OnUndock(dock.Comp.DockedWith.Value, dock.Owner);
+            Cleanup(dock.Owner, dock);
         }
 
         private void OnUndock(EntityUid dockUid, EntityUid other)

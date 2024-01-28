@@ -171,7 +171,7 @@ public sealed partial class EmergencyShuttleSystem
                 if (!Deleted(centcomm.Entity))
                 {
                     _shuttle.FTLToDock(comp.EmergencyShuttle.Value, shuttle,
-                        centcomm.Entity.Value, _consoleAccumulator, TransitTime, true);
+                        centcomm.Entity.Value, _consoleAccumulator, TransitTime);
                     continue;
                 }
 

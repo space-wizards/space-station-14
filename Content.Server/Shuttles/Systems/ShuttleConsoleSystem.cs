@@ -30,6 +30,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -38,6 +39,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
     private EntityQuery<MetaDataComponent> _metaQuery;
+
+    private HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
 
     public override void Initialize()
     {
@@ -92,10 +95,19 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RefreshShuttleConsoles();
     }
 
-    public void RefreshShuttleConsoles(EntityUid _)
+    /// <summary>
+    /// Refreshes all the shuttle console data for a particular grid.
+    /// </summary>
+    public void RefreshShuttleConsoles(EntityUid gridUid)
     {
-        // TODO: Should really call this per shuttle in some instances.
-        RefreshShuttleConsoles();
+        var docks = GetAllDocks();
+        _consoles.Clear();
+        _lookup.GetEntitiesParented(gridUid, _consoles);
+
+        foreach (var entity in _consoles)
+        {
+            UpdateState(entity, docks);
+        }
     }
 
     /// <summary>
