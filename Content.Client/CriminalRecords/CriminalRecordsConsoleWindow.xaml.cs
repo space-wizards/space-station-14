@@ -29,7 +29,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private bool _isPopulating;
     private bool _access;
-    private (uint, CriminalRecord)? _selectedRecord;
+    private uint? _selectedKey;
+    private CriminalRecord? _selectedRecord;
 
     private StationRecordFilterType _currentFilterType;
 
@@ -90,8 +91,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         HistoryButton.OnPressed += _ =>
         {
-            if (_selectedRecord is {} pair)
-                OnHistoryUpdated?.Invoke(pair.Item2, _access, true);
+            if (_selectedRecord is {} record)
+                OnHistoryUpdated?.Invoke(record, _access, true);
         };
     }
 
@@ -110,11 +111,13 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             }
         }
 
+        _selectedKey = state.SelectedKey;
+
         FilterType.SelectId((int)_currentFilterType);
 
         // set up the records listing panel
         RecordListing.Clear();
-        RecordListing.ClearSelected();
+//        RecordListing.ClearSelected();
 
         var hasRecords = state.RecordListing != null && state.RecordListing.Count > 0;
         NoRecords.Visible = !hasRecords;
@@ -122,7 +125,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             PopulateRecordListing(state.RecordListing!);
 
         // set up the selected person's record
-        var selected = state.SelectedKey != null;
+        var selected = _selectedKey != null;
 
         PersonContainer.Visible = selected;
         RecordUnselected.Visible = !selected;
@@ -138,7 +141,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         {
             PopulateRecordContainer(state.StationRecord, state.CriminalRecord);
             OnHistoryUpdated?.Invoke(state.CriminalRecord, _access, false);
-            _selectedRecord = (state.SelectedKey!.Value, state.CriminalRecord);
+            _selectedRecord = state.CriminalRecord;
         }
         else
         {
@@ -150,11 +153,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     private void PopulateRecordListing(Dictionary<uint, string> listing)
     {
         _isPopulating = true;
+
         foreach (var (key, name) in listing)
         {
             var item = RecordListing.AddItem(name);
             item.Metadata = key;
-            item.Selected = key == _selectedRecord?.Item1;
+            item.Selected = key == _selectedKey;
         }
         _isPopulating = false;
 

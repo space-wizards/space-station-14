@@ -10,6 +10,7 @@ criminal-records-status-detained = Detained
 
 criminal-records-console-crime-history = Crime History
 criminal-records-history-placeholder = Write the crime here
+criminal-records-no-history = This crewmember's record is spotless.
 criminal-records-add-history = Add
 criminal-records-delete-history = Delete
 

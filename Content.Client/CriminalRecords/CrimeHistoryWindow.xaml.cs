@@ -65,6 +65,8 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
         History.Clear();
         Editing.Visible = access;
 
+        NoHistory.Visible = record.History.Count == 0;
+
         foreach (var entry in record.History)
         {
             var time = entry.AddTime;
