@@ -24,13 +24,11 @@ namespace Content.Shared.Toilet
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly SharedToolSystem _tool = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ToiletComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<ToiletComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ToiletComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleSeatVerb);
             SubscribeLocalEvent<ToiletComponent, ActivateInWorldEvent>(OnActivateInWorld);
@@ -43,9 +41,6 @@ namespace Content.Shared.Toilet
         private void OnInit(EntityUid uid, ToiletComponent component, ComponentInit args)
         {
             EnsureComp<SecretStashComponent>(uid);
-        }
-        private void OnComponentStartup(EntityUid uid, ToiletComponent component, ComponentStartup args)
-        {
             OnToiletSetup(uid);
         }
         private void OnToiletSetup(EntityUid uid, ToiletComponent? component = null)
@@ -149,18 +144,16 @@ namespace Content.Shared.Toilet
                 return;
 
             component.ToggleSeat = !component.ToggleSeat;
-            Dirty(uid, component, meta);
-
-
 
             if (_timing.IsFirstTimePredicted)
             {
                 _audio.PlayPvs(component.SeatSound, uid);
                 UpdateAppearance(uid, component);
+                Dirty(uid, component, meta);
             }
         }
 
-        private void UpdateAppearance(EntityUid uid, ToiletComponent ? component = null)
+        private void UpdateAppearance(EntityUid uid, ToiletComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;

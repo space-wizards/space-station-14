@@ -13,7 +13,6 @@ namespace Content.Shared.Toilet
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ToiletComponent : Component
     {
-
         /// <summary>
         /// Toggles seat state.
         /// </summary>
