@@ -144,6 +144,11 @@ public partial class MapGridControl : BoxContainer
         return value * MinimapScale + MidPointVector;
     }
 
+    protected Vector2 InverseScalePosition(Vector2 value)
+    {
+        return (value - MidPointVector) / MinimapScale;
+    }
+
     /// <summary>
     /// Handles re-centering the control's offset.
     /// </summary>

@@ -6,6 +6,7 @@ using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Collections;
+using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -43,6 +44,11 @@ public sealed class ShuttleMapControl : BaseShuttleControl
 
     private Angle _ftlAngle;
 
+    /// <summary>
+    /// Raised when a request to FTL to a particular spot is raised.
+    /// </summary>
+    public event Action<MapCoordinates>? RequestFTL;
+
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
         _shuttles = _entManager.System<SharedShuttleSystem>();
@@ -62,6 +68,30 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     public void SetShuttle(EntityUid? entity)
     {
         _shuttleEntity = entity;
+    }
+
+    protected override void MouseMove(GUIMouseMoveEventArgs args)
+    {
+        // No move for you.
+        if (FtlMode)
+            return;
+
+        base.MouseMove(args);
+    }
+
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        if (ViewingMap != MapId.Nullspace)
+        {
+            if (args.Function == EngineKeyFunctions.UIClick)
+            {
+                var mapPos = InverseScalePosition(args.RelativePosition);
+                var mapCoords = new MapCoordinates(mapPos, ViewingMap);
+                RequestFTL?.Invoke(mapCoords);
+            }
+        }
+
+        base.KeyBindUp(args);
     }
 
     protected override void MouseWheel(GUIMouseWheelEventArgs args)

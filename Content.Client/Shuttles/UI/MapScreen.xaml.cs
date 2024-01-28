@@ -27,6 +27,8 @@ public sealed partial class MapScreen : BoxContainer
 
     private StyleBoxFlat _ftlStyle;
 
+    public event Action<MapCoordinates>? RequestFTL;
+
     public MapScreen()
     {
         RobustXamlLoader.Load(this);
@@ -42,6 +44,9 @@ public sealed partial class MapScreen : BoxContainer
 
         _ftlStyle = new StyleBoxFlat(Color.LimeGreen);
         FTLBar.ForegroundStyleBoxOverride = _ftlStyle;
+
+        // Just pass it on up.
+        MapRadar.RequestFTL += RequestFTL;
     }
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState state)

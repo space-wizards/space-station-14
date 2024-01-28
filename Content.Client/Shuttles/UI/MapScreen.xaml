@@ -25,6 +25,7 @@
                 </controls1:StripeBack>
                 <controls:ProgressBar Name="FTLBar" HorizontalExpand="True"
                                       Margin="5"
+                                      MaxValue="0.0"
                                       Value="1.0"/>
                 <controls:BoxContainer Orientation="Vertical">
                 <!-- Normal buttons -->

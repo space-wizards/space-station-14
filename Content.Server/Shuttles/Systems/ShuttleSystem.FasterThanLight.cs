@@ -38,7 +38,6 @@ public sealed partial class ShuttleSystem
     public const float DefaultTravelTime = 20f;
     public const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 10f;
-    private const float ShuttleFTLRange = 100f;
 
     /// <summary>
     /// Minimum mass a grid needs to be to block a shuttle recall.
@@ -51,7 +50,7 @@ public sealed partial class ShuttleSystem
     {
         Params = AudioParams.Default.WithVolume(-5f),
     };
-    // private SoundSpecifier _travelSound = new SoundPathSpecifier();
+
     private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f),

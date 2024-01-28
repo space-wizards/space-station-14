@@ -1,6 +1,8 @@
 using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 
 namespace Content.Client.Shuttles.BUI;
 
@@ -20,6 +22,13 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window = new ShuttleConsoleWindow();
         _window.OpenCentered();
         _window.OnClose += Close;
+
+        _window.RequestFTL += OnFTLRequest;
+    }
+
+    private void OnFTLRequest(MapCoordinates obj)
+    {
+        SendMessage(new ShuttleConsoleFTLRequestMessage());
     }
 
     protected override void Dispose(bool disposing)

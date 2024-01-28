@@ -1,3 +1,4 @@
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.Events;
@@ -8,5 +9,5 @@ namespace Content.Shared.Shuttles.Events;
 [Serializable, NetSerializable]
 public sealed class ShuttleConsoleFTLRequestMessage : BoundUserInterfaceMessage
 {
-    public NetEntity Destination;
+    public MapCoordinates Coordinates;
 }

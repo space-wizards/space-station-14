@@ -16,6 +16,7 @@ using Content.Shared.Movement.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -26,6 +27,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -74,65 +76,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     private void OnFtlDestShutdown(EntityUid uid, FTLDestinationComponent component, ComponentShutdown args)
     {
         RefreshShuttleConsoles();
-    }
-
-    private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component,
-        ShuttleConsoleFTLRequestMessage args)
-    {
-        var destination = GetEntity(args.Destination);
-
-        if (!TryComp<FTLDestinationComponent>(destination, out var dest))
-        {
-            return;
-        }
-
-        if (!dest.Enabled)
-            return;
-
-        EntityUid? entity = uid;
-
-        var getShuttleEv = new ConsoleShuttleEvent
-        {
-            Console = uid,
-        };
-
-        RaiseLocalEvent(entity.Value, ref getShuttleEv);
-        entity = getShuttleEv.Console;
-
-        if (!TryComp<TransformComponent>(entity, out var xform) ||
-            !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
-        {
-            return;
-        }
-
-        if (dest.Whitelist?.IsValid(entity.Value, EntityManager) == false &&
-            dest.Whitelist?.IsValid(xform.GridUid.Value, EntityManager) == false)
-        {
-            return;
-        }
-
-        var shuttleUid = xform.GridUid.Value;
-
-        if (HasComp<FTLComponent>(shuttleUid))
-        {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-in-ftl"), args.Session);
-            return;
-        }
-
-        if (!_shuttle.CanFTL(xform.GridUid, out var reason))
-        {
-            _popup.PopupCursor(reason, args.Session);
-            return;
-        }
-
-        var dock = HasComp<MapComponent>(destination) && HasComp<MapGridComponent>(destination);
-        var tagEv = new FTLTagEvent();
-        RaiseLocalEvent(xform.GridUid.Value, ref tagEv);
-
-        var ev = new ShuttleConsoleFTLTravelStartEvent(uid);
-        RaiseLocalEvent(ref ev);
-
-        _shuttle.FTLTravel(xform.GridUid.Value, shuttle, destination, dock: dock, priorityTag: tagEv.Tag);
     }
 
     private void OnDock(DockEvent ev)

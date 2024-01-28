@@ -17,6 +17,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private ShuttleConsoleMode _mode = ShuttleConsoleMode.Nav;
 
+    public event Action<MapCoordinates>? RequestFTL;
+
     public ShuttleConsoleWindow()
     {
         RobustXamlLoader.Load(this);
@@ -36,6 +38,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         NavModeButton.Pressed = true;
         SetupMode(_mode);
+
+        MapContainer.RequestFTL += RequestFTL;
     }
 
     private void ClearModes(ShuttleConsoleMode mode)
