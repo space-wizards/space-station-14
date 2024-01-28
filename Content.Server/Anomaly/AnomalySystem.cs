@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
@@ -67,8 +68,9 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         ChangeAnomalyStability(anomaly, Random.NextFloat(anomaly.Comp.InitialStabilityRange.Item1 , anomaly.Comp.InitialStabilityRange.Item2), anomaly.Comp);
         ChangeAnomalySeverity(anomaly, Random.NextFloat(anomaly.Comp.InitialSeverityRange.Item1, anomaly.Comp.InitialSeverityRange.Item2), anomaly.Comp);
 
+        anomaly.Comp.Continuity = _random.NextFloat(anomaly.Comp.MinContituty, anomaly.Comp.MaxContituty);
         ShuffleParticlesEffect(anomaly);
-        SetBehaviour(anomaly, _random.Pick(_behaviourList).ID);
+        SetRandomBehaviour(anomaly);
     }
 
     private void ShuffleParticlesEffect(Entity<AnomalyComponent> anomaly)
@@ -80,6 +82,25 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         anomaly.Comp.DestabilizingParticleType = Random.PickAndTake(particles);
         anomaly.Comp.WeakeningParticleType = Random.PickAndTake(particles);
         anomaly.Comp.TransformationParticleType = Random.PickAndTake(particles);
+    }
+
+    private void SetRandomBehaviour(Entity<AnomalyComponent> anomaly)
+    {
+        var totalWeight = _behaviourList.Sum(x => x.Weight);
+        var randomValue = _random.NextFloat(totalWeight);
+
+        foreach (var b in _behaviourList)
+        {
+            if (randomValue < b.Weight)
+            {
+                SetBehaviour(anomaly, _random.Pick(_behaviourList).ID);
+                return;
+            }
+
+            randomValue -= b.Weight;
+        }
+        // Shouldn't happen
+        throw new InvalidOperationException($"Invalid weighted variantize anomaly behaviour pick for {anomaly}!");
     }
 
     private void SetBehaviour(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviourPrototype> behaviour)
@@ -118,7 +139,9 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         }
         if (particle.ParticleType == anomaly.Comp.TransformationParticleType || particle.TransmutationOverride)
         {
-
+            ChangeAnomalySeverity(anomaly, VaryValue(particle.SeverityPerSeverityHit), anomaly.Comp);
+            if (_random.Prob(anomaly.Comp.Continuity))
+                SetRandomBehaviour(anomaly);
         }
     }
 

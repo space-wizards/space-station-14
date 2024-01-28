@@ -228,8 +228,24 @@ public sealed partial class AnomalyComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? CoreInertPrototype;
 
+    #region Behaviour Deviations
+
     [DataField]
     public ProtoId<AnomalyBehaviourPrototype>? CurrentBehaviour;
+
+    /// <summary>
+    /// Presumption of anomaly to change behavior. The higher the number, the higher the chance that the anomaly will change its behavior.
+    /// </summary>
+    [DataField]
+    public float Continuity = 0f;
+
+    [DataField]
+    public float MinContituty = 0.1f;
+
+    [DataField]
+    public float MaxContituty = 1.0f;
+
+    #endregion
 
     #region Floating Animation
     /// <summary>
