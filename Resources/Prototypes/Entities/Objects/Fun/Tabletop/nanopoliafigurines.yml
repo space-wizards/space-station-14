@@ -131,34 +131,34 @@
     size: Small
   - type: StorageFill
     contents:
-    - id: Card_Arive
-    - id: Card_Disposal
-    - id: Card_Janitor
-    - id: Card_Library
-    - id: Card_Theater
-    - id: Card_AME
-    - id: Card_Atmos
-    - id: Card_Tesla
-    - id: Card_Hospital
-    - id: Card_Chemical
-    - id: Card_Morgue
-    - id: Card_Server
-    - id: Card_Robo
-    - id: Card_RND
-    - id: Card_Storage
-    - id: Card_Cargo_Shuttle
-    - id: Card_Salvage
-    - id: Card_Lawyer_Office
-    - id: Card_Brig
-    - id: Card_Armory
-    - id: Card_Ai_Core
-    - id: Card_Nuclear_Storag
-    - id: Card_Elec
-    - id: Card_Fun
-    - id: Card_Dispo_Train1
-    - id: Card_Dispo_Train2
-    - id: Card_Dispo_Train3
-    - id: Card_Dispo_Train4
+    - id: CardArive
+    - id: CardDisposal
+    - id: CardJanitor
+    - id: CardLibrary
+    - id: CardTheater
+    - id: CardAME
+    - id: CardAtmos
+    - id: CardTesla
+    - id: CardHospital
+    - id: CardChemical
+    - id: CardMorgue
+    - id: CardServer
+    - id: CardRobo
+    - id: CardRND
+    - id: CardStorage
+    - id: CardCargoShuttle
+    - id: CardSalvage
+    - id: CardLawyerOffice
+    - id: CardBrig
+    - id: CardArmory
+    - id: CardAi_Core
+    - id: CardNuclearStorag
+    - id: CardElec
+    - id: CardFun
+    - id: CardDispoTrain1
+    - id: CardDispoTrain2
+    - id: CardDispoTrain3
+    - id: CardDispoTrain4
 
   
 
@@ -166,7 +166,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Arive
+  id: CardArive
   name: card Arive
   description: |
       Rent - 4
@@ -189,7 +189,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Disposal
+  id: CardDisposal
   name: card Disposal
   description: |
       Rent - 4
@@ -215,7 +215,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Janitor
+  id: CardJanitor
   name: card Janitor
   description: |
       Rent - 6
@@ -239,7 +239,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Library
+  id: CardLibrary
   name: card Library
   description: |
       Rent - 6
@@ -264,7 +264,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Theater
+  id: CardTheater
   name: card Theater
   description: |
       Rent - 6
@@ -289,7 +289,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_AME
+  id: CardAME
   name: card AME
   description: |
       Rent - 12
@@ -314,7 +314,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Atmos
+  id: CardAtmos
   name: Card Atmos
   description: |
       Rent - 12
@@ -339,7 +339,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Tesla
+  id: CardTesla
   name: Card Tesla
   description: |
       Rent - 12
@@ -367,7 +367,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Hospital
+  id: CardHospital
   name: Card Hospital
   description: |
       Rent - 14
@@ -392,7 +392,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Chemical
+  id: CardChemical
   name: Card Chemical
   description: |
       Rent - 14
@@ -417,7 +417,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Morgue
+  id: CardMorgue
   name: Card Morgue
   description: |
       Rent - 14
@@ -444,7 +444,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Server
+  id: CardServer
   name: Card Server
   description: |
       Rent - 20
@@ -469,7 +469,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Robo
+  id: CardRobo
   name: Card Robo
   description: |
       Rent - 20
@@ -494,7 +494,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_RND
+  id: CardRND
   name: Card RND
   description: |
       Rent - 20
@@ -521,7 +521,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Storage
+  id: CardStorage
   name: Card Storage
   description: |
       Rent - 22
@@ -546,7 +546,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Cargo_Shuttle
+  id: CardCargoShuttle
   name: Card Cargo Shuttle
   description: |
       Rent - 22
@@ -571,7 +571,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Salvage
+  id: CardSalvage
   name: Card Salvage
   description: |
       Rent - 22
@@ -598,7 +598,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Lawyer_Office
+  id: CardLawyerOffice
   name: Card Lawyer Office
   description: |
       Rent - 28
@@ -623,7 +623,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Brig
+  id: CardBrig
   name: Card Brig
   description: |
       Rent - 28
@@ -648,7 +648,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Armory
+  id: CardArmory
   name: Card Armory
   description: |
       Rent - 28
@@ -675,7 +675,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Ai_Core
+  id: CardAiCore
   name: Card Ai Core
   description: |
       Rent - 35
@@ -700,7 +700,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Nuclear_Storag
+  id: CardNuclearStorag
   name: Card nuclear storag
   description: |
       Rent - 35
@@ -726,7 +726,7 @@
 #Card other fields
 - type: entity
   parent: BaseItem
-  id: Card_Elec
+  id: CardElec
   name: Card Elec
   description: |
       If the player owns a Fun or Elec card, then the rental fee is four times the amount of points won in the cups
@@ -745,7 +745,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Fun
+  id: CardFun
   name: Card Fun
   description: |
       If the player owns a Fun or Elec card, then the rental fee is four times the amount of points won in the cups
@@ -764,7 +764,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Dispo_Train1
+  id: CardDispoTrain1
   name: Card Disposal Train 1
   description: |
       Rent - 25
@@ -785,7 +785,7 @@
 
 
 - type: entity
-  parent: Card_Dispo_Train1
+  parent: CardDispoTrain1
   id: Card_Dispo_Train2
   name: Card Disposal Train 2
   components:
@@ -796,7 +796,7 @@
 
 
 - type: entity
-  parent: Card_Dispo_Train1
+  parent: CardDispoTrain1
   id: Card_Dispo_Train3
   name: Card Disposal Train 3 
   components:
@@ -807,7 +807,7 @@
 
 
 - type: entity
-  parent: Card_Dispo_Train1
+  parent: CardDispoTrain1
   id: Card_Dispo_Train4
   name: Card Disposal Train 4
   components:
@@ -820,7 +820,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Cluwn
+  id: CardCluwn
   name: Card Cluwn
   description: A figurine from nanopolia
   abstract: false
@@ -837,7 +837,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Card_Cargo_Chest
+  id: CardCargoChest
   name: Card Cargo Chest
   description: A figurine from nanopolia
   abstract: false
