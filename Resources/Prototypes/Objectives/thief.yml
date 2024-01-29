@@ -16,7 +16,7 @@
   id: BaseThiefStealObjective
   components:
   - type: StealCondition
-    verifyMapExistance: false
+    verifyMapExistence: false
     descriptionText: objective-condition-thief-description
 
 - type: entity
@@ -25,7 +25,7 @@
   id: BaseThiefStealCollectionObjective
   components:
   - type: StealCondition
-    verifyMapExistance: true
+    verifyMapExistence: true
     descriptionText: objective-condition-thief-description
 
 - type: entity
@@ -34,7 +34,7 @@
   id: BaseThiefStealStructureObjective
   components:
   - type: StealCondition
-    verifyMapExistance: true
+    verifyMapExistence: true
     descriptionText: objective-condition-thief-description
   - type: Objective
     difficulty: 2 # it's hard to hide
@@ -45,7 +45,7 @@
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistance: false
+    verifyMapExistence: false
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
@@ -125,7 +125,7 @@
     stealGroup: TechnologyDisk
     minCollectionSize: 5
     maxCollectionSize: 15
-    verifyMapExistance: false
+    verifyMapExistence: false
   - type: Objective
     difficulty: 0.8
 
@@ -138,7 +138,7 @@
     stealGroup: IDCard
     minCollectionSize: 5
     maxCollectionSize: 15
-    verifyMapExistance: false
+    verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
 
@@ -153,7 +153,7 @@
     stealGroup: Cannabis
     minCollectionSize: 20
     maxCollectionSize: 30
-    verifyMapExistance: false
+    verifyMapExistence: false
   - type: Objective
     difficulty: 0.5
 
@@ -169,7 +169,7 @@
     stealGroup: LAMP
     minCollectionSize: 1
     maxCollectionSize: 10
-    verifyMapExistance: true
+    verifyMapExistence: true
   - type: Objective
     difficulty: 0.5 # just for fun, collectings LAMP on Moth
 
