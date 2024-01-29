@@ -26529,46 +26529,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -18.5,-13.5
       parent: 31
-- proto: ClosetBase
-  entities:
-  - uid: 7853
-    components:
-    - type: Transform
-      pos: 27.5,-22.5
-      parent: 31
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7856
-          - 7859
-          - 7854
-          - 7857
-          - 7855
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetBombFilled
   entities:
   - uid: 5116
@@ -26919,6 +26879,46 @@ entities:
     - type: Transform
       pos: -8.5,-25.5
       parent: 31
+- proto: ClosetSteelBase
+  entities:
+  - uid: 7853
+    components:
+    - type: Transform
+      pos: 27.5,-22.5
+      parent: 31
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 7856
+          - 7859
+          - 7854
+          - 7857
+          - 7855
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: ClosetWallEmergency
   entities:
   - uid: 9865
@@ -28972,13 +28972,6 @@ entities:
       parent: 31
     - type: NavMapBeacon
       text: observatory
-  - uid: 9207
-    components:
-    - type: Transform
-      pos: -41.5,-4.5
-      parent: 31
-    - type: NavMapBeacon
-      text: cryogenics
 - proto: DefaultStationBeaconAME
   entities:
   - uid: 7280
@@ -29104,6 +29097,13 @@ entities:
     components:
     - type: Transform
       pos: 8.5,-15.5
+      parent: 31
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 9207
+    components:
+    - type: Transform
+      pos: -41.5,-4.5
       parent: 31
 - proto: DefaultStationBeaconDisposals
   entities:
@@ -29296,13 +29296,6 @@ entities:
     components:
     - type: Transform
       pos: 50.5,-5.5
-      parent: 31
-- proto: DefaultStationBeaconTeslaEngine
-  entities:
-  - uid: 11380
-    components:
-    - type: Transform
-      pos: 56.5,10.5
       parent: 31
 - proto: DefaultStationBeaconToolRoom
   entities:
@@ -33235,7 +33228,7 @@ entities:
       pos: 38.5,-5.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -6516.4194
+      secondsUntilStateChange: -6538.6826
       state: Closing
   - uid: 4019
     components:

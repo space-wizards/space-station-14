@@ -79,6 +79,7 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeVoice();
             InitializeMobstate();
 
+            SubscribeLocalEvent<TriggerOnSpawnComponent, MapInitEvent>(OnSpawnTriggered);
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
@@ -198,6 +199,11 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (args.OurFixtureId == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
                 Trigger(uid);
+        }
+
+        private void OnSpawnTriggered(EntityUid uid, TriggerOnSpawnComponent component, MapInitEvent args)
+        {
+            Trigger(uid);
         }
 
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)

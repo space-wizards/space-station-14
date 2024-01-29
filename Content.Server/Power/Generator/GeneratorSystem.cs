@@ -26,11 +26,8 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
 
-    private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
-
     public override void Initialize()
     {
-        _upgradeQuery = GetEntityQuery<UpgradePowerSupplierComponent>();
 
         UpdatesBefore.Add(typeof(PowerNetSystem));
 
@@ -216,9 +213,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
             supplier.Enabled = true;
 
-            var upgradeMultiplier = _upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
-
-            supplier.MaxSupply = gen.TargetPower * upgradeMultiplier;
+            supplier.MaxSupply = gen.TargetPower;
 
             var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower, gen);
             var consumption = gen.OptimalBurnRate * frameTime * eff;
