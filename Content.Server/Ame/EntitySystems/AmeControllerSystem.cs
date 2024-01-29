@@ -263,6 +263,7 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             < 10 => AmeControllerState.Fuck,
             < 50 => AmeControllerState.Critical,
+            < 80 => AmeControllerState.Warning,
             _ => AmeControllerState.On,
         };
 
