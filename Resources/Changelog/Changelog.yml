@@ -1,24 +1,4 @@
-Entries:
-- author: mirrorcult
-  changes:
-  - message: Emergency lights no longer make sound
-    type: Remove
-  - message: Emergency light radius and energy is now much lower
-    type: Tweak
-  id: 5313
-  time: '2023-12-11T09:24:10.0000000+00:00'
-- author: Ubaser and Pigeonpeas
-  changes:
-  - message: The kobold ear marking has received a new sprite.
-    type: Tweak
-  id: 5314
-  time: '2023-12-11T09:25:55.0000000+00:00'
-- author: Rainfey
-  changes:
-  - message: Hardsuit helmets added to chameleon menu
-    type: Add
-  id: 5315
-  time: '2023-12-11T09:27:36.0000000+00:00'
+﻿Entries:
 - author: Flareguy
   changes:
   - message: 'Added 4 new HUD themes: Plasmafire, Slimecore, Clockwork, and Retro.'
@@ -3846,3 +3826,11 @@ Entries:
   id: 5815
   time: '2024-01-29T01:32:54.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24643
+- author: Ubaser
+  changes:
+  - message: Detectives now work as independent agents, separate from security, and
+      are encouraged to answer any requests for help.
+    type: Tweak
+  id: 5816
+  time: '2024-01-29T06:45:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23114
