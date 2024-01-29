@@ -180,7 +180,7 @@ public sealed partial class GunComponent : Component
     public bool ResetOnHandSelected = true;
 
     /// <summary>
-    /// How fast the projectile moves.
+    /// The base value for how fast the projectile moves.
     /// </summary>
     [DataField]
     public float ProjectileSpeed = 25f;
