@@ -10715,6 +10715,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,1.5
       parent: 8756
+- proto: AirlockDetectiveGlassLocked
+  entities:
+  - uid: 3192
+    components:
+    - type: Transform
+      pos: 39.5,48.5
+      parent: 1
 - proto: AirlockEngineeringGlassLocked
   entities:
   - uid: 9075
@@ -12484,11 +12491,6 @@ entities:
       parent: 1
 - proto: AirlockSecurityGlassLocked
   entities:
-  - uid: 3192
-    components:
-    - type: Transform
-      pos: 39.5,48.5
-      parent: 1
   - uid: 8211
     components:
     - type: Transform
