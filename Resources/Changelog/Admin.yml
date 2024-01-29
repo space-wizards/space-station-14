@@ -1,6 +1,6 @@
 Name: Admin
 AdminOnly: true
-Order: 2
+Order: 1
 Entries:
 - author: DrSmugleaf
   changes:
