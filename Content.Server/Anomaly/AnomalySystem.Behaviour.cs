@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Prototypes;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
@@ -10,6 +12,9 @@ public sealed partial class AnomalySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
+    [ValidatePrototypeId<WeightedRandomPrototype>]
+    const string WeightListProto = "AnomalyBehaviourList";
+
     private void InitializeBehaviour()
     {
 
@@ -17,21 +22,8 @@ public sealed partial class AnomalySystem
 
     private string GetRandomBehaviour()
     {
-        var behList = _prototype.EnumeratePrototypes<AnomalyBehaviourPrototype>().ToList();
-        var totalWeight = behList.Sum(x => x.Weight);
-        var randomValue = _random.NextFloat(totalWeight);
-
-        foreach (var b in behList)
-        {
-            if (randomValue < b.Weight)
-            {
-                return b.ID;
-            }
-
-            randomValue -= b.Weight;
-        }
-        // Shouldn't happen
-        throw new InvalidOperationException($"Invalid weighted variantize anomaly behaviour pick!");
+        var weightList = _prototype.Index<WeightedRandomPrototype>(WeightListProto);
+        return weightList.Pick(_random);
     }
 
     private void SetBehaviour(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviourPrototype> behaviourProto)

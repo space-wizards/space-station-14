@@ -14,12 +14,6 @@ public sealed partial class AnomalyBehaviourPrototype : IPrototype
     public string Description = string.Empty;
 
     /// <summary>
-    /// The weight of the chance that an anomaly will exhibit this particular behavior
-    /// </summary>
-    [DataField]
-    public float Weight = 1f;
-
-    /// <summary>
     /// modification of the number of points earned from an anomaly
     /// </summary>
     [DataField]

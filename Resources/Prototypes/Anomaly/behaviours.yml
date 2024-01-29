@@ -1,15 +1,34 @@
+- type: weightedRandom
+  id: AnomalyBehaviourList
+  weights:
+  #safe
+    Slow: 0.5
+    FullSafe: 0.1
+  #balanced
+    Balanced: 3
+    BalancedSecret: 1
+    Reflect: 1
+    NonSensivity: 0.5
+    Sensivity: 0.5
+  #Hard
+    Fast: 0.5
+    Inconstancy: 0.5
+    InconstancyParticle: 0.5
+    FullUnknown: 0.5
+    Jumping: 0.3
+    Moving: 0.1
+
+
 # Easy x0.5 point production
 
 - type: anomalyBehaviour
   id: FullSafe
-  weight: 0.1
   pulseFrequencyModifier: 5
   earnPointModifier: 0.05
   description: anomaly-behaviour-safe
 
 - type: anomalyBehaviour
   id: Slow
-  weight: 0.5
   pulseFrequencyModifier: 2
   earnPointModifier: 0.5
   description: anomaly-behaviour-slow
@@ -18,13 +37,11 @@
 
 - type: anomalyBehaviour
   id: Balanced
-  weight: 3
   earnPointModifier: 1
   description: anomaly-behaviour-balanced
   
 - type: anomalyBehaviour
   id: BalancedSecret
-  weight: 1
   earnPointModifier: 1.2
   description: anomaly-behaviour-secret
   components:
@@ -34,7 +51,6 @@
 
 - type: anomalyBehaviour
   id: Reflect
-  weight: 1
   earnPointModifier: 1.1
   particleSensivity: 0.5
   description: anomaly-behaviour-reflect
@@ -46,14 +62,12 @@
 
 - type: anomalyBehaviour
   id: NonSensivity
-  weight: 0.5
   earnPointModifier: 0.8
   particleSensivity: 0.5
   description: anomaly-behaviour-nonsensivity
   
 - type: anomalyBehaviour
   id: Sensivity
-  weight: 0.5
   earnPointModifier: 1.2
   particleSensivity: 1.5
   description: anomaly-behaviour-sensivity
@@ -62,14 +76,12 @@
 
 - type: anomalyBehaviour
   id: Fast
-  weight: 0.5
   earnPointModifier: 1.9
   pulseFrequencyModifier: 0.5
   description: anomaly-behaviour-fast
 
 - type: anomalyBehaviour
   id: Inconstancy
-  weight: 0.5
   earnPointModifier: 1.7
   description: anomaly-behaviour-inconstancy
   components:
@@ -79,7 +91,6 @@
 
 - type: anomalyBehaviour
   id: InconstancyParticle
-  weight: 0.5
   earnPointModifier: 1.8
   description: anomaly-behaviour-inconstancy
   components:
@@ -89,7 +100,6 @@
 
 - type: anomalyBehaviour
   id: Moving
-  weight: 0.1
   earnPointModifier: 2.2
   description: anomaly-behaviour-moving
   components:
@@ -103,7 +113,6 @@
 
 - type: anomalyBehaviour
   id: Jumping
-  weight: 0.3
   earnPointModifier: 1.8
   description: anomaly-behaviour-moving
   components:
@@ -116,7 +125,6 @@
 
 - type: anomalyBehaviour
   id: FullUnknown
-  weight: 1
   earnPointModifier: 1.9
   description: anomaly-behaviour-secret
   components:
