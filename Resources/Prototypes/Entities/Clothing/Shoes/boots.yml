@@ -31,7 +31,7 @@
         - Sidearm
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesMilitaryBase
   id: ClothingShoesBootsSalvage
   name: salvage boots
   description: Steel-toed salvage boots for salvaging in hazardous environments.
@@ -41,6 +41,10 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/explorer.rsi
   - type: Matchbox
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
 
 - type: entity
   parent: ClothingShoesBaseButcherable
