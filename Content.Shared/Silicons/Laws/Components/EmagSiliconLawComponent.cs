@@ -24,13 +24,6 @@ public sealed partial class EmagSiliconLawComponent : Component
     public bool RequireOpenPanel = true;
 
     /// <summary>
-    /// The laws that the borg is given when emagged.
-    /// Law 0 is prepended to this, so this can only include the static laws.
-    /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<SiliconLawsetPrototype> EmagLaws = string.Empty;
-
-    /// <summary>
     /// How long the borg is stunned when it's emagged. Setting to 0 will disable it.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
