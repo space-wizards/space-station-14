@@ -99,6 +99,26 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceSodaDispenser
+  icon:
+    sprite: Objects/Consumable/Drinks/generic_jug.rsi
+    state: icon
+  product: CrateServiceSodaDispenser
+  cost: 850
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceBoozeDispenser
+  icon:
+    sprite: Objects/Consumable/Drinks/generic_jug.rsi
+    state: icon
+  product: CrateServiceBoozeDispenser
+  cost: 750
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: ServiceBoxes
   icon:
     sprite: Objects/Storage/boxes.rsi
@@ -116,7 +136,7 @@
   product: CrateJanitorBiosuit
   cost: 800
   category: Service
-  group: market  
+  group: market
 
 - type: cargoProduct
   id: ServiceFoodCartHot
@@ -126,7 +146,7 @@
   product: FoodCartHot
   cost: 2000
   category: Service
-  group: market  
+  group: market
 
 - type: cargoProduct
   id: ServiceFoodCartCold
@@ -140,7 +160,7 @@
 
 - type: cargoProduct
   id: ServiceAnimalCarrier
-  icon: 
+  icon:
     sprite: Objects/Storage/petcarrier.rsi
     state: icon
   product: PetCarrier

@@ -35,9 +35,6 @@
   - type: SeedExtractor
   - type: Machine
     board: SeedExtractorMachineCircuitboard
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
 
 - type: entity
   id: IndustrialSeedExtractor
@@ -58,7 +55,3 @@
     baseMaxSeeds: 5
   - type: Machine
     board: IndustrialSeedExtractorMachineCircuitboard
-
-
-
-

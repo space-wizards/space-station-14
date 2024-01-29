@@ -10,7 +10,6 @@ using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using Content.Shared.Wires;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
 
@@ -43,7 +42,7 @@ public sealed class PartExchangerSystem : EntitySystem
         if (args.Handled || args.Args.Target == null)
             return;
 
-        if (!TryComp<StorageComponent>(uid, out var storage) || storage.Container == null)
+        if (!TryComp<StorageComponent>(uid, out var storage))
             return; //the parts are stored in here
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();
