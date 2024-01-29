@@ -140,7 +140,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
-            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.UserUid)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
+            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.UserUid)), ("title", /*Loc.GetString(component.Lawset.ObeysTo)*/"testvalue")),
             Order = 0
         });
 
