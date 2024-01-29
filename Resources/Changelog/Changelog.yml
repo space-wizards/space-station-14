@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ubaser and Pigeonpeas
-  changes:
-  - message: The kobold ear marking has received a new sprite.
-    type: Tweak
-  id: 5314
-  time: '2023-12-11T09:25:55.0000000+00:00'
 - author: Rainfey
   changes:
   - message: Hardsuit helmets added to chameleon menu
@@ -3830,3 +3824,11 @@
   id: 5814
   time: '2024-01-29T01:30:55.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24666
+- author: Krunk
+  changes:
+  - message: Health analysis interfaces now also display a subject's temperature in
+      Kelvin.
+    type: Add
+  id: 5815
+  time: '2024-01-29T01:32:54.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24643
