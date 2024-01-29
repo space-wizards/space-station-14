@@ -71,11 +71,18 @@ public sealed partial class StoreComponent : Component
     /// </summary>
     public Dictionary<string, FixedPoint2> BalanceSpent = new();
 
+    /// <summary>
+    ///     Controls if the store allows refunds
+    /// </summary>
     [ViewVariables, DataField]
     public bool RefundAllowed;
 
-    [ViewVariables]
+    /// <summary>
+    ///     The map the store was originally from, used to block refunds if the map is changed
+    /// </summary>
+    [ViewVariables, DataField]
     public MapId StartingMap;
+
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.

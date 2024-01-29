@@ -8,5 +8,6 @@ namespace Content.Server.Store.Components;
 [RegisterComponent, Access(typeof(StoreSystem))]
 public sealed partial class StoreRefundComponent : Component
 {
+    [ViewVariables, DataField]
     public EntityUid StoreEntity;
 }

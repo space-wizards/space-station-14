@@ -43,10 +43,7 @@ public sealed partial class StoreSystem
 
     private void OnRefundEntityDeleted(EntityUid uid, StoreComponent component, RefundEntityDeletedEvent args)
     {
-        if (component.BoughtEntities.Contains(args.Uid))
-        {
-            component.BoughtEntities.Remove(args.Uid);
-        }
+        component.BoughtEntities.Remove(args.Uid);
     }
 
     /// <summary>
@@ -233,7 +230,6 @@ public sealed partial class StoreSystem
                         }
                     }
                 }
-
             }
         }
 

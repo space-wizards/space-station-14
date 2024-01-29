@@ -76,6 +76,9 @@ public sealed class StoreRequestWithdrawMessage : BoundUserInterfaceMessage
     }
 }
 
+/// <summary>
+///     Used when the refund button is pressed
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class StoreRequestRefundMessage : BoundUserInterfaceMessage
 {
