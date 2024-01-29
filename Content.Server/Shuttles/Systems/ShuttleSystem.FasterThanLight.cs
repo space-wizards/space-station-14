@@ -400,53 +400,35 @@ public sealed partial class ShuttleSystem
         if (!Exists(entity.Comp1.TargetCoordinates.EntityId))
         {
             // Uhh good luck
+            // Pick earliest map?
+            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
+            var map = maps.Min(o => o.GetHashCode());
+
+            mapId = new MapId(map);
+            TryFTLProximity(uid, _mapManager.GetMapEntityId(mapId));
         }
         // Docking FTL
         else if (HasComp<MapGridComponent>(target.EntityId) &&
                  !HasComp<MapComponent>(target.EntityId))
         {
-            var config = _dockSystem.GetDockingConfigAt(uid, target.EntityId, target);
+            var config = _dockSystem.GetDockingConfigAt(uid, target.EntityId, target, entity.Comp1.TargetAngle);
 
+            // Couldn't dock somehow so just fallback to regular position FTL.
             if (config == null)
             {
-                _transform.SetCoordinates(uid, xform, target);
+                _transform.SetCoordinates(uid, xform, target, rotation: entity.Comp1.TargetAngle);
             }
+
+            mapId = target.GetMapId(EntityManager);
         }
-        // Proximity
+        // Position ftl
         else
         {
-
+            mapId = target.GetMapId(EntityManager);
+            _transform.SetCoordinates(uid, xform, target, rotation: entity.Comp1.TargetAngle);
         }
 
-        if (comp.TargetUid != null && shuttle != null)
-        {
-            if (!Deleted(comp.TargetUid))
-            {
-                if (comp.Dock)
-                    TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
-                else
-                    TryFTLProximity(uid, comp.TargetUid.Value);
-
-                mapId = Transform(comp.TargetUid.Value).MapID;
-            }
-            // oh boy, fallback time
-            else
-            {
-                // Pick earliest map?
-                var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
-                var map = maps.Min(o => o.GetHashCode());
-
-                mapId = new MapId(map);
-                TryFTLProximity(uid, _mapManager.GetMapEntityId(mapId));
-            }
-        }
-        else
-        {
-            xform.Coordinates = comp.TargetCoordinates;
-            mapId = comp.TargetCoordinates.GetMapId(EntityManager);
-        }
-
-        if (TryComp(uid, out body))
+        if (_physicsQuery.TryGetComponent(uid, out body))
         {
             _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
             _physics.SetAngularVelocity(uid, 0f, body: body);
@@ -457,16 +439,11 @@ public sealed partial class ShuttleSystem
             {
                 Disable(uid, component: body);
             }
-            else if (shuttle != null)
-            {
-                Enable(uid, component: body, shuttle: shuttle);
-            }
+
+            Enable(uid, component: body, shuttle: entity.Comp2);
         }
 
-        if (shuttle != null)
-        {
-            _thruster.DisableLinearThrusters(shuttle);
-        }
+        _thruster.DisableLinearThrusters(entity.Comp2);
 
         comp.TravelStream = _audio.Stop(comp.TravelStream);
         var audio = _audio.PlayPvs(_arrivalSound, uid);
@@ -493,24 +470,24 @@ public sealed partial class ShuttleSystem
         RaiseLocalEvent(uid, ref ftlEvent, true);
     }
 
-    private void UpdateFTLCooldown(Entity<FTLComponent> entity)
+    private void UpdateFTLCooldown(Entity<FTLComponent, ShuttleComponent> entity)
     {
-        RemComp<FTLComponent>(entity);
+        RemCompDeferred<FTLComponent>(entity);
         _console.RefreshShuttleConsoles(entity);
     }
 
     private void UpdateHyperspace(float frameTime)
     {
-        var query = EntityQueryEnumerator<FTLComponent>();
+        var query = EntityQueryEnumerator<FTLComponent, ShuttleComponent>();
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var comp, out var shuttle))
         {
             comp.Accumulator -= frameTime;
 
             if (comp.Accumulator > 0f)
                 continue;
 
-            var entity = (uid, comp);
+            var entity = (uid, comp, shuttle);
 
             switch (comp.State)
             {
