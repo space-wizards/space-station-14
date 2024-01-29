@@ -41,9 +41,9 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
     }
 
-    private void OnRefundEntityDeleted(EntityUid uid, StoreComponent component, RefundEntityDeletedEvent args)
+    private void OnRefundEntityDeleted(Entity<StoreComponent> ent, ref RefundEntityDeletedEvent args)
     {
-        component.BoughtEntities.Remove(args.Uid);
+        ent.Comp.BoughtEntities.Remove(args.Uid);
     }
 
     /// <summary>

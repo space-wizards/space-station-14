@@ -14,7 +14,7 @@ public sealed partial class StoreSystem
         if (MetaData(uid).EntityLifeStage == EntityLifeStage.Terminating)
         {
             var ev = new RefundEntityDeletedEvent(uid);
-            RaiseLocalEvent(component.StoreEntity, ev);
+            RaiseLocalEvent(component.StoreEntity, ref ev);
         }
     }
 }
