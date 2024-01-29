@@ -9,6 +9,8 @@
   access:
   - Service
   - Maintenance
+  - Theatre # DeltaV - Add Theatre access
+  - Boxer # DeltaV - Add Boxer access
 
 - type: startingGear
   id: BoxerGear

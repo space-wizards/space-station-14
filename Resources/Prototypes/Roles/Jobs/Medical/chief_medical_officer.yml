@@ -30,6 +30,8 @@
   - Chemistry
   - ChiefMedicalOfficer
   - Brig
+  - Paramedic # DeltaV - Add Paramedic access
+  - Psychologist # DeltaV - Add Psychologist access
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

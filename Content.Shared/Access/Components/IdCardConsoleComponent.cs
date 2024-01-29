@@ -48,6 +48,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Atmospherics",
         "Bar",
         "Brig",
+        "Boxer",  // DeltaV - Add Boxer access
         "Detective",
         "Captain",
         "Cargo",
@@ -55,7 +56,8 @@ public sealed partial class IdCardConsoleComponent : Component
         "Chemistry",
         "ChiefEngineer",
         "ChiefMedicalOfficer",
-        "Command",
+        "Clown", // DeltaV - Add Clown access
+		"Command",
         "Cryogenics",
         "Engineering",
         "External",
@@ -65,15 +67,22 @@ public sealed partial class IdCardConsoleComponent : Component
         "Janitor",
         "Kitchen",
         "Lawyer",
+        "Library",  // DeltaV - Add Library access 
         "Maintenance",
         "Medical",
+        "Mime", // DeltaV - Add Mime access
+        "Musician", // DeltaV - Add Musician access
+        "Paramedic", // DeltaV - Add Paramedic access
+        "Psychologist", // DeltaV - Add Psychologist access
         "Quartermaster",
+        "Reporter", // DeltaV - Add Reporter access
         "Research",
         "ResearchDirector",
         "Salvage",
         "Security",
         "Service",
         "Theatre",
+        "Zookeeper",  // DeltaV - Add Zookeeper access
     };
 
     [Serializable, NetSerializable]
