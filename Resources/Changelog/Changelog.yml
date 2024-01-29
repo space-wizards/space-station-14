@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Rainfey
-  changes:
-  - message: Hardsuit helmets added to chameleon menu
-    type: Add
-  id: 5315
-  time: '2023-12-11T09:27:36.0000000+00:00'
 - author: Flareguy
   changes:
   - message: 'Added 4 new HUD themes: Plasmafire, Slimecore, Clockwork, and Retro.'
@@ -3832,3 +3826,11 @@
   id: 5815
   time: '2024-01-29T01:32:54.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24643
+- author: Ubaser
+  changes:
+  - message: Detectives now work as independent agents, separate from security, and
+      are encouraged to answer any requests for help.
+    type: Tweak
+  id: 5816
+  time: '2024-01-29T06:45:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23114
