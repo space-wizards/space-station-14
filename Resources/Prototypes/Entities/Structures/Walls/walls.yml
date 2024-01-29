@@ -811,25 +811,6 @@
     reflectProb: 1
 
 - type: entity
-  parent: WallSolid
-  id: WallShuttleInterior
-  name: shuttle wall
-  suffix: Interior
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/shuttleinterior.rsi
-  - type: Icon
-    sprite: Structures/Walls/shuttleinterior.rsi
-  - type: Construction
-    graph: Girder
-    node: shuttleInteriorWall
-  - type: IconSmooth
-    key: walls
-    base: state
-  - type: Reflect
-    reflectProb: 1
-
-- type: entity
   parent: BaseWall
   id: WallSolid
   name: solid wall
