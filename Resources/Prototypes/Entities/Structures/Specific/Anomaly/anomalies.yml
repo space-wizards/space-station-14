@@ -123,7 +123,11 @@
     castShadows: false
   - type: GravityAnomaly
   - type: GravityWell
-  - type: RadiationSource
+  - type: RadiationSource  
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir  
   - type: RandomWalk
   - type: SingularityDistortion
     intensity: 1000
