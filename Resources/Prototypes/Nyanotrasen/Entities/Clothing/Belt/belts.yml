@@ -10,7 +10,8 @@
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Belt/katanasheath.rsi
   - type: Storage
-    capacity: 25
+    grid:
+      - 0,0,3,1
     whitelist:
       tags:
         - Katana
