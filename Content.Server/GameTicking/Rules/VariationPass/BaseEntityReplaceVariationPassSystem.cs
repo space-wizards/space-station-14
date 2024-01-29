@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Storage;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -18,6 +19,14 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
     where TEntComp: IComponent
     where TGameRuleComp: IComponent
 {
+    /// <summary>
+    ///     Used so we don't modify while enumerating
+    ///     if the replaced entity also has <see cref="TEntComp"/>.
+    ///
+    ///     Filled and cleared within the same tick so no persistence issues.
+    /// </summary>
+    private readonly Queue<(string, EntityCoordinates, Angle)> _queuedSpawns = new();
+
     protected override void ApplyVariation(Entity<TGameRuleComp> ent, ref StationVariationPassEvent args)
     {
         if (!TryComp<EntityReplaceVariationPassComponent>(ent, out var pass))
@@ -39,13 +48,20 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
                 continue;
 
             if (RobustRandom.Prob(prob))
-                Replace((uid, xform), pass.Replacements);
+                QueueReplace((uid, xform), pass.Replacements);
+        }
+
+        while (_queuedSpawns.TryDequeue(out var tup))
+        {
+            var (spawn, coords, rot) = tup;
+            var newEnt = Spawn(spawn, coords);
+            Transform(newEnt).LocalRotation = rot;
         }
 
         Log.Debug($"Entity replacement took {stopwatch.Elapsed} with {Stations.GetTileCount(args.Station)} tiles");
     }
 
-    private void Replace(Entity<TransformComponent> ent, List<EntitySpawnEntry> replacements)
+    private void QueueReplace(Entity<TransformComponent> ent, List<EntitySpawnEntry> replacements)
     {
         var coords = ent.Comp.Coordinates;
         var rot = ent.Comp.LocalRotation;
@@ -53,8 +69,7 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
 
         foreach (var spawn in EntitySpawnCollection.GetSpawns(replacements, RobustRandom))
         {
-            var newEnt = Spawn(spawn, coords);
-            Transform(newEnt).LocalRotation = rot;
+            _queuedSpawns.Enqueue((spawn, coords, rot));
         }
     }
 }
