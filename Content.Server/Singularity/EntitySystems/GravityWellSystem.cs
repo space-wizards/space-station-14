@@ -217,7 +217,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             if (!countStatic && isStatic)
                 continue;
 
-            if(!CanGravPulseAffect(entity))
+            if (!CanGravPulseAffect(entity))
                 continue;
 
             isStatic |= TryComp<MovedByPressureComponent>(entity, out var movedPressure) && !movedPressure.Enabled; //Treat magboots users as static
