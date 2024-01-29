@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Derivative of sprites taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c | space and pods modified by Velcroboy",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "sec"
+        },
+        {
+            "name": "space",
+            "directions": 4
+        },
+        {
+            "name": "pods",
+            "directions": 4
+        }
+    ]
+}

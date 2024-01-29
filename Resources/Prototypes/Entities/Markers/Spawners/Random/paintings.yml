@@ -26,10 +26,13 @@
       - PaintingSleepingGypsy
       - PaintingRedBlueYellow
       - PaintingHelloWorld
+      - PaintingSpoon # DeltaV Painting, see Resources/Prototypes/DeltaV/Entities/Structures/Wallmount/painting.yml
     chance: 1
     rarePrototypes:
       - PaintingSkeletonBoof
       - PaintingEmpty
       - PaintingMoony
       - PaintingAmogusTriptych
+      - PaintingMothBigCatch # Nyanotrasen Painting, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/painting.yml
+      - PaintingBlunt # DeltaV Painting, see Resources/Prototypes/DeltaV/Entities/Structures/Wallmount/painting.yml
     rareChance: 0.01
