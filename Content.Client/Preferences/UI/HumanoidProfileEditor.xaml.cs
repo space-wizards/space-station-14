@@ -148,6 +148,7 @@ namespace Content.Client.Preferences.UI
             _tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
             ShowClothes.OnPressed += ToggleClothes;
+			ShowLoadout.OnPressed += ToggleLoadout;
 
             #region Sex
 
@@ -676,6 +677,11 @@ namespace Content.Client.Preferences.UI
         }
 
         private void ToggleClothes(BaseButton.ButtonEventArgs obj)
+        {
+            RebuildSpriteView();
+        }
+
+        private void ToggleLoadout(BaseButton.ButtonEventArgs obj)
         {
             RebuildSpriteView();
         }
@@ -1268,8 +1274,10 @@ namespace Content.Client.Preferences.UI
             humanoid.LoadProfile(_previewDummy!.Value, Profile);
 
             if (ShowClothes.Pressed)
-                LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
-                LobbyCharacterPreviewPanel.GiveDummyLoadoutItems(_previewDummy!.Value, Profile);
+				LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
+				
+			if (ShowLoadout.Pressed)
+				LobbyCharacterPreviewPanel.GiveDummyLoadoutItems(_previewDummy!.Value, Profile);
 
             _previewSpriteView.OverrideDirection = (Direction) ((int) _previewRotation % 4 * 2);
         }
