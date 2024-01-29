@@ -29,7 +29,7 @@ laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
-laws-owner-spider-clan Spider Clan members
+laws-owner-spider-clan = Spider Clan members
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any activity from {$faction} except when doing so would conflict with any previous law.
