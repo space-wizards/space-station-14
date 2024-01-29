@@ -1,0 +1,15 @@
+- type: entity
+  id: shuttle_manipulator
+  parent: BaseStructure
+  name: station holograph
+  description: A three-dimensional hologram projection of a space station.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Structures/Decoration/shuttle_manipulator.rsi
+    state: holograph_station
+  - type: PointLight
+    radius: 1.4
+    energy: 2
+    color: "#26DEB3"
+  - type: Damageable
+    damageContainer: Inorganic
