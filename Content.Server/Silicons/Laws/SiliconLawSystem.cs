@@ -140,7 +140,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
-            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.UserUid)), ("title", /*Loc.GetString(component.Lawset.ObeysTo)*/"testvalue")),
+            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.UserUid)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
             Order = 0
         });
 
@@ -282,6 +282,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
         }
+        laws.ObeysTo = proto.ObeysTo;
 
         return laws;
     }
