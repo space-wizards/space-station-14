@@ -962,3 +962,38 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSanta
+
+#Debug Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitAdmin
+  name: bluespace traveler hardsuit [admeme]
+  description: A modified Bluespace Traveler hardsuit, or Bluespace God, or whoever this guy is.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/debugadmin.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/debugadmin.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.0
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.0
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.0 #BEST armor in the game. But only as Debug.
+        Slash: 0.0
+        Piercing: 0.0
+        Heat: 0.0
+        Cold: 0.0
+        Shock: 0.0
+        Radiation: 0.0
+        Caustic: 0.0
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitAdmin

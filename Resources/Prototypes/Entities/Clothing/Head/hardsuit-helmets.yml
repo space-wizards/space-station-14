@@ -751,3 +751,30 @@
     color: "#f4ffad"
     radius: 5
     energy: 2
+
+#Debug Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  id: ClothingHeadHelmetHardsuitAdmin
+  noSpawn: true
+  name: bluespace traveler hardsuit helmet [admeme]
+  description: Some modified bluespace helmet. Why does it look like a biker helmet?
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/debugadmin.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/debugadmin.rsi
+  - type: PointLight
+    color: "#b3f9ff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.0
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.0
+        Slash: 0.0
+        Piercing: 0.0
+        Heat: 0.0
+        Radiation: 0.0
+        Caustic: 0.0
