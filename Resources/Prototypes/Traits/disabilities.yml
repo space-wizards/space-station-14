@@ -55,7 +55,7 @@
     - type: Muted
 
 - type: trait
-  id: WheelchairUser
+  id: WheelchairBound # Retained to avoid a breaking change
   name: trait-wheelchair-user-name
   description: trait-wheelchair-user-desc
   blacklist:
