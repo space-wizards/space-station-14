@@ -1,4 +1,3 @@
-using Content.Server.Anomaly;
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Robust.Shared.Physics.Events;

@@ -1,11 +1,11 @@
-using Robust.Shared.Serialization;
+using Content.Server.Anomaly.Effects;
 
 namespace Content.Server.Anomaly.Components;
 
 /// <summary>
 /// Hides some information about the anomaly when scanning it
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SecretDataAnomalySystem), typeof(AnomalySystem))]
 public sealed partial class SecretDataAnomalyComponent : Component
 {
     [DataField]

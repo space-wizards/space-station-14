@@ -16,7 +16,7 @@
   description: anomaly-behaviour-balanced
   
 - type: anomalyBehaviour
-  id: BalancedSecretParticle
+  id: BalancedSecret
   weight: 1
   earnPointModifier: 1.2
   description: anomaly-behaviour-secret
@@ -60,7 +60,6 @@
   pulseFrequencyModifier: 0.5
   description: anomaly-behaviour-fast
 
- 
 - type: anomalyBehaviour
   id: Inconstancy
   weight: 0.5
@@ -72,7 +71,7 @@
     prob: 1
 
 - type: anomalyBehaviour
-  id: ParticleInconstancy
+  id: InconstancyParticle
   weight: 0.5
   earnPointModifier: 1.8
   description: anomaly-behaviour-inconstancy
@@ -83,7 +82,7 @@
 
 - type: anomalyBehaviour
   id: Moving
-  weight: 0.5
+  weight: 0.1
   earnPointModifier: 2.2
   description: anomaly-behaviour-moving
   components:
@@ -91,10 +90,13 @@
     minSpeed: 0
     maxSpeed: 0.5
   - type: CanMoveInAir
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
 
 - type: anomalyBehaviour
   id: Jumping
-  weight: 0.5
+  weight: 0.3
   earnPointModifier: 1.8
   description: anomaly-behaviour-moving
   components:
@@ -104,3 +106,13 @@
     rangeMin: 1
     rangeMax: 4
     effect: PuddleSparkle
+
+- type: anomalyBehaviour
+  id: FullUnknown
+  weight: 1
+  earnPointModifier: 2.4
+  description: anomaly-behaviour-secret
+  components:
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 4
+    randomStartSecretMax: 6

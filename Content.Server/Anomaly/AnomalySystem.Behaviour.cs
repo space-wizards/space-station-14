@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Anomaly;
@@ -35,7 +34,7 @@ public sealed partial class AnomalySystem
         {
             if (randomValue < b.Weight)
             {
-                return _random.Pick(_behaviourList).ID;
+                return b.ID;
             }
 
             randomValue -= b.Weight;

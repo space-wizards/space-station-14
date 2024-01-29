@@ -1,7 +1,6 @@
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Robust.Shared.Player;
