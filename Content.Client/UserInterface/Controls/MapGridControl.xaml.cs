@@ -144,9 +144,16 @@ public partial class MapGridControl : BoxContainer
         return value * MinimapScale + MidPointVector;
     }
 
-    protected Vector2 InverseScalePosition(Vector2 value)
+    /// <summary>
+    /// Converts local coordinates on the control to map coordinates.
+    /// </summary>
+    protected Vector2 InverseMapPosition(Vector2 value)
     {
-        return (value - MidPointVector) / MinimapScale;
+        var inversePos = (value - MidPointVector) / MinimapScale;
+
+        inversePos = inversePos with { Y = -inversePos.Y };
+        inversePos = Matrix3.CreateTransform(Offset, Angle.Zero).Transform(inversePos);
+        return inversePos;
     }
 
     /// <summary>

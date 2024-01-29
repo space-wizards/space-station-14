@@ -8,12 +8,30 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem
 {
+    private void InitializeFTL()
+    {
+        SubscribeLocalEvent<FTLBeaconComponent, ComponentStartup>(OnBeaconStartup);
+        SubscribeLocalEvent<FTLBeaconComponent, AnchorStateChangedEvent>(OnBeaconAnchorChanged);
+    }
+
+    private void OnBeaconStartup(Entity<FTLBeaconComponent> ent, ref ComponentStartup args)
+    {
+        RefreshShuttleConsoles();
+    }
+
+    private void OnBeaconAnchorChanged(Entity<FTLBeaconComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        RefreshShuttleConsoles();
+    }
+
     private void OnBeaconFTLMessage(Entity<ShuttleConsoleComponent> ent, ref ShuttleConsoleFTLBeaconMessage args)
     {
         var targetUid = GetEntity(args.Beacon);
 
         // Check target exists
-        if (!Exists(targetUid) || !_xformQuery.TryGetComponent(targetUid, out var targetXform))
+        if (!Exists(targetUid) ||
+            !_xformQuery.TryGetComponent(targetUid, out var targetXform) ||
+            !targetXform.Anchored)
         {
             return;
         }
@@ -23,7 +41,7 @@ public sealed partial class ShuttleConsoleSystem
         ConsoleFTL(ent, true, targetCoordinates, args.Angle, targetXform.MapID);
     }
 
-    private void OnPositionFTLMessage(Entity<ShuttleConsoleComponent> entity, ShuttleConsoleFTLPositionMessage args)
+    private void OnPositionFTLMessage(Entity<ShuttleConsoleComponent> entity, ref ShuttleConsoleFTLPositionMessage args)
     {
         var mapUid = _mapManager.GetMapEntityId(args.Coordinates.MapId);
 
@@ -60,6 +78,11 @@ public sealed partial class ShuttleConsoleSystem
 
         // Check shuttle can FTL to this target.
         if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap, beacon))
+        {
+            return;
+        }
+
+        if (!beacon && !_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle))
         {
             return;
         }

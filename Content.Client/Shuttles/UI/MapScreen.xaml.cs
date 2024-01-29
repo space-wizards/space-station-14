@@ -27,7 +27,7 @@ public sealed partial class MapScreen : BoxContainer
 
     private StyleBoxFlat _ftlStyle;
 
-    public event Action<MapCoordinates>? RequestFTL;
+    public event Action<MapCoordinates, Angle>? RequestFTL;
 
     public MapScreen()
     {
@@ -46,7 +46,10 @@ public sealed partial class MapScreen : BoxContainer
         FTLBar.ForegroundStyleBoxOverride = _ftlStyle;
 
         // Just pass it on up.
-        MapRadar.RequestFTL += RequestFTL;
+        MapRadar.RequestFTL += (coords, angle) =>
+        {
+            RequestFTL?.Invoke(coords, angle);
+        };
     }
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState state)

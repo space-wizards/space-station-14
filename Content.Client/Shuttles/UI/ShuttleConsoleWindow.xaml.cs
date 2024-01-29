@@ -17,7 +17,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private ShuttleConsoleMode _mode = ShuttleConsoleMode.Nav;
 
-    public event Action<MapCoordinates>? RequestFTL;
+    public event Action<MapCoordinates, Angle>? RequestFTL;
 
     public ShuttleConsoleWindow()
     {
@@ -39,7 +39,10 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         NavModeButton.Pressed = true;
         SetupMode(_mode);
 
-        MapContainer.RequestFTL += RequestFTL;
+        MapContainer.RequestFTL += (coords, angle) =>
+        {
+            RequestFTL?.Invoke(coords, angle);
+        };
     }
 
     private void ClearModes(ShuttleConsoleMode mode)

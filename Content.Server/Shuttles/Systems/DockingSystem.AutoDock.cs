@@ -82,7 +82,7 @@ public sealed partial class DockingSystem
             return;
         }
 
-        Undock(dork, dock);
+        Undock((dork, dock));
     }
 
     private void OnRequestAutodock(EntityUid uid, ShuttleConsoleComponent component, AutodockRequestMessage args)

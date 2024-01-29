@@ -26,9 +26,13 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.RequestFTL += OnFTLRequest;
     }
 
-    private void OnFTLRequest(MapCoordinates obj)
+    private void OnFTLRequest(MapCoordinates obj, Angle angle)
     {
-        SendMessage(new ShuttleConsoleFTLPositionMessage());
+        SendMessage(new ShuttleConsoleFTLPositionMessage()
+        {
+            Coordinates = obj,
+            Angle = angle,
+        });
     }
 
     protected override void Dispose(bool disposing)

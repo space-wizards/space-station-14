@@ -24,6 +24,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _inputs = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    private SharedMapSystem _maps;
     private SharedShuttleSystem _shuttles;
     private SharedTransformSystem _xformSystem;
 
@@ -49,10 +50,11 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     /// <summary>
     /// Raised when a request to FTL to a particular spot is raised.
     /// </summary>
-    public event Action<MapCoordinates>? RequestFTL;
+    public event Action<MapCoordinates, Angle>? RequestFTL;
 
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
+        _maps = _entManager.System<SharedMapSystem>();
         _shuttles = _entManager.System<SharedShuttleSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
@@ -90,9 +92,15 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         {
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                var mapPos = InverseScalePosition(args.RelativePosition);
+                var mapPos = InverseMapPosition(args.RelativePosition);
+
+                if (_shuttleEntity != null)
+                {
+                    mapPos = _maps.GetGridPosition(_shuttleEntity.Value, mapPos, _ftlAngle);
+                }
+
                 var mapCoords = new MapCoordinates(mapPos, ViewingMap);
-                RequestFTL?.Invoke(mapCoords);
+                RequestFTL?.Invoke(mapCoords, _ftlAngle);
             }
         }
 
@@ -105,6 +113,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         if (FtlMode)
         {
             _ftlAngle += Angle.FromDegrees(15f) * args.Delta.Y;
+            _ftlAngle = _ftlAngle.Reduced();
             return;
         }
 
@@ -185,27 +194,18 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             foreach (var grid in _grids)
             {
                 var gridPhysics = _physicsQuery.GetComponent(grid);
-                var position = _xformSystem.GetWorldPosition(grid);
-                position += gridPhysics.LocalCenter;
+                var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(grid);
+                gridPos = _maps.GetGridPosition((grid, gridPhysics), gridPos, gridRot);
 
-                var gridRelativePos = matty.Transform(position);
+                var gridRelativePos = matty.Transform(gridPos);
                 gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
                 var gridUiPos = ScalePosition(gridRelativePos);
 
                 if (grid.Owner == _shuttleEntity)
                 {
-                    var range = 1024f;
+                    var range = _shuttles.GetFTLRange(grid.Owner);
                     range *= MinimapScale;
                     handle.DrawCircle(gridUiPos, range, Color.Gold, filled: false);
-                }
-                else
-                {
-                    var localAABB = grid.Comp.LocalAABB;
-                    var maxExtent = localAABB.MaxDimension;
-                    var range = maxExtent + 32f;
-                    range *= MinimapScale;
-                    handle.DrawCircle(gridUiPos, range, Color.Magenta.WithAlpha(0.01f));
-                    handle.DrawCircle(gridUiPos, range, Color.Magenta, filled: false);
                 }
             }
         }
@@ -220,9 +220,6 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         // If mouse highlighting a grid then show a highlight and support clicks
 
         // TODO:
-        // Map objects looks good just need xaml
-        // Maybe have the below as controls to get click support and hover
-        // Need to open a special context menu for the grid (atm needs dock button)
         // Need per-map support for parallax textures (use component for path or default if none found), use nukies for planets
         // need FTL button
         // Rebuild should play a ping.
@@ -246,9 +243,9 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             var existingVerts = verts.GetOrNew(gridColor);
             var existingEdges = edges.GetOrNew(gridColor);
 
-            var physics = _physicsQuery.GetComponent(grid);
-            var gridPos = _xformSystem.GetWorldPosition(grid.Owner);
-            gridPos += physics.LocalCenter;
+            var gridPhysics = _physicsQuery.GetComponent(grid.Owner);
+            var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(grid.Owner);
+            gridPos = _maps.GetGridPosition((grid, gridPhysics), gridPos, gridRot);
 
             var gridRelativePos = matty.Transform(gridPos);
             gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
@@ -320,23 +317,40 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                 var controlBounds = GlobalPixelRect;
 
                 // If mouse inbounds then draw it.
-                if (_shuttleEntity != null && controlBounds.Contains(mousePos.Position.Floored()))
+                if (_shuttleEntity != null && controlBounds.Contains(mousePos.Position.Floored()) &&
+                    _entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) &&
+                    shuttleXform.MapID != MapId.Nullspace)
                 {
-                    var shuttleMapCoordinates = _xformSystem.GetMapCoordinates(_shuttleEntity.Value);
-                    var color = _shuttles.GetIFFColor(_shuttleEntity.Value, self: true);
+                    var physics = _physicsQuery.GetComponent(_shuttleEntity.Value);
+                    var grid = _entManager.GetComponent<MapGridComponent>(_shuttleEntity.Value);
+
+                    var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(shuttleXform);
+                    gridPos = _maps.GetGridPosition(_shuttleEntity.Value, gridPos, gridRot);
+
+                    var mouseMapPos = InverseMapPosition(mouseLocalPos);
+                    mouseMapPos += _ftlAngle.RotateVec(physics.LocalCenter);
+
+                    var mapId = shuttleXform.MapID;
+                    var ftlFree = _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(shuttleXform.MapUid!.Value, mouseMapPos), _ftlAngle);
+
+                    var color = ftlFree ? Color.LimeGreen : Color.Magenta;
 
                     // Draw line from our shuttle to target (assuming same map).
-                    if (shuttleMapCoordinates.MapId == ViewingMap)
+                    if (mapId == ViewingMap)
                     {
-                        var gridRelativePos = matty.Transform(shuttleMapCoordinates.Position);
+                        var gridRelativePos = matty.Transform(gridPos);
                         gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
                         var gridUiPos = ScalePosition(gridRelativePos);
+
+                        // Draw FTL buffer around the mouse.
+                        var ourFTLBuffer = _shuttles.GetFTLBufferRange(_shuttleEntity.Value, grid);
+                        ourFTLBuffer *= MinimapScale;
+                        handle.DrawCircle(mouseLocalPos, ourFTLBuffer, Color.Magenta.WithAlpha(0.01f));
+                        handle.DrawCircle(mouseLocalPos, ourFTLBuffer, Color.Magenta, filled: false);
 
                         // Might need to clip the line if it's too far? But my brain wasn't working so F.
                         handle.DrawDottedLine(gridUiPos, mouseLocalPos, color, (float) realTime.TotalSeconds * 30f);
                     }
-
-                    // TODO: Check if the target spot is in a forbidden zone.
 
                     // Draw shuttle pre-vis
                     var mouseVerts = new ValueList<Vector2>(4)
