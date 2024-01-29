@@ -53,7 +53,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeScanner();
         InitializeVessel();
         InitializeCommands();
-        InitializeBehaviour();
+        InitializeBehavior();
     }
 
     private void OnMapInit(Entity<AnomalyComponent> anomaly, ref MapInitEvent args)
@@ -64,7 +64,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
         ShuffleParticlesEffect(anomaly.Comp);
         anomaly.Comp.Continuity = _random.NextFloat(anomaly.Comp.MinContituty, anomaly.Comp.MaxContituty);
-        SetBehaviour(anomaly, GetRandomBehaviour());
+        SetBehavior(anomaly, GetRandomBehavior());
     }
 
     public void ShuffleParticlesEffect(AnomalyComponent anomaly)
@@ -91,14 +91,14 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (args.OtherFixtureId != particle.FixtureId)
             return;
 
-        var behaviourMod = 1f;
-        if (anomaly.Comp.CurrentBehaviour != null)
+        var behaviorMod = 1f;
+        if (anomaly.Comp.CurrentBehavior != null)
         {
-            var b = _prototype.Index(anomaly.Comp.CurrentBehaviour.Value);
-            behaviourMod = b.ParticleSensivity;
+            var b = _prototype.Index(anomaly.Comp.CurrentBehavior.Value);
+            behaviorMod = b.ParticleSensivity;
         }
         // small function to randomize because it's easier to read like this
-        float VaryValue(float v) => v * behaviourMod * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
+        float VaryValue(float v) => v * behaviorMod * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
         if (particle.ParticleType == anomaly.Comp.DestabilizingParticleType || particle.DestabilzingOverride)
         {
@@ -118,7 +118,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             ChangeAnomalySeverity(anomaly, VaryValue(particle.SeverityPerSeverityHit), anomaly.Comp);
             if (_random.Prob(anomaly.Comp.Continuity))
             {
-                SetBehaviour(anomaly, GetRandomBehaviour());
+                SetBehavior(anomaly, GetRandomBehavior());
                 RefreshPulseTimer(anomaly);
             }
         }
@@ -142,11 +142,11 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         //penalty of up to 50% based on health
         multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
 
-        //Apply behaviour modifier
-        if (component.CurrentBehaviour != null)
+        //Apply behavior modifier
+        if (component.CurrentBehavior != null)
         {
-            var behaviour = _prototype.Index(component.CurrentBehaviour.Value);
-            multiplier *= behaviour.EarnPointModifier;
+            var behavior = _prototype.Index(component.CurrentBehavior.Value);
+            multiplier *= behavior.EarnPointModifier;
         }
 
         var severityValue = 1 / (1 + MathF.Pow(MathF.E, -7 * (component.Severity - 0.5f)));

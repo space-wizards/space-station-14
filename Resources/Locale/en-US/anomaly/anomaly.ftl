@@ -75,18 +75,18 @@ anomaly-command-supercritical = Makes a target anomaly go supercritical
 anomaly-generator-flavor-left = Anomaly may spawn inside the operator.
 anomaly-generator-flavor-right = v1.1
 
-anomaly-behaviour-unknown = [color=red]ERROR. Cannot be read.[/color]
+anomaly-behavior-unknown = [color=red]ERROR. Cannot be read.[/color]
 
-anomaly-behaviour-title = Behaviour deviation analysis:
-anomaly-behaviour-point =[color=gold]Anomaly produces {$mod}% of the points[/color] 
+anomaly-behavior-title = behavior deviation analysis:
+anomaly-behavior-point =[color=gold]Anomaly produces {$mod}% of the points[/color] 
 
-anomaly-behaviour-safe = [color=forestgreen]The anomaly is extremely stable. Extremely rare pulsations.[/color]
-anomaly-behaviour-slow = [color=forestgreen]The frequency of pulsations is much less frequent.[/color]
-anomaly-behaviour-balanced = No behaviour deviations detected.
-anomaly-behaviour-reflect = A protective coating was detected.
-anomaly-behaviour-nonsensivity = A weak reaction to particles was detected.
-anomaly-behaviour-sensivity = Amplified reaction to particles was detected.
-anomaly-behaviour-secret = Interference detected. Some data cannot be read
-anomaly-behaviour-inconstancy = [color=crimson]Impermanence has been detected. Particle types can change over time.[/color]
-anomaly-behaviour-fast = [color=crimson]The pulsation frequency is strongly increased.[/color]
-anomaly-behaviour-moving = [color=crimson]Coordinate instability was detected.[/color]
+anomaly-behavior-safe = [color=forestgreen]The anomaly is extremely stable. Extremely rare pulsations.[/color]
+anomaly-behavior-slow = [color=forestgreen]The frequency of pulsations is much less frequent.[/color]
+anomaly-behavior-balanced = No behavior deviations detected.
+anomaly-behavior-reflect = A protective coating was detected.
+anomaly-behavior-nonsensivity = A weak reaction to particles was detected.
+anomaly-behavior-sensivity = Amplified reaction to particles was detected.
+anomaly-behavior-secret = Interference detected. Some data cannot be read
+anomaly-behavior-inconstancy = [color=crimson]Impermanence has been detected. Particle types can change over time.[/color]
+anomaly-behavior-fast = [color=crimson]The pulsation frequency is strongly increased.[/color]
+anomaly-behavior-moving = [color=crimson]Coordinate instability was detected.[/color]

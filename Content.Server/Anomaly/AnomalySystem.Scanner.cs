@@ -197,28 +197,28 @@ public sealed partial class AnomalySystem
             msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-transformation", ("type", GetParticleLocale(anomalyComp.TransformationParticleType))));
 
 
-        //Behaviour
+        //Behavior
         msg.PushNewline();
         msg.PushNewline();
-        msg.AddMarkup(Loc.GetString("anomaly-behaviour-title"));
+        msg.AddMarkup(Loc.GetString("anomaly-behavior-title"));
         msg.PushNewline();
 
-        if (secret != null && secret.Secret.Contains(AnomalySecretData.Behaviour))
-            msg.AddMarkup(Loc.GetString("anomaly-behaviour-unknown"));
+        if (secret != null && secret.Secret.Contains(AnomalySecretData.Behavior))
+            msg.AddMarkup(Loc.GetString("anomaly-behavior-unknown"));
         else
         {
-            if (anomalyComp.CurrentBehaviour != null)
+            if (anomalyComp.CurrentBehavior != null)
             {
-                var behaviour = _prototype.Index(anomalyComp.CurrentBehaviour.Value);
+                var behavior = _prototype.Index(anomalyComp.CurrentBehavior.Value);
 
-                msg.AddMarkup("- " + Loc.GetString(behaviour.Description));
+                msg.AddMarkup("- " + Loc.GetString(behavior.Description));
                 msg.PushNewline();
-                var mod = Math.Floor((behaviour.EarnPointModifier) * 100);
-                msg.AddMarkup("- " + Loc.GetString("anomaly-behaviour-point", ("mod", mod)));
+                var mod = Math.Floor((behavior.EarnPointModifier) * 100);
+                msg.AddMarkup("- " + Loc.GetString("anomaly-behavior-point", ("mod", mod)));
             }
             else
             {
-                msg.AddMarkup(Loc.GetString("anomaly-behaviour-balanced"));
+                msg.AddMarkup(Loc.GetString("anomaly-behavior-balanced"));
             }
         }
 

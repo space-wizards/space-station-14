@@ -1,5 +1,5 @@
 - type: weightedRandom
-  id: AnomalyBehaviourList
+  id: AnomalyBehaviorList
   weights:
   #safe
     Slow: 0.5
@@ -21,87 +21,87 @@
 
 # Easy x0.5 point production
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: FullSafe
   pulseFrequencyModifier: 5
   earnPointModifier: 0.05
-  description: anomaly-behaviour-safe
+  description: anomaly-behavior-safe
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Slow
   pulseFrequencyModifier: 2
   earnPointModifier: 0.5
-  description: anomaly-behaviour-slow
+  description: anomaly-behavior-slow
 
 # Balanced x1 point production
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Balanced
   earnPointModifier: 1
-  description: anomaly-behaviour-balanced
+  description: anomaly-behavior-balanced
   
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: BalancedSecret
   earnPointModifier: 1.2
-  description: anomaly-behaviour-secret
+  description: anomaly-behavior-secret
   components:
   - type: SecretDataAnomaly
     randomStartSecretMin: 2
     randomStartSecretMax: 3
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Reflect
   earnPointModifier: 1.1
   particleSensivity: 0.5
-  description: anomaly-behaviour-reflect
+  description: anomaly-behavior-reflect
   components:
   - type: Reflect
     reflectProb: 0.5
     reflects:
       - Energy
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: NonSensivity
   earnPointModifier: 0.8
   particleSensivity: 0.5
-  description: anomaly-behaviour-nonsensivity
+  description: anomaly-behavior-nonsensivity
   
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Sensivity
   earnPointModifier: 1.2
   particleSensivity: 1.5
-  description: anomaly-behaviour-sensivity
+  description: anomaly-behavior-sensivity
 
 # Hard x2 point production
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Fast
   earnPointModifier: 1.9
   pulseFrequencyModifier: 0.5
-  description: anomaly-behaviour-fast
+  description: anomaly-behavior-fast
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Inconstancy
   earnPointModifier: 1.7
-  description: anomaly-behaviour-inconstancy
+  description: anomaly-behavior-inconstancy
   components:
   - type: ShuffleParticlesAnomaly
     shuffleOnPulse: true
     prob: 1
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: InconstancyParticle
   earnPointModifier: 1.8
-  description: anomaly-behaviour-inconstancy
+  description: anomaly-behavior-inconstancy
   components:
   - type: ShuffleParticlesAnomaly
     shuffleOnParticleHit: true
     prob: 0.8
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Moving
   earnPointModifier: 2.2
-  description: anomaly-behaviour-moving
+  description: anomaly-behavior-moving
   components:
   - type: RandomWalk
     minSpeed: 0
@@ -111,10 +111,10 @@
     bodyType: Dynamic
     bodyStatus: InAir
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: Jumping
   earnPointModifier: 1.8
-  description: anomaly-behaviour-moving
+  description: anomaly-behavior-moving
   components:
   - type: ChaoticJump
     jumpMinInterval: 15
@@ -123,10 +123,10 @@
     rangeMax: 4
     effect: PuddleSparkle
 
-- type: anomalyBehaviour
+- type: anomalyBehavior
   id: FullUnknown
   earnPointModifier: 1.9
-  description: anomaly-behaviour-secret
+  description: anomaly-behavior-secret
   components:
   - type: SecretDataAnomaly
     randomStartSecretMin: 4

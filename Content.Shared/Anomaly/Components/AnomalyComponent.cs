@@ -228,10 +228,10 @@ public sealed partial class AnomalyComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? CoreInertPrototype;
 
-    #region Behaviour Deviations
+    #region Behavior Deviations
 
     [DataField]
-    public ProtoId<AnomalyBehaviourPrototype>? CurrentBehaviour;
+    public ProtoId<AnomalyBehaviorPrototype>? CurrentBehavior;
 
     /// <summary>
     /// Presumption of anomaly to change behavior. The higher the number, the higher the chance that the anomaly will change its behavior.

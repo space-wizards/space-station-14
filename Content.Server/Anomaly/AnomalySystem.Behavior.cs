@@ -13,32 +13,32 @@ public sealed partial class AnomalySystem
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
     [ValidatePrototypeId<WeightedRandomPrototype>]
-    const string WeightListProto = "AnomalyBehaviourList";
+    const string WeightListProto = "AnomalyBehaviorList";
 
-    private void InitializeBehaviour()
+    private void InitializeBehavior()
     {
 
     }
 
-    private string GetRandomBehaviour()
+    private string GetRandomBehavior()
     {
         var weightList = _prototype.Index<WeightedRandomPrototype>(WeightListProto);
         return weightList.Pick(_random);
     }
 
-    private void SetBehaviour(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviourPrototype> behaviourProto)
+    private void SetBehavior(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviorPrototype> behaviorProto)
     {
-        if (anomaly.Comp.CurrentBehaviour == behaviourProto)
+        if (anomaly.Comp.CurrentBehavior == behaviorProto)
             return;
 
-        if (anomaly.Comp.CurrentBehaviour != null)
-            RemoveBehaviour(anomaly);
+        if (anomaly.Comp.CurrentBehavior != null)
+            RemoveBehavior(anomaly);
 
-        anomaly.Comp.CurrentBehaviour = behaviourProto;
+        anomaly.Comp.CurrentBehavior = behaviorProto;
 
-        var behaviour = _prototype.Index(behaviourProto);
+        var behavior = _prototype.Index(behaviorProto);
 
-        foreach (var (name, entry) in behaviour.Components)
+        foreach (var (name, entry) in behavior.Components)
         {
             var reg = _componentFactory.GetRegistration(name);
 
@@ -57,15 +57,15 @@ public sealed partial class AnomalySystem
         }
     }
 
-    private void RemoveBehaviour(Entity<AnomalyComponent> anomaly)
+    private void RemoveBehavior(Entity<AnomalyComponent> anomaly)
     {
-        if (anomaly.Comp.CurrentBehaviour == null)
+        if (anomaly.Comp.CurrentBehavior == null)
             return;
 
-        var behaviour = _prototype.Index(anomaly.Comp.CurrentBehaviour.Value);
+        var behavior = _prototype.Index(anomaly.Comp.CurrentBehavior.Value);
 
         var entityPrototype = MetaData(anomaly).EntityPrototype;
-        var toRemove = behaviour.Components.Keys.ToList();
+        var toRemove = behavior.Components.Keys.ToList();
 
         foreach (var name in toRemove)
         {

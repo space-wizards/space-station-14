@@ -310,15 +310,15 @@ public abstract class SharedAnomalySystem : EntitySystem
     public TimeSpan GetPulseLength(AnomalyComponent component)
     {
         DebugTools.Assert(component.MaxPulseLength > component.MinPulseLength);
-        var modifier = Math.Clamp((component.Stability - component.GrowthThreshold) /  component.GrowthThreshold, 0, 1);
+        var modifier = Math.Clamp((component.Stability - component.GrowthThreshold) / component.GrowthThreshold, 0, 1);
 
         var lenght = (component.MaxPulseLength - component.MinPulseLength) * modifier + component.MinPulseLength;
 
-        //Apply behaviour modifier
-        if (component.CurrentBehaviour != null)
+        //Apply behavior modifier
+        if (component.CurrentBehavior != null)
         {
-            var behaviour = _prototype.Index(component.CurrentBehaviour.Value);
-            lenght *= behaviour.PulseFrequencyModifier;
+            var behavior = _prototype.Index(component.CurrentBehavior.Value);
+            lenght *= behavior.PulseFrequencyModifier;
         }
         return lenght;
     }

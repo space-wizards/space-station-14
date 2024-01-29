@@ -31,7 +31,7 @@ public sealed class SecretDataAnomalySystem : EntitySystem
             AnomalySecretData.ParticleUnstable,
             AnomalySecretData.ParticleContainment,
             AnomalySecretData.ParticleTransformation,
-            AnomalySecretData.Behaviour,
+            AnomalySecretData.Behavior,
         };
 
         for (int i = 0; i < count; i++)
