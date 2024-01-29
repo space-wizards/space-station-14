@@ -39,7 +39,7 @@
     tags:
     - Katana
   - type: Sprite
-    sprite: Objects/Weapons/Melee/katana.rsi
+    sprite: DeltaV/Objects/Weapons/Melee/katana.rsi #DeltaV
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: -135
@@ -50,7 +50,7 @@
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Normal
-    sprite: Objects/Weapons/Melee/katana.rsi
+    sprite: DeltaV/Objects/Weapons/Melee/katana.rsi #DeltaV
   - type: DisarmMalus
 
 - type: entity

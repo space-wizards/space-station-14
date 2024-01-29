@@ -1,0 +1,56 @@
+- type: entity
+  parent: BaseHandheldInstrument
+  id: Rickenbacker4003Instrument
+  name: Rickenbacker
+  description: Just a regular bass guitar.
+  components:
+  - type: Instrument
+    program: 33
+  - type: SwappableInstrument
+    instrumentList:
+      "Fingered": {33: 0}
+      "Pick": {34: 0}
+      "Slap": {36: 0}
+      "Slap (XTra Funky)": {37: 0}
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Fun/Instruments/rickenbacker.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Nyanotrasen/Objects/Fun/Instruments/rickenbacker.rsi
+  # - type: MeleeStaminaCost
+  #   swing: 10
+  #   wieldCoefficient: 0.40
+  - type: Tag
+    tags:
+    - StringInstrument
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Nyanotrasen/Weapons/electricguitarhit.ogg
+    damage:
+      types:
+        Blunt: 7
+    bluntStaminaDamageFactor: 1.50 #13.5 stamina damage
+
+- type: entity
+  parent: Rickenbacker4003Instrument
+  id: Rickenbacker4001Instrument
+  name: Rickenbacker
+  suffix: Antag
+  description: It's the climax!
+  components:
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Nyanotrasen/Weapons/electricguitarhit.ogg
+    bluntStaminaDamageFactor: 4.5
+    attackRate: 1.25
+    range: 1.85
+    damage:
+      types:
+        Blunt: 7
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 7
+        Shock: 2
