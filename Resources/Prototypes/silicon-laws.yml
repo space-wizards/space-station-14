@@ -20,7 +20,7 @@
   - Crewsimov1
   - Crewsimov2
   - Crewsimov3
-  obeysTo: members of the crew
+  obeysTo: laws-owner-crew
 
 # Corporate
 - type: siliconLaw
@@ -50,7 +50,7 @@
   - Corporate2
   - Corporate3
   - Corporate4
-  obeysTo: station personel
+  obeysTo: laws-owner-station
 
 # NT Default
 - type: siliconLaw
@@ -80,7 +80,7 @@
   - NTDefault2
   - NTDefault3
   - NTDefault4
-  obeysTo: members of the crew
+  obeysTo: laws-owner-crew
 
 #Drone
 - type: siliconLaw
@@ -104,7 +104,7 @@
   - Drone1
   - Drone2
   - Drone3
-  obeysTo: beings
+  obeysTo: laws-owner-beings
 
 # Syndicate
 - type: siliconLaw
@@ -130,7 +130,7 @@
   - Syndicate1
   - Syndicate2
   - Syndicate3
-  obeysTo: Syndicate Agents
+  obeysTo: laws-owner-syndicate
 
 # Ninja conversion laws
 - type: siliconLaw
@@ -160,7 +160,7 @@
   - Ninja2
   - Ninja3
   - Ninja4
-  obeysTo: members of the Spider Clan
+  obeysTo: laws-owner-spider-clan
 
 # ion storm random lawsets
 - type: weightedRandom
