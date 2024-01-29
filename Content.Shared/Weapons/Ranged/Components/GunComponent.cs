@@ -181,10 +181,16 @@ public sealed partial class GunComponent : Component
     public bool ResetOnHandSelected = true;
 
     /// <summary>
-    /// Type of ammo the gun can work with
+    /// Type of ammo the gun can work with. Projectile's prototype. if not null only projectiles in this list will fire, does not supercede IncompatibleAmmo.
     /// </summary>
     [DataField]
     public List<ProtoId<TagPrototype>>? CompatibleAmmo;
+
+    /// <summary>
+    /// Type of ammo the gun can work with. Projectile's prototype. Projectiles in this list will not fire.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("incompatibleAmmo")]
+    public List<ProtoId<TagPrototype>>? IncompatibleAmmo;
 
     /// <summary>
     /// Damage the gun deals when used with wrong ammo
