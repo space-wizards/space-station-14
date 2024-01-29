@@ -15,7 +15,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// <summary>
         /// Makes the reclaimer store non-integer biomass leftovers, since biomass can only stack to integer amounts.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, DataField]
         public float BiomassAccumulator = 0f;
 
         /// <summary>
