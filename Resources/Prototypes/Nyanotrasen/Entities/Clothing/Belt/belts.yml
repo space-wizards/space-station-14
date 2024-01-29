@@ -1,0 +1,26 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltKatanaSheath
+  name: katana sheaths
+  description: An ornate belt designed to hold a pair of samurai's blades, or daisho.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Belt/katanasheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Belt/katanasheath.rsi
+  - type: Storage
+    capacity: 25
+    whitelist:
+      tags:
+        - Katana
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - Katana
+  - type: Appearance
+  - type: Tag
+    tags:
+      - BeltSlotNotBelt

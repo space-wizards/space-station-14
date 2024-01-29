@@ -1,0 +1,44 @@
+- type: entity
+  name: katana
+  suffix: Dulled
+  parent: BaseItem
+  id: KatanaDulled
+  description: Ancient craftwork made with not so ancient plasteel. This one has been dulled.
+  components:
+  - type: Tag
+    tags:
+    - Katana
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/katana.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+        Slash: 1
+  - type: Item
+    size: Normal
+    sprite: Objects/Weapons/Melee/katana.rsi
+
+- type: entity
+  name: claymore
+  suffix: Dulled
+  parent: BaseItem
+  id: ClaymoreDulled
+  description: An ancient war blade. This one has been dulled.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 6
+        Slash: 1
+  - type: Item
+    size: Normal
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    slots:
+    - back

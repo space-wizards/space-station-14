@@ -1,0 +1,48 @@
+- type: entity
+  name: breaching hammer
+  parent: BaseItem
+  id: SecBreachingHammer
+  description: A large, heavy hammer with a long handle, used for breaking stones or other heavy material such as the skulls of violent criminals, also perfect for forcing your way trough airlocks.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Weapons/Melee/breaching_hammer.rsi
+    state: icon
+  - type: Item
+    size: Huge
+  - type: MeleeWeapon
+    attackRate: 0.75
+    range: 1.70
+    damage:
+      types:
+        Blunt: 10
+        Piercing: 3
+        Structural: 10
+    soundHit:
+      path: /Audio/Nyanotrasen/Weapons/club.ogg
+    bluntStaminaDamageFactor: 1.50 # 15 stamina damage
+#  - type: MeleeStaminaCost
+#    swing: 10
+#    wieldCoefficient: 0.5 #if wielded you will only consume 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+        Piercing: 2
+        Structural: 65
+  - type: Tool
+    qualities:
+      - Prying
+    speed: 0.8
+  - type: Prying
+    pryPowered: !type:Bool
+      true
+    force: !type:Bool
+      true
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: ToolForcePowered
+  - type: Clothing
+    sprite: Nyanotrasen/Objects/Weapons/Melee/breaching_hammer.rsi
+    quickEquip: false
+    slots:
+    - back
