@@ -5,9 +5,9 @@
   description: An upgraded syndicate visor with automatic health readings, designed for better detection of humanoids and their subsequent elimination.
   components:
   - type: Sprite
-    sprite: Greystation/Clothing/Eyes/Hud/syndmed.rsi
+    sprite: GreyStation/Clothing/Eyes/Hud/syndmed.rsi
   - type: Clothing
-    sprite: Greystation/Clothing/Eyes/Hud/syndmed.rsi
+    sprite: GreyStation/Clothing/Eyes/Hud/syndmed.rsi
   - type: ShowHealthBars
     damageContainers:
     - Biological
