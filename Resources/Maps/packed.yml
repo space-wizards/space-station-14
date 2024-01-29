@@ -32238,18 +32238,6 @@ entities:
       - Steel
       - Glass
       - Gold
-- proto: ClosetBase
-  entities:
-  - uid: 5460
-    components:
-    - type: Transform
-      pos: 69.5,40.5
-      parent: 2
-  - uid: 5461
-    components:
-    - type: Transform
-      pos: 69.5,37.5
-      parent: 2
 - proto: ClosetBombFilled
   entities:
   - uid: 12854
@@ -32483,6 +32471,18 @@ entities:
     components:
     - type: Transform
       pos: 54.5,25.5
+      parent: 2
+- proto: ClosetSteelBase
+  entities:
+  - uid: 5460
+    components:
+    - type: Transform
+      pos: 69.5,40.5
+      parent: 2
+  - uid: 5461
+    components:
+    - type: Transform
+      pos: 69.5,37.5
       parent: 2
 - proto: ClosetToolFilled
   entities:
@@ -35141,6 +35141,13 @@ entities:
     - type: Transform
       pos: 59.5,-1.5
       parent: 2
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 6937
+    components:
+    - type: Transform
+      pos: 21.5,17.5
+      parent: 2
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
   - uid: 12851
@@ -35311,13 +35318,6 @@ entities:
     components:
     - type: Transform
       pos: 15.5,-17.5
-      parent: 2
-- proto: DefaultStationBeaconTeslaEngine
-  entities:
-  - uid: 13181
-    components:
-    - type: Transform
-      pos: 19.5,-42.5
       parent: 2
 - proto: DefaultStationBeaconToolRoom
   entities:

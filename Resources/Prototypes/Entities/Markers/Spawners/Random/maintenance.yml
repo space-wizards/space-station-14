@@ -62,6 +62,8 @@
         - ClothingShoesCult
         - ClothingUniformJumpsuitAncient
         - ClothingUniformJumpsuitPirate
+        - ClothingShoesBootsCowboyFancy
+        - ClothingHeadHatCowboyBountyHunter
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -122,6 +124,7 @@
         - ClothingShoesBootsWork
         - ClothingShoesTourist
         - ClothingUniformJumpsuitLoungewear
+        - ClothingHeadHatCowboyRed
       chance: 0.6
       offset: 0.0
 
