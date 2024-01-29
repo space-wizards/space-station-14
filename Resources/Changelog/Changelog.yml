@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Emergency lights no longer make sound
-    type: Remove
-  - message: Emergency light radius and energy is now much lower
-    type: Tweak
-  id: 5313
-  time: '2023-12-11T09:24:10.0000000+00:00'
-- author: Ubaser and Pigeonpeas
-  changes:
-  - message: The kobold ear marking has received a new sprite.
-    type: Tweak
-  id: 5314
-  time: '2023-12-11T09:25:55.0000000+00:00'
-- author: Rainfey
-  changes:
-  - message: Hardsuit helmets added to chameleon menu
-    type: Add
-  id: 5315
-  time: '2023-12-11T09:27:36.0000000+00:00'
-- author: Flareguy
-  changes:
-  - message: 'Added 4 new HUD themes: Plasmafire, Slimecore, Clockwork, and Retro.'
-    type: Add
-  - message: The default HUD theme is now Classic. The old default HUD theme still
-      exists under the name "Minimalist."
-    type: Tweak
-  - message: The modernized HUD theme has been renamed to "Eris."
-    type: Tweak
-  id: 5316
-  time: '2023-12-11T09:28:17.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Arrivals is now stationed on a planet.
-    type: Add
-  id: 5317
-  time: '2023-12-11T09:34:19.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Added cosmetic sunglasses to the clothesmate.
-    type: Add
-  - message: Musician and Bartender now have cosmetic sunglasses.
-    type: Tweak
-  id: 5318
-  time: '2023-12-11T09:35:51.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Syndicate duffel bags heavily protect their items from explosions, and
-      regular bags have minor protection.
-    type: Tweak
-  id: 5319
-  time: '2023-12-11T09:43:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix game audio persisting to lobby.
@@ -3829,3 +3777,57 @@
   id: 5813
   time: '2024-01-28T10:49:55.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24579
+- author: TheShuEd
+  changes:
+  - message: The fire anomaly is now heavier in content.
+    type: Tweak
+  - message: Artifacts no longer block projectiles.
+    type: Tweak
+  id: 5814
+  time: '2024-01-29T01:30:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24666
+- author: Krunk
+  changes:
+  - message: Health analysis interfaces now also display a subject's temperature in
+      Kelvin.
+    type: Add
+  id: 5815
+  time: '2024-01-29T01:32:54.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24643
+- author: Ubaser
+  changes:
+  - message: Detectives now work as independent agents, separate from security, and
+      are encouraged to answer any requests for help.
+    type: Tweak
+  id: 5816
+  time: '2024-01-29T06:45:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23114
+- author: mirrorcult
+  changes:
+  - message: Rotting examine text doesn't have weird grammatical errors now
+    type: Fix
+  id: 5817
+  time: '2024-01-29T07:50:18.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24689
+- author: Eden077
+  changes:
+  - message: Synaptizine now deals less poison damage.
+    type: Tweak
+  id: 5818
+  time: '2024-01-29T07:55:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24676
+- author: mirrorcult
+  changes:
+  - message: Various annoying sounds are now a little quieter
+    type: Tweak
+  id: 5819
+  time: '2024-01-29T09:51:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24690
+- author: SpeltIncorrectyl
+  changes:
+  - message: Portable generators can now be connected to the signal network and controlled
+      remotely via devices like a signal transmitter.
+    type: Add
+  id: 5820
+  time: '2024-01-29T14:56:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24157
