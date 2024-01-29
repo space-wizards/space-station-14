@@ -25,18 +25,13 @@ namespace Content.Client.Chat.Managers
         {
             var str = text.ToString();
 
-            // temporary quality-of-life bodge until panda finished her rework
-            if (str.ToLower().StartsWith("t@"))
-            {
-                channel = ChatSelectChannel.Emotes;
-                str = str.Substring(2);
-            }
+            str = FilterAccidentalInput(str, ref channel);
 
             switch (channel)
             {
                 case ChatSelectChannel.Console:
                     // run locally
-                    _consoleHost.ExecuteCommand(text);
+                    _consoleHost.ExecuteCommand(FilterAccidentalInput(text, ref channel));
                     break;
 
                 case ChatSelectChannel.LOOC:
@@ -78,6 +73,52 @@ namespace Content.Client.Chat.Managers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
             }
+        }
+
+        public string FilterAccidentalInput(string input, ref ChatSelectChannel channel)
+        {
+            string _input = input.ToLower().Trim();
+
+            if (_input[0] == 't' && _input.Length >= 2)
+            {
+                switch (_input[1])
+                {
+                    case '/':
+                        channel = ChatSelectChannel.Console;
+                        return input.Substring(2);
+                    case '(':
+                        channel = ChatSelectChannel.LOOC;
+                        return input.Substring(2);
+                    case '[':
+                        channel = ChatSelectChannel.OOC;
+                        return input.Substring(2);
+                    case ']':
+                        channel = ChatSelectChannel.Admin;
+                        return input.Substring(2);
+                    case '@':
+                        channel = ChatSelectChannel.Emotes;
+                        return input.Substring(2);
+                    case '\\':
+                        channel = ChatSelectChannel.Dead;
+                        return input.Substring(2);
+                    case '>':
+                        channel = ChatSelectChannel.Local;
+                        return input.Substring(2);
+                    case ';':
+                        channel = ChatSelectChannel.Radio;
+                        return input.Substring(1);
+                    case ':':
+                        channel = ChatSelectChannel.Radio;
+                        return input.Substring(1);
+                    case ',':
+                        channel = ChatSelectChannel.Whisper;
+                        return input.Substring(2);
+                    default:
+                        return input;
+                }
+            }
+
+            return input;
         }
     }
 }
