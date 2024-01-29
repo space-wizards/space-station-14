@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -33,7 +33,7 @@ public sealed partial class QuickDialogSystem
                     okAction.Invoke(v1);
                 else
                 {
-                    session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
+                    session.Channel.Disconnect("Replied with invalid quick dialog data.");
                     cancelAction?.Invoke();
                 }
             }),
@@ -74,7 +74,7 @@ public sealed partial class QuickDialogSystem
                     okAction.Invoke(v1, v2);
                 else
                 {
-                    session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
+                    session.Channel.Disconnect("Replied with invalid quick dialog data.");
                     cancelAction?.Invoke();
                 }
             }),
@@ -118,7 +118,7 @@ public sealed partial class QuickDialogSystem
                     okAction.Invoke(v1, v2, v3);
                 else
                 {
-                    session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
+                    session.Channel.Disconnect("Replied with invalid quick dialog data.");
                     cancelAction?.Invoke();
                 }
             }),
@@ -166,7 +166,7 @@ public sealed partial class QuickDialogSystem
                     okAction.Invoke(v1, v2, v3, v4);
                 else
                 {
-                    session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
+                    session.Channel.Disconnect("Replied with invalid quick dialog data.");
                     cancelAction?.Invoke();
                 }
             }),

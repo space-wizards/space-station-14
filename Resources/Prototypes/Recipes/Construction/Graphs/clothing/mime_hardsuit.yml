@@ -1,0 +1,43 @@
+- type: constructionGraph
+  id: MimeHardsuit
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: mimeHardsuit
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: SuitEVA
+              name: An EVA suit
+              icon:
+                sprite: Clothing/OuterClothing/Suits/eva.rsi
+                state: icon
+              doAfter: 1
+            - tag: HelmetEVA
+              name: An EVA helmet
+              icon:
+                sprite: Clothing/Head/Helmets/eva.rsi
+                state: icon
+              doAfter: 1
+            - tag: CrayonRed
+              name: red crayon
+              icon:
+                sprite: Objects/Fun/crayons.rsi
+                state: red
+              doAfter: 1
+            - tag: CrayonBlack
+              name: black crayon
+              icon:
+                sprite: Objects/Fun/crayons.rsi
+                state: black
+              doAfter: 1
+            - tag: MimeBelt
+              name: suspenders
+              icon:
+                sprite: Clothing/Belt/suspenders.rsi
+                state: icon
+              doAfter: 1
+    - node: mimeHardsuit
+      entity: ClothingOuterHardsuitMime

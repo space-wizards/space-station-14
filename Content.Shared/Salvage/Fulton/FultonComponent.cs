@@ -39,9 +39,8 @@ public sealed partial class FultonComponent : Component
     {
         Components = new[]
         {
-            "EntityStorage",
             "Item",
-            "ReagentTank",
+            "Anchorable"
         }
     };
 
