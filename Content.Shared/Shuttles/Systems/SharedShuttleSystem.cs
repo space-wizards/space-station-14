@@ -8,6 +8,7 @@ namespace Content.Shared.Shuttles.Systems;
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public const float FTLRange = 512f;
@@ -56,10 +57,10 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var ftlRange = FTLRange;
         var mapCoordinates = coordinates.ToMap(EntityManager, _xformSystem);
 
-        var (ourPos, ourRot) = _xformSystem.GetWorldPositionRotation(shuttleUid);
-        ourPos += ourRot.RotateVec(shuttlePhysics.LocalCenter);
+        var ourPos = _maps.GetGridPosition((shuttleUid, shuttlePhysics, shuttleXform));
 
-        var targetPosition = mapCoordinates.Position + angle.RotateVec(shuttlePhysics.LocalCenter);
+        // This is the already adjusted position
+        var targetPosition = mapCoordinates.Position;
 
         // If it's a cross-map FTL no range limit.
         if (mapCoordinates.MapId == shuttleXform.MapID)

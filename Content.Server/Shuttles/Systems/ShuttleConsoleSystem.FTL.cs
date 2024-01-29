@@ -3,6 +3,7 @@ using Content.Server.Shuttles.Events;
 using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -36,9 +37,10 @@ public sealed partial class ShuttleConsoleSystem
             return;
         }
 
+        var angle = args.Angle.Reduced();
         var targetCoordinates = new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetUid));
 
-        ConsoleFTL(ent, true, targetCoordinates, args.Angle, targetXform.MapID);
+        ConsoleFTL(ent, true, targetCoordinates, angle, targetXform.MapID);
     }
 
     private void OnPositionFTLMessage(Entity<ShuttleConsoleComponent> entity, ref ShuttleConsoleFTLPositionMessage args)
@@ -87,12 +89,20 @@ public sealed partial class ShuttleConsoleSystem
             return;
         }
 
+        if (!TryComp(shuttleUid.Value, out PhysicsComponent? shuttlePhysics))
+        {
+            return;
+        }
+
+        // Client sends the "adjusted" coordinates and we adjust it back to get the actual transform coordinates.
+        var adjustedCoordinates = targetCoordinates.Offset(targetAngle.RotateVec(-shuttlePhysics.LocalCenter));
+
         var tagEv = new FTLTagEvent();
         RaiseLocalEvent(shuttleUid.Value, ref tagEv);
 
         var ev = new ShuttleConsoleFTLTravelStartEvent(ent.Owner);
         RaiseLocalEvent(ref ev);
 
-        _shuttle.FTLToCoordinates(shuttleUid.Value, shuttleComp, targetCoordinates, targetAngle);
+        _shuttle.FTLToCoordinates(shuttleUid.Value, shuttleComp, adjustedCoordinates, targetAngle);
     }
 }

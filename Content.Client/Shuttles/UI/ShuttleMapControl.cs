@@ -88,18 +88,12 @@ public sealed class ShuttleMapControl : BaseShuttleControl
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
-        if (ViewingMap != MapId.Nullspace)
+        if (FtlMode && ViewingMap != MapId.Nullspace)
         {
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                var mapPos = InverseMapPosition(args.RelativePosition);
-
-                if (_shuttleEntity != null)
-                {
-                    mapPos = _maps.GetGridPosition(_shuttleEntity.Value, mapPos, _ftlAngle);
-                }
-
-                var mapCoords = new MapCoordinates(mapPos, ViewingMap);
+                // We'll send the "adjusted" position and server will adjust it back when relevant.
+                var mapCoords = new MapCoordinates(InverseMapPosition(args.RelativePosition), ViewingMap);
                 RequestFTL?.Invoke(mapCoords, _ftlAngle);
             }
         }
@@ -309,6 +303,13 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         // Draw dotted line from our own shuttle entity to mouse.
         if (FtlMode)
         {
+            /*
+             * TODO:
+             * - Check IFF circle is correct
+             * - Fix range check circle
+             * - Check the server message being sent is correct (send the uncorrected position).
+             */
+
             var mousePos = _inputs.MouseScreenPosition;
 
             if (mousePos.Window != WindowId.Invalid)
@@ -321,14 +322,13 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                     _entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) &&
                     shuttleXform.MapID != MapId.Nullspace)
                 {
-                    var physics = _physicsQuery.GetComponent(_shuttleEntity.Value);
                     var grid = _entManager.GetComponent<MapGridComponent>(_shuttleEntity.Value);
 
                     var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(shuttleXform);
                     gridPos = _maps.GetGridPosition(_shuttleEntity.Value, gridPos, gridRot);
 
+                    // do NOT apply LocalCenter operation here because it will be adjusted in FTLFree.
                     var mouseMapPos = InverseMapPosition(mouseLocalPos);
-                    mouseMapPos += _ftlAngle.RotateVec(physics.LocalCenter);
 
                     var mapId = shuttleXform.MapID;
                     var ftlFree = _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(shuttleXform.MapUid!.Value, mouseMapPos), _ftlAngle);
