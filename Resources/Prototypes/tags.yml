@@ -1023,9 +1023,6 @@
   id: ShellShotgun
 
 - type: Tag
-  id: PelletShotgunFlare
-
-- type: Tag
   id: Shiv
 
 - type: Tag

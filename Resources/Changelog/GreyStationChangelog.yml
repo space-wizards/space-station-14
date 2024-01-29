@@ -1,8 +1,0 @@
-Name: GreyStation
-Entries:
-- author: ps3moira
-  changes:
-    - message: Add automatic changelogs
-      type: Add
-  id: 1
-  time: '2024-01-28T08:00:00.0000000+00:00'
