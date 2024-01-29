@@ -92,6 +92,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - HidesTail
 
 - type: entity
   abstract: true
@@ -110,6 +111,9 @@
   - type: HeldSpeedModifier
   - type: Item
     size: Huge
+  - type: Tag
+    tags:
+    - HidesTail
 
 - type: entity
   parent: ClothingOuterBase

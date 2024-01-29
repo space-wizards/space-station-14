@@ -22,6 +22,7 @@ public abstract class ClothingSystem : EntitySystem
 
     [ValidatePrototypeId<TagPrototype>]
     private const string HairTag = "HidesHair";
+    private const string TailTag = "HidesTail";
 
     public override void Initialize()
     {
@@ -86,14 +87,31 @@ public abstract class ClothingSystem : EntitySystem
     {
         component.InSlot = args.Slot;
         if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, HairTag))
+		{
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, false);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.HeadTop, false);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.HeadSide, false);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Snout, false);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.FacialHair, false);
+		}
+		if ((args.Slot == "jumpsuit" || args.Slot == "outerClothing") && _tagSystem.HasTag(args.Equipment, TailTag))
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Tail, false);
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
         component.InSlot = null;
         if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, HairTag))
+		{
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, true);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.HeadTop, true);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.HeadSide, true);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Snout, true);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.FacialHair, true);
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Head, true);
+		}
+		if ((args.Slot == "jumpsuit" || args.Slot == "outerClothing") && _tagSystem.HasTag(args.Equipment, TailTag))
+			_humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Tail, true);
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)

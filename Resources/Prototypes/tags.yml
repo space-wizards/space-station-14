@@ -606,6 +606,9 @@
   id: HidesHair # for headwear.
 
 - type: Tag
+  id: HidesTail # for spacesuit.
+
+- type: Tag
   id: HighRiskItem
 
 - type: Tag
