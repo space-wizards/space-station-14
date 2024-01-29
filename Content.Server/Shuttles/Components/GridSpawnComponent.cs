@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Components;
@@ -22,6 +23,26 @@ public record struct GridSpawnGroup
     public List<ResPath> Paths = new();
     public int MinCount = 1;
     public int MaxCount = 1;
+
+    /// <summary>
+    /// Components to be added to any spawned grids.
+    /// </summary>
+    public ComponentRegistry AddComponents = new();
+
+    /// <summary>
+    /// Hide the IFF label of the grid.
+    /// </summary>
+    public bool Hide = false;
+
+    /// <summary>
+    /// Should we set the metadata name of a grid. Useful for admin purposes.
+    /// </summary>
+    public bool NameGrid = false;
+
+    /// <summary>
+    /// Should we add this to the station's grids (if possible / relevant).
+    /// </summary>
+    public bool StationGrid = true;
 
     public GridSpawnGroup()
     {

@@ -5,9 +5,9 @@ namespace Content.Shared.Station;
 [NetSerializable, Serializable]
 public sealed class StationsUpdatedEvent : EntityEventArgs
 {
-    public readonly HashSet<NetEntity> Stations;
+    public readonly List<(string Name, NetEntity Entity)> Stations;
 
-    public StationsUpdatedEvent(HashSet<NetEntity> stations)
+    public StationsUpdatedEvent(List<(string Name, NetEntity Entity)> stations)
     {
         Stations = stations;
     }

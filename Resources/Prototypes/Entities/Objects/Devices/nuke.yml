@@ -83,6 +83,9 @@
       Nuke: !type:ContainerSlot
   - type: StealTarget
     stealGroup: NuclearBomb
+  - type: WarpPoint
+    follow: true
+    location: nuclear bomb
 
 - type: entity
   parent: NuclearBomb

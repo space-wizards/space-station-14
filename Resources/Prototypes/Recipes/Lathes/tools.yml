@@ -4,6 +4,7 @@
     sprite: Objects/Tools/wirecutters.rsi
     state: cutters-map
   result: Wirecutter
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -15,6 +16,7 @@
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver-map
   result: Screwdriver
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -23,6 +25,7 @@
 - type: latheRecipe
   id: Welder
   result: Welder
+  category: Tools
   completetime: 2
   materials:
     Steel: 400
@@ -30,6 +33,7 @@
 - type: latheRecipe
   id: Wrench
   result: Wrench
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -37,6 +41,7 @@
 - type: latheRecipe
   id: CableStack
   result: CableApcStack1
+  category: Parts
   completetime: 2
   materials:
     Steel: 30
@@ -44,6 +49,7 @@
 - type: latheRecipe
   id: CableMVStack
   result: CableMVStack1
+  category: Parts
   completetime: 2
   materials:
     Steel: 30
@@ -51,6 +57,7 @@
 - type: latheRecipe
   id: CableHVStack
   result: CableHVStack1
+  category: Parts
   completetime: 2
   materials:
     Steel: 30
@@ -58,6 +65,7 @@
 - type: latheRecipe
   id: Crowbar
   result: Crowbar
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -65,6 +73,7 @@
 - type: latheRecipe
   id: Pickaxe
   result: Pickaxe
+  category: Tools
   completetime: 4
   materials:
     Steel: 1000
@@ -73,6 +82,7 @@
 - type: latheRecipe
   id: Shovel
   result: Shovel
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -81,6 +91,7 @@
 - type: latheRecipe
   id: Multitool
   result: Multitool
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -89,6 +100,7 @@
 - type: latheRecipe
   id: NetworkConfigurator
   result: NetworkConfigurator
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -97,6 +109,7 @@
 - type: latheRecipe
   id: PowerDrill
   result: PowerDrill
+  category: Tools
   completetime: 2
   materials:
     Steel: 600
@@ -105,6 +118,7 @@
 - type: latheRecipe
   id: RCD
   result: RCDEmpty
+  category: Tools
   completetime: 4
   materials:
     Steel: 1000
@@ -113,6 +127,7 @@
 - type: latheRecipe
   id: RCDAmmo
   result: RCDAmmo
+  category: Tools
   completetime: 2.4
   materials:
     Steel: 500
@@ -121,6 +136,7 @@
 - type: latheRecipe
   id: HandheldGPSBasic
   result: HandheldGPSBasic
+  category: Tools
   completetime: 2
   materials:
     Steel: 800
@@ -129,6 +145,7 @@
 - type: latheRecipe
   id: TRayScanner
   result: trayScanner
+  category: Tools
   completetime: 2
   materials:
     Steel: 800
@@ -137,6 +154,7 @@
 - type: latheRecipe
   id: GasAnalyzer
   result: GasAnalyzer
+  category: Tools
   completetime: 2
   materials:
     Steel: 800
@@ -145,6 +163,7 @@
 - type: latheRecipe
   id: SprayPainter
   result: SprayPainter
+  category: Tools
   completetime: 2
   materials:
     Steel: 300
@@ -153,6 +172,7 @@
 - type: latheRecipe
   id: UtilityBelt
   result: ClothingBeltUtility
+  category: Tools
   completetime: 2
   materials:
     Cloth: 100
@@ -161,6 +181,7 @@
 - type: latheRecipe
   id: HolofanProjector
   result: HolofanProjector
+  category: Tools
   completetime: 8
   materials: # Inherited materials and time from PowerCellMedium recipe
     Steel: 600
@@ -171,6 +192,7 @@
 - type: latheRecipe
   id: RPED
   result: RPED
+  category: Tools
   completetime: 10
   materials:
     Steel: 650
@@ -180,6 +202,7 @@
 - type: latheRecipe
   id: MiningDrill
   result: MiningDrill
+  category: Tools
   completetime: 3
   materials:
     Steel: 500
@@ -188,6 +211,7 @@
 - type: latheRecipe
   id: WelderExperimental
   result: WelderExperimental
+  category: Tools
   completetime: 6
   materials:
     Steel: 800
@@ -196,25 +220,28 @@
 - type: latheRecipe
   id: JawsOfLife
   result: JawsOfLife
+  category: Tools
   completetime: 6
   materials:
     Steel: 1000
     Glass: 500
     Plasma: 300
     Gold: 50
-    
+
 - type: latheRecipe
   id: HoloprojectorField
   result: HoloprojectorField
+  category: Tools
   completetime: 3
   materials:
     Steel: 500
     Plasma: 300
     Glass: 100
-    
+
 - type: latheRecipe
   id: WeaponParticleDecelerator
   result: WeaponParticleDecelerator
+  category: Tools
   completetime: 6
   materials:
     Steel: 750

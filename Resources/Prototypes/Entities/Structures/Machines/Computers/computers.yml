@@ -142,7 +142,7 @@
     energy: 1.6
     color: "#c94242"
   - type: Computer
-    board: CargoShuttleConsoleCircuitboard  
+    board: CargoShuttleConsoleCircuitboard
   - type: StealTarget
     stealGroup: CargoShuttleConsoleCircuitboard
 
@@ -175,7 +175,7 @@
       board: SalvageShuttleConsoleCircuitboard
     - type: StealTarget
       stealGroup: SalvageShuttleConsoleCircuitboard
-      
+
 - type: entity
   parent: BaseComputer
   id: ComputerIFF
@@ -489,6 +489,7 @@
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
   - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -550,6 +551,8 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
+  - type: DeviceNetwork
+    transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: UserInterface
@@ -865,7 +868,7 @@
       access: [["Salvage"]]
     - type: StealTarget
       stealGroup: SalvageExpeditionsComputerCircuitboard
-      
+
 - type: entity
   parent: BaseComputer
   id: ComputerSurveillanceCameraMonitor

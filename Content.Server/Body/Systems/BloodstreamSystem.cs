@@ -187,7 +187,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         // Does the calculation of how much bleed rate should be added/removed, then applies it
         var oldBleedAmount = component.BleedAmount;
-        var total = bloodloss.Total;
+        var total = bloodloss.GetTotal();
         var totalFloat = total.Float();
         TryModifyBleedAmount(uid, totalFloat, component);
 

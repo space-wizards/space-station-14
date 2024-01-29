@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -14,6 +15,7 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
@@ -36,7 +38,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly INetManager _netManager = default!;
@@ -60,13 +62,14 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] protected readonly TagSystem TagSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
+    [Dependency] private   readonly UseDelaySystem _useDelay = default!;
 
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
     private const float EjectOffset = 0.4f;
     protected const string AmmoExamineColor = "yellow";
     protected const string FireRateExamineColor = "yellow";
-    protected const string ModeExamineColor = "cyan";
+    public const string ModeExamineColor = "cyan";
 
     public override void Initialize()
     {
@@ -92,18 +95,19 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
-
-#if DEBUG
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<GunComponent> gun, ref MapInitEvent args)
     {
-        if (component.NextFire > Timing.CurTime)
-            Log.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+#if DEBUG
+        if (gun.Comp.NextFire > Timing.CurTime)
+            Log.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(gun)}");
 
-        DebugTools.Assert((component.AvailableModes & component.SelectedMode) != 0x0);
+        DebugTools.Assert((gun.Comp.AvailableModes & gun.Comp.SelectedMode) != 0x0);
 #endif
+
+        RefreshModifiers((gun, gun));
     }
 
     private void OnGunMelee(EntityUid uid, GunComponent component, MeleeHitEvent args)
@@ -213,10 +217,21 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
     }
 
+    /// <summary>
+    /// Shoots by assuming the gun is the user at default coordinates.
+    /// </summary>
+    public void AttemptShoot(EntityUid gunUid, GunComponent gun)
+    {
+        var coordinates = new EntityCoordinates(gunUid, new Vector2(0, -1));
+        gun.ShootCoordinates = coordinates;
+        AttemptShoot(gunUid, gunUid, gun);
+        gun.ShotCounter = 0;
+    }
+
     private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
-        if (gun.FireRate <= 0f ||
-            !_actionBlockerSystem.CanUseHeldEntity(user))
+        if (gun.FireRateModified <= 0f ||
+            !_actionBlockerSystem.CanAttack(user))
             return;
 
         var toCoordinates = gun.ShootCoordinates;
@@ -245,7 +260,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.NextFire > curTime)
             return;
 
-        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
+        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRateModified);
 
         // First shot
         // Previously we checked shotcounter but in some cases all the bullets got dumped at once
@@ -273,7 +288,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 shots = Math.Min(shots, 1 - gun.ShotCounter);
                 break;
             case SelectiveFire.Burst:
-                shots = Math.Min(shots, 3 - gun.ShotCounter);
+                shots = Math.Min(shots, gun.ShotsPerBurstModified - gun.ShotCounter);
                 break;
             case SelectiveFire.FullAuto:
                 break;
@@ -374,12 +389,29 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid? user = null,
         bool throwItems = false);
 
+    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
+    {
+        var physics = EnsureComp<PhysicsComponent>(uid);
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
+
+        var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
+        var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
+        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
+
+        var projectile = EnsureComp<ProjectileComponent>(uid);
+        Projectiles.SetShooter(uid, projectile, user ?? gunUid);
+        projectile.Weapon = gunUid;
+
+        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
+    }
+
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
     /// <summary>
     /// Call this whenever the ammo count for a gun changes.
     /// </summary>
-    protected virtual void UpdateAmmoCount(EntityUid uid) {}
+    protected virtual void UpdateAmmoCount(EntityUid uid, bool prediction = true) {}
 
     protected void SetCartridgeSpent(EntityUid uid, CartridgeAmmoComponent cartridge, bool spent)
     {
@@ -437,6 +469,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
     {
+        var attemptEv = new GunMuzzleFlashAttemptEvent();
+        RaiseLocalEvent(gun, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         var sprite = component.MuzzleFlash;
 
         if (sprite == null)
@@ -456,6 +493,41 @@ public abstract partial class SharedGunSystem : EntitySystem
         var impulseVector =  shotDirection * impulseStrength;
         Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
     }
+
+    public void RefreshModifiers(Entity<GunComponent?> gun)
+    {
+        if (!Resolve(gun, ref gun.Comp))
+            return;
+
+        var comp = gun.Comp;
+        var ev = new GunRefreshModifiersEvent(
+            (gun, comp),
+            comp.SoundGunshot,
+            comp.CameraRecoilScalar,
+            comp.AngleIncrease,
+            comp.AngleDecay,
+            comp.MaxAngle,
+            comp.MinAngle,
+            comp.ShotsPerBurst,
+            comp.FireRate,
+            comp.ProjectileSpeed
+        );
+
+        RaiseLocalEvent(gun, ref ev);
+
+        comp.SoundGunshotModified = ev.SoundGunshot;
+        comp.CameraRecoilScalarModified = ev.CameraRecoilScalar;
+        comp.AngleIncreaseModified = ev.AngleIncrease;
+        comp.AngleDecayModified = ev.AngleDecay;
+        comp.MaxAngleModified = ev.MaxAngle;
+        comp.MinAngleModified = ev.MinAngle;
+        comp.ShotsPerBurstModified = ev.ShotsPerBurst;
+        comp.FireRateModified = ev.FireRate;
+        comp.ProjectileSpeedModified = ev.ProjectileSpeed;
+
+        Dirty(gun);
+    }
+
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
     /// <summary>
