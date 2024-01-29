@@ -23,8 +23,11 @@ namespace Content.Client.Communications.UI
             var loc = IoCManager.Resolve<ILocalizationManager>();
             MessageInput.Placeholder = new Rope.Leaf(loc.GetString("comms-console-menu-announcement-placeholder"));
 
-            AnnounceButton.OnPressed += (_) => Owner.AnnounceButtonPressed(Rope.Collapse(MessageInput.TextRope).Trim());
+            AnnounceButton.OnPressed += (_) => Owner.AnnounceButtonPressed(Rope.Collapse(MessageInput.TextRope));
             AnnounceButton.Disabled = !owner.CanAnnounce;
+
+            BroadcastButton.OnPressed += (_) => Owner.BroadcastButtonPressed(Rope.Collapse(MessageInput.TextRope));
+            BroadcastButton.Disabled = !owner.CanBroadcast;
 
             AlertLevelButton.OnItemSelected += args =>
             {

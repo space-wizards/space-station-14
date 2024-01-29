@@ -225,7 +225,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             // TODO: Make warp points use metadata name instead.
             string? name = beacon.Text;
 
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
                 if (TryComp<WarpPointComponent>(beaconUid, out var warpPoint) && warpPoint.Location != null)
                 {
