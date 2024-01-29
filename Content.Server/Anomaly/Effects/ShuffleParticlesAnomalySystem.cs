@@ -17,16 +17,14 @@ public sealed class ShuffleParticlesAnomalySystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, ShuffleParticlesAnomalyComponent shuffle, StartCollideEvent args)
     {
-        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
-            return;
-
         if (!TryComp<AnomalyComponent>(uid, out var anomaly))
             return;
 
         if (shuffle.ShuffleOnParticleHit && _random.Prob(shuffle.Prob))
-        {
             _anomaly.ShuffleParticlesEffect(anomaly);
-        }
+
+        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
+            return;
     }
 
     private void OnPulse(EntityUid uid, ShuffleParticlesAnomalyComponent shuffle, AnomalyPulseEvent args)

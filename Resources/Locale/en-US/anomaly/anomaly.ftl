@@ -80,6 +80,7 @@ anomaly-behaviour-unknown = [color=red]ERROR. Cannot be read.[/color]
 anomaly-behaviour-title = Behaviour deviation analysis:
 anomaly-behaviour-point =[color=gold]Anomaly produces {$mod}% of the points[/color] 
 
+anomaly-behaviour-safe = [color=forestgreen]The anomaly is extremely stable. Extremely rare pulsations.[/color]
 anomaly-behaviour-slow = [color=forestgreen]The frequency of pulsations is much less frequent.[/color]
 anomaly-behaviour-balanced = No behaviour deviations detected.
 anomaly-behaviour-reflect = A protective coating was detected.

@@ -8,10 +8,10 @@ public sealed class SecretDataAnomalySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<SecretDataAnomalyComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SecretDataAnomalyComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnComponentInit(EntityUid uid, SecretDataAnomalyComponent anomaly, ComponentInit args)
+    private void OnMapInit(EntityUid uid, SecretDataAnomalyComponent anomaly, MapInitEvent args)
     {
         RandomizeSecret(uid,_random.Next(anomaly.RandomStartSecretMin, anomaly.RandomStartSecretMax), anomaly);
     }

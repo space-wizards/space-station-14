@@ -1,6 +1,13 @@
 # Easy x0.5 point production
 
 - type: anomalyBehaviour
+  id: FullSafe
+  weight: 0.1
+  pulseFrequencyModifier: 5
+  earnPointModifier: 0.05
+  description: anomaly-behaviour-safe
+
+- type: anomalyBehaviour
   id: Slow
   weight: 0.5
   pulseFrequencyModifier: 2
@@ -11,7 +18,7 @@
 
 - type: anomalyBehaviour
   id: Balanced
-  weight: 2
+  weight: 3
   earnPointModifier: 1
   description: anomaly-behaviour-balanced
   
@@ -78,7 +85,7 @@
   components:
   - type: ShuffleParticlesAnomaly
     shuffleOnParticleHit: true
-    prob: 0.5
+    prob: 0.8
 
 - type: anomalyBehaviour
   id: Moving
@@ -88,7 +95,7 @@
   components:
   - type: RandomWalk
     minSpeed: 0
-    maxSpeed: 0.5
+    maxSpeed: 0.3
   - type: CanMoveInAir
   - type: Physics
     bodyType: Dynamic
@@ -110,7 +117,7 @@
 - type: anomalyBehaviour
   id: FullUnknown
   weight: 1
-  earnPointModifier: 2.4
+  earnPointModifier: 1.9
   description: anomaly-behaviour-secret
   components:
   - type: SecretDataAnomaly

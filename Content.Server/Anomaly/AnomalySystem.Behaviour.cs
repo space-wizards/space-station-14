@@ -10,27 +10,18 @@ public sealed partial class AnomalySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
-    private List<AnomalyBehaviourPrototype> _behaviourList = new();
     private void InitializeBehaviour()
     {
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
-        //Cache all behaviors into a list at the beginning of the round
-        _behaviourList.AddRange(_prototype.EnumeratePrototypes<AnomalyBehaviourPrototype>());
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
-    {
-        _behaviourList.Clear();
-        _behaviourList.AddRange(_prototype.EnumeratePrototypes<AnomalyBehaviourPrototype>());
     }
 
     private string GetRandomBehaviour()
     {
-        var totalWeight = _behaviourList.Sum(x => x.Weight);
+        var behList = _prototype.EnumeratePrototypes<AnomalyBehaviourPrototype>().ToList();
+        var totalWeight = behList.Sum(x => x.Weight);
         var randomValue = _random.NextFloat(totalWeight);
 
-        foreach (var b in _behaviourList)
+        foreach (var b in behList)
         {
             if (randomValue < b.Weight)
             {
