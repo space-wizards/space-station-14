@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -12,6 +13,9 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed partial class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
+        [ValidatePrototypeId<ToolQualityPrototype>]
+        public const string PryingToolQuality = "Prying";
+
         public const string SpaceID = "Space";
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
@@ -38,14 +42,13 @@ namespace Content.Shared.Maps
         [DataField("baseTurf")]
         public string BaseTurf { get; private set; } = string.Empty;
 
-        [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
+        [DataField]
+        public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();
 
-        /// <summary>
-        /// Whether this tile can be pried by an advanced prying tool if not pryable otherwise.
-        /// </summary>
-        [DataField("canAxe")] public bool CanAxe { get; private set; }
-
-        [DataField("canWirecutter")] public bool CanWirecutter { get; private set; }
+        /// <remarks>
+        /// Legacy AF but nice to have.
+        /// </remarks>
+        public bool CanCrowbar => DeconstructTools.Contains(PryingToolQuality);
 
         /// <summary>
         /// These play when the mob has shoes on.
@@ -64,7 +67,7 @@ namespace Content.Shared.Maps
         /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
-        [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = new [] { 1f };
+        [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = { 1f };
 
         [DataField("thermalConductivity")] public float ThermalConductivity = 0.04f;
 

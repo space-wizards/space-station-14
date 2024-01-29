@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: CigaretteMachineAds
   advertisements:
   - advertisement-cigs-1
@@ -12,7 +12,9 @@
   - advertisement-cigs-9
   - advertisement-cigs-10
   - advertisement-cigs-11
+  - advertisement-cigs-12
   thankyous:
   - vending-machine-thanks
   - thankyou-cigs-1
   - thankyou-cigs-2
+  - thankyou-cigs-3

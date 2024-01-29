@@ -1,61 +1,37 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
-  - Ice
-  - Coffee
-  - Cream
-  - Tea
-  - GreenTea
-  - IcedTea
-  - IcedGreenTea
-  - Cola
-  - SpaceMountainWind
-  - DrGibb
-  - RootBeer
-  - SpaceUp
-  - TonicWater
-  - SodaWater
-  - LemonLime
-  - Sugar
-  - JuiceOrange
-  - JuiceLime
-  - JuiceWatermelon
-  ###Hacked
-  #- Fourteen Loko
-  #- GrapeSoda
+  - DrinkCoffeeJug
+  - DrinkColaBottleFull
+  - DrinkCreamCartonXL
+  - DrinkDrGibbJug
+  - DrinkEnergyDrinkJug
+  - DrinkGreenTeaJug
+  - DrinkIceJug
+  - DrinkJuiceLimeCartonXL
+  - DrinkJuiceOrangeCartonXL
+  - DrinkLemonLimeJug
+  - DrinkRootBeerJug
+  - DrinkSodaWaterBottleFull
+  - DrinkSpaceMountainWindBottleFull
+  - DrinkSpaceUpBottleFull
+  - DrinkSugarJug
+  - DrinkTeaJug
+  - DrinkTonicWaterBottleFull
+  - DrinkWaterMelonJuiceJug
 
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory
   inventory:
-  - Beer
-  - CoffeeLiqueur
-  - Whiskey
-  - Wine
-  - Vodka
-  - Gin
-  - Rum
-  - Tequila
-  - Vermouth
-  - Cognac
-  - Ale
-  - Mead
-  ###Hacked
-  #- Goldschlager
-  #- Patron
-  #- JuiceWatermelon
-  #- JuiceBerry
-
-
-- type: reagentDispenserInventory
-  id: SodaDispenserEmagInventory
-  inventory:
-    - FourteenLoko
-    - Ephedrine
-    - Histamine
-
-- type: reagentDispenserInventory
-  id: BoozeDispenserEmagInventory
-  inventory:
-    - AtomicBomb
-    - Ethanol
-    - Iron
+  - DrinkAleBottleFullGrowler
+  - DrinkBeerGrowler
+  - DrinkCoffeeLiqueurBottleFull
+  - DrinkCognacBottleFull
+  - DrinkGinBottleFull
+  - DrinkMeadJug
+  - DrinkRumBottleFull
+  - DrinkTequilaBottleFull
+  - DrinkVermouthBottleFull
+  - DrinkVodkaBottleFull
+  - DrinkWhiskeyBottleFull
+  - DrinkWineBottleFull
