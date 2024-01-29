@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Arrivals is now stationed on a planet.
-    type: Add
-  id: 5317
-  time: '2023-12-11T09:34:19.0000000+00:00'
 - author: Whisper
   changes:
   - message: Added cosmetic sunglasses to the clothesmate.
@@ -3830,3 +3824,10 @@
   id: 5817
   time: '2024-01-29T07:50:18.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24689
+- author: Eden077
+  changes:
+  - message: Synaptizine now deals less poison damage.
+    type: Tweak
+  id: 5818
+  time: '2024-01-29T07:55:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24676
