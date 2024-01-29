@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Anomaly.Effects.Components;
+namespace Content.Server.Anomaly.Components;
 
 /// <summary>
 /// Hides some information about the anomaly when scanning it
@@ -18,7 +18,7 @@ public sealed partial class SecretDataAnomalyComponent : Component
     public List<AnomalySecretData> Secret = new();
 }
 
-[Serializable, NetSerializable]
+[Serializable]
 public enum AnomalySecretData : byte
 {
     Severity,

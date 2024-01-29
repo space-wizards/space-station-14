@@ -60,6 +60,27 @@
   pulseFrequencyModifier: 0.5
   description: anomaly-behaviour-fast
 
+ 
+- type: anomalyBehaviour
+  id: Inconstancy
+  weight: 0.5
+  earnPointModifier: 1.7
+  description: anomaly-behaviour-inconstancy
+  components:
+  - type: ShuffleParticlesAnomaly
+    shuffleOnPulse: true
+    prob: 1
+
+- type: anomalyBehaviour
+  id: ParticleInconstancy
+  weight: 0.5
+  earnPointModifier: 1.8
+  description: anomaly-behaviour-inconstancy
+  components:
+  - type: ShuffleParticlesAnomaly
+    shuffleOnParticleHit: true
+    prob: 0.5
+
 - type: anomalyBehaviour
   id: Moving
   weight: 0.5

@@ -1,7 +1,7 @@
-using Content.Shared.Anomaly.Effects.Components;
+using Content.Server.Anomaly.Components;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Anomaly.Effects;
+namespace Content.Server.Anomaly.Effects;
 
 public sealed class SecretDataAnomalySystem : EntitySystem
 {

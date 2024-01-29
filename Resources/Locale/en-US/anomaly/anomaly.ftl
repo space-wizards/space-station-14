@@ -89,5 +89,6 @@ anomaly-behaviour-nonsensivity = A weak reaction to particles was detected.
 anomaly-behaviour-sensivity = Amplified reaction to particles was detected.
 anomaly-behaviour-secret = Interference detected. Some data cannot be read
 
+anomaly-behaviour-inconstancy = [color=crimson]Impermanence has been detected. Particle types can change over time.[/color]
 anomaly-behaviour-fast = [color=crimson]The pulsation frequency is strongly increased.[/color]
 anomaly-behaviour-moving = [color=crimson]Coordinate instability was detected.[/color]
