@@ -83,6 +83,10 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
     state: icon
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 6
 
 - type: reagent
   id: IcedCoffee
@@ -130,6 +134,7 @@
 
 - type: reagent
   id: JuiceBerryPoison
+  parent: BaseJuice
   name: reagent-name-juice-berry-poison
   group: Drinks
   desc: reagent-desc-juice-berry-poison
@@ -149,6 +154,7 @@
 
 - type: reagent
   id: Lemonade
+  parent: BaseJuice
   name: reagent-name-lemonade
   group: Drinks
   desc: reagent-desc-lemonade
@@ -246,6 +252,7 @@
 
 - type: reagent
   id: NuclearCola
+  parent: BaseSoda
   name: reagent-name-nuclear-cola
   group: Drinks
   desc: reagent-desc-nuclear-cola

@@ -41,20 +41,6 @@
   - FlatpackerMachineCircuitboard
 
 - type: technology
-  id: CompactPower
-  name: research-technology-compact-power
-  icon:
-    sprite: Structures/Power/Generation/wallmount_generator.rsi
-    state: panel
-  discipline: Industrial
-  tier: 1
-  cost: 7500
-  recipeUnlocks:
-  - WallmountSubstationElectronics
-  - WallmountGeneratorElectronics
-  - WallmountGeneratorAPUElectronics
-
-- type: technology
   id: IndustrialEngineering
   name: research-technology-industrial-engineering
   icon:

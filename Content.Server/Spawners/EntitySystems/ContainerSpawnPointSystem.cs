@@ -18,7 +18,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, before: new[] { typeof(SpawnPointSystem), typeof(ArrivalsSystem) });
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, before: new[] { typeof(SpawnPointSystem) }, after: new[] { typeof(ArrivalsSystem) });
     }
 
     private void OnSpawnPlayer(PlayerSpawningEvent args)
