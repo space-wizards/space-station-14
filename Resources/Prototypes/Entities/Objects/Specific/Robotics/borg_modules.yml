@@ -255,8 +255,8 @@
     - SheetSteelLingering0
     - SheetGlassLingering0
     - PartRodMetalLingering0
-    - SheetPlasteelLingering0
-    - SheetReinforcedGlassLingering0
+    - PlasteelLingering0
+    - ReinforcedGlassLingering0
     - FloorTileItemSteelLingering0
 
 - type: entity
@@ -333,7 +333,7 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - ClothingNeckStethoscope
-    - HandheldCrewMonitorUnpowered
+    - HandheldCrewMonitor
 
 - type: entity
   id: BorgModuleTreatment
