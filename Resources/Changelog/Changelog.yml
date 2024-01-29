@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Added cosmetic sunglasses to the clothesmate.
-    type: Add
-  - message: Musician and Bartender now have cosmetic sunglasses.
-    type: Tweak
-  id: 5318
-  time: '2023-12-11T09:35:51.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Syndicate duffel bags heavily protect their items from explosions, and
@@ -3831,3 +3823,10 @@
   id: 5818
   time: '2024-01-29T07:55:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24676
+- author: mirrorcult
+  changes:
+  - message: Various annoying sounds are now a little quieter
+    type: Tweak
+  id: 5819
+  time: '2024-01-29T09:51:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24690
