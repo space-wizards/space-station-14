@@ -5,7 +5,7 @@
   description: Drains immense amounts of electricity from the grid.
   components:
     - type: Item
-      size: Large
+      size: Huge
     - type: NodeContainer
       examinable: true
       nodes:

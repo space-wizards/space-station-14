@@ -25,8 +25,8 @@
   - Salvage
   - Quartermaster
   - Maintenance
-  - External
   - Command
+  - Brig
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

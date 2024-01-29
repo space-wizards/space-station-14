@@ -12,7 +12,7 @@
       map: [ "tank" ]
       visible: false
   - type: Item
-    size: Large
+    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
@@ -32,9 +32,9 @@
     container: storagebase
   - type: PneumaticCannon
   - type: Storage
-    maxSlots: 8
     maxItemSize: Normal
-    maxTotalWeight: 32
+    grid:
+    - 0,0,3,3
     blacklist:
       tags:
         - CannonRestrict
@@ -77,9 +77,9 @@
     layers:
     - state: piecannon
   - type: Storage
-    maxSlots: 8
     maxItemSize: Normal
-    maxTotalWeight: 32
+    grid:
+    - 0,0,7,3
     whitelist:
       components:
       - CreamPie
@@ -124,11 +124,11 @@
   suffix: Admeme
   components:
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: Storage
-    maxSlots: 100
-    maxItemSize: Huge
-    maxTotalWeight: 1600
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,19,10
     whitelist:
       tags: [] #dodging a test fail like the IRS
   - type: PneumaticCannon

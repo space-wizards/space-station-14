@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -52,6 +53,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BatterySystem _batterySystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly GunSystem _gun = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -170,7 +172,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -186,7 +187,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, 0, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-drain-battery-description"),
@@ -285,27 +285,7 @@ public sealed partial class AdminVerbSystem
                     Text = "Refill Internals Oxygen",
                     Category = VerbCategory.Tricks,
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/oxygen.rsi"), "icon"),
-                    Act = () =>
-                    {
-                        foreach (var slot in _inventorySystem.GetSlots(args.Target))
-                        {
-                            if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
-                                continue;
-
-                            if (!TryComp(entity, out tank))
-                                continue;
-
-                            RefillGasTank(entity.Value, Gas.Oxygen, tank);
-                        }
-
-                        foreach (var held in _handsSystem.EnumerateHeld(args.Target))
-                        {
-                            if (!TryComp(held, out tank))
-                                continue;
-
-                            RefillGasTank(held, Gas.Oxygen, tank);
-                        }
-                    },
+                    Act = () => RefillEquippedTanks(args.User, Gas.Oxygen),
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
                     Priority = (int) TricksVerbPriorities.RefillOxygen,
@@ -317,27 +297,7 @@ public sealed partial class AdminVerbSystem
                     Text = "Refill Internals Nitrogen",
                     Category = VerbCategory.Tricks,
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/red.rsi"), "icon"),
-                    Act = () =>
-                    {
-                        foreach (var slot in _inventorySystem.GetSlots(args.Target))
-                        {
-                            if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
-                                continue;
-
-                            if (!TryComp(entity, out tank))
-                                continue;
-
-                            RefillGasTank(entity.Value, Gas.Nitrogen, tank);
-                        }
-
-                        foreach (var held in _handsSystem.EnumerateHeld(args.Target))
-                        {
-                            if (!TryComp(held, out tank))
-                                continue;
-
-                            RefillGasTank(held, Gas.Nitrogen, tank);
-                        }
-                    },
+                    Act = () =>RefillEquippedTanks(args.User, Gas.Nitrogen),
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
                     Priority = (int) TricksVerbPriorities.RefillNitrogen,
@@ -349,27 +309,7 @@ public sealed partial class AdminVerbSystem
                     Text = "Refill Internals Plasma",
                     Category = VerbCategory.Tricks,
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
-                    Act = () =>
-                    {
-                        foreach (var slot in _inventorySystem.GetSlots(args.Target))
-                        {
-                            if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
-                                continue;
-
-                            if (!TryComp(entity, out tank))
-                                continue;
-
-                            RefillGasTank(entity.Value, Gas.Plasma, tank);
-                        }
-
-                        foreach (var held in _handsSystem.EnumerateHeld(args.Target))
-                        {
-                            if (!TryComp(held, out tank))
-                                continue;
-
-                            RefillGasTank(held, Gas.Plasma, tank);
-                        }
-                    },
+                    Act = () => RefillEquippedTanks(args.User, Gas.Plasma),
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
                     Priority = (int) TricksVerbPriorities.RefillPlasma,
@@ -616,7 +556,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -638,7 +577,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, 0, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -761,7 +699,8 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Weapons/Guns/HMGs/minigun.rsi"), "icon"),
                 Act = () =>
                 {
-                    gun.FireRate = 15;
+                    EnsureComp<AdminMinigunComponent>(args.Target);
+                    _gun.RefreshModifiers((args.Target, gun));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-minigun-fire-description"),
@@ -792,9 +731,17 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
+    private void RefillEquippedTanks(EntityUid target, Gas plasma)
     {
-        if (!Resolve(tank, ref tankComponent))
+        foreach (var held in _inventorySystem.GetHandOrInventoryEntities(target))
+        {
+            RefillGasTank(held, Gas.Plasma);
+        }
+    }
+
+    private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent = null)
+    {
+        if (!Resolve(tank, ref tankComponent, false))
             return;
 
         var mixSize = tankComponent.Air.Volume;
@@ -824,18 +771,20 @@ public sealed partial class AdminVerbSystem
         {
             foreach (var grid in station.Grids)
             {
-                foreach (var ent in Transform(grid).ChildEntities)
+                var enumerator = Transform(grid).ChildEnumerator;
+                while (enumerator.MoveNext(out var ent))
                 {
                     yield return ent;
                 }
             }
         }
-
         else if (HasComp<MapComponent>(target))
         {
-            foreach (var possibleGrid in Transform(target).ChildEntities)
+            var enumerator = Transform(target).ChildEnumerator;
+            while (enumerator.MoveNext(out var possibleGrid))
             {
-                foreach (var ent in Transform(possibleGrid).ChildEntities)
+                var enumerator2 = Transform(possibleGrid).ChildEnumerator;
+                while (enumerator2.MoveNext(out var ent))
                 {
                     yield return ent;
                 }
@@ -843,7 +792,8 @@ public sealed partial class AdminVerbSystem
         }
         else
         {
-            foreach (var ent in Transform(target).ChildEntities)
+            var enumerator = Transform(target).ChildEnumerator;
+            while (enumerator.MoveNext(out var ent))
             {
                 yield return ent;
             }

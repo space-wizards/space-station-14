@@ -9,6 +9,7 @@
       - Fruit
       - Meat
       - Pill
+      - Crayon
   - type: SolutionContainerManager
     solutions:
       stomach:

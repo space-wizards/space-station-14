@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -67,8 +67,8 @@ namespace Content.Server.Administration
             if (_playerManager.TryGetSessionByUsername(playerName, out var session))
             {
                 var userId = session.UserId;
-                var address = session.ConnectedClient.RemoteEndPoint.Address;
-                var hwId = session.ConnectedClient.UserData.HWId;
+                var address = session.Channel.RemoteEndPoint.Address;
+                var hwId = session.Channel.UserData.HWId;
                 return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 
@@ -107,8 +107,8 @@ namespace Content.Server.Administration
             // Check people currently on the server, the easiest case.
             if (_playerManager.TryGetSessionById(userId, out var session))
             {
-                var address = session.ConnectedClient.RemoteEndPoint.Address;
-                var hwId = session.ConnectedClient.UserData.HWId;
+                var address = session.Channel.RemoteEndPoint.Address;
+                var hwId = session.Channel.UserData.HWId;
                 return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 

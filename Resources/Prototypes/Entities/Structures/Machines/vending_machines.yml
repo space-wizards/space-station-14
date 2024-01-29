@@ -52,7 +52,9 @@
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
+  - type: Repairable
+    doAfterDelay: 8
   - type: ActivatableUI
     key: enum.VendingMachineUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -103,7 +105,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCondiments
-  name: Condiment Station
+  name: condiment station
   description: Slather these thick gooey substances on your food for a full flavor effect.
   components:
   - type: VendingMachine
@@ -135,7 +137,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineAmmo
-  name: Liberation Station
+  name: liberation station
   description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
   components:
   - type: VendingMachine
@@ -893,37 +895,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineSmartFridge
-  name: SmartFridge
-  description: A refrigerated storage unit for keeping items cold and fresh.
-  components:
-  - type: VendingMachine
-    pack: SmartFridgeInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    denyState: deny-unshaded
-    loopDeny: false
-  - type: Advertise
-    pack: SmartFridgeAds
-  - type: Speech
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/smartfridge.rsi
-    layers:
-    - state: off
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: off
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#9dc5c9"
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
   description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
@@ -1454,7 +1425,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Brig"]]
+    access: [["Lawyer"]]
 
 - type: entity
   parent: VendingMachine
@@ -1925,6 +1896,8 @@
     radius: 1.5
     energy: 1.6
     color: "#48CF48"
+  - type: AccessReader
+    access: [["CentralCommand"]]
 
 - type: entity
   parent: VendingMachine
@@ -1967,7 +1940,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
-  name: Gas Tank Dispenser
+  name: gas tank dispenser
   description: A vendor for dispensing gas tanks.
   components:
   - type: VendingMachine
@@ -1980,7 +1953,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
-  name: Gas Tank Dispenser
+  name: gas tank dispenser
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
   - type: VendingMachine
@@ -2003,7 +1976,7 @@
     brokenState: broken
     normalState: normal
     denyState: deny
-    ejectDelay: 3
+    ejectDelay: 2
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chemvend.rsi
     layers:
@@ -2018,3 +1991,20 @@
   - type: GuideHelp
     guides:
     - Chemicals
+
+- type: entity
+  parent: VendingMachineChemicals
+  id: VendingMachineChemicalsSyndicate
+  name: SyndieJuice
+  description: Not made with freshly squeezed syndies I hope.
+  components:
+  - type: VendingMachine
+    pack: ChemVendInventorySyndicate
+    offState: off
+    brokenState: broken
+    normalState: normal
+    denyState: deny
+    ejectDelay: 2
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+

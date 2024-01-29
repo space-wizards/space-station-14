@@ -3,8 +3,8 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -14,9 +14,8 @@ namespace Content.Shared.Tools.Systems;
 public abstract partial class SharedToolSystem : EntitySystem
 {
     [Dependency] private   readonly IMapManager _mapManager = default!;
-    [Dependency] private   readonly INetManager _netManager = default!;
     [Dependency] private   readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected   readonly ISharedAdminLogManager AdminLogger = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -29,7 +28,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     public override void Initialize()
     {
         InitializeMultipleTool();
-        InitializeTilePrying();
+        InitializeTile();
         SubscribeLocalEvent<ToolComponent, ToolDoAfterEvent>(OnDoAfter);
     }
 
@@ -52,7 +51,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (tool.UseSound == null)
             return;
 
-        _audioSystem.PlayPredicted(tool.UseSound, uid, user, tool.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
+        _audioSystem.PlayPredicted(tool.UseSound, uid, user);
     }
 
     /// <summary>
@@ -149,8 +148,6 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// <param name="toolQualityNeeded">The quality needed for this tool to work.</param>
     /// <param name="doAfterEv">The event that will be raised when the tool has finished (including cancellation). Event
     /// will be directed at the tool target.</param>
-    /// <param name="id">The id of the DoAfter that was created. This may be null even if the function returns true in
-    /// the event that this tool-use cancelled an existing DoAfter</param>
     /// <param name="toolComponent">The tool component.</param>
     /// <returns>Returns true if any interaction takes place.</returns>
     public bool UseTool(
@@ -267,24 +264,6 @@ public abstract partial class SharedToolSystem : EntitySystem
         }
 
         public LatticeCuttingCompleteEvent(NetCoordinates coordinates)
-        {
-            Coordinates = coordinates;
-        }
-
-        public override DoAfterEvent Clone() => this;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
-    {
-        [DataField("coordinates", required: true)]
-        public NetCoordinates Coordinates;
-
-        private TilePryingDoAfterEvent()
-        {
-        }
-
-        public TilePryingDoAfterEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseStation
   abstract: true
   components:
@@ -33,13 +33,43 @@
     - type: StationArrivals
 
 - type: entity
+  id: BaseStationGateway
+  abstract: true
+  components:
+    - type: GatewayGenerator
+
+- type: entity
   id: BaseStationShuttles
   abstract: true
   components:
+    - type: StationCargoShuttle
+      path: /Maps/Shuttles/cargo.yml
     - type: GridSpawn
-      paths:
-        - /Maps/Shuttles/cargo.yml
-        - /Maps/Shuttles/mining.yml
+      groups:
+        trade:
+          addComponents:
+            - type: ProtectedGrid
+            - type: TradeStation
+          paths:
+            - /Maps/Shuttles/trading_outpost.yml
+        mining:
+          paths:
+          - /Maps/Shuttles/mining.yml
+        # Spawn last
+        ruins:
+          hide: true
+          nameGrid: true
+          minCount: 2
+          maxCount: 2
+          stationGrid: false
+          paths:
+          - /Maps/Ruins/biodome_satellite.yml
+          - /Maps/Ruins/derelict.yml
+          - /Maps/Ruins/djstation.yml
+          - /Maps/Ruins/old_ai_sat.yml
+          - /Maps/Ruins/relaystation.yml
+          - /Maps/Ruins/whiteship_ancient.yml
+          - /Maps/Ruins/whiteship_bluespacejumper.yml
 
 - type: entity
   id: BaseStationCentcomm
@@ -65,6 +95,12 @@
   abstract: true
   components:
     - type: SalvageExpeditionData
+
+- type: entity
+  id: BaseStationMagnet
+  abstract: true
+  components:
+    - type: SalvageMagnetData
 
 - type: entity
   id: BaseStationSiliconLawCrewsimov

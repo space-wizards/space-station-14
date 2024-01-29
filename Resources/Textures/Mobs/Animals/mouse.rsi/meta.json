@@ -16,11 +16,15 @@
     {
       "name": "icon-2"
     },
-	{
+    {
       "name": "icon-3"
     },
     {
       "name": "mouse-0",
+      "directions": 4
+    },
+    {
+      "name": "mouse-moving-0",
       "directions": 4,
       "delays": [
         [
@@ -47,6 +51,10 @@
     },
     {
       "name": "mouse-1",
+      "directions": 4
+    },
+    {
+      "name": "mouse-moving-1",
       "directions": 4,
       "delays": [
         [
@@ -73,6 +81,10 @@
     },
     {
       "name": "mouse-2",
+      "directions": 4
+    },
+    {
+      "name": "mouse-moving-2",
       "directions": 4,
       "delays": [
         [
@@ -97,8 +109,12 @@
         ]
       ]
     },
-	{
+    {
       "name": "mouse-3",
+      "directions": 4
+    },
+    {
+      "name": "mouse-moving-3",
       "directions": 4,
       "delays": [
         [
@@ -132,7 +148,7 @@
     {
       "name": "dead-2"
     },
-	{
+    {
       "name": "dead-3"
     },
     {
@@ -144,7 +160,7 @@
     {
       "name": "splat-2"
     },
-	{
+    {
       "name": "splat-3"
     },
     {

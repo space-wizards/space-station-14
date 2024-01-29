@@ -3,6 +3,7 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 

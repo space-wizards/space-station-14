@@ -459,45 +459,24 @@ namespace Content.Server.Shuttles.Systems
             if (dock.DockedWith == null)
                 return;
 
-            if (TryComp<DoorBoltComponent>(dockUid, out var airlockA))
-            {
-                _bolts.SetBoltsWithAudio(dockUid, airlockA, false);
-            }
-
-            if (TryComp<DoorBoltComponent>(dock.DockedWith, out var airlockB))
-            {
-                _bolts.SetBoltsWithAudio(dock.DockedWith.Value, airlockB, false);
-            }
-
-            if (TryComp(dockUid, out DoorComponent? doorA))
-            {
-                if (_doorSystem.TryClose(dockUid, doorA))
-                {
-                    doorA.ChangeAirtight = true;
-                }
-            }
-
-            if (TryComp(dock.DockedWith, out DoorComponent? doorB))
-            {
-                if (_doorSystem.TryClose(dock.DockedWith.Value, doorB))
-                {
-                    doorB.ChangeAirtight = true;
-                }
-            }
-
-            if (LifeStage(dockUid) < EntityLifeStage.Terminating)
-            {
-                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dockUid);
-                recentlyDocked.LastDocked = dock.DockedWith.Value;
-            }
-
-            if (TryComp(dock.DockedWith.Value, out MetaDataComponent? meta) && meta.EntityLifeStage < EntityLifeStage.Terminating)
-            {
-                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
-                recentlyDocked.LastDocked = dock.DockedWith.Value;
-            }
-
+            OnUndock(dockUid, dock.DockedWith.Value);
+            OnUndock(dock.DockedWith.Value, dockUid);
             Cleanup(dockUid, dock);
+        }
+
+        private void OnUndock(EntityUid dockUid, EntityUid other)
+        {
+            if (TerminatingOrDeleted(dockUid))
+                return;
+
+            if (TryComp<DoorBoltComponent>(dockUid, out var airlock))
+                _bolts.SetBoltsWithAudio(dockUid, airlock, false);
+
+            if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
+                door.ChangeAirtight = true;
+
+            var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dockUid);
+            recentlyDocked.LastDocked = other;
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Pair;
@@ -94,5 +96,34 @@ public sealed partial class TestPair
     {
         await Client.ExecuteCommand(cmd);
         await RunTicksSync(numTicks);
+    }
+
+    /// <summary>
+    /// Retrieve all entity prototypes that have some component.
+    /// </summary>
+    public List<EntityPrototype> GetPrototypesWithComponent<T>(
+        HashSet<string>? ignored = null,
+        bool ignoreAbstract = true,
+        bool ignoreTestPrototypes = true)
+        where T : IComponent
+    {
+        var id = Server.ResolveDependency<IComponentFactory>().GetComponentName(typeof(T));
+        var list = new List<EntityPrototype>();
+        foreach (var proto in Server.ProtoMan.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (ignored != null && ignored.Contains(proto.ID))
+                continue;
+
+            if (ignoreAbstract && proto.Abstract)
+                continue;
+
+            if (ignoreTestPrototypes && IsTestPrototype(proto))
+                continue;
+
+            if (proto.Components.ContainsKey(id))
+                list.Add(proto);
+        }
+
+        return list;
     }
 }

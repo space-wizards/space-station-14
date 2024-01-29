@@ -70,7 +70,9 @@
       - !type:ContainerNotEmpty
         container: board
       completed:
-      - !type:EmptyAllContainers {}
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
       steps:
       - tool: Prying
         doAfter: 1

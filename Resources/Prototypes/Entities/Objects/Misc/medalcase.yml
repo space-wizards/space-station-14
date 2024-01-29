@@ -2,17 +2,21 @@
   id: MedalCase
   name: medal case
   description: Case with medals.
-  parent: BaseStorageItem
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
   components:
   - type: Sprite
     sprite: Objects/Storage/medalcase.rsi
-    state: icon
+    layers:
+    - state: closed
+    - state: open
+      map: ["openLayer"]
+  - type: Appearance
   - type: Item
     sprite: Objects/Storage/medalcase.rsi
     size: Normal
   - type: Storage
-    maxSlots: 8
-    maxTotalWeight: 16
+    grid:
+    - 0,0,7,1
   - type: StorageFill
     contents:
     - id: ClothingNeckGoldmedal

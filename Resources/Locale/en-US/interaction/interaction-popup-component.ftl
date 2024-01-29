@@ -7,6 +7,7 @@ petting-success-soft-floofy = You pet {THE($target)} on {POSS-ADJ($target)} soft
 
 petting-success-bingus = You pet {THE($target)} on {POSS-ADJ($target)} wrinkly little head.
 petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathery head.
+petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} fishy little head.
 petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
 petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
 petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.
@@ -28,10 +29,13 @@ petting-success-dragon = Dodging teeth, claws, and flames, you pet {THE($target)
 petting-success-hamster = You pet {THE($target)} on {POSS-ADJ($target)} fluffy little head.
 petting-success-bear = You reluctantly pet {THE($target)} on {POSS-ADJ($target)} mystical head.
 petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous surface.
+petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
+petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
 petting-failure-bat = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too hard to catch!
+petting-failure-carp = You reach out to pet {THE($target)}, but {POSS_ADJ($target)} sharp teeth make you think twice.
 petting-failure-corrupted-corgi = You reach out to pet {THE($target)}, but think better of it.
 petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target)} snaps {POSS-ADJ($target)} claws in your general direction!
 petting-failure-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head.
@@ -39,13 +43,14 @@ petting-failure-goat = You reach out to pet {THE($target)}, but {SUBJECT($target
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too horrible!
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too australian!
 petting-failure-possum = You reach out to pet {THE($target)}, but are met with hisses and snarls!
-petting-success-pig = You reach out to pet {THE($target)}, but are met with irritated oinks and squeals!
+petting-failure-pig = You reach out to pet {THE($target)}, but are met with irritated oinks and squeals!
 petting-failure-raccoon = You reach out to pet {THE($target)}, but {THE($target)} is busy raccooning around.
 petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($target)} somehow dodge with ludicrous speed!
 petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!
 petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
 petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} attempts to bite your finger and only your quick reflexes save you from an almost fatal injury.
 petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target)} growls, making you think twice.
+petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost bites your fingers!
 
 ## Petting silicons
 
@@ -53,6 +58,7 @@ petting-success-honkbot = You pet {THE($target)} on {POSS-ADJ($target)} slippery
 petting-success-mimebot = You pet {THE($target)} on {POSS-ADJ($target)} cold metal head.
 petting-success-cleanbot = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
 petting-success-medibot = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
+petting-success-recycler = You pet {THE($target)} on {POSS-ADJ($target)} mildly threatening steel exterior.
 
 petting-failure-honkbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} honks in refusal!
 petting-failure-cleanbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy mopping!
@@ -73,3 +79,9 @@ fence-rattle-success = *rattle*
 hugging-success-generic = You hug {THE($target)}.
 hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
 hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
+
+## Other
+
+petting-success-tesla = You pet {THE($target)}, violating the laws of nature and physics.
+
+petting-failure-tesla = You reach out towards {THE($target)}, but it zaps your hand away.

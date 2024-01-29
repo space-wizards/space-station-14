@@ -6,6 +6,7 @@ using Content.Client.Verbs.UI;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -13,6 +14,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Hands.Systems
@@ -251,7 +253,7 @@ namespace Content.Client.Hands.Systems
 
             OnPlayerItemAdded?.Invoke(hand.Name, args.Entity);
 
-            if (HasComp<HandVirtualItemComponent>(args.Entity))
+            if (HasComp<VirtualItemComponent>(args.Entity))
                 OnPlayerHandBlocked?.Invoke(hand.Name);
         }
 
@@ -269,7 +271,7 @@ namespace Content.Client.Hands.Systems
 
             OnPlayerItemRemoved?.Invoke(hand.Name, args.Entity);
 
-            if (HasComp<HandVirtualItemComponent>(args.Entity))
+            if (HasComp<VirtualItemComponent>(args.Entity))
                 OnPlayerHandUnblocked?.Invoke(hand.Name);
         }
 

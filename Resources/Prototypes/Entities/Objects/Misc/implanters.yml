@@ -18,6 +18,8 @@
       blacklist:
         components:
         - Guardian # no holoparasite macrobomb wombo combo
+        tags:
+        - Unimplantable
       currentMode: Draw
       implanterSlot:
         name: Implant
@@ -39,6 +41,7 @@
     - type: Item
       sprite: Objects/Specific/Medical/implanter.rsi
       heldPrefix: 0
+      size: Small
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -97,7 +100,6 @@
   components:
     - type: Item
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
-      size: Tiny
     - type: Sprite
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
       state: implanter1
@@ -189,6 +191,14 @@
       implant: EmpImplant
 
 - type: entity
+  id: ScramImplanter
+  name: scram implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: ScramImplant
+
+- type: entity
   id: DnaScramblerImplanter
   name: DNA scrambler implanter
   parent: BaseImplantOnlyImplanterSyndi
@@ -221,6 +231,14 @@
   components:
     - type: Implanter
       implant: DeathRattleImplant
+
+- type: entity
+  id: DeathAcidifierImplanter
+  name: death acidifier implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: DeathAcidifierImplant
 
 # Security and Command implanters
 

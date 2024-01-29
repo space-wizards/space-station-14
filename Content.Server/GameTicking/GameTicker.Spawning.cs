@@ -31,6 +31,9 @@ namespace Content.Server.GameTicking
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
 
+        [ValidatePrototypeId<EntityPrototype>]
+        public const string AdminObserverPrototypeName = "AdminObserver";
+
         /// <summary>
         /// How many players have joined the round through normal methods.
         /// Useful for game rules to look at. Doesn't count observers, people in lobby, etc.
@@ -200,7 +203,7 @@ namespace Content.Server.GameTicking
             _mind.SetUserId(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            var job = new JobComponent { PrototypeId = jobId };
+            var job = new JobComponent { Prototype = jobId };
             _roles.MindAddRole(newMind, job, silent: silent);
             var jobName = _jobs.MindTryGetJobName(newMind);
 
@@ -228,7 +231,7 @@ namespace Content.Server.GameTicking
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
 
-            _stationJobs.TryAssignJob(station, jobPrototype);
+            _stationJobs.TryAssignJob(station, jobPrototype, player.UserId);
 
             if (lateJoin)
                 _adminLogger.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");

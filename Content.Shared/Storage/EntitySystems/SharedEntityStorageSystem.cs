@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
@@ -15,6 +15,8 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -256,12 +258,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (component.Open)
         {
-            TransformSystem.SetWorldPosition(toInsert, TransformSystem.GetWorldPosition(container));
+            TransformSystem.DropNextTo(toInsert, container);
             return true;
         }
 
         _joints.RecursiveClearJoints(toInsert);
-        if (!component.Contents.Insert(toInsert, EntityManager))
+        if (!_container.Insert(toInsert, component.Contents))
             return false;
 
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
@@ -278,7 +280,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
-        component.Contents.Remove(toRemove, EntityManager);
+        _container.Remove(toRemove, component.Contents);
         var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
         TransformSystem.SetWorldPosition(toRemove, pos);
         return true;
@@ -334,6 +336,17 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
         }
 
+        if (_container.IsEntityInContainer(target))
+        {
+            if (_container.TryGetOuterContainer(target,Transform(target) ,out var container) &&
+                !HasComp<HandsComponent>(container.Owner))
+            {
+                Popup.PopupClient(Loc.GetString("entity-storage-component-already-contains-user-message"), user, user);
+
+                return false;
+            }
+        }
+
         //Checks to see if the opening position, if offset, is inside of a wall.
         if (component.EnteringOffset != new Vector2(0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
         {
@@ -368,13 +381,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (toAdd == container)
             return false;
 
-        if (TryComp<PhysicsComponent>(toAdd, out var phys))
-        {
-            var aabb = _physics.GetWorldAABB(toAdd, body: phys);
-
-            if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
-                return false;
-        }
+        var aabb = _lookup.GetAABBNoContainer(toAdd, Vector2.Zero, 0);
+        if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
+            return false;
 
         return Insert(toAdd, container, component);
     }
@@ -417,6 +426,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 var storeEv = new StoreMobInItemContainerAttemptEvent();
                 RaiseLocalEvent(container, ref storeEv);
                 allowedToEat = storeEv is { Handled: true, Cancelled: false };
+
+                if (component.ItemCanStoreMobs)
+                    allowedToEat = true;
             }
         }
 

@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Gravity;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -21,6 +23,7 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -33,7 +36,39 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
             SubscribeLocalEvent<ThrownItemComponent, EntityUnpausedEvent>(OnThrownUnpaused);
+            SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnThrownGetState);
+            SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnThrownHandleState);
+
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
+        }
+
+        private void OnThrownGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
+        {
+            // TODO: Throwing needs to handle this properly I just want the bad asserts to stop getting in my way.
+            TryGetNetEntity(component.Thrower, out var nent);
+
+            args.State = new ThrownItemComponentState()
+            {
+                ThrownTime = component.ThrownTime,
+                LandTime = component.LandTime,
+                Thrower = nent,
+                Landed = component.Landed,
+                PlayLandSound = component.PlayLandSound,
+            };
+        }
+
+        private void OnThrownHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not ThrownItemComponentState state)
+                return;
+
+            TryGetEntity(state.Thrower, out var thrower);
+
+            component.ThrownTime = state.ThrownTime;
+            component.LandTime = state.LandTime;
+            component.Thrower = thrower;
+            component.Landed = state.Landed;
+            component.PlayLandSound = state.PlayLandSound;
         }
 
         private void OnMapInit(EntityUid uid, ThrownItemComponent component, MapInitEvent args)
@@ -41,7 +76,7 @@ namespace Content.Shared.Throwing
             component.ThrownTime ??= _gameTiming.CurTime;
         }
 
-        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
+        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ref ThrownEvent @event)
         {
             if (!EntityManager.TryGetComponent(uid, out FixturesComponent? fixturesComponent) ||
                 fixturesComponent.Fixtures.Count != 1 ||
@@ -99,6 +134,9 @@ namespace Content.Shared.Throwing
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+
+                if (physics.Awake)
+                    _broadphase.RegenerateContacts(uid, physics);
             }
 
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
@@ -111,13 +149,13 @@ namespace Content.Shared.Throwing
                 }
             }
 
-            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower}, true);
+            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent { User = thrownItemComponent.Thrower }, true);
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
         public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
         {
-            if (thrownItem.Landed || thrownItem.Deleted || Deleted(uid))
+            if (thrownItem.Landed || thrownItem.Deleted || _gravity.IsWeightless(uid) || Deleted(uid))
                 return;
 
             thrownItem.Landed = true;

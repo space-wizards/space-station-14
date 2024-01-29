@@ -11,9 +11,9 @@ public interface IBiomeMarkerLayer : IPrototype
     /// <summary>
     /// Biome template to use as a mask for this layer.
     /// </summary>
-    public string? EntityMask { get; }
+    public Dictionary<EntProtoId, EntProtoId> EntityMask { get; }
 
-    public string Prototype { get; }
+    public string? Prototype { get; }
 
     /// <summary>
     /// How large the pre-generated points area is.

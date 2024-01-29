@@ -1,14 +1,24 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.Anomaly;
 
@@ -21,7 +31,9 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -31,6 +43,8 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
+        SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
+        SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitEndEvent>(OnAnomalyThrowEnd);
 
         SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnAnomalyUnpause);
         SubscribeLocalEvent<AnomalyPulsingComponent, EntityUnpausedEvent>(OnPulsingUnpause);
@@ -47,7 +61,23 @@ public abstract class SharedAnomalySystem : EntitySystem
 
     private void OnAttacked(EntityUid uid, AnomalyComponent component, AttackedEvent args)
     {
+        if (HasComp<CorePoweredThrowerComponent>(args.Used))
+            return;
+
         DoAnomalyBurnDamage(uid, args.User, component);
+    }
+
+    private void OnAnomalyThrowStart(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitStartEvent args)
+    {
+        if (!TryComp<CorePoweredThrowerComponent>(args.Used, out var corePowered) || !TryComp<PhysicsComponent>(ent, out var body))
+            return;
+        _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
+        ChangeAnomalyStability(ent, Random.NextFloat(corePowered.StabilityPerThrow.X, corePowered.StabilityPerThrow.Y), ent.Comp);
+    }
+
+    private void OnAnomalyThrowEnd(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitEndEvent args)
+    {
+        _physics.SetBodyType(ent, BodyType.Static);
     }
 
     public void DoAnomalyBurnDamage(EntityUid source, EntityUid target, AnomalyComponent component)
@@ -110,8 +140,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
 
-        var ev = new AnomalyPulseEvent(component.Stability, component.Severity);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
+        RaiseLocalEvent(uid, ref ev, true);
     }
 
     /// <summary>
@@ -154,8 +184,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             _sawmill.Info($"Raising supercritical event. Entity: {ToPrettyString(uid)}");
 
-        var ev = new AnomalySupercriticalEvent();
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new AnomalySupercriticalEvent(uid);
+        RaiseLocalEvent(uid, ref ev, true);
 
         EndAnomaly(uid, component, true);
     }
@@ -181,6 +211,9 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
+
+        Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+
         QueueDel(uid);
     }
 
@@ -200,7 +233,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         component.Stability = Math.Clamp(newVal, 0, 1);
         Dirty(component);
 
-        var ev = new AnomalyStabilityChangedEvent(uid, component.Stability);
+        var ev = new AnomalyStabilityChangedEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
     }
 
@@ -223,7 +256,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         component.Severity = Math.Clamp(newVal, 0, 1);
         Dirty(component);
 
-        var ev = new AnomalySeverityChangedEvent(uid, component.Severity);
+        var ev = new AnomalySeverityChangedEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
     }
 
@@ -322,4 +355,122 @@ public abstract class SharedAnomalySystem : EntitySystem
             RemComp(ent, super);
         }
     }
+
+    /// <summary>
+    /// Gets random points around the anomaly based on the given parameters.
+    /// </summary>
+    public List<TileRef>? GetSpawningPoints(EntityUid uid, float stability, float severity, AnomalySpawnSettings settings)
+    {
+        var xform = Transform(uid);
+
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
+            return null;
+
+        var amount = (int) (MathHelper.Lerp(settings.MinAmount, settings.MaxAmount, severity * stability) + 0.5f);
+
+        var localpos = xform.Coordinates.Position;
+        var tilerefs = grid.GetLocalTilesIntersecting(
+            new Box2(localpos + new Vector2(-settings.MaxRange, -settings.MaxRange), localpos + new Vector2(settings.MaxRange, settings.MaxRange))).ToList();
+
+        if (tilerefs.Count == 0)
+            return null;
+
+        var physQuery = GetEntityQuery<PhysicsComponent>();
+        var resultList = new List<TileRef>();
+        while (resultList.Count() < amount)
+        {
+            if (tilerefs.Count() == 0)
+                break;
+
+            var tileref = _random.Pick(tilerefs);
+            var distance = MathF.Sqrt(MathF.Pow(tileref.X - xform.LocalPosition.X, 2) + MathF.Pow(tileref.Y - xform.LocalPosition.Y, 2));
+
+            //cut outer & inner circle
+            if (distance > settings.MaxRange || distance < settings.MinRange)
+            {
+                tilerefs.Remove(tileref);
+                continue;
+            }
+
+            if (!settings.CanSpawnOnEntities)
+            {
+                var valid = true;
+                foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
+                {
+                    if (!physQuery.TryGetComponent(ent, out var body))
+                        continue;
+
+                    if (body.BodyType != BodyType.Static ||
+                        !body.Hard ||
+                        (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                        continue;
+
+                    valid = false;
+                    break;
+                }
+                if (!valid)
+                {
+                    tilerefs.Remove(tileref);
+                    continue;
+                }
+            }
+            resultList.Add(tileref);
+        }
+        return resultList;
+    }
+}
+
+[DataRecord]
+public partial record struct AnomalySpawnSettings()
+{
+    /// <summary>
+    /// should entities block spawning?
+    /// </summary>
+    public bool CanSpawnOnEntities { get; set; } = true;
+
+    /// <summary>
+    /// The minimum number of entities that spawn per pulse
+    /// </summary>
+    public int MinAmount { get; set; } = 0;
+
+    /// <summary>
+    /// The maximum number of entities that spawn per pulse
+    /// scales with severity.
+    /// </summary>
+    public int MaxAmount { get; set; } = 1;
+
+    /// <summary>
+    /// The distance from the anomaly in which the entities will not appear
+    /// </summary>
+    public float MinRange { get; set; } = 0f;
+
+    /// <summary>
+    /// The maximum radius the entities will spawn in.
+    /// </summary>
+    public float MaxRange { get; set; } = 1f;
+
+    /// <summary>
+    /// Whether or not anomaly spawns entities on Pulse
+    /// </summary>
+    public bool SpawnOnPulse { get; set; } = false;
+
+    /// <summary>
+    /// Whether or not anomaly spawns entities on SuperCritical
+    /// </summary>
+    public bool SpawnOnSuperCritical { get; set; } = false;
+
+    /// <summary>
+    /// Whether or not anomaly spawns entities when destroyed
+    /// </summary>
+    public bool SpawnOnShutdown { get; set; } = false;
+
+    /// <summary>
+    /// Whether or not anomaly spawns entities on StabilityChanged
+    /// </summary>
+    public bool SpawnOnStabilityChanged { get; set; } = false;
+
+    /// <summary>
+    /// Whether or not anomaly spawns entities on SeverityChanged
+    /// </summary>
+    public bool SpawnOnSeverityChanged { get; set; } = false;
 }

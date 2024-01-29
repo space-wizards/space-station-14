@@ -22,7 +22,7 @@ public sealed class GasPowerReceiverSystem : EntitySystem
         SubscribeLocalEvent<GasPowerReceiverComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
     }
 
-    private void OnDeviceUpdated(EntityUid uid, GasPowerReceiverComponent component, AtmosDeviceUpdateEvent args)
+    private void OnDeviceUpdated(EntityUid uid, GasPowerReceiverComponent component, ref AtmosDeviceUpdateEvent args)
     {
         var timeDelta = args.dt;
 

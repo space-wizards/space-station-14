@@ -357,11 +357,12 @@ public abstract partial class SharedBuckleSystem
         if (TryComp<AppearanceComponent>(buckleUid, out var appearance))
             Appearance.SetData(buckleUid, BuckleVisuals.Buckled, true, appearance);
 
+        _rotationVisuals.SetHorizontalAngle(buckleUid,  strapComp.Rotation);
+
         ReAttach(buckleUid, strapUid, buckleComp, strapComp);
         SetBuckledTo(buckleUid, strapUid, strapComp, buckleComp);
         // TODO user is currently set to null because if it isn't the sound fails to play in some situations, fix that
-        var audioSourceUid = userUid == buckleUid ? userUid : strapUid;
-        _audio.PlayPredicted(strapComp.BuckleSound, strapUid, audioSourceUid);
+        _audio.PlayPredicted(strapComp.BuckleSound, strapUid, userUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
         RaiseLocalEvent(ev.BuckledEntity, ref ev);
@@ -435,9 +436,12 @@ public abstract partial class SharedBuckleSystem
             if (HasComp<SleepingComponent>(buckleUid) && buckleUid == userUid)
                 return false;
 
-            // If the strap is a vehicle and the rider is not the person unbuckling, return.
-            if (TryComp<VehicleComponent>(strapUid, out var vehicle) &&
-                vehicle.Rider != userUid)
+            // If the strap is a vehicle and the rider is not the person unbuckling, return. Unless the rider is crit or dead.
+            if (TryComp<VehicleComponent>(strapUid, out var vehicle) && vehicle.Rider != userUid && !_mobState.IsIncapacitated(buckleUid))
+                return false;
+
+            // If the person is crit or dead in any kind of strap, return. This prevents people from unbuckling themselves while incapacitated.
+            if (_mobState.IsIncapacitated(buckleUid) && userUid == buckleUid)
                 return false;
         }
 
@@ -468,6 +472,7 @@ public abstract partial class SharedBuckleSystem
 
         if (TryComp(buckleUid, out AppearanceComponent? appearance))
             Appearance.SetData(buckleUid, BuckleVisuals.Buckled, false, appearance);
+        _rotationVisuals.ResetHorizontalAngle(buckleUid);
 
         if (TryComp<MobStateComponent>(buckleUid, out var mobState)
             && _mobState.IsIncapacitated(buckleUid, mobState)
@@ -493,8 +498,10 @@ public abstract partial class SharedBuckleSystem
 
         _joints.RefreshRelay(buckleUid);
         Appearance.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
-        var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
-        _audio.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);
+
+        // TODO: Buckle listening to moveevents is sussy anyway.
+        if (!TerminatingOrDeleted(strapUid))
+            _audio.PlayPredicted(strapComp.UnbuckleSound, strapUid, userUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);

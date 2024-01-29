@@ -14,14 +14,6 @@ head-rev-briefing =
     Use flashes to convert people to your cause.
     Kill all heads to take over the station.
 
-head-rev-initial-name = [color=#5e9cff]{$name}[/color] was one of the Head Revolutionaries.
-head-rev-initial-name-user = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) was one of the Head Revolutionaries.
-
-head-rev-initial-count = {$initialCount ->
-    [one] There was one Head Revolutionary:
-    *[other] There were {$initialCount} Head Revolutionaries:
-}
-
 head-rev-break-mindshield = The Mindshield was destroyed!
 
 ## Rev
@@ -58,4 +50,26 @@ rev-stalemate = All of the Head Revs and Command died. It's a draw.
 
 rev-reverse-stalemate = Both Command and Head Revs survived.
 
+rev-headrev-count = {$initialCount ->
+    [one] There was one Head Revolutionary:
+    *[other] There were {$initialCount} Head Revolutionaries:
+}
 
+rev-headrev-name-user = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) converted {$count} {$count ->
+    [one] person
+    *[other] people
+}
+
+rev-headrev-name = [color=#5e9cff]{$name}[/color] converted {$count} {$count ->
+    [one] person
+    *[other] people
+}
+
+## Deconverted window
+
+rev-deconverted-title = Deconverted!
+rev-deconverted-text =
+    As the last headrev has died, the revolution is over.
+
+    You are no longer a revolutionary, so be nice.
+rev-deconverted-confirm = Confirm

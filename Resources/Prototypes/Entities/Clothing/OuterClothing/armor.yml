@@ -227,6 +227,10 @@
         Piercing: 0.6
         Heat: 0.5
         Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine
@@ -252,6 +256,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.65
+  - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
@@ -274,9 +279,29 @@
         Piercing: 0.4
   - type: ClothingSpeedModifier
     walkModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: GroupExamine
   - type: Construction
     graph: BoneArmor
     node: armor
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorPodWars
+  name: ironclad II armor
+  description: A repurposed suit of ironclad II armor, a relic of the pod wars.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/podwars_armor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/podwars_armor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+  - type: GroupExamine

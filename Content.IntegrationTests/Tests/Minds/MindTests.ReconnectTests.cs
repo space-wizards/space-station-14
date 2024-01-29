@@ -1,8 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
-using NUnit.Framework.Interfaces;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -124,12 +122,12 @@ public sealed partial class MindTests
     [Test]
     public async Task TestVisitingReconnect()
     {
-        await using var pair = await SetupPair();
+        await using var pair = await SetupPair(true);
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
         var mindSys = entMan.System<SharedMindSystem>();
         var mind = GetMind(pair);
 
-        Assert.Null(mind.Comp.VisitingEntity);
+        Assert.That(mind.Comp.VisitingEntity, Is.Null);
 
         // Make player visit a new mob
         var original = mind.Comp.OwnedEntity;
@@ -167,8 +165,8 @@ public sealed partial class MindTests
         await using var pair = await SetupPair();
         var mind = GetMind(pair);
 
-        Assert.Null(mind.Comp.VisitingEntity);
-        Assert.NotNull(mind.Comp.OwnedEntity);
+        Assert.That(mind.Comp.VisitingEntity, Is.Null);
+        Assert.That(mind.Comp.OwnedEntity, Is.Not.Null);
         var entity = mind.Comp.OwnedEntity;
 
         await pair.RunTicksSync(5);
@@ -177,7 +175,7 @@ public sealed partial class MindTests
 
         var newMind = GetMind(pair);
 
-        Assert.Null(newMind.Comp.VisitingEntity);
+        Assert.That(newMind.Comp.VisitingEntity, Is.Null);
         Assert.That(newMind.Comp.OwnedEntity, Is.EqualTo(entity));
         Assert.That(newMind.Id, Is.EqualTo(mind.Id));
 

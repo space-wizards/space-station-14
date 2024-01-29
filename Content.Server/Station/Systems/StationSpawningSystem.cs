@@ -97,7 +97,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         EntityUid? station,
         EntityUid? entity = null)
     {
-        _prototypeManager.TryIndex(job?.PrototypeId ?? string.Empty, out JobPrototype? prototype);
+        _prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out JobPrototype? prototype);
 
         // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
         if (prototype?.JobEntity != null)
@@ -161,7 +161,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
     private void DoJobSpecials(JobComponent? job, EntityUid entity)
     {
-        if (!_prototypeManager.TryIndex(job?.PrototypeId ?? string.Empty, out JobPrototype? prototype))
+        if (!_prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out JobPrototype? prototype))
             return;
 
         foreach (var jobSpecial in prototype.Special)
@@ -182,10 +182,13 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (!InventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
             return;
 
-        if (!EntityManager.TryGetComponent(idUid, out PdaComponent? pdaComponent) || !TryComp<IdCardComponent>(pdaComponent.ContainedId, out var card))
+        var cardId = idUid.Value;
+        if (TryComp<PdaComponent>(idUid, out var pdaComponent) && pdaComponent.ContainedId != null)
+            cardId = pdaComponent.ContainedId.Value;
+
+        if (!TryComp<IdCardComponent>(cardId, out var card))
             return;
 
-        var cardId = pdaComponent.ContainedId.Value;
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
 
@@ -203,7 +206,8 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         _accessSystem.SetAccessToJob(cardId, jobPrototype, extendedAccess);
 
-        _pdaSystem.SetOwner(idUid.Value, pdaComponent, characterName);
+        if (pdaComponent != null)
+            _pdaSystem.SetOwner(idUid.Value, pdaComponent, characterName);
     }
 
 

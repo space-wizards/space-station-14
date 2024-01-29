@@ -44,7 +44,7 @@
     stackType: Ointment
     count: 10
   - type: StackPrice
-    price: 10
+    price: 5
 
 - type: entity
   id: Ointment1
@@ -130,7 +130,7 @@
     stackType: Brutepack
     count: 10
   - type: StackPrice
-    price: 10
+    price: 5
 
 - type: entity
   id: Brutepack1
@@ -293,7 +293,7 @@
   id: HealingToolbox
   name: healing toolbox
   description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
-  suffix: Do Not Map
+  suffix: DO NOT MAP
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healing_toolbox.rsi
@@ -398,6 +398,19 @@
           Quantity: 10
 
 - type: entity
+  name: copper pill (10u)
+  parent: Pill
+  id: PillCopper
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Copper
+          Quantity: 10
+
+- type: entity
   parent: PillCanister
   id: PillCanisterIron
   suffix: Iron, 5
@@ -405,6 +418,16 @@
   - type: StorageFill
     contents:
     - id: PillIron
+      amount: 5
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterCopper
+  suffix: Copper, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCopper
       amount: 5
 
 - type: entity
@@ -746,4 +769,17 @@
         maxVol: 15
         reagents:
         - ReagentId: Romerol
+          Quantity: 15
+
+- type: entity
+  name: stimulants syringe
+  parent: BaseSyringe
+  id: SyringeStimulants
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Stimulants
           Quantity: 15

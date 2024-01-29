@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage
 {
@@ -15,7 +16,7 @@ namespace Content.Shared.Damage
     ///     The actual damage information is stored in <see cref="DamageDict"/>. This class provides
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
-    [DataDefinition]
+    [DataDefinition, Serializable, NetSerializable]
     public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>
     {
         // These exist solely so the wiki works. Please do not touch them or use them.
@@ -36,10 +37,6 @@ namespace Content.Shared.Damage
         [ViewVariables(VVAccess.ReadWrite)]
         [IncludeDataField(customTypeSerializer: typeof(DamageSpecifierDictionarySerializer), readOnly: true)]
         public Dictionary<string, FixedPoint2> DamageDict { get; set; } = new();
-
-        [JsonIgnore]
-        [Obsolete("Use GetTotal()")]
-        public FixedPoint2 Total => GetTotal();
 
         /// <summary>
         ///     Returns a sum of the damage values.
@@ -150,12 +147,12 @@ namespace Content.Shared.Damage
                 float newValue = value.Float();
 
                 if (modifierSet.FlatReduction.TryGetValue(key, out var reduction))
-                    newValue -= reduction;
+                    newValue = Math.Max(0f, newValue - reduction); // flat reductions can't heal you
 
                 if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
-                    newValue *= coefficient;
+                    newValue *= coefficient; // coefficients can heal you, e.g. cauterizing bleeding
 
-                if (newValue > 0)
+                if(newValue != 0)
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
             }
 

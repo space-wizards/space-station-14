@@ -12,3 +12,13 @@
   license: "CC0-1.0"
   copyright: "Grappling hook by 16bitstudios. Converted to .OGG and MONO by metalgearsloth"
   source: "https://freesound.org/people/16bitstudios/sounds/541975/"
+
+- files: ["atreides.ogg", "c-20r.ogg", "flaregun.ogg", "mateba.ogg", "minigun.ogg", "mk58.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from CM-SS13"
+  source: "https://gitlab.com/cmdevs/colonial-warfare/-/tree/32cb5892413243cc74bb2d11df8e3085f8ef1164/sound/weapons"
+
+- files: ["rocket-launcher.ogg", "taser2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/88d7dbfc105fbf40284d7b7c4587f8d23c0ac3ac"

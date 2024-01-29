@@ -39,7 +39,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
@@ -159,6 +158,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             PrototypeId = "SpaceNinja"
         };
         _role.MindAddRole(mindId, role, mind);
+        _role.MindPlaySound(mindId, config.GreetingSound, mind);
 
         var session = mind.Session;
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);

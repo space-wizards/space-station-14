@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Decals
 {
     [Prototype("decal")]
-    public sealed class DecalPrototype : IPrototype
+    public sealed partial class DecalPrototype : IPrototype
     {
         [IdDataField] public string ID { get; } = null!;
         [DataField("sprite")] public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;

@@ -38,7 +38,7 @@
   - type: PlaceableSurface
     isPlaceable: false # defaults to closed.
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -48,6 +48,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: open
@@ -101,8 +104,8 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -111,6 +114,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Construction
     graph: CrateSecure
     node: cratesecure

@@ -1,0 +1,9 @@
+- files: ["bullet_meat1.ogg", "bullet_meat2.ogg", "bullet_meat3.ogg", "bullet_meat4.ogg", "energy_meat1.ogg", "energy_meat2.ogg", "energy_metal1.ogg", "energy_metal2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13. Remixed to mono where it was stereo by metalgearsloth"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/cc701aedb633d83eae8339a8b3712ad8ad99cca0/sound"
+
+- files: ["ric1.ogg", "ric2.ogg", "ric3.ogg", "ric3.ogg", "ric5.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/7501504b0ea029d2cf1c0336d09db5c0959aa412/sound/weapons/effects"

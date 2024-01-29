@@ -3,7 +3,7 @@
 namespace Content.Shared.NameIdentifier;
 
 [Prototype("nameIdentifierGroup")]
-public sealed class NameIdentifierGroupPrototype : IPrototype
+public sealed partial class NameIdentifierGroupPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
