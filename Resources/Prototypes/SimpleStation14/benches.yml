@@ -1,0 +1,255 @@
+# Base benches
+- type: entity
+  name: bench
+  id: BenchBaseMiddle
+  suffix: Middle
+  abstract: true
+  parent: SeatBase
+  description: Multiple seats spanning a single object. Truly a marvel of science.
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    state: middle
+
+# Park benches
+- type: entity
+  name: park bench
+  id: BenchParkMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/parkbench_wooden.rsi
+
+- type: entity
+  id: BenchParkLeft
+  suffix: Left
+  parent: BenchParkMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: BenchParkRight
+  suffix: Right
+  parent: BenchParkMiddle
+  components:
+  - type: Sprite
+    state: right
+
+# Bamboo benches
+- type: entity
+  name: park bench
+  id: BenchParkBambooMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/parkbench_bamboo.rsi
+
+- type: entity
+  id: BenchParkBambooLeft
+  suffix: Left
+  parent: BenchParkBambooMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: BenchParkBambooRight
+  suffix: Right
+  parent: BenchParkBambooMiddle
+  components:
+  - type: Sprite
+    state: right
+
+# Pews
+- type: entity
+  name: pew
+  id: BenchPewMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/pews.rsi
+
+- type: entity
+  id: BenchPewLeft
+  suffix: Left
+  parent: BenchPewMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: BenchPewRight
+  suffix: Right
+  parent: BenchPewMiddle
+  components:
+  - type: Sprite
+    state: right
+
+# Steel benches
+- type: entity
+  name: steel bench
+  id: BenchSteelMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/steel_bench.rsi
+
+- type: entity
+  id: BenchSteelLeft
+  suffix: Left
+  parent: BenchSteelMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: BenchSteelRight
+  suffix: Right
+  parent: BenchSteelMiddle
+  components:
+  - type: Sprite
+    state: right
+
+# White steel benches
+- type: entity
+  name: white steel bench
+  id: BenchSteelWhiteMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/steel_bench_white.rsi
+
+- type: entity
+  id: BenchSteelWhiteLeft
+  suffix: Left
+  parent: BenchSteelWhiteMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: BenchSteelWhiteRight
+  suffix: Right
+  parent: BenchSteelWhiteMiddle
+  components:
+  - type: Sprite
+    state: right
+
+# Standard sofa
+- type: entity
+  name: sofa
+  id: BenchSofaMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/sofa.rsi
+
+- type: entity
+  id: BenchSofaLeft
+  suffix: Left
+  parent: BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: BenchSofaRight
+  suffix: Right
+  parent: BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: right
+
+- type: entity
+  name: sofa
+  id: BenchSofaCorner
+  suffix: Corner
+#  parent: BenchSofaMiddle
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/sofa.rsi
+    state: corner
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+
+# Corp sofa
+- type: entity
+  name: grey sofa
+  id: BenchSofaCorpMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/sofa_corp.rsi
+
+- type: entity
+  id: BenchSofaCorpLeft
+  suffix: Left
+  parent: BenchSofaCorpMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: BenchSofaCorpRight
+  suffix: Right
+  parent: BenchSofaCorpMiddle
+  components:
+  - type: Sprite
+    state: right
+
+- type: entity
+  name: grey sofa
+  id: BenchSofaCorpCorner
+  suffix: Corner
+#  parent: BenchSofaCorpMiddle
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    sprite: SimpleStation14/Structures/Furniture/Benches/sofa_corp.rsi
+    state: corner
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
