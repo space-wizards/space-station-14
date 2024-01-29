@@ -255,8 +255,8 @@
     - SheetSteelLingering0
     - SheetGlassLingering0
     - PartRodMetalLingering0
-    - PlasteelStackLingering0
-    - ReinforcedGlassStackLingering0
+    - PlasteelLingering0
+    - ReinforcedGlassLingering0
     - FloorTileItemSteelLingering0
 
 - type: entity
