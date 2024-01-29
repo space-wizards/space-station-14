@@ -66,7 +66,7 @@ namespace Content.Client.HealthAnalyzer.UI
             );
 
             Temperature.Text = Loc.GetString("health-analyzer-window-entity-temperature-text",
-                ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - 273f:F1} °C")
+                ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - 273f:F1} °C ({msg.Temperature:F1} °K)")
             );
 
             BloodLevel.Text = Loc.GetString("health-analyzer-window-entity-blood-level-text",

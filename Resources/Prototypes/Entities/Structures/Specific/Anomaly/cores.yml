@@ -40,8 +40,11 @@
   - type: PointLight
     radius: 1.5
     energy: 1.5
-    color: "#fca3c0"
+    color: "#E25822"
     castShadows: false
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
 
 - type: entity
   parent: BaseAnomalyCore

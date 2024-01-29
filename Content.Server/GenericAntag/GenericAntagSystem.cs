@@ -60,7 +60,7 @@ public sealed class GenericAntagSystem : EntitySystem
 }
 
 /// <summary>
-/// Event raised on a player's entity after its simple antag rule is started and objectives get added.
+/// Event raised on a player's entity after its simple antag rule is started.
 /// Use this to add a briefing, roles, etc.
 /// </summary>
 [ByRefEvent]
