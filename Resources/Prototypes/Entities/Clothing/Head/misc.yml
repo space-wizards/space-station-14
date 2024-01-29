@@ -279,8 +279,6 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
-      - HamsterWearable
-      - DroneUsable
       - WhitelistChameleon
   - type: StaticPrice
     price: 1
