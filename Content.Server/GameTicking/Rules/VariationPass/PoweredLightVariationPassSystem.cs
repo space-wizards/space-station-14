@@ -13,10 +13,10 @@ public sealed class PoweredLightVariationPassSystem : VariationPassSystem<Powere
 
     protected override void ApplyVariation(Entity<PoweredLightVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
-        var query = AllEntityQuery<PoweredLightComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        var query = AllEntityQuery<PoweredLightComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (!IsMemberOfStation(uid, ref args))
+            if (!IsMemberOfStation((uid, xform), ref args))
                 continue;
 
             if (Random.Prob(ent.Comp.LightBreakChance))

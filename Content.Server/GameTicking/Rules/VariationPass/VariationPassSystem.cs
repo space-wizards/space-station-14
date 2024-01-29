@@ -20,9 +20,9 @@ public abstract class VariationPassSystem<T> : GameRuleSystem<T>
         SubscribeLocalEvent<T, StationVariationPassEvent>(ApplyVariation);
     }
 
-    protected bool IsMemberOfStation(EntityUid ent, ref StationVariationPassEvent args)
+    protected bool IsMemberOfStation(Entity<TransformComponent> ent, ref StationVariationPassEvent args)
     {
-        return Stations.GetOwningStation(ent) == args.Station.Owner;
+        return Stations.GetOwningStation(ent, ent.Comp) == args.Station.Owner;
     }
 
     protected abstract void ApplyVariation(Entity<T> ent, ref StationVariationPassEvent args);
