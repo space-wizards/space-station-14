@@ -256,7 +256,7 @@
   name: berry-pocket
   parent: FoodDonkpocketBase
   id: FoodDonkpocketBerry
-  description: A relentlessly sweet donk-pocket, with only artificial flavoring.
+  description: A relentlessly sweet donk-pocket. Made with 100% artificial flavoring.
   components:
   - type: FlavorProfile
     flavors:
