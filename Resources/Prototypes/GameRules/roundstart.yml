@@ -134,7 +134,8 @@
     rules:
     - id: BasicPoweredLightVariationPass
     - id: BasicTrashVariationPass
-    - id: WallRustingVariationPass
+    - id: SolidWallRustingVariationPass
+    - id: ReinforcedWallRustingVariationPass
     - id: BasicPuddleMessVariationPass
       prob: 0.99
       orGroup: puddleMess

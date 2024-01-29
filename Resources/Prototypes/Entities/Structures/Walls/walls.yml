@@ -545,6 +545,7 @@
           3: { state: reinf_construct-3, visible: true}
           4: { state: reinf_construct-4, visible: true}
           5: { state: reinf_construct-5, visible: true}
+  - type: ReinforcedWallReplacementMarker
   - type: StaticPrice
     price: 150
   - type: RadiationBlocker
