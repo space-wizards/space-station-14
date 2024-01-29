@@ -55,7 +55,9 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -86,6 +88,7 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: RatKingRummageable
 
 - type: entity
   id: MailingUnit

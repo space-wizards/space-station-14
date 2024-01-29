@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created for SS14 by deltanedas (github), festive by Alekshhh (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "festive"
+    }
+  ]
+}

@@ -1,32 +1,27 @@
-﻿using System.Linq;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Construction;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Placeable;
-using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class SolutionHeaterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<SolutionHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<SolutionHeaterComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<SolutionHeaterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
-        SubscribeLocalEvent<SolutionHeaterComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<SolutionHeaterComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<SolutionHeaterComponent, ItemPlacedEvent>(OnItemPlaced);
+        SubscribeLocalEvent<SolutionHeaterComponent, ItemRemovedEvent>(OnItemRemoved);
     }
 
     private void TurnOn(EntityUid uid)
@@ -35,9 +30,12 @@ public sealed class SolutionHeaterSystem : EntitySystem
         EnsureComp<ActiveSolutionHeaterComponent>(uid);
     }
 
-    public bool TryTurnOn(EntityUid uid, SolutionHeaterComponent component)
+    public bool TryTurnOn(EntityUid uid, ItemPlacerComponent? placer = null)
     {
-        if (component.PlacedEntities.Count <= 0 || !_powerReceiver.IsPowered(uid))
+        if (!Resolve(uid, ref placer))
+            return false;
+
+        if (placer.PlacedEntities.Count <= 0 || !_powerReceiver.IsPowered(uid))
             return false;
 
         TurnOn(uid);
@@ -50,75 +48,47 @@ public sealed class SolutionHeaterSystem : EntitySystem
         RemComp<ActiveSolutionHeaterComponent>(uid);
     }
 
-    private void OnPowerChanged(EntityUid uid, SolutionHeaterComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<SolutionHeaterComponent> entity, ref PowerChangedEvent args)
     {
-        if (args.Powered && component.PlacedEntities.Count > 0)
+        var placer = Comp<ItemPlacerComponent>(entity);
+        if (args.Powered && placer.PlacedEntities.Count > 0)
         {
-            TurnOn(uid);
+            TurnOn(entity);
         }
         else
         {
-            TurnOff(uid);
+            TurnOff(entity);
         }
     }
 
-    private void OnRefreshParts(EntityUid uid, SolutionHeaterComponent component, RefreshPartsEvent args)
+    private void OnItemPlaced(Entity<SolutionHeaterComponent> entity, ref ItemPlacedEvent args)
     {
-        var heatRating = args.PartRatings[component.MachinePartHeatMultiplier] - 1;
-
-        component.HeatPerSecond = component.BaseHeatPerSecond * MathF.Pow(component.PartRatingHeatMultiplier, heatRating);
+        TryTurnOn(entity);
     }
 
-    private void OnUpgradeExamine(EntityUid uid, SolutionHeaterComponent component, UpgradeExamineEvent args)
+    private void OnItemRemoved(Entity<SolutionHeaterComponent> entity, ref ItemRemovedEvent args)
     {
-        args.AddPercentageUpgrade("solution-heater-upgrade-heat", component.HeatPerSecond / component.BaseHeatPerSecond);
-    }
-
-    private void OnStartCollide(EntityUid uid, SolutionHeaterComponent component, ref StartCollideEvent args)
-    {
-        if (component.Whitelist is not null && !component.Whitelist.IsValid(args.OtherEntity))
-            return;
-
-        // Disallow sleeping so we can detect when entity is removed from the heater.
-        _physics.SetSleepingAllowed(args.OtherEntity, args.OtherBody, false);
-
-        component.PlacedEntities.Add(args.OtherEntity);
-
-        TryTurnOn(uid, component);
-
-        if (component.PlacedEntities.Count >= component.MaxEntities)
-            _placeableSurface.SetPlaceable(uid, false);
-    }
-
-    private void OnEndCollide(EntityUid uid, SolutionHeaterComponent component, ref EndCollideEvent args)
-    {
-        // Re-allow sleeping.
-        _physics.SetSleepingAllowed(args.OtherEntity, args.OtherBody, true);
-
-        component.PlacedEntities.Remove(args.OtherEntity);
-
-        if (component.PlacedEntities.Count == 0) // Last entity was removed
-            TurnOff(uid);
-
-        _placeableSurface.SetPlaceable(uid, true);
+        var placer = Comp<ItemPlacerComponent>(entity);
+        if (placer.PlacedEntities.Count == 0) // Last entity was removed
+            TurnOff(entity);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ActiveSolutionHeaterComponent, SolutionHeaterComponent>();
-        while (query.MoveNext(out _, out _, out var heater))
+        var query = EntityQueryEnumerator<ActiveSolutionHeaterComponent, SolutionHeaterComponent, ItemPlacerComponent>();
+        while (query.MoveNext(out _, out _, out var heater, out var placer))
         {
-            foreach (var heatingEntity in heater.PlacedEntities.Take((int) heater.MaxEntities))
+            foreach (var heatingEntity in placer.PlacedEntities)
             {
-                if (!TryComp<SolutionContainerManagerComponent>(heatingEntity, out var solution))
+                if (!TryComp<SolutionContainerManagerComponent>(heatingEntity, out var container))
                     continue;
 
                 var energy = heater.HeatPerSecond * frameTime;
-                foreach (var s in solution.Solutions.Values)
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heatingEntity, container)))
                 {
-                    _solution.AddThermalEnergy(heatingEntity, s, energy);
+                    _solutionContainer.AddThermalEnergy(soln, energy);
                 }
             }
         }

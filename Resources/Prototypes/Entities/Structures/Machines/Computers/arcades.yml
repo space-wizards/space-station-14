@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: ArcadeBase
   description: An arcade cabinet.
@@ -66,6 +66,7 @@
     - PlushieRatvar
     - PlushieNar
     - PlushieSnake
+    - PlushieArachind
     - Basketball
     - Football
     - PlushieRouny
@@ -83,10 +84,15 @@
     - BirdToyInstrument
     - PlushieXeno
     - BeachBall
+    - PlushieMoth
+    - PlushieHampter
+    - PlushiePenguin
+    - PlushieHuman
+    - ClothingHeadHatCowboyRed
   - type: WiresPanel
   - type: Wires
-    LayoutId: Arcade
-    BoardName: "Arcade"
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -107,7 +113,7 @@
   - type: SpaceVillainArcade
     rewardMinAmount: 5
     rewardMaxAmount: 8
-    
+
 - type: entity
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.
@@ -127,8 +133,8 @@
   - type: ActivatableUIRequiresPower
   - type: WiresPanel
   - type: Wires
-    LayoutId: Arcade
-    BoardName: "Arcade"
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
   - type: UserInterface
     interfaces:
       - key: enum.BlockGameUiKey.Key

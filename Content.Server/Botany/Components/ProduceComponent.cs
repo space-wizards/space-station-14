@@ -5,7 +5,7 @@ namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 [Access(typeof(BotanySystem))]
-public sealed class ProduceComponent : Component
+public sealed partial class ProduceComponent : Component
 {
     [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 
@@ -19,5 +19,5 @@ public sealed class ProduceComponent : Component
     ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
     /// </summary>
     [DataField("seedId", customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
-    public readonly string? SeedId;
+    public string? SeedId;
 }

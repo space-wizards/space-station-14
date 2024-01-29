@@ -17,7 +17,7 @@
           map: [ "enum.SolutionContainerLayers.Fill" ]
           visible: false
     - type: Item
-      size: 20
+      size: Normal
       sprite: Objects/Specific/Chemistry/jug.rsi
     - type: RefillableSolution
       solution: beaker
@@ -36,7 +36,6 @@
         - key: enum.TransferAmountUiKey.Key
           type: TransferAmountBoundUserInterface
     - type: Drink
-      isOpen: true
       solution: beaker
     - type: Spillable
       solution: beaker
@@ -44,8 +43,15 @@
     - type: SolutionContainerVisuals
       maxFillLevels: 6
       fillBaseName: jug
+      inHandsMaxFillLevels: 5
+      inHandsFillBaseName: -fill-
     - type: StaticPrice
-      price: 80
+      price: 60
+    - type: Label
+      originalName: jug
+    - type: Tag
+      tags:
+      - ChemDispensable
 
 - type: entity
   parent: Jug
@@ -54,7 +60,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Carbon
+      currentLabel: reagent-name-carbon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -69,7 +75,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Iodine
+      currentLabel: reagent-name-iodine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -84,7 +90,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Fluorine
+      currentLabel: reagent-name-fluorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -99,7 +105,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Chlorine
+      currentLabel: reagent-name-chlorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -114,7 +120,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Aluminium
+      currentLabel: reagent-name-aluminium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -129,7 +135,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Phosphorus
+      currentLabel: reagent-name-phosphorus
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -144,7 +150,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Sulfur
+      currentLabel: reagent-name-sulfur
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -159,7 +165,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Silicon
+      currentLabel: reagent-name-silicon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -174,7 +180,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Hydrogen
+      currentLabel: reagent-name-hydrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -189,7 +195,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Lithium
+      currentLabel: reagent-name-lithium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -204,7 +210,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Sodium
+      currentLabel: reagent-name-sodium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -219,7 +225,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Potassium
+      currentLabel: reagent-name-potassium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -234,7 +240,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Radium
+      currentLabel: reagent-name-radium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -249,7 +255,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Iron
+      currentLabel: reagent-name-iron
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -264,7 +270,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Copper
+      currentLabel: reagent-name-copper
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -279,7 +285,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Gold
+      currentLabel: reagent-name-gold
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -294,7 +300,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Mercury
+      currentLabel: reagent-name-mercury
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -309,7 +315,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Silver
+      currentLabel: reagent-name-silver
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -324,7 +330,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Ethanol
+      currentLabel: reagent-name-ethanol
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -339,7 +345,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Sugar
+      currentLabel: reagent-name-sugar
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -354,7 +360,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Nitrogen
+      currentLabel: reagent-name-nitrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -369,10 +375,40 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Oxygen
+      currentLabel: reagent-name-oxygen
     - type: SolutionContainerManager
       solutions:
         beaker:
           reagents:
             - ReagentId: Oxygen
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (Plant-B-Gone)
+  id: JugPlantBGone
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-plant-b-gone
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: PlantBGone
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (welding fuel)
+  id: JugWeldingFuel
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-welding-fuel
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: WeldingFuel
               Quantity: 200

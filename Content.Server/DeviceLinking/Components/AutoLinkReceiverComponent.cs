@@ -4,7 +4,7 @@ namespace Content.Server.DeviceLinking.Components;
 /// This is used for automatic linkage with buttons and other transmitters.
 /// </summary>
 [RegisterComponent]
-public sealed class AutoLinkReceiverComponent : Component
+public sealed partial class AutoLinkReceiverComponent : Component
 {
     [DataField("channel", required: true)]
     public string AutoLinkChannel = default!;

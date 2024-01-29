@@ -1,25 +1,25 @@
-﻿namespace Content.Server.GameTicking.Rules.Components;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
+namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 /// Component attached to all gamerule entities.
 /// Used to both track the entity as well as store basic data
 /// </summary>
 [RegisterComponent]
-public sealed class GameRuleComponent : Component
+public sealed partial class GameRuleComponent : Component
 {
     /// <summary>
-    /// Whether or not the rule is active.
-    /// Is enabled after <see cref="GameRuleStartedEvent"/> and disabled after <see cref="GameRuleEndedEvent"/>
+    /// Game time when game rule was activated
     /// </summary>
-    [DataField("active")]
-    public bool Active;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan ActivatedAt;
 
     /// <summary>
-    /// Whether or not the gamerule finished.
-    /// Used for tracking whether a non-active gamerule has been started before.
+    /// The minimum amount of players needed for this game rule.
     /// </summary>
-    [DataField("ended")]
-    public bool Ended;
+    [DataField]
+    public int MinPlayers;
 }
 
 /// <summary>

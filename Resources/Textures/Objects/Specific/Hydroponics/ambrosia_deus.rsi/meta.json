@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/bd870d649cc8ac9d8af2fbc046af4a79afb5ab28",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "dead"
+    },
+    {
+      "name": "harvest",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "produce"
+    },
+    {
+      "name": "seed"
+    },
+    {
+      "name": "stage-1"
+    },
+    {
+      "name": "stage-2"
+    },
+    {
+      "name": "stage-3"
+    },
+    {
+      "name": "stage-4"
+    },
+    {
+      "name": "stage-5"
+    },
+    {
+      "name": "stage-6"
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4
+    }
+  ]
+}

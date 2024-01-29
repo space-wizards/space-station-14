@@ -7,7 +7,7 @@ namespace Content.Server.DeviceLinking.Components
     /// Sends out a signal to machine linked objects.
     /// </summary>
     [RegisterComponent]
-    public sealed class SignallerComponent : Component
+    public sealed partial class SignallerComponent : Component
     {
         /// <summary>
         ///     The port that gets signaled when the switch turns on.

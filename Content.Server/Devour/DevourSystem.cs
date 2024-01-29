@@ -1,10 +1,8 @@
-using Content.Shared.Devour;
 using Content.Server.Body.Systems;
-using Content.Shared.Humanoid;
 using Content.Shared.Chemistry.Components;
-using Content.Server.Devour.Components;
-using Content.Shared.DoAfter;
-using Robust.Shared.Serialization;
+using Content.Shared.Devour;
+using Content.Shared.Devour.Components;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Devour;
 
@@ -33,7 +31,7 @@ public sealed class DevourSystem : SharedDevourSystem
 
             if (component.ShouldStoreDevoured && args.Args.Target is not null)
             {
-                component.Stomach.Insert(args.Args.Target.Value);
+                ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
             }
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
         }

@@ -16,18 +16,18 @@ namespace Content.IntegrationTests.Tests.Commands
         [TestCase(false)]
         public async Task RestartRoundAfterStart(bool lobbyEnabled)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
                 Dirty = true
             });
-            var server = pairTracker.Pair.Server;
+            var server = pair.Server;
 
             var configManager = server.ResolveDependency<IConfigurationManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             GameTick tickBeforeRestart = default;
 
@@ -49,7 +49,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 }
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 15);
+            await pair.RunTicksSync(15);
 
             await server.WaitAssertion(() =>
             {
@@ -58,8 +58,8 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(tickBeforeRestart, Is.LessThan(tickAfterRestart));
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-            await pairTracker.CleanReturnAsync();
+            await pair.RunTicksSync(5);
+            await pair.CleanReturnAsync();
         }
     }
 }

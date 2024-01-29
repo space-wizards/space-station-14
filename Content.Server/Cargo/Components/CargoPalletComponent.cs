@@ -4,4 +4,4 @@ namespace Content.Server.Cargo.Components;
 /// Any entities intersecting when a shuttle is recalled will be sold.
 /// </summary>
 [RegisterComponent]
-public sealed class CargoPalletComponent : Component {}
+public sealed partial class CargoPalletComponent : Component {}

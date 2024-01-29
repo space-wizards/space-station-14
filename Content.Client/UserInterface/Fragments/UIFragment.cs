@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface.Fragments;
 /// </code>
 /// </example>
 [ImplicitDataDefinitionForInheritors]
-public abstract class UIFragment
+public abstract partial class UIFragment
 {
     public abstract Control GetUIFragmentRoot();
 

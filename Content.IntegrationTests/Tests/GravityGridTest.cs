@@ -1,11 +1,10 @@
 using Content.Server.Gravity;
 using Content.Server.Power.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.Gravity;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -30,14 +29,15 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid generator = default;
             var entityMan = server.ResolveDependency<IEntityManager>();
             var mapMan = server.ResolveDependency<IMapManager>();
+            var mapSys = entityMan.System<SharedMapSystem>();
 
             MapGridComponent grid1 = null;
             MapGridComponent grid2 = null;
@@ -53,7 +53,10 @@ namespace Content.IntegrationTests.Tests
                 grid1Entity = grid1.Owner;
                 grid2Entity = grid2.Owner;
 
-                generator = entityMan.SpawnEntity("GridGravityGeneratorDummy", grid2.ToCoordinates());
+                mapSys.SetTile(grid1Entity, grid1, Vector2i.Zero, new Tile(1));
+                mapSys.SetTile(grid2Entity, grid2, Vector2i.Zero, new Tile(1));
+
+                generator = entityMan.SpawnEntity("GridGravityGeneratorDummy", new EntityCoordinates(grid1Entity, 0.5f, 0.5f));
                 Assert.Multiple(() =>
                 {
                     Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
@@ -96,7 +99,7 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

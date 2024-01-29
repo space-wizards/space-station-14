@@ -18,8 +18,9 @@ namespace Content.Shared.PDA
 
             SubscribeLocalEvent<PdaComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
             SubscribeLocalEvent<PdaComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
-        }
 
+            SubscribeLocalEvent<PdaComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
+        }
         protected virtual void OnComponentInit(EntityUid uid, PdaComponent pda, ComponentInit args)
         {
             if (pda.IdCard != null)
@@ -27,6 +28,7 @@ namespace Content.Shared.PDA
 
             ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaIdSlotId, pda.IdSlot);
             ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaPenSlotId, pda.PenSlot);
+            ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaPaiSlotId, pda.PaiSlot);
 
             UpdatePdaAppearance(uid, pda);
         }
@@ -35,6 +37,7 @@ namespace Content.Shared.PDA
         {
             ItemSlotsSystem.RemoveItemSlot(uid, pda.IdSlot);
             ItemSlotsSystem.RemoveItemSlot(uid, pda.PenSlot);
+            ItemSlotsSystem.RemoveItemSlot(uid, pda.PaiSlot);
         }
 
         protected virtual void OnItemInserted(EntityUid uid, PdaComponent pda, EntInsertedIntoContainerMessage args)
@@ -51,6 +54,12 @@ namespace Content.Shared.PDA
                 pda.ContainedId = null;
 
             UpdatePdaAppearance(uid, pda);
+        }
+
+        private void OnGetAdditionalAccess(EntityUid uid, PdaComponent component, ref GetAdditionalAccessEvent args)
+        {
+            if (component.ContainedId is { } id)
+                args.Entities.Add(id);
         }
 
         private void UpdatePdaAppearance(EntityUid uid, PdaComponent pda)

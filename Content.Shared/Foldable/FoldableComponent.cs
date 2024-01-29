@@ -11,8 +11,8 @@ namespace Content.Shared.Foldable;
 /// </remarks>
 [RegisterComponent]
 [NetworkedComponent]
-[Access(typeof(SharedFoldableSystem))]
-public sealed class FoldableComponent : Component
+[Access(typeof(FoldableSystem))]
+public sealed partial class FoldableComponent : Component
 {
     [DataField("folded")]
     public bool IsFolded = false;

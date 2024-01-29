@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Access;
 
-public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent>
+public sealed partial class AccessWireAction : ComponentWireAction<AccessReaderComponent>
 {
     public override Color Color { get; set; } = Color.Green;
     public override string Name { get; set; } = "wire-name-access";

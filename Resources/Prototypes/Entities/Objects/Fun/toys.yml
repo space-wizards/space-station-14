@@ -19,7 +19,6 @@
   - type: EmitSoundOnLand
     sound:
       collection: ToyFall
-  - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
@@ -79,6 +78,8 @@
   suffix: DO NOT MAP
   description: So soft it almost makes you want to take a nap...
   components:
+    - type: Item
+      size: Normal
     - type: Sprite
       sprite: Mobs/Ghosts/revenant.rsi
       state: icon
@@ -94,7 +95,12 @@
   description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
   components:
   - type: Sprite
+    sprite: Objects/Fun/toys.rsi
     state: plushie_h
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: bee
   - type: Extractable
     grindableSolutionName: bee
   - type: SolutionContainerManager
@@ -103,6 +109,12 @@
         reagents:
           - ReagentId: GroundBee
             Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: bee
+    slots:
+    - HEAD
 
 - type: entity
   parent: BasePlushie
@@ -122,6 +134,7 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
 
@@ -154,6 +167,7 @@
   components:
   - type: Sprite
     state: plushie_rouny
+  - type: Rotatable
 
 - type: entity
   parent: BasePlushie
@@ -167,6 +181,29 @@
     radius: 1.5
     energy: 2
     netsync: false
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieArachind
+  name: arachnid plushie
+  description: An adorable stuffed toy that resembles an arachnid. It feels silky..
+  components:
+  - type: Sprite
+    state: plushie_arachnid
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
@@ -185,8 +222,18 @@
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieLizardMirrored
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    state: plushie_lizard_mirrored
 
 - type: entity
   parent: BasePlushie
@@ -206,6 +253,7 @@
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
 
@@ -231,6 +279,7 @@
       sound:
         path: /Audio/Items/Toys/toy_rustle.ogg
     - type: MeleeWeapon
+      wideAnimationRotation: 180
       soundHit:
         path: /Audio/Items/Toys/toy_rustle.ogg
     - type: SolutionContainerManager
@@ -281,6 +330,9 @@
     state: blue
   - type: Item
     heldPrefix: blue
+  - type: Tag
+    tags:
+      - PlushieSharkBlue
 
 - type: entity
   parent: PlushieSharkBlue
@@ -293,6 +345,9 @@
     state: pink
   - type: Item
     heldPrefix: pink
+  - type: Tag
+    tags:
+      - PlushieSharkPink
 
 - type: entity
   parent: PlushieSharkBlue
@@ -305,6 +360,9 @@
     state: grey
   - type: Item
     heldPrefix: grey
+  - type: Tag
+    tags:
+      - PlushieSharkGrey
 
 - type: entity
   parent: BasePlushie
@@ -312,6 +370,8 @@
   name: ratvar plushie
   description: A small stuffed doll of the elder god Ratvar.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: plushie_ratvar
 
@@ -321,6 +381,8 @@
   name: nar'sie plushie
   description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: narplush
 
@@ -344,8 +406,11 @@
     sound:
       path: /Audio/Effects/bite.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     soundHit:
       path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite # Rrrr!
 
 - type: entity
   parent: BasePlushie
@@ -368,6 +433,7 @@
     sound:
       path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/rattle.ogg
 
@@ -383,6 +449,7 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: Clothing
@@ -398,6 +465,8 @@
   name: rubber ducky
   description: Not carried here by ocean currents.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Fun/ducky.rsi
     state: icon
@@ -425,6 +494,7 @@
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
 
@@ -443,6 +513,8 @@
   name: xeno plushie
   description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: plushie_xeno
   - type: EmitSoundOnUse
@@ -455,6 +527,7 @@
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
 
@@ -502,13 +575,13 @@
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
         volume: -5
-        maxdistance: 10
+        maxDistance: 10
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
         volume: -5
-        maxdistance: 10
+        maxDistance: 10
 
 - type: entity
   parent: BasePlushie
@@ -516,6 +589,8 @@
   name: ian toy
   description: Unable to eat, but just as fluffy as the real guy!
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     state: ian
   - type: EmitSoundOnUse
@@ -534,7 +609,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: 24
+    size: Normal
 
 - type: entity
   parent: FoamWeaponBase
@@ -546,7 +621,7 @@
     sprite: Objects/Fun/toys.rsi
     state: foamcrossbow
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamcrossbow
   - type: Gun
@@ -591,6 +666,9 @@
   - type: Item
     sprite: Objects/Fun/toys.rsi
     heldPrefix: capgun
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -649,10 +727,10 @@
       types:
         Blunt: 0
   - type: Item
-    size: 20
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
-  - type: ItemCooldown
+  - type: UseDelay
 
 # MISC
 
@@ -669,7 +747,7 @@
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bask
   - type: TileFrictionModifier
@@ -685,7 +763,7 @@
     sprite: Objects/Fun/toys.rsi
     state: football
   - type: Item
-    size: 12
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: footb
 
@@ -702,7 +780,7 @@
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: beachb
   - type: TileFrictionModifier
@@ -718,7 +796,7 @@
     sprite: Objects/Fun/toys.rsi
     state: synb
   - type: Item
-    size: 24
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: synb
   - type: Damageable
@@ -737,7 +815,7 @@
     sprite: Objects/Fun/toys.rsi
     state: corgib
   - type: Item
-    size: 24
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: corgib
   - type: Damageable
@@ -762,10 +840,36 @@
     intensity: 2000
     falloffPower: 2.6
   - type: Item
-    size: 12
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: singularitytoy
 
+- type: entity
+  parent: BaseItem
+  id: TeslaToy
+  name: Teddy Tesla
+  description: The favorite toy of the great engineer Nikola Tesla.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    shader: unshaded
+    layers:
+    - state: tesla_projectile
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080FF"
+  - type: Electrified
+    shockDamage: 2
+    shockTime: 0.8
+    requirePower: false
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.65
+        volume: -10
+    
 - type: entity
   parent: BaseItem
   id: PonderingOrb
@@ -780,13 +884,14 @@
     radius: 2
     color: "#00CCFF"
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: orb
   - type: TileFrictionModifier
     modifier: 0.001
 
 - type: entity
+  parent: BaseItem
   id: ToySword
   name: toy sword
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
@@ -795,8 +900,16 @@
       isSharp: false
       colorOptions:
         - DodgerBlue
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Weapons/ebladeon.ogg
+      soundDeactivate:
+        path: /Audio/Weapons/ebladeoff.ogg
+    - type: ItemToggleActiveSound
+      activeSound:
+        path: /Audio/Weapons/ebladehum.ogg
     - type: Sprite
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      sprite: Objects/Fun/toy_sword.rsi
       layers:
         - state: e_sword
         - state: e_sword_blade
@@ -805,8 +918,8 @@
           shader: unshaded
           map: [ "blade" ]
     - type: Item
-      size: 5
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      size: Small
+      sprite: Objects/Fun/toy_sword.rsi
     - type: UseDelay
       delay: 1.0
     - type: PointLight
@@ -833,6 +946,19 @@
       damage:
         types:
           Blunt: 0
+    - type: ItemToggleMeleeWeapon
+      activatedSoundOnHit:
+        path: /Audio/Weapons/eblade1.ogg
+        params:
+          variation: 0.250
+      activatedSoundOnHitNoDamage:
+        path: /Audio/Weapons/eblade1.ogg
+        params:
+          variation: 0.250
+      activatedSoundOnSwing:
+        path: /Audio/Weapons/eblademiss.ogg
+        params:
+          variation: 0.125
 
 - type: entity
   parent: BasePlushie
@@ -869,7 +995,7 @@
       types:
         Blunt: 0
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/cutlass.rsi
 
 - type: entity
@@ -911,7 +1037,7 @@
     - type: StaminaDamageOnHit
       damage: 8
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Fun/rubber_hammer.rsi
     - type: Appearance
     - type: DisarmMalus
@@ -941,7 +1067,6 @@
     sprite: Objects/Fun/whoopie.rsi
     state: icon
     quickEquip: false
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       collection: Parp
@@ -1015,9 +1140,8 @@
   name: crazy glue
   description:  A bottle of crazy glue manufactured by Honk! Co.
   components:
-  - type: Drink
-    isOpen: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
@@ -1034,3 +1158,56 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieMoth
+  name: moth plushie
+  description: Cute and fluffy moth plushie. Enjoy, bz!
+  components:
+  - type: Sprite
+    state: plushie_moth
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePenguin
+  name: penguin plushie
+  description: I use arch btw!
+  components:
+  - type: Sprite
+    state: plushie_penguin
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieHuman
+  name: human plushie
+  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
+  components:
+  - type: Sprite
+    state: plushie_human
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Human/malescream_1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Human/malescream_2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Human/malescream_3.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Human/malescream_4.ogg

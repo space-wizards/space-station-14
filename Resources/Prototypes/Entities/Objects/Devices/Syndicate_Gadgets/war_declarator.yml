@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseItem
+  id: NukeOpsDeclarationOfWar
+  name: declaration of war
+  description: Use to send a declaration of hostilities to the target, delaying your shuttle departure while they prepare for your assault. Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals. Must be used at start of mission, or your benefactors will lose interest.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/declaration_of_war.rsi
+      layers:
+        - state: declarator
+    - type: Item
+    - type: UseDelay
+      delay: 0.5
+    - type: ActivatableUI
+      inHandsOnly: true
+      singleUser: true
+      closeOnHandDeselect: false
+      key: enum.WarDeclaratorUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.WarDeclaratorUiKey.Key
+          type: WarDeclaratorBoundUserInterface
+    - type: WarDeclarator
+      message: war-declarator-default-message
+#    - type: WarConditionOnExamine

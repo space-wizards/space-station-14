@@ -83,7 +83,7 @@
     sprite: Structures/Storage/Crates/o2.rsi
 
 - type: entity
-  parent: CratePlastic
+  parent: CrateGenericSteel
   id: CrateElectrical
   name: electrical crate
   components:
@@ -121,6 +121,47 @@
     sprite: Structures/Storage/Crates/surgery.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/surgery.rsi
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateWeb
+  name: web crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/web.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/web.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Construction
+    graph: WebStructures
+    node: crate
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 3
+            max: 5
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/rustle1.ogg
+    openSound:
+      path: /Audio/Effects/rustle2.ogg
 
 # Secure Crates
 
@@ -204,7 +245,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/plasma.rsi
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["Engineering"], ["Research"], ["Chemistry"]]
 
 - type: entity
   parent: CrateBaseSecure
@@ -258,8 +299,7 @@
   name: livestock crate
   components:
   - type: EntityStorage
-    air:
-      volume: 800
+    airtight: false
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:
@@ -277,7 +317,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroyHeavy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:
@@ -327,7 +367,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: MetalGlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetPlastic:
@@ -338,7 +378,7 @@
   - type: Physics
     bodyType: Dynamic
   - type: EntityStorage
-    capacity: 500
+    capacity: 1
     airtight: false
   - type: Fixtures
     fixtures:
@@ -422,7 +462,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:
@@ -456,11 +496,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 200 # discourage just beating the grave to break it open
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:
@@ -470,6 +510,15 @@
         acts: [ "Destruction" ]
   - type: Physics
     bodyType: Static
+  - type: Grave
+  - type: ProRottingContainer
+  - type: EntityStorage
+    airtight: true
+    isCollidableWhenOpen: false
+    closeSound:
+      path: /Audio/Items/shovel_dig.ogg
+    openSound:
+      path: /Audio/Items/shovel_dig.ogg
 
 - type: entity
   parent: CrateWoodenGrave
@@ -491,6 +540,8 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSyndicate
+  name: Syndicate crate
+  description: A dark steel crate with red bands and a letter S embossed on the front.
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/syndicate.rsi
@@ -519,3 +570,13 @@
   - type: AccessReader
     access: [["Janitor"]]
 
+- type: entity
+  parent: CrateBaseWeldable
+  id: InvisibleCrate
+  suffix: Stealth
+  components:
+  - type: Stealth
+    hadOutline: true
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.10
+    movementVisibilityRate: 0.10

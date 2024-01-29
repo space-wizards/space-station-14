@@ -26,8 +26,8 @@ namespace Content.IntegrationTests.Tests.Interaction
         [Test]
         public async Task EntityEntityTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -107,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

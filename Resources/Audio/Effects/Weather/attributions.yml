@@ -1,0 +1,23 @@
+- files:
+    - rain.ogg
+    - snowstorm.ogg
+    - snowstorm_weak.ogg
+    - wind_2_1.ogg
+    - wind_2_2.ogg
+    - wind_3_1.ogg
+    - wind_4_1.ogg
+    - wind_4_2.ogg
+    - wind_5_1.ogg
+  license: CC-BY-SA-3.0
+  copyright: '"rain.ogg", "snowstorm.ogg", "snowstorm_weak.ogg", "wind_2_1.ogg", "wind_2_2.ogg", "wind_3_1.ogg", "wind_4_1.ogg", "wind_4_2.ogg", "wind_5_1.ogg" by Citadel Station 13. Modified for looping.'
+  source: https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/28e11dee540e61b6c42fa293c1e1da087c1c2b0a
+
+- files: [rain2.wav]
+  copyright: '"Natural Environments" by Varazuvi of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license.'
+  license: Custom
+  source: https://gdc.sonniss.com
+
+- files: [rain_heavy.ogg]
+  copyright: '"RATH - Rain Hard Loop 08s" of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license.'
+  license: Custom
+  source: https://gdc.sonniss.com

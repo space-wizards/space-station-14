@@ -7,6 +7,8 @@ namespace Content.Client.Vehicle;
 
 public sealed class VehicleSystem : SharedVehicleSystem
 {
+    [Dependency] private EyeSystem _eye = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -21,14 +23,18 @@ public sealed class VehicleSystem : SharedVehicleSystem
     {
         // Center the player's eye on the vehicle
         if (TryComp(uid, out EyeComponent? eyeComp))
-            eyeComp.Target ??= component.Vehicle;
+        {
+            _eye.SetTarget(uid, eyeComp.Target ?? component.Vehicle, eyeComp);
+        }
     }
 
     private void OnRiderShutdown(EntityUid uid, RiderComponent component, ComponentShutdown args)
     {
         // reset the riders eye centering.
-        if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
-            eyeComp.Target = null;
+        if (TryComp(uid, out EyeComponent? eyeComp))
+        {
+            _eye.SetTarget(uid, null, eyeComp);
+        }
     }
 
     private void OnRiderHandleState(EntityUid uid, RiderComponent component, ref ComponentHandleState args)
@@ -36,10 +42,14 @@ public sealed class VehicleSystem : SharedVehicleSystem
         if (args.Current is not RiderComponentState state)
             return;
 
-        if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
-            eyeComp.Target = state.Entity;
+        var entity = EnsureEntity<RiderComponent>(state.Entity, uid);
 
-        component.Vehicle = state.Entity;
+        if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
+        {
+            _eye.SetTarget(uid, entity, eyeComp);
+        }
+
+        component.Vehicle = entity;
     }
 
     private void OnVehicleAppearanceChange(EntityUid uid, VehicleComponent component, ref AppearanceChangeEvent args)

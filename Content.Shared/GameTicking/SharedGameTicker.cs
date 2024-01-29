@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Network;
+using Content.Shared.Roles;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -13,13 +13,16 @@ namespace Content.Shared.GameTicking
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
         //TODO: Move these, they really belong in StationJobsSystem or a cvar.
+        [ValidatePrototypeId<JobPrototype>]
         public const string FallbackOverflowJob = "Passenger";
+
         public const string FallbackOverflowJobName = "job-name-passenger";
 
         // TODO network.
         // Probably most useful for replays, round end info, and probably things like lobby menus.
         [ViewVariables]
         public int RoundId { get; protected set; }
+        [ViewVariables] public TimeSpan RoundStartTimeSpan { get; protected set; }
 
         public override void Initialize()
         {
@@ -60,6 +63,15 @@ namespace Content.Shared.GameTicking
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class TickerConnectionStatusEvent : EntityEventArgs
+    {
+        public TimeSpan RoundStartTimeSpan { get; }
+        public TickerConnectionStatusEvent(TimeSpan roundStartTimeSpan)
+        {
+            RoundStartTimeSpan = roundStartTimeSpan;
+        }
+    }
 
     [Serializable, NetSerializable]
     public sealed class TickerLobbyStatusEvent : EntityEventArgs
@@ -122,10 +134,10 @@ namespace Content.Shared.GameTicking
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
         /// </summary>
-        public Dictionary<EntityUid, Dictionary<string, uint?>> JobsAvailableByStation { get; }
-        public Dictionary<EntityUid, string> StationNames { get; }
+        public Dictionary<NetEntity, Dictionary<string, uint?>> JobsAvailableByStation { get; }
+        public Dictionary<NetEntity, string> StationNames { get; }
 
-        public TickerJobsAvailableEvent(Dictionary<EntityUid, string> stationNames, Dictionary<EntityUid, Dictionary<string, uint?>> jobsAvailableByStation)
+        public TickerJobsAvailableEvent(Dictionary<NetEntity, string> stationNames, Dictionary<NetEntity, Dictionary<string, uint?>> jobsAvailableByStation)
         {
             StationNames = stationNames;
             JobsAvailableByStation = jobsAvailableByStation;
@@ -141,7 +153,7 @@ namespace Content.Shared.GameTicking
             public string PlayerOOCName;
             public string? PlayerICName;
             public string Role;
-            public EntityUid? PlayerEntityUid;
+            public NetEntity? PlayerNetEntity;
             public bool Antag;
             public bool Observer;
             public bool Connected;
@@ -154,6 +166,10 @@ namespace Content.Shared.GameTicking
         public int PlayerCount { get; }
         public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
         public string? LobbySong;
+
+        /// <summary>
+        /// Sound gets networked due to how entity lifecycle works between client / server and to avoid clipping.
+        /// </summary>
         public string? RestartSound;
 
         public RoundEndMessageEvent(
@@ -177,7 +193,6 @@ namespace Content.Shared.GameTicking
         }
     }
 
-
     [Serializable, NetSerializable]
     public enum PlayerGameStatus : sbyte
     {
@@ -186,4 +201,3 @@ namespace Content.Shared.GameTicking
         JoinedGame,
     }
 }
-

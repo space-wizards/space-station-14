@@ -1,13 +1,16 @@
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Console;
+using System.Linq;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     public sealed class SetSolutionTemperature : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "setsolutiontemperature";
         public string Description => "Set the temperature of some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <new temperature>";
@@ -20,25 +23,25 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
                 shell.WriteLine($"Invalid entity id.");
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(uid, out SolutionContainerManagerComponent? man))
+            if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;
             }
 
-            if (!man.Solutions.ContainsKey(args[1]))
+            var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
+            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
-                var validSolutions = string.Join(", ", man.Solutions.Keys);
+                var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
                 return;
             }
-            var solution = man.Solutions[args[1]];
 
             if (!float.TryParse(args[2], out var quantity))
             {
@@ -52,7 +55,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().SetTemperature(uid, solution, quantity);
+            solutionContainerSystem.SetTemperature(solution.Value, quantity);
         }
     }
 }

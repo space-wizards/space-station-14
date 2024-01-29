@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
-    public sealed class StationLimitedNetworkComponent : Component
+    public sealed partial class StationLimitedNetworkComponent : Component
     {
         /// <summary>
         /// The station id the device is limited to.

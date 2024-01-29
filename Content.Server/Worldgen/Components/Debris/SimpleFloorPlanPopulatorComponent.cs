@@ -12,7 +12,7 @@ namespace Content.Server.Worldgen.Components.Debris;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(SimpleFloorPlanPopulatorSystem))]
-public sealed class SimpleFloorPlanPopulatorComponent : Component
+public sealed partial class SimpleFloorPlanPopulatorComponent : Component
 {
     private Dictionary<string, EntitySpawnCollectionCache>? _caches;
 

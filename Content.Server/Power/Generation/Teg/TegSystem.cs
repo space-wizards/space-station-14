@@ -97,7 +97,7 @@ public sealed class TegSystem : EntitySystem
         }
     }
 
-    private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, AtmosDeviceUpdateEvent args)
+    private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, ref AtmosDeviceUpdateEvent args)
     {
         var tegGroup = GetNodeGroup(uid);
         if (tegGroup is not { IsFullyBuilt: true })
@@ -120,8 +120,8 @@ public sealed class TegSystem : EntitySystem
         var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
         var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
 
-        var cA = _atmosphere.GetHeatCapacity(airA);
-        var cB = _atmosphere.GetHeatCapacity(airB);
+        var cA = _atmosphere.GetHeatCapacity(airA, true);
+        var cB = _atmosphere.GetHeatCapacity(airB, true);
 
         // Shift ramp position based on demand and generation from previous tick.
         var curRamp = component.RampPosition;
@@ -270,15 +270,19 @@ public sealed class TegSystem : EntitySystem
         _appearance.SetData(uid, TegVisuals.CirculatorSpeed, speed);
         _appearance.SetData(uid, TegVisuals.CirculatorPower, powered);
 
-        if (TryComp(uid, out PointLightComponent? pointLight))
+        if (_pointLight.TryGetLight(uid, out var pointLight))
         {
             _pointLight.SetEnabled(uid, powered, pointLight);
-            pointLight.Color = speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow;
+            _pointLight.SetColor(uid, speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow, pointLight);
         }
     }
 
     private void GeneratorPowerChange(EntityUid uid, TegGeneratorComponent component, ref PowerChangedEvent args)
     {
+        // TODO: I wish power events didn't go out on shutdown.
+        if (TerminatingOrDeleted(uid))
+            return;
+
         var nodeGroup = GetNodeGroup(uid);
         if (nodeGroup == null)
             return;

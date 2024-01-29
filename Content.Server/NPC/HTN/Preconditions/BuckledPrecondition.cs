@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Checks if the owner is buckled or not
 /// </summary>
-public sealed class BuckledPrecondition : HTNPrecondition
+public sealed partial class BuckledPrecondition : HTNPrecondition
 {
     private SharedBuckleSystem _buckle = default!;
 

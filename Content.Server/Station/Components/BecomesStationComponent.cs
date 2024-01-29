@@ -7,7 +7,7 @@ namespace Content.Server.Station.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(GameTicker))]
-public sealed class BecomesStationComponent : Component
+public sealed partial class BecomesStationComponent : Component
 {
     /// <summary>
     ///     Mapping only. Should use StationIds in all other

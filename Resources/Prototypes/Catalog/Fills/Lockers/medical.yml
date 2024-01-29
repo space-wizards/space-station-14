@@ -5,16 +5,16 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxPillCanister
       - id: BoxSyringe
       - id: EpinephrineChemistryBottle
-        amount: 3
+        amount: 1
       - id: Brutepack
         amount: 2
       - id: Ointment
         amount: 2
       - id: Bloodpack
         amount: 2
+      - id: Gauze
 
 - type: entity
   id: LockerWallMedicalFilled
@@ -24,16 +24,16 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxPillCanister
       - id: BoxSyringe
       - id: EpinephrineChemistryBottle
-        amount: 3
+        amount: 1
       - id: Brutepack
         amount: 2
       - id: Ointment
         amount: 2
       - id: Bloodpack
         amount: 2
+      - id: Gauze
 
 
 - type: entity
@@ -47,7 +47,7 @@
         prob: 0.6
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
-     # - id: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingEyesHudMedical
       - id: ClothingBeltMedical
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
@@ -67,8 +67,6 @@
       - id: UniformScrubsColorPurple
         prob: 0.05
         orGroup: Surgshrubs
-      - id: NitrousOxideTankFilled
-        prob: 0.3
       - id: ClothingMaskSterile
 
 - type: entity
@@ -83,7 +81,7 @@
         prob: 0.6
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
-     # - id: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingEyesHudMedical
       - id: ClothingBeltMedical
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
@@ -103,8 +101,6 @@
       - id: UniformScrubsColorPurple
         prob: 0.05
         orGroup: Surgshrubs
-      - id: NitrousOxideTankFilled
-        prob: 0.3
       - id: ClothingMaskSterile
 
 - type: entity
@@ -116,10 +112,18 @@
     contents:
       - id: BoxSyringe
       - id: BoxBeaker
+      - id: BoxBeaker
+        prob: 0.3
       - id: BoxPillCanister
       - id: BoxBottle
-        amount: 2
-        
+      - id: BoxVial
+      - id: ChemBag
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHeadsetMedical
+      - id: ClothingMaskSterile
+      - id: HandLabeler
+        prob: 0.5
+
 - type: entity
   id: LockerParamedicFilled
   suffix: Filled
@@ -127,11 +131,15 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetVoidParamed
       - id: ClothingOuterHardsuitVoidParamed
       - id: ClothingOuterCoatParamedicWB
       - id: ClothingHeadHatParamedicsoft
+      - id: ClothingOuterWinterPara
       - id: ClothingUniformJumpsuitParamedic
       - id: ClothingUniformJumpskirtParamedic
       - id: ClothingEyesHudMedical
-      
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHeadsetMedical
+      - id: ClothingMaskSterile
+      - id: MedkitFilled
+        prob: 0.3

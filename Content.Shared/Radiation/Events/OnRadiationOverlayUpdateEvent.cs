@@ -72,9 +72,9 @@ public sealed class OnRadiationOverlayResistanceUpdateEvent : EntityEventArgs
     /// <summary>
     ///     Key is grids uid. Values are tiles with their rad resistance.
     /// </summary>
-    public readonly Dictionary<EntityUid, Dictionary<Vector2i, float>> Grids;
+    public readonly Dictionary<NetEntity, Dictionary<Vector2i, float>> Grids;
 
-    public OnRadiationOverlayResistanceUpdateEvent(Dictionary<EntityUid, Dictionary<Vector2i, float>> grids)
+    public OnRadiationOverlayResistanceUpdateEvent(Dictionary<NetEntity, Dictionary<Vector2i, float>> grids)
     {
         Grids = grids;
     }

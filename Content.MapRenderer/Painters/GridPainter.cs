@@ -9,7 +9,6 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
@@ -23,7 +22,6 @@ namespace Content.MapRenderer.Painters
         private readonly DecalPainter _decalPainter;
 
         private readonly IEntityManager _cEntityManager;
-        private readonly IMapManager _cMapManager;
 
         private readonly IEntityManager _sEntityManager;
         private readonly IMapManager _sMapManager;
@@ -37,7 +35,6 @@ namespace Content.MapRenderer.Painters
             _decalPainter = new DecalPainter(client, server);
 
             _cEntityManager = client.ResolveDependency<IEntityManager>();
-            _cMapManager = client.ResolveDependency<IMapManager>();
 
             _sEntityManager = server.ResolveDependency<IEntityManager>();
             _sMapManager = server.ResolveDependency<IMapManager>();
@@ -73,26 +70,27 @@ namespace Content.MapRenderer.Painters
 
             var components = new ConcurrentDictionary<EntityUid, List<EntityData>>();
 
-            foreach (var entity in _sEntityManager.GetEntities())
+            foreach (var serverEntity in _sEntityManager.GetEntities())
             {
-                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent? sprite))
+                var clientEntity = _cEntityManager.GetEntity(_sEntityManager.GetNetEntity(serverEntity));
+                if (!_cEntityManager.TryGetComponent(clientEntity, out SpriteComponent? sprite))
                 {
                     continue;
                 }
 
-                var prototype = _sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype;
+                var prototype = _sEntityManager.GetComponent<MetaDataComponent>(serverEntity).EntityPrototype;
                 if (prototype == null)
                 {
                     continue;
                 }
 
-                var transform = _sEntityManager.GetComponent<TransformComponent>(entity);
-                if (_cMapManager.TryGetGrid(transform.GridUid, out var grid))
+                var transform = _sEntityManager.GetComponent<TransformComponent>(serverEntity);
+                if (_sMapManager.TryGetGrid(transform.GridUid, out var grid))
                 {
                     var position = transform.LocalPosition;
 
                     var (x, y) = TransformLocalPosition(position, grid);
-                    var data = new EntityData(entity, sprite, x, y);
+                    var data = new EntityData(serverEntity, sprite, x, y);
 
                     components.GetOrAdd(transform.GridUid.Value, _ => new List<EntityData>()).Add(data);
                 }

@@ -3,7 +3,7 @@ using System.Numerics;
 namespace Content.Client.Paper;
 
 [RegisterComponent]
-public sealed class PaperVisualsComponent : Component
+public sealed partial class PaperVisualsComponent : Component
 {
     /// <summary>
     ///     The path to the image which will be used as a background for the paper itself
@@ -88,7 +88,7 @@ public sealed class PaperVisualsComponent : Component
     ///     Modulate the style's font by this color
     /// </summary>
     [DataField("fontAccentColor")]
-    public Color FontAccentColor = new Color(0x25, 0x25, 0x2a);
+    public Color FontAccentColor = new Color(223, 223, 213);
 
     /// <summary>
     ///     This can enforce that your paper has a limited area to write in.

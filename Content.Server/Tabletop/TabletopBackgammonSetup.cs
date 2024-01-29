@@ -3,14 +3,14 @@ using JetBrains.Annotations;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed class TabletopBackgammonSetup : TabletopSetup
+    public sealed partial class TabletopBackgammonSetup : TabletopSetup
     {
 
         [DataField("whitePiecePrototype")]
-        public string WhitePiecePrototype { get; } = "WhiteTabletopPiece";
+        public string WhitePiecePrototype { get; private set; } = "WhiteTabletopPiece";
 
         [DataField("blackPiecePrototype")]
-        public string BlackPiecePrototype { get; } = "BlackTabletopPiece";
+        public string BlackPiecePrototype { get; private set; } = "BlackTabletopPiece";
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
             var board = entityManager.SpawnEntity(BoardPrototype, session.Position);

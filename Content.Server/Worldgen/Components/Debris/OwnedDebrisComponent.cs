@@ -9,7 +9,7 @@ namespace Content.Server.Worldgen.Components.Debris;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(DebrisFeaturePlacerSystem))]
-public sealed class OwnedDebrisComponent : Component
+public sealed partial class OwnedDebrisComponent : Component
 {
     /// <summary>
     ///     The last location in the controller's internal structure for this debris.

@@ -1,5 +1,6 @@
 ﻿using Content.Client.Examine;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Power.Generation.Teg;
 
@@ -14,6 +15,9 @@ namespace Content.Client.Power.Generation.Teg;
 /// <seealso cref="TegCirculatorComponent"/>
 public sealed class TegSystem : EntitySystem
 {
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string ArrowPrototype = "TegCirculatorArrow";
+
     public override void Initialize()
     {
         SubscribeLocalEvent<TegCirculatorComponent, ClientExaminedEvent>(CirculatorExamined);
@@ -21,6 +25,6 @@ public sealed class TegSystem : EntitySystem
 
     private void CirculatorExamined(EntityUid uid, TegCirculatorComponent component, ClientExaminedEvent args)
     {
-        Spawn("TegCirculatorArrow", new EntityCoordinates(uid, 0, 0));
+        Spawn(ArrowPrototype, new EntityCoordinates(uid, 0, 0));
     }
 }

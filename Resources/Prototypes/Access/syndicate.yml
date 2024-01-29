@@ -1,3 +1,7 @@
-﻿- type: accessLevel
+- type: accessLevel
   id: NuclearOperative
   name: id-card-access-level-nuclear-operative
+
+- type: accessLevel
+  id: SyndicateAgent
+  name: id-card-access-level-syndicate-agent

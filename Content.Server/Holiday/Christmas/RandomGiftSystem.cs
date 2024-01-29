@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -30,7 +31,7 @@ public sealed class RandomGiftSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _prototype.PrototypesReloaded += OnPrototypesReloaded;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeLocalEvent<RandomGiftComponent, MapInitEvent>(OnGiftMapInit);
         SubscribeLocalEvent<RandomGiftComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<RandomGiftComponent, ExaminedEvent>(OnExamined);
@@ -43,8 +44,7 @@ public sealed class RandomGiftSystem : EntitySystem
             return;
 
         var name = _prototype.Index<EntityPrototype>(component.SelectedEntity).Name;
-        args.Message.PushNewline();
-        args.Message.AddText(Loc.GetString("gift-packin-contains", ("name", name)));
+        args.PushText(Loc.GetString("gift-packin-contains", ("name", name)));
     }
 
     private void OnUseInHand(EntityUid uid, RandomGiftComponent component, UseInHandEvent args)
@@ -57,7 +57,7 @@ public sealed class RandomGiftSystem : EntitySystem
 
         var coords = Transform(args.User).Coordinates;
         var handsEnt = Spawn(component.SelectedEntity, coords);
-        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(component.Owner)} which spawned {ToPrettyString(handsEnt)}");
+        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(handsEnt)}");
         EnsureComp<ItemComponent>(handsEnt); // For insane mode.
         if (component.Wrapper is not null)
             Spawn(component.Wrapper, coords);
@@ -79,7 +79,8 @@ public sealed class RandomGiftSystem : EntitySystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
     {
-        BuildIndex();
+        if (obj.WasModified<EntityPrototype>())
+            BuildIndex();
     }
 
     private void BuildIndex()

@@ -13,14 +13,12 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Fun)]
     sealed class DamageCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public string Command => "damage";
         public string Description => Loc.GetString("damage-command-description");
         public string Help => Loc.GetString("damage-command-help", ("command", Command));
-
-        private readonly IPrototypeManager _prototypeManager = default!;
-        public DamageCommand() {
-            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
@@ -75,28 +73,27 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageGroup, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
+                    _entManager.System<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
                 };
 
                 return true;
             }
             // Fall back to DamageType
-            else if (_prototypeManager.TryIndex<DamageTypePrototype>(args[0], out var damageType))
+
+            if (_prototypeManager.TryIndex<DamageTypePrototype>(args[0], out var damageType))
             {
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageType, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
+                    _entManager.System<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
                 };
                 return true;
 
             }
-            else
-            {
-                shell.WriteLine(Loc.GetString("damage-command-error-type", ("arg", args[0])));
-                func = null;
-                return false;
-            }
+
+            shell.WriteLine(Loc.GetString("damage-command-error-type", ("arg", args[0])));
+            func = null;
+            return false;
         }
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -107,11 +104,11 @@ namespace Content.Server.Damage.Commands
                 return;
             }
 
-            EntityUid target;
-            var entMan = IoCManager.Resolve<IEntityManager>();
+            EntityUid? target;
+
             if (args.Length == 4)
             {
-                if (!EntityUid.TryParse(args[3], out target) || !entMan.EntityExists(target))
+                if (!_entManager.TryParseNetEntity(args[3], out target) || !_entManager.EntityExists(target))
                 {
                     shell.WriteLine(Loc.GetString("damage-command-error-euid", ("arg", args[3])));
                     return;
@@ -127,7 +124,7 @@ namespace Content.Server.Damage.Commands
                 return;
             }
 
-            if (!TryParseDamageArgs(shell, target, args, out var damageFunc))
+            if (!TryParseDamageArgs(shell, target.Value, args, out var damageFunc))
                 return;
 
             bool ignoreResistances;
@@ -144,7 +141,7 @@ namespace Content.Server.Damage.Commands
                 ignoreResistances = false;
             }
 
-            damageFunc(target, ignoreResistances);
+            damageFunc(target.Value, ignoreResistances);
         }
     }
 }

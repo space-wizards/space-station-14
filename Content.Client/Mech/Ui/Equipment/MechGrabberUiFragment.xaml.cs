@@ -23,7 +23,7 @@ public sealed partial class MechGrabberUiFragment : BoxContainer
         SpaceLabel.Text = $"{state.Contents.Count}/{state.MaxContents}";
         for (var i = 0; i < state.Contents.Count; i++)
         {
-            var ent = state.Contents[i];
+            var ent = _entity.GetEntity(state.Contents[i]);
 
             if (!_entity.TryGetComponent<MetaDataComponent>(ent, out var meta))
                 continue;

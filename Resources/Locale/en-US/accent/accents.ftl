@@ -4,6 +4,8 @@ accent-words-cat-2 = Mow.
 accent-words-cat-3 = Mrrrow!
 accent-words-cat-4 = Hhsss!
 accent-words-cat-5 = Brrow.
+accent-words-cat-6 = Meow?
+accent-words-cat-7 = Miau.
 
 # Dog accent
 accent-words-dog-1 = Bark!
@@ -17,6 +19,9 @@ accent-words-mouse-1 = Squeak!
 accent-words-mouse-2 = Piep!
 accent-words-mouse-3 = Chuu!
 accent-words-mouse-4 = Eeee!
+accent-words-mouse-5 = Pip!
+accent-words-mouse-6 = Fwiep!
+accent-words-mouse-7 = Heep!
 
 # Mumble
 accent-words-mumble-1 = Mmfph!
@@ -43,6 +48,17 @@ accent-words-zombie-4 = Grrrrr...
 accent-words-zombie-5 = Ouuaahhhhh...
 accent-words-zombie-6 = Graaaaaooohhlll...
 accent-words-zombie-7 = Brainsss... Braaaiiinnsss..
+accent-words-zombie-8 = Braughhh...
+accent-words-zombie-9 = Breshhhh...
+accent-words-zombie-10 = Graaaaaa...
+
+# Moth Zombie
+accent-words-zombie-moth-1 = Clothessss...
+accent-words-zombie-moth-2 = Shooooesss...
+accent-words-zombie-moth-3 = Liiiiight...
+accent-words-zombie-moth-4 = Laaamps...
+accent-words-zombie-moth-5 = Haaaatsss... Hatttssss...
+accent-words-zombie-moth-6 = Scarffsss...
 
 # Generic Aggressive
 accent-words-generic-aggressive-1 = Grr!
@@ -80,3 +96,25 @@ accent-words-slimes-2 = Blimpuf?
 accent-words-slimes-3 = Blump!
 accent-words-slimes-4 = Bluuump...
 accent-words-slimes-5 = Blabl blump!
+
+# Mothroach
+accent-words-mothroach-1 = Chirp!
+
+# Crab
+accent-words-crab-1 = Click.
+accent-words-crab-2 = Click-clack!
+accent-words-crab-3 = Clack?
+accent-words-crab-4 = Tipi-tap!
+accent-words-crab-5 = Clik-tap.
+accent-words-crab-6 = Cliliick.
+
+# Kobold
+accent-words-kobold-1 = Yip!
+accent-words-kobold-2 = Grrar.
+accent-words-kobold-3 = Yap!
+accent-words-kobold-4 = Bip.
+accent-words-kobold-5 = Screet?
+accent-words-kobold-6 = Gronk!
+accent-words-kobold-7 = Hiss!
+accent-words-kobold-8 = Eeee!
+accent-words-kobold-9 = Yip.

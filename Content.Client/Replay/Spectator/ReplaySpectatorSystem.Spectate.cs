@@ -3,6 +3,7 @@ using Content.Client.Replay.UI;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Replay.Spectator;
@@ -15,27 +16,21 @@ public sealed partial class ReplaySpectatorSystem
         if (_replayPlayback.Replay == null)
             return;
 
-        var verb = new AlternativeVerb
+        ev.Verbs.Add(new AlternativeVerb
         {
             Priority = 100,
-            Act = () =>
-            {
-                SpectateEntity(ev.Target);
-            },
-
+            Act = () => SpectateEntity(ev.Target),
             Text = Loc.GetString("replay-verb-spectate"),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/vv.svg.192dpi.png"))
-        };
-
-        ev.Verbs.Add(verb);
+        });
     }
 
     public void SpectateEntity(EntityUid target)
     {
-        if (_player.LocalPlayer == null)
+        if (_player.LocalSession == null)
             return;
 
-        var old = _player.LocalPlayer.ControlledEntity;
+        var old = _player.LocalEntity;
 
         if (old == target)
         {
@@ -44,14 +39,17 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        _player.LocalPlayer.AttachEntity(target, EntityManager, _client);
         EnsureComp<ReplaySpectatorComponent>(target);
+        if (TryComp(target, out ActorComponent? actor))
+            _player.SetLocalSession(actor.PlayerSession);
+        else
+            _player.SetAttachedEntity(_player.LocalSession, target);
 
         _stateMan.RequestStateChange<ReplaySpectateEntityState>();
         if (old == null)
             return;
 
-        if (old.Value.IsClientSide())
+        if (IsClientSide(old.Value))
             Del(old.Value);
         else
             RemComp<ReplaySpectatorComponent>(old.Value);
@@ -59,10 +57,9 @@ public sealed partial class ReplaySpectatorSystem
 
     public TransformComponent SpawnSpectatorGhost(EntityCoordinates coords, bool gridAttach)
     {
-        if (_player.LocalPlayer == null)
-            throw new InvalidOperationException();
-
-        var old = _player.LocalPlayer.ControlledEntity;
+        var old = _player.LocalEntity;
+        var session = _player.GetSessionById(DefaultUser);
+        _player.SetLocalSession(session);
 
         var ent = Spawn("ReplayObserver", coords);
         _eye.SetMaxZoom(ent, Vector2.One * 5);
@@ -73,11 +70,11 @@ public sealed partial class ReplaySpectatorSystem
         if (gridAttach)
             _transform.AttachToGridOrMap(ent);
 
-        _player.LocalPlayer.AttachEntity(ent, EntityManager, _client);
+        _player.SetAttachedEntity(session, ent);
 
         if (old != null)
         {
-            if (old.Value.IsClientSide())
+            if (IsClientSide(old.Value))
                 QueueDel(old.Value);
             else
                 RemComp<ReplaySpectatorComponent>(old.Value);
@@ -93,18 +90,20 @@ public sealed partial class ReplaySpectatorSystem
     {
         if (args.Length == 0)
         {
-            if (_player.LocalPlayer?.ControlledEntity is { } current)
+            if (_player.LocalSession?.AttachedEntity is { } current)
                 SpawnSpectatorGhost(new EntityCoordinates(current, default), true);
             else
                 SpawnSpectatorGhost(default, true);
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var netEntity))
         {
             shell.WriteError(Loc.GetString("cmd-parse-failure-uid", ("arg", args[0])));
             return;
         }
+
+        var uid = GetEntity(netEntity);
 
         if (!Exists(uid))
         {
@@ -120,7 +119,7 @@ public sealed partial class ReplaySpectatorSystem
         if (args.Length != 1)
             return CompletionResult.Empty;
 
-        return CompletionResult.FromHintOptions(CompletionHelper.EntityUids(args[0],
+        return CompletionResult.FromHintOptions(CompletionHelper.NetEntities(args[0],
             EntityManager), Loc.GetString("cmd-replay-spectate-hint"));
     }
 }

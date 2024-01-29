@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(MassHallucinationsRule))]
-public sealed class MassHallucinationsRuleComponent : Component
+public sealed partial class MassHallucinationsRuleComponent : Component
 {
     /// <summary>
     /// The maximum time between incidents in seconds

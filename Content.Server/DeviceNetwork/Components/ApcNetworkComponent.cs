@@ -6,7 +6,7 @@ namespace Content.Server.DeviceNetwork.Components
     [RegisterComponent]
     [Access(typeof(ApcNetworkSystem))]
     [ComponentProtoName("ApcNetworkConnection")]
-    public sealed class ApcNetworkComponent : Component
+    public sealed partial class ApcNetworkComponent : Component
     {
         /// <summary>
         /// The node Group the ApcNetworkConnection is connected to

@@ -1,6 +1,6 @@
 namespace Content.Server.NPC.Queries.Considerations;
 
-public sealed class TargetAmmoCon : UtilityConsideration
+public sealed partial class TargetAmmoCon : UtilityConsideration
 {
 
 }

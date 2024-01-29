@@ -44,7 +44,7 @@ public sealed class ItemSystem : SharedItemSystem
     {
         // if the item is in a container, it might be equipped to hands or inventory slots --> update visuals.
         if (Container.TryGetContainingContainer(uid, out var container))
-            RaiseLocalEvent(container.Owner, new VisualsChangedEvent(uid, container.ID));
+            RaiseLocalEvent(container.Owner, new VisualsChangedEvent(GetNetEntity(uid), container.ID));
     }
 
     /// <summary>

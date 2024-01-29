@@ -16,9 +16,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
         [Test]
         public async Task PrototypesHaveKnownComponents()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var client = pair.Client;
 
             var sResourceManager = server.ResolveDependency<IResourceManager>();
             var prototypePath = new ResPath("/Prototypes/");
@@ -93,7 +93,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
 
             if (unknownComponentsClient.Count + unknownComponentsServer.Count == 0)
             {
-                await pairTracker.CleanReturnAsync();
+                await pair.CleanReturnAsync();
                 Assert.Pass($"Validated {entitiesValidated} entities with {componentsValidated} components in {paths.Length} files.");
                 return;
             }
@@ -118,9 +118,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
         [Test]
         public async Task IgnoredComponentsExistInTheCorrectPlaces()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var client = pair.Client;
             var serverComponents = server.ResolveDependency<IComponentFactory>();
             var ignoredServerNames = Server.Entry.IgnoredComponents.List;
             var clientComponents = client.ResolveDependency<IComponentFactory>();
@@ -138,7 +138,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
                 }
             }
             Assert.That(failureMessages, Is.Empty);
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

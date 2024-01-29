@@ -12,8 +12,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var client = pair.Client;
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();
 
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto) || !proto.Components.ContainsKey("Sprite"))
+                    if (proto.NoSpawn || proto.Abstract || pair.IsTestPrototype(proto) || !proto.Components.ContainsKey("Sprite"))
                         continue;
 
                     Assert.DoesNotThrow(() =>
@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests
                         proto.ID);
                 }
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

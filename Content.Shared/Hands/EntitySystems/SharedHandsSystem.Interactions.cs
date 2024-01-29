@@ -1,10 +1,13 @@
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
+using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Localizations;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Hands.EntitySystems;
 
@@ -86,13 +89,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
         var newActiveIndex = component.SortedHands.IndexOf(component.ActiveHand.Name) + 1;
         var nextHand = component.SortedHands[newActiveIndex % component.Hands.Count];
 
-        TrySetActiveHand(component.Owner, nextHand, component);
+        TrySetActiveHand(session.AttachedEntity.Value, nextHand, component);
     }
 
-    private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid netEntity)
     {
         if (TryComp(session?.AttachedEntity, out HandsComponent? hands) && hands.ActiveHand != null)
-            TryDrop(session.AttachedEntity!.Value, hands.ActiveHand, coords, handsComp: hands);
+            TryDrop(session.AttachedEntity.Value, hands.ActiveHand, coords, handsComp: hands);
 
         // always send to server.
         return false;
@@ -180,12 +183,25 @@ public abstract partial class SharedHandsSystem : EntitySystem
     //TODO: Actually shows all items/clothing/etc.
     private void HandleExamined(EntityUid uid, HandsComponent handsComp, ExaminedEvent args)
     {
-        foreach (var inhand in EnumerateHeld(uid, handsComp))
-        {
-            if (HasComp<HandVirtualItemComponent>(inhand))
-                continue;
+        var held = EnumerateHeld(uid, handsComp)
+            .Where(x => !HasComp<VirtualItemComponent>(x)).ToList();
 
-            args.PushText(Loc.GetString("comp-hands-examine", ("user", Identity.Entity(handsComp.Owner, EntityManager)), ("item", inhand)));
+        using (args.PushGroup(nameof(HandsComponent)))
+        {
+            if (!held.Any())
+            {
+                args.PushText(Loc.GetString("comp-hands-examine-empty",
+                    ("user", Identity.Entity(uid, EntityManager))));
+                return;
+            }
+
+            var heldList = ContentLocalizationManager.FormatList(held
+                .Select(x => Loc.GetString("comp-hands-examine-wrapper",
+                    ("item", Identity.Entity(x, EntityManager)))).ToList());
+
+            args.PushMarkup(Loc.GetString("comp-hands-examine",
+                ("user", Identity.Entity(uid, EntityManager)),
+                ("items", heldList)));
         }
     }
 }

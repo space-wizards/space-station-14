@@ -3,9 +3,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
-using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
@@ -13,7 +11,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 
@@ -50,12 +47,14 @@ public sealed class RadarControl : MapGridControl
     /// <summary>
     /// Currently hovered docked to show on the map.
     /// </summary>
-    public EntityUid? HighlightedDock;
+    public NetEntity? HighlightedDock;
 
     /// <summary>
     /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
     /// </summary>
     public Action<EntityCoordinates>? OnRadarClick;
+
+    private List<Entity<MapGridComponent>> _grids = new();
 
     public RadarControl() : base(64f, 256f, 256f)
     {
@@ -124,7 +123,7 @@ public sealed class RadarControl : MapGridControl
         foreach (var state in ls.Docks)
         {
             var coordinates = state.Coordinates;
-            var grid = _docks.GetOrNew(coordinates.EntityId);
+            var grid = _docks.GetOrNew(_entManager.GetEntity(coordinates.NetEntity));
             grid.Add(state);
         }
     }
@@ -198,9 +197,11 @@ public sealed class RadarControl : MapGridControl
 
         var shown = new HashSet<EntityUid>();
 
+        _grids.Clear();
+        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
+
         // Draw other grids... differently
-        foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID,
-                     new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector)))
+        foreach (var grid in _grids)
         {
             var gUid = grid.Owner;
             if (gUid == ourGridId || !fixturesQuery.HasComponent(gUid))
@@ -240,7 +241,7 @@ public sealed class RadarControl : MapGridControl
                 (iff == null && IFFComponent.ShowIFFDefault ||
                  (iff.Flags & IFFFlags.HideLabel) == 0x0))
             {
-                var gridBounds = grid.LocalAABB;
+                var gridBounds = grid.Comp.LocalAABB;
                 Label label;
 
                 if (!_iffControls.TryGetValue(gUid, out var control))
@@ -324,14 +325,13 @@ public sealed class RadarControl : MapGridControl
         {
             foreach (var state in docks)
             {
-                var ent = state.Entity;
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
                 if (uiPosition.Length() > WorldRange - DockScale)
                     continue;
 
-                var color = HighlightedDock == ent ? state.HighlightedColor : state.Color;
+                var color = HighlightedDock == state.Entity ? state.HighlightedColor : state.Color;
 
                 uiPosition.Y = -uiPosition.Y;
 

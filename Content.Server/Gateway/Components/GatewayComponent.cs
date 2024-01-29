@@ -1,6 +1,7 @@
 using Content.Server.Gateway.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Components;
 
@@ -8,33 +9,57 @@ namespace Content.Server.Gateway.Components;
 /// Controlling gateway that links to other gateway destinations on the server.
 /// </summary>
 [RegisterComponent, Access(typeof(GatewaySystem))]
-public sealed class GatewayComponent : Component
+public sealed partial class GatewayComponent : Component
 {
     /// <summary>
-    /// Sound to play when opening or closing the portal.
+    /// Whether this destination is shown in the gateway ui.
+    /// If you are making a gateway for an admeme set this once you are ready for players to select it.
     /// </summary>
-    [DataField("portalSound")]
-    public SoundSpecifier PortalSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg");
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Enabled;
 
     /// <summary>
-    /// Every other gateway destination on the server.
+    /// Can the gateway be interacted with? If false then only settable via admins / mappers.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Interactable = true;
+
+    /// <summary>
+    /// Name as it shows up on the ui of station gateways.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public FormattedMessage Name = new();
+
+    /// <summary>
+    /// Sound to play when opening the portal.
     /// </summary>
     /// <remarks>
-    /// Added on
+    /// Originally named PortalSound as it was used for opening and closing.
     /// </remarks>
-    [ViewVariables]
-    public HashSet<EntityUid> Destinations = new();
+    [DataField("portalSound")]
+    public SoundSpecifier OpenSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg");
 
     /// <summary>
-    /// The time at which the portal will be closed.
+    /// Sound to play when closing the portal.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextClose", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextClose;
+    [DataField]
+    public SoundSpecifier CloseSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg");
 
     /// <summary>
-    /// The time at which the portal was last opened.
-    /// Only used for UI.
+    /// Sound to play when trying to open or close the portal and missing access.
     /// </summary>
-    [ViewVariables]
-    public TimeSpan LastOpen;
+    [DataField]
+    public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+
+    /// <summary>
+    /// Cooldown between opening portal / closing.
+    /// </summary>
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// The time at which the portal can next be opened.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextReady;
 }

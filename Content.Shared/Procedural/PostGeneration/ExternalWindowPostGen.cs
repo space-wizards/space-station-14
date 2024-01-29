@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// If external areas are found will try to generate windows.
 /// </summary>
-public sealed class ExternalWindowPostGen : IPostDunGen
+public sealed partial class ExternalWindowPostGen : IPostDunGen
 {
     [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string?> Entities = new()

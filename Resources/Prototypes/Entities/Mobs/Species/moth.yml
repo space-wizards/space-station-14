@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McFluff
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobMoth
   abstract: true
   components:
@@ -22,28 +22,40 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
+  - type: ZombieAccentOverride
+    accent: zombieMoth
+  - type: Speech
+    speechVerb: Moth
+  - type: TypingIndicator
+    proto: moth
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 5
+  - type: Bloodstream
+    bloodReagent: InsectBlood
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#808A51"
+  - type: MothAccent
   - type: Vocal
     sounds:
       Male: UnisexMoth
       Female: UnisexMoth
       Unsexed: UnisexMoth
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
     weightlessAcceleration: 1.5 # Move around more easily in space.
     weightlessFriction: 1
     weightlessModifier: 1
   - type: Flammable
     damage:
       types:
-        Heat: 1.5 # moths burn more easily
+        Heat: 4.5 # moths burn more easily
   - type: Temperature # Moths hate the heat and thrive in the cold.
-    heatDamageThreshold: 335
+    heatDamageThreshold: 320
     coldDamageThreshold: 230
     currentTemperature: 310.15
     specificHeat: 46
@@ -52,7 +64,7 @@
         Cold : 0.05 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.2 #per second, scales with temperature & other constants
+        Heat : 3 #per second, scales with temperature & other constants
   - type: Sprite # sprite again because we want different layer ordering
     noRot: true
     drawdepth: Mobs
@@ -85,13 +97,13 @@
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
-      - map: [ "id" ]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
+      - map: [ "id" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] #in the utopian future we should probably have a wings enum inserted here so everyhting doesn't break
       - map: [ "neck" ]
       - map: [ "back" ]
@@ -109,12 +121,9 @@
         visible: false
 
 - type: entity
-  save: false
-  name: Urist McFluff
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobMothDummy
   noSpawn: true
-  description: A dummy moth meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Moth

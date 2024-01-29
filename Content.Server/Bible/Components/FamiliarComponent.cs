@@ -6,7 +6,7 @@ namespace Content.Server.Bible.Components
     /// if any special behavior is needed.
     /// </summary>
     [RegisterComponent]
-    public sealed class FamiliarComponent : Component
+    public sealed partial class FamiliarComponent : Component
     {
         /// <summary>
         /// The entity this familiar was summoned from.

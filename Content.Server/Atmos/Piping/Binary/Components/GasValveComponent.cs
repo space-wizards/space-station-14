@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public sealed class GasValveComponent : Component
+    public sealed partial class GasValveComponent : Component
     {
         [DataField("open")]
         public bool Open { get; set; } = true;
@@ -15,6 +15,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [DataField("valveSound")]
-        public SoundSpecifier ValveSound { get; } = new SoundCollectionSpecifier("valveSqueak");
+        public SoundSpecifier ValveSound { get; private set; } = new SoundCollectionSpecifier("valveSqueak");
     }
 }

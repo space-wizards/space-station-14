@@ -51,20 +51,20 @@ namespace Content.YAMLLinter
         private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             ValidateClient()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient();
+            var client = pair.Client;
             var result = await ValidateInstance(client);
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
             return result;
         }
 
         private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             ValidateServer()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var result = await ValidateInstance(server);
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
             return result;
         }
 
@@ -77,7 +77,26 @@ namespace Content.YAMLLinter
 
             await instance.WaitPost(() =>
             {
+                var engineErrors = protoMan.ValidateDirectory(new ResPath("/EnginePrototypes"), out var engPrototypes);
                 yamlErrors = protoMan.ValidateDirectory(new ResPath("/Prototypes"), out var prototypes);
+
+                // Merge engine & content prototypes
+                foreach (var (kind, instances) in engPrototypes)
+                {
+                    if (prototypes.TryGetValue(kind, out var existing))
+                        existing.UnionWith(instances);
+                    else
+                        prototypes[kind] = instances;
+                }
+
+                foreach (var (kind, set) in engineErrors)
+                {
+                    if (yamlErrors.TryGetValue(kind, out var existing))
+                        existing.UnionWith(set);
+                    else
+                        yamlErrors[kind] = set;
+                }
+
                 fieldErrors = protoMan.ValidateFields(prototypes);
             });
 

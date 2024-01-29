@@ -6,7 +6,7 @@ namespace Content.Shared.Anomaly.Components;
 /// This component tracks anomalies that are currently pulsing
 /// </summary>
 [RegisterComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalyPulsingComponent : Component
+public sealed partial class AnomalyPulsingComponent : Component
 {
     /// <summary>
     /// The time at which the pulse will be over.

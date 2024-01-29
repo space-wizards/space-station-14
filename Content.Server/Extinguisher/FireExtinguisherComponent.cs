@@ -5,6 +5,6 @@ namespace Content.Server.Extinguisher;
 
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(FireExtinguisherSystem))]
-public sealed class FireExtinguisherComponent : SharedFireExtinguisherComponent
+public sealed partial class FireExtinguisherComponent : SharedFireExtinguisherComponent
 {
 }

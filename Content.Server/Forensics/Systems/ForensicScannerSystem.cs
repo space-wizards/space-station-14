@@ -1,8 +1,5 @@
 using System.Linq;
-using System.Text; // todo: remove this stinky LINQy
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Timing;
+using System.Text;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
@@ -11,6 +8,12 @@ using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
+// todo: remove this stinky LINQy
 
 namespace Content.Server.Forensics
 {
@@ -23,6 +26,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly PaperSystem _paperSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -47,6 +51,7 @@ namespace Content.Server.Forensics
                 component.Fingerprints,
                 component.Fibers,
                 component.DNAs,
+                component.Residues,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -70,6 +75,7 @@ namespace Content.Server.Forensics
                     scanner.Fingerprints = new();
                     scanner.Fibers = new();
                     scanner.DNAs = new();
+                    scanner.Residues = new();
                 }
 
                 else
@@ -77,12 +83,13 @@ namespace Content.Server.Forensics
                     scanner.Fingerprints = forensics.Fingerprints.ToList();
                     scanner.Fibers = forensics.Fibers.ToList();
                     scanner.DNAs = forensics.DNAs.ToList();
+                    scanner.Residues = forensics.Residues.ToList();
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
             }
 
-            OpenUserInterface(args.Args.User, scanner);
+            OpenUserInterface(args.Args.User, (uid, scanner));
         }
 
         /// <remarks>
@@ -90,7 +97,7 @@ namespace Content.Server.Forensics
         /// </remarks>
         private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
         {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.ScanDelay, new ForensicScannerDoAfterEvent(), uid, target: target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ScanDelay, new ForensicScannerDoAfterEvent(), uid, target: target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -106,7 +113,7 @@ namespace Content.Server.Forensics
             var verb = new UtilityVerb()
             {
                 Act = () => StartScan(uid, component, args.User, args.Target),
-                IconEntity = uid,
+                IconEntity = GetNetEntity(uid),
                 Text = Loc.GetString("forensic-scanner-verb-text"),
                 Message = Loc.GetString("forensic-scanner-verb-message")
             };
@@ -159,14 +166,14 @@ namespace Content.Server.Forensics
             UpdateUserInterface(uid, component);
         }
 
-        private void OpenUserInterface(EntityUid user, ForensicScannerComponent component)
+        private void OpenUserInterface(EntityUid user, Entity<ForensicScannerComponent> scanner)
         {
             if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
-            UpdateUserInterface(component.Owner, component);
+            UpdateUserInterface(scanner, scanner.Comp);
 
-            _uiSystem.TryOpen(component.Owner, ForensicScannerUiKey.Key, actor.PlayerSession);
+            _uiSystem.TryOpen(scanner, ForensicScannerUiKey.Key, actor.PlayerSession);
         }
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
@@ -191,13 +198,13 @@ namespace Content.Server.Forensics
             var printed = EntityManager.SpawnEntity(component.MachineOutput, Transform(uid).Coordinates);
             _handsSystem.PickupOrDrop(args.Session.AttachedEntity, printed, checkActionBlocker: false);
 
-            if (!TryComp<PaperComponent>(printed, out var paper))
+            if (!HasComp<PaperComponent>(printed))
             {
                 _sawmill.Error("Printed paper did not have PaperComponent.");
                 return;
             }
 
-            MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName));
+            _metaData.SetEntityName(printed, Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName)));
 
             var text = new StringBuilder();
 
@@ -217,6 +224,12 @@ namespace Content.Server.Forensics
             foreach (var dna in component.DNAs)
             {
                 text.AppendLine(dna);
+            }
+            text.AppendLine();
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
+            foreach (var residue in component.Residues)
+            {
+                text.AppendLine(residue);
             }
 
             _paperSystem.SetContent(printed, text.ToString());

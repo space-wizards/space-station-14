@@ -6,18 +6,18 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReactionEffects;
 
 [DataDefinition]
-public sealed class CreateEntityReactionEffect : ReagentEffect
+public sealed partial class CreateEntityReactionEffect : ReagentEffect
 {
     /// <summary>
     ///     What entity to create.
     /// </summary>
-    [DataField("entity", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
 
     /// <summary>
     ///     How many entities to create per unit reaction.
     /// </summary>
-    [DataField("number")]
+    [DataField]
     public uint Number = 1;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

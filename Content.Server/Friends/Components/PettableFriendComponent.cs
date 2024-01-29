@@ -7,7 +7,7 @@ namespace Content.Server.Friends.Components;
 /// Uses FactionExceptionComponent behind the scenes
 /// </summary>
 [RegisterComponent, Access(typeof(PettableFriendSystem))]
-public sealed class PettableFriendComponent : Component
+public sealed partial class PettableFriendComponent : Component
 {
     /// <summary>
     /// Localized popup sent when petting for the first time

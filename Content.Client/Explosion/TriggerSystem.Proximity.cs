@@ -30,7 +30,7 @@ public sealed partial class TriggerSystem
             {
                 ComponentType = typeof(PointLightComponent),
                 InterpolationMode = AnimationInterpolationMode.Nearest,
-                Property = nameof(PointLightComponent.Radius),
+                Property = nameof(PointLightComponent.AnimatedRadius),
                 KeyFrames =
                 {
                     new AnimationTrackProperty.KeyFrame(0.1f, 0),

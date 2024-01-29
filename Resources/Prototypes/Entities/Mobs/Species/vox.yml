@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobVox
   abstract: true
   components:
@@ -60,13 +60,13 @@
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
-      - map: [ "id" ]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
+      - map: [ "id" ]
       - map: [ "neck" ]
       - map: [ "back" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
@@ -109,13 +109,12 @@
       Unsexed: UnisexVox
 
 - type: entity
+  parent: BaseSpeciesDummy
   id: MobVoxDummy
-  parent: MobHumanDummy
   noSpawn: true
   components:
   - type: HumanoidAppearance
     species: Vox
   - type: Body
     prototype: Vox
-    requiredLegs: 2
 

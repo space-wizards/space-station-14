@@ -9,7 +9,7 @@ namespace Content.Server.Solar.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(PowerSolarSystem))]
-    public sealed class SolarPanelComponent : Component
+    public sealed partial class SolarPanelComponent : Component
     {
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)

@@ -1,10 +1,12 @@
-using Content.Server.Morgue.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue;
 using Content.Shared.Morgue.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Morgue;
 
@@ -62,7 +64,7 @@ public sealed class MorgueSystem : EntitySystem
             if (!hasMob && HasComp<BodyComponent>(ent))
                 hasMob = true;
 
-            if (HasComp<ActorComponent?>(ent))
+            if (HasComp<ActorComponent>(ent))
             {
                 _appearance.SetData(uid, MorgueVisuals.Contents, MorgueContents.HasSoul, app);
                 return;
@@ -79,20 +81,21 @@ public sealed class MorgueSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (comp, storage, appearance) in EntityQuery<MorgueComponent, EntityStorageComponent, AppearanceComponent>())
+        var query = EntityQueryEnumerator<MorgueComponent, EntityStorageComponent, AppearanceComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var storage, out var appearance))
         {
             comp.AccumulatedFrameTime += frameTime;
 
-            CheckContents(comp.Owner, comp, storage);
+            CheckContents(uid, comp, storage);
 
             if (comp.AccumulatedFrameTime < comp.BeepTime)
                 continue;
 
             comp.AccumulatedFrameTime -= comp.BeepTime;
 
-            if (comp.DoSoulBeep && _appearance.TryGetData<MorgueContents>(appearance.Owner, MorgueVisuals.Contents, out var contents, appearance) && contents == MorgueContents.HasSoul)
+            if (comp.DoSoulBeep && _appearance.TryGetData<MorgueContents>(uid, MorgueVisuals.Contents, out var contents, appearance) && contents == MorgueContents.HasSoul)
             {
-                _audio.PlayPvs(comp.OccupantHasSoulAlarmSound, comp.Owner);
+                _audio.PlayPvs(comp.OccupantHasSoulAlarmSound, uid);
             }
         }
     }

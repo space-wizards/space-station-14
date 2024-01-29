@@ -18,10 +18,11 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Shared.Construction.EntitySystems;
 
-public sealed class AnchorableSystem : EntitySystem
+public sealed partial class AnchorableSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -331,12 +332,12 @@ public sealed class AnchorableSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    private sealed class TryUnanchorCompletedEvent : SimpleDoAfterEvent
+    private sealed partial class TryUnanchorCompletedEvent : SimpleDoAfterEvent
     {
     }
 
     [Serializable, NetSerializable]
-    private sealed class TryAnchorCompletedEvent : SimpleDoAfterEvent
+    private sealed partial class TryAnchorCompletedEvent : SimpleDoAfterEvent
     {
     }
 }

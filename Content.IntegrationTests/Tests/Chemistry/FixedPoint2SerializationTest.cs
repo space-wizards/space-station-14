@@ -51,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
     }
 
     [DataDefinition]
-    public sealed class FixedPoint2TestDefinition
+    public sealed partial class FixedPoint2TestDefinition
     {
         [DataField("unit")] public FixedPoint2? Unit { get; set; } = FixedPoint2.New(5);
     }

@@ -8,7 +8,7 @@ namespace Content.Shared.Vehicle.Components;
 /// used mostly to keep track of them for entityquery.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class RiderComponent : Component
+public sealed partial class RiderComponent : Component
 {
     /// <summary>
     /// The vehicle this rider is currently riding.
@@ -21,5 +21,5 @@ public sealed class RiderComponent : Component
 [Serializable, NetSerializable]
 public sealed class RiderComponentState : ComponentState
 {
-    public EntityUid? Entity;
+    public NetEntity? Entity;
 }

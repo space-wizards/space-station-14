@@ -7,7 +7,7 @@ namespace Content.Server.Radiation.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadiationSystem), Other = AccessPermissions.ReadExecute)]
-public sealed class RadiationGridResistanceComponent : Component
+public sealed partial class RadiationGridResistanceComponent : Component
 {
     /// <summary>
     ///     Radiation resistance per tile.

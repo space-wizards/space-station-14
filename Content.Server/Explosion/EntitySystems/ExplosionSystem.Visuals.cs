@@ -15,12 +15,18 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, ExplosionVisualsComponent component, ref ComponentGetState args)
     {
+        Dictionary<NetEntity, Dictionary<int, List<Vector2i>>> tileLists = new();
+        foreach (var (grid, data) in component.Tiles)
+        {
+            tileLists.Add(GetNetEntity(grid), data);
+        }
+
         args.State = new ExplosionVisualsState(
             component.Epicenter,
             component.ExplosionType,
             component.Intensity,
             component.SpaceTiles,
-            component.Tiles,
+            tileLists,
             component.SpaceMatrix,
             component.SpaceTileSize);
     }
@@ -44,11 +50,11 @@ public sealed partial class ExplosionSystem : EntitySystem
         comp.Intensity = iterationIntensity;
         comp.SpaceMatrix = spaceMatrix;
         comp.SpaceTileSize = spaceData?.TileSize ?? DefaultTileSize;
-        Dirty(comp);
+        Dirty(explosionEntity, comp);
 
         // Light, sound & visuals may extend well beyond normal PVS range. In principle, this should probably still be
         // restricted to something like the same map, but whatever.
-        _pvsSys.AddGlobalOverride(explosionEntity);
+        _pvsSys.AddGlobalOverride(GetNetEntity(explosionEntity));
 
         var appearance = AddComp<AppearanceComponent>(explosionEntity);
         _appearance.SetData(explosionEntity, ExplosionAppearanceData.Progress, 1, appearance);

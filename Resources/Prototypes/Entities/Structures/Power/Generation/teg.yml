@@ -51,6 +51,11 @@
         teg:
           !type:TegNodeGenerator
           nodeGroupID: Teg
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNode: output
+      sprite: Structures/Power/Generation/teg.rsi
+      state: static
     - type: Rotatable
 
     # Note that only the TEG center is an AtmosDevice.
@@ -91,6 +96,10 @@
       enabled: false
       sound:
         path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+    - type: GuideHelp
+      guides: [ TEG, Power ]
+    - type: StealTarget
+      stealGroup: Teg
 
 - type: entity
   id: TegCirculator
@@ -146,6 +155,8 @@
     - type: Rotatable
     - type: Anchorable
     - type: Pullable
+    - type: GuideHelp
+      guides: [ TEG, Power ]
 
     # functionality
     - type: NodeContainer
@@ -166,8 +177,8 @@
 
     - type: AtmosUnsafeUnanchor
     - type: TegCirculator
-      light_color_fast: '#AA00FF'
-      light_color_slow: '#FF3300'
+    - type: StealTarget
+      stealGroup: Teg
 
 - # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
   type: entity

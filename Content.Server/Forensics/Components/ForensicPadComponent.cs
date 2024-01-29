@@ -4,7 +4,7 @@ namespace Content.Server.Forensics
     /// Used to take a sample of someone's fingerprints.
     /// </summary>
     [RegisterComponent]
-    public sealed class ForensicPadComponent : Component
+    public sealed partial class ForensicPadComponent : Component
     {
         [DataField("scanDelay")]
         public float ScanDelay = 3.0f;

@@ -2,15 +2,16 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Hands.Systems;
+using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
+using Content.Shared.Internals;
 using Content.Shared.Inventory;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Content.Shared.Verbs;
-using Content.Server.Popups;
-using Content.Shared.DoAfter;
-using Content.Shared.Internals;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
@@ -25,6 +26,8 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+
+    public const SlotFlags InventorySlots = SlotFlags.POCKET | SlotFlags.BELT;
 
     public override void Initialize()
     {
@@ -64,7 +67,13 @@ public sealed class InternalsSystem : EntitySystem
         // Toggle off if they're on
         if (AreInternalsWorking(internals))
         {
-            DisconnectTank(internals);
+            if (force || user == uid)
+            {
+                DisconnectTank(internals);
+                return;
+            }
+
+            StartToggleInternalsDoAfter(user, uid, internals);
             return;
         }
 
@@ -75,7 +84,7 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        var tank = FindBestGasTank(uid ,internals);
+        var tank = FindBestGasTank(uid);
 
         if (tank == null)
         {
@@ -83,26 +92,29 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        var isUser = uid == user;
-
         if (!force)
         {
-            // Is the target not you? If yes, use a do-after to give them time to respond.
-            //If no, do a short delay. There's no reason it should be beyond 1 second.
-            var delay = !isUser ? internals.Delay : 1.0f;
-
-            _doAfter.TryStartDoAfter(new DoAfterArgs(user, delay, new InternalsDoAfterEvent(), uid, target: uid)
-            {
-                BreakOnUserMove = true,
-                BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                MovementThreshold = 0.1f,
-            });
-
+            StartToggleInternalsDoAfter(user, uid, internals);
             return;
         }
 
-        _gasTank.ConnectToInternals(tank);
+        _gasTank.ConnectToInternals(tank.Value);
+    }
+
+    private void StartToggleInternalsDoAfter(EntityUid user, EntityUid target, InternalsComponent internals)
+    {
+        // Is the target not you? If yes, use a do-after to give them time to respond.
+        // If not, do a short delay. There's no reason it should be beyond 1 second.
+        var isUser = user == target;
+        var delay = !isUser ? internals.Delay : 1.0f;
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), target, target: target)
+        {
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            BreakOnTargetMove = true,
+            MovementThreshold = 0.1f,
+        });
     }
 
     private void OnDoAfter(EntityUid uid, InternalsComponent component, InternalsDoAfterEvent args)
@@ -130,34 +142,36 @@ public sealed class InternalsSystem : EntitySystem
         if (AreInternalsWorking(component))
         {
             var gasTank = Comp<GasTankComponent>(component.GasTankEntity!.Value);
-            args.Gas = _gasTank.RemoveAirVolume(gasTank, Atmospherics.BreathVolume);
+            args.Gas = _gasTank.RemoveAirVolume((component.GasTankEntity.Value, gasTank), Atmospherics.BreathVolume);
             // TODO: Should listen to gas tank updates instead I guess?
             _alerts.ShowAlert(uid, AlertType.Internals, GetSeverity(component));
         }
     }
-    public void DisconnectBreathTool(InternalsComponent component)
+    public void DisconnectBreathTool(Entity<InternalsComponent> ent)
     {
+        var (owner, component) = ent;
         var old = component.BreathToolEntity;
         component.BreathToolEntity = null;
 
         if (TryComp(old, out BreathToolComponent? breathTool) )
         {
             _atmos.DisconnectInternals(breathTool);
-            DisconnectTank(component);
+            DisconnectTank(ent);
         }
 
-        _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
+        _alerts.ShowAlert(owner, AlertType.Internals, GetSeverity(component));
     }
 
-    public void ConnectBreathTool(InternalsComponent component, EntityUid toolEntity)
+    public void ConnectBreathTool(Entity<InternalsComponent> ent, EntityUid toolEntity)
     {
+        var (owner, component) = ent;
         if (TryComp(component.BreathToolEntity, out BreathToolComponent? tool))
         {
             _atmos.DisconnectInternals(tool);
         }
 
         component.BreathToolEntity = toolEntity;
-        _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
+        _alerts.ShowAlert(owner, AlertType.Internals, GetSeverity(component));
     }
 
     public void DisconnectTank(InternalsComponent? component)
@@ -166,23 +180,32 @@ public sealed class InternalsSystem : EntitySystem
             return;
 
         if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
-            _gasTank.DisconnectFromInternals(tank);
+            _gasTank.DisconnectFromInternals((component.GasTankEntity.Value, tank));
 
         component.GasTankEntity = null;
         _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
     }
 
-    public bool TryConnectTank(InternalsComponent component, EntityUid tankEntity)
+    public bool TryConnectTank(Entity<InternalsComponent> ent, EntityUid tankEntity)
     {
+        var component = ent.Comp;
         if (component.BreathToolEntity == null)
             return false;
 
         if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
-            _gasTank.DisconnectFromInternals(tank);
+            _gasTank.DisconnectFromInternals((component.GasTankEntity.Value, tank));
 
         component.GasTankEntity = tankEntity;
-        _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
+        _alerts.ShowAlert(ent, AlertType.Internals, GetSeverity(component));
         return true;
+    }
+
+    public bool AreInternalsWorking(EntityUid uid, InternalsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        return AreInternalsWorking(component);
     }
 
     public bool AreInternalsWorking(InternalsComponent component)
@@ -204,59 +227,35 @@ public sealed class InternalsSystem : EntitySystem
         return 1;
     }
 
-    public GasTankComponent? FindBestGasTank(EntityUid internalsOwner, InternalsComponent component)
+    public Entity<GasTankComponent>? FindBestGasTank(Entity<HandsComponent?, InventoryComponent?, ContainerManagerComponent?> user)
     {
         // Prioritise
         // 1. back equipped tanks
         // 2. exo-slot tanks
         // 3. in-hand tanks
         // 4. pocket/belt tanks
-        InventoryComponent? inventory = null;
-        ContainerManagerComponent? containerManager = null;
 
-        if (_inventory.TryGetSlotEntity(internalsOwner, "back", out var backEntity, inventory, containerManager) &&
+        if (!Resolve(user.Owner, ref user.Comp1, ref user.Comp2, ref user.Comp3))
+            return null;
+
+        if (_inventory.TryGetSlotEntity(user.Owner, "back", out var backEntity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
             _gasTank.CanConnectToInternals(backGasTank))
         {
-            return backGasTank;
+            return (backEntity.Value, backGasTank);
         }
 
-        if (_inventory.TryGetSlotEntity(internalsOwner, "suitstorage", out var entity, inventory, containerManager) &&
+        if (_inventory.TryGetSlotEntity(user.Owner, "suitstorage", out var entity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
             _gasTank.CanConnectToInternals(gasTank))
         {
-            return gasTank;
+            return (entity.Value, gasTank);
         }
 
-        var tanks = new List<GasTankComponent>();
-
-        foreach (var hand in _hands.EnumerateHands(internalsOwner))
+        foreach (var item in _inventory.GetHandOrInventoryEntities((user.Owner, user.Comp1, user.Comp2)))
         {
-            if (TryComp(hand.HeldEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
-                tanks.Add(gasTank);
-        }
-
-        if (tanks.Count > 0)
-        {
-            tanks.Sort((x, y) => y.Air.TotalMoles.CompareTo(x.Air.TotalMoles));
-            return tanks[0];
-        }
-
-        if (Resolve(internalsOwner, ref inventory, false))
-        {
-            var enumerator = new InventorySystem.ContainerSlotEnumerator(internalsOwner, inventory.TemplateId, _protoManager, _inventory, SlotFlags.POCKET | SlotFlags.BELT);
-
-            while (enumerator.MoveNext(out var container))
-            {
-                if (TryComp(container.ContainedEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
-                    tanks.Add(gasTank);
-            }
-
-            if (tanks.Count > 0)
-            {
-                tanks.Sort((x, y) => y.Air.TotalMoles.CompareTo(x.Air.TotalMoles));
-                return tanks[0];
-            }
+            if (TryComp(item, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
+                return (item, gasTank);
         }
 
         return null;

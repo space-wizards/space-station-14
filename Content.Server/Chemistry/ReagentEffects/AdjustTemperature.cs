@@ -5,9 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public sealed class AdjustTemperature : ReagentEffect
+    public sealed partial class AdjustTemperature : ReagentEffect
     {
-        [DataField("amount")]
+        [DataField]
         public float Amount;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

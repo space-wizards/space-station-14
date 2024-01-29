@@ -8,12 +8,11 @@
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
+  - ShuttleGunKineticCircuitboard
   # These are roundstart but not replenishable for salvage
-  - WeaponCrusher
-  - WeaponCrusherDagger
 
 - type: technology
   id: DraconicMunitions
@@ -51,19 +50,19 @@
   - TimerTrigger
   - FlashPayload
   - ExplosivePayload
+  - Igniter
 
 - type: technology
-  id: AdvancedLaserManipulation
-  name: research-technology-advanced-laser-manipulation
+  id: WeaponizedLaserManipulation
+  name: research-technology-weaponized-laser-manipulation
   icon:
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - WeaponLaserCarbine
-  - WeaponAdvancedLaser
 
 - type: technology
   id: NonlethalAmmunition
@@ -73,7 +72,7 @@
     state: beanbag
   discipline: Arsenal
   tier: 1
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - ShellShotgunBeanbag
   - CartridgePistolRubber
@@ -84,6 +83,26 @@
   - MagazineBoxMagnumRubber
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
+
+- type: technology
+  id: UraniumMunitions
+  name: research-technology-uranium-munitions
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: uranium
+  discipline: Arsenal
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ShellShotgunUranium
+  - CartridgePistolUranium
+  - CartridgeMagnumUranium
+  - CartridgeLightRifleUranium
+  - CartridgeRifleUranium
+  - MagazineBoxPistolUranium
+  - MagazineBoxMagnumUranium
+  - MagazineBoxLightRifleUranium
+  - MagazineBoxRifleUranium
 
 # Tier 2
 
@@ -121,18 +140,71 @@
   tier: 2
   cost: 8000
   recipeUnlocks:
+  - ClothingEyesGlassesSecurity
   - Truncheon
+  - TelescopicShield
+  - HoloprojectorSecurity
+  - WeaponDisablerSMG
+
+- type: technology
+  id: BasicShuttleArmament
+  name: research-technology-basic-shuttle-armament
+  icon: 
+    sprite: Structures/Power/cage_recharger.rsi
+    state: full
+  discipline: Arsenal
+  tier: 2
+  cost: 10500
+  recipeUnlocks:
+  - PowerCageRechargerCircuitboard
+  - PowerCageSmall
+  - PowerCageMedium
+  - MagazineGrenadeEmpty
+  - GrenadeFlash
+  - ShuttleGunSvalinnMachineGunCircuitboard
+  - ShuttleGunPerforatorCircuitboard
+  - ShuttleGunFriendshipCircuitboard
+  technologyPrerequisites:
+  - SalvageWeapons
 
 # Tier 3
 
 - type: technology
-  id: HandheldElectricalPropulsion
-  name: research-technology-handheld-electrical-propulsion
+  id: PortableMicrofusionWeaponry
+  name: research-technology-portable-microfusion-weaponry
   icon:
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     state: icon
   discipline: Arsenal
   tier: 3
   cost: 15000
   recipeUnlocks:
-  - WeaponTaser
+  - WeaponAdvancedLaser
+
+- type: technology
+  id: ExperimentalBatteryAmmo
+  name: research-technology-experimental-battery-ammo
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - WeaponLaserSvalinn
+  
+- type: technology
+  id: AdvancedShuttleWeapon
+  name: research-technology-advanced-shuttle-weapon
+  icon: 
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - GrenadeEMP
+  - PowerCageHigh
+  - ShuttleGunDusterCircuitboard
+  technologyPrerequisites:
+  - BasicShuttleArmament

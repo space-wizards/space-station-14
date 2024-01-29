@@ -9,7 +9,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Item
-    size: 5
+    size: Small
   - type: Clothing
     quickEquip: false
     slots:
@@ -29,7 +29,12 @@
         acts: ["Destruction"]
   - type: Appearance
   - type: AnimationPlayer
-  - type: TimerTriggerVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
 
 - type: entity
   name: explosive grenade
@@ -72,6 +77,9 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   id: GrenadeFlashEffect
@@ -145,7 +153,7 @@
   - type: AnchorOnTrigger
     removeOnTrigger: true
   - type: TwoStageTrigger
-    triggerDelay: 10
+    triggerDelay: 10.45
     components:
       - type: AmbientSound
         enabled: true
@@ -191,15 +199,15 @@
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
       volume: 5
-  - type: AmbientSound
-    enabled: false
-    volume: -5
-    range: 14
-    sound:
-      path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
   - type: TwoStageTrigger
-    triggerDelay: 10
+    triggerDelay: 11.14
     components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
       - type: GravityWell
         maxRange: 10
         baseRadialAcceleration: -180
@@ -219,9 +227,8 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
-            volume: 5
+            volume: 15
       - type: DeleteOnTrigger
-
 
 - type: entity
   name: the nuclear option
@@ -265,7 +272,7 @@
     - state: empty
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
-    size: 8
+    size: Small
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph
@@ -338,3 +345,37 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/hallelujah.ogg
+
+- type: entity
+  parent: GrenadeBase
+  id: SmokeGrenade
+  name: smoke grenade
+  description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+  - type: SmokeOnTrigger
+    duration: 30
+    spreadAmount: 50
+  - type: SoundOnTrigger
+    sound: /Audio/Effects/smoke.ogg
+  - type: DeleteOnTrigger
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Smoke-grenade.ogg
+
+- type: entity
+  parent: SmokeGrenade
+  id: TearGasGrenade
+  name: tear gas grenade
+  description: A riot control tear gas grenade. Causes irritation, pain and makes you cry your eyes out.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/tear_gas.rsi
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 30
+    solution:
+      reagents:
+      - ReagentId: TearGas
+        Quantity: 50

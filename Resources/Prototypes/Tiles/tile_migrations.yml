@@ -1,0 +1,58 @@
+- type: tileAlias
+  id: FloorBasaslt
+  target: FloorBasalt
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSand1
+  target: FloorAsteroidCoarseSand0
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSand2
+  target: FloorAsteroidCoarseSand0
+
+# 2023-08-21
+# Asteroid coarse sand has been nuked since it was made to fit in with the old CEV-Eris style rocks. This tile alias is inevitably not enough to fix every instance of it appearing since the tile is so common, but it's the only reasonable way forward since it's not the default anymore.
+
+- type: tileAlias
+  id: FloorAsteroidSandRocks
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidSandRocksRed
+  target: FloorAsteroidSandRed
+
+- type: tileAlias
+  id: FloorAsteroidSandPebbles
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand1
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand2
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand3
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand4
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSand0
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSandDug
+  target: FloorAsteroidSandDug
+
+- type: tileAlias
+  id: FloorGlassAlt
+  target: FloorGlass
+
+- type: tileAlias
+  id: FloorRGlassAlt
+  target: FloorRGlass

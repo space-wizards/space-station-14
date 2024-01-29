@@ -18,12 +18,21 @@
     toggleOnInteract: false
   - type: Intercom
   - type: Speech
+    speechVerb: Robotic
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
+  - type: WiresVisuals
+  - type: ContainerFill
+    containers:
+      board: [ IntercomElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Sprite
     noRot: false
+    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
     layers:
     - state: base
@@ -38,13 +47,17 @@
       map: ["enum.RadioDeviceVisualLayers.Speaker"]
       shader: unshaded
       visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      shader: unshaded
+      visible: false
   - type: Transform
     noRot: false
     anchored: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "Intercom"
-    LayoutId: Intercom
+    boardName: wires-board-name-intercom
+    layoutId: Intercom
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI
     key: enum.IntercomUiKey.Key
@@ -52,6 +65,8 @@
     interfaces:
       - key: enum.IntercomUiKey.Key
         type: IntercomBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: Construction
     graph: Intercom
     node: intercom
@@ -74,9 +89,15 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalGlassBreak
+              params:
+                volume: -4
   - type: GenericVisualizer
     visuals:
+      enum.WiresVisualLayers.MaintenancePanel:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
@@ -103,6 +124,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
     state: build
   - type: Construction

@@ -9,8 +9,11 @@ namespace Content.Client.Administration.UI.SetOutfit
     public sealed class SetOutfitEui : BaseEui
     {
         private readonly SetOutfitMenu _window;
+        private IEntityManager _entManager;
+
         public SetOutfitEui()
         {
+            _entManager = IoCManager.Resolve<IEntityManager>();
             _window = new SetOutfitMenu();
             _window.OnClose += OnClosed;
         }
@@ -34,7 +37,7 @@ namespace Content.Client.Administration.UI.SetOutfit
         public override void HandleState(EuiStateBase state)
         {
             var outfitState = (SetOutfitEuiState) state;
-            _window.TargetEntityId = outfitState.TargetEntityId;
+            _window.TargetEntityId = outfitState.TargetNetEntity;
 
         }
     }

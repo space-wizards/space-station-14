@@ -3,7 +3,6 @@ using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
-using Content.Shared.Spawners.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -16,8 +15,10 @@ using Robust.Client.Player;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -29,6 +30,10 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
+
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string HitscanProto = "HitscanEffect";
 
     public bool SpreadOverlay
     {
@@ -76,7 +81,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnMuzzleFlash(MuzzleFlashEvent args)
     {
-        CreateEffect(args.Uid, args);
+        CreateEffect(GetEntity(args.Uid), args);
     }
 
     private void OnHitscan(HitscanEvent ev)
@@ -84,13 +89,15 @@ public sealed partial class GunSystem : SharedGunSystem
         // ALL I WANT IS AN ANIMATED EFFECT
         foreach (var a in ev.Sprites)
         {
-            if (a.Sprite is not SpriteSpecifier.Rsi rsi ||
-                Deleted(a.coordinates.EntityId))
-            {
+            if (a.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
-            }
 
-            var ent = Spawn("HitscanEffect", a.coordinates);
+            var coords = GetCoordinates(a.coordinates);
+
+            if (Deleted(coords.EntityId))
+                continue;
+
+            var ent = Spawn(HitscanProto, coords);
             var sprite = Comp<SpriteComponent>(ent);
             var xform = Transform(ent);
             xform.LocalRotation = a.angle;
@@ -144,7 +151,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gunUid });
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
             return;
         }
 
@@ -156,7 +163,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (mousePos.MapId == MapId.Nullspace)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gunUid });
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
 
             return;
         }
@@ -168,8 +175,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
         EntityManager.RaisePredictiveEvent(new RequestShootEvent
         {
-            Coordinates = coordinates,
-            Gun = gunUid,
+            Coordinates = GetNetCoordinates(coordinates),
+            Gun = GetNetEntity(gunUid),
         });
     }
 
@@ -187,11 +194,11 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             if (throwItems)
             {
-                Recoil(user, direction, gun.CameraRecoilScalar);
-                if (ent!.Value.IsClientSide())
+                Recoil(user, direction, gun.CameraRecoilScalarModified);
+                if (IsClientSide(ent!.Value))
                     Del(ent.Value);
                 else
-                    RemComp<AmmoComponent>(ent.Value);
+                    RemoveShootable(ent.Value);
                 continue;
             }
 
@@ -202,8 +209,8 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         SetCartridgeSpent(ent!.Value, cartridge, true);
                         MuzzleFlash(gunUid, cartridge, user);
-                        Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                        Recoil(user, direction, gun.CameraRecoilScalar);
+                        Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                        Recoil(user, direction, gun.CameraRecoilScalarModified);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
                         //    Del(cartridge.Owner);
@@ -214,22 +221,22 @@ public sealed partial class GunSystem : SharedGunSystem
                         Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                     }
 
-                    if (ent!.Value.IsClientSide())
+                    if (IsClientSide(ent!.Value))
                         Del(ent.Value);
 
                     break;
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gunUid, newAmmo, user);
-                    Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                    Recoil(user, direction, gun.CameraRecoilScalar);
-                    if (ent!.Value.IsClientSide())
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                    Recoil(user, direction, gun.CameraRecoilScalarModified);
+                    if (IsClientSide(ent!.Value))
                         Del(ent.Value);
                     else
-                        RemComp<AmmoComponent>(ent.Value);
+                        RemoveShootable(ent.Value);
                     break;
                 case HitscanPrototype:
-                    Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                    Recoil(user, direction, gun.CameraRecoilScalar);
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                    Recoil(user, direction, gun.CameraRecoilScalarModified);
                     break;
             }
         }
@@ -302,12 +309,18 @@ public sealed partial class GunSystem : SharedGunSystem
         };
 
         _animPlayer.Play(ent, anim, "muzzle-flash");
-        var light = EnsureComp<PointLightComponent>(uid);
-        light.NetSyncEnabled = false;
+        if (!TryComp(uid, out PointLightComponent? light))
+        {
+            light = (PointLightComponent) _factory.GetComponent(typeof(PointLightComponent));
+            light.Owner = uid;
+            light.NetSyncEnabled = false;
+            AddComp(uid, light);
+        }
+
         Lights.SetEnabled(uid, true, light);
         Lights.SetRadius(uid, 2f, light);
-        light.Color = Color.FromHex("#cc8e2b");
-        light.Energy = 5f;
+        Lights.SetColor(uid, Color.FromHex("#cc8e2b"), light);
+        Lights.SetEnergy(uid, 5f, light);
 
         var animTwo = new Animation()
         {
@@ -328,7 +341,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(PointLightComponent),
-                    Property = nameof(PointLightComponent.Enabled),
+                    Property = nameof(PointLightComponent.AnimatedEnable),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {

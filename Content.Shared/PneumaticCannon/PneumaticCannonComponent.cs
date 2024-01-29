@@ -8,7 +8,7 @@ namespace Content.Shared.PneumaticCannon;
 ///     Handles gas powered guns--cancels shooting if no gas is available, and takes gas from the given container slot.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PneumaticCannonComponent : Component
+public sealed partial class PneumaticCannonComponent : Component
 {
     public const string TankSlotId = "gas_tank";
 
@@ -37,6 +37,12 @@ public sealed class PneumaticCannonComponent : Component
     /// </summary>
     [DataField("baseProjectileSpeed")]
     public float BaseProjectileSpeed = 20f;
+
+    /// <summary>
+    ///     The current projectile speed setting.
+    /// </summary>
+    [DataField]
+    public float? ProjectileSpeed;
 
     /// <summary>
     /// If true, will throw ammo rather than shoot it.

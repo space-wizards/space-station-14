@@ -9,7 +9,7 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 {
     // The active camera on the monitor. If this is null, the part of the UI
     // that contains the monitor should clear.
-    public EntityUid? ActiveCamera { get; }
+    public NetEntity? ActiveCamera { get; }
 
     // Currently available subnets. Does not send the entirety of the possible
     // cameras to view because that could be really, really large
@@ -23,7 +23,7 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     // Known cameras, by address and name.
     public Dictionary<string, string> Cameras { get; }
 
-    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;

@@ -6,6 +6,6 @@ namespace Content.Shared.Sound.Components;
 /// Simple sound emitter that emits sound on entity pickup
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class EmitSoundOnPickupComponent : BaseEmitSoundComponent
+public sealed partial class EmitSoundOnPickupComponent : BaseEmitSoundComponent
 {
 }

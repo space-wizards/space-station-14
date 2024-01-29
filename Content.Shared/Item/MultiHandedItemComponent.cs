@@ -7,7 +7,7 @@ namespace Content.Shared.Item;
 /// multiple hands to be able to be picked up
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class MultiHandedItemComponent : Component
+public sealed partial class MultiHandedItemComponent : Component
 {
     [DataField("handsNeeded"), ViewVariables(VVAccess.ReadWrite)]
     public int HandsNeeded = 2;

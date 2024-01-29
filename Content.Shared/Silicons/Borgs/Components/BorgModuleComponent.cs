@@ -7,7 +7,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// to give them unique abilities and attributes.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
-public sealed class BorgModuleComponent : Component
+public sealed partial class BorgModuleComponent : Component
 {
     /// <summary>
     /// The entity this module is installed into

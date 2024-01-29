@@ -13,6 +13,11 @@
                     Access="Public"
                     HorizontalExpand="True" />
                 <Button
+                    Name="RefreshButton"
+                    MinWidth="64"
+                    HorizontalAlignment="Right"
+                    Text="Refresh" />
+                <Button
                     Name="WithdrawButton"
                     MinWidth="64"
                     HorizontalAlignment="Right"

@@ -140,6 +140,8 @@
     color: "#c94242"
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
+  - type: StealTarget
+    stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -168,6 +170,8 @@
       color: "#c94242"
     - type: Computer
       board: SalvageShuttleConsoleCircuitboard
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -239,6 +243,7 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: NodeContainer
     examinable: true
     nodes:
@@ -246,6 +251,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ActivatableUI
+    singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:
@@ -317,6 +323,9 @@
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
+  - type: GuideHelp
+    guides:
+    - Forensics
 
 - type: entity
   parent: BaseComputer
@@ -371,6 +380,9 @@
       state: rd_key
   - type: ResearchClient
   - type: ResearchConsole
+  - type: ActiveRadio
+    channels:
+    - Science
   - type: TechnologyDatabase
   - type: ActivatableUI
     key: enum.ResearchConsoleUiKey.Key
@@ -391,6 +403,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Science
 
 - type: entity
   parent: BaseComputer
@@ -471,6 +486,7 @@
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
   - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -516,7 +532,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: A computer used to make station wide announcements, set the appropriate alert level, and call the emergency shuttle.
+  description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
@@ -532,6 +548,8 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
+  - type: DeviceNetwork
+    transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: UserInterface
@@ -552,7 +570,7 @@
   parent: ComputerComms
   id: SyndicateComputerComms
   name: syndicate communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
   components:
   - type: Sprite
     layers:
@@ -673,6 +691,9 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoOrders
@@ -714,6 +735,9 @@
     range: 200
     ports:
       - OrderSender
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoBounty
@@ -788,6 +812,7 @@
       - key: enum.CloningConsoleUiKey.Key
         type: CloningConsoleBoundUserInterface
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
   - type: Damageable
     damageContainer: Inorganic
@@ -838,6 +863,8 @@
       color: "#b89f25"
     - type: AccessReader
       access: [["Salvage"]]
+    - type: StealTarget
+      stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -900,6 +927,7 @@
     range: 200
   - type: DeviceNetworkRequiresPower
   - type: Speech
+    speechVerb: Robotic
   - type: SurveillanceCameraSpeaker
   - type: SurveillanceCameraMonitor
     speechEnabled: true
@@ -940,6 +968,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   parent: BaseComputer

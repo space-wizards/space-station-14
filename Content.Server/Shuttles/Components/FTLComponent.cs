@@ -10,7 +10,7 @@ namespace Content.Server.Shuttles.Components;
 /// Added to a component when it is queued or is travelling via FTL.
 /// </summary>
 [RegisterComponent]
-public sealed class FTLComponent : Component
+public sealed partial class FTLComponent : Component
 {
     [ViewVariables]
     public FTLState State = FTLState.Available;
@@ -51,5 +51,5 @@ public sealed class FTLComponent : Component
         Params = AudioParams.Default.WithVolume(-3f).WithLoop(true)
     };
 
-    public IPlayingAudioStream? TravelStream;
+    public EntityUid? TravelStream;
 }

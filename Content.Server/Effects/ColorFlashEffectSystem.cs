@@ -7,6 +7,6 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 {
     public override void RaiseEffect(Color color, List<EntityUid> entities, Filter filter)
     {
-        RaiseNetworkEvent(new ColorFlashEffectEvent(color, entities), filter);
+        RaiseNetworkEvent(new ColorFlashEffectEvent(color, GetNetEntityList(entities)), filter);
     }
 }

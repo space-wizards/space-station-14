@@ -19,19 +19,19 @@ public sealed partial class GameMapPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// Name of the map to use in generic messages, like the map vote.
     /// </summary>
     [DataField("mapName", required: true)]
-    public string MapName { get; } = default!;
+    public string MapName { get; private set; } = default!;
 
     /// <summary>
     /// Relative directory path to the given map, i.e. `/Maps/saltern.yml`
     /// </summary>
     [DataField("mapPath", required: true)]
-    public ResPath MapPath { get; } = default!;
+    public ResPath MapPath { get; private set; } = default!;
 
     [DataField("stations", required: true)]
     private Dictionary<string, StationConfig> _stations = new();
@@ -40,4 +40,18 @@ public sealed partial class GameMapPrototype : IPrototype
     /// The stations this map contains. The names should match with the BecomesStation components.
     /// </summary>
     public IReadOnlyDictionary<string, StationConfig> Stations => _stations;
+
+    /// <summary>
+    /// Performs a shallow clone of this map prototype, replacing <c>MapPath</c> with the argument.
+    /// </summary>
+    public GameMapPrototype Persistence(ResPath mapPath)
+    {
+        return new()
+        {
+            ID = ID,
+            MapName = MapName,
+            MapPath = mapPath,
+            _stations = _stations
+        };
+    }
 }

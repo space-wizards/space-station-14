@@ -1,22 +1,21 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
     [Virtual]
-    public class ConditionalSpawnerComponent : Component
+    public partial class ConditionalSpawnerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("prototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public List<string> Prototypes { get; set; } = new();
+        [DataField]
+        public List<EntProtoId> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("gameRules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public readonly List<string> GameRules = new();
+        [DataField]
+        public List<EntProtoId> GameRules = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("chance")]
+        [DataField]
         public float Chance { get; set; } = 1.0f;
     }
 }

@@ -6,6 +6,6 @@ namespace Content.Shared.Sound.Components;
 /// Simple sound emitter that emits sound on entity drop
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class EmitSoundOnDropComponent : BaseEmitSoundComponent
+public sealed partial class EmitSoundOnDropComponent : BaseEmitSoundComponent
 {
 }

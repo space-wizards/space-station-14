@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Toilet
 {
     [RegisterComponent]
-    public sealed class ToiletComponent : Component
+    public sealed partial class ToiletComponent : Component
     {
         [DataField("pryLidTime")]
         public float PryLidTime = 1f;
@@ -26,7 +26,7 @@ namespace Content.Shared.Toilet
     }
 
     [Serializable, NetSerializable]
-    public sealed class ToiletPryDoAfterEvent : SimpleDoAfterEvent
+    public sealed partial class ToiletPryDoAfterEvent : SimpleDoAfterEvent
     {
     }
 }

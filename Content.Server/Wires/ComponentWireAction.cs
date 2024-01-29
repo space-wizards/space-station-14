@@ -5,7 +5,7 @@ namespace Content.Server.Wires;
 /// <summary>
 ///     convenience class for wires that depend on the existence of some component to function. Slightly reduces boilerplate.
 /// </summary>
-public abstract class ComponentWireAction<TComponent> : BaseWireAction where TComponent : Component
+public abstract partial class ComponentWireAction<TComponent> : BaseWireAction where TComponent : Component
 {
     public abstract StatusLightState? GetLightState(Wire wire, TComponent component);
     public override StatusLightState? GetLightState(Wire wire)

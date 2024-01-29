@@ -7,8 +7,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
@@ -26,15 +24,15 @@ public sealed class AddTests
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
         var sEntities = server.ResolveDependency<IEntityManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -65,14 +63,14 @@ public sealed class AddTests
             return false;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sEntities = server.ResolveDependency<IEntityManager>();
@@ -83,7 +81,7 @@ public sealed class AddTests
 
         var guid = Guid.NewGuid();
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -130,20 +128,20 @@ public sealed class AddTests
             json.Dispose();
         }
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -161,14 +159,14 @@ public sealed class AddTests
             return messages.Count >= amount;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddPlayerSessionLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
@@ -177,7 +175,7 @@ public sealed class AddTests
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.First();
+            var player = sPlayers.Sessions.First();
             playerGuid = player.UserId;
 
             Assert.DoesNotThrow(() =>
@@ -197,7 +195,7 @@ public sealed class AddTests
             Assert.That(logs.First().Players, Does.Contain(playerGuid));
             return true;
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
@@ -210,8 +208,8 @@ public sealed class AddTests
             AdminLogsEnabled = true
         };
 
-        await using var pairTracker = await PoolManager.GetServerClient(setting);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(setting);
+        var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
@@ -264,14 +262,14 @@ public sealed class AddTests
 
             json.Dispose();
         }
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task DuplicatePlayerDoesNotThrowTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
@@ -280,7 +278,7 @@ public sealed class AddTests
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.Single();
+            var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
         });
@@ -300,15 +298,15 @@ public sealed class AddTests
             return true;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
         Assert.Pass();
     }
 
     [Test]
     public async Task DuplicatePlayerIdDoesNotThrowTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
@@ -318,7 +316,7 @@ public sealed class AddTests
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.Single();
+            var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
         });
@@ -338,7 +336,7 @@ public sealed class AddTests
             return true;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
         Assert.Pass();
     }
 }

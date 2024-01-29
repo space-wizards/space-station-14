@@ -18,10 +18,10 @@ namespace Content.Shared.Containers;
 ///     cref="EntitySpawnCollection.GetSpawns"/>, which is also used by several other systems.
 /// </remarks>
 [RegisterComponent]
-public sealed class ContainerFillComponent : Component
+public sealed partial class ContainerFillComponent : Component
 {
     [DataField("containers", customTypeSerializer:typeof(ContainerFillSerializer))]
-    public readonly Dictionary<string, List<string>> Containers = new();
+    public Dictionary<string, List<string>> Containers = new();
 
     /// <summary>
     ///     If true, entities spawned via the construction system will not have entities spawned into containers managed

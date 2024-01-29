@@ -4,6 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Resist;
 
 [Serializable, NetSerializable]
-public sealed class ResistLockerDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class ResistLockerDoAfterEvent : SimpleDoAfterEvent
 {
 }

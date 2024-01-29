@@ -16,7 +16,7 @@
     proto: CartridgeLightRifle
     capacity: 30
   - type: Item
-    size: 5
+    size: Small
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -92,6 +92,20 @@
   - type: Sprite
     layers:
     - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineLightRifleUranium
+  name: "magazine (.30 rifle uranium)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleUranium
+  - type: Sprite
+    layers:
+    - state: uranium
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

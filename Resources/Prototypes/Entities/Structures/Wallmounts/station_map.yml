@@ -51,6 +51,12 @@
     - type: Icon
       sprite: Structures/Machines/station_map.rsi
       state: station_map0
+    - type: ContainerFill
+      containers:
+        board: [ StationMapCircuitboard ]
+    - type: ContainerContainer
+      containers:
+        board: !type:Container
     - type: ApcPowerReceiver
       powerLoad: 200
       priority: Low

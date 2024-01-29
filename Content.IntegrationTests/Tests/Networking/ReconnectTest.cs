@@ -9,9 +9,9 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var server = pair.Server;
+            var client = pair.Client;
 
             var host = client.ResolveDependency<IClientConsoleHost>();
             var netManager = client.ResolveDependency<IClientNetManager>();
@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Networking
             await client.WaitPost(() => host.ExecuteCommand("disconnect"));
 
             // Run some ticks for the disconnect to complete and such.
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
@@ -29,10 +29,10 @@ namespace Content.IntegrationTests.Tests.Networking
             await client.WaitPost(() => netManager.ClientConnect(null, 0, null));
 
             // Run some ticks for the handshake to complete and such.
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

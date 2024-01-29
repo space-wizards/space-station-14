@@ -1,10 +1,11 @@
-using Content.Shared.Eye.Blinding;
 using Content.Shared.StatusEffect;
 using Content.Shared.Inventory;
-using Content.Server.Tools;
+using Content.Shared.Item;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Tools.Components;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
 {
@@ -12,11 +13,13 @@ namespace Content.Server.Eye.Blinding.EyeProtection
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly BlindableSystem _blindingSystem = default!;
+        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
+        
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<RequiresEyeProtectionComponent, ToolUseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<RequiresEyeProtectionComponent, WelderToggledEvent>(OnWelderToggled);
+            SubscribeLocalEvent<RequiresEyeProtectionComponent, ItemToggledEvent>(OnWelderToggled);
 
             SubscribeLocalEvent<EyeProtectionComponent, GetEyeProtectionEvent>(OnGetProtection);
             SubscribeLocalEvent<EyeProtectionComponent, InventoryRelayedEvent<GetEyeProtectionEvent>>(OnGetRelayedProtection);
@@ -44,20 +47,20 @@ namespace Content.Server.Eye.Blinding.EyeProtection
             var ev = new GetEyeProtectionEvent();
             RaiseLocalEvent(args.User, ev);
 
-            var time = (float) (component.StatusEffectTime- ev.Protection).TotalSeconds;
+            var time = (float) (component.StatusEffectTime - ev.Protection).TotalSeconds;
             if (time <= 0)
                 return;
 
             // Add permanent eye damage if they had zero protection, also somewhat scale their temporary blindness by
             // how much damage they already accumulated.
-            _blindingSystem.AdjustEyeDamage(args.User, 1, blindable);
+            _blindingSystem.AdjustEyeDamage((args.User, blindable), 1);
             var statusTimeSpan = TimeSpan.FromSeconds(time * MathF.Sqrt(blindable.EyeDamage));
             _statusEffectsSystem.TryAddStatusEffect(args.User, TemporaryBlindnessSystem.BlindingStatusEffect,
                 statusTimeSpan, false, TemporaryBlindnessSystem.BlindingStatusEffect);
         }
-        private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, WelderToggledEvent args)
+        private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggledEvent args)
         {
-            component.Toggled = args.WelderOn;
+            component.Toggled = args.Activated;
         }
     }
 }

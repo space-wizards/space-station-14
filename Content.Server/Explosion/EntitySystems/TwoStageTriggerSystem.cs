@@ -33,7 +33,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
         component.NextTriggerTime = _timing.CurTime + component.TriggerDelay;
     }
 
-    public void LoadComponents(EntityUid uid, TwoStageTriggerComponent component)
+    private void LoadComponents(EntityUid uid, TwoStageTriggerComponent component)
     {
         foreach (var (name, entry) in component.SecondStageComponents)
         {
@@ -47,6 +47,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
             _serializationManager.CopyTo(entry.Component, ref temp);
             EntityManager.AddComponent(uid, comp);
         }
+        component.ComponentsIsLoaded = true;
     }
 
     public override void Update(float frameTime)
@@ -54,17 +55,18 @@ public sealed class TwoStageTriggerSystem : EntitySystem
         base.Update(frameTime);
 
         var enumerator = EntityQueryEnumerator<TwoStageTriggerComponent>();
-
         while (enumerator.MoveNext(out var uid, out var component))
         {
-            if (component.NextTriggerTime == null)
+            if (!component.Triggered)
                 continue;
+
+            if (!component.ComponentsIsLoaded)
+                LoadComponents(uid, component);
 
             if (_timing.CurTime < component.NextTriggerTime)
                 continue;
 
             component.NextTriggerTime = null;
-            LoadComponents(uid, component);
             _triggerSystem.Trigger(uid);
         }
     }

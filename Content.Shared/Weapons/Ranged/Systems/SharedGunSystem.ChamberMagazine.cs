@@ -25,7 +25,6 @@ public abstract partial class SharedGunSystem
          * Racking does both in one hit and has a different sound (to avoid RSI + sounds cooler).
          */
 
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnChamberVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<ActivationVerb>>(OnChamberActivationVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<InteractionVerb>>(OnChamberInteractionVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<AlternativeVerb>>(OnMagazineVerb);
@@ -47,18 +46,9 @@ public abstract partial class SharedGunSystem
         }
     }
 
-    private void OnChamberVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<Verb> args)
-    {
-        if (component.BoltClosed != null)
-        {
-            args.Verbs.Add(new Verb()
-            {
-                Text = component.BoltClosed.Value ? Loc.GetString("gun-chamber-bolt-open") : Loc.GetString("gun-chamber-bolt-close"),
-                Act = () => ToggleBolt(uid, component, args.User),
-            });
-        }
-    }
-
+    /// <summary>
+    /// Called when user "Activated In World" (E) with the gun as the target
+    /// </summary>
     private void OnChamberActivate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ActivateInWorldEvent args)
     {
         if (args.Handled)
@@ -68,6 +58,9 @@ public abstract partial class SharedGunSystem
         ToggleBolt(uid, component, args.User);
     }
 
+    /// <summary>
+    /// Called when gun was "Activated In Hand" (Z)
+    /// </summary>
     private void OnChamberUse(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UseInHandEvent args)
     {
         if (args.Handled)
@@ -77,6 +70,9 @@ public abstract partial class SharedGunSystem
         UseChambered(uid, component, args.User);
     }
 
+    /// <summary>
+    /// Creates "Rack" verb on the gun
+    /// </summary>
     private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
@@ -92,10 +88,16 @@ public abstract partial class SharedGunSystem
         });
     }
 
+    /// <summary>
+    /// Opens then closes the bolt, or just closes it if currently open.
+    /// </summary>
     private void UseChambered(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null)
     {
         if (component.BoltClosed == false)
+        {
+            ToggleBolt(uid, component, user);
             return;
+        }
 
         if (TryTakeChamberEntity(uid, out var chamberEnt))
         {
@@ -118,6 +120,9 @@ public abstract partial class SharedGunSystem
         }
     }
 
+    /// <summary>
+    /// Creates "Open/Close bolt" verb on the gun
+    /// </summary>
     private void OnChamberInteractionVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
@@ -134,6 +139,9 @@ public abstract partial class SharedGunSystem
         });
     }
 
+    /// <summary>
+    /// Updates the bolt to its new state
+    /// </summary>
     public void SetBoltClosed(EntityUid uid, ChamberMagazineAmmoProviderComponent component, bool value, EntityUid? user = null, AppearanceComponent? appearance = null, ItemSlotsComponent? slots = null)
     {
         if (component.BoltClosed == null || value == component.BoltClosed)
@@ -198,10 +206,11 @@ public abstract partial class SharedGunSystem
     {
         // Try to put a new round in if possible.
         var magEnt = GetMagazineEntity(uid);
+        var chambered = GetChamberEntity(uid);
 
         // Similar to what takeammo does though that uses an optimised version where
         // multiple bullets may be fired in a single tick.
-        if (magEnt != null)
+        if (magEnt != null && chambered == null)
         {
             var relayedArgs = new TakeAmmoEvent(1,
                 new List<(EntityUid? Entity, IShootable Shootable)>(),
@@ -223,7 +232,10 @@ public abstract partial class SharedGunSystem
                 {
                     foreach (var (ent, _) in relayedArgs.Ammo)
                     {
-                        Del(ent!.Value);
+                        if (!IsClientSide(ent!.Value))
+                            continue;
+
+                        Del(ent.Value);
                     }
                 }
             }
@@ -234,6 +246,9 @@ public abstract partial class SharedGunSystem
         }
     }
 
+    /// <summary>
+    /// Sets the bolt's positional value to the other state
+    /// </summary>
     public void ToggleBolt(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null)
     {
         if (component.BoltClosed == null)
@@ -242,19 +257,31 @@ public abstract partial class SharedGunSystem
         SetBoltClosed(uid, component, !component.BoltClosed.Value, user);
     }
 
+    /// <summary>
+    /// Called when the gun was Examined
+    /// </summary>
     private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
         var (count, _) = GetChamberMagazineCountCapacity(uid, component);
+        string boltState;
 
-        if (component.BoltClosed != null)
+        using (args.PushGroup(nameof(ChamberMagazineAmmoProviderComponent)))
         {
-            args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", component.BoltClosed), ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
-        }
+            if (component.BoltClosed != null)
+            {
+                if (component.BoltClosed == true)
+                    boltState = Loc.GetString("gun-chamber-bolt-open-state");
+                else
+                    boltState = Loc.GetString("gun-chamber-bolt-closed-state");
+                args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", boltState),
+                    ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
+            }
 
-        args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
+            args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
+        }
     }
 
     private bool TryTakeChamberEntity(EntityUid uid, [NotNullWhen(true)] out EntityUid? entity)
@@ -270,7 +297,7 @@ public abstract partial class SharedGunSystem
         if (entity == null)
             return false;
 
-        container.Remove(entity.Value);
+        Containers.Remove(entity.Value, container);
         return true;
     }
 
@@ -296,7 +323,7 @@ public abstract partial class SharedGunSystem
     {
         return Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
                container is ContainerSlot slot &&
-               slot.Insert(ammo);
+               Containers.Insert(ammo, slot);
     }
 
     private void OnChamberAmmoCount(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ref GetAmmoCountEvent args)
@@ -332,7 +359,7 @@ public abstract partial class SharedGunSystem
         {
             if (TryTakeChamberEntity(uid, out chamberEnt))
             {
-                args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
+                args.Ammo.Add((chamberEnt.Value, EnsureShootable(chamberEnt.Value)));
             }
             // No ammo returned.
             else
@@ -386,7 +413,7 @@ public abstract partial class SharedGunSystem
         {
             // Shooting code won't eject it if it's still contained.
             chamberEnt = slot.ContainedEntity;
-            args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
+            args.Ammo.Add((chamberEnt.Value, EnsureShootable(chamberEnt.Value)));
         }
     }
 }

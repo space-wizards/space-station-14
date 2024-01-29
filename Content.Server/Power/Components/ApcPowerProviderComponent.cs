@@ -4,7 +4,7 @@ namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     [ComponentProtoName("PowerProvider")]
-    public sealed class ApcPowerProviderComponent : BaseApcNetComponent
+    public sealed partial class ApcPowerProviderComponent : BaseApcNetComponent
     {
         [ViewVariables] public List<ApcPowerReceiverComponent> LinkedReceivers { get; } = new();
 

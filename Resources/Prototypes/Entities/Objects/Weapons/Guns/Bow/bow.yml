@@ -1,0 +1,94 @@
+- type: entity
+  name: bow
+  parent: BaseItem
+  id: BaseBow
+  description: The original rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+  - type: Item
+    size: Normal
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+  - type: Wieldable
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: UseDelay
+    delay: 1
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+    soundEmpty: null
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Arrow
+          - Plunger
+  - type: ContainerContainer
+    containers:
+      projectiles: !type:ContainerSlot
+  - type: ContainerAmmoProvider
+    container: projectiles
+
+- type: entity
+  id: BowImprovised
+  parent: BaseBow
+  components:
+  - type: Sprite
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+    - state: unwielded-plunger
+      map: [ plunger ]
+      visible: false
+  # to elucidate whats intended here:
+  # arrow is inserted -> ItemMapper sets layer with map `arrow` to visible
+  # bow is wielded -> generic vis sets states of layers with map `arrow` and `base`
+  # arrow is removed -> itemmapper sets layer with map `arrow` to invisible
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    - plunger
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Arrow
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        plunger:
+          True: { state: wielded-plunger }
+          False: { state: unwielded-plunger }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+  - type: Construction
+    graph: ImprovisedBow
+    node: ImprovisedBow

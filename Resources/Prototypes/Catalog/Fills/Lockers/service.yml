@@ -9,6 +9,8 @@
       - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
       - id: ClothingEyesHudBeer
+      - id: HandLabeler
+        amount: 1
       - id: DrinkBottleBeer
         prob: 0.5
       - id: DrinkBottleBeer
@@ -18,7 +20,7 @@
       - id: BoxBeanbag
         amount: 2
       - id: RagItem
-        amound: 2
+        amount: 2
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -33,7 +35,7 @@
   - type: StorageFill
     contents:
       - id: CrowbarRed
-      - id: MonkeyCubeBox
+      - id: VariantCubeBox
       - id: BoxMousetrap
         amount: 2
       - id: SprayBottleWater
@@ -42,12 +44,14 @@
       - id: ReagentContainerSugar
       - id: FoodCondimentPacketSalt
         amount: 3
+      - id: FoodCondimentPacketPepper
+        amount: 3
       - id: FoodCondimentBottleEnzyme
       # really, milk should go in the fridge. Unfortunately saltern only has freezers.
       # yes, I'm using this as an excuse to not have to do extra work.
-      - id: ReagentContainerMilk
+      - id: DrinkMilkCarton
         amount: 2
-      - id: ReagentContainerMilkSoy
+      - id: DrinkSoyMilkCarton
 
 - type: entity
   id: ClosetJanitorFilled
@@ -93,24 +97,14 @@
   - type: StorageFill
     contents:
       - id: ClothingHandsGlovesLeather
-        amount: 2
       - id: ClothingOuterApronBotanist
-        amount: 2
       - id: ClothingHeadBandBotany
-        amount: 2
-      - id: HydroponicsToolClippers
+      - id: RobustHarvestChemistryBottle
+        prob: 0.3
       - id: ClothingBeltPlant
       - id: PlantBag ##Some maps don't have nutrivend
       - id: BoxMouthSwab
       - id: HandLabeler
-      - id: TowercapSeeds
-      - id: BananaSeeds
-        prob: 0.6
-      - id: EggySeeds
-        prob: 0.5
-      - id: AppleSeeds
-        prob: 0.8
-      - id: TomatoSeeds
       - id: ClothingUniformOveralls
       - id: ClothingHeadHatTrucker
         prob: 0.1
@@ -131,3 +125,13 @@
         prob: 0.5
       - id: NettleSeeds
         prob: 0.7
+
+- type: entity
+  id: ClosetJanitorBombFilled
+  parent: ClosetJanitorBomb
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetJanitorBombSuit
+      - id: ClothingOuterSuitJanitorBomb

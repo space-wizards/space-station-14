@@ -40,6 +40,11 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/power.rsi
+    state: generator
   - type: PowerSupplier
     supplyRate: 3000
     supplyRampRate: 500
@@ -49,6 +54,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
@@ -65,7 +71,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:ExplodeBehavior
   - type: Explosive
     explosionType: Default
@@ -124,6 +130,11 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    state: static
   - type: PowerSupplier
     supplyRate: 3000
     supplyRampRate: 500
@@ -176,67 +187,6 @@
       supplyRate: 15000
 
 - type: entity
-  parent: [ BaseGenerator, ConstructibleMachine ]
-  id: GeneratorPlasma
-  suffix: Plasma, 20kW
-  components:
-  - type: PowerSupplier
-  - type: Sprite
-    sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen0_1
-  - type: WiresPanel
-  - type: Wires
-    BoardName: "GeneratorPlasma"
-    LayoutId: GeneratorPlasma
-  - type: Machine
-    board: GeneratorPlasmaMachineCircuitboard
-  - type: UpgradePowerSupplier
-    powerSupplyMultiplier: 1.25
-    scaling: Exponential
-  - type: FuelGenerator
-    targetPower: 20000
-    optimalPower: 20000
-  - type: SolidFuelGeneratorAdapter
-    fuelMaterial: Plasma
-  - type: ActivatableUI
-    key: enum.GeneratorComponentUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.GeneratorComponentUiKey.Key
-        type: SolidFuelGeneratorBoundUserInterface
-
-- type: entity
-  parent: [ BaseGenerator, ConstructibleMachine ]
-  id: GeneratorUranium
-  suffix: Uranium, 30kW
-  components:
-  - type: PowerSupplier
-  - type: Sprite
-    sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen1_1
-  - type: WiresPanel
-  - type: Wires
-    BoardName: "GeneratorUranium"
-    LayoutId: GeneratorUranium
-  - type: Machine
-    board: GeneratorUraniumMachineCircuitboard
-  - type: UpgradePowerSupplier
-    powerSupplyMultiplier: 1.25
-    scaling: Exponential
-  - type: FuelGenerator
-    targetPower: 30000
-    optimalPower: 30000
-    optimalBurnRate: 0.00416666666
-  - type: SolidFuelGeneratorAdapter
-    fuelMaterial: Uranium
-  - type: ActivatableUI
-    key: enum.GeneratorComponentUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.GeneratorComponentUiKey.Key
-        type: SolidFuelGeneratorBoundUserInterface
-
-- type: entity
   parent: BaseGeneratorWallmount
   id: GeneratorWallmountBasic
   suffix: Basic, 3kW
@@ -248,6 +198,12 @@
     node: generator
   - type: StaticPrice
     price: 14
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -263,6 +219,12 @@
     node: APU
   - type: StaticPrice
     price: 38
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorAPUElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 # RTG - no fuel requirement
 
@@ -276,6 +238,9 @@
   - type: PowerSupplier
     supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
   - type: Sprite
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg
+  - type: PowerMonitoringDevice
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
   - type: AmbientSound
@@ -296,7 +261,7 @@
         behaviors:
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalBreak
           - !type:SpawnEntitiesBehavior
             spawn:
               GeneratorRTGDamaged:
@@ -321,6 +286,9 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
+  - type: PowerMonitoringDevice
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg_damaged
   - type: RadiationSource # ideally only when opened.
     intensity: 2
   - type: Destructible
@@ -337,7 +305,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

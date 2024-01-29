@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation: https://github.com/tgstation/tgstation/commit/b3399ffe39f9ace645123c98323c4832412cc641",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "dead"
+    },
+    {
+      "name": "harvest"
+    },
+    {
+      "name": "produce"
+    },
+    {
+      "name": "pit"
+    },
+    {
+      "name": "seed"
+    },
+    {
+      "name": "stage-1"
+    },
+    {
+      "name": "stage-2"
+    },
+    {
+      "name": "stage-3"
+    },
+    {
+      "name": "stage-4"
+    }
+  ]
+}

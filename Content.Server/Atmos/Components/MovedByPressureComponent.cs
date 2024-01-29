@@ -2,7 +2,7 @@ namespace Content.Server.Atmos.Components
 {
     // Unfortunately can't be friends yet due to magboots.
     [RegisterComponent]
-    public sealed class MovedByPressureComponent : Component
+    public sealed partial class MovedByPressureComponent : Component
     {
         public const float MoveForcePushRatio = 1f;
         public const float MoveForceForcePushRatio = 1f;

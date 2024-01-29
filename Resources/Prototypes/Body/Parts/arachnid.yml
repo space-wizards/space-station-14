@@ -11,7 +11,7 @@
       reagents:
       - ReagentId: Fat
         Quantity: 3
-      - ReagentId: SpiderBlood
+      - ReagentId: CopperBlood
         Quantity: 10
 
 - type: entity
@@ -27,7 +27,7 @@
       reagents:
       - ReagentId: Fat
         Quantity: 10
-      - ReagentId: SpiderBlood
+      - ReagentId: CopperBlood
         Quantity: 20
 
 - type: entity
@@ -43,7 +43,7 @@
       reagents:
       - ReagentId: Fat
         Quantity: 5
-      - ReagentId: SpiderBlood
+      - ReagentId: CopperBlood
         Quantity: 10
 
 - type: entity

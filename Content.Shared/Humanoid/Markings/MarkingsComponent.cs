@@ -1,7 +1,7 @@
 namespace Content.Shared.Humanoid.Markings
 {
     [RegisterComponent]
-    public sealed class MarkingsComponent : Component
+    public sealed partial class MarkingsComponent : Component
     {
         public Dictionary<HumanoidVisualLayers, List<Marking>> ActiveMarkings = new();
 

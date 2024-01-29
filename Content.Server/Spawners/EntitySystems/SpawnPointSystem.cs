@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using Content.Server.GameTicking;
-using Content.Server.Shuttles.Components;
+﻿using Content.Server.GameTicking;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Shared.Map;
@@ -17,7 +16,7 @@ public sealed class SpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer);
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, after: new[] { typeof(ContainerSpawnPointSystem), typeof(ArrivalsSystem) });
     }
 
     private void OnSpawnPlayer(PlayerSpawningEvent args)
@@ -28,7 +27,6 @@ public sealed class SpawnPointSystem : EntitySystem
         // TODO: Cache all this if it ends up important.
         var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
         var possiblePositions = new List<EntityCoordinates>();
-        EntityCoordinates? firstLoc = null;
 
         while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
@@ -40,7 +38,9 @@ public sealed class SpawnPointSystem : EntitySystem
                 possiblePositions.Add(xform.Coordinates);
             }
 
-            if (_gameTicker.RunLevel != GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.Job && (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype.ID))
+            if (_gameTicker.RunLevel != GameRunLevel.InRound &&
+                spawnPoint.SpawnType == SpawnPointType.Job &&
+                (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype))
             {
                 possiblePositions.Add(xform.Coordinates);
             }

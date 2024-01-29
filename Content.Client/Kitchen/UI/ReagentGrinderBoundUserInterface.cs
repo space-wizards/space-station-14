@@ -74,7 +74,7 @@ namespace Content.Client.Kitchen.UI
 
         public void EjectChamberContent(EntityUid uid)
         {
-            SendMessage(new ReagentGrinderEjectChamberContentMessage(uid));
+            SendMessage(new ReagentGrinderEjectChamberContentMessage(EntMan.GetNetEntity(uid)));
         }
     }
 }

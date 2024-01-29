@@ -62,4 +62,38 @@ namespace Content.Shared.Administration
             DiscordRelayEnabled = enabled;
         }
     }
+
+    /// <summary>
+    ///     Sent by the client to notify the server when it begins or stops typing.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class BwoinkClientTypingUpdated : EntityEventArgs
+    {
+        public NetUserId Channel { get; }
+        public bool Typing { get; }
+
+        public BwoinkClientTypingUpdated(NetUserId channel, bool typing)
+        {
+            Channel = channel;
+            Typing = typing;
+        }
+    }
+
+    /// <summary>
+    ///     Sent by server to notify admins when a player begins or stops typing.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class BwoinkPlayerTypingUpdated : EntityEventArgs
+    {
+        public NetUserId Channel { get; }
+        public string PlayerName { get; }
+        public bool Typing { get; }
+
+        public BwoinkPlayerTypingUpdated(NetUserId channel, string playerName, bool typing)
+        {
+            Channel = channel;
+            PlayerName = playerName;
+            Typing = typing;
+        }
+    }
 }

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Citadel Station 13 at https://github.com/Citadel-Station-13/Citadel-Station-13/blob/a36c4fd163b1f36a3aaf766e32183ccb6304a561/icons/mob/lavaland/watcher.dmi. Cut into layers/modified by mirrorcult for SS14",
+  "size": {
+    "x": 54,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "unshaded",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    },
+    {
+      "name": "dead-unshaded"
+    }
+  ]
+}

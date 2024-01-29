@@ -38,6 +38,9 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
@@ -61,8 +64,8 @@
   # Machine / Construction stuff
   - type: WiresPanel
   - type: Wires
-    BoardName: "chem_master"
-    LayoutId: chem_master
+    boardName: wires-board-name-chemmaster
+    layoutId: chem_master
   - type: Machine
     board: ChemMasterMachineCircuitboard
   - type: ContainerContainer
@@ -86,6 +89,9 @@
   - type: SolutionContainerManager
     solutions:
       buffer: {}
+  - type: DumpableSolution
+    solution: buffer
+    unlimited: true
   - type: GuideHelp
     guides:
     - Chemicals

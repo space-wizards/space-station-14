@@ -1,7 +1,10 @@
 using System.Numerics;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Gravity;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Movement.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
@@ -24,12 +27,12 @@ public sealed class ThrowingSystem : EntitySystem
     /// </summary>
     public const float FlyTime = 0.15f;
 
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public void TryThrow(
         EntityUid uid,
@@ -107,11 +110,23 @@ public sealed class ThrowingSystem : EntitySystem
             return;
         }
 
-        if (projectileQuery.HasComponent(uid))
+        // Allow throwing if this projectile only acts as a projectile when shot, otherwise disallow
+        if (projectileQuery.TryGetComponent(uid, out var proj) && !proj.OnlyCollideWhenShot)
             return;
 
         var comp = EnsureComp<ThrownItemComponent>(uid);
         comp.Thrower = user;
+
+        // Estimate time to arrival so we can apply OnGround status and slow it much faster.
+        var time = direction.Length() / strength;
+        comp.ThrownTime = _gameTiming.CurTime;
+        // did we launch this with something stronger than our hands?
+        if (TryComp<HandsComponent>(comp.Thrower, out var hands) && strength > hands.ThrowForceMultiplier)
+            comp.LandTime = comp.ThrownTime + TimeSpan.FromSeconds(time);
+        else
+            comp.LandTime = time < FlyTime ? default : comp.ThrownTime + TimeSpan.FromSeconds(time - FlyTime);
+        comp.PlayLandSound = playSound;
+
         ThrowingAngleComponent? throwingAngle = null;
 
         // Give it a l'il spin.
@@ -128,30 +143,21 @@ public sealed class ThrowingSystem : EntitySystem
             _transform.SetLocalRotation(uid, angle + offset);
         }
 
+        var throwEvent = new ThrownEvent(user, uid);
+        RaiseLocalEvent(uid, ref throwEvent, true);
         if (user != null)
-            _interactionSystem.ThrownInteraction(user.Value, uid);
+            _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity}");
 
         var impulseVector = direction.Normalized() * strength * physics.Mass;
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
-        // Estimate time to arrival so we can apply OnGround status and slow it much faster.
-        var time = direction.Length() / strength;
-
-        if (time < FlyTime)
+        if (comp.LandTime == null || comp.LandTime <= TimeSpan.Zero)
         {
             _thrownSystem.LandComponent(uid, comp, physics, playSound);
         }
         else
         {
             _physics.SetBodyStatus(physics, BodyStatus.InAir);
-
-            Timer.Spawn(TimeSpan.FromSeconds(time - FlyTime), () =>
-            {
-                if (physics.Deleted)
-                    return;
-
-                _thrownSystem.LandComponent(uid, comp, physics, playSound);
-            });
         }
 
         // Give thrower an impulse in the other direction

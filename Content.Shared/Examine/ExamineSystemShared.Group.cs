@@ -1,5 +1,5 @@
-using Robust.Shared.Utility;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Examine
 {
@@ -23,7 +23,7 @@ namespace Content.Shared.Examine
         /// </summary>
         private void OnGroupExamineVerb(EntityUid uid, GroupExamineComponent component, GetVerbsEvent<ExamineVerb> args)
         {
-            foreach (var group in component.ExamineGroups)
+            foreach (var group in component.Group)
             {
                 if (!EntityHasComponent(uid, group.Components))
                     continue;
@@ -116,7 +116,7 @@ namespace Content.Shared.Examine
                 // Make sure we have the component name as a string
                 var componentName = _componentFactory.GetComponentName(component.GetType());
 
-                foreach (var examineGroup in groupExamine.ExamineGroups)
+                foreach (var examineGroup in groupExamine.Group)
                 {
                     // If any of the examine groups list of components contain this componentname
                     if (examineGroup.Components.Contains(componentName))
@@ -124,7 +124,7 @@ namespace Content.Shared.Examine
                         foreach (var entry in examineGroup.Entries)
                         {
                             // If any of the entries already are from your component, dont do anything else - no doubles!
-                            if (entry.ComponentName == componentName)
+                            if (entry.Component == componentName)
                                 return;
                         }
 

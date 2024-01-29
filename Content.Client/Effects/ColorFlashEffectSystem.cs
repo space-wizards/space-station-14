@@ -11,6 +11,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
 
     /// <summary>
     /// It's a little on the long side but given we use multiple colours denoting what happened it makes it easier to register.
@@ -31,7 +32,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        OnColorFlashEffect(new ColorFlashEffectEvent(color, entities));
+        OnColorFlashEffect(new ColorFlashEffectEvent(color, GetNetEntityList(entities)));
     }
 
     private void OnEffectAnimationCompleted(EntityUid uid, ColorFlashEffectComponent component, AnimationCompletedEvent args)
@@ -77,15 +78,22 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
     {
         var color = ev.Color;
 
-        foreach (var ent in ev.Entities)
+        foreach (var nent in ev.Entities)
         {
+            var ent = GetEntity(nent);
+
             if (Deleted(ent))
             {
                 continue;
             }
 
-            var player = EnsureComp<AnimationPlayerComponent>(ent);
-            player.NetSyncEnabled = false;
+            if (!TryComp(ent, out AnimationPlayerComponent? player))
+            {
+                player = (AnimationPlayerComponent) _factory.GetComponent(typeof(AnimationPlayerComponent));
+                player.Owner = ent;
+                player.NetSyncEnabled = false;
+                AddComp(ent, player);
+            }
 
             // Need to stop the existing animation first to ensure the sprite color is fixed.
             // Otherwise we might lerp to a red colour instead.
@@ -109,10 +117,16 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
             if (animation == null)
                 continue;
 
-            var comp = EnsureComp<ColorFlashEffectComponent>(ent);
-            comp.NetSyncEnabled = false;
+            if (!TryComp(ent, out ColorFlashEffectComponent? comp))
+            {
+                comp = (ColorFlashEffectComponent) _factory.GetComponent(typeof(ColorFlashEffectComponent));
+                comp.Owner = ent;
+                comp.NetSyncEnabled = false;
+                AddComp(ent, comp);
+            }
+
             comp.Color = sprite.Color;
-            _animation.Play(player, animation, AnimationKey);
+            _animation.Play((ent, player), animation, AnimationKey);
         }
     }
 }

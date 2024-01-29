@@ -28,9 +28,9 @@ public partial class SharedGunSystem
             var ent = container.ContainedEntities[0];
 
             if (_netManager.IsServer)
-                container.Remove(ent);
+                Containers.Remove(ent, container);
 
-            args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
+            args.Ammo.Add((ent, EnsureShootable(ent)));
         }
     }
 

@@ -5,12 +5,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
-    public sealed class TotalDamage : ReagentEffectCondition
+    public sealed partial class TotalDamage : ReagentEffectCondition
     {
-        [DataField("max")]
+        [DataField]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
 
-        [DataField("min")]
+        [DataField]
         public FixedPoint2 Min = FixedPoint2.Zero;
 
         public override bool Condition(ReagentEffectArgs args)

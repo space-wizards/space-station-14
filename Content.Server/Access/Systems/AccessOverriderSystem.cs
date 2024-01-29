@@ -1,15 +1,18 @@
+using System.Linq;
+using Content.Server.Popups;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using System.Linq;
+using Robust.Shared.Player;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
-using Content.Server.Popups;
-using Content.Shared.DoAfter;
 
 namespace Content.Server.Access.Systems;
 
@@ -28,14 +31,18 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AccessOverriderComponent, WriteToTargetAccessReaderIdMessage>(OnWriteToTargetAccessReaderIdMessage);
         SubscribeLocalEvent<AccessOverriderComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, AfterInteractEvent>(AfterInteractOn);
         SubscribeLocalEvent<AccessOverriderComponent, AccessOverriderDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<AccessOverriderComponent, BoundUIOpenedEvent>(UpdateUserInterface);
-        SubscribeLocalEvent<AccessOverriderComponent, BoundUIClosedEvent>(OnClose);
+
+        Subs.BuiEvents<AccessOverriderComponent>(AccessOverriderUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
+            subs.Event<BoundUIClosedEvent>(OnClose);
+            subs.Event<WriteToTargetAccessReaderIdMessage>(OnWriteToTargetAccessReaderIdMessage);
+        });
     }
 
     private void AfterInteractOn(EntityUid uid, AccessOverriderComponent component, AfterInteractEvent args)
@@ -46,7 +53,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (!_interactionSystem.InRangeUnobstructed(args.User, (EntityUid) args.Target))
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(args.User, component.DoAfterTime, new AccessOverriderDoAfterEvent(), uid, target: args.Target, used: uid)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.DoAfter, new AccessOverriderDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -260,6 +267,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return true;
 
         var privilegedId = component.PrivilegedIdSlot.Item;
-        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, reader);
+        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
     }
 }

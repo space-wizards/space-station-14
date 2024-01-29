@@ -1,8 +1,6 @@
 ﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
@@ -12,7 +10,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// random chemicals upon being triggered.
 /// </summary>
 [RegisterComponent, Access(typeof(ChemicalPuddleArtifactSystem))]
-public sealed class ChemicalPuddleArtifactComponent : Component
+public sealed partial class ChemicalPuddleArtifactComponent : Component
 {
     /// <summary>
     /// The solution where all the chemicals are stored

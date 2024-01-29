@@ -91,12 +91,14 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalBreak
+              params:
+                volume: -8
 
 - type: entity
   id: ApcNetSwitch
   name: apc net switch
-  description: Its a switch for toggling lights that are connected to the same apc.
+  description: It's a switch for toggling lights that are connected to the same apc.
   placement:
     mode: SnapgridCenter
     snap:
@@ -175,3 +177,41 @@
         - Left
         - Right
         - Middle
+
+#directional
+
+- type: entity
+  id: SignalSwitchDirectional
+  name: signal switch
+  suffix: directional
+  parent: SignalSwitch
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Construction
+    graph: SignalSwitchDirectionalGraph
+    node: SignalSwitchDirectionalNode
+
+- type: entity
+  id: SignalButtonDirectional
+  name: signal button
+  suffix: directional
+  parent: SignalButton
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Construction
+    graph: SignalButtonDirectionalGraph
+    node: SignalButtonDirectionalNode
+
+- type: entity
+  id: ApcNetSwitchDirectional
+  name: apc net switch
+  suffix: directional
+  parent: ApcNetSwitch
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Construction
+    graph: LightSwitchDirectionalGraph
+    node: LightSwitchDirectionalNode

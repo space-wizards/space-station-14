@@ -9,6 +9,20 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelTools
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: Multitool
+
+- type: entity
   parent: ClothingBackpackSatchelClown
   id: ClothingBackpackSatchelClownFilled
   components:
@@ -30,12 +44,22 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelFilledDetective
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: ForensicPad
+      - id: ForensicScanner
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackSatchelBrigmedic
   id: ClothingBackpackSatchelBrigmedicFilled
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalBrigmedic
       - id: Flash
 
 - type: entity
@@ -46,6 +70,16 @@
   - type: StorageFill
     contents:
       - id: BoxSurvivalMedical
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelMedical
+  id: ClothingBackpackSatchelParamedicFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalMedical
+      - id: EmergencyRollerBedSpawnFolded
 
 - type: entity
   noSpawn: true
@@ -209,9 +243,9 @@
     - type: StorageFill
       contents:
       - id: BoxSurvival
+      - id: BoxForensicPad
       - id: Lighter
       - id: CigPackBlack
-      - id: BoxForensicPad
       - id: HandLabeler
 
 - type: entity
@@ -250,3 +284,15 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampMime
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelHolding
+  id: ClothingBackpackSatchelHoldingAdmin
+  components:
+  - type: StorageFill
+    contents:
+    - id: AdminPDA
+    - id: GasAnalyzer
+    - id: trayScanner
+  - type: Unremoveable

@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(EmpArtifactSystem))]
-public sealed class EmpArtifactComponent : Component
+public sealed partial class EmpArtifactComponent : Component
 {
     [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
     public float Range = 4f;

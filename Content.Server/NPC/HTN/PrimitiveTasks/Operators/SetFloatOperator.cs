@@ -6,7 +6,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Just sets a blackboard key to a float
 /// </summary>
-public sealed class SetFloatOperator : HTNOperator
+public sealed partial class SetFloatOperator : HTNOperator
 {
     [DataField("targetKey", required: true)] public string TargetKey = string.Empty;
 

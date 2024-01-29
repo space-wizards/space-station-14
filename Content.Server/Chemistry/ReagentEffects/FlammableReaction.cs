@@ -8,9 +8,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed class FlammableReaction : ReagentEffect
+    public sealed partial class FlammableReaction : ReagentEffect
     {
-        [DataField("multiplier")]
+        [DataField]
         public float Multiplier = 0.05f;
 
         public override bool ShouldLog => true;

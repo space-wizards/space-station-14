@@ -45,8 +45,8 @@ whitespace before newlines are ignored.
     [Test]
     public async Task ParseTestDocument()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var client = pairTracker.Pair.Client;
+        await using var pair = await PoolManager.GetServerClient();
+        var client = pair.Client;
         await client.WaitIdleAsync();
         var parser = client.ResolveDependency<DocumentParsingManager>();
 
@@ -134,7 +134,7 @@ whitespace before newlines are ignored.
         subTest2.Params.TryGetValue("k", out val);
         Assert.That(val, Is.EqualTo(@"<>\>=""=<-_?*3.0//"));
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     public sealed class TestControl : Control, IDocumentTag

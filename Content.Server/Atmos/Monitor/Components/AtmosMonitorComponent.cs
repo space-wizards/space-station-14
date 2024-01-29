@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Monitor.Components;
 
 [RegisterComponent]
-public sealed class AtmosMonitorComponent : Component
+public sealed partial class AtmosMonitorComponent : Component
 {
     // Whether this monitor can send alarms,
     // or recieve atmos command events.
@@ -23,13 +23,13 @@ public sealed class AtmosMonitorComponent : Component
     public bool NetEnabled = true;
 
     [DataField("temperatureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
-    public readonly string? TemperatureThresholdId;
+    public string? TemperatureThresholdId;
 
     [DataField("temperatureThreshold")]
     public AtmosAlarmThreshold? TemperatureThreshold;
 
     [DataField("pressureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
-    public readonly string? PressureThresholdId;
+    public string? PressureThresholdId;
 
     [DataField("pressureThreshold")]
     public AtmosAlarmThreshold? PressureThreshold;

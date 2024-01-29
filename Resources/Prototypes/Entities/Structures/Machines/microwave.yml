@@ -5,9 +5,17 @@
   description: It's magic.
   components:
   - type: Microwave
+    capacity: 10
   - type: Appearance
   - type: GenericVisualizer
     visuals:
+      enum.MicrowaveVisualState.Bloody:
+        bloody:
+          True: { visible: true }
+          False: { visible: false }
+        bloodyunshaded:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "mw" }
@@ -17,12 +25,23 @@
           Idle: { state: "mw_unlit" }
           Broken: { state: "mw_unlit" }
           Cooking: { state: "mw_running_unlit" }
+        bloodyunshaded:
+          Idle: { visible: false }
+          Broken: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           True: { visible: true }
           False: { visible: false }
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key
@@ -49,6 +68,13 @@
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+    - state: mwbloody0
+      map: ["bloody"]
+      visible: false
+    - state: mwbloody1
+      shader: unshaded
+      map: ["bloodyunshaded"]
+      visible: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -57,6 +83,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    totalIntensity: 5
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
   - type: ApcPowerReceiver
     powerLoad: 400
   - type: Machine
@@ -66,6 +99,9 @@
       microwave_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - microwave_entity_container
   - type: GuideHelp
     guides:
     - Chef

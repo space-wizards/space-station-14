@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Research.TechnologyDisk.Components;
 
 [RegisterComponent]
-public sealed class DiskConsoleComponent : Component
+public sealed partial class DiskConsoleComponent : Component
 {
     /// <summary>
     /// How much it costs to print a disk

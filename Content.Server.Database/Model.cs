@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.Json;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -93,7 +94,7 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<AdminLog>()
-                .HasKey(log => new {log.Id, log.RoundId});
+                .HasKey(log => new {log.RoundId, log.Id});
 
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Id);
@@ -112,7 +113,17 @@ namespace Content.Server.Database
                 .HasPrincipalKey(player => player.UserId);
 
             modelBuilder.Entity<AdminLogPlayer>()
-                .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
+                .HasIndex(p => p.PlayerUserId);
+
+            modelBuilder.Entity<Round>()
+                .HasIndex(round => round.StartDate);
+
+            modelBuilder.Entity<Round>()
+                .Property(round => round.StartDate)
+                .HasDefaultValue(default(DateTime));
+
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
 
             modelBuilder.Entity<ServerBan>()
                 .HasIndex(p => p.PlayerUserId);
@@ -160,6 +171,15 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .Property(p => p.ServerId)
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .HasOne(p => p.Server)
+                .WithMany(p => p.ConnectionLogs)
+                .OnDelete(DeleteBehavior.SetNull);
 
             // SetNull is necessary for created by/edited by-s here,
             // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
@@ -468,6 +488,8 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public DateTime StartDate { get; set; }
+
         public List<Player> Players { get; set; } = default!;
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
@@ -485,15 +507,19 @@ namespace Content.Server.Database
 
         [InverseProperty(nameof(Round.Server))]
         public List<Round> Rounds { get; set; } = default!;
+
+        [InverseProperty(nameof(ConnectionLog.Server))]
+        public List<ConnectionLog> ConnectionLogs { get; set; } = default!;
     }
 
     [Index(nameof(Type))]
     public class AdminLog
     {
+        [Key, ForeignKey("Round")] public int RoundId { get; set; }
+
         [Key]
         public int Id { get; set; }
 
-        [Key, ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
 
         [Required] public LogType Type { get; set; }
@@ -507,24 +533,17 @@ namespace Content.Server.Database
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
         public List<AdminLogPlayer> Players { get; set; } = default!;
-
-        public List<AdminLogEntity> Entities { get; set; } = default!;
     }
 
     public class AdminLogPlayer
     {
+        [Required, Key] public int RoundId { get; set; }
+        [Required, Key] public int LogId { get; set; }
+
         [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
         public Player Player { get; set; } = default!;
 
-        [Required, Key] public int LogId { get; set; }
-        [Required, Key] public int RoundId { get; set; }
-        [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
-    }
-
-    public class AdminLogEntity
-    {
-        [Required, Key] public int Uid { get; set; }
-        public string? Name { get; set; } = default!;
+        [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
     }
 
     // Used by SS14.Admin
@@ -532,7 +551,7 @@ namespace Content.Server.Database
     {
         int Id { get; set; }
         Guid? PlayerUserId { get; set; }
-        (IPAddress, int)? Address { get; set; }
+        NpgsqlInet? Address { get; set; }
         byte[]? HWId { get; set; }
         DateTime BanTime { get; set; }
         DateTime? ExpirationTime { get; set; }
@@ -600,8 +619,7 @@ namespace Content.Server.Database
         /// <summary>
         /// CIDR IP address range of the ban. The whole range can match the ban.
         /// </summary>
-        [Column(TypeName = "inet")]
-        public (IPAddress, int)? Address { get; set; }
+        public NpgsqlInet? Address { get; set; }
 
         /// <summary>
         /// Hardware ID of the banned player.
@@ -748,7 +766,19 @@ namespace Content.Server.Database
 
         public ConnectionDenyReason? Denied { get; set; }
 
+        /// <summary>
+        /// ID of the <see cref="Server"/> that the connection was attempted to.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The default value of this column is set to <c>0</c>, which is the ID of the "<c>unknown</c>" server.
+        /// This is intended for old entries (that didn't track this) and if the server name isn't configured.
+        /// </para>
+        /// </remarks>
+        public int ServerId { get; set; }
+
         public List<ServerBanHit> BanHits { get; set; } = null!;
+        public Server Server { get; set; } = null!;
     }
 
     public enum ConnectionDenyReason : byte
@@ -778,7 +808,7 @@ namespace Content.Server.Database
         public Round? Round { get; set; }
         public Guid? PlayerUserId { get; set; }
         [Required] public TimeSpan PlaytimeAtNote { get; set; }
-        [Column(TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+        public NpgsqlInet? Address { get; set; }
         public byte[]? HWId { get; set; }
 
         public DateTime BanTime { get; set; }

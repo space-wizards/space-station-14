@@ -8,7 +8,7 @@ namespace Content.Server.Medical;
 /// <summary>
 /// Causes a failure in the cryo pod ejection system when cut. A crowbar will be needed to pry open the pod.
 /// </summary>
-public sealed class CryoPodEjectLockWireAction: ComponentWireAction<CryoPodComponent>
+public sealed partial class CryoPodEjectLockWireAction: ComponentWireAction<CryoPodComponent>
 {
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-lock";

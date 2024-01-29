@@ -1,9 +1,8 @@
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.Clothing.Components;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Explosion;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Storage;
 
 namespace Content.Server.Inventory
 {
@@ -15,17 +14,19 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
-
+            SubscribeLocalEvent<InventoryComponent, BeforeExplodeEvent>(OnExploded);
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
         }
 
-        private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
+        private void OnExploded(Entity<InventoryComponent> ent, ref BeforeExplodeEvent args)
         {
-            if (args.Handled || !component.QuickEquip)
-                return;
-
-            QuickEquip(uid, component, args);
+            // explode each item in their inventory too
+            var slots = new InventorySlotEnumerator(ent);
+            while (slots.MoveNext(out var slot))
+            {
+                if (slot.ContainedEntity != null)
+                    args.Contents.Add(slot.ContainedEntity.Value);
+            }
         }
 
         private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
@@ -33,39 +34,22 @@ namespace Content.Server.Inventory
             if (args.SenderSession.AttachedEntity is not { Valid: true } uid)
                     return;
 
-            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
+            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<StorageComponent>(entityUid, out var storageComponent))
             {
                 _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
             }
         }
 
-        public void TransferEntityInventories(EntityUid uid, EntityUid target)
+        public void TransferEntityInventories(Entity<InventoryComponent?> source, Entity<InventoryComponent?> target)
         {
-            if (!TryGetContainerSlotEnumerator(uid, out var enumerator))
+            if (!Resolve(source.Owner, ref source.Comp) || !Resolve(target.Owner, ref target.Comp))
                 return;
 
-            Dictionary<string, EntityUid> inventoryEntities = new();
-            var slots = GetSlots(uid);
-            while (enumerator.MoveNext(out var containerSlot))
+            var enumerator = new InventorySlotEnumerator(source.Comp);
+            while (enumerator.NextItem(out var item, out var slot))
             {
-                //records all the entities stored in each of the target's slots
-                foreach (var slot in slots)
-                {
-                    if (TryGetSlotContainer(target, slot.Name, out var conslot, out _) &&
-                        conslot.ID == containerSlot.ID &&
-                        containerSlot.ContainedEntity is { } containedEntity)
-                    {
-                        inventoryEntities.Add(slot.Name, containedEntity);
-                    }
-                }
-                //drops everything in the target's inventory on the ground
-                TryUnequip(uid, containerSlot.ID, true, true);
-            }
-            // This takes the objects we removed and stored earlier
-            // and actually equips all of it to the new entity
-            foreach (var (slot, item) in inventoryEntities)
-            {
-                TryEquip(target, item, slot , true, true);
+                if (TryUnequip(source, slot.Name, true, true, inventory: source.Comp))
+                    TryEquip(target, item, slot.Name , true, true, inventory: target.Comp);
             }
         }
     }

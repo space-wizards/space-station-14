@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Construction;
 using Content.Server.Nutrition.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -10,6 +9,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage.Components;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Nutrition.EntitySystems;
@@ -27,24 +27,11 @@ public sealed class FatExtractorSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<FatExtractorComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<FatExtractorComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<FatExtractorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<FatExtractorComponent, GotEmaggedEvent>(OnGotEmagged);
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterCloseEvent>(OnClosed);
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterOpenEvent>(OnOpen);
         SubscribeLocalEvent<FatExtractorComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
-    private void OnRefreshParts(EntityUid uid, FatExtractorComponent component, RefreshPartsEvent args)
-    {
-        var rating = args.PartRatings[component.MachinePartNutritionRate] - 1;
-        component.NutritionPerSecond = component.BaseNutritionPerSecond + (int) (component.PartRatingRateMultiplier * rating);
-    }
-
-    private void OnUpgradeExamine(EntityUid uid, FatExtractorComponent component, UpgradeExamineEvent args)
-    {
-        args.AddPercentageUpgrade("fat-extractor-component-rate", (float) component.NutritionPerSecond / component.BaseNutritionPerSecond);
     }
 
     private void OnUnpaused(EntityUid uid, FatExtractorComponent component, ref EntityUnpausedEvent args)
@@ -90,7 +77,7 @@ public sealed class FatExtractorSystem : EntitySystem
 
         component.Processing = true;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, true);
-        component.Stream = _audio.PlayPvs(component.ProcessSound, uid);
+        component.Stream = _audio.PlayPvs(component.ProcessSound, uid)?.Entity;
         component.NextUpdate = _timing.CurTime + component.UpdateTime;
     }
 
@@ -104,7 +91,7 @@ public sealed class FatExtractorSystem : EntitySystem
 
         component.Processing = false;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, false);
-        component.Stream?.Stop();
+        component.Stream = _audio.Stop(component.Stream);
     }
 
     public bool TryGetValidOccupant(EntityUid uid, [NotNullWhen(true)] out EntityUid? occupant, FatExtractorComponent? component = null, EntityStorageComponent? storage = null)

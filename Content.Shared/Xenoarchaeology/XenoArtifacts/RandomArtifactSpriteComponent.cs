@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
-public sealed class RandomArtifactSpriteComponent : Component
+public sealed partial class RandomArtifactSpriteComponent : Component
 {
     [DataField("minSprite")]
     public int MinSprite = 1;

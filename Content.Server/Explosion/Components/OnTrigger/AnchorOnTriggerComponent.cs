@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.Components;
 /// Will anchor the attached entity upon a <see cref="TriggerEvent"/>.
 /// </summary>
 [RegisterComponent]
-public sealed class AnchorOnTriggerComponent : Component
+public sealed partial class AnchorOnTriggerComponent : Component
 {
     [DataField("removeOnTrigger")]
     public bool RemoveOnTrigger = true;

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using Content.IntegrationTests;
 using Content.Server.Maps;
+#if DEBUG
+using BenchmarkDotNet.Configs;
+#else
 using Robust.Benchmarks.Configs;
+#endif
 using Robust.Shared.Prototypes;
 
 namespace Content.Benchmarks
@@ -20,12 +23,6 @@ namespace Content.Benchmarks
 
         public static async Task MainAsync(string[] args)
         {
-            PoolManager.Startup(typeof(Program).Assembly);
-            var pair = await PoolManager.GetServerClient();
-            var gameMaps = pair.Pair.Server.ResolveDependency<IPrototypeManager>().EnumeratePrototypes<GameMapPrototype>().ToList();
-            MapLoadBenchmark.MapsSource = gameMaps.Select(x => x.ID);
-            await pair.CleanReturnAsync();
-
 #if DEBUG
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\nWARNING: YOU ARE RUNNING A DEBUG BUILD, USE A RELEASE BUILD FOR AN ACCURATE BENCHMARK");
@@ -35,8 +32,6 @@ namespace Content.Benchmarks
             var config = Environment.GetEnvironmentVariable("ROBUST_BENCHMARKS_ENABLE_SQL") != null ? DefaultSQLConfig.Instance : null;
             BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args, config);
 #endif
-
-            PoolManager.Shutdown();
         }
     }
 }

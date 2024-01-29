@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(ChemMasterSystem))]
-    public sealed class ChemMasterComponent : Component
+    public sealed partial class ChemMasterComponent : Component
     {
         [DataField("pillType"), ViewVariables(VVAccess.ReadWrite)]
         public uint PillType = 0;

@@ -1,9 +1,10 @@
 using Content.Shared.Projectiles;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Client.Projectiles;
 
@@ -19,10 +20,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
     private void OnProjectileImpact(ImpactEffectEvent ev)
     {
-        if (Deleted(ev.Coordinates.EntityId))
+        var coords = GetCoordinates(ev.Coordinates);
+
+        if (Deleted(coords.EntityId))
             return;
 
-        var ent = Spawn(ev.Prototype, ev.Coordinates);
+        var ent = Spawn(ev.Prototype, coords);
 
         if (TryComp<SpriteComponent>(ent, out var sprite))
         {

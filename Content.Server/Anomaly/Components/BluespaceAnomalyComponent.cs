@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Anomaly.Components;
 
 [RegisterComponent, Access(typeof(BluespaceAnomalySystem))]
-public sealed class BluespaceAnomalyComponent : Component
+public sealed partial class BluespaceAnomalyComponent : Component
 {
     /// <summary>
     /// The maximum radius that the shuffle effect will extend for

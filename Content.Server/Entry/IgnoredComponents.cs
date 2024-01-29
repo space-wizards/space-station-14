@@ -7,7 +7,6 @@ namespace Content.Server.Entry
             "ConstructionGhost",
             "IconSmooth",
             "InteractionOutline",
-            "ItemStatus",
             "Marker",
             "GuidebookControlsTest",
             "GuideHelp",
@@ -19,6 +18,7 @@ namespace Content.Server.Entry
             "PdaBorderColor",
             "InventorySlots",
             "LightFade",
+            "HolidayRsiSwap",
         };
     }
 }

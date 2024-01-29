@@ -105,7 +105,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -132,7 +132,7 @@
   - type: Damageable
     damageModifierSet: Web
   - type: Sprite
-    sprite: Structures/Furniture/Web/bed.rsi
+    sprite: Structures/Web/bed.rsi
     state: icon
   - type: Destructible
     thresholds:
@@ -144,9 +144,38 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWebSilk:
             min: 1
             max: 1
+  - type: Construction
+    graph: WebStructures
+    node: bed
+
+- type: entity
+  parent: Bed
+  id: PsychBed
+  name: psychologist bed
+  description: An upholstered bed for the psychological care of patients.
+  components:
+  - type: Sprite
+    state: psychbed
+  - type: HealOnBuckle
+    damage:
+      types:
+        Cold: -0.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 2
+            max: 2

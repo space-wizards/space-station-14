@@ -3,6 +3,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
@@ -42,7 +43,7 @@ namespace Content.Server.Engineering.EntitySystems
 
             if (component.DoAfterTime > 0 && TryGet<SharedDoAfterSystem>(out var doAfterSystem))
             {
-                var doAfterArgs = new DoAfterArgs(user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
+                var doAfterArgs = new DoAfterArgs(EntityManager, user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
                     BreakOnUserMove = true,
                 };
@@ -52,17 +53,17 @@ namespace Content.Server.Engineering.EntitySystems
                     return;
             }
 
-            if (component.Deleted || Deleted(component.Owner))
+            if (component.Deleted || Deleted(uid))
                 return;
 
-            if (!TryComp<TransformComponent>(component.Owner, out var transformComp))
+            if (!TryComp<TransformComponent>(uid, out var transformComp))
                 return;
 
             var entity = EntityManager.SpawnEntity(component.Prototype, transformComp.Coordinates);
 
             _handsSystem.TryPickup(user, entity);
 
-            EntityManager.DeleteEntity(component.Owner);
+            EntityManager.DeleteEntity(uid);
         }
     }
 }

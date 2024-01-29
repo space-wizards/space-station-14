@@ -1,6 +1,5 @@
 using Content.Server.GameTicking;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -10,12 +9,13 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
-                Connected = true
+                Connected = true,
+                Dirty = true
             });
-            var server = pairTracker.Pair.Server;
+            var server = pair.Server;
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
 
             await server.WaitPost(() =>
@@ -23,8 +23,8 @@ namespace Content.IntegrationTests.Tests
                 sysManager.GetEntitySystem<GameTicker>().RestartRound();
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
-            await pairTracker.CleanReturnAsync();
+            await pair.RunTicksSync(10);
+            await pair.CleanReturnAsync();
         }
     }
 }

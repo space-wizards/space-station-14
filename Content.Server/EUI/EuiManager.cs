@@ -1,9 +1,9 @@
-﻿using Content.Shared.Eui;
+using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
-
 
 namespace Content.Server.EUI
 {
@@ -12,11 +12,11 @@ namespace Content.Server.EUI
         [Dependency] private readonly IPlayerManager _players = default!;
         [Dependency] private readonly IServerNetManager _net = default!;
 
-        private readonly Dictionary<IPlayerSession, PlayerEuiData> _playerData =
+        private readonly Dictionary<ICommonSession, PlayerEuiData> _playerData =
             new();
 
-        private readonly Queue<(IPlayerSession player, uint id)> _stateUpdateQueue =
-            new Queue<(IPlayerSession, uint id)>();
+        private readonly Queue<(ICommonSession player, uint id)> _stateUpdateQueue =
+            new Queue<(ICommonSession, uint id)>();
 
         private sealed class PlayerEuiData
         {
@@ -53,7 +53,7 @@ namespace Content.Server.EUI
             }
         }
 
-        public void OpenEui(BaseEui eui, IPlayerSession player)
+        public void OpenEui(BaseEui eui, ICommonSession player)
         {
             if (eui.Id != 0)
             {
@@ -71,7 +71,7 @@ namespace Content.Server.EUI
             msg.Type = MsgEuiCtl.CtlType.Open;
             msg.OpenType = eui.GetType().Name;
 
-            _net.ServerSendMessage(msg, player.ConnectedClient);
+            _net.ServerSendMessage(msg, player.Channel);
         }
 
         public void CloseEui(BaseEui eui)
@@ -82,7 +82,7 @@ namespace Content.Server.EUI
             var msg = new MsgEuiCtl();
             msg.Id = eui.Id;
             msg.Type = MsgEuiCtl.CtlType.Close;
-            _net.ServerSendMessage(msg, eui.Player.ConnectedClient);
+            _net.ServerSendMessage(msg, eui.Player.Channel);
         }
 
         private void RxMsgMessage(MsgEuiMessage message)

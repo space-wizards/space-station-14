@@ -1,18 +1,11 @@
 using System.Linq;
-using Content.Server.Chat.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.Wires;
-using Content.Shared.Interaction;
-using Content.Shared.Speech;
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
+using Robust.Shared.Player;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -25,16 +18,19 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
+        Subs.BuiEvents<SurveillanceCameraMonitorComponent>(SurveillanceCameraMonitorUiKey.Key, subs =>
+        {
+            subs.Event<SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
+            subs.Event<SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
+            subs.Event<SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
+            subs.Event<SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
+            subs.Event<SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
+            subs.Event<BoundUIClosedEvent>(OnBoundUiClose);
+        });
     }
 
     private const float _maxHeartbeatTime = 300f;
@@ -42,21 +38,22 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (_, monitor) in EntityQuery<ActiveSurveillanceCameraMonitorComponent, SurveillanceCameraMonitorComponent>())
+        var query = EntityQueryEnumerator<ActiveSurveillanceCameraMonitorComponent, SurveillanceCameraMonitorComponent>();
+        while (query.MoveNext(out var uid, out _, out var monitor))
         {
-            if (Paused(monitor.Owner))
+            if (Paused(uid))
             {
                 continue;
             }
 
             monitor.LastHeartbeatSent += frameTime;
-            SendHeartbeat(monitor.Owner, monitor);
+            SendHeartbeat(uid, monitor);
             monitor.LastHeartbeat += frameTime;
 
             if (monitor.LastHeartbeat > _maxHeartbeatTime)
             {
-                DisconnectCamera(monitor.Owner, true, monitor);
-                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(monitor.Owner);
+                DisconnectCamera(uid, true, monitor);
+                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(uid);
             }
         }
     }
@@ -488,14 +485,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        IPlayerSession? session = null;
-        if (player != null
-            && TryComp(player, out ActorComponent? actor))
-        {
-            session = actor.PlayerSession;
-        }
-
-        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
+        var state = new SurveillanceCameraMonitorUiState(GetNetEntity(monitor.ActiveCamera), monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
         _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 }

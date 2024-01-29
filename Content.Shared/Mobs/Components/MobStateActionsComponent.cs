@@ -10,7 +10,7 @@ namespace Content.Shared.Mobs.Components;
 /// </remarks>
 /// <see cref="MobStateActionsSystem"/>
 [RegisterComponent]
-public sealed class MobStateActionsComponent : Component
+public sealed partial class MobStateActionsComponent : Component
 {
     /// <summary>
     ///     Specifies a list of actions that should be available if a mob is in a given state.
@@ -18,10 +18,12 @@ public sealed class MobStateActionsComponent : Component
     /// <example>
     /// actions:
     ///   Critical:
-    ///   - CritSuccumb
+    ///   - ActionCritSuccumb
     ///   Alive:
-    ///   - AnimalLayEgg
+    ///   - ActionAnimalLayEgg
     /// </example>
     [DataField("actions")]
     public Dictionary<MobState, List<string>> Actions = new();
+
+    [DataField] public List<EntityUid> GrantedActions = new();
 }

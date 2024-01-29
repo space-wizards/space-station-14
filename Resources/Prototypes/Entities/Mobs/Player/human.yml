@@ -1,14 +1,15 @@
 - type: entity
   save: false
   name: Urist McHands
-  parent: [BaseMobHuman, BaseMob]
+  parent: BaseMobHuman
   id: MobHuman
 
 #Syndie
 - type: entity
   parent: MobHuman
   id: MobHumanSyndicateAgent
-  name: Syndicate Agent
+  name: syndicate agent
+  suffix: Human
   components:
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
@@ -54,10 +55,27 @@
       factions:
       - Syndicate
 
-# DNA Scrambler
+# Space Ninja
 - type: entity
+  noSpawn: true
+  name: Space Ninja
   parent: MobHuman
-  id: MobHumanScrambled
-  name: Scrambled Human
+  id: MobHumanSpaceNinja
   components:
-    - type: RandomHumanoidAppearance
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: Loadout
+    prototypes: [SpaceNinjaGear]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: SpaceNinja
+  - type: GenericAntag
+    rule: Ninja
+  - type: AutoImplant
+    implants:
+    - DeathAcidifierImplant
+  - type: RandomMetadata
+    nameSegments:
+    - names_ninja_title
+    - names_ninja

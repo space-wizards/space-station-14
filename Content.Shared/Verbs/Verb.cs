@@ -1,7 +1,8 @@
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
@@ -112,7 +113,7 @@ namespace Content.Shared.Verbs
         ///     If this is not null, and no icon or icon texture were specified, a sprite view of this entity will be
         ///     used as the icon for this verb.
         /// </summary>
-        public EntityUid? IconEntity;
+        public NetEntity? IconEntity;
 
         /// <summary>
         ///     Whether or not to close the context menu after using it to run this verb.
@@ -215,14 +216,25 @@ namespace Content.Shared.Verbs
         public static List<Type> VerbTypes = new()
         {
             typeof(Verb),
+            typeof(VvVerb),
             typeof(InteractionVerb),
             typeof(UtilityVerb),
             typeof(InnateVerb),
             typeof(AlternativeVerb),
             typeof(ActivationVerb),
             typeof(ExamineVerb),
-            typeof(EquipmentVerb) 
+            typeof(EquipmentVerb)
         };
+    }
+
+    /// <summary>
+    ///     View variables verbs.
+    /// </summary>
+    /// <remarks>Currently only used for the verb that opens the view variables panel.</remarks>
+    [Serializable, NetSerializable]
+    public sealed class VvVerb : Verb
+    {
+        public override int TypePriority => int.MaxValue;
     }
 
     /// <summary>
@@ -338,9 +350,10 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///     Verbs specifically for interactions that occur with equipped entities. These verbs should be accessible via
-    ///     the stripping UI, and may optionally also be accessible via a verb on the equipee if the via inventory relay
-    ///     events.get-verbs event.
+    ///     Verbs specifically for interactions that occur with equipped entities. These verbs are unique in that they
+    ///     can be used via the stripping UI. Additionally, when getting verbs on an entity with an inventory it will
+    ///     these automatically relay the <see cref="GetVerbsEvent{EquipmentVerb}"/> event to all equipped items via a
+    ///     <see cref="InventoryRelayedEvent{T}"/>.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class EquipmentVerb : Verb

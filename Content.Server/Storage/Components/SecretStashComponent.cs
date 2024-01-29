@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
 using Content.Shared.Toilet;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Storage.Components
 {
@@ -13,13 +14,13 @@ namespace Content.Server.Storage.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(SecretStashSystem))]
-    public sealed class SecretStashComponent : Component
+    public sealed partial class SecretStashComponent : Component
     {
         /// <summary>
         ///     Max item size that can be fitted into secret stash.
         /// </summary>
         [DataField("maxItemSize")]
-        public int MaxItemSize = (int) ReferenceSizes.Pocket;
+        public ProtoId<ItemSizePrototype> MaxItemSize = "Small";
 
         /// <summary>
         ///     IC secret stash name. For example "the toilet cistern".

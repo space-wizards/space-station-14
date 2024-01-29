@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.DeviceLinking.Components
 {
     [RegisterComponent]
-    public sealed class DoorSignalControlComponent : Component
+    public sealed partial class DoorSignalControlComponent : Component
     {
         [DataField("openPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string OpenPort = "Open";

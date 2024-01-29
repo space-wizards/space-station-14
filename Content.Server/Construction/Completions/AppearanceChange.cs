@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Completions;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class AppearanceChange : IGraphAction
+public sealed partial class AppearanceChange : IGraphAction
 {
     /// <summary>
     /// The appearance key to use.

@@ -5,7 +5,7 @@
 ///     It could be connected MV cables, stun baton or multi tool.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactElectricityTriggerComponent : Component
+public sealed partial class ArtifactElectricityTriggerComponent : Component
 {
     /// <summary>
     ///     How much power should artifact receive to operate.

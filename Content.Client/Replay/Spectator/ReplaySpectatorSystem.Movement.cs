@@ -2,7 +2,7 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Client.Replay.Spectator;
 
@@ -44,7 +44,7 @@ public sealed partial class ReplaySpectatorSystem
         if (_replayPlayback.Replay == null)
             return;
 
-        if (_player.LocalPlayer?.ControlledEntity is not { } player)
+        if (_player.LocalEntity is not { } player)
             return;
 
         if (Direction == DirectionFlag.None)
@@ -55,7 +55,7 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        if (!player.IsClientSide() || !HasComp<ReplaySpectatorComponent>(player))
+        if (!IsClientSide(player) || !HasComp<ReplaySpectatorComponent>(player))
         {
             // Player is trying to move -> behave like the ghost-on-move component.
             SpawnSpectatorGhost(new EntityCoordinates(player, default), true);
@@ -99,7 +99,7 @@ public sealed partial class ReplaySpectatorSystem
         var worldVec = parentRotation.RotateVec(localVec);
         var speed = CompOrNull<MovementSpeedModifierComponent>(player)?.BaseSprintSpeed ?? DefaultSpeed;
         var delta = worldVec * frameTime * speed;
-        _transform.SetWorldPositionRotation(xform, pos + delta, delta.ToWorldAngle());
+        _transform.SetWorldPositionRotation(player, pos + delta, delta.ToWorldAngle(), xform);
     }
 
     private sealed class MoverHandler : InputCmdHandler
@@ -113,12 +113,9 @@ public sealed partial class ReplaySpectatorSystem
             _dir = dir;
         }
 
-        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+        public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
         {
-            if (message is not FullInputCmdMessage full)
-                return false;
-
-            if (full.State == BoundKeyState.Down)
+            if (message.State == BoundKeyState.Down)
                 _sys.Direction |= _dir;
             else
                 _sys.Direction &= ~_dir;

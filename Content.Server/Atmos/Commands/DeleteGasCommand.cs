@@ -2,7 +2,6 @@ using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
@@ -11,17 +10,18 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class DeleteGasCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public string Command => "deletegas";
         public string Description => "Removes all gases from a grid, or just of one type if specified.";
         public string Help => $"Usage: {Command} <GridId> <Gas> / {Command} <GridId> / {Command} <Gas> / {Command}";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             EntityUid? gridId;
             Gas? gas = null;
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
 
             switch (args.Length)
             {
@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Commands
                         return;
                     }
 
-                    gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridUid;
+                    gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
                     if (gridId == null)
                     {
@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.Commands
                 }
                 case 1:
                 {
-                    if (!EntityUid.TryParse(args[0], out var number))
+                    if (!NetEntity.TryParse(args[0], out var numberEnt) || !_entManager.TryGetEntity(numberEnt, out var number))
                     {
                         // Argument is a gas
                         if (player == null)
@@ -66,7 +66,7 @@ namespace Content.Server.Atmos.Commands
                             return;
                         }
 
-                        gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridUid;
+                        gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
                         if (gridId == null)
                         {
@@ -90,7 +90,7 @@ namespace Content.Server.Atmos.Commands
                 }
                 case 2:
                 {
-                    if (!EntityUid.TryParse(args[0], out var first))
+                    if (!NetEntity.TryParse(args[0], out var firstNet) || !_entManager.TryGetEntity(firstNet, out var first))
                     {
                         shell.WriteLine($"{args[0]} is not a valid integer for a grid id.");
                         return;
@@ -119,15 +119,13 @@ namespace Content.Server.Atmos.Commands
                     return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-
-            if (!mapManager.TryGetGrid(gridId, out _))
+            if (!_mapManager.TryGetGrid(gridId, out _))
             {
                 shell.WriteLine($"No grid exists with id {gridId}");
                 return;
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = _entManager.System<AtmosphereSystem>();
 
             var tiles = 0;
             var moles = 0f;
@@ -136,7 +134,8 @@ namespace Content.Server.Atmos.Commands
             {
                 foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
                 {
-                    if (tile.Immutable) continue;
+                    if (tile.Immutable)
+                        continue;
 
                     tiles++;
                     moles += tile.TotalMoles;
@@ -148,7 +147,8 @@ namespace Content.Server.Atmos.Commands
             {
                 foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
                 {
-                    if (tile.Immutable) continue;
+                    if (tile.Immutable)
+                        continue;
 
                     tiles++;
                     moles += tile.TotalMoles;

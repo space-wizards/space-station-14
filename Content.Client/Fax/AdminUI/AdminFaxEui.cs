@@ -1,4 +1,4 @@
-﻿using Content.Client.Eui;
+using Content.Client.Eui;
 using Content.Shared.Eui;
 using Content.Shared.Fax;
 using JetBrains.Annotations;
@@ -14,8 +14,9 @@ public sealed class AdminFaxEui : BaseEui
     {
         _window = new AdminFaxWindow();
         _window.OnClose += () => SendMessage(new AdminFaxEuiMsg.Close());
-        _window.OnFollowFax += uid => SendMessage(new AdminFaxEuiMsg.Follow(uid));
-        _window.OnMessageSend += args => SendMessage(new AdminFaxEuiMsg.Send(args.uid, args.title, args.from, args.message, args.stamp));
+        _window.OnFollowFax += entity => SendMessage(new AdminFaxEuiMsg.Follow(entity));
+        _window.OnMessageSend += args => SendMessage(new AdminFaxEuiMsg.Send(args.entity, args.title,
+                    args.stampedBy, args.message, args.stampSprite, args.stampColor));
     }
 
     public override void Opened()

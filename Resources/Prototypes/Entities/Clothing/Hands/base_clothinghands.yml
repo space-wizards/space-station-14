@@ -9,6 +9,9 @@
     slots: [gloves]
   - type: Food
     requiresSpecialDigestion: true
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: SolutionContainerManager
     solutions:
       food:
@@ -17,5 +20,17 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: Tag
-    tags: 
-      - ClothMade
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  abstract: true
+  parent: ClothingHandsBase
+  id: ClothingHandsButcherable
+  components:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1

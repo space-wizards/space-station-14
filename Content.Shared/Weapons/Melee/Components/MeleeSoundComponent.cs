@@ -8,7 +8,7 @@ namespace Content.Shared.Weapons.Melee.Components;
 /// Plays the specified sound upon receiving damage of the specified type.
 /// </summary>
 [RegisterComponent]
-public sealed class MeleeSoundComponent : Component
+public sealed partial class MeleeSoundComponent : Component
 {
     /// <summary>
     /// Specified sounds to apply when the entity takes damage with the specified group.

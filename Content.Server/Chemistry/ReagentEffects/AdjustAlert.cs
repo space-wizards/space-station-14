@@ -5,18 +5,18 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class AdjustAlert : ReagentEffect
+public sealed partial class AdjustAlert : ReagentEffect
 {
     [DataField("alertType", required: true)]
     public AlertType Type;
 
-    [DataField("clear")]
+    [DataField]
     public bool Clear;
 
-    [DataField("cooldown")]
+    [DataField]
     public bool Cooldown;
 
-    [DataField("time")]
+    [DataField]
     public float Time;
 
     //JUSTIFICATION: This just changes some visuals, doesn't need to be documented.
