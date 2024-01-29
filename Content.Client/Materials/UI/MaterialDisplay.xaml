@@ -16,7 +16,6 @@
         </BoxContainer>
         <BoxContainer Name="Content"
                       Orientation="Horizontal"
-                      HorizontalExpand="True"
                       HorizontalAlignment="Right">
             <!--Here go buttons which added in c#-->
         </BoxContainer>

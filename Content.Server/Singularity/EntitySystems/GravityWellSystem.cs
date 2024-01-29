@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Singularity.EntitySystems;
@@ -216,8 +217,10 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             if (!countStatic && isStatic)
                 continue;
 
-            if (!CanGravPulseAffect(entity))
+            if(!CanGravPulseAffect(entity))
                 continue;
+
+            isStatic |= TryComp<MovedByPressureComponent>(entity, out var movedPressure) && !movedPressure.Enabled; //Treat magboots users as static
 
             var displacement = epicenter - _transform.GetWorldPosition(entity, xformQuery);
             var distance2 = displacement.LengthSquared();
