@@ -121,7 +121,7 @@ namespace Content.Client.Kitchen.UI
             //Set the "micowave light" ui color to indicate if the microwave is busy or not
             if (cState.IsMicrowaveBusy && cState.ContainedSolids.Length > 0)
             {
-                _menu.IngredientsPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#FFB800FF") };
+                _menu.IngredientsPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#947300") };
             }
             else
             {
