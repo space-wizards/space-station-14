@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Syndicate duffel bags heavily protect their items from explosions, and
-      regular bags have minor protection.
-    type: Tweak
-  id: 5319
-  time: '2023-12-11T09:43:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix game audio persisting to lobby.
@@ -3830,3 +3823,11 @@
   id: 5819
   time: '2024-01-29T09:51:31.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24690
+- author: SpeltIncorrectyl
+  changes:
+  - message: Portable generators can now be connected to the signal network and controlled
+      remotely via devices like a signal transmitter.
+    type: Add
+  id: 5820
+  time: '2024-01-29T14:56:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24157
