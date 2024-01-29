@@ -797,6 +797,21 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatHoscap
+  name: Head Of Security cap
+  description: A dignified, stately Head Of Security cap.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/hoscap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/hoscap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatCentcomcap
   name: CentCom cap
   description: An extravagant, fancy Central Commander cap.
