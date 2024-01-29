@@ -5,7 +5,7 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Tools.Systems;
 
-public abstract partial class SharedToolSystem : EntitySystem
+public abstract partial class SharedToolSystem
 {
     public void InitializeMultipleTool()
     {
@@ -57,7 +57,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!Resolve(uid, ref multiple, ref tool))
             return;
 
-        Dirty(multiple);
+        Dirty(uid, multiple);
 
         if (multiple.Entries.Length <= multiple.CurrentEntry)
         {

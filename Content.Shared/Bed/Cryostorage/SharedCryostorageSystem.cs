@@ -42,7 +42,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
-        _configuration.OnValueChanged(CCVars.GameCryoSleepRejoining, OnCvarChanged);
+        _configuration.OnValueChanged(CCVars.GameCryoSleepRejoining, OnCvarChanged, true);
     }
 
     public override void Shutdown()
@@ -132,8 +132,8 @@ public abstract class SharedCryostorageSystem : EntitySystem
 
     private void OnRemovedContained(Entity<CryostorageContainedComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        var (_, comp) = ent;
-        if (!comp.StoredWhileDisconnected)
+        var (uid, comp) = ent;
+        if (!IsInPausedMap(uid))
             RemCompDeferred(ent, comp);
     }
 
@@ -175,5 +175,13 @@ public abstract class SharedCryostorageSystem : EntitySystem
         var map = _mapManager.CreateMap();
         _mapManager.SetMapPaused(map, true);
         PausedMap = _mapManager.GetMapEntityId(map);
+    }
+
+    public bool IsInPausedMap(Entity<TransformComponent?> entity)
+    {
+        var (_, comp) = entity;
+        comp ??= Transform(entity);
+
+        return comp.MapUid != null && comp.MapUid == PausedMap;
     }
 }
