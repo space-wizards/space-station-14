@@ -29,7 +29,7 @@ namespace Content.Client.Chat.Managers
             if (str.ToLower().StartsWith("t@"))
             {
                 channel = ChatSelectChannel.Emotes;
-                str = str.Substring(1);
+                str = str.Substring(2);
             }
 
             switch (channel)
