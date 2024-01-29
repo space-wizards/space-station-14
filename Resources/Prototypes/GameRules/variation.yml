@@ -18,6 +18,18 @@
   - type: PoweredLightVariationPass
 
 - type: entity
+  id: WallRustingVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: WallReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 10
+    entitiesPerReplacementStdDev: 2
+    replacements:
+    - id: WallSolidRust
+
+- type: entity
   id: BasicTrashVariationPass
   parent: BaseVariationPass
   noSpawn: true

@@ -800,6 +800,7 @@
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
+  - type: WallReplacementMarker
   - type: Construction
     graph: Girder
     node: wall
