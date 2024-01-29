@@ -3,6 +3,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Storage;
 
 namespace Content.Shared.Station;
 
@@ -28,6 +29,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true, force:true);
+                    RaiseLocalEvent(equipmentEntity, new ApplyStorageOverrideEvent(profile, slot));
                 }
             }
         }
