@@ -1,16 +1,30 @@
+using Content.Client.UserInterface.Controls;
+using Content.Shared.Administration;
 using Content.Shared.CriminalRecords;
+using Content.Shared.Dataset;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Client.CriminalRecords;
 
 public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string ReasonPlaceholders = "CriminalRecordsWantedReasonPlaceholders";
+
     private CriminalRecordsConsoleWindow? _window;
     private CrimeHistoryWindow? _historyWindow;
+    private DialogWindow? _reasonDialog;
 
     public CriminalRecordsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {}
+    {
+        IoCManager.InjectDependencies(this);
+    }
 
     protected override void Open()
     {
@@ -50,11 +64,41 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
     {
         if (status == SecurityStatus.Wanted)
         {
-            // TODO: open dialog
+            GetWantedReason();
             return;
         }
 
         SendMessage(new CriminalRecordChangeStatus(status, null));
+    }
+
+    private void GetWantedReason()
+    {
+        if (_reasonDialog != null)
+        {
+            _reasonDialog.MoveToFront();
+            return;
+        }
+
+        var field = "reason";
+        var title = Loc.GetString("criminal-records-status-wanted");
+        var placeholders = _proto.Index<DatasetPrototype>(ReasonPlaceholders);
+        var placeholder = _random.Pick(placeholders.Values); // just funny it doesn't actually get used
+        var prompt = Loc.GetString("criminal-records-console-reason");
+        var entry = new QuickDialogEntry(field, QuickDialogEntryType.LongText, prompt, placeholder);
+        var entries = new List<QuickDialogEntry>() { entry };
+        _reasonDialog = new DialogWindow(title, entries);
+
+        _reasonDialog.OnConfirmed += responses =>
+        {
+            var reason = responses[field];
+            // TODO: same as history unhardcode
+            if (reason.Length < 1 || reason.Length > 256)
+                return;
+
+            SendMessage(new CriminalRecordChangeStatus(SecurityStatus.Wanted, reason));
+        };
+
+        _reasonDialog.OnClose += () => { _reasonDialog = null; };
     }
 
     /// <summary>
@@ -84,5 +128,6 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
 
         _window?.Close();
         _historyWindow?.Close();
+        _reasonDialog?.Close();
     }
 }

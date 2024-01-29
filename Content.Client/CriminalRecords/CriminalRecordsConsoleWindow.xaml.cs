@@ -119,7 +119,6 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         // set up the records listing panel
         RecordListing.Clear();
-//        RecordListing.ClearSelected();
 
         var hasRecords = state.RecordListing != null && state.RecordListing.Count > 0;
         NoRecords.Visible = !hasRecords;

@@ -11,10 +11,12 @@ criminal-records-status-wanted = Wanted
 criminal-records-status-detained = Detained
 
 criminal-records-console-wanted-reason = [color=gray]Wanted Reason[/color]
+criminal-records-console-reason = Reason
 
 ## Crime History
 
 criminal-records-console-crime-history = Crime History
+criminal-records-history-addition = Addition
 criminal-records-history-placeholder = Write the crime here
 criminal-records-no-history = This crewmember's record is spotless.
 criminal-records-add-history = Add
