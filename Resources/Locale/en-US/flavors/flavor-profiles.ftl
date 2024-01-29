@@ -185,6 +185,7 @@ flavor-complex-tonic-water = like angry water
 flavor-complex-cola = like cola
 flavor-complex-energy-drink = like battery acid
 flavor-complex-dr-gibb = like malpractice
+flavor-complex-grape-soda = like grape soda
 flavor-complex-lemon-lime-soda = like lemon-lime soda
 flavor-complex-pwr-game-soda = like gaming
 flavor-complex-root-beer-soda = like root beer

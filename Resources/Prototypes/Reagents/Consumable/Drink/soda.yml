@@ -49,7 +49,7 @@
   parent: BaseSoda
   desc: reagent-desc-grape-soda
   physicalDesc: reagent-physical-desc-fizzy
-  flavor: soda
+  flavor: grapesoda
   color: "#ae94a6"
 
 - type: reagent

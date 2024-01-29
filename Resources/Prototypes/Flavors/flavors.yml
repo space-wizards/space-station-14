@@ -650,6 +650,11 @@
   description: flavor-complex-root-space-up
 
 - type: flavor
+  id: grapesoda
+  flavorType: Complex
+  description: flavor-complex-grape-soda
+
+- type: flavor
   id: starkistsoda
   flavorType: Complex
   description: flavor-complex-starkist-soda
