@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-/// This is used for...
+/// This handles starting various roundstart variation rules after a station has been loaded.
 /// </summary>
 [RegisterComponent]
 public sealed partial class RoundstartStationVariationRuleComponent : Component

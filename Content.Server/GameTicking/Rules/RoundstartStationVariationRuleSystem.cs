@@ -9,9 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
-/// <summary>
-/// This handles starting various roundstart variation rules after a station has been loaded.
-/// </summary>
+/// <inheritdoc cref="RoundstartStationVariationRuleComponent"/>
 public sealed class RoundstartStationVariationRuleSystem : GameRuleSystem<RoundstartStationVariationRuleComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -37,12 +35,12 @@ public sealed class RoundstartStationVariationRuleSystem : GameRuleSystem<Rounds
         // as long as one is running
         if (!GameTicker.IsGameRuleAdded<RoundstartStationVariationRuleComponent>())
             return;
-        
+
         // this is unlikely, but could theoretically happen if it was saved and reloaded, so check anyway
         if (HasComp<StationVariationHasRunComponent>(ev.Station))
             return;
 
-        Log.Info($"Starting station variation for station {ToPrettyString(ev.Station)}");
+        Log.Info($"Running variation rules for station {ToPrettyString(ev.Station)}");
 
         // raise the event on any passes that have been added
         var passEv = new StationVariationPassEvent(ev.Station);
