@@ -623,6 +623,24 @@
         Cable: 2
 
 - type: entity
+  id: IndustrialSeedExtractorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: industrial seed extractor machine board
+  description: A machine printed circuit board for a industrial seed extractor.
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: IndustrialSeedExtractor
+      requirements:
+        Manipulator: 2
+        Capacitor: 1
+      materialRequirements:
+        Glass: 3
+        Cable: 2
+        Plasma: 1
+
+- type: entity
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: SMES machine board

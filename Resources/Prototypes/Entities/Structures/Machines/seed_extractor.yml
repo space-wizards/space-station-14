@@ -38,3 +38,27 @@
   - type: UpgradePowerDraw
     powerDrawMultiplier: 0.75
     scaling: Exponential
+
+- type: entity
+  id: IndustrialSeedExtractor
+  name: industrial seed extractor
+  parent: SeedExtractor
+  description: Efficiently extracts seeds from produce.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/industrial_seed_extractor.rsi
+    snapCardinals: true
+    layers:
+    - state: seedextractor-off
+    - state: seedextractor-unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: SeedExtractor
+    baseMinSeeds: 2
+    baseMaxSeeds: 5
+  - type: Machine
+    board: IndustrialSeedExtractorMachineCircuitboard
+
+
+
+

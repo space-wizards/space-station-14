@@ -12,7 +12,7 @@
   recipeUnlocks:
   - BorgModuleGardening
   - BorgModuleHarvesting
-  - SeedExtractorMachineCircuitboard
+  - IndustrialSeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
 
 - type: technology

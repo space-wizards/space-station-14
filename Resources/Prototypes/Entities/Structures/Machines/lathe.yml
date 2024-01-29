@@ -374,6 +374,7 @@
     - UniformPrinterMachineCircuitboard
     - FloorGreenCircuit
     - FloorBlueCircuit
+    - SeedExtractorMachineCircuitboard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -436,7 +437,7 @@
       - MiniGravityGeneratorCircuitboard
       - ShuttleGunKineticCircuitboard
       - GasRecyclerMachineCircuitboard
-      - SeedExtractorMachineCircuitboard
+      - IndustrialSeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
       - AnomalyVesselCircuitboard
