@@ -5,7 +5,6 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
@@ -179,18 +178,6 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField]
     public bool ResetOnHandSelected = true;
-
-    /// <summary>
-    /// Type of ammo the gun can work with
-    /// </summary>
-    [DataField]
-    public List<ProtoId<TagPrototype>>? CompatibleAmmo;
-
-    /// <summary>
-    /// Damage the gun deals when used with wrong ammo
-    /// </summary>
-    [DataField]
-    public DamageSpecifier? DamageOnWrongAmmo = null;
 
     /// <summary>
     /// The base value for how fast the projectile moves.
