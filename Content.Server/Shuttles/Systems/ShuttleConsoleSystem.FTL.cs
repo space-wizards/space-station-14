@@ -7,19 +7,20 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem
 {
-    private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleFTLRequestMessage args)
+    private void OnBeaconFTLMessage(Entity<ShuttleConsoleComponent> ent, ref ShuttleConsoleFTLBeaconMessage args)
     {
-        /*
-         * TODO:
-         * FTL position request -> locked in the whole time.
-         * FTL dock request -> Picks a random dock when arriving stage, if not possible then mishap and land nearby.
-         * Need some flag to force it or not.
-         * FTL dock request only valid for arrivals and shit.
-         * Make FTL boundaries actually work with grid queries and show dotted line update.
-         * Need to make boundaries not show on IFF entities.
-         * Maybe need to iterate every grid on map and determine
-         */
+        var uid = GetEntity(args.Beacon);
 
+        if (!Exists(uid))
+        {
+            return;
+        }
+
+
+    }
+
+    private void OnPositionFTLMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleFTLPositionMessage args)
+    {
         var mapUid = _mapManager.GetMapEntityId(args.Coordinates.MapId);
 
         if (!Exists(mapUid))

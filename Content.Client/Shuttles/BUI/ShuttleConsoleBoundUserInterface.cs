@@ -28,7 +28,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnFTLRequest(MapCoordinates obj)
     {
-        SendMessage(new ShuttleConsoleFTLRequestMessage());
+        SendMessage(new ShuttleConsoleFTLPositionMessage());
     }
 
     protected override void Dispose(bool disposing)

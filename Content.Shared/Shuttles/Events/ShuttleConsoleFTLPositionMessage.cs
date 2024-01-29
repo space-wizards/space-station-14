@@ -7,7 +7,7 @@ namespace Content.Shared.Shuttles.Events;
 /// Raised on the client when it wishes to travel somewhere.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ShuttleConsoleFTLRequestMessage : BoundUserInterfaceMessage
+public sealed class ShuttleConsoleFTLPositionMessage : BoundUserInterfaceMessage
 {
     public MapCoordinates Coordinates;
 }
