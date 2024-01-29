@@ -16,6 +16,9 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 54000 # 15 hours
+    - !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 18000 # 5 Hours
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
