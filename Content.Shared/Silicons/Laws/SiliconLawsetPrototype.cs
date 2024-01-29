@@ -78,5 +78,5 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     /// What entity the lawset considers as a figure of authority.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public string ObeysTo = "able to give you orders";
+    public string ObeysTo = string.Empty;
 }
