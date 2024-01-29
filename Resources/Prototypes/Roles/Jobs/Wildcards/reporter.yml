@@ -9,6 +9,8 @@
   access:
   - Service
   - Maintenance
+  - Theatre # DeltaV - Add Theatre access
+  - Reporter # DeltaV - Add Reporter access
 
 - type: startingGear
   id: ReporterGear

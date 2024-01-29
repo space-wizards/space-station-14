@@ -9,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Library # DeltaV - Add Library access
 
 - type: startingGear
   id: LibrarianGear

@@ -1,0 +1,27 @@
+﻿- type: accessLevel
+  id: Boxer
+  name: id-card-access-level-boxer
+
+- type: accessLevel
+  id: Clown
+  name: id-card-access-level-clown
+
+- type: accessLevel
+  id: Library
+  name: id-card-access-level-library
+
+- type: accessLevel
+  id: Mime
+  name: id-card-access-level-mime
+
+- type: accessLevel
+  id: Musician
+  name: id-card-access-level-musician
+
+- type: accessLevel
+  id: Reporter
+  name: id-card-access-level-reporter
+
+- type: accessLevel
+  id: Zookeeper
+  name: id-card-access-level-zookeeper

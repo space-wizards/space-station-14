@@ -12,6 +12,7 @@
   access:
   - Theatre
   - Maintenance
+  - Mime # DeltaV - Add Mime access
   special:
   - !type:AddComponentSpecial
     components:
