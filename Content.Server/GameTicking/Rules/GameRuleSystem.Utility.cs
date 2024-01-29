@@ -111,15 +111,14 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             return false;
 
         var found = false;
-        var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(targetGrid);
-        var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
+        var aabb = gridComp.LocalAABB;
 
         for (var i = 0; i < 10; i++)
         {
-            var randomX = RobustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
-            var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+            var randomX = RobustRandom.Next((int) aabb.Left, (int) aabb.Right);
+            var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
 
-            tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
+            tile = new Vector2i(randomX, randomY);
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile,
                     mapGridComp: gridComp)
                 || _atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
