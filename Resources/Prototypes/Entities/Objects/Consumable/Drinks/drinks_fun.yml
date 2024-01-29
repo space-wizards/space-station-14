@@ -147,15 +147,21 @@
   - type: RandomFillSolution
     solution: drink
     weightedRandomId: RandomFillMopwata
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/mopwata.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
           True: {state: "icon_open"}
-          False: {state: "icon"}
+          False: {state: "icon_empty"}
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mopwata.rsi
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
