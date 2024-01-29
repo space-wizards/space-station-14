@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Emergency lights no longer make sound
-    type: Remove
-  - message: Emergency light radius and energy is now much lower
-    type: Tweak
-  id: 5313
-  time: '2023-12-11T09:24:10.0000000+00:00'
 - author: Ubaser and Pigeonpeas
   changes:
   - message: The kobold ear marking has received a new sprite.
@@ -3829,3 +3821,12 @@
   id: 5813
   time: '2024-01-28T10:49:55.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24579
+- author: TheShuEd
+  changes:
+  - message: The fire anomaly is now heavier in content.
+    type: Tweak
+  - message: Artifacts no longer block projectiles.
+    type: Tweak
+  id: 5814
+  time: '2024-01-29T01:30:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24666
