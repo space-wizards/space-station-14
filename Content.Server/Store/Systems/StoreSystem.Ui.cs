@@ -11,6 +11,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
 using Content.Shared.Store;
+using Npgsql.Replication.PgOutput.Messages;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -113,11 +114,6 @@ public sealed partial class StoreSystem
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
         // stores/listings, this needs to use session specific BUI states.
 
-        var xform = Transform(store);
-
-        if (component.StartingMap != xform.MapID)
-            component.RefundAllowed = false;
-
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
@@ -172,6 +168,12 @@ public sealed partial class StoreSystem
                 return;
             }
         }
+
+        if (!IsOnStartingMap(uid, component))
+            component.RefundAllowed = false;
+        else
+            component.RefundAllowed = true;
+
         //subtract the cash
         foreach (var currency in listing.Cost)
         {
@@ -317,10 +319,16 @@ public sealed partial class StoreSystem
     {
         // TODO: Remove guardian/holopara
 
-        if (!component.RefundAllowed || !component.BoughtEntities.Any())
+        if (args.Session.AttachedEntity is not { Valid: true } buyer)
             return;
 
-        if (args.Session.AttachedEntity is not { Valid: true } buyer)
+        if (!IsOnStartingMap(uid, component))
+        {
+            component.RefundAllowed = false;
+            UpdateUserInterface(buyer, uid, component);
+        }
+
+        if (!component.RefundAllowed || !component.BoughtEntities.Any())
             return;
 
         foreach (var purchase in component.BoughtEntities.ToList())
@@ -347,7 +355,6 @@ public sealed partial class StoreSystem
         // Reset store back to its original state
         RefreshAllListings(component);
         component.BalanceSpent = new();
-        component.RefundAllowed = false;
         UpdateUserInterface(buyer, uid, component);
     }
 
@@ -356,5 +363,11 @@ public sealed partial class StoreSystem
         component.BoughtEntities.Add(purchase);
         var refundComp = EnsureComp<StoreRefundComponent>(purchase);
         refundComp.StoreEntity = uid;
+    }
+
+    private bool IsOnStartingMap(EntityUid store, StoreComponent component)
+    {
+        var xform = Transform(store);
+        return component.StartingMap == xform.MapID;
     }
 }

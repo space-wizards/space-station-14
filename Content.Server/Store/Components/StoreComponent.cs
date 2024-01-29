@@ -71,7 +71,7 @@ public sealed partial class StoreComponent : Component
     /// </summary>
     public Dictionary<string, FixedPoint2> BalanceSpent = new();
 
-    [ViewVariables]
+    [ViewVariables, DataField]
     public bool RefundAllowed;
 
     [ViewVariables]
