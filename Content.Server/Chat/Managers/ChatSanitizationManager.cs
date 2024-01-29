@@ -91,6 +91,15 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         }
 
         input = input.TrimEnd();
+        
+        // panda encouraged me to do this so here we are
+        string _input = input.ToLower();
+
+        if (_input[0] == 't')
+        {
+            input = input.Substring(1);
+        }
+        
 
         foreach (var (smiley, replacement) in SmileyToEmote)
         {
