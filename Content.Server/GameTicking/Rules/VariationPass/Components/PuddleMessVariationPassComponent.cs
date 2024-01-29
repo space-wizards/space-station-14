@@ -13,7 +13,7 @@ public sealed partial class PuddleMessVariationPassComponent : Component
     ///     Tiles before one spill on average.
     /// </summary>
     [DataField]
-    public float TilesPerSpillAverage = 750f;
+    public float TilesPerSpillAverage = 600f;
 
     [DataField]
     public float TilesPerSpillStdDev = 50f;

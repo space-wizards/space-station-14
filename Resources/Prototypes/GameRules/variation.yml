@@ -35,6 +35,8 @@
   noSpawn: true
   components:
   - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 35
+    tilesPerEntityStdDev: 4
     entities:
     - id: RandomSpawner
 
