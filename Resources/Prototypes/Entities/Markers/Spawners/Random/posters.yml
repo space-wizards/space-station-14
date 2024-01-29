@@ -91,6 +91,10 @@
       - PosterContrabandEnlistGorlex
       - PosterContrabandInterdyne
       - PosterContrabandWaffleCorp
+      - PosterContrabandSaucerNumberOne # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterContrabandBreadLies # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterContrabandGotWood # DeltaV Poster, see Resources/Prototypes/DeltaV/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterContrabandAyaya # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
     chance: 1
 
 - type: entity
@@ -149,4 +153,19 @@
       - PosterLegitPeriodicTable
       - PosterLegitRenault
       - PosterLegitNTTGC
+      - PosterLegitDejaVu # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitDontPanic # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitBarDrinks # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitBotanyFood # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitHotDonkExplosion # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitEatMeat # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitMoreBread # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitPieSlice # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitPizzaHope # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitMedicate # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitNoTouching # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitChknDnnr # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitShoukou # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitCornzza # Nyanotrasen Poster, see Resources/Prototypes/Nyanotrasen/Entities/Structures/Wallmount/Signs/posters.yml
+      - PosterLegitFuckAround # DeltaV Poster, see Resources/Prototypes/DeltaV/Entities/Structures/Wallmount/Signs/posters.yml
     chance: 1

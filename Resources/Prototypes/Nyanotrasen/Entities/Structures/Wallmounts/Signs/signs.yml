@@ -1,0 +1,41 @@
+- type: entity
+  parent: BaseSign
+  id: SignSec
+  name: security sign
+  description: A sign indicating the Security department.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/signs.rsi
+    state: sec
+
+- type: entity
+  parent: BaseSign
+  id: SignLastIdiot
+  name: Zero Days Since Last Idiot
+  description: Must be an Engineering joke.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/last_idiot.rsi
+    state: icon
+    offset: "0.5,0"
+
+- type: entity
+  parent: BaseSign
+  id: SignConspiracyBoard
+  name: conspiracy board
+  description: Perfect for tracking the multiple layers of criminal activities.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/conspiracy_board.rsi
+    state: icon
+    offset: "0.5,0"
+
+- type: entity
+  parent: BaseSign
+  id: SignDojo
+  name: dojo sign
+  description: A sign indicating a place with discipline and tatami mats.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/doujou.rsi
+    state: doujousign

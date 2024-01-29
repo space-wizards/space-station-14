@@ -457,7 +457,9 @@
   description: A sign indicating the escape pods.
   components:
   - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/signs.rsi # Nyanotrasen - Give pods sign directional sprites
     state: pods
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -709,7 +711,9 @@
   description: A sign warning that the area ahead is nothing but cold, empty space.
   components:
   - type: Sprite
+    sprite: Nyanotrasen/Structures/Wallmounts/signs.rsi # Nyanotrasen - Give space sign directional sprites
     state: space
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign

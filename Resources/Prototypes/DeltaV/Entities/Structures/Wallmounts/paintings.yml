@@ -1,0 +1,19 @@
+- type: entity
+  parent: PaintingBase
+  id: PaintingBlunt
+  name: Blunt Painting
+  description: A blunt smoking weird-cat thing with a smug look.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Structures/Wallmounts/Paintings/ps3moira.rsi
+    state: bluntpainting
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingSpoon
+  name: Spoon Painting
+  description: The type of painting that really ties together a room.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Structures/Wallmounts/Paintings/leonardodabepis.rsi
+    state: spoonpainting
