@@ -26,19 +26,13 @@ public sealed partial class FTLComponent : Component
     public float Accumulator = 0f;
 
     /// <summary>
-    /// Target Uid to dock with at the end of FTL.
+    /// Coordinates to arrive it: May be relative to another grid (for docking) or map coordinates.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public EntityUid? TargetUid;
+    public EntityCoordinates TargetCoordinates;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public MapCoordinates TargetCoordinates;
-
-    /// <summary>
-    /// Should we dock with the target when arriving or show up nearby.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public bool Dock;
+    [DataField]
+    public Angle TargetAngle;
 
     /// <summary>
     /// If we're docking after FTL what is the prioritised dock tag (if applicable).

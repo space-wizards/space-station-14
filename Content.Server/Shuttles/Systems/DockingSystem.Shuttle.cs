@@ -19,13 +19,13 @@ public sealed partial class DockingSystem
 
     public Angle GetAngle(EntityUid uid, TransformComponent xform, EntityUid targetUid, TransformComponent targetXform, EntityQuery<TransformComponent> xformQuery)
    {
-       var (shuttlePos, shuttleRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
-       var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+       var (shuttlePos, shuttleRot) = _transform.GetWorldPositionRotation(xform);
+       var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform);
 
        var shuttleCOM = Robust.Shared.Physics.Transform.Mul(new Transform(shuttlePos, shuttleRot),
-           Comp<PhysicsComponent>(uid).LocalCenter);
+           _physicsQuery.GetComponent(uid).LocalCenter);
        var targetCOM = Robust.Shared.Physics.Transform.Mul(new Transform(targetPos, targetRot),
-           Comp<PhysicsComponent>(targetUid).LocalCenter);
+           _physicsQuery.GetComponent(targetUid).LocalCenter);
 
        var mapDiff = shuttleCOM - targetCOM;
        var angle = mapDiff.ToWorldAngle();
@@ -36,7 +36,7 @@ public sealed partial class DockingSystem
    /// <summary>
    /// Checks if 2 docks can be connected by moving the shuttle directly onto docks.
    /// </summary>
-   public bool CanDock(
+   private bool CanDock(
        DockingComponent shuttleDock,
        TransformComponent shuttleDockXform,
        DockingComponent gridDock,
@@ -119,37 +119,63 @@ public sealed partial class DockingSystem
        return GetDockingConfigPrivate(shuttleUid, targetGrid, shuttleDocks, gridDocks, priorityTag);
    }
 
-   private DockingConfig? GetDockingConfigPrivate(
+   /// <summary>
+   /// Tries to get a docking config at the specified coordinates and angle.
+   /// </summary>
+   public DockingConfig? GetDockingConfigAt(EntityUid shuttleUid,
+       EntityUid targetGrid,
+       EntityCoordinates coordinates,
+       Angle angle)
+   {
+       var gridDocks = GetDocks(targetGrid);
+       var shuttleDocks = GetDocks(shuttleUid);
+
+       var configs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks);
+
+       foreach (var config in configs)
+       {
+           if (config.Coordinates.Equals(coordinates) && config.Angle.EqualsApprox(angle, 0.01))
+           {
+               return config;
+           }
+       }
+
+       return null;
+   }
+
+   /// <summary>
+   /// Gets all docking configs between the 2 grids.
+   /// </summary>
+   private List<DockingConfig> GetDockingConfigs(
        EntityUid shuttleUid,
        EntityUid targetGrid,
        List<(EntityUid, DockingComponent)> shuttleDocks,
-       List<(EntityUid, DockingComponent)> gridDocks,
-       string? priorityTag = null)
-    {
-        if (gridDocks.Count <= 0)
-            return null;
+       List<(EntityUid, DockingComponent)> gridDocks)
+   {
+       var validDockConfigs = new List<DockingConfig>();
 
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var targetGridGrid = Comp<MapGridComponent>(targetGrid);
-        var targetGridXform = xformQuery.GetComponent(targetGrid);
+       if (gridDocks.Count <= 0)
+            return validDockConfigs;
+
+        var targetGridGrid = _gridQuery.GetComponent(targetGrid);
+        var targetGridXform = _xformQuery.GetComponent(targetGrid);
         var targetGridAngle = _transform.GetWorldRotation(targetGridXform).Reduced();
         var shuttleFixturesComp = Comp<FixturesComponent>(shuttleUid);
-        var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
+        var shuttleAABB = _gridQuery.GetComponent(shuttleUid).LocalAABB;
 
         var isMap = HasComp<MapComponent>(targetGrid);
 
-        var validDockConfigs = new List<DockingConfig>();
         var grids = new List<Entity<MapGridComponent>>();
         if (shuttleDocks.Count > 0)
         {
            // We'll try all combinations of shuttle docks and see which one is most suitable
            foreach (var (dockUid, shuttleDock) in shuttleDocks)
            {
-               var shuttleDockXform = xformQuery.GetComponent(dockUid);
+               var shuttleDockXform = _xformQuery.GetComponent(dockUid);
 
                foreach (var (gridDockUid, gridDock) in gridDocks)
                {
-                   var gridXform = xformQuery.GetComponent(gridDockUid);
+                   var gridXform = _xformQuery.GetComponent(gridDockUid);
 
                    if (!CanDock(
                            shuttleDock, shuttleDockXform,
@@ -167,15 +193,15 @@ public sealed partial class DockingSystem
                    }
 
                    // Can't just use the AABB as we want to get bounds as tight as possible.
-                   var spawnPosition = new EntityCoordinates(targetGrid, matty.Transform(Vector2.Zero));
-                   spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager, _transform));
+                   var gridPosition = new EntityCoordinates(targetGrid, matty.Transform(Vector2.Zero));
+                   var spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, gridPosition.ToMapPos(EntityManager, _transform));
 
                    // TODO: use tight bounds
                    var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetAngle, spawnPosition.Position);
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
                    grids.Clear();
-                   _mapManager.FindGridsIntersecting(targetGridXform.MapID, dockedBounds, ref grids);
+                   _mapManager.FindGridsIntersecting(targetGridXform.MapID, dockedBounds, ref grids, includeMap: false);
                    if (grids.Any(o => o.Owner != targetGrid && o.Owner != targetGridXform.MapUid))
                    {
                        continue;
@@ -204,9 +230,9 @@ public sealed partial class DockingSystem
 
                            if (!CanDock(
                                    other,
-                                   xformQuery.GetComponent(otherUid),
+                                   _xformQuery.GetComponent(otherUid),
                                    otherGrid,
-                                   xformQuery.GetComponent(otherGridUid),
+                                   _xformQuery.GetComponent(otherGridUid),
                                    shuttleAABB,
                                    targetGridAngle,
                                    shuttleFixturesComp, targetGridGrid,
@@ -234,7 +260,7 @@ public sealed partial class DockingSystem
                    validDockConfigs.Add(new DockingConfig()
                    {
                        Docks = dockedPorts,
-                       Coordinates = spawnPosition,
+                       Coordinates = gridPosition,
                        Area = dockedAABB,
                        Angle = targetAngle,
                    });
@@ -242,8 +268,22 @@ public sealed partial class DockingSystem
            }
         }
 
+        return validDockConfigs;
+   }
+
+   private DockingConfig? GetDockingConfigPrivate(
+       EntityUid shuttleUid,
+       EntityUid targetGrid,
+       List<(EntityUid, DockingComponent)> shuttleDocks,
+       List<(EntityUid, DockingComponent)> gridDocks,
+       string? priorityTag = null)
+   {
+       var validDockConfigs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks);
+
         if (validDockConfigs.Count <= 0)
             return null;
+
+        var targetGridAngle = _transform.GetWorldRotation(targetGrid).Reduced();
 
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
         validDockConfigs = validDockConfigs

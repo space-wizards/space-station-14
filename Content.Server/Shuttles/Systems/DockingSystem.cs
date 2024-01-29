@@ -34,7 +34,9 @@ namespace Content.Server.Shuttles.Systems
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.20f;
 
+        private EntityQuery<MapGridComponent> _gridQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
+        private EntityQuery<TransformComponent> _xformQuery;
 
         private HashSet<Entity<DockingComponent>> _dockingSet = new();
         private HashSet<Entity<DockingComponent, DoorBoltComponent>> _dockingBoltSet = new();
@@ -42,7 +44,9 @@ namespace Content.Server.Shuttles.Systems
         public override void Initialize()
         {
             base.Initialize();
+            _gridQuery = GetEntityQuery<MapGridComponent>();
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
+            _xformQuery = GetEntityQuery<TransformComponent>();
 
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
@@ -70,7 +74,7 @@ namespace Content.Server.Shuttles.Systems
         public void SetDocks(EntityUid gridUid, bool enabled)
         {
             _dockingSet.Clear();
-            _lookup.GetEntitiesParented(gridUid, _dockingSet);
+            _lookup.GetChildEntities(gridUid, _dockingSet);
 
             foreach (var dock in _dockingSet)
             {
@@ -82,7 +86,7 @@ namespace Content.Server.Shuttles.Systems
         public void SetDockBolts(EntityUid gridUid, bool enabled)
         {
             _dockingBoltSet.Clear();
-            _lookup.GetEntitiesParented(gridUid, _dockingBoltSet);
+            _lookup.GetChildEntities(gridUid, _dockingBoltSet);
 
             foreach (var entity in _dockingBoltSet)
             {
@@ -232,12 +236,16 @@ namespace Content.Server.Shuttles.Systems
             RaiseLocalEvent(msg);
         }
 
-        private void OnStartup(EntityUid uid, DockingComponent component, ComponentStartup args)
+        private void OnStartup(Entity<DockingComponent> entity, ref ComponentStartup args)
         {
-            // Use startup so transform already initialized
-            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored) return;
+            var uid = entity.Owner;
+            var component = entity.Comp;
 
-            EnableDocking(uid, component);
+            // Use startup so transform already initialized
+            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored)
+                return;
+
+            EnableDocking((uid, component));
 
             // This little gem is for docking deserialization
             if (component.DockedWith != null)
@@ -254,15 +262,15 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        private void OnAnchorChange(EntityUid uid, DockingComponent component, ref AnchorStateChangedEvent args)
+        private void OnAnchorChange(Entity<DockingComponent> entity, ref AnchorStateChangedEvent args)
         {
             if (args.Anchored)
             {
-                EnableDocking(uid, component);
+                EnableDocking(entity);
             }
             else
             {
-                DisableDocking(uid, component);
+                DisableDocking(entity);
             }
 
             _console.RefreshShuttleConsoles();
@@ -270,19 +278,24 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnDockingReAnchor(Entity<DockingComponent> entity, ref ReAnchorEvent args)
         {
+            var uid = entity.Owner;
+            var component = entity.Comp;
+
             if (!component.Docked)
                 return;
 
             var otherDock = component.DockedWith;
             var other = Comp<DockingComponent>(otherDock!.Value);
 
-            Undock(uid, component);
+            Undock(entity);
             Dock(uid, component, otherDock.Value, other);
             _console.RefreshShuttleConsoles();
         }
 
         private void DisableDocking(Entity<DockingComponent> entity)
         {
+            var component = entity.Comp;
+
             if (!component.Enabled)
                 return;
 
@@ -290,12 +303,15 @@ namespace Content.Server.Shuttles.Systems
 
             if (component.DockedWith != null)
             {
-                Undock(uid, component);
+                Undock(entity);
             }
         }
 
-        private void EnableDocking(EntityUid uid, DockingComponent component)
+        private void EnableDocking(Entity<DockingComponent> entity)
         {
+            var uid = entity.Owner;
+            var component = entity.Comp;
+
             if (component.Enabled)
                 return;
 

@@ -102,7 +102,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         var docks = GetAllDocks();
         _consoles.Clear();
-        _lookup.GetEntitiesParented(gridUid, _consoles);
+        _lookup.GetChildEntities(gridUid, _consoles);
 
         foreach (var entity in _consoles)
         {

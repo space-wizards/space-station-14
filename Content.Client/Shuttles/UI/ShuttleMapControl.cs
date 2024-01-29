@@ -9,6 +9,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -35,6 +36,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     private Font _font;
     private Texture _backgroundTexture;
 
+    private EntityQuery<PhysicsComponent> _physicsQuery;
     private List<Entity<MapGridComponent>> _grids = new();
 
     /// <summary>
@@ -54,6 +56,9 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         _shuttles = _entManager.System<SharedShuttleSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
+
+        _physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
         _backgroundTexture = cache.GetResource<TextureResource>("/Textures/Parallaxes/space_map2.png");
     }
@@ -179,7 +184,9 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         {
             foreach (var grid in _grids)
             {
+                var gridPhysics = _physicsQuery.GetComponent(grid);
                 var position = _xformSystem.GetWorldPosition(grid);
+                position += gridPhysics.LocalCenter;
 
                 var gridRelativePos = matty.Transform(position);
                 gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
@@ -194,7 +201,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                 else
                 {
                     var localAABB = grid.Comp.LocalAABB;
-                    var maxExtent = localAABB.MaxExtent;
+                    var maxExtent = localAABB.MaxDimension;
                     var range = maxExtent + 32f;
                     range *= MinimapScale;
                     handle.DrawCircle(gridUiPos, range, Color.Magenta.WithAlpha(0.01f));
@@ -239,7 +246,9 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             var existingVerts = verts.GetOrNew(gridColor);
             var existingEdges = edges.GetOrNew(gridColor);
 
+            var physics = _physicsQuery.GetComponent(grid);
             var gridPos = _xformSystem.GetWorldPosition(grid.Owner);
+            gridPos += physics.LocalCenter;
 
             var gridRelativePos = matty.Transform(gridPos);
             gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
