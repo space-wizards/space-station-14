@@ -160,24 +160,27 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Returns true if the grid can FTL. Used to block protected shuttles like the emergency shuttle.
     /// </summary>
-    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason)
+    public bool CanFTL(EntityUid shuttleUid, [NotNullWhen(false)] out string? reason)
     {
-        if (HasComp<PreventPilotComponent>(uid))
+        if (HasComp<FTLComponent>(shuttleUid))
+        {
+            reason = Loc.GetString("shuttle-console-in-ftl");
+            return false;
+        }
+
+        if (HasComp<PreventPilotComponent>(shuttleUid))
         {
             reason = Loc.GetString("shuttle-console-prevent");
             return false;
         }
 
-        if (uid != null)
-        {
-            var ev = new ConsoleFTLAttemptEvent(uid.Value, false, string.Empty);
-            RaiseLocalEvent(uid.Value, ref ev, true);
+        var ev = new ConsoleFTLAttemptEvent(shuttleUid, false, string.Empty);
+        RaiseLocalEvent(shuttleUid, ref ev, true);
 
-            if (ev.Cancelled)
-            {
-                reason = ev.Reason;
-                return false;
-            }
+        if (ev.Cancelled)
+        {
+            reason = ev.Reason;
+            return false;
         }
 
         reason = null;
@@ -187,12 +190,16 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Returns whether an entity can FTL to the specified map.
     /// </summary>
-    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap)
+    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, bool beacon)
     {
         var mapUid = _mapManager.GetMapEntityId(targetMap);
 
-        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination))
+        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) ||
+            !destination.Enabled ||
+           (destination.BeaconsOnly && !beacon))
+        {
             return false;
+        }
 
         return destination.Whitelist?.IsValid(shuttleUid, EntityManager) != false;
     }
@@ -819,6 +826,9 @@ public sealed partial class ShuttleSystem
                     immune.UnionWith(gibs);
                     continue;
                 }
+
+                if (HasComp<FTLBeaconComponent>(ent))
+                    continue;
 
                 QueueDel(ent);
             }

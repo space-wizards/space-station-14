@@ -16,4 +16,10 @@ public sealed partial class FTLDestinationComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool Enabled = true;
+
+    /// <summary>
+    /// Can we only FTL to beacons on this map.
+    /// </summary>
+    [DataField]
+    public bool BeaconsOnly;
 }

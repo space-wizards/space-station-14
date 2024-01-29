@@ -32,6 +32,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TagSystem _tags = default!;
@@ -39,14 +40,16 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
     private EntityQuery<MetaDataComponent> _metaQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
 
-    private HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
+    private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
         _metaQuery = GetEntityQuery<MetaDataComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(OnConsoleShutdown);
         SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
