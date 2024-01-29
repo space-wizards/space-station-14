@@ -282,3 +282,5 @@
       - HamsterWearable
       - DroneUsable
       - WhitelistChameleon
+  - type: StaticPrice
+    price: 1
