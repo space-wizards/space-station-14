@@ -145,7 +145,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         });
 
         //Add the secrecy law after the others
-        component.Lawset?.Laws.Append(new SiliconLaw
+        component.Lawset?.Laws.Add(new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-secrecy")
         });
