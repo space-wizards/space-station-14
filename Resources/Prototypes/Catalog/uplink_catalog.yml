@@ -599,7 +599,7 @@
   description: uplink-syndicate-crate-secret-storage-desc
   productEntity: CrateSecretStorage
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkUtility
 # Implants
