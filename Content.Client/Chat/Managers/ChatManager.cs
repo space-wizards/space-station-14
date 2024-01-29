@@ -24,6 +24,14 @@ namespace Content.Client.Chat.Managers
         public void SendMessage(string text, ChatSelectChannel channel)
         {
             var str = text.ToString();
+
+            // temporary quality-of-life bodge until panda finished her rework
+            if (str.ToLower().StartsWith("t@"))
+            {
+                channel = ChatSelectChannel.Emotes;
+                str = str.Substring(1);
+            }
+
             switch (channel)
             {
                 case ChatSelectChannel.Console:
