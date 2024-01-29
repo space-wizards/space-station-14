@@ -43,6 +43,8 @@
     - type: SolutionContainerVisuals
       maxFillLevels: 6
       fillBaseName: jug
+      inHandsMaxFillLevels: 5
+      inHandsFillBaseName: -fill-
     - type: StaticPrice
       price: 60
     - type: Label
