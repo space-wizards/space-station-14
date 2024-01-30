@@ -967,7 +967,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitAdmin
-  name: bluespace traveler hardsuit [admeme]
+  name: bluespace traveler hardsuit
+  suffix: Admeme
   description: A modified Bluespace Traveler hardsuit, or Bluespace God, or whoever this guy is.
   components:
   - type: Sprite

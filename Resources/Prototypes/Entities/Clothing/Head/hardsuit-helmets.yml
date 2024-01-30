@@ -757,6 +757,7 @@
   parent: ClothingHeadHelmetHardsuitSyndieCommander
   id: ClothingHeadHelmetHardsuitAdmin
   name: bluespace traveler hardsuit helmet
+  suffix: Admeme
   description: Some modified bluespace helmet. Why does it look like a biker helmet?
   components:
   - type: Sprite
