@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nok-ko
-  changes:
-  - message: Pacified players can no longer throw dangerous objects such as spears,
-      bolas, and bottles.
-    type: Tweak
-  id: 5330
-  time: '2023-12-11T23:40:23.0000000+00:00'
 - author: notafet
   changes:
   - message: Pumps, vents, scrubbers, and heaters now work faster.
@@ -3837,3 +3830,10 @@
   id: 5829
   time: '2024-01-30T10:56:38.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24656
+- author: themias
+  changes:
+  - message: Fixed Centcom cargo gifts not being fulfilled
+    type: Fix
+  id: 5830
+  time: '2024-01-30T11:05:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24701
