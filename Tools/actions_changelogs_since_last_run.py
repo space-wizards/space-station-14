@@ -118,8 +118,7 @@ def get_discord_body(content: str):
         }
 
 
-def send_discord(content: str, count: int):
-    print(f"Posting {count} changelog entries to discord webhook")
+def send_discord(content: str):
     body = get_discord_body(content)
 
     response = requests.post(DISCORD_WEBHOOK_URL, json=body)
@@ -139,7 +138,6 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
     for name, group in itertools.groupby(entries, lambda x: x["author"]):
         # Need to split text to avoid discord character limit
-        count = 0
         group_content = io.StringIO()
         group_content.write(f"**{name}** updated:\n")
 
@@ -148,7 +146,6 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 message = change['message']
                 url = entry.get("url")
-                count += 1
                 if url and url.strip():
                     group_content.write(f"{emoji} [-]({url}) {message}\n")
                 else:
@@ -161,20 +158,18 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
         # If adding the text would bring it over the group limit then send the message and start a new one
         if message_length + group_length >= DISCORD_SPLIT_LIMIT:
-            send_discord(message_text, count)
+            send_discord(message_text)
 
             # Reset the message
-            count = 0
             message_content = io.StringIO()
 
         # Flush the group to the message
         message_content.write(group_text)
     
     # Clean up anything remaining
-    if count > 0:
-        message_text = message_content.getvalue()
-        if len(message_text) > 0:
-            send_discord(message_text, count)
+    message_text = message_content.getvalue()
+    if len(message_text) > 0:
+        send_discord(message_text)
 
 
 main()
