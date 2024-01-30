@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Avalon
-  changes:
-  - message: CentCom has begun unceremoniously plucking Mothroaches out of Maintenance
-      and selling them to nearby Space Stations after the discovery that they make
-      decent pets.
-    type: Add
-  id: 5333
-  time: '2023-12-12T04:46:41.0000000+00:00'
 - author: notafet
   changes:
   - message: Tritium and frezon can once again be sold for profit.
@@ -3838,3 +3830,10 @@
   id: 5832
   time: '2024-01-30T13:28:17.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24714
+- author: themias
+  changes:
+  - message: Stun batons now toggle off after being drained by an EMP.
+    type: Fix
+  id: 5833
+  time: '2024-01-30T23:04:26.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24706
