@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Incapacitated mobs can no longer be shoved for a speed boost.
-    type: Fix
-  id: 5325
-  time: '2023-12-11T13:05:14.0000000+00:00'
 - author: willicassi
   changes:
   - message: Added info to botany guidebook entry
@@ -3834,3 +3828,10 @@
   id: 5824
   time: '2024-01-30T01:33:35.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24715
+- author: liltenhead
+  changes:
+  - message: Jugs are now destructible.
+    type: Tweak
+  id: 5825
+  time: '2024-01-30T08:11:43.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24719
