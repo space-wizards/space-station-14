@@ -74,7 +74,7 @@
               max: 1
           transferForensics: true
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]        
+          acts: [ "Destruction" ]
     - type: Label
       originalName: jug
     - type: Tag
