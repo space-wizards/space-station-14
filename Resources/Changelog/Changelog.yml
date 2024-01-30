@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Incapacitated mobs can no longer be shoved for a speed boost.
-    type: Fix
-  id: 5325
-  time: '2023-12-11T13:05:14.0000000+00:00'
-- author: willicassi
-  changes:
-  - message: Added info to botany guidebook entry
-    type: Add
-  id: 5326
-  time: '2023-12-11T17:42:22.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Removed the Handheld Electrical Propulsion technology and its associated
-      item, tasers, from research.
-    type: Remove
-  id: 5327
-  time: '2023-12-11T22:33:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Added the artifact crusher to research! Crush things today!
-    type: Add
-  id: 5328
-  time: '2023-12-11T23:15:47.0000000+00:00'
-- author: notafet
-  changes:
-  - message: Stations no longer produce limitless plasma. Plasma refills can now be
-      ordered at cargo.
-    type: Tweak
-  id: 5329
-  time: '2023-12-11T23:21:25.0000000+00:00'
-- author: nok-ko
-  changes:
-  - message: Pacified players can no longer throw dangerous objects such as spears,
-      bolas, and bottles.
-    type: Tweak
-  id: 5330
-  time: '2023-12-11T23:40:23.0000000+00:00'
-- author: notafet
-  changes:
-  - message: Pumps, vents, scrubbers, and heaters now work faster.
-    type: Tweak
-  id: 5331
-  time: '2023-12-11T23:59:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Removed Senior Researcher, Senior Engineer, Senior Physician, and Senior
-      Officer.
-    type: Remove
-  id: 5332
-  time: '2023-12-12T02:37:06.0000000+00:00'
 - author: Avalon
   changes:
   - message: CentCom has begun unceremoniously plucking Mothroaches out of Maintenance
@@ -3834,3 +3782,59 @@
   id: 5824
   time: '2024-01-30T01:33:35.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24715
+- author: liltenhead
+  changes:
+  - message: Jugs are now destructible.
+    type: Tweak
+  id: 5825
+  time: '2024-01-30T08:11:43.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24719
+- author: Emisse
+  changes:
+  - message: Aspid
+    type: Remove
+  id: 5826
+  time: '2024-01-30T10:26:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24725
+- author: mirrorcult
+  changes:
+  - message: Throwing items now scale a bit when thrown to simulate rising/falling
+    type: Add
+  id: 5827
+  time: '2024-01-30T10:50:41.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24724
+- author: Emisse
+  changes:
+  - message: Gemini
+    type: Remove
+  id: 5828
+  time: '2024-01-30T10:54:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24728
+- author: CrigCrag
+  changes:
+  - message: Added a new large salvage wreck.
+    type: Add
+  id: 5829
+  time: '2024-01-30T10:56:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24656
+- author: themias
+  changes:
+  - message: Fixed Centcom cargo gifts not being fulfilled
+    type: Fix
+  id: 5830
+  time: '2024-01-30T11:05:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24701
+- author: Scribbles0
+  changes:
+  - message: You can now make anomaly cores orbit you.
+    type: Add
+  id: 5831
+  time: '2024-01-30T11:12:24.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24716
+- author: MIXnikita
+  changes:
+  - message: New sound effects for some shuttle guns
+    type: Tweak
+  id: 5832
+  time: '2024-01-30T13:28:17.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24714
