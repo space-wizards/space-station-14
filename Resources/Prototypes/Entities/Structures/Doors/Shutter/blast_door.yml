@@ -27,6 +27,16 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StrongMetallic
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
+  - type: Construction
+    graph: BlastDoor
+    node: blastdoor
+    containers:
+    - board
+  - type: StaticPrice
+    price: 280
 
 - type: entity
   id: BlastDoorOpen
@@ -43,3 +53,46 @@
     airBlocked: false
   - type: RadiationBlocker
     enabled: false
+
+- type: entity
+  id: BlastDoorFrame
+  parent: BaseStructureDynamic
+  name: blast door frame
+  description: This one says 'BLAST DONGER'.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    state: assembly
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - Impassable
+        - HighImpassable
+        layer:
+        - HighImpassable
+  - type: Transform
+    noRot: true
+  - type: Construction
+    graph: BlastDoor
+    node: frame1
+  placement:
+    mode: SnapgridCenter

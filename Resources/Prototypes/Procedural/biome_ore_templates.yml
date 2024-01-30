@@ -1,6 +1,6 @@
 # Low value
 - type: biomeMarkerLayer
-  id: OreTin
+  id: OreIron
   entityMask:
     AsteroidRock: AsteroidRockTin
     WallRock: WallRockTin

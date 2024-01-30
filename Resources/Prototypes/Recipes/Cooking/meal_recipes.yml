@@ -291,9 +291,9 @@
     TableSalt: 5
   solids:
     FoodBreadBun: 1
-    FoodMeat: 3
-    FoodCheeseSlice: 3
-    FoodTomato: 3
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodTomato: 2
     FoodEgg: 2
 
 - type: microwaveMealRecipe
@@ -313,6 +313,14 @@
   solids:
     FoodBreadBun: 1
     FoodMeatXeno: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothRoachburger
+  name: mothroachburger recipe
+  result: FoodBurgerMothRoach
+  solids:
+    FoodBreadBun: 1
+    MobMothroach: 1
 
 #Breads & Sandwiches
 
@@ -888,11 +896,168 @@
     FoodBungo: 2
     FoodChili: 1
 
+#Pies
+
+- type: microwaveMealRecipe
+  id: RecipeAmanitaPie
+  name: amanita pie recipe
+  result: FoodPieAmanita
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodFlyAmanita: 1
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeApplePie
+  name: apple pie recipe
+  result: FoodPieApple
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodApple: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBaklava
+  name: baklava recipe
+  result: FoodPieBaklava
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodSnackPistachios: 1 #i'd rather use a botany crop but we don't have nuts yet
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBananaCreamPie
+  name: banana cream pie recipe
+  result: FoodPieBananaCream
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBanana: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBerryClafoutis
+  name: berry clafoutis recipe
+  result: FoodPieClafoutis
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBerries: 3
+    FoodPlateTin: 1
+
+#- type: microwaveMealRecipe
+#  id: RecipeCherryPie
+#  name: cherry pie recipe
+#  result: FoodPieCherry
+#  time: 15
+#  solids:
+#    FoodDoughPie: 1
+#    FoodCherry: 3 #cherries don't exist yet
+#    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFrostyPie
+  name: frosty pie recipe
+  result: FoodPieFrosty
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodChilly: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMeatPie
+  name: meat pie recipe
+  result: FoodPieMeat
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodMeat: 3
+    FoodPlateTin: 1
+
+#- type: microwaveMealRecipe
+#  id: RecipePlumpPie
+#  name: plump pie recipe
+#  result: FoodPiePlump
+#  time: 15
+#  solids:
+#    FoodDoughPie: 1
+#    FoodPlumpHelmet: 3 #a big part of me wants to veto this because the item description is a dick joke but i'll write the placeholder anyway
+#    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeXenoPie
+  name: xeno pie recipe
+  result: FoodPieXeno
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodMeatXeno: 3
+    FoodPlateTin: 1
+
+#Tarts
+
+- type: microwaveMealRecipe
+  id: RecipeCocoTart
+  name: chocolate lava tart recipe
+  result: FoodTartCoco
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodSnackChocolateBar: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGappleTart
+  name: golden apple streusel tart recipe
+  result: FoodTartGapple
+  time: 15
+  reagents:
+    Gold: 10
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodApple: 2 #in absence of the real gapple i'm substituting one apple with 10u gold (one ingot)
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGrapeTart
+  name: grape tart recipe
+  result: FoodTartGrape
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodGrape: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMimeTart
+  name: mime tart recipe
+  result: FoodTartMime
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodMimana: 3
+    FoodPlateTin: 1
+
 #Other
 
 - type: microwaveMealRecipe
   id: RecipeCubanCarp
-  name: cuban carp recipe
+  name: Cuban carp recipe
   result: FoodMealCubancarp
   time: 15
   solids:
@@ -1071,46 +1236,6 @@
     FoodSnackChocolateBar: 1
 
 - type: microwaveMealRecipe
-  id: RecipeApplePie
-  name: apple pie
-  result: FoodPieApple
-  time: 15
-  solids:
-    FoodDoughPie: 1
-    FoodApple: 3
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
-  id: RecipeBerryClafoutis
-  name: berry clafoutis
-  result: FoodPieClafoutis
-  time: 15
-  solids:
-    FoodDoughPie: 1
-    FoodBerries: 3
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMeatPie
-  name: meat pie recipe
-  result: FoodPieMeat
-  time: 15
-  solids:
-    FoodDoughPie: 1
-    FoodMeat: 3
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
-  id: RecipeXenoPie
-  name: xeno pie recipe
-  result: FoodPieXeno
-  time: 15
-  solids:
-    FoodDoughPie: 1
-    FoodMeatXeno: 3
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
   id: RecipeAppleCake
   name: apple cake recipe
   result: FoodCakeApple
@@ -1204,16 +1329,6 @@
     FoodCakePlain: 1
 
 - type: microwaveMealRecipe
-  id: RecipeBananaCreamPie
-  name: banana cream pie
-  result: FoodPieBananaCream
-  time: 15
-  solids:
-    FoodDoughPie: 1
-    FoodBanana: 3
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
   id: RecipeCake
   name: cake recipe
   result: FoodCakePlain
@@ -1250,16 +1365,6 @@
     OrganHumanBrain: 1
 
 - type: microwaveMealRecipe
-  id: RecipeAmanitaPie
-  name: amanita pie recipe
-  result: FoodPieAmanita
-  time: 15
-  solids:
-    FoodDoughPie: 1
-    FoodFlyAmanita: 1
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
   id: RecipeSlimeCake
   name: slime cake recipe
   result: FoodCakeSlime
@@ -1293,18 +1398,6 @@
     FoodBreadSausage: 1
     OrganAnimalHeart: 1
     FoodSpaceshroomCooked: 1
-
-- type: microwaveMealRecipe
-  id: RecipeGrapeTart
-  name: grape tart recipe
-  result: FoodTartGrape
-  time: 15
-  reagents:
-    Sugar: 5
-    Milk: 5
-  solids:
-    FoodDoughPie: 1
-    FoodGrape: 3
 
 - type: microwaveMealRecipe
   id: RecipeDumplings
@@ -1723,6 +1816,17 @@
   time: 15
   solids:
     FoodMeatLizard: 1
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSnakeKebab
+  name: snake kebab recipe
+  result: FoodMeatSnakeKebab
+  time: 15
+  reagents:
+    Wine: 5
+  solids:
+    FoodMeatSnake: 1
     FoodKebabSkewer: 1
 
 - type: microwaveMealRecipe

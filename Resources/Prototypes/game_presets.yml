@@ -9,6 +9,18 @@
     - RampingStationEventScheduler
 
 - type: gamePreset
+  id: AllAtOnce
+  name: all-at-once-title
+  description: all-at-once-description
+  showInVote: false
+  rules:
+    - Nukeops
+    - Traitor
+    - Revolutionary
+    - Zombie
+    - RampingStationEventScheduler
+
+- type: gamePreset
   id: Extended
   alias:
   - extended
@@ -18,6 +30,15 @@
   description: extended-description
   rules:
   - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Greenshift
+  alias:
+  - greenshift
+  - shittersafarideluxeedition
+  name: greenshift-title
+  showInVote: false #4boring4vote
+  description: greenshift-description
 
 - type: gamePreset
   id: Secret

@@ -16,7 +16,6 @@ public sealed class NavMapBeaconBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-
         _window = new NavMapBeaconWindow(Owner);
         _window.OpenCentered();
         _window.OnClose += Close;

@@ -7,7 +7,7 @@
   - hideSpawnMenu
   components:
   - type: Item
-    size: Normal
+    size: Large
   - type: Sprite
     sprite: Objects/Devices/flatpack.rsi
     layers:
@@ -34,7 +34,7 @@
       cpu_science: "#D381C9"
       cpu_supply: "#A46106"
   - type: StaticPrice
-    price: 500
+    price: 250
   - type: Tag
     tags:
     - DroneUsable

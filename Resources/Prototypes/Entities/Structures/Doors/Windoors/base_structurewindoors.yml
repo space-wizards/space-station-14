@@ -8,8 +8,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmash
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -112,6 +111,7 @@
     openUnlitVisible: true
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
+  - type: NavMapDoor
   - type: DoorBolt
   - type: Electrified
     enabled: false
