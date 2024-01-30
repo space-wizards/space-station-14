@@ -806,10 +806,10 @@
       sprite: Mobs/Elemental/orecrab.rsi
   - type: RandomSpawner
     prototypes:
-      - MobUraniumCrab
-      - MobIronCrab
-      - MobQuartzCrab
-      - MobSilverCrab
+      - MobSpawnCrabUranium
+      - MobSpawnCrabIron
+      - MobSpawnCrabQuartz
+      - MobSpawnCrabSilver
 
 - type: entity
   name: luminous person spawner

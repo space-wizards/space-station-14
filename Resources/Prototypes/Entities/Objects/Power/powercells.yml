@@ -267,3 +267,139 @@
     - type: BatterySelfRecharger
       autoRecharge: true
       autoRechargeRate: 40
+
+# Power cage (big heavy power cell for big devices)
+
+- type: entity
+  id: BasePowerCage
+  abstract: true
+  parent: BasePowerCell
+  components:
+  - type: Item
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: SolutionContainerManager
+    solutions:
+      battery:
+        maxVol: 15
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: Zinc
+          Quantity: 15
+  - type: Tag
+    tags:
+      - PowerCage
+  - type: HitscanBatteryAmmoProvider
+    proto: RedShuttleLaser
+    fireCost: 150
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+
+- type: entity
+  id: PowerCageSmall
+  parent: BasePowerCage
+  name: small-capacity power cage
+  description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 1400
+    startingCharge: 1400
+    
+- type: entity
+  id: PowerCageMedium
+  parent: BasePowerCage
+  name: medium-capacity power cage
+  description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: medium
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 2700
+    startingCharge: 2700
+    
+- type: entity
+  id: PowerCageHigh
+  parent: BasePowerCage
+  name: high-capacity power cage
+  description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: high
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 6200
+    startingCharge: 6200
+    
+- type: entity
+  id: PowerCageSmallEmpty
+  parent: PowerCageSmall
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
+  - type: Battery
+    maxCharge: 1400
+    startingCharge: 0
+    
+- type: entity
+  id: PowerCageMediumEmpty
+  parent: PowerCageMedium
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
+  - type: Battery
+    startingCharge: 0
+    
+- type: entity
+  id: PowerCageHighEmpty
+  parent: PowerCageHigh
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
+  - type: Battery
+    startingCharge: 0

@@ -19,7 +19,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: Item
-    size: Normal
+    size: Tiny
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:
       collection: RadiationPulse
@@ -40,8 +40,11 @@
   - type: PointLight
     radius: 1.5
     energy: 1.5
-    color: "#fca3c0"
+    color: "#E25822"
     castShadows: false
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
 
 - type: entity
   parent: BaseAnomalyCore
@@ -134,6 +137,19 @@
     color: "#ffffaa"
     castShadows: false
   - type: Electrified
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreFlora
+  suffix: Flora
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#6270bb"
+    castShadows: false
 
 # Inert cores
 
@@ -254,4 +270,17 @@
     radius: 1.5
     energy: 2.0
     color: "#ffffaa"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreFloraInert
+  suffix: Flora, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#6270bb"
     castShadows: false

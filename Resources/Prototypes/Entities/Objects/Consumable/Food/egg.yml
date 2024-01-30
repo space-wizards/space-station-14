@@ -24,6 +24,8 @@
         reagents:
         - ReagentId: Egg
           Quantity: 6
+  - type: DrawableSolution
+    solution: food
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true

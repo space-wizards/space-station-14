@@ -70,7 +70,7 @@ namespace Content.Server.Tools
             _solutionContainer.RemoveReagent(entity.Comp.FuelSolution.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
 
             // Logging
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} on");
+            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} on");
 
             _ignitionSource.SetIgnited(entity.Owner);
 
@@ -88,7 +88,7 @@ namespace Content.Server.Tools
         public void TurnOff(Entity<WelderComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
         {
             // Logging
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} off");
+            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} off");
 
             _ignitionSource.SetIgnited(entity.Owner, false);
 
@@ -99,24 +99,27 @@ namespace Content.Server.Tools
 
         private void OnWelderExamine(Entity<WelderComponent> entity, ref ExaminedEvent args)
         {
-            if (_itemToggle.IsActivated(entity.Owner))
+            using (args.PushGroup(nameof(WelderComponent)))
             {
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
-            }
-            else
-            {
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
-            }
+                if (_itemToggle.IsActivated(entity.Owner))
+                {
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
+                }
 
-            if (args.IsInDetailsRange)
-            {
-                var (fuel, capacity) = GetWelderFuelAndCapacity(entity.Owner, entity.Comp);
+                if (args.IsInDetailsRange)
+                {
+                    var (fuel, capacity) = GetWelderFuelAndCapacity(entity.Owner, entity.Comp);
 
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
-                    ("colorName", fuel < capacity / FixedPoint2.New(4f) ? "darkorange" : "orange"),
-                    ("fuelLeft", fuel),
-                    ("fuelCapacity", capacity),
-                    ("status", string.Empty))); // Lit status is handled above
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
+                        ("colorName", fuel < capacity / FixedPoint2.New(4f) ? "darkorange" : "orange"),
+                        ("fuelLeft", fuel),
+                        ("fuelCapacity", capacity),
+                        ("status", string.Empty))); // Lit status is handled above
+                }
             }
         }
 
