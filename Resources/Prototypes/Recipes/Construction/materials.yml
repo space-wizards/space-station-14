@@ -10,17 +10,6 @@
   objectType: Item
 
 - type: construction
-  name: clockwork rod
-  id: ClockRod
-  graph: MetalRod
-  startNode: start
-  targetNode: ClockRod
-  category: construction-category-materials
-  description: A sturdy metal rod with runes that can be used for intricate clockwork machinery.
-  icon: { sprite: Objects/Materials/parts.rsi, state: clockrods }
-  objectType: Item
-
-- type: construction
   name: reinforced glass
   description: A reinforced sheet of glass.
   id: SheetRGlass

@@ -130,7 +130,7 @@
                 SheetBrass1:
                   min: 1
                   max: 2
-                PartRodClock1:
+                PartRodMetal1:
                   min: 1
                   max: 2
             - !type:DoActsBehavior

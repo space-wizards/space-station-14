@@ -996,9 +996,6 @@
   id: RipleyRArm
 
 - type: Tag
-  id: RodClock1
-
-- type: Tag
   id: RodMetal1
 
 - type: Tag

@@ -18,7 +18,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: ClockRod
+            - material: MetalRod
               amount: 2
               doAfter: 1
 
@@ -45,7 +45,7 @@
             - !type:AdminLog
               message: "A grille was cut"
             - !type:SpawnPrototype
-              prototype: PartRodClock1
+              prototype: PartRodMetal1
               amount: 2
             - !type:DeleteEntity
           steps:

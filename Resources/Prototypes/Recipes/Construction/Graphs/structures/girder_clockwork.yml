@@ -36,7 +36,7 @@
           conditions:
             - !type:EntityAnchored {}
           steps:
-            - material: ClockRod
+            - material: MetalRod
               amount: 2
               doAfter: 2
             - material: Brass
@@ -51,7 +51,7 @@
         - to: clockGirder
           completed:
             - !type:GivePrototype
-              prototype: PartRodClock1
+              prototype: PartRodMetal1
               amount: 2
             - !type:GivePrototype
               prototype: SheetBrass1
