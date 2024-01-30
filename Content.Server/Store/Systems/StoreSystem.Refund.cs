@@ -1,4 +1,7 @@
-﻿using Content.Server.Store.Components;
+﻿using Content.Server.Actions;
+using Content.Server.Store.Components;
+using Content.Shared.Actions;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Store.Systems;
 
@@ -8,6 +11,24 @@ public sealed partial class StoreSystem
     {
         SubscribeLocalEvent<StoreComponent, EntityTerminatingEvent>(OnStoreTerminating);
         SubscribeLocalEvent<StoreRefundComponent, EntityTerminatingEvent>(OnRefundTerminating);
+        SubscribeLocalEvent<StoreRefundComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
+        SubscribeLocalEvent<StoreRefundComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+    }
+
+    private void OnEntityRemoved(EntityUid uid, StoreRefundComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (component.StoreEntity == null || _actions.TryGetActionData(uid, out _) || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
+            return;
+
+        DisableRefund(component.StoreEntity.Value, storeComp);
+    }
+
+    private void OnEntityInserted(EntityUid uid, StoreRefundComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if (component.StoreEntity == null || _actions.TryGetActionData(uid, out _) || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
+            return;
+
+        DisableRefund(component.StoreEntity.Value, storeComp);
     }
 
     private void OnStoreTerminating(Entity<StoreComponent> ent, ref EntityTerminatingEvent args)

@@ -365,4 +365,15 @@ public sealed partial class StoreSystem
         var xform = Transform(store);
         return component.StartingMap == xform.MapID;
     }
+
+    /// <summary>
+    ///     Disables refunds for this store
+    /// </summary>
+    public void DisableRefund(EntityUid store, StoreComponent? component = null)
+    {
+        if (!Resolve(store, ref component))
+            return;
+
+        component.RefundAllowed = false;
+    }
 }
