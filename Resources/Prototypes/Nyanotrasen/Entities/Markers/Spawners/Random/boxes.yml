@@ -16,7 +16,7 @@
       - BoxLightbulb
       - BoxLighttube
       - BoxLightMixed
-      - BoxMaintenanceLightbulb
+      #- BoxMaintenanceLightbulb
       - BoxMesonScanners
       - BoxMRE
       - BoxInflatable

@@ -73,7 +73,7 @@
     rarePrototypes:
       - TraversalDistorterMachineCircuitboard
       - CloningPodMachineCircuitboard
-      - ReverseEngineeringMachineCircuitboard
+      #- ReverseEngineeringMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
@@ -85,7 +85,7 @@
       - NetProbeCartridge
       - HandTeleporter
       - HoloprojectorSecurity
-      - HoloprojectorEngineering
+      #- HoloprojectorEngineering
       - HandheldStationMap
       - ComputerMassMediaCircuitboard
       - SensorConsoleCircuitboard
@@ -100,7 +100,7 @@
       - SheetifierMachineCircuitboard
       - TelecomServerCircuitboard
       - MiniGravityGeneratorCircuitboard
-      - Portafib
-      - ShockCollar
+      #- Portafib
+      #- ShockCollar
       - PotatoAIChip
     rareChance: 0.25
