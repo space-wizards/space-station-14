@@ -11,7 +11,7 @@ public sealed partial class ReformComponent : Component
     /// The action to use.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId? ActionPrototype;
+    public EntProtoId ActionPrototype = default!;
 
     [DataField, AutoNetworkedField] 
     public EntityUid? ActionEntity;
@@ -19,30 +19,30 @@ public sealed partial class ReformComponent : Component
     /// <summary>
     /// How long it will take to reform
     /// </summary>
-    [DataField("reformTime", required: true)]
+    [DataField(required: true)]
     public float ReformTime = 0;
 
     /// <summary>
     /// Whether or not the entity should start with a cooldown
     /// </summary>
-    [DataField("startDelayed")]
+    [DataField]
     public bool StartDelayed = true;
 
     /// <summary>
     /// Whether or not the entity should be stunned when reforming at all
     /// </summary>
-    [DataField("shouldStun")]
+    [DataField]
     public bool ShouldStun = true;
 
     /// <summary>
     /// The text that appears when attempting to reform
     /// </summary>
-    [DataField("popupText", required: true)]
+    [DataField(required: true)]
     public string PopupText;
 
     /// <summary>
     /// The mob that our entity will reform into
     /// </summary>
-    [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string? Prototype { get; private set; }
+    [DataField(required: true)]
+    public EntProtoId ReformPrototype { get; private set; }
 }

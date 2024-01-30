@@ -30,17 +30,17 @@ public sealed partial class ReformSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReformComponent, ComponentInit>(OnCompInit);
+        SubscribeLocalEvent<ReformComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ReformComponent, ComponentShutdown>(OnCompRemove);
 
         SubscribeLocalEvent<ReformComponent, ReformEvent>(OnReform);
         SubscribeLocalEvent<ReformComponent, ReformDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnCompInit(EntityUid uid, ReformComponent comp, ComponentInit args)
+    private void OnMapInit(EntityUid uid, ReformComponent comp, MapInitEvent args)
     {
-        // When the component is initialized, give them the action
-        if (comp.ActionPrototype != null && !_protoManager.TryIndex<EntityPrototype>(comp.ActionPrototype, out var actionProto))
+        // When the map is initialized, give them the action
+        if (comp.ActionPrototype != default && !_protoManager.TryIndex<EntityPrototype>(comp.ActionPrototype, out var actionProto))
             return;
 
         _actionsSystem.AddAction(uid, ref comp.ActionEntity, out var reformAction, comp.ActionPrototype);
@@ -91,7 +91,7 @@ public sealed partial class ReformSystem : EntitySystem
 
         // Spawn a new entity
         // This is, to an extent, taken from polymorph. I don't use polymorph for various reasons- most notably that this is permanent. 
-        var child = Spawn(comp.Prototype, Transform(uid).Coordinates);
+        var child = Spawn(comp.ReformPrototype, Transform(uid).Coordinates);
 
         // This transfers the mind to the new entity
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))

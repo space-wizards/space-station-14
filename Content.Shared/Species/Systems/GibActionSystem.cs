@@ -27,7 +27,7 @@ public sealed partial class GibActionSystem : EntitySystem
     private void OnMobStateChanged(EntityUid uid, GibActionComponent comp, MobStateChangedEvent args)
     {
         // When the mob changes state, check if they're dead and give them the action if so. 
-        if (!TryComp<MobStateComponent>(uid, out var MobState))
+        if (!TryComp<MobStateComponent>(uid, out var mobState))
             return;
 
         if (!_protoManager.TryIndex<EntityPrototype>(comp.ActionPrototype, out var actionProto))
@@ -36,7 +36,7 @@ public sealed partial class GibActionSystem : EntitySystem
 
         foreach (var allowedState in comp.AllowedStates)
         {
-            if(allowedState == MobState.CurrentState)
+            if(allowedState == mobState.CurrentState)
             {
                 // The mob should never have more than 1 state so I don't see this being an issue
                 _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.ActionPrototype);
