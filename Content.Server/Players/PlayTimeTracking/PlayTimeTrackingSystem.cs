@@ -164,8 +164,13 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (_sponsorManager.IsHost(player))
 			return true;
 		
-		if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
-            job.Requirements == null ||
+		if (!_prototypes.TryIndex<JobPrototype>(role, out var job))
+			return true;
+		
+		if (job.SponsorOnly && !_sponsorManager.IsSponsor(player))
+			return false;
+			
+		if (job.Requirements == null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
@@ -177,14 +182,17 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     public HashSet<string> GetDisallowedJobs(ICommonSession player)
     {
         var roles = new HashSet<string>();
-		if (!_cfg.GetCVar(CCVars.GameRoleTimers) || _sponsorManager.IsHost(player))
+		if (_sponsorManager.IsHost(player))
             return roles;
 
         var playTimes = _tracking.GetTrackerTimes(player);
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            if (job.Requirements != null)
+            if (job.SponsorOnly && !_sponsorManager.IsSponsor(player))
+				goto NoRole;
+			
+			if (_cfg.GetCVar(CCVars.GameRoleTimers) && job.Requirements != null)
             {
                 foreach (var requirement in job.Requirements)
                 {
@@ -204,9 +212,6 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public void RemoveDisallowedJobs(NetUserId userId, ref List<string> jobs)
     {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return;
-
         var player = _playerManager.GetSessionByUserId(userId);
         if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
         {
@@ -223,6 +228,16 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
                 jobber.Requirements == null ||
                 jobber.Requirements.Count == 0)
                 continue;
+			
+			if (jobber.SponsorOnly && !_sponsorManager.IsSponsor(player))
+			{
+				jobs.RemoveSwap(i);
+				i--;
+				continue;
+			}
+			
+			if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+				continue;
 
             foreach (var requirement in jobber.Requirements)
             {

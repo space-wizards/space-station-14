@@ -99,8 +99,8 @@ public sealed class JobRequirementsManager
             return false;
         }
 
-        if (job.Requirements == null ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
+        if ((job.Requirements == null || !_cfg.GetCVar(CCVars.GameRoleTimers)) &&
+			(!job.SponsorOnly || _sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session)))
         {
             return true;
         }
