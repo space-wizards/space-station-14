@@ -17,6 +17,7 @@ GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
 GITHUB_RUN        = os.environ["GITHUB_RUN_ID"]
 GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
 
+# https://discord.com/developers/docs/resources/webhook
 DISCORD_SPLIT_LIMIT = 2000
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
@@ -132,6 +133,9 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
     count: int = 0
     message_content = io.StringIO()
+    # We need to manually split messages to avoid discord's character limit
+    # With that being said this isn't entirely robust
+    # e.g. a sufficiently large CL breaks it, but that's a future problem
 
     for name, group in itertools.groupby(entries, lambda x: x["author"]):
         # Need to split text to avoid discord character limit
