@@ -438,7 +438,7 @@
   - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: Moth
-    speechSounds: Chitter # Delta-V - Eep!
+    speechSounds: Squeak
   - type: MothAccent
   - type: Sprite
     sprite: Mobs/Animals/mothroach.rsi
