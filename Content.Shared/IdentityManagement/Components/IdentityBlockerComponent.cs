@@ -32,5 +32,5 @@ public sealed class SeeIdentityAttemptEvent : CancellableEntityEventArgs, IInven
     public SlotFlags TargetSlots => SlotFlags.MASK | SlotFlags.HEAD | SlotFlags.EYES;
 
     // cumulative coverage from each relayed slot
-    public IdentityBlockerCoverage Coverage = IdentityBlockerCoverage.NONE;
+    public IdentityBlockerCoverage TotalCoverage = IdentityBlockerCoverage.NONE;
 }
