@@ -78,6 +78,7 @@ public sealed partial class StorageOverrideSystem : EntitySystem
     /// <param name="id">The prototype id of the item to spawn and insert.</param>
     /// <param name="container">The container the item is inside, if any.</param>
     /// <param name="location">The location of the item inside the container, if any.</param>
+    /// <returns>Whether the new item was replaced.</returns>
     private bool ReplaceItemByPrototype(EntityUid item, StorageOverridePrototype data, EntityUid? root, string? id, Container? container = null, ItemStorageLocation? location = null)
     {
         if (string.IsNullOrEmpty(id) || !data.Prototypes.TryGetValue(id, out var newID))
@@ -89,6 +90,12 @@ public sealed partial class StorageOverrideSystem : EntitySystem
         {
             DebugTools.Assert(root != item);
             DebugTools.Assert(location != null);
+
+            if (!data.AllowDrop && !_storageSystem.ItemFitsInGridLocation(newItem, container.Owner, location.Value))
+            {
+                EntityManager.QueueDeleteEntity(newItem);
+                return false;
+            }
 
             _containerSystem.Remove(item, container);
             _storageSystem.InsertAt(container.Owner, newItem, location.Value, out var _, playSound: false);

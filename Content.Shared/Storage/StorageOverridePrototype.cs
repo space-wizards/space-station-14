@@ -10,10 +10,18 @@ public sealed partial class StorageOverridePrototype : IPrototype
     public string ID { get; private set; } = string.Empty;
 
     [DataField]
-    public int MaxReplacements { get; private set; } = int.MaxValue;
+    private int _maxReplacements = int.MaxValue;
+
+    public int MaxReplacements {
+        get => _maxReplacements;
+        private set => _maxReplacements = Math.Max(1, value);
+    }
 
     [DataField]
     public bool SearchReplaced { get; private set; } = true;
+
+    [DataField]
+    public bool AllowDrop { get; private set; } = true;
 
     [DataField]
     public string? Species { get; private set; } = null;
