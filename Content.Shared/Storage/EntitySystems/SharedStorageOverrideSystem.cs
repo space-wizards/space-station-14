@@ -9,7 +9,7 @@ namespace Content.Shared.Storage;
 /// <summary>
 /// System for searching down storage hierarchies to find items to replace.
 /// </summary>
-public sealed partial class StorageOverrideSystem : EntitySystem
+public sealed partial class SharedStorageOverrideSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
