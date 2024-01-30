@@ -191,7 +191,7 @@
     - id: Soap
       prob: 0.3
     #- id: ClothingOuterWinterCoatPlaid
-      prob: 0.5
+    #  prob: 0.5
     #- id: ClothingUniformMNKTracksuitBlack
     #  prob: 0.3
     #- id: ClothingCostumeNaota
