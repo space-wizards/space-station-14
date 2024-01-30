@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles;
 
-[Prototype("preSpawnGearOverride")]
+[Prototype("spawnGearOverride")]
 public sealed partial class SpawnGearOverridePrototype : IPrototype
     {
     /// <summary>
