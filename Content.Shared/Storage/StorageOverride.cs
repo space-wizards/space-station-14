@@ -1,14 +1,18 @@
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage;
 
+/// <summary>
+/// System for searching down storage hierarchies to find items to replace.
+/// </summary>
 public sealed partial class StorageOverrideSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
 
     // TODO: Make new prototype to compare against!
     private readonly string _tempProtoSpecies = "SlimePerson";
@@ -23,14 +27,17 @@ public sealed partial class StorageOverrideSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MetaDataComponent, ApplyStorageOverrideEvent>(ApplyStorageOverride);
+        SubscribeLocalEvent<ApplyStorageOverrideEvent>(ApplyStorageOverride);
     }
 
     /// <summary>
-    /// Contextual checks to determine whether an item may be something or contain something we wish to replace.
+    /// Contextual checks to determine whether a storage container may have something we wish to replace.
     /// </summary>
-    private void ApplyStorageOverride(Entity<MetaDataComponent> item, ref ApplyStorageOverrideEvent ev)
+    private void ApplyStorageOverride(ApplyStorageOverrideEvent ev)
     {
+        if (!EntityManager.HasComponent<StorageComponent>(ev.Entity))
+            return;
+
         // TODO: Make new prototype to compare against!
         if (ev.Profile?.Species != _tempProtoSpecies)
             return;
@@ -39,31 +46,30 @@ public sealed partial class StorageOverrideSystem : EntitySystem
         if (string.IsNullOrEmpty(ev.Slot?.Name) || ev.Slot?.Name != _tempProtoSlotName)
             return;
 
-        RecursiveStorageOverride(item);
+        RecursiveStorageOverride(ev.Entity);
     }
 
     /// <summary>
-    /// A recursive search through an item or it's storage container.
+    /// A recursive search through a storage container.
     /// </summary>
-    /// <param name="item">The item to remove.</param>
+    /// <param name="item">The item in question. On first pass, this is the root.</param>
     /// <param name="root">Top level entity for items found in containers.</param>
     /// <param name="container">The container the item is inside, if any.</param>
     /// <param name="location">The location of the item inside the container, if any.</param>
     private void RecursiveStorageOverride(EntityUid item, EntityUid? root = null, Container? container = null, ItemStorageLocation? location = null)
     {
-        if (_entityManager.TryGetComponent<StorageComponent>(item, out var storageComp))
+        if (EntityManager.TryGetComponent<MetaDataComponent>(item, out var metadataComp))
+            ReplaceItemByPrototype(item, root, metadataComp.EntityPrototype?.ID, container, location);
+
+        if (EntityManager.TryGetComponent<StorageComponent>(item, out var storageComp))
         {
             foreach (var (uid, loc) in new Dictionary<EntityUid, ItemStorageLocation>(storageComp.StoredItems))
                 RecursiveStorageOverride(uid, root, storageComp.Container, loc);
         }
-        else if (_entityManager.TryGetComponent<MetaDataComponent>(item, out var metadataComp))
-        {
-            ReplaceItemByPrototype(item, root, metadataComp.EntityPrototype?.ID, container, location);
-        }
     }
 
     /// <summary>
-    /// Replaces an item if it matches by prototype id, and if necessary, inside of a container.
+    /// Replaces an item if it matches by prototype id. Handles the item's container if necessary.
     /// </summary>
     /// <param name="item">The item to remove.</param>
     /// <param name="root">Top level entity for items found in containers.</param>
@@ -76,36 +82,35 @@ public sealed partial class StorageOverrideSystem : EntitySystem
         if (string.IsNullOrEmpty(id) || !_tempProtoPairs.TryGetValue(id, out var newID))
             return;
 
-        var newItem = Spawn(newID, _entityManager.GetComponent<TransformComponent>(root ?? item).Coordinates);
+        var newItem = Spawn(newID, EntityManager.GetComponent<TransformComponent>(root ?? item).Coordinates);
 
-        if (container == null)
+        if (container != null)
         {
-            // Top level, we never recursed
-            DebugTools.Assert(root == item);
-            DebugTools.Assert(location == null);
-        }
-        else
-        {
+            DebugTools.Assert(root != item);
+            DebugTools.Assert(location != null);
+
             _containerSystem.Remove(item, container);
-            _containerSystem.Insert(newItem, container); // TODO: Use location to make sure the item is in the same spot
+            _storageSystem.InsertAt(container.Owner, newItem, location.Value, out var _, playSound: false);
         }
 
-        _entityManager.QueueDeleteEntity(item);
+        EntityManager.QueueDeleteEntity(item);
     }
 }
 
 /// <summary>
-/// An event directed at an item to perform a recursive search and replacement of it or it's contents.
+/// An event directed at a storage container to perform a recursive search and replacement of it or it's contents.
 /// </summary>
-/// <param name="profile">Character profile for the player the item is about to be equipped to, if any.</param>
-/// <param name="slotName">Name of the inventory slot on the player the item is about to be equipped to, if any.</param>
+/// <param name="profile">Character profile for the player the storage container is about to be equipped to, if any.</param>
+/// <param name="slotName">Name of the inventory slot on the player the storage container is about to be equipped to, if any.</param>
 public sealed class ApplyStorageOverrideEvent : EntityEventArgs
 {
+    public EntityUid Entity { get; }
     public HumanoidCharacterProfile? Profile { get; }
     public SlotDefinition? Slot { get; }
 
-    public ApplyStorageOverrideEvent(HumanoidCharacterProfile? profile = null, SlotDefinition? slot = null)
+    public ApplyStorageOverrideEvent(EntityUid entity, HumanoidCharacterProfile? profile = null, SlotDefinition? slot = null)
     {
+        Entity = entity;
         Profile = profile;
         Slot = slot;
     }
