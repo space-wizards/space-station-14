@@ -1,12 +1,54 @@
 - type: species
   id: Vox
   name: Vox
-  roundStart: false # sad...
+  roundStart: true # testing only!
   prototype: MobVox
   sprites: MobVoxSprites
   markingLimits: MobVoxMarkingLimits
   dollPrototype: MobVoxDummy
   skinColoration: Hues
+  preSpawnGearOverride: PreSpawnGearOverrideVox
+
+- type: preSpawnGearOverride
+  id: PreSpawnGearOverride_testing
+  overrideType: Force
+  gearTemplate:
+    id: VoxGearToTest
+    equipment:
+      gloves: ClothingHandsGlovesFingerlessInsulated
+
+- type: preSpawnGearOverride
+  id: PreSpawnGearOverride_testing
+  overrideType: Remove
+  gearTemplate:
+    id: VoxGearToRemove
+    equipment:
+      jumpsuit: ClothingUniformJumpsuitNinja
+      # belt holds katana so satchel has the tools for sabotaging things
+      back: ClothingBackpackSatchelTools
+      mask: ClothingMaskNinja
+      head: ClothingHeadHelmetSpaceNinja
+      eyes: ClothingEyesVisorNinja
+      gloves: ClothingHandsGlovesSpaceNinja
+      outerClothing: ClothingOuterSuitSpaceNinja
+      shoes: ClothingShoesSpaceNinja
+      id: AgentIDCard
+      ears: ClothingHeadsetGrey
+      pocket1: SpiderCharge
+      pocket2: PinpointerStation
+      belt: EnergyKatana
+      suitstorage: YellowOxygenTankFilled
+
+- type: preSpawnGearOverride
+  id: PreSpawnGearOverrideVox
+  overrideType: Add
+  gearTemplate:
+    id: preSpawnGearOverrideVox
+    equipment:
+      mask: ClothingMaskBreath
+      outerClothing: ClothingOuterVest
+      suitstorage: NitrogenTankFilled
+
 
 - type: speciesBaseSprites
   id: MobVoxSprites

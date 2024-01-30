@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -68,6 +69,12 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype { get; private set; } = default!;
+
+    /// <summary>
+    ///     Species specific modifications to the starting gear inherited from the Job/Role
+    /// </summary>
+    [DataField("preSpawnGearOverride", required: false, customTypeSerializer:typeof(PrototypeIdSerializer<PreSpawnGearOverridePrototype>))]
+    public string? PreSpawnGearOverride { get; private set; } = default!;
 
     /// <summary>
     /// Prototype used by the species for the dress-up doll in various menus.
