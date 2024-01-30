@@ -157,6 +157,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
         # If adding the text would bring it over the group limit then send the message and start a new one
         if message_length + group_length >= DISCORD_SPLIT_LIMIT:
+            print("Split changelog  and sending to discord")
             send_discord(message_text)
 
             # Reset the message
@@ -168,6 +169,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
     # Clean up anything remaining
     message_text = message_content.getvalue()
     if len(message_text) > 0:
+        print("Sending final changelog to discord")
         send_discord(message_text)
 
 
