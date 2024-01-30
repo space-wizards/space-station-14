@@ -3,7 +3,6 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Traitor.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.Traitor.Systems;
 
@@ -13,7 +12,6 @@ namespace Content.Server.Traitor.Systems;
 public sealed class AutoTraitorSystem : EntitySystem
 {
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -25,12 +23,12 @@ public sealed class AutoTraitorSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, AutoTraitorComponent comp, MapInitEvent args)
     {
-        TryMakeTraitor(uid, comp, comp.Prob);
+        TryMakeTraitor(uid, comp);
     }
 
     private void OnMindAdded(EntityUid uid, AutoTraitorComponent comp, MindAddedMessage args)
     {
-        TryMakeTraitor(uid, comp, comp.Prob);
+        TryMakeTraitor(uid, comp);
     }
 
     /// <summary>
@@ -58,14 +56,8 @@ public sealed class AutoTraitorSystem : EntitySystem
     /// <summary>
     /// Checks if there is a mind, then makes it a traitor using the options.
     /// </summary>
-    public bool TryMakeTraitor(EntityUid uid, AutoTraitorComponent? comp = null, float prob = 1f)
+    public bool TryMakeTraitor(EntityUid uid, AutoTraitorComponent? comp = null)
     {
-        if (!_random.Prob(prob))
-        {
-            RemComp<AutoTraitorComponent>(uid);
-            return false;
-        }
-
         if (!Resolve(uid, ref comp))
             return false;
 

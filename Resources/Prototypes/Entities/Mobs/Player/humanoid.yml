@@ -504,8 +504,6 @@
   id: LostCargoTechnical
   randomizeName: false
   components:
-    - type: AutoTraitor
-      prob: 0.05
     - type: GhostRole
       name: ghost-role-information-lost-cargo-technical-name
       description: ghost-role-information-lost-cargo-technical-description
@@ -559,8 +557,6 @@
   id: ClownTroupe
   randomizeName: false
   components:
-    - type: AutoTraitor
-      prob: 0.05
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
@@ -576,8 +572,6 @@
   id: ClownTroupeBanana
   randomizeName: false
   components:
-    - type: AutoTraitor
-      prob: 0.05
     - type: GhostRole
       name: ghost-role-information-clown-troupe-name
       description: ghost-role-information-clown-troupe-description
@@ -619,8 +613,6 @@
   id: TravelingChef
   randomizeName: false
   components:
-    - type: AutoTraitor
-      prob: 0.05
     - type: GhostRole
       name: ghost-role-information-traveling-chef-name
       description: ghost-role-information-traveling-chef-description
