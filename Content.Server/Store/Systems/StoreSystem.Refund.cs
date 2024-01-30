@@ -6,15 +6,12 @@ public sealed partial class StoreSystem
 {
     private void InitializeRefund()
     {
-        SubscribeLocalEvent<StoreRefundComponent, ComponentShutdown>(OnRefundShutdown);
+        SubscribeLocalEvent<StoreRefundComponent, EntityTerminatingEvent>(OnRefundTerminating);
     }
 
-    private void OnRefundShutdown(EntityUid uid, StoreRefundComponent component, ComponentShutdown args)
+    private void OnRefundTerminating(Entity<StoreRefundComponent> ent, ref EntityTerminatingEvent args)
     {
-        if (MetaData(uid).EntityLifeStage == EntityLifeStage.Terminating)
-        {
-            var ev = new RefundEntityDeletedEvent(uid);
-            RaiseLocalEvent(component.StoreEntity, ref ev);
-        }
+        var ev = new RefundEntityDeletedEvent(ent);
+        RaiseLocalEvent(ent.Comp.StoreEntity, ref ev);
     }
 }
