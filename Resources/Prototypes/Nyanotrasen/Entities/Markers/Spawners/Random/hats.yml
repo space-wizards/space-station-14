@@ -1,0 +1,102 @@
+- type: entity
+  name: Hat Spawner
+  id: HatSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Clothing/Head/Hats/tophat.rsi
+          state: icon
+    - type: RandomSpawner
+      rarePrototypes:
+        - ClothingHeadHatCentcom
+        - ClothingHeadHatOutlawHat
+        - ClothingHeadHatWizardFake
+        - ClothingHeadHatPirate
+        - ClothingHeadHatPlaguedoctor
+        - ClothingHeadHatSantahat
+        - ClothingHeadHatXmasCrown
+        - ClothingHeadHelmetCosmonaut
+        - ClothingHeadHelmetBasic
+        - ClothingHeadHelmetScaf
+        - ClothingHeadHelmetTemplar
+        - ClothingHeadHelmetThunderdome
+        - ClothingHeadHelmetFire
+        - ClothingHeadHatChef
+        - ClothingHeadHatBunny
+        - ClothingHeadHatHoodBioGeneral
+        - ClothingHeadHatHoodRad
+        - ClothingHeadHatCake
+        - ClothingHeadHatChickenhead
+        - ClothingHeadHatHairflower
+        - ClothingHeadHatPumpkin
+        - ClothingHeadHatRichard
+        - ClothingHeadHatSkub
+        - ClothingHeadHatShrineMaidenWig
+        - ClothingHeadHatSquid
+        - ClothingHeadHatBizarreSoft
+        - ClothingHeadHatWeldingMaskFlame
+        - ClothingHeadHatWeldingMaskFlameBlue
+        - ClothingHeadHatWeldingMaskPainted
+        - ClothingHeadCage
+        - ClothingHeadHelmetKendoMen
+        - ClothingHeadBandMerc
+      rareChance: 0.03
+      prototypes:
+        - ClothingHeadHatAnimalCat
+        - ClothingHeadHatAnimalCatBrown
+        - ClothingHeadHatAnimalCatBlack
+        - ClothingHeadHatAnimalHeadslime
+        - ClothingHeadHatAnimalMonkey
+        - ClothingHeadBandBlack
+        - ClothingHeadBandBlue
+        - ClothingHeadBandGold
+        - ClothingHeadBandGreen
+        - ClothingHeadBandGrey
+        - ClothingHeadBandRed
+        - ClothingHeadBandSkull
+        - ClothingHeadBandBrown
+        - ClothingHeadHatHardhatBlue
+        - ClothingHeadHatHardhatOrange
+        - ClothingHeadHatHardhatRed
+        - ClothingHeadHatHardhatWhite
+        - ClothingHeadHatHardhatYellow
+        - ClothingHeadHatHardhatYellowDark
+        - ClothingHeadHatBeaverHat
+        - ClothingHeadHatBeret
+        - ClothingHeadHatBowlerHat
+        - ClothingHeadHatCardborg
+        - ClothingHeadHatFedoraBrown
+        - ClothingHeadHatFedoraGrey
+        - ClothingHeadHatFedoraBlack
+        - ClothingHeadHatFedoraChoc
+        - ClothingHeadHatFedoraWhite
+        - ClothingHeadHatPaper
+        - ClothingHeadHatSombrero
+        - ClothingHeadHatTophat
+        - ClothingHeadHatUshanka
+        - ClothingHeadHatTrucker
+        - ClothingHeadPaperSack
+        - ClothingHeadPaperSackSmile
+        - ClothingHeadFishCap
+        - ClothingHeadRastaHat
+        - ClothingHeadSafari
+        - ClothingHeadHatFlowerCrown
+        - ClothingHeadHatCone
+        - ClothingHeadHatCasa
+        - ClothingHeadHatBluesoft
+        - ClothingHeadHatCorpsoftFlipped
+        - ClothingHeadHatGreensoft
+        - ClothingHeadHatGreysoft
+        - ClothingHeadHatOrangesoft
+        - ClothingHeadHatPurplesoftFlipped
+        - ClothingHeadHatRedsoftFlipped
+        - ClothingHeadHatYellowsoft
+        - ClothingHeadHatWelding
+        - ClothingHeadHatFlatBlack
+        - ClothingHeadHatFlatBrown
+        - ClothingHeadTinfoil
+        - ClothingHeadHatStrawHat
+      chance: 0.5
+      offset: 0.2

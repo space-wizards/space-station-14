@@ -1,0 +1,11 @@
+- type: entity
+  name: white ferret
+  parent: MobFerret
+  id: MobFerretWhite
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Nyanotrasen/Mobs/Pets/whiteferret.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: ferret
