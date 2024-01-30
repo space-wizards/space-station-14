@@ -124,8 +124,7 @@ public sealed partial class GameTicker
         {
             string finalPlayers = SerializeToYaml(_replayRoundPlayerInfo);
             metadata["roundEndPlayers"] = new ValueDataNode(finalPlayers);
-            // Fake line seperator so that the format in the yaml file does not break, but you can still use tools to manually make new lines.
-            metadata["roundEndText"] = new ValueDataNode(_replayRoundText!.Replace("\n", "/n"));
+            metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
             _replayRoundPlayerInfo = null;
             _replayRoundText = null;
         }
