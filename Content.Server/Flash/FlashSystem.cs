@@ -157,11 +157,6 @@ namespace Content.Server.Flash
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                var entPosition = _transform.GetMapCoordinates(entity);
-                //cut to a circle.
-                if (MathF.Sqrt(MathF.Pow(mapPosition.X - entPosition.X, 2) + MathF.Pow(mapPosition.Y - entPosition.Y, 2)) > range)
-                    continue;
-
                 if (!flashableQuery.HasComponent(entity))
                     continue;
 
