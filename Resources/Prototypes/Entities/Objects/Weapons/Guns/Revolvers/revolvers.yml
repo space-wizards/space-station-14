@@ -97,6 +97,7 @@
   name: Inspector
   parent: WeaponRevolverInspector
   id: WeaponRevolverInspectorNonlethal # Detective's starter weapon
+  suffix: non-lethal
   description: A detective's best friend. Uses .45 magnum ammo.
   components:
   - type: RevolverAmmoProvider
