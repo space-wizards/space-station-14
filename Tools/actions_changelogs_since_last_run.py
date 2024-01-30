@@ -17,6 +17,8 @@ GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
 GITHUB_RUN        = os.environ["GITHUB_RUN_ID"]
 GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
 
+# https://discord.com/developers/docs/resources/webhook
+DISCORD_SPLIT_LIMIT = 2000
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
 CHANGELOG_FILE = "Resources/Changelog/Changelog.yml"
@@ -104,48 +106,71 @@ def diff_changelog(old: dict[str, Any], cur: dict[str, Any]) -> Iterable[Changel
     return (e for e in cur["Entries"] if e["id"] not in old_entry_ids)
 
 
+def get_discord_body(content: str):
+    return {
+            "content": content,
+            # Do not allow any mentions.
+            "allowed_mentions": {
+                "parse": []
+            },
+            # SUPPRESS_EMBEDS
+            "flags": 1 << 2
+        }
+
+
+def send_discord(content: str):
+    body = get_discord_body(content)
+
+    response = requests.post(DISCORD_WEBHOOK_URL, json=body)
+    response.raise_for_status()
+
+
 def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
     if not DISCORD_WEBHOOK_URL:
         print(f"No discord webhook URL found, skipping discord send")
         return
 
-    count: int = 0
+    message_content = io.StringIO()
+    # We need to manually split messages to avoid discord's character limit
+    # With that being said this isn't entirely robust
+    # e.g. a sufficiently large CL breaks it, but that's a future problem
 
     for name, group in itertools.groupby(entries, lambda x: x["author"]):
-        count = 0
-        content = io.StringIO()
-        content.write(f"**{name}** updated:\n")
+        # Need to split text to avoid discord character limit
+        group_content = io.StringIO()
+        group_content.write(f"**{name}** updated:\n")
 
         for entry in group:
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 message = change['message']
                 url = entry.get("url")
-                count += 1
                 if url and url.strip():
-                    content.write(f"{emoji} [-]({url}) {message}\n")
+                    group_content.write(f"{emoji} [-]({url}) {message}\n")
                 else:
-                    content.write(f"{emoji} - {message}\n")
+                    group_content.write(f"{emoji} - {message}\n")
 
-            body = {
-                "content": content.getvalue(),
-                # Do not allow any mentions.
-                "allowed_mentions": {
-                    "parse": []
-                },
-                # SUPPRESS_EMBEDS
-                "flags": 1 << 2
-            }
-            
-        # No entries?
-        if count == 0:
-          continue
+        group_text = group_content.getvalue()
+        message_text = message_content.getvalue()
+        message_length = len(message_text)
+        group_length = len(group_text)
 
-        # Post per group to try to avoid discord character limits
-        print(f"Posting {count} changelog entries to discord webhook")
+        # If adding the text would bring it over the group limit then send the message and start a new one
+        if message_length + group_length >= DISCORD_SPLIT_LIMIT:
+            print("Split changelog  and sending to discord")
+            send_discord(message_text)
 
-        response = requests.post(DISCORD_WEBHOOK_URL, json=body)
-        response.raise_for_status()
+            # Reset the message
+            message_content = io.StringIO()
+
+        # Flush the group to the message
+        message_content.write(group_text)
     
+    # Clean up anything remaining
+    message_text = message_content.getvalue()
+    if len(message_text) > 0:
+        print("Sending final changelog to discord")
+        send_discord(message_text)
+
 
 main()
