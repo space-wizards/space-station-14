@@ -63,12 +63,13 @@ public sealed partial class StoreComponent : Component
     /// <summary>
     ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, DataField]
     public List<EntityUid> BoughtEntities = new();
 
     /// <summary>
     ///     The total balance spent in this store. Used for refunds.
     /// </summary>
+    [ViewVariables, DataField]
     public Dictionary<string, FixedPoint2> BalanceSpent = new();
 
     /// <summary>
