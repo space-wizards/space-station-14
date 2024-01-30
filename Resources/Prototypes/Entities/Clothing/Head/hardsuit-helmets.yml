@@ -756,8 +756,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieCommander
   id: ClothingHeadHelmetHardsuitAdmin
-  noSpawn: true
-  name: bluespace traveler hardsuit helmet [admeme]
+  name: bluespace traveler hardsuit helmet
   description: Some modified bluespace helmet. Why does it look like a biker helmet?
   components:
   - type: Sprite
