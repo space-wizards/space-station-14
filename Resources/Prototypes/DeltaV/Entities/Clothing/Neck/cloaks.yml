@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSalvager
+  name: salvager's cloak
+  description: Worn by dangerous people who've deconstructed stations with ease.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Neck/Cloaks/salvage.rsi 
+  - type: Clothing
+    sprite: DeltaV/Clothing/Neck/Cloaks/salvage.rsi  

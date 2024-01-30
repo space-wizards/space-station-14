@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingHeadHelmetHardsuitERTLeader
+  id: ClothingHeadHelmetHardsuitERTCentcomm
+  name: CentCom hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hardsuits/ERThelmets/ertcentcomm.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hardsuits/ERThelmets/ertcentcomm.rsi
+  - type: PointLight
+    color: "#00aa5c"

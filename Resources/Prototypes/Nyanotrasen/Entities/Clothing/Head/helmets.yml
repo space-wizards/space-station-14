@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetKabuto
+  name: kabuto and menpo
+  description: A modern replica of a kabuto and menpo.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Helmets/kabuto.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Helmets/kabuto.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.80
+        

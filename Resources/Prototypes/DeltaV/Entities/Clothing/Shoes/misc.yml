@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesMiscWhite
+  name: white leather shoes
+  description: Impeccably shined white leather shoes. Don't tread on these tootsies.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Shoes/Misc/whiteleather.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Shoes/Misc/whiteleather.rsi

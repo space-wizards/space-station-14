@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitAreopagite
+  name: areopagite's suit
+  description: Quite the getup.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/OuterClothing/Suits/areopagite.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/OuterClothing/Suits/areopagite.rsi
