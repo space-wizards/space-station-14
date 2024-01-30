@@ -1,0 +1,28 @@
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCCWarden
+  name: central command's armored winter coat
+  description: A tough, utilitarian coat designed for the wardens of Central Command. Reinforced kevlar plating and high quality fur allow the user to look stylish while staying protected.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/OuterClothing/WinterCoats/cc_warden_winter_coat.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/OuterClothing/WinterCoats/cc_warden_winter_coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.4 #Stronger than the warden's armored jacket, because shenanigans and CC spends alot of money.
+        Heat: 0.75
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterDenimJacket
+  name: Denim jacket
+  description: A jean jacket with a warm inner lining.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/OuterClothing/WinterCoats/denim_jacket.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/OuterClothing/WinterCoats/denim_jacket.rsi

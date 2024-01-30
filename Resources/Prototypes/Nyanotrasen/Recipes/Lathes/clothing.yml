@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: ClothingUniformJumpsuitPrisonGuard
+  icon:
+    sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/prisonguard.rsi
+    state: icon
+  result: ClothingUniformJumpsuitPrisonGuard
+  completetime: 4
+  materials:
+    Cloth: 300
