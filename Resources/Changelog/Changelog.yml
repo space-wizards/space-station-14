@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: ninruB
-  changes:
-  - message: Familiar Garbs may now appear as maintenance loot.
-    type: Add
-  id: 5324
-  time: '2023-12-11T13:04:56.0000000+00:00'
 - author: Errant
   changes:
   - message: Incapacitated mobs can no longer be shoved for a speed boost.
@@ -3833,3 +3827,10 @@
   id: 5823
   time: '2024-01-30T00:21:26.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23822
+- author: Tayrtahn
+  changes:
+  - message: Pressing shift as a ghost no longer cancels following your target
+    type: Fix
+  id: 5824
+  time: '2024-01-30T01:33:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24715
