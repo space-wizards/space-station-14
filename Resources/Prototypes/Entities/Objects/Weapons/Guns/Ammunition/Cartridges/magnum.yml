@@ -65,3 +65,35 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumUranium
+
+- type: entity
+  id: CartridgeMagnumParticle
+  name: cartridge (.45 particle)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumParticle
+
+- type: entity
+  id: CartridgeMagnumParticlePlasma
+  name: cartridge (.45 plasma)
+  parent: CartridgePistolParticlePlasma
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumParticlePlasma
+
+- type: entity
+  id: CartridgeMagnumParticleTritium
+  name: cartridge (.45 tritium)
+  parent: CartridgePistolParticleTritium
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumParticleTritium
+
+- type: entity
+  id: CartridgeMagnumParticleFrezon
+  name: cartridge (.45 frezon)
+  parent: CartridgePistolParticleFrezon
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumParticleFrezon

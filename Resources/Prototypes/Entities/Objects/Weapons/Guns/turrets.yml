@@ -196,6 +196,51 @@
     - SimpleHostile
 
 - type: entity
+  id: WeaponTurretHostileParticle
+  parent: WeaponTurretHostile
+  suffix: Hostile, Particle
+  components:
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Miss/particleboltfire2.ogg
+      params:
+        volume: 5
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticle
+    capacity: 500
+
+- type: entity
+  id: WeaponTurretHostileParticlePlasma
+  parent: WeaponTurretHostileParticle
+  suffix: Hostile, Plasma
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticlePlasma
+    capacity: 500
+
+- type: entity
+  id: WeaponTurretHostileParticleTritium
+  parent: WeaponTurretHostileParticle
+  suffix: Hostile, Tritium
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticleTritium
+    capacity: 500
+
+- type: entity
+  id: WeaponTurretHostileParticleFrezon
+  parent: WeaponTurretHostileParticle
+  suffix: Hostile, Frezon
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticleFrezon
+    capacity: 500
+
+- type: entity
   name: xeno turret
   description: Shoots 9mm acid projectiles
   parent: BaseWeaponTurret

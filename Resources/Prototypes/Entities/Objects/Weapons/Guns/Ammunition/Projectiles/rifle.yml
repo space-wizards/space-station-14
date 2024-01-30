@@ -54,4 +54,66 @@
       types:
         Radiation: 7
         Piercing: 8
-        
+
+- type: entity
+  id: BulletRifleParticle
+  parent: BaseBulletParticle
+  name: BulletParticle
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+        Slash: 7
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+
+- type: entity
+  id: BulletRifleParticlePlasma
+  parent: BulletPistolParticlePlasma
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: SolutionInjectOnCollide
+    transferAmount: 1.33 #high volume to keep the color, low transfer to keep the balance.
+    blockSlots: NONE #particle lasers shouldn't be blocked by a mask
+
+- type: entity
+  id: BulletRifleParticleTritium
+  parent: BulletPistolParticleTritium
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: SolutionInjectOnCollide
+    transferAmount: 1.33 #high volume to keep the color, low transfer to keep the balance.
+    blockSlots: NONE #particle lasers shouldn't be blocked by a mask
+
+- type: entity
+  id: BulletRifleParticleFrezon
+  parent: BulletPistolParticleFrezon
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: SolutionInjectOnCollide
+    transferAmount: 2.66 #high volume to keep the color, low transfer to keep the balance.
+    blockSlots: NONE #particle lasers shouldn't be blocked by a mask

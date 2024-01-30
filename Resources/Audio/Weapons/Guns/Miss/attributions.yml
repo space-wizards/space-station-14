@@ -7,3 +7,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from CM-SS13"
   source: "https://github.com/cmss13-devs/cmss13/tree/0535055a7abcd3016123f2be2cd3db428c122dac/sound/bullets"
+
+- files: ["particleboltfire", "particleboltfire2", "particlebolt_flyby1", "particlebolt_flyby2", "particlebolt_flyby3", "particlebolt_flyby4", "particlebolt_flyby5"]
+  license: "CC-0"
+  copyright: "user Sheyvan from freesound.org"
+  source: "https://freesound.org/people/Sheyvan/sounds/703452/"

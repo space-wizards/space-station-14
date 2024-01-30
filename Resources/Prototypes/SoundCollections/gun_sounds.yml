@@ -10,3 +10,12 @@
   id: EnergyMiss
   files:
     - /Audio/Weapons/Guns/Miss/energy_miss1.ogg
+
+- type: soundCollection
+  id: ParticleBoltMiss
+  files:
+  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby1.ogg
+  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby2.ogg
+  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby3.ogg
+  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby4.ogg
+  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby5.ogg

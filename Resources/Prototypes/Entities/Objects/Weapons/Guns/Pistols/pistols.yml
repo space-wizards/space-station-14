@@ -196,10 +196,44 @@
             - CartridgePistol
 
 - type: entity
+  name: mk 59
+  parent: WeaponPistolMk58
+  id: WeaponPistolMk59Particle
+  description: A cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary. Uses .35 particle.
+  suffix: particle, admeme
+  components:
+  - type: Gun
+    fireRate: 5
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Miss/particleboltfire2.ogg
+      params:
+        volume: 5
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolParticle
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistolParticle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+
+- type: entity
   name: N1984
   parent: BaseWeaponPistol
   id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber. 
+  description: The sidearm of any self respecting officer.     Comes in the lord's caliber .45 magnum. 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
@@ -259,6 +293,44 @@
       gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnumRubber
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeMagnum
+
+- type: entity
+  name: Particle N1984
+  parent: WeaponPistolN1984
+  id: WeaponPistolN1984Particle
+  description: The sidearm of any self respecting officer.     Comes in the lord's caliber .45 particle.
+  suffix: particle, admeme
+  components:
+  - type: Gun
+    minAngle: 1
+    maxAngle: 20
+    angleIncrease: 8
+    angleDecay: 9
+    fireRate: 4
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Miss/particleboltfire2.ogg
+      params:
+        volume: 5
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineMagnumParticle
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineMagnum
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeMagnumParticle
         priority: 1
         whitelist:
           tags:

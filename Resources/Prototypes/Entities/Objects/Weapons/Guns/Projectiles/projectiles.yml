@@ -901,3 +901,138 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+# particle plasma projectiles
+- type: entity
+  id: BaseBulletParticle
+  name: Particle Bullet
+  description: If you can see this you're probably dead!
+  abstract: true
+  components:
+  - type: Reflective
+  - type: FlyBySound
+    sound:
+      collection: ParticleBoltMiss
+    prob: 1
+    range: 2
+  - type: Clickable
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/particleproj.rsi
+    layers:
+    - state: particlebolt
+      shader: unshaded
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by:
+        shape: !type:PhysShapeCircle
+          radius: 2
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+        Slash: 6
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: TimedDespawn
+    lifetime: 20
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 1.9
+    energy: 0.4
+
+- type: entity
+  id: BaseBulletPistolParticleSolution # Trigger-on-collide bullets
+  name: Particle Bullet
+  parent: BaseBulletParticle
+  abstract: true
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/particleproj.rsi
+    layers:
+    - state: particlebolt
+      map: [ "enum.SolutionContainerLayers.Base" ]
+      shader: unshaded
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+      shader: unshaded
+    - state: front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+      shader: unshaded
+  - type: Appearance
+  - type: TriggerOnCollide
+    fixtureID: projectile
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+        Slash: 6
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by:
+        shape: !type:PhysShapeCircle
+          radius: 2
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: fill
+#    metamorphic: true # why the hell does that look so fucking cool?
+#    metamorphicDefaultSprite:
+#      sprite: Objects/Consumable/Drinks/jar.rsi
+#      state: icon
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnCollide
+    transferAmount: 15
+    blockSlots: NONE #particle lasers shouldn't be blocked by a mask
+  - type: InjectableSolution
+    solution: ammo
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 1.9
+    energy: 0.4

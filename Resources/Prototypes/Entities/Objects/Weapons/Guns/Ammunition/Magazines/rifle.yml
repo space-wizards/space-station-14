@@ -88,3 +88,59 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleParticle
+  name: "magazine (.20 particle)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleParticle
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleParticlePlasma
+  name: "magazine (.20 plasma)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleParticlePlasma
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleParticleTritium
+  name: "magazine (.20 tritium)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleParticleTritium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleParticleFrezon
+  name: "magazine (.20 frezon)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleParticleFrezon
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

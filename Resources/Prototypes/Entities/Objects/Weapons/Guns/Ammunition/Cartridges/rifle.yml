@@ -57,3 +57,35 @@
   components:
   - type: CartridgeAmmo
     proto: BulletRifleUranium
+
+- type: entity
+  id: CartridgeRifleParticle
+  name: cartridge (.20 particle)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleParticle
+
+- type: entity
+  id: CartridgeRifleParticlePlasma
+  name: cartridge (.20 plasma)
+  parent: CartridgePistolParticlePlasma
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleParticlePlasma
+
+- type: entity
+  id: CartridgeRifleParticleTritium
+  name: cartridge (.20 tritium)
+  parent: CartridgePistolParticleTritium
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleParticleTritium
+
+- type: entity
+  id: CartridgeRifleParticleFrezon
+  name: cartridge (.20 frezon)
+  parent: CartridgePistolParticleFrezon
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleParticleFrezon

@@ -98,3 +98,62 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: uranium
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolParticle
+  name: ammunition box (.35 particle)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticle
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolParticlePlasma
+  name: ammunition box (.35 plasma)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticlePlasma
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolParticleTritium
+  name: ammunition box (.35 tritium)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticleTritium
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolParticleFrezon
+  name: ammunition box (.35 frezon)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolParticleFrezon
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: rubber

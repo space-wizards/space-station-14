@@ -118,6 +118,118 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
+  id: MagazineMagnumParticle
+  name: pistol magazine (.45 particle)
+  parent: BaseMagazineMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticle
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineMagnumParticlePlasma
+  name: pistol magazine (.45 plasma)
+  parent: BaseMagazineMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticlePlasma
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineMagnumParticleTritium
+  name: pistol magazine (.45 tritium)
+  parent: BaseMagazineMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticleTritium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineMagnumParticleFrezon
+  name: pistol magazine (.45 frezon)
+  parent: BaseMagazineMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticleFrezon
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineMagnumSubMachineGunParticle
+  name: "Vector magazine (.45 particle)"
+  parent: BaseMagazineMagnumSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticle
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineMagnumSubMachineGunParticlePlasma
+  name: "Vector magazine (.45 plasma)"
+  parent: BaseMagazineMagnumSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticlePlasma
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineMagnumSubMachineGunParticleTritium
+  name: "Vector magazine (.45 tritium)"
+  parent: BaseMagazineMagnumSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticleTritium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineMagnumSubMachineGunParticleFrezon
+  name: "Vector magazine (.45 frezon)"
+  parent: BaseMagazineMagnumSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumParticleFrezon
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
   id: MagazineMagnumSubMachineGun
   name: "Vector magazine (.45 magnum)"
   parent: BaseMagazineMagnumSubMachineGun

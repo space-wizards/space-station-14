@@ -57,3 +57,62 @@
   components:
   - type: CartridgeAmmo
     proto: BulletPistolUranium
+
+- type: entity
+  id: CartridgePistolParticle
+  name: cartridge (.35 particle)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletPistolParticle
+
+- type: entity
+  id: CartridgePistolParticlePlasma
+  name: cartridge (.35 plasma)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletPistolParticlePlasma
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 15 # the quantity is high to keep the color of the projectile. The injection rate is limited by the actual proj.
+  - type: SolutionTransfer
+    maxTransferAmount: 15
+
+- type: entity
+  id: CartridgePistolParticleTritium
+  name: cartridge (.35 tritium)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletPistolParticleTritium
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Tritium
+          Quantity: 15 # the quantity is high to keep the color of the projectile. The injection rate is limited by the actual proj.
+  - type: SolutionTransfer
+    maxTransferAmount: 15
+
+- type: entity
+  id: CartridgePistolParticleFrezon
+  name: cartridge (.35 frezon)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletPistolParticleFrezon
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Frezon
+          Quantity: 15 # the quantity is high to keep the color of the projectile. The injection rate is limited by the actual proj.
+  - type: SolutionTransfer
+    maxTransferAmount: 15

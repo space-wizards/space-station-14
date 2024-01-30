@@ -54,3 +54,84 @@
       types:
         Radiation: 6
         Piercing: 10
+
+- type: entity
+  id: BulletPistolParticle
+  parent: BaseBulletParticle
+  name: BulletParticle
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+        Slash: 6
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+
+- type: entity
+  id: BulletPistolParticlePlasma # Poison Burny bullets
+  name: ionized plasma
+  parent: BaseBulletPistolParticleSolution
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: SolutionInjectOnCollide
+    transferAmount: 1 #high volume to keep the color, low transfer to keep the balance.
+    blockSlots: NONE #particle lasers shouldn't be blocked by a mask
+  - type: PointLight
+    enabled: true
+    color: "#ff4300" #"#7e009e" # it just looks better, ionno
+    radius: 1.9
+    energy: 0.4
+
+- type: entity
+  id: BulletPistolParticleTritium # Rad Burny bullets
+  name: ionized tritium
+  parent: BaseBulletPistolParticleSolution
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: SolutionInjectOnCollide
+    transferAmount: 1 #high volume to keep the color, low transfer to keep the balance.
+    blockSlots: NONE #particle lasers shouldn't be blocked by a mask
+  - type: PointLight
+    enabled: true
+    color: "#66ff33"
+    radius: 1.9
+    energy: 0.4
+
+- type: entity
+  id: BulletPistolParticleFrezon # Cold bullets
+  name: ionized frezon
+  parent: BaseBulletPistolParticleSolution
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Cold: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: SolutionInjectOnCollide
+    transferAmount: 1.5 #high volume to keep the color, low transfer to keep the balance.
+    blockSlots: NONE #particle lasers shouldn't be blocked by a mask
+  - type: PointLight
+    enabled: true
+    color: "#30f0ff"
+    radius: 1.9
+    energy: 0.4

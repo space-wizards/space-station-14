@@ -275,10 +275,24 @@
   desc: reagent-desc-frezon
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#3a758c"
+  color: "#30f0ff"
   boilingPoint: -195.8
   meltingPoint: -210.0
   metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 2
+      - !type:AdjustReagent
+        reagent: Leporazine # it'll help, but its not magic.
+        amount: -1.0
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
+        amount: -50000 # cold and fast.
     Gas:
       effects:
       - !type:HealthChange
