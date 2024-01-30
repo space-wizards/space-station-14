@@ -48,7 +48,6 @@ namespace Content.IntegrationTests.Tests
             "Fland",
             "Meta",
             "Packed",
-            "Aspid",
             "Cluster",
             "Omega",
             "Bagel",
