@@ -14,8 +14,8 @@
 - type: soundCollection
   id: ParticleBoltMiss
   files:
-  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby1.ogg
-  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby2.ogg
-  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby3.ogg
-  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby4.ogg
-  - /Uploaded/CptJeanLuc/II/blasters/Effects/particlebolt_flyby5.ogg
+  - /Audio/Weapons/Guns/Miss/particlebolt_flyby1.ogg
+  - /Audio/Weapons/Guns/Miss/particlebolt_flyby2.ogg
+  - /Audio/Weapons/Guns/Miss/particlebolt_flyby3.ogg
+  - /Audio/Weapons/Guns/Miss/particlebolt_flyby4.ogg
+  - /Audio/Weapons/Guns/Miss/particlebolt_flyby5.ogg
