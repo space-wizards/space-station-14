@@ -44,18 +44,4 @@ public sealed partial class StartingGearPrototype : IPrototype
     }
 }
 
-public enum StartingGearOverrideType : byte
-{
-    /// <summary>
-    /// Adds items if the targeted slots are not getting job-specified gear
-    /// </summary>
-    Add,
-    /// <summary>
-    /// Adds items, overriding job-specified gear
-    /// </summary>
-    Force,
-    /// <summary>
-    /// Removes job-specified items from every slot where input was specified, leaving the slot empty
-    /// </summary>
-    Remove  //TODO: implement this
-}
+

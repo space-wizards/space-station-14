@@ -139,26 +139,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (prototype?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-
-            if (species.PreSpawnGearOverride is not null)
-            {
-
-                //TODO: Move all of this out to PreSpawnGearOverride
-                var preSpawnGearOverrideInput = _prototypeManager.Index<PreSpawnGearOverridePrototype>(species.PreSpawnGearOverride);
-                if (preSpawnGearOverrideInput is not null)
-                {
-                    //foreach (var (type, gearTemplate) in preSpawnGearOverrideInput)
-                    //{
-                    //    PreSpawnGearOverride(type, gearTemplate, startingGear);
-                    //}
-                    if (preSpawnGearOverrideInput.OverrideType is not null && preSpawnGearOverrideInput.GearTemplate is not null)
-                    {
-                        PreSpawnGearOverride(preSpawnGearOverrideInput.OverrideType.Value,
-                            preSpawnGearOverrideInput.GearTemplate, startingGear);
-                    }
-                }
-            }
-
+            SpawnGearOverrideSpecies(species.SpawnGearOverride, startingGear);
             EquipStartingGear(entity.Value, startingGear, profile);
             if (profile != null)
                 EquipIdCard(entity.Value, profile.Name, prototype, station);
@@ -190,50 +171,58 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         }
     }
 
-    private void PreSpawnGearOverride(StartingGearOverrideType type, StartingGearPrototype template, StartingGearPrototype current)
+    /// <summary>
+    /// Modifies starting gear based on species
+    /// </summary>
+    /// <param name="overrideList">Incoming starting gear change templates.</param>
+    /// <param name="startingGear">Current starting gear.</param>
+    private void SpawnGearOverrideSpecies(List<string> overrideList, StartingGearPrototype startingGear)
     {
-        switch(type)
+        foreach (var listEntry in overrideList)
         {
-            case StartingGearOverrideType.Add or StartingGearOverrideType.Force:
-                if (template.Duffelbag is not null
-                    && (current.Duffelbag is null || type is StartingGearOverrideType.Force))
-                    current.Duffelbag = template.Duffelbag;
-                if (template.Satchel is not null
-                    && (current.Satchel is null || type is StartingGearOverrideType.Force))
-                    current.Duffelbag = template.Satchel;
-                if (template.InnerClothingSkirt is not null
-                    && (current.InnerClothingSkirt is null || type is StartingGearOverrideType.Force))
-                    current.InnerClothingSkirt = template.InnerClothingSkirt;
+            var input = _prototypeManager.Index<SpawnGearOverridePrototype>(listEntry);
+            var type = input.OverrideType;
+            var template = input.GearTemplate;
 
-                foreach (var (tSlot, tEnt) in template.Equipment)
-                {
-                    // TODO: add logs for incorrect slot or prototype entries
+            if (template is null)
+                continue;
 
-                    if (!current.Equipment.TryAdd(tSlot, tEnt) && type is StartingGearOverrideType.Force)
-                        current.Equipment[tSlot] = template.Equipment[tSlot];
-                }
-                break;
+            switch(type)
+            {
+                case SpawnGearOverrideType.Add or SpawnGearOverrideType.Force:
+                    if (template.Duffelbag is not null
+                        && (startingGear.Duffelbag is null || type is SpawnGearOverrideType.Force))
+                        startingGear.Duffelbag = template.Duffelbag;
+                    if (template.Satchel is not null
+                        && (startingGear.Satchel is null || type is SpawnGearOverrideType.Force))
+                        startingGear.Duffelbag = template.Satchel;
+                    if (template.InnerClothingSkirt is not null
+                        && (startingGear.InnerClothingSkirt is null || type is SpawnGearOverrideType.Force))
+                        startingGear.InnerClothingSkirt = template.InnerClothingSkirt;
 
-            case StartingGearOverrideType.Remove:
-                if (template.Duffelbag is not null)
-                    current.Duffelbag = null;
-                if (template.Satchel is not null)
-                    current.Duffelbag = null;
-                if (template.InnerClothingSkirt is not null)
-                    current.InnerClothingSkirt = null;
+                    foreach (var (tSlot, tEnt) in template.Equipment)
+                    {
+                        if (!startingGear.Equipment.TryAdd(tSlot, tEnt) && type is SpawnGearOverrideType.Force)
+                            startingGear.Equipment[tSlot] = template.Equipment[tSlot];
+                    }
+                    break;
+                case SpawnGearOverrideType.Remove:
+                    if (template.Duffelbag is not null)
+                        startingGear.Duffelbag = null;
+                    if (template.Satchel is not null)
+                        startingGear.Duffelbag = null;
+                    if (template.InnerClothingSkirt is not null)
+                        startingGear.InnerClothingSkirt = null;
 
-                foreach (var (tSlot, tEnt) in template.Equipment)
-                {
-                    // TODO: add logs for incorrect slot or prototype entries
-
-                    // TODO: TEST THIS
-                    if (!template.Equipment.TryGetValue(tSlot, out var tv))
-                        current.Equipment.Remove(tSlot);
-                }
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException($"Invalid gear override type {type}");
+                    foreach (var (tSlot, tEnt) in template.Equipment)
+                    {
+                        if (template.Equipment.TryGetValue(tSlot, out var tv))
+                            startingGear.Equipment.Remove(tSlot);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Invalid gear override type {type}");
+            }
         }
     }
 
