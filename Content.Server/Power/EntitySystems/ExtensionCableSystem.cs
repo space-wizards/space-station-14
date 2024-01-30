@@ -3,31 +3,22 @@ using Content.Server.Power.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems
 {
     public sealed class ExtensionCableSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
         private EntityQuery<MapGridComponent> _gridQuery;
-        private EntityQuery<MetaDataComponent> _metaQuery;
-        private EntityQuery<TransformComponent> _xformQuery;
-        private EntityQuery<ExtensionCableProviderComponent> _providerQuery;
-        private EntityQuery<ExtensionCableReceiverComponent> _receiverQuery;
+        private readonly Queue<EntityUid> _providerConnectionQueue = new();
+        private readonly Queue<EntityUid> _receiverConnectionQueue = new();
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _gridQuery = _entityManager.GetEntityQuery<MapGridComponent>();
-            _metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
-            _xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
-            _providerQuery = _entityManager.GetEntityQuery<ExtensionCableProviderComponent>();
-            _receiverQuery = _entityManager.GetEntityQuery<ExtensionCableReceiverComponent>();
+            _gridQuery = EntityManager.GetEntityQuery<MapGridComponent>();
 
             //Lifecycle events
             SubscribeLocalEvent<ExtensionCableProviderComponent, ComponentStartup>(OnProviderStarted);
@@ -36,11 +27,34 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ExtensionCableReceiverComponent, ComponentShutdown>(OnReceiverShutdown);
 
             //Anchoring
+            // Note that anchoring happens earlier than the startup
+            // see SharedTransformSystem.OnCompStartup
             SubscribeLocalEvent<ExtensionCableReceiverComponent, AnchorStateChangedEvent>(OnReceiverAnchorStateChanged);
             SubscribeLocalEvent<ExtensionCableReceiverComponent, ReAnchorEvent>(OnReceiverReAnchor);
 
             SubscribeLocalEvent<ExtensionCableProviderComponent, AnchorStateChangedEvent>(OnProviderAnchorStateChanged);
             SubscribeLocalEvent<ExtensionCableProviderComponent, ReAnchorEvent>(OnProviderReAnchor);
+        }
+
+        public override void Update(float frameTime)
+        {
+            while (_receiverConnectionQueue.TryDequeue(out var receiverUid))
+            {
+                if (!TryComp<ExtensionCableReceiverComponent>(receiverUid, out var receiverComp))
+                    continue;
+
+                if (receiverComp.Connectable)
+                    Connect((receiverUid, receiverComp));
+            }
+
+            while (_providerConnectionQueue.TryDequeue(out var providerUid))
+            {
+                if (!TryComp<ExtensionCableProviderComponent>(providerUid, out var providerComp))
+                    continue;
+
+                if (providerComp.Connectable)
+                    Connect((providerUid, providerComp));
+            }
         }
 
         #region Provider
@@ -49,22 +63,23 @@ namespace Content.Server.Power.EntitySystems
         {
             if (!Resolve(provider, ref provider.Comp))
                 return;
+
             provider.Comp.TransferRange = range;
             ResetReceivers((provider, provider.Comp));
         }
 
         private void OnProviderStarted(Entity<ExtensionCableProviderComponent> provider, ref ComponentStartup args)
         {
-            Connect(provider);
+            EnqueueConnect(provider);
         }
 
         private void OnProviderShutdown(Entity<ExtensionCableProviderComponent> provider, ref ComponentShutdown args)
         {
-            var xform = _xformQuery.GetComponent(provider);
+            var xform = Transform(provider);
 
             // If grid deleting no need to update power.
             if (HasComp<MapGridComponent>(xform.GridUid) &&
-                _metaQuery.GetComponent(xform.GridUid.Value).EntityLifeStage > EntityLifeStage.MapInitialized)
+                TerminatingOrDeleted(xform.GridUid.Value))
             {
                 return;
             }
@@ -75,45 +90,29 @@ namespace Content.Server.Power.EntitySystems
         private void OnProviderAnchorStateChanged(Entity<ExtensionCableProviderComponent> provider, ref AnchorStateChangedEvent args)
         {
             if (args.Anchored)
-                Connect(provider);
+                EnqueueConnect(provider);
             else
                 Disconnect(provider);
         }
 
-        private void OnProviderReAnchor(Entity<ExtensionCableProviderComponent> provider, ref ReAnchorEvent args)
+        private void EnqueueConnect(Entity<ExtensionCableProviderComponent> provider)
         {
-            Disconnect(provider);
-            Connect(provider);
+            provider.Comp.Connectable = true;
+            provider.Comp.IsConnectCalled = false;
+            _providerConnectionQueue.Enqueue(provider);
         }
 
         private void Connect(Entity<ExtensionCableProviderComponent> provider)
         {
-            provider.Comp.Connectable = true;
-
-            foreach (var receiver in FindAvailableReceivers(provider, provider.Comp.TransferRange))
+            if (provider.Comp.IsConnectCalled)
+                return;
+            provider.Comp.IsConnectCalled = true;
+            var nearbyReceivers =
+                GetNearbyEntities<ExtensionCableReceiverComponent>(provider, provider.Comp.TransferRange);
+            foreach (var receiver in nearbyReceivers)
             {
-                // When multiple providers connect at the same tick, allow receivers to prefer the closest one.
-                // This helps to avoid confusing connections during grid init and when batch spawning cables.
-                if (receiver.Comp.Provider != null)
-                {
-                    if (receiver.Comp.ProviderConnectedTick != _gameTiming.CurTick)
-                        continue;
-
-                    var receiverXform = _xformQuery.GetComponent(receiver);
-                    var providerXform = _xformQuery.GetComponent(provider);
-                    var connectedProviderXform = _xformQuery.GetComponent(receiver.Comp.Provider.Value);
-                    if (Distance.Compare(receiverXform, providerXform, connectedProviderXform) >= 0)
-                        continue;
-
-                    Disconnect(receiver);
-                    receiver.Comp.Connectable = true;
-                }
-
-                receiver.Comp.Provider = provider;
-                receiver.Comp.ProviderConnectedTick = _gameTiming.CurTick;
-                provider.Comp.LinkedReceivers.Add(receiver);
-                RaiseLocalEvent(receiver, new ProviderConnectedEvent(provider), broadcast: false);
-                RaiseLocalEvent(provider, new ReceiverConnectedEvent(receiver), broadcast: false);
+                if (receiver.Comp is { Connectable: true, Provider: null })
+                    ConnectToClosestProvider(receiver);
             }
         }
 
@@ -121,6 +120,12 @@ namespace Content.Server.Power.EntitySystems
         {
             provider.Comp.Connectable = false;
             ResetReceivers(provider);
+        }
+
+        private void OnProviderReAnchor(Entity<ExtensionCableProviderComponent> provider, ref ReAnchorEvent args)
+        {
+            Disconnect(provider);
+            EnqueueConnect(provider);
         }
 
         private void ResetReceivers(Entity<ExtensionCableProviderComponent> provider)
@@ -139,44 +144,10 @@ namespace Content.Server.Power.EntitySystems
             {
                 // No point resetting what the receiver is doing if it's deleting, plus significant perf savings
                 // in not doing needless lookups
-                if (!_entityManager.IsQueuedForDeletion(receiver)
-                    && _metaQuery.GetComponent(receiver).EntityLifeStage <= EntityLifeStage.MapInitialized)
-                {
-                    TryFindAndSetClosestProvider(receiver);
-                }
-            }
-        }
-
-        private IEnumerable<Entity<ExtensionCableReceiverComponent>> FindAvailableReceivers(EntityUid providerUid, float range)
-        {
-            var xform = _xformQuery.GetComponent(providerUid);
-            var coordinates = xform.Coordinates;
-
-            if (!_gridQuery.TryGetComponent(xform.GridUid, out var grid))
-                yield break;
-
-            var nearbyEntities =
-                _mapSystem.GetCellsInSquareArea(xform.GridUid.Value, grid, coordinates, (int) Math.Ceiling(range / grid.TileSize));
-
-            foreach (var entity in nearbyEntities)
-            {
-                if (entity == providerUid)
+                if (TerminatingOrDeleted(receiver) || EntityManager.IsQueuedForDeletion(receiver))
                     continue;
 
-                if (_entityManager.IsQueuedForDeletion(entity) ||
-                    _metaQuery.GetComponent(entity).EntityLifeStage > EntityLifeStage.MapInitialized)
-                    continue;
-
-                if (!_receiverQuery.TryGetComponent(entity, out var receiver))
-                    continue;
-
-                if (!receiver.Connectable)
-                    continue;
-
-                var entityXform = _xformQuery.GetComponent(entity);
-                var distance = (entityXform.LocalPosition - xform.LocalPosition).Length();
-                if (Distance.Compare(distance, Math.Min(range, receiver.ReceptionRange)) <= 0)
-                    yield return (entity, receiver);
+                ConnectToClosestProvider(receiver);
             }
         }
 
@@ -188,137 +159,130 @@ namespace Content.Server.Power.EntitySystems
         {
             if (!Resolve(receiver, ref receiver.Comp))
                 return;
+
             var provider = receiver.Comp.Provider;
             receiver.Comp.Provider = null;
             RaiseLocalEvent(receiver, new ProviderDisconnectedEvent(provider), broadcast: false);
 
             if (provider != null)
             {
-                provider.Value.Comp.LinkedReceivers.Remove((receiver, receiver.Comp));
                 RaiseLocalEvent(provider.Value, new ReceiverDisconnectedEvent((receiver, receiver.Comp)), broadcast: false);
+                provider.Value.Comp.LinkedReceivers.Remove((receiver, receiver.Comp));
             }
 
             receiver.Comp.ReceptionRange = range;
-            TryFindAndSetClosestProvider((receiver, receiver.Comp));
+            ConnectToClosestProvider((receiver, receiver.Comp));
         }
 
         private void OnReceiverStarted(Entity<ExtensionCableReceiverComponent> receiver, ref ComponentStartup args)
         {
-            if (_entityManager.TryGetComponent(receiver, out PhysicsComponent? physicsComponent))
+            if (TryComp(receiver, out PhysicsComponent? physicsComponent))
             {
                 receiver.Comp.Connectable = physicsComponent.BodyType == BodyType.Static;
             }
 
-            if (receiver.Comp.Provider == null)
-            {
-                TryFindAndSetClosestProvider(receiver);
-            }
+            if (receiver.Comp.Connectable)
+                EnqueueConnect(receiver);
         }
 
         private void OnReceiverShutdown(Entity<ExtensionCableReceiverComponent> receiver, ref ComponentShutdown args)
         {
-            var xform = _xformQuery.GetComponent(receiver);
-
-            // If grid deleting no need to update power.
-            if (HasComp<MapGridComponent>(xform.GridUid) &&
-                _metaQuery.GetComponent(xform.GridUid.Value).EntityLifeStage > EntityLifeStage.MapInitialized)
-            {
-                return;
-            }
-
             Disconnect(receiver);
         }
 
         private void OnReceiverAnchorStateChanged(Entity<ExtensionCableReceiverComponent> receiver, ref AnchorStateChangedEvent args)
         {
             if (args.Anchored)
-                Connect(receiver);
+            {
+                EnqueueConnect(receiver);
+            }
             else
+            {
                 Disconnect(receiver);
+            }
         }
 
         private void OnReceiverReAnchor(Entity<ExtensionCableReceiverComponent> receiver, ref ReAnchorEvent args)
         {
             Disconnect(receiver);
-            Connect(receiver);
+            EnqueueConnect(receiver);
+        }
+
+        private void EnqueueConnect(Entity<ExtensionCableReceiverComponent> receiver)
+        {
+            receiver.Comp.Connectable = true;
+            _receiverConnectionQueue.Enqueue(receiver);
         }
 
         private void Connect(Entity<ExtensionCableReceiverComponent> receiver)
         {
-            receiver.Comp.Connectable = true;
             if (receiver.Comp.Provider == null)
-                TryFindAndSetClosestProvider(receiver);
+            {
+                ConnectToClosestProvider(receiver);
+            }
         }
 
         private void Disconnect(Entity<ExtensionCableReceiverComponent> receiver)
         {
             receiver.Comp.Connectable = false;
-            var provider = receiver.Comp.Provider;
-            receiver.Comp.Provider = null;
-            RaiseLocalEvent(receiver, new ProviderDisconnectedEvent(provider), broadcast: false);
-            if (provider != null)
+            RaiseLocalEvent(receiver, new ProviderDisconnectedEvent(receiver.Comp.Provider), broadcast: false);
+            if (receiver.Comp.Provider != null)
             {
-                provider.Value.Comp.LinkedReceivers.Remove(receiver);
-                RaiseLocalEvent(provider.Value, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                RaiseLocalEvent(receiver.Comp.Provider.Value, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                receiver.Comp.Provider.Value.Comp.LinkedReceivers.Remove(receiver);
             }
+
+            receiver.Comp.Provider = null;
         }
 
-        private void TryFindAndSetClosestProvider(Entity<ExtensionCableReceiverComponent> receiver, TransformComponent? xform = null)
+        private void ConnectToClosestProvider(Entity<ExtensionCableReceiverComponent> receiver)
         {
             if (!receiver.Comp.Connectable)
                 return;
 
-            if (!TryFindAvailableProvider(receiver, receiver.Comp.ReceptionRange, out var provider, xform))
+            if (!TryFindClosestProvider(receiver, receiver.Comp.ReceptionRange, out var provider))
                 return;
 
             receiver.Comp.Provider = provider;
-            receiver.Comp.ProviderConnectedTick = _gameTiming.CurTick;
             provider.Value.Comp.LinkedReceivers.Add(receiver);
             RaiseLocalEvent(receiver, new ProviderConnectedEvent(provider), broadcast: false);
             RaiseLocalEvent(provider.Value, new ReceiverConnectedEvent(receiver), broadcast: false);
         }
 
-        private bool TryFindAvailableProvider(EntityUid receiver, float range,
-            [NotNullWhen(true)] out Entity<ExtensionCableProviderComponent>? foundProvider,
-            TransformComponent? xform = null)
+        private bool TryFindClosestProvider(
+            EntityUid receiver,
+            float range,
+            [NotNullWhen(true)] out Entity<ExtensionCableProviderComponent>? foundProvider)
         {
-            if (!Resolve(receiver, ref xform) || !_gridQuery.TryGetComponent(xform.GridUid, out var grid))
+            if (!TryComp<TransformComponent>(receiver, out var xform))
             {
                 foundProvider = null;
                 return false;
             }
 
-            var coordinates = xform.Coordinates;
-            var nearbyEntities =
-                _mapSystem.GetCellsInSquareArea(xform.GridUid.Value, grid, coordinates, (int) Math.Ceiling(range / grid.TileSize));
-
             Entity<ExtensionCableProviderComponent>? closestCandidate = null;
             var closestDistanceFound = float.MaxValue;
-            foreach (var entity in nearbyEntities)
+            var nearbyProviders = GetNearbyEntities<ExtensionCableProviderComponent>(receiver, range);
+            foreach (var provider in nearbyProviders)
             {
-                if (entity == receiver || !_providerQuery.TryGetComponent(entity, out var provider) || !provider.Connectable)
-                    continue;
-
-                if (_entityManager.IsQueuedForDeletion(entity))
-                    continue;
-
-                if (!_metaQuery.TryGetComponent(entity, out var meta) || meta.EntityLifeStage > EntityLifeStage.MapInitialized)
+                if (!provider.Comp.Connectable)
                     continue;
 
                 // Find the closest provider
-                if (!_xformQuery.TryGetComponent(entity, out var entityXform))
-                    continue;
-                var distance = (entityXform.LocalPosition - xform.LocalPosition).Length();
-                if (Distance.Compare(distance, closestDistanceFound) >= 0)
+                if (!TryComp<TransformComponent>(provider, out var providerXform))
                     continue;
 
-                closestCandidate = (entity, provider);
+                var distance = (providerXform.LocalPosition - xform.LocalPosition).Length();
+                if (CompareDistance(distance, closestDistanceFound) >= 0)
+                    continue;
+
+                closestCandidate = provider;
                 closestDistanceFound = distance;
             }
 
             // Make sure the provider is in range before claiming success
             if (closestCandidate != null &&
-                Distance.Compare(closestDistanceFound, Math.Min(range, closestCandidate.Value.Comp.TransferRange)) <= 0)
+                CompareDistance(closestDistanceFound, Math.Min(range, closestCandidate.Value.Comp.TransferRange)) <= 0)
             {
                 foundProvider = closestCandidate;
                 return true;
@@ -326,6 +290,50 @@ namespace Content.Server.Power.EntitySystems
 
             foundProvider = null;
             return false;
+        }
+
+        #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// Returns all anchored entities having the <see cref="T"/> component
+        /// in the area around the specified entity
+        /// </summary>
+        /// <param name="uid">Origin entity to look around</param>
+        /// <param name="range">The look around distance</param>
+        /// <typeparam name="T">Filter entries by the component type</typeparam>
+        /// <returns>Entries enumerator</returns>
+        private IEnumerable<Entity<T>> GetNearbyEntities<T>(EntityUid uid, float range) where T : IComponent
+        {
+            if (!TryComp<TransformComponent>(uid, out var xform) ||
+                !_gridQuery.TryGetComponent(xform.GridUid, out var grid))
+                yield break;
+
+            var nearbyEntities = _mapSystem.GetCellsInSquareArea(xform.GridUid.Value, grid, xform.Coordinates,
+                (int) Math.Ceiling(range / grid.TileSize));
+
+            foreach (var entity in nearbyEntities)
+            {
+                if (entity == uid)
+                    continue;
+
+                if (TerminatingOrDeleted(entity) || EntityManager.IsQueuedForDeletion(entity))
+                    continue;
+
+                if (!TryComp<T>(entity, out var component))
+                    continue;
+
+                yield return (entity, component);
+            }
+        }
+
+        /// <summary>
+        /// Compares two float values that represent a distance
+        /// </summary>
+        public static int CompareDistance(float a, float b)
+        {
+            return MathHelper.CloseTo(a, b) ? 0 : a.CompareTo(b);
         }
 
         #endregion
@@ -394,40 +402,5 @@ namespace Content.Server.Power.EntitySystems
         }
 
         #endregion
-
-
-        private static class Distance
-        {
-            /// <summary>
-            /// Compares transform components distances to another origin transform component
-            /// </summary>
-            /// <remarks>
-            /// Does some weird XY pos comparisons when the distance is equal
-            /// </remarks>
-            public static int Compare(TransformComponent origin, TransformComponent a, TransformComponent b)
-            {
-                var distanceToA = (origin.LocalPosition - a.LocalPosition).Length();
-                var distanceToB = (origin.LocalPosition - b.LocalPosition).Length();
-                if (!MathHelper.CloseTo(distanceToA, distanceToB))
-                    return distanceToA.CompareTo(distanceToB);
-
-                // The XY check may seem unnecessary for distance comparison at first. However, it helps to make
-                // provider-receiver connections more deterministic, ruling out the spawn order from the equation.
-                if (!MathHelper.CloseTo(a.LocalPosition.Y, b.LocalPosition.Y))
-                    return a.LocalPosition.Y.CompareTo(b.LocalPosition.Y);
-                if (!MathHelper.CloseTo(a.LocalPosition.X, b.LocalPosition.X))
-                    return a.LocalPosition.X.CompareTo(b.LocalPosition.X);
-
-                return 0;
-            }
-
-            /// <summary>
-            /// Compares two float values that represent a distance
-            /// </summary>
-            public static int Compare(float a, float b)
-            {
-                return MathHelper.CloseTo(a, b) ? 0 : a.CompareTo(b);
-            }
-        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Content.Server.Power.EntitySystems;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Power.Components
 {
@@ -19,8 +18,5 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("receptionRange")]
         public int ReceptionRange { get; set; } = 3;
-
-        [NonSerialized]
-        public GameTick ProviderConnectedTick = GameTick.Zero;
     }
 }

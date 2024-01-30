@@ -21,6 +21,10 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Connectable { get; set; } = true;
 
-
+        /// <summary>
+        ///     Helper flag to avoid calling Connect multiple times, such as on anchoring and then again on start up.
+        /// </summary>
+        [ViewVariables]
+        public bool IsConnectCalled { get; set; } = false;
     }
 }
