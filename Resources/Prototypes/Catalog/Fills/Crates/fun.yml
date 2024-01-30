@@ -26,6 +26,8 @@
       - id: PlushieXeno
       - id: PlushieHampter
       - id: PlushieMoth
+      - id: PlushieMothRandom # Nyanotrasen - Random Moth Plushies
+        amount: 2
       - id: PlushieArachind
       - id: PlushiePenguin
 
@@ -366,4 +368,3 @@
       - id: BoxDarts
         amount: 1
         prob: 0.05
-

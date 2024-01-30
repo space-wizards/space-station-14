@@ -497,6 +497,9 @@
     spawned:
     - id: FoodMeatSlime
       amount: 2
+    - id: HideMothroach # Gotta make the plushies
+      amount: 1
+      prob: 0.5
   - type: Extractable
     grindableSolutionName: food
   - type: ReplacementAccent
