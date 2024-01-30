@@ -519,6 +519,7 @@
           Quantity: 3.3
         - ReagentId: Copper
           Quantity: 6.7
+        canReact: false
 
 - type: entity
   parent: SheetCGlass
