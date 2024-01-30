@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Pumps, vents, scrubbers, and heaters now work faster.
-    type: Tweak
-  id: 5331
-  time: '2023-12-11T23:59:47.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Removed Senior Researcher, Senior Engineer, Senior Physician, and Senior
@@ -3837,3 +3831,10 @@
   id: 5830
   time: '2024-01-30T11:05:20.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24701
+- author: Scribbles0
+  changes:
+  - message: You can now make anomaly cores orbit you.
+    type: Add
+  id: 5831
+  time: '2024-01-30T11:12:24.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24716
