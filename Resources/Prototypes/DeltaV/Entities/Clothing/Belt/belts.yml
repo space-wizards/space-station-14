@@ -1,0 +1,55 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltCeremonial
+  name: ceremonial belt
+  description: A blue-and-white belt with assorted pockets and pouches.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Belt/ceremonial.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Belt/ceremonial.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+        - SecBeltEquip
+        - Radio
+        - Flashlight
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - Ammo
+        - PowerCell
+        - OnUseTimerTrigger
+  - type: ItemMapper
+    mapLayers:
+      flashbang:
+        whitelist:
+          components:
+          - FlashOnTrigger
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltSuspendersBlack
+  name: suspenders
+  description: For holding your pants up.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Belt/suspendersblack.rsi
+    state: icon
+  - type: Clothing
+    sprite: DeltaV/Clothing/Belt/suspendersblack.rsi
+    quickEquip: true
+  - type: Tag
+    tags:
+      - BeltSlotNotBelt

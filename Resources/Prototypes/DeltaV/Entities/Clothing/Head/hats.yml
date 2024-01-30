@@ -1,0 +1,124 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraBlack
+  name: black fedora
+  description: A black fedora. Lookin' classy.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/blackfedora.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/blackfedora.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraChoc
+  name: brown fedora
+  description: A brown fedora. Lookin' snazzy.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/brownfedora.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/brownfedora.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraWhite
+  name: white fedora
+  description: A white fedora. Lookin' ritzy.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/whitefedora.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/whitefedora.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFlatBlack
+  name: black flat cap
+  description: A black flat cap, for driving cabs and delivering the papers.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/flatblack.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/flatblack.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFlatBrown
+  name: brown flat cap
+  description: A brown flat cap, for driving cabs and delivering the papers.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/flatbrown.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/flatbrown.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFlatSyndie
+  name: black flat cap
+  suffix: Weapon
+  description: A black flat cap, for sending a message.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/flatblack.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/flatblack.rsi
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 8
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCourier
+  name: courier's cap
+  description: Special delivery.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Soft/couriersoft.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Soft/couriersoft.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCourierFlipped
+  name: courier's cap flipped
+  description: Special delivery.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Soft/couriersoft.rsi
+    state: flipped-icon
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Soft/couriersoft.rsi
+    equippedPrefix: flipped
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDirCap
+  name: director's cap
+  description: A green cap with a director's rank emblem, belonging to a high-ranking member of Central Command. Whoever it is, they mean business.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/dircap.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/dircap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatStrawHat
+  name: straw hat
+  description: A fancy hat for hot days! Not recommended to wear near fires.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/Head/Hats/straw_hat.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/Head/Hats/straw_hat.rsi
+  - type: Construction
+    graph: StrawHat
+    node: strawhat
+  - type: Tag
+    tags:
+    - HamsterWearable
+

@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "AR/molotov (Discord: 778302733064339526)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "icon"
+      },
+      {
+        "name": "equipped-INNERCLOTHING",
+        "directions": 4
+      }]}
