@@ -98,7 +98,6 @@ namespace Content.Server.Power.EntitySystems
         private void EnqueueConnect(Entity<ExtensionCableProviderComponent> provider)
         {
             provider.Comp.Connectable = true;
-            provider.Comp.IsConnectCalled = false;
             _providerConnectionQueue.Enqueue(provider);
         }
 
@@ -119,6 +118,7 @@ namespace Content.Server.Power.EntitySystems
         private void Disconnect(Entity<ExtensionCableProviderComponent> provider)
         {
             provider.Comp.Connectable = false;
+            provider.Comp.IsConnectCalled = false;
             ResetReceivers(provider);
         }
 
