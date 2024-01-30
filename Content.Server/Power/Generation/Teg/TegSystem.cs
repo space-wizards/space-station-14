@@ -97,7 +97,7 @@ public sealed class TegSystem : EntitySystem
         }
     }
 
-    private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, AtmosDeviceUpdateEvent args)
+    private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, ref AtmosDeviceUpdateEvent args)
     {
         var tegGroup = GetNodeGroup(uid);
         if (tegGroup is not { IsFullyBuilt: true })

@@ -31,7 +31,7 @@ namespace Content.Client.Stylesheets
                 {
                     $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
                     $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
-                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
                 },
                 size
             );
@@ -908,6 +908,12 @@ namespace Content.Client.Stylesheets
                     new[]
                 {
                     new StyleProperty("font", notoSansItalic12),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassLabelKeyText}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansBold12),
+                    new StyleProperty( Control.StylePropertyModulateSelf, NanoGold)
                 }),
 
                 // alert tooltip

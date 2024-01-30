@@ -125,6 +125,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomAgent
+  name: CentCom agent's jumpsuit
+  description: A suit worn by CentCom's legal team. Smells of burnt coffee.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficial
   name: CentCom official's jumpsuit
   description: It's a jumpsuit worn by CentCom's officials.
@@ -951,7 +962,7 @@
       mode: SensorOff
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMercenary
   name: mercenary jumpsuit
   description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.

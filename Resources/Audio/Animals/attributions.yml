@@ -117,3 +117,18 @@
   license: "CC-BY-4.0"
   copyright: "Audio is recorded/created by Pfranzen 'FreeSound.org'. The original audio was trimmed and renamed"
   source: "https://freesound.org/people/pfranzen/sounds/322744/"
+  
+- files: ["dog_bark1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
+  source: "https://freesound.org/people/KFerentchak/sounds/235912/"  
+  
+- files: ["dog_bark2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
+  source: "https://freesound.org/people/KFerentchak/sounds/235912/"  
+  
+- files: ["dog_bark3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
+  source: "https://freesound.org/people/KFerentchak/sounds/235912/"

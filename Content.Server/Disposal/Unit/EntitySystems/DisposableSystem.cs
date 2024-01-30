@@ -63,7 +63,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!CanInsert(uid, toInsert, holder))
                 return false;
 
-            if (!holder.Container.Insert(toInsert, EntityManager))
+            if (!_containerSystem.Insert(toInsert, holder.Container))
                 return false;
 
             if (_physicsQuery.TryGetComponent(toInsert, out var physBody))
@@ -127,14 +127,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 RemComp<BeingDisposedComponent>(entity);
 
                 var meta = _metaQuery.GetComponent(entity);
-                holder.Container.Remove(entity, EntityManager, meta: meta, reparent: false, force: true);
+                _containerSystem.Remove((entity, null, meta), holder.Container, reparent: false, force: true);
 
                 var xform = _xformQuery.GetComponent(entity);
                 if (xform.ParentUid != uid)
                     continue;
 
                 if (duc != null)
-                    duc.Container.Insert(entity, EntityManager, xform, meta: meta);
+                    _containerSystem.Insert((entity, xform, meta), duc.Container);
                 else
                 {
                     _xformSystem.AttachToGridOrMap(entity, xform);
@@ -185,7 +185,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             // Insert into next tube
-            if (!to.Contents.Insert(holderUid))
+            if (!_containerSystem.Insert(holderUid, to.Contents))
             {
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
@@ -267,7 +267,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
                 // Past this point, we are performing inter-tube transfer!
                 // Remove current tube content
-                _disposalTubeQuery.GetComponent(currentTube).Contents.Remove(uid, reparent: false, force: true);
+                _containerSystem.Remove(uid, _disposalTubeQuery.GetComponent(currentTube).Contents, reparent: false, force: true);
 
                 // Find next tube
                 var nextTube = _disposalTubeSystem.NextTubeFor(currentTube, holder.CurrentDirection);

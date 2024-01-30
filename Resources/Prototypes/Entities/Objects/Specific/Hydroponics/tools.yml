@@ -11,13 +11,12 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
     damage:
       types:
-        Slash: 10
+        Slash: 6
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
 
@@ -33,7 +32,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -41,6 +39,7 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
+    storedRotation: -90
 
 - type: entity
   name: scythe
@@ -52,7 +51,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     damage:
@@ -80,14 +78,13 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
     damage:
       types:
-        Slash: 10
-        Piercing: 5
+        Slash: 8
+        Piercing: 2
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
 
@@ -99,20 +96,20 @@
   components:
   - type: Tag
     tags:
-    - Shovel
     - BotanyShovel
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
       types:
-        Blunt: 10
-        Piercing: 5 # I guess you can stab it into them?
+        Blunt: 8
+        Piercing: 2 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
+  - type: Shovel
+    speedModifier: 0.75 # slower at digging than a full-sized shovel
 
 - type: entity
   name: plant bag
@@ -123,6 +120,8 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
+  - type: Item
+    storedRotation: -90
   - type: Clothing
     quickEquip: false
     slots:

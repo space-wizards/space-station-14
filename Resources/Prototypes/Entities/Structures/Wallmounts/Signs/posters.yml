@@ -865,7 +865,7 @@
 - type: entity
   parent: PosterBase
   id: PosterLegit12Gauge
-  name: "12 Gauge"
+  name: "12 gauge"
   description: "A poster boasting about the superiority of 12 gauge shotgun shells."
   components:
   - type: Sprite

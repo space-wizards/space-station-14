@@ -3,6 +3,8 @@
 - type: entity
   id: CrateEngineeringAMEShielding
   parent: CrateEngineeringSecure
+  name: packaged antimatter reactor crate
+  description: 9 parts for the main body of an antimatter reactor, or for expanding an existing one.
   components:
   - type: StorageFill
     contents:
@@ -12,6 +14,8 @@
 - type: entity
   id: CrateEngineeringAMEJar
   parent: CrateEngineeringSecure
+  name: antimatter containment jar crate
+  description: 3 antimatter jars, for fuelling an antimatter reactor.
   components:
   - type: StorageFill
     contents:
@@ -21,6 +25,8 @@
 - type: entity
   id: CrateEngineeringAMEControl
   parent: CrateEngineeringSecure
+  name: antimatter control unit crate
+  description: The control unit of an antimatter reactor.
   components:
   - type: StorageFill
     contents:
@@ -31,6 +37,8 @@
 - type: entity
   id: CrateEngineeringSingularityEmitter
   parent: CrateEngineeringSecure
+  name: emitter crate
+  description: An emitter, best used for singularity engines.
   components:
   - type: StorageFill
     contents:
@@ -39,6 +47,8 @@
 - type: entity
   id: CrateEngineeringSingularityCollector
   parent: CrateEngineeringSecure
+  name: radiation collector crate
+  description: A radiation collector, best used for singularity engines.
   components:
   - type: StorageFill
     contents:
@@ -47,6 +57,8 @@
 - type: entity
   id: CrateEngineeringSingularityContainment
   parent: CrateEngineeringSecure
+  name: containment field generator crate
+  description: A containment field generator, keeps the singulo in submission.
   components:
   - type: StorageFill
     contents:
@@ -55,6 +67,8 @@
 - type: entity
   id: CrateEngineeringSingularityGenerator
   parent: CrateEngineeringSecure
+  name: singularity generator crate
+  description: A singularity generator, the mother of the beast.
   components:
   - type: StorageFill
     contents:
@@ -65,6 +79,8 @@
 - type: entity
   id: CrateEngineeringParticleAccelerator
   parent: CrateEngineeringSecure
+  name: PA crate
+  description: Complex to setup, but rewarding as fuck.
   components:
   - type: StorageFill
     contents:
@@ -80,8 +96,8 @@
 
 #- type: entity
 #  id: CrateEngineeringSingularity
-#  name: singularity crate
-#  description: "Prank the station!"
+#  name:  singularity crate
+#  description:  "Prank the station!"
 #  parent: CrateEngineeringSecure
 #  components:
 #  - type: StorageFill
@@ -92,6 +108,8 @@
 - type: entity
   id: CrateEngineeringGenerator
   parent: CrateEngineering
+  name:  generator crate
+  suffix: DEBUG
   components:
   - type: StorageFill
     contents:
@@ -100,6 +118,8 @@
 - type: entity
   id: CrateEngineeringSolar
   parent: CrateEngineering
+  name: solar assembly crate
+  description: Parts for constructing solar panels and trackers.
   components:
   - type: StorageFill
     contents:
@@ -109,6 +129,8 @@
 - type: entity
   id: CrateEngineeringShuttle
   parent: CrateEngineeringSecure
+  name: shuttle powering crate
+  description: A crate containing all needs for shuttle powering.
   components:
   - type: StorageFill
     contents:
@@ -116,3 +138,33 @@
       - id: WallmountGeneratorAPUElectronics
       - id: HandheldGPSBasic
       - id: InflatableDoorStack1
+
+- type: entity
+  id: CrateEngineeringTeslaGenerator
+  parent: CrateEngineeringSecure
+  name: tesla generator crate
+  description: A tesla generator. God save you.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TeslaGenerator
+
+- type: entity
+  id: CrateEngineeringTeslaCoil
+  parent: CrateEngineeringSecure
+  name: tesla coil crate
+  description: Tesla coil. Attracts lightning and generates energy from it.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TeslaCoil
+
+- type: entity
+  id: CrateEngineeringTeslaGroundingRod
+  parent: CrateEngineeringSecure
+  name: tesla grounding rod crate
+  description: Grounding rod, best for lightning protection.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TeslaGroundingRod

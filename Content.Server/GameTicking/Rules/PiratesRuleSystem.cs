@@ -196,6 +196,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             var gridId = _map.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
             {
                 Offset = aabb.Center + new Vector2(a, a),
+                LoadMap = false,
             });
 
             if (!gridId.HasValue)

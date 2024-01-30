@@ -134,7 +134,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             return;
         }
 
-        if (component.KeyContainer.Insert(args.Used))
+        if (_container.Insert(args.Used, component.KeyContainer))
         {
             _popup.PopupClient(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
             _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);

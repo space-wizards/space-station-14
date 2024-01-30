@@ -23,8 +23,7 @@
   copyright: "Taken from tgstation"
   source: "https://github.com/tgstation/tgstation/tree/88d7dbfc105fbf40284d7b7c4587f8d23c0ac3ac"
 
-- files: ["nailgun.ogg]
-  license: "CC-BY-SA-3.0"
-  copyright: "Layering by KittenColony. Sounds from soundsnap"
-  source: "https://www.soundsnap.com/nailgun_01_wav, https://www.soundsnap.com/m14_suppressed_single_shot_urban_03"
-  
+- files: ["ship_duster.ogg", "ship_friendship.ogg", "ship_svalinn.ogg", "ship_perforator.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by MIXnikita for Space Station 14"
+  source: "https://github.com/MIXnikita"

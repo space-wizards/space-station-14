@@ -37,7 +37,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
 
 - type: entity
@@ -72,7 +72,7 @@
   - type: ItemSlots
     slots:
       key_slot: #this slot name is important
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -125,7 +125,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
         spawn:
@@ -135,7 +135,7 @@
   - type: ItemSlots
     slots:
       key_slot:
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -146,7 +146,7 @@
           params:
             volume: -3
       trashbag_slot:
-        name: Bag
+        name: janitorial-trolley-slot-component-slot-name-trashbag
         whitelist:
           tags:
             - TrashBag
@@ -205,7 +205,7 @@
   - type: ItemSlots
     slots:
       key_slot:
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -215,6 +215,8 @@
           path: /Audio/Effects/Vehicle/vehiclestartup.ogg
           params:
             volume: -3
+  - type: StealTarget
+    stealGroup: VehicleSecway
 
 - type: entity
   parent: BaseVehicleRideable
@@ -253,7 +255,7 @@
   - type: ItemSlots
     slots:
       key_slot:
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -296,7 +298,7 @@
     - type: ItemSlots
       slots:
         key_slot:
-          name: Keys
+          name: vehicle-slot-component-slot-name-keys
           whitelist:
             requireAll: true
             tags:
@@ -342,7 +344,7 @@
     - type: ItemSlots
       slots:
         key_slot:
-          name: Keys
+          name: vehicle-slot-component-slot-name-keys
           whitelist:
             requireAll: true
             tags:
@@ -384,9 +386,6 @@
     friction: 0.8
     baseWalkSpeed: 3.5
     baseSprintSpeed: 4.3
-  - type: Tag
-    tags:
-      - DoorBumpOpener
   - type: Destructible
     thresholds:
     - trigger:
@@ -403,7 +402,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
 
 - type: entity
   parent: VehicleUnicycle
@@ -416,7 +415,7 @@
 - type: entity
   id: VehicleWheelchair
   parent: [BaseVehicleRideable, BaseFoldable, BaseItem]
-  name: Wheelchair
+  name: wheelchair
   description: A chair with big wheels. It looks like you can move in these on your own.
   components:
     - type: Vehicle
