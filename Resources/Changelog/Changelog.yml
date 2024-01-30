@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Tritium and frezon can once again be sold for profit.
-    type: Tweak
-  id: 5334
-  time: '2023-12-12T07:48:34.0000000+00:00'
 - author: IProduceWidgets
   changes:
   - message: Mayo Jar is bigger (50u)
@@ -3837,3 +3831,10 @@
   id: 5833
   time: '2024-01-30T23:04:26.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24706
+- author: Tayrtahn
+  changes:
+  - message: Fixed weird rotation while strapped to a bed.
+    type: Fix
+  id: 5834
+  time: '2024-01-30T23:23:31.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24746
