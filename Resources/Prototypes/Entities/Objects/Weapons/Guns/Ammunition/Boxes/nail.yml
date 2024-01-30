@@ -1,0 +1,26 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseMagazineBoxNail
+  name: box of nails (.10)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeNail
+        - BulletNail
+    proto: BulletNail
+    capacity: 60
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/nail.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance

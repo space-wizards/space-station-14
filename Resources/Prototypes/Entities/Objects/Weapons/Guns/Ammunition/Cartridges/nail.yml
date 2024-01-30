@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeNail
-  name: nail (.10 engineering) 
+  name: nail (.10 debug) 
   parent: BaseCartridge
   abstract: true
   components:
