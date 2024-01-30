@@ -178,6 +178,17 @@
         - id: SpeedLoaderMagnumRubber
 
 - type: entity
+  id: ClothingBeltHolsterFilledNonlethal
+  parent: ClothingBeltHolster
+  suffix: Filled, Non-Lethal
+  components:
+  - type: StorageFill
+    contents:
+        - id: WeaponRevolverInspectorNonlethal
+        - id: SpeedLoaderMagnumRubber
+        - id: SpeedLoaderMagnumRubber
+
+- type: entity
   id: ClothingBeltChefFilled
   parent: ClothingBeltChef
   suffix: Filled
