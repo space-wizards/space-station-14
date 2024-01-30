@@ -62,7 +62,12 @@ namespace Content.Shared.PDA
                 args.Entities.Add(id);
         }
 
-        private void UpdatePdaAppearance(EntityUid uid, PdaComponent pda)
+        public void UpdatePdaAppearance(EntityUid uid, PdaComponent pda, string newState)
+        {
+            pda.State = newState;
+            UpdatePdaAppearance(uid, pda);
+        }
+        protected virtual void UpdatePdaAppearance(EntityUid uid, PdaComponent pda)
         {
             Appearance.SetData(uid, PdaVisuals.IdCardInserted, pda.ContainedId != null);
         }

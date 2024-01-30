@@ -1,0 +1,18 @@
+- type: entity
+  parent: BasePDA
+  id: PDAChameleon
+  name: passenger PDA
+  suffix: Chameleon
+  description: Why isn't it gray?
+  components:
+  - type: ChameleonClothing
+    slot: [idcard]
+    default: PassengerPDA
+  - type: Pda
+    state: pda
+  - type: UserInterface
+    interfaces:
+      - key: enum.ChameleonUiKey.Key
+        type: ChameleonBoundUserInterface
+      - key: enum.PdaUiKey.Key
+        type: PdaBoundUserInterface

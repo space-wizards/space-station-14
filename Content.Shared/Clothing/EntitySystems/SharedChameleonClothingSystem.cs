@@ -5,6 +5,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
+using Content.Shared.PDA;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -15,6 +16,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedPdaSystem _pdaSystem = default!;
 
     public override void Initialize()
     {
@@ -37,7 +39,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     // This function is called on a server after user selected new outfit.
     // And after that on a client after state was updated.
     // This 100% makes sure that server and client have exactly same data.
-    protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
+    protected virtual void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.Default) ||
             !_proto.TryIndex(component.Default, out EntityPrototype? proto))
@@ -66,6 +68,14 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
+        }
+
+        // pda sprite logic
+        if (TryComp<PdaComponent>(uid, out var pdaComp) &&
+           proto.TryGetComponent<PdaComponent>(out var otherPdaComp)
+           && otherPdaComp.State != null)
+        {
+            _pdaSystem.UpdatePdaAppearance(uid, pdaComp, otherPdaComp.State);
         }
     }
 
