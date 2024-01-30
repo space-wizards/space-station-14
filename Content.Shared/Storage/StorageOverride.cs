@@ -14,17 +14,6 @@ public sealed partial class StorageOverrideSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
 
-    // TODO: Make new prototype to compare against!
-    private readonly string _tempProtoSpecies = "SlimePerson";
-    private readonly string _tempProtoSlotName = "back";
-    private readonly int _tempProtoMaxReplacements = int.MaxValue;
-    private readonly bool _tempProtoSearchReplaced = true; // Should search continue inside replaced containers?
-    private readonly Dictionary<string, string> _tempProtoPairs = new()
-    {
-        { "EmergencyOxygenTankFilled", "EmergencyNitrogenTankFilled" },
-        { "ExtendedEmergencyOxygenTankFilled", "ExtendedEmergencyNitrogenTankFilled" },
-    };
-
     public override void Initialize()
     {
         base.Initialize();
@@ -40,42 +29,43 @@ public sealed partial class StorageOverrideSystem : EntitySystem
         if (!EntityManager.HasComponent<StorageComponent>(ev.Entity))
             return;
 
-        // TODO: Make new prototype to compare against!
-        if (ev.Profile?.Species != _tempProtoSpecies)
+        if (ev.Profile != null &&
+            ev.Data.Species != null &&
+            ev.Profile.Species != ev.Data.Species)
             return;
 
-        // TODO: Make new prototype to compare against!
-        if (string.IsNullOrEmpty(ev.Slot?.Name) || ev.Slot?.Name != _tempProtoSlotName)
+        if (!string.IsNullOrEmpty(ev.Slot?.Name) &&
+            !string.IsNullOrEmpty(ev.Data.SlotName) &&
+            ev.Slot.Name != ev.Data.SlotName)
             return;
 
-        RecursiveStorageOverride(ev.Entity);
+        RecursiveStorageOverride(ev.Entity, ev.Data);
     }
 
     /// <summary>
     /// A recursive search through a storage container.
     /// </summary>
     /// <param name="item">The item in question. On first pass, this is the root.</param>
+    /// <param name="data">Prototype data to compare against.</param>
     /// <param name="root">Top level entity for items found in containers.</param>
     /// <param name="container">The container the item is inside, if any.</param>
     /// <param name="location">The location of the item inside the container, if any.</param>
-    private void RecursiveStorageOverride(EntityUid item, int? replacements = 0, EntityUid? root = null, Container? container = null, ItemStorageLocation? location = null)
+    private void RecursiveStorageOverride(EntityUid item, StorageOverridePrototype data, int? replacements = 0, EntityUid? root = null, Container? container = null, ItemStorageLocation? location = null)
     {
-        replacements ??= 0;
-
         if (EntityManager.TryGetComponent<MetaDataComponent>(item, out var metadataComp) &&
-            ReplaceItemByPrototype(item, root, metadataComp.EntityPrototype?.ID, container, location))
+            ReplaceItemByPrototype(item, data, root, metadataComp.EntityPrototype?.ID, container, location))
         {
-            if (++replacements >= _tempProtoMaxReplacements)
+            if (++replacements >= data.MaxReplacements)
                 return;
 
-            if (!_tempProtoSearchReplaced)
+            if (!data.SearchReplaced)
                 return;
         }
 
         if (EntityManager.TryGetComponent<StorageComponent>(item, out var storageComp))
         {
             foreach (var (uid, loc) in new Dictionary<EntityUid, ItemStorageLocation>(storageComp.StoredItems))
-                RecursiveStorageOverride(uid, replacements, root, storageComp.Container, loc);
+                RecursiveStorageOverride(uid, data, replacements, root, storageComp.Container, loc);
         }
     }
 
@@ -83,14 +73,14 @@ public sealed partial class StorageOverrideSystem : EntitySystem
     /// Replaces an item if it matches by prototype id. Handles the item's container if necessary.
     /// </summary>
     /// <param name="item">The item to remove.</param>
+    /// <param name="data">Prototype data to compare against.</param>
     /// <param name="root">Top level entity for items found in containers.</param>
     /// <param name="id">The prototype id of the item to spawn and insert.</param>
     /// <param name="container">The container the item is inside, if any.</param>
     /// <param name="location">The location of the item inside the container, if any.</param>
-    private bool ReplaceItemByPrototype(EntityUid item, EntityUid? root, string? id, Container? container = null, ItemStorageLocation? location = null)
+    private bool ReplaceItemByPrototype(EntityUid item, StorageOverridePrototype data, EntityUid? root, string? id, Container? container = null, ItemStorageLocation? location = null)
     {
-        // TODO: Make new prototype to compare against!
-        if (string.IsNullOrEmpty(id) || !_tempProtoPairs.TryGetValue(id, out var newID))
+        if (string.IsNullOrEmpty(id) || !data.Prototypes.TryGetValue(id, out var newID))
             return false;
 
         var newItem = Spawn(newID, EntityManager.GetComponent<TransformComponent>(root ?? item).Coordinates);
@@ -118,12 +108,14 @@ public sealed partial class StorageOverrideSystem : EntitySystem
 public sealed class ApplyStorageOverrideEvent : EntityEventArgs
 {
     public EntityUid Entity { get; }
+    public StorageOverridePrototype Data { get; }
     public HumanoidCharacterProfile? Profile { get; }
     public SlotDefinition? Slot { get; }
 
-    public ApplyStorageOverrideEvent(EntityUid entity, HumanoidCharacterProfile? profile = null, SlotDefinition? slot = null)
+    public ApplyStorageOverrideEvent(EntityUid entity, StorageOverridePrototype data, HumanoidCharacterProfile? profile = null, SlotDefinition? slot = null)
     {
         Entity = entity;
+        Data = data;
         Profile = profile;
         Slot = slot;
     }

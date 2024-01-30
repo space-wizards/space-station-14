@@ -4,11 +4,13 @@ using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Station;
 
 public abstract class SharedStationSpawningSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
 
@@ -29,7 +31,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true, force:true);
-                    RaiseLocalEvent(new ApplyStorageOverrideEvent(equipmentEntity, profile, slot));
+                    RaiseLocalEvent(new ApplyStorageOverrideEvent(equipmentEntity, _prototypeManager.Index<StorageOverridePrototype>("StartingGear")));
                 }
             }
         }
