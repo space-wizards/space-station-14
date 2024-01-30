@@ -58,7 +58,7 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
             LoadMap = false,
         };
         //dont use TryLoad, because he doesn't return EntityUid
-        var gridUid = _map.LoadGrid(preloader.PreloadGridsMapId, proto.Path, options);
+        var gridUid = _map.LoadGrid(preloader.PreloadGridsMapId, proto.Path.ToString(), options);
         if (gridUid != null)
             preloader.PreloadedGrids.Add(new(proto.ID, gridUid.Value));
     }
