@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: Added yellow tinted jensen glasses that may show up in maints from time
-      to time
-    type: Add
-  id: 5322
-  time: '2023-12-11T11:36:19.0000000+00:00'
 - author: ninruB
   changes:
   - message: Familiar Garbs may now appear as maintenance loot.
@@ -3833,3 +3826,10 @@
   id: 5822
   time: '2024-01-29T23:19:56.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24708
+- author: SlamBamActionman
+  changes:
+  - message: Arachnids slipping in water now get a cute hat!
+    type: Add
+  id: 5823
+  time: '2024-01-30T00:21:26.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23822
