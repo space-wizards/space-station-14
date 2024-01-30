@@ -19,11 +19,11 @@ public sealed class TrackableSystem : EntitySystem
     /// </summary>
     private void OnRemove(EntityUid uid, TrackableComponent component, ComponentRemove args)
     {
-        foreach (var entity in component.TrackedBy)
+        foreach (var tracker in component.TrackedBy)
         {
-            if (TryComp<PinpointerComponent>(entity, out var pinpointer))
+            if (TryComp<PinpointerComponent>(tracker, out var pinpointer))
             {
-                _pinpointerSystem.RemoveTarget(uid, pinpointer);
+                _pinpointerSystem.RemoveTarget(uid, pinpointer, tracker);
             }
         }
     }

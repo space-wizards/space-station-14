@@ -53,7 +53,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Searches the closest object that has a specific component, this entity is then added to the stored targets.
     /// </summary>
-    private void LocateTarget(EntityUid uid, PinpointerComponent component, IComponent selectedComponent,EntityUid? user = null)
+    private void LocateTarget(EntityUid uid, PinpointerComponent component,IComponent selectedComponent, EntityUid user)
     {
         var target = FindTargetFromComponent(uid, selectedComponent.GetType());
 
@@ -243,7 +243,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             else
             {
                 trackable.TrackedBy.Remove(uid);
-                RemoveTarget(target, component);
+                RemoveTarget(target, component,uid);
             }
         }
 
@@ -254,14 +254,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             TogglePinpointer(uid, component);
         }
-    }
-
-    /// <summary>
-    ///     Removes a target from the target list.
-    /// </summary>
-    public void RemoveTarget(EntityUid uid, PinpointerComponent component)
-    {
-        component.StoredTargets.Remove(uid);
     }
 
     /// <summary>

@@ -18,9 +18,10 @@ public abstract class SharedNukeCodePaperSystem : EntitySystem
     /// </summary>
     private void GotPinpointerScanned(EntityUid uid, NukeCodePaperComponent component, GotPinpointerScannedEvent args)
     {
-        if (component.Nuke != null)
-        {
-            _pinpointerSystem.SetTarget(args.Pinpointer, component.Nuke);
-        }
+        if (component.Nuke == null)
+            return;
+
+        _pinpointerSystem.SetTarget(args.Pinpointer, component.Nuke);
+        args.Handled = true;
     }
 }

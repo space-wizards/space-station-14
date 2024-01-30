@@ -4,7 +4,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Pinpointer;
 
@@ -41,7 +40,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             var pinpointerScanEvent = new GotPinpointerScannedEvent(uid);
             RaiseLocalEvent(args.Target.Value, ref pinpointerScanEvent);
 
-            if (component.Target == null)
+            if (component.Target == null || !pinpointerScanEvent.Handled)
                 return;
         }
 
@@ -115,13 +114,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// Stores the located target on the pinpointer if it's not already stored.
     /// Adds the Trackable component to the target so it can keep track of all the pinpointers tracking it.
     /// </summary>
-    public void StoreTarget(EntityUid? target, EntityUid pinpointer, PinpointerComponent component, EntityUid? user = null)
+    public void StoreTarget(EntityUid? target, EntityUid pinpointer, PinpointerComponent component, EntityUid user)
     {
         if (target == null)
         {
-            if (user != null)
-                _popup.PopupEntity(Loc.GetString("targeting-pinpointer-failed"), user.Value, user.Value);
-
+            _popup.PopupEntity(Loc.GetString("targeting-pinpointer-failed"), user, user);
             return;
         }
 
@@ -131,6 +128,16 @@ public abstract class SharedPinpointerSystem : EntitySystem
         component.StoredTargets.Add(target.Value);
         EnsureComp<TrackableComponent>(target.Value, out var trackable);
         trackable.TrackedBy.Add(pinpointer);
+        Dirty(pinpointer, component);
+    }
+
+    /// <summary>
+    ///     Removes a target from the target list.
+    /// </summary>
+    public void RemoveTarget(EntityUid uid, PinpointerComponent component, EntityUid tracker)
+    {
+        component.StoredTargets.Remove(uid);
+        Dirty(tracker, component);
     }
 
     /// <summary>
@@ -188,5 +195,8 @@ public abstract class SharedPinpointerSystem : EntitySystem
     }
 }
 
+/// <summary>
+///     Gets raised when the pinpointer is used on another entity.
+/// </summary>
 [ByRefEvent]
-public record struct GotPinpointerScannedEvent(EntityUid Pinpointer);
+public record struct GotPinpointerScannedEvent(EntityUid Pinpointer, bool Handled = false);

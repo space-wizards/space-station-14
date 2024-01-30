@@ -16,62 +16,62 @@ public sealed partial class PinpointerComponent : Component
     ///     A list of components that will be searched for when selected from the verb menu.
     ///     The closest entities found with one of the components in this list will be added to the StoredTargets.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ComponentRegistry Components = new();
 
     /// <summary>
     ///     A list of entities that are stored on the pinpointer
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<EntityUid> StoredTargets = new();
+    [ViewVariables, AutoNetworkedField]
+    public readonly List<EntityUid> StoredTargets = new();
 
     /// <summary>
     ///     The maximum amount of targets the pinpointer is able to store
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int MaxTargets = 10;
 
     /// <summary>
     ///     The arrow's colour is red when the tile distance to the target is higher than this value and blue when below.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float MediumDistance = 16f;
 
     /// <summary>
     ///     The arrow's colour is blue when the tile distance to the target is higher than this value and green when below.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float CloseDistance = 8f;
 
     /// <summary>
     ///     The arrow's colour is green when the tile distance to the target is higher than this value and the arrow
     ///     turns into a black dot when below this value.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float ReachedDistance = 1f;
 
     /// <summary>
     ///     Pinpointer arrow precision in radians.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public double Precision = 0.09;
 
     /// <summary>
     ///     Name to display of the target being tracked.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? TargetName;
 
     /// <summary>
     ///     Whether or not the target name should be updated when the target is updated.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool UpdateTargetName = true;
 
     /// <summary>
     ///     Whether or not the target can be reassigned.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool CanRetarget;
 
     /// <summary>
