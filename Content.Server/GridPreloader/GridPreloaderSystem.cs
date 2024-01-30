@@ -4,6 +4,8 @@ using Content.Shared.GridPreloader.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Numerics;
@@ -36,31 +38,40 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
         _mapManager.AddUninitializedMap(preloader.PreloadGridsMapId);
         _mapManager.SetMapPaused(preloader.PreloadGridsMapId, true);
 
-        var counter = 0;
-        foreach (var grid in _prototype.EnumeratePrototypes<PreloadedGridPrototype>())
+        var globalXOffset = 0f;
+        foreach (var proto in _prototype.EnumeratePrototypes<PreloadedGridPrototype>())
         {
-            for (int i = 0; i < grid.Copies; i++)
+            for (int i = 0; i < proto.Copies; i++)
             {
-                CreateFrozenGrid(preloader, grid, counter);
-                counter++;
+                var options = new MapLoadOptions
+                {
+                    LoadMap = false,
+                };
+
+                // i dont use TryLoad, because he doesn't return EntityUid
+                var gridUid = _map.LoadGrid(preloader.PreloadGridsMapId, proto.Path.ToString(), options);
+
+                if (gridUid == null)
+                    continue;
+
+                EnsureComp<MapGridComponent>(gridUid.Value, out var mapGrid);
+                EnsureComp<PhysicsComponent>(gridUid.Value, out var physic);
+
+                //Position Calculating
+                globalXOffset += mapGrid.LocalAABB.Width / 2;
+
+                var xPos = -physic.LocalCenter.X + globalXOffset;
+                var yPos = -physic.LocalCenter.Y;
+
+                _transform.SetLocalPosition(Transform(gridUid.Value), new Vector2(xPos, yPos));
+                _transform.SetLocalRotation(Transform(gridUid.Value), Angle.Zero);
+
+                globalXOffset += (mapGrid.LocalAABB.Width / 2) + 1;
+
+                //Add to list
+                preloader.PreloadedGrids.Add(new(proto.ID, gridUid.Value));
             }
         }
-    }
-
-    private void CreateFrozenGrid(GridPreloaderComponent preloader, PreloadedGridPrototype proto, int counter)
-    {
-        if (proto.Path == null)
-            return;
-
-        var options = new MapLoadOptions
-        {
-            Offset = new Vector2(counter * 15, 0),
-            LoadMap = false,
-        };
-        //dont use TryLoad, because he doesn't return EntityUid
-        var gridUid = _map.LoadGrid(preloader.PreloadGridsMapId, proto.Path.ToString(), options);
-        if (gridUid != null)
-            preloader.PreloadedGrids.Add(new(proto.ID, gridUid.Value));
     }
 
     /// <summary>
