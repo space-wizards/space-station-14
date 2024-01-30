@@ -63,19 +63,27 @@ public sealed partial class StoreComponent : Component
     /// <summary>
     ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, DataField]
     public List<EntityUid> BoughtEntities = new();
 
     /// <summary>
     ///     The total balance spent in this store. Used for refunds.
     /// </summary>
+    [ViewVariables, DataField]
     public Dictionary<string, FixedPoint2> BalanceSpent = new();
 
-    [ViewVariables]
+    /// <summary>
+    ///     Controls if the store allows refunds
+    /// </summary>
+    [ViewVariables, DataField]
     public bool RefundAllowed;
 
+    /// <summary>
+    ///     The map the store was originally from, used to block refunds if the map is changed
+    /// </summary>
     [ViewVariables]
     public MapId StartingMap;
+
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
@@ -96,7 +104,11 @@ public readonly record struct StoreAddedEvent;
 [ByRefEvent]
 public readonly record struct StoreRemovedEvent;
 
-public sealed partial class RefundEntityDeletedEvent : EventArgs
+/// <summary>
+///     Broadcast when an Entity with the <see cref="StoreRefundComponent"/> is deleted
+/// </summary>
+[ByRefEvent]
+public readonly struct RefundEntityDeletedEvent
 {
     public EntityUid Uid { get; }
 
