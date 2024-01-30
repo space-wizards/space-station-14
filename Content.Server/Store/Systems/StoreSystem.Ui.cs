@@ -176,8 +176,7 @@ public sealed partial class StoreSystem
         {
             component.Balance[currency.Key] -= currency.Value;
 
-            if (!component.BalanceSpent.ContainsKey(currency.Key))
-                component.BalanceSpent.Add(currency.Key, FixedPoint2.Zero);
+            component.BalanceSpent.TryAdd(currency.Key, FixedPoint2.Zero);
 
             component.BalanceSpent[currency.Key] += currency.Value;
         }
