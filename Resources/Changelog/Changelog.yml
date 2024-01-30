@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the artifact crusher to research! Crush things today!
-    type: Add
-  id: 5328
-  time: '2023-12-11T23:15:47.0000000+00:00'
 - author: notafet
   changes:
   - message: Stations no longer produce limitless plasma. Plasma refills can now be
@@ -3836,3 +3830,10 @@
   id: 5827
   time: '2024-01-30T10:50:41.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24724
+- author: Emisse
+  changes:
+  - message: Gemini
+    type: Remove
+  id: 5828
+  time: '2024-01-30T10:54:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24728
