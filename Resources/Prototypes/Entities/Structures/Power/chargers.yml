@@ -32,7 +32,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
   - type: StaticPrice
     price: 25
 
@@ -102,11 +102,49 @@
         ejectOnInteract: true
         name: power-cell-slot-component-slot-name-default
         whitelist:
-          components:
-          - PowerCell
-        blacklist:
           tags:
-          - PotatoBattery
+          - PowerCell
+          - PowerCellSmall
+
+- type: entity
+  parent: [ BaseItemRecharger, ConstructibleMachine ]
+  id: PowerCageRecharger
+  name: cage recharger
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    color: "#03fc4e"
+    energy: 0.7
+  - type: Charger
+    chargeRate: 50
+  - type: Sprite
+    sprite: Structures/Power/cage_recharger.rsi
+  - type: PowerCellSlot
+    cellSlotId: charger_slot
+  - type: ItemSlots
+    slots:
+      charger_slot:
+        ejectOnInteract: true
+        name: Power cage
+        whitelist:
+          tags:
+          - PowerCage
+  - type: Machine
+    board: PowerCageRechargerCircuitboard
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: BaseItemRecharger

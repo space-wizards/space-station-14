@@ -30,8 +30,24 @@
       "name": "inhand-left",
       "directions": 4
     },
+	{
+      "name": "inhand-left-fill-1",
+      "directions": 4
+    },
+	{
+      "name": "inhand-left-fill-2",
+      "directions": 4
+    },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-1",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-2",
       "directions": 4
     }
   ],
