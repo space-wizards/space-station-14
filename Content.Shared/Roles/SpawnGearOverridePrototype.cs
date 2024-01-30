@@ -7,13 +7,14 @@ namespace Content.Shared.Roles;
 public sealed partial class SpawnGearOverridePrototype : IPrototype
     {
     /// <summary>
-    /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
+    /// This determines how the template will be applied to the starting gear.
     /// </summary>
     [DataField]
     public SpawnGearOverrideType? OverrideType { get; private set; } = null;
 
     /// <summary>
-    /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
+    /// This is the gear template that will be applied.
+    /// If you modify the Backpack or Jumpsuit, you should also modify DuffelBag and Satchel or InnerClothingSkirt, otherwise they will overwrite your change if the user has chosen those alternate options.
     /// </summary>
     [DataField]
     public StartingGearPrototype? GearTemplate { get; private set; } = null;
@@ -26,16 +27,15 @@ public sealed partial class SpawnGearOverridePrototype : IPrototype
 public enum SpawnGearOverrideType : byte
 {
     /// <summary>
-    /// Adds the item to the slot if the targeted slot is not getting job-specified gear
+    /// Entries specified in GearTemplate will check if their target slot is empty, and be added only if they don't overwrite existing starting gear.
     /// </summary>
     Add,
     /// <summary>
-    /// Adds the item to the slot, overriding job-specified gear
+    /// Entries specified in GearTemplate will be added to their target slots, overwriting existing items.
     /// </summary>
     Force,
     /// <summary>
-    /// Removes job-specified items from every slot where input is specified (no matter what the input entity is), leaving the slot empty
-    /// For removing Backpacks or Jumpsuits, you must also specify removal for DuffelBag, Satchel and InnerClothingSkirt, outside the Equipment list
+    /// If an item, any item, is specified in a slot on GearTemplate then ANY item in the target slot will be deleted. I don't know why anyone would need this, but it exists now.
     /// </summary>
     Remove
 }
