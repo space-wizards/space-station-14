@@ -22,12 +22,6 @@ public sealed partial class StepTriggerComponent : Component
     public HashSet<EntityUid> CurrentlySteppedOn = new();
 
     /// <summary>
-    ///     List of entities that left collision this frame.
-    /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
-    public HashSet<EntityUid> StoppedColliding = new();
-
-    /// <summary>
     ///     Whether or not this component will currently try to trigger for entities.
     /// </summary>
     [DataField, AutoNetworkedField]

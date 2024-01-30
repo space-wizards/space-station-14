@@ -15,6 +15,6 @@ public sealed partial class LandMineComponent : Component
     /// <summary>
     /// Trigger sound effect when stepping onto landmine
     /// </summary>
-    [DataField("sound")]
-    public SoundSpecifier TriggerSound;
+    [DataField("sound"), ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? TriggerSound = default;
 }

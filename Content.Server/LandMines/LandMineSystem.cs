@@ -1,51 +1,36 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
-using Robust.Shared.Player;
 
 namespace Content.Server.LandMines;
 
 public sealed class LandMineSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<LandMineComponent, StepOffTriggeredEvent>(HandleStepOffTriggered);
         SubscribeLocalEvent<LandMineComponent, StepTriggeredEvent>(HandleStepTriggered);
 
         SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
     }
 
-    private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepOffTriggeredEvent args)
-    {
-        if (component.TriggerImmediately)
-        {
-            return;
-        }
-
-        _trigger.Trigger(uid, args.Tripper);
-    }
-
     private void HandleStepTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredEvent args)
     {
-        ShowLandminePopup(uid, args.Tripper);
-        PlayLandmineActivatedSound(uid, component);
-
-        if (!component.TriggerImmediately)
+        if (component.TriggerImmediately && !args.IsStepOff ||
+            !component.TriggerImmediately && args.IsStepOff)
         {
-            return;
+            _trigger.Trigger(uid, args.Tripper);
         }
-
-        _trigger.Trigger(uid, args.Tripper);
+        else if (!component.TriggerImmediately && !args.IsStepOff)
+        {
+            ShowLandminePopup(uid, args.Tripper);
+            PlayLandmineActivatedSound(uid, component);
+        }
     }
 
     private void ShowLandminePopup(EntityUid uid, EntityUid tripper)
@@ -59,7 +44,14 @@ public sealed class LandMineSystem : EntitySystem
 
     private void PlayLandmineActivatedSound(EntityUid uid, LandMineComponent component)
     {
-        _audioSystem.PlayPvs(component.TriggerSound, uid);
+        SoundSpecifier? triggerSound = component.TriggerSound;
+
+        if (triggerSound == null)
+        {
+            return;
+        }
+
+        _audioSystem.PlayPvs(triggerSound, uid);
     }
 
     private static void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)

@@ -25,6 +25,11 @@ public sealed class LavaSystem : EntitySystem
 
     private void OnLavaStepTriggered(EntityUid uid, LavaComponent component, ref StepTriggeredEvent args)
     {
+        if (args.IsStepOff)
+        {
+            return;
+        }
+
         var otherUid = args.Tripper;
 
         if (TryComp<FlammableComponent>(otherUid, out var flammable))

@@ -212,6 +212,11 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
         {
+            if (args.IsStepOff)
+            {
+                return;
+            }
+
             Trigger(uid, args.Tripper);
         }
 

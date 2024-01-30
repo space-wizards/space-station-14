@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
@@ -50,6 +50,11 @@ public sealed class ChasmSystem : EntitySystem
 
     private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredEvent args)
     {
+        if (args.IsStepOff)
+        {
+            return;
+        }
+
         // already doomed
         if (HasComp<ChasmFallingComponent>(args.Tripper))
             return;

@@ -51,6 +51,11 @@ public sealed partial class EnsnareableSystem
 
     private void OnStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggeredEvent args)
     {
+        if (args.IsStepOff)
+        {
+            return;
+        }
+
         TryEnsnare(args.Tripper, uid, component);
     }
 

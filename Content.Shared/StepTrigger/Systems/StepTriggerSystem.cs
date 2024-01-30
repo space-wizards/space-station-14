@@ -11,6 +11,7 @@ public sealed class StepTriggerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -39,12 +40,12 @@ public sealed class StepTriggerSystem : EntitySystem
 
         while (enumerator.MoveNext(out var uid, out var active, out var trigger, out var transform))
         {
-            if (Update(uid, trigger, transform, query))
+            if (!Update(uid, trigger, transform, query))
             {
-                RemCompDeferred(uid, active);
+                continue;
             }
 
-            ProcessStepOff(uid, trigger);
+            RemCompDeferred(uid, active);
         }
     }
 
@@ -58,7 +59,8 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (component.Blacklist != null && TryComp<MapGridComponent>(transform.GridUid, out var grid))
         {
-            var anch = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(transform.Coordinates));
+            var positon = _map.LocalToTile(uid, grid, transform.Coordinates);
+            var anch = _map.GetAnchoredEntitiesEnumerator(uid, grid, positon);
 
             while (anch.MoveNext(out var ent))
             {
@@ -80,18 +82,6 @@ public sealed class StepTriggerSystem : EntitySystem
         return false;
     }
 
-    private void ProcessStepOff(EntityUid uid, StepTriggerComponent component)
-    {
-        // We shouldn't raise this event in OnEndCollide - game shits itself once in a while
-        foreach (var otherUid in component.StoppedColliding)
-        {
-            var evStepOff = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
-            RaiseLocalEvent(uid, ref evStepOff);
-        }
-
-        component.StoppedColliding.Clear();
-    }
-
     private void UpdateColliding(EntityUid uid, StepTriggerComponent component, TransformComponent ownerXform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
     {
         if (!query.TryGetComponent(otherUid, out var otherPhysics))
@@ -106,7 +96,6 @@ public sealed class StepTriggerSystem : EntitySystem
         {
             if (component.CurrentlySteppedOn.Remove(otherUid))
             {
-                component.StoppedColliding.Add(otherUid);
                 Dirty(uid, component);
             }
             return;
@@ -124,7 +113,7 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
         }
 
-        var evStep = new StepTriggeredEvent { Source = uid, Tripper = otherUid };
+        var evStep = new StepTriggeredEvent { IsStepOff = false, Source = uid, Tripper = otherUid };
         RaiseLocalEvent(uid, ref evStep, true);
 
         component.CurrentlySteppedOn.Add(otherUid);
@@ -176,8 +165,10 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
 
         component.CurrentlySteppedOn.Remove(otherUid);
-        component.StoppedColliding.Add(otherUid);
         Dirty(uid, component);
+
+        var evStepOff = new StepTriggeredEvent { IsStepOff = true, Source = uid, Tripper = otherUid };
+        RaiseLocalEvent(uid, ref evStepOff);
 
         if (component.Colliding.Count == 0)
         {
@@ -247,15 +238,11 @@ public struct StepTriggerAttemptEvent
 }
 
 [ByRefEvent]
-public struct StepTriggeredEvent
+public readonly struct StepTriggeredEvent
 {
-    public EntityUid Source;
-    public EntityUid Tripper;
-}
-
-[ByRefEvent]
-public readonly struct StepOffTriggeredEvent
-{
+    // Added the boolean here; sometimes we would have to make 
+    // different actions on default step and step off (e.g. LandMineSystem)
+    public readonly bool IsStepOff { get; init; }
     public readonly EntityUid Source { get; init; }
     public readonly EntityUid Tripper { get; init; }
 }
