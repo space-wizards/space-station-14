@@ -17,3 +17,39 @@
         Slash: 0.9
         Piercing: 0.6
         Heat: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHoPArmored
+  name: head of personnel's armored coat
+  description: A comfortable jacket that offers some protection against acts of god and man.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/OuterClothing/Coats/hop.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/OuterClothing/Coats/hop.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLeatherJacket
+  name: leather jacket
+  description: A rugged leather jacket, for fashion or for utility.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/OuterClothing/Coats/leatherjacket.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/OuterClothing/Coats/leatherjacket.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.75

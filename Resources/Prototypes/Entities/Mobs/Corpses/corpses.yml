@@ -15,6 +15,7 @@
       - ChefGear
       - ChaplainGear
       - PassengerGear
+      - MartialArtistGear # Nyanotrasen - MartialArtist, see Resources/Prototypes/Nyanotrasen/Roles/Jobs/Wildcards/martialartist.yml
 
 - type: entity
   parent: SalvageHumanCorpse
