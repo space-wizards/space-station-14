@@ -230,8 +230,9 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// </summary>
     private void RemoveAllStoredTargets(EntityUid uid, PinpointerComponent component, EntityUid? user)
     {
-        foreach (var target in component.StoredTargets)
+        for (var i = component.StoredTargets.Count - 1; i >= 0; i--)
         {
+            var target = component.StoredTargets[i];
             if (!TryComp<TrackableComponent>(target, out var trackable))
                 continue;
 
