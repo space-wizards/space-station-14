@@ -99,11 +99,10 @@ namespace Content.Server.Stunnable.Systems
 
         private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
         {
-            if (_itemToggle.IsActivated(entity.Owner) &&
-                TryComp<BatteryComponent>(entity.Owner, out var battery) &&
+            if (TryComp<BatteryComponent>(entity.Owner, out var battery) &&
                 battery.CurrentCharge < entity.Comp.EnergyPerUse)
             {
-                _itemToggle.Toggle(entity.Owner, predicted: false);
+                _itemToggle.TryDeactivate(entity.Owner, predicted: false);
             }
         }
     }
