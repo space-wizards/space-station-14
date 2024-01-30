@@ -9,7 +9,7 @@
     MinSize="465 225">
     <PanelContainer HorizontalExpand="True" VerticalExpand="True">
         <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#25252AAA" />
+            <graphics:StyleBoxFlat BackgroundColor="#25252ADD" />
         </PanelContainer.PanelOverride>
 
         <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True" VerticalExpand="True">

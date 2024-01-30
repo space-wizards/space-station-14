@@ -26,14 +26,10 @@
                         PlaceHolder="{Loc 'lathe-menu-search-designs'}"
                         HorizontalExpand="True">
                     </LineEdit>
-                    <Button
-                        Name="FilterButton"
-                        Text="{Loc 'lathe-menu-search-filter'}"
-                        TextAlign="Center"
-                        Margin="5 0 0 0"
-                        Disabled="True"
-                        StyleClasses="ButtonSquare">
-                    </Button>
+                    <OptionButton
+                        Name="FilterOption"
+                        MinWidth="100"
+                        StyleClasses="ButtonSquare"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical"
                     MinHeight="225"

@@ -184,6 +184,7 @@
     - /Audio/Ambience/spookyspace1.ogg
     - /Audio/Ambience/spookyspace2.ogg
     - /Audio/Ambience/ambispace2.ogg
+    - /Audio/Lobby/title2.ogg
 
 - type: soundCollection
   id: AmbienceSpooky
@@ -213,7 +214,7 @@
     - !type:InSpaceRule
     - !type:GridInRangeRule
       inverted: true
-      range: 1
+      range: 3
 
 # TODO
 - type: rules

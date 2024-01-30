@@ -53,20 +53,26 @@
   parent: BaseAnomaly
   suffix: Pyroclastic
   components:
+  - type: AmbientSound
+    volume: 5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
   - type: Anomaly
     corePrototype: AnomalyCorePyroclastic
     coreInertPrototype: AnomalyCorePyroclasticInert
   - type: Sprite
+    sprite: Structures/Specific/Anomalies/pyro_anom.rsi
     layers:
-    - state: anom1
+    - state: anom
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom1-pulse
+    - state: pulse
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
   - type: PointLight
-    radius: 2.0
+    radius: 6.0
     energy: 7.5
-    color: "#fca3c0"
+    color: "#E25822"
     castShadows: false
   - type: PyroclasticAnomaly
   - type: TempAffectingAnomaly
@@ -75,9 +81,21 @@
   - type: GasProducerAnomaly
     releasedGas: 3
     releaseOnMaxSeverity: true
-    spawnRadius: 3
+    spawnRadius: 4
     tileCount: 5
-    tempChange: 550
+    tempChange: 420
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileAnomalyFireball
+    targetNonSentientChance: 0.6
+    projectileSpeed: 0.5
+    minProjectiles: 3
+    maxProjectiles: 6
+  - type: IgnitionSource
+    temperature: 800
+    ignited: true
+  - type: IgniteOnCollide
+    fixtureId: fix1
+    fireStacks: 1
 
 - type: entity
   id: AnomalyGravity
@@ -102,6 +120,14 @@
   - type: GravityAnomaly
   - type: GravityWell
   - type: RadiationSource
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: RandomWalk
+  - type: SingularityDistortion
+    intensity: 1000
+    falloffPower: 2.7
 
 - type: entity
   id: AnomalyElectricity
@@ -147,16 +173,75 @@
     color: "#cb5b7e"
     castShadows: false
   - type: TileSpawnAnomaly
-    floorTileId: FloorFlesh
+    entries:
+    - settings:
+        spawnOnPulse: true
+        spawnOnStabilityChanged: true
+        minAmount: 3
+        maxAmount: 7
+        maxRange: 4
+      floor: FloorFlesh
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 30
+        maxRange: 10
+      floor: FloorFlesh
   - type: EntitySpawnAnomaly
-    superCriticalSpawns:
-    - FleshKudzu
-    spawns:
-    - MobFleshJared
-    - MobFleshGolem
-    - MobFleshClamp
-    - MobFleshLover
-    - FleshBlocker
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 1
+        maxAmount: 4
+        minRange: 1.5
+        maxRange: 2.5
+      spawns:
+      - FleshBlocker
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 3
+        maxRange: 4.5
+      spawns:
+      - MobFleshJared
+      - MobFleshGolem
+      - MobFleshClamp
+      - MobFleshLover
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 15
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - FleshBlocker
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 5
+        maxAmount: 10
+        maxRange: 8
+      spawns:
+      - MobFleshJared
+      - MobFleshGolem
+      - MobFleshClamp
+      - MobFleshLover
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 5
+        maxAmount: 8
+        maxRange: 10
+      spawns:
+      - FleshKudzu
+    - settings:
+        spawnOnShutdown: true
+        maxAmount: 2
+        maxRange: 1
+      spawns:
+      - MobFleshJared
+      - MobFleshGolem
+      - MobFleshClamp
+      - MobFleshLover
+      - FleshKudzu
 
 - type: entity
   id: AnomalyBluespace
@@ -208,7 +293,6 @@
       types:
         Radiation: 10
 
-
 - type: entity
   id: AnomalyIce
   parent: BaseAnomaly
@@ -242,12 +326,14 @@
     projectilePrototype: ProjectileIcicle
     targetNonSentientChance: 0.1
   - type: EntitySpawnAnomaly
-    spawns:
-    - IceCrust
-    maxSpawnAmount: 17
-    spawnOnPulse: false
-    spawnOnSuperCritical: false
-    spawnOnStabilityChanged: true
+    entries:
+    - settings:
+        spawnOnStabilityChanged: true
+        minAmount: 5
+        maxAmount: 15
+        maxRange: 4
+      spawns:
+      - IceCrust
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000
@@ -257,8 +343,9 @@
     spawnRadius: 0
 
 - type: entity
-  id: AnomalyRock
+  id: AnomalyRockBase
   parent: BaseAnomaly
+  abstract: true
   suffix: Rock
   components:
   - type: Anomaly
@@ -277,18 +364,319 @@
     color: "#5ca8cb"
     castShadows: false
   - type: TileSpawnAnomaly
-    floorTileId: FloorAsteroidTile
-    spawnChance: 0.8
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 15
+        maxAmount: 20
+        maxRange: 7.5
+      floor: FloorAsteroidTile
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 50
+        maxRange: 12
+      floor: FloorAsteroidTile
+
+- type: entity
+  id: AnomalyRockUranium
+  parent: AnomalyRockBase
+  suffix: Rock, Uranium
+  components:
+  - type: Sprite
+    color: "#52ff39"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#52ff39"
   - type: EntitySpawnAnomaly
-    maxSpawnAmount: 50
-    spawnRange: 10
-    spawns:
-    - WallSpawnAsteroid
-    - RockAnomCrabSpawner
-    - CrystalSpawner
-    superCriticalSpawns:
-    - WallSpawnAsteroid
-    - SpawnMobOreCrab
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidUranium
+      - WallSpawnAsteroidUraniumCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalGreen
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalGreen
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidUraniumCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabUranium
+
+- type: entity
+  id: AnomalyRockQuartz
+  parent: AnomalyRockBase
+  suffix: Rock, Quartz
+  components:
+  - type: Sprite
+    color: "#fb4747"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#fb4747"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:  
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidQuartz
+      - WallSpawnAsteroidQuartzCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalGrey
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalGrey
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidQuartzCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabQuartz
+
+- type: entity
+  id: AnomalyRockSilver
+  parent: AnomalyRockBase
+  suffix: Rock, Silver
+  components:
+  - type: Sprite
+    color: "#47f8ff"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#47f8ff"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidSilver
+      - WallSpawnAsteroidSilverCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalCyan
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalCyan
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidSilverCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabSilver
+
+- type: entity
+  id: AnomalyRockIron
+  parent: AnomalyRockBase
+  suffix: Rock, Iron
+  components:
+  - type: Sprite
+    color: "#ff8227"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#ff8227"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidIron
+      - WallSpawnAsteroidIronCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalOrange
+    - settings: 
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalOrange
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidIronCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabIron
+
+- type: entity
+  id: AnomalyFlora
+  parent: BaseAnomaly
+  suffix: Flora
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Structures/Specific/Anomalies/flora_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 8.0
+    energy: 8.5
+    color: "#6270bb"
+  - type: Anomaly
+    animationTime: 6
+    offset: 0.05, 0
+    corePrototype: AnomalyCoreFlora
+    coreInertPrototype: AnomalyCoreFloraInert
+    anomalyContactDamage:
+      types:
+        Slash: 0
+  - type: TileSpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 3
+        maxAmount: 7
+        maxRange: 5
+      floor: FloorAstroGrass
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 30
+        maxRange: 15
+      floor: FloorAstroGrass
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 2
+        maxAmount: 5
+        maxRange: 2
+      spawns: 
+      - KudzuFlowerFriendly
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 5
+        maxAmount: 10
+        maxRange: 6
+      spawns: 
+      - KudzuFlowerAngry
+
+- type: entity
+  id: AnomalyFloraBulb
+  name: strange glowing berry
+  parent: BaseStructure
+  description: It's a beautiful strange glowing berry. It seems to have something growing inside it... 
+  suffix: Flora Anomaly
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Diona
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 1
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              EffectAnomalyFloraBulb:
+                min: 1
+                max: 1
+  - type: PointLight
+    radius: 2.0
+    energy: 4.5
+    color: "#6270bb"
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Specific/Anomalies/flora_anom.rsi
+    state: bulb
 
 - type: entity
   id: AnomalyLiquid
@@ -321,10 +709,14 @@
       types:
         Slash: 1
   - type: EntitySpawnAnomaly
-    superCriticalSpawns:
-    - ReagentSlimeSpawner
-    spawns:
-      - PuddleSparkle
+    entries:
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 3
+        maxAmount: 8
+        maxRange: 2
+      spawns:
+      - ReagentSlimeSpawner
   - type: SolutionContainerManager
     solutions:
       anomaly:
