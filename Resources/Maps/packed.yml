@@ -69260,6 +69260,11 @@ entities:
       parent: 2
 - proto: SuitStorageSec
   entities:
+  - uid: 2311
+    components:
+    - type: Transform
+      pos: 41.5,28.5
+      parent: 2
   - uid: 7946
     components:
     - type: Transform
@@ -69269,13 +69274,6 @@ entities:
     components:
     - type: Transform
       pos: 38.5,21.5
-      parent: 2
-- proto: SuitStorageWarden
-  entities:
-  - uid: 2311
-    components:
-    - type: Transform
-      pos: 41.5,28.5
       parent: 2
 - proto: SurveillanceCameraCommand
   entities:
