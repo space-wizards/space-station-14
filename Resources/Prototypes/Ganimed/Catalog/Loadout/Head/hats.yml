@@ -165,7 +165,6 @@
   category: loadout-category-head
   cost: 8
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatFancyCrown
 
 - type: loadout
@@ -240,7 +239,6 @@
   category: loadout-category-head
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - SecurityCadet
     - SecurityOfficer
@@ -257,7 +255,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatUshanka
 
 - type: loadout
@@ -293,11 +290,19 @@
   prototype: ClothingHeadHatHoshat
 
 - type: loadout
+  id: LoadoutHeadClothingHeadHatCapHoS
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingHeadHatCapHoS
+
+- type: loadout
   id: LoadoutHeadClothingHeadHatCapcap
   category: loadout-category-head
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Captain
   prototype: ClothingHeadHatCapcap
@@ -318,14 +323,12 @@
     - Coroner
     - Brigmedic
   prototype: ClothingHeadNurseHat
-  sponsorOnly: true
   
 - type: loadout
   id: LoadoutHeadClothingHeadSafari
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadSafari
   
 - type: loadout
@@ -333,7 +336,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatBowlerHat
   
 - type: loadout
@@ -356,7 +358,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatOutlawHat
   
 - type: loadout
@@ -364,7 +365,6 @@
   category: loadout-category-head
   cost: 3
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatCake
   
 - type: loadout
@@ -372,7 +372,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Clown
   prototype: ClothingHeadHatPlaguedoctor

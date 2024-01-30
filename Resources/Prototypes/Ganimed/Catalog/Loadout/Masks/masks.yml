@@ -33,7 +33,7 @@
 - type: loadout
   id: LoadoutMasksClothingMaskBreath
   category: loadout-category-masks
-  cost: 2
+  cost: 1
   exclusive: true
   prototype: ClothingMaskBreath
 

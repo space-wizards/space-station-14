@@ -1,7 +1,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetAltMedical
   category: loadout-category-ears
-  cost: 2
+  cost: 1
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
@@ -10,7 +10,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetAltCargo
   category: loadout-category-ears
-  cost: 2
+  cost: 1
   exclusive: true
   whitelistJobs:
     - Quartermaster
@@ -19,7 +19,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetAltEngineering
   category: loadout-category-ears
-  cost: 2
+  cost: 1
   exclusive: true
   whitelistJobs:
     - ChiefEngineer
@@ -28,7 +28,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetAltCommand
   category: loadout-category-ears
-  cost: 2
+  cost: 1
   exclusive: true
   whitelistJobs:
     - Captain
@@ -38,7 +38,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetAltScience
   category: loadout-category-ears
-  cost: 2
+  cost: 1
   exclusive: true
   whitelistJobs:
     - ResearchDirector
@@ -47,7 +47,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetAltSecurity
   category: loadout-category-ears
-  cost: 2
+  cost: 1
   exclusive: true
   whitelistJobs:
     - HeadOfSecurity

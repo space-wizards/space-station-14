@@ -61,7 +61,7 @@
 - type: loadout
   id: LoadoutBeltClothingBeltBandolier
   category: loadout-category-belt
-  cost: 3
+  cost: 2
   exclusive: true
   whitelistJobs:
     - SecurityCadet
@@ -108,7 +108,7 @@
 - type: loadout
   id: LoadoutBeltClothingBeltPlantFilled
   category: loadout-category-belt
-  cost: 3
+  cost: 2
   exclusive: true
   whitelistJobs:
     - ServiceWorker
@@ -142,7 +142,6 @@
   category: loadout-category-belt
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefMedicalOfficer
     - Chemist
@@ -158,9 +157,8 @@
 - type: loadout
   id: LoadoutBeltClothingBeltSecurityFilled
   category: loadout-category-belt
-  cost: 3
+  cost: 2
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - SecurityCadet
     - SecurityOfficer
@@ -176,16 +174,16 @@
 - type: loadout
   id: LoadoutBeltClothingBeltChiefEngineer
   category: loadout-category-belt
-  cost: 3
+  cost: 2
   exclusive: true
   whitelistJobs:
     - ChiefEngineer
-  prototype: ClothingBeltChiefEngineerFilled
+  prototype: ClothingBeltChiefEngineer
 
 - type: loadout
   id: LoadoutBeltClothingBeltJanitor
   category: loadout-category-belt
-  cost: 3
+  cost: 2
   exclusive: true
   whitelistJobs:
     - Janitor
@@ -195,7 +193,7 @@
 - type: loadout
   id: LoadoutBeltClothingBeltChampion
   category: loadout-category-belt
-  cost: 7
+  cost: 6
   exclusive: true
   prototype: ClothingBeltChampion
 
@@ -224,4 +222,3 @@
     - Brigmedic
     - BlueShield
   prototype: ClothingBeltAssault
-  sponsorOnly: true

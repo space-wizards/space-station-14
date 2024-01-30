@@ -1,7 +1,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetCMO
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
@@ -10,7 +10,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetQM
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - Quartermaster
@@ -19,7 +19,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetIAA
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - IAA
@@ -28,7 +28,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetCE
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - ChiefEngineer
@@ -37,7 +37,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetBrigmedic
   category: loadout-category-ears
-  cost: 4
+  cost: 0
   exclusive: true
   whitelistJobs:
     - Brigmedic
@@ -46,7 +46,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetEngineering
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - TechnicalAssistant
@@ -59,7 +59,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetCommand
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - Captain
@@ -71,7 +71,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetMedical
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
@@ -88,7 +88,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetScience
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - ResearchDirector
@@ -101,7 +101,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetCargo
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - Quartermaster
@@ -112,7 +112,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetMining
   category: loadout-category-ears
-  cost: 3
+  cost: 0
   exclusive: true
   sponsorOnly: true
   whitelistJobs:
@@ -124,14 +124,14 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetGrey
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   prototype: ClothingHeadsetGrey
 
 - type: loadout
   id: LoadoutEarsClothingHeadsetService
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - HeadOfPersonnel
@@ -154,7 +154,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetSecurity
   category: loadout-category-ears
-  cost: 1
+  cost: 0
   exclusive: true
   whitelistJobs:
     - SecurityCadet
@@ -170,7 +170,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetMedicalScience
   category: loadout-category-ears
-  cost: 4
+  cost: 0
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
@@ -190,7 +190,7 @@
 - type: loadout
   id: LoadoutEarsClothingHeadsetRobotics
   category: loadout-category-ears
-  cost: 4
+  cost: 0
   exclusive: true
   whitelistJobs:
     - ResearchDirector

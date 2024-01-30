@@ -99,7 +99,7 @@
 - type: loadout
   id: LoadoutShoesClothingShoesBootsJackSec
   category: loadout-category-shoes
-  cost: 3
+  cost: 1
   exclusive: true
   whitelistJobs:
     - SecurityCadet
@@ -117,9 +117,8 @@
 - type: loadout
   id: LoadoutShoesClothingShoesBootsJackSecFilled
   category: loadout-category-shoes
-  cost: 3
+  cost: 1
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - SecurityCadet
     - SecurityOfficer
@@ -134,7 +133,7 @@
 - type: loadout
   id: LoadoutShoesClothingShoesBootsWork
   category: loadout-category-shoes
-  cost: 2
+  cost: 1
   exclusive: true
   whitelistJobs:
     - ChiefEngineer
