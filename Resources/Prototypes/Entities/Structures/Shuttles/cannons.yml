@@ -86,7 +86,7 @@
     availableModes:
       - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_svalinn.ogg
       params:
         variation: 0.05
   - type: MagazineVisuals
@@ -142,7 +142,7 @@
     availableModes:
       - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_perforator.ogg
       params:
         variation: 0.05
   - type: MagazineVisuals
@@ -203,7 +203,7 @@
     availableModes:
     - FullAuto
     soundGunshot:
-      path: /Audio/Items/Mining/fultext_launch.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_friendship.ogg
       params:
         pitch: 0.8
     soundEmpty:
@@ -256,7 +256,7 @@
     availableModes:
     - FullAuto
     soundGunshot:
-      path: /Audio/Items/Mining/fultext_launch.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_duster.ogg
       params:
         variation: 0.05
         pitch: 0.8
