@@ -48,7 +48,6 @@ namespace Content.IntegrationTests.Tests
             "Fland",
             "Meta",
             "Packed",
-            "Aspid",
             "Cluster",
             "Omega",
             "Bagel",
@@ -59,7 +58,6 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Core",
             "Marathon",
-            "Gemini",
             "MeteorArena",
             "Atlas",
             "Reach"    
@@ -298,7 +296,7 @@ namespace Content.IntegrationTests.Tests
 
             Assert.That(gameMaps.Remove(PoolManager.TestMap));
 
-            CollectionAssert.AreEquivalent(GameMaps.ToHashSet(), gameMaps, "Game map prototype missing from test cases.");
+            Assert.That(gameMaps, Is.EquivalentTo(GameMaps.ToHashSet()), "Game map prototype missing from test cases.");
 
             await pair.CleanReturnAsync();
         }

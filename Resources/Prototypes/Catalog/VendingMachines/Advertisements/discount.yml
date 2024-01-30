@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: DiscountDansAds
   advertisements:
   - advertisement-discount-1
@@ -9,6 +9,7 @@
   - advertisement-discount-6
   - advertisement-discount-7
   - advertisement-discount-8
+  - advertisement-discount-9
   thankyous:
   - vending-machine-thanks
   - thankyou-discount-1
@@ -18,3 +19,4 @@
   - thankyou-discount-5
   - thankyou-discount-6
   - thankyou-discount-7
+  - thankyou-discount-8

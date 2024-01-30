@@ -58,6 +58,17 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  name: paper scrap
+  parent: Paper
+  id: PaperScrap
+  description: 'A crumpled up piece of white paper.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: scrap
+
+- type: entity
   name: office paper
   parent: Paper
   id: PaperOffice

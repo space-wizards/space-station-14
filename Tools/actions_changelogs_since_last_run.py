@@ -136,6 +136,10 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 # SUPPRESS_EMBEDS
                 "flags": 1 << 2
             }
+            
+        # No entries?
+        if count == 0:
+          continue
 
         # Post per group to try to avoid discord character limits
         print(f"Posting {count} changelog entries to discord webhook")

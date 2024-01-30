@@ -138,7 +138,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundNoDamage"), AutoNetworkedField]
-    public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
+    public SoundSpecifier NoDamageSound { get; set; } = new SoundCollectionSpecifier("WeakHit");
 }
 
 /// <summary>

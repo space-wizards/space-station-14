@@ -131,7 +131,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetVoidParamed
       - id: ClothingOuterHardsuitVoidParamed
       - id: ClothingOuterCoatParamedicWB
       - id: ClothingHeadHatParamedicsoft
