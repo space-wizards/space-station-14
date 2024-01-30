@@ -1,0 +1,106 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomBoards
+  name: random machine board spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Misc/module.rsi
+        state: airalarm_electronics
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - CircuitImprinterMachineCircuitboard
+      - ArtifactAnalyzerMachineCircuitboard
+      - ThermomachineFreezerMachineCircuitBoard
+      - ThermomachineHeaterMachineCircuitBoard
+      - PortableScrubberMachineCircuitBoard
+      - ChemMasterMachineCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SeedExtractorMachineCircuitboard
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - PortableGeneratorJrPacmanMachineCircuitboard
+      - PortableGeneratorPacmanMachineCircuitboard
+      - PortableGeneratorSuperPacmanMachineCircuitboard
+      - ReagentGrinderMachineCircuitboard
+      - OreProcessorMachineCircuitboard
+      - MaterialReclaimerMachineCircuitboard
+      - MicrowaveMachineCircuitboard
+      - SurveillanceWirelessCameraMovableCircuitboard
+      - PowerComputerCircuitboard
+      - ComputerTelevisionCircuitboard
+      - SolarControlComputerCircuitboard
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - DoorElectronics
+      - FirelockElectronics
+      - APCElectronics
+      - WallmountSubstationElectronics
+      - WallmountGeneratorElectronics
+      - WallmountGeneratorAPUElectronics
+      - SolarTrackerElectronics
+      - Mousetrap
+      - RadioHandheld
+      - BoozeDispenserMachineCircuitboard
+      - SodaDispenserMachineCircuitboard
+      - RemoteSignaller
+      - TimerTrigger
+      - SignalTrigger
+      - VoiceTrigger
+      - ExplosivePayload
+      - ChemicalPayload
+      - FlashPayload
+      - ChemDispenserMachineCircuitboard
+      - EmitterCircuitboard
+      - SurveillanceCameraWirelessRouterCircuitboard
+      - SurveillanceWirelessCameraMonitorCircuitboard
+      - SurveillanceWirelessCameraAnchoredCircuitboard
+      - NotekeeperCartridge
+      - NewsReadCartridge
+      - GeigerCounter
+      - Holoprojector
+      - HolofanProjector
+      - StationMapCircuitboard
+      - AnomalyVesselCircuitboard
+      - CellRechargerCircuitboard
+      - BorgChargerCircuitboard
+      - HotplateMachineCircuitboard
+      - ElectricGrillMachineCircuitboard
+      - FatExtractorMachineCircuitboard
+    chance: 0.8
+    rarePrototypes:
+      - TraversalDistorterMachineCircuitboard
+      - CloningPodMachineCircuitboard
+      #- ReverseEngineeringMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
+      - DawInstrumentMachineCircuitboard
+      - StasisBedMachineCircuitboard
+      - GasRecyclerMachineCircuitboard
+      - CryoPodMachineCircuitboard
+      - BodyScannerComputerCircuitboard
+      - CloningConsoleComputerCircuitboard
+      - CrewManifestCartridge
+      - NetProbeCartridge
+      - HandTeleporter
+      - HoloprojectorSecurity
+      #- HoloprojectorEngineering
+      - HandheldStationMap
+      - ComputerMassMediaCircuitboard
+      - SensorConsoleCircuitboard
+      - AmmoTechFabCircuitboard
+      - ArtifactCrusherMachineCircuitboard
+      - AnomalyVesselExperimentalCircuitboard
+      - CondenserMachineCircuitBoard
+      - CrewMonitoringServerMachineCircuitboard
+      - WeaponCapacitorRechargerCircuitboard
+      - ElectrolysisUnitMachineCircuitboard
+      - CentrifugeMachineCircuitboard
+      - SheetifierMachineCircuitboard
+      - TelecomServerCircuitboard
+      - MiniGravityGeneratorCircuitboard
+      #- Portafib
+      #- ShockCollar
+      - PotatoAIChip
+    rareChance: 0.25

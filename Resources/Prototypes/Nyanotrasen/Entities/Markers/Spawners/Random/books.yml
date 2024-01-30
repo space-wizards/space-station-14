@@ -1,0 +1,78 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomBook
+  name: random book spawner
+  placement:
+    mode: PlaceFree # want to be able to free place books for stacks, etc.
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    layers:
+      - sprite: Objects/Misc/books.rsi
+        state: book6
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      # Author Books
+      - BookNarsieLegend
+      - BookTruth
+      - BookWorld
+      - BookIanAntarctica
+      - BookSlothClownSSS
+      - BookSlothClownPranks
+      - BookSlothClownMMD
+      - BookStruck
+      - BookSun
+      - BookPossum
+      - BookCafe
+      - BookFeather
+      - BookIanLostWolfPup
+      - BookIanRanch
+      - BookIanOcean
+      - BookIanMountain
+      - BookIanCity
+      - BookIanArctic
+      - BookIanDesert
+      - BookNames
+      - BookEarth
+      - BookTemple
+      - BookAurora
+      - BookWatched
+      - BookMedicalOfficer
+      - BookMorgue
+      - BookRufus
+      - BookMap
+      - BookJourney
+      - BookInspiration
+      # Guidebook Books
+      - BookSpaceEncyclopedia
+      - BookTheBookOfControl
+      - BookBartendersManual
+      - BookChefGaming
+      - BookLeafLoversSecret
+      - BookEngineersHandbook
+      - BookScientistsGuidebook
+      - BookSecurity
+      - BookHowToKeepStationClean
+      - BookHowToRockAndStone
+      - BookMedicalReferenceBook
+      - BookHowToSurvive
+      - BookChemicalCompendium
+      # Other Books
+      - BookEscalation
+      - BookEscalationSecurity
+      - BookAtmosDistro
+      - BookAtmosWaste
+      - BookAtmosAirAlarms
+      - BookAtmosVentsMore
+      - BookRandom # The empty random book because why not
+    chance: 0.9
+    rarePrototypes:
+      - BookChemistryInsane
+      - BookBotanicalTextbook
+      - BookGnominomicon
+      - BookFishing
+      - BookFishops # DeltaV - fishops book
+      - BookDetective
+    rareChance: 0.25

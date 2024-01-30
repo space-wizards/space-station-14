@@ -1,0 +1,117 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomBox
+  name: random box spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Storage/boxes.rsi
+        state: box
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - BoxCardboard
+      - BoxMousetrap
+      - BoxLightbulb
+      - BoxLighttube
+      - BoxLightMixed
+      #- BoxMaintenanceLightbulb
+      - BoxMesonScanners
+      - BoxMRE
+      - BoxInflatable
+      - BoxPerformer
+      - BoxFlare
+      - BoxTrashbag
+      - BoxSurvival
+      - BoxSyringe
+      - BoxPillCanister
+      - BoxBottle
+      - BoxSterileMask
+      - BoxLatexGloves
+      - BoxBodyBag
+      - BoxBeaker
+      - BoxVial
+      - BoxCandle
+      - BoxCandleSmall
+      - BoxDarts
+    chance: 0.7
+    rarePrototypes:
+      - BoxHugHealing
+      - BoxSurvivalMedical
+      - BoxNitrileGloves
+      - BoxMouthSwab
+      - BoxHandcuff
+      - BoxHeadset
+      - BoxFlashbang
+      - BoxZiptie
+      - PresentRandom
+      - MysteryFigureBox
+    rareChance: 0.05
+
+
+- type: entity
+  parent: MarkerBase
+  id: RandomAmmoBox
+  name: random ammo box spawner
+  suffix: 15%
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Storage/boxes.rsi
+        state: shellslug
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - BoxMagazinePistolCaselessRiflePractice
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazineLightRiflePractice
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazineLightRifleRubber
+      - MagazineBoxMagnumPractice
+      - BoxMagazineMagnumSubMachineGunPractice
+      - BoxMagazineMagnumSubMachineGunRubber
+      - BoxMagazinePistolPractice
+      - BoxMagazinePistolRubber
+      - BoxMagazinePistolHighCapacityPractice
+      - BoxMagazinePistolHighCapacityRubber
+      - BoxMagazinePistolSubMachineGunPractice
+      - BoxMagazinePistolSubMachineGunRubber
+      - BoxMagazineShotgunBeanbag
+      - BoxBeanbag
+      - BoxShotgunFlare
+      - BoxShotgunPractice
+      - BoxShellTranquilizer
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazineRiflePractice
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazineRifleRubber
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazinePistolCaselessRiflePractice
+      - BoxMagazinePistolCaselessRiflePractice
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazinePistolCaselessRiflePractice
+      - BoxMagazineCaselessRifleRubber
+      - BoxMagazinePistolCaselessRiflePractice
+      - BoxMagazineCaselessRifleRubber
+    chance: 0.15
+    rarePrototypes:
+      - BoxMagazinePistolCaselessRifle
+      - BoxMagazineLightRifle
+      - MagazineBoxMagnum
+      - BoxMagazineMagnumSubMachineGun
+      - BoxMagazinePistolSubMachineGunTopMounted
+      - BoxMagazinePistol
+      - BoxMagazinePistolHighCapacity
+      - BoxMagazinePistolSubMachineGun
+      - BoxMagazineShotgun
+      - BoxMagazineShotgunSlug
+      - BoxMagazineShotgunIncendiary
+      - BoxLethalshot
+      - BoxShotgunSlug
+      - BoxShotgunIncendiary
+      - BoxMagazineRifle
+      - BoxMagazineCaselessRifleRubber
+    rareChance: 0.015
