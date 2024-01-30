@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: willicassi
-  changes:
-  - message: Added info to botany guidebook entry
-    type: Add
-  id: 5326
-  time: '2023-12-11T17:42:22.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Removed the Handheld Electrical Propulsion technology and its associated
@@ -3835,3 +3829,10 @@
   id: 5825
   time: '2024-01-30T08:11:43.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24719
+- author: Emisse
+  changes:
+  - message: Aspid
+    type: Remove
+  id: 5826
+  time: '2024-01-30T10:26:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24725
