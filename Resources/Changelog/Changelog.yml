@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix game audio persisting to lobby.
-    type: Fix
-  id: 5320
-  time: '2023-12-11T10:26:56.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Beer goggles can now scan solutions.
-    type: Add
-  id: 5321
-  time: '2023-12-11T11:35:11.0000000+00:00'
-- author: MACMAN2003
-  changes:
-  - message: Added yellow tinted jensen glasses that may show up in maints from time
-      to time
-    type: Add
-  id: 5322
-  time: '2023-12-11T11:36:19.0000000+00:00'
-- author: ninruB
-  changes:
-  - message: Familiar Garbs may now appear as maintenance loot.
-    type: Add
-  id: 5324
-  time: '2023-12-11T13:04:56.0000000+00:00'
 - author: Errant
   changes:
   - message: Incapacitated mobs can no longer be shoved for a speed boost.
@@ -3831,3 +3806,31 @@
   id: 5820
   time: '2024-01-29T14:56:29.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24157
+- author: Tayrtahn
+  changes:
+  - message: Welders properly display their lit status again.
+    type: Fix
+  id: 5821
+  time: '2024-01-29T23:04:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24705
+- author: Tayrtahn
+  changes:
+  - message: Water bottles now display their fill level while held.
+    type: Add
+  id: 5822
+  time: '2024-01-29T23:19:56.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24708
+- author: SlamBamActionman
+  changes:
+  - message: Arachnids slipping in water now get a cute hat!
+    type: Add
+  id: 5823
+  time: '2024-01-30T00:21:26.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23822
+- author: Tayrtahn
+  changes:
+  - message: Pressing shift as a ghost no longer cancels following your target
+    type: Fix
+  id: 5824
+  time: '2024-01-30T01:33:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24715
