@@ -14,7 +14,6 @@
     - type: TapeRecorder
     - type: ActiveListener
       range: 4
-    - type: ItemCooldown
     - type: UseDelay
       delay: 1
     - type: Speech

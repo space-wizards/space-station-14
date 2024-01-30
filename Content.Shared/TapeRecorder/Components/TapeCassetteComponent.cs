@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.TapeRecorder.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedTapeRecorderSystem))]
 public sealed partial class TapeCassetteComponent : Component
 {
@@ -16,7 +16,9 @@ public sealed partial class TapeCassetteComponent : Component
     /// The current position within the tape we are at, in seconds
     /// Networked for client side prediction
     /// </summary>
+    //Annoyingly im seeing a 8 - 10% discrepency between client server frame times - as such this needs to be auto networked
     [DataField]
+    [AutoNetworkedField]
     public float CurrentPosition = 0f;
 
     /// <summary>
@@ -30,4 +32,12 @@ public sealed partial class TapeCassetteComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan RepairDelay = TimeSpan.FromSeconds(3);
+}
+
+/// <summary>
+/// Removed from the cassette when damaged to prevent it being played until repaired
+/// </summary>
+[RegisterComponent]
+public sealed partial class FitsInTapeRecorderComponent : Component
+{
 }

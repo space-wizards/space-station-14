@@ -1,4 +1,5 @@
 using Content.Shared.TapeRecorder;
+using Robust.Shared.Timing;
 
 namespace Content.Client.TapeRecorder;
 
@@ -7,4 +8,13 @@ namespace Content.Client.TapeRecorder;
 /// </summary>
 public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 {
+    [Dependency] protected readonly IGameTiming _timing = default!;
+
+    public override void Update(float frameTime)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        base.Update(frameTime);
+    }
 }

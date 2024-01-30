@@ -18,7 +18,7 @@ public sealed partial class TapeRecorderComponent : Component
     public TapeRecorderMode Mode = TapeRecorderMode.Empty;
 
     /// <summary>
-    /// Is the mode currently active
+    /// True when the current mode is active i.e. recording or stopped
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
@@ -69,6 +69,31 @@ public sealed partial class TapeRecorderComponent : Component
     [DataField]
     public SpriteSpecifier RewindIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rewindarrow.svg.192dpi.png"));
 }
+
+/// <summary>
+/// Currently recording tape recorder
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class RecordingTapeRecorderComponent : Component
+{
+}
+
+/// <summary>
+/// Currently rewinding tape recorder
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class RewindingTapeRecorderComponent : Component
+{
+}
+
+/// <summary>
+/// Currently playing tape recorder
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class PlayingTapeRecorderComponent : Component
+{
+}
+
 
 [Serializable, NetSerializable]
 public enum TapeRecorderVisuals : byte

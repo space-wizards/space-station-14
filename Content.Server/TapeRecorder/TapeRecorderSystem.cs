@@ -4,7 +4,6 @@ using Content.Server.VoiceMask;
 using Content.Shared.TapeRecorder;
 using Content.Shared.TapeRecorder.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Utility;
 using System.Linq;
 
 namespace Content.Server.TapeRecorder;
@@ -22,13 +21,49 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         SubscribeLocalEvent<RecordingTapeRecorderComponent, ListenEvent>(OnListen);
     }
 
+    protected override bool ProcessRecordingTapeRecorder(Entity<TapeRecorderComponent> tapeRecorder, float frameTime)
+    {
+        if (!base.ProcessRecordingTapeRecorder(tapeRecorder, frameTime))
+        {
+            StopRecording(tapeRecorder);
+            SetMode(tapeRecorder, TapeRecorderMode.Stopped, false);
+            return false;
+        }
+
+        return true;
+    }
+
+    protected override bool ProcessPlayingTapeRecorder(Entity<TapeRecorderComponent> tapeRecorder, float frameTime)
+    {
+        if (!base.ProcessPlayingTapeRecorder(tapeRecorder, frameTime))
+        {
+            StopPlayback(tapeRecorder);
+            SetMode(tapeRecorder, TapeRecorderMode.Stopped, false);
+            return false;
+        }
+
+        return true;
+    }
+
+    protected override bool ProcessRewindingTapeRecorder(Entity<TapeRecorderComponent> tapeRecorder, float frameTime)
+    {
+        if (!base.ProcessRewindingTapeRecorder(tapeRecorder, frameTime))
+        {
+            StopRewinding(tapeRecorder);
+            SetMode(tapeRecorder, TapeRecorderMode.Stopped, false);
+            return false;
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Given a time range, play all messages on a tape within said range
     /// Split into this system as shared does not have _chatSystem access
     /// </summary>
-    protected override void ReplayMessagesInSegment(EntityUid uid, TapeRecorderComponent tapeRecorderComponent, TapeCassetteComponent tapeCassetteComponent, float segmentStart, float segmentEnd)
+    protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> tapeRecorder, TapeCassetteComponent tapeCassetteComponent, float segmentStart, float segmentEnd)
     {
-        TryComp<VoiceMaskComponent>(uid, out var voiceMaskComponent);
+        TryComp<VoiceMaskComponent>(tapeRecorder, out var voiceMaskComponent);
 
         foreach (var messageToBeReplayed in tapeCassetteComponent.RecordedData.Where(x => x.Timestamp > tapeCassetteComponent.CurrentPosition && x.Timestamp <= segmentEnd))
         {
@@ -36,24 +71,24 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             if (voiceMaskComponent != null)
                 voiceMaskComponent.VoiceName = messageToBeReplayed.Name;
             //Play the message
-            _chatSystem.TrySendInGameICMessage(uid, messageToBeReplayed.Message, InGameICChatType.Speak, false);
+            _chatSystem.TrySendInGameICMessage(tapeRecorder, messageToBeReplayed.Message, InGameICChatType.Speak, false);
         }
     }
 
     /// <summary>
     /// Right click menu to swap mode
     /// </summary>
-    private void GetAltVerbs(EntityUid uid, TapeRecorderComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void GetAltVerbs(Entity<TapeRecorderComponent> tapeRecorder, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
 
         //Dont allow mode changes when the mode is active
-        if (component.Active)
+        if (tapeRecorder.Comp.Active)
             return;
 
         //If no tape is loaded, show no options
-        var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
+        var cassette = _itemSlotsSystem.GetItemOrNull(tapeRecorder, SlotName);
         if (cassette == null)
             return;
 
@@ -65,148 +100,85 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         if (tapeCassetteComponent.MaxCapacity.TotalSeconds > tapeCassetteComponent.CurrentPosition)
         {
 
-            if (component.Mode != TapeRecorderMode.Recording)
+            if (tapeRecorder.Comp.Mode != TapeRecorderMode.Recording)
             {
                 args.Verbs.Add(new AlternativeVerb()
                 {
                     Text = Loc.GetString("verb-tape-recorder-record"),
                     Act = () =>
                     {
-                        component.Mode = TapeRecorderMode.Recording;
-                        Dirty(uid, component);
+                        SetMode(tapeRecorder, TapeRecorderMode.Recording, false);
                     },
-                    Icon = component.RecordIcon,
+                    Icon = tapeRecorder.Comp.RecordIcon,
                     Priority = 1
                 });
             }
 
-            if (component.Mode != TapeRecorderMode.Playing)
+            if (tapeRecorder.Comp.Mode != TapeRecorderMode.Playing)
             {
                 args.Verbs.Add(new AlternativeVerb()
                 {
                     Text = Loc.GetString("verb-tape-recorder-playback"),
                     Act = () =>
                     {
-                        component.Mode = TapeRecorderMode.Playing;
-                        Dirty(uid, component);
+                        SetMode(tapeRecorder, TapeRecorderMode.Playing, false);
                     },
-                    Icon = component.PlayIcon,
+                    Icon = tapeRecorder.Comp.PlayIcon,
                     Priority = 2
                 });
             }
         }
 
         //If there is tape to rewind and we are not already rewinding
-        if (tapeCassetteComponent.CurrentPosition > float.Epsilon && component.Mode != TapeRecorderMode.Rewinding)
+        if (tapeCassetteComponent.CurrentPosition > float.Epsilon && tapeRecorder.Comp.Mode != TapeRecorderMode.Rewinding)
         {
             args.Verbs.Add(new AlternativeVerb()
             {
                 Text = Loc.GetString("verb-tape-recorder-rewind"),
                 Act = () =>
                 {
-                    component.Mode = TapeRecorderMode.Rewinding;
-                    Dirty(uid, component);
+                    SetMode(tapeRecorder, TapeRecorderMode.Rewinding, false);
                 },
-                Icon = component.RewindIcon,
+                Icon = tapeRecorder.Comp.RewindIcon,
                 Priority = 3
             });
         }
     }
 
     /// <summary>
-    /// Whenever someone speaks within listening range
+    /// Whenever someone speaks within listening range, record it to tape
     /// </summary>
-    private void OnListen(EntityUid uid, RecordingTapeRecorderComponent component, ListenEvent args)
+    private void OnListen(Entity<RecordingTapeRecorderComponent> tapeRecorder, ref ListenEvent args)
     {
-        var cassette = _itemSlotsSystem.GetItemOrNull(uid, SlotName);
+        var cassette = _itemSlotsSystem.GetItemOrNull(tapeRecorder, SlotName);
 
         if (cassette == null)
             return;
 
 
-        if (TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
-        {
-            //Handle someone using a voice changer
-            var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
-            RaiseLocalEvent(args.Source, nameEv);
+        if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
+            return;
 
-            //Add a new entry to the tape
-            tapeCassetteComponent.RecordedData.Add(new TapeCassetteRecordedMessage(tapeCassetteComponent.CurrentPosition, nameEv.Name, args.Message));
-        }
+        //Handle someone using a voice changer
+        var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
+        RaiseLocalEvent(args.Source, nameEv);
+
+        //Add a new entry to the tape
+        tapeCassetteComponent.RecordedData.Add(new TapeCassetteRecordedMessage(tapeCassetteComponent.CurrentPosition, nameEv.Name, args.Message));
     }
 
-    /// <summary>
-    /// Start recording if we are not already recording
-    /// </summary>
-    /*protected override bool StartRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
-    {
-        if (!base.StartRecording(tapeRecorder, component, user))
-            return false;
 
-        //If we dont know who triggered the sound, play here
-        //Otherwise its handled in SharedTapeRecorderSystem for prediction
-        if (!user.HasValue)
+    /// <summary>
+    /// Start playback if we are not already playing, ensure we have a voice mask component so the name is correctly shown through radios
+    /// </summary>
+    protected override bool StartPlayback(Entity<TapeRecorderComponent> tapeRecorder, EntityUid? user = null)
+    {
+        if (base.StartPlayback(tapeRecorder, user))
         {
-            _audioSystem.PlayPvs(component.PlaySound, tapeRecorder);
+            EnsureComp<VoiceMaskComponent>(tapeRecorder);
+            return true;
         }
 
-        return true;
+        return false;
     }
-
-    /// <summary>
-    /// Stop recording if we are currently recording
-    /// </summary>
-    protected override bool StopRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
-    {
-        return base.StopRecording(tapeRecorder, component, user);
-    }*/
-
-    /// <summary>
-    /// Start playback if we are not already playing
-    /// </summary>
-    protected override bool StartPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
-    {
-        EnsureComp<VoiceMaskComponent>(tapeRecorder);
-        return base.StartPlayback(tapeRecorder, component, user);
-    }
-
-    /// <summary>
-    /// Stop playback if we are playing
-    /// </summary>
-    /*protected override bool StopPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
-    {
-        return base.StopPlayback(tapeRecorder, component, user);
-    }
-
-    /// <summary>
-    /// Start rewinding the tape if we are not already rewinding
-    /// </summary>
-    protected override bool StartRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
-    {
-        if (!base.StartRewinding(tapeRecorder, component, user))
-            return false;
-
-        if (!user.HasValue)
-        {
-            _audioSystem.PlayPvs(component.RewindSound, tapeRecorder);
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Stop rewinding if we are rewinding
-    /// </summary>
-    protected override bool StopRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
-    {
-        if (!base.StopRewinding(tapeRecorder, component, user))
-            return false;
-
-        if (!user.HasValue)
-        {
-            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
-        }
-
-        return true;
-    }*/
 }
