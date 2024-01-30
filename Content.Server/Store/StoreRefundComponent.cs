@@ -9,5 +9,5 @@ namespace Content.Server.Store.Components;
 public sealed partial class StoreRefundComponent : Component
 {
     [ViewVariables, DataField]
-    public EntityUid StoreEntity;
+    public EntityUid? StoreEntity;
 }
