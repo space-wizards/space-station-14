@@ -152,28 +152,22 @@ namespace Content.Server.Flash
         {
             var transform = EntityManager.GetComponent<TransformComponent>(source);
             var mapPosition = _transform.GetMapCoordinates(transform);
-            var flashableEntities = new List<EntityUid>();
             var flashableQuery = GetEntityQuery<FlashableComponent>();
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                if (!flashableQuery.HasComponent(entity))
+                if (!flashableQuery.TryGetComponent(entity, out var flashable))
                     continue;
 
-                flashableEntities.Add(entity);
-            }
-
-            foreach (var entity in flashableEntities)
-            {
-                var flashable = flashableQuery.GetComponent(entity);
 
                 // Check for unobstructed entities while ignoring the mobs with flashable components.
-                if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, flashable.CollisionGroup, (e) => flashableEntities.Contains(e) || e == source))
+                if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, flashable.CollisionGroup, (e) => e == source))
                     continue;
 
                 // They shouldn't have flash removed in between right?
                 Flash(entity, user, source, duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));
             }
+
             if (sound != null)
             {
                 _audio.PlayPvs(sound, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(3f));

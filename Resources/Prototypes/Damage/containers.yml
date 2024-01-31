@@ -49,6 +49,6 @@
     - Shock
 
 - type: damageContainer
-  id: Shadow
+  id: ShadowHaze
   supportedTypes:
     - Heat

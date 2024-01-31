@@ -23,4 +23,4 @@
       types:
         Heat: 10
   - type: Damageable
-    damageContainer: Shadow
+    damageContainer: ShadowHaze
