@@ -55,7 +55,7 @@
         - 0.270782035 # oxygen
       temperature: 293.15
   - type: StorageOverride
-    preset: StartingGear
+    preset: StartingGearSlimeBackpack
     single: EmergencyNitrogenTankFilled
 
 - type: entity
@@ -88,7 +88,7 @@
         - 0.615413715 # oxygen
       temperature: 293.15
   - type: StorageOverride
-    preset: StartingGear
+    preset: StartingGearSlimeBackpack
     single: ExtendedEmergencyNitrogenTankFilled
 
 - type: entity

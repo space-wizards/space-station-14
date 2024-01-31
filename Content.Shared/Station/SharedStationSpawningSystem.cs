@@ -3,6 +3,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 
@@ -14,10 +15,10 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
 
-    private StorageOverridePrototype? _startingGearOverride = null;
+    private StorageOverridePrototype? _startingGearSlimeBackpack = null;
 
-    public StorageOverridePrototype StartingGearOverride {
-        get => _startingGearOverride ??= _prototypeManager.Index<StorageOverridePrototype>("StartingGear");
+    public StorageOverridePrototype StartingGearSlimeBackpack {
+        get => _startingGearSlimeBackpack ??= _prototypeManager.Index<StorageOverridePrototype>("StartingGearSlimeBackpack");
     }
 
     /// <summary>
@@ -37,7 +38,9 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true, force:true);
-                    RaiseLocalEvent(new ApplyStorageOverrideEvent(equipmentEntity, StartingGearOverride, profile, slot));
+
+                    if (profile?.Species == "SlimePerson" && slot.Name == "back")
+                        RaiseLocalEvent(new ApplyStorageOverrideEvent(equipmentEntity, StartingGearSlimeBackpack));
                 }
             }
         }

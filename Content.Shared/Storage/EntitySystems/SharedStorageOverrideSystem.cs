@@ -29,15 +29,7 @@ public sealed partial class SharedStorageOverrideSystem : EntitySystem
         if (!EntityManager.HasComponent<StorageComponent>(ev.Entity))
             return;
 
-        if (ev.Data.Species != null &&
-            ev.Data.Species != ev.Profile?.Species)
-            return;
-
-        if (!string.IsNullOrEmpty(ev.Data.SlotName) &&
-            ev.Data.SlotName != ev.Slot?.Name)
-            return;
-
-        RecursiveStorageOverride(ev.Entity, ev.Data);
+        RecursiveStorageOverride(ev.Entity, ev.Data, ev.Key);
     }
 
     /// <summary>
@@ -48,11 +40,11 @@ public sealed partial class SharedStorageOverrideSystem : EntitySystem
     /// <param name="root">Top level entity for items found in containers.</param>
     /// <param name="container">The container the item is inside, if any.</param>
     /// <param name="location">The location of the item inside the container, if any.</param>
-    private void RecursiveStorageOverride(EntityUid item, StorageOverridePrototype data, int? replacements = 0, EntityUid? root = null, Container? container = null, ItemStorageLocation? location = null)
+    private void RecursiveStorageOverride(EntityUid item, StorageOverridePrototype data, string? key = null, int? replacements = 0, EntityUid? root = null, Container? container = null, ItemStorageLocation? location = null)
     {
         if (EntityManager.TryGetComponent<SharedStorageOverrideComponent>(item, out var overrideComp) &&
             overrideComp.Preset == data.Preset &&
-            ReplaceItem(item, data, overrideComp.Pick(), root, container, location))
+            ReplaceItem(item, data, overrideComp.Pick(key), root, container, location))
         {
             if (++replacements >= data.MaxReplacements)
                 return;
@@ -64,7 +56,7 @@ public sealed partial class SharedStorageOverrideSystem : EntitySystem
         if (EntityManager.TryGetComponent<StorageComponent>(item, out var storageComp))
         {
             foreach (var (uid, loc) in new Dictionary<EntityUid, ItemStorageLocation>(storageComp.StoredItems))
-                RecursiveStorageOverride(uid, data, replacements, root, storageComp.Container, loc);
+                RecursiveStorageOverride(uid, data, key, replacements, root, storageComp.Container, loc);
         }
     }
 
@@ -110,20 +102,17 @@ public sealed partial class SharedStorageOverrideSystem : EntitySystem
 /// An event directed at a storage container to perform a recursive search and replacement of it or it's contents.
 /// </summary>
 /// <param name="data">Preset chosen by the sender to determine which items will react and how to handle them.</param>
-/// <param name="profile">Character profile for the player the storage container is about to be equipped to, if any.</param>
-/// <param name="slotName">Name of the inventory slot on the player the storage container is about to be equipped to, if any.</param>
+/// <param name="key">Key to use if the item requires picking from a dictionary.</param>
 public sealed class ApplyStorageOverrideEvent : EntityEventArgs
 {
     public EntityUid Entity { get; }
     public StorageOverridePrototype Data { get; }
-    public HumanoidCharacterProfile? Profile { get; }
-    public SlotDefinition? Slot { get; }
+    public string? Key { get; }
 
-    public ApplyStorageOverrideEvent(EntityUid entity, StorageOverridePrototype data, HumanoidCharacterProfile? profile = null, SlotDefinition? slot = null)
+    public ApplyStorageOverrideEvent(EntityUid entity, StorageOverridePrototype data, string? key = null)
     {
         Entity = entity;
         Data = data;
-        Profile = profile;
-        Slot = slot;
+        Key = key;
     }
 }
