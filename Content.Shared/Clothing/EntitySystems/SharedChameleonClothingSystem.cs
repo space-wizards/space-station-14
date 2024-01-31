@@ -75,7 +75,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
            proto.TryGetComponent<PdaComponent>(out var otherPdaComp)
            && otherPdaComp.State != null)
         {
-            _pdaSystem.UpdatePdaAppearance(uid, pdaComp, otherPdaComp.State);
+            _pdaSystem.UpdatePdaState(uid, pdaComp, otherPdaComp.State);
         }
     }
 

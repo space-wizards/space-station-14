@@ -49,22 +49,14 @@ public sealed class PdaSystem : SharedPdaSystem
         sprite.LayerSetVisible(PdaVisualLayers.IdLight, component.IdSlot.StartingItem != null);
     }
 
-    protected override void UpdatePdaAppearance(EntityUid uid, PdaComponent pda)
+    public override void UpdatePdaState(EntityUid uid, PdaComponent pda, string newState)
     {
-        base.UpdatePdaAppearance(uid, pda);
+        base.UpdatePdaState(uid, pda, newState);
 
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        if (!sprite.LayerMapTryGet(PdaVisualLayers.Base, out var layerId))
-            return;
-
-        var currentState = sprite.LayerGetState(layerId);
-
-        if (currentState == pda.State)
-            return;
-
-        sprite.LayerSetState(PdaVisualLayers.Base, pda.State);
+        sprite.LayerSetState(PdaVisualLayers.Base, newState);
     }
 
     public enum PdaVisualLayers : byte
