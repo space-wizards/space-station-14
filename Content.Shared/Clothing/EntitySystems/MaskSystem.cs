@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -68,6 +68,6 @@ public sealed class MaskSystem : EntitySystem
         RaiseLocalEvent(uid, ref maskEv);
 
         var wearerEv = new WearerMaskToggledEvent(mask.IsToggled);
-        RaiseLocalEvent(uid, ref wearerEv);
+        RaiseLocalEvent(wearer, ref wearerEv);
     }
 }
