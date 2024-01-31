@@ -206,3 +206,5 @@ SpawnVehicleATV: null
 SpawnVehicleSecway: null
 SpawnVehicleJanicart: null
 VehicleJanicart: null
+VehicleJanicartDestroyed: null
+
