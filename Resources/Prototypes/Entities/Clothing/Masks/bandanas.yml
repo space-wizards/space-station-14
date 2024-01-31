@@ -1,53 +1,56 @@
 - type: entity
-  parent: ClothingMaskBaseButcherable
+  parent: [ClothingMaskBaseButcherable, BaseFoldable]
   id: ClothingMaskBandanaBase
   abstract: true
   components:
-  - type: Sprite
-    state: icon_mask
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5 # one bite
+  - type: Clothing
+    foldedSlots:
+    - HEAD
+    unfoldedSlots:
+    - MASK
+  - type: Appearance
+  - type: Foldable
+    fitsInContainerUnfolded: true
+    canFoldInsideContainer: true
   - type: Mask
   - type: IngestionBlocker
   - type: IdentityBlocker
     coverage: MOUTH
+  - type: Sprite
+    layers:
+    - state: icon_mask
+      map: [ "unfoldedLayer" ]
+    - state: icon
+      map: ["foldedLayer"]
+      visible: false
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandBlack
   name: black bandana
-  description: A black bandana to hide your face.
+  description: A black bandana to make you look cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/black.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/black.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandBlack
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandBlue
   name: blue bandana
-  description: A blue bandana to hide your face.
+  description: A blue bandana to make you look cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/blue.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/blue.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandBlue
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandBotany
   name: botany bandana
-  description: A botany bandana to hide your face, made from natural fibers.
+  description: A botany bandana to make you look cool, made from natural fibers.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/botany.rsi
@@ -58,96 +61,80 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandBotany
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandGold
   name: gold bandana
-  description: A gold bandana to hide your face.
+  description: A gold bandana to make you look cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/gold.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/gold.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandGold
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandGreen
   name: green bandana
-  description: A green bandana to hide your face.
+  description: A green bandana to make you look cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/green.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/green.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandGreen
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandGrey
   name: grey bandana
-  description: A grey bandana to hide your face.
+  description: A grey bandana to make you look cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/grey.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/grey.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandGrey
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandRed
   name: red bandana
-  description: A red bandana to hide your face.
+  description: A red bandana to make you look cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/red.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/red.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandRed
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandSkull
   name: skull bandana
-  description: A bandana with a skull to hide your face and look even cooler.
+  description: A bandana with a skull to make you look even cooler.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/skull.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/skull.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandSkull
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandMerc
   name: mercenary bandana
-  description: To protect the face from the sun, insects and other dangers of the higher path.
+  description: To protect the head from the sun, insects and other dangers of the higher path.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/merc.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/merc.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandMerc
 
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandBrown
   name: brown bandana
-  description: A brown bandana to hide your face.
+  description: A brown bandana to make you look cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/brown.rsi
   - type: Clothing
     sprite: Clothing/Head/Bandanas/brown.rsi
-  - type: TransformableClothing
-    transformProto: ClothingHeadBandBrown

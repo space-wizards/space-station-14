@@ -1,5 +1,6 @@
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -14,6 +15,7 @@ public sealed class FoldableSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -90,11 +92,14 @@ public sealed class FoldableSystem : EntitySystem
         Dirty(uid, component);
         _appearance.SetData(uid, FoldedVisuals.State, folded);
         _buckle.StrapSetEnabled(uid, !component.IsFolded);
+
+        var ev = new GotFoldedEvent(folded);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnInsertEvent(EntityUid uid, FoldableComponent component, ContainerGettingInsertedAttemptEvent args)
     {
-        if (!component.IsFolded)
+        if (!component.IsFolded && !component.FitsInContainerUnfolded)
             args.Cancel();
     }
 
@@ -108,9 +113,14 @@ public sealed class FoldableSystem : EntitySystem
         if (!Resolve(uid, ref fold))
             return false;
 
-        // Can't un-fold in any container (locker, hands, inventory, whatever).
+        // Can't un-fold in any container unless enabled (locker, hands, inventory, whatever).
         if (_container.IsEntityInContainer(uid))
-            return false;
+        {
+            if (_inventory.TryGetContainingSlot(uid, out var slot) && !fold.CanFoldWhileEquipped)
+                return false;
+            else if (!fold.CanFoldInsideContainer)
+                return false;
+        }
 
         var ev = new FoldAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -167,3 +177,10 @@ public sealed class FoldableSystem : EntitySystem
 /// <param name="Cancelled"></param>
 [ByRefEvent]
 public record struct FoldAttemptEvent(bool Cancelled = false);
+
+/// <summary>
+/// Event raised on an entity after it has been folded.
+/// </summary>
+/// <param name="IsFolded"></param>
+[ByRefEvent]
+public record struct GotFoldedEvent(bool IsFolded);

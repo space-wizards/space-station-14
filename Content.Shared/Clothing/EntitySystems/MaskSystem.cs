@@ -1,7 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Foldable;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
 
@@ -21,11 +23,12 @@ public sealed class MaskSystem : EntitySystem
         SubscribeLocalEvent<MaskComponent, ToggleMaskEvent>(OnToggleMask);
         SubscribeLocalEvent<MaskComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<MaskComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<MaskComponent, GotFoldedEvent>(OnGotFolded);
     }
 
     private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
     {
-        if (!args.InHands)
+        if (_inventorySystem.InSlotWithFlags(uid, SlotFlags.MASK))
             args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 
@@ -64,10 +67,18 @@ public sealed class MaskSystem : EntitySystem
 
     private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false)
     {
-        var maskEv = new ItemMaskToggledEvent(wearer, mask.IsToggled, isEquip);
+        var maskEv = new ItemMaskToggledEvent(wearer, equippedPrefix: "toggled", mask.IsToggled, isEquip);
         RaiseLocalEvent(uid, ref maskEv);
 
         var wearerEv = new WearerMaskToggledEvent(mask.IsToggled);
         RaiseLocalEvent(wearer, ref wearerEv);
+    }
+
+    private void OnGotFolded(Entity<MaskComponent> ent, ref GotFoldedEvent args)
+    {
+        ent.Comp.IsToggled = args.IsFolded;
+
+        var wearerEv = new ItemMaskToggledEvent(ent.Owner, equippedPrefix: null, ent.Comp.IsToggled, args.IsFolded);
+        RaiseLocalEvent(ent.Owner, ref wearerEv);
     }
 }

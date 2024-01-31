@@ -16,9 +16,17 @@ public sealed partial class FoldableComponent : Component
 {
     [DataField("folded")]
     public bool IsFolded = false;
+
+    [DataField]
+    public bool FitsInContainerUnfolded = false;
+
+    [DataField]
+    public bool CanFoldInsideContainer = false;
+
+    [DataField]
+    public bool CanFoldWhileEquipped = false;
 }
 
-// ahhh, the ol' "state thats just a copy of the component".
 [Serializable, NetSerializable]
 public sealed class FoldableComponentState : ComponentState
 {
