@@ -1,10 +1,12 @@
 using Content.Server.Nutrition.Components;
 using Content.Shared.Examine;
+using Content.Shared.Nutrition.Components;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
 public sealed partial class SealableSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -23,9 +25,22 @@ public sealed partial class SealableSystem : EntitySystem
         args.PushMarkup(sealedText);
     }
 
-    private void OnOpened(EntityUid entity, SealableComponent comp, OpenableOpenedEvent args)
+    private void OnOpened(EntityUid uid, SealableComponent comp, OpenableOpenedEvent args)
     {
         comp.Sealed = false;
+
+        UpdateAppearance(uid, comp);
+    }
+
+    /// <summary>
+    /// Update open visuals to the current value.
+    /// </summary>
+    public void UpdateAppearance(EntityUid uid, SealableComponent? comp = null, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        _appearance.SetData(uid, SealableVisuals.Sealed, comp.Sealed, appearance);
     }
 
     /// <summary>
