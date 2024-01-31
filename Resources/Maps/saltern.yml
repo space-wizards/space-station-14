@@ -56540,6 +56540,8 @@ entities:
   entities:
   - uid: 11380
     components:
+    - type: MetaData
+      name: exit button
     - type: Transform
       pos: 11.5,-6.5
       parent: 31
