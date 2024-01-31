@@ -249,7 +249,6 @@
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
-      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -806,7 +805,6 @@
       - MedkitRadiation
       - MedkitCombat
     dynamicRecipes:
-      - HandheldCrewMonitor
       - ChemicalMedipen
       - ClothingHandsGlovesNitrile
       - CryostasisBeaker
