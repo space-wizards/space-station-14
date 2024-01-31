@@ -259,7 +259,6 @@
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
-      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -649,6 +648,7 @@
       - ForensicPad
       - RiotShield
       - ShellShotgun
+      - ShellShotgunSlug
       - ShellShotgunFlare
       - ShellTranquilizer
       - MagazinePistol
@@ -760,6 +760,7 @@
         - CartridgePistol
         - CartridgeMagnum
         - ShellShotgun
+        - ShellShotgunSlug
         - ShellShotgunFlare
         - ShellTranquilizer
         - CartridgeLightRifle
@@ -824,7 +825,6 @@
       - MedkitRadiation
       - MedkitCombat
     dynamicRecipes:
-      - HandheldCrewMonitor
       - ClothingHandsGlovesNitrile
       - CryostasisBeaker
       - LargeBeaker

@@ -337,4 +337,5 @@
   - type: Clothing
     slots:
     - HEAD
+    quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
