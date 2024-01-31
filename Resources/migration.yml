@@ -170,3 +170,11 @@ DefaultStationBeaconTeslaEngine: null
 ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
 ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
 ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
+
+# 2024-01-31
+HandheldCrewMonitorEmpty: null
+HandheldCrewMonitor: null
+SpyCrewMonitor: null
+SpyCrewMonitorEmpty: null
+SyndiCrewMonitor: null
+SyndiCrewMonitorEmpty: null
