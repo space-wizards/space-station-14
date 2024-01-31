@@ -34,6 +34,14 @@
         amount: 5
   - type: Inventory
     templateId: arachnid
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
+      - !type:WearableReaction
+        slot: head
+        prototypeID: WaterDropletHat
   # Damage (Self)
   - type: Bloodstream
     bloodReagent: CopperBlood

@@ -15,6 +15,9 @@
     bodyType: Static
   - type: ContainerContainer
   - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
   - type: Fixtures
     fixtures:
       fix1:
@@ -82,11 +85,8 @@
   - type: Gun
     fireRate: 5
     useKey: false
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_svalinn.ogg
       params:
         variation: 0.05
   - type: MagazineVisuals
@@ -137,12 +137,8 @@
           acts: ["Destruction"]
   - type: Gun
     fireRate: 1
-    useKey: false
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_perforator.ogg
       params:
         variation: 0.05
   - type: MagazineVisuals
@@ -195,15 +191,12 @@
           acts: ["Destruction"]
   - type: Gun
     projectileSpeed: 80
-    fireRate: 4
+    fireRate: 1
     angleDecay: 45
     minAngle: 0
     maxAngle: 15
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
     soundGunshot:
-      path: /Audio/Items/Mining/fultext_launch.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_friendship.ogg
       params:
         pitch: 0.8
     soundEmpty:
@@ -252,11 +245,8 @@
   - type: Gun
     projectileSpeed: 40
     fireRate: 0.3
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
     soundGunshot:
-      path: /Audio/Items/Mining/fultext_launch.ogg
+      path: /Audio/Weapons/Guns/Gunshots/ship_duster.ogg
       params:
         variation: 0.05
         pitch: 0.8
