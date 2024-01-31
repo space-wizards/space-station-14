@@ -39,7 +39,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     // This function is called on a server after user selected new outfit.
     // And after that on a client after state was updated.
     // This 100% makes sure that server and client have exactly same data.
-    protected virtual void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
+    protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.Default) ||
             !_proto.TryIndex(component.Default, out EntityPrototype? proto))
