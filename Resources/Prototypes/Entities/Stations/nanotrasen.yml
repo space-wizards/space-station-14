@@ -24,6 +24,7 @@
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
+    - BaseStationGridPreloader
   noSpawn: true
   components:
     - type: Transform

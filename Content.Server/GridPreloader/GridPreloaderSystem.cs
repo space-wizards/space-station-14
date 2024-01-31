@@ -1,8 +1,9 @@
-using Content.Server.GameTicking.Events;
+using Content.Shared.CCVar;
 using Content.Shared.GridPreloader.Prototypes;
 using Content.Shared.GridPreloader.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -13,7 +14,7 @@ using System.Numerics;
 namespace Content.Server.GridPreloader;
 public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
 {
-
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -24,19 +25,17 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
     {
         base.Initialize();
 
-
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+        SubscribeLocalEvent<GridPreloaderComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnRoundStart(RoundStartingEvent ev)
+    private void OnMapInit(Entity<GridPreloaderComponent> preloader, ref MapInitEvent args)
     {
-        //Init preloader entity in nullspace
-        var preloaderEntity = Spawn();
-        var preloader = AddComp<GridPreloaderComponent>(preloaderEntity);
+        if (!_cfg.GetCVar(CCVars.PreloadGrids))
+            return;
 
-        preloader.PreloadGridsMapId = _mapManager.CreateMap();
-        _mapManager.AddUninitializedMap(preloader.PreloadGridsMapId);
-        _mapManager.SetMapPaused(preloader.PreloadGridsMapId, true);
+        preloader.Comp.PreloadGridsMapId = _mapManager.CreateMap();
+        _mapManager.AddUninitializedMap(preloader.Comp.PreloadGridsMapId.Value);
+        _mapManager.SetMapPaused(preloader.Comp.PreloadGridsMapId.Value, true);
 
         var globalXOffset = 0f;
         foreach (var proto in _prototype.EnumeratePrototypes<PreloadedGridPrototype>())
@@ -49,27 +48,31 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
                 };
 
                 // i dont use TryLoad, because he doesn't return EntityUid
-                var gridUid = _map.LoadGrid(preloader.PreloadGridsMapId, proto.Path.ToString(), options);
+                var gridUid = _map.LoadGrid(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), options);
+
+                if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
+                    continue;
+
+                if (!TryComp<PhysicsComponent>(gridUid, out var physic))
+                    continue;
 
                 if (gridUid == null)
                     continue;
 
-                EnsureComp<MapGridComponent>(gridUid.Value, out var mapGrid);
-                EnsureComp<PhysicsComponent>(gridUid.Value, out var physic);
-
                 //Position Calculating
                 globalXOffset += mapGrid.LocalAABB.Width / 2;
 
-                var xPos = -physic.LocalCenter.X + globalXOffset;
-                var yPos = -physic.LocalCenter.Y;
+                var xform = Transform(gridUid.Value);
 
-                _transform.SetLocalPosition(Transform(gridUid.Value), new Vector2(xPos, yPos));
-                _transform.SetLocalRotation(Transform(gridUid.Value), Angle.Zero);
+                var coord = new Vector2(-physic.LocalCenter.X + globalXOffset, -physic.LocalCenter.Y);
+
+                _transform.SetLocalPosition(xform, coord);
+                _transform.SetLocalRotation(xform, Angle.Zero);
 
                 globalXOffset += (mapGrid.LocalAABB.Width / 2) + 1;
 
                 //Add to list
-                preloader.PreloadedGrids.Add(new(proto.ID, gridUid.Value));
+                preloader.Comp.PreloadedGrids.Add(new(proto.ID, gridUid.Value));
             }
         }
     }
@@ -91,8 +94,11 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
         if (shuttle == default)
             return null;
 
+        if (shuttle.Item2 == null)
+            return null;
+
         //Move Shuttle to map
-        var uid = shuttle.Item2;
+        var uid = shuttle.Item2.Value;
 
         _transform.SetCoordinates(uid, coord);
         preloader.PreloadedGrids.Remove(shuttle);

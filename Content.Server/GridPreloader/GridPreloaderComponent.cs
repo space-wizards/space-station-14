@@ -1,4 +1,6 @@
+using Content.Shared.GridPreloader.Prototypes;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GridPreloader;
 
@@ -9,8 +11,8 @@ namespace Content.Server.GridPreloader;
 public sealed partial class GridPreloaderComponent : Component
 {
     [DataField]
-    public MapId PreloadGridsMapId;
+    public MapId? PreloadGridsMapId;
 
     [DataField]
-    public List<(string, EntityUid)> PreloadedGrids = new();
+    public List<(ProtoId<PreloadedGridPrototype>, EntityUid?)> PreloadedGrids = new();
 }
