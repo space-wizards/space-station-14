@@ -10,7 +10,7 @@
   - type: Openable
     sound:
       collection: bottleOpenSounds
-    recloseable: true
+    closeable: true
     closeSound:
       collection: bottleCloseSounds
   - type: SolutionContainerManager
@@ -95,6 +95,8 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -125,6 +127,8 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -141,7 +145,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/champagnebottle.rsi
   - type: Openable
-    recloseable: false # Champagne corks are fat. Not worth the effort.
+    closeable: false # Champagne corks are fat. Not worth the effort.
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -159,6 +163,8 @@
     currentLabel: cognac
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -176,6 +182,8 @@
     currentLabel: cola
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
+  - type: Openable
+    sealable: true
 
 
 - type: entity
@@ -212,6 +220,8 @@
     currentLabel: gin
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -227,6 +237,8 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gildlagerbottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -244,6 +256,8 @@
     currentLabel: coffee liqueur
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -289,6 +303,8 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -306,6 +322,8 @@
     currentLabel: rum
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -324,6 +342,8 @@
     currentLabel: space mountain wind
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -342,6 +362,8 @@
     currentLabel: space-up
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -359,6 +381,8 @@
     currentLabel: tequila
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -376,6 +400,8 @@
     currentLabel: vermouth
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -393,6 +419,8 @@
     currentLabel: vodka
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -410,6 +438,8 @@
     currentLabel: whiskey
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -427,6 +457,8 @@
     currentLabel: wine
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
+  - type: Openable
+    sealable: true
 
 # Small Bottles
 
@@ -447,6 +479,8 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
+  - type: Openable
+    closeable: false
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
@@ -465,6 +499,8 @@
     currentLabel: beer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
+  - type: Openable
+    closeable: false
 
 
 - type: entity
@@ -482,9 +518,10 @@
         reagents:
         - ReagentId: Ale
           Quantity: 50
-
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
+  - type: Openable
+    closeable: false
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -503,6 +540,8 @@
     currentLabel: ale
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
+  - type: Openable
+    closeable: false
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -533,6 +572,8 @@
     fillBaseName: icon-
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
+  - type: Openable
+    sealable: true
 
 - type: entity
   parent: DrinkWaterBottleFull

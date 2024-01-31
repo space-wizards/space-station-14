@@ -51,11 +51,25 @@ public sealed class OpenableSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, OpenableComponent comp, ExaminedEvent args)
     {
-        if (!comp.Opened || !args.IsInDetailsRange)
+        if (!args.IsInDetailsRange)
             return;
 
-        var text = Loc.GetString(comp.ExamineText);
-        args.PushMarkup(text);
+        if (comp.Opened)
+        {
+            var text = Loc.GetString(comp.ExamineText);
+            args.PushMarkup(text);
+        }
+
+        if (comp.Sealable)
+        {
+            string sealedText;
+            if (comp.Sealed)
+                sealedText = Loc.GetString(comp.ExamineTextSealed);
+            else
+                sealedText = Loc.GetString(comp.ExamineTextUnsealed);
+
+            args.PushMarkup(sealedText);
+        }
     }
 
     private void OnTransferAttempt(EntityUid uid, OpenableComponent comp, SolutionTransferAttemptEvent args)
@@ -81,7 +95,7 @@ public sealed class OpenableSystem : EntitySystem
         Verb verb;
         if (comp.Opened)
         {
-            if (!comp.Recloseable)
+            if (!comp.Closeable)
                 return;
 
             verb = new()
@@ -111,6 +125,18 @@ public sealed class OpenableSystem : EntitySystem
             return true;
 
         return comp.Opened;
+    }
+
+    /// <summary>
+    /// Returns true if the entity's seal is intact. If the item does not have OpenableComponent
+    /// it clearly is not sealed, and items that can't be sealed are obviously always unsealed too.
+    /// </summary>
+    public bool IsSealed(EntityUid uid, OpenableComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false))
+            return false;
+
+        return comp.Sealable && comp.Sealed;
     }
 
     /// <summary>
@@ -153,6 +179,10 @@ public sealed class OpenableSystem : EntitySystem
 
         comp.Opened = opened;
 
+        // If we open a sealed container, break the seal
+        if (opened && comp.Sealable)
+            comp.Sealed = false;
+
         UpdateAppearance(uid, comp);
     }
 
@@ -176,7 +206,7 @@ public sealed class OpenableSystem : EntitySystem
     /// <returns>Whether it got closed</returns>
     public bool TryClose(EntityUid uid, OpenableComponent? comp = null)
     {
-        if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Recloseable)
+        if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Closeable)
             return false;
 
         SetOpen(uid, false, comp);

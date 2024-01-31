@@ -47,12 +47,40 @@ public sealed partial class OpenableComponent : Component
     /// <summary>
     /// Can this item be closed again after opening?
     /// </summary>
-    [DataField]
-    public bool Recloseable = false;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Closeable = false;
 
     /// <summary>
     /// Sound played when closing.
     /// </summary>
     [DataField]
     public SoundSpecifier? CloseSound;
+
+    /// <summary>
+    /// If true, opening and reclosing this item will leave
+    /// evidence that it has been opened, shown in the
+    /// examined text. If false, no special text will be
+    /// displayed.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Sealable = false;
+
+    /// <summary>
+    /// Whether the item's seal is intact (i.e. it has never been opened)
+    /// Not used if Sealable is false.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Sealed = true;
+
+    /// <summary>
+    /// Text shown when examining and the item's seal has not been broken.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId ExamineTextSealed = "drink-component-on-examine-is-sealed";
+
+    /// <summary>
+    /// Text shown when examining and the item's seal has been broken.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId ExamineTextUnsealed = "drink-component-on-examine-is-unsealed";
 }
