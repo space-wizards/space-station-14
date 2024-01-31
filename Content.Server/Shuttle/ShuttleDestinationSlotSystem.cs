@@ -18,7 +18,6 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly ShuttleDestinationCoordinatesSystem _coordinates = default!;
 
     public override void Initialize()
     {
@@ -53,91 +52,89 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
         {
             if (component.DiskSlot.Item is { Valid: true } disk)
             {
-                EntityUid? diskCoords = GetDiskDestination(disk);
+                ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+                if (!Resolve(disk, ref diskCoordinates))
+                {
+                    return;
+                }
+
+                EntityUid? diskCoords = diskCoordinates.Destination;
 
                 if (diskCoords != null)
                 {
-                    // Shuttle Consoles
-
-                    if (!EnsureComp(diskCoords.Value, out FTLDestinationComponent destination))
+                    if (HasComp<FTLDestinationComponent>(diskCoords.Value))
                     {
-                        destination.Enabled = false;
+                        EnableDestination(uid, diskCoords.Value);
+                        _console.RefreshShuttleConsoles();
                     }
-
-                    EnableDestination(uid, destination);
-                    _console.RefreshShuttleConsoles();
                 }
             }
         } else
         {
             if (args.Entity is { Valid: true } disk)
             {
+                ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+                if (!Resolve(disk, ref diskCoordinates))
+                {
+                    return;
+                }
 
-                EntityUid? diskCoords = GetDiskDestination(disk);
+                EntityUid? diskCoords = diskCoordinates.Destination;
 
                 if (diskCoords != null)
                 {
-                    // Shuttle Consoles
-
-                    EnsureComp(diskCoords.Value, out FTLDestinationComponent destination);
-                    DisableDestination(uid, destination);
-                    _console.RefreshShuttleConsoles();
+                    if (HasComp<FTLDestinationComponent>(diskCoords.Value))
+                    {
+                        DisableDestination(uid, diskCoords.Value);
+                        _console.RefreshShuttleConsoles();
+                    }
                 }
             }
         }
     }
 
-    private EntityUid? GetDiskDestination(EntityUid disk)
+    private void EnableDestination(EntityUid uid, EntityUid destination)
     {
-        ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
-
-        if (!Resolve(disk, ref diskCoordinates))
-        {
-            return null;
-        }
-
-        return _coordinates.GetDestinationEntityUid(diskCoordinates.Destination);
-    }
-
-    private void EnableDestination(EntityUid uid, FTLDestinationComponent destination)
-    {
-        if (destination.WhitelistSpecific == null)
-        {
-            destination.WhitelistSpecific = new List<EntityUid>();
-        }
-
-        // Drone consoles adds the shuttle's console uid, to allow control from both consoles
-
+        // Drone consoles adds the destination to the shuttle's console component, to allow control from both consoles
         if (TryComp(uid, out DroneConsoleComponent? consoleId))
         {
             _console.RefreshDroneConsoles();
 
             if (consoleId != null && consoleId.Entity != null)
             {
-                destination.WhitelistSpecific.Add(consoleId.Entity.Value);
-                return;
-            }
-        }
-
-        destination.WhitelistSpecific.Add(uid);
-    }
-
-    private void DisableDestination(EntityUid uid, FTLDestinationComponent destination)
-    {
-        if (destination.WhitelistSpecific != null)
-        {
-            if (TryComp(uid, out DroneConsoleComponent? consoleId))
-            {
-                _console.RefreshDroneConsoles();
-
-                if (consoleId != null && consoleId.Entity != null)
+                if (TryComp(consoleId.Entity.Value, out ShuttleConsoleComponent? remoteConsoleComp))
                 {
-                    destination.WhitelistSpecific.Remove(consoleId.Entity.Value);
+                    remoteConsoleComp.FTLWhitelist.Add(destination);
                     return;
                 }
             }
+        }
 
-            destination.WhitelistSpecific.Remove(uid);
+        if (TryComp(uid, out ShuttleConsoleComponent? consoleComp))
+        {
+            consoleComp.FTLWhitelist.Add(destination);
+        }
+    }
+
+    private void DisableDestination(EntityUid uid, EntityUid destination)
+    {
+        if (TryComp(uid, out DroneConsoleComponent? consoleId))
+        {
+            _console.RefreshDroneConsoles();
+
+            if (consoleId != null && consoleId.Entity != null)
+            {
+                if (TryComp(consoleId.Entity.Value, out ShuttleConsoleComponent? remoteConsoleComp))
+                {
+                    remoteConsoleComp.FTLWhitelist.Remove(destination);
+                    return;
+                }
+            }
+        }
+
+        if (TryComp(uid, out ShuttleConsoleComponent? consoleComp))
+        {
+            consoleComp.FTLWhitelist.Remove(destination);
         }
     }
 }

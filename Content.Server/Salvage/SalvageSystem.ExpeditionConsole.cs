@@ -1,5 +1,7 @@
+using Content.Server.Shuttle.Components;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Dataset;
 
 namespace Content.Server.Salvage;
 
@@ -15,11 +17,17 @@ public sealed partial class SalvageSystem
         if (!data.Missions.TryGetValue(args.Index, out var missionparams))
             return;
 
-        SpawnMission(missionparams, station.Value);
+        var job = SpawnMission(missionparams, station.Value);
 
         data.ActiveMission = args.Index;
         var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
+
+        var cdUid = Spawn("CoordinatesDisk", Transform(uid).Coordinates);
+        EnsureComp<ShuttleDestinationCoordinatesComponent>(cdUid).Destination = job.FTLDestination;
+        _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), missionparams.Seed));
+        _audio.PlayPvs(component.PrintSound, uid);
+
         UpdateConsoles((station.Value, data));
     }
 

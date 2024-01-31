@@ -315,10 +315,13 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                     continue;
                 }
 
-                // If destination has a specific whitelist, limit to only those entities
-                if (comp.WhitelistSpecific != null && !comp.WhitelistSpecific.Contains(entity.Value) && !(shuttleGridUid != null && comp.WhitelistSpecific.Contains(shuttleGridUid.Value)))
+                // Restricted destinations shouldn't show up unless enabled via a coordinate disk in the console
+                if (TryComp(entity, out ShuttleConsoleComponent? console))
                 {
-                    continue;
+                    if (comp.RequireCoordinateDisk == true && !console.FTLWhitelist.Contains(destUid))
+                    {
+                        continue;
+                    }
                 }
 
                 var meta = metaQuery.GetComponent(destUid);

@@ -8,6 +8,7 @@ using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Server.Salvage;
 
@@ -166,8 +167,10 @@ public sealed partial class SalvageSystem
         return new SalvageExpeditionConsoleState(component.NextOffer, component.Claimed, component.Cooldown, component.ActiveMission, missions);
     }
 
-    private void SpawnMission(SalvageMissionParams missionParams, EntityUid station)
+    private SpawnSalvageMissionJob SpawnMission(SalvageMissionParams missionParams, EntityUid station)
     {
+        var ftlDestination = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates());
+        
         var cancelToken = new CancellationTokenSource();
         var job = new SpawnSalvageMissionJob(
             SalvageJobTime,
@@ -180,12 +183,15 @@ public sealed partial class SalvageSystem
             _biome,
             _dungeon,
             _metaData,
+            _transform,
             station,
+            ftlDestination,
             missionParams,
             cancelToken.Token);
 
         _salvageJobs.Add((job, cancelToken));
         _salvageQueue.EnqueueJob(job);
+        return job;
     }
 
     private void OnStructureExamine(EntityUid uid, SalvageStructureComponent component, ExaminedEvent args)

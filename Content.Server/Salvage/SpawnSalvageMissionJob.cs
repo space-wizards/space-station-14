@@ -32,6 +32,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server.Shuttles.Components;
+using Content.Shared.Coordinates;
 
 namespace Content.Server.Salvage;
 
@@ -45,8 +47,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
     private readonly MetaDataSystem _metaData;
+    private readonly SharedTransformSystem _xforms;
 
     public readonly EntityUid Station;
+    public EntityUid FTLDestination;
     private readonly SalvageMissionParams _missionParams;
 
     private readonly ISawmill _sawmill;
@@ -62,7 +66,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         BiomeSystem biome,
         DungeonSystem dungeon,
         MetaDataSystem metaData,
+        SharedTransformSystem xform,
         EntityUid station,
+        EntityUid ftlDestination,
         SalvageMissionParams missionParams,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
@@ -74,7 +80,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _biome = biome;
         _dungeon = dungeon;
         _metaData = metaData;
+        _xforms = xform;
         Station = station;
+        FTLDestination = ftlDestination;
         _missionParams = missionParams;
         _sawmill = logManager.GetSawmill("salvage_job");
 #if !DEBUG
@@ -145,11 +153,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
 
+        // Assign coordinates to FTL destination
+        _xforms.SetCoordinates(FTLDestination, new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
+
         // Don't want consoles to have the incorrect name until refreshed.
-        var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
-        _metaData.SetEntityName(ftlUid, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
-        //_entManager.GetComponent<FTLDestinationComponent>(ftlUid).WhitelistSpecific = new List<EntityUid>();
-        _entManager.InitializeAndStartEntity(ftlUid);
+        _metaData.SetEntityName(FTLDestination, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
+        _entManager.GetComponent<FTLDestinationComponent>(FTLDestination).RequireCoordinateDisk = true;
+        _entManager.InitializeAndStartEntity(FTLDestination);
 
         var landingPadRadius = 24;
         var minDungeonOffset = landingPadRadius + 4;
