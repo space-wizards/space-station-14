@@ -252,7 +252,7 @@
 
 - type: Tag
   id: CannonBall
-  
+
 - type: Tag
   id: CannonRestrict
 
@@ -1147,9 +1147,6 @@
 
 - type: Tag
   id: UraniumGlassShard
-
-- type: Tag
-  id: VehicleKey
 
 - type: Tag
   id: VimPilot

@@ -26,9 +26,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         if (!TryComp<SpriteComponent>(uid, out var ownerSprite))
             return;
 
-        if (HasComp<VehicleComponent>(component.LastEntityBuckledTo))
-            return;
-
         // Adjust draw depth when the chair faces north so that the seat back is drawn over the player.
         // Reset the draw depth when rotated in any other direction.
         // TODO when ECSing, make this a visualizer
