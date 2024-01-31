@@ -14,6 +14,12 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
 
+    private StorageOverridePrototype? _startingGearOverride = null;
+
+    public StorageOverridePrototype StartingGearOverride {
+        get => _startingGearOverride ??= _prototypeManager.Index<StorageOverridePrototype>("StartingGear");
+    }
+
     /// <summary>
     /// Equips starting gear onto the given entity.
     /// </summary>
@@ -31,7 +37,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true, force:true);
-                    RaiseLocalEvent(new ApplyStorageOverrideEvent(equipmentEntity, _prototypeManager.Index<StorageOverridePrototype>("StartingGear")));
+                    RaiseLocalEvent(new ApplyStorageOverrideEvent(equipmentEntity, StartingGearOverride, profile, slot));
                 }
             }
         }
