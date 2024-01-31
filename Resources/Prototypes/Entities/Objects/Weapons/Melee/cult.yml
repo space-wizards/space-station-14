@@ -21,6 +21,12 @@
     slots:
     - back
   - type: DisarmMalus
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 10
 
 - type: entity
   name: eldritch blade
@@ -45,6 +51,12 @@
     slots:
     - back
   - type: DisarmMalus
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 13
 
 - type: entity
   name: unholy halberd
@@ -81,5 +93,12 @@
     quickEquip: false
     slots:
     - back
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 8
+        Slash: 8
   - type: UseDelay
     delay: 1
