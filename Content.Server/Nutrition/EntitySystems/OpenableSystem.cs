@@ -8,9 +8,8 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -87,6 +86,7 @@ public sealed class OpenableSystem : EntitySystem
             verb = new()
             {
                 Text = Loc.GetString(comp.CloseVerbText),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
                 Act = () => TryClose(args.Target, comp)
             };
         }
@@ -95,6 +95,7 @@ public sealed class OpenableSystem : EntitySystem
             verb = new()
             {
                 Text = Loc.GetString(comp.OpenVerbText),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
                 Act = () => TryOpen(args.Target, comp)
             };
         }
