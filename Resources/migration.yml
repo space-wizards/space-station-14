@@ -190,8 +190,6 @@ VehicleKeyATV: null
 VehicleKeySkeleton: null
 VehicleKeySyndicateSegway: null
 VehicleKeySkeletonMotorcycle: null
-VehicleJanicart: null
-VehicleJanicartDestroyed: null
 VehicleSecway: null
 VehicleATV: null
 VehicleSyndicateSegway: null
@@ -203,7 +201,8 @@ CrateFunATV: null
 CrateFunSyndicateSegway: null
 MobTaxiBot: null
 MobSupplyBot: null
-SpawnVehicleJanicart: null
 SpawnVehicleMotobike: null
 SpawnVehicleATV: null
 SpawnVehicleSecway: null
+SpawnVehicleJanicart: null
+VehicleJanicart: null
