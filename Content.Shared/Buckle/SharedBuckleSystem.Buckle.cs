@@ -424,9 +424,6 @@ public abstract partial class SharedBuckleSystem
             if (HasComp<SleepingComponent>(buckleUid) && buckleUid == userUid)
                 return false;
 
-            if (!_mobState.IsIncapacitated(buckleUid))
-                return false;
-
             // If the person is crit or dead in any kind of strap, return. This prevents people from unbuckling themselves while incapacitated.
             if (_mobState.IsIncapacitated(buckleUid) && userUid == buckleUid)
                 return false;
