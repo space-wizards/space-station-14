@@ -100,7 +100,7 @@ public sealed class OpenableSystem : EntitySystem
 
             verb = new()
             {
-                Text = Loc.GetString("openable-component-verb-close"),
+                Text = Loc.GetString(comp.CloseVerbText),
                 Act = () => TryClose(args.Target, comp)
             };
         }
@@ -108,7 +108,7 @@ public sealed class OpenableSystem : EntitySystem
         {
             verb = new()
             {
-                Text = Loc.GetString("openable-component-verb-open"),
+                Text = Loc.GetString(comp.OpenVerbText),
                 Act = () => TryOpen(args.Target, comp)
             };
         }

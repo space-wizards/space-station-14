@@ -39,6 +39,20 @@ public sealed partial class OpenableComponent : Component
     public LocId ClosedPopup = "drink-component-try-use-drink-not-open";
 
     /// <summary>
+    /// Text to show in the verb menu for the "Open" action.
+    /// You may want to change this for non-drinks, i.e. "Peel", "Unwrap"
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId OpenVerbText = "openable-component-verb-open";
+
+    /// <summary>
+    /// Text to show in the verb menu for the "Close" action.
+    /// You may want to change this for non-drinks, i.e. "Wrap"
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId CloseVerbText = "openable-component-verb-close";
+
+    /// <summary>
     /// Sound played when opening.
     /// </summary>
     [DataField]
