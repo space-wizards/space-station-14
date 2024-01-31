@@ -11,6 +11,7 @@ public sealed class SponsorManager
 		new Dictionary<string, DateTime>(){
 			{"JustHuman", new DateTime(2024, 01, 01)},
 			{"EugeneOM", new DateTime(2024, 01, 01)},
+			{"Safno_S", new DateTime(2024, 01, 01)},
 		};
 
     public bool IsSponsor(ICommonSession? session)
