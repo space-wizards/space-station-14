@@ -526,7 +526,7 @@
   icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
   productEntity: EncryptionKeyBinary
   cost:
-    Telecrystal: 3
+    Telecrystal: 1
   categories:
   - UplinkUtility
 
