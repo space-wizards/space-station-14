@@ -48,7 +48,23 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
             _xformQuery = GetEntityQuery<TransformComponent>();
 
+            SubscribeLocalEvent<EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
+        }
+
+        private void OnParentChanged(ref EntParentChangedMessage message)
+        {
+            var meta = MetaData(message.Entity);
+            if ((meta.Flags & MetaDataFlags.InContainer) != 0)
+                return;
+
+            var xform = Transform(message.Entity);
+            if (!TryComp<DisposalHolderComponent>(xform.ParentUid, out var holder))
+                return;
+
+            // A container-less entity is having its parent set to a disposable holder
+            // such as when that entity is being teleported into the holder
+            _containerSystem.Insert(message.Entity, holder.Container, force: true);
         }
 
         private void OnComponentStartup(EntityUid uid, DisposalHolderComponent holder, ComponentStartup args)
