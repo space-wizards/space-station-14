@@ -526,6 +526,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: icon-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkWaterBottleFull

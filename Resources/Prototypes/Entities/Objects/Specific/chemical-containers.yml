@@ -47,6 +47,34 @@
       inHandsFillBaseName: -fill-
     - type: StaticPrice
       price: 60
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+            params:
+              volume: -4
+        - !type:SpillBehavior { }
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetPlastic1:
+              min: 0
+              max: 1
+          transferForensics: true
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - type: Label
       originalName: jug
     - type: Tag
