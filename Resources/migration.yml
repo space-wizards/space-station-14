@@ -201,3 +201,9 @@ VehicleUnicycleFolded: null
 ActionVehicleHorn: null
 CrateFunATV: null
 CrateFunSyndicateSegway: null
+MobTaxiBot: null
+MobSupplyBot: null
+SpawnVehicleJanicart: null
+SpawnVehicleMotobike: null
+SpawnVehicleATV: null
+SpawnVehicleSecway: null
