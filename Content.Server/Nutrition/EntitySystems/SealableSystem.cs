@@ -18,11 +18,7 @@ public sealed partial class SealableSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        string sealedText;
-        if (comp.Sealed)
-            sealedText = Loc.GetString(comp.ExamineTextSealed);
-        else
-            sealedText = Loc.GetString(comp.ExamineTextUnsealed);
+        var sealedText = comp.Sealed ? Loc.GetString(comp.ExamineTextSealed) : Loc.GetString(comp.ExamineTextUnsealed);
 
         args.PushMarkup(sealedText);
     }
