@@ -1,23 +1,25 @@
+using Content.Server.Atmos.Components;
 using Content.Shared.Actions.Events;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
-using Robust.Shared.Audio.Systems;
-using Content.Shared.Abilities.Firestarter;
+
+namespace Content.Server.Atmos.EntitySystems;
 
 /// <summary>
 /// Adds an action ability that will cause all flammable targets in a radius to ignite, also heals the owner
 /// of the component when used.
 /// </summary>
-namespace Content.Server.Abilities.Firestarter;
-
-public sealed class FirestarterSystem : EntitySystem
+public sealed class FirestarterSystem : SharedFirestarterSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+
+    private readonly HashSet<Entity<FlammableComponent>> _flammables = new();
 
     public override void Initialize()
     {
@@ -26,11 +28,10 @@ public sealed class FirestarterSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks Radius for igniting nearby flammable objects .
+    /// Checks Radius for igniting nearby flammable objects
     /// </summary>
     private void OnStartFire(EntityUid uid, FirestarterComponent component, FireStarterActionEvent args)
     {
-
         if (_container.IsEntityOrParentInContainer(uid))
             return;
 
@@ -47,10 +48,10 @@ public sealed class FirestarterSystem : EntitySystem
     /// </summary>
     public void IgniteNearby(EntityUid uid, EntityCoordinates coordinates, float severity, float radius)
     {
-        var flammables = new HashSet<Entity<FlammableComponent>>();
-        _lookup.GetEntitiesInRange(coordinates, radius, flammables);
+        _flammables.Clear();
+        _lookup.GetEntitiesInRange(coordinates, radius, _flammables);
 
-        foreach (var flammable in flammables)
+        foreach (var flammable in _flammables)
         {
             var ent = flammable.Owner;
             var stackAmount = 2 + (int) (severity / 0.15f);
