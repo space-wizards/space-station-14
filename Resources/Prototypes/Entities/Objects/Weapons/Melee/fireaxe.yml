@@ -45,6 +45,13 @@
     stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types: # Don't put structural damage. When destroyed by a throw, the fire axe disappears
+        Blunt: 4
+        Slash: 8
 
 - type: entity
   id: FireAxeFlaming
