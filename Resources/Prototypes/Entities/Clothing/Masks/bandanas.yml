@@ -14,8 +14,8 @@
           Quantity: 5 # one bite
   - type: Mask
   - type: IngestionBlocker
-  #- type: IdentityBlocker
-  # not until separate eye/mouth blocker
+  - type: IdentityBlocker
+    coverage: MOUTH
 
 - type: entity
   parent: ClothingMaskBandanaBase
