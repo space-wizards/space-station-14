@@ -17,6 +17,10 @@
     FullUnknown: 0.5
     Jumping: 0.3
     Moving: 0.1
+  #Complex
+    FastUnknown: 0.2
+    JumpingUnknown: 0.1
+    InconstancyParticleUnknown: 0.1
 
 
 # Easy x0.5 point production
@@ -131,3 +135,43 @@
   - type: SecretDataAnomaly
     randomStartSecretMin: 4
     randomStartSecretMax: 6
+
+# Complex Effects
+
+- type: anomalyBehavior
+  id: JumpingUnknown
+  earnPointModifier: 1.9
+  description: anomaly-behavior-moving
+  components:
+  - type: ChaoticJump
+    jumpMinInterval: 15
+    jumpMaxInterval: 25
+    rangeMin: 1
+    rangeMax: 1
+    effect: PuddleSparkle
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 3
+    randomStartSecretMax: 5
+
+
+- type: anomalyBehavior
+  id: FastUnknown
+  earnPointModifier: 1.9
+  pulseFrequencyModifier: 0.5
+  description: anomaly-behavior-fast
+  components:
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 3
+    randomStartSecretMax: 5
+
+- type: anomalyBehavior
+  id: InconstancyParticleUnknown
+  earnPointModifier: 1.95
+  description: anomaly-behavior-inconstancy
+  components:
+  - type: ShuffleParticlesAnomaly
+    shuffleOnParticleHit: true
+    prob: 0.5
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 3
+    randomStartSecretMax: 5
