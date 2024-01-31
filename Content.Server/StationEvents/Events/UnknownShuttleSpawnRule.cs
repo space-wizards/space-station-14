@@ -27,9 +27,9 @@ public sealed class UnknownShuttleSpawnRule : StationEventSystem<UnknownShuttleS
 
         var mapId = _mapManager.GetMapEntityId(shuttleMap);
         var coord = Transform(mapId).Coordinates;
-        var loadedShuttle = _gridPreloader.TryGetPreloadedGrid(_random.Pick(component.ShuttleVariants), coord);
+
         //To do: If there are no pre-loaded shuttles left, the alert will still go off! This is a problem, but it seems to be necessary to make an Event Handler with Canceled fields.
-        if (loadedShuttle == null)
+        if (!_gridPreloader.TryGetPreloadedGrid(_random.Pick(component.ShuttleVariants), coord, out var loadedShuttle))
             return;
 
         _mapManager.DoMapInitialize(shuttleMap);

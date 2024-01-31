@@ -37,6 +37,7 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
         _mapManager.AddUninitializedMap(preloader.Comp.PreloadGridsMapId.Value);
         _mapManager.SetMapPaused(preloader.Comp.PreloadGridsMapId.Value, true);
 
+        var mapUid = _mapManager.GetMapEntityId(preloader.Comp.PreloadGridsMapId.Value);
         var globalXOffset = 0f;
         foreach (var proto in _prototype.EnumeratePrototypes<PreloadedGridPrototype>())
         {
@@ -49,7 +50,6 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
 
                 // i dont use TryLoad, because he doesn't return EntityUid
                 var gridUid = _map.LoadGrid(preloader.Comp.PreloadGridsMapId.Value, proto.Path.ToString(), options);
-
                 if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
                     continue;
 
@@ -62,46 +62,53 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
                 //Position Calculating
                 globalXOffset += mapGrid.LocalAABB.Width / 2;
 
-                var xform = Transform(gridUid.Value);
-
                 var coord = new Vector2(-physic.LocalCenter.X + globalXOffset, -physic.LocalCenter.Y);
-
-                _transform.SetLocalPosition(xform, coord);
-                _transform.SetLocalRotation(xform, Angle.Zero);
+                _transform.SetCoordinates(gridUid.Value, new EntityCoordinates(mapUid, coord));
 
                 globalXOffset += (mapGrid.LocalAABB.Width / 2) + 1;
 
                 //Add to list
-                preloader.Comp.PreloadedGrids.Add(new(proto.ID, gridUid.Value));
+                if (!preloader.Comp.PreloadedGrids.ContainsKey(proto.ID))
+                    preloader.Comp.PreloadedGrids[proto.ID] = new List<EntityUid>();
+                preloader.Comp.PreloadedGrids[proto.ID].Add(gridUid.Value);
             }
         }
+    }
+
+    public GridPreloaderComponent? GetPreloaderEntity()
+    {
+        return EntityQuery<GridPreloaderComponent>().FirstOrDefault();
     }
 
     /// <summary>
     /// An attempt to get a certain preloaded shuttle. If there are no more such shuttles left, returns null
     /// </summary>
-    public EntityUid? TryGetPreloadedGrid(ProtoId<PreloadedGridPrototype> proto, EntityCoordinates coord, GridPreloaderComponent? preloader = null)
+    public bool TryGetPreloadedGrid(ProtoId<PreloadedGridPrototype> proto, EntityCoordinates coord, out EntityUid? preloadedGrid, GridPreloaderComponent? preloader = null)
     {
+        preloadedGrid = null;
+
         if (preloader == null)
         {
-            preloader = EntityQuery<GridPreloaderComponent>().FirstOrDefault();
+            preloader = GetPreloaderEntity();
             if (preloader == null)
-                return null;
+                return false;
         }
 
-        var shuttle = preloader.PreloadedGrids.Find(item => item.Item1 == proto);
+        if (preloader.PreloadedGrids.ContainsKey(proto) && preloader.PreloadedGrids[proto].Count > 0)
+        {
+            preloadedGrid = preloader.PreloadedGrids[proto][0];
 
-        if (shuttle == default)
-            return null;
+            _transform.SetCoordinates(preloadedGrid.Value, coord);
 
-        if (shuttle.Item2 == null)
-            return null;
+            preloader.PreloadedGrids[proto].RemoveAt(0);
+            if (preloader.PreloadedGrids[proto].Count == 0)
+                preloader.PreloadedGrids.Remove(proto);
 
-        //Move Shuttle to map
-        var uid = shuttle.Item2.Value;
-
-        _transform.SetCoordinates(uid, coord);
-        preloader.PreloadedGrids.Remove(shuttle);
-        return shuttle.Item2;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

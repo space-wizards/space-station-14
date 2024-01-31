@@ -14,5 +14,5 @@ public sealed partial class GridPreloaderComponent : Component
     public MapId? PreloadGridsMapId;
 
     [DataField]
-    public List<(ProtoId<PreloadedGridPrototype>, EntityUid?)> PreloadedGrids = new();
+    public Dictionary<ProtoId<PreloadedGridPrototype>, List<EntityUid>> PreloadedGrids = new();
 }
