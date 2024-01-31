@@ -204,7 +204,7 @@
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
       - id: BoxEncryptionKeyScience
-      - id: UplinkBinaryTranslatorKey
+      - entity: EncryptionKeyBinary
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -222,7 +222,7 @@
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
       - id: BoxEncryptionKeyScience
-      - id: UplinkBinaryTranslatorKey
+      - entity: EncryptionKeyBinary
 
 - type: entity
   id: LockerHeadOfSecurityFilledHardsuit
