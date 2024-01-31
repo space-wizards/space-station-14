@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed the quick-remove star in the inventory sometimes not appearing.
-    type: Fix
-  - message: You can drag items out of the inventory window to drop them on the ground.
-    type: Add
-  id: 5336
-  time: '2023-12-12T07:49:37.0000000+00:00'
 - author: IProduceWidgets
   changes:
   - message: Pill canisters are slightly better than cig packs, go talk to the chemists.
@@ -3839,3 +3831,10 @@
   id: 5835
   time: '2024-01-31T03:49:19.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24741
+- author: mirrorcult
+  changes:
+  - message: Throwing recoil reduced further
+    type: Tweak
+  id: 5836
+  time: '2024-01-31T05:00:41.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24759
