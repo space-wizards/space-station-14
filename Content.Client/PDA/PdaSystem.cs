@@ -23,16 +23,6 @@ public sealed class PdaSystem : SharedPdaSystem
 
         if (Appearance.TryGetData<bool>(uid, PdaVisuals.IdCardInserted, out var isCardInserted, args.Component))
             args.Sprite.LayerSetVisible(PdaVisualLayers.IdLight, isCardInserted);
-
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
-            return;
-
-        if (sprite.LayerMapTryGet(PdaVisualLayers.Base, out var layerId))
-        {
-            var layerState = sprite.LayerGetState(layerId);
-            if (layerState != component.State)
-                sprite.LayerSetState(PdaVisualLayers.Base, component.State);
-        }
     }
 
     protected override void OnComponentInit(EntityUid uid, PdaComponent component, ComponentInit args)
