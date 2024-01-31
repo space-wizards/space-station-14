@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Roles;
+using Content.Shared.Antag;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
@@ -42,9 +43,9 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             if (!_random.Prob(comp.RuleChance))
                 continue;
 
-            //Get all players eligible for this role
+            //Get all players eligible for this role, allow selecting existing antags
             //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, allowMultipleAntagRoles: true, allowNonHumanoids: true);
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, acceptableAntags: AntagAcceptability.All, allowNonHumanoids: true);
 
             //Abort if there are none
             if (eligiblePlayers.Count == 0)

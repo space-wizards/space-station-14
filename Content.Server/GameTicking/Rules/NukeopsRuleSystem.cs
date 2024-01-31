@@ -624,9 +624,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (ev.PlayerPool.Count == 0)
                 continue;
 
-            var commanderEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.CommanderRoleProto, false);
-            var agentEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.MedicRoleProto, false);
-            var operativeEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.OperativeRoleProto, false);
+            var commanderEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.CommanderRoleProto);
+            var agentEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.MedicRoleProto);
+            var operativeEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.OperativeRoleProto);
 
             var nukiesToSelect = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
 
