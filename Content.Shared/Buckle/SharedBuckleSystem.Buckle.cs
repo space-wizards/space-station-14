@@ -357,7 +357,7 @@ public abstract partial class SharedBuckleSystem
         if (TryComp<AppearanceComponent>(buckleUid, out var appearance))
             Appearance.SetData(buckleUid, BuckleVisuals.Buckled, true, appearance);
 
-        _rotationVisuals.SetHorizontalAngle(buckleUid,  strapComp.Rotation);
+        _rotationVisuals.SetHorizontalAngle(buckleUid, strapComp.Rotation);
 
         ReAttach(buckleUid, strapUid, buckleComp, strapComp);
         SetBuckledTo(buckleUid, strapUid, strapComp, buckleComp);
