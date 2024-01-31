@@ -16,7 +16,7 @@
   id: BaseThiefStealObjective
   components:
   - type: StealCondition
-    verifyMapExistance: false
+    verifyMapExistence: false
     descriptionText: objective-condition-thief-description
 
 - type: entity
@@ -25,27 +25,27 @@
   id: BaseThiefStealCollectionObjective
   components:
   - type: StealCondition
-    verifyMapExistance: true
+    verifyMapExistence: true
     descriptionText: objective-condition-thief-description
-    
+
 - type: entity
   abstract: true
   parent: [BaseThiefObjective, BaseStealObjective]
   id: BaseThiefStealStructureObjective
   components:
   - type: StealCondition
-    verifyMapExistance: true
+    verifyMapExistence: true
     descriptionText: objective-condition-thief-description
   - type: Objective
     difficulty: 2 # it's hard to hide
-    
+
 - type: entity
   abstract: true
   parent: [BaseThiefObjective, BaseStealObjective]
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistance: false
+    verifyMapExistence: false
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
@@ -65,7 +65,7 @@
     maxCollectionSize: 50 #will be limited to the number of figures on the station anyway.
   - type: Objective
     difficulty: 0.25
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealCollectionObjective
@@ -125,7 +125,7 @@
     stealGroup: TechnologyDisk
     minCollectionSize: 5
     maxCollectionSize: 15
-    verifyMapExistance: false
+    verifyMapExistence: false
   - type: Objective
     difficulty: 0.8
 
@@ -138,7 +138,7 @@
     stealGroup: IDCard
     minCollectionSize: 5
     maxCollectionSize: 15
-    verifyMapExistance: false
+    verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
 
@@ -153,7 +153,7 @@
     stealGroup: Cannabis
     minCollectionSize: 20
     maxCollectionSize: 30
-    verifyMapExistance: false
+    verifyMapExistence: false
   - type: Objective
     difficulty: 0.5
 
@@ -169,7 +169,7 @@
     stealGroup: LAMP
     minCollectionSize: 1
     maxCollectionSize: 10
-    verifyMapExistance: true
+    verifyMapExistence: true
   - type: Objective
     difficulty: 0.5 # just for fun, collectings LAMP on Moth
 
@@ -187,7 +187,7 @@
   - type: Objective
     difficulty: 1
 
-- type: entity                                      
+- type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
   id: FlippoEngravedLighterStealObjective
@@ -402,7 +402,7 @@
     stealGroup: ChemDispenser
   - type: Objective
     difficulty: 1
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealStructureObjective
@@ -414,7 +414,7 @@
     stealGroup: XenoArtifact
   - type: Objective
     difficulty: 0.5
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealStructureObjective
@@ -426,7 +426,7 @@
     stealGroup: FreezerHeater
   - type: Objective
     difficulty: 0.5
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealStructureObjective
@@ -438,7 +438,7 @@
     stealGroup: Teg
   - type: Objective
     difficulty: 1
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealStructureObjective
@@ -450,7 +450,7 @@
     stealGroup: BoozeDispenser
   - type: Objective
     difficulty: 0.5
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealStructureObjective
@@ -462,7 +462,7 @@
     stealGroup: AltarNanotrasen
   - type: Objective
     difficulty: 0.5
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealStructureObjective
@@ -544,7 +544,7 @@
     stealGroup: AnimalRenault
   - type: Objective
     difficulty: 2
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealAnimalObjective
@@ -556,7 +556,7 @@
     stealGroup: AnimalHamlet
   - type: Objective
     difficulty: 1
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealAnimalObjective
@@ -568,7 +568,7 @@
     stealGroup: AnimalShiva
   - type: Objective
     difficulty: 2
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealAnimalObjective
@@ -580,7 +580,7 @@
     stealGroup: AnimalSmile
   - type: Objective
     difficulty: 1
-    
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealAnimalObjective
@@ -592,6 +592,18 @@
     stealGroup: AnimalPunPun
   - type: Objective
     difficulty: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: TropicoStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: AnimalTropico
+  - type: Objective
+    difficulty: 1
 
 # Escape
 
