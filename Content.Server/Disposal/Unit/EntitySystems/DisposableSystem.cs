@@ -36,8 +36,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         private EntityQuery<PhysicsComponent> _physicsQuery;
         private EntityQuery<TransformComponent> _xformQuery;
 
-        private List<EntityUid> _entList = new();
-
         public override void Initialize()
         {
             base.Initialize();
@@ -48,23 +46,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
             _xformQuery = GetEntityQuery<TransformComponent>();
 
-            SubscribeLocalEvent<EntParentChangedMessage>(OnParentChanged);
             SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
-        }
-
-        private void OnParentChanged(ref EntParentChangedMessage message)
-        {
-            var meta = MetaData(message.Entity);
-            if ((meta.Flags & MetaDataFlags.InContainer) != 0)
-                return;
-
-            var xform = Transform(message.Entity);
-            if (!TryComp<DisposalHolderComponent>(xform.ParentUid, out var holder))
-                return;
-
-            // A container-less entity is having its parent set to a disposable holder
-            // such as when that entity is being teleported into the holder
-            _containerSystem.Insert(message.Entity, holder.Container);
         }
 
         private void OnComponentStartup(EntityUid uid, DisposalHolderComponent holder, ComponentStartup args)
@@ -135,15 +117,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
-            _entList.Clear();
-            _entList.AddRange(holder.Container.ContainedEntities);
-
-            foreach (var entity in _entList)
+            // We're purposely iterating over all the holder's children
+            // because the holder might have something teleported into it,
+            // outside the usual container insertion logic.
+            var children = holderTransform.ChildEnumerator;
+            while (children.MoveNext(out var entity))
             {
                 RemComp<BeingDisposedComponent>(entity);
 
                 var meta = _metaQuery.GetComponent(entity);
-                _containerSystem.Remove((entity, null, meta), holder.Container, reparent: false, force: true);
+                if (holder.Container.Contains(entity))
+                    _containerSystem.Remove((entity, null, meta), holder.Container, reparent: false, force: true);
 
                 var xform = _xformQuery.GetComponent(entity);
                 if (xform.ParentUid != uid)
