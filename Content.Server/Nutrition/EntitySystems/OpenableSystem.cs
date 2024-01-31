@@ -51,25 +51,11 @@ public sealed class OpenableSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, OpenableComponent comp, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        if (!comp.Opened || !args.IsInDetailsRange)
             return;
 
-        if (comp.Opened)
-        {
-            var text = Loc.GetString(comp.ExamineText);
-            args.PushMarkup(text);
-        }
-
-        if (comp.Sealable)
-        {
-            string sealedText;
-            if (comp.Sealed)
-                sealedText = Loc.GetString(comp.ExamineTextSealed);
-            else
-                sealedText = Loc.GetString(comp.ExamineTextUnsealed);
-
-            args.PushMarkup(sealedText);
-        }
+        var text = Loc.GetString(comp.ExamineText);
+        args.PushMarkup(text);
     }
 
     private void OnTransferAttempt(EntityUid uid, OpenableComponent comp, SolutionTransferAttemptEvent args)
@@ -128,18 +114,6 @@ public sealed class OpenableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns true if the entity's seal is intact. If the item does not have OpenableComponent
-    /// it clearly is not sealed, and items that can't be sealed are obviously always unsealed too.
-    /// </summary>
-    public bool IsSealed(EntityUid uid, OpenableComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp, false))
-            return false;
-
-        return comp.Sealable && comp.Sealed;
-    }
-
-    /// <summary>
     /// Returns true if the entity both has OpenableComponent and is not opened.
     /// Drinks that don't have OpenableComponent are automatically open, so it returns false.
     /// If user is not null a popup will be shown to them.
@@ -179,9 +153,8 @@ public sealed class OpenableSystem : EntitySystem
 
         comp.Opened = opened;
 
-        // If we open a sealed container, break the seal
-        if (opened && comp.Sealable)
-            comp.Sealed = false;
+        if (opened)
+            RaiseLocalEvent(uid, new OpenableOpenedEvent());
 
         UpdateAppearance(uid, comp);
     }
@@ -214,4 +187,11 @@ public sealed class OpenableSystem : EntitySystem
             _audio.PlayPvs(comp.CloseSound, uid);
         return true;
     }
+}
+
+/// <summary>
+/// Raised after an Openable is opened
+/// </summary>
+public sealed class OpenableOpenedEvent : EventArgs
+{
 }

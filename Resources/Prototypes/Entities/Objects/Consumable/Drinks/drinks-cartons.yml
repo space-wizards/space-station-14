@@ -9,7 +9,7 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-    sealable: true
+  - type: Sealable
   - type: SolutionContainerManager
     solutions:
       drink:
