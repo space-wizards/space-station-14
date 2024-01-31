@@ -43,4 +43,16 @@ public sealed partial class OpenableComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("canOpenSounds");
+
+    /// <summary>
+    /// Can this item be closed again after opening?
+    /// </summary>
+    [DataField]
+    public bool Recloseable = false;
+
+    /// <summary>
+    /// Sound played when closing.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? CloseSound;
 }

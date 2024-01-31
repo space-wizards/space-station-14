@@ -10,6 +10,9 @@
   - type: Openable
     sound:
       collection: bottleOpenSounds
+    recloseable: true
+    closeSound:
+      collection: bottleCloseSounds
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -137,6 +140,8 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/champagnebottle.rsi
+  - type: Openable
+    recloseable: false # Champagne corks are fat. Not worth the effort.
 
 - type: entity
   parent: DrinkBottleGlassBaseFull

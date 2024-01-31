@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -32,6 +33,7 @@ public sealed class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
+        SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<Verb>>(AddOpenCloseVerbs);
     }
 
     private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
@@ -69,6 +71,34 @@ public sealed class OpenableSystem : EntitySystem
     {
         // prevent spilling/pouring/whatever drinks when closed
         args.Handled = !comp.Opened;
+    }
+
+    private void AddOpenCloseVerbs(EntityUid uid, OpenableComponent comp, GetVerbsEvent<Verb> args)
+    {
+        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            return;
+
+        Verb verb;
+        if (comp.Opened)
+        {
+            if (!comp.Recloseable)
+                return;
+
+            verb = new()
+            {
+                Text = Loc.GetString("openable-component-verb-close"),
+                Act = () => TryClose(args.Target, comp)
+            };
+        }
+        else
+        {
+            verb = new()
+            {
+                Text = Loc.GetString("openable-component-verb-open"),
+                Act = () => TryOpen(args.Target, comp)
+            };
+        }
+        args.Verbs.Add(verb);
     }
 
     /// <summary>
@@ -137,6 +167,21 @@ public sealed class OpenableSystem : EntitySystem
 
         SetOpen(uid, true, comp);
         _audio.PlayPvs(comp.Sound, uid);
+        return true;
+    }
+
+    /// <summary>
+    /// If opened, closes it and plays the close sound, if one is defined.
+    /// </summary>
+    /// <returns>Whether it got closed</returns>
+    public bool TryClose(EntityUid uid, OpenableComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Recloseable)
+            return false;
+
+        SetOpen(uid, false, comp);
+        if (comp.CloseSound != null)
+            _audio.PlayPvs(comp.CloseSound, uid);
         return true;
     }
 }
