@@ -3,15 +3,19 @@
   weights:
   #safe
     Slow: 0.5
+    Light: 0.5
     FullSafe: 0.1
   #balanced
     Balanced: 3
+    DelayedForce: 1
+    Rapid: 1
     BalancedSecret: 1
     Reflect: 1
-    NonSensivity: 0.5
-    Sensivity: 0.5
+    NonSensivity: 1
+    Sensivity: 1
   #Hard
     Fast: 0.5
+    Strenght: 0.5
     Inconstancy: 0.5
     InconstancyParticle: 0.5
     FullUnknown: 0.5
@@ -27,7 +31,8 @@
 
 - type: anomalyBehavior
   id: FullSafe
-  pulseFrequencyModifier: 5
+  pulseFrequencyModifier: 3
+  pulsePowerModifier: 0.5
   earnPointModifier: 0.05
   description: anomaly-behavior-safe
 
@@ -37,13 +42,33 @@
   earnPointModifier: 0.5
   description: anomaly-behavior-slow
 
+- type: anomalyBehavior
+  id: Light
+  pulsePowerModifier: 0.5
+  earnPointModifier: 0.5
+  description: anomaly-behavior-light
+
 # Balanced x1 point production
 
 - type: anomalyBehavior
   id: Balanced
   earnPointModifier: 1
   description: anomaly-behavior-balanced
+
+- type: anomalyBehavior
+  id: DelayedForce
+  earnPointModifier: 1.15
+  description: anomaly-behavior-delayed-force
+  pulseFrequencyModifier: 0.5
+  pulsePowerModifier: 2
   
+- type: anomalyBehavior
+  id: Rapid
+  earnPointModifier: 1.15
+  description: anomaly-behavior-rapid
+  pulseFrequencyModifier: 2
+  pulsePowerModifier: 0.5
+
 - type: anomalyBehavior
   id: BalancedSecret
   earnPointModifier: 1.2
@@ -83,6 +108,12 @@
   earnPointModifier: 1.9
   pulseFrequencyModifier: 0.5
   description: anomaly-behavior-fast
+
+- type: anomalyBehavior
+  id: Strenght
+  pulsePowerModifier: 1.5
+  earnPointModifier: 1.4
+  description: anomaly-behavior-strenght
 
 - type: anomalyBehavior
   id: Inconstancy

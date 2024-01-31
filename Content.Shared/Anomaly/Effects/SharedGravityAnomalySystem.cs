@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Ghost;
@@ -26,8 +26,8 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
     private void OnAnomalyPulse(EntityUid uid, GravityAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var xform = Transform(uid);
-        var range = component.MaxThrowRange * args.Severity;
-        var strength = component.MaxThrowStrength * args.Severity;
+        var range = component.MaxThrowRange * args.Severity * args.PowerModifier;
+        var strength = component.MaxThrowStrength * args.Severity * args.PowerModifier;
         var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var worldPos = _xform.GetWorldPosition(xform, xformQuery);
@@ -55,8 +55,8 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
         var tiles = tileref.Select(t => (t.GridIndices, Tile.Empty)).ToList();
         grid.SetTiles(tiles);
 
-        var range = component.MaxThrowRange * 2;
-        var strength = component.MaxThrowStrength * 2;
+        var range = component.MaxThrowRange * 2 * args.PowerModifier;
+        var strength = component.MaxThrowStrength * 2 * args.PowerModifier;
         var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var physQuery = GetEntityQuery<PhysicsComponent>();

@@ -31,7 +31,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnPulse)
                 continue;
 
-            SpawnEntities(component, entry, args.Stability, args.Severity);
+            SpawnEntities(component, entry, args.Stability, args.Severity, args.PowerModifier);
         }
     }
 
@@ -42,7 +42,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnSuperCritical)
                 continue;
 
-            SpawnEntities(component, entry, 1, 1);
+            SpawnEntities(component, entry, 1, 1, args.PowerModifier);
         }
     }
 
@@ -53,7 +53,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnShutdown || args.Supercritical)
                 continue;
 
-            SpawnEntities(component, entry, 1, 1);
+            SpawnEntities(component, entry, 1, 1, 1);
         }
     }
 
@@ -64,7 +64,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnStabilityChanged)
                 continue;
 
-            SpawnEntities(component, entry, args.Stability, args.Severity);
+            SpawnEntities(component, entry, args.Stability, args.Severity, 1);
         }
     }
 
@@ -75,17 +75,17 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnSeverityChanged)
                 continue;
 
-            SpawnEntities(component, entry, args.Stability, args.Severity);
+            SpawnEntities(component, entry, args.Stability, args.Severity, 1);
         }
     }
 
-    private void SpawnEntities(Entity<EntitySpawnAnomalyComponent> anomaly, EntitySpawnSettingsEntry entry, float stability, float severity)
+    private void SpawnEntities(Entity<EntitySpawnAnomalyComponent> anomaly, EntitySpawnSettingsEntry entry, float stability, float severity, float powerMod)
     {
         var xform = Transform(anomaly);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
-        var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings);
+        var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings, powerMod);
         if (tiles == null)
             return;
 

@@ -26,6 +26,12 @@ public sealed partial class AnomalyBehaviorPrototype : IPrototype
     public float PulseFrequencyModifier = 1f;
 
     /// <summary>
+    /// pulse and supercrit power modifier
+    /// </summary>
+    [DataField]
+    public float PulsePowerModifier = 1f;
+
+    /// <summary>
     /// how much the particles will affect the anomaly
     /// </summary>
     [DataField]

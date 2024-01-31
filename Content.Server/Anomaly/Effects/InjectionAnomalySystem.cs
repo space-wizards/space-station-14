@@ -29,12 +29,12 @@ public sealed class InjectionAnomalySystem : EntitySystem
 
     private void OnPulse(Entity<InjectionAnomalyComponent> entity, ref AnomalyPulseEvent args)
     {
-        PulseScalableEffect(entity, entity.Comp.InjectRadius, entity.Comp.MaxSolutionInjection * args.Severity);
+        PulseScalableEffect(entity, entity.Comp.InjectRadius * args.PowerModifier, entity.Comp.MaxSolutionInjection * args.Severity * args.PowerModifier);
     }
 
     private void OnSupercritical(Entity<InjectionAnomalyComponent> entity, ref AnomalySupercriticalEvent args)
     {
-        PulseScalableEffect(entity, entity.Comp.SuperCriticalInjectRadius, entity.Comp.SuperCriticalSolutionInjection);
+        PulseScalableEffect(entity, entity.Comp.SuperCriticalInjectRadius * args.PowerModifier, entity.Comp.SuperCriticalSolutionInjection * args.PowerModifier);
     }
 
     private void PulseScalableEffect(Entity<InjectionAnomalyComponent> entity, float injectRadius, float maxInject)

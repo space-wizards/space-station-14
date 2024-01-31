@@ -273,13 +273,13 @@ public sealed partial class AnomalyComponent : Component
 /// <param name="Stability"></param>
 /// <param name="Severity"></param>
 [ByRefEvent]
-public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stability, float Severity);
+public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stability, float Severity, float PowerModifier);
 
 /// <summary>
 /// Event raised on an anomaly when it reaches a supercritical point.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly);
+public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly, float PowerModifier);
 
 /// <summary>
 /// Event broadcast after an anomaly goes supercritical

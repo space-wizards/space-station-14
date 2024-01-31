@@ -82,11 +82,15 @@ anomaly-behavior-point =[color=gold]Anomaly produces {$mod}% of the points[/colo
 
 anomaly-behavior-safe = [color=forestgreen]The anomaly is extremely stable. Extremely rare pulsations.[/color]
 anomaly-behavior-slow = [color=forestgreen]The frequency of pulsations is much less frequent.[/color]
+anomaly-behavior-light = [color=forestgreen]Pulsation power is significantly reduced.[/color]
 anomaly-behavior-balanced = No behavior deviations detected.
+anomaly-behavior-delayed-force = The frequency of pulsations is greatly reduced, but their power is increased.
+anomaly-behavior-rapid = The frequency of the pulsation is much higher, but its strength is attenuated.
 anomaly-behavior-reflect = A protective coating was detected.
 anomaly-behavior-nonsensivity = A weak reaction to particles was detected.
 anomaly-behavior-sensivity = Amplified reaction to particles was detected.
 anomaly-behavior-secret = Interference detected. Some data cannot be read
 anomaly-behavior-inconstancy = [color=crimson]Impermanence has been detected. Particle types can change over time.[/color]
 anomaly-behavior-fast = [color=crimson]The pulsation frequency is strongly increased.[/color]
+anomaly-behavior-strenght = [color=crimson]The pulsation power is significantly increased.[/color]
 anomaly-behavior-moving = [color=crimson]Coordinate instability was detected.[/color]

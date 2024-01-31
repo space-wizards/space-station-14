@@ -1,5 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -141,7 +142,13 @@ public abstract class SharedAnomalySystem : EntitySystem
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
 
-        var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
+        var powerMod = 1f;
+        if (component.CurrentBehavior != null)
+        {
+            var beh = _prototype.Index<AnomalyBehaviorPrototype>(component.CurrentBehavior);
+            powerMod = beh.PulsePowerModifier;
+        }
+        var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity, powerMod);
         RaiseLocalEvent(uid, ref ev, true);
     }
 
@@ -194,7 +201,14 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             _sawmill.Info($"Raising supercritical event. Entity: {ToPrettyString(uid)}");
 
-        var ev = new AnomalySupercriticalEvent(uid);
+        var powerMod = 1f;
+        if (component.CurrentBehavior != null)
+        {
+            var beh = _prototype.Index<AnomalyBehaviorPrototype>(component.CurrentBehavior);
+            powerMod = beh.PulsePowerModifier;
+        }
+
+        var ev = new AnomalySupercriticalEvent(uid, powerMod);
         RaiseLocalEvent(uid, ref ev, true);
 
         EndAnomaly(uid, component, true);
@@ -378,14 +392,14 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <summary>
     /// Gets random points around the anomaly based on the given parameters.
     /// </summary>
-    public List<TileRef>? GetSpawningPoints(EntityUid uid, float stability, float severity, AnomalySpawnSettings settings)
+    public List<TileRef>? GetSpawningPoints(EntityUid uid, float stability, float severity, AnomalySpawnSettings settings, float powerModifier = 1f)
     {
         var xform = Transform(uid);
 
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return null;
 
-        var amount = (int) (MathHelper.Lerp(settings.MinAmount, settings.MaxAmount, severity * stability) + 0.5f);
+        var amount = (int) (MathHelper.Lerp(settings.MinAmount, settings.MaxAmount, severity * stability * powerModifier) + 0.5f);
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
