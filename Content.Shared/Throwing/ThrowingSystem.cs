@@ -166,7 +166,7 @@ public sealed class ThrowingSystem : EntitySystem
         if (user == null)
             return;
 
-        _recoil.KickCamera(user.Value, -direction * 0.3f);
+        _recoil.KickCamera(user.Value, -direction * 0.04f);
 
         // Give thrower an impulse in the other direction
         if (pushbackRatio != 0.0f &&

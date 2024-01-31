@@ -34,11 +34,11 @@ namespace Content.Shared.Lathe
         public SoundSpecifier? ProducingSound;
 
         #region Visualizer info
-        [DataField(required: true)]
-        public string IdleState = default!;
+        [DataField]
+        public string? IdleState;
 
-        [DataField(required: true)]
-        public string RunningState = default!;
+        [DataField]
+        public string? RunningState;
         #endregion
 
         /// <summary>
