@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: BaseShellShotgun
   name: shell (.50)
   parent: BaseCartridge
@@ -155,14 +155,13 @@
   name: uranium shotgun shell
   parent: BaseShellShotgun
   components:
-  - type: Sprite
-    layers:
-      - state: depleted-uranium
-        map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    count: 5
-    spread: 6
-    proto: PelletShotgunUranium
-  - type: SpentAmmoVisuals
-    state: "depleted-uranium"
-
+    - type: Sprite
+      layers:
+        - state: depleted-uranium
+          map: [ "enum.AmmoVisualLayers.Base" ]
+    - type: CartridgeAmmo
+      count: 5
+      spread: 6
+      proto: PelletShotgunUranium
+    - type: SpentAmmoVisuals
+      state: "depleted-uranium"

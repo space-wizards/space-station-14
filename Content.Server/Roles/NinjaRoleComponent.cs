@@ -8,9 +8,4 @@ namespace Content.Server.Roles;
 [RegisterComponent, ExclusiveAntagonist]
 public sealed partial class NinjaRoleComponent : AntagonistRoleComponent
 {
-    /// <summary>
-    /// Warp point that the spider charge has to target
-    /// </summary>
-    [DataField("spiderChargeTarget")]
-    public EntityUid? SpiderChargeTarget;
 }
