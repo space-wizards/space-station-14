@@ -25,6 +25,12 @@
       - Slicing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 8
 
 - type: entity
   name: kitchen knife
@@ -70,6 +76,10 @@
   - type: GuideHelp
     guides:
     - Chef
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 11
 
 - type: entity
   name: combat knife
@@ -90,8 +100,6 @@
     damage:
       types:
         Slash: 12
-  - type: EmbeddableProjectile
-    sound: /Audio/Weapons/star_hit.ogg
   - type: DamageOtherOnHit
     damage:
       types:
@@ -127,6 +135,10 @@
     damage:
       types:
         Slash: 15
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 12
   - type: Item
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
 
@@ -152,6 +164,10 @@
     damage:
       types:
         Slash: 5.5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 4
   - type: Item
     sprite: Objects/Weapons/Melee/shiv.rsi
   - type: DisarmMalus
@@ -171,6 +187,10 @@
     damage:
       types:
         Slash: 7 #each "tier" grants an additional 2 damage
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 6
   - type: Item
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
   - type: Sprite
@@ -190,6 +210,10 @@
     damage:
       types:
         Slash: 9
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 7
   - type: Item
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
   - type: Sprite
@@ -210,6 +234,11 @@
       types:
         Slash: 7
         Radiation: 4
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+        Radiation: 3
   - type: Item
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
   - type: Sprite
