@@ -11,6 +11,8 @@
     color: "#ffeead"
     enabled: false
     radius: 4
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
 
 - type: entity
   parent: BaseWeaponCrusher
@@ -49,6 +51,11 @@
       types:
         Blunt: 10
         Slash: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 8
+        Slash: 4
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -81,6 +88,10 @@
     damage:
       types:
         Slash: 15
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 12
   - type: Tag
     tags:
     - Knife
