@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: Pill canisters are slightly better than cig packs, go talk to the chemists.
-    type: Tweak
-  id: 5337
-  time: '2023-12-12T07:51:38.0000000+00:00'
-- author: IProduceWidgets
-  changes:
   - message: Sec belt holds sidearms and sidearm ammo.
     type: Tweak
   id: 5338
@@ -3838,3 +3832,12 @@
   id: 5836
   time: '2024-01-31T05:00:41.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24759
+- author: mirrorcult
+  changes:
+  - message: Various aspects of the station will now be varied automatically at the
+      start of the round. Expect more trash, some broken/oddly-functioning lights,
+      and spills (and more stuff in the future).
+    type: Add
+  id: 5837
+  time: '2024-01-31T05:52:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24397
