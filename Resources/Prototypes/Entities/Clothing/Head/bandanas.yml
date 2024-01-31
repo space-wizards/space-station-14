@@ -35,12 +35,6 @@
   parent: [ClothingHeadBandBase, ClothingMaskBandBotany]
   id: ClothingHeadBandBotany
   name: botany bandana
-  components:
-  - type: Tag
-    tags:
-    - ClothMade
-    - HamsterWearable
-    - WhitelistChameleon  
 
 - type: entity
   parent: [ClothingHeadBandBase, ClothingMaskBandGold]
