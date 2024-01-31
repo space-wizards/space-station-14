@@ -148,6 +148,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
         _metaData.SetEntityName(ftlUid, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
+        //_entManager.GetComponent<FTLDestinationComponent>(ftlUid).WhitelistSpecific = new List<EntityUid>();
         _entManager.InitializeAndStartEntity(ftlUid);
 
         var landingPadRadius = 24;

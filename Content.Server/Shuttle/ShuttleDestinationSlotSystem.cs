@@ -57,15 +57,6 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
                 if (diskCoords != null)
                 {
-
-                    // Emergency Pod Disk Consoles
-
-                    if (TryComp(uid, out TransformComponent? xform) && TryComp(xform.GridUid, out EscapePodComponent? escapePodComponent))
-                    {
-                        escapePodComponent.Destination = diskCoords.Value;
-                        return;
-                    }
-
                     // Shuttle Consoles
 
                     if (!EnsureComp(diskCoords.Value, out FTLDestinationComponent destination))
@@ -86,15 +77,6 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
                 if (diskCoords != null)
                 {
-
-                    // Emergency Pod Disk Consoles
-
-                    if (TryComp(uid, out TransformComponent? xform) && TryComp(xform.GridUid, out EscapePodComponent? escapePodComponent))
-                    {
-                        escapePodComponent.Destination = null;
-                        return;
-                    }
-
                     // Shuttle Consoles
 
                     EnsureComp(diskCoords.Value, out FTLDestinationComponent destination);

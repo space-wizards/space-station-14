@@ -84,7 +84,6 @@
       - id: BoxPDA
       - id: BoxID
       - id: BoxHeadset
-      - id: CentComDiskCase
       - id: IDComputerCircuitboard
       - id: WeaponDisabler
       - id: CigarGoldCase

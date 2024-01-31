@@ -420,7 +420,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         var mapId = _mapManager.CreateMap();
-        var grid = _map.LoadGrid(mapId, component.Map.ToString(),  new MapLoadOptions()
+        var grid = _map.LoadGrid(mapId, component.Map.ToString(), new MapLoadOptions()
         {
             LoadMap = false,
         });
@@ -451,6 +451,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         component.MapEntity = map;
         component.Entity = grid;
+        _shuttle.AddFTLDestination(grid.Value, false);
     }
 
     public HashSet<EntityUid> GetCentcommMaps()
@@ -542,31 +543,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             }
         }
 
-        // check each pod & non-emergency shuttle
-        var launchQuery = EntityQueryEnumerator<ShuttleComponent>();
-        while (launchQuery.MoveNext(out var uid, out var shuttle))
-        {
-            bool goneToCentCom = false;
-            var query = AllEntityQuery<StationCentcommComponent>();
-            while (query.MoveNext(out var comp))
-            {
-                if (TryComp<FTLComponent>(uid, out var shuttleFtl))
-                {
-                    if (shuttleFtl.TargetUid == comp.Entity)
-                    {
-                        goneToCentCom = true;
-                    }
-                }
-                if (TryComp<TransformComponent>(uid, out var shuttleXform) && shuttleXform.MapUid == comp.MapEntity)
-                {
-                    goneToCentCom = true;
-                }
-            }
-            if (goneToCentCom && IsOnGrid(xform, uid))
-            {
-                return true;
-            }
-        }
         return false;
     }
 
