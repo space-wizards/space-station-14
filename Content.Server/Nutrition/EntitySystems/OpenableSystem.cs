@@ -155,6 +155,8 @@ public sealed class OpenableSystem : EntitySystem
 
         if (opened)
             RaiseLocalEvent(uid, new OpenableOpenedEvent());
+        else
+            RaiseLocalEvent(uid, new OpenableClosedEvent());
 
         UpdateAppearance(uid, comp);
     }
@@ -190,8 +192,15 @@ public sealed class OpenableSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised after an Openable is opened
+/// Raised after an Openable is opened.
 /// </summary>
 public sealed class OpenableOpenedEvent : EventArgs
+{
+}
+
+/// <summary>
+/// Raised after an Openable is closed.
+/// </summary>
+public sealed class OpenableClosedEvent : EventArgs
 {
 }
