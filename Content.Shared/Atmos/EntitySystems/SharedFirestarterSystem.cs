@@ -1,8 +1,9 @@
 using Content.Shared.Actions;
+using Content.Shared.Atmos.Components;
 
-namespace Content.Shared.Abilities.Firestarter;
+namespace Content.Shared.Atmos.EntitySystems;
 
-public sealed class SharedFirestarterSystem : EntitySystem
+public abstract class SharedFirestarterSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
@@ -18,5 +19,6 @@ public sealed class SharedFirestarterSystem : EntitySystem
     private void OnComponentInit(EntityUid uid, FirestarterComponent component, ComponentInit args)
     {
         _actionsSystem.AddAction(uid, ref component.FireStarterActionEntity, component.FireStarterAction, uid);
+        Dirty(uid, component);
     }
 }
