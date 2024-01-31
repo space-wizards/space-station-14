@@ -25,6 +25,9 @@ marking-LizardHornsSimple = Lizard Horns
 marking-LizardTailSmooth-tail_smooth = Lizard Tail (Smooth)
 marking-LizardTailSmooth = Lizard Tail (Smooth)
 
+marking-LizardTailLarge-tail_large = Lizard Tail (Large)
+marking-LizardTailLarge = Lizard Tail (Large)
+
 marking-LizardTailSpikes-tail_spikes = Lizard Tail (Spiky)
 marking-LizardTailSpikes = Lizard Tail (Spiky)
 
@@ -94,3 +97,6 @@ marking-LizardHornsFloppyKoboldEars = Lizard Ears (Floppy Kobold)
 
 marking-LizardChestUnderbelly-body_underbelly = Lizard Chest (Underbelly)
 marking-LizardChestUnderbelly = Lizard Chest (Underbelly)
+
+marking-LizardChestBackspikes-body_backspikes = Lizard Back spikes (Four)
+marking-LizardChestBackspikes = Lizard Back spikes (Four)

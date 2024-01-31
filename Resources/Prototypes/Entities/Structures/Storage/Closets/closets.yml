@@ -1,4 +1,4 @@
-# Tool closet
+﻿# Tool closet
 - type: entity
   id: ClosetTool
   name: tool closet
@@ -67,7 +67,7 @@
 - type: entity
   id: ClosetJanitorBomb
   name: janitorial bomb suit closet
-  parent: ClosetBase
+  parent: ClosetSteelBase
   description: It's a storage unit for janitorial explosion-protective suits.
   suffix: DO NOT MAP
   components:
@@ -136,6 +136,19 @@
   - type: EntityStorageVisuals
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+
+# Syndicate
+- type: entity
+  id: LockerSyndicate
+  name: armory closet
+  parent: ClosetSteelBase
+  description: It's a storage unit.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: syndicate
+    stateDoorOpen: syndicate_open
+    stateDoorClosed: syndicate_door
 
 # Bluespace closet
 - type: entity

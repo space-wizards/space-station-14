@@ -66,11 +66,11 @@ public sealed partial class StrapComponent : Component
     public Vector2 BuckleOffset = Vector2.Zero;
 
     /// <summary>
-    /// The angle in degrees to rotate the player by when they get strapped
+    /// The angle to rotate the player by when they get strapped
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public int Rotation;
+    public Angle Rotation;
 
     /// <summary>
     /// The size of the strap which is compared against when buckling entities

@@ -14,7 +14,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/hit_kick.ogg
+      collection: MetalThud
   - type: CombatMode
   - type: NoSlip
   - type: StaticPrice
@@ -136,6 +136,9 @@
     containers:
     - part-container
     - cell_slot
+  - type: Lock
+    locked: true
+  - type: ActivatableUIRequiresLock
   - type: Flashable
   - type: Damageable
     damageContainer: Silicon
@@ -156,7 +159,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
@@ -200,6 +203,7 @@
     tags:
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
+    - CanPilot
   - type: Emoting
   - type: GuideHelp
     guides:
@@ -217,9 +221,32 @@
     enabled: false
     groups:
     - AllAccess
-  - type: Lock
-    locked: true
-  - type: ActivatableUIRequiresLock
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowSecurityIcons
+
+- type: entity
+  id: BaseBorgChassisSyndicate
+  parent: BaseBorgChassis
+  abstract: true
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Access
+      tags:
+       - NuclearOperative
+       - SyndicateAgent
+    - type: AccessReader
+      access: [["SyndicateAgent"], ["NuclearOperative"]]
+    - type: SiliconLawProvider
+      laws: SyndicateStatic
+    - type: IntrinsicRadioTransmitter
+      channels:
+        - Binary
+        - Syndicate
+    - type: ActiveRadio
+      channels:
+        - Syndicate
+    - type: ShowSyndicateIcons
+    - type: MovementAlwaysTouching

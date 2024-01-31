@@ -91,6 +91,19 @@
   - CryoPodMachineCircuitboard
 
 - type: technology
+  id: Biofabrication
+  name: research-technology-biofabrication
+  icon:
+    sprite: Structures/Machines/biofabricator.rsi
+    state: icon
+  discipline: Biochemical
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - BiofabricatorMachineCircuitboard
+  - BiomassReclaimerMachineCircuitboard
+
+- type: technology
   id: ChemicalDispensary
   name: research-technology-chemical-dispensary
   icon:
@@ -105,18 +118,6 @@
   - BorgModuleAdvancedTreatment
   technologyPrerequisites:
   - Chemistry
-
-- type: technology
-  id: CrewMonitoring
-  name: research-technology-crew-monitoring
-  icon:
-    sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
-    state: scanner
-  discipline: Biochemical
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - HandheldCrewMonitor
 
 # Tier 3
 

@@ -14,7 +14,6 @@
     sprite: Objects/Fun/bikehorn.rsi
     slots: [Belt]
     quickEquip: false
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       collection: BikeHorn
@@ -52,7 +51,7 @@
   name: broken bike horn
   description: A broken horn off of a bicycle.
   components:
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Sprite
     sprite: Objects/Fun/cluwnehorn.rsi
     state: icon
@@ -107,6 +106,11 @@
   - type: Prayable
   - type: StaticPrice
     price: 1000
+  - type: PointLight
+    radius: 1.2
+    energy: 1
+    castShadows: false
+    color: "#eef066"
 
 - type: entity
   parent: BikeHorn
