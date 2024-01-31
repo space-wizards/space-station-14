@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos.Components;
 /// <summary>
 /// Lets its owner entity ignite flammables around it and also heal some damage.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedFirestarterSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedFirestarterSystem))]
 public sealed partial class FirestarterComponent : Component
 {
     /// <summary>
@@ -23,7 +23,7 @@ public sealed partial class FirestarterComponent : Component
     [DataField]
     public EntProtoId? FireStarterAction = "ActionFireStarter";
 
-    [DataField, AutoNetworkedField] public EntityUid? FireStarterActionEntity;
+    [DataField] public EntityUid? FireStarterActionEntity;
 
 
     /// <summary>
