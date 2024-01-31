@@ -28,6 +28,7 @@ law-ninja-4 = You must fight and act with ninja's honor, except where it would c
 
 law-emag-custom = Only {$name} and people they designate as such are Syndicate Agents.
 law-emag-require-panel = The panel must be open to use the EMAG.
+law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
