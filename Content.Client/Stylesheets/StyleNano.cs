@@ -1000,7 +1000,7 @@ namespace Content.Client.Stylesheets
 
                  new StyleRule(new SelectorElement(typeof(ItemList), new[] {"transparentBackgroundItemList"}, null, null), new[]
                 {
-                   new StyleProperty(ItemList.StylePropertyBackground,
+                    new StyleProperty(ItemList.StylePropertyBackground,
                         new StyleBoxFlat {BackgroundColor = Color.Transparent}),
                     new StyleProperty(ItemList.StylePropertyItemBackground,
                         itemListItemBackground),
