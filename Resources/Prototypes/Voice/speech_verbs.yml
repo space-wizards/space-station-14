@@ -123,7 +123,7 @@
   - chat-speech-verb-mumble
 
 - type: speechVerb
-  id: Vulpkanine
+  id: Vulpkanin
   speechVerbStrings:
   - chat-speech-verb-vulpkanine-1
   - chat-speech-verb-vulpkanine-2
