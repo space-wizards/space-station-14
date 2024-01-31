@@ -428,7 +428,7 @@
     - HandLabeler
     - Lighter
     - DrinkShaker
-    - Dropper
+    - BorgDropper
 
 - type: entity
   id: BorgModuleMusique
