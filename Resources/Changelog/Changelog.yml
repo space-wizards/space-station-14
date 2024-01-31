@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: Jar now fills.
-    type: Tweak
-  id: 5340
-  time: '2023-12-12T07:54:15.0000000+00:00'
-- author: IProduceWidgets
-  changes:
   - message: Cig Cartons are slightly smaller.
     type: Tweak
   id: 5341
@@ -3843,3 +3837,10 @@
   id: 5839
   time: '2024-01-31T11:26:46.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24585
+- author: TheShuEd
+  changes:
+  - message: Anomalies can no longer spawn entities in walls or other objects.
+    type: Fix
+  id: 5840
+  time: '2024-01-31T21:05:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24783
