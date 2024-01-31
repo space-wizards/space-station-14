@@ -149,6 +149,28 @@
         - state: rock_quartz
 
 - type: entity
+  id: AsteroidRockQuartzCrab
+  parent: AsteroidRock
+  description: An ore vein rich with quartz.
+  suffix: Quartz Crab
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreQuartzCrab
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_quartz
+
+- type: entity
   id: AsteroidRockSilver
   parent: AsteroidRock
   description: An ore vein rich with silver.
@@ -169,6 +191,15 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_asteroid_west
         - state: rock_silver
+        
+- type: entity
+  id: AsteroidRockSilverCrab
+  parent: AsteroidRockSilver
+  suffix: Silver Crab
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSilverCrab
 
 # Yes I know it drops steel but we may get smelting at some point
 - type: entity
@@ -192,6 +223,15 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_asteroid_west
         - state: rock_tin
+        
+- type: entity
+  id: AsteroidRockTinCrab
+  parent: AsteroidRockTin
+  suffix: Iron
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreIronCrab
 
 - type: entity
   id: AsteroidRockUranium
@@ -215,6 +255,14 @@
           state: rock_asteroid_west
         - state: rock_uranium
 
+- type: entity
+  id: AsteroidRockUraniumCrab
+  parent: AsteroidRockUranium
+  suffix: Uranium Crab
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreUraniumCrab
 
 - type: entity
   id: AsteroidRockBananium
@@ -270,46 +318,6 @@
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
-
-- type: entity
-  id: AsteroidRockCrab
-  parent: AsteroidRock
-  name: asteroid rock
-  suffix: orecrab
-  description: An asteroid.
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/rock.rsi
-    layers:
-      - state: rock_asteroid_ore
-      - map: [ "enum.EdgeLayer.South" ]
-        state: rock_asteroid_south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: rock_asteroid_east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: rock_asteroid_north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: rock_asteroid_west
-  - type: OreVein
-    oreChance: 0.33
-    oreRarityPrototypeId: OreCrab
-
-- type: entity
-  id: AsteroidRockCrab1
-  parent: AsteroidRockCrab
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/rock.rsi
-    layers:
-      - state: rock_asteroid_ore1
-      - map: [ "enum.EdgeLayer.South" ]
-        state: rock_asteroid_south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: rock_asteroid_east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: rock_asteroid_north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: rock_asteroid_west
 
 - type: entity
   id: IronRock

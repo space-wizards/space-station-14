@@ -7,6 +7,7 @@
     DrinkVacuumFlask: 5
     DrinkFlaskBar: 5
     DrinkShaker: 5
+    CustomDrinkJug: 2 #to allow for custom drinks in the soda/booze dispensers
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
     DrinkBeerBottleFull: 5
