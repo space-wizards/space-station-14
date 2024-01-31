@@ -331,7 +331,7 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - ClothingNeckStethoscope
-    - HandheldCrewMonitor
+    - HandheldCrewMonitorBorg
 
 - type: entity
   id: BorgModuleTreatment
