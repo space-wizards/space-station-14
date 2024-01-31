@@ -23,6 +23,12 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 14
   - type: Tag
     tags:
     - CaptainSabre
@@ -51,6 +57,12 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/katana.rsi
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 12
   - type: DisarmMalus
 
 - type: entity
@@ -67,6 +79,10 @@
     damage:
       types:
         Slash: 30
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 25
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/energykatana.rsi
@@ -77,13 +93,15 @@
     charges: 3
   - type: AutoRecharge
     rechargeDuration: 20
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg 
   - type: Clothing
     sprite: Objects/Weapons/Melee/energykatana.rsi
     slots:
     - Back
     - Belt
   - type: Reflect
-
+  
 - type: entity
   name: machete
   parent: BaseItem
@@ -102,8 +120,14 @@
     damage:
       types:
         Slash: 15
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 12
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/machete.rsi
@@ -125,10 +149,16 @@
     damage:
       types:
         Slash: 20
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 17
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Normal
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
   - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
@@ -153,8 +183,14 @@
     damage:
       types:
         Slash: 16
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 13
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/cutlass.rsi
