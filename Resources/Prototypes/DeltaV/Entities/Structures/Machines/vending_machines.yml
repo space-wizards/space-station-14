@@ -21,3 +21,4 @@
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
     - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
