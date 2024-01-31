@@ -64,7 +64,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // A container-less entity is having its parent set to a disposable holder
             // such as when that entity is being teleported into the holder
-            _containerSystem.Insert(message.Entity, holder.Container, force: true);
+            _containerSystem.Insert(message.Entity, holder.Container);
         }
 
         private void OnComponentStartup(EntityUid uid, DisposalHolderComponent holder, ComponentStartup args)
