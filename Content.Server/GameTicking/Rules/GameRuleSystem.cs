@@ -1,14 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Robust.Shared.Timing;
-using Content.Server.Station.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Collections;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -85,38 +80,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
     {
 
-    }
-
-    protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
-    {
-        return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-    }
-
-    protected bool TryRoundStartAttempt(RoundStartAttemptEvent ev, string localizedPresetName)
-    {
-        var query = EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out _, out var gameRule))
-        {
-            if (ev.Players.Length == 0)
-            {
-                ChatManager.DispatchServerAnnouncement(Loc.GetString("preset-no-one-ready", ("presetName", localizedPresetName)));
-                ev.Cancel();
-                break;
-            }
-
-            var minPlayers = gameRule.MinPlayers;
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length),
-                    ("minimumPlayers", minPlayers),
-                    ("presetName", localizedPresetName)));
-                ev.Cancel();
-                break;
-            }
-        }
-
-        return !ev.Cancelled;
     }
 
     public override void Update(float frameTime)
