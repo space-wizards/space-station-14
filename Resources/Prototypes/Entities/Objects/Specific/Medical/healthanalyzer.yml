@@ -13,6 +13,8 @@
         shader: unshaded
         visible: true
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Item
+    storedRotation: -90
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
     closeOnHandDeselect: false

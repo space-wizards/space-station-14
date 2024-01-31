@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameTicking;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Shared.Map;
@@ -15,7 +16,7 @@ public sealed class SpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer);
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, after: new[] { typeof(ContainerSpawnPointSystem), typeof(ArrivalsSystem) });
     }
 
     private void OnSpawnPlayer(PlayerSpawningEvent args)
@@ -39,7 +40,7 @@ public sealed class SpawnPointSystem : EntitySystem
 
             if (_gameTicker.RunLevel != GameRunLevel.InRound &&
                 spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job?.ID == args.Job.PrototypeId))
+                (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype))
             {
                 possiblePositions.Add(xform.Coordinates);
             }

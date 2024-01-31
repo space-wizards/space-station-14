@@ -1,12 +1,13 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Maps;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
@@ -28,11 +29,16 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] public readonly PuddleSystem Puddle = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
+
+    private HashSet<EntityUid> _entSet = new();
 
     public override void Initialize()
     {
@@ -76,15 +82,16 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         if (_exposedTimer < ExposedUpdateDelay)
             return;
 
-        foreach (var (exposed, transform) in EntityManager.EntityQuery<AtmosExposedComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var transform))
         {
-            var air = GetContainingMixture(exposed.Owner, transform:transform);
+            var air = GetContainingMixture(uid, transform:transform);
 
             if (air == null)
                 continue;
 
             var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform);
-            RaiseLocalEvent(exposed.Owner, ref updateEvent);
+            RaiseLocalEvent(uid, ref updateEvent);
         }
 
         _exposedTimer -= ExposedUpdateDelay;

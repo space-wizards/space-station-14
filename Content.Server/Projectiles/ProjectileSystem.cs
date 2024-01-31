@@ -4,11 +4,9 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 
 namespace Content.Server.Projectiles;
 
@@ -39,7 +37,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         RaiseLocalEvent(target, ref attemptEv);
         if (attemptEv.Cancelled)
         {
-            SetShooter(component, target);
+            SetShooter(uid, component, target);
             return;
         }
 
@@ -60,7 +58,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
             _adminLogger.Add(LogType.BulletHit,
                 HasComp<ActorComponent>(target) ? LogImpact.Extreme : LogImpact.High,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.Total:damage} damage");
+                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
         }
 
         if (!deleted)
@@ -71,10 +69,11 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         component.DamagedEntity = true;
 
+        var afterProjectileHitEvent = new AfterProjectileHitEvent(component.Damage, target, args.OtherFixture);
+        RaiseLocalEvent(uid, ref afterProjectileHitEvent);
+
         if (component.DeleteOnCollide)
-        {
             QueueDel(uid);
-        }
 
         if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
         {

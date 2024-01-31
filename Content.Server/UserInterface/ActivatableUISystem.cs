@@ -5,10 +5,11 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.UserInterface;
 
@@ -17,6 +18,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -122,16 +124,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
     {
-        if (!_blockerSystem.CanInteract(user, uiEntity) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
-            return false;
-
-        if (aui.RequireHands && !HasComp<HandsComponent>(user))
-            return false;
-
-        if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
-            return false;
-
-        if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession))
+        if (!TryComp(user, out ActorComponent? actor))
             return false;
 
         if (aui.Key == null)
@@ -140,8 +133,26 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!_uiSystem.TryGetUi(uiEntity, aui.Key, out var ui))
             return false;
 
+        if (ui.SubscribedSessions.Contains(actor.PlayerSession))
+        {
+            _uiSystem.CloseUi(ui, actor.PlayerSession);
+            return true;
+        }
+
+        if (!_blockerSystem.CanInteract(user, uiEntity) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
+            return false;
+
+        if (aui.RequireHands && !HasComp<HandsComponent>(user))
+            return false;
+
+        if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession))
+            return false;
+
         if (aui.SingleUser && (aui.CurrentSingleUser != null) && (actor.PlayerSession != aui.CurrentSingleUser))
         {
+            string message = Loc.GetString("machine-already-in-use", ("machine", uiEntity));
+            _popupSystem.PopupEntity(message, uiEntity, user);
+
             // If we get here, supposedly, the object is in use.
             // Check with BUI that it's ACTUALLY in use just in case.
             // Since this could brick the object if it goes wrong.
@@ -164,7 +175,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent(uiEntity, bae);
 
         SetCurrentSingleUser(uiEntity, actor.PlayerSession, aui);
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
+        _uiSystem.OpenUi(ui, actor.PlayerSession);
 
         //Let the component know a user opened it so it can do whatever it needs to do
         var aae = new AfterActivatableUIOpenEvent(user, actor.PlayerSession);
@@ -173,7 +184,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         return true;
     }
 
-    public void SetCurrentSingleUser(EntityUid uid, IPlayerSession? v, ActivatableUIComponent? aui = null)
+    public void SetCurrentSingleUser(EntityUid uid, ICommonSession? v, ActivatableUIComponent? aui = null)
     {
         if (!Resolve(uid, ref aui))
             return;
@@ -231,9 +242,9 @@ public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventAr
 public sealed class AfterActivatableUIOpenEvent : EntityEventArgs
 {
     public EntityUid User { get; }
-    public readonly IPlayerSession Session;
+    public readonly ICommonSession Session;
 
-    public AfterActivatableUIOpenEvent(EntityUid who, IPlayerSession session)
+    public AfterActivatableUIOpenEvent(EntityUid who, ICommonSession session)
     {
         User = who;
         Session = session;

@@ -9,9 +9,8 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
@@ -35,21 +34,21 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var entityUid))
+            if (!int.TryParse(args[0], out var entInt))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            var target = new EntityUid(entityUid);
+            var nent = new NetEntity(entInt);
 
-            if (!target.IsValid() || !_entities.EntityExists(target))
+            if (!_entities.TryGetEntity(nent, out var target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            if (!_entities.HasComponent<InventoryComponent?>(target))
+            if (!_entities.HasComponent<InventoryComponent>(target))
             {
                 shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message", ("missing", "inventory")));
                 return;
@@ -57,19 +56,19 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length == 1)
             {
-                if (shell.Player is not IPlayerSession player)
+                if (shell.Player is not { } player)
                 {
                     shell.WriteError(Loc.GetString("set-outfit-command-is-not-player-error"));
                     return;
                 }
 
                 var eui = IoCManager.Resolve<EuiManager>();
-                var ui = new SetOutfitEui(target);
+                var ui = new SetOutfitEui(nent);
                 eui.OpenEui(ui, player);
                 return;
             }
 
-            if (!SetOutfit(target, args[1], _entities))
+            if (!SetOutfit(target.Value, args[1], _entities))
                 shell.WriteLine(Loc.GetString("set-outfit-command-invalid-outfit-id-error"));
         }
 
@@ -93,9 +92,9 @@ namespace Content.Server.Administration.Commands
             }
 
             var invSystem = entityManager.System<InventorySystem>();
-            if (invSystem.TryGetSlots(target, out var slotDefinitions, inventoryComponent))
+            if (invSystem.TryGetSlots(target, out var slots))
             {
-                foreach (var slot in slotDefinitions)
+                foreach (var slot in slots)
                 {
                     invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
                     var gearStr = startingGear.GetGear(slot.Name, profile);

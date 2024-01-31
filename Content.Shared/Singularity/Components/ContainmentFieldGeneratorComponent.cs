@@ -92,7 +92,7 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     /// Stores a list of fields connected between generators in this direction.
     /// </summary>
     [ViewVariables]
-    public Dictionary<Direction, (ContainmentFieldGeneratorComponent, List<EntityUid>)> Connections = new();
+    public Dictionary<Direction, (Entity<ContainmentFieldGeneratorComponent>, List<EntityUid>)> Connections = new();
 
     /// <summary>
     /// What fields should this spawn?

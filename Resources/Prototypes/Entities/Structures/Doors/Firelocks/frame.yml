@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: FirelockFrame
   parent: BaseStructureDynamic
-  name: Firelock Frame
+  name: firelock frame
   description: That is a firelock frame.
   components:
   - type: Sprite

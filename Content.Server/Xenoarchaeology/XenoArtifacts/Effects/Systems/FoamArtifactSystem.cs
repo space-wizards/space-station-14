@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
@@ -38,8 +37,7 @@ public sealed class FoamArtifactSystem : EntitySystem
         var range = (int) MathF.Round(MathHelper.Lerp(component.MinFoamAmount, component.MaxFoamAmount, _random.NextFloat(0, 1f)));
         sol.AddReagent(component.SelectedReagent, component.ReagentAmount);
         var foamEnt = Spawn("Foam", xform.Coordinates);
-        var smoke = EnsureComp<SmokeComponent>(foamEnt);
-        smoke.SpreadAmount = range * 4;
-        _smoke.Start(foamEnt, smoke, sol, component.Duration);
+        var spreadAmount = range * 4;
+        _smoke.StartSmoke(foamEnt, sol, component.Duration, spreadAmount);
     }
 }

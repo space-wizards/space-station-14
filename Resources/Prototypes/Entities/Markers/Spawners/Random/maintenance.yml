@@ -11,13 +11,23 @@
           state: icon-super
     - type: RandomSpawner
       rarePrototypes:
+        - ClothingUniformJumpsuitFamilyGuy
         - CigarGold
         - ClothingNeckCloakHerald
         - ClothingHeadHelmetTemplar
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
         - ClothingNeckCloakMoth
+        - ClothingNeckCloakVoid
         - ClothingNeckCloakGoliathCloak
+        - ClothingNeckCloakAce
+        - ClothingNeckCloakAro
+        - ClothingNeckCloakBi
+        - ClothingNeckCloakIntersex
+        - ClothingNeckCloakLesbian
+        - ClothingNeckCloakGay
+        - ClothingNeckCloakEnby
+        - ClothingNeckCloakPan
         - ToySkeleton
         - Basketball
         - Football
@@ -52,6 +62,8 @@
         - ClothingShoesCult
         - ClothingUniformJumpsuitAncient
         - ClothingUniformJumpsuitPirate
+        - ClothingShoesBootsCowboyFancy
+        - ClothingHeadHatCowboyBountyHunter
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -95,6 +107,7 @@
         - ClothingNeckTieRed
         - ClothingOuterCoatGentle
         - ClothingOuterCoatJensen
+        - ClothingEyesGlassesJensen
         - ClothingOuterCoatLab
         - ClothingOuterCoatPirate
         - ClothingOuterHoodieBlack
@@ -104,12 +117,14 @@
         - ClothingOuterFlannelGreen
         - ClothingOuterVestHazard
         - ClothingShoesBootsJack
+        - ClothingShoesHighheelBoots
         - ClothingShoesBootsLaceup
         - ClothingShoesLeather
         - ClothingShoesBootsSalvage
         - ClothingShoesBootsWork
         - ClothingShoesTourist
         - ClothingUniformJumpsuitLoungewear
+        - ClothingHeadHatCowboyRed
       chance: 0.6
       offset: 0.0
 
@@ -139,7 +154,10 @@
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
+        - ToolboxArtisticFilled
         - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
+        - EmergencyFunnyOxygenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -183,6 +201,7 @@
         - CableHVStack10
         - CableMVStack10
         - CableApcStack10
+        - PetCarrier
       chance: 0.6
       offset: 0.0
 
@@ -211,6 +230,8 @@
         - FlashlightLantern
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
+        - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - Lighter
         - Matchbox
         - Crowbar

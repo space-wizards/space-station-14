@@ -1,9 +1,9 @@
+using Content.Server.Polymorph.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Humanoid;
-using Content.Server.Polymorph.Systems;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Polymorph;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
@@ -28,7 +28,10 @@ public sealed class PolyArtifactSystem : EntitySystem
     private void OnActivate(EntityUid uid, PolyArtifactComponent component, ArtifactActivatedEvent args)
     {
         var xform = Transform(uid);
-        foreach (var comp in _lookup.GetComponentsInRange<HumanoidAppearanceComponent>(xform.Coordinates, component.Range))
+        var humanoids = new HashSet<Entity<HumanoidAppearanceComponent>>();
+        _lookup.GetEntitiesInRange(xform.Coordinates, component.Range, humanoids);
+
+        foreach (var comp in humanoids)
         {
             var target = comp.Owner;
             if (_mob.IsAlive(target))

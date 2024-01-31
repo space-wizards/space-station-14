@@ -54,6 +54,30 @@
                         <!-- appearanceList -->
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Margin="10" Orientation="Vertical" HorizontalExpand="True">
+                                <!-- Species -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <OptionButton Name="CSpeciesButton" HorizontalAlignment="Right" />
+                                </BoxContainer>
+                                <!-- Age -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <LineEdit Name="CAgeEdit" MinSize="40 0" HorizontalAlignment="Right" />
+                                </BoxContainer>
+                                <!-- Sex -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <OptionButton Name="CSexButton" HorizontalAlignment="Right" />
+                                </BoxContainer>
+                                <!-- Pronouns -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <OptionButton Name="CPronounsButton" HorizontalAlignment="Right" />
+                                </BoxContainer>
                                 <!-- Show clothing -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-clothing'}" />
@@ -71,30 +95,6 @@
                                     <Label Text="{Loc 'humanoid-profile-editor-backpack-label'}" />
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="CBackpackButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Sex -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <OptionButton Name="CSexButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Pronouns -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <OptionButton Name="CPronounsButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Age -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <LineEdit Name="CAgeEdit" MinSize="40 0" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Species -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <OptionButton Name="CSpeciesButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                             </BoxContainer>
                             <!-- Skin -->

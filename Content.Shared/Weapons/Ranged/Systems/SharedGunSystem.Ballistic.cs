@@ -48,7 +48,7 @@ public abstract partial class SharedGunSystem
             return;
 
         component.Entities.Add(args.Used);
-        component.Container.Insert(args.Used);
+        Containers.Insert(args.Used, component.Container);
         // Not predicted so
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
@@ -183,10 +183,10 @@ public abstract partial class SharedGunSystem
 
         // Reset shotting for cycling
         if (Resolve(uid, ref gunComp, false) &&
-            gunComp is { FireRate: > 0f } &&
+            gunComp is { FireRateModified: > 0f } &&
             !Paused(uid))
         {
-            gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRate);
+            gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRateModified);
         }
 
         Dirty(uid, component);
@@ -241,7 +241,7 @@ public abstract partial class SharedGunSystem
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
                 component.Entities.RemoveAt(component.Entities.Count - 1);
-                component.Container.Remove(entity);
+                Containers.Remove(entity, component.Container);
             }
             else if (component.UnspawnedCount > 0)
             {

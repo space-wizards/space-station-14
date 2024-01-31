@@ -1,3 +1,4 @@
+using Content.Server.GameTicking;
 using Content.Shared.Follower;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -31,11 +32,11 @@ public sealed class FollowerSystemTest
             var map = mapMan.CreateMap();
 
             // Spawn an observer to be followed.
-            var followed = entMan.SpawnEntity("MobObserver", new MapCoordinates(0, 0, map));
+            var followed = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, new MapCoordinates(0, 0, map));
             logger.Info($"Spawned followed observer: {entMan.ToPrettyString(followed)}");
 
             // Spawn an observer to follow another observer.
-            var follower = entMan.SpawnEntity("MobObserver", new MapCoordinates(0, 0, map));
+            var follower = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, new MapCoordinates(0, 0, map));
             logger.Info($"Spawned follower observer: {entMan.ToPrettyString(follower)}");
 
             followerSystem.StartFollowingEntity(follower, followed);

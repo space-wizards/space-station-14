@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: base shield
   parent: BaseItem
   id: BaseShield
@@ -10,7 +10,7 @@
       state: riot-icon
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
-      size: 100
+      size: Ginormous
       heldPrefix: riot
     - type: Blocking
       passiveBlockModifier:
@@ -47,7 +47,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:
@@ -68,7 +69,7 @@
   description: A large tower shield. Good for controlling crowds.
   components:
     - type: StaticPrice
-      price: 100
+      price: 90
 
 - type: entity
   name: riot laser shield
@@ -160,7 +161,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: WoodDestroy
             - !type:SpawnEntitiesBehavior
               spawn:
                 MaterialWoodPlank:
@@ -215,17 +217,71 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:
                   min: 1
                   max: 2
 
+- type: entity
+  name: web shield
+  parent: BaseShield
+  id: WebShield
+  description: A stringy shield. It's weak, and doesn't seem to do well against heat.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/web-shield.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Weapons/Melee/web-shield.rsi
+      heldPrefix: icon
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+        flatReductions:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.5
+    - type: Construction
+      graph: WebObjects
+      node: shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialWebSilk:
+                  min: 1
+                  max: 1
+            - !type:PlaySoundBehavior
+              sound:
+                collection: WoodDestroy
+
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity
-  name: Clockwork Shield
+  name: clockwork shield
   parent: BaseShield
   id: ClockworkShield
   description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
@@ -254,7 +310,7 @@
       #Have it break into brass when clock cult is in
 
 - type: entity
-  name: Mirror Shield
+  name: mirror shield
   parent: BaseShield
   id: MirrorShield
   description: Eerily glows red... you hear the geometer whispering
@@ -263,7 +319,11 @@
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
-    - type: Blocking #Mirror shield should reflect heat/laser eventually, but be relatively weak to everything else.
+    - type: Reflect
+      reflectProb: 0.95
+      reflects:
+        - Energy
+    - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
       passiveBlockModifier:
         coefficients:
           Blunt: 1.2
@@ -289,7 +349,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/glass_break1.ogg
+              sound:
+                collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetGlass:
@@ -303,12 +364,17 @@
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
     - type: ItemToggle
-      activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/ebladeoff.ogg
-      offSize: 5
+    - type: ItemToggleActiveSound
+      activeSound:
+        path: /Audio/Weapons/ebladehum.ogg
+    - type: ItemToggleSize
+      activatedSize: Huge
+    - type: ItemToggleDisarmMalus
+      activatedDisarmMalus: 0.6
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -319,7 +385,7 @@
           shader: unshaded
           map: [ "shield" ]
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Weapons/Melee/e_shield.rsi
       heldPrefix: eshield
     - type: UseDelay
@@ -378,7 +444,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 BrokenEnergyShield:
@@ -398,7 +465,7 @@
       state: eshield-icon
     - type: Item
       sprite: Objects/Weapons/Melee/e_shield.rsi
-      size: 5
+      size: Small
       heldPrefix: eshield
 
 - type: entity
@@ -408,16 +475,18 @@
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
     - type: ItemToggle
-      activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/telescopicon.ogg
         params:
           volume: -5
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-      offSize: 10
+    - type: ItemToggleDisarmMalus
+      activatedDisarmMalus: 0.6
+    - type: ItemToggleSize
+      activatedSize: Huge
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
@@ -426,7 +495,7 @@
           visible: false
           map: [ "shield" ]
     - type: Item
-      size: 10
+      size: Small
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       heldPrefix: teleriot
     - type: UseDelay
@@ -454,7 +523,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalGlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:

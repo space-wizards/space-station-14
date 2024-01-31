@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: ArcadeBase
   description: An arcade cabinet.
@@ -66,6 +66,7 @@
     - PlushieRatvar
     - PlushieNar
     - PlushieSnake
+    - PlushieArachind
     - Basketball
     - Football
     - PlushieRouny
@@ -85,6 +86,9 @@
     - BeachBall
     - PlushieMoth
     - PlushieHampter
+    - PlushiePenguin
+    - PlushieHuman
+    - ClothingHeadHatCowboyRed
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade

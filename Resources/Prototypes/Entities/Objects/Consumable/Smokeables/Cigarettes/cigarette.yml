@@ -17,7 +17,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
@@ -26,6 +26,7 @@
   id: SoakedCigarette
   parent: BaseCigar
   name: cigarette
+  suffix: Soaked
   description: A roll of tobacco and nicotine soaked in some chemical.
   components:
   - type: Sprite
@@ -41,7 +42,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
@@ -59,6 +60,11 @@
     solutions:
       smokable:
         maxVol: 20
+  - type: Tag
+    tags:
+      - Cigarette
+      - Trash
+      - Burnt
 
 - type: entity
   id: CigaretteSyndicate

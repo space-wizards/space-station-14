@@ -66,3 +66,9 @@ reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, al
 
 reagent-name-bungotoxin = bungotoxin
 reagent-desc-bungotoxin = A moderately slow-acting poison found within the pit of the bungo fruit.
+
+reagent-name-vestine = vestine
+reagent-desc-vestine = Has an adverse reaction within the body causing major jittering. While not particularly useful on it's own, it can be used to produce a small variety of chemicals.
+
+reagent-name-tazinide = tazinide
+reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.
