@@ -12,6 +12,7 @@ public sealed partial class WoundSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableInit);
+        InitWounding();
     }
 
     private void OnWoundableInit(EntityUid owner, WoundableComponent woundable, ref ComponentInit args)

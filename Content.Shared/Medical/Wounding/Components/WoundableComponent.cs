@@ -21,6 +21,15 @@ public sealed partial class WoundableComponent : Component
 
     public const string WoundableContainerId = "Wounds";
 
+    /// <summary>
+    /// Should we spread damage to child and parent woundables when we gib this part
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SplatterDamageOnDestroy = true;
+
+    [DataField, AutoNetworkedField]
+    public EntProtoId? AmputationWoundProto = null;
+
     [DataField(required:true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<WoundingMetadata,DamageTypePrototype>)), AutoNetworkedField]
     public Dictionary<string, WoundingMetadata> Config = new();
 
