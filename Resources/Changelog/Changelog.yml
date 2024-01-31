@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Mayo Jar is bigger (50u)
-    type: Tweak
-  id: 5335
-  time: '2023-12-12T07:48:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Fixed the quick-remove star in the inventory sometimes not appearing.
@@ -3838,3 +3832,10 @@
   id: 5834
   time: '2024-01-30T23:23:31.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24746
+- author: themias
+  changes:
+  - message: Some glasses and masks can be worn together to hide your identity.
+    type: Tweak
+  id: 5835
+  time: '2024-01-31T03:49:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24741
