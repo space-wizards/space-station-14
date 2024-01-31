@@ -14,20 +14,20 @@ public sealed partial class OpenableComponent : Component
     /// Whether this drink or food is opened or not.
     /// Drinks can only be drunk or poured from/into when open, and food can only be eaten when open.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool Opened;
 
     /// <summary>
     /// If this is false you cant press Z to open it.
     /// Requires an OpenBehavior damage threshold or other logic to open.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool OpenableByHand = true;
 
     /// <summary>
     /// Text shown when examining and its open.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public LocId ExamineText = "drink-component-on-examine-is-opened";
 
     /// <summary>
@@ -35,21 +35,21 @@ public sealed partial class OpenableComponent : Component
     /// Defaults to the popup drink uses since its "correct".
     /// It's still generic enough that you should change it if you make openable non-drinks, i.e. unwrap it first, peel it first.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public LocId ClosedPopup = "drink-component-try-use-drink-not-open";
 
     /// <summary>
     /// Text to show in the verb menu for the "Open" action.
     /// You may want to change this for non-drinks, i.e. "Peel", "Unwrap"
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public LocId OpenVerbText = "openable-component-verb-open";
 
     /// <summary>
     /// Text to show in the verb menu for the "Close" action.
     /// You may want to change this for non-drinks, i.e. "Wrap"
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public LocId CloseVerbText = "openable-component-verb-close";
 
     /// <summary>
@@ -61,8 +61,8 @@ public sealed partial class OpenableComponent : Component
     /// <summary>
     /// Can this item be closed again after opening?
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Closeable = false;
+    [DataField]
+    public bool Closeable;
 
     /// <summary>
     /// Sound played when closing.
@@ -76,25 +76,25 @@ public sealed partial class OpenableComponent : Component
     /// examined text. If false, no special text will be
     /// displayed.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Sealable = false;
+    [DataField]
+    public bool Sealable;
 
     /// <summary>
     /// Whether the item's seal is intact (i.e. it has never been opened)
     /// Not used if Sealable is false.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool Sealed = true;
 
     /// <summary>
     /// Text shown when examining and the item's seal has not been broken.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public LocId ExamineTextSealed = "drink-component-on-examine-is-sealed";
 
     /// <summary>
     /// Text shown when examining and the item's seal has been broken.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public LocId ExamineTextUnsealed = "drink-component-on-examine-is-unsealed";
 }
