@@ -35,7 +35,7 @@ public sealed partial class TapeRecorderComponent : Component
     /// What sound is used when play mode is activated
     /// </summary>
     [DataField]
-    public SoundSpecifier PlaySound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_play.ogg")
+    public SoundSpecifier PlaySound = new SoundPathSpecifier("/Audio/Items/Taperecorder/taperecorder_play.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(3f)
     };
@@ -44,7 +44,7 @@ public sealed partial class TapeRecorderComponent : Component
     /// What sound is used when stop mode is activated
     /// </summary>
     [DataField]
-    public SoundSpecifier StopSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_stop.ogg")
+    public SoundSpecifier StopSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/taperecorder_stop.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(3f)
     };
@@ -53,7 +53,7 @@ public sealed partial class TapeRecorderComponent : Component
     /// What sound is used when rewind mode is activated
     /// </summary>
     [DataField]
-    public SoundSpecifier RewindSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_rewind.ogg")
+    public SoundSpecifier RewindSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/taperecorder_rewind.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(3f)
     };
