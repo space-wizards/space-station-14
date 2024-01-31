@@ -7,6 +7,7 @@
   description: survival-description
   rules:
     - RampingStationEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: AllAtOnce
@@ -30,6 +31,7 @@
   description: extended-description
   rules:
   - BasicStationEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Greenshift
@@ -39,6 +41,8 @@
   name: greenshift-title
   showInVote: false #4boring4vote
   description: greenshift-description
+  rules:
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Secret
@@ -72,6 +76,7 @@
   rules:
     - Traitor
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Deathmatch
@@ -96,6 +101,7 @@
   rules:
     - Nukeops
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Revolutionary
@@ -109,6 +115,7 @@
   rules:
     - Revolutionary
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Zombie
@@ -124,6 +131,7 @@
   rules:
   - Zombie
   - BasicStationEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Pirates
@@ -135,3 +143,4 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
