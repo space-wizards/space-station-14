@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 namespace Content.Server.Body.Components
 {
     /// <summary>
@@ -14,7 +14,7 @@ namespace Content.Server.Body.Components
         /// Toggle Internals delay (seconds) when the target is not you.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("delay")]
+        [DataField]
         public float Delay = 3;
     }
 }

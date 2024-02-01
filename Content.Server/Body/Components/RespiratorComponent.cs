@@ -24,32 +24,32 @@ namespace Content.Server.Body.Components
         ///     Saturation level. Reduced by UpdateInterval each tick.
         ///     Can be thought of as 'how many seconds you have until you start suffocating' in this configuration.
         /// </summary>
-        [DataField("saturation")]
+        [DataField]
         public float Saturation = 5.0f;
 
         /// <summary>
         ///     At what level of saturation will you begin to suffocate?
         /// </summary>
-        [DataField("suffocationThreshold")]
+        [DataField]
         public float SuffocationThreshold;
 
-        [DataField("maxSaturation")]
+        [DataField]
         public float MaxSaturation = 5.0f;
 
-        [DataField("minSaturation")]
+        [DataField]
         public float MinSaturation = -2.0f;
 
         // TODO HYPEROXIA?
 
-        [DataField("damage", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
-        [DataField("damageRecovery", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageRecovery = default!;
 
-        [DataField("gaspPopupCooldown")]
+        [DataField]
         public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
 
         [ViewVariables]
