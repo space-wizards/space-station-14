@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Discord bot Changelog now includes hyperlinks to the PRs.
-    type: Add
-  id: 5361
-  time: '2023-12-14T18:19:25.0000000+00:00'
 - author: themias
   changes:
   - message: Fixed spray nozzle not getting ammo from the back pack tank
@@ -3859,3 +3853,15 @@
   id: 5860
   time: '2024-02-01T13:03:50.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24482
+- author: Nopey
+  changes:
+  - message: Many belts and the plant bag no longer produce an erroneous "Can't insert"
+      and "This doesn't go in there!" messages while inserting certain items such
+      as Produce (plant bag) or Smoke Grenades (security belt).
+    type: Fix
+  - message: Ammunition can once again be stored in assault belts, as was the case
+      before June 2022.
+    type: Fix
+  id: 5861
+  time: '2024-02-01T13:33:57.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24063
