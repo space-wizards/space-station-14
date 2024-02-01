@@ -253,9 +253,7 @@
   - type: ItemBorgModule
     items:
     - SheetSteelLingering0
-    - SheetPlasteelLingering0
     - SheetGlassLingering0
-    - SheetRGlassLingering0
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
 
