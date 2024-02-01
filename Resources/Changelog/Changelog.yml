@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: Long guns are now actually long.
-    type: Tweak
-  id: 5344
-  time: '2023-12-12T07:59:43.0000000+00:00'
-- author: IProduceWidgets
-  changes:
   - message: syndicate pens now come in suitably sized discarding boxes.
     type: Tweak
   id: 5345
@@ -3850,3 +3844,10 @@
   id: 5843
   time: '2024-02-01T05:02:49.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24698
+- author: PJB3005
+  changes:
+  - message: Health analyzers now show if somebody is starving.
+    type: Add
+  id: 5844
+  time: '2024-02-01T06:28:17.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24789
