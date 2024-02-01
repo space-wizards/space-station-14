@@ -50677,163 +50677,6 @@ entities:
       - Steel
       - Glass
       - Gold
-- proto: ClosetBase
-  entities:
-  - uid: 9847
-    components:
-    - type: Transform
-      pos: -33.5,-11.5
-      parent: 30
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1495
-        moles:
-        - 1.8959498
-        - 7.1323833
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9864
-          - 9861
-          - 9860
-          - 9859
-          - 9858
-          - 9857
-          - 9856
-          - 9855
-          - 9854
-          - 9853
-          - 9852
-          - 9851
-          - 1945
-          - 9850
-          - 1934
-          - 9849
-          - 1950
-          - 9848
-          - 1951
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 11364
-    components:
-    - type: Transform
-      pos: 5.5,-13.5
-      parent: 30
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 11365
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 15236
-    components:
-    - type: Transform
-      pos: 33.5,41.5
-      parent: 30
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 16172
-    components:
-    - type: Transform
-      pos: 52.5,24.5
-      parent: 30
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 16213
-    components:
-    - type: Transform
-      pos: 26.5,4.5
-      parent: 30
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: ClosetBombFilled
   entities:
   - uid: 2072
@@ -52581,6 +52424,163 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-37.5
+      parent: 30
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 3.4430928
+        - 12.952587
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+- proto: ClosetSteelBase
+  entities:
+  - uid: 9847
+    components:
+    - type: Transform
+      pos: -33.5,-11.5
+      parent: 30
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1495
+        moles:
+        - 1.8959498
+        - 7.1323833
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 9864
+          - 9861
+          - 9860
+          - 9859
+          - 9858
+          - 9857
+          - 9856
+          - 9855
+          - 9854
+          - 9853
+          - 9852
+          - 9851
+          - 1945
+          - 9850
+          - 1934
+          - 9849
+          - 1950
+          - 9848
+          - 1951
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 11364
+    components:
+    - type: Transform
+      pos: 5.5,-13.5
+      parent: 30
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 3.4430928
+        - 12.952587
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 11365
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 15236
+    components:
+    - type: Transform
+      pos: 33.5,41.5
+      parent: 30
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 3.4430928
+        - 12.952587
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 16172
+    components:
+    - type: Transform
+      pos: 52.5,24.5
+      parent: 30
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 3.4430928
+        - 12.952587
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+  - uid: 16213
+    components:
+    - type: Transform
+      pos: 26.5,4.5
       parent: 30
     - type: EntityStorage
       air:
@@ -56275,6 +56275,13 @@ entities:
     components:
     - type: Transform
       pos: -23.5,-7.5
+      parent: 30
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 14843
+    components:
+    - type: Transform
+      pos: 30.5,41.5
       parent: 30
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
@@ -90193,6 +90200,8 @@ entities:
     - type: Transform
       pos: 30.5,42.5
       parent: 30
+    - type: AtmosDevice
+      joinedGrid: 30
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 15441
@@ -91957,6 +91966,8 @@ entities:
     - type: Transform
       pos: 29.5,42.5
       parent: 30
+    - type: AtmosDevice
+      joinedGrid: 30
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 13799

@@ -30,13 +30,12 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffelSecurity
-  id: ClothingBackpackDuffelSecurityFilledDetective
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelFilledDetective
   components:
   - type: StorageFill
     contents:
       - id: BoxSurvivalSecurity
-      - id: Flash
       - id: ForensicPad
       - id: ForensicScanner
 

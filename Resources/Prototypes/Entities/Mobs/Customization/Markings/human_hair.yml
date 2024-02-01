@@ -305,7 +305,7 @@
   markingCategory: Hair
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
-      state: classiccornrows2      
+      state: classiccornrows2
 - type: marking
   id: HumanHairClassicFloorlengthBedhead
   bodyPart: Hair
@@ -425,6 +425,13 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: doublebun
+- type: marking
+  id: HumanHairDoublebunLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: doublebun_long
 - type: marking
   id: HumanHairDreads
   bodyPart: Hair

@@ -19,7 +19,7 @@ public abstract partial class SharedGunSystem
             args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor),
                 ("mode", GetLocSelector(component.SelectedMode))));
             args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor),
-                ("fireRate", $"{component.FireRate:0.0}")));
+                ("fireRate", $"{component.FireRateModified:0.0}")));
         }
     }
 
@@ -80,7 +80,7 @@ public abstract partial class SharedGunSystem
                 component.NextFire += cooldown;
         }
 
-        Audio.PlayPredicted(component.SoundModeToggle, uid, user);
+        Audio.PlayPredicted(component.SoundMode, uid, user);
         Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), uid, user);
         Dirty(uid, component);
     }
@@ -112,7 +112,7 @@ public abstract partial class SharedGunSystem
 
     private void OnGunSelected(EntityUid uid, GunComponent component, HandSelectedEvent args)
     {
-        var fireDelay = 1f / component.FireRate;
+        var fireDelay = 1f / component.FireRateModified;
         if (fireDelay.Equals(0f))
             return;
 
