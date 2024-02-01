@@ -62,8 +62,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [ValidatePrototypeId<DamageTypePrototype>]
     private const string DamageType = "Shock";
 
-    // Yes, this is absurdly small for a reason.
-    private const float ElectrifiedScalePerWatt = 1E-6f;
+    // Multiply and shift the log scale for shock damage.
+    private const float ElectrifiedScalePerWatt = 2.8f;
+    private const float ElectrifiedShiftDamage = -30.6f;
 
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
@@ -264,7 +265,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         // Initial damage scales off of the available supply on the principle that the victim has shorted the entire powernet through their body.
-        var damageScale = supp * ElectrifiedScalePerWatt;
+        var damageScale = ElectrifiedShiftDamage + MathF.Log(supp) * ElectrifiedScalePerWatt;
+        if (damageScale <= 0f)
+            return false;
 
         {
             var lastRet = true;
