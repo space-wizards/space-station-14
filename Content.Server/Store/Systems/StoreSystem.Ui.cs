@@ -11,6 +11,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
 using Content.Shared.Store;
+using Content.Shared.UserInterface;
 using Npgsql.Replication.PgOutput.Messages;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
