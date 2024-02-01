@@ -31,7 +31,4 @@ public sealed partial class StorageOverridePrototype : IPrototype
 
     [DataField]
     public bool AllowDrop { get; private set; } = true;
-
-    [DataField]
-    public Dictionary<string, string> Prototypes = new();
 }
