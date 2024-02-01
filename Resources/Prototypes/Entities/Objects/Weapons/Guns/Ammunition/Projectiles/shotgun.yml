@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   noSpawn: true
@@ -132,10 +132,7 @@
           !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
         mask:
-        - BulletImpassable
-  - type: Tag
-    tags:
-    - PelletShotgunFlare
+          - BulletImpassable
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
