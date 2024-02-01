@@ -25,5 +25,10 @@
       blue: '#0335FCFF'
       white: '#FFFFFFFF'
       black: '#333333FF'
+      # standard atmos pipes
+      waste: '#990000'
+      distro: '#0055cc'
+      air: '#03fcd3'
+      mix: '#947507'
   - type: StaticPrice
     price: 40
