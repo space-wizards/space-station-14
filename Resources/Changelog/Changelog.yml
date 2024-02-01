@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix arrivals fog not actually blocking, no more free roaming.
-    type: Fix
-  id: 5347
-  time: '2023-12-12T09:20:33.0000000+00:00'
 - author: themias
   changes:
   - message: Added fill visuals to Hot Chocolate
@@ -3851,3 +3845,10 @@
   id: 5846
   time: '2024-02-01T06:53:33.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24374
+- author: koteq
+  changes:
+  - message: Fixed indicator near SSD players
+    type: Fix
+  id: 5847
+  time: '2024-02-01T08:30:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24589
