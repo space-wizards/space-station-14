@@ -1,6 +1,8 @@
 ﻿- type: entity
   id: BaseClockworkWindoor
+  name: clockwork windoor
   parent: BaseWindoor
+  components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
     thresholds:
