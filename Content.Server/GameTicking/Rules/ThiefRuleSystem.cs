@@ -122,6 +122,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
                     catch (Exception err)
                     {
                         Log.Error("Error safely picking thieves. Trace:\n" + err);
+                        var selectedthieves = _antagSelection.PickAntag(0, thiefPool);
                     }
 
                 }
