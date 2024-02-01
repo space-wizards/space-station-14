@@ -458,7 +458,7 @@ public sealed class BloodstreamSystem : EntitySystem
     /// <summary>
     ///     Stops the bleeding of the devoured target so the dragon doesn't leave a trail of random blood puddles behind
     /// </summary>
-    private void OnDevoured(EntityUid uid, BloodstreamComponent component, OnDevouredEvent args)
+    private void OnDevoured(EntityUid uid, BloodstreamComponent component, ref OnDevouredEvent args)
     {
         if (component.BleedAmount > 0)
         {

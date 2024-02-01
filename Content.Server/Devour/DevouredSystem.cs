@@ -24,7 +24,7 @@ public sealed class DevouredSystem : EntitySystem
     /// <summary>
     ///     Pacifies the target and gives them a passive damage effect the moment they are devoured.
     /// </summary>
-    private void OnDevoured(EntityUid uid, DevouredComponent component, OnDevouredEvent args)
+    private void OnDevoured(EntityUid uid, DevouredComponent component, ref OnDevouredEvent args)
     {
         component.Devourer = args.Devourer;
 
