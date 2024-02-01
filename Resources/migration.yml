@@ -208,3 +208,6 @@ SpawnVehicleJanicart: null
 VehicleJanicart: null
 VehicleJanicartDestroyed: null
 
+# 2024-02-01
+YellowOxygenTank: OxygenTank
+YellowOxygenTankFilled: OxygenTankFilled
