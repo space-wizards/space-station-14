@@ -162,7 +162,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         // style index might be invalid now so check them all
         var max = Styles.Count - 1;
-        var query = EntityQueryEnumerator<SprayPainterComponent>();
+        var query = AllEntityQuery<SprayPainterComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.Index > max)
