@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed spray nozzle not getting ammo from the back pack tank
-    type: Fix
-  id: 5362
-  time: '2023-12-14T20:49:40.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Mothroach crates are now twice as expensive
@@ -3865,3 +3859,10 @@
   id: 5861
   time: '2024-02-01T13:33:57.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24063
+- author: Blazeror
+  changes:
+  - message: Chemical analysis goggles can now inspect solutions inside spray bottles.
+    type: Fix
+  id: 5862
+  time: '2024-02-01T22:19:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24838
