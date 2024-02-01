@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed secret doors not requiring metal rods
-    type: Fix
-  id: 5349
-  time: '2023-12-13T00:01:51.0000000+00:00'
 - author: Vasilis
   changes:
   - message: Added a General settings tab, and moved a bunch of options into it.
@@ -3853,3 +3847,10 @@
   id: 5848
   time: '2024-02-01T08:45:24.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24464
+- author: PJB3005
+  changes:
+  - message: Removed starvation damage
+    type: Remove
+  id: 5849
+  time: '2024-02-01T09:01:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24790
