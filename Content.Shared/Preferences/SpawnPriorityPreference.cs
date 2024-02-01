@@ -5,7 +5,10 @@ namespace Content.Shared.Preferences
     /// </summary>
     public enum SpawnPriorityPreference
     {
-        Arrivals,
-        Cryosleep
+        ///////////////////////
+        /// DO NOT TOUCH!!! ///
+        ///////////////////////
+        Arrivals = 0,
+        Cryosleep = 1
     }
 }

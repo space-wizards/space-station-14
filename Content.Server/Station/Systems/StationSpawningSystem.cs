@@ -51,10 +51,18 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
     private bool _randomizeCharacters;
 
+    private Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>> _spawnerCallbacks = new();
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         _configurationManager.OnValueChanged(CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
+
+        _spawnerCallbacks = new Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>>()
+        {
+            { SpawnPriorityPreference.Arrivals, _arrivalsSystem.HandlePlayerSpawning },
+            { SpawnPriorityPreference.Cryosleep, _containerSpawnPointSystem.HandlePlayerSpawning }
+        };
     }
 
     /// <summary>
@@ -78,16 +86,24 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         if (station != null && profile != null)
         {
-            switch (profile!.SpawnPriority)
+            /// Try to call the character's preferred spawner first.
+            if (_spawnerCallbacks.TryGetValue(profile.SpawnPriority, out var preferredSpawner))
             {
-                case SpawnPriorityPreference.Arrivals:
-                    _arrivalsSystem.HandlePlayerSpawning(ev);
-                    _containerSpawnPointSystem.HandlePlayerSpawning(ev);
-                    break;
-                case SpawnPriorityPreference.Cryosleep:
-                    _containerSpawnPointSystem.HandlePlayerSpawning(ev);
-                    _arrivalsSystem.HandlePlayerSpawning(ev);
-                    break;
+                preferredSpawner(ev);
+
+                foreach (var (key, remainingSpawner) in _spawnerCallbacks)
+                {
+                    if (key == profile.SpawnPriority)
+                        continue;
+
+                    remainingSpawner(ev);
+                }
+            }
+            else
+            {
+                /// Call all of them in the typical order.
+                foreach (var typicalSpawner in _spawnerCallbacks.Values)
+                    typicalSpawner(ev);
             }
         }
 
