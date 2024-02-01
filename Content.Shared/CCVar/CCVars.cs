@@ -230,12 +230,6 @@ namespace Content.Shared.CCVar
             GameCryoSleepRejoining = CVarDef.Create("game.cryo_sleep_rejoining", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
-        /// Whether or not late-joiners spawn into arrivals or cryogenic storage, if both are enabled.
-        /// </summary>
-        public static readonly CVarDef<bool>
-            StationSpawningPrioritizeArrivals = CVarDef.Create("game.station_spawning_prioritize_arrivals", true, CVar.SERVER | CVar.REPLICATED);
-
-        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =

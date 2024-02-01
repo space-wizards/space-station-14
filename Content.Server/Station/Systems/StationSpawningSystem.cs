@@ -74,16 +74,22 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (station != null && !Resolve(station.Value, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        var prioritizeArrivals = _configurationManager.GetCVar(CCVars.StationSpawningPrioritizeArrivals);
         var ev = new PlayerSpawningEvent(job, profile, station);
 
-        if (station != null && prioritizeArrivals)
-            _arrivalsSystem.HandlePlayerSpawning(ev);
-
-        _containerSpawnPointSystem.HandlePlayerSpawning(ev);
-
-        if (station != null && !prioritizeArrivals)
-            _arrivalsSystem.HandlePlayerSpawning(ev);
+        if (station != null && profile != null)
+        {
+            switch (profile!.SpawnPriority)
+            {
+                case SpawnPriorityPreference.Arrivals:
+                    _arrivalsSystem.HandlePlayerSpawning(ev);
+                    _containerSpawnPointSystem.HandlePlayerSpawning(ev);
+                    break;
+                case SpawnPriorityPreference.Cryosleep:
+                    _containerSpawnPointSystem.HandlePlayerSpawning(ev);
+                    _arrivalsSystem.HandlePlayerSpawning(ev);
+                    break;
+            }
+        }
 
         RaiseLocalEvent(ev);
 
