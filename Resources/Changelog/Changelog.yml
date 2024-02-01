@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Crusher Glaives can be made with the Salvage Weapons technology.
-    type: Add
-  id: 5364
-  time: '2023-12-15T01:34:37.0000000+00:00'
 - author: brainfood1183
   changes:
   - message: Acidifier now has a sprite effect.
@@ -3867,3 +3861,10 @@
   id: 5863
   time: '2024-02-01T22:21:04.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24826
+- author: themias
+  changes:
+  - message: Added sound effect for Diona salutes
+    type: Add
+  id: 5864
+  time: '2024-02-01T22:34:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24836
