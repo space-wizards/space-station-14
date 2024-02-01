@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: Cigar cases can now hold Small items.
-    type: Tweak
-  id: 5342
-  time: '2023-12-12T07:56:19.0000000+00:00'
-- author: IProduceWidgets
-  changes:
   - message: Pipes now have slightly bigger bowls! (30u)
     type: Tweak
   id: 5343
@@ -3846,3 +3840,11 @@
   id: 5841
   time: '2024-02-01T00:28:42.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24765
+- author: metalgearsloth
+  changes:
+  - message: Removed vehicles pending rework (the code is bad I was told to make this
+      more obvious).
+    type: Remove
+  id: 5842
+  time: '2024-02-01T00:33:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24681
