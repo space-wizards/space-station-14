@@ -36,12 +36,10 @@ public sealed class SlipperySystem : EntitySystem
 
     private void HandleStepTrigger(EntityUid uid, SlipperyComponent component, ref StepTriggeredEvent args)
     {
-        if (args.IsStepOff)
+        if (!args.IsStepOff)
         {
-            return;
+            TrySlip(uid, component, args.Tripper);
         }
-
-        TrySlip(uid, component, args.Tripper);
     }
 
     private void HandleAttemptCollide(
