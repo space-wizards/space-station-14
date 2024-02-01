@@ -253,9 +253,10 @@
   - type: OnUseTimerTrigger
     useVerbInstead: true
     beepInterval: .25
-    beepSound: /Audio/Items/Janitor/floor_sign_beep.ogg
-    params:
-      volume: 1
+    beepSound:
+      path: /Audio/Items/Janitor/floor_sign_beep.ogg
+      params:
+        volume: 1
     examinable: false
   - type: Tag
     tags: # ignore "WhitelistChameleon" tag

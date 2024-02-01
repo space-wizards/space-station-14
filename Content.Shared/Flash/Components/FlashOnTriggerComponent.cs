@@ -7,6 +7,6 @@ namespace Content.Shared.Flash.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class FlashOnTriggerComponent : Component
 {
-    [DataField("range")] public float Range = 1.0f;
-    [DataField("duration")] public float Duration = 8.0f;
+    [DataField] public float Range = 1.0f;
+    [DataField] public float Duration = 8.0f;
 }

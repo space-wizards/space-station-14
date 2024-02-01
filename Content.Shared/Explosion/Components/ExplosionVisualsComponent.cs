@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Explosion;
+namespace Content.Shared.Explosion.Components;
 
 /// <summary>
 ///     Component that is used to send explosion overlay/visual data to an abstract explosion entity.
