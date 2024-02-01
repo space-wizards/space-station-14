@@ -834,7 +834,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        /// How long a admin client can go without any input before being considered AFK.
+        /// How long an admin client can go without any input before being considered AFK.
         /// </summary>
         public static readonly CVarDef<float> AdminAfkTime =
             CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
