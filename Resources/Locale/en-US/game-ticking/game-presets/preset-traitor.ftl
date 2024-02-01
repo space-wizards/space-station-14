@@ -3,7 +3,7 @@
 traitor-round-end-codewords = The codewords were: [color=White]{$codewords}[/color]
 traitor-round-end-agent-name = traitor
 
-objective-issuer-syndicate = [color=#87cefa]The Syndicate[/color]
+objective-issuer-syndicate = [color=crimson]The Syndicate[/color]
 
 # Shown at the end of a round of Traitor
 
@@ -40,4 +40,4 @@ traitor-role-uplink-code =
 traitor-role-codewords-short =
     The codewords are:
     {$codewords}.
-traitor-role-uplink-code-short = Your uplink code is {$code}.
+traitor-role-uplink-code-short = Your uplink code is {$code}. Set it as your PDA ringtone to access uplink.

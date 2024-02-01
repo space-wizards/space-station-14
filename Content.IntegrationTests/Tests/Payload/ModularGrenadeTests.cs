@@ -68,7 +68,7 @@ public sealed class ModularGrenadeTests : InteractionTest
         }
 
         // Grenade has exploded.
-        await RunTicks(5);
+        await RunTicks(30);
         AssertDeleted();
     }
 }

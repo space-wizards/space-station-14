@@ -54,7 +54,7 @@
         types: {}
       damage:
         types:
-          Heat: 1
+          Heat: 3
     - type: Reactive
       groups:
         Flammable: [Touch]
@@ -102,6 +102,59 @@
   components:
     - type: Kudzu
       spreadChance: 0.3
+
+- type: entity
+  id: KudzuFlowerFriendly
+  name: floral carpet
+  suffix: Friendly, Floral Anomaly
+  description: A colorful carpet of flowers sprawling in every direction. You're not sure whether to take it down or leave it up.
+  parent: Kudzu
+  components:
+    - type: Sprite
+      drawdepth: FloorObjects
+      sprite: Objects/Misc/kudzuflower.rsi
+      state: kudzu_11
+    - type: Kudzu
+      spriteVariants: 5
+      spreadChance: 0.01
+    - type: SlowContacts
+      walkSpeedModifier: 0.8
+      sprintSpeedModifier: 0.8
+      ignoreWhitelist:
+        components:
+        - IgnoreKudzu
+    - type: RandomSpawner
+      deleteSpawnerAfterSpawn: false
+      rareChance: 0.15
+      offset: 0.2
+      chance: 0.05
+      prototypes:
+      - FloraTree01
+      - FloraTree02
+      - FloraTree03
+      - FloraTree04
+      - FloraTree05
+      - FloraTree06
+      - FloraTreeLarge01
+      - FloraTreeLarge02
+      - FloraTreeLarge03
+      - CrystalCyan
+      rarePrototypes:
+      - AnomalyFloraBulb
+
+- type: entity
+  id: KudzuFlowerAngry
+  suffix: Angry, Floral Anomaly
+  parent: KudzuFlowerFriendly
+  components:
+    - type: Kudzu
+      spreadChance: 0.4
+    - type: RandomSpawner
+      chance: 0.1
+      rarePrototypes:
+      - AnomalyFloraBulb
+      - MobLuminousEntity
+      - MobLuminousObject
 
 - type: entity
   id: FleshKudzu
@@ -179,7 +232,7 @@
       fireSpread: true
       damage:
        types:
-         Heat: 1
+         Heat: 3
     - type: GrowingKudzu
       growthTickChance: 0.3
     - type: AtmosExposed

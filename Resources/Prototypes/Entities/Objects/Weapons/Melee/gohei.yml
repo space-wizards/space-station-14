@@ -11,7 +11,7 @@
     wideAnimationRotation: -150
     damage:
       types:
-        Blunt: 3 #You'd be better off punching people
+        Blunt: 0
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/gohei.rsi

@@ -45,7 +45,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             _appearance.SetData(uid, OutletInjectorVisuals.Enabled, component.Enabled, appearance);
         }
 
-        private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, AtmosDeviceUpdateEvent args)
+        private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, ref AtmosDeviceUpdateEvent args)
         {
             if (!injector.Enabled)
                 return;

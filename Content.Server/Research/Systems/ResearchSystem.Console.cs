@@ -1,6 +1,6 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;

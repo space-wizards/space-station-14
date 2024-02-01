@@ -83,6 +83,10 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
     state: icon
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 6
 
 - type: reagent
   id: IcedCoffee
@@ -130,6 +134,7 @@
 
 - type: reagent
   id: JuiceBerryPoison
+  parent: BaseJuice
   name: reagent-name-juice-berry-poison
   group: Drinks
   desc: reagent-desc-juice-berry-poison
@@ -149,6 +154,7 @@
 
 - type: reagent
   id: Lemonade
+  parent: BaseJuice
   name: reagent-name-lemonade
   group: Drinks
   desc: reagent-desc-lemonade
@@ -246,6 +252,7 @@
 
 - type: reagent
   id: NuclearCola
+  parent: BaseSoda
   name: reagent-name-nuclear-cola
   group: Drinks
   desc: reagent-desc-nuclear-cola
@@ -312,7 +319,7 @@
   parent: BaseDrink
   desc: reagent-desc-tonic-water
   physicalDesc: reagent-physical-desc-fizzy
-  flavor: water
+  flavor: tonicwater
   color: "#0064C8"
 
 - type: reagent
@@ -424,3 +431,17 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rewriter.rsi
     state: icon
+
+- type: reagent
+  id: Mopwata
+  name: reagent-name-mopwata
+  parent: BaseDrink
+  desc: reagent-desc-mopwata
+  physicalDesc: reagent-physical-desc-murky
+  flavor: mopwata
+  color: "#59502b"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.6

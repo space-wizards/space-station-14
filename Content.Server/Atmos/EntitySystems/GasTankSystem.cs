@@ -4,7 +4,7 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Systems;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -110,6 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
         {
+            using(args.PushGroup(nameof(GasTankComponent)));
             if (args.IsInDetailsRange)
                 args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
             if (component.IsConnected)

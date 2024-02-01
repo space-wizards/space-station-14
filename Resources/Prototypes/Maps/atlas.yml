@@ -2,8 +2,8 @@
   id: Atlas
   mapName: Atlas
   mapPath: /Maps/atlas.yml
-  minPlayers: 0
-  maxPlayers: 35
+  minPlayers: 5
+  maxPlayers: 20
   stations:
     Atlas:
       stationProto: StandardNanotrasenStation
@@ -34,7 +34,7 @@
             TechnicalAssistant: [ 1, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 2 ]
+            Chemist: [ 1, 1 ]
             MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 1, 3 ]
             #science

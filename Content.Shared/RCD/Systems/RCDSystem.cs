@@ -38,6 +38,7 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private readonly int RcdModeCount = Enum.GetValues(typeof(RcdMode)).Length;
 
@@ -110,7 +111,9 @@ public sealed class RCDSystem : EntitySystem
         };
 
         args.Handled = true;
-        _doAfter.TryStartDoAfter(doAfterArgs);
+
+        if (_doAfter.TryStartDoAfter(doAfterArgs) && _gameTiming.IsFirstTimePredicted)
+            Spawn("EffectRCDConstruction", location);
     }
 
     private void OnDoAfterAttempt(EntityUid uid, RCDComponent comp, DoAfterAttemptEvent<RCDDoAfterEvent> args)

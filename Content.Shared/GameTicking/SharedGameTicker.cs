@@ -22,6 +22,7 @@ namespace Content.Shared.GameTicking
         // Probably most useful for replays, round end info, and probably things like lobby menus.
         [ViewVariables]
         public int RoundId { get; protected set; }
+        [ViewVariables] public TimeSpan RoundStartTimeSpan { get; protected set; }
 
         public override void Initialize()
         {
@@ -62,6 +63,15 @@ namespace Content.Shared.GameTicking
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class TickerConnectionStatusEvent : EntityEventArgs
+    {
+        public TimeSpan RoundStartTimeSpan { get; }
+        public TickerConnectionStatusEvent(TimeSpan roundStartTimeSpan)
+        {
+            RoundStartTimeSpan = roundStartTimeSpan;
+        }
+    }
 
     [Serializable, NetSerializable]
     public sealed class TickerLobbyStatusEvent : EntityEventArgs
@@ -156,6 +166,10 @@ namespace Content.Shared.GameTicking
         public int PlayerCount { get; }
         public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
         public string? LobbySong;
+
+        /// <summary>
+        /// Sound gets networked due to how entity lifecycle works between client / server and to avoid clipping.
+        /// </summary>
         public string? RestartSound;
 
         public RoundEndMessageEvent(
@@ -179,7 +193,6 @@ namespace Content.Shared.GameTicking
         }
     }
 
-
     [Serializable, NetSerializable]
     public enum PlayerGameStatus : sbyte
     {
@@ -188,4 +201,3 @@ namespace Content.Shared.GameTicking
         JoinedGame,
     }
 }
-

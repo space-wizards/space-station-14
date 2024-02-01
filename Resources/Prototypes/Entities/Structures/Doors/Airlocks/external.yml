@@ -2,10 +2,9 @@
   parent: Airlock
   id: AirlockExternal
   suffix: External
-  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated.
+  description: It opens, it closes, it might crush you, and there might be only space behind it.
   components:
   - type: Door
-    bumpOpen: false
     crushDamage:
       types:
         Blunt: 15

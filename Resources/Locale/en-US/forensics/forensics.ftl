@@ -24,3 +24,5 @@ forensic-scanner-verb-message = Perform a forensic scan
 
 forensic-pad-fingerprint-name = {$entity}'s fingerprints
 forensic-pad-gloves-name = fibers from {$entity}
+
+forensics-cleaning = You begin cleaning the evidence off of {THE($target)}...

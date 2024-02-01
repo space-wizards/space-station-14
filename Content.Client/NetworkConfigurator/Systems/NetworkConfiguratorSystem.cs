@@ -31,13 +31,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         base.Initialize();
 
         SubscribeLocalEvent<ClearAllOverlaysEvent>(_ => ClearAllOverlays());
-        SubscribeLocalEvent<NetworkConfiguratorComponent, ItemStatusCollectMessage>(OnCollectItemStatus);
+        Subs.ItemStatus<NetworkConfiguratorComponent>(OnCollectItemStatus);
     }
 
-    private void OnCollectItemStatus(EntityUid uid, NetworkConfiguratorComponent configurator, ItemStatusCollectMessage args)
+    private Control OnCollectItemStatus(Entity<NetworkConfiguratorComponent> entity)
     {
         _inputManager.TryGetKeyBinding((ContentKeyFunctions.AltUseItemInHand), out var binding);
-        args.Controls.Add(new StatusControl(configurator, binding?.GetKeyString() ?? ""));
+        return new StatusControl(entity, binding?.GetKeyString() ?? "");
     }
 
     public bool ConfiguredListIsTracked(EntityUid uid, NetworkConfiguratorComponent? component = null)
@@ -100,17 +100,6 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         _actions.RemoveAction(overlay.Action);
         _overlay.RemoveOverlay(overlay);
-    }
-
-    // hacky solution related to mapping
-    public void SetActiveDeviceList(EntityUid tool, EntityUid list, NetworkConfiguratorComponent? component = null)
-    {
-        if (!Resolve(tool, ref component))
-        {
-            return;
-        }
-
-        component.ActiveDeviceList = list;
     }
 
     private sealed class StatusControl : Control
