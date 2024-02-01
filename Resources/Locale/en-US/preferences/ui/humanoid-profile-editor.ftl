@@ -31,8 +31,12 @@ humanoid-profile-editor-preference-jumpskirt = Jumpskirt
 humanoid-profile-editor-preference-backpack = Backpack
 humanoid-profile-editor-preference-satchel = Satchel
 humanoid-profile-editor-preference-duffelbag = Duffelbag
+
+# Spawn priority
+humanoid-profile-editor-preference-spawn-priority-none = None
 humanoid-profile-editor-preference-spawn-priority-arrivals = Arrivals
 humanoid-profile-editor-preference-spawn-priority-cryosleep = Cryosleep
+
 humanoid-profile-editor-jobs-amount-in-department-tooltip = Jobs in the {$departmentName} department
 humanoid-profile-editor-department-jobs-label = {$departmentName} jobs
 humanoid-profile-editor-antags-tab = Antags

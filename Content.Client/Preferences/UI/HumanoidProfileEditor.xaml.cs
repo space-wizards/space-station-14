@@ -343,8 +343,10 @@ namespace Content.Client.Preferences.UI
 
             #region SpawnPriority
 
-            _spawnPriorityButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-spawn-priority-arrivals"), (int) SpawnPriorityPreference.Arrivals);
-            _spawnPriorityButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-spawn-priority-cryosleep"), (int) SpawnPriorityPreference.Cryosleep);
+            foreach (var value in Enum.GetValues<SpawnPriorityPreference>())
+            {
+                _spawnPriorityButton.AddItem(Loc.GetString($"humanoid-profile-editor-preference-spawn-priority-{value.ToString().ToLower()}"), (int) value);
+            }
 
             _spawnPriorityButton.OnItemSelected += args =>
             {
