@@ -21,6 +21,7 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     SecretDocumentsStealObjective: 0.5
+    HoSGunStealObjective: 0.5 # Delta-V - HoS Gun
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill

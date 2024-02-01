@@ -70,6 +70,10 @@
   <Box>
     <GuideEntityEmbed Entity="BookSecretDocuments" Caption="Secret Documents"/>
   </Box>
+  - Steal the Head of Security's [color=#a4885c]X-01 MultiPhase Energy Gun[/color].
+  <Box>
+    <GuideEntityEmbed Entity="WeaponEnergyGunMultiphase" Caption="Head of Security's personal Energy Gun"/>
+  </Box>
   - Steal the Chief Engineer's [color=#a4885c]Advanced Magboots[/color].
   <Box>
     <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption="Advanced Magboots"/>

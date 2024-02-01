@@ -247,6 +247,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: WeaponEnergyGunMultiphase # DeltaV - HoS Energy Gun
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -270,6 +271,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: WeaponEnergyGunMultiphase # DeltaV - HoS Energy Gun
 
 - type: entity
   id: LockerFreezerVaultFilled
