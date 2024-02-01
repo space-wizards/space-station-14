@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.Gibing.Events;
+namespace Content.Shared.Gibbing.Events;
 
 /// <summary>
 /// Called just before we actually gib the target entity
@@ -15,7 +15,7 @@ namespace Content.Shared.Gibing.Events;
 /// </summary>
 /// <param name="Target">The entity being gibbed</param>
 /// <param name="DroppedEntities">Any entities that are spilled out (if any)</param>
-[ByRefEvent] public record struct EntityGibedEvent(EntityUid Target, List<EntityUid> DroppedEntities);
+[ByRefEvent] public record struct EntityGibbedEvent(EntityUid Target, List<EntityUid> DroppedEntities);
 
 [Serializable, NetSerializable]
 public enum GibOption : byte

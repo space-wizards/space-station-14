@@ -7,6 +7,9 @@
     sprite: Mobs/Species/Human/organs.rsi
   - type: Organ
   - type: Food
+  - type: Gibbable
+    gibPrototypes: []
+    gibCount: 3
   - type: Extractable
     grindableSolutionName: organ
   - type: SolutionContainerManager

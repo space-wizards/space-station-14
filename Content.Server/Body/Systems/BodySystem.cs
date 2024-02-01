@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Shared.Gibbing.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio.Systems;
 
@@ -106,7 +107,8 @@ public sealed class BodySystem : SharedBodySystem
         _humanoidSystem.SetLayersVisibility(bodyUid, layers, false, true, humanoid);
     }
 
-    public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
+    public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null,
+        bool deleteItems = false, bool deleteBrain = false, GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null)
     {
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();

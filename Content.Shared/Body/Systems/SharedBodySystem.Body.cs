@@ -5,10 +5,13 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.DragDrop;
-using Content.Shared.Gibing.Events;
-using Content.Shared.Gibing.Systems;
+using Content.Shared.Gibbing.Components;
+using Content.Shared.Gibbing.Events;
+using Content.Shared.Gibbing.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -25,7 +28,8 @@ public partial class SharedBodySystem
      */
 
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly GibingSystem _gibingSystem = default!;
+    [Dependency] private readonly GibbingSystem _gibbingSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     private void InitializeBody()
     {
         // Body here to handle root body parts.
@@ -266,26 +270,33 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
-        BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
+        BodyComponent? body = null ,bool deleteItems = false, bool deleteBrain = false,
+        GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null)
     {
         var gibs = new HashSet<EntityUid>();
 
         if (!Resolve(bodyId, ref body, false))
             return gibs;
 
+        var root = GetRootPartOrNull(bodyId, body);
+        if (root != null && gibSound == null)
+        {
+            if (Resolve(root.Value.Entity, ref gibbable))
+                gibSound = gibbable.GibSound;
+        }
         var parts = GetBodyChildren(bodyId, body).ToArray();
         gibs.EnsureCapacity(parts.Length);
         foreach (var part in parts)
         {
 
-            _gibingSystem.TryGibEntityWithRef(bodyId, part.Id, GibOption.Gib, GibContentsOption.Skip, ref gibs);
+            _gibbingSystem.TryGibEntityWithRef(bodyId, part.Id, GibOption.Gib, GibContentsOption.Skip, ref gibs, playAudio: false);
 
             if (!gibOrgans)
                 continue;
 
             foreach (var organ in GetPartOrgans(part.Id, part.Component))
             {
-                _gibingSystem.TryGibEntityWithRef(bodyId, organ.Id, GibOption.Drop, GibContentsOption.Skip, ref gibs);
+                _gibbingSystem.TryGibEntityWithRef(bodyId, organ.Id, GibOption.Drop, GibContentsOption.Skip, ref gibs, playAudio: false);
             }
         }
         if(TryComp<InventoryComponent>(bodyId, out var inventory))
@@ -296,6 +307,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
+        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null, GibbableComponent.GibAudioParams);
         return gibs;
     }
 }
