@@ -35,7 +35,7 @@ namespace Content.Shared.Slippery
         public float LaunchForwardsMultiplier = 1f;
 
         /// <summary>
-        /// If this is true, any slipping entity loses it's friction until
+        /// If this is true, any slipping entity loses its friction until
         /// it's not colliding with any SuperSlippery entities anymore.
         /// </summary>
         [DataField, AutoNetworkedField]

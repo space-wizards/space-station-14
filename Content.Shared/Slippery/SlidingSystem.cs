@@ -43,6 +43,7 @@ public sealed class SlidingSystem : EntitySystem
 
         component.CollidingEntities.Add(args.OtherEntity);
         component.FrictionModifier = 0;
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -50,11 +51,13 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnEndCollide(EntityUid uid, SlidingComponent component, ref EndCollideEvent args)
     {
-        if (TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) && slippery.SuperSlippery)
-            component.CollidingEntities.Remove(args.OtherEntity);
+        if (!component.CollidingEntities.Remove(args.OtherEntity))
+            return;
 
         if (component.CollidingEntities.Count == 0)
             component.FrictionModifier = SharedStunSystem.KnockDownModifier;
+
+        Dirty(uid, component);
     }
 
 }

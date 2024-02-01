@@ -17,14 +17,19 @@ namespace Content.Server.Chemistry.TileReactions
     [DataDefinition]
     public sealed partial class SpillTileReaction : ITileReaction
     {
-        [DataField("launchForwardsMultiplier")] private float _launchForwardsMultiplier = 1;
-        [DataField("requiredSlipSpeed")] private float _requiredSlipSpeed = 6;
-        [DataField("paralyzeTime")] private float _paralyzeTime = 1;
-        [DataField("superSlippery")] private bool _superSlippery;
+        [DataField] private float _launchForwardsMultiplier = 1;
+        [DataField] private float _requiredSlipSpeed = 6;
+        [DataField] private float _paralyzeTime = 1;
+
+        /// <summary>
+        /// <see cref="SlipperyComponent.SuperSlippery"/>
+        /// </summary>
+        [DataField] private bool _superSlippery;
 
         public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
-            if (reactVolume < 5) return FixedPoint2.Zero;
+            if (reactVolume < 5)
+                return FixedPoint2.Zero;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
@@ -35,7 +40,7 @@ namespace Content.Server.Chemistry.TileReactions
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;
                 slippery.ParalyzeTime = _paralyzeTime;
                 slippery.SuperSlippery = _superSlippery;
-                entityManager.Dirty(slippery);
+                entityManager.Dirty(puddleUid, slippery);
 
                 var step = entityManager.EnsureComponent<StepTriggerComponent>(puddleUid);
                 entityManager.EntitySysManager.GetEntitySystem<StepTriggerSystem>().SetRequiredTriggerSpeed(puddleUid, _requiredSlipSpeed, step);

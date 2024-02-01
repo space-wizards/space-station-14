@@ -2,6 +2,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Slippery;
 
+/// <summary>
+/// Applies continuous movement to the attached entity when colliding with super slipper entities.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SlidingComponent : Component
 {
