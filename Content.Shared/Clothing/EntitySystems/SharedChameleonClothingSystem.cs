@@ -3,9 +3,10 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Tag;
-using Robust.Shared.Prototypes;
 using Content.Shared.PDA;
+using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -18,11 +19,17 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPdaSystem _pdaSystem = default!;
 
+    private readonly ChameleonClothingRegistry _clothingRegistry = new();
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
+
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReloaded);
+
+        PrepareAllVariants();
     }
 
     private void OnGotEquipped(EntityUid uid, ChameleonClothingComponent component, GotEquippedEvent args)
@@ -33,6 +40,20 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     private void OnGotUnequipped(EntityUid uid, ChameleonClothingComponent component, GotUnequippedEvent args)
     {
         component.User = null;
+    }
+
+    private void OnProtoReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<EntityPrototype>())
+            PrepareAllVariants();
+    }
+
+    /// <summary>
+    ///     Get a list of valid chameleon targets for these slots.
+    /// </summary>
+    public IEnumerable<EntProtoId> GetValidTargets(SlotFlags slot, EntityWhitelist? whitelist = null)
+    {
+        return _clothingRegistry.GetValidVariants(slot, _factory, whitelist);
     }
 
     // Updates chameleon visuals and meta information.
@@ -84,22 +105,116 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// <summary>
     ///     Check if this entity prototype is valid target for chameleon item.
     /// </summary>
-    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE)
+    protected bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, EntityWhitelist? whitelist = null)
     {
         // check if entity is valid
-        if (proto.Abstract || proto.NoSpawn)
+        if (proto.Abstract || proto.HideSpawnMenu)
             return false;
 
         // check if it is marked as valid chameleon target
-        if (!proto.TryGetComponent(out TagComponent? tags, _factory) || !tags.Tags.Contains("WhitelistChameleon"))
+        if (whitelist != null && !whitelist.IsValid(proto, _factory))
             return false;
 
         // check if it's valid clothing
-        if (!proto.TryGetComponent("Clothing", out ClothingComponent? clothing))
+        if (!proto.TryGetComponent<ClothingComponent>(out var clothing))
             return false;
+
         if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;
 
         return true;
+    }
+
+    private void PrepareAllVariants()
+    {
+
+        var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
+
+        foreach (var proto in prototypes)
+        {
+            // check if this is valid clothing
+            if (!IsValidTarget(proto))
+                continue;
+
+            if (!proto.TryGetComponent<ClothingComponent>(out var item, _factory))
+                continue;
+
+            _clothingRegistry.RegisterVariant(proto, item.Slots);
+        }
+    }
+}
+
+/// <summary>
+/// Stores a collection of clothing items organised by slot
+/// </summary>
+public sealed class ChameleonClothingRegistry
+{
+    private Dictionary<SlotFlags, List<EntityPrototype>> _clothingPerSlot;
+
+    private static readonly SlotFlags[] IgnoredSlots =
+    {
+            SlotFlags.All,
+            SlotFlags.PREVENTEQUIP,
+            SlotFlags.NONE
+        };
+    private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
+
+    public ChameleonClothingRegistry()
+    {
+        _clothingPerSlot = new();
+
+        foreach (var slot in Slots)
+            _clothingPerSlot.Add(slot, new());
+
+    }
+
+    /// <summary>
+    /// Register a clothing prototype against its valid slots
+    /// </summary>
+    /// <param name="clothingPrototype">The EntityPrototype of the clothing</param>
+    /// <param name="slot">A bitflag array of the valid slots for this article of clothing</param>
+    public void RegisterVariant(EntityPrototype clothingPrototype, SlotFlags slot)
+    {
+        foreach (var availableSlot in Slots)
+        {
+            if (slot.HasFlag(availableSlot)) _clothingPerSlot[availableSlot].Add(clothingPrototype);
+        }
+    }
+
+    /// <summary>
+    /// Get all valid prototypes for a specific chameleon item
+    /// </summary>
+    /// <param name="slot">Which slot does the chameleon item fit in</param>
+    /// <param name="factory">Component factory</param>
+    /// <param name="whitelist">Optional whitelist to match against each prototype</param>
+    /// <returns></returns>
+    public IEnumerable<EntProtoId> GetValidVariants(SlotFlags slot, IComponentFactory factory, EntityWhitelist? whitelist = null)
+    {
+        var outList = new List<EntProtoId>();
+
+        if (!_clothingPerSlot.TryGetValue(slot, out var variants))
+            return outList;
+
+        foreach (var clothingProto in variants)
+        {
+            if (whitelist == null)
+            {
+                outList.Add(clothingProto.ID);
+            }
+            else if (whitelist.IsValid(clothingProto, factory))
+            {
+                outList.Add(clothingProto.ID);
+            }
+        }
+
+        return outList;
+    }
+
+    /// <summary>
+    /// Clear the registry
+    /// </summary>
+    public void Clear()
+    {
+        _clothingPerSlot.Clear();
     }
 }

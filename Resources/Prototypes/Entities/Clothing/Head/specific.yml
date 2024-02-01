@@ -13,6 +13,10 @@
       sprite: Clothing/Head/Hats/beret.rsi
     - type: ChameleonClothing
       slot: [HEAD]
+      whitelist:
+        tags:
+          - WhitelistChameleon
+        requireAll: true
       default: ClothingHeadHatBeret
     - type: UserInterface
       interfaces:

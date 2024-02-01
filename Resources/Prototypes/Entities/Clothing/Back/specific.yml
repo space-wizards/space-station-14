@@ -11,6 +11,10 @@
       sprite: Clothing/Back/Backpacks/backpack.rsi
     - type: ChameleonClothing
       slot: [back]
+      whitelist:
+        tags:
+          - WhitelistChameleon
+        requireAll: true
       default: ClothingBackpack
     - type: UserInterface
       interfaces:

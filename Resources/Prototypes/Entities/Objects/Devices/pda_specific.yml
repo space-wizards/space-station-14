@@ -7,6 +7,12 @@
   components:
   - type: ChameleonClothing
     slot: [idcard]
+    whitelist:
+      components:
+        - Pda
+      tags:
+        - WhitelistChameleon
+      requireAll: true
     default: PassengerPDA
   - type: Pda
     state: pda

@@ -32,6 +32,7 @@
   - type: Tag
     tags:
     - HudMedical
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase
@@ -47,6 +48,7 @@
   - type: Tag
     tags:
     - HudSecurity
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase

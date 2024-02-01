@@ -13,6 +13,10 @@
       sprite: Clothing/Hands/Gloves/Color/black.rsi
     - type: ChameleonClothing
       slot: [gloves]
+      whitelist:
+        tags:
+          - WhitelistChameleon
+        requireAll: true
       default: ClothingHandsGlovesColorBlack
     - type: Fiber
       fiberMaterial: fibers-chameleon

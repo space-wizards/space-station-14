@@ -21,6 +21,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - WhitelistChameleon
   - type: StealTarget
     stealGroup: IDCard
 
@@ -114,6 +115,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - WhitelistChameleon
     - HighRiskItem
   - type: StealTarget
     stealGroup: CaptainIDCard
@@ -650,10 +652,21 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+  - type: ChameleonClothing
+    slot: [idcard]
+    whitelist:
+      components:
+        - IdCard
+      tags:
+        - WhitelistChameleon
+      requireAll: true
+    default: PassengerIDCard
   - type: UserInterface
     interfaces:
       - key: enum.AgentIDCardUiKey.Key
         type: AgentIDCardBoundUserInterface
+      - key: enum.ChameleonUiKey.Key
+        type: ChameleonBoundUserInterface
 
 - type: entity
   name: passenger ID card

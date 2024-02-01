@@ -1,5 +1,6 @@
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -27,6 +28,10 @@ public sealed partial class ChameleonClothingComponent : Component
     [DataField(required: true), AutoNetworkedField]
     public EntProtoId? Default;
 
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
     /// <summary>
     ///     Current user that wears chameleon clothing.
     /// </summary>
@@ -39,11 +44,13 @@ public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
     public readonly string? SelectedId;
+    public readonly EntityWhitelist? Whitelist;
 
-    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId)
+    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId, EntityWhitelist? whitelist)
     {
         Slot = slot;
         SelectedId = selectedId;
+        Whitelist = whitelist;
     }
 }
 

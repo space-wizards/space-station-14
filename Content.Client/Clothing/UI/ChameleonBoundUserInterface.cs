@@ -1,7 +1,6 @@
-﻿using Content.Client.Clothing.Systems;
+using Content.Client.Clothing.Systems;
 using Content.Shared.Clothing.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Clothing.UI;
 
@@ -34,7 +33,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
         if (state is not ChameleonBoundUserInterfaceState st)
             return;
 
-        var targets = _chameleon.GetValidTargets(st.Slot);
+        var targets = _chameleon.GetValidTargets(st.Slot, st.Whitelist);
         _menu?.UpdateState(targets, st.SelectedId);
     }
 

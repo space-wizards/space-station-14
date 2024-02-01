@@ -13,6 +13,10 @@
       sprite: Clothing/Mask/gas.rsi
     - type: ChameleonClothing
       slot: [mask]
+      whitelist:
+        tags:
+          - WhitelistChameleon
+        requireAll: true
       default: ClothingMaskGas
     - type: BreathMask
     - type: IdentityBlocker # need that for default ClothingMaskGas

@@ -13,6 +13,10 @@
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
     - type: ChameleonClothing
       slot: [eyes]
+      whitelist:
+        tags:
+          - WhitelistChameleon
+        requireAll: true
       default: ClothingEyesGlassesSunglasses
     - type: UserInterface
       interfaces:
