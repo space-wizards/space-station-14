@@ -11,7 +11,6 @@ public sealed partial class SharedStorageOverrideSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {
@@ -74,7 +73,7 @@ public sealed partial class SharedStorageOverrideSystem : EntitySystem
         if (string.IsNullOrEmpty(id))
             return false;
 
-        var newItem = Spawn(id, _transformSystem.GetMapCoordinates(root ?? item));
+        var newItem = Spawn(id, EntityManager.GetComponent<TransformComponent>(root ?? item).MapPosition);
 
         if (container != null)
         {
