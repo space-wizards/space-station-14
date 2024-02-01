@@ -9,13 +9,13 @@ namespace Content.Shared.Explosion.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ActiveTimerTriggerComponent : Component
 {
-    [DataField("timeRemaining")] public float TimeRemaining;
+    [DataField] public float TimeRemaining;
 
-    [DataField("user")] public EntityUid? User;
+    [DataField] public EntityUid? User;
 
-    [DataField("beepInterval")] public float BeepInterval;
+    [DataField] public float BeepInterval;
 
-    [DataField("timeUntilBeep")] public float TimeUntilBeep;
+    [DataField] public float TimeUntilBeep;
 
-    [DataField("beepSound")] public SoundSpecifier? BeepSound;
+    [DataField] public SoundSpecifier? BeepSound;
 }
