@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Mothroach crates are now twice as expensive
-    type: Tweak
-  id: 5363
-  time: '2023-12-14T20:58:38.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Crusher Glaives can be made with the Salvage Weapons technology.
@@ -3866,3 +3860,10 @@
   id: 5862
   time: '2024-02-01T22:19:01.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24838
+- author: themias
+  changes:
+  - message: Fixed dylovene overdoses not applying brute damage
+    type: Fix
+  id: 5863
+  time: '2024-02-01T22:21:04.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24826
