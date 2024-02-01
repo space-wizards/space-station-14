@@ -184,17 +184,6 @@
         amount: 6
 
 - type: entity
-  id: CrateFunATV
-  parent: CrateLivestock
-  name: ATV crate
-  description: An Absolutely Taxable Vehicle to help cargo with hauling.
-  components:
-  - type: StorageFill
-    contents:
-      - id: VehicleATV
-      - id: VehicleKeyATV
-
-- type: entity
   id: CrateFunSadTromboneImplants
   parent: CrateGenericSteel
   name: sad trombone implants
@@ -261,17 +250,6 @@
         amount: 4
 
 - type: entity
-  id: CrateFunSyndicateSegway
-  parent: CrateLivestock
-  name: Syndicate segway crate
-  description: A crate containing a two-wheeler that will help you escape from the security officers. Or not.
-  components:
-    - type: StorageFill
-      contents:
-        - id: VehicleSyndicateSegway
-        - id: VehicleKeySyndicateSegway
-
-- type: entity
   id: CrateFunBoxing
   parent: CrateGenericSteel
   name: boxing crate
@@ -322,7 +300,6 @@
       - id: MrDips
         orGroup: Giftpool
       - id: RevolverCapGun
-      - id: VehicleUnicycleFolded
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
