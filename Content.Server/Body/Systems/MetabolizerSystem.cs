@@ -12,11 +12,13 @@ using Content.Shared.Mobs.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
 {
     public sealed class MetabolizerSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -34,7 +36,19 @@ namespace Content.Server.Body.Systems
             _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+            SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<MetabolizerComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        }
+
+        private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
+        {
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        }
+
+        private void OnUnpaused(Entity<MetabolizerComponent> ent, ref EntityUnpausedEvent args)
+        {
+            ent.Comp.NextUpdate += args.PausedTime;
         }
 
         private void OnMetabolizerInit(Entity<MetabolizerComponent> entity, ref ComponentInit args)
@@ -54,14 +68,11 @@ namespace Content.Server.Body.Systems
         {
             if (args.Apply)
             {
-                component.UpdateFrequency *= args.Multiplier;
+                component.UpdateInterval *= args.Multiplier;
                 return;
             }
 
-            component.UpdateFrequency /= args.Multiplier;
-            // Reset the accumulator properly
-            if (component.AccumulatedFrametime >= component.UpdateFrequency)
-                component.AccumulatedFrametime = component.UpdateFrequency;
+            component.UpdateInterval /= args.Multiplier;
         }
 
         public override void Update(float frameTime)
@@ -78,13 +89,11 @@ namespace Content.Server.Body.Systems
 
             foreach (var (uid, metab) in metabolizers)
             {
-                metab.AccumulatedFrametime += frameTime;
-
                 // Only update as frequently as it should
-                if (metab.AccumulatedFrametime < metab.UpdateFrequency)
+                if (_gameTiming.CurTime < metab.NextUpdate)
                     continue;
 
-                metab.AccumulatedFrametime -= metab.UpdateFrequency;
+                metab.NextUpdate += metab.UpdateInterval;
                 TryMetabolize(uid, metab);
             }
         }

@@ -3,19 +3,33 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
     public sealed class StomachSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<StomachComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        }
+
+        private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
+        {
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        }
+
+        private void OnUnpaused(Entity<StomachComponent> ent, ref EntityUnpausedEvent args)
+        {
+            ent.Comp.NextUpdate += args.PausedTime;
         }
 
         public override void Update(float frameTime)
@@ -23,12 +37,10 @@ namespace Content.Server.Body.Systems
             var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerManagerComponent>();
             while (query.MoveNext(out var uid, out var stomach, out var organ, out var sol))
             {
-                stomach.AccumulatedFrameTime += frameTime;
-
-                if (stomach.AccumulatedFrameTime < stomach.UpdateInterval)
+                if (_gameTiming.CurTime < stomach.NextUpdate)
                     continue;
 
-                stomach.AccumulatedFrameTime -= stomach.UpdateInterval;
+                stomach.NextUpdate += stomach.UpdateInterval;
 
                 // Get our solutions
                 if (!_solutionContainerSystem.ResolveSolution((uid, sol), DefaultSolutionName, ref stomach.Solution, out var stomachSolution))
@@ -81,9 +93,6 @@ namespace Content.Server.Body.Systems
 
             // This way we don't have to worry about it breaking if the stasis bed component is destroyed
             component.UpdateInterval /= args.Multiplier;
-            // Reset the accumulator properly
-            if (component.AccumulatedFrameTime >= component.UpdateInterval)
-                component.AccumulatedFrameTime = component.UpdateInterval;
         }
 
         public bool CanTransferSolution(EntityUid uid, Solution solution,

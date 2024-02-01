@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
@@ -16,7 +17,17 @@ namespace Content.Server.Body.Components
         public static string DefaultBloodSolutionName = "bloodstream";
         public static string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
 
-        public float AccumulatedFrametime = 0.0f;
+        /// <summary>
+        /// The next time that blood level will be updated and bloodloss damage dealt.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
+
+        /// <summary>
+        /// The interval at which this component updates.
+        /// </summary>
+        [DataField]
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(3);
 
         /// <summary>
         ///     How much is this entity currently bleeding?
@@ -62,12 +73,6 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField(required: true)]
         public DamageSpecifier BloodlossHealDamage = new();
-
-        /// <summary>
-        ///     How frequently should this bloodstream update, in seconds?
-        /// </summary>
-        [DataField]
-        public float UpdateInterval = 3.0f;
 
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
         /// <summary>
@@ -164,6 +169,6 @@ namespace Content.Server.Body.Components
         /// Variable that stores the amount of status time added by having a low blood level.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float StatusTime;
+        public TimeSpan StatusTime;
     }
 }

@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Damage;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
@@ -7,7 +8,20 @@ namespace Content.Server.Body.Components
     public sealed partial class RespiratorComponent : Component
     {
         /// <summary>
-        ///     Saturation level. Reduced by CycleDelay each tick.
+        ///     The next time that this body will inhale or exhale.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
+
+        /// <summary>
+        ///     The interval between updates. Each update is either inhale or exhale,
+        ///     so a full cycle takes twice as long.
+        /// </summary>
+        [DataField]
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        ///     Saturation level. Reduced by UpdateInterval each tick.
         ///     Can be thought of as 'how many seconds you have until you start suffocating' in this configuration.
         /// </summary>
         [DataField("saturation")]
@@ -55,11 +69,6 @@ namespace Content.Server.Body.Components
 
         [ViewVariables]
         public RespiratorStatus Status = RespiratorStatus.Inhaling;
-
-        [DataField("cycleDelay")]
-        public float CycleDelay = 2.0f;
-
-        public float AccumulatedFrametime;
     }
 }
 

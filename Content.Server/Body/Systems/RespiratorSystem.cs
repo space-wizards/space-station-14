@@ -35,7 +35,19 @@ public sealed class RespiratorSystem : EntitySystem
 
         // We want to process lung reagents before we inhale new reagents.
         UpdatesAfter.Add(typeof(MetabolizerSystem));
+        SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RespiratorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+    }
+
+    private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+    }
+
+    private void OnUnpaused(Entity<RespiratorComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextUpdate += args.PausedTime;
     }
 
     public override void Update(float frameTime)
@@ -45,17 +57,15 @@ public sealed class RespiratorSystem : EntitySystem
         var query = EntityQueryEnumerator<RespiratorComponent, BodyComponent>();
         while (query.MoveNext(out var uid, out var respirator, out var body))
         {
+            if (_gameTiming.CurTime < respirator.NextUpdate)
+                continue;
+
+            respirator.NextUpdate += respirator.UpdateInterval;
+
             if (_mobState.IsDead(uid))
-            {
                 continue;
-            }
 
-            respirator.AccumulatedFrametime += frameTime;
-
-            if (respirator.AccumulatedFrametime < respirator.CycleDelay)
-                continue;
-            respirator.AccumulatedFrametime -= respirator.CycleDelay;
-            UpdateSaturation(uid, -respirator.CycleDelay, respirator);
+            UpdateSaturation(uid, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
 
             if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
             {
@@ -203,7 +213,7 @@ public sealed class RespiratorSystem : EntitySystem
     {
         if (args.Apply)
         {
-            component.CycleDelay *= args.Multiplier;
+            component.UpdateInterval *= args.Multiplier;
             component.Saturation *= args.Multiplier;
             component.MaxSaturation *= args.Multiplier;
             component.MinSaturation *= args.Multiplier;
@@ -211,13 +221,10 @@ public sealed class RespiratorSystem : EntitySystem
         }
 
         // This way we don't have to worry about it breaking if the stasis bed component is destroyed
-        component.CycleDelay /= args.Multiplier;
+        component.UpdateInterval /= args.Multiplier;
         component.Saturation /= args.Multiplier;
         component.MaxSaturation /= args.Multiplier;
         component.MinSaturation /= args.Multiplier;
-        // Reset the accumulator properly
-        if (component.AccumulatedFrametime >= component.CycleDelay)
-            component.AccumulatedFrametime = component.CycleDelay;
     }
 }
 

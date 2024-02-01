@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components;
 
@@ -6,6 +7,18 @@ namespace Content.Server.Body.Components;
 [Access(typeof(ThermalRegulatorSystem))]
 public sealed partial class ThermalRegulatorComponent : Component
 {
+    /// <summary>
+    /// The next time that the body will regulate its heat.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdate;
+
+    /// <summary>
+    /// The interval at which thermal regulation is processed.
+    /// </summary>
+    [DataField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+
     /// <summary>
     /// Heat generated due to metabolism. It's generated via metabolism
     /// </summary>
@@ -48,6 +61,4 @@ public sealed partial class ThermalRegulatorComponent : Component
     /// </summary>
     [DataField("thermalRegulationTemperatureThreshold")]
     public float ThermalRegulationTemperatureThreshold { get; private set; }
-
-    public float AccumulatedFrametime;
 }

@@ -1,25 +1,44 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems;
 
 public sealed class ThermalRegulatorSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly TemperatureSystem _tempSys = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSys = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ThermalRegulatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ThermalRegulatorComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+    }
+
+    private void OnUnpaused(Entity<ThermalRegulatorComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextUpdate += args.PausedTime;
+    }
 
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<ThermalRegulatorComponent>();
         while (query.MoveNext(out var uid, out var regulator))
         {
-            regulator.AccumulatedFrametime += frameTime;
-            if (regulator.AccumulatedFrametime < 1)
+            if (_gameTiming.CurTime < regulator.NextUpdate)
                 continue;
 
-            regulator.AccumulatedFrametime -= 1;
+            regulator.NextUpdate += regulator.UpdateInterval;
             ProcessThermalRegulation(uid, regulator);
         }
     }

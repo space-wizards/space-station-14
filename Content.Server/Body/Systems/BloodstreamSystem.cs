@@ -21,11 +21,13 @@ using Content.Shared.Speech.EntitySystems;
 using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems;
 
 public sealed class BloodstreamSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
@@ -44,6 +46,8 @@ public sealed class BloodstreamSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<BloodstreamComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<BloodstreamComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
@@ -51,6 +55,16 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
+    }
+
+    private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+    }
+
+    private void OnUnpaused(Entity<BloodstreamComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextUpdate += args.PausedTime;
     }
 
     private void OnReactionAttempt(Entity<BloodstreamComponent> entity, ref ReactionAttemptEvent args)
@@ -95,12 +109,10 @@ public sealed class BloodstreamSystem : EntitySystem
         var query = EntityQueryEnumerator<BloodstreamComponent>();
         while (query.MoveNext(out var uid, out var bloodstream))
         {
-            bloodstream.AccumulatedFrametime += frameTime;
-
-            if (bloodstream.AccumulatedFrametime < bloodstream.UpdateInterval)
+            if (_gameTiming.CurTime < bloodstream.NextUpdate)
                 continue;
 
-            bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
+            bloodstream.NextUpdate += bloodstream.UpdateInterval;
 
             if (!_solutionContainerSystem.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 continue;
@@ -133,8 +145,11 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Apply dizziness as a symptom of bloodloss.
                 // The effect is applied in a way that it will never be cleared without being healthy.
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
-                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval*2, false);
-                _stutteringSystem.DoStutter(uid, TimeSpan.FromSeconds(bloodstream.UpdateInterval*2), false);
+                _drunkSystem.TryApplyDrunkenness(
+                    uid,
+                    (float) bloodstream.UpdateInterval.TotalSeconds * 2,
+                    applySlur: false);
+                _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, false);
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
                 bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
@@ -145,10 +160,10 @@ public sealed class BloodstreamSystem : EntitySystem
                 _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
 
                 // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
-                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime);
-                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime);
+                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime.TotalSeconds);
+                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime.TotalSeconds);
                 // Reset the drunk and stutter time to zero
-                bloodstream.StatusTime = 0;
+                bloodstream.StatusTime = TimeSpan.Zero;
             }
         }
     }
@@ -254,9 +269,6 @@ public sealed class BloodstreamSystem : EntitySystem
             return;
         }
         component.UpdateInterval /= args.Multiplier;
-        // Reset the accumulator properly
-        if (component.AccumulatedFrametime >= component.UpdateInterval)
-            component.AccumulatedFrametime = component.UpdateInterval;
     }
 
     private void OnRejuvenate(Entity<BloodstreamComponent> entity, ref RejuvenateEvent args)

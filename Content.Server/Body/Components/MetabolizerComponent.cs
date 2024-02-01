@@ -1,6 +1,7 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -12,14 +13,18 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Access(typeof(MetabolizerSystem))]
     public sealed partial class MetabolizerComponent : Component
     {
-        public float AccumulatedFrametime = 0.0f;
+        /// <summary>
+        ///     The next time that reagents will be metabolized.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
 
         /// <summary>
-        ///     How often to metabolize reagents, in seconds.
+        ///     How often to metabolize reagents.
         /// </summary>
         /// <returns></returns>
         [DataField]
-        public float UpdateFrequency = 1.0f;
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
         ///     From which solution will this metabolizer attempt to metabolize chemicals
