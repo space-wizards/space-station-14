@@ -121,8 +121,8 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var listingName = listing.GetLocalisedNameOrEntityName();
-        var listingDesc = listing.GetLocalisedDescriptionOrEntityDescription();
+        var listingName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing);
+        var listingDesc = ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listing);
         var listingPrice = listing.Cost;
         var canBuy = CanBuyListing(Balance, listingPrice);
 

@@ -18,8 +18,6 @@ namespace Content.Shared.Store;
 [Virtual, DataDefinition]
 public partial class ListingData : IEquatable<ListingData>, ICloneable
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -152,42 +150,6 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
         };
-    }
-
-    /// <summary>
-    /// ListingData's Name field can be either a localisation string or the actual entity's name.
-    /// This function gets a localised name from the localisation string if it exists, and if not, it gets the entity's name.
-    /// If neither a localised string exists, or an associated entity name, it will return the value of the "Name" field.
-    /// </summary>
-    public string GetLocalisedNameOrEntityName()
-    {
-        bool wasLocalised = Loc.TryGetString(Name, out string? listingName);
-
-        if (!wasLocalised && ProductEntity != null)
-        {
-            var proto = _prototypeManager.Index<EntityPrototype>(ProductEntity);
-            listingName = proto.Name;
-        }
-
-        return listingName ?? Name;
-    }
-
-    /// <summary>
-    /// ListingData's Description field can be either a localisation string or the actual entity's description.
-    /// This function gets a localised description from the localisation string if it exists, and if not, it gets the entity's description.
-    /// If neither a localised string exists, or an associated entity description, it will return the value of the "Description" field.
-    /// </summary>
-    public string GetLocalisedDescriptionOrEntityDescription()
-    {
-        bool wasLocalised = Loc.TryGetString(Description, out string? listingDesc);
-
-        if (!wasLocalised && ProductEntity != null)
-        {
-            var proto = _prototypeManager.Index<EntityPrototype>(ProductEntity);
-            listingDesc = proto.Description;
-        }
-
-        return listingDesc ?? Description;
     }
 }
 

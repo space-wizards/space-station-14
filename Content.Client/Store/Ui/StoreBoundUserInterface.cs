@@ -100,8 +100,8 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         var filteredListings = new HashSet<ListingData>(_listings);
         if (!string.IsNullOrEmpty(_search))
         {
-            filteredListings.RemoveWhere(listingData => !listingData.GetLocalisedNameOrEntityName().Trim().ToLowerInvariant().Contains(_search) &&
-                                                        !listingData.GetLocalisedDescriptionOrEntityDescription().Trim().ToLowerInvariant().Contains(_search));
+            filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData).Trim().ToLowerInvariant().Contains(_search) &&
+                                                        !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData).Trim().ToLowerInvariant().Contains(_search));
         }
         _menu.PopulateStoreCategoryButtons(filteredListings);
         _menu.UpdateListing(filteredListings.ToList());
