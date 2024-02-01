@@ -22,3 +22,8 @@
   license: "CC-BY-SA-4.0"
   copyright: "Hannah 'FairlySadPanda' Dawson 2024"
   source: "https://github.com/FairlySadPanda"
+
+- files: ["doomed.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "brainfood1183 github"
+  source: "https://github.com/space-wizards/space-station-14"
