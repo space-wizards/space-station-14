@@ -7,5 +7,5 @@ namespace Content.Shared.Access.Components;
 public sealed partial class ActivatableUIRequiresAccessComponent : Component
 {
     [DataField]
-    public string? PopupMessage = "lock-comp-has-user-access-fail";
+    public LocId? PopupMessage = "lock-comp-has-user-access-fail";
 }
