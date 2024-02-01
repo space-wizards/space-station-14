@@ -24,42 +24,42 @@ public sealed class DevouredSystem : EntitySystem
     /// <summary>
     ///     Pacifies the target and gives them a passive damage effect the moment they are devoured.
     /// </summary>
-    private void OnDevoured(EntityUid uid, DevouredComponent component, ref OnDevouredEvent args)
+    private void OnDevoured(Entity<DevouredComponent> entity, ref OnDevouredEvent args)
     {
-        component.Devourer = args.Devourer;
+        entity.Comp.Devourer = args.Devourer;
 
         //If the target already had a passive damage component it will be stored so it can be returned
         //to it's original value later.
-        if (EnsureComp<PassiveDamageComponent>(uid, out var passiveDamage))
-            component.OriginalAllowedMobStates = passiveDamage.AllowedStates;
+        if (EnsureComp<PassiveDamageComponent>(entity.Owner, out var passiveDamage))
+            entity.Comp.OriginalAllowedMobStates = passiveDamage.AllowedStates;
 
         //Stores the stomach damage value if it exists.
         if (TryComp<DevourerComponent>(args.Devourer, out var devourer))
         {
             if (devourer.StomachDamage != null)
-                component.StomachDamage = devourer.StomachDamage;
+                entity.Comp.StomachDamage = devourer.StomachDamage;
 
             //Sets the MobStates in which the devoured entity is damaged.
             passiveDamage.AllowedStates = devourer.DigestibleStates;
         }
 
         //Sets the damage multiplier based on MobState.
-        if (TryComp<MobStateComponent>(uid, out var mobState))
+        if (TryComp<MobStateComponent>(entity.Owner, out var mobState))
         {
-            SetStomachDamage(mobState.CurrentState, component, passiveDamage);
+            SetStomachDamage(mobState.CurrentState, entity.Comp, passiveDamage);
         }
 
         //Sets the max damage to the damage needed for the mob to be considered dead +
         //the damage cap specified in the component. This can be used to make reviving take more work if
         //the target has been devoured for a long time.
-        if (TryComp<MobThresholdsComponent>(uid, out var mobThresholds))
+        if (TryComp<MobThresholdsComponent>(entity.Owner, out var mobThresholds))
         {
             for (var mobStates = 0; mobStates < mobThresholds.Thresholds.Count; mobStates++)
             {
                 var mobStateValue = mobThresholds.Thresholds.ElementAt(mobStates);
                 if (mobStateValue.Value == MobState.Dead)
                 {
-                    passiveDamage.DamageCap = mobStateValue.Key + component.DamageCap;
+                    passiveDamage.DamageCap = mobStateValue.Key + entity.Comp.DamageCap;
                     break;
                 }
             }
@@ -68,8 +68,8 @@ public sealed class DevouredSystem : EntitySystem
         //Pacifies entities in the stomach and stores if the target was already pacified.
         //This is to make sure the pacified component won't be removed if the entity
         //already had it before being devoured.
-        if (EnsureComp<PacifiedComponent>(uid, out var pacified))
-            component.OriginallyPacified = true;
+        if (EnsureComp<PacifiedComponent>(entity.Owner, out var pacified))
+            entity.Comp.OriginallyPacified = true;
     }
 
     /// <summary>

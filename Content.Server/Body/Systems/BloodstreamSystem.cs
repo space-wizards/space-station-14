@@ -273,6 +273,17 @@ public sealed class BloodstreamSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Stops the bleeding of the devoured target so the dragon doesn't leave a trail of random blood puddles behind
+    /// </summary>
+    private void OnDevoured(Entity<BloodstreamComponent> entity, ref OnDevouredEvent args)
+    {
+        if (entity.Comp.BleedAmount > 0)
+        {
+            entity.Comp.BleedAmount = 0;
+        }
+    }
+
+    /// <summary>
     ///     Attempt to transfer provided solution to internal solution.
     /// </summary>
     public bool TryAddToChemicals(EntityUid uid, Solution solution, BloodstreamComponent? component = null)
@@ -453,16 +464,5 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (currentVolume > 0)
             _solutionContainerSystem.TryAddReagent(component.BloodSolution.Value, component.BloodReagent, currentVolume, out _);
-    }
-
-    /// <summary>
-    ///     Stops the bleeding of the devoured target so the dragon doesn't leave a trail of random blood puddles behind
-    /// </summary>
-    private void OnDevoured(EntityUid uid, BloodstreamComponent component, ref OnDevouredEvent args)
-    {
-        if (component.BleedAmount > 0)
-        {
-            component.BleedAmount = 0;
-        }
     }
 }
