@@ -9,7 +9,7 @@ namespace Content.Shared.Gibing.Components;
 public sealed partial class GibableComponent : Component
 {
     [DataField(required:true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public List<EntProtoId> GibletPrototypes;
+    public List<EntProtoId> GibletPrototypes = new();
 
     [DataField(required:true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public int GibletCount;
