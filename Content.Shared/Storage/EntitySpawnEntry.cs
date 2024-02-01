@@ -12,14 +12,12 @@ namespace Content.Shared.Storage;
 [DataDefinition]
 public partial struct EntitySpawnEntry
 {
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? PrototypeId = null;
+    [DataField("id")]
+    public EntProtoId? PrototypeId = null;
 
     /// <summary>
     ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("prob")] public float SpawnProbability = 1;
 
     /// <summary>
@@ -43,19 +41,16 @@ public partial struct EntitySpawnEntry
     /// </code>
     ///     </example>
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("orGroup")] public string? GroupId = null;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("amount")] public int Amount = 1;
+    [DataField] public int Amount = 1;
 
     /// <summary>
     ///     How many of this can be spawned, in total.
     ///     If this is lesser or equal to <see cref="Amount"/>, it will spawn <see cref="Amount"/> exactly.
     ///     Otherwise, it chooses a random value between <see cref="Amount"/> and <see cref="MaxAmount"/> on spawn.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxAmount")] public int MaxAmount = 1;
+    [DataField] public int MaxAmount = 1;
 
     public EntitySpawnEntry() { }
 }
