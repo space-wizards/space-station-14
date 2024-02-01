@@ -94,13 +94,13 @@ public sealed class SharedRevolutionarySystem : EntitySystem
     /// </summary>
     private void DirtyRevComps<T>(EntityUid someUid, T someComp, ComponentStartup ev)
     {
-        var revComps = EntityQueryEnumerator<RevolutionaryComponent>();
+        var revComps = AllEntityQuery<RevolutionaryComponent>();
         while (revComps.MoveNext(out var uid, out var comp))
         {
             Dirty(uid, comp);
         }
 
-        var headRevComps = EntityQueryEnumerator<HeadRevolutionaryComponent>();
+        var headRevComps = AllEntityQuery<HeadRevolutionaryComponent>();
         while (headRevComps.MoveNext(out var uid, out var comp))
         {
             Dirty(uid, comp);
