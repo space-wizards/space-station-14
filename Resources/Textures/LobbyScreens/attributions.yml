@@ -12,3 +12,13 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "ps3moira#9488 on discord"
   source: "https://github.com/greystation14/GreyStation14"
+
+- files: ["lobbyscreen4.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Warriorstar on youtube"
+  source: "https://www.youtube.com/watch?v=BphzHA_L__4"
+
+- files: ["doomed.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "brainfood1183 github"
+  source: "https://github.com/space-wizards/space-station-14"

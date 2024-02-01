@@ -1,6 +1,6 @@
 #Misc outfit startingGear definitions.
 
-#Skeleton Biker
+#Skeleton Biker - Just a skeleton now
 - type: startingGear
   id: SkeletonBiker
   equipment:
@@ -13,8 +13,6 @@
     shoes: ClothingShoesBootsJack
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-    pocket1: VehicleSkeletonMotorcycle
-    pocket2: VehicleKeySkeletonMotorcycle
   innerClothingSkirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -145,7 +143,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperativeMedic
     mask: ClothingMaskGasSyndicate
-    eyes: ClothingEyesHudSyndicate
+    eyes: ClothingEyesHudSyndicateMed # GreyStation
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieMedic
@@ -322,6 +320,12 @@
   innerClothingSkirt: ClothingUniformJumpskirtBrigmedic
   satchel: ClothingBackpackSatchelBrigmedicFilled
   duffelbag: ClothingBackpackDuffelBrigmedicFilled
+
+# Aghost
+- type: startingGear
+  id: MobAghostGear
+  equipment:
+    back: ClothingBackpackSatchelHoldingAdmin
 
 #Head Rev Gear
 - type: startingGear

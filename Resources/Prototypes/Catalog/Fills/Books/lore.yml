@@ -105,6 +105,16 @@
   - type: Paper
     content: book-text-fishing
 
+- type: entity # DeltaV
+  parent: BookFishing
+  id: BookFishops
+  name: Fishops Advanced User Manual, first edition
+  suffix: library salvage
+  description: Legends say the second edition was lost to time.
+  components:
+  - type: Paper
+    content: book-text-fishops
+
 - type: entity
   parent: BookBase
   id: BookDetective

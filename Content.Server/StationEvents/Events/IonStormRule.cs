@@ -53,6 +53,8 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
     [ValidatePrototypeId<DatasetPrototype>]
     private const string AllergySeverities = "IonStormAllergySeverities";
     [ValidatePrototypeId<DatasetPrototype>]
+    private const string Species = "IonStormSpecies";
+    [ValidatePrototypeId<DatasetPrototype>]
     private const string Concepts = "IonStormConcepts";
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Drinks = "IonStormDrinks";

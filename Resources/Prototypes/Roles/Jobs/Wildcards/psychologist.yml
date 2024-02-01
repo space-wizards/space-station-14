@@ -9,6 +9,7 @@
   access:
   - Medical
   - Maintenance
+  - Psychologist # DeltaV - Add Psychologist access
   extendedAccess:
   - Chemistry
 

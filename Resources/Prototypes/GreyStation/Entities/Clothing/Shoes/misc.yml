@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoeCrocs
+  name: crocs
+  description: An abomination of footwear thought to be lost to a bygone era.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Shoes/Misc/crocs.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Shoes/Misc/crocs.rsi

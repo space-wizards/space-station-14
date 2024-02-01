@@ -1,0 +1,54 @@
+- type: entity
+  name: Random Animal Spawner
+  id: RandomAnimalSpawner
+  parent: MarkerBase
+  suffix: No Mice
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Mobs/Animals/chicken.rsi
+        state: icon-1
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - MobChicken
+      - MobDuckMallard
+      - MobDuckWhite
+      - MobDuckBrown
+      - MobCow
+      - MobGoat
+      - MobPig
+      - MobMonkey
+      - MobParrot
+      - MobPenguin
+      - MobPossum
+      - MobPossumOld
+      - MobRaccoon
+      - MobFox
+      - MobArcticFox
+      - MobCat
+    chance: 1
+    rarePrototypes:
+      - MobGorilla
+      - MobKangaroo
+      - MobBoxingKangaroo
+      - MobGoose
+      - MobSnake
+      - MobGiantSpider
+      - MobGiantSpiderAngry
+      - MobCorgi
+      - MobCorgiNarsi
+      - MobCorgiPuppy
+      - MobCrab
+      - MobCatSpace
+      - MobCatKitten
+      - MobSloth
+      - MobFerret
+      - MobFerretWhite
+      - MobLizard
+      - MobSlug
+      - MobFrog
+      - MobMothroach
+      - MobArcticFox
+    rareChance: 0.15

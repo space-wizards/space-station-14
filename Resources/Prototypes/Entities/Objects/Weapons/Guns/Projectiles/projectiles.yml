@@ -445,6 +445,7 @@
     radius: 2.5
     color: white
     energy: 0.5
+  - type: GatheringProjectile
 
 - type: entity
   id: BulletCharge

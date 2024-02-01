@@ -1,0 +1,19 @@
+- type: entity
+  parent: PosterBase
+  id: PosterLegitFuckAround
+  name: Fuck Around...
+  description: ...and find out. Sponsored by the Intergalactic Bartenders' Federation, Delta branch.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Structures/Wallmounts/Posters/TJohnson.rsi
+    state: fuckaround
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandGotWood
+  name: "Got Wood?"
+  description: "A grimy old advert for a seedy lumber company. \"You got a friend in me.\" is scrawled in the corner."
+  components:
+  - type: Sprite
+    sprite: DeltaV/Structures/Wallmounts/Posters/misc.rsi
+    state: woodygotwood

@@ -1,0 +1,62 @@
+- type: entity
+  parent: PlushieMoth
+  id: PlushieMothRandom
+  name: moth plushie
+  suffix: Random
+  description: A cute little mothperson that you can hold in the palm of your hand.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Fun/Toys/moff.rsi
+    layers:
+      - state: moff1
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          moff1: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff2: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff3: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff4: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff5: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff6: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff7: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff8: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff9: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff10: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff11: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff12: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff13: ""
+      - enum.DamageStateVisualLayers.Base:
+          moff14: ""
+
+- type: entity
+  parent: PlushieMoth
+  id: PlushieMothMusician
+  name: moth musician plushie
+  description: A plushie depicting an adorable mothperson with a tiny synthesizer and tiny glasses.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Fun/Toys/moff.rsi
+    state: moffmusician
+
+- type: entity
+  parent: PlushieMoth
+  id: PlushieMothBartender
+  name: moth bartender plushie
+  description: A plushie depicting an adorable mothperson with a tiny tophat and tiny kevlar vest. It smells like cigarettes.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Fun/Toys/moff.rsi
+    state: moffbartender

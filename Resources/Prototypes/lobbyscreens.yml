@@ -9,3 +9,11 @@
 - type: lobbyBackground
   id: Lobbyscreen3
   background: /Textures/LobbyScreens/lobbyscreen3.png
+
+- type: lobbyBackground
+  id: Lobbyscreen4
+  background: /Textures/LobbyScreens/lobbyscreen4.png
+
+- type: lobbyBackground
+  id: Doomed
+  background: /Textures/LobbyScreens/doomed.png

@@ -219,6 +219,12 @@
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+    soundGunshot: # GreyStation - Replaced Laser Sounds
+      path: /Audio/GreyStation/Weapons/Guns/Gunshots/laser.ogg
+      params:
+        volume: 2
+    soundEmpty:
+      path: /Audio/GreyStation/Weapons/Guns/Empty/dry_fire.ogg
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5

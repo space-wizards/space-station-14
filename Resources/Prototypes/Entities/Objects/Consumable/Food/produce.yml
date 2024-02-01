@@ -52,6 +52,9 @@
           Quantity: 10
   - type: Produce
     seedId: wheat
+  - type: Tag # Delta V straw hat
+    tags:
+    - Wheat # End of Delta V straw hat
 
 - type: entity
   name: oat bushel
