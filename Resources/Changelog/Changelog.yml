@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: 'A new type of grenade has been developed, these grenades release a spray
-      of bullets instead of exploding: Shrapnel grenade, Stinger grenade and Incendiary
-      grenade.'
-    type: Add
-  - message: Stinger grenades and ClusterBangs are now available in the sectech.
-    type: Add
-  - message: Incendiary grenades, Shrapnel grenades, Cluster grenades and the Slipocalypse
-      ClusterSoap are now available in the syndicate uplink, clowns also get a Clusterbanana
-      in their uplink.
-    type: Add
-  - message: Explosive banana peels are now more dangerous.
-    type: Tweak
-  id: 5358
-  time: '2023-12-14T03:30:43.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Added gas condensers. These machines are available at the circuit imprinter
@@ -3865,3 +3849,11 @@
   id: 5857
   time: '2024-02-01T12:41:03.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24810
+- author: mirrorcult
+  changes:
+  - message: Crayon/lathe/vendor/round end/gas analyzer windows now open closer to
+      the sides of the screen
+    type: Tweak
+  id: 5858
+  time: '2024-02-01T12:49:49.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24767
