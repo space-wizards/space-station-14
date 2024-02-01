@@ -37,6 +37,13 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("probability")]
         public float Probability = 1.0f;
 
+        /// <summary>
+        ///     Cooldown between emotes
+        /// </summary>
+        [JsonPropertyName("cooldown")]
+        [DataField("cooldown")]
+        public float CooldownEmote = 2;
+
         [JsonIgnore]
         [DataField("logImpact")]
         public virtual LogImpact LogImpact { get; private set; } = LogImpact.Low;

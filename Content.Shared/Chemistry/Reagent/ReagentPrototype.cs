@@ -102,7 +102,13 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public float Viscosity;
 
-         /// <summary>
+        /// <summary>
+        /// Should this reagent work on the dead?
+        /// </summary>
+        [DataField]
+        public bool Cooldown;
+
+        /// <summary>
         /// Should this reagent work on the dead?
         /// </summary>
         [DataField]

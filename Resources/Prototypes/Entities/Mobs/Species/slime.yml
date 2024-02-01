@@ -60,6 +60,9 @@
         visualType: Large
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
+      - !type:Emote
+        emote: Scream
+        cooldown: 2
   - type: Butcherable
     butcheringType: Spike
     spawned:
