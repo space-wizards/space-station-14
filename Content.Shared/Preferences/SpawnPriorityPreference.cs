@@ -8,7 +8,8 @@ namespace Content.Shared.Preferences
         ///////////////////////
         /// DO NOT TOUCH!!! ///
         ///////////////////////
-        Arrivals = 0,
-        Cryosleep = 1
+        None = 0,
+        Arrivals = 1,
+        Cryosleep = 2,
     }
 }
