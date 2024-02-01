@@ -89,7 +89,7 @@
         doAfter: 5
 
   - node: glassElectronics
-    entity: ClockworkAirlockAssembly
+    entity: ClockworkAirlockAssemblyGlass
     edges:
     - to: glassAirlock
       conditions:
