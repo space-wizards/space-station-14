@@ -1,12 +1,12 @@
 ﻿using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Definition;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Medical.Wounding.Prototypes;
 
 [Prototype]
-[Serializable, NetSerializable]
 public sealed class WoundPoolPrototype : IPrototype
 {
     [IdDataField]
@@ -16,7 +16,7 @@ public sealed class WoundPoolPrototype : IPrototype
     /// A list of possible wounds and the percentage of damage taken that is needed to apply them
     /// </summary>
     [DataField(required:true,customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<FixedPoint2, EntityPrototype>))]
-    public SortedDictionary<FixedPoint2, string> Wounds = new(); //TODO: This may cause an explosion IDK
+    public SortedDictionary<FixedPoint2, string> Wounds = new();
 }
 
 [Serializable, NetSerializable, DataDefinition]

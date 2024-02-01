@@ -124,7 +124,7 @@ public sealed class BodySystem : SharedBodySystem
         var filter = Filter.Pvs(bodyId, entityManager: EntityManager);
         var audio = AudioParams.Default.WithVariation(0.025f);
 
-        _audio.PlayStatic(body.GibSound, filter, coordinates, true, audio);
+        //_audio.PlayStatic(body.GibSound, filter, coordinates, true, audio);
 
         foreach (var entity in gibs)
         {
@@ -132,12 +132,12 @@ public sealed class BodySystem : SharedBodySystem
             {
                 if (!HasComp<BrainComponent>(entity) || deleteBrain)
                 {
-                    QueueDel(entity);
+                    //QueueDel(entity);
                 }
             }
             else
             {
-                SharedTransform.SetCoordinates(entity, coordinates.Offset(_random.NextVector2(.3f)));
+                //SharedTransform.SetCoordinates(entity, coordinates.Offset(_random.NextVector2(.3f)));
             }
         }
         RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));

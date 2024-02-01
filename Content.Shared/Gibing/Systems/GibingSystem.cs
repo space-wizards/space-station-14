@@ -39,11 +39,37 @@ public sealed class GibingSystem : EntitySystem
     /// <param name="containerWhitelist">A list of containerIds on the target that permit gibing</param>
     /// <param name="containerBlacklist">A list of containerIds on the target that DO NOT permit gibing</param>
     /// <returns>True if successful, false if not</returns>
-    public bool TryGibEntity(EntityUid outerEntity, EntityUid target, GibOption gibSettings, GibContentsOption gibContentsOption,
-        out HashSet<EntityUid> droppedEntities, GibableComponent? gibable = null, float randomSpreadMod = 1.0f, bool playAudio = true,
+    public bool TryGibEntity(EntityUid outerEntity, EntityUid target, GibOption gibSettings,
+        GibContentsOption gibContentsOption,
+        out HashSet<EntityUid> droppedEntities, GibableComponent? gibable = null, float randomSpreadMod = 1.0f,
+        bool playAudio = true,
         List<string>? containerWhitelist = null, List<string>? containerBlacklist = null)
     {
         droppedEntities = new();
+        return TryGibEntityWithRef(outerEntity, target, gibSettings, gibContentsOption, ref droppedEntities, gibable,
+            randomSpreadMod, playAudio, containerWhitelist, containerBlacklist);
+    }
+
+
+    /// <summary>
+    /// Attempt to gib a specified entity. That entity must have a gibable components. This method is NOT recursive will only
+    /// work on the target and any entities it contains (depending on gibContentsOption)
+    /// </summary>
+    /// <param name="outerEntity">The outermost entity we care about, used to place the dropped items</param>
+    /// <param name="target">Target entity we wish to gib</param>
+    /// <param name="gibSettings">What type of gibing are we performing</param>
+    /// <param name="gibContentsOption">What type of gibing do we perform on any container contents?</param>
+    /// <param name="droppedEntities">a hashset containing all the entities that have been dropped/created</param>
+    /// <param name="gibable">The gibable component</param>
+    /// <param name="randomSpreadMod">How much to multiply the random spread on drops for</param>
+    /// <param name="playAudio">Should we play audio</param>
+    /// <param name="containerWhitelist">A list of containerIds on the target that permit gibing</param>
+    /// <param name="containerBlacklist">A list of containerIds on the target that DO NOT permit gibing</param>
+    /// <returns>True if successful, false if not</returns>
+    public bool TryGibEntityWithRef(EntityUid outerEntity, EntityUid target, GibOption gibSettings, GibContentsOption gibContentsOption,
+        ref HashSet<EntityUid> droppedEntities, GibableComponent? gibable = null, float randomSpreadMod = 1.0f, bool playAudio = true,
+        List<string>? containerWhitelist = null, List<string>? containerBlacklist = null)
+    {
         if (!Resolve(target, ref gibable))
             return false;
         if (gibSettings == GibOption.Skip && gibContentsOption == GibContentsOption.Skip)
@@ -71,8 +97,6 @@ public sealed class GibingSystem : EntitySystem
                         foreach (var ent in container.ContainedEntities)
                         {
                             DropEntity(ent, parentXform, randomSpreadMod, gibable, ref droppedEntities);
-                            var gibbedEvent = new EntityGibedEvent(target, new List<EntityUid>{ent});
-                            RaiseLocalEvent(target,ref gibbedEvent);
                         }
                     }
                     break;
@@ -83,10 +107,7 @@ public sealed class GibingSystem : EntitySystem
                     {
                         foreach (var ent in container.ContainedEntities)
                         {
-                            var gibbedEvent = new EntityGibedEvent(ent, GibEntity(ent, parentXform,
-                                randomSpreadMod, gibable,ref droppedEntities));
-                            RaiseLocalEvent(target,ref gibbedEvent);
-                            EntityManager.DeleteEntity(ent);
+                            GibEntity(ent, parentXform, randomSpreadMod, gibable,ref droppedEntities);
                         }
                     }
                     break;
@@ -100,14 +121,11 @@ public sealed class GibingSystem : EntitySystem
             case GibOption.Drop:
             {
                 DropEntity(target, parentXform, randomSpreadMod, gibable, ref droppedEntities);
-                var gibbedEvent = new EntityGibedEvent(target, new List<EntityUid>{target});
-                RaiseLocalEvent(target,ref gibbedEvent);
                 break;
             }
             case GibOption.Gib:
             {
-                var gibbedEvent = new EntityGibedEvent(target, GibEntity(target, parentXform, randomSpreadMod, gibable, ref droppedEntities));
-                RaiseLocalEvent(target,ref gibbedEvent);
+                GibEntity(target, parentXform, randomSpreadMod, gibable, ref droppedEntities);
                 break;
             }
         }
@@ -126,29 +144,46 @@ public sealed class GibingSystem : EntitySystem
             return;
         var gibAttemptEvent = new AttemptEntityGibEvent(target, gibable.GibletCount, GibOption.Drop);
         RaiseLocalEvent(target, ref gibAttemptEvent);
-        if (gibAttemptEvent.Canceled)
+        if (gibAttemptEvent.GibOption == GibOption.Skip)
             return;
+        if (gibAttemptEvent.GibOption == GibOption.Gib)
+        {
+            GibEntity(target, parentXform, randomSpreadMod, gibable, ref droppedEntities, deleteTarget: false);
+            return;
+        }
         _transformSystem.AttachToGridOrMap(target);
         _transformSystem.SetCoordinates(target,parentXform.Coordinates.Offset(_random.NextVector2(GibScatterRange * randomSpreadMod)));
         droppedEntities.Add(target);
+        var gibbedEvent = new EntityGibedEvent(target, new List<EntityUid>{target});
+        RaiseLocalEvent(target,ref gibbedEvent);
     }
 
     private List<EntityUid> GibEntity(EntityUid target, TransformComponent parentXform, float randomSpreadMod,
-        GibableComponent? gibable, ref HashSet<EntityUid> droppedEntities)
+        GibableComponent? gibable, ref HashSet<EntityUid> droppedEntities, bool deleteTarget = true)
     {
         var localGibs = new List<EntityUid>();
         if (!Resolve(target, ref gibable))
             return localGibs;
         var gibAttemptEvent = new AttemptEntityGibEvent(target, gibable.GibletCount, GibOption.Drop);
         RaiseLocalEvent(target, ref gibAttemptEvent);
-        if (gibAttemptEvent.Canceled)
+        if (gibAttemptEvent.GibOption == GibOption.Skip)
             return localGibs;
+        if (gibAttemptEvent.GibOption == GibOption.Drop)
+        {
+            DropEntity(target, parentXform, randomSpreadMod, gibable, ref droppedEntities);
+            localGibs.Add(target);
+            return localGibs;
+        }
         for (var i = 0; i < gibAttemptEvent.GibletCount; i++)
         {
             if (TryCreateRandomGiblet(target, gibable, parentXform.Coordinates, randomSpreadMod, false, out var giblet))
                 droppedEntities.Add(giblet.Value);
         }
         _transformSystem.AttachToGridOrMap(target, Transform(target));
+        var gibbedEvent = new EntityGibedEvent(target, localGibs);
+        RaiseLocalEvent(target,ref gibbedEvent);
+        if (deleteTarget)
+            EntityManager.DeleteEntity(target);
         return localGibs;
     }
 

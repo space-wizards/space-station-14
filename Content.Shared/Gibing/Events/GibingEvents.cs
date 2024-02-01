@@ -8,8 +8,7 @@ namespace Content.Shared.Gibing.Events;
 /// <param name="Target">The entity being gibed</param>
 /// <param name="GibletCount">how many giblets to spawn</param>
 /// <param name="GibOption">What type of gibbing is occuring</param>
-/// <param name="Canceled">Are we cancelling this gib?</param>
-[ByRefEvent] public record struct AttemptEntityGibEvent(EntityUid Target, int GibletCount, GibOption GibOption, bool Canceled = false);
+[ByRefEvent] public record struct AttemptEntityGibEvent(EntityUid Target, int GibletCount, GibOption GibOption);
 
 /// <summary>
 /// Called immediately after we gib the target entity

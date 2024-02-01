@@ -5,6 +5,8 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.DragDrop;
+using Content.Shared.Gibing.Events;
+using Content.Shared.Gibing.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
@@ -23,7 +25,7 @@ public partial class SharedBodySystem
      */
 
     [Dependency] private readonly InventorySystem _inventory = default!;
-
+    [Dependency] private readonly GibingSystem _gibingSystem = default!;
     private void InitializeBody()
     {
         // Body here to handle root body parts.
@@ -273,19 +275,17 @@ public partial class SharedBodySystem
 
         var parts = GetBodyChildren(bodyId, body).ToArray();
         gibs.EnsureCapacity(parts.Length);
-
         foreach (var part in parts)
         {
-            SharedTransform.AttachToGridOrMap(part.Id);
-            gibs.Add(part.Id);
+
+            _gibingSystem.TryGibEntityWithRef(bodyId, part.Id, GibOption.Gib, GibContentsOption.Skip, ref gibs);
 
             if (!gibOrgans)
                 continue;
 
             foreach (var organ in GetPartOrgans(part.Id, part.Component))
             {
-                SharedTransform.AttachToGridOrMap(organ.Id);
-                gibs.Add(organ.Id);
+                _gibingSystem.TryGibEntityWithRef(bodyId, organ.Id, GibOption.Drop, GibContentsOption.Skip, ref gibs);
             }
         }
         if(TryComp<InventoryComponent>(bodyId, out var inventory))
