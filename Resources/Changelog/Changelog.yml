@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added gas condensers. These machines are available at the circuit imprinter
-      and can convert gases into liquids. Tasty!
-    type: Add
-  id: 5359
-  time: '2023-12-14T03:35:44.0000000+00:00'
 - author: DangerRevolution
   changes:
   - message: Extended emergency nitrogen tanks can now be found on the station.
@@ -3857,3 +3850,11 @@
   id: 5858
   time: '2024-02-01T12:49:49.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24767
+- author: Tayrtahn
+  changes:
+  - message: Plushies, whoopie cushions, and a few other noisemaking objects can be
+      used as modular grenade payloads.
+    type: Add
+  id: 5859
+  time: '2024-02-01T12:59:42.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24306
