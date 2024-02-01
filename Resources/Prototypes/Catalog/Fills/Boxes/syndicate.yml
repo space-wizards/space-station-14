@@ -35,13 +35,11 @@
 - type: entity
   id: Observationskit
   parent: BoxCardboard
-  name: Observations kit
+  name: observations kit
   suffix: Filled
   components:
     - type: StorageFill
       contents:
-        - id: SyndiCrewMonitorEmpty
-          amount: 1
         - id: PowerCellHigh
           amount: 1
         - id: ClothingEyesGlassesHiddenSecurity

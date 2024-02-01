@@ -17,3 +17,15 @@
 - type: lobbyBackground
   id: SSXIV
   background: /Textures/LobbyScreens/ssxiv.png
+
+- type: lobbyBackground
+  id: Susstation
+  background: /Textures/LobbyScreens/susstation.png
+
+- type: lobbyBackground
+  id: SkellyVsTheRev
+  background: /Textures/LobbyScreens/skellyvstherev.png
+
+- type: lobbyBackground
+  id: Doomed
+  background: /Textures/LobbyScreens/doomed.png

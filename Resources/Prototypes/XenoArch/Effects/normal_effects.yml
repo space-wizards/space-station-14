@@ -584,24 +584,6 @@
     - shuffle-artifact-popup
 
 - type: artifactEffect
-  id: EffectT4PartsSpawn
-  targetDepth: 3
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 10
-    spawns:
-    - id: QuadraticCapacitorStockPart
-      prob: 0.5
-      maxAmount: 3
-    - id: FemtoManipulatorStockPart
-      prob: 0.5
-      maxAmount: 3
-    - id: BluespaceMatterBinStockPart
-      prob: 0.5
-      maxAmount: 3
-
-- type: artifactEffect
   id: EffectFoamDangerous
   targetDepth: 3
   effectHint: artifact-effect-hint-biochemical
@@ -682,3 +664,13 @@
     maxSpawns: 1
     spawns:
     - id: Singularity
+
+- type: artifactEffect
+  id: EffectTesla
+  targetDepth: 10
+  effectHint: artifact-effect-hint-destruction
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
+    - id: TeslaEnergyBall

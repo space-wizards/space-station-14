@@ -29,7 +29,7 @@
 
 - type: entity
   parent: ReinforcementRadioSyndicate
-  id: ReinforcementRadioSyndicateMonkey # Reinforcement radio exclusive to nukeops uplink
+  id: ReinforcementRadioSyndicateMonkey
   name: syndicate monkey reinforcement radio
   description: Calls in a specially trained monkey to assist you.
   components:
@@ -39,6 +39,14 @@
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
+
+- type: entity
+  parent: ReinforcementRadioSyndicateMonkey
+  id: ReinforcementRadioSyndicateMonkeyNukeops # Reinforcement radio exclusive to nukeops uplink
+  suffix: NukeOps
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobMonkeySyndicateAgentNukeops
 
 - type: entity
   parent: ReinforcementRadioSyndicate

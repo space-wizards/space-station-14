@@ -150,7 +150,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
             if (tileRef != null)
             {
-                foreach (var entity in _entityLookup.GetEntitiesIntersecting(tileRef.Value, flags: LookupFlags.StaticSundries))
+                foreach (var entity in _entityLookup.GetLocalEntitiesIntersecting(tileRef.Value, flags: LookupFlags.StaticSundries))
                 {
                     if (_tag.HasTag(entity, "Window"))
                         return false;
@@ -258,7 +258,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         var net = powerNet.NetworkNode;
-        var supp = net.LastCombinedSupply;
+        var supp = net.LastCombinedMaxSupply;
 
         if (supp <= 0f)
             return false;
@@ -295,7 +295,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             if (id != null &&
                 _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
-                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
+                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedMaxSupply: > 0 } })
             {
                 return tryNode;
             }

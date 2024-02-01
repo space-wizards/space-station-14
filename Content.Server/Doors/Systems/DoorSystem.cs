@@ -28,8 +28,6 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
 
-
-        SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforeDoorPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
@@ -123,12 +121,6 @@ public sealed class DoorSystem : SharedDoorSystem
             SetState(uid, DoorState.Welded, component);
         else if (component.State == DoorState.Welded)
             SetState(uid, DoorState.Closed, component);
-    }
-
-    private void OnBeforeDoorPry(EntityUid id, DoorComponent door, ref BeforePryEvent args)
-    {
-        if (door.State == DoorState.Welded || !door.CanPry)
-            args.Cancelled = true;
     }
     #endregion
 

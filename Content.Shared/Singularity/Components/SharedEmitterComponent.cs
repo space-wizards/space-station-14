@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using Content.Shared.Construction.Prototypes;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -54,12 +53,6 @@ public sealed partial class EmitterComponent : Component
     public TimeSpan FireInterval = TimeSpan.FromSeconds(2);
 
     /// <summary>
-    /// The base amount of time between each shot during a burst.
-    /// </summary>
-    [DataField("baseFireInterval"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan BaseFireInterval = TimeSpan.FromSeconds(2);
-
-    /// <summary>
     /// The current minimum delay between bursts.
     /// </summary>
     [DataField("fireBurstDelayMin")]
@@ -70,33 +63,6 @@ public sealed partial class EmitterComponent : Component
     /// </summary>
     [DataField("fireBurstDelayMax")]
     public TimeSpan FireBurstDelayMax = TimeSpan.FromSeconds(10);
-
-    /// <summary>
-    /// The base minimum delay between shot bursts.
-    /// Used for machine part rating calculations.
-    /// </summary>
-    [DataField("baseFireBurstDelayMin")]
-    public TimeSpan BaseFireBurstDelayMin = TimeSpan.FromSeconds(4);
-
-    /// <summary>
-    /// The base maximum delay between shot bursts.
-    /// Used for machine part rating calculations.
-    /// </summary>
-    [DataField("baseFireBurstDelayMax")]
-    public TimeSpan BaseFireBurstDelayMax = TimeSpan.FromSeconds(10);
-
-    /// <summary>
-    /// The multiplier for the base delay between shot bursts as well as
-    /// the fire interval
-    /// </summary>
-    [DataField("fireRateMultiplier"), ViewVariables(VVAccess.ReadWrite)]
-    public float FireRateMultiplier = 0.8f;
-
-    /// <summary>
-    /// The machine part that affects burst delay.
-    /// </summary>
-    [DataField("machinePartFireRate", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartFireRate = "Capacitor";
 
     /// <summary>
     /// The visual state that is set when the emitter is turned on

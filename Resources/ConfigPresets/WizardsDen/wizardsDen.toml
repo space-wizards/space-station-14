@@ -34,3 +34,6 @@ limit = 10.0
 see_own_notes = true
 deadmin_on_join = true
 new_player_threshold = 600
+
+[worldgen]
+enabled = true

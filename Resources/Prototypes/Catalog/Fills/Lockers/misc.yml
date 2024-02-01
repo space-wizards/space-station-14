@@ -83,7 +83,7 @@
         - id: ClothingOuterSuitFire
         - id: ClothingHeadHelmetFire
         - id: ClothingMaskGas
-        - id: YellowOxygenTankFilled
+        - id: OxygenTankFilled
         - id: NitrogenTankFilled
         - id: FireExtinguisher
           prob: 0.25
@@ -97,7 +97,7 @@
         - id: ClothingOuterSuitFire
         - id: ClothingHeadHelmetFire
         - id: ClothingMaskGas
-        - id: YellowOxygenTankFilled
+        - id: OxygenTankFilled
         - id: NitrogenTankFilled
         - id: FireExtinguisher
           prob: 0.25
@@ -145,6 +145,8 @@
         - id: ClothingHandsGlovesColorYellowBudget
           prob: 0.25
         - id: StrangePill
+          prob: 0.20
+        - id: DrinkMopwataBottleRandom
           prob: 0.20
         - id: ModularReceiver
           prob: 0.1
