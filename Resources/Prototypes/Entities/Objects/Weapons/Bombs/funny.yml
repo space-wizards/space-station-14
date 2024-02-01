@@ -24,7 +24,8 @@
           Blunt: 5
     - type: OnUseTimerTrigger
       delay: 120
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      beepSound:
+        path: /Audio/Machines/Nuke/general_beep.ogg
         params:
           volume: -2
     - type: ExplodeOnTrigger
