@@ -545,10 +545,29 @@
           3: { state: reinf_construct-3, visible: true}
           4: { state: reinf_construct-4, visible: true}
           5: { state: reinf_construct-5, visible: true}
+  - type: ReinforcedWallReplacementMarker
   - type: StaticPrice
     price: 150
   - type: RadiationBlocker
     resistance: 5
+
+- type: entity
+  parent: WallReinforced
+  id: WallReinforcedRust
+  name: reinforced wall
+  suffix: rusted
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/solid_rust.rsi
+  - type: Icon
+    sprite: Structures/Walls/solid_rust.rsi
+    state: rgeneric
+  - type: Construction
+    graph: Girder
+    node: reinforcedWall
+  - type: IconSmooth
+    key: walls
+    base: reinf_over
 
 - type: entity
   parent: WallShuttleDiagonal
@@ -822,6 +841,7 @@
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
+  - type: WallReplacementMarker
   - type: Construction
     graph: Girder
     node: wall
@@ -876,44 +896,22 @@
     state: state0
 
 - type: entity
-  parent: BaseWall
+  parent: WallSolid
   id: WallSolidRust
   name: solid wall
   suffix: rusted
   components:
   - type: Sprite
-    sprite: Structures/Walls/solidrust.rsi
+    sprite: Structures/Walls/solid_rust.rsi
   - type: Icon
-    sprite: Structures/Walls/solidrust.rsi
+    sprite: Structures/Walls/solid_rust.rsi
     state: full
   - type: Construction
     graph: Girder
     node: wallrust
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
-    base: solidrust
+    base: solid
 
 - type: entity
   parent: BaseWall
