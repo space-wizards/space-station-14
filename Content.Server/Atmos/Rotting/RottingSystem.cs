@@ -133,7 +133,8 @@ public sealed class RottingSystem : SharedRottingSystem
             return;
         }
 
-        var description = "perishable-" + stage;
+        var isMob = HasComp<MobStateComponent>(perishable);
+        var description = "perishable-" + stage + (!isMob ? "-nonmob" : string.Empty);
         args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
     }
 

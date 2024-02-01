@@ -16,7 +16,7 @@
         maxVol: 100
   - type: Sprite
     state: icon
-    sprite: Objects/Consumable/Drinks/water.rsi # fallback to boring water jug
+    sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
   - type: Item
     size: Normal
   - type: Damageable
@@ -198,6 +198,8 @@
         reagents:
         - ReagentId: Cognac
           Quantity: 100
+  - type: Label
+    currentLabel: cognac
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
@@ -213,6 +215,8 @@
         reagents:
         - ReagentId: Cola
           Quantity: 100
+  - type: Label
+    currentLabel: cola
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
 
@@ -248,6 +252,8 @@
         reagents:
         - ReagentId: Gin
           Quantity: 100
+  - type: Label
+    currentLabel: gin
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
@@ -278,6 +284,8 @@
         reagents:
         - ReagentId: CoffeeLiqueur
           Quantity: 100
+  - type: Label
+    currentLabel: coffee liqueur
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
 
@@ -365,6 +373,8 @@
         - ReagentId: SpaceMountainWind
           Quantity: 100
   - type: Drink
+  - type: Label
+    currentLabel: space mountain wind
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
 
@@ -381,6 +391,8 @@
         - ReagentId: SpaceUp
           Quantity: 100
   - type: Drink
+  - type: Label
+    currentLabel: space-up
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
@@ -430,6 +442,8 @@
         reagents:
         - ReagentId: Vodka
           Quantity: 100
+  - type: Label
+    currentLabel: vodka
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
@@ -500,8 +514,11 @@
         reagents:
         - ReagentId: Beer
           Quantity: 150
+  - type: Label
+    currentLabel: beer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
+
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
@@ -518,6 +535,7 @@
         reagents:
         - ReagentId: Ale
           Quantity: 50
+
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
@@ -534,6 +552,8 @@
         reagents:
         - ReagentId: Ale
           Quantity: 150
+  - type: Label
+    currentLabel: ale
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
@@ -565,6 +585,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: icon-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -579,6 +601,8 @@
         reagents:
         - ReagentId: SodaWater
           Quantity: 150
+  - type: Label
+    currentLabel: soda water
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -593,6 +617,8 @@
         reagents:
         - ReagentId: TonicWater
           Quantity: 150
+  - type: Label
+    currentLabel: tonic water
 
 # Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
 
@@ -610,6 +636,8 @@
         - ReagentId: JuiceLime
           Quantity: 150
   - type: Drink
+  - type: Label
+    currentLabel: lime juice
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -627,6 +655,8 @@
         - ReagentId: JuiceOrange
           Quantity: 150
   - type: Drink
+  - type: Label
+    currentLabel: orange juice
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
@@ -644,6 +674,8 @@
         - ReagentId: Cream
           Quantity: 150
   - type: Drink
+  - type: Label
+    currentLabel: cream
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
 
@@ -679,6 +711,8 @@
         - ReagentId: LemonLime
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: lemon-lime
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -709,6 +743,8 @@
         - ReagentId: Ice
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: ice
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -724,6 +760,8 @@
         - ReagentId: Coffee
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: coffee
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -739,6 +777,8 @@
         - ReagentId: Tea
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: tea
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -754,6 +794,8 @@
         - ReagentId: GreenTea
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: green tea
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -784,6 +826,8 @@
         - ReagentId: DrGibb
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: dr gibb
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -799,6 +843,8 @@
         - ReagentId: RootBeer
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: root beer
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -813,4 +859,35 @@
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 300
+  - type: Drink
+  - type: Label
+    currentLabel: watermelon juice
+
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkEnergyDrinkJug
+  name: red bool jug
+  description: A jug of Red Bool, with enough caffine to kill a whole station.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: EnergyDrink
+          Quantity: 100
+  - type: Drink
+  - type: Label
+    currentLabel: red bool
+
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: CustomDrinkJug
+  name: beverage jug
+  description: A jug for storing custom made drinks.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
   - type: Drink

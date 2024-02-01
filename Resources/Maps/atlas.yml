@@ -4034,6 +4034,9 @@ entities:
     - type: Transform
       pos: 3.5,-1.5
       parent: 30
+    - type: DeviceLinkSink
+      links:
+      - 7475
   - uid: 2403
     components:
     - type: Transform
@@ -23638,6 +23641,7 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.78
       inletOneConcentration: 0.22
+      targetPressure: 4500
     - type: AtmosDevice
       joinedGrid: 30
 - proto: GasOutletInjector
@@ -32137,6 +32141,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -39.5,2.5
       parent: 30
+    - type: GasPressurePump
+      targetPressure: 300
     - type: AtmosDevice
       joinedGrid: 30
     - type: AtmosPipeColor
@@ -32210,6 +32216,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -43.5,1.5
       parent: 30
+    - type: GasPressurePump
+      targetPressure: 4500
     - type: AtmosDevice
       joinedGrid: 30
   - uid: 6896
@@ -32218,6 +32226,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -43.5,3.5
       parent: 30
+    - type: GasPressurePump
+      targetPressure: 4500
     - type: AtmosDevice
       joinedGrid: 30
 - proto: GasThermoMachineFreezer
@@ -42268,6 +42278,18 @@ entities:
         - Pressed: Toggle
         6376:
         - Pressed: Toggle
+  - uid: 7475
+    components:
+    - type: MetaData
+      name: exit button
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,-2.5
+      parent: 30
+    - type: DeviceLinkSource
+      linkedPorts:
+        2401:
+        - Pressed: Open
 - proto: SignalSwitchDirectional
   entities:
   - uid: 346
@@ -43282,6 +43304,13 @@ entities:
     components:
     - type: Transform
       pos: 32.5,-4.5
+      parent: 30
+- proto: SpawnMobCrabAtmos
+  entities:
+  - uid: 7416
+    components:
+    - type: Transform
+      pos: -40.5,2.5
       parent: 30
 - proto: SpawnMobFoxRenault
   entities:

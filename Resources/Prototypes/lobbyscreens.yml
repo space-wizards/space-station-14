@@ -25,3 +25,7 @@
 - type: lobbyBackground
   id: SkellyVsTheRev
   background: /Textures/LobbyScreens/skellyvstherev.png
+
+- type: lobbyBackground
+  id: Doomed
+  background: /Textures/LobbyScreens/doomed.png
