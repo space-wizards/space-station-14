@@ -109,77 +109,6 @@
   - type: ZombieImmune
 
 - type: entity
-  parent: [ MobSiliconBase, BaseVehicle]
-  id: MobSiliconBaseVehicle # for vehicles
-  abstract: true
-  components:
-  - type: NoSlip
-  - type: GhostTakeoverAvailable
-  - type: GhostRole
-    makeSentient: true
-  - type: UnpoweredFlashlight
-  - type: PointLight
-    enabled: false
-    radius: 3.5
-    softness: 2
-    mask: /Textures/Effects/LightMasks/cone.png
-    autoRot: true
-
-- type: entity
-  parent: MobSiliconBaseVehicle
-  id: MobTaxiBot
-  name: taxibot
-  description: Give a ride?
-  components:
-  - type: Sprite
-    sprite: Mobs/Silicon/Bots/taxibot.rsi
-    layers:
-    - state: taxibot
-      map: ["enum.VehicleVisualLayers.AutoAnimate"]
-  - type: GhostRole
-    name: ghost-role-information-taxibot-name
-    description: ghost-role-information-taxibot-description
-  - type: Strap
-    buckleOffset: "0, 0"
-    maxBuckleDistance: 1
-  - type: Construction
-    graph: TaxiBot
-    node: bot
-
-- type: entity
-  parent: MobSiliconBaseVehicle
-  id: MobSupplyBot
-  name: supplybot
-  description: Delivers cargo!
-  components:
-  - type: Sprite
-    sprite: Mobs/Silicon/Bots/supplybot.rsi
-    layers:
-    - state: supplybot
-      map: ["enum.VehicleVisualLayers.AutoAnimate"]
-  - type: GhostRole
-    name: ghost-role-information-supplybot-name
-    description: ghost-role-information-supplybot-description
-  - type: Construction
-    graph: SupplyBot
-    node: bot
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,9,3
-  - type: Access
-    groups:
-    - Cargo
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-
-- type: entity
   parent: MobSiliconBase
   id: MobHonkBot
   name: honkbot
@@ -350,12 +279,12 @@
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: ShowHealthBars
-    damageContainers: 
+    damageContainers:
     - Biological
   - type: ShowHealthIcons
-    damageContainers: 
+    damageContainers:
     - Biological
-  
+
 - type: entity
   parent: MobSiliconBase
   id: MobMimeBot

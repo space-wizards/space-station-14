@@ -261,15 +261,6 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
-  - type: EmbeddableProjectile
-    offset: 0.3,0.0
-    removalTime: 0.0
-  - type: ThrowingAngle
-    angle: 315
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 3
 
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
@@ -300,10 +291,6 @@
     state: overpriced_pen
   - type: MeleeWeapon
     wideAnimationRotation: -45
-    damage:
-      types:
-        Piercing: 15
-  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 15
