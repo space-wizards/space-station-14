@@ -7,8 +7,11 @@ namespace Content.Server.Body.Components
     [RegisterComponent]
     public sealed partial class InternalsComponent : Component
     {
-        [ViewVariables] public EntityUid? GasTankEntity { get; set; }
-        [ViewVariables] public EntityUid? BreathToolEntity { get; set; }
+        [ViewVariables]
+        public EntityUid? GasTankEntity;
+
+        [ViewVariables]
+        public EntityUid? BreathToolEntity;
 
         /// <summary>
         /// Toggle Internals delay (seconds) when the target is not you.

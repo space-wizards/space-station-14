@@ -23,42 +23,42 @@ public sealed partial class ThermalRegulatorComponent : Component
     /// Heat generated due to metabolism. It's generated via metabolism
     /// </summary>
     [DataField]
-    public float MetabolismHeat { get; private set; }
+    public float MetabolismHeat;
 
     /// <summary>
     /// Heat output via radiation.
     /// </summary>
     [DataField]
-    public float RadiatedHeat { get; private set; }
+    public float RadiatedHeat;
 
     /// <summary>
     /// Maximum heat regulated via sweat
     /// </summary>
     [DataField]
-    public float SweatHeatRegulation { get; private set; }
+    public float SweatHeatRegulation;
 
     /// <summary>
     /// Maximum heat regulated via shivering
     /// </summary>
     [DataField]
-    public float ShiveringHeatRegulation { get; private set; }
+    public float ShiveringHeatRegulation;
 
     /// <summary>
     /// Amount of heat regulation that represents thermal regulation processes not
     /// explicitly coded.
     /// </summary>
     [DataField]
-    public float ImplicitHeatRegulation { get; private set; }
+    public float ImplicitHeatRegulation;
 
     /// <summary>
     /// Normal body temperature
     /// </summary>
     [DataField]
-    public float NormalBodyTemperature { get; private set; }
+    public float NormalBodyTemperature;
 
     /// <summary>
     /// Deviation from normal temperature for body to start thermal regulation
     /// </summary>
     [DataField]
-    public float ThermalRegulationTemperatureThreshold { get; private set; }
+    public float ThermalRegulationTemperatureThreshold;
 }

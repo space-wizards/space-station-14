@@ -50,7 +50,7 @@ namespace Content.Server.Body.Components
         public DamageSpecifier DamageRecovery = default!;
 
         [DataField]
-        public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
+        public TimeSpan GaspPopupCooldown = TimeSpan.FromSeconds(8);
 
         [ViewVariables]
         public TimeSpan LastGaspPopupTime;
