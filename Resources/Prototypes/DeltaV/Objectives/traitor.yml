@@ -8,5 +8,5 @@
   - type: NotJobRequirement
     job: HeadOfSecurity
   - type: StealCondition
-    prototype: WeaponEnergyGunMultiphase
+    stealGroup: WeaponEnergyGunMultiphase
     owner: job-name-hos

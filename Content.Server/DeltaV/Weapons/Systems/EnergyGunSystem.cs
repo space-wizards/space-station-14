@@ -135,7 +135,7 @@ public sealed class EnergyGunSystem : EntitySystem
 
             if (TryComp<AppearanceComponent>(uid, out var _) && TryComp<ItemComponent>(uid, out var item))
             {
-                _item.SetHeldPrefix(uid, component.CurrentFireMode.State, item);
+                _item.SetHeldPrefix(uid, component.CurrentFireMode.State, false, item);
                 switch (component.CurrentFireMode.State)
                 {
                     case "disabler":
