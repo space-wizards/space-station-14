@@ -499,10 +499,12 @@ public sealed partial class ChangelingSystem
 
         var target = args.Target;
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostTwentyFive))
+        if (!TryUseAbility(uid, component, component.ChemicalsCostFive))
             return;
 
         TryReagentStingTarget(uid, target, component, "THC", FixedPoint2.New(50));
+
+        args.Handled = true;
 
         var selfMessageSuccess = Loc.GetString("changeling-sting-success-self", ("target", Identity.Entity(target, EntityManager)));
         _popup.PopupEntity(selfMessageSuccess, uid, uid);
