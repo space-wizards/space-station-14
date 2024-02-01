@@ -4,6 +4,7 @@ using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
@@ -87,7 +88,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
     private void SpawnEntities(Entity<EntitySpawnAnomalyComponent> anomaly, EntitySpawnSettingsEntry entry, float stability, float severity)
     {
         var xform = Transform(anomaly);
-        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
+        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
         var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings);
@@ -96,7 +97,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
 
         foreach (var tileref in tiles)
         {
-            Spawn(_random.Pick(entry.Spawns), tileref.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map));
+            Spawn(_random.Pick(entry.Spawns), _mapSystem.ToCenterCoordinates(tileref, grid));
         }
     }
 }
