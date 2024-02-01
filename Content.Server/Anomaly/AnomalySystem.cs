@@ -127,10 +127,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         {
             ChangeAnomalySeverity(anomaly, VaryValue(particle.SeverityPerSeverityHit), anomaly.Comp);
             if (_random.Prob(anomaly.Comp.Continuity))
-            {
                 SetBehavior(anomaly, GetRandomBehavior());
-                RefreshPulseTimer(anomaly);
-            }
         }
     }
 
