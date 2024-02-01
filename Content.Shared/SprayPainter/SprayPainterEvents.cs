@@ -12,7 +12,7 @@ public enum SprayPainterUiKey
 [Serializable, NetSerializable]
 public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 {
-    public int Index { get; }
+    public readonly int Index;
 
     public SprayPainterSpritePickedMessage(int index)
     {
@@ -23,26 +23,11 @@ public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
 {
-    public string? Key { get; }
+    public readonly string? Key;
 
     public SprayPainterColorPickedMessage(string? key)
     {
         Key = key;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class SprayPainterBoundUserInterfaceState : BoundUserInterfaceState
-{
-    public int SelectedStyle { get; }
-    public string? SelectedColorKey { get; }
-    public Dictionary<string, Color> Palette { get; }
-
-    public SprayPainterBoundUserInterfaceState(int selectedStyle, string? selectedColorKey, Dictionary<string, Color> palette)
-    {
-        SelectedStyle = selectedStyle;
-        SelectedColorKey = selectedColorKey;
-        Palette = palette;
     }
 }
 

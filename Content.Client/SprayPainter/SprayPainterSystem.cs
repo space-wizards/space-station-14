@@ -14,10 +14,11 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
     public List<SprayPainterEntry> Entries { get; private set; } = new();
 
-    public override void Initialize()
+    protected override void CacheStyles()
     {
-        base.Initialize();
+        base.CacheStyles();
 
+        Entries.Clear();
         foreach (var style in Styles)
         {
             var name = style.Name;
