@@ -7,6 +7,7 @@
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+    noRot: true
     layers:
     - state: core
     - state: pulse
@@ -25,6 +26,9 @@
       collection: RadiationPulse
   - type: UseDelay
     delay: 2
+  - type: Tag
+    tags:
+    - ForceableFollow
   - type: AnomalyCore
     timeToDecay: 600
     startPrice: 10000
@@ -40,8 +44,11 @@
   - type: PointLight
     radius: 1.5
     energy: 1.5
-    color: "#fca3c0"
+    color: "#E25822"
     castShadows: false
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
 
 - type: entity
   parent: BaseAnomalyCore

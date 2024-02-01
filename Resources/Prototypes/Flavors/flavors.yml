@@ -555,9 +555,49 @@
   description: flavor-complex-mopwata
 
 - type: flavor
+  id: tonicwater
+  flavorType: Complex
+  description: flavor-complex-tonic-water
+
+- type: flavor
   id: beer
   flavorType: Complex
   description: flavor-complex-beer
+
+- type: flavor
+  id: cognac
+  flavorType: Complex
+  description: flavor-complex-cognac
+
+- type: flavor
+  id: mead
+  flavorType: Complex
+  description: flavor-complex-mead
+
+- type: flavor
+  id: vermouth
+  flavorType: Complex
+  description: flavor-complex-vermouth
+
+- type: flavor
+  id: irishcarbomb
+  flavorType: Complex
+  description: flavor-complex-irish-car-bomb
+
+- type: flavor
+  id: blackrussian
+  flavorType: Complex
+  description: flavor-complex-black-russian
+
+- type: flavor
+  id: whiterussian
+  flavorType: Complex
+  description: flavor-complex-white-russian
+
+- type: flavor
+  id: moonshine
+  flavorType: Complex
+  description: flavor-complex-moonshine
 
 - type: flavor
   id: ale
@@ -568,6 +608,61 @@
   id: cola
   flavorType: Complex
   description: flavor-complex-cola
+
+- type: flavor
+  id: energydrink
+  flavorType: Complex
+  description: flavor-complex-energy-drink
+
+- type: flavor
+  id: drgibb
+  flavorType: Complex
+  description: flavor-complex-dr-gibb
+
+- type: flavor
+  id: lemonlimesoda
+  flavorType: Complex
+  description: flavor-complex-lemon-lime-soda
+
+- type: flavor
+  id: pwrgamesoda
+  flavorType: Complex
+  description: flavor-complex-pwr-game-soda
+
+- type: flavor
+  id: rootbeersoda
+  flavorType: Complex
+  description: flavor-complex-root-beer-soda
+
+- type: flavor
+  id: rootbeerfloat
+  flavorType: Complex
+  description: flavor-complex-root-beer-float
+
+- type: flavor
+  id: sodacitrus
+  flavorType: Complex
+  description: flavor-complex-citrus-soda
+
+- type: flavor
+  id: spaceup
+  flavorType: Complex
+  description: flavor-complex-root-space-up
+
+- type: flavor
+  id: grapesoda
+  flavorType: Complex
+  description: flavor-complex-grape-soda
+
+- type: flavor
+  id: starkistsoda
+  flavorType: Complex
+  description: flavor-complex-starkist-soda
+
+- type: flavor
+  id: fourteenlokosoda
+  flavorType: Complex
+  description: flavor-complex-fourteen-loko-soda
 
 - type: flavor
   id: cogchamp
@@ -873,7 +968,7 @@
   id: spaceshroomcooked
   flavorType: Complex
   description: flavor-complex-spaceshroom-cooked
-  
+
 - type: flavor
   id: lostfriendship
   flavorType: Complex
