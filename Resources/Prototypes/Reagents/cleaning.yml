@@ -110,6 +110,7 @@
       paralyzeTime: 3
       launchForwardsMultiplier: 2
       requiredSlipSpeed: 1
+      superSlippery: true
 
 - type: reagent
   id: SpaceGlue
