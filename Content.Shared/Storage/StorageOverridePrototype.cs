@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Storage;
 
@@ -11,6 +12,8 @@ namespace Content.Shared.Storage;
 [Prototype("storageOverride")]
 public sealed partial class StorageOverridePrototype : IPrototype
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
@@ -31,4 +34,26 @@ public sealed partial class StorageOverridePrototype : IPrototype
 
     [DataField]
     public bool AllowDrop { get; private set; } = true;
+
+    /// If you change the following fields, do the same in StorageOverrideComponent
+    [DataField]
+    private string? Single { get; set; } = null;
+
+    [DataField]
+    private List<string>? Random { get; set; } = null;
+
+    [DataField]
+    private Dictionary<string, string>? Keyed { get; set; } = null;
+
+    public string? Pick(string? key = null)
+    {
+        if (Single != null)
+            return Single;
+        else if (Random != null)
+            return Random[_random.Next(Random.Count)];
+        else if (Keyed != null && key != null)
+            return Keyed.GetValueOrDefault(key);
+        else
+            return null;
+    }
 }

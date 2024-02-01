@@ -17,6 +17,10 @@ public sealed partial class SharedStorageOverrideComponent : Component
     public string Preset { get; private set; } = string.Empty;
 
     [DataField]
+    public bool FromPreset { get; private set; } = false;
+
+    /// If you change the following fields, do the same in StorageOverridePrototype
+    [DataField]
     private string? Single { get; set; } = null;
 
     [DataField]

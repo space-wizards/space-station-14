@@ -1,5 +1,3 @@
-using Content.Shared.Inventory;
-using Content.Shared.Preferences;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
@@ -44,7 +42,7 @@ public sealed partial class SharedStorageOverrideSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent<SharedStorageOverrideComponent>(item, out var overrideComp) &&
             overrideComp.Preset == data.Preset &&
-            ReplaceItem(item, data, overrideComp.Pick(key), root, container, location))
+            ReplaceItem(item, data, overrideComp.FromPreset ? data.Pick(key) : overrideComp.Pick(key), root, container, location))
         {
             if (++replacements >= data.MaxReplacements)
                 return;
