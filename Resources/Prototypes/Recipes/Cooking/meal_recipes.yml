@@ -1481,14 +1481,6 @@
     FoodDonkpocketBerry: 1
 
 - type: microwaveMealRecipe
-  id: RecipeDonkpocketGondola
-  name: warm gondola-pocket recipe
-  result: FoodDonkpocketGondolaWarm
-  time: 5
-  solids:
-    FoodDonkpocketGondola: 1
-
-- type: microwaveMealRecipe
   id: RecipeHotChili
   name: hot chili recipe
   result: FoodSoupChiliHot
