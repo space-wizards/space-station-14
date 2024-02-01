@@ -869,7 +869,7 @@
       params:
         variation: 0.65
         volume: -10
-    
+
 - type: entity
   parent: BaseItem
   id: PonderingOrb
@@ -1237,6 +1237,4 @@
       path: /Audio/Items/newton_cradle.ogg
       params:
         volume: -7
-        range: 5
-        sound:
-          path: /Audio/Items/newton_cradle.ogg
+        maxDistance: 5
