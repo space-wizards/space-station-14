@@ -851,6 +851,9 @@
   id: Packet
 
 - type: Tag
+  id: Paper
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
