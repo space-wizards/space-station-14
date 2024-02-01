@@ -103,7 +103,7 @@
         prob: 0.3
       - id: ClothingBeltPlant
       - id: PlantBag ##Some maps don't have nutrivend
-      - id: BoxMouthSwab
+      - id: BoxPollenSwab
       - id: HandLabeler
       - id: ClothingUniformOveralls
       - id: ClothingHeadHatTrucker

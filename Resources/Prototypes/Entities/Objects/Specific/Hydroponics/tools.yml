@@ -137,3 +137,23 @@
         - Produce
         - Seed
   - type: Dumpable
+
+- type: entity
+  parent: BaseItem
+  id: PollenSwab
+  name: pollen swab
+  description: Transfers pollen between plants, can lead to addition or removal of plant traits.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Specific/Medical/mouth_swab.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: BotanySwab
+  - type: GuideHelp
+    guides:
+    - Botany

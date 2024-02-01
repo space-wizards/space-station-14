@@ -497,3 +497,23 @@
     layers:
       - state: box
       - state: darts
+
+- type: entity
+  name: polen swab box
+  parent: BoxCardboard
+  id: BoxPollenSwab
+  components:
+  - type: Storage
+    grid:
+    - 0,0,4,3
+  - type: StorageFill
+    contents:
+      - id: PollenSwab
+        amount: 10
+  - type: Sprite
+    layers:
+      - state: box
+      - state: swab
+  - type: GuideHelp
+    guides:
+    - Botany
