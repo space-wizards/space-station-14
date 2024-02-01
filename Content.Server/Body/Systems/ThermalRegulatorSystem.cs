@@ -48,7 +48,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
     /// </summary>
     private void ProcessThermalRegulation(EntityUid uid, ThermalRegulatorComponent comp)
     {
-        if (!EntityManager.TryGetComponent(uid, out TemperatureComponent? temperatureComponent)) return;
+        if (!TryComp(uid, out TemperatureComponent? temperatureComponent)) return;
 
         var totalMetabolismTempChange = comp.MetabolismHeat - comp.RadiatedHeat;
 
