@@ -1,0 +1,120 @@
+﻿# Base
+
+- type: entity
+  id: BaseVariationPass
+  parent: BaseGameRule
+  abstract: true
+  noSpawn: true
+  components:
+  - type: StationVariationPassRule
+
+# Actual rules
+
+- type: entity
+  id: BasicPoweredLightVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: PoweredLightVariationPass
+
+- type: entity
+  id: SolidWallRustingVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: WallReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 10
+    entitiesPerReplacementStdDev: 2
+    replacements:
+    - id: WallSolidRust
+
+- type: entity
+  id: ReinforcedWallRustingVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: ReinforcedWallReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 12
+    entitiesPerReplacementStdDev: 2
+    replacements:
+    - id: WallReinforcedRust
+
+- type: entity
+  id: BasicTrashVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 35
+    tilesPerEntityStdDev: 4
+    entities:
+    - id: RandomSpawner
+
+- type: weightedRandomFillSolution
+  id: RandomFillTrashPuddle
+  fills:
+  - quantity: 80
+    weight: 5
+    reagents:
+    - Vomit
+    - InsectBlood
+    - WeldingFuel
+    - Mold
+  - quantity: 55
+    weight: 4
+    reagents:
+    - PlantBGone
+    - Potassium # :trollface:
+    - VentCrud
+    - Carbon
+    - Hydrogen
+    - Fat
+    - SpaceLube
+    - SpaceGlue
+    - Sulfur
+    - Acetone
+    - Bleach
+  - quantity: 40
+    weight: 3
+    reagents:
+    - Blood
+    - CopperBlood
+    - Slime
+  - quantity: 25
+    weight: 1
+    reagents:
+    - Omnizine
+    - Desoxyephedrine
+    - Napalm
+    - Radium
+    - Gold
+    - Silver
+    - Sodium
+
+- type: weightedRandomFillSolution
+  id: RandomFillTrashPuddleBloodbath
+  fills:
+  - quantity: 80
+    weight: 1
+    reagents:
+    - Blood
+
+- type: entity
+  id: BasicPuddleMessVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: PuddleMessVariationPass
+    randomPuddleSolutionFill: RandomFillTrashPuddle
+
+- type: entity
+  id: BloodbathPuddleMessVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: PuddleMessVariationPass
+    tilesPerSpillAverage: 150
+    tilesPerSpillStdDev: 10
+    randomPuddleSolutionFill: RandomFillTrashPuddleBloodbath

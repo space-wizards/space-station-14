@@ -3,6 +3,7 @@
   parent: BaseStructureDynamic
   name: closet
   description: A standard-issue Nanotrasen storage unit.
+  abstract: true
   components:
   - type: ResistLocker
   - type: Transform
@@ -32,7 +33,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -74,7 +75,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -6
       - !type:SpawnEntitiesBehavior
@@ -87,6 +88,8 @@
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+  - type: StaticPrice
+    price: 50
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
@@ -160,7 +163,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -6
       - !type:SpawnEntitiesBehavior
@@ -227,7 +230,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -268,7 +271,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -6
       - !type:SpawnEntitiesBehavior

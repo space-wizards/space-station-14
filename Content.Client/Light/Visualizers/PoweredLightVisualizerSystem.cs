@@ -31,7 +31,14 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
             args.Sprite.LayerSetState(PoweredLightLayers.Base, spriteState);
 
         if (args.Sprite.LayerExists(PoweredLightLayers.Glow))
+        {
+            if (TryComp<PointLightComponent>(uid, out var light))
+            {
+                args.Sprite.LayerSetColor(PoweredLightLayers.Glow, light.Color);
+            }
+
             args.Sprite.LayerSetVisible(PoweredLightLayers.Glow, state == PoweredLightState.On);
+        }
 
         SetBlinkingAnimation(
             uid,
