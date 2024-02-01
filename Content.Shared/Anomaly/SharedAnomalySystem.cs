@@ -426,7 +426,7 @@ public partial record struct AnomalySpawnSettings()
     /// <summary>
     /// should entities block spawning?
     /// </summary>
-    public bool CanSpawnOnEntities { get; set; } = true;
+    public bool CanSpawnOnEntities { get; set; } = false;
 
     /// <summary>
     /// The minimum number of entities that spawn per pulse
