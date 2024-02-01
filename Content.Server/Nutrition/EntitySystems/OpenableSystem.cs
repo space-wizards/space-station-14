@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -16,7 +17,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// <summary>
 /// Provides API for openable food and drinks, handles opening on use and preventing transfer when closed.
 /// </summary>
-public sealed class OpenableSystem : EntitySystem
+public sealed class OpenableSystem : SharedOpenableSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -155,9 +156,15 @@ public sealed class OpenableSystem : EntitySystem
         comp.Opened = opened;
 
         if (opened)
-            RaiseLocalEvent(uid, new OpenableOpenedEvent());
+        {
+            var ev = new OpenableOpenedEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
         else
-            RaiseLocalEvent(uid, new OpenableClosedEvent());
+        {
+            var ev = new OpenableClosedEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
 
         UpdateAppearance(uid, comp);
     }
@@ -190,18 +197,4 @@ public sealed class OpenableSystem : EntitySystem
             _audio.PlayPvs(comp.CloseSound, uid);
         return true;
     }
-}
-
-/// <summary>
-/// Raised after an Openable is opened.
-/// </summary>
-public sealed class OpenableOpenedEvent : EventArgs
-{
-}
-
-/// <summary>
-/// Raised after an Openable is closed.
-/// </summary>
-public sealed class OpenableClosedEvent : EventArgs
-{
 }

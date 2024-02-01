@@ -1,8 +1,8 @@
-using Content.Server.Nutrition.Components;
 using Content.Shared.Examine;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 
-namespace Content.Server.Nutrition.EntitySystems;
+namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class SealableSystem : EntitySystem
 {
@@ -11,7 +11,7 @@ public sealed partial class SealableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SealableComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(OpenableSystem) });
+        SubscribeLocalEvent<SealableComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(SharedOpenableSystem) });
         SubscribeLocalEvent<SealableComponent, OpenableOpenedEvent>(OnOpened);
     }
 
@@ -29,11 +29,13 @@ public sealed partial class SealableSystem : EntitySystem
     {
         comp.Sealed = false;
 
+        Dirty(uid, comp);
+
         UpdateAppearance(uid, comp);
     }
 
     /// <summary>
-    /// Update open visuals to the current value.
+    /// Update seal visuals to the current value.
     /// </summary>
     public void UpdateAppearance(EntityUid uid, SealableComponent? comp = null, AppearanceComponent? appearance = null)
     {
