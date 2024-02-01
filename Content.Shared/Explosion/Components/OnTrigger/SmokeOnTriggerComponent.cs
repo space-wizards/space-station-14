@@ -1,14 +1,15 @@
-using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Explosion.EntitySystems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Explosion.Components;
+namespace Content.Shared.Explosion.Components.OnTrigger;
 
 /// <summary>
 /// Creates a smoke cloud when triggered, with an optional solution to include in it.
 /// No sound is played incase a grenade is stealthy, use <see cref="SoundOnTriggerComponent"/> if you want a sound.
 /// </summary>
-[RegisterComponent, Access(typeof(SmokeOnTriggerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSmokeOnTriggerSystem))]
 public sealed partial class SmokeOnTriggerComponent : Component
 {
     /// <summary>

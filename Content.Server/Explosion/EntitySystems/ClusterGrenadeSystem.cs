@@ -8,6 +8,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Content.Server.Weapons.Ranged.Systems;
 using System.Numerics;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Flash.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 
