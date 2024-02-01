@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
@@ -522,7 +522,7 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
     {
-        RaiseNetworkEvent(_cachedAvailableJobs, ev.PlayerSession.ConnectedClient);
+        RaiseNetworkEvent(_cachedAvailableJobs, ev.PlayerSession.Channel);
     }
 
     private void OnStationRenamed(EntityUid uid, StationJobsComponent component, StationRenamedEvent args)

@@ -3,7 +3,7 @@ using Content.Server.Drone.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Server.Tools.Innate;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Body.Components;
 using Content.Shared.Drone;
 using Content.Shared.Emoting;
