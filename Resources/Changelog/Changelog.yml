@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: Ubaser
   changes:
-  - message: Some jetpacks can be now worn in more slots.
-    type: Tweak
-  id: 5352
-  time: '2023-12-13T08:51:09.0000000+00:00'
-- author: Ubaser
-  changes:
   - message: Ninjas and Nukies now get new sprites for their pinpointers.
     type: Add
   id: 5353
@@ -3856,3 +3850,12 @@
   id: 5851
   time: '2024-02-01T10:39:10.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24801
+- author: FungiFellow
+  changes:
+  - message: Added Binary Key in RD's Locker
+    type: Add
+  - message: 50% off Binary Key
+    type: Tweak
+  id: 5852
+  time: '2024-02-01T10:42:12.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24778
