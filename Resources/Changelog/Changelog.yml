@@ -1,30 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: Jar now fills.
-    type: Tweak
-  id: 5340
-  time: '2023-12-12T07:54:15.0000000+00:00'
-- author: IProduceWidgets
-  changes:
-  - message: Cig Cartons are slightly smaller.
-    type: Tweak
-  id: 5341
-  time: '2023-12-12T07:55:56.0000000+00:00'
-- author: IProduceWidgets
-  changes:
-  - message: Cigar cases can now hold Small items.
-    type: Tweak
-  id: 5342
-  time: '2023-12-12T07:56:19.0000000+00:00'
-- author: IProduceWidgets
-  changes:
-  - message: Pipes now have slightly bigger bowls! (30u)
-    type: Tweak
-  id: 5343
-  time: '2023-12-12T07:56:44.0000000+00:00'
-- author: IProduceWidgets
-  changes:
   - message: Long guns are now actually long.
     type: Tweak
   id: 5344
@@ -3843,3 +3819,34 @@
   id: 5839
   time: '2024-01-31T11:26:46.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24585
+- author: TheShuEd
+  changes:
+  - message: Anomalies can no longer spawn entities in walls or other objects.
+    type: Fix
+  id: 5840
+  time: '2024-01-31T21:05:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24783
+- author: EdenTheLiznerd
+  changes:
+  - message: The Syndicate has changed around their stock prices and gotten rid of
+      some old dusty headsets
+    type: Tweak
+  id: 5841
+  time: '2024-02-01T00:28:42.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24765
+- author: metalgearsloth
+  changes:
+  - message: Removed vehicles pending rework (the code is bad I was told to make this
+      more obvious).
+    type: Remove
+  id: 5842
+  time: '2024-02-01T00:33:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24681
+- author: Jajsha
+  changes:
+  - message: Emagged borgs now recieve laws recontextualizing who's a crew member
+      instead of recieving a completely new lawset.
+    type: Tweak
+  id: 5843
+  time: '2024-02-01T05:02:49.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24698
