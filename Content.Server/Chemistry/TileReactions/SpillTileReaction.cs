@@ -20,6 +20,7 @@ namespace Content.Server.Chemistry.TileReactions
         [DataField("launchForwardsMultiplier")] private float _launchForwardsMultiplier = 1;
         [DataField("requiredSlipSpeed")] private float _requiredSlipSpeed = 6;
         [DataField("paralyzeTime")] private float _paralyzeTime = 1;
+        [DataField("superSlippery")] private bool _superSlippery;
 
         public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
@@ -33,6 +34,7 @@ namespace Content.Server.Chemistry.TileReactions
                 var slippery = entityManager.EnsureComponent<SlipperyComponent>(puddleUid);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;
                 slippery.ParalyzeTime = _paralyzeTime;
+                slippery.SuperSlippery = _superSlippery;
                 entityManager.Dirty(slippery);
 
                 var step = entityManager.EnsureComponent<StepTriggerComponent>(puddleUid);
