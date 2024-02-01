@@ -103,14 +103,17 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         // try to find a valid position to teleport to, teleport to whatever works if we can't
         var targetCoords = new MapCoordinates();
+        var targetParent = EntityUid.Invalid;
         for (var i = 0; i < implant.TeleportAttempts; i++)
         {
             var distance = implant.TeleportRadius * MathF.Sqrt(_random.NextFloat()); // to get an uniform distribution
             targetCoords = entityCoords.Offset(_random.NextAngle().ToVec() * distance);
+            targetParent = EntityUid.Invalid;
 
             // prefer teleporting to grids
             if (!_mapManager.TryFindGridAt(targetCoords, out var gridUid, out var grid))
                 continue;
+            targetParent = gridUid;
 
             // the implant user probably does not want to be in your walls
             var valid = true;
@@ -131,6 +134,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
                 break;
         }
         _xform.SetWorldPosition(ent, targetCoords.Position);
+        _xform.SetParent(ent, targetParent.IsValid() ? targetParent : _mapManager.GetMapEntityId(xform.MapID));
         _audio.PlayPvs(implant.TeleportSound, ent);
 
         args.Handled = true;
