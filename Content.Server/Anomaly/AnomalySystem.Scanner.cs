@@ -21,6 +21,7 @@ public sealed partial class AnomalySystem
 
         SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnScannerAnomalySeverityChanged);
         SubscribeLocalEvent<AnomalyHealthChangedEvent>(OnScannerAnomalyHealthChanged);
+        SubscribeLocalEvent<AnomalyBehaviorChangedEvent>(OnScannerAnomalyBehaviorChanged);
     }
 
     private void OnScannerAnomalyShutdown(ref AnomalyShutdownEvent args)
@@ -57,6 +58,17 @@ public sealed partial class AnomalySystem
     }
 
     private void OnScannerAnomalyHealthChanged(ref AnomalyHealthChangedEvent args)
+    {
+        var query = EntityQueryEnumerator<AnomalyScannerComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            if (component.ScannedAnomaly != args.Anomaly)
+                continue;
+            UpdateScannerUi(uid, component);
+        }
+    }
+
+    private void OnScannerAnomalyBehaviorChanged(ref AnomalyBehaviorChangedEvent args)
     {
         var query = EntityQueryEnumerator<AnomalyScannerComponent>();
         while (query.MoveNext(out var uid, out var component))

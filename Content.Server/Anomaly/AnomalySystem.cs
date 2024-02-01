@@ -201,7 +201,10 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (anomaly.Comp.CurrentBehavior != null)
             RemoveBehavior(anomaly);
 
+        //event broadcast
+        var ev = new AnomalyBehaviorChangedEvent(anomaly, anomaly.Comp.CurrentBehavior, behaviorProto);
         anomaly.Comp.CurrentBehavior = behaviorProto;
+        RaiseLocalEvent(anomaly, ref ev, true);
 
         var behavior = _prototype.Index(behaviorProto);
 

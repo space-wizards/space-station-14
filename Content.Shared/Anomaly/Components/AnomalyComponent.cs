@@ -308,3 +308,9 @@ public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, fl
 /// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
 public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly, float Health);
+
+/// <summary>
+/// Event broadcast when an anomaly's behavior is changed.
+/// </summary>
+[ByRefEvent]
+public readonly record struct AnomalyBehaviorChangedEvent(EntityUid Anomaly, ProtoId<AnomalyBehaviorPrototype>? Old, ProtoId<AnomalyBehaviorPrototype>? New);
