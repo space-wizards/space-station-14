@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Cybersun and centcom pens can now edit stamped paper.
-    type: Tweak
-  id: 5355
-  time: '2023-12-13T21:33:32.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Added a new "uneven" hair style.
@@ -3862,3 +3856,10 @@
   id: 5854
   time: '2024-02-01T11:06:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24806
+- author: Varen
+  changes:
+  - message: Cutting wires will now properly electrocute if enough power is available.
+    type: Fix
+  id: 5855
+  time: '2024-02-01T11:54:25.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24554
