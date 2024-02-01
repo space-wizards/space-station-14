@@ -727,6 +727,11 @@
   - type: Pda
     id: SyndicateIDCard
     state: pda-syndi
+    penSlot:
+      startingItem: CyberPen
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#891417"
   - type: Icon
@@ -1015,6 +1020,11 @@
   - type: Pda
     id: SyndicateIDCard
     state: pda-syndi-agent
+    penSlot:
+      startingItem: CyberPen
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#891417"
   - type: Icon
