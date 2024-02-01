@@ -23,7 +23,11 @@ public abstract class SharedIdentitySystem : EntitySystem
     private void OnSeeIdentity(EntityUid uid, IdentityBlockerComponent component, SeeIdentityAttemptEvent args)
     {
         if (component.Enabled)
-            args.Cancel();
+        {
+            args.TotalCoverage |= component.Coverage;
+            if(args.TotalCoverage == IdentityBlockerCoverage.FULL)
+                args.Cancel();
+        }
     }
 
     protected virtual void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)
