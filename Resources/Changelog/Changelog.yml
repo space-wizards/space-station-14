@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: syndicate pens now come in suitably sized discarding boxes.
-    type: Tweak
-  id: 5345
-  time: '2023-12-12T08:01:33.0000000+00:00'
-- author: IProduceWidgets
-  changes:
   - message: Mops are now larger!
     type: Tweak
   - message: Defibs are now larger!
@@ -3851,3 +3845,10 @@
   id: 5844
   time: '2024-02-01T06:28:17.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24789
+- author: PixelTK
+  changes:
+  - message: The arachnid plushie now has a new sprite.
+    type: Tweak
+  id: 5845
+  time: '2024-02-01T06:36:43.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24747
