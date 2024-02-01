@@ -562,7 +562,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="actionId">Action entity to add</param>
     /// <param name="component">The <see cref="performer"/>'s action component of </param>
     /// <param name="actionPrototypeId">The action entity prototype id to use if <see cref="actionId"/> is invalid.</param>
-    /// <param name="container">The entity that contains/enables this action (e.g., flashlight)..</param>
+    /// <param name="container">The entity that contains/enables this action (e.g., flashlight).</param>
     public bool AddAction(EntityUid performer,
         [NotNullWhen(true)] ref EntityUid? actionId,
         string? actionPrototypeId,
@@ -691,6 +691,24 @@ public abstract class SharedActionsSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Grants the provided action from the container to the target entity. If the target entity has no action
+    /// component, this will give them one.
+    /// </summary>
+    /// <param name="performer"></param>
+    /// <param name="container"></param>
+    /// <param name="actionId"></param>
+    public void GrantContainedAction(Entity<ActionsComponent?> performer, Entity<ActionsContainerComponent?> container, EntityUid actionId)
+    {
+        if (!Resolve(container, ref container.Comp))
+            return;
+
+        performer.Comp ??= EnsureComp<ActionsComponent>(performer);
+
+        if (TryGetActionData(actionId, out var action))
+            AddActionDirect(performer, actionId, performer.Comp, action);
+    }
+
     public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetActions(EntityUid holderId, ActionsComponent? actions = null)
     {
         if (!Resolve(holderId, ref actions, false))
@@ -721,6 +739,18 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Container == container)
                 RemoveAction(performer, actionId, comp);
         }
+    }
+
+    /// <summary>
+    ///     Removes a single provided action provided by another entity.
+    /// </summary>
+    public void RemoveProvidedAction(EntityUid performer, EntityUid container, EntityUid actionId, ActionsComponent? comp = null)
+    {
+        if (!Resolve(performer, ref comp, false) || !TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.Container == container)
+            RemoveAction(performer, actionId, comp);
     }
 
     public void RemoveAction(EntityUid? actionId)
