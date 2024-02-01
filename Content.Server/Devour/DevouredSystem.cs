@@ -30,7 +30,7 @@ public sealed class DevouredSystem : EntitySystem
 
         //If the target already had a passive damage component it will be stored so it can be returned
         //to it's original value later.
-        if (EnsureComp<PassiveDamageComponent>(entity.Owner, out var passiveDamage))
+        if (EnsureComp<PassiveDamageComponent>(entity, out var passiveDamage))
             entity.Comp.OriginalAllowedMobStates = passiveDamage.AllowedStates;
 
         //Stores the stomach damage value if it exists.
@@ -44,7 +44,7 @@ public sealed class DevouredSystem : EntitySystem
         }
 
         //Sets the damage multiplier based on MobState.
-        if (TryComp<MobStateComponent>(entity.Owner, out var mobState))
+        if (TryComp<MobStateComponent>(entity, out var mobState))
         {
             SetStomachDamage(mobState.CurrentState, entity.Comp, passiveDamage);
         }
@@ -52,7 +52,7 @@ public sealed class DevouredSystem : EntitySystem
         //Sets the max damage to the damage needed for the mob to be considered dead +
         //the damage cap specified in the component. This can be used to make reviving take more work if
         //the target has been devoured for a long time.
-        if (TryComp<MobThresholdsComponent>(entity.Owner, out var mobThresholds))
+        if (TryComp<MobThresholdsComponent>(entity, out var mobThresholds))
         {
             for (var mobStates = 0; mobStates < mobThresholds.Thresholds.Count; mobStates++)
             {
@@ -68,7 +68,7 @@ public sealed class DevouredSystem : EntitySystem
         //Pacifies entities in the stomach and stores if the target was already pacified.
         //This is to make sure the pacified component won't be removed if the entity
         //already had it before being devoured.
-        if (EnsureComp<PacifiedComponent>(entity.Owner, out var pacified))
+        if (EnsureComp<PacifiedComponent>(entity, out var pacified))
             entity.Comp.OriginallyPacified = true;
     }
 
