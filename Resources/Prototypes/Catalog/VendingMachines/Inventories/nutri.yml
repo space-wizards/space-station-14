@@ -14,7 +14,7 @@
     RobustHarvestChemistryBottle: 3
     EZNutrientChemistryBottle: 3
     Bucket: 3
-    DiseaseSwab: 20
+    PollenSwab: 20
     #TO DO:
     #plant analyzer
   emaggedInventory:
