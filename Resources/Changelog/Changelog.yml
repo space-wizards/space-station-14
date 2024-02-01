@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: Added a General settings tab, and moved a bunch of options into it.
-    type: Add
-  - message: Added the ability to toggle on and off the Discord Rich Presence.
-    type: Add
-  id: 5350
-  time: '2023-12-13T01:58:20.0000000+00:00'
 - author: Ubaser
   changes:
   - message: RD now has a custom-made lab coat.
@@ -3854,3 +3846,11 @@
   id: 5849
   time: '2024-02-01T09:01:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24790
+- author: SlamBamActionman
+  changes:
+  - message: The Visitor job can now be given to ID cards via the ID Card Console/Agent
+      IDs.
+    type: Add
+  id: 5850
+  time: '2024-02-01T10:13:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23972
