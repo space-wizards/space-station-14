@@ -1,0 +1,39 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestFlak
+  name: flak jacket
+  description: A dusty and weathered flak jacket.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/OuterClothing/Vests/flak.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/OuterClothing/Vests/flak.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.75
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestFlakPress
+  name: flak jacket (press)
+  description: A flak jacket for reporters in wartorn zones.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Clothing/OuterClothing/Vests/flakpress.rsi
+  - type: Clothing
+    sprite: DeltaV/Clothing/OuterClothing/Vests/flakpress.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.75
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
