@@ -222,7 +222,6 @@
         - HolosignProjector
         - Plunger
         - LightReplacer
-        - JanicartKeys
       components:
         - LightReplacer
   - type: ItemMapper

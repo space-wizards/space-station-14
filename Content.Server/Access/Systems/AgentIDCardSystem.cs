@@ -1,6 +1,6 @@
 using Content.Server.Access.Components;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Interaction;

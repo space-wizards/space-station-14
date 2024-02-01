@@ -1211,3 +1211,32 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Human/malescream_4.ogg
+
+- type: entity
+  parent: BaseItem
+  id: NewtonCradle
+  name: newton cradle
+  description: A device bored paper pushers use to remind themselves that time did not stop yet. Contains gravity.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/newton_cradle.rsi
+    state: icon-off
+  - type: Item
+    sprite: Objects/Fun/newton_cradle.rsi
+    storedRotation: -90
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { state: icon }
+          False: { state: icon-off }
+  - type: ItemToggle
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Items/newton_cradle.ogg
+      params:
+        volume: -7
+        range: 5
+        sound:
+          path: /Audio/Items/newton_cradle.ogg

@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
