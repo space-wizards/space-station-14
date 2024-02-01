@@ -21,11 +21,11 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly SharedPdaSystem _pdaSystem = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
-   {
-            SlotFlags.All,
-            SlotFlags.PREVENTEQUIP,
-            SlotFlags.NONE
-        };
+    {
+        SlotFlags.All,
+        SlotFlags.PREVENTEQUIP,
+        SlotFlags.NONE
+    };
     private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
 
     private Dictionary<SlotFlags, List<EntityPrototype>> _data = new();
@@ -88,21 +88,21 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         // item sprite logic
         if (TryComp(uid, out ItemComponent? item) &&
-            proto.TryGetComponent(out ItemComponent? otherItem, _factory))
+            proto.TryGetComponent<ItemComponent>(out var otherItem, _factory))
         {
             _itemSystem.CopyVisuals(uid, otherItem, item);
         }
 
         // clothing sprite logic
         if (TryComp(uid, out ClothingComponent? clothing) &&
-            proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
+            proto.TryGetComponent<ClothingComponent>(out var otherClothing, _factory))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
 
         // pda sprite logic
         if (TryComp<PdaComponent>(uid, out var pdaComp) &&
-           proto.TryGetComponent<PdaComponent>(out var otherPdaComp)
+           proto.TryGetComponent<PdaComponent>(out var otherPdaComp, _factory)
            && otherPdaComp.State != null)
         {
             _pdaSystem.UpdatePdaState(uid, pdaComp, otherPdaComp.State);

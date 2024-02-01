@@ -43,10 +43,10 @@ public sealed partial class ChameleonClothingComponent : Component
 public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
-    public readonly string? SelectedId;
+    public readonly EntProtoId? SelectedId;
     public readonly EntityWhitelist? Whitelist;
 
-    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId, EntityWhitelist? whitelist)
+    public ChameleonBoundUserInterfaceState(SlotFlags slot, EntProtoId? selectedId, EntityWhitelist? whitelist)
     {
         Slot = slot;
         SelectedId = selectedId;
