@@ -38,7 +38,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         CacheStyles();
 
-        SubscribeLocalEvent<SprayPainterComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SprayPainterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoorDoAfterEvent>(OnDoorDoAfter);
         Subs.BuiEvents<SprayPainterComponent>(SprayPainterUiKey.Key, subs =>
         {
@@ -51,7 +51,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
     }
 
-    private void OnInit(Entity<SprayPainterComponent> ent, ref ComponentInit args)
+    private void OnMapInit(Entity<SprayPainterComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.ColorPalette.Count == 0)
             return;
