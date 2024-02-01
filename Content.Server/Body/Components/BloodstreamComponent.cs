@@ -1,12 +1,13 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
 {
@@ -43,7 +44,7 @@ namespace Content.Server.Body.Components
         public float BleedAmount;
 
         /// <summary>
-        ///     How much should bleeding should be reduced every update interval?
+        ///     How much should bleeding be reduced every update interval?
         /// </summary>
         [DataField]
         public float BleedReductionAmount = 0.33f;
@@ -79,7 +80,7 @@ namespace Content.Server.Body.Components
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
         [DataField]
-        public float BloodRefreshAmount = 1.0f;
+        public FixedPoint2 BloodRefreshAmount = 1.0f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
@@ -94,8 +95,8 @@ namespace Content.Server.Body.Components
         /// <remarks>
         ///     For example, piercing damage is increased while poison damage is nullified entirely.
         /// </remarks>
-        [DataField(customTypeSerializer:typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
-        public string DamageBleedModifiers = "BloodlossHuman";
+        [DataField]
+        public ProtoId<DamageModifierSetPrototype> DamageBleedModifiers = "BloodlossHuman";
 
         /// <summary>
         ///     The sound to be played when a weapon instantly deals blood loss damage.
@@ -131,7 +132,7 @@ namespace Content.Server.Body.Components
         ///     Slime-people might use slime as their blood or something like that.
         /// </remarks>
         [DataField]
-        public string BloodReagent = "Blood";
+        public ProtoId<ReagentPrototype> BloodReagent = "Blood";
 
         /// <summary>Name/Key that <see cref="BloodSolution"/> is indexed by.</summary>
         [DataField]

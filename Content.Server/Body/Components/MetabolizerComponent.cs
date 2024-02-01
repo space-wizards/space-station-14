@@ -1,9 +1,8 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Body.Components
 {
@@ -44,9 +43,9 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        [DataField(customTypeSerializer:typeof(PrototypeIdHashSetSerializer<MetabolizerTypePrototype>))]
+        [DataField]
         [Access(typeof(MetabolizerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-        public HashSet<string>? MetabolizerTypes = null;
+        public HashSet<ProtoId<MetabolizerTypePrototype>>? MetabolizerTypes = null;
 
         /// <summary>
         ///     Should this metabolizer remove chemicals that have no metabolisms defined?
@@ -77,8 +76,8 @@ namespace Content.Server.Body.Components
     [DataDefinition]
     public sealed partial class MetabolismGroupEntry
     {
-        [DataField(required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
-        public string Id = default!;
+        [DataField(required: true)]
+        public ProtoId<MetabolismGroupPrototype> Id = default!;
 
         [DataField("rateModifier")]
         public FixedPoint2 MetabolismRateModifier = 1.0;
