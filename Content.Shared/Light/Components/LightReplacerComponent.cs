@@ -1,7 +1,8 @@
-using Content.Server.Light.EntitySystems;
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Light.Components;
 
@@ -9,7 +10,7 @@ namespace Content.Server.Light.Components;
 ///     Device that allows user to quikly change bulbs in <see cref="PoweredLightComponent"/>
 ///     Can be reloaded by new light tubes or light bulbs
 /// </summary>
-[RegisterComponent, Access(typeof(LightReplacerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedLightReplacerSystem))]
 public sealed partial class LightReplacerComponent : Component
 {
     [DataField("sound")]

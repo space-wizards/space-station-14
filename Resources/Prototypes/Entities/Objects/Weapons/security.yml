@@ -186,6 +186,7 @@
       shape:
         !type:PhysShapeCircle
           radius: 2
+      repeating: true
     - type: Anchorable
     - type: Sprite
       sprite: Objects/Weapons/pflash.rsi

@@ -1,5 +1,5 @@
 using Content.Server.Explosion.Components;
-using Content.Server.Flash.Components;
+using Content.Shared.Flash.Components;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;

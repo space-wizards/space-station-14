@@ -329,7 +329,7 @@
         lightreplacer_slot:
           name: janitorial-trolley-slot-component-slot-name-lightreplacer
           whitelist:
-            tags:
+            components:
               - LightReplacer
           priority: 6
         spraybottle_slot:

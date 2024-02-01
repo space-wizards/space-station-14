@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-
 namespace Content.Shared.Flash.Components;
 
 /// <summary>

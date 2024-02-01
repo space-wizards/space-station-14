@@ -1,9 +1,11 @@
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Explosion.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.Explosion.Components.OnTrigger;
+namespace Content.Shared.Explosion.Components;
 
 /// <summary>
 /// Creates a smoke cloud when triggered, with an optional solution to include in it.
