@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Mops are now larger!
-    type: Tweak
-  - message: Defibs are now larger!
-    type: Tweak
-  id: 5346
-  time: '2023-12-12T08:02:44.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix arrivals fog not actually blocking, no more free roaming.
@@ -3852,3 +3844,10 @@
   id: 5845
   time: '2024-02-01T06:36:43.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24747
+- author: lzk228
+  changes:
+  - message: Yellow oxygen tank was removed to standardise gas tank colourings.
+    type: Remove
+  id: 5846
+  time: '2024-02-01T06:53:33.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24374
