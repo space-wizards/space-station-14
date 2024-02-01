@@ -1,5 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Humanoid;
+using Content.Shared.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
@@ -22,6 +23,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server.Forensics;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -255,10 +257,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, child, mind: mind);
 
-        //Ensures a map to banish the entity to
-        EnsurePausedMap();
-        if (PausedMap != null)
-            _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
+        SendToPausedMap(uid, targetTransformComp);
 
         return child;
     }
@@ -378,72 +377,118 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (target.Comp.PolymorphActions.TryGetValue(id, out var val))
             _actions.RemoveAction(target, val);
     }
-    
-            /// <summary>
-        /// Registers PolymorphHumanoidData from an EntityUid, provived they have all the needed components
-        /// </summary>
-        /// <param name="source">The source that the humanoid data is referencing from</param>
-        public PolymorphHumanoidData? TryRegisterPolymorphHumanoidData(EntityUid source)
+
+    /// <summary>
+    /// Polymorphs the target entity into an exact copy of the given PolymorphHumanoidData
+    /// </summary>
+    /// <param name="uid">The entity that will be transformed</param>
+    /// <param name="data">The humanoid data</param>
+    public EntityUid? PolymorphEntityAsHumanoid(EntityUid uid, PolymorphHumanoidData data)
+    {
+        if (data.EntityPrototype == null)
+            return null;
+        if (data.HumanoidAppearanceComponent == null)
+            return null;
+        if (data.MetaDataComponent == null)
+            return null;
+        if (data.DNA == null)
+            return null;
+        if (data.EntityUid == null)
+            return null;
+
+        var targetTransformComp = Transform(uid);
+        var child = data.EntityUid.Value;
+
+        RetrievePausedEntity(uid, child);
+
+        if (TryComp<HumanoidAppearanceComponent>(child, out var humanoidAppearance))
+            _humanoid.SetAppearance(data.HumanoidAppearanceComponent, humanoidAppearance);
+
+        if (TryComp<DnaComponent>(child, out var dnaComp))
+            dnaComp.DNA = data.DNA;
+
+        //Transfers all damage from the original to the new one
+        if (TryComp<DamageableComponent>(child, out var damageParent)
+            && _mobThreshold.GetScaledDamage(uid, child, out var damage)
+            && damage != null)
         {
-            var newHumanoidData = new PolymorphHumanoidData();
-
-            if (!TryComp<MetaDataComponent>(source, out var targetMeta))
-                return null;
-            if (!TryPrototype(source, out var prototype, targetMeta))
-                return null;
-            if (!TryComp<DnaComponent>(source, out var dnaComp))
-                return null;
-            if (!TryComp<HumanoidAppearanceComponent>(source, out var targetHumanoidAppearance))
-                return null;
-
-            newHumanoidData.EntityPrototype = prototype;
-            newHumanoidData.MetaDataComponent = targetMeta;
-            newHumanoidData.HumanoidAppearanceComponent = targetHumanoidAppearance;
-            newHumanoidData.DNA = dnaComp.DNA;
-
-            var targetTransformComp = Transform(source);
-
-            var newEntityUid = Spawn(newHumanoidData.EntityPrototype.ID, targetTransformComp.Coordinates);
-            var newEntityUidTransformComp = Transform(newEntityUid);
-
-            if (TryComp(source, out MindShieldComponent? mindshieldComp)) // copy over mindshield status
-            {
-                var copiedMindshieldComp = (Component) _serialization.CreateCopy(mindshieldComp, notNullableOverride: true);
-                EntityManager.AddComponent(newEntityUid, copiedMindshieldComp);
-            }
-
-            SendToPausesdMap(newEntityUid, newEntityUidTransformComp);
-
-            newHumanoidData.EntityUid = newEntityUid;
-            _metaData.SetEntityName(newEntityUid, targetMeta.EntityName);
-
-            return newHumanoidData;
+            _damageable.SetDamage(child, damageParent, damage);
         }
 
-        /// <summary>
-        /// Registers PolymorphHumanoidData from an EntityUid, provived they have all the needed components. This allows you to add a uid as the HumanoidData's EntityUid variable. Does not send the given uid to the pause map.
-        /// </summary>
-        /// <param name="source">The source that the humanoid data is referencing from</param>
-        /// <param name="uid">The uid that will become the newHumanoidData's EntityUid</param>
-        public PolymorphHumanoidData? TryRegisterPolymorphHumanoidData(EntityUid source, EntityUid uid)
+        _inventory.TransferEntityInventories(uid, child); // transfer the inventory all the time
+        foreach (var hand in _hands.EnumerateHeld(uid))
         {
-            var newHumanoidData = new PolymorphHumanoidData();
-
-            if (!TryComp<MetaDataComponent>(source, out var targetMeta))
-                return null;
-            if (!TryPrototype(source, out var prototype, targetMeta))
-                return null;
-            if (!TryComp<DnaComponent>(source, out var dnaComp))
-                return null;
-            if (!TryComp<HumanoidAppearanceComponent>(source, out var targetHumanoidAppearance))
-                return null;
-
-            newHumanoidData.EntityPrototype = prototype;
-            newHumanoidData.MetaDataComponent = targetMeta;
-            newHumanoidData.HumanoidAppearanceComponent = targetHumanoidAppearance;
-            newHumanoidData.DNA = dnaComp.DNA;
-            newHumanoidData.EntityUid = uid;
-
-            return newHumanoidData;
+            if (!_hands.TryPickupAnyHand(child, hand))
+                _hands.TryDrop(uid, hand, checkActionBlocker: false);
         }
+
+        if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+            _mindSystem.TransferTo(mindId, child, mind: mind);
+
+        SendToPausedMap(uid, targetTransformComp);
+
+        return child;
+    }
+
+    /// <summary>
+    /// Registers PolymorphHumanoidData from an EntityUid, provived they have all the needed components
+    /// </summary>
+    /// <param name="source">The source that the humanoid data is referencing from</param>
+    public PolymorphHumanoidData? TryRegisterPolymorphHumanoidData(EntityUid source)
+    {
+        var newHumanoidData = new PolymorphHumanoidData();
+
+        if (!TryComp<MetaDataComponent>(source, out var targetMeta))
+            return null;
+        if (!TryPrototype(source, out var prototype, targetMeta))
+            return null;
+        if (!TryComp<DnaComponent>(source, out var dnaComp))
+            return null;
+        if (!TryComp<HumanoidAppearanceComponent>(source, out var targetHumanoidAppearance))
+            return null;
+
+        newHumanoidData.EntityPrototype = prototype;
+        newHumanoidData.MetaDataComponent = targetMeta;
+        newHumanoidData.HumanoidAppearanceComponent = targetHumanoidAppearance;
+        newHumanoidData.DNA = dnaComp.DNA;
+
+        var targetTransformComp = Transform(source);
+
+        var newEntityUid = Spawn(newHumanoidData.EntityPrototype.ID, targetTransformComp.Coordinates);
+        var newEntityUidTransformComp = Transform(newEntityUid);
+
+        SendToPausedMap(source, targetTransformComp);
+
+        newHumanoidData.EntityUid = newEntityUid;
+        _metaData.SetEntityName(newEntityUid, targetMeta.EntityName);
+
+        return newHumanoidData;
+    }
+
+    /// <summary>
+    /// Registers PolymorphHumanoidData from an EntityUid, provived they have all the needed components. This allows you to add a uid as the HumanoidData's EntityUid variable. Does not send the given uid to the pause map.
+    /// </summary>
+    /// <param name="source">The source that the humanoid data is referencing from</param>
+    /// <param name="uid">The uid that will become the newHumanoidData's EntityUid</param>
+    public PolymorphHumanoidData? TryRegisterPolymorphHumanoidData(EntityUid source, EntityUid uid)
+    {
+        var newHumanoidData = new PolymorphHumanoidData();
+
+        if (!TryComp<MetaDataComponent>(source, out var targetMeta))
+            return null;
+        if (!TryPrototype(source, out var prototype, targetMeta))
+            return null;
+        if (!TryComp<DnaComponent>(source, out var dnaComp))
+            return null;
+        if (!TryComp<HumanoidAppearanceComponent>(source, out var targetHumanoidAppearance))
+            return null;
+
+        newHumanoidData.EntityPrototype = prototype;
+        newHumanoidData.MetaDataComponent = targetMeta;
+        newHumanoidData.HumanoidAppearanceComponent = targetHumanoidAppearance;
+        newHumanoidData.DNA = dnaComp.DNA;
+        newHumanoidData.EntityUid = uid;
+
+        return newHumanoidData;
+    }
 }
