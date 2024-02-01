@@ -1,0 +1,11 @@
+- type: vendingMachineInventory
+  id: BoxingDrobeInventory
+  startingInventory:
+    UniformShortsRed: 3
+    UniformShortsRedWithTop: 3
+    ClothingHandsGlovesBoxingRed: 2
+    ClothingHandsGlovesBoxingBlue: 2
+    ClothingHandsGlovesBoxingGreen: 2
+    ClothingHandsGlovesBoxingYellow: 2
+  emaggedInventory:
+    UniformJabroni: 2
