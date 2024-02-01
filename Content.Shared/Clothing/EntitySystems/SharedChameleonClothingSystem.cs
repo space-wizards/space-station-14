@@ -6,6 +6,7 @@ using Content.Shared.Item;
 using Content.Shared.PDA;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using System.Collections.Frozen;
 using System.Linq;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -19,7 +20,15 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPdaSystem _pdaSystem = default!;
 
-    private readonly ChameleonClothingRegistry _clothingRegistry = new();
+    private static readonly SlotFlags[] IgnoredSlots =
+   {
+            SlotFlags.All,
+            SlotFlags.PREVENTEQUIP,
+            SlotFlags.NONE
+        };
+    private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
+
+    private Dictionary<SlotFlags, List<EntityPrototype>> _data = new();
 
     public override void Initialize()
     {
@@ -53,7 +62,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// </summary>
     public IEnumerable<EntProtoId> GetValidTargets(SlotFlags slot, EntityWhitelist? whitelist = null)
     {
-        return _clothingRegistry.GetValidVariants(slot, _factory, whitelist);
+        return GetValidVariants(slot, _factory, whitelist);
     }
 
     // Updates chameleon visuals and meta information.
@@ -127,6 +136,10 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
     private void PrepareAllVariants()
     {
+        _data.Clear();
+
+        foreach (var slot in Slots)
+            _data.Add(slot, new());
 
         var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
 
@@ -139,33 +152,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             if (!proto.TryGetComponent<ClothingComponent>(out var item, _factory))
                 continue;
 
-            _clothingRegistry.RegisterVariant(proto, item.Slots);
+            RegisterVariant(proto, item.Slots);
         }
-    }
-}
-
-/// <summary>
-/// Stores a collection of clothing items organised by slot
-/// </summary>
-public sealed class ChameleonClothingRegistry
-{
-    private Dictionary<SlotFlags, List<EntityPrototype>> _clothingPerSlot;
-
-    private static readonly SlotFlags[] IgnoredSlots =
-    {
-            SlotFlags.All,
-            SlotFlags.PREVENTEQUIP,
-            SlotFlags.NONE
-        };
-    private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
-
-    public ChameleonClothingRegistry()
-    {
-        _clothingPerSlot = new();
-
-        foreach (var slot in Slots)
-            _clothingPerSlot.Add(slot, new());
-
     }
 
     /// <summary>
@@ -175,9 +163,9 @@ public sealed class ChameleonClothingRegistry
     /// <param name="slot">A bitflag array of the valid slots for this article of clothing</param>
     public void RegisterVariant(EntityPrototype clothingPrototype, SlotFlags slot)
     {
-        foreach (var availableSlot in Slots)
+        foreach (var availableSlot in _data.Keys)
         {
-            if (slot.HasFlag(availableSlot)) _clothingPerSlot[availableSlot].Add(clothingPrototype);
+            if (slot.HasFlag(availableSlot)) _data[availableSlot].Add(clothingPrototype);
         }
     }
 
@@ -192,7 +180,7 @@ public sealed class ChameleonClothingRegistry
     {
         var outList = new List<EntProtoId>();
 
-        if (!_clothingPerSlot.TryGetValue(slot, out var variants))
+        if (!_data.TryGetValue(slot, out var variants))
             return outList;
 
         foreach (var clothingProto in variants)
@@ -208,13 +196,5 @@ public sealed class ChameleonClothingRegistry
         }
 
         return outList;
-    }
-
-    /// <summary>
-    /// Clear the registry
-    /// </summary>
-    public void Clear()
-    {
-        _clothingPerSlot.Clear();
     }
 }
