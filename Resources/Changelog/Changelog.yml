@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Ninjas and Nukies now get new sprites for their pinpointers.
-    type: Add
-  id: 5353
-  time: '2023-12-13T08:53:05.0000000+00:00'
-- author: Errant
-  changes:
-  - message: A dying person's Last Words can no longer be sent to radio channels.
-    type: Fix
-  id: 5354
-  time: '2023-12-13T21:20:38.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Cybersun and centcom pens can now edit stamped paper.
@@ -3859,3 +3847,18 @@
   id: 5852
   time: '2024-02-01T10:42:12.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24778
+- author: Dygon
+  changes:
+  - message: Paraplegic entities have their legs healed when zombified.
+    type: Fix
+  id: 5853
+  time: '2024-02-01T11:06:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24169
+- author: PJB3005
+  changes:
+  - message: The AME can now single-handedly power the entire station until one of
+      our cool coders gets their shit together and fixes engineering.
+    type: Fix
+  id: 5854
+  time: '2024-02-01T11:06:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24806
