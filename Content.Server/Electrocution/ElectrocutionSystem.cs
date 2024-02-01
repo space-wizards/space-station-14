@@ -63,9 +63,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private const string DamageType = "Shock";
 
     // Multiply and shift the log scale for shock damage.
-    private const float ElectrifiedScalePerWatt = 2.8f;
-    private const float ElectrifiedShiftDamage = -30.6f;
-
+    private const float ElectrifiedScaleLogCoefficent = 1.35f;
+    private const float ElectrifiedShiftDamage = 1.67f;
+    private const float ElectrifiedDamageSupplyCoefficent = 0.00001f;
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
 
@@ -265,7 +265,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         // Initial damage scales off of the available supply on the principle that the victim has shorted the entire powernet through their body.
-        var damageScale = ElectrifiedShiftDamage + MathF.Log(supp) * ElectrifiedScalePerWatt;
+        var damageScale = ElectrifiedShiftDamage + MathF.Log(supp * ElectrifiedDamageSupplyCoefficent) * ElectrifiedScaleLogCoefficent;
         if (damageScale <= 0f)
             return false;
 
@@ -278,7 +278,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * damageScale * MathF.Pow(RecursiveDamageMultiplier, depth)),
+                    (int) MathF.Ceiling(electrified.ShockDamage * damageScale * MathF.Pow(RecursiveDamageMultiplier, depth)),
                     TimeSpan.FromSeconds(electrified.ShockTime * MathF.Min(1f + MathF.Log2(1f + damageScale), 3f) * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient);
