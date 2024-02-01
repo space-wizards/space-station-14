@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: DinnerwareAds
   advertisements:
     - advertisement-dinnerware-1
@@ -8,5 +8,8 @@
     - advertisement-dinnerware-5
     - advertisement-dinnerware-6
     - advertisement-dinnerware-7
+    - advertisement-dinnerware-8
+    - advertisement-dinnerware-9
+    - advertisement-dinnerware-10
   thankyous:
     - vending-machine-thanks
