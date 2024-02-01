@@ -48,8 +48,11 @@
   - type: Flatpack
     entity: SolarAssembly
   - type: Sprite
-    sprite: Objects/Power/solar_parts.rsi
-    state: solar_assembly_parts
+    layers:
+    - state: base
+    - state: overlay
+      color: "#fff200"
+    - state: icon-solar-assembly
 
 - type: entity
   parent: BaseFlatpack
@@ -58,8 +61,11 @@
   description: A flatpack used for constructing an antimatter engine reactor.
   components:
   - type: Sprite
-    sprite: Objects/Power/AME/ame_part.rsi
-    state: box
+    layers:
+    - state: base
+    - state: overlay
+      color: "#990033"
+    - state: icon-ame-part
   - type: Flatpack
     entity: AmeShielding
   - type: StaticPrice

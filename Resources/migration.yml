@@ -215,3 +215,4 @@ YellowOxygenTankFilled: OxygenTankFilled
 # 2024-02-01
 SolarAssemblyPart: SolarAssemblyFlatpack
 AmePart: AmePartFlatpack
+AmePartStealObjective: AmePartFlatpackStealObjective
