@@ -52,7 +52,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var thief, out var gameRule))
         {
-            //Chance to not lauch gamerule  
+            //Chance to not lauch gamerule
             if (_random.Prob(thief.RuleChance))
             {
                 if (!GameTicker.IsGameRuleAdded(uid, gameRule))
@@ -89,11 +89,49 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         while (component.ThievesMinds.Count < numberOfThievesToSelect && thiefPool.Count > 0)
         {
             Log.Info($"{numberOfThievesToSelect} thieves required, {component.ThievesMinds.Count} currently chosen, {thiefPool.Count} potentials");
-            var selectedThieves = _antagSelection.PickAntag(numberOfThievesToSelect - component.ThievesMinds.Count, thiefPool);
-            foreach (var thief in selectedThieves)
+
+            // check if there aren't enough players available for a thief round-start
+            if (thiefPool.Count >= numberOfThievesToSelect - component.ThievesMinds.Count)
             {
-                MakeThief(component, thief, component.PacifistThieves);
+                var selectedThieves = _antagSelection.PickAntag(numberOfThievesToSelect - component.ThievesMinds.Count, thiefPool);
+
+                foreach (var thief in selectedThieves)
+                {
+                    MakeThief(component, thief, component.PacifistThieves);
+                }
             }
+            else
+            {
+                Log.Info("Not enough potential thieves available.");
+
+                // determine the maximum number of thieves that can be picked from the available pool, without causing an ArgumentOutOfRangeException.
+                var maxThievesToPick = Math.Min(thiefPool.Count, numberOfThievesToSelect - component.ThievesMinds.Count);
+
+                if (maxThievesToPick > 0)
+                {
+                    // then pick as many thieves as *safely* possible, error handling for testing purposes
+                    try
+                    {
+                        var selectedThieves = _antagSelection.PickAntag(maxThievesToPick, thiefPool);
+
+                        foreach (var thief in selectedThieves)
+                        {
+                            MakeThief(component, thief, component.PacifistThieves);
+                        }
+                    }
+                    catch (Exception err)
+                    {
+                        Log.Error("Error safely picking thieves. Trace:\n" + err);
+                    }
+
+                }
+                else
+                {
+                    Log.Info("No potential thieves available.");
+                }
+            }
+
+
         }
     }
 
@@ -122,7 +160,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             PrototypeId = thiefRule.ThiefPrototypeId
         });
 
-        //Add Pacified  
+        //Add Pacified
         //To Do: Long-term this should just be using the antag code to add components.
         if (addPacified) //This check is important because some servers may want to disable the thief's pacifism. Do not remove.
         {
