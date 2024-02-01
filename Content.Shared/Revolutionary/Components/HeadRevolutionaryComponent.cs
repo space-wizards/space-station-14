@@ -24,4 +24,7 @@ public sealed partial class HeadRevolutionaryComponent : Component, IAntagStatus
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 
     public override bool SessionSpecific => true;
+
+    [DataField]
+    public bool IconVisibleToGhost { get; set; } = true;
 }

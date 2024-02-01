@@ -1,11 +1,9 @@
-using Content.Shared.CCVar;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Popups;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Stunnable;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 
@@ -15,15 +13,10 @@ public sealed class SharedRevolutionarySystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    private bool _revIconGhostVisibility;
-
-    private void OnRevIconGhostVisibilityChanged(bool value) => _revIconGhostVisibility = value;
     public override void Initialize()
     {
         base.Initialize();
-        _cfg.OnValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevIconGhostVisibilityChanged, true);
 
         SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(MindShieldImplanted);
         SubscribeLocalEvent<RevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
@@ -31,12 +24,6 @@ public sealed class SharedRevolutionarySystem : EntitySystem
         SubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>(DirtyRevComps);
         SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentStartup>(DirtyRevComps);
         SubscribeLocalEvent<ShowRevIconsComponent, ComponentStartup>(DirtyRevComps);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfg.UnsubValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevIconGhostVisibilityChanged);
     }
 
     /// <summary>
@@ -65,7 +52,7 @@ public sealed class SharedRevolutionarySystem : EntitySystem
     /// </summary>
     private void OnRevCompGetStateAttempt(EntityUid uid, HeadRevolutionaryComponent comp, ref ComponentGetStateAttemptEvent args)
     {
-        args.Cancelled = !CanGetState(args.Player);
+        args.Cancelled = !CanGetState(args.Player, comp.IconVisibleToGhost);
     }
 
     /// <summary>
@@ -73,15 +60,16 @@ public sealed class SharedRevolutionarySystem : EntitySystem
     /// </summary>
     private void OnRevCompGetStateAttempt(EntityUid uid, RevolutionaryComponent comp, ref ComponentGetStateAttemptEvent args)
     {
-        args.Cancelled = !CanGetState(args.Player);
+        args.Cancelled = !CanGetState(args.Player, comp.IconVisibleToGhost);
     }
 
     /// <summary>
     /// The criteria that determine whether a Rev/HeadRev component should be sent to a client.
     /// </summary>
     /// <param name="player"> The Player the component will be sent to.</param>
+    /// <param name="visibleToGhosts"> Whether the component permits the icon to be visible to observers. </param>
     /// <returns></returns>
-    private bool CanGetState(ICommonSession? player)
+    private bool CanGetState(ICommonSession? player, bool visibleToGhosts)
     {
         //Apparently this can be null in replays so I am just returning true.
         if (player is null)
@@ -92,7 +80,7 @@ public sealed class SharedRevolutionarySystem : EntitySystem
         if (HasComp<RevolutionaryComponent>(uid) || HasComp<HeadRevolutionaryComponent>(uid))
             return true;
 
-        if (_revIconGhostVisibility && HasComp<GhostComponent>(uid))
+        if (visibleToGhosts && HasComp<GhostComponent>(uid))
             return true;
 
         return HasComp<ShowRevIconsComponent>(uid);

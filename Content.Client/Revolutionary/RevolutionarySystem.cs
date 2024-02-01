@@ -1,8 +1,7 @@
+using Content.Shared.Antag;
 using Content.Shared.Revolutionary.Components;
-using Content.Shared.CCVar;
 using Content.Shared.Ghost;
 using Content.Shared.StatusIcon.Components;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.Revolutionary;
 
@@ -11,48 +10,35 @@ namespace Content.Client.Revolutionary;
 /// </summary>
 public sealed class RevolutionarySystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    private bool _revIconGhostVisibility;
-
-    private void OnRevGhostIconVisibilityChanged(bool value) => _revIconGhostVisibility = value;
     public override void Initialize()
     {
         base.Initialize();
 
-        _cfg.OnValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevGhostIconVisibilityChanged, true);
         SubscribeLocalEvent<RevolutionaryComponent, CanDisplayStatusIconsEvent>(OnCanShowRevIcon);
         SubscribeLocalEvent<HeadRevolutionaryComponent, CanDisplayStatusIconsEvent>(OnCanShowRevIcon);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfg.UnsubValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevGhostIconVisibilityChanged);
     }
 
     /// <summary>
     /// Determine whether a client should display the rev icon.
     /// </summary>
-    private void OnCanShowRevIcon<T>(EntityUid uid, T comp, ref CanDisplayStatusIconsEvent args)
+    private void OnCanShowRevIcon<T>(EntityUid uid, T comp, ref CanDisplayStatusIconsEvent args) where T : IAntagStatusIconComponent
     {
-        args.Cancelled = !CanDisplayIcon(args.User);
+        args.Cancelled = !CanDisplayIcon(args.User, comp.IconVisibleToGhost);
     }
 
     /// <summary>
     /// The criteria that determine whether a client should see Rev/Head rev icons.
     /// </summary>
-    private bool CanDisplayIcon(EntityUid? uid)
+    private bool CanDisplayIcon(EntityUid? uid, bool visibleToGhost)
     {
         if (HasComp<HeadRevolutionaryComponent>(uid) || HasComp<RevolutionaryComponent>(uid))
             return true;
 
-        if (_revIconGhostVisibility && HasComp<GhostComponent>(uid))
+        if (visibleToGhost && HasComp<GhostComponent>(uid))
             return true;
 
         return HasComp<ShowRevIconsComponent>(uid);
-
-
     }
 
 }

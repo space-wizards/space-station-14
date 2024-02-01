@@ -18,4 +18,7 @@ public sealed partial class RevolutionaryComponent : Component, IAntagStatusIcon
     public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "RevolutionaryFaction";
 
     public override bool SessionSpecific => true;
+
+    [DataField]
+    public bool IconVisibleToGhost { get; set; } = true;
 }

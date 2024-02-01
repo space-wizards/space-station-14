@@ -97,6 +97,9 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
     [DataField("zombieStatusIcon")]
     public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
 
+    [DataField]
+    public bool IconVisibleToGhost { get; set; } = true;
+
     /// <summary>
     /// Healing each second
     /// </summary>
