@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 8  # Should have the same or less damage than a regular pellet
+        Piercing: 28
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -132,10 +132,7 @@
           !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
         mask:
-        - BulletImpassable
-  - type: Tag
-    tags:
-    - PelletShotgunFlare
+          - BulletImpassable
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare

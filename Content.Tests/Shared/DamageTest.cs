@@ -61,7 +61,7 @@ namespace Content.Tests.Shared
 
             // Check that it properly split up the groups into types
             FixedPoint2 damage;
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(8)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -73,7 +73,7 @@ namespace Content.Tests.Shared
 
             // check that integer multiplication works
             damageSpec = damageSpec * 2;
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(16)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(16)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -93,7 +93,7 @@ namespace Content.Tests.Shared
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(4.4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(13.2)));
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8.8 + 8.8 + 4.4 + 13.2)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(8.8 + 8.8 + 4.4 + 13.2)));
 
             // check that integer division works
             damageSpec = damageSpec / 2;

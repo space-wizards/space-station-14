@@ -59,6 +59,7 @@ marking-HumanHairC = Cut Hair
 marking-HumanHairDandypompadour = Dandy Pompadour
 marking-HumanHairDevilock = Devil Lock
 marking-HumanHairDoublebun = Double Bun
+marking-HumanHairDoublebunLong = Double Bun Long
 marking-HumanHairDreads = Dreadlocks
 marking-HumanHairDrillruru = Drillruru
 marking-HumanHairDrillhairextended = Drill Hair (Extended)

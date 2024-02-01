@@ -52,7 +52,7 @@
           behaviors:
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 GasCanisterBrokenBase:
@@ -141,7 +141,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             StorageCanisterBroken:
@@ -183,7 +183,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           AirCanisterBroken:
@@ -222,7 +222,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           OxygenCanisterBroken:
@@ -277,7 +277,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             NitrogenCanisterBroken:
@@ -334,7 +334,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             CarbonDioxideCanisterBroken:
@@ -395,7 +395,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             PlasmaCanisterBroken:
@@ -440,7 +440,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             TritiumCanisterBroken:
@@ -486,7 +486,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             WaterVaporCanisterBroken:
@@ -531,7 +531,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             AmmoniaCanisterBroken:
@@ -579,7 +579,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             NitrousOxideCanisterBroken:
@@ -626,7 +626,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           FrezonCanisterBroken:
@@ -660,7 +660,7 @@
         behaviors:
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
             SheetPlasteel1:

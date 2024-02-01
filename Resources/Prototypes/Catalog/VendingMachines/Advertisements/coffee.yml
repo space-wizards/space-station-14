@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: HotDrinksMachineAds
   advertisements:
     - advertisement-coffee-1
@@ -14,8 +14,10 @@
     - advertisement-coffee-11
     - advertisement-coffee-12
     - advertisement-coffee-13
+    - advertisement-coffee-14
   thankyous:
     - vending-machine-thanks
     - thankyou-coffee-1
     - thankyou-coffee-2
     - thankyou-coffee-3
+    - thankyou-coffee-4
