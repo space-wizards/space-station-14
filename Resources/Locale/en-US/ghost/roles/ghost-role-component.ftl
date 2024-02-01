@@ -1,5 +1,6 @@
 # also used in MakeGhostRuleWindow and MakeGhostRoleCommand
-ghost-role-component-default-rules = You don't remember any of your previous life unless an administrator tells you otherwise.
+ghost-role-component-default-rules = All normal rules apply unless an administrator tells you otherwise.
+                                     You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                      You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                      You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 
@@ -10,7 +11,7 @@ ghost-role-information-mothroach-name = Mothroach
 ghost-role-information-mothroach-description = A cute but mischievous mothroach.
 
 ghost-role-information-giant-spider-name = Giant spider
-ghost-role-information-giant-spider-description = Wreak havoc on the station's inhabitants!
+ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
 
@@ -21,8 +22,10 @@ ghost-role-information-hamlet-name = Hamlet the hamster.
 ghost-role-information-hamlet-description = Lives in the station bridge, has a bit of a temper and is always hungry.
 
 ghost-role-information-slimes-name = Slime
-ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
-ghost-role-information-angry-slimes-description = Everything around you irritates your instincts, destroy them!
+ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. You are friendly to others.
+
+ghost-role-information-angry-slimes-name = Slime
+ghost-role-information-angry-slimes-description = Everyone around you irritates your instincts, destroy them!
 
 ghost-role-information-smile-name = Smile the Slime
 ghost-role-information-smile-description = The sweetest creature in the world. Smile Slime!
@@ -89,13 +92,13 @@ ghost-role-information-supplybot-name = SupplyBot
 ghost-role-information-supplybot-description = Deliver goods around the station.
 
 ghost-role-information-space-bear-name = Space bear
-ghost-role-information-space-bear-description = You're a bear! Do bear things.
+ghost-role-information-space-bear-description = Your tummy rumbles, and these people look really yummy... What a feast!
 
 ghost-role-information-salvage-bear-name = Space bear on salvage wreck
 ghost-role-information-salvage-bear-description = Defend the loot inside the salvage wreck!
 
 ghost-role-information-space-kangaroo-name = Space kangaroo
-ghost-role-information-space-kangaroo-description = You're a kangaroo! Do kangaroo things.
+ghost-role-information-space-kangaroo-description = Give the crew a taste of your sharp claws!
 
 ghost-role-information-salvage-kangaroo-name = Space kangaroo on salvage wreck
 ghost-role-information-salvage-kangaroo-description = Defend the loot inside the salvage wreck!
@@ -154,7 +157,7 @@ ghost-role-information-remilia-name = Remilia, the chaplain's familiar
 ghost-role-information-remilia-description = Obey your master. Eat fruit.
 ghost-role-information-remilia-rules = You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
 
-ghost-role-information-cerberus-name = Cerberus, Evil Famili
+ghost-role-information-cerberus-name = Cerberus, Evil Familiar
 ghost-role-information-cerberus-description = Obey your master. Spread chaos.
 ghost-role-information-cerberus-rules = You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
 

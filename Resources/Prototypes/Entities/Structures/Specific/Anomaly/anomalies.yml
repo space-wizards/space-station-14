@@ -53,20 +53,26 @@
   parent: BaseAnomaly
   suffix: Pyroclastic
   components:
+  - type: AmbientSound
+    volume: 5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
   - type: Anomaly
     corePrototype: AnomalyCorePyroclastic
     coreInertPrototype: AnomalyCorePyroclasticInert
   - type: Sprite
+    sprite: Structures/Specific/Anomalies/pyro_anom.rsi
     layers:
-    - state: anom1
+    - state: anom
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom1-pulse
+    - state: pulse
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
   - type: PointLight
-    radius: 2.0
+    radius: 6.0
     energy: 7.5
-    color: "#fca3c0"
+    color: "#E25822"
     castShadows: false
   - type: PyroclasticAnomaly
   - type: TempAffectingAnomaly
@@ -75,9 +81,21 @@
   - type: GasProducerAnomaly
     releasedGas: 3
     releaseOnMaxSeverity: true
-    spawnRadius: 3
+    spawnRadius: 4
     tileCount: 5
-    tempChange: 550
+    tempChange: 420
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileAnomalyFireball
+    targetNonSentientChance: 0.6
+    projectileSpeed: 0.5
+    minProjectiles: 3
+    maxProjectiles: 6
+  - type: IgnitionSource
+    temperature: 800
+    ignited: true
+  - type: IgniteOnCollide
+    fixtureId: fix1
+    fireStacks: 1
 
 - type: entity
   id: AnomalyGravity
