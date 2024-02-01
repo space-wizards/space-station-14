@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Added a new "uneven" hair style.
-    type: Add
-  id: 5356
-  time: '2023-12-13T21:34:28.0000000+00:00'
-- author: notafet
-  changes:
-  - message: Plasma and tritium fires spread more slowly and are now more survivable.
-    type: Tweak
-  id: 5357
-  time: '2023-12-14T02:39:38.0000000+00:00'
 - author: Dygon
   changes:
   - message: 'A new type of grenade has been developed, these grenades release a spray
@@ -3863,3 +3851,17 @@
   id: 5855
   time: '2024-02-01T11:54:25.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24554
+- author: SlamBamActionman
+  changes:
+  - message: Paper is now edible, even for non-moths.
+    type: Tweak
+  id: 5856
+  time: '2024-02-01T12:40:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24755
+- author: mac6na6na
+  changes:
+  - message: Tiered part crates will no longer appear on salvage expeditions.
+    type: Remove
+  id: 5857
+  time: '2024-02-01T12:41:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24810
