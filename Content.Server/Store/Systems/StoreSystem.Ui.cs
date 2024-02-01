@@ -177,7 +177,7 @@ public sealed partial class StoreSystem
 
         //log dat shit.
         _admin.Add(LogType.StorePurchase, LogImpact.Low,
-            $"{ToPrettyString(buyer):player} purchased listing \"{Loc.GetString(listing.Name)}\" from {ToPrettyString(uid)}");
+            $"{ToPrettyString(buyer):player} purchased listing \"{listing.GetLocalisedNameOrEntityName()}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!

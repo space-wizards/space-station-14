@@ -121,8 +121,8 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var listingName = Loc.GetString(listing.Name);
-        var listingDesc = Loc.GetString(listing.Description);
+        var listingName = listing.GetLocalisedNameOrEntityName();
+        var listingDesc = listing.GetLocalisedDescriptionOrEntityDescription();
         var listingPrice = listing.Cost;
         var canBuy = CanBuyListing(Balance, listingPrice);
 
@@ -136,12 +136,6 @@ public sealed partial class StoreMenu : DefaultWindow
         {
             if (texture == null)
                 texture = spriteSys.GetPrototypeIcon(listing.ProductEntity).Default;
-
-            var proto = _prototypeManager.Index<EntityPrototype>(listing.ProductEntity);
-            if (listingName == string.Empty)
-                listingName = proto.Name;
-            if (listingDesc == string.Empty)
-                listingDesc = proto.Description;
         }
         else if (listing.ProductAction != null)
         {
