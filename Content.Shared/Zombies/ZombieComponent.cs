@@ -1,3 +1,4 @@
+using Content.Shared.Antag;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
@@ -13,7 +14,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Zombies;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ZombieComponent : Component
+public sealed partial class ZombieComponent : Component, IAntagStatusIconComponent
 {
     /// <summary>
     /// The baseline infection chance you have if you are completely nude
@@ -93,8 +94,11 @@ public sealed partial class ZombieComponent : Component
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 
-    [DataField("zombieStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
-    public string ZombieStatusIcon = "ZombieFaction";
+    [DataField("zombieStatusIcon")]
+    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
+
+    [DataField]
+    public bool IconVisibleToGhost { get; set; } = true;
 
     /// <summary>
     /// Healing each second
