@@ -215,7 +215,7 @@
     state: icon
 
 - type: stealTargetGroup
-  id: AmePart
+  id: AmePartFlatpack
   name: AME part
   sprite:
     sprite: Objects/Power/AME/ame_part.rsi

@@ -211,3 +211,7 @@ VehicleJanicartDestroyed: null
 # 2024-02-01
 YellowOxygenTank: OxygenTank
 YellowOxygenTankFilled: OxygenTankFilled
+
+# 2024-02-01
+SolarAssemblyPart: SolarAssemblyFlatpack
+AmePart: AmePartFlatpack
