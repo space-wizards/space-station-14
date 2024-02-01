@@ -7,6 +7,7 @@
     DrinkVacuumFlask: 5
     DrinkFlaskBar: 5
     DrinkShaker: 5
+    CustomDrinkJug: 2 #to allow for custom drinks in the soda/booze dispensers
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
     DrinkBeerBottleFull: 5
@@ -34,3 +35,7 @@
     DrinkWhiskeyBottleFull: 5
     DrinkWineBottleFull: 5
     DrinkChampagneBottleFull: 2 #because the premium drink
+    DrinkBeerCan: 5
+    DrinkWineCan: 5
+  emaggedInventory:
+    DrinkPoisonWinebottleFull: 2

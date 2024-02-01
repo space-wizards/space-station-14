@@ -515,14 +515,14 @@
   targetDepth: 2
   effectHint: artifact-effect-hint-polymorph
   components:
-  - type: PolyArtifact
+  - type: PolyOthersArtifact
 
 - type: artifactEffect
   id: EffectPolyLizard
   targetDepth: 2
   effectHint: artifact-effect-hint-polymorph
   components:
-  - type: PolyArtifact
+  - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactLizard
 
 - type: artifactEffect
@@ -530,7 +530,7 @@
   targetDepth: 3
   effectHint: artifact-effect-hint-polymorph
   components:
-  - type: PolyArtifact
+  - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactLuminous
 
 - type: artifactEffect
@@ -664,3 +664,13 @@
     maxSpawns: 1
     spawns:
     - id: Singularity
+
+- type: artifactEffect
+  id: EffectTesla
+  targetDepth: 10
+  effectHint: artifact-effect-hint-destruction
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
+    - id: TeslaEnergyBall
