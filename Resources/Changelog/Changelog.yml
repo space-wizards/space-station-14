@@ -1,12 +1,6 @@
 ﻿Entries:
 - author: themias
   changes:
-  - message: Added fill visuals to Hot Chocolate
-    type: Tweak
-  id: 5348
-  time: '2023-12-13T00:01:24.0000000+00:00'
-- author: themias
-  changes:
   - message: Fixed secret doors not requiring metal rods
     type: Fix
   id: 5349
@@ -3852,3 +3846,10 @@
   id: 5847
   time: '2024-02-01T08:30:07.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24589
+- author: TheShuEd
+  changes:
+  - message: Anomaly generator can now only be used by a scientist.
+    type: Tweak
+  id: 5848
+  time: '2024-02-01T08:45:24.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24464
