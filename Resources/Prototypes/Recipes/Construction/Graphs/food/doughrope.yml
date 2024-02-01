@@ -3,7 +3,7 @@
   start: start
   graph:
   - node: start
-    entity: FoodDough
+    entity: FoodDoughSlice
     edges:
     - to: rolled
       steps:
