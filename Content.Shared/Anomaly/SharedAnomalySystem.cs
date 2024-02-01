@@ -410,9 +410,9 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         var physQuery = GetEntityQuery<PhysicsComponent>();
         var resultList = new List<TileRef>();
-        while (resultList.Count() < amount)
+        while (resultList.Count < amount)
         {
-            if (tilerefs.Count() == 0)
+            if (tilerefs.Count == 0)
                 break;
 
             var tileref = _random.Pick(tilerefs);
@@ -447,6 +447,7 @@ public abstract class SharedAnomalySystem : EntitySystem
                     continue;
                 }
             }
+
             resultList.Add(tileref);
         }
         return resultList;
@@ -459,7 +460,7 @@ public partial record struct AnomalySpawnSettings()
     /// <summary>
     /// should entities block spawning?
     /// </summary>
-    public bool CanSpawnOnEntities { get; set; } = true;
+    public bool CanSpawnOnEntities { get; set; } = false;
 
     /// <summary>
     /// The minimum number of entities that spawn per pulse

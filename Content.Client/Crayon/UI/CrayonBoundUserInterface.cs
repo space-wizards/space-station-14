@@ -24,7 +24,7 @@ namespace Content.Client.Crayon.UI
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var crayonDecals = prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon"));
             _menu.Populate(crayonDecals);
-            _menu.OpenCentered();
+            _menu.OpenCenteredLeft();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
