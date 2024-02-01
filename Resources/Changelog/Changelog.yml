@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Mercury poisoning now causes stuttering.
-    type: Tweak
-  id: 5366
-  time: '2023-12-15T09:28:13.0000000+00:00'
 - author: ninruB
   changes:
   - message: Reptilians no longer innately take 30% less heat damage.
@@ -3869,3 +3863,11 @@
   id: 5865
   time: '2024-02-01T22:49:54.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24739
+- author: VasilisThePikachu
+  changes:
+  - message: The fridge's explosion resistance has been nerfed significantly, It's
+      no longer able to survive nukes at point blank range of the nuke.
+    type: Tweak
+  id: 5866
+  time: '2024-02-01T23:41:43.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24844
