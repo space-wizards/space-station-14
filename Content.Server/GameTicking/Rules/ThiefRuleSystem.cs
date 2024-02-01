@@ -110,19 +110,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
                 if (maxThievesToPick > 0)
                 {
                     // then pick as many thieves as *safely* possible, error handling for testing purposes
-                    try
-                    {
-                        var selectedThieves = _antagSelection.PickAntag(maxThievesToPick, thiefPool);
+                    var selectedThieves = _antagSelection.PickAntag(maxThievesToPick, thiefPool);
 
-                        foreach (var thief in selectedThieves)
-                        {
-                            MakeThief(component, thief, component.PacifistThieves);
-                        }
-                    }
-                    catch (Exception err)
+                    foreach (var thief in selectedThieves)
                     {
-                        Log.Error("Error safely picking thieves. Trace:\n" + err);
-                        var selectedthieves = _antagSelection.PickAntag(0, thiefPool);
+                        MakeThief(component, thief, component.PacifistThieves);
                     }
 
                 }
