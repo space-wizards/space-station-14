@@ -97,10 +97,6 @@
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen
-    - DionaSpecies
 
 - type: entity
   parent: BaseSpeciesDummy
