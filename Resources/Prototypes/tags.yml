@@ -714,9 +714,6 @@
   id: Lemon
 
 - type: Tag
-  id: LightReplacer
-
-- type: Tag
   id: Lime
 
 - type: Tag
@@ -851,10 +848,10 @@
   id: Packet
 
 - type: Tag
-  id: Payload # for grenade/bomb crafting
+  id: Paper
 
 - type: Tag
-  id: PaintableAirlock
+  id: Payload # for grenade/bomb crafting
 
 - type: Tag
   id: Pancake
