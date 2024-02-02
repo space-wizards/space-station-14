@@ -60,6 +60,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         // if target is below minimum then can't start
         if (target < comp.Min)
         {
+            Log.Info($"Not enough players to start a turf war! Only {target} taggers would be selected, minimum is {comp.Min}");
             GameTicker.EndGameRule(uid, rule);
             return;
         }
@@ -113,6 +114,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         // if number of departments is below the minimum then can't start
         if (departments.Count < comp.Min)
         {
+            Log.Info($"Not unique departments to start a turf war! Only {departments.Count} were found, minimum is {comp.Min}");
             GameTicker.EndGameRule(uid, rule);
             return;
         }
