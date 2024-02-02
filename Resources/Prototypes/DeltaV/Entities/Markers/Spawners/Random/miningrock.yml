@@ -1,0 +1,84 @@
+- type: entity
+  name: Mining Rock Spawner
+  id: RandomRockSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: DeltaV/Structures/Walls/asteroid_rock.rsi
+        state: full
+  - type: RandomSpawner
+    prototypes:
+      - AsteroidAltRock
+    chance: .90
+    rarePrototypes:
+      - AsteroidAltRockMining
+      - Barricade
+      - MountainRockMining
+      - MountainRock
+      - RandomCrystalSpawner
+      - RandomWallRockSpawner
+      - RandomBasaltRockSpawner
+    rareChance: 0.15
+
+- type: entity
+  name: Crystal Spawner
+  id: RandomCrystalSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/crystal.rsi
+        state: crystal_grey
+  - type: RandomSpawner
+    prototypes:
+      - CrystalGreen
+      - CrystalPink
+      - CrystalGrey
+      - CrystalOrange
+      - CrystalBlue
+      - CrystalCyan
+
+- type: entity
+  name: Wall Rock Spawner
+  id: RandomWallRockSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Walls/rock.rsi
+        state: rock
+  - type: RandomSpawner
+    prototypes:
+      - WallRockGold
+      - WallRockPlasma
+      - WallRockQuartz
+      - WallRockSilver
+      - WallRockTin
+      - WallRockUranium
+      - WallRockBananium
+      - WallRockArtifactFragment
+
+- type: entity
+  name: Basalt Rock Spawner
+  id: RandomBasaltRockSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Walls/rock.rsi
+        state: rock_wall
+  - type: RandomSpawner
+    prototypes:
+      - WallRockBasaltGold
+      - WallRockBasaltPlasma
+      - WallRockBasaltQuartz
+      - WallRockBasaltSilver
+      - WallRockBasaltTin
+      - WallRockBasaltUranium
+      - WallRockBasaltArtifactFragment
+#Might add chance for no crystal later??

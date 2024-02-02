@@ -1,0 +1,29 @@
+- type: tile
+  id: FloorCoarseSandGrey
+  name: tiles-asteroid-sand-greystation
+  sprite: /Textures/GreyStation/Tiles/Planet/asteroid_coarse_sand.png
+  variants: 3
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Space
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorCoarseSandDugGrey
+  name: tiles-asteroid-sand-dug-greystation
+  sprite: /Textures/GreyStation/Tiles/Planet/asteroid_coarse_sand_dug.png
+  variants: 1
+  placementVariants:
+  - 1.0
+  baseTurf: Space
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true

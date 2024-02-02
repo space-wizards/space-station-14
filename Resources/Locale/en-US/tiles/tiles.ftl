@@ -117,3 +117,6 @@ tiles-web = web tile
 tiles-chromite = chromite
 tiles-astro-grass = astro-grass
 tiles-astro-ice = astro-ice
+tiles-asphalt-nyano = asphalt
+tiles-asteroid-sand-greystation = asteroid sand
+tiles-asteroid-sand-dug-greystation = dug asteroid sand
