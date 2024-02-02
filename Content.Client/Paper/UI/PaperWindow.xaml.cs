@@ -45,6 +45,7 @@ namespace Content.Client.Paper.UI
             typeof(TimeTag),
             typeof(NameTag),
             typeof(DateTag),
+            typeof(StationTag),
         };
 
         // private readonly Dictionary<string, IMarkupTag> _customTags = new IMarkupTag[]

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Server.Station.Systems;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -26,6 +27,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly StationSystem _station = default!;
 
         public override void Initialize()
         {
@@ -125,7 +127,10 @@ namespace Content.Server.Paper
                         {
                             PersonName = Loc.GetString("paper-tags-person-name-default")
                         };
-
+                    var station = _station.GetOwningStation(args.Used);
+                    paperComp.TagsState = station is null
+                        ? paperComp.TagsState with { StationName = Loc.GetString("paper-tags-station-name-default") }
+                        : paperComp.TagsState with { StationName = Name(station!.Value) };
                     // paperComp.TagsState = TryComp<MetaDataComponent>()
                 }
 
