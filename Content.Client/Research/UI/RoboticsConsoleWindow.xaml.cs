@@ -125,13 +125,13 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 
         // how the turntables
         DisableButton.Disabled = !data.HasBrain;
-        DestroyButton.Disabled = _timing.CurTime >= _nextDestroy;
+        DestroyButton.Disabled = _timing.CurTime < _nextDestroy;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        DestroyButton.Disabled = _timing.CurTime >= _nextDestroy;
+        DestroyButton.Disabled = _timing.CurTime < _nextDestroy;
     }
 }
