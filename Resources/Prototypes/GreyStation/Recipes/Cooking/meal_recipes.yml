@@ -1,0 +1,7 @@
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketGondola
+  name: warm gondola-pocket recipe
+  result: FoodDonkpocketGondolaWarm
+  time: 5
+  solids:
+    FoodDonkpocketGondola: 1
