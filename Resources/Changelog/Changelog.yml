@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: Added the Action Upgrade System - used to upgrade specific actions!
-    type: Add
-  - message: Added commands to upgrade actions.
-    type: Add
-  - message: Added Charges information to action tooltips for actions with charges
-    type: Add
-  id: 5368
-  time: '2023-12-15T09:41:44.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Chaplains can smack their bible on water to create holy water.
@@ -3872,3 +3862,11 @@
   id: 5867
   time: '2024-02-02T04:24:20.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24850
+- author: Psychpsyo
+  changes:
+  - message: You can now turn down the screen shake intensity in the accessibility
+      settings.
+    type: Add
+  id: 5868
+  time: '2024-02-02T12:39:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24749
