@@ -268,14 +268,14 @@
         reagent: Ethanol
         amount: 0.2
 
-- type: reagent
-  id: Sake
-  name: reagent-name-sake
-  parent: BaseAlcohol
-  desc: reagent-desc-sake
-  physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: sake
-  color: "#DDDDDD"
+#- type: reagent
+#  id: Sake
+#  name: reagent-name-sake
+#  parent: BaseAlcohol
+#  desc: reagent-desc-sake
+#  physicalDesc: reagent-physical-desc-strong-smelling
+#  flavor: sake
+#  color: "#DDDDDD"
 
 - type: reagent
   id: Tequila
