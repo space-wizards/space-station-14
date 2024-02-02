@@ -1,6 +1,6 @@
 using Content.Server.Gateway.Components;
 using Content.Server.Station.Systems;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.Gateway;
 using Content.Shared.Popups;

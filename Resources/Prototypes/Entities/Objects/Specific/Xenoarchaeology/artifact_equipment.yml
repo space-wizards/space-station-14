@@ -9,6 +9,7 @@
     - type: AccessReader
       access: [["Research"], ["Salvage"]]
     - type: Lock
+    - type: ResistLocker
     - type: Sprite
       drawdepth: Objects
       sprite: Structures/Storage/Crates/artifact.rsi
