@@ -622,3 +622,13 @@
     Steel: 250
     Glass: 250
     Plastic: 250
+
+- type: latheRecipe
+  id: BorgModuleInvestigation
+  result: BorgModuleInvestigation
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
