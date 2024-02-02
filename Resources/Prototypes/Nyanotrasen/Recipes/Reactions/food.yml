@@ -32,14 +32,3 @@
     - !type:CreateEntityReactionEffect
       entity: FoodMozzarella
       number: 2
-
-- type: reaction
-  id: Ghee
-  impact: Low
-  minTemp: 373
-  reactants:
-    Butter:
-      amount: 1
-  products:
-    OilGhee: 1
-    

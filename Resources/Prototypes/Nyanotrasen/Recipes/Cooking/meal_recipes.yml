@@ -254,19 +254,6 @@
     WheatSeeds: 1
 
 - type: microwaveMealRecipe
-  id: RecipeMothEyeballSoup
-  name: moth eyeball soup recipe
-  result: FoodMothEyeballSoup
-  time: 10
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    OrganMothEyes: 1
-    FoodTomato: 1
-    FoodPotato: 1
-
-- type: microwaveMealRecipe
   id: RecipeMothBeanStew
   name: bean stew recipe
   result: FoodMothBeanStew
