@@ -52,6 +52,12 @@
 	{
       "name": "dink"
     },
+	{
+      "name": "stonk-box"
+    },
+	{
+      "name": "stonk"
+    },
     {
       "name": "inhand-left",
       "directions": 4
