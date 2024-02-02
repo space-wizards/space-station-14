@@ -9,6 +9,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
@@ -78,6 +79,7 @@ public sealed class SlipperySystem : EntitySystem
             {
                 var sliding = EnsureComp<SlidingComponent>(other);
                 sliding.CollidingEntities.Add(uid);
+                DebugTools.AssertNotEqual(sliding.CollidingEntities, 0);
             }
         }
 
