@@ -111,10 +111,8 @@
     state: industrial-working
   discipline: Biochemical
   tier: 2
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
-  - ChemMasterMachineCircuitboard
-  - ChemDispenserMachineCircuitboard
   - BorgModuleAdvancedTreatment
   technologyPrerequisites:
   - Chemistry
