@@ -101,10 +101,6 @@
           probability: 0.5
   - type: FireVisuals
     alternateState: Standing
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen
-    - SkeletonSpecies
 
 - type: entity
   parent: BaseSpeciesDummy
