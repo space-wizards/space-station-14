@@ -389,20 +389,6 @@
 
 - type: entity
   parent: FoodBoxDonkpocket
-  id: FoodBoxDonkpocketGondola
-  name: box of gondola-flavoured donk-pockets
-  components:
-  - type: Sprite
-    state: gondola-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketGondola
-      amount: 6
-
-- type: entity
-  parent: FoodBoxDonkpocket
   id: FoodBoxDonkpocketBerry
   name: box of berry-flavoured donk-pockets
   components:

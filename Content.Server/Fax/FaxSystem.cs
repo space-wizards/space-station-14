@@ -17,6 +17,7 @@ using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Robust.Shared.Timing;
 using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
