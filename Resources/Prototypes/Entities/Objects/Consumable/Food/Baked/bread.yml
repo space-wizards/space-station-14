@@ -615,6 +615,9 @@
           Quantity: 1
         - ReagentId: Blackpepper
           Quantity: 1
+  - type: Clothing
+    slots: [ BELT ]
+    equippedPrefix: baguette
 # Tastes like France.
 
 - type: entity
