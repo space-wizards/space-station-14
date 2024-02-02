@@ -1,0 +1,33 @@
+- type: entity
+  id: CrateFoodDonkpocketSavory
+  parent: CratePlastic
+  components:
+    - type: StorageFill
+      contents:
+        - id: FoodBoxDonkpocket
+          amount: 2
+        - id: FoodBoxDonkpocketPizza
+          amount: 1
+        - id: FoodBoxDonkpocketSpicy
+          amount: 1
+        - id: FoodBoxDonkpocketTeriyaki
+          amount: 1
+        - id: FoodBoxDonkpocketDink
+          prob: 0.1
+
+- type: entity
+  id: CrateFoodDonkpocketSweet
+  parent: CratePlastic
+  components:
+    - type: StorageFill
+      contents:
+        - id: FoodBoxDonkpocket
+          amount: 2
+        - id: FoodBoxDonkpocketHonk
+          amount: 1
+        - id: FoodBoxDonkpocketBerry
+          amount: 1
+        - id: FoodBoxDonkpocketGondola
+          amount: 1
+        - id: FoodBoxDonkpocketDink
+          prob: 0.1
