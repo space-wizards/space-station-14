@@ -1,23 +1,19 @@
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
-using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
-using Content.Shared.Kitchen.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
-using Content.Shared.Gibbing.Components;
-using Content.Shared.Movement.Systems;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Body.Systems;
 
@@ -66,45 +62,41 @@ public sealed class BodySystem : SharedBodySystem
     }
 
     protected override void AddPart(
-        EntityUid bodyUid,
-        EntityUid partUid,
-        string slotId,
-        BodyPartComponent component,
-        BodyComponent? bodyComp = null)
+        Entity<BodyComponent?> bodyEnt,
+        Entity<BodyPartComponent> partEnt,
+        string slotId)
     {
         // TODO: Predict this probably.
-        base.AddPart(bodyUid, partUid, slotId, component, bodyComp);
+        base.AddPart(bodyEnt, partEnt, slotId);
 
-        if (TryComp<HumanoidAppearanceComponent>(bodyUid, out var humanoid))
+        if (TryComp<HumanoidAppearanceComponent>(bodyEnt, out var humanoid))
         {
-            var layer = component.ToHumanoidLayers();
+            var layer = partEnt.Comp.ToHumanoidLayers();
             if (layer != null)
             {
                 var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(bodyUid, layers, true, true, humanoid);
+                _humanoidSystem.SetLayersVisibility(bodyEnt, layers, true, true, humanoid);
             }
         }
     }
 
     protected override void RemovePart(
-        EntityUid bodyUid,
-        EntityUid partUid,
-        string slotId,
-        BodyPartComponent component,
-        BodyComponent? bodyComp = null)
+        Entity<BodyComponent?> bodyEnt,
+        Entity<BodyPartComponent> partEnt,
+        string slotId)
     {
-        base.RemovePart(bodyUid, partUid, slotId, component, bodyComp);
+        base.RemovePart(bodyEnt, partEnt, slotId);
 
-        if (!TryComp<HumanoidAppearanceComponent>(bodyUid, out var humanoid))
+        if (!TryComp<HumanoidAppearanceComponent>(bodyEnt, out var humanoid))
             return;
 
-        var layer = component.ToHumanoidLayers();
+        var layer = partEnt.Comp.ToHumanoidLayers();
 
         if (layer == null)
             return;
 
         var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-        _humanoidSystem.SetLayersVisibility(bodyUid, layers, false, true, humanoid);
+        _humanoidSystem.SetLayersVisibility(bodyEnt, layers, false, true, humanoid);
     }
 
     public override HashSet<EntityUid> GibBody(
