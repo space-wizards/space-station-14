@@ -60,19 +60,3 @@
       - !type:AdjustReagent
         reagent: OilOlive
         amount: 0.10
-
-- type: reagent
-  id: OilGhee
-  name: reagent-name-oil-ghee
-  group: Foods
-  desc: reagent-desc-oil-ghee
-  physicalDesc: reagent-physical-desc-oily
-  flavor: butter
-  color: gold
-  recognizable: true
-  metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.75
