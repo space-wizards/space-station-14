@@ -58,11 +58,8 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
     {
         SpamEmitSoundReset(entity);
 
-        if (entity.Comp.Enabled)
-        {
-            // Prewarm to emulate the component already running.
-            entity.Comp.NextSound -= Random.Next(entity.Comp.MinInterval);
-        }
+        // Prewarm so multiple entities have more variation.
+        entity.Comp.NextSound -= Random.Next(entity.Comp.MaxInterval);
     }
 
     private void HandleSpamEmitSoundUnpause(Entity<SpamEmitSoundComponent> entity, ref EntityUnpausedEvent args)
