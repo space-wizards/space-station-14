@@ -211,8 +211,24 @@
       - Cyborgs
 
 - type: entity
+  abstract: true
+  id: BaseBorgTransponder
+  components:
+  - type: BorgTransponder
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CyborgControl
+    transmitFrequencyId: RoboticsConsole
+  # literally just a minibomb
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 200
+    intensitySlope: 30
+    maxIntensity: 60
+
+- type: entity
   id: BaseBorgChassisNT
-  parent: BaseBorgChassis
+  parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
   - type: NpcFactionMember
