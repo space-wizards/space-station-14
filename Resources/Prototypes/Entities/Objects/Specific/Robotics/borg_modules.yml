@@ -513,7 +513,6 @@
     items:
     - FlashlightSecliteBorg
     - ForensicScanner
-    - FlippoLighter
    
 #syndicate modules
 - type: entity
