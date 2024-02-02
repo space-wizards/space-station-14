@@ -59,6 +59,9 @@
   id: BorgArm
 
 - type: Tag
+  id: BoomBoxTape
+
+- type: Tag
   id: BorgEngineerHead
 
 - type: Tag

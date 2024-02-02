@@ -63,6 +63,11 @@
   name: store-category-pointless
   priority: 9
 
+- type: storeCategory
+  id: UplinkTape
+  name: store-category-tape
+  priority: 10
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities

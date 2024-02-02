@@ -1603,3 +1603,39 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+
+# Tape
+
+- type: listing
+  id: UplinkBoomBox
+  name: uplink-boombox-name
+  description: uplink-boombox-desc
+  icon: { sprite: /Textures/Objects/Devices/boombox.rsi, state: boombox }
+  productEntity: BaseBoomBox
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkTape
+
+- type: listing
+  id: UplinkTapeSyndPAI
+  name: uplink-tape-pai-name
+  description: uplink-tape-pai-desc
+  icon: { sprite: /Textures/Objects/Devices/boomboxtape.rsi, state: tape }
+  productEntity: BaseBoomBoxTapeSyndPAI
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkTape
+
+- type: listing
+  id: UplinkTapeSyndTest
+  name: uplink-tape-box-supplies-name
+  description: uplink-tape-box-supplies-desc
+  icon: { sprite: /Textures/Objects/Devices/boomboxtape.rsi, state: tape }
+  productEntity: BaseBoomBoxTapeSyndTest
+  cost:
+    Telecrystal: 41
+  categories:
+    - UplinkTape

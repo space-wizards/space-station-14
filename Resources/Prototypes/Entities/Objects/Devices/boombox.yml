@@ -1,0 +1,83 @@
+- type: entity
+  parent: BaseItem
+  id: BaseBoomBox
+  name: BoomBox
+  description: A boombox for playing music with a volume control. The manufacturer's label has been erased on the back cover...
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/boombox.rsi
+      state: boombox
+    - type: BoomBox
+      slots:
+        boombox_slot:
+          whitelist:
+            tags:
+              - BoomBoxTape
+          locked: false
+          swap: false
+          ejectOnDeconstruct: true
+          ejectOnBreak: true
+    - type: ActivatableUI
+      key: enum.BoomBoxUiKey.Key
+    - type: UserInterface
+      interfaces:
+      - key: enum.BoomBoxUiKey.Key
+        type: BoomBoxBoundUi
+
+- type: entity
+  parent: BaseItem
+  id: BaseBoomBoxTape
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/boomboxtape.rsi
+      state: tape
+    - type: Tag
+      tags:
+        - BoomBoxTape
+    - type: BoomBoxTape
+      soundPath: /Audio/BoomBox/AssHole.ogg
+      syndStatus: false
+      syndItem: "SyndicatePersonalAI"
+
+- type: entity
+  parent: BaseBoomBoxTape
+  id: BaseBoomBoxTapeTheWizard
+  name: The Wizard
+  description: It is said that this tape can summon a wizard...
+  components:
+    - type: BoomBoxTape
+      soundPath: /Audio/BoomBox/TheWizard.ogg
+
+- type: entity
+  parent: BaseBoomBoxTape
+  id: BaseBoomBoxTapeAssHole
+  name: Space AssHole
+  description: Ageless classics...
+  components:
+    - type: BoomBoxTape
+      soundPath: /Audio/BoomBox/AssHole.ogg
+
+- type: entity
+  parent: BaseBoomBoxTape
+  id: BaseBoomBoxTapeSyndPAI
+  name: Space AssHole
+  description: Ageless classics...
+  suffix: Syndicate
+  components:
+    - type: BoomBoxTape
+      soundPath: /Audio/BoomBox/AssHole.ogg
+      syndStatus: true
+      syndItem: "SyndicatePersonalAI"
+
+- type: entity
+  parent: BaseBoomBoxTape
+  id: BaseBoomBoxTapeSyndTest
+  name: The Wizard
+  description: It is said that this tape can summon a wizard...
+  suffix: Syndicate
+  components:
+    - type: BoomBoxTape
+      soundPath: /Audio/BoomBox/TheWizard.ogg
+      syndStatus: true
+      syndItem: "CrateSyndicateSurplusBundle"

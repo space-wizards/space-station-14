@@ -1,0 +1,11 @@
+boombox-on = The boombox is on
+need-tape = A cassette is required
+tape-in = The cassette is inserted
+tape-out = The cassette has been removed
+boombox-off = The boombox is off
+read-tape = The song was read
+boombox-ui-window = The boombox
+boombox-ui-minusvol-button = - vol
+boombox-ui-plusvol-button = + vol
+boombox-ui-start-button = ▶
+boombox-ui-stop-button = ⏹

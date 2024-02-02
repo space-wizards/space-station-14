@@ -1,0 +1,25 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'boombox-ui-window'}"
+               MinSize="256 80"
+               SetSize="256 80">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="MinusVolButton"
+                    Text="{Loc 'boombox-ui-minusvol-button'}"
+                    HorizontalExpand="True"
+                    Disabled="True" />
+            <Button Name="StartButton"
+                    Text="{Loc 'boombox-ui-start-button'}"
+                    HorizontalExpand="True"
+                    Disabled="True" />
+            <Button Name="StopButton"
+                    Text="{Loc 'boombox-ui-stop-button'}"
+                    HorizontalExpand="True"
+                    Disabled="True" />
+            <Button Name="PlusVolButton"
+                    Text="{Loc 'boombox-ui-plusvol-button'}"
+                    HorizontalExpand="True"
+                    Disabled="True" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
