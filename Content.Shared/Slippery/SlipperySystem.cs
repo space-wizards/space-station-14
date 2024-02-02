@@ -75,7 +75,10 @@ public sealed class SlipperySystem : EntitySystem
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
 
             if (component.SuperSlippery)
-                EnsureComp<SlidingComponent>(other);
+            {
+                var sliding = EnsureComp<SlidingComponent>(other);
+                sliding.CollidingEntities.Add(uid);
+            }
         }
 
         var playSound = !_statusEffects.HasStatusEffect(other, "KnockedDown");
