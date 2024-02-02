@@ -85,6 +85,7 @@
     - BorgModuleClowning
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
+    - BorgModuleInvestigation
 
 - type: technology
   id: RoboticCleanliness
