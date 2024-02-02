@@ -691,9 +691,15 @@
   icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: gib }
   productEntity: DeathAcidifierImplanter
   cost:
-    Telecrystal: 4 # very rarely used by agents for their original purpose, gibber weapon
+    Telecrystal: 2 
   categories:
   - UplinkImplants
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+  
 
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
