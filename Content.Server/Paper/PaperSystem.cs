@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Server.Roles.Jobs;
 using Content.Server.Station.Systems;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Mind.Components;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -28,6 +30,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StationSystem _station = default!;
+        [Dependency] private readonly JobSystem _job = default!;
 
         public override void Initialize()
         {
@@ -119,19 +122,18 @@ namespace Content.Server.Paper
                 if (paperComp.TagsState != null)
                 {
                     paperComp.TagsState = TryComp<MetaDataComponent>(args.User, out var metaEntity)
-                        ? paperComp.TagsState with
-                        {
-                            PersonName = metaEntity!.EntityName,
-                        }
-                        : paperComp.TagsState with
-                        {
-                            PersonName = Loc.GetString("paper-tags-person-name-default")
-                        };
-                    var station = _station.GetOwningStation(args.Used);
+                        ? paperComp.TagsState with { PersonName = metaEntity!.EntityName }
+                        : paperComp.TagsState with { PersonName = Loc.GetString("paper-tags-person-name-default") };
+
+                    var station = _station.GetOwningStation(args.User);
                     paperComp.TagsState = station is null
                         ? paperComp.TagsState with { StationName = Loc.GetString("paper-tags-station-name-default") }
                         : paperComp.TagsState with { StationName = Name(station!.Value) };
-                    // paperComp.TagsState = TryComp<MetaDataComponent>()
+
+                    if (TryComp<MindContainerComponent>(args.User, out var mindContainer))
+                        paperComp.TagsState = _job.MindTryGetJobName(mindContainer.Mind, out var jobName)
+                            ? paperComp.TagsState with { PersonJob = jobName }
+                            : paperComp.TagsState with { PersonJob = Loc.GetString("paper-tags-person-job-default") };
                 }
 
                 paperComp.Mode = PaperAction.Write;
