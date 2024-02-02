@@ -33,6 +33,7 @@ public sealed class SlipperySystem : EntitySystem
         SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
         SubscribeLocalEvent<SlipperyComponent, StepTriggeredEvent>(HandleStepTrigger);
         SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
+        SubscribeLocalEvent<ThrownItemComponent, SlipEvent>(OnThrownSlipAttempt);
         // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
     }
@@ -55,6 +56,18 @@ public sealed class SlipperySystem : EntitySystem
         args.Cancel();
     }
 
+    private void OnThrownSlipAttempt(EntityUid uid, ThrownItemComponent comp, SlipEvent args)
+    {
+        args.Cancel();
+
+        //TODO: If it's after 2024 March and this popup is still here, remove it
+        // Only here so people who don't read even the changelog won't think soap suddenly broke
+        // Can't be popupclient because the goal is to let every onlooker know that this was not a glitch or "omg noslips"
+        _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), uid);
+
+        return;
+    }
+
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
         return !_container.IsEntityInContainer(uid)
@@ -66,20 +79,15 @@ public sealed class SlipperySystem : EntitySystem
         if (HasComp<KnockedDownComponent>(other))
             return;
 
-        if (HasComp<ThrownItemComponent>(uid))
-        {
-            // This popup is here so people don't just think the game broke, it can probably be removed later
-            _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), other);
-            return;
-        }
-
         var attemptEv = new SlipAttemptEvent();
         RaiseLocalEvent(other, attemptEv);
         if (attemptEv.Cancelled)
             return;
 
         var ev = new SlipEvent(other);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ev);
+        if (ev.Cancelled)
+            return;
 
         if (TryComp(other, out PhysicsComponent? physics))
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
@@ -108,7 +116,16 @@ public sealed class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRel
 }
 
 /// <summary>
-///     This event is raised directed at an entity that CAUSED some other entity to slip (e.g., the banana peel).
+///     Raised on an entity that CAUSED some other entity to slip (e.g., the banana peel).
 /// </summary>
-[ByRefEvent]
-public readonly record struct SlipEvent(EntityUid Slipped);
+public sealed class SlipEvent : CancellableEntityEventArgs
+{
+    /// <summary>
+    /// The person being slipped.
+    /// </summary>
+    public EntityUid Slipped;
+    public SlipEvent(EntityUid slipped)
+    {
+        Slipped = slipped;
+    }
+}
