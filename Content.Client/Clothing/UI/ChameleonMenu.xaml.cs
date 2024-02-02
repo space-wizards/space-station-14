@@ -17,7 +17,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly SpriteSystem _sprite;
-    public event Action<string>? OnIdSelected;
+    public event Action<EntProtoId>? OnIdSelected;
 
     private IEnumerable<EntProtoId> _possibleIds = Enumerable.Empty<EntProtoId>();
     private EntProtoId? _selectedId;

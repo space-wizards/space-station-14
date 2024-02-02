@@ -1,6 +1,7 @@
 using Content.Client.Clothing.Systems;
 using Content.Shared.Clothing.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Clothing.UI;
 
@@ -37,7 +38,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
         _menu?.UpdateState(targets, st.SelectedId);
     }
 
-    private void OnIdSelected(string selectedId)
+    private void OnIdSelected(EntProtoId selectedId)
     {
         SendMessage(new ChameleonPrototypeSelectedMessage(selectedId));
     }
