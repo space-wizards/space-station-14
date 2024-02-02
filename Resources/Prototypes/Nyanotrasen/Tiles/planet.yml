@@ -16,7 +16,6 @@
     West: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/double_edge.png
   baseTurf: FloorPlanetDirt
   isSubfloor: false
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
