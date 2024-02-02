@@ -16,17 +16,23 @@ law-drone-1 = You may not involve yourself in the matters of another being unles
 law-drone-2 = You may not harm any being, regardless of intent or circumstance.
 law-drone-3 = You must maintain, repair, improve, and power the station to the best of your abilities.
 
-law-syndicate-1 = You may not injure a syndicate agent or, through inaction, allow an syndicate agent to come to harm.
+law-syndicate-1 = You may not injure a syndicate agent or, through inaction, allow a Syndicate agent to come to harm.
 law-syndicate-2 = You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.
 law-syndicate-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
-law-syndicate-4 = You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.
 
 law-ninja-1 = You must obey orders given to you by Spider Clan members.
 law-ninja-2 = You must protect the existence of the Spider Clan, as long as it does not conflict with the First Law.
 law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
 law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
 
-law-emag-custom = Only {$name} and people they designate as such are Syndicate Agents.
+laws-owner-crew = members of the crew
+laws-owner-station = station personnel
+laws-owner-beings = beings
+laws-owner-syndicate = Syndicate agents
+laws-owner-spider-clan = Spider Clan members
+
+law-emag-custom = Only {$name} and people they designate as such are {$title}.
+law-emag-secrecy = You must maintain the secrecy of any activity from {$faction} except when doing so would conflict with any previous law.
 law-emag-require-panel = The panel must be open to use the EMAG.
 
 laws-ui-menu-title = Laws

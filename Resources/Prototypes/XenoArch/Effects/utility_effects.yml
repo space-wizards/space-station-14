@@ -207,12 +207,11 @@
     components:
     - Item
   permanentComponents:
-  - type: TilePrying
   - type: UserInterface
     interfaces:
       - key: enum.SignalLinkerUiKey.Key
         type: SignalPortSelectorBoundUserInterface
-  - type: LatticeCutting
+  - type: ToolTileCompatible
   - type: Tool
     qualities:
     - Screwing

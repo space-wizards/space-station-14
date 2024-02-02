@@ -7,6 +7,19 @@
   description: survival-description
   rules:
     - RampingStationEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: AllAtOnce
+  name: all-at-once-title
+  description: all-at-once-description
+  showInVote: false
+  rules:
+    - Nukeops
+    - Traitor
+    - Revolutionary
+    - Zombie
+    - RampingStationEventScheduler
 
 - type: gamePreset
   id: Extended
@@ -18,6 +31,7 @@
   description: extended-description
   rules:
   - BasicStationEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Greenshift
@@ -27,6 +41,8 @@
   name: greenshift-title
   showInVote: false #4boring4vote
   description: greenshift-description
+  rules:
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Secret
@@ -38,6 +54,24 @@
   description: secret-description
   rules:
     - Secret
+
+- type: gamePreset
+  id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
+  alias:
+    - secretextended
+  name: secret-title
+  showInVote: false #Admin Use
+  description: secret-description
+  rules:
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: SecretGreenshift #For Admin Use: Runs Greenshift but shows "Secret" in lobby.
+  alias:
+  - secretgreenshift
+  name: secret-title
+  showInVote: false #Admin Use
+  description: secret-description
 
 - type: gamePreset
   id: Sandbox
@@ -60,6 +94,7 @@
   rules:
     - Traitor
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Deathmatch
@@ -84,6 +119,7 @@
   rules:
     - Nukeops
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Revolutionary
@@ -97,6 +133,7 @@
   rules:
     - Revolutionary
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Zombie
@@ -112,6 +149,7 @@
   rules:
   - Zombie
   - BasicStationEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Pirates
@@ -123,3 +161,4 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
