@@ -28,6 +28,7 @@
     tags:
     - Document
     - Trash
+    - Paper
   - type: Appearance
   - type: PaperVisuals
   - type: Flammable
@@ -56,6 +57,17 @@
               max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Food
+    solution: food
+    delay: 7
+    forceFeedDelay: 7
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 1
 
 - type: entity
   name: paper scrap
