@@ -17,7 +17,6 @@
   baseTurf: FloorPlanetDirt
   isSubfloor: false
   canCrowbar: false
-  canShovel: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
