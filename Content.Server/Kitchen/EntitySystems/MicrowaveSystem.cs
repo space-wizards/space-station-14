@@ -108,6 +108,9 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
                 return;
 
+            foreach (var item in _container.GetContainer(ent, "microwave_entity_container").ContainedEntities)
+                RemComp<ActivelyMicrowavedComponent>(item);
+
             SetAppearance(ent.Owner, MicrowaveVisualState.Idle, microwaveComponent);
             microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
         }
