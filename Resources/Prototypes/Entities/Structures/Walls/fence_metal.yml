@@ -163,8 +163,8 @@
         mask:
         - FullTileMask
         layer:
-        - HighImpassable
         - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -231,8 +231,8 @@
         mask:
         - TableMask
         layer:
-        - HighImpassable
         - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -268,8 +268,8 @@
         mask:
         - TableMask
         layer:
-        - HighImpassable
         - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -304,8 +304,8 @@
         mask:
         - TableMask
         layer:
-        - HighImpassable
         - MidImpassable
+        - LowImpassable
   - type: InteractionOutline
   - type: Door
     openSpriteState: door_opened
