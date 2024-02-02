@@ -6,7 +6,7 @@ namespace Content.Shared.Pointing;
 public abstract class SharedPointingSystem : EntitySystem
 {
     protected readonly TimeSpan PointDuration = TimeSpan.FromSeconds(4);
-    protected readonly float PointKeyTimeMove = 0.15f;
+    protected readonly float PointKeyTimeMove = 0.1f;
     protected readonly float PointKeyTimeHover = 0.5f;
 
     [Serializable, NetSerializable]

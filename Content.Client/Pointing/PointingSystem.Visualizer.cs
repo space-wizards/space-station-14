@@ -39,10 +39,11 @@ public sealed partial class PointingSystem : SharedPointingSystem
                     InterpolationMode = AnimationInterpolationMode.Cubic,
                     KeyFrames =
                     {
-                        // We pad here to prevent improper looping
+                        // We pad here to prevent improper looping and tighten the overshoot, just a touch
                         new AnimationTrackProperty.KeyFrame(startPosition, 0f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startPosition, offset, 0.9f), PointKeyTimeMove),
                         new AnimationTrackProperty.KeyFrame(offset, PointKeyTimeMove),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, PointKeyTimeHover),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, PointKeyTimeMove),
                         new AnimationTrackProperty.KeyFrame(offset, PointKeyTimeHover),
                         new AnimationTrackProperty.KeyFrame(Vector2.Zero, PointKeyTimeHover),
                         new AnimationTrackProperty.KeyFrame(offset, PointKeyTimeHover),
