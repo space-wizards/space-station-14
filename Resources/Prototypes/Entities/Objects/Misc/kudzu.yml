@@ -163,7 +163,7 @@
   components:
     - type: Kudzu
       spreadRadius: 10
-      spreadChance: 0.4
+      spreadChance: 0.3
     - type: RandomSpawner
       chance: 0.1
       rarePrototypes:
