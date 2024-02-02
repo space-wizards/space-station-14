@@ -539,6 +539,7 @@
     - BorgModuleHarvesting
     - BorgModuleMusique
     - BorgModuleClowning
+    - BorgModuleInvestigation
     - BorgModuleDiagnosis
     - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
