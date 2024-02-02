@@ -1,0 +1,14 @@
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketGondola
+  name: box of gondola-flavoured donk-pockets
+  components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Consumable/Food/Baked/donkpocket.rsi
+    state: gondola-box
+  - type: Item
+    sprite: GreyStation/Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketGondola
+      amount: 6
