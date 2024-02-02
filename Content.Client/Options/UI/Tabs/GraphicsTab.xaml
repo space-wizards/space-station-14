@@ -16,11 +16,6 @@
                 <OptionButton Name="UIScaleOption" />
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'ui-options-hud-theme'}" />
-                <Control MinSize="4 0" />
-                <OptionButton Name="HudThemeOption" />
-            </BoxContainer>
-            <BoxContainer Orientation="Horizontal">
                 <CheckBox Name="ViewportStretchCheckBox" Text="{Loc 'ui-options-vp-stretch'}" />
                 <BoxContainer Name="ViewportScaleBox" Orientation="Horizontal">
                     <Label Name="ViewportScaleText" Margin="8 0" />
@@ -37,11 +32,6 @@
                 <Slider Name="ViewportWidthSlider"
                         Rounded="True"
                         MinWidth="200" />
-            </BoxContainer>
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'ui-options-hud-layout'}" />
-                <Control MinSize="4 0" />
-                <OptionButton Name="HudLayoutOption" />
             </BoxContainer>
             <CheckBox Name="IntegerScalingCheckBox"
                       Text="{Loc 'ui-options-vp-integer-scaling'}"

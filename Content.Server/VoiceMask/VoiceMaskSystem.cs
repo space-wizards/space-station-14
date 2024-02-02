@@ -22,7 +22,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnSpeakerNameTransform);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
-        SubscribeLocalEvent<VoiceMaskComponent, ItemMaskToggledEvent>(OnMaskToggled);
+        SubscribeLocalEvent<VoiceMaskComponent, WearerMaskToggledEvent>(OnMaskToggled);
         SubscribeLocalEvent<VoiceMaskerComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OnSetName);
@@ -66,10 +66,12 @@ public sealed partial class VoiceMaskSystem : EntitySystem
                 */
 
             args.Name = component.VoiceName;
+            if (component.SpeechVerb != null)
+                args.SpeechVerb = component.SpeechVerb;
         }
     }
 
-    private void OnMaskToggled(Entity<VoiceMaskComponent> ent, ref ItemMaskToggledEvent args)
+    private void OnMaskToggled(Entity<VoiceMaskComponent> ent, ref WearerMaskToggledEvent args)
     {
         ent.Comp.Enabled = !args.IsToggled;
     }

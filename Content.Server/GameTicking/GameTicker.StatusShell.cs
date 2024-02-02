@@ -27,7 +27,7 @@ namespace Content.Server.GameTicking
         ///     For access to the round ID in status responses.
         /// </summary>
         [Dependency] private readonly SharedGameTicker _gameTicker = default!;
-        
+
         private void InitializeStatusShell()
         {
             IoCManager.Resolve<IStatusHost>().OnStatusRequest += GetStatusResponse;
@@ -35,6 +35,8 @@ namespace Content.Server.GameTicking
 
         private void GetStatusResponse(JsonNode jObject)
         {
+            var preset = CurrentPreset ?? Preset;
+
             // This method is raised from another thread, so this better be thread safe!
             lock (_statusShellLock)
             {
@@ -43,7 +45,10 @@ namespace Content.Server.GameTicking
                 jObject["round_id"] = _gameTicker.RoundId;
                 jObject["players"] = _playerManager.PlayerCount;
                 jObject["soft_max_players"] = _cfg.GetCVar(CCVars.SoftMaxPlayers);
+                jObject["panic_bunker"] = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
                 jObject["run_level"] = (int) _runLevel;
+                if (preset != null)
+                    jObject["preset"] = Loc.GetString(preset.ModeTitle);
                 if (_runLevel >= GameRunLevel.InRound)
                 {
                     jObject["round_start_time"] = _roundStartDateTime.ToString("o");

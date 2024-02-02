@@ -6,10 +6,6 @@
   abstract: true
   components:
   - type: Hunger
-    starvationDamage:
-      types:
-        Cold: 0.5
-        Bloodloss: 0.5
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
@@ -28,7 +24,6 @@
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:

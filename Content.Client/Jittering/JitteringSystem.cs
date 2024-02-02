@@ -30,6 +30,7 @@ namespace Content.Client.Jittering
 
             var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
 
+            jittering.StartOffset = sprite.Offset;
             _animationPlayer.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
@@ -39,7 +40,7 @@ namespace Content.Client.Jittering
                 _animationPlayer.Stop(uid, animationPlayer, _jitterAnimationKey);
 
             if (TryComp(uid, out SpriteComponent? sprite))
-                sprite.Offset = Vector2.Zero;
+                sprite.Offset = jittering.StartOffset;
         }
 
         private void OnAnimationCompleted(EntityUid uid, JitteringComponent jittering, AnimationCompletedEvent args)
@@ -91,7 +92,7 @@ namespace Content.Client.Jittering
                         KeyFrames =
                         {
                             new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),
-                            new AnimationTrackProperty.KeyFrame(offset, length),
+                            new AnimationTrackProperty.KeyFrame(jittering.StartOffset + offset, length),
                         }
                     }
                 }

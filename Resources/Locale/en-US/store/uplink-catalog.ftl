@@ -33,6 +33,9 @@ uplink-explosive-grenade-desc = A simplistic grenade with a three-and-a-half-sec
 uplink-flash-grenade-name = Flashbang
 uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
 
+uplink-smoke-grenade-name = Smoke Grenade
+uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfect for killing someone in the shadows or making a sneaky getaway.
+
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
@@ -118,6 +121,9 @@ uplink-reinforcement-radio-monkey-desc =  Call in a trained monkey to assist you
 uplink-reinforcement-radio-name = Reinforcement Teleporter
 uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
 
+uplink-reinforcement-radio-cyborg-assault-name = Syndicate Assault Cyborg Teleporter
+uplink-reinforcement-radio-cyborg-assault-desc =  A lean, mean killing machine with access to an Energy Sword, LMG, Cryptographic Sequencer, and a Pinpointer.
+
 uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 
@@ -139,6 +145,12 @@ uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever y
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
+uplink-syndicate-weapon-module-name = Weapon Cyborg Module
+uplink-syndicate-weapon-module-desc = This module will give a cyborg advanced laser and machete
+
+uplink-singularity-beacon-name = Singularity Beacon
+uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
@@ -146,12 +158,14 @@ uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespa
 uplink-freedom-implanter-name = Freedom Implanter
 uplink-freedom-implanter-desc = Get away from those nasty sec officers with this three use implant!
 
+uplink-scram-implanter-name = Scram Implanter
+uplink-scram-implanter-desc = A 2-use implant which teleports you within a large radius. Attempts to teleport you onto an unobstructed tile. May sometimes fail to do so. Life insurance not included.
+
 uplink-dna-scrambler-implanter-name = DNA Scrambler Implanter
 uplink-dna-scrambler-implanter-desc = A single use implant that can be activated to modify your DNA and give you a completely new look.
 
 uplink-emp-implanter-name = EMP Implanter
 uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
-
 
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
@@ -169,8 +183,14 @@ uplink-micro-bomb-implanter-name = Micro Bomb Implanter
 uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
 
 # Bundles
+uplink-observation-kit-name = Observation Kit
+uplink-observation-kit-desc = Includes syndicate crew monitor, high power cell and security hud disguised as sunglasses.
+
 uplink-emp-kit-name = Electrical Disruptor Kit
 uplink-emp-kit-desc = The ultimate reversal on energy-based weaponry: Disables disablers, stuns stunbatons, discharges laser guns! Contains 3 EMP grenades and an EMP implanter. Note: Does not disrupt actual firearms.
+
+uplink-chemistry-kit-name = Chemical Synthesis Kit
+uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
 
 uplink-meds-bundle-name = Medical Bundle
 uplink-meds-bundle-desc = All you need to get your comrades back in the fight: mainly a combat medkit, a defibrillator and three combat medipens.
@@ -265,14 +285,17 @@ uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increas
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
-uplink-hardsuit-syndie-name = Syndicate Hardsuit
-uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
-
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping and, in zero gravity, allow you to move normally, at the cost of a slight slowdown. Additionally, they have jetpack functionality and come fueled, but don't last for long.
 
 uplink-eva-syndie-name = Syndicate EVA Bundle
 uplink-eva-syndie-desc = A simple EVA suit that offers no protection other than what's needed to survive in space.
+
+uplink-hardsuit-syndie-name = Syndicate Hardsuit
+uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+
+uplink-hardsuit-syndieelite-name = Syndicate Elite Hardsuit
+uplink-hardsuit-syndieelite-desc = An elite version of the blood-red hardsuit, with improved mobility and fireproofing. Property of Gorlex Marauders.
 
 uplink-clothing-outer-hardsuit-juggernaut-name = Cybersun Juggernaut Suit
 uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
@@ -299,14 +322,14 @@ uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
 uplink-ultrabright-lantern-name = Extra-Bright Lantern
 uplink-ultrabright-lantern-desc = It can be used to blind people like a flash.
 
-uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
-uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
-
 uplink-combat-medkit-name = Combat Medical Kit
 uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
 
 uplink-combat-medipen-name = Combat Medipen
 uplink-combat-medipen-desc = A single-use medipen containing chemicals that regenerate most types of damage.
+
+uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
+uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
 
 uplink-stimpack-name = Stimpack
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
@@ -322,6 +345,9 @@ uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguise
 
 uplink-slipocalypse-clustersoap-name = Slipocalypse Clustersoap
 uplink-slipocalypse-clustersoap-desc = Scatters arounds small pieces of syndicate-brand soap after being thrown, these pieces of soap evaporate after 60 seconds.
+
+uplink-mobcat-microbomb-name = SyndiCat
+uplink-mobcat-microbomb-desc = A hand cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun
@@ -368,3 +394,6 @@ uplink-syndicate-pai-desc = A Syndicate variant of the pAI with access to the Sy
 
 uplink-bribe-name = Lobbying Bundle
 uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. Real or counterfeit? Yes.
+
+uplink-hypodart-name = Hypodart
+uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir for chemicals. It can store up to 7u reagents in itself, and instantly inject when it hits the target. Starts empty.

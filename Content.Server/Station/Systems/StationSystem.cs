@@ -6,6 +6,7 @@ using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Station;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -35,6 +36,7 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -85,7 +87,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), e.Session);
+            RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), e.Session);
         }
     }
 
@@ -93,7 +95,7 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentStartup args)
     {
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
 
         var metaData = MetaData(uid);
         RaiseLocalEvent(new StationInitializedEvent(uid));
@@ -108,7 +110,7 @@ public sealed class StationSystem : EntitySystem
             RemComp<StationMemberComponent>(grid);
         }
 
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -209,6 +211,23 @@ public sealed class StationSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns the total number of tiles contained in the station's grids.
+    /// </summary>
+    public int GetTileCount(StationDataComponent component)
+    {
+        var count = 0;
+        foreach (var gridUid in component.Grids)
+        {
+            if (!TryComp<MapGridComponent>(gridUid, out var grid))
+                continue;
+
+            count += _map.GetAllTiles(gridUid, grid).Count();
+        }
+
+        return count;
+    }
+
+    /// <summary>
     /// Tries to retrieve a filter for everything in the station the source is on.
     /// </summary>
     /// <param name="source">The entity to use to find the station.</param>
@@ -306,8 +325,8 @@ public sealed class StationSystem : EntitySystem
             AddGridToStation(station, grid, null, data, name);
         }
 
-        var ev = new StationPostInitEvent();
-        RaiseLocalEvent(station, ref ev);
+        var ev = new StationPostInitEvent((station, data));
+        RaiseLocalEvent(station, ref ev, true);
 
         return station;
     }
@@ -331,7 +350,7 @@ public sealed class StationSystem : EntitySystem
         if (!string.IsNullOrEmpty(name))
             _metaData.SetEntityName(mapGrid, name);
 
-        var stationMember = AddComp<StationMemberComponent>(mapGrid);
+        var stationMember = EnsureComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
         stationData.Grids.Add(mapGrid);
 
@@ -401,6 +420,14 @@ public sealed class StationSystem : EntitySystem
         QueueDel(station);
     }
 
+    public EntityUid? GetOwningStation(EntityUid? entity, TransformComponent? xform = null)
+    {
+        if (entity == null)
+            return null;
+
+        return GetOwningStation(entity.Value, xform);
+    }
+
     /// <summary>
     /// Gets the station that "owns" the given entity (essentially, the station the grid it's on is attached to)
     /// </summary>
@@ -458,6 +485,19 @@ public sealed class StationSystem : EntitySystem
         }
 
         return stations;
+    }
+
+    public List<(string Name, NetEntity Entity)> GetStationNames()
+    {
+        var stations = GetStationsSet();
+        var stats = new List<(string Name, NetEntity Station)>();
+
+        foreach (var weh in stations)
+        {
+            stats.Add((MetaData(weh).EntityName, GetNetEntity(weh)));
+        }
+
+        return stats;
     }
 
     /// <summary>

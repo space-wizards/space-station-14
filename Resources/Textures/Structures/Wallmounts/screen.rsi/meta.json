@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "From vgstation: https://github.com/vgstation-coders/vgstation13/commit/a7290010020e541ed6b57817a07023ca6bef26fe#diff-20395160138bed693d15eee6f16d671531b5fa533ec52c50e8df6d52370dbecd",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "screen"
+      }
+    ]
+}

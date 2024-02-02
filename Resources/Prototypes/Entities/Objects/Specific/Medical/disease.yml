@@ -22,7 +22,7 @@
 - type: entity
   parent: BaseItem
   id: Vaccine
-  name: Vaccine
+  name: vaccine
   description: Prevents people who DON'T already have a disease from catching it.
   components:
   - type: Item

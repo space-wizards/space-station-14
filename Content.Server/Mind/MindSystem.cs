@@ -171,14 +171,17 @@ public sealed class MindSystem : SharedMindSystem
             return;
         }
 
-        if (GetSession(mind) is { } session)
-            _players.SetAttachedEntity(session, entity);
-
         mind.VisitingEntity = entity;
 
         // EnsureComp instead of AddComp to deal with deferred deletions.
         var comp = EnsureComp<VisitingMindComponent>(entity);
         comp.MindId = mindId;
+
+        // Do this AFTER the entity changes above as this will fire off a player-detached event
+        // which will run ghosting twice.
+        if (GetSession(mind) is { } session)
+            _players.SetAttachedEntity(session, entity);
+
         Log.Info($"Session {mind.Session?.Name} visiting entity {entity}.");
     }
 

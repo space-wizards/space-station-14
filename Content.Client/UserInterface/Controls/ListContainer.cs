@@ -23,6 +23,7 @@ public sealed class ListContainer : Control
     public bool Toggle { get; set; }
     public Action<ListData, ListContainerButton>? GenerateItem;
     public Action<BaseButton.ButtonEventArgs?, ListData?>? ItemPressed;
+    public Action<GUIBoundKeyEventArgs, ListData?>? ItemKeyBindDown;
     public IReadOnlyList<ListData> Data => _data;
 
     private const int DefaultSeparation = 3;
@@ -133,6 +134,11 @@ public sealed class ListContainer : Control
             return;
         _selected = button.Data;
         ItemPressed?.Invoke(args, button.Data);
+    }
+
+    private void OnItemKeyBindDown(ListContainerButton button, GUIBoundKeyEventArgs args)
+    {
+        ItemKeyBindDown?.Invoke(args, button.Data);
     }
 
     [Pure]
@@ -256,6 +262,7 @@ public sealed class ListContainer : Control
                     {
                         button = new ListContainerButton(data);
                         button.OnPressed += OnItemPressed;
+                        button.OnKeyBindDown += args => OnItemKeyBindDown(button, args);
                         button.ToggleMode = Toggle;
                         button.Group = _buttonGroup;
 

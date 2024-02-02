@@ -105,12 +105,14 @@
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic. Uses .50 shotgun shells.
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Item
     size: Normal
     shape:
     - 0,0,4,0
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
+    heldPrefix: db
   - type: Gun
     fireRate: 2
   - type: BallisticAmmoProvider
@@ -134,25 +136,22 @@
   name: Enforcer
   parent: BaseWeaponShotgun
   id: WeaponShotgunEnforcer
-  description: A next-generation Frozen Star shotgun. Uses .50 shotgun shells.
+  description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
+    heldPrefix: enforcer
   - type: BallisticAmmoProvider
 
 - type: entity
-  name: Enforcer
-  parent: BaseWeaponShotgun
+  parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerRubber
-  description: A next-generation Frozen Star shotgun. Uses .50 shotgun shells.
   suffix: Non-Lethal
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
 
@@ -166,6 +165,8 @@
     size: Normal
     shape:
     - 0,0,4,0
+    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
+    heldPrefix: pump
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
@@ -188,6 +189,8 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
     size: Small
+    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
+    heldPrefix: sawn
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
@@ -261,14 +264,16 @@
   id: WeaponShotgunImprovised
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
+    heldPrefix: improvised
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider

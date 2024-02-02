@@ -26,7 +26,7 @@
 - type: entity
   parent: PartBase
   id: PartRodMetal
-  name: metal rods
+  name: metal rod
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -68,9 +68,9 @@
       rod:
         reagents:
         - ReagentId: Iron
-          Quantity: 11
-        - ReagentId: Carbon #Not 1.25 (half of 2.5) because that would probably be really weird
-          Quantity: 1
+          Quantity: 4.5
+        - ReagentId: Carbon
+          Quantity: 0.5
 
 - type: entity
   parent: PartRodMetal
@@ -105,6 +105,15 @@
 - type: entity
   parent: PartRodMetal
   id: PartRodMetalLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelLingering0
   suffix: Lingering, 0
   components:
   - type: Stack

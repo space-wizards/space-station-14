@@ -31,7 +31,7 @@
 - type: entity
   id: CigCartonRed
   parent: CigCartonGreen
-  name: Dromedaryco carton
+  name: DromedaryCo carton
   description: A carton containing 6 packets of Dromedarycos.
   components:
   - type: Sprite

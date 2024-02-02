@@ -14,13 +14,13 @@ namespace Content.Shared.Storage
     /// <summary>
     /// Handles generic storage with window, such as backpacks.
     /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class StorageComponent : Component
     {
         public static string ContainerId = "storagebase";
 
         // TODO: This fucking sucks
-        [ViewVariables(VVAccess.ReadWrite), DataField("isOpen"), AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public bool IsUiOpen;
 
         [ViewVariables]
@@ -29,73 +29,81 @@ namespace Content.Shared.Storage
         /// <summary>
         /// A dictionary storing each entity to its position within the storage grid.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public Dictionary<EntityUid, ItemStorageLocation> StoredItems = new();
 
         /// <summary>
         /// A list of boxes that comprise a combined grid that determines the location that items can be stored.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public List<Box2i> Grid = new();
 
         /// <summary>
         /// The maximum size item that can be inserted into this storage,
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         [Access(typeof(SharedStorageSystem))]
         public ProtoId<ItemSizePrototype>? MaxItemSize;
 
         // TODO: Make area insert its own component.
-        [DataField("quickInsert")]
+        [DataField]
         public bool QuickInsert; // Can insert storables by "attacking" them with the storage entity
 
-        [DataField("clickInsert")]
+        [DataField]
         public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
 
-        [DataField("areaInsert")]
+        [DataField]
         public bool AreaInsert;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
 
-        [DataField("areaInsertRadius")]
+        [DataField]
         public int AreaInsertRadius = 1;
 
         /// <summary>
         /// Whitelist for entities that can go into the storage.
         /// </summary>
-        [DataField("whitelist")]
+        [DataField]
         public EntityWhitelist? Whitelist;
 
         /// <summary>
         /// Blacklist for entities that can go into storage.
         /// </summary>
-        [DataField("blacklist")]
+        [DataField]
         public EntityWhitelist? Blacklist;
 
         /// <summary>
         /// Sound played whenever an entity is inserted into storage.
         /// </summary>
-        [DataField("storageInsertSound")]
+        [DataField]
         public SoundSpecifier? StorageInsertSound = new SoundCollectionSpecifier("storageRustle");
 
         /// <summary>
         /// Sound played whenever an entity is removed from storage.
         /// </summary>
-        [DataField("storageRemoveSound")]
+        [DataField]
         public SoundSpecifier? StorageRemoveSound;
 
         /// <summary>
         /// Sound played whenever the storage window is opened.
         /// </summary>
-        [DataField("storageOpenSound")]
+        [DataField]
         public SoundSpecifier? StorageOpenSound = new SoundCollectionSpecifier("storageRustle");
 
         /// <summary>
         /// Sound played whenever the storage window is closed.
         /// </summary>
-        [DataField("storageCloseSound")]
+        [DataField]
         public SoundSpecifier? StorageCloseSound;
 
+        /// <summary>
+        /// If not null, ensures that all inserted items are of the same orientation
+        /// Horizontal - items are stored laying down
+        /// Vertical - items are stored standing up
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public StorageDefaultOrientation? DefaultStorageOrientation;
+
         [Serializable, NetSerializable]
-        public enum StorageUiKey
+        public enum StorageUiKey : byte
         {
             Key,
         }
@@ -203,5 +211,12 @@ namespace Content.Shared.Storage
         Locked,
         StorageUsed,
         Capacity
+    }
+
+    [Serializable, NetSerializable]
+    public enum StorageDefaultOrientation : byte
+    {
+        Horizontal,
+        Vertical
     }
 }
