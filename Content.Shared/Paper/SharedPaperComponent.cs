@@ -10,12 +10,14 @@ public abstract partial class SharedPaperComponent : Component
         public readonly string Text;
         public readonly List<StampDisplayInfo> StampedBy;
         public readonly PaperAction Mode;
+        public readonly TimeSpan TimeWrite;
 
-        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
+        public PaperBoundUserInterfaceState(string text, TimeSpan timeWrite, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
         {
             Text = text;
             StampedBy = stampedBy;
             Mode = mode;
+            TimeWrite = timeWrite;
         }
     }
 
@@ -23,10 +25,12 @@ public abstract partial class SharedPaperComponent : Component
     public sealed class PaperInputTextMessage : BoundUserInterfaceMessage
     {
         public readonly string Text;
+        public readonly TimeSpan TimeWrite;
 
-        public PaperInputTextMessage(string text)
+        public PaperInputTextMessage(string text, TimeSpan timeWrite)
         {
             Text = text;
+            TimeWrite = timeWrite;
         }
     }
 

@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Robust.Client.Timing;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
@@ -9,6 +10,8 @@ namespace Content.Client.Paper.UI;
 [UsedImplicitly]
 public sealed class PaperBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IClientGameTiming _clientGameTiming = default!;
+
     [ViewVariables]
     private PaperWindow? _window;
 
@@ -48,7 +51,9 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
     private void Input_OnTextEntered(string text)
     {
-        SendMessage(new PaperInputTextMessage(text));
+        var time = _clientGameTiming.CurTime;
+
+        SendMessage(new PaperInputTextMessage(text, time));
 
         if (_window != null)
         {

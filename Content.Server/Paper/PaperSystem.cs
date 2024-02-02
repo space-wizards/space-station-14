@@ -163,6 +163,7 @@ namespace Content.Server.Paper
             }
 
             paperComp.Mode = PaperAction.Read;
+            paperComp.TimeWrite = args.TimeWrite;
             UpdateUserInterface(uid, paperComp);
         }
 
@@ -217,7 +218,7 @@ namespace Content.Server.Paper
                 return;
 
             if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
+                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.TimeWrite, paperComp.StampedBy, paperComp.Mode), session);
         }
     }
 

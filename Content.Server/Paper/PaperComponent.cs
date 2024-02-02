@@ -21,4 +21,7 @@ public sealed partial class PaperComponent : SharedPaperComponent
     /// </summary>
     [DataField("stampState")]
     public string? StampState { get; set; }
+
+    [DataField("timeWrite")]
+    public TimeSpan TimeWrite { get; set; }
 }
