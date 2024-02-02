@@ -1311,3 +1311,28 @@
       params:
         volume: -7
         maxDistance: 5
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieScientist
+  name: The plush scientist
+  description: A charming plush doll of the one who will doom your station.
+  components:
+  - type: Sprite
+    state: plushie_sci
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/weh.ogg
