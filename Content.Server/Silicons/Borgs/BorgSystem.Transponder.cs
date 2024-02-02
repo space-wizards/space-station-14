@@ -91,7 +91,7 @@ public sealed partial class BorgSystem
             return;
         }
 
-        _explosion.TriggerExplosive(ent, ent.Comp);
+        _explosion.TriggerExplosive(ent, ent.Comp, delete: false);
     }
 
     private bool CheckEmagged(EntityUid uid, string name)
