@@ -201,12 +201,3 @@
     tags:
       - GlassAirlock
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
-- type: entity
-  parent: AirlockGlass
-  id: AirlockEngineeringGlass
-  suffix: Engineering
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
-  - type: PaintableAirlock
-    group: Glass
