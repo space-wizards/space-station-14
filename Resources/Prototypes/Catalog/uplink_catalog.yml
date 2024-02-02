@@ -691,7 +691,7 @@
   icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: gib }
   productEntity: DeathAcidifierImplanter
   cost:
-    Telecrystal: 2
+    Telecrystal: 4 # very rarely used by agents for their original purpose, gibber weapon
   categories:
   - UplinkImplants
 
@@ -809,7 +809,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
   productEntity: BriefcaseSyndieSniperBundleFilled
   cost:
-    Telecrystal: 12
+    Telecrystal: 8 # used to be 12. Too infrequently used
   categories:
   - UplinkBundles
 
@@ -842,7 +842,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   cost:
-    Telecrystal: 25
+    Telecrystal: 30 # It used to be 25.
   categories:
   - UplinkBundles
 
@@ -1348,7 +1348,7 @@
   description: uplink-soap-desc
   productEntity: SoapSyndie
   cost:
-    Telecrystal: 1
+    Telecrystal: 2 # It used to be 1, but possibility of unfair use.
   categories:
   - UplinkMisc
 
