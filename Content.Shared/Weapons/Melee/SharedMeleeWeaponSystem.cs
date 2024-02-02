@@ -708,12 +708,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    public bool PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)
+    public void PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)
     {
         var playedSound = false;
 
         if (Deleted(target))
-            return false;
+            return;
 
         // hitting can obv destroy an entity so we play at coords and not following them
         var coords = Transform(target).Coordinates;
@@ -773,7 +773,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     break;
             }
         }
-        return playedSound;
     }
 
     public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)
