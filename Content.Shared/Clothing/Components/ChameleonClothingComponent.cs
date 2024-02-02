@@ -17,18 +17,18 @@ public sealed partial class ChameleonClothingComponent : Component
     /// <summary>
     ///     Filter possible chameleon options by their slot flag.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     [DataField(required: true)]
     public SlotFlags Slot;
 
     /// <summary>
     ///     EntityPrototype id that chameleon item is trying to mimic.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     [DataField(required: true), AutoNetworkedField]
     public EntProtoId? Default;
 
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     [DataField]
     public EntityWhitelist? Whitelist;
 
