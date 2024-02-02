@@ -6,8 +6,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmash
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     layers:
@@ -67,6 +66,9 @@
     materialComposition:
       Glass: 25
   - type: SpaceGarbage
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
 
 - type: entity
   parent: BaseLightbulb
@@ -126,6 +128,19 @@
     lightSoftness: 1.1
 
 - type: entity
+  parent: LightBulb
+  name: old incandescent light bulb
+  id: LightBulbOld
+  description: An aging light bulb.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#FFD1A3" # 4000K color temp
+    lightEnergy: 0.3 # old incandescents just arent as bright
+    lightRadius: 6
+    lightSoftness: 1.1
+
+- type: entity
   suffix: Broken
   parent: BaseLightbulb
   name: incandescent light bulb
@@ -161,6 +176,19 @@
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
+
+- type: entity
+  parent: LightTube
+  name: old fluorescent light tube
+  id: LightTubeOld
+  description: An aging light fixture.
+  components:
+  - type: LightBulb
+    color: "#FFDABB" # old fluorescents are yellower-4500K temp
+    lightEnergy: 0.5
+    lightRadius: 10
+    lightSoftness: 1
+    PowerUse: 10
 
 - type: entity
   suffix: Broken
@@ -230,6 +258,10 @@
   - type: Construction
     graph: CyanLight
     node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalCyan
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -246,6 +278,10 @@
   - type: Construction
     graph: BlueLight
     node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalBlue
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -262,6 +298,10 @@
   - type: Construction
     graph: PinkLight
     node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalPink
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -278,6 +318,10 @@
   - type: Construction
     graph: OrangeLight
     node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalOrange
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -294,6 +338,10 @@
   - type: Construction
     graph: RedLight
     node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalRed
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -310,3 +358,7 @@
   - type: Construction
     graph: GreenLight
     node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalGreen

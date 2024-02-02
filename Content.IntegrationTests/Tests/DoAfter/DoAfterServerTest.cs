@@ -21,6 +21,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
   - type: DoAfter
 ";
 
+        [Serializable, NetSerializable]
         private sealed partial class TestDoAfterEvent : DoAfterEvent
         {
             public override DoAfterEvent Clone()

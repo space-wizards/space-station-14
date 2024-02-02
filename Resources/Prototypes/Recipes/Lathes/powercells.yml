@@ -1,6 +1,7 @@
 - type: latheRecipe
   id: PowerCellSmall
   result: PowerCellSmallPrinted
+  category: Parts
   completetime: 1
   materials:
     Steel: 100
@@ -9,6 +10,7 @@
 - type: latheRecipe
   id: PowerCellMedium
   result: PowerCellMediumPrinted
+  category: Parts
   completetime: 6
   materials:
     Steel: 300
@@ -19,6 +21,7 @@
 - type: latheRecipe
   id: PowerCellHigh
   result: PowerCellHighPrinted
+  category: Parts
   completetime: 10
   materials:
     Steel: 300
@@ -29,9 +32,38 @@
 - type: latheRecipe
   id: PowerCellMicroreactor
   result: PowerCellMicroreactorPrinted
+  category: Parts
   completetime: 10
   materials:
     Steel: 500
     Glass: 400
     Uranium: 200
+    Gold: 100
+
+- type: latheRecipe
+  id: PowerCageSmall
+  result: PowerCageSmall
+  completetime: 3
+  materials:
+    Steel: 200
+    Plastic: 100
+
+- type: latheRecipe
+  id: PowerCageMedium
+  result: PowerCageMedium
+  completetime: 6
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 250
+    Gold: 40
+
+- type: latheRecipe
+  id: PowerCageHigh
+  result: PowerCageHigh
+  completetime: 10
+  materials:
+    Steel: 600
+    Glass: 800
+    Plastic: 400
     Gold: 100

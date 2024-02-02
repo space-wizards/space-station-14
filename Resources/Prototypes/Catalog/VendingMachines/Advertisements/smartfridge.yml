@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: SmartFridgeAds
   advertisements:
   - advertisement-smartfridge-1
@@ -7,5 +7,7 @@
   - advertisement-smartfridge-4
   - advertisement-smartfridge-5
   - advertisement-smartfridge-6
+  - advertisement-smartfridge-7
+  - advertisement-smartfridge-8
   thankyous:
   - vending-machine-thanks

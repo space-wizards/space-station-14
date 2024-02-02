@@ -27,6 +27,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: vial-1-
+    inHandsMaxFillLevels: 4
+    inHandsFillBaseName: -fill-
   - type: Drink
     solution: beaker
   - type: SolutionContainerManager

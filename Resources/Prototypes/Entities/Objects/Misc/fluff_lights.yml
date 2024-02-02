@@ -223,7 +223,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/glass_break1.ogg
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           FloodlightBroken:
@@ -259,7 +259,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
