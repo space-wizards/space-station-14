@@ -1,0 +1,22 @@
+# Asphalt
+- type: tile
+  id: FloorPlanetAsphalt
+  name: tiles-asphalt-nyano
+  sprite: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/asphalt.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  edgeSprites:
+    SouthEast: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/single_edge.png
+    NorthEast: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/single_edge.png
+    NorthWest: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/single_edge.png
+    SouthWest: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/single_edge.png
+    South: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/double_edge.png
+    East: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/double_edge.png
+    North: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/double_edge.png
+    West: /Textures/Nyanotrasen/Tiles/Planet/Asphalt/double_edge.png
+  baseTurf: FloorPlanetDirt
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true

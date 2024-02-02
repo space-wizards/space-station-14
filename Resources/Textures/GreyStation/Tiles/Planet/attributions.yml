@@ -1,0 +1,9 @@
+- files: ["asteroid_coarse_sand.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from CEV-Eris"
+  source: "https://github.com/discordia-space/CEV-Eris/pull/1790"
+
+- files: ["asteroid_coarse_sand_dug.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from CEV-Eris"
+  source: "https://github.com/discordia-space/CEV-Eris/pull/1790"
