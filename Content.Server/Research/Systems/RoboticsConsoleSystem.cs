@@ -151,7 +151,7 @@ public sealed class RoboticsConsoleSystem : EntitySystem
 
     private void UpdateUserInterface(Entity<RoboticsConsoleComponent> ent)
     {
-        var state = new RoboticsConsoleState(ent.Comp.Cyborgs);
+        var state = new RoboticsConsoleState(ent.Comp.Cyborgs, ent.Comp.NextDestroy);
         _ui.TrySetUiState(ent, RoboticsConsoleUiKey.Key, state);
     }
 }

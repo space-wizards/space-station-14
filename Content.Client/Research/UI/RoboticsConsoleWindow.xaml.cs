@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Research.UI;
 
@@ -13,6 +14,7 @@ namespace Content.Client.Research.UI;
 public sealed partial class RoboticsConsoleWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     private readonly AccessReaderSystem _accessReader;
@@ -24,6 +26,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
     private EntityUid _console;
     private string? _selected;
     private Dictionary<string, CyborgControlData> _cyborgs = new();
+    private TimeSpan _nextDestroy = TimeSpan.Zero;
 
     public RoboticsConsoleWindow(EntityUid console)
     {
@@ -63,6 +66,9 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
     public void UpdateState(RoboticsConsoleState state)
     {
         _cyborgs = state.Cyborgs;
+        _nextDestroy = state.NextDestroy;
+
+        // clear invalid selection
         if (_selected is {} selected && !_cyborgs.ContainsKey(selected))
             _selected = null;
 
@@ -119,5 +125,13 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 
         // how the turntables
         DisableButton.Disabled = !data.HasBrain;
+        DestroyButton.Disabled = _timing.CurTime >= _nextDestroy;
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        DestroyButton.Disabled = _timing.CurTime >= _nextDestroy;
     }
 }

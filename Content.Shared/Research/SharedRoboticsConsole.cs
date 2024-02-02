@@ -17,9 +17,15 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
     /// </summary>
     public Dictionary<string, CyborgControlData> Cyborgs;
 
-    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs)
+    /// <summary>
+    /// When the destroy button can next be used.
+    /// </summary>
+    public TimeSpan NextDestroy;
+
+    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs, TimeSpan nextDestroy)
     {
         Cyborgs = cyborgs;
+        NextDestroy = nextDestroy;
     }
 }
 
