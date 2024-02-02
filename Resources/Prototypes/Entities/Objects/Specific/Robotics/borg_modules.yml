@@ -499,6 +499,21 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
+
+- type: entity
+  id: BorgModuleInvestigation
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: investigation cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-monocle
+  - type: ItemBorgModule
+    items:
+    - FlashlightSecliteBorg
+    - ForensicScanner
+    - FlippoEngravedLighter
    
 #syndicate modules
 - type: entity
