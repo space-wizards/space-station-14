@@ -226,7 +226,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHoS
-  name: head of security's winter coat
+  name: head of security's armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect a head of security from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
@@ -249,7 +249,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHoSUnarmored
-  name: head of security's winter coat
+  name: head of security's unarmored winter coat
   description: A sturdy coat, a warm coat, but not an armored coat.
   components:
   - type: Sprite
