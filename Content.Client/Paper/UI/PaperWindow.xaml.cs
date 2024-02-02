@@ -49,11 +49,6 @@ namespace Content.Client.Paper.UI
             typeof(JobTag),
         };
 
-        // private readonly Dictionary<string, IMarkupTag> _customTags = new IMarkupTag[]
-        // {
-        //     new TimeTag(),
-        // }.ToDictionary(t => t.Name.ToLower(), t => t);
-
         public PaperWindow()
         {
             RobustXamlLoader.Load(this);
@@ -232,7 +227,6 @@ namespace Content.Client.Paper.UI
                 msg.AddMarkupPermissive("\r\n");
             }
 
-            // DTO to the engine data model
             if (state.TagsState != null)
                 WrittenTextLabel.SetMessage(msg, state.TagsState, _allowedTags, DefaultTextColor);
             else

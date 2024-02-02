@@ -108,6 +108,26 @@ namespace Content.Server.Paper
             }
         }
 
+        private void UpdateTagsState(EntityUid userUid, PaperComponent paperComp)
+        {
+            if (paperComp.TagsState != null)
+            {
+                paperComp.TagsState = TryComp<MetaDataComponent>(userUid, out var metaEntity)
+                    ? paperComp.TagsState with { PersonName = metaEntity!.EntityName }
+                    : paperComp.TagsState with { PersonName = Loc.GetString("paper-tags-person-name-default") };
+
+                var station = _station.GetOwningStation(userUid);
+                paperComp.TagsState = station is null
+                    ? paperComp.TagsState with { StationName = Loc.GetString("paper-tags-station-name-default") }
+                    : paperComp.TagsState with { StationName = Name(station!.Value) };
+
+                if (TryComp<MindContainerComponent>(userUid, out var mindContainer))
+                    paperComp.TagsState = _job.MindTryGetJobName(mindContainer.Mind, out var jobName)
+                        ? paperComp.TagsState with { PersonJob = jobName }
+                        : paperComp.TagsState with { PersonJob = Loc.GetString("paper-tags-person-job-default") };
+            }
+        }
+
         private void OnInteractUsing(EntityUid uid, PaperComponent paperComp, InteractUsingEvent args)
         {
             // only allow editing if there are no stamps or when using a cyberpen
@@ -119,25 +139,9 @@ namespace Content.Server.Paper
                 if (!TryComp<ActorComponent>(args.User, out var actor))
                     return;
 
-                if (paperComp.TagsState != null)
-                {
-                    paperComp.TagsState = TryComp<MetaDataComponent>(args.User, out var metaEntity)
-                        ? paperComp.TagsState with { PersonName = metaEntity!.EntityName }
-                        : paperComp.TagsState with { PersonName = Loc.GetString("paper-tags-person-name-default") };
-
-                    var station = _station.GetOwningStation(args.User);
-                    paperComp.TagsState = station is null
-                        ? paperComp.TagsState with { StationName = Loc.GetString("paper-tags-station-name-default") }
-                        : paperComp.TagsState with { StationName = Name(station!.Value) };
-
-                    if (TryComp<MindContainerComponent>(args.User, out var mindContainer))
-                        paperComp.TagsState = _job.MindTryGetJobName(mindContainer.Mind, out var jobName)
-                            ? paperComp.TagsState with { PersonJob = jobName }
-                            : paperComp.TagsState with { PersonJob = Loc.GetString("paper-tags-person-job-default") };
-                }
-
                 paperComp.Mode = PaperAction.Write;
                 _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);
+                UpdateTagsState(args.User, paperComp);
                 UpdateUserInterface(uid, paperComp, actor.PlayerSession);
                 args.Handled = true;
                 return;
