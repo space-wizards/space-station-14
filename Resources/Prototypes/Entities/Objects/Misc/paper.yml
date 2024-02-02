@@ -278,6 +278,7 @@
   parent: Pen
   id: PenEmbeddable
   abstract: true
+  components:
   - type: EmbeddableProjectile
     offset: 0.3,0.0
     removalTime: 0.0
