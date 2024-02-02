@@ -31,7 +31,7 @@ public sealed partial class AccessReaderComponent : Component
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan DenyCooldown = TimeSpan.FromSeconds(30);
+    public TimeSpan DenyCooldown = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// List of access groups that grant access to this reader. Only a single matching group is required to gain access.
