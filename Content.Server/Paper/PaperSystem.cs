@@ -10,6 +10,7 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
@@ -24,6 +25,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -62,6 +64,7 @@ namespace Content.Server.Paper
                     _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState, appearance);
             }
 
+            paperComp.TagsState = new(null, null, null, null, null);
         }
 
         private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
@@ -70,6 +73,21 @@ namespace Content.Server.Paper
 
             if (!TryComp<ActorComponent>(args.User, out var actor))
                 return;
+
+            if (paperComp.TagsState != null)
+            {
+                paperComp.TagsState = TryComp<MetaDataComponent>(args.User, out var metaEntity)
+                    ? paperComp.TagsState with
+                    {
+                        PersonName = metaEntity!.EntityName,
+                    }
+                    : paperComp.TagsState with
+                    {
+                        PersonName = Loc.GetString("paper-tags-person-name-default")
+                    };
+
+                // paperComp.TagsState = TryComp<MetaDataComponent>()
+            }
 
             UpdateUserInterface(uid, paperComp, actor.PlayerSession);
         }
@@ -162,8 +180,16 @@ namespace Content.Server.Paper
                         $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
             }
 
+            if (paperComp.TagsState != null)
+            {
+                paperComp.TagsState = paperComp.TagsState with
+                {
+                    WriteTime = _gameTiming.CurTime,
+                    WriteDate = DateTime.Now,
+                };
+            }
+
             paperComp.Mode = PaperAction.Read;
-            paperComp.TimeWrite = args.TimeWrite;
             UpdateUserInterface(uid, paperComp);
         }
 
@@ -218,7 +244,7 @@ namespace Content.Server.Paper
                 return;
 
             if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.TimeWrite, paperComp.StampedBy, paperComp.Mode), session);
+                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.TagsState, paperComp.StampedBy, paperComp.Mode), session);
         }
     }
 
