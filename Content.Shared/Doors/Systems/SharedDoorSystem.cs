@@ -195,7 +195,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         // might not be able to deny without power or some other blocker.
-        var ev = new BeforeDoorDeniedEvent();
+        var ev = new BeforeDoorDeniedEvent() { User = user };
         RaiseLocalEvent(uid, ev);
         if (ev.Cancelled)
             return;
@@ -255,7 +255,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!HasAccess(uid, user, door))
         {
             if (!quiet)
-                Deny(uid, door);
+                Deny(uid, door, user);
             return false;
         }
 

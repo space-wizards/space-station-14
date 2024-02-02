@@ -21,10 +21,12 @@ public sealed class PulledAccessLog
 {
     public readonly TimeSpan Time;
     public readonly string Accessor;
+    public readonly bool AccessGranted;
 
-    public PulledAccessLog(TimeSpan time, string accessor)
+    public PulledAccessLog(TimeSpan time, string accessor, bool accessGranted)
     {
         Time = time;
         Accessor = accessor;
+        AccessGranted = accessGranted;
     }
 }

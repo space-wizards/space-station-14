@@ -50,6 +50,7 @@ namespace Content.Shared.Doors
     /// </summary>
     public sealed class BeforeDoorDeniedEvent : CancellableEntityEventArgs
     {
+        public EntityUid? User = null;
     }
 
     /// <summary>

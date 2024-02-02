@@ -27,6 +27,13 @@ public sealed partial class AccessReaderComponent : Component
     public HashSet<string> DenyTags = new();
 
     /// <summary>
+    /// Cooldown time between access denied sounds.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan DenyCooldown = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// List of access groups that grant access to this reader. Only a single matching group is required to gain access.
     /// A group matches if it is a subset of the set being checked against.
     /// </summary>
@@ -62,7 +69,7 @@ public sealed partial class AccessReaderComponent : Component
     /// A limit on the max size of <see cref="AccessLog"/>
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int AccessLogLimit = 20;
+    public int AccessLogLimit = 30;
 
     /// <summary>
     /// Whether or not emag interactions have an effect on this.
@@ -76,9 +83,13 @@ public readonly partial record struct AccessRecord(
     [property: DataField, ViewVariables(VVAccess.ReadWrite)]
     TimeSpan AccessTime,
     [property: DataField, ViewVariables(VVAccess.ReadWrite)]
-    string Accessor)
+    string Accessor,
+    [field: NonSerialized]
+    EntityUid AccessorUid,
+    [property: DataField, ViewVariables(VVAccess.ReadWrite)]
+    bool AccessGranted)
 {
-    public AccessRecord() : this(TimeSpan.Zero, string.Empty)
+    public AccessRecord() : this(TimeSpan.Zero, string.Empty, EntityUid.Invalid, false)
     {
     }
 }

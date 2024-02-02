@@ -14,7 +14,8 @@ public sealed class AddAccessLogCommand : ToolshedCommand
         [CommandInvocationContext] IInvocationContext ctx,
         [CommandArgument] EntityUid input,
         [CommandArgument] float seconds,
-        [CommandArgument] ValueRef<string> accessor)
+        [CommandArgument] ValueRef<string> accessor,
+        [CommandArgument] bool granted)
     {
         var accessReader = EnsureComp<AccessReaderComponent>(input);
 
@@ -24,10 +25,11 @@ public sealed class AddAccessLogCommand : ToolshedCommand
 
         var accessTime = TimeSpan.FromSeconds(seconds);
         var accessName = accessor.Evaluate(ctx)!;
-        accessReader.AccessLog.Enqueue(new AccessRecord(accessTime, accessName));
+        accessReader.AccessLog.Enqueue(new AccessRecord(accessTime, accessName, EntityUid.Invalid, granted));
         ctx.WriteLine($"Successfully added access log to {input} with this information inside:\n " +
                       $"Time of access: {accessTime}\n " +
-                      $"Accessed by: {accessName}");
+                      $"Accessed by: {accessName}\n " +
+                      $"Access granted: {granted}");
     }
 
     [CommandImplementation]
@@ -35,8 +37,9 @@ public sealed class AddAccessLogCommand : ToolshedCommand
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
         [CommandArgument] float seconds,
-        [CommandArgument] ValueRef<string> accessor)
+        [CommandArgument] ValueRef<string> accessor,
+        [CommandArgument] bool granted)
     {
-        AddAccessLog(ctx, input, seconds, accessor);
+        AddAccessLog(ctx, input, seconds, accessor, granted);
     }
 }

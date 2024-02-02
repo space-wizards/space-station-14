@@ -32,7 +32,7 @@ public sealed partial class LogProbeUiFragment : BoxContainer
     {
         var timeLabelText = TimeSpan.FromSeconds(Math.Truncate(log.Time.TotalSeconds)).ToString();
         var accessorLabelText = log.Accessor;
-        var entry = new LogProbeUiEntry(numberLabelText, timeLabelText, accessorLabelText);
+        var entry = new LogProbeUiEntry(numberLabelText, timeLabelText, accessorLabelText, log.AccessGranted);
 
         ProbedDeviceContainer.AddChild(entry);
     }

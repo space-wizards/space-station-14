@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Doors;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.EntitySystems;
@@ -37,6 +38,7 @@ public sealed class AccessReaderSystem : EntitySystem
 
         SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<AccessReaderComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<AccessReaderComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
     }
 
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
@@ -84,6 +86,20 @@ public sealed class AccessReaderSystem : EntitySystem
         Dirty(uid, reader);
     }
 
+    private void OnBeforeDoorDenied(EntityUid uid, AccessReaderComponent component, BeforeDoorDeniedEvent args)
+    {
+        if (args.User is null)
+            return;
+
+        var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+        var lastDeniedTime = component.AccessLog.LastOrDefault((r) =>
+            r.AccessorUid == args.User && r.AccessGranted == false &&
+            stationTime - r.AccessTime > TimeSpan.FromTicks(1)).AccessTime;
+
+        if (stationTime - lastDeniedTime < component.DenyCooldown)
+            args.Cancel();
+    }
+
     /// <summary>
     /// Searches the source for access tags
     /// then compares it with the all targets accesses to see if it is allowed.
@@ -105,10 +121,11 @@ public sealed class AccessReaderSystem : EntitySystem
 
         if (IsAllowed(access, stationKeys, target, reader))
         {
-            LogAccess((target, reader), user);
+            LogAccess((target, reader), user, granted: true);
             return true;
         }
 
+        LogAccess((target, reader), user, granted: false);
         return false;
     }
 
@@ -348,7 +365,8 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The reader to log the access on</param>
     /// <param name="accessor">The accessor to log</param>
-    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
+    /// <param name="granted">Whenever the access was granted or not</param>
+    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor, bool granted)
     {
         if (IsPaused(ent))
             return;
@@ -366,6 +384,6 @@ public sealed class AccessReaderSystem : EntitySystem
         name ??= Loc.GetString("access-reader-unknown-id");
 
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-        ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name));
+        ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name, accessor, granted));
     }
 }
