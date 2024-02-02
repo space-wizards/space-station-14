@@ -647,7 +647,7 @@
 - type: flavor
   id: spaceup
   flavorType: Complex
-  description: flavor-complex-root-space-up
+  description: flavor-complex-space-up-soda
 
 - type: flavor
   id: grapesoda
