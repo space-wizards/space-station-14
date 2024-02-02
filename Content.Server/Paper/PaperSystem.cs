@@ -74,21 +74,6 @@ namespace Content.Server.Paper
             if (!TryComp<ActorComponent>(args.User, out var actor))
                 return;
 
-            if (paperComp.TagsState != null)
-            {
-                paperComp.TagsState = TryComp<MetaDataComponent>(args.User, out var metaEntity)
-                    ? paperComp.TagsState with
-                    {
-                        PersonName = metaEntity!.EntityName,
-                    }
-                    : paperComp.TagsState with
-                    {
-                        PersonName = Loc.GetString("paper-tags-person-name-default")
-                    };
-
-                // paperComp.TagsState = TryComp<MetaDataComponent>()
-            }
-
             UpdateUserInterface(uid, paperComp, actor.PlayerSession);
         }
 
@@ -128,6 +113,21 @@ namespace Content.Server.Paper
                 RaiseLocalEvent(args.Used, ref writeEvent);
                 if (!TryComp<ActorComponent>(args.User, out var actor))
                     return;
+
+                if (paperComp.TagsState != null)
+                {
+                    paperComp.TagsState = TryComp<MetaDataComponent>(args.User, out var metaEntity)
+                        ? paperComp.TagsState with
+                        {
+                            PersonName = metaEntity!.EntityName,
+                        }
+                        : paperComp.TagsState with
+                        {
+                            PersonName = Loc.GetString("paper-tags-person-name-default")
+                        };
+
+                    // paperComp.TagsState = TryComp<MetaDataComponent>()
+                }
 
                 paperComp.Mode = PaperAction.Write;
                 _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);

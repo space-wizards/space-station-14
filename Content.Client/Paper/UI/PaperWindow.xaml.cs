@@ -42,7 +42,8 @@ namespace Content.Client.Paper.UI
             typeof(ColorTag),
             typeof(HeadingTag),
             typeof(ItalicTag),
-            typeof(TimeTag)
+            typeof(TimeTag),
+            typeof(NameTag),
         };
 
         // private readonly Dictionary<string, IMarkupTag> _customTags = new IMarkupTag[]

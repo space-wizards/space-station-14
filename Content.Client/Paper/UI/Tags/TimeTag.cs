@@ -10,12 +10,10 @@ public sealed class TimeTag : IMarkupTag
 
     public string TextBefore(MarkupNode node)
     {
-        if (node.Attributes.TryGetValue("state", out var compound))
-        {
-            var time = (compound.CompoundValue as SharedPaperComponent.TagsState)!.WriteTime!.Value;
-            return time.ToString(@"hh\:mm\:ss");
-        }
-
-        return "00:00:00";
+        var defaultStr = "00:00:00";
+        if (!node.Attributes.TryGetValue("state", out var compound))
+            return defaultStr;
+        var time = (compound.CompoundValue as SharedPaperComponent.TagsState)!.WriteTime;
+        return time.HasValue ? time.Value.ToString(@"hh\:mm\:ss") : defaultStr;
     }
 }
