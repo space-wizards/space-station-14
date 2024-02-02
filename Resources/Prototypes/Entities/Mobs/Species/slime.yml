@@ -76,10 +76,6 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen
-    - SlimeSpecies
 
 - type: entity
   parent: MobHumanDummy
