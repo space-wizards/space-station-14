@@ -1,0 +1,78 @@
+- type: reagent
+  id: TomatoSauce
+  name: reagent-name-tomatosauce
+  group: Foods
+  desc: reagent-desc-tomatosauce
+  physicalDesc: reagent-physical-desc-dark-red
+  flavor: tomato
+  color: "#a61600"
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.15
+      - !type:AdjustReagent
+        reagent: JuiceTomato
+        amount: 0.60
+
+- type: reagent
+  id: Pesto
+  name: reagent-name-pesto
+  group: Foods
+  desc: reagent-desc-pesto
+  physicalDesc: reagent-physical-desc-oily
+  flavor: nutty
+  color: "#5c8400"
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.10
+      - !type:AdjustReagent
+        reagent: OilOlive
+        amount: 0.35
+      - !type:AdjustReagent
+        reagent: Allicin
+        amount: 0.25
+
+- type: reagent
+  id: Bechamel
+  name: reagent-name-bechamel
+  group: Foods
+  desc: reagent-desc-bechamel
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
+  color: "#fffbc7"
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.10
+      - !type:AdjustReagent
+        reagent: Cream
+        amount: 0.55
+      - !type:AdjustReagent
+        reagent: OilOlive
+        amount: 0.10
+
+- type: reagent
+  id: OilGhee
+  name: reagent-name-oil-ghee
+  group: Foods
+  desc: reagent-desc-oil-ghee
+  physicalDesc: reagent-physical-desc-oily
+  flavor: butter
+  color: gold
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75

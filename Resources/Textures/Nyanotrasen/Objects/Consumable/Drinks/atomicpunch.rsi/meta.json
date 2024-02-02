@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-3.0",
+    "copyright": "Made by Kurzaen#5648",
+    "states": [
+        {
+            "name": "icon"
+        }
+    ]
+}

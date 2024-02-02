@@ -1,0 +1,197 @@
+- type: reagent
+  id: Sake
+  name: reagent-name-sake
+  parent: BaseAlcohol
+  desc: reagent-desc-sake
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: sake
+  color: "#DDDDDD"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/sakeglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+
+- type: reagent
+  id: Soju
+  name: reagent-name-soju
+  parent: BaseAlcohol
+  desc: reagent-desc-soju
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: soju
+  color: "#DDDDDD"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/sojuglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: OrangeCreamice
+  name: reagent-name-orange-creamcicle
+  parent: BaseAlcohol
+  desc: reagent-desc-orange-creamcicle
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: orangecreamcicle
+  color: "#efaa16"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/orangecreamcicle.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
+
+- type: reagent
+  id: Silverjack
+  name: reagent-name-silverjack
+  parent: BaseAlcohol
+  desc: reagent-desc-silverjack
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: silverjack
+  color: "#978647"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/silverjack.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.0625
+
+- type: reagent
+  id: Brainbomb
+  name: reagent-name-brainbomb
+  parent: BaseAlcohol
+  desc: reagent-desc-brainbomb
+  physicalDesc: reagent-physical-desc-abrasive
+  flavor: brainbomb
+  color: "#6f7a2c"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/brainbomb.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        damage:
+          types:
+            Caustic: 0.25
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.085
+      - !type:AdjustReagent
+        reagent: THC
+        amount: 0.33
+      - !type:AdjustReagent
+        reagent: SpaceDrugs
+        amount: 0.33
+
+- type: reagent
+  id: ClownBlood
+  name: reagent-name-clownblood
+  parent: BaseAlcohol
+  desc: reagent-desc-clownblood
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: funny
+  color: "#94001c"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/clownblood.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.025
+
+- type: reagent
+  id: CircusJuice
+  name: reagent-name-circusjuice
+  parent: BaseAlcohol
+  desc: reagent-desc-circusjuice
+  physicalDesc: reagent-physical-desc-glittery
+  flavor: circusjuice
+  color: "#c47872"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/circusjuice.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.0625
+      - !type:Emote #It's very funny
+        emote: Laugh
+        probability: 0.15
+
+- type: reagent
+  id: SapoPicante
+  name: reagent-name-sapopicante
+  parent: BaseAlcohol
+  desc: reagent-desc-sapopicante
+  physicalDesc: reagent-physical-desc-oily
+  flavor: sapopicante
+  color: "#c0501a"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/sapopicante.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.065
+      - !type:AdjustTemperature
+        amount: 75 # thermal energy, not temperature!
+
+- type: reagent
+  id: Graveyard
+  name: reagent-name-graveyard
+  parent: BaseAlcohol
+  desc: reagent-desc-graveyard
+  physicalDesc: reagent-physical-desc-dark-red
+  flavor: graveyard
+  color: "#4f1b1b"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/graveyard.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.03

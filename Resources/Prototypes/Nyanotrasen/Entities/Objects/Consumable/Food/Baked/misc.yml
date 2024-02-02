@@ -1,0 +1,128 @@
+- type: entity
+  name: cheesecake balls
+  parent: FoodBakedBase
+  id: FoodMothCheesecakeBalls
+  description: Made of soft cheese, powdered sugar and flour, rolled into balls, battered and then deep fried. They're often served with honey.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - cheesy
+      - honey
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/misc.rsi
+    state: cheesecakes
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Sugar
+          Quantity: 12
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheesecake and honey
+
+- type: entity
+  name: mothmallow tray
+  parent: FoodBakedBase
+  id: FoodMothMothmallow
+  description: A light and fluffy vegan marshmallow flavoured with vanilla and rum. These are known to the moths as cloud squares.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - vanilla
+      - sweet
+      - sublime
+  - type: SliceableFood
+    count: 5
+    slice: FoodMothMothmallowSlice
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/misc.rsi
+    state: mothmallow
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Sugar
+          Quantity: 10
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like vanilla and clouds.
+
+- type: entity
+  name: mothmallow slice
+  parent: FoodBakedBase
+  id: FoodMothMothmallowSlice
+  description: Fluffy little clouds of joy- in a strangely moth-like form and colour.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - vanilla
+      - sweet
+      - sublime
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/misc.rsi
+    state: mothmallow-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 2
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like vanilla and clouds.
+
+- type: entity
+  name: moffin
+  parent: FoodBakedBase
+  id: FoodMothMoffin
+  description: A delicious, spongy and dusty little cake.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/misc.rsi
+    layers:
+      - state: moffin
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          moffin: ""
+      - enum.DamageStateVisualLayers.Base:
+          moffin2: ""
+      - enum.DamageStateVisualLayers.Base:
+          moffin3: ""
+  - type: FlavorProfile
+    flavors:
+      - muffin
+      - cotton
+      - fiber
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 4
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like muffin, dust and lint

@@ -1,0 +1,133 @@
+# Curd cheese, substitute for a lot of things
+- type: entity
+  name: curd cheese
+  parent: FoodBakingBase
+  id: FoodCurdCheese
+  description: Known by many names throughout cuisine, curd cheese is useful for a wide variety of dishes.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - creamy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/cheese.rsi
+    state: curdcheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Cream
+          Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: cheese curds
+  parent: FoodBakingBase
+  id: FoodCheeseCurds
+  description: Not to be mistaken for curd cheese. Tasty deep fried.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/cheese.rsi
+    state: cheesecurds
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Protein
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+# Mozzarella
+- type: entity
+  name: mozzarella cheese
+  parent: FoodBakingBase
+  id: FoodMozzarella
+  description: Delicious, creamy, and cheesy, all in one simple package.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/cheese.rsi
+    state: mozzarella
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Cream
+          Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: herby cheese
+  parent: FoodBakingBase
+  id: FoodMothHerbyCheese
+  description: As a staple of mothic cuisine, cheese is often augmented with various flavours to keep variety in their diet.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - leafy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/ingredients.rsi
+    state: herbycheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Protein
+          Quantity: 2
+        - ReagentId: Cream
+          Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheese, herbs
+
+- type: entity
+  name: mothic salad
+  parent: FoodBowlBase
+  id: FoodMothSaladBase
+  description: A basic salad of cabbage, red onion and tomato.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cabbage
+      - onion
+      - tomato
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/ingredients.rsi
+    state: mothsaladbase
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 0.5
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
