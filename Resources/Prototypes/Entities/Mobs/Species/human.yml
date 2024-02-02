@@ -19,10 +19,6 @@
     spawned:
     - id: FoodMeatHuman
       amount: 5
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen
-    - HumanSpecies
 
 - type: entity
   parent: BaseSpeciesDummy
