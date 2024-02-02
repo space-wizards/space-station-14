@@ -39,54 +39,57 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 continue;
 
             regulator.NextUpdate += regulator.UpdateInterval;
-            ProcessThermalRegulation(uid, regulator);
+            ProcessThermalRegulation((uid, regulator));
         }
     }
 
     /// <summary>
     /// Processes thermal regulation for a mob
     /// </summary>
-    private void ProcessThermalRegulation(EntityUid uid, ThermalRegulatorComponent comp)
+    private void ProcessThermalRegulation(Entity<ThermalRegulatorComponent, TemperatureComponent?> ent)
     {
-        if (!TryComp(uid, out TemperatureComponent? temperatureComponent)) return;
+        if (!Resolve(ent, ref ent.Comp2, logMissing: false))
+            return;
 
-        var totalMetabolismTempChange = comp.MetabolismHeat - comp.RadiatedHeat;
+        var totalMetabolismTempChange = ent.Comp1.MetabolismHeat - ent.Comp1.RadiatedHeat;
 
         // implicit heat regulation
-        var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - comp.NormalBodyTemperature);
-        var heatCapacity = _tempSys.GetHeatCapacity(uid, temperatureComponent);
+        var tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - ent.Comp1.NormalBodyTemperature);
+        var heatCapacity = _tempSys.GetHeatCapacity(ent, ent);
         var targetHeat = tempDiff * heatCapacity;
-        if (temperatureComponent.CurrentTemperature > comp.NormalBodyTemperature)
+        if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
         {
-            totalMetabolismTempChange -= Math.Min(targetHeat, comp.ImplicitHeatRegulation);
+            totalMetabolismTempChange -= Math.Min(targetHeat, ent.Comp1.ImplicitHeatRegulation);
         }
         else
         {
-            totalMetabolismTempChange += Math.Min(targetHeat, comp.ImplicitHeatRegulation);
+            totalMetabolismTempChange += Math.Min(targetHeat, ent.Comp1.ImplicitHeatRegulation);
         }
 
-        _tempSys.ChangeHeat(uid, totalMetabolismTempChange, true, temperatureComponent);
+        _tempSys.ChangeHeat(ent, totalMetabolismTempChange, ignoreHeatResistance: true, ent);
 
         // recalc difference and target heat
-        tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - comp.NormalBodyTemperature);
+        tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - ent.Comp1.NormalBodyTemperature);
         targetHeat = tempDiff * heatCapacity;
 
         // if body temperature is not within comfortable, thermal regulation
         // processes starts
-        if (tempDiff > comp.ThermalRegulationTemperatureThreshold)
+        if (tempDiff > ent.Comp1.ThermalRegulationTemperatureThreshold)
             return;
 
-        if (temperatureComponent.CurrentTemperature > comp.NormalBodyTemperature)
+        if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
         {
-            if (!_actionBlockerSys.CanSweat(uid)) return;
-            _tempSys.ChangeHeat(uid, -Math.Min(targetHeat, comp.SweatHeatRegulation), true,
-                temperatureComponent);
+            if (!_actionBlockerSys.CanSweat(ent))
+                return;
+
+            _tempSys.ChangeHeat(ent, -Math.Min(targetHeat, ent.Comp1.SweatHeatRegulation), ignoreHeatResistance: true, ent);
         }
         else
         {
-            if (!_actionBlockerSys.CanShiver(uid)) return;
-            _tempSys.ChangeHeat(uid, Math.Min(targetHeat, comp.ShiveringHeatRegulation), true,
-                temperatureComponent);
+            if (!_actionBlockerSys.CanShiver(ent))
+                return;
+
+            _tempSys.ChangeHeat(ent, Math.Min(targetHeat, ent.Comp1.ShiveringHeatRegulation), ignoreHeatResistance: true, ent);
         }
     }
 }

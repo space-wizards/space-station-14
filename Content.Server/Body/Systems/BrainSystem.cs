@@ -39,7 +39,7 @@ namespace Content.Server.Body.Systems
             _mindSystem.TransferTo(mindId, newEntity, mind: mind);
         }
 
-        private void OnPointAttempt(EntityUid uid, BrainComponent component, PointAttemptEvent args)
+        private void OnPointAttempt(Entity<BrainComponent> ent, ref PointAttemptEvent args)
         {
             args.Cancel();
         }

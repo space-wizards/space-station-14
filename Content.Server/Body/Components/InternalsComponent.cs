@@ -1,4 +1,3 @@
-using System.Threading;
 namespace Content.Server.Body.Components
 {
     /// <summary>
@@ -14,10 +13,10 @@ namespace Content.Server.Body.Components
         public EntityUid? BreathToolEntity;
 
         /// <summary>
-        /// Toggle Internals delay (seconds) when the target is not you.
+        /// Toggle Internals delay when the target is not you.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public float Delay = 3;
+        public TimeSpan Delay = TimeSpan.FromSeconds(3);
     }
 }
