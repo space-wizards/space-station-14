@@ -20,6 +20,8 @@
     - Revolutionary
     - Zombie
     - RampingStationEventScheduler
+    - TurfWar
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Extended
@@ -168,6 +170,7 @@
   id: TurfWar
   alias:
   - turf
+  - turfwar
   - turftagging
   name: turf-war-title
   description: turf-war-description

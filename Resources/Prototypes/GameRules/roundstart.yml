@@ -118,6 +118,17 @@
     rules:
       TurfWar: 0.25
 
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: TurfWar
+  components:
+  - type: TurfWarRule
+    # 10-30 people
+    playersPerTagger: 5
+    min: 2
+    max: 6
+
 # event schedulers
 - type: entity
   id: BasicStationEventScheduler
