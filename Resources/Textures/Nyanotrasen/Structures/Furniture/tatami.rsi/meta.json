@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Hyenh#6078",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "tatami_1x1"
+        },
+        {
+            "name": "tatami_1x1P"
+        }
+    ]
+}

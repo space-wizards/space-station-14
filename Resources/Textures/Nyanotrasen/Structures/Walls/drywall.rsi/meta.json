@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "size": {"x": 32, "y": 32},
+    "license": "CC-BY-SA-4.0",
+    "copyright": "@Vordenburg",
+    "states":
+    [
+        {"name": "full"},
+        {"name": "drywall0", "directions": 4},
+        {"name": "drywall1", "directions": 4},
+        {"name": "drywall2", "directions": 4},
+        {"name": "drywall3", "directions": 4},
+        {"name": "drywall4", "directions": 4},
+        {"name": "drywall5", "directions": 4},
+        {"name": "drywall6", "directions": 4},
+        {"name": "drywall7", "directions": 4}
+    ]
+}
