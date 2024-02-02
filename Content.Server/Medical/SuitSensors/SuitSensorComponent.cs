@@ -72,10 +72,4 @@ public sealed partial class SuitSensorComponent : Component
     /// </summary>
     [DataField("server")]
     public string? ConnectedServer = null;
-
-    /// <summary>
-    /// The previous mode of the suit. This is used to restore the state when an EMP effect ends.
-    /// </summary>
-    [ViewVariables]
-    public SuitSensorMode PreviousMode = SuitSensorMode.SensorOff;
 }
