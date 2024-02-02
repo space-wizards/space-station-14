@@ -41,15 +41,12 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
                 return;
 
             _selected = address;
-            SelectCyborg.Visible = false;
-            BorgContainer.Visible = true;
             PopulateData();
         };
         Cyborgs.OnItemDeselected += _ =>
         {
             _selected = null;
-            SelectCyborg.Visible = true;
-            BorgContainer.Visible = false;
+            PopulateData();
         };
 
         // these won't throw since buttons are only visible if a borg is selected
@@ -74,7 +71,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         CyborgsContainer.Visible = hasCyborgs;
         PopulateCyborgs();
 
-        // PopulateData called automatically by selecting an item
+        PopulateData();
 
         var access = _player.LocalPlayer?.ControlledEntity is {} player && _accessReader.IsAllowed(player, _console);
         DangerZone.Visible = access;
@@ -98,7 +95,14 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
     private void PopulateData()
     {
         if (_selected is not {} selected)
+        {
+            SelectCyborg.Visible = true;
+            BorgContainer.Visible = false;
             return;
+        }
+
+        SelectCyborg.Visible = false;
+        BorgContainer.Visible = true;
 
         var data = _cyborgs[selected];
         var chassis = _proto.Index<EntityPrototype>(data.Chassis);
@@ -109,6 +113,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 
         Model.Text = Loc.GetString("robotics-console-model", ("name", model));
         Designation.Text = Loc.GetString("robotics-console-designation", ("name", data.Name));
+        Battery.Text = Loc.GetString("robotics-console-battery", ("charge", (int) (data.Charge * 100f)));
         Brain.Text = Loc.GetString("robotics-console-brain", ("brain", data.HasBrain));
         Modules.Text = Loc.GetString("robotics-console-modules", ("count", data.ModuleCount));
 

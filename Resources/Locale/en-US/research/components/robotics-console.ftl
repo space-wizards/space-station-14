@@ -4,6 +4,7 @@ robotics-console-no-cyborgs = No Cyborgs!
 robotics-console-select-cyborg = Select a cyborg above.
 robotics-console-model = Model: {$name}
 robotics-console-designation = Designation: {$name}
+robotics-console-battery = Battery charge: {$charge}%
 robotics-console-modules = Modules installed: {$count}
 robotics-console-brain = Brain installed: {$brain ->
     [true] Yes

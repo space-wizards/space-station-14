@@ -53,6 +53,7 @@ public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 
 /// <summary>
 /// All data a client needs to render the console UI for a single cyborg.
+/// Created by <c>BorgTransponderComponent</c> and sent to clients by <c>RoboticsConsoleComponent</c>.
 /// </summary>
 [Serializable, NetSerializable]
 public record struct CyborgControlData
@@ -66,6 +67,11 @@ public record struct CyborgControlData
     /// Name of the borg's entity, including its silicon id.
     /// </summary>
     public string Name;
+
+    /// <summary>
+    /// Battery charge from 0 to 1.
+    /// </summary>
+    public float Charge;
 
     /// <summary>
     /// How many modules this borg has, just useful information for roboticists.

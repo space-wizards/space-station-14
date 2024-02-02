@@ -35,7 +35,7 @@
 				<!-- TODO: button to open camera window for this borg -->
 	        </BoxContainer>
 	    	<controls:StripeBack Name="DangerZone" Visible="False">
-	    		<BoxContainer Margin="5 5 5 5" Orientation="Horizontal" HorizontalExpand="True">
+	    		<BoxContainer Margin="5 5 5 5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center">
 		    		<Button Name="DisableButton" Text="{Loc 'robotics-console-disable'}"/>
 		    		<Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="ButtonCaution"/>
 	    		</BoxContainer>
