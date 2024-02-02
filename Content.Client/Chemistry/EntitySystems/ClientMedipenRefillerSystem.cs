@@ -1,5 +1,3 @@
-
-
 using Content.Shared.Chemistry;
 
 namespace Content.Client.Chemistry.EntitySystems;

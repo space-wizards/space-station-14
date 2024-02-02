@@ -7,7 +7,7 @@ public sealed partial class MedipenRefillerComponent : Component
 {
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public TimeSpan CompletionTime = TimeSpan.FromSeconds(20);
+    public TimeSpan CompletionTime = TimeSpan.FromSeconds(10);
 
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan RemainingTime = TimeSpan.Zero;
