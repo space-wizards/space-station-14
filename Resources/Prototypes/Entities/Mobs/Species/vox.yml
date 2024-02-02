@@ -107,10 +107,6 @@
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen
-    - VoxSpecies
 
 - type: entity
   parent: BaseSpeciesDummy
