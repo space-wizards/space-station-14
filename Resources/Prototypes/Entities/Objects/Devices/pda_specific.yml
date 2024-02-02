@@ -22,3 +22,5 @@
         type: ChameleonBoundUserInterface
       - key: enum.PdaUiKey.Key
         type: PdaBoundUserInterface
+  - type: PdaBorderColor
+    borderColor: "#717059"

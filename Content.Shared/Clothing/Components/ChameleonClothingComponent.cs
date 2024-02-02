@@ -57,9 +57,9 @@ public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class ChameleonPrototypeSelectedMessage : BoundUserInterfaceMessage
 {
-    public readonly string SelectedId;
+    public readonly EntProtoId SelectedId;
 
-    public ChameleonPrototypeSelectedMessage(string selectedId)
+    public ChameleonPrototypeSelectedMessage(EntProtoId selectedId)
     {
         SelectedId = selectedId;
     }

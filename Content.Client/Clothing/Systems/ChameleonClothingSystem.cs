@@ -1,3 +1,4 @@
+using Content.Client.PDA;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Robust.Client.GameObjects;
@@ -8,8 +9,6 @@ namespace Content.Client.Clothing.Systems;
 // All valid items for chameleon are calculated on client startup and stored in dictionary.
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -25,9 +24,28 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         base.UpdateSprite(uid, proto);
         if (TryComp(uid, out SpriteComponent? sprite)
-            && proto.TryGetComponent(out SpriteComponent? otherSprite, _factory))
+            && proto.TryGetComponent(out SpriteComponent? otherSprite, Factory))
         {
             sprite.CopyFrom(otherSprite);
+        }
+    }
+
+    protected override void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component, EntityPrototype? prototype = null)
+    {
+        if (!component.Default.HasValue)
+            return;
+
+        if (prototype == null)
+            prototype = Proto.Index(component.Default.Value);
+
+        base.UpdateVisuals(uid, component, prototype);
+
+        if (TryComp<PdaBorderColorComponent>(uid, out var pdaBorder) &&
+            prototype.TryGetComponent<PdaBorderColorComponent>(out var otherPdaBorder))
+        {
+            pdaBorder.AccentHColor = otherPdaBorder.AccentHColor;
+            pdaBorder.AccentVColor = otherPdaBorder.AccentVColor;
+            pdaBorder.BorderColor = otherPdaBorder.BorderColor;
         }
     }
 }
