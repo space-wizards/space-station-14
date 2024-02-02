@@ -43,8 +43,8 @@
     price: 300
   - type: SpamEmitSoundRequirePower
   - type: SpamEmitSound
-    rollInterval: 30
-    maxExtraInterval: 60
+    minInterval: 30
+    maxInterval: 90
     playChance: 0.6
     sound:
       collection: ArcadeNoise

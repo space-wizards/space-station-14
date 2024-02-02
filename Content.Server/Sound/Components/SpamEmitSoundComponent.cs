@@ -3,41 +3,47 @@ using Content.Shared.Sound.Components;
 namespace Content.Server.Sound.Components
 {
     /// <summary>
-    /// Rolls to play a sound every few seconds.
+    /// Repeatedly plays a sound with a randomized delay.
     /// </summary>
     [RegisterComponent]
     public sealed partial class SpamEmitSoundComponent : BaseEmitSoundComponent
     {
-        [DataField]
-        public float Accumulator = 0f;
-
         /// <summary>
-        /// Time in seconds between each roll.
+        /// The time at which the next sound will play.
         /// </summary>
         [DataField]
-        public float RollInterval = 2f;
+        public TimeSpan NextSound;
 
         /// <summary>
-        /// The maximum amount of extra time (in seconds) that can be
-        /// randomly added to the RollInterval after each roll.
+        /// The minimum time in seconds between playing the sound.
         /// </summary>
         [DataField]
-        public float MaxExtraInterval = 2f;
+        public TimeSpan MinInterval = TimeSpan.FromSeconds(2);
 
         /// <summary>
-        /// Chance that the sound will play on each roll.
-        /// 0 = never, 1 = always
+        /// The maximum time in seconds between playing the sound.
         /// </summary>
         [DataField]
-        public float PlayChance = 0.5f;
+        public TimeSpan MaxInterval = TimeSpan.FromSeconds(2);
 
         // Always Pvs.
+        /// <summary>
+        /// Content of a popup message to display whenever the sound plays.
+        /// </summary>
         [DataField]
-        public string? PopUp;
+        public LocId? PopUp;
 
+        /// <summary>
+        /// Whether the timer is currently running and sounds are being played.
+        /// Do not set this directly, use <see cref="EmitSoundSystem.SetEnabled"/>
+        /// </summary>
         [DataField]
+        [Access(typeof(EmitSoundSystem))]
         public bool Enabled = true;
 
-        public float ExtraInterval;
+        /// <summary>
+        /// Stores the time at which the component was disabled.
+        /// </summary>
+        public TimeSpan DisabledTime;
     }
 }
