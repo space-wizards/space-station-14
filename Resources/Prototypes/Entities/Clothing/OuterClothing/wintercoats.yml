@@ -227,6 +227,7 @@
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHoS
   name: head of security's winter coat
+  description: A sturdy, utilitarian winter coat designed to protect a head of security from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
@@ -242,6 +243,19 @@
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterHOS
+
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterHoSUnarmored
+  name: head of security's winter coat
+  description: A sturdy coat, a warm coat, but not an armored coat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterHOS
 
@@ -452,6 +466,19 @@
         Heat: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterWarden
+
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterWardenUnarmored
+  name: warden's unarmored winter coat
+  description: A sturdy coat, a warm coat, but not an armored coat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 
