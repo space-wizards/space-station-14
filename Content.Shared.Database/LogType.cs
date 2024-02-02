@@ -95,4 +95,5 @@ public enum LogType
     /// </summary>
     ChatRateLimited = 87,
     AtmosTemperatureChanged = 88,
+    RoboticsConsole = 89
 }
