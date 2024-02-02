@@ -113,6 +113,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 15
+    hasInjectionDelay: true
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1

@@ -7,8 +7,11 @@ namespace Content.Shared.Chemistry.Components;
 [NetworkedComponent()]
 public abstract partial class SharedHyposprayComponent : Component
 {
-    [DataField("solutionName")]
+    [DataField]
     public string SolutionName = "hypospray";
+
+    [DataField]
+    public bool HasInjectionDelay = false;
 }
 
 [Serializable, NetSerializable]

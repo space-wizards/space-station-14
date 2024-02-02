@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
@@ -32,8 +33,8 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
+            SubscribeLocalEvent<HyposprayComponent, InjectorDoAfterEvent>(OnInjectDoAfter);
         }
-
         private void OnHypoGetState(Entity<HyposprayComponent> entity, ref ComponentGetState args)
         {
             args.State = _solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out _, out var solution)
@@ -43,7 +44,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnUseInHand(Entity<HyposprayComponent> entity, ref UseInHandEvent args)
         {
-            if (args.Handled)
+            if (!EligibleEntity(args.User, _entMan, entity.Comp) || args.Handled)
                 return;
 
             TryDoInject(entity, args.User, args.User);
@@ -54,18 +55,24 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             Dirty(entity);
         }
-
         public void OnAfterInteract(Entity<HyposprayComponent> entity, ref AfterInteractEvent args)
         {
-            if (!args.CanReach)
-                return;
-
+            var comp = entity.Comp;
             var target = args.Target;
             var user = args.User;
 
-            TryDoInject(entity, target, user);
-        }
+            if (!EligibleEntity(target, _entMan, comp) || !args.CanReach || target is null)
+                return;
 
+            //  If true, there will be a DoAfter before performing the action, with a variable delay.
+            if (comp.HasInjectionDelay && !target.Equals(user) && !_tag.HasTag(entity, "EmptyMedipen"))
+            {
+                BeforeInjectionDoAfter(entity, user, target.Value);
+                return;
+            }
+
+            TryDoInject(entity, args.Target, args.User);
+        }
         public void OnAttack(Entity<HyposprayComponent> entity, ref MeleeHitEvent args)
         {
             if (!args.HitEntities.Any())
@@ -73,20 +80,57 @@ namespace Content.Server.Chemistry.EntitySystems
 
             TryDoInject(entity, args.HitEntities.First(), args.User);
         }
+        private void OnInjectDoAfter(EntityUid uid, HyposprayComponent component, InjectorDoAfterEvent args)
+        {
+            if (!Resolve(uid, ref component!) || args.Cancelled || args.Handled || args.Target is null || args.Used is null)
+                return;
+
+            TryDoInject((uid, component), args.Target, args.User);
+            args.Handled = true;
+        }
+
+        private void BeforeInjectionDoAfter(Entity<HyposprayComponent> entity, EntityUid user, EntityUid target)
+        {
+            var comp = entity.Comp;
+            var delay = comp.BaseDelay + comp.DelayPerUnit * (float) comp.TransferAmount;
+            var userName = Identity.Name(user, _entMan);
+            var targetName = Identity.Name(target, _entMan);
+
+            _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-inject-target-message", ("user", userName)), target, Shared.Popups.PopupType.MediumCaution);
+
+            // The delay varies depending on the amount you are trying to inject and the state of the player.
+            // In general, it's faster than a syringe in emergency cases, and slower in combat situations.
+            if (_mobState.IsCritical(target))
+                delay -= comp.CritDelayReduction;
+            else if (_combat.IsInCombatMode(target))
+            {
+                delay += comp.CombatDelayPenalty;
+                // Indicates to the user that there is a time penalty. It's here for consistency reasons.
+                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-resist-user-message", ("target", targetName)), user, Shared.Popups.PopupType.MediumCaution);
+            }
+
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, Math.Max(delay, 0), new InjectorDoAfterEvent(), entity, target, entity)
+            {
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                BreakOnWeightlessMove = true,
+                BreakOnDamage = true,
+                BreakOnHandChange = true,
+                MovementThreshold = 0.1f,
+            };
+
+            _doAfter.TryStartDoAfter(doAfterArgs);
+        }
 
         public bool TryDoInject(Entity<HyposprayComponent> hypo, EntityUid? target, EntityUid user)
         {
             var (uid, component) = hypo;
-
-            if (!EligibleEntity(target, _entMan, component))
-                return false;
 
             if (TryComp(uid, out UseDelayComponent? delayComp))
             {
                 if (_useDelay.IsDelayed((uid, delayComp)))
                     return false;
             }
-
 
             string? msgFormat = null;
 
@@ -104,7 +148,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return true;
             }
 
-            if (!_solutionContainers.TryGetInjectableSolution(target.Value, out var targetSoln, out var targetSolution))
+            if (!_solutionContainers.TryGetInjectableSolution(target!.Value, out var targetSoln, out var targetSolution))
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, _entMan))), user);
                 return false;
@@ -126,9 +170,6 @@ namespace Content.Server.Chemistry.EntitySystems
             if (delayComp != null)
                 _useDelay.TryResetDelay((uid, delayComp));
 
-            if (_tag.HasTag(uid, "Medipen"))
-                _tag.TryAddTag(uid, "EmptyMedipen");
-
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
 
@@ -145,6 +186,10 @@ namespace Content.Server.Chemistry.EntitySystems
                 return true;
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
             _solutionContainers.TryAddSolution(targetSoln.Value, removedSolution);
+
+            // Tag needs to be added for whitelist reasons
+            if (_tag.HasTag(hypo, "Medipen"))
+                _tag.AddTag(hypo, "EmptyMedipen");
 
             var ev = new TransferDnaEvent { Donor = target.Value, Recipient = uid };
             RaiseLocalEvent(target.Value, ref ev);

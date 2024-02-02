@@ -19,6 +19,15 @@ namespace Content.Server.Chemistry.Components
         [DataField("injectSound")]
         public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
+        [DataField]
+        public float BaseDelay = 3f;
+        [DataField]
+        public float DelayPerUnit = 0.1f;
+        [DataField]
+        public float CritDelayReduction = 3f;
+        [DataField]
+        public float CombatDelayPenalty = 3f;
+
         /// <summary>
         /// Whether or not the hypo is able to inject only into mobs. On false you can inject into beakers/jugs
         /// </summary>
