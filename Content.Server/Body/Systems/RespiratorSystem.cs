@@ -109,7 +109,7 @@ public sealed class RespiratorSystem : EntitySystem
 
         // Inhale gas
         var ev = new InhaleLocationEvent();
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ref ev, broadcast: false);
 
         ev.Gas ??= _atmosSys.GetContainingMixture(uid, false, true);
 
@@ -140,7 +140,7 @@ public sealed class RespiratorSystem : EntitySystem
         // exhale gas
 
         var ev = new ExhaleLocationEvent();
-        RaiseLocalEvent(uid, ev, false);
+        RaiseLocalEvent(uid, ref ev, broadcast: false);
 
         if (ev.Gas == null)
         {
@@ -228,12 +228,8 @@ public sealed class RespiratorSystem : EntitySystem
     }
 }
 
-public sealed class InhaleLocationEvent : EntityEventArgs
-{
-    public GasMixture? Gas;
-}
+[ByRefEvent]
+public record struct InhaleLocationEvent(GasMixture? Gas);
 
-public sealed class ExhaleLocationEvent : EntityEventArgs
-{
-    public GasMixture? Gas;
-}
+[ByRefEvent]
+public record struct ExhaleLocationEvent(GasMixture? Gas);

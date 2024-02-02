@@ -61,7 +61,7 @@ public sealed class BodySystem : SharedBodySystem
     {
         foreach (var organ in GetBodyOrgans(uid, component))
         {
-            RaiseLocalEvent(organ.Id, args);
+            RaiseLocalEvent(organ.Id, ref args);
         }
     }
 
@@ -130,7 +130,10 @@ public sealed class BodySystem : SharedBodySystem
 
         var gibs = base.GibBody(bodyId, gibOrgans, body, launchGibs: launchGibs,
             splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
-        RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));
+
+        var ev = new BeingGibbedEvent(gibs);
+        RaiseLocalEvent(bodyId, ref ev);
+
         QueueDel(bodyId);
 
         return gibs;

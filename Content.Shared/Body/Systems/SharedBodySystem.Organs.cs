@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
@@ -12,21 +12,27 @@ public partial class SharedBodySystem
     private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
     {
         component.Body = bodyUid;
-        RaiseLocalEvent(uid, new AddedToPartEvent(parentPartUid));
+        var addedEv = new AddedToPartEvent(parentPartUid);
+        RaiseLocalEvent(uid, ref addedEv);
 
         if (component.Body != null)
-            RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, parentPartUid));
+        {
+            var addedInBodyEv = new AddedToPartInBodyEvent(bodyUid, parentPartUid);
+            RaiseLocalEvent(uid, ref addedInBodyEv);
+        }
 
         Dirty(uid, component);
     }
 
     private void RemoveOrgan(EntityUid uid, EntityUid parentPartUid, OrganComponent component)
     {
-        RaiseLocalEvent(uid, new RemovedFromPartEvent(parentPartUid));
+        var removedEv = new RemovedFromPartEvent(parentPartUid);
+        RaiseLocalEvent(uid, ref removedEv);
 
-        if (component.Body != null)
+        if (component.Body is {Valid: true} bodyUid)
         {
-            RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(component.Body.Value, parentPartUid));
+            var removedInBodyEv = new RemovedFromPartInBodyEvent(bodyUid, parentPartUid);
+            RaiseLocalEvent(uid, ref removedInBodyEv);
         }
 
         component.Body = null;

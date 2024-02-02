@@ -218,15 +218,25 @@ namespace Content.Server.Body.Systems
         }
     }
 
-    public sealed class ApplyMetabolicMultiplierEvent : EntityEventArgs
+    [ByRefEvent]
+    public readonly record struct ApplyMetabolicMultiplierEvent(
+        EntityUid Uid,
+        float Multiplier,
+        bool Apply)
     {
-        // The entity whose metabolism is being modified
-        public EntityUid Uid;
+        /// <summary>
+        /// The entity whose metabolism is being modified.
+        /// </summary>
+        public readonly EntityUid Uid = Uid;
 
-        // What the metabolism's update rate will be multiplied by
-        public float Multiplier;
+        /// <summary>
+        /// What the metabolism's update rate will be multiplied by.
+        /// </summary>
+        public readonly float Multiplier = Multiplier;
 
-        // Apply this multiplier or ignore / reset it?
-        public bool Apply;
+        /// <summary>
+        /// If true, apply the multiplier. If false, revert it.
+        /// </summary>
+        public readonly bool Apply = Apply;
     }
 }

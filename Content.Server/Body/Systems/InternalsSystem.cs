@@ -135,7 +135,7 @@ public sealed class InternalsSystem : EntitySystem
         _alerts.ClearAlert(uid, AlertType.Internals);
     }
 
-    private void OnInhaleLocation(EntityUid uid, InternalsComponent component, InhaleLocationEvent args)
+    private void OnInhaleLocation(EntityUid uid, InternalsComponent component, ref InhaleLocationEvent args)
     {
         if (AreInternalsWorking(component))
         {

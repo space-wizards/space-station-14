@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -78,12 +78,18 @@ public partial class SharedBodySystem
 
                 Dirty(organ, organComp);
 
-                if (organComp.Body != null)
-                    RaiseLocalEvent(organ, new RemovedFromPartInBodyEvent(organComp.Body.Value, uid));
+                if (organComp.Body is { Valid: true } oldBodyUid)
+                {
+                    var removedEv = new RemovedFromPartInBodyEvent(oldBodyUid, uid);
+                    RaiseLocalEvent(organ, ref removedEv);
+                }
 
                 organComp.Body = bodyUid;
-                if (bodyUid != null)
-                    RaiseLocalEvent(organ, new AddedToPartInBodyEvent(bodyUid.Value, uid));
+                if (bodyUid is not null)
+                {
+                    var addedEv = new AddedToPartInBodyEvent(bodyUid.Value, uid);
+                    RaiseLocalEvent(organ, ref addedEv);
+                }
             }
         }
 
