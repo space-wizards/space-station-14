@@ -153,7 +153,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         component.Lawset?.Laws.Add(new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = component.Lawset.Laws[^1].Order + 1
+            Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
     }
 
