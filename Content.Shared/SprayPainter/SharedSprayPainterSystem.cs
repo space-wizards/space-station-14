@@ -126,7 +126,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!group.StylePaths.TryGetValue(style.Name, out var sprite))
         {
             string msg = Loc.GetString("spray-painter-style-not-available");
-            _popup.PopupEntity(msg, args.User, args.User);
+            _popup.PopupClient(msg, args.User, args.User);
             return;
         }
 

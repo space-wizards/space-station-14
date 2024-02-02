@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: ninruB
-  changes:
-  - message: Reptilians no longer innately take 30% less heat damage.
-    type: Tweak
-  id: 5367
-  time: '2023-12-15T09:37:05.0000000+00:00'
 - author: keronshb
   changes:
   - message: Added the Action Upgrade System - used to upgrade specific actions!
@@ -3871,3 +3865,10 @@
   id: 5866
   time: '2024-02-01T23:41:43.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24844
+- author: Dygon
+  changes:
+  - message: You can't slip through chain link fences anymore.
+    type: Fix
+  id: 5867
+  time: '2024-02-02T04:24:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24850
