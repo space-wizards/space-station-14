@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Gibbed body parts contain their victim's DNA
-    type: Tweak
-  - message: Implanters, syringes, hyposprays, medipens, and cigarettes transfer DNA
-    type: Tweak
-  - message: Melee weapons that deal blunt/slash/pierce damage transfer DNA
-    type: Tweak
-  - message: Soap and rags can be used to clean evidence off of items, but leave evidence
-      of their own
-    type: Tweak
-  id: 5371
-  time: '2023-12-15T09:52:56.0000000+00:00'
 - author: TheShuEd
   changes:
   - message: Added hypodart into uplink. It is capable of piercing armor and injecting
@@ -3872,3 +3859,11 @@
   id: 5870
   time: '2024-02-03T01:55:03.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24876
+- author: Hmeister
+  changes:
+  - message: The guidebook entry for cargo is now up to date, and some other minor
+      changes to the guidebook.
+    type: Tweak
+  id: 5871
+  time: '2024-02-03T02:07:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24828
