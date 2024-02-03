@@ -30,8 +30,7 @@ public sealed partial class AccessReaderComponent : Component
     /// Cooldown time between denied access attempts.
     /// </summary>
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan DenyCooldown = TimeSpan.FromSeconds(5);
+    public TimeSpan DenyCooldown = TimeSpan.FromSeconds(2.5);
 
     /// <summary>
     /// List of access groups that grant access to this reader. Only a single matching group is required to gain access.
