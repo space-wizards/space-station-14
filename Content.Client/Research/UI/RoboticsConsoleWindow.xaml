@@ -24,20 +24,14 @@
                     </BoxContainer>
                 </PanelContainer>
                 <PanelContainer VerticalExpand="True" HorizontalExpand="True">
-                    <BoxContainer Margin="5 5 5 5" Orientation="Vertical">
-                        <Label Name="Model"/>
-                        <Label Name="Designation"/>
-                        <Label Name="Battery"/>
-                        <Label Name="Brain"/>
-                        <Label Name="Modules"/>
-                    </BoxContainer>
+                    <RichTextLabel Name="BorgInfo"/>
                 </PanelContainer>
                 <!-- TODO: button to open camera window for this borg -->
             </BoxContainer>
             <controls:StripeBack Name="DangerZone" Visible="False">
                 <BoxContainer Margin="5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center">
-                    <Button Name="DisableButton" Text="{Loc 'robotics-console-disable'}"/>
-                    <Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="Caution"/>
+                    <Button Name="DisableButton" Text="{Loc 'robotics-console-disable'}" StyleClasses="OpenRight"/>
+                    <Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="OpenLeft"/>
                 </BoxContainer>
             </controls:StripeBack>
         </BoxContainer>

@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;
 using Content.Shared.Research;
@@ -7,6 +8,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Research.UI;
 
@@ -61,6 +63,9 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         {
             OnDestroyPressed?.Invoke(_selected!);
         };
+
+        // cant put multiple styles in xaml for some reason
+        DestroyButton.StyleClasses.Add(StyleBase.ButtonCaution);
     }
 
     public void UpdateState(RoboticsConsoleState state)
@@ -117,11 +122,24 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 
         BorgSprite.Texture = icon;
 
-        Model.Text = Loc.GetString("robotics-console-model", ("name", model));
-        Designation.Text = Loc.GetString("robotics-console-designation", ("name", data.Name));
-        Battery.Text = Loc.GetString("robotics-console-battery", ("charge", (int) (data.Charge * 100f)));
-        Brain.Text = Loc.GetString("robotics-console-brain", ("brain", data.HasBrain));
-        Modules.Text = Loc.GetString("robotics-console-modules", ("count", data.ModuleCount));
+        var batteryColor = data.Charge switch {
+            < 0.2f => "red",
+            < 0.4f => "orange",
+            < 0.6f => "yellow",
+            < 0.8f => "green",
+            _ => "blue"
+        };
+
+        var text = FormattedMessage.FromMarkup(Loc.GetString("robotics-console-model", ("name", model)));
+        text.PushNewline();
+        text.AddMarkup(Loc.GetString("robotics-console-designation"));
+        text.AddText($" {data.Name}\n"); // prevent players trolling by naming borg [color=red]satan[/color]
+        text.AddMarkup(Loc.GetString("robotics-console-battery", ("charge", (int) (data.Charge * 100f)), ("color", batteryColor)));
+        text.PushNewline();
+        text.AddMarkup(Loc.GetString("robotics-console-brain", ("brain", data.HasBrain)));
+        text.PushNewline();
+        text.AddMarkup(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
+        BorgInfo.SetMessage(text);
 
         // how the turntables
         DisableButton.Disabled = !data.HasBrain;
