@@ -206,9 +206,6 @@
     - DoorBumpOpener
     - CanPilot
   - type: Emoting
-  - type: InstantAction
-    icon: { sprite: Clothing/Shoes/Boots/magboots-science.rsi, state: icon }
-    iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
   - type: GuideHelp
     guides:
       - Cyborgs
