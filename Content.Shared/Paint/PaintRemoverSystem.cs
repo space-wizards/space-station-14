@@ -55,7 +55,6 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
         if (!TryComp(target, out PaintedComponent? paint))
             return;
 
-
         paint.Enabled = false;
         _audio.PlayPredicted(component.Sound, target, args.User);
         _popup.PopupClient(Loc.GetString("you clean off the paint", ("target", target)), args.User, args.User, PopupType.Medium);
