@@ -1488,6 +1488,14 @@
   solids:
     FoodDonkpocketStonk: 1
 
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketCarp
+  name: warm carp-pocket recipe
+  result: FoodDonkpocketCarpWarm
+  time: 5
+  solids:
+    FoodDonkpocketCarp: 1
+
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
