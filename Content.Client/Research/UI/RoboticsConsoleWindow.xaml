@@ -28,11 +28,12 @@
                 </PanelContainer>
                 <!-- TODO: button to open camera window for this borg -->
             </BoxContainer>
-            <controls:StripeBack Name="DangerZone" Visible="False">
-                <BoxContainer Margin="5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center">
+            <controls:StripeBack>
+                <BoxContainer Name="DangerZone" Margin="5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center" Visible="False">
                     <Button Name="DisableButton" Text="{Loc 'robotics-console-disable'}" StyleClasses="OpenRight"/>
                     <Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="OpenLeft"/>
                 </BoxContainer>
+                <Label Name="LockedMessage" Text="{Loc 'robotics-console-locked-message'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </controls:StripeBack>
         </BoxContainer>
     </BoxContainer>

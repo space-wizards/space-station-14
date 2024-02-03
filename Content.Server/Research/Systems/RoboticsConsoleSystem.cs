@@ -3,7 +3,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Research.Components;
-using Content.Shared.Access.Systems;
+using Content.Shared.Lock;
 using Content.Shared.Database;
 using Content.Shared.Research;
 using Robust.Server.GameObjects;
@@ -18,10 +18,10 @@ namespace Content.Server.Research.Systems;
 /// </summary>
 public sealed class RoboticsConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -100,7 +100,7 @@ public sealed class RoboticsConsoleSystem : EntitySystem
 
     private void OnDisable(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDisableMessage args)
     {
-        if (args.Session.AttachedEntity is not {} user || !_access.IsAllowed(user, ent))
+        if (args.Session.AttachedEntity is not {} user || _lock.IsLocked(ent.Owner))
             return;
 
         if (!ent.Comp.Cyborgs.TryGetValue(args.Address, out var data))
@@ -117,7 +117,7 @@ public sealed class RoboticsConsoleSystem : EntitySystem
 
     private void OnDestroy(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDestroyMessage args)
     {
-        if (args.Session.AttachedEntity is not {} user || !_access.IsAllowed(user, ent))
+        if (args.Session.AttachedEntity is not {} user || _lock.IsLocked(ent.Owner))
             return;
 
         var now = _timing.CurTime;

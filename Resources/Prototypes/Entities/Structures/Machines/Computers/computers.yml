@@ -1084,3 +1084,4 @@
     board: RoboticsConsoleCircuitboard
   - type: AccessReader # only used for dangerous things
     access: [["ResearchDirector"]]
+  - type: Lock
