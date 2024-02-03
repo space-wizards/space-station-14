@@ -1365,8 +1365,6 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-
-
 - type: listing
   id: UplinkSlipocalypseClusterSoap
   name: uplink-slipocalypse-clustersoap-name
@@ -1381,7 +1379,6 @@
     blacklist:
       tags:
       - NukeOpsUplink
-  
 
 - type: listing
   id: UplinkUltrabrightLantern
