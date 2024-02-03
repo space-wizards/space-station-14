@@ -53,9 +53,9 @@ public sealed class RoboticsConsoleSystem : EntitySystem
         {
             // remove cyborgs that havent pinged in a while
             _removing.Clear();
-            foreach (var (address, timeout) in comp.Timeouts)
+            foreach (var (address, data) in comp.Cyborgs)
             {
-                if (now >= timeout)
+                if (now >= data.Timeout)
                     _removing.Add(address);
             }
 
@@ -63,7 +63,6 @@ public sealed class RoboticsConsoleSystem : EntitySystem
             foreach (var address in _removing)
             {
                 comp.Cyborgs.Remove(address);
-                comp.Timeouts.Remove(address);
             }
         }
     }
@@ -84,9 +83,9 @@ public sealed class RoboticsConsoleSystem : EntitySystem
         if (!payload.TryGetValue(RoboticsConsoleConstants.NET_CYBORG_DATA, out CyborgControlData? data))
             return;
 
-        var address = args.SenderAddress;
-        ent.Comp.Cyborgs[address] = data.Value;
-        ent.Comp.Timeouts[address] = _timing.CurTime + ent.Comp.Timeout;
+        var real = data.Value;
+        real.Timeout = _timing.CurTime + ent.Comp.Timeout;
+        ent.Comp.Cyborgs[args.SenderAddress] = real;
 
         UpdateUserInterface(ent);
     }
@@ -122,7 +121,7 @@ public sealed class RoboticsConsoleSystem : EntitySystem
         if (now < ent.Comp.NextDestroy)
             return;
 
-        if (!RemoveCyborg(ent, args.Address, out var data))
+        if (!ent.Comp.Cyborgs.Remove(args.Address, out var data))
             return;
 
         var payload = new NetworkPayload()
@@ -132,22 +131,11 @@ public sealed class RoboticsConsoleSystem : EntitySystem
 
         _deviceNetwork.QueuePacket(ent, args.Address, payload);
 
-        var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Value.Name));
+        var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));
         _radio.SendRadioMessage(ent, message, ent.Comp.RadioChannel, ent);
-        _adminLogger.Add(LogType.RoboticsConsole, LogImpact.Extreme, $"{ToPrettyString(user):user} destroyed borg {data.Value.Name} with address {args.Address}");
+        _adminLogger.Add(LogType.RoboticsConsole, LogImpact.Extreme, $"{ToPrettyString(user):user} destroyed borg {data.Name} with address {args.Address}");
 
         ent.Comp.NextDestroy = now + ent.Comp.DestroyCooldown;
-    }
-
-    private bool RemoveCyborg(Entity<RoboticsConsoleComponent> ent, string address, [NotNullWhen(true)] out CyborgControlData? data)
-    {
-        data = null;
-        if (!ent.Comp.Cyborgs.Remove(address, out var real))
-            return false;
-
-        data = real;
-
-        return ent.Comp.Timeouts.Remove(address);
     }
 
     private void UpdateUserInterface(Entity<RoboticsConsoleComponent> ent)

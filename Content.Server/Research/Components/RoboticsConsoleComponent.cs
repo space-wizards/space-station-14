@@ -16,12 +16,6 @@ public sealed partial class RoboticsConsoleComponent : Component
     public Dictionary<string, CyborgControlData> Cyborgs = new();
 
     /// <summary>
-    /// Last time a packet was received from each cyborg.
-    /// </summary>
-    [DataField]
-    public Dictionary<string, TimeSpan> Timeouts = new();
-
-    /// <summary>
     /// After not responding for this length of time borgs are removed from the console.
     /// </summary>
     [DataField]

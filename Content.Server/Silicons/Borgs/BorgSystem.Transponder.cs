@@ -38,7 +38,8 @@ public sealed partial class BorgSystem
                 Name = meta.EntityName,
                 Charge = charge,
                 ModuleCount = chassis.ModuleCount,
-                HasBrain = chassis.BrainEntity != null
+                HasBrain = chassis.BrainEntity != null,
+                Timeout = TimeSpan.Zero
             };
 
             var payload = new NetworkPayload()

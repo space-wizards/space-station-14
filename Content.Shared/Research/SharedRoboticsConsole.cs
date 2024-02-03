@@ -1,5 +1,6 @@
 ﻿﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Research;
 
@@ -61,34 +62,46 @@ public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 /// All data a client needs to render the console UI for a single cyborg.
 /// Created by <c>BorgTransponderComponent</c> and sent to clients by <c>RoboticsConsoleComponent</c>.
 /// </summary>
-[Serializable, NetSerializable]
+[DataRecord, Serializable, NetSerializable]
 public record struct CyborgControlData
 {
     /// <summary>
     /// Chassis prototype of the borg.
     /// </summary>
+    [DataField]
     public EntProtoId Chassis;
 
     /// <summary>
     /// Name of the borg's entity, including its silicon id.
     /// </summary>
+    [DataField]
     public string Name;
 
     /// <summary>
     /// Battery charge from 0 to 1.
     /// </summary>
+    [DataField]
     public float Charge;
 
     /// <summary>
     /// How many modules this borg has, just useful information for roboticists.
     /// Lets them keep track of the latejoin borgs that need new modules and stuff.
     /// </summary>
+    [DataField]
     public int ModuleCount;
 
     /// <summary>
     /// Whether the borg has a brain installed or not.
     /// </summary>
+    [DataField]
     public bool HasBrain;
+
+    /// <summary>
+    /// When this cyborg's data will be deleted.
+    /// Set by the console when receiving the packet.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan Timeout;
 }
 
 public static class RoboticsConsoleConstants
