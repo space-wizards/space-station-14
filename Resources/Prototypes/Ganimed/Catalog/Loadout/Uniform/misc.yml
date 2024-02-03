@@ -137,3 +137,21 @@
   exclusive: false
   sponsorOnly: true
   prototype: ClothingUniformJumpskirtOfLife
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSkeleton
+  category: loadout-category-uniform
+  cost: 5
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitSkeleton
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHoSOld
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: false
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpsuitHoSOld

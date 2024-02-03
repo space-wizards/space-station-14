@@ -39,3 +39,15 @@
     sprite: Clothing/Shoes/Specific/chef.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/chef.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesUSSPBlack
+  name: old ussp boots
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Shoes/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Shoes/ussp.rsi

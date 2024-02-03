@@ -1,0 +1,9 @@
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelHoS
+  name: head of security's satchel
+  description: Stylish, leather black satchel
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Back/Satchels/hos.rsi

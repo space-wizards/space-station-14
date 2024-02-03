@@ -190,3 +190,23 @@
   cost: 2
   exclusive: true
   prototype: ClothingMaskSterile
+
+- type: loadout
+  id: LoadoutMasksClothingMaskGasAtmosian
+  category: loadout-category-masks
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - AtmosphericTechnician
+    - ChiefEngineer
+    - SeniorEngineer
+  prototype: ClothingMaskGasAtmosian
+
+- type: loadout
+  id: LoadoutMasksClothingMaskSkull
+  category: loadout-category-masks
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingMaskSkull

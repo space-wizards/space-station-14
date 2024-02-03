@@ -358,3 +358,25 @@
   whitelistJobs:
     - BlueShield
   prototype: ClothingOuterCoatBlueShield
+
+- type: loadout
+  id: LoadoutOuterClothingOuterAtmosianBomberJacket
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - AtmosphericTechnician
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingOuterAtmosianBomberJacket
+
+- type: loadout
+  id: LoadoutOuterClothingOuterCoatHoSOvercoat
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingOuterCoatHoSOvercoat

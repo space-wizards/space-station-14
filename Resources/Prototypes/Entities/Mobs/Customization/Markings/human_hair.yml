@@ -1350,6 +1350,14 @@
       state: baum
 
 - type: marking
+  id: HumanHairBaum2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Corvax/Mobs/Customization/human_hair.rsi
+      state: baum2
+
+- type: marking
   id: HumanHairBeachwave
   bodyPart: Hair
   markingCategory: Hair

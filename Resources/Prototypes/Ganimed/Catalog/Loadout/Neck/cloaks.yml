@@ -187,3 +187,23 @@
   whitelistJobs:
     - Captain
   prototype: ClothingNeckCloakCapFormal
+
+- type: loadout
+  id: LoadoutNeckClothingCloakAtmosian
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+  prototype: ClothingCloakAtmosian
+
+- type: loadout
+  id: LoadoutNeckClothingCloakGamer
+  category: loadout-category-neck
+  cost: 8
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingCloakGamer

@@ -219,3 +219,23 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingHandsGlovesPowerglove
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesLeatherHoS
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingHandsGlovesLeatherHoS
+
+- type: loadout
+  id: LoadoutHandsClothingHandsWatchDivine
+  category: loadout-category-hands
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Chaplain
+  prototype: ClothingHandsWatchDivine

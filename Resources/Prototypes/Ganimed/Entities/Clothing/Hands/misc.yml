@@ -1,0 +1,34 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLeatherHoS
+  name: leather gloves
+  description: Stylish black leather gloves
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Hands/Gloves/hos.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Hands/Gloves/hos.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsWatchDivine
+  name: divine watches
+  description: This watch can only be worn by a divine person
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Hands/Accessories/watch.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Hands/Accessories/watch.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLeatherUSSPBlack
+  name: old ussp leather gloves
+  description: Black leather gloves from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Hands/Gloves/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Hands/Gloves/ussp.rsi

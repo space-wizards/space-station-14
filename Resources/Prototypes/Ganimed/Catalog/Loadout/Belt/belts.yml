@@ -222,3 +222,13 @@
     - Brigmedic
     - BlueShield
   prototype: ClothingBeltAssault
+
+- type: loadout
+  id: LoadoutBeltClothingBeltHoS
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingBeltHoS

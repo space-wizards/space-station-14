@@ -17,3 +17,23 @@
   components:
   - type: Sprite
     sprite: Ganimed/Clothing/Neck/Cloaks/hieroglyphics.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingCloakAtmosian
+  name: atmosian's cloak
+  description: The cloak of a legendary Atmosian.
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Neck/Cloaks/atmosian.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingCloakGamer
+  name: legendary gamer's cloak
+  description: Worn by the most skilled professional gamers.
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Neck/Cloaks/gamer.rsi

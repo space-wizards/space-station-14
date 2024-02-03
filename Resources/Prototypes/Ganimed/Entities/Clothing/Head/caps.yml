@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapLeatherHoS
+  name: leather head of security's cap
+  description: Pretty old stuff for these times, bringing back old memories...
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/hoscap.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/hoscap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapUSSPBlack
+  name: old ussp leather cap
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/ussp.rsi

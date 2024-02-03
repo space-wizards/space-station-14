@@ -385,3 +385,13 @@
   whitelistJobs:
     - Clown
   prototype: ClothingHeadHatJesterAlt
+  
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCapLeatherHoS
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingHeadHatCapLeatherHoS
