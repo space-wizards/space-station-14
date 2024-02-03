@@ -1558,6 +1558,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ReducedMotion =
             CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        public static readonly CVarDef<bool> ChatEnableColorName =
+            CVarDef.Create("accessibility.enable_color_name", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying names with individual colors.");
+
         /*
          * CHAT
          */
@@ -1612,9 +1615,6 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ChatFancyNameBackground =
             CVarDef.Create("chat.fancy_name_background", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying a background under the speaking character's name.");
-
-        public static readonly CVarDef<bool> ChatEnableColorName =
-            CVarDef.Create("chat.enable_color_name", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying names with individual colors.");
 
         /// <summary>
         /// A message broadcast to each player that joins the lobby.
