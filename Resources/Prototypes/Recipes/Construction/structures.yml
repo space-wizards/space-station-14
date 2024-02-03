@@ -321,25 +321,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
-  
-- type: construction
-  name: stainedWindow
-  id: StainedWindow
-  graph: Window
-  startNode: start
-  targetNode: stainedWindow
-  category: construction-category-structures
-  description: Clear. 
-  canBuildInImpassable: true
-  conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/stained_window.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
 
 - type: construction
   name: diagonal window

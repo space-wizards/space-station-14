@@ -236,22 +236,3 @@
   - type: Construction
     graph: WindowDiagonal
     node: windowDiagonal
-
-- type: entity
-  parent: Window
-  id: StainedWindow
-  name: stained glass window
-  components:
-  - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/stained_window.rsi
-  - type: Icon
-    sprite: Structures/Windows/stained_window.rsi
-  - type: Repairable
-    fuelCost: 15
-    doAfterDelay: 4
-  - type: IconSmooth
-    base: swindow
-  - type: Construction
-    graph: Window
-    node: stainedWindow

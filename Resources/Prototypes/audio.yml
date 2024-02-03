@@ -45,9 +45,6 @@
   priority: 3
 
 # General areas
-
-
-
 - type: ambientMusic
   id: Maintenance
   sound:
