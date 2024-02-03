@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
 
@@ -34,6 +35,8 @@ public sealed partial class PaintComponent : Component
     [DataField, AutoNetworkedField]
     public Color Color = Color.FromHex("#c62121");
 
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntityWhitelist? Blacklist;
     /// <summary>
     /// Reagent consumption per use.
     /// </summary>

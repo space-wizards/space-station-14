@@ -70,6 +70,7 @@
       tags:
         - Carp
         - DoorBumpOpener
+        - NoPaint
     - type: ReplacementAccent
       accent: genericAggressive
     - type: Speech
@@ -131,7 +132,6 @@
             - Opaque
     - type: TypingIndicator
       proto: robot
-    - type: NoPaintShader
 
 - type: entity
   parent: MobCarp

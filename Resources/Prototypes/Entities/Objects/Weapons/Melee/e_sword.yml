@@ -76,9 +76,11 @@
         shader: unshaded
   - type: DisarmMalus
     malus: 0
-  - type: NoPaintShader
   - type: Reflect
     enabled: false
+  - type: Tag
+    tags:
+      - NoPaint
 
 - type: entity
   name: pen
@@ -155,6 +157,7 @@
   - type: Tag
     tags:
     - Write
+    - NoPaint
   - type: DisarmMalus
     malus: 0
 

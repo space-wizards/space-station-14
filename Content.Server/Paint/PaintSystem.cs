@@ -33,16 +33,19 @@ public sealed class PaintSystem : SharedPaintSystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (!TryComp(args.Used, out PaintComponent? component))
+        if (!entity.Comp.Blacklist?.IsValid(target, EntityManager) != true)
+        {
+            _popup.PopupEntity(Loc.GetString("paint-failure", ("target", target)), args.User, args.User, PopupType.Medium);
             return;
+        }
 
         if (TryPaint(entity, target))
         {
             EnsureComp<PaintedComponent>(target, out PaintedComponent? paint);
             EnsureComp<AppearanceComponent>(target);
 
-            paint.Color = component.Color; // set the target color to the color specified in the spray paint yml.
-            _audio.PlayPvs(component.Spray, args.Used);
+            paint.Color = entity.Comp.Color; // set the target color to the color specified in the spray paint yml.
+            _audio.PlayPvs(entity.Comp.Spray, args.Used);
             paint.Enabled = true;
             _popup.PopupEntity(Loc.GetString("paint-success", ("target", target)), args.User, args.User, PopupType.Medium);
             _appearanceSystem.SetData(target, PaintVisuals.Painted, true);
@@ -61,7 +64,7 @@ public sealed class PaintSystem : SharedPaintSystem
         if (HasComp<PaintedComponent>(target))
             return false;
 
-        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target) || HasComp<NoPaintShaderComponent>(target) )
+        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target))
             return false;
 
         if (_solutionContainer.TryGetSolution(reagent.Owner, reagent.Comp.Solution, out _, out var solution))
