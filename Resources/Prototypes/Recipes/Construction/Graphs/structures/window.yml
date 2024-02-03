@@ -46,6 +46,12 @@
               amount: 2
               doAfter: 3
 
+        - to: stainedWindow
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 6
+
         - to: shuttleWindow
           steps:
             - material: Plasteel
@@ -56,6 +62,21 @@
 
     - node: window
       entity: Window
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: stainedWindow
+      entity: StainedWindow
       edges:
         - to: start
           completed:

@@ -16,6 +16,15 @@
   rules: NearPrayable
   priority: 4
 
+- type: ambientMusic
+  id: Train
+  sound:
+    params:
+      volume: -8
+    collection: AmbienceTrain
+  rules: NearTrain
+  priority: 4
+
 # Departments
 - type: ambientMusic
   id: Medical
@@ -36,6 +45,9 @@
   priority: 3
 
 # General areas
+
+
+
 - type: ambientMusic
   id: Maintenance
   sound:
@@ -196,6 +208,16 @@
     - /Audio/Ambience/ambiruin6.ogg
     - /Audio/Ambience/ambiruin7.ogg
 
+- type: soundCollection
+  id: AmbienceTrain
+  files:
+    - /Audio/Ambience/ambitrain1.ogg
+    - /Audio/Ambience/ambitrain2.ogg
+    - /Audio/Ambience/ambitrain3.ogg
+    - /Audio/Ambience/ambiruin3.ogg
+    - /Audio/Ambience/ambiruin5.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+
 ## Background noise on station, separate to ambient music.
 - type: soundCollection
   id: AmbienceStation
@@ -234,6 +256,16 @@
       tiles:
         - Plating
       range: 2
+
+- type: rules
+  id: NearTrain
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.15
+      tiles:
+        - TrainLattice
+      range: 4
 
 - type: rules
   id: NearMedical

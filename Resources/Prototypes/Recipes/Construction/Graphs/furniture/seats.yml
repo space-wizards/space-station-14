@@ -70,6 +70,13 @@
               doAfter: 1
             - material: Cloth
               amount: 1
+        - to: blueComfBench
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 1
 
     - node: chair
       entity: Chair
