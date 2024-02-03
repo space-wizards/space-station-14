@@ -11715,13 +11715,6 @@ entities:
     - type: Transform
       pos: -20.5,-54.5
       parent: 60
-    - type: DeviceLinkSink
-      links:
-      - 4889
-    - type: DeviceLinkSource
-      linkedPorts:
-        4889:
-        - DoorStatus: DoorBolt
   - uid: 5168
     components:
     - type: Transform
@@ -11787,10 +11780,10 @@ entities:
       parent: 60
     - type: DeviceLinkSink
       links:
-      - 7332
+      - 7291
     - type: DeviceLinkSource
       linkedPorts:
-        7332:
+        7291:
         - DoorStatus: DoorBolt
   - uid: 7345
     components:
@@ -12068,13 +12061,6 @@ entities:
     - type: Transform
       pos: 0.5,-78.5
       parent: 60
-    - type: DeviceLinkSink
-      links:
-      - 7364
-    - type: DeviceLinkSource
-      linkedPorts:
-        7364:
-        - DoorStatus: DoorBolt
   - uid: 8522
     components:
     - type: Transform
@@ -12118,10 +12104,10 @@ entities:
       parent: 60
     - type: DeviceLinkSink
       links:
-      - 12584
+      - 6181
     - type: DeviceLinkSource
       linkedPorts:
-        12584:
+        6181:
         - DoorStatus: DoorBolt
   - uid: 19087
     components:
@@ -12332,25 +12318,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -23.5,-54.5
       parent: 60
-    - type: DeviceLinkSink
-      links:
-      - 4890
-    - type: DeviceLinkSource
-      linkedPorts:
-        4890:
-        - DoorStatus: DoorBolt
   - uid: 7364
     components:
     - type: Transform
       pos: 0.5,-80.5
       parent: 60
-    - type: DeviceLinkSink
-      links:
-      - 7362
-    - type: DeviceLinkSource
-      linkedPorts:
-        7362:
-        - DoorStatus: DoorBolt
   - uid: 13181
     components:
     - type: Transform
@@ -13702,26 +13674,12 @@ entities:
     - type: Transform
       pos: -47.5,-39.5
       parent: 60
-    - type: DeviceLinkSink
-      links:
-      - 7316
-    - type: DeviceLinkSource
-      linkedPorts:
-        7316:
-        - DoorStatus: DoorBolt
   - uid: 12584
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -56.5,-31.5
       parent: 60
-    - type: DeviceLinkSink
-      links:
-      - 12842
-    - type: DeviceLinkSource
-      linkedPorts:
-        12842:
-        - DoorStatus: DoorBolt
 - proto: AirlockSyndicateGlassLocked
   entities:
   - uid: 5333
@@ -14844,10 +14802,25 @@ entities:
     - type: Transform
       pos: 52.5,31.5
       parent: 60
+  - uid: 728
+    components:
+    - type: Transform
+      pos: -24.5,-35.5
+      parent: 60
   - uid: 5477
     components:
     - type: Transform
       pos: 46.5,31.5
+      parent: 60
+  - uid: 5503
+    components:
+    - type: Transform
+      pos: 0.5,-80.5
+      parent: 60
+  - uid: 5507
+    components:
+    - type: Transform
+      pos: -23.5,-54.5
       parent: 60
   - uid: 6129
     components:
@@ -14928,11 +14901,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-63.5
-      parent: 60
-  - uid: 19786
-    components:
-    - type: Transform
-      pos: -24.5,-35.5
       parent: 60
   - uid: 19800
     components:
@@ -110826,6 +110794,23 @@ entities:
       parent: 60
     - type: AtmosDevice
       joinedGrid: 60
+- proto: OxygenTankFilled
+  entities:
+  - uid: 17242
+    components:
+    - type: Transform
+      pos: -18.527008,32.655674
+      parent: 60
+  - uid: 17243
+    components:
+    - type: Transform
+      pos: -18.245758,32.64005
+      parent: 60
+  - uid: 24063
+    components:
+    - type: Transform
+      pos: 8.5436735,-62.480114
+      parent: 60
 - proto: PaintingAmogusTriptych
   entities:
   - uid: 23383
@@ -129920,25 +129905,6 @@ entities:
     - type: Transform
       pos: -26.5,-9.5
       parent: 60
-- proto: SpawnVehicleJanicart
-  entities:
-  - uid: 728
-    components:
-    - type: Transform
-      pos: -3.5,-26.5
-      parent: 60
-- proto: SpawnVehicleSecway
-  entities:
-  - uid: 5503
-    components:
-    - type: Transform
-      pos: -26.5,-20.5
-      parent: 60
-  - uid: 24175
-    components:
-    - type: Transform
-      pos: -33.5,-20.5
-      parent: 60
 - proto: SpawnVendingMachineRestockFoodDrink
   entities:
   - uid: 19888
@@ -135803,32 +135769,6 @@ entities:
     components:
     - type: Transform
       pos: 50.5,-25.5
-      parent: 60
-- proto: VehicleJanicartDestroyed
-  entities:
-  - uid: 24122
-    components:
-    - type: Transform
-      pos: -19.5,-44.5
-      parent: 60
-- proto: VehicleKeyJanicart
-  entities:
-  - uid: 21686
-    components:
-    - type: Transform
-      pos: -5.895404,-28.54571
-      parent: 60
-- proto: VehicleKeySecway
-  entities:
-  - uid: 5507
-    components:
-    - type: Transform
-      pos: -28.569313,-20.385147
-      parent: 60
-  - uid: 24176
-    components:
-    - type: Transform
-      pos: -33.527782,-15.554149
       parent: 60
 - proto: VendingBarDrobe
   entities:
@@ -152116,12 +152056,26 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -49.5,-31.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 12842
+    - type: DeviceLinkSource
+      linkedPorts:
+        12842:
+        - DoorStatus: DoorBolt
   - uid: 7291
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -47.5,-33.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 7316
+    - type: DeviceLinkSource
+      linkedPorts:
+        7316:
+        - DoorStatus: DoorBolt
   - uid: 8083
     components:
     - type: Transform
@@ -156779,22 +156733,5 @@ entities:
     components:
     - type: Transform
       pos: 23.533411,-13.4549055
-      parent: 60
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 17242
-    components:
-    - type: Transform
-      pos: -18.527008,32.655674
-      parent: 60
-  - uid: 17243
-    components:
-    - type: Transform
-      pos: -18.245758,32.64005
-      parent: 60
-  - uid: 24063
-    components:
-    - type: Transform
-      pos: 8.5436735,-62.480114
       parent: 60
 ...
