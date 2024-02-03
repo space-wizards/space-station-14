@@ -40,6 +40,8 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/freezer.rsi
   - type: AntiRottingContainer
+  - type: ExplosionResistance
+    damageCoefficient: 0.50
 
 - type: entity
   parent: CratePlastic
