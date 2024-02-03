@@ -49,10 +49,7 @@
     entity: SolarAssembly
   - type: Sprite
     layers:
-    - state: base
-    - state: overlay
-      color: "#fff200"
-    - state: icon-solar-assembly
+    - state: solar-assembly-part
 
 - type: entity
   parent: BaseFlatpack
@@ -62,10 +59,7 @@
   components:
   - type: Sprite
     layers:
-    - state: base
-    - state: overlay
-      color: "#990033"
-    - state: icon-ame-part
+    - state: ame-part
   - type: Flatpack
     entity: AmeShielding
   - type: StaticPrice
