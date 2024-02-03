@@ -13,15 +13,21 @@ public sealed partial class AdjustAlert : ReagentEffect
     [DataField]
     public bool Clear;
 
-    // Show cooldown progress over the alert
+    /// <summary>
+    /// Show cooldown progress over the alert
+    /// </summary>
     [DataField]
     public bool Cooldown;
 
-    // Automatically remove the alert after a set time
+    /// <summary>
+    /// Automatically remove the alert after a set time
+    /// </summary>
     [DataField]
     public bool AutoRemove;
 
-    // The length of the cooldown or the delay before autoRemove (in seconds) .
+    /// <summary>
+    /// The length of the cooldown or the delay before autoRemove (in seconds) .
+    /// </summary>
     [DataField]
     public float Time;
 
@@ -31,6 +37,7 @@ public sealed partial class AdjustAlert : ReagentEffect
     public override void Effect(ReagentEffectArgs args)
     {
         var alertSys = EntitySystem.Get<AlertsSystem>();
+        // TODO: Use EntityManager for the entitysystem static resolve.
         if (!args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))
             return;
 

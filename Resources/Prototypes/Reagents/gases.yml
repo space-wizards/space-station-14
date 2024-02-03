@@ -68,13 +68,14 @@
           types:
             Poison:
               1
+      # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
         conditions:
           - !type:ReagentThreshold
             min: 1.5
         autoRemove: True
-        time: 3.95
+        time: 5
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
@@ -107,13 +108,14 @@
           types:
             Radiation:
               1
+      # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
         conditions:
           - !type:ReagentThreshold
             min: 1.5
         autoRemove: True
-        time: 3.95
+        time: 5
 
 - type: reagent
   id: CarbonDioxide
@@ -150,7 +152,7 @@
           type: Plant
           shouldHave: false
         factor: -4
-      # soonTM
+      # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide
 

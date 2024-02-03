@@ -76,7 +76,7 @@ public abstract class AlertsSystem : EntitySystem
     /// <param name="severity">severity, if supported by the alert</param>
     /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
     ///     be erased if there is currently a cooldown for the alert)</param>
-    /// /// <param name="autoRemove">the time when the alert will be removed automatically</param>
+    /// /// <param name="autoRemove">the server time after which the alert will be removed automatically</param>
     public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null, TimeSpan? autoRemove = null)
     {
         if (!TryComp(euid, out AlertsComponent? alertsComponent))
@@ -89,7 +89,8 @@ public abstract class AlertsSystem : EntitySystem
             if (alertsComponent.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
                 alertStateCallback.Type == alertType &&
                 alertStateCallback.Severity == severity &&
-                alertStateCallback.Cooldown == cooldown)
+                alertStateCallback.Cooldown == cooldown &&
+                alertStateCallback.AutoRemove == autoRemove)
             {
                 return;
             }
@@ -102,10 +103,11 @@ public abstract class AlertsSystem : EntitySystem
 
             alertsComponent.Alerts[alert.AlertKey] = state;
 
+            // Keeping a list of AutoRemove alerts, so Update() doesn't need to check every alert
             if (alertsComponent.Alerts[alert.AlertKey].AutoRemove is not null )
             {
                 var autoComp = EnsureComp<AlertAutoRemoveComponent>(euid);
-                autoComp.Alerts.Add(alert.AlertKey, state);
+                autoComp.Alerts[alert.AlertKey] = state;
             }
 
             AfterShowAlert((euid, alertsComponent));
@@ -187,6 +189,9 @@ public abstract class AlertsSystem : EntitySystem
         LoadPrototypes();
     }
 
+
+    // TODO: Subscribe to EntityUnpausedEvent for the component and bump all the timers by pausedtime (see existing implementations) so this still works if a server is saved and then loaded.
+    // TODO: Also use RemCompDeferred and avoid touching the components during iteration.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
