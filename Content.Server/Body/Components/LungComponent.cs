@@ -1,5 +1,6 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Body.Systems;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 
@@ -8,7 +9,7 @@ namespace Content.Server.Body.Components;
 [RegisterComponent, Access(typeof(LungSystem))]
 public sealed partial class LungComponent : Component
 {
-    [DataField("air")]
+    [DataField]
     [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public GasMixture Air { get; set; } = new()
     {
@@ -16,7 +17,21 @@ public sealed partial class LungComponent : Component
         Temperature = Atmospherics.NormalBodyTemperature
     };
 
-    [ViewVariables]
-    [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-    public Solution LungSolution = default!;
+    /// <summary>
+    /// The name/key of the solution on this entity which these lungs act on.
+    /// </summary>
+    [DataField]
+    public string SolutionName = LungSystem.LungSolutionName;
+
+    /// <summary>
+    /// The solution on this entity that these lungs act on.
+    /// </summary>
+    [DataField]
+    public Entity<SolutionComponent>? Solution = null;
+
+    /// <summary>
+    /// The type of gas this lung needs. Used only for the breathing alerts, not actual metabolism.
+    /// </summary>
+    [DataField]
+    public AlertType Alert = AlertType.LowOxygen;
 }

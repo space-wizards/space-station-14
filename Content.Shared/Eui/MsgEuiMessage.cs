@@ -8,6 +8,7 @@ namespace Content.Shared.Eui
     public sealed class MsgEuiMessage : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
+        public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
 
         public uint Id;
         public EuiMessageBase Message = default!;
@@ -16,8 +17,9 @@ namespace Content.Shared.Eui
         {
             Id = buffer.ReadUInt32();
 
-            var len = buffer.ReadVariableInt32();
-            var stream = buffer.ReadAlignedMemory(len);
+            var length = buffer.ReadVariableInt32();
+            using var stream = new MemoryStream(length);
+            buffer.ReadAlignedMemory(stream, length);
             Message = ser.Deserialize<EuiMessageBase>(stream);
         }
 

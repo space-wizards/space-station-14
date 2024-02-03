@@ -16,6 +16,8 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.KitchenSpikeComponent;
@@ -110,7 +112,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (args.Handled)
                 return;
 
-            if (component.PrototypesToSpawn?.Count > 0) {
+            if (component.PrototypesToSpawn?.Count > 0)
+            {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, args.User);
                 args.Handled = true;
             }
@@ -153,7 +156,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 QueueDel(gib);
             }
 
-            _audio.Play(component.SpikeSound, Filter.Pvs(uid), uid, true);
+            _audio.PlayEntity(component.SpikeSound, Filter.Pvs(uid), uid, true);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,

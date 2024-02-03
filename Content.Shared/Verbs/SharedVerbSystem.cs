@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory.VirtualItem;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Verbs
@@ -24,16 +25,17 @@ namespace Content.Shared.Verbs
             if (user == null)
                 return;
 
-            var target = GetEntity(args.Target);
+            if (!TryGetEntity(args.Target, out var target))
+                return;
 
             // It is possible that client-side prediction can cause this event to be raised after the target entity has
             // been deleted. So we need to check that the entity still exists.
-            if (Deleted(target) || Deleted(user))
+            if (Deleted(user))
                 return;
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
-            var verbs = GetLocalVerbs(target, user.Value, args.RequestedVerb.GetType());
+            var verbs = GetLocalVerbs(target.Value, user.Value, args.RequestedVerb.GetType());
 
             // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
             // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
@@ -41,7 +43,7 @@ namespace Content.Shared.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                ExecuteVerb(verb, user.Value, target);
+                ExecuteVerb(verb, user.Value, target.Value);
         }
 
         /// <summary>
@@ -96,7 +98,7 @@ namespace Content.Shared.Verbs
                     // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
                     // their sprite.
 
-                    if (TryComp(@using, out HandVirtualItemComponent? pull))
+                    if (TryComp(@using, out VirtualItemComponent? pull))
                     {
                         @using = pull.BlockingEntity;
                     }

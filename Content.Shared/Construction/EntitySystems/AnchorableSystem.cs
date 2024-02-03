@@ -15,8 +15,7 @@ using Robust.Shared.Physics.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Shared.Construction.EntitySystems;
 

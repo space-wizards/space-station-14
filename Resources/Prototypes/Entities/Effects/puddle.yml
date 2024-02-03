@@ -11,10 +11,12 @@
 - type: entity
   id: PuddleSmear
   parent: PuddleTemporary
+  suffix: Smear
 
 - type: entity
   id: PuddleVomit
   parent: PuddleTemporary
+  suffix: Vomit
   components:
   - type: SolutionContainerManager
     solutions:
@@ -29,6 +31,7 @@
 - type: entity
   id: PuddleEgg
   parent: PuddleTemporary
+  suffix: Egg
   components:
   - type: SolutionContainerManager
     solutions:
@@ -41,6 +44,7 @@
 - type: entity
   id: PuddleTomato
   parent: PuddleTemporary
+  suffix: Tomato
   components:
   - type: SolutionContainerManager
     solutions:
@@ -55,6 +59,7 @@
 - type: entity
   id: PuddleWatermelon
   parent: PuddleTemporary
+  suffix: Watermelon
   components:
   - type: SolutionContainerManager
     solutions:
@@ -69,6 +74,7 @@
 - type: entity
   id: PuddleFlour
   parent: PuddleTemporary
+  suffix: Flour
   components:
   - type: SolutionContainerManager
     solutions:
@@ -80,7 +86,7 @@
 
 - type: entity
   id: PuddleSparkle
-  name: Sparkle
+  name: sparkle
   placement:
     mode: SnapgridCenter
   components:
@@ -106,11 +112,6 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepWater
-      params:
-        volume: 6
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: Transform
@@ -155,4 +156,7 @@
     examinable: false
   - type: ExaminableSolution
     solution: puddle
+  - type: DrawableSolution
+    solution: puddle
   - type: BadDrink
+  - type: IgnoresFingerprints

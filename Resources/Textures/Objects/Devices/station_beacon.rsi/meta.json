@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created by EmoGarbage404 (github) for SS14, based on beacon design from /tg/",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "blink",
+            "delays": [
+                [
+                    2.0,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "assembly"
+        }
+    ]
+}

@@ -12,7 +12,7 @@
         map: ["base"]
     - type: Item
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
-      size: 5
+      size: Small
     - type: AmbientSound
       enabled: false
       range: 8
@@ -24,9 +24,10 @@
           Blunt: 5
     - type: OnUseTimerTrigger
       delay: 120
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
-      params:
-        volume: -2
+      beepSound:
+        path: /Audio/Machines/Nuke/general_beep.ogg
+        params:
+          volume: -2
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default
@@ -83,11 +84,23 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    maxIntensity: 2
-    totalIntensity: 10
+    maxIntensity: 3.4
+    intensitySlope: 3
+    totalIntensity: 20
     canCreateVacuum: false
   - type: DeleteOnTrigger
   - type: AnimationPlayer
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   parent: BaseItem

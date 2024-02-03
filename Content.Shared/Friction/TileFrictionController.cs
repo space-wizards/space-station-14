@@ -13,7 +13,6 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
 
-
 namespace Content.Shared.Friction
 {
     public sealed class TileFrictionController : VirtualController
@@ -71,7 +70,7 @@ namespace Content.Shared.Friction
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    _mover.UseMobMovement(body.Owner))
+                    _mover.UseMobMovement(uid))
                 {
                     continue;
                 }

@@ -132,7 +132,7 @@ namespace Content.Shared.Roles
 
                         reason = FormattedMessage.FromMarkup(Loc.GetString(
                             "role-timer-department-insufficient",
-                            ("time", deptDiff),
+                            ("time", Math.Ceiling(deptDiff)),
                             ("department", Loc.GetString(deptRequirement.Department)),
                             ("departmentColor", department.Color.ToHex())));
                         return false;
@@ -161,7 +161,9 @@ namespace Content.Shared.Roles
                         if (overallDiff <= 0 || overallTime >= overallRequirement.Time)
                             return true;
 
-                        reason = FormattedMessage.FromMarkup(Loc.GetString("role-timer-overall-insufficient", ("time", overallDiff)));
+                        reason = FormattedMessage.FromMarkup(Loc.GetString(
+                              "role-timer-overall-insufficient", 
+                              ("time", Math.Ceiling(overallDiff))));
                         return false;
                     }
                     else
@@ -197,7 +199,7 @@ namespace Content.Shared.Roles
 
                         reason = FormattedMessage.FromMarkup(Loc.GetString(
                             "role-timer-role-insufficient",
-                            ("time", roleDiff),
+                            ("time", Math.Ceiling(roleDiff)),
                             ("job", Loc.GetString(proto)),
                             ("departmentColor", departmentColor.ToHex())));
                         return false;

@@ -1,4 +1,5 @@
 using Content.Client.Hands.Systems;
+using Content.Client.NPC.HTN;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Robust.Client.Graphics;
@@ -57,6 +58,11 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
     {
         base.SetInCombatMode(entity, value, component);
         UpdateHud(entity);
+    }
+
+    protected override bool IsNpc(EntityUid uid)
+    {
+        return HasComp<HTNComponent>(uid);
     }
 
     private void UpdateHud(EntityUid entity)

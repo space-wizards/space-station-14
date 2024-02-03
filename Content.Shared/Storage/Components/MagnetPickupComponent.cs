@@ -1,6 +1,4 @@
 using Content.Shared.Inventory;
-using Content.Shared.Tag;
-using Content.Shared.Whitelist;
 
 namespace Content.Server.Storage.Components;
 
@@ -21,16 +19,4 @@ public sealed partial class MagnetPickupComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("range")]
     public float Range = 1f;
-
-    [ValidatePrototypeId<TagPrototype>]
-    private const string DefaultTag = "Ore";
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]
-    public EntityWhitelist? Whitelist = new()
-    {
-        Tags = new List<string>()
-        {
-            DefaultTag,
-        }
-    };
 }

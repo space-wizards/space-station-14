@@ -4,7 +4,8 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Events;
-using Content.Shared.Movement.Pulling.Events;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Physics.Pull;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -96,7 +97,8 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnFollowerMove(EntityUid uid, FollowerComponent component, ref MoveInputEvent args)
     {
-        StopFollowingEntity(uid, component.Following);
+        if ((args.Component.HeldMoveButtons & MoveButtons.AnyDirection) != MoveButtons.None)
+            StopFollowingEntity(uid, component.Following);
     }
 
     private void OnPullStarted(EntityUid uid, FollowerComponent component, PullStartedMessage args)
@@ -138,7 +140,20 @@ public sealed class FollowerSystem : EntitySystem
             targetXform = Transform(targetXform.ParentUid);
         }
 
-        var followerComp = EnsureComp<FollowerComponent>(follower);
+        // Cleanup old following.
+        if (TryComp<FollowerComponent>(follower, out var followerComp))
+        {
+            // Already following you goob
+            if (followerComp.Following == entity)
+                return;
+
+            StopFollowingEntity(follower, followerComp.Following, deparent: false, removeComp: false);
+        }
+        else
+        {
+            followerComp = AddComp<FollowerComponent>(follower);
+        }
+
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
@@ -149,16 +164,16 @@ public sealed class FollowerSystem : EntitySystem
         if (TryComp<JointComponent>(follower, out var joints))
             _jointSystem.ClearJoints(follower, joints);
 
-        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
-
         var xform = Transform(follower);
-        _containerSystem.AttachParentToContainerOrGrid(xform);
+        _containerSystem.AttachParentToContainerOrGrid((follower, xform));
 
         // If we didn't get to parent's container.
         if (xform.ParentUid != Transform(xform.ParentUid).ParentUid)
         {
             _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), rotation: Angle.Zero);
         }
+
+        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         EnsureComp<OrbitVisualsComponent>(follower);
 
@@ -167,14 +182,14 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(follower, followerEv);
         RaiseLocalEvent(entity, entityEv);
-        Dirty(followedComp);
+        Dirty(entity, followedComp);
     }
 
     /// <summary>
     ///     Forces an entity to stop following another entity, if it is doing so.
     /// </summary>
     /// <param name="deparent">Should the entity deparent itself</param>
-    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null, bool deparent = true)
+    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null, bool deparent = true, bool removeComp = true)
     {
         if (!Resolve(target, ref followed, false))
             return;
@@ -186,8 +201,12 @@ public sealed class FollowerSystem : EntitySystem
         if (followed.Following.Count == 0)
             RemComp<FollowedComponent>(target);
 
-        RemComp<FollowerComponent>(uid);
-        RemComp<OrbitVisualsComponent>(uid);
+        if (removeComp)
+        {
+            RemComp<FollowerComponent>(uid);
+            RemComp<OrbitVisualsComponent>(uid);
+        }
+
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
 

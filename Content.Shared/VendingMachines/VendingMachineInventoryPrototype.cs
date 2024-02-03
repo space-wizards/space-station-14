@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.VendingMachines
 {
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
-    public sealed class VendingMachineInventoryPrototype : IPrototype
+    public sealed partial class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]

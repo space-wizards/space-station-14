@@ -4,6 +4,7 @@ using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Interaction
 {
@@ -47,7 +48,7 @@ namespace Content.Server.Interaction
 
         private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
         {
-            if (ev.Player.AttachedEntity is not { } user)
+            if (ev.Player.AttachedEntity is not { } user || ev.Result == BoundUserInterfaceRangeResult.Fail)
                 return;
 
             if (InRangeUnobstructed(user, ev.Target, ev.UserInterface.InteractionRange))

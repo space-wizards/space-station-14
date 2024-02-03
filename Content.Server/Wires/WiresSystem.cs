@@ -5,7 +5,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
@@ -17,8 +17,13 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
+using Content.Server.UserInterface;
 
 namespace Content.Server.Wires;
 
@@ -615,7 +620,7 @@ public sealed class WiresSystem : SharedWiresSystem
             wires.WireSeed), ui: ui);
     }
 
-    public void OpenUserInterface(EntityUid uid, IPlayerSession player)
+    public void OpenUserInterface(EntityUid uid, ICommonSession player)
     {
         if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
             _uiSystem.OpenUi(ui, player);

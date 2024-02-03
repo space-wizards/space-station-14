@@ -17,6 +17,24 @@
         amount: 0.05
 
 - type: reagent
+  id: HotCocoa
+  name: reagent-name-hot-cocoa
+  parent: BaseDrink
+  desc: reagent-desc-hot-cocoa
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: chocolate
+  color: "#664300"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
   id: Cream
   name: reagent-name-cream
   group: Drinks
@@ -65,6 +83,10 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
     state: icon
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 6
 
 - type: reagent
   id: IcedCoffee
@@ -112,6 +134,7 @@
 
 - type: reagent
   id: JuiceBerryPoison
+  parent: BaseJuice
   name: reagent-name-juice-berry-poison
   group: Drinks
   desc: reagent-desc-juice-berry-poison
@@ -131,6 +154,7 @@
 
 - type: reagent
   id: Lemonade
+  parent: BaseJuice
   name: reagent-name-lemonade
   group: Drinks
   desc: reagent-desc-lemonade
@@ -228,6 +252,7 @@
 
 - type: reagent
   id: NuclearCola
+  parent: BaseSoda
   name: reagent-name-nuclear-cola
   group: Drinks
   desc: reagent-desc-nuclear-cola
@@ -294,7 +319,7 @@
   parent: BaseDrink
   desc: reagent-desc-tonic-water
   physicalDesc: reagent-physical-desc-fizzy
-  flavor: water
+  flavor: tonicwater
   color: "#0064C8"
 
 - type: reagent
@@ -408,27 +433,15 @@
     state: icon
 
 - type: reagent
-  id: TheMartinez
-  name: reagent-name-the-martinez
+  id: Mopwata
+  name: reagent-name-mopwata
   parent: BaseDrink
-  desc: reagent-desc-the-martinez
-  physicalDesc: reagent-physical-desc-vibrant
-  flavor: themartinez
-  color: "#75b1f0"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/the_martinez.rsi
-    state: icon
-
-- type: reagent
-  id: WhiteGilgamesh
-  name: reagent-name-white-gilgamesh
-  parent: BaseDrink
-  desc: reagent-desc-white-gilgamesh
-  physicalDesc: reagent-physical-desc-creamy
-  flavor: white-gilgamesh
-  color: "#e5d27e"
+  desc: reagent-desc-mopwata
+  physicalDesc: reagent-physical-desc-murky
+  flavor: mopwata
+  color: "#59502b"
   metabolisms:
     Drink:
       effects:
-        - !type:SatiateThirst
-          factor: 1
+      - !type:SatiateThirst
+        factor: 0.6

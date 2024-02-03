@@ -28,8 +28,6 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
 
-
-        SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforeDoorPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
@@ -59,7 +57,7 @@ public sealed class DoorSystem : SharedDoorSystem
             return;
 
         if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked(uid, airtight, collidable);
+            _airtightSystem.SetAirblocked((uid, airtight), collidable);
 
         // Pathfinding / AI stuff.
         RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
@@ -123,12 +121,6 @@ public sealed class DoorSystem : SharedDoorSystem
             SetState(uid, DoorState.Welded, component);
         else if (component.State == DoorState.Welded)
             SetState(uid, DoorState.Closed, component);
-    }
-
-    private void OnBeforeDoorPry(EntityUid id, DoorComponent door, ref BeforePryEvent args)
-    {
-        if (door.State == DoorState.Welded || !door.CanPry)
-            args.Cancelled = true;
     }
     #endregion
 
@@ -201,14 +193,14 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
+    protected override void CheckDoorBump(Entity<DoorComponent, PhysicsComponent> ent)
     {
-        var uid = body.Owner;
-        if (component.BumpOpen)
+        var (uid, door, physics) = ent;
+        if (door.BumpOpen)
         {
-            foreach (var other in PhysicsSystem.GetContactingEntities(uid, body, approximate: true))
+            foreach (var other in PhysicsSystem.GetContactingEntities(uid, physics, approximate: true))
             {
-                if (Tags.HasTag(other, "DoorBumpOpener") && TryOpen(uid, component, other, false, quiet: true))
+                if (Tags.HasTag(other, "DoorBumpOpener") && TryOpen(uid, door, other, quiet: true))
                     break;
             }
         }

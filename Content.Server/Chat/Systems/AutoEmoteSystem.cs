@@ -1,11 +1,11 @@
-namespace Content.Server.Chat.Systems;
-
 using System.Linq;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+
+namespace Content.Server.Chat.Systems;
 
 public sealed class AutoEmoteSystem : EntitySystem
 {
@@ -27,14 +27,13 @@ public sealed class AutoEmoteSystem : EntitySystem
         base.Update(frameTime);
 
         var curTime = _gameTiming.CurTime;
-        foreach (var autoEmote in EntityQuery<AutoEmoteComponent>())
+        var query = EntityQueryEnumerator<AutoEmoteComponent>();
+        while (query.MoveNext(out var uid, out var autoEmote))
         {
-            var uid = autoEmote.Owner;
-
             if (autoEmote.NextEmoteTime > curTime)
                 continue;
 
-            foreach ((var key, var time) in autoEmote.EmoteTimers)
+            foreach (var (key, time) in autoEmote.EmoteTimers)
             {
                 if (time > curTime)
                     continue;

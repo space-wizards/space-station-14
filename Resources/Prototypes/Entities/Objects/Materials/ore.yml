@@ -8,7 +8,7 @@
     sprite: Objects/Materials/ore.rsi
   - type: Item
     sprite: Objects/Materials/ore.rsi
-    size: 60
+    size: Normal
   - type: Tag
     tags:
     - Ore
@@ -48,7 +48,15 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Gold: 500
+      RawGold: 500
+  - type: Extractable
+    grindableSolutionName: goldore
+  - type: SolutionContainerManager
+    solutions:
+      goldore:
+        reagents:
+        - ReagentId: Gold
+          Quantity: 10
 
 - type: entity
   parent: GoldOre
@@ -57,13 +65,11 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
 
 - type: entity
   parent: OreBase
   id: SteelOre
-  name: steel ore
+  name: iron ore
   suffix: Full
   components:
   - type: Stack
@@ -73,7 +79,15 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Steel: 500
+      RawIron: 500
+  - type: Extractable
+    grindableSolutionName: ironore
+  - type: SolutionContainerManager
+    solutions:
+      ironore:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 10
 
 - type: entity
   id: SteelOre1
@@ -82,8 +96,6 @@
   components:
     - type: Stack
       count: 1
-    - type: Item
-      size: 2
 
 - type: entity
   parent: OreBase
@@ -98,7 +110,20 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Plasma: 500
+      RawPlasma: 500
+  - type: PointLight
+    radius: 1.2
+    energy: 0.6
+    castShadows: false
+    color: "#e592e7"
+  - type: Extractable
+    grindableSolutionName: plasmaore
+  - type: SolutionContainerManager
+    solutions:
+      plasmaore:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 10
 
 - type: entity
   parent: PlasmaOre
@@ -107,8 +132,6 @@
   components:
     - type: Stack
       count: 1
-    - type: Item
-      size: 2
 
 - type: entity
   parent: OreBase
@@ -123,7 +146,15 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Silver: 500
+      RawSilver: 500
+  - type: Extractable
+    grindableSolutionName: silverore
+  - type: SolutionContainerManager
+    solutions:
+      silverore:
+        reagents:
+        - ReagentId: Silver
+          Quantity: 10
 
 - type: entity
   parent: SilverOre
@@ -132,8 +163,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
 
 - type: entity
   parent: OreBase
@@ -148,7 +177,15 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Glass: 500
+      RawQuartz: 500
+  - type: Extractable
+    grindableSolutionName: quartzore
+  - type: SolutionContainerManager
+    solutions:
+      quartzaore:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
 
 - type: entity
   parent: SpaceQuartz
@@ -157,8 +194,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
 
 - type: entity
   parent: OreBase
@@ -173,7 +208,23 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Uranium: 500
+      RawUranium: 500
+  - type: PointLight
+    radius: 1.2
+    energy: 0.8
+    castShadows: false
+    color: "#9be792"
+  - type: Extractable
+    grindableSolutionName: uraniumore
+  - type: SolutionContainerManager
+    solutions:
+      uraniumore:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 8
+        - ReagentId: Radium
+          Quantity: 2
+        canReact: false
 
 - type: entity
   parent: UraniumOre
@@ -182,9 +233,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
-
 
 - type: entity
   parent: OreBase
@@ -199,7 +247,24 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Bananium: 500
+      RawBananium: 500
+  - type: PointLight
+    radius: 1.2
+    energy: 1
+    castShadows: false
+    color: "#eef066"
+  - type: Extractable
+    grindableSolutionName: bananiumore
+  - type: SolutionContainerManager
+    solutions:
+      bananiumore:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Honk
+          Quantity: 5
 
 - type: entity
   parent: BananiumOre
@@ -208,5 +273,42 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
+
+- type: entity
+  parent: OreBase
+  id: Coal
+  name: coal
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Coal
+  - type: Sprite
+    state: coal
+  - type: Material
+  - type: Extractable
+    grindableSolutionName: coal
+  - type: SolutionContainerManager
+    solutions:
+      coal:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 8.4
+        - ReagentId: Ammonia
+          Quantity: 0.8
+        - ReagentId: Hydrogen
+          Quantity: 0.5
+        - ReagentId: Sulfur
+          Quantity: 0.2
+        - ReagentId: Mercury
+          Quantity: 0.1
+  - type: PhysicalComposition
+    materialComposition:
+      Coal: 500
+
+- type: entity
+  parent: Coal
+  id: Coal1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

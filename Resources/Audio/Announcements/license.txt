@@ -1,9 +1,0 @@
-aliens.ogg taken from https://github.com/tgstation/tgstation/blob/95731342b97167d7883ff091d389f79c36442ee6/sound/ai/default/aliens.ogg used under CC-BY-SA-3.0
-attention.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a used under CC-BY-SA-3.0
-meteors.ogg taken from https://github.com/tgstation/tgstation/blob/95731342b97167d7883ff091d389f79c36442ee6/sound/ai/default/meteors.ogg used under CC-BY-SA-3.0
-outbreak7.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a used under CC-BY-SA-3.0
-welcome.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a used under CC-BY-SA-3.0
-announce.ogg taken from /tg/station https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a cut from the beginning of "shuttlerecalled.ogg" used under CC-BY-SA-3.0
-
-shuttle_dock.ogg taken from /tg/station at https://github.com/tgstation/tgstation/blob/b327cb667c1ca5d1aa14e6368e66cbfa7b343b9c/sound/ai/default/shuttledock.ogg used under CC-BY-SA-3.0
-war.ogg taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/07b26ee6b4a11a0607986d322ee007020569feae/sound/effects/siren.ogg used under CC-BY-SA-3.0, volume and pitch changed, merged with redalert.ogg

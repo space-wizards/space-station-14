@@ -22,6 +22,7 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<MobThresholdsComponent, UpdateMobStateEvent>(OnUpdateMobState);
+        SubscribeLocalEvent<MobThresholdsComponent, MobStateChangedEvent>(OnThresholdsMobState);
     }
 
     private void OnGetState(EntityUid uid, MobThresholdsComponent component, ref ComponentGetState args)
@@ -424,9 +425,7 @@ public sealed class MobThresholdSystem : EntitySystem
         if (!TryComp<MobStateComponent>(target, out var mobState) || !TryComp<DamageableComponent>(target, out var damageable))
             return;
         CheckThresholds(target, mobState, thresholds, damageable);
-        var ev = new MobThresholdChecked(target, mobState, thresholds, damageable);
-        RaiseLocalEvent(target, ref ev, true);
-        UpdateAlerts(target, mobState.CurrentState, thresholds, damageable);
+        UpdateAllEffects((target, thresholds, mobState, damageable), mobState.CurrentState);
     }
 
     private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
@@ -445,6 +444,23 @@ public sealed class MobThresholdSystem : EntitySystem
         {
             args.State = component.CurrentThresholdState;
         }
+    }
+
+    private void UpdateAllEffects(Entity<MobThresholdsComponent, MobStateComponent?, DamageableComponent?> ent, MobState currentState)
+    {
+        var (_, thresholds, mobState, damageable) = ent;
+        if (Resolve(ent, ref thresholds, ref mobState, ref damageable))
+        {
+            var ev = new MobThresholdChecked(ent, mobState, thresholds, damageable);
+            RaiseLocalEvent(ent, ref ev, true);
+        }
+
+        UpdateAlerts(ent, currentState, thresholds, damageable);
+    }
+
+    private void OnThresholdsMobState(Entity<MobThresholdsComponent> ent, ref MobStateChangedEvent args)
+    {
+        UpdateAllEffects((ent, ent, null, null), args.NewMobState);
     }
 
     #endregion

@@ -2,6 +2,8 @@
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles;
@@ -10,6 +12,7 @@ public abstract class SharedRoleSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // TODO please lord make role entities
@@ -25,7 +28,7 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         var name = "game-ticker-unknown-role";
         string? playTimeTracker = null;
-        if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out JobPrototype? job))
+        if (component.Prototype != null && _prototypes.TryIndex(component.Prototype, out JobPrototype? job))
         {
             name = job.Name;
             playTimeTracker = job.PlayTimeTracker;
@@ -65,7 +68,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if we already have a role with this type.
     /// </exception>
-    public void MindAddRole<T>(EntityUid mindId, T component, MindComponent? mind = null, bool silent = false) where T : Component, new()
+    public void MindAddRole<T>(EntityUid mindId, T component, MindComponent? mind = null, bool silent = false) where T : IComponent, new()
     {
         if (!Resolve(mindId, ref mind))
             return;
@@ -99,7 +102,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if we do not have this role.
     /// </exception>
-    public void MindRemoveRole<T>(EntityUid mindId) where T : Component
+    public void MindRemoveRole<T>(EntityUid mindId) where T : IComponent
     {
         if (!RemComp<T>(mindId))
         {
@@ -118,7 +121,7 @@ public abstract class SharedRoleSystem : EntitySystem
             $"'Role {typeof(T).Name}' removed from mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
-    public bool MindTryRemoveRole<T>(EntityUid mindId) where T : Component
+    public bool MindTryRemoveRole<T>(EntityUid mindId) where T : IComponent
     {
         if (!MindHasRole<T>(mindId))
             return false;
@@ -127,7 +130,7 @@ public abstract class SharedRoleSystem : EntitySystem
         return true;
     }
 
-    public bool MindHasRole<T>(EntityUid mindId) where T : Component
+    public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
     {
         return HasComp<T>(mindId);
     }
@@ -152,5 +155,15 @@ public abstract class SharedRoleSystem : EntitySystem
     public bool IsAntagonistRole<T>()
     {
         return _antagTypes.Contains(typeof(T));
+    }
+
+    /// <summary>
+    /// Play a sound for the mind, if it has a session attached.
+    /// Use this for role greeting sounds.
+    /// </summary>
+    public void MindPlaySound(EntityUid mindId, SoundSpecifier? sound, MindComponent? mind = null)
+    {
+        if (Resolve(mindId, ref mind) && mind.Session != null)
+            _audio.PlayGlobal(sound, mind.Session);
     }
 }
