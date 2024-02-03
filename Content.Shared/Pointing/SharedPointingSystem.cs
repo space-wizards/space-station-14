@@ -15,4 +15,22 @@ public abstract class SharedPointingSystem : EntitySystem
         public Vector2 StartPosition { get; init; }
         public TimeSpan EndTime { get; init; }
     }
+
+    public bool CanPoint(EntityUid uid)
+    {
+        var ev = new PointAttemptEvent(uid);
+        RaiseLocalEvent(uid, ev, true);
+
+        return !ev.Cancelled;
+    }
+}
+
+public sealed class PointAttemptEvent : CancellableEntityEventArgs
+{
+    public PointAttemptEvent(EntityUid uid)
+    {
+        Uid = uid;
+    }
+
+    public EntityUid Uid { get; }
 }

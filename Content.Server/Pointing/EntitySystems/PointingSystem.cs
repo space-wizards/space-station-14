@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
@@ -10,7 +9,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -35,7 +33,6 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
@@ -133,14 +130,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            // Checking mob state directly instead of some action blocker, as many action blockers are blocked for
-            // ghosts and there is no obvious choice for pointing.
-            if (_mobState.IsIncapacitated(player))
-            {
-                return false;
-            }
-
-            if (HasComp<SleepingComponent>(player))
+            if (!CanPoint(player))
             {
                 return false;
             }

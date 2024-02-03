@@ -1,6 +1,4 @@
 using Content.Client.Pointing.Components;
-using Content.Shared.Bed.Sleep;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
@@ -12,8 +10,6 @@ namespace Content.Client.Pointing;
 
 public sealed partial class PointingSystem : SharedPointingSystem
 {
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -35,18 +31,11 @@ public sealed partial class PointingSystem : SharedPointingSystem
         // I'm just adding this verb exclusively to clients so that the verb-loading pop-in on the verb menu isn't
         // as bad. Important for this verb seeing as its usually an option on just about any entity.
 
+        // this is a pointing arrow. no pointing here...
         if (HasComp<PointingArrowComponent>(args.Target))
-        {
-            // this is a pointing arrow. no pointing here...
-            return;
-        }
-
-        // Can the user point? Checking mob state directly instead of some action blocker, as many action blockers are blocked for
-        // ghosts and there is no obvious choice for pointing (unless ghosts CanEmote?).
-        if (_mobState.IsIncapacitated(args.User))
             return;
 
-        if (HasComp<SleepingComponent>(args.User))
+        if (!CanPoint(args.User))
             return;
 
         // We won't check in range or visibility, as this verb is currently only executable via the context menu,
