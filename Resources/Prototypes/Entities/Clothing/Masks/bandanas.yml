@@ -3,15 +3,15 @@
   id: ClothingMaskBandanaBase
   abstract: true
   components:
-  - type: Clothing
-    foldedSlots:
-    - HEAD
-    unfoldedSlots:
-    - MASK
   - type: Appearance
   - type: Foldable
     fitsInContainerUnfolded: true
     canFoldInsideContainer: true
+  - type: FoldableClothing
+    foldedSlots:
+    - HEAD
+    unfoldedSlots:
+    - MASK
   - type: Mask
   - type: IngestionBlocker
   - type: IdentityBlocker

@@ -73,18 +73,6 @@ public sealed partial class ClothingComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UnequipDelay = TimeSpan.Zero;
-
-    /// <summary>
-    /// Which slots does this fit into when folded?
-    /// </summary>
-    [DataField]
-    public SlotFlags? FoldedSlots;
-
-    /// <summary>
-    /// Which slots does this fit into when unfolded?
-    /// </summary>
-    [DataField]
-    public SlotFlags? UnfoldedSlots;
 }
 
 [Serializable, NetSerializable]

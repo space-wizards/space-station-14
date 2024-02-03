@@ -1,5 +1,4 @@
 using Content.Shared.Clothing.Components;
-using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
@@ -33,7 +32,6 @@ public abstract class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<ClothingComponent, ItemMaskToggledEvent>(OnMaskToggled);
-        SubscribeLocalEvent<ClothingComponent, GotFoldedEvent>(OnGotFolded);
 
         SubscribeLocalEvent<ClothingComponent, ClothingEquipDoAfterEvent>(OnEquipDoAfter);
         SubscribeLocalEvent<ClothingComponent, ClothingUnequipDoAfterEvent>(OnUnequipDoAfter);
@@ -117,14 +115,6 @@ public abstract class ClothingSystem : EntitySystem
         //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
         if(args.equippedPrefix != null)
             SetEquippedPrefix(ent, args.IsToggled ? args.equippedPrefix : null, ent);
-    }
-
-    private void OnGotFolded(Entity<ClothingComponent> ent, ref GotFoldedEvent args)
-    {
-        if (args.IsFolded && ent.Comp.FoldedSlots.HasValue)
-            SetSlots(ent.Owner, ent.Comp.FoldedSlots.Value, ent.Comp);
-        else if (!args.IsFolded && ent.Comp.UnfoldedSlots.HasValue)
-            SetSlots(ent.Owner, ent.Comp.UnfoldedSlots.Value, ent.Comp);
     }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)

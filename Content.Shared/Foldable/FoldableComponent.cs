@@ -9,31 +9,13 @@ namespace Content.Shared.Foldable;
 /// <remarks>
 /// Wiill prevent any insertions into containers while this item is unfolded.
 /// </remarks>
-[RegisterComponent]
-[NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(FoldableSystem))]
 public sealed partial class FoldableComponent : Component
 {
-    [DataField("folded")]
+    [DataField("folded"), AutoNetworkedField]
     public bool IsFolded = false;
 
     [DataField]
-    public bool FitsInContainerUnfolded = false;
-
-    [DataField]
     public bool CanFoldInsideContainer = false;
-
-    [DataField]
-    public bool CanFoldWhileEquipped = false;
-}
-
-[Serializable, NetSerializable]
-public sealed class FoldableComponentState : ComponentState
-{
-    public readonly bool IsFolded;
-
-    public FoldableComponentState(bool isFolded)
-    {
-        IsFolded = isFolded;
-    }
 }
