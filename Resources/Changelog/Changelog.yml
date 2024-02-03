@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Added smoke grenades to the syndicate uplink for 1 TC, they create a
-      large smoke cloud to provide cover for your heinous activites.
-    type: Add
-  - message: Added tear gas grenades to the SecTech and security belts, use them to
-      control riots.
-    type: Add
-  id: 5382
-  time: '2023-12-16T01:49:30.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix map boundaries not pushing you back.
@@ -3874,3 +3864,10 @@
   id: 5881
   time: '2024-02-03T16:43:50.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24920
+- author: EmoGarbage404
+  changes:
+  - message: Changed the colors used for chat names.
+    type: Tweak
+  id: 5882
+  time: '2024-02-03T17:33:58.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24922
