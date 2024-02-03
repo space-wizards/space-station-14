@@ -6,6 +6,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Puller;
 
+#nullable enable
+
 [TestFixture]
 public sealed class PullerTest
 {
