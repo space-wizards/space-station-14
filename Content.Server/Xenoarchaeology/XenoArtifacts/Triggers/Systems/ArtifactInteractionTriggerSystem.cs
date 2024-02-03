@@ -1,6 +1,6 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Movement.Pulling.Events;
+using Content.Shared.Physics.Pull;
 using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
@@ -22,7 +22,7 @@ public sealed class ArtifactInteractionTriggerSystem : EntitySystem
         if (!component.PullActivation)
             return;
 
-        _artifactSystem.TryActivateArtifact(uid, args.PullerUid);
+        _artifactSystem.TryActivateArtifact(uid, args.Puller.Owner);
     }
 
     private void OnAttack(EntityUid uid, ArtifactInteractionTriggerComponent component, AttackedEvent args)
