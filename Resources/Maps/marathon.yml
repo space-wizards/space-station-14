@@ -10179,6 +10179,13 @@ entities:
     - type: Transform
       pos: -63.5,-18.5
       parent: 30
+    - type: DeviceLinkSink
+      links:
+      - 17342
+    - type: DeviceLinkSource
+      linkedPorts:
+        17342:
+        - DoorStatus: DoorBolt
   - uid: 5391
     components:
     - type: Transform
@@ -10220,6 +10227,13 @@ entities:
     - type: Transform
       pos: -63.5,-20.5
       parent: 30
+    - type: DeviceLinkSink
+      links:
+      - 386
+    - type: DeviceLinkSource
+      linkedPorts:
+        386:
+        - DoorStatus: DoorBolt
   - uid: 18018
     components:
     - type: Transform
@@ -10348,6 +10362,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -18.5,46.5
       parent: 30
+    - type: DeviceLinkSink
+      links:
+      - 1696
+    - type: DeviceLinkSource
+      linkedPorts:
+        1696:
+        - DoorStatus: DoorBolt
   - uid: 5390
     components:
     - type: Transform
@@ -10365,11 +10386,25 @@ entities:
     - type: Transform
       pos: 45.5,16.5
       parent: 30
+    - type: DeviceLinkSink
+      links:
+      - 15830
+    - type: DeviceLinkSource
+      linkedPorts:
+        15830:
+        - DoorStatus: DoorBolt
   - uid: 15830
     components:
     - type: Transform
       pos: 48.5,16.5
       parent: 30
+    - type: DeviceLinkSink
+      links:
+      - 15829
+    - type: DeviceLinkSource
+      linkedPorts:
+        15829:
+        - DoorStatus: DoorBolt
   - uid: 16278
     components:
     - type: Transform
@@ -11543,6 +11578,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -21.5,46.5
       parent: 30
+    - type: DeviceLinkSink
+      links:
+      - 5070
+    - type: DeviceLinkSource
+      linkedPorts:
+        5070:
+        - DoorStatus: DoorBolt
   - uid: 1756
     components:
     - type: Transform
@@ -13409,6 +13451,11 @@ entities:
     components:
     - type: Transform
       pos: -52.5,-7.5
+      parent: 30
+  - uid: 11444
+    components:
+    - type: Transform
+      pos: -85.5,-60.5
       parent: 30
   - uid: 16402
     components:
@@ -102383,6 +102430,21 @@ entities:
     - type: Transform
       pos: -10.326736,-38.446224
       parent: 30
+  - uid: 10012
+    components:
+    - type: Transform
+      pos: -1.4952288,-44.42826
+      parent: 30
+  - uid: 11333
+    components:
+    - type: Transform
+      pos: -1.4344845,-44.759243
+      parent: 30
+  - uid: 19791
+    components:
+    - type: Transform
+      pos: -60.268562,45.564415
+      parent: 30
   - uid: 19792
     components:
     - type: Transform
@@ -141778,22 +141840,5 @@ entities:
     components:
     - type: Transform
       pos: -6.388359,64.59328
-      parent: 30
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 10012
-    components:
-    - type: Transform
-      pos: -1.4952288,-44.42826
-      parent: 30
-  - uid: 11333
-    components:
-    - type: Transform
-      pos: -1.4344845,-44.759243
-      parent: 30
-  - uid: 19791
-    components:
-    - type: Transform
-      pos: -60.268562,45.564415
       parent: 30
 ...
