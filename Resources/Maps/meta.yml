@@ -10526,11 +10526,25 @@ entities:
     - type: Transform
       pos: 68.5,8.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 12540
+    - type: DeviceLinkSource
+      linkedPorts:
+        12540:
+        - DoorStatus: DoorBolt
   - uid: 12560
     components:
     - type: Transform
       pos: 65.5,8.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 12540
+    - type: DeviceLinkSource
+      linkedPorts:
+        12540:
+        - DoorStatus: DoorBolt
 - proto: AirlockEngineeringLocked
   entities:
   - uid: 1109
@@ -10694,6 +10708,16 @@ entities:
     - type: Transform
       pos: 66.5,6.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 12560
+      - 12559
+    - type: DeviceLinkSource
+      linkedPorts:
+        12560:
+        - DoorStatus: DoorBolt
+        12559:
+        - DoorStatus: DoorBolt
   - uid: 23561
     components:
     - type: Transform
@@ -10818,21 +10842,61 @@ entities:
     - type: Transform
       pos: -44.5,33.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 3442
+      - 3582
+    - type: DeviceLinkSource
+      linkedPorts:
+        3442:
+        - DoorStatus: DoorBolt
+        3582:
+        - DoorStatus: DoorBolt
   - uid: 3442
     components:
     - type: Transform
       pos: -43.5,29.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 3445
+      - 3441
+    - type: DeviceLinkSource
+      linkedPorts:
+        3445:
+        - DoorStatus: DoorBolt
+        3441:
+        - DoorStatus: DoorBolt
   - uid: 3445
     components:
     - type: Transform
       pos: -44.5,32.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 3442
+      - 3582
+    - type: DeviceLinkSource
+      linkedPorts:
+        3442:
+        - DoorStatus: DoorBolt
+        3582:
+        - DoorStatus: DoorBolt
   - uid: 3582
     components:
     - type: Transform
       pos: -42.5,29.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 3445
+      - 3441
+    - type: DeviceLinkSource
+      linkedPorts:
+        3445:
+        - DoorStatus: DoorBolt
+        3441:
+        - DoorStatus: DoorBolt
   - uid: 3884
     components:
     - type: Transform
@@ -10850,11 +10914,25 @@ entities:
     - type: Transform
       pos: 63.5,38.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 13927
+    - type: DeviceLinkSource
+      linkedPorts:
+        13927:
+        - DoorStatus: DoorBolt
   - uid: 13927
     components:
     - type: Transform
       pos: 63.5,40.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 13926
+    - type: DeviceLinkSource
+      linkedPorts:
+        13926:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 5442
@@ -10887,21 +10965,49 @@ entities:
     - type: Transform
       pos: -41.5,35.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 9492
+    - type: DeviceLinkSource
+      linkedPorts:
+        9492:
+        - DoorStatus: DoorBolt
   - uid: 9494
     components:
     - type: Transform
       pos: -32.5,45.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 9495
+    - type: DeviceLinkSource
+      linkedPorts:
+        9495:
+        - DoorStatus: DoorBolt
   - uid: 9495
     components:
     - type: Transform
       pos: -32.5,47.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 9494
+    - type: DeviceLinkSource
+      linkedPorts:
+        9494:
+        - DoorStatus: DoorBolt
   - uid: 13922
     components:
     - type: Transform
       pos: 48.5,38.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 13921
+    - type: DeviceLinkSource
+      linkedPorts:
+        13921:
+        - DoorStatus: DoorBolt
   - uid: 14536
     components:
     - type: Transform
@@ -10922,36 +11028,85 @@ entities:
     - type: Transform
       pos: -50.5,-40.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 16715
+    - type: DeviceLinkSource
+      linkedPorts:
+        16715:
+        - DoorStatus: DoorBolt
   - uid: 17204
     components:
     - type: Transform
       pos: -42.5,-63.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 17205
+    - type: DeviceLinkSource
+      linkedPorts:
+        17205:
+        - DoorStatus: DoorBolt
   - uid: 17205
     components:
     - type: Transform
       pos: -39.5,-63.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 17204
+    - type: DeviceLinkSource
+      linkedPorts:
+        17204:
+        - DoorStatus: DoorBolt
   - uid: 20027
     components:
     - type: Transform
       pos: 5.5,-65.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 20026
+    - type: DeviceLinkSource
+      linkedPorts:
+        20026:
+        - DoorStatus: DoorBolt
   - uid: 20029
     components:
     - type: Transform
       pos: 38.5,-64.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 20030
+    - type: DeviceLinkSource
+      linkedPorts:
+        20030:
+        - DoorStatus: DoorBolt
   - uid: 20030
     components:
     - type: Transform
       pos: 38.5,-61.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 20029
+    - type: DeviceLinkSource
+      linkedPorts:
+        20029:
+        - DoorStatus: DoorBolt
   - uid: 20038
     components:
     - type: Transform
       pos: 39.5,-54.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 20037
+    - type: DeviceLinkSource
+      linkedPorts:
+        20037:
+        - DoorStatus: DoorBolt
   - uid: 25050
     components:
     - type: Transform
@@ -11081,11 +11236,25 @@ entities:
     - type: Transform
       pos: -44.5,35.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 9493
+    - type: DeviceLinkSource
+      linkedPorts:
+        9493:
+        - DoorStatus: DoorBolt
   - uid: 13921
     components:
     - type: Transform
       pos: 49.5,39.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 13922
+    - type: DeviceLinkSource
+      linkedPorts:
+        13922:
+        - DoorStatus: DoorBolt
   - uid: 13923
     components:
     - type: Transform
@@ -11121,16 +11290,37 @@ entities:
     - type: Transform
       pos: -52.5,-40.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 16716
+    - type: DeviceLinkSource
+      linkedPorts:
+        16716:
+        - DoorStatus: DoorBolt
   - uid: 20026
     components:
     - type: Transform
       pos: 5.5,-67.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 20027
+    - type: DeviceLinkSource
+      linkedPorts:
+        20027:
+        - DoorStatus: DoorBolt
   - uid: 20037
     components:
     - type: Transform
       pos: 41.5,-54.5
       parent: 5350
+    - type: DeviceLinkSink
+      links:
+      - 20038
+    - type: DeviceLinkSource
+      linkedPorts:
+        20038:
+        - DoorStatus: DoorBolt
 - proto: AirlockFreezerKitchenHydroLocked
   entities:
   - uid: 2433
@@ -13919,6 +14109,16 @@ entities:
     - type: Transform
       pos: -45.5,18.5
       parent: 5350
+  - uid: 8415
+    components:
+    - type: Transform
+      pos: 59.5,4.5
+      parent: 5350
+  - uid: 8416
+    components:
+    - type: Transform
+      pos: -72.5,-22.5
+      parent: 5350
   - uid: 8480
     components:
     - type: Transform
@@ -13934,10 +14134,25 @@ entities:
     - type: Transform
       pos: -63.5,4.5
       parent: 5350
+  - uid: 9290
+    components:
+    - type: Transform
+      pos: -73.5,-22.5
+      parent: 5350
+  - uid: 9291
+    components:
+    - type: Transform
+      pos: -76.5,-17.5
+      parent: 5350
   - uid: 10294
     components:
     - type: Transform
       pos: 39.5,-15.5
+      parent: 5350
+  - uid: 10297
+    components:
+    - type: Transform
+      pos: -78.5,8.5
       parent: 5350
   - uid: 11035
     components:
@@ -116310,13 +116525,6 @@ entities:
     - type: Transform
       pos: 10.629476,34.365833
       parent: 5350
-- proto: HandheldCrewMonitor
-  entities:
-  - uid: 16241
-    components:
-    - type: Transform
-      pos: -17.467426,-36.423878
-      parent: 5350
 - proto: HandheldGPSBasic
   entities:
   - uid: 3571
@@ -120683,6 +120891,16 @@ entities:
     components:
     - type: Transform
       pos: -16.506245,-14.163311
+      parent: 5350
+  - uid: 3638
+    components:
+    - type: Transform
+      pos: -43.593536,23.615883
+      parent: 5350
+  - uid: 3639
+    components:
+    - type: Transform
+      pos: -43.374786,23.584633
       parent: 5350
 - proto: PaintingAmogusTriptych
   entities:
@@ -138869,32 +139087,6 @@ entities:
     - type: Transform
       pos: -3.5,30.5
       parent: 5350
-- proto: SpawnVehicleATV
-  entities:
-  - uid: 24625
-    components:
-    - type: Transform
-      pos: -8.5,-35.5
-      parent: 5350
-- proto: SpawnVehicleJanicart
-  entities:
-  - uid: 9291
-    components:
-    - type: Transform
-      pos: -23.5,28.5
-      parent: 5350
-- proto: SpawnVehicleSecway
-  entities:
-  - uid: 8415
-    components:
-    - type: Transform
-      pos: -4.5,28.5
-      parent: 5350
-  - uid: 10297
-    components:
-    - type: Transform
-      pos: 4.5,34.5
-      parent: 5350
 - proto: SprayBottle
   entities:
   - uid: 14634
@@ -145484,32 +145676,6 @@ entities:
     components:
     - type: Transform
       pos: -46.53311,-52.435802
-      parent: 5350
-- proto: VehicleKeyATV
-  entities:
-  - uid: 24646
-    components:
-    - type: Transform
-      pos: -7.4760914,-35.418602
-      parent: 5350
-- proto: VehicleKeyJanicart
-  entities:
-  - uid: 9290
-    components:
-    - type: Transform
-      pos: -28.519938,26.44267
-      parent: 5350
-- proto: VehicleKeySecway
-  entities:
-  - uid: 8416
-    components:
-    - type: Transform
-      pos: -2.5585675,29.702742
-      parent: 5350
-  - uid: 10432
-    components:
-    - type: Transform
-      pos: 4.4444723,36.563564
       parent: 5350
 - proto: VendingBarDrobe
   entities:
@@ -169077,17 +169243,5 @@ entities:
     components:
     - type: Transform
       pos: 45.520813,-8.421944
-      parent: 5350
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 3638
-    components:
-    - type: Transform
-      pos: -43.593536,23.615883
-      parent: 5350
-  - uid: 3639
-    components:
-    - type: Transform
-      pos: -43.374786,23.584633
       parent: 5350
 ...
