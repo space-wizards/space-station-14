@@ -179,7 +179,7 @@
         - SmokeOnTrigger
         - Flash
         - Handcuff
-        - RangedMagazine
+        - BallisticAmmoProvider
         - Ammo
   - type: ItemMapper
     mapLayers:
@@ -221,7 +221,6 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
-        - LightReplacer
       components:
         - LightReplacer
   - type: ItemMapper
