@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix map boundaries not pushing you back.
-    type: Fix
-  id: 5383
-  time: '2023-12-16T02:19:54.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Crayons boxes now hold a white crayon.
@@ -3871,3 +3865,11 @@
   id: 5882
   time: '2024-02-03T17:33:58.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24922
+- author: deltanedas
+  changes:
+  - message: Dissolved the biochem technology discipline into others and roundstart
+      availability.
+    type: Add
+  id: 5883
+  time: '2024-02-03T18:13:30.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24871
