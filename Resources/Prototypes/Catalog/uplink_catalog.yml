@@ -1354,9 +1354,18 @@
   description: uplink-soap-desc
   productEntity: SoapSyndie
   cost:
-    Telecrystal: 2 # It used to be 1, but possibility of unfair use.
+    Telecrystal: 1
   categories:
   - UplinkMisc
+  conditions: # Operatives are not slippery guys. They're just dangerous.
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+
 
 - type: listing
   id: UplinkSlipocalypseClusterSoap
@@ -1367,6 +1376,12 @@
     Telecrystal: 3
   categories:
   - UplinkMisc
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  
 
 - type: listing
   id: UplinkUltrabrightLantern
