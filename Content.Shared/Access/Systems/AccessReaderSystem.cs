@@ -44,7 +44,8 @@ public sealed class AccessReaderSystem : EntitySystem
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
         args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
+            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessDeniedLog,
+            component.AccessLogLimit);
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -63,6 +64,8 @@ public sealed class AccessReaderSystem : EntitySystem
         }
 
         component.AccessLists = new(state.AccessLists);
+        component.AccessLists = new(state.AccessLists);
+        component.AccessDeniedLog = new(state.AccessDenyLog);
         component.DenyTags = new(state.DenyTags);
         component.AccessLog = new(state.AccessLog);
         component.AccessLogLimit = state.AccessLogLimit;
@@ -91,13 +94,13 @@ public sealed class AccessReaderSystem : EntitySystem
         if (args.User is null)
             return;
 
+        var lastDeniedTime = component.AccessDeniedLog.LastOrDefault((r) => r.AccessorUid == args.User).AccessTime;
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-        var lastDeniedTime = component.AccessLog.LastOrDefault((r) =>
-            r.AccessorUid == args.User && r.AccessGranted == false &&
-            stationTime - r.AccessTime > TimeSpan.FromTicks(1)).AccessTime;
 
         if (stationTime - lastDeniedTime < component.DenyCooldown)
             args.Cancel();
+        else
+            LogAccess((uid, component), args.User.Value, denied: true);
     }
 
     /// <summary>
@@ -121,11 +124,10 @@ public sealed class AccessReaderSystem : EntitySystem
 
         if (IsAllowed(access, stationKeys, target, reader))
         {
-            LogAccess((target, reader), user, granted: true);
+            LogAccess((target, reader), user);
             return true;
         }
 
-        LogAccess((target, reader), user, granted: false);
         return false;
     }
 
@@ -365,14 +367,16 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The reader to log the access on</param>
     /// <param name="accessor">The accessor to log</param>
-    /// <param name="granted">Whenever the access was granted or not</param>
-    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor, bool granted)
+    /// <param name="denied">Whenever the access was denied</param>
+    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor, bool denied = false)
     {
         if (IsPaused(ent))
             return;
 
-        if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
-            ent.Comp.AccessLog.Dequeue();
+        var accessLog = denied ? ent.Comp.AccessDeniedLog : ent.Comp.AccessLog;
+
+        if (accessLog.Count >= ent.Comp.AccessLogLimit)
+            accessLog.Dequeue();
 
         string? name = null;
         // TODO pass the ID card on IsAllowed() instead of using this expensive method
@@ -384,6 +388,6 @@ public sealed class AccessReaderSystem : EntitySystem
         name ??= Loc.GetString("access-reader-unknown-id");
 
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-        ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name, accessor, granted));
+        accessLog.Enqueue(new AccessRecord(stationTime, name, accessor));
     }
 }

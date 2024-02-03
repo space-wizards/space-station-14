@@ -27,7 +27,7 @@ public sealed partial class AccessReaderComponent : Component
     public HashSet<string> DenyTags = new();
 
     /// <summary>
-    /// Cooldown time between access denied sounds.
+    /// Cooldown time between denied access attempts.
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -66,10 +66,16 @@ public sealed partial class AccessReaderComponent : Component
     public Queue<AccessRecord> AccessLog = new();
 
     /// <summary>
+    /// A list of past denied access attempts
+    /// </summary>
+    [DataField]
+    public Queue<AccessRecord> AccessDeniedLog = new();
+
+    /// <summary>
     /// A limit on the max size of <see cref="AccessLog"/>
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int AccessLogLimit = 30;
+    public int AccessLogLimit = 20;
 
     /// <summary>
     /// Whether or not emag interactions have an effect on this.
@@ -85,11 +91,9 @@ public readonly partial record struct AccessRecord(
     [property: DataField, ViewVariables(VVAccess.ReadWrite)]
     string Accessor,
     [field: NonSerialized]
-    EntityUid AccessorUid,
-    [property: DataField, ViewVariables(VVAccess.ReadWrite)]
-    bool AccessGranted)
+    EntityUid AccessorUid)
 {
-    public AccessRecord() : this(TimeSpan.Zero, string.Empty, EntityUid.Invalid, false)
+    public AccessRecord() : this(TimeSpan.Zero, string.Empty, EntityUid.Invalid)
     {
     }
 }
@@ -107,15 +111,25 @@ public sealed class AccessReaderComponentState : ComponentState
 
     public Queue<AccessRecord> AccessLog;
 
+    public Queue<AccessRecord> AccessDenyLog;
+
     public int AccessLogLimit;
 
-    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, List<(NetEntity, uint)> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
+    public AccessReaderComponentState(
+        bool enabled,
+        HashSet<string> denyTags,
+        List<HashSet<string>> accessLists,
+        List<(NetEntity, uint)> accessKeys,
+        Queue<AccessRecord> accessLog,
+        Queue<AccessRecord> accessDenyLog,
+        int accessLogLimit)
     {
         Enabled = enabled;
         DenyTags = denyTags;
         AccessLists = accessLists;
         AccessKeys = accessKeys;
         AccessLog = accessLog;
+        AccessDenyLog = accessDenyLog;
         AccessLogLimit = accessLogLimit;
     }
 }
