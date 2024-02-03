@@ -65,7 +65,6 @@ public sealed class SlipperySystem : EntitySystem
         // Can't be popupclient because the goal is to let every onlooker know that this was not a glitch or "omg noslips"
         _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), uid);
 
-        return;
     }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
