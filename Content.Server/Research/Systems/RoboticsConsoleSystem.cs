@@ -48,7 +48,8 @@ public sealed class RoboticsConsoleSystem : EntitySystem
         base.Update(frameTime);
 
         var now = _timing.CurTime;
-        foreach (var comp in EntityQuery<RoboticsConsoleComponent>())
+        var query = EntityQueryEnumerator<RoboticsConsoleComponent>();
+        while (query.MoveNext(out var comp))
         {
             // remove cyborgs that havent pinged in a while
             _removing.Clear();
