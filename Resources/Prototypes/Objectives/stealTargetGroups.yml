@@ -218,8 +218,8 @@
   id: AmePartFlatpack
   name: AME part
   sprite:
-    sprite: Objects/Power/AME/ame_part.rsi
-    state: box
+    sprite: Objects/Devices/flatpack.rsi
+    state: ame-part
 
 - type: stealTargetGroup
   id: SalvageExpeditionsComputerCircuitboard

@@ -63,8 +63,8 @@
 - type: cargoProduct
   id: EngineSolar
   icon:
-    sprite: Objects/Power/solar_parts.rsi
-    state: solar_assembly_parts
+    sprite: Objects/Devices/flatpack.rsi
+    state: solar-assembly-part
   product: CrateEngineeringSolar
   cost: 500
   category: Engineering
@@ -89,7 +89,7 @@
   cost: 1200
   category: Engineering
   group: market
-  
+
 - type: cargoProduct
   id: EngineTeslaGroundingRod
   icon:
