@@ -5,7 +5,7 @@ using Content.Server.DeviceLinking.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Cloning;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Database;
