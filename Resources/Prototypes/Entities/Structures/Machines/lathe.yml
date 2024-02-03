@@ -282,6 +282,7 @@
       - ClothingBackpackWaterTank
       - MegaSprayBottle
       - TimerTrigger
+      - ChemicalPayload
       - FlashPayload
       - Signaller
       - SignalTrigger
@@ -833,6 +834,7 @@
       - Hemostat
       - ClothingEyesGlassesChemical
     dynamicRecipes:
+      - ChemicalPayload
       - CryostasisBeaker
       - BluespaceBeaker
       - SyringeBluespace
