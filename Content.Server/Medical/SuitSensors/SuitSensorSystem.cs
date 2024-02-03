@@ -47,6 +47,7 @@ public sealed class SuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<SuitSensorComponent, EmpDisabledRemoved>(OnEmpFinished);
     }
 
     private void OnUnpaused(EntityUid uid, SuitSensorComponent component, ref EntityUnpausedEvent args)
@@ -204,9 +205,6 @@ public sealed class SuitSensorSystem : EntitySystem
                 return;
         }
 
-        if (HasComp<EmpDisabledComponent>(uid))
-            msg = "suit-sensor-examine-off";
-
         args.PushMarkup(Loc.GetString(msg));
     }
 
@@ -218,6 +216,10 @@ public sealed class SuitSensorSystem : EntitySystem
 
         // standard interaction checks
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        // use this instead of overwriting ControlsLocked on tracking implants/prisoner suits
+        if (HasComp<EmpDisabledComponent>(uid))
             return;
 
         args.Verbs.UnionWith(new[]
@@ -249,6 +251,12 @@ public sealed class SuitSensorSystem : EntitySystem
     {
         args.Affected = true;
         args.Disabled = true;
+        SetSensor(uid, SuitSensorMode.SensorOff, null, component);
+    }
+
+    private void OnEmpFinished(EntityUid uid, SuitSensorComponent component, ref EmpDisabledRemoved args)
+    {
+        SetSensor(uid, component.PreviousMode, null, component);
     }
 
     private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, EntityUid userUid, SuitSensorMode mode)
@@ -293,6 +301,7 @@ public sealed class SuitSensorSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        component.PreviousMode = component.Mode;
         component.Mode = mode;
 
         if (userUid != null)
@@ -308,7 +317,7 @@ public sealed class SuitSensorSystem : EntitySystem
             return null;
 
         // check if sensor is enabled and worn by user
-        if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null || transform.GridUid == null || HasComp<EmpDisabledComponent>(uid))
+        if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null || transform.GridUid == null)
             return null;
 
         // try to get mobs id from ID slot
