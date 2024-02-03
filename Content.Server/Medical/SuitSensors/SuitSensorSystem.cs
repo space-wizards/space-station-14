@@ -218,10 +218,6 @@ public sealed class SuitSensorSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        // use this instead of overwriting ControlsLocked on tracking implants/prisoner suits
-        if (HasComp<EmpDisabledComponent>(uid))
-            return;
-
         args.Verbs.UnionWith(new[]
         {
             CreateVerb(uid, component, args.User, SuitSensorMode.SensorOff),
@@ -251,12 +247,18 @@ public sealed class SuitSensorSystem : EntitySystem
     {
         args.Affected = true;
         args.Disabled = true;
+
+        component.PreviousMode = component.Mode;
         SetSensor(uid, SuitSensorMode.SensorOff, null, component);
+
+        component.PreviousControlsLocked = component.ControlsLocked;
+        component.ControlsLocked = true;
     }
 
     private void OnEmpFinished(EntityUid uid, SuitSensorComponent component, ref EmpDisabledRemoved args)
     {
         SetSensor(uid, component.PreviousMode, null, component);
+        component.ControlsLocked = component.PreviousControlsLocked;
     }
 
     private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, EntityUid userUid, SuitSensorMode mode)
@@ -301,7 +303,6 @@ public sealed class SuitSensorSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        component.PreviousMode = component.Mode;
         component.Mode = mode;
 
         if (userUid != null)

@@ -76,6 +76,13 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     /// The previous mode of the suit. This is used to restore the state when an EMP effect ends.
     /// </summary>
-    [ViewVariables]
+    [DataField, ViewVariables]
     public SuitSensorMode PreviousMode = SuitSensorMode.SensorOff;
+
+    /// <summary>
+    ///  The previous locked status of the controls.  This is used to restore the state when an EMP effect ends.
+    ///  This keeps prisoner jumpsuits/internal implants from becoming unlocked after an EMP.
+    /// </summary>
+    [DataField, ViewVariables]
+    public bool PreviousControlsLocked = false;
 }
