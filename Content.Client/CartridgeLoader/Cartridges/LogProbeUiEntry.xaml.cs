@@ -7,14 +7,11 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class LogProbeUiEntry : BoxContainer
 {
-    public LogProbeUiEntry(int numberLabel, string timeText, string accessorText, bool granted)
+    public LogProbeUiEntry(int numberLabel, string timeText, string accessorText)
     {
         RobustXamlLoader.Load(this);
         NumberLabel.Text = numberLabel.ToString();
         TimeLabel.Text = timeText;
         AccessorLabel.Text = accessorText;
-        Access.Text = granted
-            ? Loc.GetString("log-probe-label-access-granted")
-            : Loc.GetString("log-probe-label-access-denied");
     }
 }

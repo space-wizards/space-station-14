@@ -12,8 +12,7 @@
         <BoxContainer Orientation="Horizontal" Margin="4 8">
             <Label Align="Right" SetWidth="26" ClipText="True" Text="{Loc 'log-probe-label-number'}"/>
             <Label Align="Center" SetWidth="100" ClipText="True" Text="{Loc 'log-probe-label-time'}"/>
-            <Label Align="Left" SetWidth="290" ClipText="True" Text="{Loc 'log-probe-label-accessor'}"/>
-            <Label Align="Left" SetWidth="100" ClipText="True" Text="{Loc 'log-probe-label-access'}"/>
+            <Label Align="Left" SetWidth="390" ClipText="True" Text="{Loc 'log-probe-label-accessor'}"/>
         </BoxContainer>
     </PanelContainer>
     <ScrollContainer VerticalExpand="True" HScrollEnabled="True">

@@ -46,8 +46,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
         {
             var log = new PulledAccessLog(
                 accessRecord.AccessTime,
-                accessRecord.Accessor,
-                accessRecord.AccessGranted
+                accessRecord.Accessor
             );
 
             ent.Comp.PulledAccessLogs.Add(log);

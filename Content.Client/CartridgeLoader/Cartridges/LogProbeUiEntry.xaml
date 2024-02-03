@@ -13,11 +13,7 @@
                ClipText="True"/>
         <Label Name="AccessorLabel"
                Align="Left"
-               SetWidth="290"
-               ClipText="True"/>
-        <Label Name="Access"
-               Align="Left"
-               SetWidth="100"
+               SetWidth="390"
                ClipText="True"/>
     </BoxContainer>
     <customControls:HSeparator Margin="0 5 0 5"/>
