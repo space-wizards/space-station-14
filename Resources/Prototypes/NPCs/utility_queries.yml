@@ -199,6 +199,40 @@
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
 
+- type: utilityQuery
+  id: FindReceiver
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: TransporterReceiver
+  considerations:
+    - !type:IsCorrectReceiver
+      curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: FindProvider
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: TransporterProvider
+  considerations:
+    - !type:ProviderHasItems
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+
+- type: utilityQuery
+  id: FindNearestTransporterCharger
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: TransporterCharger
+  considerations:
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+
 #- type: utilityQuery
 #  id: NearbyShoes
 #  query:
