@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: 'Added 2 new artifact effect: attraction and repulsion'
-    type: Add
-  id: 5375
-  time: '2023-12-15T15:39:25.0000000+00:00'
 - author: mirrorcult
   changes:
   - message: Explosion visuals now last slightly longer
@@ -3870,3 +3864,11 @@
   id: 5874
   time: '2024-02-03T02:29:41.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24870
+- author: metalgearsloth
+  changes:
+  - message: Moving entities that are pulled now throws them instead of moving them
+      manually.
+    type: Tweak
+  id: 5875
+  time: '2024-02-03T03:36:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20906
