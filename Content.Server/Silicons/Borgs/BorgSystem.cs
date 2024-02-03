@@ -14,6 +14,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Pointing;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
@@ -67,6 +68,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
+        SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnPointAttempt);
 
         InitializeModules();
         InitializeMMI();
@@ -240,6 +242,12 @@ public sealed partial class BorgSystem : SharedBorgSystem
         }
 
         _mind.TransferTo(mindId, containerEnt, mind: mind);
+    }
+
+    private void OnPointAttempt(EntityUid uid, BorgBrainComponent component, PointAttemptEvent args)
+    {
+        if (!HasComp<BorgChassisComponent>(uid))
+            args.Cancel();
     }
 
     private void UpdateBatteryAlert(EntityUid uid, PowerCellSlotComponent? slotComponent = null)
