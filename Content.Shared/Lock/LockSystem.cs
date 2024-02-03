@@ -200,6 +200,18 @@ public sealed class LockSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns true if the entity is locked.
+    /// Entities with no lock component are considered unlocked.
+    /// </summary>
+    public bool IsLocked(Entity<LockComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.Locked;
+    }
+
+    /// <summary>
     /// Raises an event for other components to check whether or not
     /// the entity can be locked in its current state.
     /// </summary>
