@@ -50,6 +50,7 @@
   - TimerTrigger
   - FlashPayload
   - ExplosivePayload
+  - ChemicalPayload
   - Igniter
 
 - type: technology

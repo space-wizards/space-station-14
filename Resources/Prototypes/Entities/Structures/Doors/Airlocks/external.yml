@@ -18,6 +18,7 @@
     sprite: Structures/Doors/Airlocks/Standard/external.rsi
   - type: PaintableAirlock
     group: External
+    department: null
 
 - type: entity
   parent: AirlockExternal

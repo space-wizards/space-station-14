@@ -1,161 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed spray nozzle not getting ammo from the back pack tank
-    type: Fix
-  id: 5362
-  time: '2023-12-14T20:49:40.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Mothroach crates are now twice as expensive
-    type: Tweak
-  id: 5363
-  time: '2023-12-14T20:58:38.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Crusher Glaives can be made with the Salvage Weapons technology.
-    type: Add
-  id: 5364
-  time: '2023-12-15T01:34:37.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - message: Acidifier now has a sprite effect.
-    type: Tweak
-  id: 5365
-  time: '2023-12-15T01:56:42.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Mercury poisoning now causes stuttering.
-    type: Tweak
-  id: 5366
-  time: '2023-12-15T09:28:13.0000000+00:00'
-- author: ninruB
-  changes:
-  - message: Reptilians no longer innately take 30% less heat damage.
-    type: Tweak
-  id: 5367
-  time: '2023-12-15T09:37:05.0000000+00:00'
-- author: keronshb
-  changes:
-  - message: Added the Action Upgrade System - used to upgrade specific actions!
-    type: Add
-  - message: Added commands to upgrade actions.
-    type: Add
-  - message: Added Charges information to action tooltips for actions with charges
-    type: Add
-  id: 5368
-  time: '2023-12-15T09:41:44.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Chaplains can smack their bible on water to create holy water.
-    type: Add
-  id: 5369
-  time: '2023-12-15T09:52:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Added the electrolysis unit and the centrifuge. These will be used for
-      chemistry in the future.
-    type: Add
-  id: 5370
-  time: '2023-12-15T09:52:46.0000000+00:00'
-- author: themias
-  changes:
-  - message: Gibbed body parts contain their victim's DNA
-    type: Tweak
-  - message: Implanters, syringes, hyposprays, medipens, and cigarettes transfer DNA
-    type: Tweak
-  - message: Melee weapons that deal blunt/slash/pierce damage transfer DNA
-    type: Tweak
-  - message: Soap and rags can be used to clean evidence off of items, but leave evidence
-      of their own
-    type: Tweak
-  id: 5371
-  time: '2023-12-15T09:52:56.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: Added hypodart into uplink. It is capable of piercing armor and injecting
-      up to 7u reagents.
-    type: Add
-  id: 5372
-  time: '2023-12-15T09:55:57.0000000+00:00'
-- author: tgrkzus
-  changes:
-  - message: Open tanks will no longer make noise at very low release pressure.
-    type: Tweak
-  id: 5373
-  time: '2023-12-15T09:56:17.0000000+00:00'
-- author: MendaxxDev
-  changes:
-  - message: The flare gun now explodes, damages and stuns the player when used with
-      wrong ammo
-    type: Tweak
-  id: 5374
-  time: '2023-12-15T09:57:59.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: 'Added 2 new artifact effect: attraction and repulsion'
-    type: Add
-  id: 5375
-  time: '2023-12-15T15:39:25.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - message: Explosion visuals now last slightly longer
-    type: Add
-  - message: You will now hear a reverbed explosion sound effect for explosions that
-      are far away from you
-    type: Add
-  - message: Smaller explosions now make a distinct sound compared to larger ones
-    type: Add
-  id: 5376
-  time: '2023-12-15T16:57:46.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Artistic toolboxes now have a filled variant that can be found in maintenance
-      occasionally.
-    type: Tweak
-  id: 5377
-  time: '2023-12-15T20:44:42.0000000+00:00'
-- author: Ilya246
-  changes:
-  - message: Cyborg jobs now start with a positronic brain.
-    type: Tweak
-  id: 5378
-  time: '2023-12-15T20:45:31.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Borgs can wear hats now. Time to get festive!
-    type: Tweak
-  id: 5379
-  time: '2023-12-15T22:33:52.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - message: Chasms no longer spawn on lava expeditions
-    type: Tweak
-  id: 5380
-  time: '2023-12-15T22:34:09.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: The guidebook now shows you if a chemical's recipe needs an alternative
-      mixing method, such as a chaplain's blessing or electrolysis.
-    type: Fix
-  id: 5381
-  time: '2023-12-15T23:59:54.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Added smoke grenades to the syndicate uplink for 1 TC, they create a
-      large smoke cloud to provide cover for your heinous activites.
-    type: Add
-  - message: Added tear gas grenades to the SecTech and security belts, use them to
-      control riots.
-    type: Add
-  id: 5382
-  time: '2023-12-16T01:49:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix map boundaries not pushing you back.
-    type: Fix
-  id: 5383
-  time: '2023-12-16T02:19:54.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Crayons boxes now hold a white crayon.
@@ -3865,3 +3708,168 @@
   id: 5861
   time: '2024-02-01T13:33:57.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24063
+- author: Blazeror
+  changes:
+  - message: Chemical analysis goggles can now inspect solutions inside spray bottles.
+    type: Fix
+  id: 5862
+  time: '2024-02-01T22:19:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24838
+- author: themias
+  changes:
+  - message: Fixed dylovene overdoses not applying brute damage
+    type: Fix
+  id: 5863
+  time: '2024-02-01T22:21:04.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24826
+- author: themias
+  changes:
+  - message: Added sound effect for Diona salutes
+    type: Add
+  id: 5864
+  time: '2024-02-01T22:34:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24836
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Detectives are now listed under civilian instead of security.
+    type: Tweak
+  id: 5865
+  time: '2024-02-01T22:49:54.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24739
+- author: VasilisThePikachu
+  changes:
+  - message: The fridge's explosion resistance has been nerfed significantly, It's
+      no longer able to survive nukes at point blank range of the nuke.
+    type: Tweak
+  id: 5866
+  time: '2024-02-01T23:41:43.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24844
+- author: Dygon
+  changes:
+  - message: You can't slip through chain link fences anymore.
+    type: Fix
+  id: 5867
+  time: '2024-02-02T04:24:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24850
+- author: Psychpsyo
+  changes:
+  - message: You can now turn down the screen shake intensity in the accessibility
+      settings.
+    type: Add
+  id: 5868
+  time: '2024-02-02T12:39:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24749
+- author: Anzarot121
+  changes:
+  - message: Fixed a problem in the code due to which mobs, including hamsters, slimes,
+      spiders, xenos, could not pull things.
+    type: Fix
+  id: 5869
+  time: '2024-02-03T01:25:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22485
+- author: Tayrtahn
+  changes:
+  - message: 'Added a new flavor of Donk Pockets: Stonk Pockets'
+    type: Add
+  id: 5870
+  time: '2024-02-03T01:55:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24876
+- author: Hmeister
+  changes:
+  - message: The guidebook entry for cargo is now up to date, and some other minor
+      changes to the guidebook.
+    type: Tweak
+  id: 5871
+  time: '2024-02-03T02:07:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24828
+- author: FairlySadPanda
+  changes:
+  - message: The round restart audio, again...
+    type: Fix
+  id: 5872
+  time: '2024-02-03T02:11:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24754
+- author: Adrian16199
+  changes:
+  - message: Added scarfs to the uniform printer.
+    type: Add
+  id: 5873
+  time: '2024-02-03T02:12:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24735
+- author: Jajsha
+  changes:
+  - message: Emagged Cyborgs are no longer affected by Ion Storm events.
+    type: Fix
+  - message: Improved wording of cyborg laws.
+    type: Tweak
+  id: 5874
+  time: '2024-02-03T02:29:41.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24870
+- author: metalgearsloth
+  changes:
+  - message: Moving entities that are pulled now throws them instead of moving them
+      manually.
+    type: Tweak
+  id: 5875
+  time: '2024-02-03T03:36:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20906
+- author: lzk228
+  changes:
+  - message: Soapy water removed.
+    type: Remove
+  id: 5876
+  time: '2024-02-03T04:23:34.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24301
+- author: Krunk
+  changes:
+  - message: Characters can properly select 'None' as a preference for their spawn
+      priority.
+    type: Fix
+  id: 5877
+  time: '2024-02-03T08:06:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24897
+- author: Krunk
+  changes:
+  - message: Pointing arrows now begin at the player and smoothly animate to their
+      target.
+    type: Add
+  id: 5878
+  time: '2024-02-03T08:09:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24864
+- author: Dygon
+  changes:
+  - message: Single tile sized puddles of space lube won't let you slide extremely
+      far anymore.
+    type: Fix
+  id: 5879
+  time: '2024-02-03T08:10:51.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24846
+- author: shampunj
+  changes:
+  - message: Fixed incorrect path to the uranium spear image in the construction menu
+    type: Fix
+  id: 5880
+  time: '2024-02-03T08:11:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24895
+- author: nikthechampiongr
+  changes:
+  - message: End of round messages no longer loop until the heat death of the universe.
+    type: Fix
+  id: 5881
+  time: '2024-02-03T16:43:50.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24920
+- author: EmoGarbage404
+  changes:
+  - message: Changed the colors used for chat names.
+    type: Tweak
+  id: 5882
+  time: '2024-02-03T17:33:58.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24922
+- author: deltanedas
+  changes:
+  - message: Dissolved the biochem technology discipline into others and roundstart
+      availability.
+    type: Add
+  id: 5883
+  time: '2024-02-03T18:13:30.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24871
