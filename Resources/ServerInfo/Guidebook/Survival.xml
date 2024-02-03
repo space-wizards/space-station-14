@@ -12,7 +12,6 @@ In the event of a serious emergency, there're a few things you can do to help en
 - If entering critical condition, use the emergency medipen from your emergency box, it'll make sure you don't end up unable to do anything. Emergency medipens can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with poisons/etc.
 <Box>
 <GuideEntityEmbed Entity="EmergencyMedipen"/>
-<GuideEntityEmbed Entity="SpaceMedipen"/>
 </Box>
 - Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that nitrogen replaces oxygen for you and you don't start with one of those in your emergency canister.
 <Box>

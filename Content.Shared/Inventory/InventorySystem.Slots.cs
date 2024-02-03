@@ -99,7 +99,7 @@ public partial class InventorySystem : EntitySystem
 
     public InventorySlotEnumerator GetSlotEnumerator(Entity<InventoryComponent?> entity, SlotFlags flags = SlotFlags.All)
     {
-        if (!Resolve(entity.Owner, ref entity.Comp))
+        if (!Resolve(entity.Owner, ref entity.Comp, false))
             return InventorySlotEnumerator.Empty;
 
         return new InventorySlotEnumerator(entity.Comp, flags);

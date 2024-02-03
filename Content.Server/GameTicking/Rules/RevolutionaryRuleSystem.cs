@@ -2,13 +2,14 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.Chat.Managers;
+using Content.Server.EUI;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
-using Content.Server.Objectives;
 using Content.Server.Popups;
+using Content.Server.Revolutionary;
 using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
@@ -17,6 +18,7 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -40,10 +42,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
+    [Dependency] private readonly EuiManager _euiMan = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -104,15 +106,24 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             ev.AddLine(Loc.GetString(Outcomes[index]));
 
             ev.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", headrev.HeadRevs.Count)));
-            foreach (var player in headrev.HeadRevs.Values)
+            foreach (var player in headrev.HeadRevs)
             {
-                var title = _objectives.GetTitle(player);
-                if (title == null)
-                    continue;
-
                 // TODO: when role entities are a thing this has to change
-                var count = CompOrNull<RevolutionaryRoleComponent>(player)?.ConvertedCount ?? 0;
-                ev.AddLine(Loc.GetString("rev-headrev-player", ("title", title), ("count", count)));
+                var count = CompOrNull<RevolutionaryRoleComponent>(player.Value)?.ConvertedCount ?? 0;
+
+                _mind.TryGetSession(player.Value, out var session);
+                var username = session?.Name;
+                if (username != null)
+                {
+                    ev.AddLine(Loc.GetString("rev-headrev-name-user",
+                    ("name", player.Key),
+                    ("username", username), ("count", count)));
+                }
+                else
+                {
+                    ev.AddLine(Loc.GetString("rev-headrev-name",
+                    ("name", player.Key), ("count", count)));
+                }
 
                 // TODO: someone suggested listing all alive? revs maybe implement at some point
             }
@@ -218,7 +229,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var message = Loc.GetString("rev-role-greeting");
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
+            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.Red);
             _audioSystem.PlayGlobal("/Audio/Ambience/Antag/headrev_start.ogg", ev.Target);
         }
     }
@@ -249,7 +260,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 var message = Loc.GetString("head-rev-role-greeting");
                 var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex("#5e9cff"));
+                _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.FromHex("#5e9cff"));
             }
         }
     }
@@ -298,17 +309,28 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
         if (_antagSelection.IsGroupDead(headRevList, false))
         {
-            var rev = AllEntityQuery<RevolutionaryComponent>();
-            while (rev.MoveNext(out var uid, out _))
+            var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
+            while (rev.MoveNext(out var uid, out _, out var mc))
             {
-                if (!HasComp<HeadRevolutionaryComponent>(uid))
-                {
-                    _npcFaction.RemoveFaction(uid, RevolutionaryNpcFaction);
-                    _stun.TryParalyze(uid, stunTime, true);
-                    RemCompDeferred<RevolutionaryComponent>(uid);
-                    _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Entity(uid, EntityManager))), uid);
-                    _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to all Head Revolutionaries dying.");
-                }
+                if (HasComp<HeadRevolutionaryComponent>(uid))
+                    continue;
+
+                _npcFaction.RemoveFaction(uid, RevolutionaryNpcFaction);
+                _stun.TryParalyze(uid, stunTime, true);
+                RemCompDeferred<RevolutionaryComponent>(uid);
+                _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Entity(uid, EntityManager))), uid);
+                _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to all Head Revolutionaries dying.");
+
+                if (!_mind.TryGetMind(uid, out var mindId, out var mind, mc))
+                    continue;
+
+                // remove their antag role
+                _role.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId);
+
+                // make it very obvious to the rev they've been deconverted since
+                // they may not see the popup due to antag and/or new player tunnel vision
+                if (_mind.TryGetSession(mindId, out var session))
+                    _euiMan.OpenEui(new DeconvertedEui(), session);
             }
             return true;
         }

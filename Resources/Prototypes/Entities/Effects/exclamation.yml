@@ -1,0 +1,39 @@
+- type: entity
+  id: Exclamation
+  name: exclamation
+  noSpawn: true
+  save: false
+  components:
+    - type: Transform
+      noRot: true
+    - type: Sprite
+      sprite: Structures/Storage/closet.rsi
+      drawdepth: Effects
+      noRot: true
+      layers:
+      - state: "cardboard_special"
+    - type: TimedDespawn
+      lifetime: 1
+    - type: Tag
+      tags:
+        - HideContextMenu
+        
+        
+- type: entity
+  id: WhistleExclamation
+  name: exclamation
+  noSpawn: true
+  components:
+    - type: Sprite
+      sprite: Structures/Storage/closet.rsi
+      state: cardboard_special
+      drawdepth: Effects
+      offset: 0, 1
+      noRot: true
+    - type: Transform
+      noRot: true
+    - type: TimedDespawn
+      lifetime: 0.8
+    - type: Tag
+      tags:
+        - HideContextMenu

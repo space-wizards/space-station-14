@@ -3,13 +3,16 @@ using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
+using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Widgets;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -55,8 +58,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (UIManager.ActiveScreen == null)
             return;
 
-        var inventoryGui = UIManager.GetActiveUIWidget<InventoryGui>();
-        RegisterInventoryButton(inventoryGui.InventoryButton);
+        if (UIManager.GetActiveUIWidgetOrNull<InventoryGui>() is { } inventoryGui)
+            RegisterInventoryButton(inventoryGui.InventoryButton);
     }
 
     public void OnStateEntered(GameplayState state)
@@ -241,7 +244,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         }
 
         UpdateInventoryHotbar(_playerInventory);
-        _inventoryHotbar.Visible = !_inventoryHotbar.Visible;
+        var shouldBeVisible = !_inventoryHotbar.Visible;
+        _inventoryHotbar.Visible = shouldBeVisible;
+
     }
 
     // Neuron Activation
@@ -336,6 +341,25 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef) &&
                    _container.CanInsert(held, container);
 
+        if (!fits && _entities.TryGetComponent<StorageComponent>(container.ContainedEntity, out var storage))
+        {
+            fits = _entities.System<StorageSystem>().CanInsert(container.ContainedEntity.Value, held, out _, storage);
+        }
+        else if (!fits && _entities.TryGetComponent<ItemSlotsComponent>(container.ContainedEntity, out var itemSlots))
+        {
+            var itemSlotsSys = _entities.System<ItemSlotsSystem>();
+            foreach (var slot in itemSlots.Slots.Values)
+            {
+                if (!slot.InsertOnInteract)
+                    continue;
+
+                if (!itemSlotsSys.CanInsert(container.ContainedEntity.Value, held, null, slot))
+                    continue;
+                fits = true;
+                break;
+            }
+        }
+
         hoverSprite.CopyFrom(sprite);
         hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
@@ -400,8 +424,17 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (_slotGroups.GetValueOrDefault(group)?.GetButton(name) is not { } button)
             return;
 
-        button.SpriteView.SetEntity(entity);
-        button.StorageButton.Visible = showStorage;
+        if (_entities.TryGetComponent(entity, out VirtualItemComponent? virtb))
+        {
+            button.SpriteView.SetEntity(virtb.BlockingEntity);
+            button.Blocked = true;
+        }
+        else
+        {
+            button.SpriteView.SetEntity(entity);
+            button.Blocked = false;
+            button.StorageButton.Visible = showStorage;
+        }
     }
 
     public bool RegisterSlotGroupContainer(ItemSlotButtonContainer slotContainer)

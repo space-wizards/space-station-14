@@ -107,8 +107,8 @@ namespace Content.Server.GameTicking
                 return;
 
             Preset = preset;
-            UpdateInfoText();
             ValidateMap();
+            UpdateInfoText();
 
             if (force)
             {
@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
             return true;
         }
 
-        private void StartGamePresetRules()
+        public void StartGamePresetRules()
         {
             // May be touched by the preset during init.
             var rules = new List<EntityUid>(GetAddedGameRules());

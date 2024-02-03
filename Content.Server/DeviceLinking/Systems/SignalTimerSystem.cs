@@ -1,10 +1,10 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.UserInterface;
+using Content.Server.DeviceLinking.Events;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -19,6 +19,11 @@ public sealed class SignalTimerSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
+    /// <summary>
+    /// Per-tick timer cache.
+    /// </summary>
+    private List<Entity<SignalTimerComponent>> _timers = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -29,11 +34,13 @@ public sealed class SignalTimerSystem : EntitySystem
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerTextChangedMessage>(OnTextChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerDelayChangedMessage>(OnDelayChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerStartMessage>(OnTimerStartMessage);
+        SubscribeLocalEvent<SignalTimerComponent, SignalReceivedEvent>(OnSignalReceived);
     }
 
     private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
     {
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        _signalSystem.EnsureSinkPorts(uid, component.Trigger);
     }
 
     private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
@@ -58,11 +65,13 @@ public sealed class SignalTimerSystem : EntitySystem
     public void Trigger(EntityUid uid, SignalTimerComponent signalTimer)
     {
         RemComp<ActiveSignalTimerComponent>(uid);
+
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string?[] { signalTimer.Label }, appearance);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new[] { signalTimer.Label }, appearance);
         }
 
+        _audio.PlayPvs(signalTimer.DoneSound, uid);
         _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
         if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
@@ -80,16 +89,29 @@ public sealed class SignalTimerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+        UpdateTimer();
+    }
+
+    private void UpdateTimer()
+    {
+        _timers.Clear();
+
         var query = EntityQueryEnumerator<ActiveSignalTimerComponent, SignalTimerComponent>();
         while (query.MoveNext(out var uid, out var active, out var timer))
         {
             if (active.TriggerTime > _gameTiming.CurTime)
                 continue;
 
-            Trigger(uid, timer);
+            _timers.Add((uid, timer));
+        }
 
-            if (timer.DoneSound != null)
-                _audio.PlayPvs(timer.DoneSound, uid);
+        foreach (var timer in _timers)
+        {
+            // Exploded or the likes.
+            if (!Exists(timer.Owner))
+                continue;
+
+            Trigger(timer.Owner, timer.Comp);
         }
     }
 
@@ -144,7 +166,19 @@ public sealed class SignalTimerSystem : EntitySystem
     {
         if (!IsMessageValid(uid, args))
             return;
+        OnStartTimer(uid, component);
+    }
 
+    private void OnSignalReceived(EntityUid uid, SignalTimerComponent component, ref SignalReceivedEvent args)
+    {
+        if (args.Port == component.Trigger)
+        {
+            OnStartTimer(uid, component);
+        }
+    }
+
+    public void OnStartTimer(EntityUid uid, SignalTimerComponent component)
+    {
         TryComp<AppearanceComponent>(uid, out var appearance);
         var timer = EnsureComp<ActiveSignalTimerComponent>(uid);
         timer.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);

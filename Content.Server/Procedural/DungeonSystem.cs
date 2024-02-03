@@ -7,6 +7,7 @@ using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.GameTicking;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
@@ -15,6 +16,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural;
 
@@ -24,14 +26,20 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly AnchorableSystem _anchorable = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private ISawmill _sawmill = default!;
+    private readonly List<(Vector2i, Tile)> _tiles = new();
+
+    private EntityQuery<MetaDataComponent> _metaQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
 
     private const double DungeonJobTime = 0.005;
 
@@ -41,10 +49,15 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
     private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
+    [ValidatePrototypeId<ContentTileDefinition>]
+    public const string FallbackTileId = "FloorSteel";
+
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("dungen");
+
+        _metaQuery = GetEntityQuery<MetaDataComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
         _console.RegisterCommand("dungen_preset_vis", Loc.GetString("cmd-dungen_preset_vis-desc"), Loc.GetString("cmd-dungen_preset_vis-help"), DungeonPresetVis, PresetCallback);
         _console.RegisterCommand("dungen_pack_vis", Loc.GetString("cmd-dungen_pack_vis-desc"), Loc.GetString("cmd-dungen_pack_vis-help"), DungeonPackVis, PackCallback);
@@ -176,7 +189,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(
-            _sawmill,
+            Log,
             DungeonJobTime,
             EntityManager,
             _mapManager,
@@ -186,6 +199,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             _decals,
             this,
             _lookup,
+            _tile,
             _transform,
             gen,
             grid,
@@ -207,7 +221,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(
-            _sawmill,
+            Log,
             DungeonJobTime,
             EntityManager,
             _mapManager,
@@ -217,6 +231,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             _decals,
             this,
             _lookup,
+            _tile,
             _transform,
             gen,
             grid,
@@ -227,7 +242,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
-        job.Run();
         await job.AsTask;
 
         if (job.Exception != null)

@@ -1,6 +1,8 @@
 - type: entity
   id: CrateCargoLuxuryHardsuit
   parent: CratePirate
+  name: luxury mining hardsuit crate
+  description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
   components:
   - type: StorageFill
     contents:
@@ -72,56 +74,59 @@
       orGroup: Junk
     #canisters
     - id: AirCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: AmmoniaCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: CarbonDioxideCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: FrezonCanister
       prob: 0.001
       orGroup: Canister
     - id: NitrogenCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: NitrousOxideCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: OxygenCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: PlasmaCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: TritiumCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: WaterVaporCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     #weapons
     - id: WeaponPulseCarbine
-      prob: 0.001
+      prob: 0.0001
       orGroup: Weapons
     - id: WeaponRifleAk
-      prob: 0.001
+      prob: 0.0001
+      orGroup: Weapons
+    - id: Throngler
+      prob: 0.0001
       orGroup: Weapons
     - id: WeaponLauncherPirateCannon
       prob: 0.001
       orGroup: Weapons
     - id: WeaponPistolCHIMP
-      prob: 0.01
+      prob: 0.001
       orGroup: Weapons
     - id: WeaponSniperMosin
       prob: 0.01
       orGroup: Weapons
     - id: WeaponMakeshiftLaser
-      prob: 0.01
+      prob: 0.001
       orGroup: Weapons
     - id: Sledgehammer
-      prob: 0.01
+      prob: 0.001
       orGroup: Weapons
     - id: WeaponMeleeToolboxRobust
       prob: 0.01
@@ -130,6 +135,30 @@
       prob: 0.01
       orGroup: Weapons
     - id: WeaponLaserGun
+      prob: 0.001
+      orGroup: Weapons
+    - id: WeaponShotgunHandmade
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponFlareGun
+      prob: 0.01
+      orGroup: Weapons
+    - id: Bola
+      prob: 0.01
+      orGroup: Weapons
+    - id: ToySword
+      prob: 0.01
+      orGroup: Weapons
+    - id: Shovel
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponWaterPistol
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponWaterBlaster
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponTurretXeno
       prob: 0.01
       orGroup: Weapons
     #clothing
@@ -137,10 +166,13 @@
       prob: 0.05
       orGroup: Clothes
     - id: ClothingOuterHardsuitCBURN
-      prob: 0.01
+      prob: 0.001
+      orGroup: Clothes
+    - id: ClothingOuterHardsuitBasic
+      prob: 0.001
       orGroup: Clothes
     - id: ClothingBackpackERTClown
-      prob: 0.01
+      prob: 0.001
       orGroup: Clothes
     - id: ClothingNeckCloakAdmin
       prob: 0.01
@@ -157,10 +189,43 @@
     - id: ClothingHeadHatCatEars
       prob: 0.01
       orGroup: Clothes
+    - id: ClothingHeadHatDogEars
+      prob: 0.01
+      orGroup: Clothes
     - id: ClothingOuterArmorReflective
       prob: 0.01
       orGroup: Clothes
     - id: ClothingUniformJumpskirtSyndieFormalDress
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingNeckCloakNanotrasen
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUniformJumpsuitNanotrasen
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingShoesSnakeskinBoots
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingOuterCoatSpaceAsshole
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUniformJumpsuitHawaiYellow
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingHeadSafari
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingMaskGasMerc
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingHeadHatCardborg
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUnderSocksCoder
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUniformJumpskirtOfLife
       prob: 0.01
       orGroup: Clothes
     #swag
@@ -174,24 +239,33 @@
       prob: 0.01
       orGroup: Swag
     - id: IngotGold
-      prob: 0.01
+      prob: 0.001
       orGroup: Swag
     - id: GoldOre1
       prob: 0.01
       orGroup: Swag
     - id: GoldOre
-      prob: 0.01
+      prob: 0.001
       orGroup: Swag
     - id: DrinkGoldenCup
       prob: 0.01
       orGroup: Swag
     - id: ToolboxGoldFilled
-      prob: 0.01
+      prob: 0.001
       orGroup: Swag
     - id: ClothingEyesGlassesGar
       prob: 0.01
       orGroup: Swag
+    - id: ClothingEyesGlassesGarGiga
+      prob: 0.01
+      orGroup: Swag
+    - id: ClothingEyesGlassesGarOrange
+      prob: 0.01
+      orGroup: Swag
     - id: ClothingHeadHatChameleon
+      prob: 0.01
+      orGroup: Swag
+    - id: ClothingBeltChampion
       prob: 0.01
       orGroup: Swag
     #plushies
@@ -210,6 +284,9 @@
     - id: PlushiePenguin
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieHuman
+      prob: 0.01
+      orGroup: Plushies
     - id: PlushieLizard
       prob: 0.01
       orGroup: Plushies
@@ -225,15 +302,18 @@
     - id: PlushieMoth
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieArachind
+      prob: 0.01
+      orGroup: Plushies
     #useful
     - id: AmeJar
       prob: 0.01
       orGroup: Useful
     - id: Omnitool
-      prob: 0.01
+      prob: 0.001
       orGroup: Useful
     - id: SoapOmega
-      prob: 0.01
+      prob: 0.001
       orGroup: Useful
     - id: ClothingEyesGlassesMeson
       prob: 0.01
@@ -242,7 +322,7 @@
       prob: 0.01
       orGroup: Useful
     - id: Chainsaw
-      prob: 0.01
+      prob: 0.001
       orGroup: Useful
     - id: Crowbar
       prob: 0.01
@@ -254,6 +334,12 @@
       prob: 0.01
       orGroup: Useful
     - id: ToyAmongPequeno
+      prob: 0.01
+      orGroup: Useful
+    - id: Lamp
+      prob: 0.01
+      orGroup: Useful
+    - id: FloraTreeLarge05
       prob: 0.01
       orGroup: Useful
     #notuseful
@@ -285,5 +371,20 @@
       prob: 0.01
       orGroup: NotUseful
     - id: EncryptionKeyCommon
+      prob: 0.01
+      orGroup: NotUseful
+    - id: CableHVStack1
+      prob: 0.01
+      orGroup: NotUseful
+    - id: DrinkMugBlue
+      prob: 0.01
+      orGroup: NotUseful
+    - id: CablecuffsBroken
+      prob: 0.01
+      orGroup: NotUseful
+    - id: FoodPlateTin
+      prob: 0.01
+      orGroup: NotUseful
+    - id: WeakKudzu
       prob: 0.01
       orGroup: NotUseful

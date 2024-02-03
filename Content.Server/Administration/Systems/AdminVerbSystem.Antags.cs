@@ -110,7 +110,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = Loc.GetString("admin-verb-text-make-head-rev"),
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadRevolutionary.png")),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "HeadRevolutionary"),
             Act = () =>
             {
                 if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
@@ -132,7 +132,7 @@ public sealed partial class AdminVerbSystem
                 if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
                     return;
 
-                _thief.MakeThief(session, false); //Midround add pacific is bad
+                _thief.AdminMakeThief(session, false); //Midround add pacific is bad
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-thief"),

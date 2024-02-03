@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: MachineArtifactAnalyzer
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: artifact analyzer
@@ -40,11 +40,8 @@
     anchored: true
     noRot: false
   - type: ApcPowerReceiver
-    powerLoad: 15000
+    powerLoad: 12000
     needsPower: false #only turns on when scanning
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.80
-    scaling: Exponential
   - type: ArtifactAnalyzer
   - type: ItemPlacer
     whitelist:
@@ -109,9 +106,6 @@
         hard: False
   - type: Transform
     noRot: false
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.80
-    scaling: Exponential
   - type: TraversalDistorter
   - type: ItemPlacer
     # don't limit the number of artifacts that can be biased

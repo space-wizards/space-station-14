@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server.Advertise;
 using Content.Server.Cargo.Systems;
+using Content.Server.Chat.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -16,12 +18,14 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
+using Content.Shared.UserInterface;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.VendingMachines
 {
@@ -35,6 +39,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly AdvertiseSystem _advertise = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -52,8 +57,13 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, EmpPulseEvent>(OnEmpPulse);
 
             SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
-            SubscribeLocalEvent<VendingMachineComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
-            SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
+
+            Subs.BuiEvents<VendingMachineComponent>(VendingMachineUiKey.Key, subs =>
+            {
+                subs.Event<BoundUIOpenedEvent>(OnBoundUIOpened);
+                subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
+                subs.Event<VendingMachineEjectMessage>(OnInventoryEjectMessage);
+            });
 
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
 
@@ -107,6 +117,16 @@ namespace Content.Server.VendingMachines
             UpdateVendingMachineInterfaceState(uid, component);
         }
 
+        private void OnBoundUIClosed(EntityUid uid, VendingMachineComponent component, BoundUIClosedEvent args)
+        {
+            // Only vendors that advertise will send message after dispensing
+            if (component.ShouldSayThankYou && TryComp<AdvertiseComponent>(uid, out var advertise))
+            {
+                _advertise.SayThankYou(uid, advertise);
+                component.ShouldSayThankYou = false;
+            }
+        }
+
         private void UpdateVendingMachineInterfaceState(EntityUid uid, VendingMachineComponent component)
         {
             var state = new VendingMachineInterfaceState(GetAllInventory(uid, component));
@@ -148,7 +168,7 @@ namespace Content.Server.VendingMachines
                 component.DispenseOnHitChance == null || args.DamageDelta == null)
                 return;
 
-            if (args.DamageIncreased && args.DamageDelta.Total >= component.DispenseOnHitThreshold &&
+            if (args.DamageIncreased && args.DamageDelta.GetTotal() >= component.DispenseOnHitThreshold &&
                 _random.Prob(component.DispenseOnHitChance.Value))
             {
                 if (component.DispenseOnHitCooldown > 0f)
@@ -277,6 +297,7 @@ namespace Content.Server.VendingMachines
             vendComponent.Ejecting = true;
             vendComponent.NextItemToEject = entry.ID;
             vendComponent.ThrowNextItem = throwItem;
+            vendComponent.ShouldSayThankYou = true;
             entry.Amount--;
             UpdateVendingMachineInterfaceState(uid, vendComponent);
             TryUpdateVisualState(uid, vendComponent);

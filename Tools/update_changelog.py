@@ -12,6 +12,7 @@ MAX_ENTRIES = 500
 HEADER_RE = r"(?::cl:|🆑) *\r?\n(.+)$"
 ENTRY_RE = r"^ *[*-]? *(\S[^\n\r]+)\r?$"
 
+CATEGORY_MAIN = "Main"
 
 # From https://stackoverflow.com/a/37958106/4678631
 class NoDatesSafeLoader(yaml.SafeLoader):
@@ -33,8 +34,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("changelog_file")
     parser.add_argument("parts_dir")
+    parser.add_argument("--category", default=CATEGORY_MAIN)
 
     args = parser.parse_args()
+
+    category = args.category
 
     with open(args.changelog_file, "r", encoding="utf-8-sig") as f:
         current_data = yaml.load(f, Loader=NoDatesSafeLoader)
@@ -54,7 +58,13 @@ def main():
         partpath = os.path.join(args.parts_dir, partname)
         print(partpath)
 
-        partyaml = yaml.load(open(partpath, "r", encoding="utf-8-sig"), Loader=NoDatesSafeLoader)
+        with open(partpath, "r", encoding="utf-8-sig") as f:
+            partyaml = yaml.load(f, Loader=NoDatesSafeLoader)
+
+        part_category = partyaml.get("category", CATEGORY_MAIN)
+        if part_category != category:
+            print(f"Skipping: wrong category ({part_category} vs {category})")
+            continue
 
         author = partyaml["author"]
         time = partyaml.get(
@@ -86,8 +96,13 @@ def main():
         print(f"Removing {overflow} old entries.")
         entries_list = entries_list[overflow:]
 
-    with open(args.changelog_file, "w") as f:
-        yaml.safe_dump({"Entries": entries_list}, f)
+    new_data = {"Entries": entries_list}
+    for key, value in current_data.items():
+        if key != "Entries":
+            new_data[key] = value
+
+    with open(args.changelog_file, "w", encoding="utf-8-sig") as f:
+        yaml.safe_dump(new_data, f)
 
 
 main()

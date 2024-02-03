@@ -11,6 +11,9 @@ using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Map;
+using System.Numerics;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Anomaly;
 
@@ -21,6 +24,9 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
+    [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     private void InitializeGenerator()
     {
         SubscribeLocalEvent<AnomalyGeneratorComponent, BoundUIOpenedEvent>(OnGeneratorBUIOpened);
@@ -113,6 +119,8 @@ public sealed partial class AnomalySystem
             // don't spawn inside of solid objects
             var physQuery = GetEntityQuery<PhysicsComponent>();
             var valid = true;
+
+            // TODO: This should be using static lookup.
             foreach (var ent in gridComp.GetAnchoredEntities(tile))
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
@@ -128,7 +136,28 @@ public sealed partial class AnomalySystem
             if (!valid)
                 continue;
 
-            targetCoords = gridComp.GridTileToLocal(tile);
+            var pos = _mapSystem.GridTileToLocal(grid, gridComp, tile);
+            var mapPos = pos.ToMap(EntityManager, _transform);
+            // don't spawn in AntiAnomalyZones
+            var antiAnomalyZonesQueue = AllEntityQuery<AntiAnomalyZoneComponent, TransformComponent>();
+            while (antiAnomalyZonesQueue.MoveNext(out var uid, out var zone, out var antiXform))
+            {
+                if (antiXform.MapID != mapPos.MapId)
+                    continue;
+
+                var antiCoordinates = _transform.GetWorldPosition(antiXform);
+
+                var delta = antiCoordinates - mapPos.Position;
+                if (delta.LengthSquared() < zone.ZoneRadius * zone.ZoneRadius)
+                {
+                    valid = false;
+                    break;
+                }
+            }
+            if (!valid)
+                continue;
+
+            targetCoords = pos;
             break;
         }
 

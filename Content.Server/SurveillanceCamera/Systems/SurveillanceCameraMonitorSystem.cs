@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -18,16 +18,19 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
+        Subs.BuiEvents<SurveillanceCameraMonitorComponent>(SurveillanceCameraMonitorUiKey.Key, subs =>
+        {
+            subs.Event<SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
+            subs.Event<SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
+            subs.Event<SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
+            subs.Event<SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
+            subs.Event<SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
+            subs.Event<BoundUIClosedEvent>(OnBoundUiClose);
+        });
     }
 
     private const float _maxHeartbeatTime = 300f;

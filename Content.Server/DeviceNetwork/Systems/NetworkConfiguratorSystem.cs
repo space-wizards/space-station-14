@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
@@ -13,6 +12,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
@@ -532,11 +532,19 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OnUiClosed(EntityUid uid, NetworkConfiguratorComponent component, BoundUIClosedEvent args)
     {
-        component.ActiveDeviceList = null;
+        if (!args.UiKey.Equals(NetworkConfiguratorUiKey.Configure)
+            && !args.UiKey.Equals(NetworkConfiguratorUiKey.Link)
+            && !args.UiKey.Equals(NetworkConfiguratorUiKey.List))
+        {
+            return;
+        }
+
         if (TryComp(component.ActiveDeviceList, out DeviceListComponent? list))
         {
             list.Configurators.Remove(uid);
         }
+
+        component.ActiveDeviceList = null;
 
         if (args.UiKey is NetworkConfiguratorUiKey.Link)
         {

@@ -1,5 +1,5 @@
 using Content.Server.Explosion.Components;
-using Content.Server.Flash.Components;
+using Content.Shared.Flash.Components;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -8,6 +8,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Content.Server.Weapons.Ranged.Systems;
 using System.Numerics;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Flash.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 
@@ -158,7 +160,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             grenade = component.GrenadesContainer.ContainedEntities[0];
 
             // This shouldn't happen but you never know.
-            if (!component.GrenadesContainer.Remove(grenade))
+            if (!_containerSystem.Remove(grenade, component.GrenadesContainer))
                 return false;
 
             return true;

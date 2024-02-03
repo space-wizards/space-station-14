@@ -18,7 +18,7 @@
           radius: 0.1
         density: 190
         mask:
-        - Impassable
+        - HighImpassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"

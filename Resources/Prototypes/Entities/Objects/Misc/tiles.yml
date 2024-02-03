@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: FloorTileItemBase
   description: These could work as a pretty decent throwing weapon.
@@ -34,7 +34,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -8
       - !type:DoActsBehavior
@@ -810,6 +810,24 @@
       - FloorBlueCircuit
   - type: Stack
     stackType: FloorTileBCircuit
+
+# Circuits stacks
+
+- type: entity
+  parent: FloorTileItemGCircuit
+  id: FloorTileItemGCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: FloorTileItemBCircuit
+  id: FloorTileItemBCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
 
 # Terrain
 - type: entity

@@ -7,6 +7,7 @@
     DrinkVacuumFlask: 5
     DrinkFlaskBar: 5
     DrinkShaker: 5
+    CustomDrinkJug: 2 #to allow for custom drinks in the soda/booze dispensers
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
     DrinkBeerBottleFull: 5
@@ -15,7 +16,7 @@
     DrinkColaBottleFull: 4
     DrinkCreamCarton: 5
     DrinkGinBottleFull: 3
-    DrinkGoldschlagerBottleFull: 1
+    DrinkGildlagerBottleFull: 2 #if champagne gets less because its premium, then gildlager should match this and have two
     DrinkGrenadineBottleFull: 2
     DrinkJuiceLimeCarton: 3
     DrinkJuiceOrangeCarton: 3
@@ -34,3 +35,7 @@
     DrinkWhiskeyBottleFull: 5
     DrinkWineBottleFull: 5
     DrinkChampagneBottleFull: 2 #because the premium drink
+    DrinkBeerCan: 5
+    DrinkWineCan: 5
+  emaggedInventory:
+    DrinkPoisonWinebottleFull: 2

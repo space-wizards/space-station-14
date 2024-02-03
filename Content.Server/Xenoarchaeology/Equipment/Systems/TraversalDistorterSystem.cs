@@ -1,12 +1,9 @@
-﻿using Content.Server.Construction;
-using Content.Server.Popups;
+﻿using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
-using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Placeable;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
@@ -23,8 +20,6 @@ public sealed class TraversalDistorterSystem : EntitySystem
 
         SubscribeLocalEvent<TraversalDistorterComponent, ActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<TraversalDistorterComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<TraversalDistorterComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<TraversalDistorterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
         SubscribeLocalEvent<TraversalDistorterComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<TraversalDistorterComponent, ItemRemovedEvent>(OnItemRemoved);
@@ -73,19 +68,8 @@ public sealed class TraversalDistorterSystem : EntitySystem
                 examine = Loc.GetString("traversal-distorter-desc-out");
                 break;
         }
-        args.Message.AddMarkup(examine);
-    }
 
-    private void OnRefreshParts(EntityUid uid, TraversalDistorterComponent component, RefreshPartsEvent args)
-    {
-        var biasRating = args.PartRatings[component.MachinePartBiasChance];
-
-        component.BiasChance = component.BaseBiasChance * MathF.Pow(component.PartRatingBiasChance, biasRating - 1);
-    }
-
-    private void OnUpgradeExamine(EntityUid uid, TraversalDistorterComponent component, UpgradeExamineEvent args)
-    {
-        args.AddPercentageUpgrade("traversal-distorter-upgrade-bias", component.BiasChance / component.BaseBiasChance);
+        args.PushMarkup(examine);
     }
 
     private void OnItemPlaced(EntityUid uid, TraversalDistorterComponent component, ref ItemPlacedEvent args)

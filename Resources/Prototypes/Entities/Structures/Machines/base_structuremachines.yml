@@ -40,7 +40,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
 
 - type: entity
   abstract: true
@@ -50,6 +50,8 @@
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
 
 - type: entity
   abstract: true
@@ -66,3 +68,5 @@
     containers:
     - machine_parts
     - machine_board
+  - type: LightningTarget
+    priority: 1

@@ -145,7 +145,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             {
                 var message = Loc.GetString(antagGreeting);
                 var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex(greetingColor));
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.FromHex(greetingColor));
             }
         }
     }
@@ -285,7 +285,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 {
                     if (_containerSystem.CanInsert(itemToSpawn, pocket1Slot))
                     {
-                        pocket1Slot.Insert(itemToSpawn);
+                        _containerSystem.Insert(itemToSpawn, pocket1Slot);
                     }
                 }
                 else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2Slot, out _))
@@ -294,7 +294,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                     {
                         if (_containerSystem.CanInsert(itemToSpawn, pocket2Slot))
                         {
-                            pocket2Slot.Insert(itemToSpawn);
+                            _containerSystem.Insert(itemToSpawn, pocket2Slot);
                         }
                     }
                 }

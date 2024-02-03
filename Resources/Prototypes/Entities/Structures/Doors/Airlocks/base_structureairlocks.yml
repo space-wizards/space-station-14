@@ -64,6 +64,7 @@
   - type: Weldable
     time: 3
   - type: Airlock
+  - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
@@ -117,6 +118,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      # TODO this should go to the broken node first
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
   - type: Construction
     graph: Airlock
     node: airlock
@@ -129,9 +134,12 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+    department: Civilian
   - type: AccessReader
   - type: StaticPrice
     price: 150
+  - type: LightningTarget
+    priority: 1
   - type: Tag
     tags:
       - Airlock
@@ -139,4 +147,5 @@
   - type: PryUnpowered
   placement:
     mode: SnapgridCenter
+
 

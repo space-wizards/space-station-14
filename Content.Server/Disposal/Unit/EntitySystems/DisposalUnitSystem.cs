@@ -208,7 +208,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!ResolveDisposals(uid, ref disposal))
             return;
 
-        if (!disposal.Container.Insert(toInsert))
+        if (!_containerSystem.Insert(toInsert, disposal.Container))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
@@ -681,7 +681,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void Remove(EntityUid uid, SharedDisposalUnitComponent component, EntityUid toRemove)
     {
-        component.Container.Remove(toRemove);
+        _containerSystem.Remove(toRemove, component.Container);
 
         if (component.Container.ContainedEntities.Count == 0)
         {
@@ -800,7 +800,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         _audioSystem.PlayPvs(component.InsertSound, uid);
 
-        if (!component.Container.Insert(inserted))
+        if (!_containerSystem.Insert(inserted, component.Container))
             return;
 
         if (user != inserted && user != null)

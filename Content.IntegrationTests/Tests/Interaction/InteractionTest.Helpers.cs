@@ -23,6 +23,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleComponent;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -134,9 +135,9 @@ public abstract partial class InteractionTest
     /// <remarks>
     /// Automatically enables welders.
     /// </remarks>
-    protected async Task<EntityUid?> PlaceInHands(string? id, int quantity = 1, bool enableWelder = true)
+    protected async Task<NetEntity> PlaceInHands(string id, int quantity = 1, bool enableWelder = true)
     {
-        return await PlaceInHands(id == null ? null : (id, quantity), enableWelder);
+        return await PlaceInHands((id, quantity), enableWelder);
     }
 
     /// <summary>
@@ -145,7 +146,7 @@ public abstract partial class InteractionTest
     /// <remarks>
     /// Automatically enables welders.
     /// </remarks>
-    protected async Task<EntityUid?> PlaceInHands(EntitySpecifier? entity, bool enableWelder = true)
+    protected async Task<NetEntity> PlaceInHands(EntitySpecifier entity, bool enableWelder = true)
     {
         if (Hands.ActiveHand == null)
         {
@@ -153,14 +154,8 @@ public abstract partial class InteractionTest
             return default;
         }
 
+        Assert.That(!string.IsNullOrWhiteSpace(entity.Prototype));
         await DeleteHeldEntity();
-
-        if (entity == null || string.IsNullOrWhiteSpace(entity.Prototype))
-        {
-            await RunTicks(1);
-            Assert.That(Hands.ActiveHandEntity, Is.Null);
-            return null;
-        }
 
         // spawn and pick up the new item
         var item = await SpawnEntity(entity, SEntMan.GetCoordinates(PlayerCoords));
@@ -184,7 +179,7 @@ public abstract partial class InteractionTest
         if (enableWelder && itemToggle != null)
             Assert.That(itemToggle.Activated);
 
-        return item;
+        return SEntMan.GetNetEntity(item);
     }
 
     /// <summary>
@@ -328,6 +323,17 @@ public abstract partial class InteractionTest
         {
             await Interact(spec);
         }
+    }
+
+    /// <summary>
+    /// Throw the currently held entity. Defaults to targeting the current <see cref="TargetCoords"/>
+    /// </summary>
+    protected async Task<bool> ThrowItem(NetCoordinates? target = null, float minDistance = 4)
+    {
+        var actualTarget = SEntMan.GetCoordinates(target ?? TargetCoords);
+        var result = false;
+        await Server.WaitPost(() => result = HandSys.ThrowHeldItem(SEntMan.GetEntity(Player), actualTarget, minDistance));
+        return result;
     }
 
     #endregion
@@ -483,7 +489,7 @@ public abstract partial class InteractionTest
         });
     }
 
-    protected void AssertDeleted(bool deleted = true, NetEntity? target = null)
+    protected void AssertDeleted(NetEntity? target = null)
     {
         target ??= Target;
         if (target == null)
@@ -494,15 +500,31 @@ public abstract partial class InteractionTest
 
         Assert.Multiple(() =>
         {
-            Assert.That(SEntMan.Deleted(SEntMan.GetEntity(target)), Is.EqualTo(deleted));
-            Assert.That(CEntMan.Deleted(CEntMan.GetEntity(target)), Is.EqualTo(deleted));
+            Assert.That(SEntMan.Deleted(SEntMan.GetEntity(target)));
+            Assert.That(CEntMan.Deleted(CEntMan.GetEntity(target)));
+        });
+    }
+
+    protected void AssertExists(NetEntity? target = null)
+    {
+        target ??= Target;
+        if (target == null)
+        {
+            Assert.Fail("No target specified");
+            return;
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(SEntMan.EntityExists(SEntMan.GetEntity(target)));
+            Assert.That(CEntMan.EntityExists(CEntMan.GetEntity(target)));
         });
     }
 
     /// <summary>
     /// Assert whether or not the target has the given component.
     /// </summary>
-    protected void AssertComp<T>(bool hasComp = true, NetEntity? target = null)
+    protected void AssertComp<T>(bool hasComp = true, NetEntity? target = null) where T : IComponent
     {
         target ??= Target;
         if (target == null)
@@ -731,6 +753,11 @@ public abstract partial class InteractionTest
     {
         await Server.WaitPost(() => SEntMan.DeleteEntity(uid));
         await RunTicks(5);
+    }
+
+    protected Task Delete(NetEntity nuid)
+    {
+        return Delete(SEntMan.GetEntity(nuid));
     }
 
     #region Time/Tick managment
@@ -1062,6 +1089,37 @@ public abstract partial class InteractionTest
         await SetMovementKey(dir, BoundKeyState.Up);
         await RunTicks(1);
     }
+
+    #endregion
+
+    #region Networking
+
+    protected EntityUid ToServer(NetEntity nent) => SEntMan.GetEntity(nent);
+    protected EntityUid ToClient(NetEntity nent) => CEntMan.GetEntity(nent);
+    protected EntityUid? ToServer(NetEntity? nent) => SEntMan.GetEntity(nent);
+    protected EntityUid? ToClient(NetEntity? nent) => CEntMan.GetEntity(nent);
+    protected EntityUid ToServer(EntityUid cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
+    protected EntityUid ToClient(EntityUid cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+    protected EntityUid? ToServer(EntityUid? cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
+    protected EntityUid? ToClient(EntityUid? cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+
+    protected EntityCoordinates ToServer(NetCoordinates coords) => SEntMan.GetCoordinates(coords);
+    protected EntityCoordinates ToClient(NetCoordinates coords) => CEntMan.GetCoordinates(coords);
+    protected EntityCoordinates? ToServer(NetCoordinates? coords) => SEntMan.GetCoordinates(coords);
+    protected EntityCoordinates? ToClient(NetCoordinates? coords) => CEntMan.GetCoordinates(coords);
+
+    #endregion
+
+    #region Metadata & Transforms
+
+    protected MetaDataComponent Meta(NetEntity uid) => Meta(ToServer(uid));
+    protected MetaDataComponent Meta(EntityUid uid) => SEntMan.GetComponent<MetaDataComponent>(uid);
+
+    protected TransformComponent Xform(NetEntity uid) => Xform(ToServer(uid));
+    protected TransformComponent Xform(EntityUid uid) => SEntMan.GetComponent<TransformComponent>(uid);
+
+    protected EntityCoordinates Position(NetEntity uid) => Position(ToServer(uid));
+    protected EntityCoordinates Position(EntityUid uid) => Xform(uid).Coordinates;
 
     #endregion
 }
