@@ -19,7 +19,6 @@ using Content.Shared.Jittering;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -32,6 +31,8 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
 
 namespace Content.Server.Electrocution;
 
@@ -465,14 +466,14 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         all.Add((entity, depth));
         visited.Add(entity);
 
-        if (TryComp<SharedPullableComponent>(entity, out var pullable) &&
+        if (TryComp<PullableComponent>(entity, out var pullable) &&
             pullable.Puller is { Valid: true } pullerId &&
             !visited.Contains(pullerId))
         {
             GetChainedElectrocutionTargetsRecurse(pullerId, depth + 1, visited, all);
         }
 
-        if (TryComp<SharedPullerComponent>(entity, out var puller) &&
+        if (TryComp<PullerComponent>(entity, out var puller) &&
             puller.Pulling is { Valid: true } pullingId &&
             !visited.Contains(pullingId))
         {

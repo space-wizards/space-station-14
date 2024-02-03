@@ -1,69 +1,6 @@
 ﻿Entries:
 - author: Ubaser
   changes:
-  - message: Chaplains can smack their bible on water to create holy water.
-    type: Add
-  id: 5369
-  time: '2023-12-15T09:52:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Added the electrolysis unit and the centrifuge. These will be used for
-      chemistry in the future.
-    type: Add
-  id: 5370
-  time: '2023-12-15T09:52:46.0000000+00:00'
-- author: themias
-  changes:
-  - message: Gibbed body parts contain their victim's DNA
-    type: Tweak
-  - message: Implanters, syringes, hyposprays, medipens, and cigarettes transfer DNA
-    type: Tweak
-  - message: Melee weapons that deal blunt/slash/pierce damage transfer DNA
-    type: Tweak
-  - message: Soap and rags can be used to clean evidence off of items, but leave evidence
-      of their own
-    type: Tweak
-  id: 5371
-  time: '2023-12-15T09:52:56.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: Added hypodart into uplink. It is capable of piercing armor and injecting
-      up to 7u reagents.
-    type: Add
-  id: 5372
-  time: '2023-12-15T09:55:57.0000000+00:00'
-- author: tgrkzus
-  changes:
-  - message: Open tanks will no longer make noise at very low release pressure.
-    type: Tweak
-  id: 5373
-  time: '2023-12-15T09:56:17.0000000+00:00'
-- author: MendaxxDev
-  changes:
-  - message: The flare gun now explodes, damages and stuns the player when used with
-      wrong ammo
-    type: Tweak
-  id: 5374
-  time: '2023-12-15T09:57:59.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: 'Added 2 new artifact effect: attraction and repulsion'
-    type: Add
-  id: 5375
-  time: '2023-12-15T15:39:25.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - message: Explosion visuals now last slightly longer
-    type: Add
-  - message: You will now hear a reverbed explosion sound effect for explosions that
-      are far away from you
-    type: Add
-  - message: Smaller explosions now make a distinct sound compared to larger ones
-    type: Add
-  id: 5376
-  time: '2023-12-15T16:57:46.0000000+00:00'
-- author: Ubaser
-  changes:
   - message: Artistic toolboxes now have a filled variant that can be found in maintenance
       occasionally.
     type: Tweak
@@ -3870,3 +3807,64 @@
   id: 5868
   time: '2024-02-02T12:39:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24749
+- author: Anzarot121
+  changes:
+  - message: Fixed a problem in the code due to which mobs, including hamsters, slimes,
+      spiders, xenos, could not pull things.
+    type: Fix
+  id: 5869
+  time: '2024-02-03T01:25:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22485
+- author: Tayrtahn
+  changes:
+  - message: 'Added a new flavor of Donk Pockets: Stonk Pockets'
+    type: Add
+  id: 5870
+  time: '2024-02-03T01:55:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24876
+- author: Hmeister
+  changes:
+  - message: The guidebook entry for cargo is now up to date, and some other minor
+      changes to the guidebook.
+    type: Tweak
+  id: 5871
+  time: '2024-02-03T02:07:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24828
+- author: FairlySadPanda
+  changes:
+  - message: The round restart audio, again...
+    type: Fix
+  id: 5872
+  time: '2024-02-03T02:11:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24754
+- author: Adrian16199
+  changes:
+  - message: Added scarfs to the uniform printer.
+    type: Add
+  id: 5873
+  time: '2024-02-03T02:12:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24735
+- author: Jajsha
+  changes:
+  - message: Emagged Cyborgs are no longer affected by Ion Storm events.
+    type: Fix
+  - message: Improved wording of cyborg laws.
+    type: Tweak
+  id: 5874
+  time: '2024-02-03T02:29:41.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24870
+- author: metalgearsloth
+  changes:
+  - message: Moving entities that are pulled now throws them instead of moving them
+      manually.
+    type: Tweak
+  id: 5875
+  time: '2024-02-03T03:36:09.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20906
+- author: lzk228
+  changes:
+  - message: Soapy water removed.
+    type: Remove
+  id: 5876
+  time: '2024-02-03T04:23:34.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24301
