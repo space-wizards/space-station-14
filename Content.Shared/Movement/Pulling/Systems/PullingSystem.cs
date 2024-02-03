@@ -63,9 +63,6 @@ public sealed class PullingSystem : EntitySystem
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(OnRequestMovePulledObject))
-            .Register<PullingSystem>();
-
-        CommandBinds.Builder
             .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(OnReleasePulledObject))
             .Register<PullingSystem>();
     }
