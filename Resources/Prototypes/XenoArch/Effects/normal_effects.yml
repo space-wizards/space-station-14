@@ -89,11 +89,14 @@
     - id: FoodPacketPopcornTrash
       prob: 0.1
       orGroup: Trash
-    - id: PlushieScientist
+    - id: FoodPacketRaisinsTrash
       prob: 0.1
       orGroup: Trash
     - id: ToySpawner
-      prob: 0.1
+      prob: 0.05
+      orGroup: Trash
+    - id: PlushieScientist
+      prob: 0.05
       orGroup: Trash
 
 - type: artifactEffect
