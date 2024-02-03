@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added hypodart into uplink. It is capable of piercing armor and injecting
-      up to 7u reagents.
-    type: Add
-  id: 5372
-  time: '2023-12-15T09:55:57.0000000+00:00'
-- author: tgrkzus
-  changes:
-  - message: Open tanks will no longer make noise at very low release pressure.
-    type: Tweak
-  id: 5373
-  time: '2023-12-15T09:56:17.0000000+00:00'
 - author: MendaxxDev
   changes:
   - message: The flare gun now explodes, damages and stuns the player when used with
@@ -3867,3 +3854,17 @@
   id: 5871
   time: '2024-02-03T02:07:21.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24828
+- author: FairlySadPanda
+  changes:
+  - message: The round restart audio, again...
+    type: Fix
+  id: 5872
+  time: '2024-02-03T02:11:53.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24754
+- author: Adrian16199
+  changes:
+  - message: Added scarfs to the uniform printer.
+    type: Add
+  id: 5873
+  time: '2024-02-03T02:12:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24735
