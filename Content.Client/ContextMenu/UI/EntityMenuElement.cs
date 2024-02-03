@@ -79,12 +79,11 @@ namespace Content.Client.ContextMenu.UI
             var representation = _entityManager.ToPrettyString(entity);
 
             var name = representation.Name;
-            var id = representation.Uid.ToString();
             var prototype = representation.Prototype;
             var playerName = representation.Session?.Name ?? SearchPlayerName(entity);
             var deleted = representation.Deleted;
 
-            return $"{name} ({id} / {_entityManager.GetNetEntity(entity).ToString()}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
+            return $"{name} ({_entityManager.GetNetEntity(entity).ToString()}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
         }
 
         private string GetEntityDescription(EntityUid entity)
@@ -94,7 +93,7 @@ namespace Content.Client.ContextMenu.UI
                 return GetEntityDescriptionAdmin(entity);
             }
 
-            return Identity.Name(entity, _entityManager, _playerManager.LocalPlayer!.ControlledEntity!);
+            return Identity.Name(entity, _entityManager, _playerManager.LocalEntity!);
         }
 
         /// <summary>
