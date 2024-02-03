@@ -52,7 +52,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// <summary>
     /// How long it takes to flush a disposals unit manually.
     /// </summary>
-    [DataField]
+    [DataField("flushTime")]
     public TimeSpan ManualFlushTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
