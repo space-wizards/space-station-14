@@ -2,7 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Utility;
@@ -98,6 +97,13 @@ namespace Content.Client.RoundEnd
                 Name = Loc.GetString("round-end-summary-window-player-manifest-tab-title")
             };
 
+            var searchLineEdit = new LineEdit
+            {
+                PlaceHolder = Loc.GetString("round-end-summary-window-player-manifest-search"),
+                HorizontalExpand = true,
+                Margin = new Thickness(10),
+            };
+
             var playerInfoContainerScrollbox = new ScrollContainer
             {
                 VerticalExpand = true,
@@ -109,9 +115,13 @@ namespace Content.Client.RoundEnd
             };
 
             //Put observers at the bottom of the list. Put antags on top.
-            var sortedPlayersInfo = playersInfo.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);
+            var sortedPlayersInfo = playersInfo
+                .OrderBy(p => p.Observer)
+                .ThenBy(p => !p.Antag)
+                .ThenBy(p => p.PlayerOOCName);
 
             //Create labels for each player info.
+            Dictionary<BoxContainer, string> searchDocuments = new();
             foreach (var playerInfo in sortedPlayersInfo)
             {
                 var hBox = new BoxContainer
@@ -144,25 +154,41 @@ namespace Content.Client.RoundEnd
                             Loc.GetString("round-end-summary-window-player-info-if-observer-text",
                                           ("playerOOCName", playerInfo.PlayerOOCName),
                                           ("playerICName", playerInfo.PlayerICName)));
+                        var observerRole = Loc.GetString("observer-role-name");
+                        searchDocuments.Add(hBox, $"{playerInfo.PlayerOOCName}\n{playerInfo.PlayerICName}\n{observerRole}");
                     }
                     else
                     {
                         //TODO: On Hover display a popup detailing more play info.
                         //For example: their antag goals and if they completed them sucessfully.
                         var icNameColor = playerInfo.Antag ? "red" : "white";
+                        var playerRole = Loc.GetString(playerInfo.Role);
                         playerInfoText.SetMarkup(
                             Loc.GetString("round-end-summary-window-player-info-if-not-observer-text",
                                 ("playerOOCName", playerInfo.PlayerOOCName),
                                 ("icNameColor", icNameColor),
                                 ("playerICName", playerInfo.PlayerICName),
-                                ("playerRole", Loc.GetString(playerInfo.Role))));
+                                ("playerRole", playerRole)));
+                        searchDocuments.Add(hBox, $"{playerInfo.PlayerOOCName}\n{playerInfo.PlayerICName}\n{playerRole}");
                     }
                 }
                 hBox.AddChild(playerInfoText);
                 playerInfoContainer.AddChild(hBox);
             }
 
+            searchLineEdit.OnTextChanged += (args) =>
+            {
+                var searchText = args.Text;
+                foreach (var (hBox, searchDoc) in searchDocuments)
+                {
+                    hBox.Visible = string.IsNullOrEmpty(searchText) ||
+                                   searchDoc.Contains(searchText, StringComparison.CurrentCultureIgnoreCase);
+                }
+                playerInfoContainerScrollbox.SetScrollValue(new Vector2(0, 0));
+            };
+
             playerInfoContainerScrollbox.AddChild(playerInfoContainer);
+            playerManifestTab.AddChild(searchLineEdit);
             playerManifestTab.AddChild(playerInfoContainerScrollbox);
 
             return playerManifestTab;
