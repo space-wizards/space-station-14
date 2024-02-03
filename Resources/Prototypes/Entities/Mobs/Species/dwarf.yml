@@ -6,6 +6,14 @@
   abstract: true
   components:
   - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 0.5
+        Bloodloss: 0.5
+    starvationDamageCap:
+      types:
+        Cold: 30.0
+        Bloodloss: 30.0
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.

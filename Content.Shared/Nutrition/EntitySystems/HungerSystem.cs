@@ -137,16 +137,33 @@ public sealed class HungerSystem : EntitySystem
         component.LastThreshold = component.CurrentThreshold;
     }
 
-    private void DoContinuousHungerEffects(EntityUid uid, HungerComponent? component = null)
+    private void DoContinuousHungerEffects(EntityUid uid, HungerComponent? component = null, DamageableComponent? damageable = null)
     {
         if (!Resolve(uid, ref component))
+            return;
+        if (!Resolve(uid, ref damageable))
             return;
 
         if (component.CurrentThreshold <= HungerThreshold.Starving &&
             component.StarvationDamage is { } damage &&
             !_mobState.IsDead(uid))
         {
-            _damageable.TryChangeDamage(uid, damage, true, false);
+            if (component.StarvationDamageCap == null)
+            {
+                _damageable.TryChangeDamage(uid, damage, true, false);
+                return;
+            }
+
+            var spec = new DamageSpecifier();
+            foreach (var (type, value) in component.StarvationDamageCap.DamageDict)
+            {
+                if (damageable.Damage.DamageDict.GetValueOrDefault(type, 0) < value)
+                {
+                    spec.DamageDict[type] = component.StarvationDamage[type];
+                }
+            }
+
+            _damageable.TryChangeDamage(uid, spec, true, false);
         }
     }
 

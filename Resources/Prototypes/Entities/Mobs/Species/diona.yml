@@ -8,6 +8,12 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
+    starvationDamage:
+      types:
+        Bloodloss: 0.5
+    starvationDamageCap:
+      types:
+        Bloodloss: 60.0
     baseDecayRate: 0.0083
   - type: Thirst
     baseDecayRate: 0.0083

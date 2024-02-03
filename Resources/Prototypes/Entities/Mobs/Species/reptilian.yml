@@ -8,6 +8,14 @@
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 0.5
+        Bloodloss: 0.5
+    starvationDamageCap:
+      types:
+        Cold: 30.0
+        Bloodloss: 30.0
   - type: Puller
     needsHands: false
   - type: Thirst

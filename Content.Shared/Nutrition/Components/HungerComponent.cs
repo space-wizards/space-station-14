@@ -102,6 +102,12 @@ public sealed partial class HungerComponent : Component
     public DamageSpecifier? StarvationDamage;
 
     /// <summary>
+    /// The maximum quantity of damage that can be taken per-type.
+    /// </summary>
+    [DataField("starvationDamageCap")]
+    public DamageSpecifier? StarvationDamageCap;
+
+    /// <summary>
     /// The time when the hunger will update next.
     /// </summary>
     [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
