@@ -1,5 +1,6 @@
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
+using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Shared.Fax;
 
@@ -54,15 +55,17 @@ public static class AdminFaxEuiMsg
         public string Title { get; }
         public string From { get; }
         public string Content { get; }
+        public TagsState? TagsState { get; }
         public string StampState { get; }
         public Color StampColor { get; }
 
-        public Send(NetEntity target, string title, string from, string content, string stamp, Color stampColor)
+        public Send(NetEntity target, string title, string from, string content, TagsState? tagsState, string stamp, Color stampColor)
         {
             Target = target;
             Title = title;
             From = from;
             Content = content;
+            TagsState = tagsState;
             StampState = stamp;
             StampColor = stampColor;
         }

@@ -283,11 +283,13 @@ public sealed class FaxSystem : EntitySystem
                         !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
                         return;
 
+                    args.Data.TryGetValue(FaxConstants.FaxPaperTagsStateData,
+                        out SharedPaperComponent.TagsState? tagsState);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
 
-                    var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy);
+                    var printout = new FaxPrintout(content, name, tagsState, prototypeId, stampState, stampedBy);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -406,6 +408,7 @@ public sealed class FaxSystem : EntitySystem
         // TODO: See comment in 'Send()' about not being able to copy whole entities
         var printout = new FaxPrintout(paper.Content,
                                        metadata.EntityName,
+                                       paper.TagsState,
                                        metadata.EntityPrototype?.ID ?? DefaultPaperPrototypeId,
                                        paper.StampState,
                                        paper.StampedBy);
@@ -457,6 +460,9 @@ public sealed class FaxSystem : EntitySystem
             // back to DefaultPaperPrototypeId in SpawnPaperFromQueue if we can't find one here.
             payload[FaxConstants.FaxPaperPrototypeData] = metadata.EntityPrototype.ID;
         }
+
+        if (paper.TagsState is not null)
+            payload[FaxConstants.FaxPaperTagsStateData] = paper.TagsState;
 
         if (paper.StampState != null)
         {
@@ -510,6 +516,9 @@ public sealed class FaxSystem : EntitySystem
         if (TryComp<PaperComponent>(printed, out var paper))
         {
             _paperSystem.SetContent(printed, printout.Content);
+
+            if (printout.TagsState is not null)
+                paper.TagsState = printout.TagsState;
 
             // Apply stamps
             if (printout.StampState != null)

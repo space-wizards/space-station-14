@@ -3,6 +3,7 @@ using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Fax;
 
@@ -130,6 +131,9 @@ public sealed partial class FaxPrintout
     [DataField("content", required: true)]
     public string Content { get; private set; } = default!;
 
+    [DataField("tagsState")]
+    public TagsState? TagsState { get; private set; }
+
     [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
     public string PrototypeId { get; private set; } = default!;
 
@@ -143,10 +147,11 @@ public sealed partial class FaxPrintout
     {
     }
 
-    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null)
+    public FaxPrintout(string content, string name, TagsState? tagsState, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null)
     {
         Content = content;
         Name = name;
+        TagsState = tagsState;
         PrototypeId = prototypeId ?? "";
         StampState = stampState;
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();
