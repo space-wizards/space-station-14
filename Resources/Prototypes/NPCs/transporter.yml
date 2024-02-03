@@ -1,0 +1,11 @@
+- type: htnCompound
+  id: TransporterCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: FindNearestTransporterCharger
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true

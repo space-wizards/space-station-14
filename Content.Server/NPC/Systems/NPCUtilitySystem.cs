@@ -22,6 +22,8 @@ using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Transporters;
+using Content.Server.Transporters.Components;
 
 namespace Content.Server.NPC.Systems;
 
@@ -334,6 +336,21 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return melee.Damage.GetTotal().Float() * melee.AttackRate / 100f;
                 }
 
+                return 0f;
+            }
+            case IsCorrectReceiverCon:
+            {
+                if (TryComp(owner, out TransporterComponent? transporter) &&
+                    transporter.Target == targetUid)
+                    return 1f;
+
+                return 0f;
+            }
+            case ProviderHasItemsCon:
+            {
+                if (TryComp(targetUid, out TransporterProviderComponent? provider) &&
+                    provider.HasItems)
+                    return 1f;
                 return 0f;
             }
             default:

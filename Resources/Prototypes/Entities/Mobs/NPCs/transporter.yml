@@ -1,0 +1,33 @@
+- type: entity
+  id: Transporter
+  name: Transporter
+  description: A simple robot capable of carrying a single item.
+  components:
+    - type: Sprite # If you're reading this, I forgot to add a new sprite for this and you need to tell me.
+      sprite: Objects/Specific/Cargo/Transporters/transporter.rsi
+      snapCardinals: true
+      layers:
+        - state: icon
+    - type: Appearance
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          density: 10
+          mask:
+            - SmallMobMask
+          layer:
+            - SmallMobLayer
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: HTN
+      rootTask:
+        task: TransporterCompound

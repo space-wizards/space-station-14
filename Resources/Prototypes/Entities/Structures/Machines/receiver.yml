@@ -1,0 +1,32 @@
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: TransporterReceiver
+  name: Receiver
+  description: A machine that transporters bring items to.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Cargo/Transporters/receiver.rsi
+      snapCardinals: true
+      layers:
+        - state: icon
+    - type: Appearance
+    - type: TransporterCharger
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          density: 200
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
