@@ -5,8 +5,9 @@
   components:
     - type: Sprite
       layers:
-        - sprite: Structures/Walls/random.rsi
-          state: randomgrille
+        - state: blue
+        - sprite: Structures/Walls/randomsolidextra.rsi
+          state: randomsolidextra
     - type: RandomSpawner
       prototypes:
         - SheetSteel1
