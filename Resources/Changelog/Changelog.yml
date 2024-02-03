@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Artistic toolboxes now have a filled variant that can be found in maintenance
-      occasionally.
-    type: Tweak
-  id: 5377
-  time: '2023-12-15T20:44:42.0000000+00:00'
 - author: Ilya246
   changes:
   - message: Cyborg jobs now start with a positronic brain.
@@ -3868,3 +3861,11 @@
   id: 5876
   time: '2024-02-03T04:23:34.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24301
+- author: Krunk
+  changes:
+  - message: Characters can properly select 'None' as a preference for their spawn
+      priority.
+    type: Fix
+  id: 5877
+  time: '2024-02-03T08:06:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24897
