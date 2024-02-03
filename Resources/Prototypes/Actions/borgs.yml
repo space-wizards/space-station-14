@@ -11,13 +11,15 @@
       state: state-laws
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
-
+    
 - type: entity
   id: ActionToggleMagbootsBorg
-  parent: ActionBaseToggleMagboots
+  name: Toggle Magboots
+  description: Toggles the magboots on and off.
   noSpawn: true
   components:
   - type: InstantAction
+    event: !type:ToggleMagbootsEvent
     icon: { sprite: Clothing/Shoes/Boots/magboots-science.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
     
