@@ -20,11 +20,6 @@ public sealed class ThrowingSystem : EntitySystem
 {
     public const float ThrowAngularImpulse = 5f;
 
-    /// <summary>
-    /// Speed cap on rotation in case of click-spam.
-    /// </summary>
-    public const float ThrowAngularCap = 3f * MathF.PI;
-
     public const float PushbackDefault = 2f;
 
     /// <summary>
@@ -47,17 +42,15 @@ public sealed class ThrowingSystem : EntitySystem
         float strength = 1.0f,
         EntityUid? user = null,
         float pushbackRatio = PushbackDefault,
-        bool recoil = true,
-        bool animated = true,
         bool playSound = true)
     {
-        var thrownPos = _transform.GetMapCoordinates(uid);
-        var mapPos = _transform.ToMapCoordinates(coordinates);
+        var thrownPos = Transform(uid).MapPosition;
+        var mapPos = coordinates.ToMap(EntityManager, _transform);
 
         if (mapPos.MapId != thrownPos.MapId)
             return;
 
-        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio, recoil: recoil, animated: animated, playSound: playSound);
+        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio, playSound);
     }
 
     /// <summary>
@@ -72,8 +65,6 @@ public sealed class ThrowingSystem : EntitySystem
         float strength = 1.0f,
         EntityUid? user = null,
         float pushbackRatio = PushbackDefault,
-        bool recoil = true,
-        bool animated = true,
         bool playSound = true)
     {
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
@@ -81,6 +72,7 @@ public sealed class ThrowingSystem : EntitySystem
             return;
 
         var projectileQuery = GetEntityQuery<ProjectileComponent>();
+        var tagQuery = GetEntityQuery<TagComponent>();
 
         TryThrow(
             uid,
@@ -90,7 +82,8 @@ public sealed class ThrowingSystem : EntitySystem
             projectileQuery,
             strength,
             user,
-            pushbackRatio, recoil: recoil, animated: animated, playSound: playSound);
+            pushbackRatio,
+            playSound);
     }
 
     /// <summary>
@@ -108,8 +101,6 @@ public sealed class ThrowingSystem : EntitySystem
         float strength = 1.0f,
         EntityUid? user = null,
         float pushbackRatio = PushbackDefault,
-        bool recoil = true,
-        bool animated = true,
         bool playSound = true)
     {
         if (strength <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero)
@@ -125,17 +116,12 @@ public sealed class ThrowingSystem : EntitySystem
         if (projectileQuery.TryGetComponent(uid, out var proj) && !proj.OnlyCollideWhenShot)
             return;
 
-        var comp = new ThrownItemComponent
-        {
-            Thrower = user,
-            Animate = animated,
-        };
+        var comp = new ThrownItemComponent();
+        comp.Thrower = user;
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
         var time = direction.Length() / strength;
         comp.ThrownTime = _gameTiming.CurTime;
-        // TODO: This is a bandaid, don't do this.
-        // if you want to force landtime have the caller handle it or add a new method.
         // did we launch this with something stronger than our hands?
         if (TryComp<HandsComponent>(comp.Thrower, out var hands) && strength > hands.ThrowForceMultiplier)
             comp.LandTime = comp.ThrownTime + TimeSpan.FromSeconds(time);
@@ -180,8 +166,7 @@ public sealed class ThrowingSystem : EntitySystem
         if (user == null)
             return;
 
-        if (recoil)
-            _recoil.KickCamera(user.Value, -direction * 0.04f);
+        _recoil.KickCamera(user.Value, -direction * 0.04f);
 
         // Give thrower an impulse in the other direction
         if (pushbackRatio != 0.0f &&

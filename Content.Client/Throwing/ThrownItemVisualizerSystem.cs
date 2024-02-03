@@ -24,7 +24,7 @@ public sealed class ThrownItemVisualizerSystem : EntitySystem
 
     private void OnAutoHandleState(EntityUid uid, ThrownItemComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite) || !component.Animate)
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);

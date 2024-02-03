@@ -25,6 +25,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
     [Dependency] private readonly IStateManager _stateManager = default!;
 
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
+    private readonly AudioParams _roundEndParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
 
     public EntityUid? LobbyMusicStream;
     public EntityUid? LobbyRoundRestartAudioStream;
@@ -139,7 +140,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private void PlayRestartSound(RoundRestartCleanupEvent ev)
     {
-        if (!_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+        if (!_configManager.GetCVar(CCVars.RestartSoundsEnabled))
             return;
 
         var file = _gameTicker.RestartSound;
@@ -152,7 +153,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
             file,
             Filter.Local(),
             false,
-            _lobbyParams.WithVolume(_lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
+            _roundEndParams.WithVolume(_roundEndParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
         )?.Entity;
     }
 }

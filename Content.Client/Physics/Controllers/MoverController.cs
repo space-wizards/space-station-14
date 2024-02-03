@@ -1,7 +1,6 @@
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
-using Robust.Client.GameObjects;
+using Content.Shared.Pulling.Components;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Physics.Components;
@@ -25,7 +24,7 @@ namespace Content.Client.Physics.Controllers
 
             SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
             SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
-            SubscribeLocalEvent<PullableComponent, UpdateIsPredictedEvent>(OnUpdatePullablePredicted);
+            SubscribeLocalEvent<SharedPullableComponent, UpdateIsPredictedEvent>(OnUpdatePullablePredicted);
         }
 
         private void OnUpdatePredicted(EntityUid uid, InputMoverComponent component, ref UpdateIsPredictedEvent args)
@@ -41,7 +40,7 @@ namespace Content.Client.Physics.Controllers
                 args.IsPredicted = true;
         }
 
-        private void OnUpdatePullablePredicted(EntityUid uid, PullableComponent component, ref UpdateIsPredictedEvent args)
+        private void OnUpdatePullablePredicted(EntityUid uid, SharedPullableComponent component, ref UpdateIsPredictedEvent args)
         {
             // Enable prediction if an entity is being pulled by the player.
             // Disable prediction if an entity is being pulled by some non-player entity.
