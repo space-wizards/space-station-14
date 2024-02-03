@@ -5,7 +5,6 @@
   components:
   - type: Appearance
   - type: Foldable
-    fitsInContainerUnfolded: true
     canFoldInsideContainer: true
   - type: FoldableClothing
     foldedSlots:
