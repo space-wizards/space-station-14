@@ -66,7 +66,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
     private void UpdateHud(Entity<AlertsComponent> entity)
     {
-        if (_playerManager.LocalEntity == entity.Owner && _timing.IsFirstTimePredicted)
+        if (_playerManager.LocalEntity == entity.Owner)
             SyncAlerts?.Invoke(this, entity.Comp.Alerts);
     }
 
@@ -82,7 +82,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
     {
         base.HandleComponentShutdown(uid, component, args);
 
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+        if (_playerManager.LocalEntity != uid)
             return;
 
         ClearAlerts?.Invoke(this, EventArgs.Empty);

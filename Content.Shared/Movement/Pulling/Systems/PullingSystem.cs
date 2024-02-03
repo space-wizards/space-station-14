@@ -57,6 +57,7 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullableComponent, JointRemovedEvent>(OnJointRemoved);
         SubscribeLocalEvent<PullableComponent, GetVerbsEvent<Verb>>(AddPullVerbs);
 
+        SubscribeLocalEvent<PullerComponent, EntityUnpausedEvent>(OnPullerUnpaused);
         SubscribeLocalEvent<PullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<PullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
@@ -73,6 +74,11 @@ public sealed class PullingSystem : EntitySystem
     {
         base.Shutdown();
         CommandBinds.Unregister<PullingSystem>();
+    }
+
+    private void OnPullerUnpaused(EntityUid uid, PullerComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextThrow += args.PausedTime;
     }
 
     private void OnVirtualItemDeleted(EntityUid uid, PullerComponent component, VirtualItemDeletedEvent args)
@@ -204,6 +210,12 @@ public sealed class PullingSystem : EntitySystem
         if (_containerSystem.IsEntityInContainer(player))
             return false;
 
+        // Cooldown buddy
+        if (_timing.CurTime < pullerComp.NextThrow)
+            return false;
+
+        pullerComp.NextThrow = _timing.CurTime + pullerComp.ThrowCooldown;
+
         // Cap the distance
         const float range = 2f;
         var fromUserCoords = coords.WithEntityId(player, EntityManager);
@@ -215,7 +227,8 @@ public sealed class PullingSystem : EntitySystem
             fromUserCoords = userCoords.Offset(userDirection.Normalized() * range);
         }
 
-        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, strength: 2f, playSound: false);
+        Dirty(player, pullerComp);
+        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, strength: 4f, animated: false, recoil: false, playSound: false);
         return false;
     }
 
