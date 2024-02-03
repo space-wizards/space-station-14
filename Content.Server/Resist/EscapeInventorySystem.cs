@@ -39,7 +39,7 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
-        if ((args.Component.HeldMoveButtons & MoveButtons.AnyDirection) == MoveButtons.None)
+        if (!args.HasDirectionalMovement)
             return;
 
         if (!_containerSystem.TryGetContainingContainer(uid, out var container) || !_actionBlockerSystem.CanInteract(uid, container.Owner))
