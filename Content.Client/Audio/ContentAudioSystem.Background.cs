@@ -6,34 +6,37 @@ using JetBrains.Annotations;
 using Robust.Client;
 using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
 namespace Content.Client.Audio;
 
+/// <summary>
+/// Handles cross-round audio, like lobby music and the restart sound effect.
+/// </summary>
 [UsedImplicitly]
-public sealed class BackgroundAudioSystem : EntitySystem
+public sealed partial class ContentAudioSystem
 {
-    /*
-     * TODO: Nuke this system and merge into contentaudiosystem
-     */
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    // Default audio parameters for background audio.
+    private const float BaseVolume = -5;
+    private const float BaseRestartVolume = 0;
+    private const float BasePitch = 1;
+    private const string BusName = "Master";
+    private const float MaxDistance = 0;
+    private const float RolloffFactor = 0;
+    private const float RefDistance = 0;
+    private const float PlayOffsetSeconds = 0;
+
     [Dependency] private readonly IBaseClient _client = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly ClientGameTicker _gameTicker = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
 
-    private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
-    private readonly AudioParams _roundEndParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
+    private EntityUid? _lobbyMusicStream;
+    private EntityUid? _lobbyRoundRestartAudioStream;
 
-    public EntityUid? LobbyMusicStream;
-    public EntityUid? LobbyRoundRestartAudioStream;
-
-    public override void Initialize()
+    private void InitializeBackgroundAudio()
     {
-        base.Initialize();
-
         _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
         _configManager.OnValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
 
@@ -43,13 +46,37 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
         _gameTicker.LobbySongUpdated += LobbySongUpdated;
 
-        SubscribeNetworkEvent<RoundRestartCleanupEvent>(PlayRestartSound);
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
 
-    public override void Shutdown()
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
     {
-        base.Shutdown();
+        PlayRestartSound();
 
+        _fadingOut.Clear();
+
+        // Preserve lobby sfx but everything else should get dumped.
+        TryComp(_lobbyMusicStream, out AudioComponent? lobbyMusicComp);
+        var oldMusicGain = lobbyMusicComp?.Gain;
+
+        TryComp(_lobbyRoundRestartAudioStream, out AudioComponent? restartComp);
+        var oldAudioGain = restartComp?.Gain;
+
+        SilenceAudio();
+
+        if (oldMusicGain != null)
+        {
+            Audio.SetGain(_lobbyMusicStream, oldMusicGain.Value, lobbyMusicComp);
+        }
+
+        if (oldAudioGain != null)
+        {
+            Audio.SetGain(_lobbyRoundRestartAudioStream, oldAudioGain.Value, restartComp);
+        }
+    }
+
+    private void ShutdownBackgroundAudio()
+    {
         _configManager.UnsubValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
         _configManager.UnsubValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
 
@@ -83,25 +110,17 @@ public sealed class BackgroundAudioSystem : EntitySystem
     private void LobbyMusicVolumeCVarChanged(float volume)
     {
         if (_stateManager.CurrentState is LobbyState)
-        {
             RestartLobbyMusic();
-        }
     }
 
     private void LobbyMusicCVarChanged(bool musicEnabled)
     {
         if (!musicEnabled)
-        {
             EndLobbyMusic();
-        }
         else if (_stateManager.CurrentState is LobbyState)
-        {
             StartLobbyMusic();
-        }
         else
-        {
             EndLobbyMusic();
-        }
     }
 
     private void LobbySongUpdated()
@@ -117,43 +136,36 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     public void StartLobbyMusic()
     {
-        if (LobbyMusicStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+        if (_lobbyMusicStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
             return;
 
         var file = _gameTicker.LobbySong;
-        if (file == null) // We have not received the lobby song yet.
-        {
+        if (file == null)
             return;
-        }
 
-        LobbyMusicStream = _audio.PlayGlobal(
-            file,
-            Filter.Local(),
-            false,
-            _lobbyParams.WithVolume(_lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume))))?.Entity;
+        var volume = BaseVolume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume));
+        AudioParams lobbyParams = new(volume, BasePitch, BusName, MaxDistance, RolloffFactor, RefDistance, true, PlayOffsetSeconds);
+
+        _lobbyMusicStream = _audio.PlayGlobal(file, Filter.Local(), false, lobbyParams)?.Entity;
     }
 
     private void EndLobbyMusic()
     {
-        LobbyMusicStream = _audio.Stop(LobbyMusicStream);
+        _lobbyMusicStream = _audio.Stop(_lobbyMusicStream);
     }
 
-    private void PlayRestartSound(RoundRestartCleanupEvent ev)
+    private void PlayRestartSound()
     {
         if (!_configManager.GetCVar(CCVars.RestartSoundsEnabled))
             return;
 
         var file = _gameTicker.RestartSound;
         if (string.IsNullOrEmpty(file))
-        {
             return;
-        }
 
-        LobbyRoundRestartAudioStream = _audio.PlayGlobal(
-            file,
-            Filter.Local(),
-            false,
-            _roundEndParams.WithVolume(_roundEndParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
-        )?.Entity;
+        var volume = BaseRestartVolume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume));
+        AudioParams roundEndParams = new(volume, BasePitch, BusName, MaxDistance, RolloffFactor, RefDistance, false, PlayOffsetSeconds);
+
+        _lobbyRoundRestartAudioStream = _audio.PlayGlobal(file, Filter.Local(), false, roundEndParams)?.Entity;
     }
 }

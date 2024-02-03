@@ -1,4 +1,5 @@
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
@@ -9,10 +10,6 @@ namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
-    [Dependency] private readonly IAudioManager _audioManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-
     // Need how much volume to change per tick and just remove it when it drops below "0"
     private readonly Dictionary<EntityUid, float> _fadingOut = new();
 
@@ -42,39 +39,14 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         base.Initialize();
         UpdatesOutsidePrediction = true;
         InitializeAmbientMusic();
-        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
-    }
-
-    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
-    {
-        _fadingOut.Clear();
-
-        // Preserve lobby music but everything else should get dumped.
-        var lobbyMusic = EntityManager.System<BackgroundAudioSystem>().LobbyMusicStream;
-        TryComp(lobbyMusic, out AudioComponent? lobbyMusicComp);
-        var oldMusicGain = lobbyMusicComp?.Gain;
-
-        var restartAudio = EntityManager.System<BackgroundAudioSystem>().LobbyRoundRestartAudioStream;
-        TryComp(restartAudio, out AudioComponent? restartComp);
-        var oldAudioGain = restartComp?.Gain;
-
-        SilenceAudio();
-
-        if (oldMusicGain != null)
-        {
-            Audio.SetGain(lobbyMusic, oldMusicGain.Value, lobbyMusicComp);
-        }
-
-        if (oldAudioGain != null)
-        {
-            Audio.SetGain(restartAudio, oldAudioGain.Value, restartComp);
-        }
+        InitializeBackgroundAudio();
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         ShutdownAmbientMusic();
+        ShutdownBackgroundAudio();
     }
 
     public override void Update(float frameTime)
