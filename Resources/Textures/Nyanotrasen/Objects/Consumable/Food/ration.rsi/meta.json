@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/cf899a1821ee05318f75bc1d72240b2df51c0965, wrapper edit by FluffiestFloof, bars sprited by Kurzaen",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "psb"
+    },
+    {
+      "name": "psb-bar-soy"
+    },
+    {
+      "name": "psb-bar-neapolitan"
+    },
+    {
+      "name": "psb-bar-cheese"
+    },
+    {
+      "name": "psb-bar-mint"
+    },
+    {
+      "name": "psb-bar-vegetable"
+    },
+    {
+      "name": "psb-bar-meat"
+    },
+    {
+      "name": "psb-bar-brownie"
+    },
+    {
+      "name": "psb-bar-banana"
+    },
+    {
+      "name": "psb-bar-wonka"
+    },
+    {
+      "name": "psb-trash"
+    }
+  ]
+}

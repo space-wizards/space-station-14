@@ -1,0 +1,119 @@
+#Salads
+
+- type: entity
+  name: caprese salad
+  parent: FoodBakingBase
+  id: FoodMothCapreseSalad
+  description: A very tasty yet simple to prepare salad.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - tomato
+      - leafy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/salad.rsi
+    state: capresesalad
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Protein
+          Quantity: 3
+  - type: Tag
+    tags:
+    - Fruit
+#Tastes like mozzarella, tomato and balsamic
+
+- type: entity
+  name: fleet salad
+  parent: FoodBowlBase
+  id: FoodMothFleetSalad
+  description: The grilled cheese makes it particularly filling, while the croutons provide a crunchy kick.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - leafy
+      - bread
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/salad.rsi
+    state: fleetsalad
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheese, salad and bread
+
+- type: entity
+  name: cotton salad
+  parent: FoodBowlBase
+  id: FoodMothCottonSalad
+  description: A salad with added cotton and a basic dressing. Presumably moths are around.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - leafy
+      - cotton
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/salad.rsi
+    state: cottonsalad
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 7
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheese, salad and cotton
+
+- type: entity
+  name: kachumbari salad
+  parent: FoodBowlBase
+  id: FoodMothKachumbariSalad
+  description:
+  components:
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - tomato
+      - chili
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/salad.rsi
+    state: kachumbarisalad
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 6
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like onion, tomato, corn, chili and cilantro

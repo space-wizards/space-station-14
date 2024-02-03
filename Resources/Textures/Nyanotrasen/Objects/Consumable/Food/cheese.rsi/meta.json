@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/5c97b13e18b6cc8afcac911b44f115162c477ad6",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "curdcheese"
+    },
+    {
+      "name": "cheesecurds"
+    },
+    {
+      "name": "mozzarella"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+# Curd Cheese
+- type: reaction
+  id: CurdlingCurdCheese
+  impact: Low
+  quantized: true
+  reactants:
+    Milk:
+      amount: 15
+    Vinegar:
+      amount: 5
+    Cream:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodCurdCheese
+      number: 2
+      
+# Mozzarella
+- type: reaction
+  id: CurdlingMozzarella
+  impact: Low
+  quantized: true
+  reactants:
+    Milk:
+      amount: 15
+    Cream:
+      amount: 10
+    Enzyme:
+      amount: 5
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodMozzarella
+      number: 2

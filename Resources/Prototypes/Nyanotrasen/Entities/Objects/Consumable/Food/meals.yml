@@ -1,0 +1,265 @@
+- type: entity
+  name: big baked rice
+  parent: FoodBakingBase
+  id: FoodMothBakedRice
+  description: A mothic favourite, baked rice can be filled with a variety of vegetable fillings to make a delicious meal to share.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - potato
+      - cabbage
+      - rice
+  - type: SliceableFood
+    count: 6
+    slice: FoodMothBakedRicePortion
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: bakedrice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 16
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 8
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: lil baked rice
+  parent: FoodBakingBase
+  id: FoodMothBakedRicePortion
+  description: A single portion of baked rice, perfect as a side dish, or even as a full meal.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - potato
+      - cabbage
+      - rice
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: bakedrice-portion
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2.5
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1.25
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+
+- type: entity
+  name: green lasagne
+  parent: FoodMealBase
+  id: FoodMothGreenLasagne
+  description: A fine lasagne made with pesto and a herby white sauce. Good for multiple servings.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - pasta
+  - type: SliceableFood
+    count: 6
+    slice: FoodMothGreenLasagneSlice
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: greenlasagne
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 18
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 6
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheese, pesto and pasta
+
+- type: entity
+  name: green lasagne slice
+  parent: FoodMealBase
+  id: FoodMothGreenLasagneSlice
+  description: A slice of herby, pesto-y lasagne.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      #- pesto
+      - pasta
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: greenlasagne-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like cheese, pesto and pasta
+
+- type: entity
+  name: oven-baked corn
+  parent: FoodBakingBase
+  id: FoodMothBakedCorn
+  description: A cob of corn, baked in the roasting heat of an oven until it blisters and blackens.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: bakedcorn
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like corn and char
+
+- type: entity
+  name: buttered baked corn
+  parent: FoodBakingBase
+  id: FoodMothButteredBakedCorn
+  description: A cob of corn, baked in the roasting heat of an oven until it blisters and blackens.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+      - butter
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: butteredbakedcorn
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 16
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 6
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like corn, butter and char
+
+- type: entity
+  name: mozzarella sticks
+  parent: FoodBakingBase
+  id: FoodMothMozzarellaSticks
+  description: Little sticks of mozzarella, breaded and fried.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - bread
+      - oil
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: mozzarellasticks
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like creamy cheese, breading and oil
+
+# Mac Balls should use macncheese donks
+- type: entity
+  name: mac balls
+  parent: FoodBakingBase
+  id: FoodMothMacBalls
+  description: Fried balls of donk-pocket dipped in corn batter, served with tomato sauce.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+      - bread
+      - cheesy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
+    state: macballs
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Omnizine
+          Quantity: 1
+  - type: Tag
+    tags:
+      - ClothMade # Mothic Food
+#Tastes like pasta, cornbread and cheese
+
+- type: entity
+  name: fish and chips
+  parent: FoodMealBase
+  id: FoodMealFishChips
+  description: A dish that consists of fried fish and potatoes.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+      - batter
+  - type: Sprite
+    state: fishandchips
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
+# Tastes like fish and batter.
+

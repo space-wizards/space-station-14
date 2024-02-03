@@ -1541,22 +1541,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumglass.rsi
 
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkSakeGlass
-  name: sake glass
-  description: Wine made from rice, it's sake!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Sake
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+#- type: entity # GreyStation edited out in favor of Nyano Sake
+#  parent: DrinkGlassBase
+#  id: DrinkSakeGlass
+#  name: sake glass
+#  description: Wine made from rice, it's sake!
+#  components:
+#  - type: SolutionContainerManager
+#    solutions:
+#      drink:
+#        maxVol: 30
+#        reagents:
+#        - ReagentId: Sake
+#          Quantity: 30
+#  - type: Drink
+#  - type: Sprite
+#    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

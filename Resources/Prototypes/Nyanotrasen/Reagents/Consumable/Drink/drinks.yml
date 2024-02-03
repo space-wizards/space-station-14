@@ -1,0 +1,59 @@
+- type: reagent
+  id: AtomicPunch
+  name: reagent-name-atomicpunch
+  parent: BaseDrink
+  desc: reagent-desc-atomicpunch
+  physicalDesc: reagent-physical-desc-volatile
+  flavor: atomicpunch
+  color: "#d04949"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/atomicpunch.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Radium
+        amount: 0.01
+
+- type: reagent
+  id: PinkDrink
+  name: reagent-name-pinkdrink
+  parent: BaseDrink
+  desc: reagent-desc-pinkdrink
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: pinkdrink
+  color: "#d04949"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/pinkdrink.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+
+- type: reagent
+  id: BubbleTea
+  name: reagent-name-bubbletea
+  parent: BaseDrink
+  desc: reagent-desc-bubbletea
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: bubbletea
+  color: "#d2b18c"
+  metamorphicSprite:
+    sprite: Nyanotrasen/Objects/Consumable/Drinks/bubbletea.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.2
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1

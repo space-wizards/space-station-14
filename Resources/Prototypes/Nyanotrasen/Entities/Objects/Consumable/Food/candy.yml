@@ -1,0 +1,47 @@
+- type: entity
+  parent: FoodBase
+  id: FoodLollipop
+  name: lollipop
+  description: For being such a good sport.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Omnizine
+          Quantity: 3
+        - ReagentId: Iron
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 3
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/candy.rsi
+    state: lollipop
+
+- type: entity
+  parent: FoodBase
+  id: FoodGumball
+  name: gumball
+  description: For being such a good sport.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Kelotane
+          Quantity: 3
+        - ReagentId: Tricordrazine
+          Quantity: 3
+        - ReagentId: Dylovene
+          Quantity: 3
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/candy.rsi
+    state: gumball

@@ -1,0 +1,289 @@
+- type: entity
+  name: corncob crust pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaCorncob
+  description: Cobbled together as a sick joke. Best served with liquid butter.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corncob
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: corncob
+  - type: SliceableFood
+    slice: FoodPizzaCorncobSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 36
+        - ReagentId: Nausium
+          Quantity: 33
+  - type: Tag
+    tags:
+    - Pizza
+
+- type: entity
+  name: slice of corncob crust pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaCorncobSlice
+  description: Cobbled together as a sick joke. Best served with liquid butter.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corncob
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: corncob-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Nausium
+          Quantity: 5.5
+  - type: Tag
+    tags:
+    - Pizza
+
+- type: entity
+  name: firecracker pizza
+  parent: FoodPizzaBase
+  id: FoodMothPizzaFirecracker
+  description: They're not kidding when they call this a hot pizza pie.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - spicy
+      - corn
+      - cheesy
+  - type: SliceableFood
+    slice: FoodMothPizzaFirecrackerSlice
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: firecracker
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: CapsaicinOil
+          Quantity: 1
+        - ReagentId: BbqSauce
+          Quantity: 4
+  - type: Tag
+    tags:
+    - Pizza
+    - ClothMade # Mothic Food
+
+- type: entity
+  name: slice of firecracker pizza
+  parent: FoodPizzaSliceBase
+  id: FoodMothPizzaFirecrackerSlice
+  description: A spicy slice of something quite nice.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - spicy
+      - corn
+      - cheesy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: firecracker-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: CapsaicinOil
+          Quantity: 0.1
+        - ReagentId: BbqSauce
+          Quantity: 0.5
+  - type: Tag
+    tags:
+    - Pizza
+    - ClothMade # Mothic Food
+# Tastes like crust, chili, corn, cheese
+
+- type: entity
+  name: quattro formaggi pizza
+  parent: FoodPizzaBase
+  id: FoodMothPizzaFiveCheese
+  description: For centuries, scholars have asked; how much cheese is too much cheese?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - oily
+      - cheesy
+  - type: SliceableFood
+    slice: FoodMothPizzaFiveCheeseSlice
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: fivecheese
+  - type: Tag
+    tags:
+    - Pizza
+    - ClothMade # Mothic Food
+
+- type: entity
+  name: slice of quattro formaggi pizza
+  parent: FoodPizzaSliceBase
+  id: FoodMothPizzaFiveCheeseSlice
+  description: It's the cheesiest slice in the galaxy!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - oily
+      - cheesy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: fivecheese-slice
+  - type: Tag
+    tags:
+    - Pizza
+    - ClothMade # Mothic Food
+# Tastes like crust, cheese, more cheese, excessive amount of cheese
+
+- type: entity
+  name: pesto pizza
+  parent: FoodPizzaBase
+  id: FoodMothPizzaPesto
+  description: Pesto is a popular pizza topping for moths, quite possibly because it exemplifies their favourite flavours; cheese, herbs, and veggies.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - garlic
+      - nutty
+      - cheesy
+  - type: SliceableFood
+    slice: FoodMothPizzaPestoSlice
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: pesto
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Allicin
+          Quantity: 2
+  - type: Tag
+    tags:
+    - Pizza
+    - Fruit
+
+- type: entity
+  name: slice of pesto pizza
+  parent: FoodPizzaSliceBase
+  id: FoodMothPizzaPestoSlice
+  description: Green as the grass in the garden.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - garlic
+      - nutty
+      - cheesy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: pesto-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: Allicin
+          Quantity: 0.25
+  - type: Tag
+    tags:
+    - Pizza
+    - Fruit
+# Tastes like crust, pesto, cheese
+
+- type: entity
+  name: cotton pizza
+  parent: FoodPizzaBase
+  id: FoodMothPizzaCotton
+  description: A crime to some, a delicious pizza to others. Cotton and cheese.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - cotton
+      - cheesy
+  - type: SliceableFood
+    slice: FoodMothPizzaCottonSlice
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: cotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Pizza
+    - ClothMade
+
+- type: entity
+  name: slice of cotton pizza
+  parent: FoodPizzaSliceBase
+  id: FoodMothPizzaCottonSlice
+  description: White as a sheet of paper.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - cotton
+      - cheesy
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Consumable/Food/Baked/pizza.rsi
+    state: cotton-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4.4
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: Fiber
+          Quantity: 0.8
+  - type: Tag
+    tags:
+    - Pizza
+    - ClothMade
+# Tastes like crust, cotton, cheese

@@ -37,8 +37,8 @@ reagent-desc-poison-wine = Is this even wine? Toxic! Hallucinogenic! Probably co
 reagent-name-rum = rum
 reagent-desc-rum = Distilled alcoholic drink made from sugarcane byproducts.
 
-reagent-name-sake = sake
-reagent-desc-sake = Alcoholic beverage made by fermenting rice that has been polished.
+#reagent-name-sake = sake
+#reagent-desc-sake = Alcoholic beverage made by fermenting rice that has been polished.
 
 reagent-name-tequila = tequila
 reagent-desc-tequila = A strong and mildly flavoured, mexican produced spirit.

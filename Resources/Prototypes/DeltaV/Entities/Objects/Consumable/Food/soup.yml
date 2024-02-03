@@ -1,0 +1,25 @@
+- type: entity
+  name: scrambled eggs
+  parent: FoodBowlBase
+  id: FoodMealScrambledEggs
+  description: Some cooked eggs with salt. Yummy!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - egg
+      - salty
+  - type: Sprite
+    sprite: DeltaV/Objects/Consumable/Food/scrambledeggs.rsi
+    layers:
+      - state: bowl
+      - state: scrambled-eggs
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+# Tastes like eggs, butter and salt

@@ -1,0 +1,29 @@
+- type: cargoProduct
+  id: FoodCrateKvassTank
+  icon:
+    sprite: DeltaV/Structures/Storage/kvass.rsi
+    state: kvass
+  product: KvassTankFull
+  cost: 2000
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodDonkpocketSavory
+  icon:
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    state: pizza-box
+  product: CrateFoodDonkpocketSavory
+  cost: 6000 # Thanks bounties
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodDonkpocketSweet
+  icon:
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    state: berry-box
+  product: CrateFoodDonkpocketSweet
+  cost: 6000 # Thanks bounties
+  category: Food
+  group: market
