@@ -163,20 +163,21 @@ namespace Content.Client.GameTicking.Managers
     }
 
     [UsedImplicitly, AnyCommand]
-    public sealed class ChangelogCommand : IConsoleCommand
+    public sealed class RoundSummaryCommand : IConsoleCommand
     {
-        public string Command => "roundendsummary";
-        public string Description => "Opens the round end summary window";
-        public string Help => $"Usage: {Command}";
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+
+        public string Command => "roundsummary";
+        public string Description => Loc.GetString("round-summary-command-description");
+        public string Help => Loc.GetString("round-summary-command-help-text", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var entitySystem = IoCManager.Resolve<IEntitySystemManager>();
-            var clientGameTicker = entitySystem.GetEntitySystem<ClientGameTicker>();
-            var window = clientGameTicker.RoundEndSummaryWindow;
+            var gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
+            var window = gameTicker.RoundEndSummaryWindow;
             if (window == null)
             {
-                shell.WriteLine(Loc.GetString("round-end-summary-command-no-window"));
+                shell.WriteLine(Loc.GetString("round-summary-command-no-window"));
                 return;
             }
 
