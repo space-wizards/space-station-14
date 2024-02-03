@@ -1,4 +1,5 @@
 ﻿- type: entity
+  save: false
   name: Vox
   parent: BaseMobVox
   id: MobVox

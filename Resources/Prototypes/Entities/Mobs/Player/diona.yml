@@ -1,4 +1,5 @@
 - type: entity
+  save: false
   name: Urist McPlants
   parent: BaseMobDiona
   id: MobDiona

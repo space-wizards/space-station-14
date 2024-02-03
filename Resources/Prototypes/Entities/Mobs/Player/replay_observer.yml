@@ -2,6 +2,7 @@
   parent: MobObserver
   id: ReplayObserver
   noSpawn: true
+  save: false
   components:
   - type: MovementSpeedModifier
     baseSprintSpeed: 24

@@ -1,4 +1,5 @@
 - type: entity
+  save: false
   abstract: true
   id: PlayerSiliconBase #for player controlled silicons
   components:
