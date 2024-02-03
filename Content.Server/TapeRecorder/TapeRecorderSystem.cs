@@ -17,7 +17,6 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TapeRecorderComponent, GetVerbsEvent<AlternativeVerb>>(GetAltVerbs);
         SubscribeLocalEvent<RecordingTapeRecorderComponent, ListenEvent>(OnListen);
     }
 
@@ -75,75 +74,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         }
     }
 
-    /// <summary>
-    /// Right click menu to swap mode
-    /// </summary>
-    private void GetAltVerbs(Entity<TapeRecorderComponent> tapeRecorder, ref GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
-        //Dont allow mode changes when the mode is active
-        if (tapeRecorder.Comp.Active)
-            return;
-
-        //If no tape is loaded, show no options
-        var cassette = _itemSlotsSystem.GetItemOrNull(tapeRecorder, SlotName);
-        if (cassette == null)
-            return;
-
-        //Sanity check, this is a tape? right?
-        if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
-            return;
-
-        //If we have tape capacity remaining
-        if (tapeCassetteComponent.MaxCapacity.TotalSeconds > tapeCassetteComponent.CurrentPosition)
-        {
-
-            if (tapeRecorder.Comp.Mode != TapeRecorderMode.Recording)
-            {
-                args.Verbs.Add(new AlternativeVerb()
-                {
-                    Text = Loc.GetString("verb-tape-recorder-record"),
-                    Act = () =>
-                    {
-                        SetMode(tapeRecorder, TapeRecorderMode.Recording, false);
-                    },
-                    Icon = tapeRecorder.Comp.RecordIcon,
-                    Priority = 1
-                });
-            }
-
-            if (tapeRecorder.Comp.Mode != TapeRecorderMode.Playing)
-            {
-                args.Verbs.Add(new AlternativeVerb()
-                {
-                    Text = Loc.GetString("verb-tape-recorder-playback"),
-                    Act = () =>
-                    {
-                        SetMode(tapeRecorder, TapeRecorderMode.Playing, false);
-                    },
-                    Icon = tapeRecorder.Comp.PlayIcon,
-                    Priority = 2
-                });
-            }
-        }
-
-        //If there is tape to rewind and we are not already rewinding
-        if (tapeCassetteComponent.CurrentPosition > float.Epsilon && tapeRecorder.Comp.Mode != TapeRecorderMode.Rewinding)
-        {
-            args.Verbs.Add(new AlternativeVerb()
-            {
-                Text = Loc.GetString("verb-tape-recorder-rewind"),
-                Act = () =>
-                {
-                    SetMode(tapeRecorder, TapeRecorderMode.Rewinding, false);
-                },
-                Icon = tapeRecorder.Comp.RewindIcon,
-                Priority = 3
-            });
-        }
-    }
+   
 
     /// <summary>
     /// Whenever someone speaks within listening range, record it to tape

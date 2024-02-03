@@ -9,6 +9,7 @@ using Content.Shared.TapeRecorder.Components;
 using Content.Shared.TapeRecorder.Events;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -36,6 +37,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         SubscribeLocalEvent<TapeRecorderComponent, EntInsertedIntoContainerMessage>(OnCassetteInserted);
         SubscribeLocalEvent<TapeRecorderComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<TapeRecorderComponent, ExaminedEvent>(OnRecorderExamined);
+        SubscribeLocalEvent<TapeRecorderComponent, GetVerbsEvent<AlternativeVerb>>(GetAltVerbs);
 
         SubscribeLocalEvent<TapeCassetteComponent, ExaminedEvent>(OnTapeExamined);
         SubscribeLocalEvent<TapeCassetteComponent, DamageChangedEvent>(OnDamagedChanged);
@@ -69,6 +71,76 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         while (rewindingQuery.MoveNext(out var uid, out _, out var tapeRecorderComponent))
         {
             ProcessRewindingTapeRecorder((uid, tapeRecorderComponent), frameTime);
+        }
+    }
+
+    /// <summary>
+    /// Right click menu to swap mode
+    /// </summary>
+    private void GetAltVerbs(Entity<TapeRecorderComponent> tapeRecorder, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        //Dont allow mode changes when the mode is active
+        if (tapeRecorder.Comp.Active)
+            return;
+
+        //If no tape is loaded, show no options
+        var cassette = _itemSlotsSystem.GetItemOrNull(tapeRecorder, SlotName);
+        if (cassette == null)
+            return;
+
+        //Sanity check, this is a tape? right?
+        if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
+            return;
+
+        //If we have tape capacity remaining
+        if (tapeCassetteComponent.MaxCapacity.TotalSeconds > tapeCassetteComponent.CurrentPosition)
+        {
+
+            if (tapeRecorder.Comp.Mode != TapeRecorderMode.Recording)
+            {
+                args.Verbs.Add(new AlternativeVerb()
+                {
+                    Text = Loc.GetString("verb-tape-recorder-record"),
+                    Act = () =>
+                    {
+                        SetMode(tapeRecorder, TapeRecorderMode.Recording, false);
+                    },
+                    Icon = tapeRecorder.Comp.RecordIcon,
+                    Priority = 1
+                });
+            }
+
+            if (tapeRecorder.Comp.Mode != TapeRecorderMode.Playing)
+            {
+                args.Verbs.Add(new AlternativeVerb()
+                {
+                    Text = Loc.GetString("verb-tape-recorder-playback"),
+                    Act = () =>
+                    {
+                        SetMode(tapeRecorder, TapeRecorderMode.Playing, false);
+                    },
+                    Icon = tapeRecorder.Comp.PlayIcon,
+                    Priority = 2
+                });
+            }
+        }
+
+        //If there is tape to rewind and we are not already rewinding
+        if (tapeCassetteComponent.CurrentPosition > float.Epsilon && tapeRecorder.Comp.Mode != TapeRecorderMode.Rewinding)
+        {
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Text = Loc.GetString("verb-tape-recorder-rewind"),
+                Act = () =>
+                {
+                    SetMode(tapeRecorder, TapeRecorderMode.Rewinding, false);
+                },
+                Icon = tapeRecorder.Comp.RewindIcon,
+                Priority = 3
+            });
         }
     }
 
@@ -341,7 +413,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         if (component.RecordedData.Count == 0)
             return;
 
-        var index = _robustRandom.Next(0, component.RecordedData.Count-1);
+        var index = _robustRandom.Next(0, component.RecordedData.Count);
         var entryToCorrupt = component.RecordedData[index];
 
         var corruptedMessage = new StringBuilder();
@@ -350,7 +422,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
             //25% chance for each character to be corrupted
             if (_robustRandom.GetRandom().Prob(0.25))
             {
-                corruptedMessage.Append("#");
+                corruptedMessage.Append(Loc.GetString(component.CorruptionCharacter));
             }
             else
             {
@@ -358,7 +430,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
             }
         }
 
-        var corruptedEntry = new TapeCassetteRecordedMessage(entryToCorrupt.Timestamp, "Unintelligible", corruptedMessage.ToString());
+        var corruptedEntry = new TapeCassetteRecordedMessage(entryToCorrupt.Timestamp, Loc.GetString(component.Unintelligable), corruptedMessage.ToString());
         corruptedEntry.Flushed = entryToCorrupt.Flushed;
         component.RecordedData[index] = corruptedEntry;
     }
@@ -569,6 +641,6 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
             return;
 
-        Dirty(cassette.Value, tapeCassetteComponent);
+        //Dirty(cassette.Value, tapeCassetteComponent);
     }
 }

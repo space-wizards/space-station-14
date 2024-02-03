@@ -13,15 +13,13 @@ public sealed partial class TapeRecorderComponent : Component
     /// <summary>
     /// The current tape recorder mode, controls what using the item will do
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public TapeRecorderMode Mode = TapeRecorderMode.Empty;
 
     /// <summary>
     /// True when the current mode is active i.e. recording or stopped
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool Active = false;
 
     /// <summary>

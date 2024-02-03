@@ -21,3 +21,9 @@ verb-tape-recorder-record = Switch to Recording Mode
 verb-tape-recorder-playback = Switch to Playback Mode
 
 verb-tape-recorder-rewind = Switch to Rewinding Mode
+
+tape-recorder-voice-unknown = Unknown
+
+tape-recorder-voice-unintelligible = Unintelligible
+
+tape-recorder-message-corruption = #

@@ -1,6 +1,6 @@
 - files:
     - "taperecorder_play.ogg"
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken from cassette tape deck open, close +tape handling.aif on freesound.org"
   source: "https://freesound.org/people/kyles/sounds/450525/"
 
@@ -12,6 +12,6 @@
 
 - files:
     - "taperecorder_rewind.ogg"
-  license: "CC BY-NC 4.0"
+  license: "CC-BY-NC-4.0"
   copyright: "Taken from mechanical on freesound.org"
   source: "https://freesound.org/people/acclivity/sounds/23393/"

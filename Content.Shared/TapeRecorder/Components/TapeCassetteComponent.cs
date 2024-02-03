@@ -32,6 +32,12 @@ public sealed partial class TapeCassetteComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan RepairDelay = TimeSpan.FromSeconds(3);
+
+    [DataField]
+    public LocId Unintelligable = "tape-recorder-voice-unintelligible";
+
+    [DataField]
+    public LocId CorruptionCharacter = "tape-recorder-message-corruption";
 }
 
 /// <summary>

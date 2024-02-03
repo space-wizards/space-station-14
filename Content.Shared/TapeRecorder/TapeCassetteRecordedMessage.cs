@@ -16,7 +16,7 @@ public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCasset
     /// The name of the entity that spoke
     /// </summary>
     [DataField]
-    public string Name = "Unknown";
+    public LocId Name = "tape-recorder-voice-unknown";
 
     /// <summary>
     /// What was spoken
