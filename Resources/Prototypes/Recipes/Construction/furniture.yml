@@ -220,6 +220,23 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  name: comfortable blue bench
+  id: BlueComfBench
+  graph: Seat
+  startNode: start
+  targetNode: blueComfBench
+  category: construction-category-furniture
+  description: A bench with an extremely comfortable backrest.
+  icon:
+    sprite: Structures/Furniture/Bench/comf_bench.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #tables
 - type: construction
   name: steel table
