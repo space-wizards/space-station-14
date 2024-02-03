@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Chaplains can smack their bible on water to create holy water.
-    type: Add
-  id: 5369
-  time: '2023-12-15T09:52:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Added the electrolysis unit and the centrifuge. These will be used for
@@ -3870,3 +3864,11 @@
   id: 5868
   time: '2024-02-02T12:39:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24749
+- author: Anzarot121
+  changes:
+  - message: Fixed a problem in the code due to which mobs, including hamsters, slimes,
+      spiders, xenos, could not pull things.
+    type: Fix
+  id: 5869
+  time: '2024-02-03T01:25:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22485
