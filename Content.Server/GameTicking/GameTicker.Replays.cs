@@ -125,6 +125,7 @@ public sealed partial class GameTicker
             string finalPlayers = SerializeToYaml(_replayRoundPlayerInfo);
             metadata["roundEndPlayers"] = new ValueDataNode(finalPlayers);
             metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
+            metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
             _replayRoundPlayerInfo = null;
             _replayRoundText = null;
         }
