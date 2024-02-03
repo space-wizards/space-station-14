@@ -68,13 +68,13 @@ public record struct CyborgControlData
     /// <summary>
     /// Chassis prototype of the borg.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public EntProtoId Chassis;
 
     /// <summary>
     /// Name of the borg's entity, including its silicon id.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public string Name;
 
     /// <summary>
