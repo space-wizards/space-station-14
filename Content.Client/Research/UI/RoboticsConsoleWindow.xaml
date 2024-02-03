@@ -37,7 +37,7 @@
             <controls:StripeBack Name="DangerZone" Visible="False">
                 <BoxContainer Margin="5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center">
                     <Button Name="DisableButton" Text="{Loc 'robotics-console-disable'}"/>
-                    <Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="ButtonCaution"/>
+                    <Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="Caution"/>
                 </BoxContainer>
             </controls:StripeBack>
         </BoxContainer>
