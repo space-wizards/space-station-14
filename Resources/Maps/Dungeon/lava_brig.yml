@@ -12290,7 +12290,7 @@ entities:
     - type: Transform
       pos: 21.5,12.5
       parent: 588
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 801
     components:

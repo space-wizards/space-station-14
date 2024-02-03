@@ -51189,7 +51189,7 @@ entities:
     - type: Transform
       pos: -45.5,-8.5
       parent: 30
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 7273
     components:

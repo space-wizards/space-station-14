@@ -151600,7 +151600,7 @@ entities:
     - type: Transform
       pos: -10.5,-14.5
       parent: 60
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 1195
     components:

@@ -82622,7 +82622,7 @@ entities:
     - type: Transform
       pos: 46.5,-19.5
       parent: 2
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 4277
     components:

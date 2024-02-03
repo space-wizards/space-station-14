@@ -70127,7 +70127,7 @@ entities:
     - type: Transform
       pos: 39.5,-13.5
       parent: 31
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 4897
     components:

@@ -80972,7 +80972,7 @@ entities:
     - type: Transform
       pos: -28.5,14.5
       parent: 1
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 6009
     components:

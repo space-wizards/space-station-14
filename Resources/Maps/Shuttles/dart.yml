@@ -6663,7 +6663,7 @@ entities:
     - type: Transform
       pos: -6.5,-20.5
       parent: 1
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 335
     components:
@@ -6701,7 +6701,7 @@ entities:
     - type: Transform
       pos: 2.464967,-12.427811
       parent: 1
-- proto: WeldingFuelTankHighCapacityFull
+- proto: WeldingFuelTankHighCapacityFullFull
   entities:
   - uid: 767
     components:
