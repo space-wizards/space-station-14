@@ -49,7 +49,7 @@ public sealed class RoboticsConsoleSystem : EntitySystem
 
         var now = _timing.CurTime;
         var query = EntityQueryEnumerator<RoboticsConsoleComponent>();
-        while (query.MoveNext(out var comp))
+        while (query.MoveNext(out var uid, out var comp))
         {
             // remove cyborgs that havent pinged in a while
             _removing.Clear();
@@ -64,6 +64,9 @@ public sealed class RoboticsConsoleSystem : EntitySystem
             {
                 comp.Cyborgs.Remove(address);
             }
+
+            if (_removing.Count > 0)
+                UpdateUserInterface((uid, comp));
         }
     }
 
