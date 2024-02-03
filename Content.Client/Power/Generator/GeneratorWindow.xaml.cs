@@ -135,6 +135,14 @@ public sealed partial class GeneratorWindow : FancyWindow
 
     private bool TryGetStartProgress(out float progress)
     {
+        // Try to check progress of auto-revving first
+        if (_entityManager.TryGetComponent<ActiveGeneratorRevvingComponent>(_entity, out var activeGeneratorRevvingComponent) && _entityManager.TryGetComponent<PortableGeneratorComponent>(_entity, out var portableGeneratorComponent))
+        {
+            var calculatedProgress = activeGeneratorRevvingComponent.CurrentTime / portableGeneratorComponent.StartTime;
+            progress = (float) calculatedProgress;
+            return true;
+        }
+
         var doAfterSystem = _entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
         return doAfterSystem.TryFindActiveDoAfter<GeneratorStartedEvent>(_entity, out _, out _, out progress);
     }
