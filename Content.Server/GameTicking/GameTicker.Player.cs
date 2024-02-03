@@ -85,8 +85,8 @@ namespace Content.Server.GameTicking
                     if (mind == null)
                     {
                         // try to load persistence saved mind for this player when joining
-                        var query = EntityManager.AllEntityQuery<MindComponent>(true);
-                        foreach (var mindComp in query)
+                        var query = EntityManager.AllEntityQueryEnumerator<MindComponent>(true);
+                        while (query.MoveNext(out var mindComp))
                         {
                             if (mindComp.UserId == session.UserId)
                             {

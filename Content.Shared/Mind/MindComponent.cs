@@ -61,7 +61,7 @@ namespace Content.Shared.Mind
         [ViewVariables]
         public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
-        [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField, AutoNetworkedField]
         public string? CharacterName;
 
         /// <summary>
@@ -70,13 +70,6 @@ namespace Content.Shared.Mind
         /// </summary>
         [DataField]
         public TimeSpan? TimeOfDeath;
-
-        /// <summary>
-        ///     The container component currently owned by this mind.
-        ///     Can be null.
-        /// </summary>
-        [ViewVariables]
-        public MindContainerComponent? OwnedComponent { get; internal set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
@@ -94,13 +87,13 @@ namespace Content.Shared.Mind
         /// <summary>
         ///     Prevents user from ghosting out
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool PreventGhosting;
 
         /// <summary>
         ///     Prevents user from suiciding
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool PreventSuicide;
 
         /// <summary>
