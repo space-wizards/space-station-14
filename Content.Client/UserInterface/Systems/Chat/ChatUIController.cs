@@ -64,6 +64,7 @@ public sealed class ChatUIController : UIController
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
+    private bool _chatNameColorsEnabled;
 
     private ISawmill _sawmill = default!;
 
@@ -178,6 +179,8 @@ public sealed class ChatUIController : UIController
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
         _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
+        _cfg.OnValueChanged(CCVars.ChatEnableColorName, (value) => { _chatNameColorsEnabled = value; });
+        _chatNameColorsEnabled = _cfg.GetCVar(CCVars.ChatEnableColorName);
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -775,7 +778,7 @@ public sealed class ChatUIController : UIController
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
         // color the name unless it's something like "the old man"
-        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _cfg.GetCVar(CCVars.ChatEnableColorName))
+        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
             if (grammar != null && grammar.ProperNoun == true)
