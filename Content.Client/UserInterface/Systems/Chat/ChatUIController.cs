@@ -62,7 +62,7 @@ public sealed class ChatUIController : UIController
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
-    private const string _chatNamePalette = "Material";
+    private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
 
     private ISawmill _sawmill = default!;
@@ -223,7 +223,7 @@ public sealed class ChatUIController : UIController
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
 
-        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(_chatNamePalette).Colors.Values.ToArray();
+        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(ChatNamePalette).Colors.Values.ToArray();
         _chatNameColors = new string[nameColors.Length];
         for (var i = 0; i < nameColors.Length; i++)
         {

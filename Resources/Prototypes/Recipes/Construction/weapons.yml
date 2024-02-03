@@ -39,7 +39,7 @@
   targetNode: spear
   category: construction-category-weapons
   description: A crude uranium spear for when you need to put holes in somebody.
-  icon: { sprite: Objects/Weapons/Melee/plasma_spear.rsi, state: spear }
+  icon: { sprite: Objects/Weapons/Melee/uranium_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction

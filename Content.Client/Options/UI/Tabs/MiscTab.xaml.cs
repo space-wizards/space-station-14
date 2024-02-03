@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Options.UI.Tabs
 {
@@ -64,6 +65,7 @@ namespace Content.Client.Options.UI.Tabs
             FancyNameBackgroundsCheckBox.OnToggled += OnCheckBoxToggled;
             EnableColorNameCheckBox.OnToggled += OnCheckBoxToggled;
             ReducedMotionCheckBox.OnToggled += OnCheckBoxToggled;
+            ScreenShakeIntensitySlider.OnValueChanged += OnScreenShakeIntensitySliderChanged;
             // ToggleWalk.OnToggled += OnCheckBoxToggled;
             StaticStorageUI.OnToggled += OnCheckBoxToggled;
 
@@ -76,6 +78,8 @@ namespace Content.Client.Options.UI.Tabs
             FancySpeechBubblesCheckBox.Pressed = _cfg.GetCVar(CCVars.ChatEnableFancyBubbles);
             FancyNameBackgroundsCheckBox.Pressed = _cfg.GetCVar(CCVars.ChatFancyNameBackground);
             EnableColorNameCheckBox.Pressed = _cfg.GetCVar(CCVars.ChatEnableColorName);
+            ReducedMotionCheckBox.Pressed = _cfg.GetCVar(CCVars.ReducedMotion);
+            ScreenShakeIntensitySlider.Value = _cfg.GetCVar(CCVars.ScreenShakeIntensity) * 100f;
             // ToggleWalk.Pressed = _cfg.GetCVar(CCVars.ToggleWalk);
             StaticStorageUI.Pressed = _cfg.GetCVar(CCVars.StaticStorageUI);
 
@@ -92,6 +96,12 @@ namespace Content.Client.Options.UI.Tabs
         private void OnHudThemeChanged(OptionButton.ItemSelectedEventArgs args)
         {
             HudThemeOption.SelectId(args.Id);
+            UpdateApplyButton();
+        }
+
+        private void OnScreenShakeIntensitySliderChanged(Range obj)
+        {
+            ScreenShakeIntensityLabel.Text = Loc.GetString("ui-options-screen-shake-percent", ("intensity", ScreenShakeIntensitySlider.Value / 100f));
             UpdateApplyButton();
         }
 
@@ -114,6 +124,7 @@ namespace Content.Client.Options.UI.Tabs
             _cfg.SetCVar(CCVars.ChatFancyNameBackground, FancyNameBackgroundsCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ChatEnableColorName, EnableColorNameCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ReducedMotion, ReducedMotionCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.ScreenShakeIntensity, ScreenShakeIntensitySlider.Value / 100f);
             // _cfg.SetCVar(CCVars.ToggleWalk, ToggleWalk.Pressed);
             _cfg.SetCVar(CCVars.StaticStorageUI, StaticStorageUI.Pressed);
 
@@ -139,6 +150,7 @@ namespace Content.Client.Options.UI.Tabs
             var isFancyBackgroundSame = FancyNameBackgroundsCheckBox.Pressed == _cfg.GetCVar(CCVars.ChatFancyNameBackground);
             var isEnableColorNameSame = EnableColorNameCheckBox.Pressed == _cfg.GetCVar(CCVars.ChatEnableColorName);
             var isReducedMotionSame = ReducedMotionCheckBox.Pressed == _cfg.GetCVar(CCVars.ReducedMotion);
+            var isScreenShakeIntensitySame = Math.Abs(ScreenShakeIntensitySlider.Value / 100f - _cfg.GetCVar(CCVars.ScreenShakeIntensity)) < 0.01f;
             // var isToggleWalkSame = ToggleWalk.Pressed == _cfg.GetCVar(CCVars.ToggleWalk);
             var isStaticStorageUISame = StaticStorageUI.Pressed == _cfg.GetCVar(CCVars.StaticStorageUI);
 
@@ -153,6 +165,7 @@ namespace Content.Client.Options.UI.Tabs
                                    isFancyBackgroundSame &&
                                    isEnableColorNameSame &&
                                    isReducedMotionSame &&
+                                   isScreenShakeIntensitySame &&
                                    // isToggleWalkSame &&
                                    isStaticStorageUISame;
         }

@@ -198,6 +198,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!ResolveStorage(uid, ref component))
             return;
 
+        if (component.Open)
+            return;
+
         var beforeev = new StorageBeforeOpenEvent();
         RaiseLocalEvent(uid, ref beforeev);
         component.Open = true;
@@ -214,6 +217,16 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     public void CloseStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
         if (!ResolveStorage(uid, ref component))
+            return;
+
+        if (!component.Open)
+            return;
+
+        // Prevent the container from closing if it is queued for deletion. This is so that the container-emptying
+        // behaviour of DestructionEventArgs is respected. This exists because malicious players were using
+        // destructible boxes to delete entities by having two players simultaneously destroy and close the box in
+        // the same tick.
+        if (EntityManager.IsQueuedForDeletion(uid))
             return;
 
         component.Open = false;
