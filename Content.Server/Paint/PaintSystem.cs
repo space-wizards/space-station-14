@@ -16,6 +16,7 @@ public sealed class PaintSystem : SharedPaintSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -24,7 +25,6 @@ public sealed class PaintSystem : SharedPaintSystem
         SubscribeLocalEvent<PaintComponent, AfterInteractEvent>(OnInteract);
     }
 
-    // When paint is used on an entity it will apply the color to the entity provided TryPaint returns true.
     private void OnInteract(Entity<PaintComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled)
@@ -36,61 +36,42 @@ public sealed class PaintSystem : SharedPaintSystem
         if (!TryComp(args.Used, out PaintComponent? component))
             return;
 
-        if (TryPaint(entity, target, args.User, args.Used))
+        if (TryPaint(entity, target))
         {
+            EnsureComp<PaintedComponent>(target, out PaintedComponent? paint);
+            EnsureComp<AppearanceComponent>(target);
 
-            if (HasComp<AppearanceComponent>(target))
-                RemComp<AppearanceComponent>(target);
-
-            EnsureComp<PaintedComponent>(target);
-            AddComp<AppearanceComponent>(target);
-
-            if (!TryComp(target, out PaintedComponent? paint))
-                return;
-            else
-            {
-                paint.Color = component.Color; // set the target color to the color specified in the spray paint yml.
-                _audio.PlayPvs(component.Spray, args.Used);
-                paint.Enabled = true;
-                UpdateAppearance(target, paint);
-                Dirty(target, paint);
-                args.Handled = true;
-                return;
-            }
+            paint.Color = component.Color; // set the target color to the color specified in the spray paint yml.
+            _audio.PlayPvs(component.Spray, args.Used);
+            paint.Enabled = true;
+            _popup.PopupEntity(Loc.GetString("paint-success", ("target", target)), args.User, args.User, PopupType.Medium);
+            _appearanceSystem.SetData(target, PaintVisuals.Painted, true);
+            Dirty(target, paint);
+            args.Handled = true;
+            return;
         }
 
-        if (!TryPaint(entity, target, args.User, args.Used))
-            return;
+        if (!TryPaint(entity, target))
+            _popup.PopupEntity(Loc.GetString("paint-failure", ("target", target)), args.User, args.User, PopupType.Medium);
+        return;
     }
 
-    private bool TryPaint(Entity<PaintComponent> reagent, EntityUid target, EntityUid actor, EntityUid used)
+    private bool TryPaint(Entity<PaintComponent> reagent, EntityUid target)
     {
         if (HasComp<PaintedComponent>(target))
-        {
-            _popup.PopupEntity(Loc.GetString("paint-failure-painted", ("target", target)), actor, actor, PopupType.Medium);
             return false;
-        }
 
-        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target) || HasComp<NoPaintShaderComponent>(target))
-        {
-            _popup.PopupEntity(Loc.GetString("paint-failure", ("target", target)), actor, actor, PopupType.Medium);
+        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target) || HasComp<NoPaintShaderComponent>(target) )
             return false;
-        }
 
         if (_solutionContainer.TryGetSolution(reagent.Owner, reagent.Comp.Solution, out _, out var solution))
         {
             var quantity = solution.RemoveReagent(reagent.Comp.Reagent, reagent.Comp.ConsumptionUnit);
             if (quantity > 0)// checks quantity of solution is more than 0.
-            {
-                _popup.PopupEntity(Loc.GetString("paint-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
-            }
 
             if (quantity < 1)
-            {
-                _popup.PopupEntity(Loc.GetString("paint-empty", ("used", used)), actor, actor, PopupType.Medium);
                 return false;
-            }
         }
         return false;
     }

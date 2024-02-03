@@ -12,6 +12,8 @@ namespace Content.Client.Paint
         /// <summary>
         /// Visualizer for Paint which applies a shader and colors the entity.
         /// </summary>
+
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -27,10 +29,12 @@ namespace Content.Client.Paint
             if (args.Sprite == null)
                 return;
 
-            if (!TryComp(uid, out SpriteComponent? sprite))
+            if (!_appearance.TryGetData<bool>(uid, PaintVisuals.Painted, out bool isPainted))
                 return;
 
-            for (var layer = 0; layer < args.Sprite.AllLayers.Count(); ++layer)
+            var sprite = args.Sprite;
+
+            for (var layer = 0; layer < sprite.AllLayers.Count(); ++layer)
             {
                 sprite.LayerSetColor(layer, component.Color);
                 sprite.LayerSetShader(layer, component.ShaderName);

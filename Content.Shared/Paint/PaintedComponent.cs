@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Paint;
 
@@ -33,3 +34,8 @@ public sealed partial class PaintedComponent : Component
     public string ShaderName = "Greyscale";
 }
 
+[Serializable, NetSerializable]
+public enum PaintVisuals : byte
+{
+    Painted,
+}

@@ -15,6 +15,7 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -54,14 +55,14 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
         if (!TryComp(target, out PaintedComponent? paint))
             return;
 
-        if (_timing.IsFirstTimePredicted)
-        {
-            paint.Enabled = false;
-            _audio.PlayPvs(component.Sound, target);
-            _popup.PopupClient(Loc.GetString("you clean off the paint", ("target", target)), args.User, args.User, PopupType.Medium);
-            RemComp<PaintedComponent>(target);
-            Dirty(target, paint);
-        }
+
+        paint.Enabled = false;
+        _audio.PlayPredicted(component.Sound, target, args.User);
+        _popup.PopupClient(Loc.GetString("you clean off the paint", ("target", target)), args.User, args.User, PopupType.Medium);
+        _appearanceSystem.SetData(target, PaintVisuals.Painted, false);
+        RemComp<PaintedComponent>(target);
+        Dirty(target, paint);
+
         args.Handled = true;
     }
 }
