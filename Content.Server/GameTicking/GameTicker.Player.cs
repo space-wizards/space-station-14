@@ -85,11 +85,9 @@ namespace Content.Server.GameTicking
                     if (mind == null)
                     {
                         // try to load persistence saved mind for this player when joining
-                        var query = EntityManager.EntityQuery<MindComponent>(true);
-                        Log.Debug($"Looking for {session.UserId}");
+                        var query = EntityManager.AllEntityQuery<MindComponent>(true);
                         foreach (var mindComp in query)
                         {
-                            Log.Debug($"Found {mindComp.UserId}");
                             if (mindComp.UserId == session.UserId)
                             {
                                 // found a mind, later it will take over its entity
