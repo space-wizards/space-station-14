@@ -1,16 +1,15 @@
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
-using Content.Shared.CCVar;
+using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Utility;
 
 namespace Content.Client.GameTicking.Managers
@@ -30,7 +29,7 @@ namespace Content.Client.GameTicking.Managers
         /// <summary>
         /// The current round-end window. Could be used to support re-opening the window after closing it.
         /// </summary>
-        private RoundEndSummaryWindow? _window;
+        public RoundEndSummaryWindow? RoundEndSummaryWindow { get; private set; }
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -155,11 +154,34 @@ namespace Content.Client.GameTicking.Managers
             RestartSound = message.RestartSound;
 
             // Don't open duplicate windows (mainly for replays).
-            if (_window?.RoundId == message.RoundId)
+            if (RoundEndSummaryWindow?.RoundId == message.RoundId)
                 return;
 
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+            RoundEndSummaryWindow = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+        }
+    }
+
+    [UsedImplicitly, AnyCommand]
+    public sealed class ChangelogCommand : IConsoleCommand
+    {
+        public string Command => "roundendsummary";
+        public string Description => "Opens the round end summary window";
+        public string Help => $"Usage: {Command}";
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            var entitySystem = IoCManager.Resolve<IEntitySystemManager>();
+            var clientGameTicker = entitySystem.GetEntitySystem<ClientGameTicker>();
+            var window = clientGameTicker.RoundEndSummaryWindow;
+            if (window == null)
+            {
+                shell.WriteLine(Loc.GetString("round-end-summary-command-no-window"));
+                return;
+            }
+
+            window.OpenCenteredRight();
+            window.MoveToFront();
         }
     }
 }
