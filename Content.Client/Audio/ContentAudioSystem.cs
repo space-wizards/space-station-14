@@ -50,24 +50,15 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         _fadingOut.Clear();
 
         // Preserve lobby music but everything else should get dumped.
-        var lobbyMusic = EntityManager.System<BackgroundAudioSystem>().LobbyMusicStream;
-        TryComp(lobbyMusic, out AudioComponent? lobbyMusicComp);
-        var oldMusicGain = lobbyMusicComp?.Gain;
-
-        var restartAudio = EntityManager.System<BackgroundAudioSystem>().LobbyRoundRestartAudioStream;
-        TryComp(restartAudio, out AudioComponent? restartComp);
-        var oldAudioGain = restartComp?.Gain;
+        var lobbyStream = EntityManager.System<BackgroundAudioSystem>().LobbyStream;
+        TryComp(lobbyStream, out AudioComponent? audioComp);
+        var oldGain = audioComp?.Gain;
 
         SilenceAudio();
 
-        if (oldMusicGain != null)
+        if (oldGain != null)
         {
-            Audio.SetGain(lobbyMusic, oldMusicGain.Value, lobbyMusicComp);
-        }
-
-        if (oldAudioGain != null)
-        {
-            Audio.SetGain(restartAudio, oldAudioGain.Value, restartComp);
+            Audio.SetGain(lobbyStream, oldGain.Value, audioComp);
         }
     }
 

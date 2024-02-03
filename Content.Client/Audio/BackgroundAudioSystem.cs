@@ -26,8 +26,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
-    public EntityUid? LobbyMusicStream;
-    public EntityUid? LobbyRoundRestartAudioStream;
+    public EntityUid? LobbyStream;
 
     public override void Initialize()
     {
@@ -116,7 +115,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     public void StartLobbyMusic()
     {
-        if (LobbyMusicStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+        if (LobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
             return;
 
         var file = _gameTicker.LobbySong;
@@ -125,16 +124,13 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         }
 
-        LobbyMusicStream = _audio.PlayGlobal(
-            file,
-            Filter.Local(),
-            false,
+        LobbyStream = _audio.PlayGlobal(file, Filter.Local(), false,
             _lobbyParams.WithVolume(_lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume))))?.Entity;
     }
 
     private void EndLobbyMusic()
     {
-        LobbyMusicStream = _audio.Stop(LobbyMusicStream);
+        LobbyStream = _audio.Stop(LobbyStream);
     }
 
     private void PlayRestartSound(RoundRestartCleanupEvent ev)
@@ -148,11 +144,10 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         }
 
-        LobbyRoundRestartAudioStream = _audio.PlayGlobal(
-            file,
-            Filter.Local(),
-            false,
-            _lobbyParams.WithVolume(_lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
-        )?.Entity;
+        var volume = _lobbyParams.WithVolume(_lobbyParams.Volume +
+                                             SharedAudioSystem.GainToVolume(
+                                                 _configManager.GetCVar(CCVars.LobbyMusicVolume)));
+
+        _audio.PlayGlobal(file, Filter.Local(), false, volume);
     }
 }
