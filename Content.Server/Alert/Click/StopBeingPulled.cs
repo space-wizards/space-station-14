@@ -1,7 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Systems;
+using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling;
 using JetBrains.Annotations;
 
 namespace Content.Server.Alert.Click
@@ -20,9 +20,9 @@ namespace Content.Server.Alert.Click
             if (!entityManager.System<ActionBlockerSystem>().CanInteract(player, null))
                 return;
 
-            if (entityManager.TryGetComponent(player, out PullableComponent? playerPullable))
+            if (entityManager.TryGetComponent(player, out SharedPullableComponent? playerPullable))
             {
-                entityManager.System<PullingSystem>().TryStopPull(player, playerPullable, user: player);
+                entityManager.System<SharedPullingSystem>().TryStopPull(playerPullable);
             }
         }
     }
