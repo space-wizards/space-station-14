@@ -2,11 +2,13 @@ using System.Linq;
 using Content.Shared.Disposal;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -14,6 +16,7 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public sealed class DumpableSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -113,7 +116,20 @@ public sealed class DumpableSystem : EntitySystem
         if (!TryComp<StorageComponent>(storageUid, out var storage))
             return;
 
-        var delay = storage.Container.ContainedEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
+        var delay = 0f;
+
+        foreach (var entity in storage.Container.ContainedEntities)
+        {
+            if (!TryComp<ItemComponent>(entity, out var itemComp) ||
+                !_prototypeManager.TryIndex(itemComp.Size, out var itemSize))
+            {
+                continue;
+            }
+
+            delay += itemSize.Weight;
+        }
+
+        delay *= (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
