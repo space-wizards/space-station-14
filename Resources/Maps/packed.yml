@@ -7414,11 +7414,31 @@ entities:
     - type: Transform
       pos: 37.5,-39.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 4391
+    - type: DeviceLinkSource
+      linkedPorts:
+        4391:
+        - DoorStatus: DoorBolt
   - uid: 4391
     components:
     - type: Transform
       pos: 35.5,-37.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 4385
+      - 4390
+      - 4392
+    - type: DeviceLinkSource
+      linkedPorts:
+        4385:
+        - DoorStatus: DoorBolt
+        4390:
+        - DoorStatus: DoorBolt
+        4392:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalEngineeringLocked
   entities:
   - uid: 69
@@ -7426,21 +7446,49 @@ entities:
     - type: Transform
       pos: 11.5,37.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 70
+    - type: DeviceLinkSource
+      linkedPorts:
+        70:
+        - DoorStatus: DoorBolt
   - uid: 70
     components:
     - type: Transform
       pos: 11.5,35.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 69
+    - type: DeviceLinkSource
+      linkedPorts:
+        69:
+        - DoorStatus: DoorBolt
   - uid: 171
     components:
     - type: Transform
       pos: 15.5,-41.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 173
+    - type: DeviceLinkSource
+      linkedPorts:
+        173:
+        - DoorStatus: DoorBolt
   - uid: 173
     components:
     - type: Transform
       pos: 13.5,-43.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 171
+    - type: DeviceLinkSource
+      linkedPorts:
+        171:
+        - DoorStatus: DoorBolt
   - uid: 225
     components:
     - type: Transform
@@ -7456,31 +7504,73 @@ entities:
     - type: Transform
       pos: 74.5,45.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 2128
+    - type: DeviceLinkSource
+      linkedPorts:
+        2128:
+        - DoorStatus: DoorBolt
   - uid: 2128
     components:
     - type: Transform
       pos: 72.5,45.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 1902
+    - type: DeviceLinkSource
+      linkedPorts:
+        1902:
+        - DoorStatus: DoorBolt
   - uid: 4385
     components:
     - type: Transform
       pos: 33.5,-39.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 4391
+    - type: DeviceLinkSource
+      linkedPorts:
+        4391:
+        - DoorStatus: DoorBolt
   - uid: 4392
     components:
     - type: Transform
       pos: 35.5,-41.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 4391
+    - type: DeviceLinkSource
+      linkedPorts:
+        4391:
+        - DoorStatus: DoorBolt
   - uid: 12931
     components:
     - type: Transform
       pos: 33.5,-47.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 12932
+    - type: DeviceLinkSource
+      linkedPorts:
+        12932:
+        - DoorStatus: DoorBolt
   - uid: 12932
     components:
     - type: Transform
       pos: 32.5,-49.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 12931
+    - type: DeviceLinkSource
+      linkedPorts:
+        12931:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassCargoLocked
   entities:
   - uid: 258
@@ -7498,21 +7588,61 @@ entities:
     - type: Transform
       pos: 6.5,16.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 7881
+      - 7886
+    - type: DeviceLinkSource
+      linkedPorts:
+        7886:
+        - DoorStatus: DoorBolt
+        7881:
+        - DoorStatus: DoorBolt
   - uid: 7674
     components:
     - type: Transform
       pos: 6.5,17.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 7881
+      - 7886
+    - type: DeviceLinkSource
+      linkedPorts:
+        7886:
+        - DoorStatus: DoorBolt
+        7881:
+        - DoorStatus: DoorBolt
   - uid: 7881
     components:
     - type: Transform
       pos: 4.5,17.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 7674
+      - 6863
+    - type: DeviceLinkSource
+      linkedPorts:
+        7674:
+        - DoorStatus: DoorBolt
+        6863:
+        - DoorStatus: DoorBolt
   - uid: 7886
     components:
     - type: Transform
       pos: 4.5,16.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 7674
+      - 6863
+    - type: DeviceLinkSource
+      linkedPorts:
+        7674:
+        - DoorStatus: DoorBolt
+        6863:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 2734
@@ -7520,11 +7650,25 @@ entities:
     - type: Transform
       pos: -5.5,-18.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 6839
+    - type: DeviceLinkSource
+      linkedPorts:
+        6839:
+        - DoorStatus: DoorBolt
   - uid: 6839
     components:
     - type: Transform
       pos: -5.5,-15.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 2734
+    - type: DeviceLinkSource
+      linkedPorts:
+        2734:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassShuttleArrivals
   entities:
   - uid: 1332
@@ -7568,11 +7712,25 @@ entities:
     - type: Transform
       pos: 1.5,-35.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 1370
+    - type: DeviceLinkSource
+      linkedPorts:
+        1370:
+        - DoorStatus: DoorBolt
   - uid: 1370
     components:
     - type: Transform
       pos: -0.5,-35.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 1369
+    - type: DeviceLinkSource
+      linkedPorts:
+        1369:
+        - DoorStatus: DoorBolt
   - uid: 3202
     components:
     - type: Transform
@@ -7583,11 +7741,25 @@ entities:
     - type: Transform
       pos: 87.5,-20.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 10751
+    - type: DeviceLinkSource
+      linkedPorts:
+        10751:
+        - DoorStatus: DoorBolt
   - uid: 10751
     components:
     - type: Transform
       pos: 84.5,-20.5
       parent: 2
+    - type: DeviceLinkSink
+      links:
+      - 8728
+    - type: DeviceLinkSource
+      linkedPorts:
+        8728:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalShuttleLocked
   entities:
   - uid: 2167
@@ -9416,6 +9588,11 @@ entities:
     - type: Transform
       pos: -4.5,2.5
       parent: 2
+  - uid: 4300
+    components:
+    - type: Transform
+      pos: 56.5,51.5
+      parent: 2
   - uid: 6591
     components:
     - type: Transform
@@ -9425,6 +9602,11 @@ entities:
     components:
     - type: Transform
       pos: 28.5,-10.5
+      parent: 2
+  - uid: 6871
+    components:
+    - type: Transform
+      pos: 87.5,4.5
       parent: 2
   - uid: 12295
     components:
@@ -34351,13 +34533,6 @@ entities:
     - type: Transform
       pos: 67.5,-5.5
       parent: 2
-- proto: CrateFunATV
-  entities:
-  - uid: 9478
-    components:
-    - type: Transform
-      pos: 7.5,31.5
-      parent: 2
 - proto: CrateGenericSteel
   entities:
   - uid: 3720
@@ -40538,7 +40713,7 @@ entities:
     - type: Transform
       pos: 107.3062,-11.344688
       parent: 2
-- proto: FoodBoxDonkpocketGondola
+- proto: FoodBoxDonkpocketPizza
   entities:
   - uid: 8861
     components:
@@ -68770,20 +68945,6 @@ entities:
     - type: Transform
       pos: 39.5,23.5
       parent: 2
-- proto: SpawnVehicleJanicart
-  entities:
-  - uid: 12910
-    components:
-    - type: Transform
-      pos: 6.5,-5.5
-      parent: 2
-- proto: SpawnVehicleSecway
-  entities:
-  - uid: 8446
-    components:
-    - type: Transform
-      pos: 36.5,21.5
-      parent: 2
 - proto: SprayBottle
   entities:
   - uid: 5393
@@ -72317,20 +72478,6 @@ entities:
     components:
     - type: Transform
       pos: 81.5,-7.5
-      parent: 2
-- proto: VehicleKeyJanicart
-  entities:
-  - uid: 4300
-    components:
-    - type: Transform
-      pos: 6.513515,-4.4061713
-      parent: 2
-- proto: VehicleKeySecway
-  entities:
-  - uid: 8447
-    components:
-    - type: Transform
-      pos: 36.51057,20.60821
       parent: 2
 - proto: VendingBarDrobe
   entities:
