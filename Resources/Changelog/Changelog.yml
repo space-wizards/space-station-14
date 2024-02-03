@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MendaxxDev
-  changes:
-  - message: The flare gun now explodes, damages and stuns the player when used with
-      wrong ammo
-    type: Tweak
-  id: 5374
-  time: '2023-12-15T09:57:59.0000000+00:00'
 - author: TheShuEd
   changes:
   - message: 'Added 2 new artifact effect: attraction and repulsion'
@@ -3868,3 +3861,12 @@
   id: 5873
   time: '2024-02-03T02:12:38.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24735
+- author: Jajsha
+  changes:
+  - message: Emagged Cyborgs are no longer affected by Ion Storm events.
+    type: Fix
+  - message: Improved wording of cyborg laws.
+    type: Tweak
+  id: 5874
+  time: '2024-02-03T02:29:41.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24870
