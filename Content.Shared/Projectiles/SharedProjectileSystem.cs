@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Buckle;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -30,7 +29,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
 
     public override void Initialize()
     {
@@ -214,7 +212,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     {
         if (TryComp<TargetedProjectileComponent>(uid, out var targeted) &&
             args.OtherEntity != targeted.Target &&
-            !_buckle.IsBuckled(args.OtherEntity) &&
             _standing.IsDown(args.OtherEntity))
         {
             args.Cancelled = true;
