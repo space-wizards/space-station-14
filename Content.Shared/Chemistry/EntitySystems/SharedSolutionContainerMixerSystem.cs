@@ -102,6 +102,8 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
                 continue;
 
             _solution.UpdateChemicals(soln.Value, true, reactionMixer);
+            if(comp.CanSeparate)
+                soln.Value.Comp.Solution.IsSeparatedByLayers = true;
         }
     }
 

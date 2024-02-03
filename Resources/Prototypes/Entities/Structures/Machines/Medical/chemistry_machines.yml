@@ -86,6 +86,7 @@
   components:
   - type: SolutionContainerMixer
     mixDuration: 10
+    canSeparate: true
     mixingSound:
       path: /Audio/Machines/spinning.ogg
       params:
