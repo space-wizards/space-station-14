@@ -206,6 +206,8 @@
     - DoorBumpOpener
     - CanPilot
   - type: Emoting
+  - type: Magboots
+    toggleAction: ActionToggleMagbootsSci
   - type: GuideHelp
     guides:
       - Cyborgs
