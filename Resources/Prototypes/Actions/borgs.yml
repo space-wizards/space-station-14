@@ -13,7 +13,7 @@
     useDelay: 0.5
 
 - type: entity
-  id: ActionToggleMagbootsSci
+  id: ActionToggleMagbootsBorg
   parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
