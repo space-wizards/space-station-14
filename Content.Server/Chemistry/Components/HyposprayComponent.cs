@@ -8,30 +8,37 @@ namespace Content.Server.Chemistry.Components
     public sealed partial class HyposprayComponent : SharedHyposprayComponent
     {
         // TODO: This should be on clumsycomponent.
-        [DataField("clumsyFailChance")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ClumsyFailChance = 0.5f;
 
-        [DataField("transferAmount")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
-        [DataField("injectSound")]
+        [DataField]
         public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
-
-        [DataField]
-        public float BaseDelay = 3f;
-        [DataField]
-        public float DelayPerUnit = 0.1f;
-        [DataField]
-        public float CritDelayReduction = 3f;
-        [DataField]
-        public float CombatDelayPenalty = 3f;
 
         /// <summary>
         /// Whether or not the hypo is able to inject only into mobs. On false you can inject into beakers/jugs
         /// </summary>
-        [DataField("onlyMobs")]
+        [DataField]
         public bool OnlyMobs = true;
+
+        /// <summary>
+        /// If true, hypo will initiate a DoAfter before injecting
+        /// </summary>
+
+        [DataField]
+        public bool HasInjectionDelay = false;
+
+        [DataField]
+        public float BaseDelay = 4f;
+
+        [DataField]
+        public float CritDelay = 1f;
+
+        [DataField]
+        public float CombatDelay = 8f;
     }
 }

@@ -92,21 +92,27 @@ namespace Content.Server.Chemistry.EntitySystems
         private void BeforeInjectionDoAfter(Entity<HyposprayComponent> entity, EntityUid user, EntityUid target)
         {
             var comp = entity.Comp;
-            var delay = comp.BaseDelay + comp.DelayPerUnit * (float) comp.TransferAmount;
+            var delay = comp.BaseDelay;
             var userName = Identity.Name(user, _entMan);
             var targetName = Identity.Name(target, _entMan);
 
-            _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-inject-target-message", ("user", userName)), target, Shared.Popups.PopupType.MediumCaution);
-
-            // The delay varies depending on the amount you are trying to inject and the state of the player.
-            // In general, it's faster than a syringe in emergency cases, and slower in combat situations.
-            if (_mobState.IsCritical(target))
-                delay -= comp.CritDelayReduction;
+            // The delay varies depending on the state of the player.
+            if (_mobState.IsIncapacitated(target))
+            {
+                delay = comp.CritDelay;
+                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-inject-user-message"), user, Shared.Popups.PopupType.Small);
+                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-inject-target-message", ("user", userName)), target, Shared.Popups.PopupType.SmallCaution);
+            }
             else if (_combat.IsInCombatMode(target))
             {
-                delay += comp.CombatDelayPenalty;
-                // Indicates to the user that there is a time penalty. It's here for consistency reasons.
-                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-resist-user-message", ("target", targetName)), user, Shared.Popups.PopupType.MediumCaution);
+                delay = comp.CombatDelay;
+                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-resist-user-message", ("target", targetName)), user, Shared.Popups.PopupType.SmallCaution);
+                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-inject-target-message", ("user", userName)), target, Shared.Popups.PopupType.SmallCaution);
+            }
+            else
+            {
+                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-inject-user-message"), user, Shared.Popups.PopupType.Small);
+                _popup.PopupCursor(Loc.GetString("hypospray-component-do-after-inject-target-message", ("user", userName)), target, Shared.Popups.PopupType.SmallCaution);
             }
 
             var doAfterArgs = new DoAfterArgs(EntityManager, user, Math.Max(delay, 0), new InjectorDoAfterEvent(), entity, target, entity)

@@ -9,9 +9,6 @@ public abstract partial class SharedHyposprayComponent : Component
 {
     [DataField]
     public string SolutionName = "hypospray";
-
-    [DataField]
-    public bool HasInjectionDelay = false;
 }
 
 [Serializable, NetSerializable]
