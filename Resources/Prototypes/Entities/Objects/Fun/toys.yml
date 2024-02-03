@@ -7,6 +7,9 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
+  - type: Tag
+    tags:
+      - Payload
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -19,6 +22,9 @@
   - type: EmitSoundOnLand
     sound:
       collection: ToyFall
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ToySqueak
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
@@ -66,6 +72,7 @@
       tags:
         - ForceableFollow
         - PlushieGhost
+        - Payload
     - type: RandomWalk
       accumulatorRatio: 0.5
       maxSpeed: 1
@@ -131,6 +138,9 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
@@ -199,6 +209,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -219,6 +232,9 @@
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: MeleeWeapon
@@ -252,6 +268,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -276,6 +295,9 @@
       sound:
         path: /Audio/Items/Toys/toy_rustle.ogg
     - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnTrigger
       sound:
         path: /Audio/Items/Toys/toy_rustle.ogg
     - type: MeleeWeapon
@@ -333,6 +355,7 @@
   - type: Tag
     tags:
       - PlushieSharkBlue
+      - Payload
 
 - type: entity
   parent: PlushieSharkBlue
@@ -348,6 +371,7 @@
   - type: Tag
     tags:
       - PlushieSharkPink
+      - Payload
 
 - type: entity
   parent: PlushieSharkBlue
@@ -363,6 +387,7 @@
   - type: Tag
     tags:
       - PlushieSharkGrey
+      - Payload
 
 - type: entity
   parent: BasePlushie
@@ -405,6 +430,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/bite.ogg
   - type: MeleeWeapon
     wideAnimationRotation: -90
     soundHit:
@@ -432,6 +460,9 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -446,6 +477,9 @@
   - type: Sprite
     state: toy_mouse
   - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
@@ -478,6 +512,9 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
 
 - type: entity
   parent: BasePlushie
@@ -491,6 +528,9 @@
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: MeleeWeapon
@@ -524,6 +564,9 @@
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: MeleeWeapon
@@ -568,6 +611,9 @@
   components:
   - type: Sprite
     state: nuketoy
+  - type: Tag
+    tags:
+      - Payload
   - type: UseDelay
     delay: 180.0
   - type: EmitSoundOnUse
@@ -577,6 +623,12 @@
         volume: -5
         maxDistance: 10
   - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxDistance: 10
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
@@ -594,6 +646,9 @@
   - type: Sprite
     state: ian
   - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/ian.ogg
   - type: MeleeWeapon
@@ -869,7 +924,7 @@
       params:
         variation: 0.65
         volume: -10
-    
+
 - type: entity
   parent: BaseItem
   id: PonderingOrb
@@ -1013,11 +1068,15 @@
   - type: EmitSoundOnActivate
     sound:
       collection: ClownRecorder
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ClownRecorder
   - type: UseDelay
     delay: 30.0
   - type: Tag
     tags:
     - ClownRecorder
+    - Payload
 
 - type: entity
   parent: BaseItem
@@ -1067,6 +1126,9 @@
     sprite: Objects/Fun/whoopie.rsi
     state: icon
     quickEquip: false
+  - type: Tag
+    tags:
+      - Payload
   - type: EmitSoundOnUse
     sound:
       collection: Parp
@@ -1092,6 +1154,11 @@
     intersectRatio: 0.2
     requiredTriggeredSpeed: 1
   - type: TriggerOnStepTrigger
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
   - type: Appearance
   - type: CollisionWake
     enabled: false
@@ -1178,6 +1245,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Moth/moth_chitter.ogg
@@ -1211,3 +1281,33 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Human/malescream_4.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Human/malescream_5.ogg
+
+- type: entity
+  parent: BaseItem
+  id: NewtonCradle
+  name: newton cradle
+  description: A device bored paper pushers use to remind themselves that time did not stop yet. Contains gravity.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/newton_cradle.rsi
+    state: icon-off
+  - type: Item
+    sprite: Objects/Fun/newton_cradle.rsi
+    storedRotation: -90
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { state: icon }
+          False: { state: icon-off }
+  - type: ItemToggle
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Items/newton_cradle.ogg
+      params:
+        volume: -7
+        maxDistance: 5
