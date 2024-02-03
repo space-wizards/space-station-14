@@ -31,7 +31,7 @@ namespace Content.Client.Stylesheets
                 {
                     $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
                     $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
-                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
                 },
                 size
             );
