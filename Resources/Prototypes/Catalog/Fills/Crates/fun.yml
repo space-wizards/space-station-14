@@ -50,6 +50,7 @@
          prob: 0.1
       - id: PlushieScientist
          prob: 0.1
+
 - type: entity
   id: CrateFunLizardPlushieBulk
   parent: CrateGenericSteel
