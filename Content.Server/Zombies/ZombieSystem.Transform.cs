@@ -24,17 +24,16 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
-using Content.Shared.Pulling.Components;
-using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
-using Robust.Shared.Audio;
 using Content.Shared.Prying.Components;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Zombies
@@ -58,7 +57,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly SharedRoleSystem _roles = default!;
-        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <summary>
@@ -98,13 +96,14 @@ namespace Content.Server.Zombies
             var zombiecomp = AddComp<ZombieComponent>(target);
 
             //we need to basically remove all of these because zombies shouldn't
-            //get diseases, breath, be thirst, be hungry, die in space or have offspring
+            //get diseases, breath, be thirst, be hungry, die in space, have offspring or be paraplegic.
             RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
-            RemComp<ReproductiveComponent>(target); 
+            RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
+            RemComp<LegsParalyzedComponent>(target);
 
             //funny voice
             var accentType = "zombie";
@@ -263,7 +262,9 @@ namespace Content.Server.Zombies
                 RemComp(target, handsComp);
             }
 
-            RemComp<SharedPullerComponent>(target);
+            // Sloth: What the fuck?
+            // How long until compregistry lmao.
+            RemComp<PullerComponent>(target);
 
             // No longer waiting to become a zombie:
             // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
