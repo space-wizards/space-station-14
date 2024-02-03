@@ -42,7 +42,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
     {
         get
         {
-            var ent = _playerManager.LocalPlayer?.ControlledEntity;
+            var ent = _playerManager.LocalEntity;
             return ent is not null
                 ? GetActiveAlerts(ent.Value)
                 : null;
@@ -51,28 +51,28 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
     protected override void AfterShowAlert(Entity<AlertsComponent> alerts)
     {
-        UpdateHud(uid, alertsComponent);
+        UpdateHud(alerts);
     }
 
     protected override void AfterClearAlert(Entity<AlertsComponent> alerts)
     {
-        UpdateHud(uid, alertsComponent);
+        UpdateHud(alerts);
     }
 
-    private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref AfterAutoHandleStateEvent args)
+    private void ClientAlertsHandleState(Entity<AlertsComponent> alerts, ref AfterAutoHandleStateEvent args)
     {
-        UpdateHud(uid, component);
+        UpdateHud(alerts);
     }
 
-    private void UpdateHud(EntityUid uid, AlertsComponent component)
+    private void UpdateHud(Entity<AlertsComponent> entity)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity == uid && _timing.IsFirstTimePredicted)
-            SyncAlerts?.Invoke(this, component.Alerts);
+        if (_playerManager.LocalEntity == entity.Owner && _timing.IsFirstTimePredicted)
+            SyncAlerts?.Invoke(this, entity.Comp.Alerts);
     }
 
     private void OnPlayerAttached(EntityUid uid, AlertsComponent component, LocalPlayerAttachedEvent args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+        if (_playerManager.LocalEntity != uid)
             return;
 
         SyncAlerts?.Invoke(this, component.Alerts);

@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Server.Shuttle.Components;
+using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
