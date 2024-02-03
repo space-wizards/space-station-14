@@ -79,7 +79,7 @@ public sealed class SlipperySystem : EntitySystem
             {
                 var sliding = EnsureComp<SlidingComponent>(other);
                 sliding.CollidingEntities.Add(uid);
-                DebugTools.AssertNotEqual(sliding.CollidingEntities.Count, 0);
+                DebugTools.Assert(_physics.GetContactingEntities(other, physics).Contains(uid));
             }
         }
 
