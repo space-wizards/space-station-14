@@ -1,11 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Content.Server.Administration.Systems;
 using Content.Server.GameTicking;
@@ -36,7 +35,7 @@ public sealed class ServerApi : IPostInjectInit
     [Dependency] private readonly IGameMapManager _gameMapManager = default!; // Map name
     [Dependency] private readonly IServerNetManager _netManager = default!; // Kick
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Game rules
-    [Dependency] private readonly IComponentFactory _componentFactory = default!; // Needed to circumvent the "IoC has no context on this thread" error until I figure out how to do it properly
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!; // game explodes when calling stuff from the non-game thread
     [Dependency] private readonly EntityManager _entityManager = default!;
 
@@ -44,6 +43,18 @@ public sealed class ServerApi : IPostInjectInit
 
     private string _token = string.Empty;
     private ISawmill _sawmill = default!;
+
+    public static Dictionary<string, string> PanicPunkerCvarNames = new()
+    {
+        { "Enabled", "game.panic_bunker.enabled" },
+        { "DisableWithAdmins", "game.panic_bunker.disable_with_admins" },
+        { "EnableWithoutAdmins", "game.panic_bunker.enable_without_admins" },
+        { "CountDeadminnedAdmins", "game.panic_bunker.count_deadminned_admins" },
+        { "ShowReason", "game.panic_bunker.show_reason" },
+        { "MinAccountAgeHours", "game.panic_bunker.min_account_age" },
+        { "MinOverallHours", "game.panic_bunker.min_overall_hours" },
+        { "CustomReason", "game.panic_bunker.custom_reason" }
+    };
 
     void IPostInjectInit.PostInject()
     {
@@ -62,19 +73,11 @@ public sealed class ServerApi : IPostInjectInit
         _statusHost.AddHandler(ActionForcePreset);
         _statusHost.AddHandler(ActionForceMotd);
         _statusHost.AddHandler(ActionPanicPunker);
+    }
 
-        // Bandaid fix for the test fails
-        // "System.Collections.Generic.KeyNotFoundException : The given key 'server.admin_api_token' was not present in the dictionary."
-        // TODO: Figure out why this happens
-        try
-        {
-            _config.OnValueChanged(CCVars.AdminApiToken, UpdateToken, true);
-        }
-        catch (Exception e)
-        {
-            _sawmill.Error("Failed to subscribe to config vars: {0}", e);
-        }
-
+    public void Initialize()
+    {
+        _config.OnValueChanged(CCVars.AdminApiToken, UpdateToken, true);
     }
 
     public void Shutdown()
@@ -103,118 +106,63 @@ public sealed class ServerApi : IPostInjectInit
         if (!CheckAccess(context))
             return true;
 
-        var body = await ReadJson<PanicBunkerActionBody>(context);
-        var (success, actor) = await CheckActor(context, body);
+        var body = await ReadJson<Dictionary<string, object>>(context);
+        var (success, actor) = await CheckActor(context);
         if (!success)
-        {
-            await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
-        }
 
-        if (body!.Action == null || body.Value == null)
+        foreach (var panicPunkerActions in body!.Select(x => new { Action = x.Key, Value = x.Value.ToString() }))
         {
-            await context.RespondJsonAsync(new BaseResponse()
+            if (panicPunkerActions.Action == null || panicPunkerActions.Value == null)
             {
-                Message = "An action and value are required to perform this action.",
-                Exception = new ExceptionData()
+                await context.RespondJsonAsync(new BaseResponse()
                 {
-                    Message = "An action and value are required to perform this action.",
-                    ErrorType = ErrorTypes.ActionNotSpecified
-                }
-            }, HttpStatusCode.BadRequest);
-            return true;
+                    Message = "Action and value are required to perform this action.",
+                    Exception = new ExceptionData()
+                    {
+                        Message = "Action and value are required to perform this action.",
+                        ErrorType = ErrorTypes.ActionNotSpecified
+                    }
+                }, HttpStatusCode.BadRequest);
+                return true;
+            }
+
+            if (!PanicPunkerCvarNames.TryGetValue(panicPunkerActions.Action, out var cvarName))
+            {
+                await context.RespondJsonAsync(new BaseResponse()
+                {
+                    Message = $"Cannot set: Action {panicPunkerActions.Action} does not exist.",
+                    Exception = new ExceptionData()
+                    {
+                        Message = $"Cannot set: Action {panicPunkerActions.Action} does not exist.",
+                        ErrorType = ErrorTypes.ActionNotSupported
+                    }
+                }, HttpStatusCode.BadRequest);
+                return true;
+            }
+
+            // Since the CVar can be of different types, we need to parse it to the correct type
+            // First, I try to parse it as a bool, if it fails, I try to parse it as an int
+            // And as a last resort, I do nothing and put it as a string
+            if (bool.TryParse(panicPunkerActions.Value, out var boolValue))
+            {
+                await RunOnMainThread(() => _config.SetCVar(cvarName, boolValue));
+            }
+            else if (int.TryParse(panicPunkerActions.Value, out var intValue))
+            {
+                await RunOnMainThread(() => _config.SetCVar(cvarName, intValue));
+            }
+            else
+            {
+                await RunOnMainThread(() => _config.SetCVar(cvarName, panicPunkerActions.Value));
+            }
+            _sawmill.Info($"Panic bunker property {panicPunkerActions} changed to {panicPunkerActions.Value} by {actor!.Name} ({actor.Guid}).");
         }
 
-        switch (body.Action) // TODO: This looks bad, there has to be a better way to do this.
+        await context.RespondJsonAsync(new BaseResponse()
         {
-            case "enabled":
-                if (!bool.TryParse(body.Value, out var enabled))
-                {
-                    await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-                    return true;
-                }
-
-                _taskManager.RunOnMainThread(() =>
-                {
-                    _config.SetCVar(CCVars.PanicBunkerEnabled, enabled);
-                });
-                break;
-            case "disable_with_admins":
-                if (!bool.TryParse(body.Value, out var disableWithAdmins))
-                {
-                    await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-                    return true;
-                }
-
-                _taskManager.RunOnMainThread(() =>
-                {
-                    _config.SetCVar(CCVars.PanicBunkerDisableWithAdmins, disableWithAdmins);
-                });
-                break;
-            case "enable_without_admins":
-                if (!bool.TryParse(body.Value, out var enableWithoutAdmins))
-                {
-                    await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-                    return true;
-                }
-
-                _taskManager.RunOnMainThread(() =>
-                {
-                    _config.SetCVar(CCVars.PanicBunkerEnableWithoutAdmins, enableWithoutAdmins);
-                });
-                break;
-            case "count_deadminned_admins":
-                if (!bool.TryParse(body.Value, out var countDeadminnedAdmins))
-                {
-                    await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-                    return true;
-                }
-
-                _taskManager.RunOnMainThread(() =>
-                {
-                    _config.SetCVar(CCVars.PanicBunkerCountDeadminnedAdmins, countDeadminnedAdmins);
-                });
-                break;
-            case "show_reason":
-                if (!bool.TryParse(body.Value, out var showReason))
-                {
-                    await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-                    return true;
-                }
-
-                _taskManager.RunOnMainThread(() =>
-                {
-                    _config.SetCVar(CCVars.PanicBunkerShowReason, showReason);
-                });
-                break;
-            case "min_account_age_hours":
-                if (!int.TryParse(body.Value, out var minAccountAgeHours))
-                {
-                    await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-                    return true;
-                }
-
-                _taskManager.RunOnMainThread(() =>
-                {
-                    _config.SetCVar(CCVars.PanicBunkerMinAccountAge, minAccountAgeHours * 60);
-                });
-                break;
-            case "min_overall_hours":
-                if (!int.TryParse(body.Value, out var minOverallHours))
-                {
-                    await context.RespondErrorAsync(HttpStatusCode.BadRequest);
-                    return true;
-                }
-
-                _taskManager.RunOnMainThread(() =>
-                {
-                    _config.SetCVar(CCVars.PanicBunkerMinOverallHours, minOverallHours * 60);
-                });
-                break;
-        }
-
-        _sawmill.Info($"Panic bunker setting {body.Action} changed to {body.Value} by {actor!.Name} ({actor.Guid}).");
-        await context.RespondAsync("Success", HttpStatusCode.OK);
+            Message = "OK"
+        });
         return true;
     }
 
@@ -232,7 +180,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
 
         var motd = await ReadJson<MotdActionBody>(context);
-        var (success, actor) = await CheckActor(context, motd);
+        var (success, actor) = await CheckActor(context);
         if (!success)
             return true;
 
@@ -253,7 +201,7 @@ public sealed class ServerApi : IPostInjectInit
 
         _sawmill.Info($"MOTD changed to \"{motd.Motd}\" by {actor!.Name} ({actor.Guid}).");
 
-        _taskManager.RunOnMainThread(() => _config.SetCVar(CCVars.MOTD, motd.Motd));
+        await RunOnMainThread(() => _config.SetCVar(CCVars.MOTD, motd.Motd));
         // A hook in the MOTD system sends the changes to each client
         await context.RespondJsonAsync(new BaseResponse()
         {
@@ -276,7 +224,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
 
         var body = await ReadJson<PresetActionBody>(context);
-        var (success, actor) = await CheckActor(context, body);
+        var (success, actor) = await CheckActor(context);
         if (!success)
             return true;
 
@@ -325,7 +273,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        _taskManager.RunOnMainThread(() =>
+        await RunOnMainThread(() =>
         {
             ticker.SetGamePreset(result);
         });
@@ -351,7 +299,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
 
         var body = await ReadJson<GameRuleActionBody>(context);
-        var (success, actor) = await CheckActor(context, body);
+        var (success, actor) = await CheckActor(context);
         if (!success)
             return true;
 
@@ -389,7 +337,7 @@ public sealed class ServerApi : IPostInjectInit
         }
 
         _sawmill.Info($"Ended game rule {body.GameRuleId} by {actor!.Name} ({actor.Guid}).");
-        _taskManager.RunOnMainThread(() => ticker.EndGameRule((EntityUid) gameRuleEntity));
+        await RunOnMainThread(() => ticker.EndGameRule((EntityUid) gameRuleEntity));
         await context.RespondJsonAsync(new BaseResponse()
         {
             Message = "OK"
@@ -411,7 +359,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
 
         var body = await ReadJson<GameRuleActionBody>(context);
-        var (success, actor) = await CheckActor(context, body);
+        var (success, actor) = await CheckActor(context);
         if (!success)
             return true;
 
@@ -486,7 +434,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
 
         var body = await ReadJson<KickActionBody>(context);
-        var (success, actor) = await CheckActor(context,body);
+        var (success, actor) = await CheckActor(context);
         if (!success)
             return true;
 
@@ -544,7 +492,7 @@ public sealed class ServerApi : IPostInjectInit
         var reason = body.Reason ?? "No reason supplied";
         reason += " (kicked by admin)";
 
-        _taskManager.RunOnMainThread(() =>
+        await RunOnMainThread(() =>
         {
             _netManager.DisconnectChannel(session.Channel, reason);
         });
@@ -561,33 +509,23 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionRoundStatus(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/admin/actions/round")
+        if (context.RequestMethod != HttpMethod.Post || !context.Url.AbsolutePath.StartsWith("/admin/actions/round/"))
+        {
+            return false;
+        }
+
+        // Make sure paths like /admin/actions/round/lol/start don't work
+        if (context.Url.AbsolutePath.Split('/').Length != 5)
         {
             return false;
         }
 
         if (!CheckAccess(context))
             return true;
-        var body = await ReadJson<RoundActionBody>(context);
-
-        var (success, actor) = await CheckActor(context, body);
+        var (success, actor) = await CheckActor(context);
         if (!success)
             return true;
 
-        // Get the action from the request body
-        if (body == null || string.IsNullOrWhiteSpace(body.Action))
-        {
-            await context.RespondJsonAsync(new BaseResponse()
-            {
-                Message = "An action is required to perform this action.",
-                Exception = new ExceptionData()
-                {
-                    Message = "An action is required to perform this action.",
-                    ErrorType = ErrorTypes.ActionNotSpecified
-                }
-            }, HttpStatusCode.BadRequest);
-            return true;
-        }
 
         var (ticker, roundEndSystem) = await RunOnMainThread(() =>
         {
@@ -595,7 +533,11 @@ public sealed class ServerApi : IPostInjectInit
             var roundEndSystem = _entitySystemManager.GetEntitySystem<RoundEndSystem>();
             return (ticker, roundEndSystem);
         });
-        switch (body.Action)
+
+        // Action is the last part of the URL path (e.g. /admin/actions/round/start -> start)
+        var action = context.Url.AbsolutePath.Split('/').Last();
+
+        switch (action)
         {
             case "start":
                 if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
@@ -608,12 +550,12 @@ public sealed class ServerApi : IPostInjectInit
                             Message = "Round already started",
                             ErrorType = ErrorTypes.RoundAlreadyStarted
                         }
-                    }, HttpStatusCode.UnprocessableEntity);
+                    }, HttpStatusCode.Conflict);
                     _sawmill.Debug("Forced round start failed: round already started");
                     return true;
                 }
 
-                _taskManager.RunOnMainThread(() =>
+                await RunOnMainThread(() =>
                 {
                     ticker.StartRound();
                 });
@@ -630,11 +572,11 @@ public sealed class ServerApi : IPostInjectInit
                             Message = "Round already ended",
                             ErrorType = ErrorTypes.RoundAlreadyEnded
                         }
-                    }, HttpStatusCode.UnprocessableEntity);
+                    }, HttpStatusCode.Conflict);
                     _sawmill.Debug("Forced round end failed: round is not in progress");
                     return true;
                 }
-                _taskManager.RunOnMainThread(() =>
+                await RunOnMainThread(() =>
                 {
                     roundEndSystem.EndRound();
                 });
@@ -651,37 +593,28 @@ public sealed class ServerApi : IPostInjectInit
                             Message = "Round not in progress",
                             ErrorType = ErrorTypes.RoundNotInProgress
                         }
-                    }, HttpStatusCode.UnprocessableEntity);
+                    }, HttpStatusCode.Conflict);
                     _sawmill.Debug("Forced round restart failed: round is not in progress");
                     return true;
                 }
-                _taskManager.RunOnMainThread(() =>
+                await RunOnMainThread(() =>
                 {
                     roundEndSystem.EndRound();
                 });
                 _sawmill.Info("Forced round restart");
                 break;
             case "restartnow": // You should restart yourself NOW!!!
-                _taskManager.RunOnMainThread(() =>
+                await RunOnMainThread(() =>
                 {
                     ticker.RestartRound();
                 });
                 _sawmill.Info("Forced instant round restart");
                 break;
             default:
-                await context.RespondJsonAsync(new BaseResponse()
-                {
-                    Message = "Invalid action supplied.",
-                    Exception = new ExceptionData()
-                    {
-                        Message = "Invalid action supplied.",
-                        ErrorType = ErrorTypes.ActionNotSupported
-                    }
-                }, HttpStatusCode.BadRequest);
-                return true;
+                return false;
         }
 
-        _sawmill.Info($"Round {body.Action} by {actor!.Name} ({actor.Guid}).");
+        _sawmill.Info($"Round {action} by {actor!.Name} ({actor.Guid}).");
         await context.RespondJsonAsync(new BaseResponse()
         {
             Message = "OK"
@@ -844,7 +777,7 @@ public sealed class ServerApi : IPostInjectInit
                 }
             });
             return false;
-        } // No auth header, no access
+        }
 
 
         if (CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(authToken.ToString()), Encoding.UTF8.GetBytes(_token)))
@@ -860,7 +793,7 @@ public sealed class ServerApi : IPostInjectInit
             }
         });
         // Invalid auth header, no access
-        _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}""", authToken.ToString());
+        _sawmill.Info("Unauthorized access attempt to admin API.");
         return false;
     }
 
@@ -886,14 +819,50 @@ public sealed class ServerApi : IPostInjectInit
         return result;
     }
 
-    private async Task<(bool, Actor? actor)> CheckActor(IStatusHandlerContext context, BaseBody? body = null)
+    /// <summary>
+    /// Runs an action on the main thread. This does not return any value and is meant to be used for void functions. Use <see cref="RunOnMainThread{T}"/> for functions that return a value.
+    /// </summary>
+    private async Task RunOnMainThread(Action action)
     {
-        // Try to read the actor from the request body
-        var actor = body?.Actor ?? (await ReadJson<BaseBody>(context))?.Actor;
+        var taskCompletionSource = new TaskCompletionSource<bool>();
+        _taskManager.RunOnMainThread(() =>
+        {
+            try
+            {
+                action();
+                taskCompletionSource.TrySetResult(true);
+            }
+            catch (Exception e)
+            {
+                taskCompletionSource.TrySetException(e);
+            }
+        });
+
+        await taskCompletionSource.Task;
+    }
+
+    private async Task<(bool, Actor? actor)> CheckActor(IStatusHandlerContext context)
+    {
+        // The actor is JSON encoded in the header
+        var actor = context.RequestHeaders.TryGetValue("Actor", out var actorHeader) ? actorHeader.ToString() : null;
         if (actor != null)
         {
+            var actionData = JsonSerializer.Deserialize<Actor>(actor);
+            if (actionData == null)
+            {
+                await context.RespondJsonAsync(new BaseResponse()
+                {
+                    Message = "Unable to parse actor.",
+                    Exception = new ExceptionData()
+                    {
+                        Message = "Unable to parse actor.",
+                        ErrorType = ErrorTypes.BodyUnableToParse
+                    }
+                }, HttpStatusCode.BadRequest);
+                return (false, null);
+            }
             // Check if the actor is valid, like if all the required fields are present
-            if (string.IsNullOrWhiteSpace(actor.Guid) || string.IsNullOrWhiteSpace(actor.Name))
+            if (string.IsNullOrWhiteSpace(actionData.Guid) || string.IsNullOrWhiteSpace(actionData.Name))
             {
                 await context.RespondJsonAsync(new BaseResponse()
                 {
@@ -907,7 +876,22 @@ public sealed class ServerApi : IPostInjectInit
                 return (false, null);
             }
 
-            return (true, actor);
+            // See if the parsed GUID is a valid GUID
+            if (!Guid.TryParse(actionData.Guid, out _))
+            {
+                await context.RespondJsonAsync(new BaseResponse()
+                {
+                    Message = "Invalid GUID supplied.",
+                    Exception = new ExceptionData()
+                    {
+                        Message = "Invalid GUID supplied.",
+                        ErrorType = ErrorTypes.InvalidActor
+                    }
+                }, HttpStatusCode.BadRequest);
+                return (false, null);
+            }
+
+            return (true, actionData);
         }
 
         await context.RespondJsonAsync(new BaseResponse()
@@ -927,7 +911,6 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<T?> ReadJson<T>(IStatusHandlerContext context)
     {
-        // Check if the request body is empty
         try
         {
             var json = await context.RequestBodyJsonAsync<T>();
@@ -951,11 +934,6 @@ public sealed class ServerApi : IPostInjectInit
 
 #region From Client
 
-    private record BaseBody
-    {
-        public Actor? Actor { get; init; }
-    }
-
     private record Actor
     {
         public string? Guid { get; init; }
@@ -964,36 +942,25 @@ public sealed class ServerApi : IPostInjectInit
         public bool IsDeadmined { get; init; } = false;
     }
 
-    private record RoundActionBody : BaseBody
-    {
-        public string? Action { get; init; }
-    }
-
-    private record KickActionBody : BaseBody
+    private record KickActionBody
     {
         public string? Guid { get; init; }
         public string? Reason { get; init; }
     }
 
-    private record GameRuleActionBody : BaseBody
+    private record GameRuleActionBody
     {
         public string? GameRuleId { get; init; }
     }
 
-    private record PresetActionBody : BaseBody
+    private record PresetActionBody
     {
         public string? PresetId { get; init; }
     }
 
-    private record MotdActionBody : BaseBody
+    private record MotdActionBody
     {
         public string? Motd { get; init; }
-    }
-
-    private record PanicBunkerActionBody : BaseBody
-    {
-        public string? Action { get; init; }
-        public string? Value { get; init; }
     }
 
 #endregion
