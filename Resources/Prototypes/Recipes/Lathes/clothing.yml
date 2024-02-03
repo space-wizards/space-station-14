@@ -1058,7 +1058,7 @@
   completetime: 2
   materials:
     Cloth: 100
-
+# Ties
 - type: latheRecipe
   id: ClothingNeckTieRed
   result: ClothingNeckTieRed
@@ -1076,6 +1076,62 @@
 - type: latheRecipe
   id: ClothingNeckTieSci
   result: ClothingNeckTieSci
+  completetime: 2
+  materials:
+    Cloth: 50
+# Scarfs
+- type: latheRecipe
+  id: ClothingNeckScarfStripedGreen
+  result: ClothingNeckScarfStripedGreen
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedBlue
+  result: ClothingNeckScarfStripedBlue
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedRed
+  result: ClothingNeckScarfStripedRed
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedBrown
+  result: ClothingNeckScarfStripedBrown
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedLightBlue
+  result: ClothingNeckScarfStripedLightBlue
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedOrange
+  result: ClothingNeckScarfStripedOrange
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedBlack
+  result: ClothingNeckScarfStripedBlack
+  completetime: 2
+  materials:
+    Cloth: 50
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedPurple
+  result: ClothingNeckScarfStripedPurple
   completetime: 2
   materials:
     Cloth: 50
