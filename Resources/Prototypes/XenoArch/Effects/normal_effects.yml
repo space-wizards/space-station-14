@@ -89,7 +89,7 @@
     - id: FoodPacketPopcornTrash
       prob: 0.1
       orGroup: Trash
-    - id: FoodPacketRaisinsTrash
+    - id: PlushieScientist
       prob: 0.1
       orGroup: Trash
     - id: ToySpawner
