@@ -140,7 +140,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private void PlayRestartSound(RoundRestartCleanupEvent ev)
     {
-        if (!_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+        if (!_configManager.GetCVar(CCVars.RestartSoundsEnabled))
             return;
 
         var file = _gameTicker.RestartSound;
