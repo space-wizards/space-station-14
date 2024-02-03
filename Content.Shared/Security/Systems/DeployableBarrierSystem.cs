@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Lock;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Security.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -12,7 +12,7 @@ public sealed class DeployableBarrierSystem : EntitySystem
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedPullingSystem _pulling = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -58,8 +58,8 @@ public sealed class DeployableBarrierSystem : EntitySystem
         var state = isDeployed ? DeployableBarrierState.Deployed : DeployableBarrierState.Idle;
         _appearance.SetData(uid, DeployableBarrierVisuals.State, state);
 
-        if (TryComp(uid, out SharedPullableComponent? pullable))
-            _pulling.TryStopPull(pullable);
+        if (TryComp(uid, out PullableComponent? pullable))
+            _pulling.TryStopPull(uid, pullable);
 
         SharedPointLightComponent? pointLight = null;
         if (_pointLight.ResolveLight(uid, ref pointLight))

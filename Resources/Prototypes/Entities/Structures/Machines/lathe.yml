@@ -134,7 +134,6 @@
       - TrashBag
       - PowerCellSmall
       - PowerCellMedium
-      - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -169,6 +168,7 @@
        - MagazineBoxMagnum
        - MagazineBoxRifle
        - MagazineBoxLightRifle
+       - GrenadeBlast
     emagDynamicRecipes:
       - CartridgePistolRubber
       - CartridgeMagnumRubber
@@ -197,6 +197,12 @@
       - MagazineBoxMagnumUranium
       - MagazineBoxLightRifleUranium
       - MagazineBoxRifleUranium
+      - PowerCageSmall
+      - PowerCageMedium
+      - PowerCageHigh
+      - MagazineGrenadeEmpty
+      - GrenadeEMP
+      - GrenadeFlash
 
 - type: entity
   id: AutolatheHyperConvection
@@ -252,7 +258,6 @@
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
-      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -422,10 +427,12 @@
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
+      - PowerCageRechargerCircuitboard
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
+      - ShuttleGunKineticCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
@@ -640,6 +647,7 @@
       - ForensicPad
       - RiotShield
       - ShellShotgun
+      - ShellShotgunSlug
       - ShellShotgunFlare
       - ShellTranquilizer
       - MagazinePistol
@@ -691,6 +699,9 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxPistolRubber
       - MagazineBoxRifleRubber
+      - MagazineGrenadeEmpty
+      - GrenadeEMP
+      - GrenadeFlash
       - ShellShotgunBeanbag
       - ShellShotgunIncendiary
       - ShellShotgunUranium
@@ -706,6 +717,13 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - PowerCageSmall
+      - PowerCageMedium
+      - PowerCageHigh
+      - ShuttleGunSvalinnMachineGunCircuitboard
+      - ShuttleGunPerforatorCircuitboard
+      - ShuttleGunFriendshipCircuitboard
+      - ShuttleGunDusterCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -741,6 +759,7 @@
         - CartridgePistol
         - CartridgeMagnum
         - ShellShotgun
+        - ShellShotgunSlug
         - ShellShotgunFlare
         - ShellTranquilizer
         - CartridgeLightRifle
@@ -792,7 +811,6 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
-      - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -805,7 +823,6 @@
       - MedkitRadiation
       - MedkitCombat
     dynamicRecipes:
-      - HandheldCrewMonitor
       - ClothingHandsGlovesNitrile
       - CryostasisBeaker
       - LargeBeaker
@@ -969,6 +986,15 @@
       - ClothingNeckTieRed
       - ClothingNeckTieDet
       - ClothingNeckTieSci
+      # Scarfs - All scarfs avaible in winterdrobe
+      - ClothingNeckScarfStripedGreen
+      - ClothingNeckScarfStripedBlue
+      - ClothingNeckScarfStripedRed
+      - ClothingNeckScarfStripedBrown
+      - ClothingNeckScarfStripedLightBlue
+      - ClothingNeckScarfStripedOrange
+      - ClothingNeckScarfStripedBlack
+      - ClothingNeckScarfStripedPurple
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingHeadHatCentcomcap
@@ -1053,6 +1079,20 @@
   - type: Lathe
     materialUseMultiplier: 0.75
     timeMultiplier: 0.5
+    staticRecipes:
+      - SheetSteel30
+      - SheetGlass30
+      - SheetRGlass30
+      - SheetPlasma30
+      - SheetPGlass30
+      - SheetRPGlass30
+      - SheetPlasteel30
+      - SheetUranium30
+      - SheetUGlass30
+      - SheetRUGlass30
+      - IngotGold30
+      - IngotSilver30
+      - MaterialBananium10
 
 - type: entity
   parent: BaseLathe

@@ -30,4 +30,10 @@ public sealed partial class DepartmentPrototype : IPrototype
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Primary = true;
+
+    /// <summary>
+    /// Departments with a higher weight sorted before other departments in UI.
+    /// </summary>
+    [DataField("weight")]
+    public int Weight { get; private set; } = 0;
 }

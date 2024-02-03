@@ -331,7 +331,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             {
                 if (TryComp<MeleeWeaponComponent>(targetUid, out var melee))
                 {
-                    return melee.Damage.Total.Float() * melee.AttackRate / 100f;
+                    return melee.Damage.GetTotal().Float() * melee.AttackRate / 100f;
                 }
 
                 return 0f;

@@ -1,7 +1,7 @@
 - type: reagent
   id: JuiceApple
   name: reagent-name-juice-apple
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-apple
   physicalDesc: reagent-physical-desc-crisp
   flavor: apple
@@ -11,7 +11,7 @@
 - type: reagent
   id: JuiceBanana
   name: reagent-name-juice-banana
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-banana
   physicalDesc: reagent-physical-desc-crisp
   flavor: banana
@@ -20,7 +20,7 @@
 - type: reagent
   id: JuiceBerry
   name: reagent-name-juice-berry
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-berry
   physicalDesc: reagent-physical-desc-sweet
   flavor: berry
@@ -29,7 +29,7 @@
 - type: reagent
   id: JuiceCarrot
   name: reagent-name-juice-carrot
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-carrot
   physicalDesc: reagent-physical-desc-crisp
   flavor: carrot
@@ -49,7 +49,7 @@
 - type: reagent
   id: JuiceGrape
   name: reagent-name-juice-grape
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-grape
   physicalDesc: reagent-physical-desc-crisp
   flavor: juice
@@ -58,7 +58,7 @@
 - type: reagent
   id: JuiceLemon
   name: reagent-name-juice-lemon
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-lemon
   physicalDesc: reagent-physical-desc-citric
   flavor: sour
@@ -67,7 +67,7 @@
 - type: reagent
   id: JuiceLime
   name: reagent-name-juice-lime
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-lime
   physicalDesc: reagent-physical-desc-citric
   flavor: sour
@@ -84,7 +84,7 @@
 - type: reagent
   id: JuiceOrange
   name: reagent-name-juice-orange
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-orange
   physicalDesc: reagent-physical-desc-citric
   flavor: orange
@@ -93,7 +93,7 @@
 - type: reagent
   id: JuicePineapple
   name: reagent-name-juice-pineapple
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-pineapple
   physicalDesc: reagent-physical-desc-tropical
   flavor: pineapple
@@ -102,7 +102,7 @@
 - type: reagent
   id: JuicePotato
   name: reagent-name-juice-potato
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-potato
   physicalDesc: reagent-physical-desc-starchy
   flavor: potatoes
@@ -111,7 +111,7 @@
 - type: reagent
   id: JuiceTomato
   name: reagent-name-juice-tomato
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-tomato
   physicalDesc: reagent-physical-desc-saucey
   flavor: tomato
@@ -120,7 +120,7 @@
 - type: reagent
   id: JuiceWatermelon
   name: reagent-name-juice-watermelon
-  parent: BaseDrink
+  parent: BaseJuice
   desc: reagent-desc-juice-watermelon
   physicalDesc: reagent-physical-desc-sweet
   flavor: watermelon
