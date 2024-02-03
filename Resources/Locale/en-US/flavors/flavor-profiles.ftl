@@ -166,6 +166,7 @@ flavor-complex-spaceshroom-cooked = like space umami
 flavor-complex-lost-friendship = like lost friendship
 flavor-complex-light = like a light gone out
 flavor-complex-profits = like profits
+flavor-complex-fishops = like the dreaded fishops
 
 # Drink-specific flavors.
 
