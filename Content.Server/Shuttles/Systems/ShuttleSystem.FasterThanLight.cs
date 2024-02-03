@@ -125,6 +125,7 @@ public sealed partial class ShuttleSystem
 
         entity.Comp.Whitelist = whitelist;
         _console.RefreshShuttleConsoles();
+        Dirty(entity);
     }
 
     /// <summary>
@@ -145,6 +146,7 @@ public sealed partial class ShuttleSystem
 
         component.Enabled = enabled;
         _console.RefreshShuttleConsoles();
+        Dirty(mapUid, component);
         return true;
     }
 

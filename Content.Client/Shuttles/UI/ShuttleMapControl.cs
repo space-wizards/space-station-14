@@ -303,13 +303,6 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         // Draw dotted line from our own shuttle entity to mouse.
         if (FtlMode)
         {
-            /*
-             * TODO:
-             * - Check IFF circle is correct
-             * - Fix range check circle
-             * - Check the server message being sent is correct (send the uncorrected position).
-             */
-
             var mousePos = _inputs.MouseScreenPosition;
 
             if (mousePos.Window != WindowId.Invalid)
