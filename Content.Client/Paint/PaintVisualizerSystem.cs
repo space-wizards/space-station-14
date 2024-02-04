@@ -39,6 +39,7 @@ namespace Content.Client.Paint
                 sprite.LayerSetColor(layer, component.Color);
                 sprite.LayerSetShader(layer, component.ShaderName);
             }
+            return;
         }
 
         // Shader and Color for the held sprites.
@@ -55,14 +56,10 @@ namespace Content.Client.Paint
                 if (!sprite.LayerMapTryGet(revealed, out var layer) || sprite[layer] is not Layer notlayer)
                     continue;
 
-                if (component.Enabled)
-                {
-                    sprite.LayerSetShader(layer, component.ShaderName);
-                    sprite.LayerSetColor(layer, component.Color);
-                    return;
-                }
-                return;
+                sprite.LayerSetShader(layer, component.ShaderName);
+                sprite.LayerSetColor(layer, component.Color);
             }
+            return;
         }
 
         // shader and color for the clothing equipped sprites.
@@ -79,13 +76,10 @@ namespace Content.Client.Paint
                 if (!sprite.LayerMapTryGet(revealed, out var layer) || sprite[layer] is not Layer notlayer)
                     continue;
 
-                if (component.Enabled)
-                {
-                    sprite.LayerSetShader(layer, component.ShaderName);
-                    sprite.LayerSetColor(layer, component.Color);
-                    return;
-                }
+                sprite.LayerSetShader(layer, component.ShaderName);
+                sprite.LayerSetColor(layer, component.Color);
             }
+            return;
         }
 
         // Removes the shader and color from the sprite layers when component is removed. 
