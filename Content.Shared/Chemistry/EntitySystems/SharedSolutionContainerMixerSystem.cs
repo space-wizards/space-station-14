@@ -102,10 +102,8 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
                 continue;
 
             _solution.UpdateChemicals(soln.Value, true, reactionMixer);
-            if (TryComp<SolutionSeparatorComponent>(entity, out _))
-            {
-                soln.Value.Comp.Solution.IsSeparatedByLayers = true;
-            }
+            var mixerMixedEvent = new SolutionContainerMixerMixedEvent(soln.Value);
+            RaiseLocalEvent(container.Owner, ref mixerMixedEvent, true);
         }
     }
 
@@ -126,3 +124,9 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
         }
     }
 }
+
+/// <summary>
+/// Raised on <seealso cref="SharedSolutionContainerMixerSystem"/> finishing mixing successfully.
+/// </summary>
+[ByRefEvent]
+public record struct SolutionContainerMixerMixedEvent(Entity<SolutionComponent> Solution);
