@@ -9,9 +9,9 @@ namespace Content.Server.Geras;
 [RegisterComponent]
 public sealed partial class GerasComponent : Component
 {
-    [DataField("gerasId")] public ProtoId<EntityPrototype> GerasPolymorphId = "SlimeMorphGeras";
+    [DataField] public ProtoId<EntityPrototype> GerasPolymorphId = "SlimeMorphGeras";
 
-    [DataField("gerasAction")] public ProtoId<EntityPrototype> GerasAction = "ActionMorphGeras";
+    [DataField] public ProtoId<EntityPrototype> GerasAction = "ActionMorphGeras";
 
     public EntityUid? GerasActionEntity;
 }

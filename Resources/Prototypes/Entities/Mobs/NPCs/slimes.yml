@@ -142,6 +142,14 @@
   - type: MultiHandedItem
   - type: Item
     size: Huge
+  - type: Sprite
+    color: "#FFFFFF55"
+  - type: MeleeWeapon
+    attackRate: 2
+    damage:
+      types:
+        Blunt: 8
+        Structural: 5
   - type: DamageStateVisuals
     states:
       Alive:
