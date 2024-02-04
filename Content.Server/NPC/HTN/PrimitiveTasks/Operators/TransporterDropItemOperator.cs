@@ -2,7 +2,7 @@ using Content.Server.Transporters.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-public sealed partial class TransporterClaimOperator : HTNOperator
+public sealed partial class TransporterDropItemOperator : HTNOperator
 {
     private TransporterSystem _transporters = default!;
 
@@ -19,12 +19,8 @@ public sealed partial class TransporterClaimOperator : HTNOperator
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var target = blackboard.GetValue<EntityUid>(TargetKey);
 
-        Logger.Debug($"Transporter {owner.ToString()} will attempt to claim item {target.ToString()}...");
-
-        if (_transporters.ClaimItem(owner, target))
-            Logger.Debug($"Transporter {owner.ToString()} has claimed item {target.ToString()}!");
-        else
-            Logger.Debug($"Transporter {owner.ToString()} failed to claim item {target.ToString()}.");
+        if (!_transporters.TransporterAttemptDrop(owner, target))
+            return HTNOperatorStatus.Failed;
 
         return HTNOperatorStatus.Finished;
     }

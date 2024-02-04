@@ -1,12 +1,9 @@
-using System.Threading;
-using Content.Server.NPC;
 using Content.Server.NPC.HTN;
-using Content.Server.NPC.Pathfinding;
-using Content.Server.NPC.Systems;
 using Content.Server.Transporters.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Item;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Transporters.Systems;
@@ -14,7 +11,8 @@ namespace Content.Server.Transporters.Systems;
 public sealed partial class TransporterSystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _containers = default!;
-    [Dependency] private readonly HTNSystem _htn = default!;
+
+    public readonly string ContainerKey = "item";
 
     public override void Initialize()
     {
@@ -25,6 +23,9 @@ public sealed partial class TransporterSystem : EntitySystem
 
     public void MarkForTransport(Entity<TransporterProviderComponent> provider, EntityUid item)
     {
+        if (HasComp<MarkedForTransportComponent>(item))
+            return;
+
         Logger.Debug($"Item {item.ToString()} ({ToPrettyString(item)}) has been marked for transport!");
         provider.Comp.CurrentUnclaimedItems.Add(item);
         EnsureComp(item, out MarkedForTransportComponent mark);
@@ -33,21 +34,46 @@ public sealed partial class TransporterSystem : EntitySystem
 
     public void UnmarkForTransport(EntityUid item)
     {
-        Logger.Debug($"Item {item.ToString()} ({ToPrettyString(item)}) has been unmarked for transport!");
         if (!TryComp(item, out MarkedForTransportComponent? mark) ||
             mark.AssociatedProvider is null ||
             !TryComp(mark.AssociatedProvider, out TransporterProviderComponent? provider))
             return;
 
+        Logger.Debug($"Item {item.ToString()} ({ToPrettyString(item)}) has been unmarked for transport!");
         provider.CurrentUnclaimedItems.Remove(item);
         RemComp(item, mark);
     }
 
+    public bool TransporterAttemptGrab(EntityUid transporter, EntityUid item)
+    {
+        if (!TryComp(transporter, out ContainerManagerComponent? containerMan))
+            return false;
+
+        var container = _containers.GetContainer(transporter, ContainerKey, containerMan);
+
+        if (container.Count > 0)
+            return false;
+        return _containers.Insert(item, container);
+    }
+
+    public bool TransporterAttemptDrop(EntityUid transporter, EntityUid receiver)
+    {
+        if (!TryComp(transporter, out ContainerManagerComponent? containerMan))
+            return false;
+
+        var container = _containers.GetContainer(transporter, ContainerKey, containerMan);
+
+        if (container.Count == 0)
+            return false;
+
+        var item = container.ContainedEntities[0]; // There's only one.
+        return _containers.Remove(item, container, destination:receiver.ToCoordinates());
+    }
+
     public void OnProviderCollide(EntityUid uid, TransporterProviderComponent component, ref StartCollideEvent args)
     {
-        Logger.Debug("YOU SON OF A BITCH!");
-        //if(!TryComp(uid, out ItemComponent? _))
-        //    return;
+        if(!HasComp<ItemComponent>(args.OtherEntity))
+            return;
 
         MarkForTransport((uid, component), args.OtherEntity);
     }
@@ -63,7 +89,7 @@ public sealed partial class TransporterSystem : EntitySystem
 
     public bool ClaimItem(EntityUid claimer, EntityUid item)
     {
-        if (!TryComp(claimer, out TransporterComponent? transporterComponent)
+        if (!HasComp<TransporterComponent>(claimer)
             || !TryComp(item, out MarkedForTransportComponent? mark)
             || mark.Claimed)
             return false;

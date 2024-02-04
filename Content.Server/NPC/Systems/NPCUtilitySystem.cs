@@ -367,6 +367,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (TryComp(targetUid, out TransporterProviderComponent? provider) &&
                     provider.HasItems)
                     return 1f;
+
                 return 0f;
             }
             case TargetOnFireCon:
@@ -382,6 +383,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (TryComp(targetUid, out MarkedForTransportComponent? mark) &&
                     mark.Claimed)
                     return 0f;
+
                 return 1f;
             }
         }

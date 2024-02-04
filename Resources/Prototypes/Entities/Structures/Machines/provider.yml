@@ -11,6 +11,7 @@
         - state: icon
     - type: Appearance
     - type: TransporterCharger
+    - type: TransporterProvider
     - type: Destructible
       thresholds:
         - trigger:

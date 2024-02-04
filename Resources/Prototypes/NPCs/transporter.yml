@@ -13,10 +13,16 @@
           operator: !type:MoveToOperator
             pathfindInPlanning: true
 
-#        - !type:HTNPrimitiveTask
-#          operator: !type:UtilityOperator
-#            proto: FindReceiver
-#
-#        - !type:HTNPrimitiveTask
-#          operator: !type:MoveToOperator
-#            pathfindInPlanning: true
+        - !type:HTNPrimitiveTask
+          operator: !type:TransporterGrabItemOperator
+
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: FindReceiver
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+
+        - !type:HTNPrimitiveTask
+          operator: !type:TransporterDropItemOperator
