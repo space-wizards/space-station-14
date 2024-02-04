@@ -43,6 +43,11 @@
           SheetSteel1:
             min: 1
             max: 2
+  - type: Construction
+    graph: ClosetSteel
+    node: done
+    containers:
+    - entity_storage
 
 - type: entity
   id: LockerBaseSecure
@@ -60,3 +65,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Construction
+    graph: ClosetSteelSecure
+    node: done
+    containers:
+    - entity_storage
