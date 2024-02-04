@@ -16,8 +16,8 @@
     Brutepack: 1
     MaterialCloth1: 1
   reagents:
-    TranexamicAcid: 10
-    Cryptobiolin: 10
+    TranexamicAcid: 20
+    Cryptobiolin: 20
 
 - type: microwaveMealRecipe
   id: RecipeRegenerativeMesh
@@ -29,5 +29,5 @@
     Ointment: 1
     MaterialCloth1: 1
   reagents:
-    Sigynate: 10
-    Dermaline: 10
+    Sigynate: 20
+    Dermaline: 20
