@@ -177,7 +177,7 @@
       range: 1.75
       energyConsumption: 50000
       disableDuration: 10
-      
+
 - type: entity
   parent: BaseSubdermalImplant
   id: ScramImplant
@@ -210,7 +210,7 @@
   parent: BaseSubdermalImplant
   id: MicroBombImplant
   name: micro-bomb implant
-  description: This implant detonates the user upon death.
+  description: This implant detonates the user upon activation or upon death.
   noSpawn: true
   components:
     - type: SubdermalImplant
