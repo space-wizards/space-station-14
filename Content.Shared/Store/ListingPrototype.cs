@@ -82,7 +82,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     ///     The listing ID of the related upgrade listing. Can be used to link a <see cref="ProductAction"/> to an
     ///         upgrade or to use standalone as an upgrade
     /// </summary>
-    [DataField]
+    [DataField("productUpgradeID")]
     public ProtoId<ListingPrototype>? ProductUpgradeID;
 
     /// <summary>
@@ -120,7 +120,6 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             Description != listing.Description ||
             ProductEntity != listing.ProductEntity ||
             ProductAction != listing.ProductAction ||
-            ProductActionEntity != listing.ProductActionEntity ||
             ProductEvent != listing.ProductEvent ||
             RestockTime != listing.RestockTime)
             return false;
