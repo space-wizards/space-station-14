@@ -6,6 +6,7 @@ using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
@@ -33,6 +34,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly IAfkManager _afkManager = default!;
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
@@ -327,7 +329,7 @@ namespace Content.Server.Administration.Systems
                 username += $" ({characterName})";
 
             // If no admins are online, set embed color to red. Otherwise green
-            var color = GetTargetAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
+            var color = GetNonAfkAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
 
             // Limit server name to 1500 characters, in case someone tries to be a little funny
             var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
@@ -471,7 +473,8 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, admins.Count == 0));
+                var nonAfkAdmins = GetNonAfkAdmins();
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, nonAfkAdmins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -483,19 +486,26 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(starMuteMsg, senderSession.Channel);
         }
 
-        // Returns all online admins with AHelp access
+        private IList<INetChannel> GetNonAfkAdmins()
+        {
+            return _adminManager.ActiveAdmins
+                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) && !_afkManager.IsAfk(p))
+                .Select(p => p.Channel)
+                .ToList();
+        }
+
         private IList<INetChannel> GetTargetAdmins()
         {
             return _adminManager.ActiveAdmins
-               .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
-               .Select(p => p.Channel)
-               .ToList();
+                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
+                .Select(p => p.Channel)
+                .ToList();
         }
 
         private static string GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool noReceivers = false)
         {
             var stringbuilder = new StringBuilder();
-            
+
             if (admin)
                 stringbuilder.Append(":outbox_tray:");
             else if (noReceivers)
