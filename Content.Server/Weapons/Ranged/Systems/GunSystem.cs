@@ -6,7 +6,6 @@ using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
-using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -42,7 +41,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
@@ -220,7 +218,6 @@ public sealed partial class GunSystem : SharedGunSystem
                             foreach (var target in rayCastResults)
                             {
                                 if (_standing.IsDown(target.HitEntity) &&
-                                    !_buckle.IsBuckled(target.HitEntity) &&
                                     gun.Target != target.HitEntity)
                                     continue;
 

@@ -55,7 +55,7 @@ public partial class MobStateSystem
                 //unused
                 break;
             case MobState.Dead:
-                // Makes someone laying down on a bed able to be hit again while not aimed at.
+                // Makes someone buckled to a chair able to be hit again while not aimed at.
                 if(_buckle.IsBuckled(target))
                     _standing.RevertCollisionChange(target);
 
@@ -88,7 +88,7 @@ public partial class MobStateSystem
                 break;
             case MobState.Dead:
                 _standing.Down(target);
-                // Makes someone that dies while on a bed unable to be hit unless aimed at.
+                // Makes someone that dies while on a chair unable to be hit unless aimed at.
                 if(_buckle.IsBuckled(target))
                     _standing.ChangeCollision(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);

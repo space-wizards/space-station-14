@@ -6,6 +6,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
 using Content.Shared.Rotation;
+using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -288,6 +289,13 @@ public abstract partial class SharedBuckleSystem
             return false;
 
         if (!force && !StrapHasSpace(strapUid, buckleComp, strapComp))
+            return false;
+
+        //You can't strap laying down entities to a buckle that makes you stand.
+        if (!force &&
+            TryComp<StandingStateComponent>(buckleUid, out var standingState) &&
+            !standingState.Standing &&
+            strapComp.Position == StrapPosition.Stand)
             return false;
 
         if (!strapComp.BuckledEntities.Add(buckleUid))
