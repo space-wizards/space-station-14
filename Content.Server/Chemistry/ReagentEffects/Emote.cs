@@ -4,6 +4,8 @@ using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
@@ -13,8 +15,16 @@ namespace Content.Server.Chemistry.ReagentEffects;
 [UsedImplicitly]
 public sealed partial class Emote : ReagentEffect
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
     [DataField("emote", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string? EmoteId;
+
+    [DataField]
+    TimeSpan? Cooldown;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    TimeSpan NextEmote = TimeSpan.Zero;
 
     [DataField]
     public bool ShowInChat;
@@ -26,6 +36,10 @@ public sealed partial class Emote : ReagentEffect
     public override void Effect(ReagentEffectArgs args)
     {
         if (EmoteId == null)
+            return;
+        
+        if (effect.cooldown != null &&
+            _gameTiming.CurTime <= effect.cooldown + proto.Cooldown)
             return;
 
         var chatSys = args.EntityManager.System<ChatSystem>();

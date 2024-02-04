@@ -103,12 +103,6 @@ namespace Content.Shared.Chemistry.Reagent
         public float Viscosity;
 
         /// <summary>
-        /// How long was it for the previous effect to take in place.
-        /// </summary>
-        [DataField]
-        public bool Cooldown;
-
-        /// <summary>
         /// Should this reagent work on the dead?
         /// </summary>
         [DataField]

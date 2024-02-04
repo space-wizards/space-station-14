@@ -7,7 +7,6 @@ using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.Reagent
 {
@@ -18,9 +17,7 @@ namespace Content.Shared.Chemistry.Reagent
     [ImplicitDataDefinitionForInheritors]
     [MeansImplicitUse]
     public abstract partial class ReagentEffect
-    {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        
+    {      
         [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
         /// <summary>
         ///     The list of conditions required for the effect to activate. Not required.
@@ -39,13 +36,6 @@ namespace Content.Shared.Chemistry.Reagent
         [JsonPropertyName("probability")]
         [DataField("probability")]
         public float Probability = 1.0f;
-
-        /// <summary>
-        ///     Cooldown between emotes
-        /// </summary>
-        [DataField("cooldown", serverOnly: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public TimeSpan Cooldown = TimeSpan.Zero;
 
         [JsonIgnore]
         [DataField("logImpact")]
@@ -87,10 +77,6 @@ namespace Content.Shared.Chemistry.Reagent
                 random = IoCManager.Resolve<IRobustRandom>();
 
             if (effect.Probability < 1.0f && !random.Prob(effect.Probability))
-                return false;
-
-            if (effect.cooldown != null &&
-                _gameTiming.CurTime <= effect.cooldown + proto.Cooldown)
                 return false;
 
             if (effect.Conditions != null)
