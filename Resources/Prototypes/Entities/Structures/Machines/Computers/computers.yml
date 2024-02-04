@@ -1085,3 +1085,4 @@
   - type: AccessReader # only used for dangerous things
     access: [["ResearchDirector"]]
   - type: Lock
+    unlockOnClick: false
