@@ -202,7 +202,7 @@
   - /Audio/Effects/Footsteps/spurs2.ogg
   - /Audio/Effects/Footsteps/spurs3.ogg
 
-- type: soundCollection
+- type: soundCollection # GreyStation
   id: FootstepMonsterGlutton
   files:
   - /Audio/GreyStation/Effects/monsterslugslither.ogg
