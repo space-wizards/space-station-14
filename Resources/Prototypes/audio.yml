@@ -259,7 +259,7 @@
   rules:
     - !type:NearbyTilesPercentRule
       ignoreAnchored: true
-      percent: 0.15
+      percent: 0.05
       tiles:
         - TrainLattice
       range: 4
