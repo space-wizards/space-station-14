@@ -80,14 +80,14 @@ public partial class SharedBodySystem
 
                 if (organComp.Body is { Valid: true } oldBodyUid)
                 {
-                    var removedEv = new RemovedFromPartInBodyEvent(oldBodyUid, ent);
+                    var removedEv = new OrganRemovedFromBodyEvent(oldBodyUid, ent);
                     RaiseLocalEvent(organ, ref removedEv);
                 }
 
                 organComp.Body = bodyUid;
                 if (bodyUid is not null)
                 {
-                    var addedEv = new AddedToPartInBodyEvent(bodyUid.Value, ent);
+                    var addedEv = new OrganAddedToBodyEvent(bodyUid.Value, ent);
                     RaiseLocalEvent(organ, ref addedEv);
                 }
             }

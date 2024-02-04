@@ -15,12 +15,12 @@ public partial class SharedBodySystem
         EntityUid parentPartUid)
     {
         organEnt.Comp.Body = bodyUid;
-        var addedEv = new AddedToPartEvent(parentPartUid);
+        var addedEv = new OrganAddedEvent(parentPartUid);
         RaiseLocalEvent(organEnt, ref addedEv);
 
         if (organEnt.Comp.Body is not null)
         {
-            var addedInBodyEv = new AddedToPartInBodyEvent(bodyUid, parentPartUid);
+            var addedInBodyEv = new OrganAddedToBodyEvent(bodyUid, parentPartUid);
             RaiseLocalEvent(organEnt, ref addedInBodyEv);
         }
 
@@ -29,12 +29,12 @@ public partial class SharedBodySystem
 
     private void RemoveOrgan(Entity<OrganComponent> organEnt, EntityUid parentPartUid)
     {
-        var removedEv = new RemovedFromPartEvent(parentPartUid);
+        var removedEv = new OrganRemovedEvent(parentPartUid);
         RaiseLocalEvent(organEnt, ref removedEv);
 
         if (organEnt.Comp.Body is { Valid: true } bodyUid)
         {
-            var removedInBodyEv = new RemovedFromPartInBodyEvent(bodyUid, parentPartUid);
+            var removedInBodyEv = new OrganRemovedFromBodyEvent(bodyUid, parentPartUid);
             RaiseLocalEvent(organEnt, ref removedInBodyEv);
         }
 
