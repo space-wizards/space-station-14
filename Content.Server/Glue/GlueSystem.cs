@@ -78,7 +78,7 @@ public sealed class GlueSystem : SharedGlueSystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var glue, out _, out var meta))
+        while (query.MoveNext(out var uid, out var glue, out var _, out var meta))
         {
             if (_timing.CurTime < glue.Until)
                 continue;
