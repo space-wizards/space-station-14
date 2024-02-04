@@ -27,6 +27,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public FixedPoint2 Volume { get; set; }
 
+        [DataField("isSeparatedByLayers")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsSeparatedByLayers { get; set; }
 

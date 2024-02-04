@@ -86,11 +86,11 @@
   components:
   - type: SolutionContainerMixer
     mixDuration: 10
-    canSeparate: true
     mixingSound:
       path: /Audio/Machines/spinning.ogg
       params:
         volume: -4
+  - type: SolutionSeparator
   - type: ReactionMixer
     reactionTypes:
     - Centrifuge

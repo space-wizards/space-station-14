@@ -35,13 +35,6 @@ public sealed partial class SolutionContainerMixerComponent : Component
 
     [DataField]
     public Entity<AudioComponent>? MixingSoundEntity;
-
-    /// <summary>
-    /// Marker that machine can separate solution that it works with into layers,
-    /// so it will pour out reagent by reagent and not all mixed up.
-    /// </summary>
-    [DataField]
-    public bool CanSeparate;
 }
 
 [Serializable, NetSerializable]
