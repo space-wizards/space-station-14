@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added 9 new cargo bounties!
-    type: Add
-  id: 5389
-  time: '2023-12-16T08:23:35.0000000+00:00'
 - author: mirrorcult
   changes:
   - message: Everyone can toggle fire alarms now, not just atmos
@@ -3877,3 +3871,11 @@
   id: 5888
   time: '2024-02-04T20:48:06.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24881
+- author: Scribbles0
+  changes:
+  - message: Holoparasites can now autoattack at their max attack rate when holding
+      down their attack button.
+    type: Add
+  id: 5889
+  time: '2024-02-04T23:01:49.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24944
