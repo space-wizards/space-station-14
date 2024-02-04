@@ -13,7 +13,6 @@ using Content.Shared.Store;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Store.Systems;
@@ -108,11 +107,6 @@ public sealed partial class StoreSystem
 
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
         // stores/listings, this needs to use session specific BUI states.
-
-        var xform = Transform(store);
-
-        if (component.StartingMap != xform.MapID)
-            component.RefundAllowed = false;
 
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
