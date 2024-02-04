@@ -1,14 +1,25 @@
-{
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Made by AsikKEsel",
-    "size": {
-      "x": 32,
-      "y": 32
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Beestation-Hornet at https://github.com/BeeStation/BeeStation-Hornet/commit/d06dde90f7bb6e6ba1b4a34bcc2a4624dbb1518c",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "closed"
     },
-    "states": [
-      {
-        "name": "icon"
-      }
-    ]
-  }
+    {
+      "name": "open"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

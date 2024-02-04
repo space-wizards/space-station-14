@@ -2,9 +2,10 @@ trait-blindness-name = Blindness
 trait-blindness-desc = You are legally blind, and can't see clearly past a few meters in front of you.
 
 trait-narcolepsy-name = Narcolepsy
-trait-narcolepsy-decs = You fall asleep randomly
+trait-narcolepsy-desc = You fall asleep randomly
 
 trait-pacifist-name = Pacifist
+trait-pacifist-desc = You cannot attack or hurt any living beings.
 
 permanent-blindness-trait-examined = [color=lightblue]{CAPITALIZE(POSS-ADJ($target))} eyes are glassy and unfocused. It doesn't seem like {SUBJECT($target)} can see you well, if at all.[/color]
 
@@ -17,20 +18,14 @@ trait-muted-desc = You can't speak
 trait-paracusia-name = Paracusia
 trait-paracusia-desc = You hear sounds that aren't really there
 
-trait-uncloneable-name = Uncloneable
-trait-uncloneable-desc = Cannot be cloned
+trait-unrevivable-name = Unrevivable
+trait-unrevivable-desc = You are unable to be revived by defibrillators.
 
 trait-pirate-accent-name = Pirate Accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
-trait-archaic-accent-name = Archaic Accent
-trait-archaic-accent-desc = You speak in a way that many others find outdated
-
 trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
-
-trait-wheelchair-bound-name = Wheelchair Bound
-trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.
 
 trait-frontal-lisp-name = Frontal Lisp
 trait-frontal-lisp-desc = You thpeak with a lithp

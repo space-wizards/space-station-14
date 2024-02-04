@@ -36,7 +36,7 @@
         - !type:ReagentThreshold
           min: 20
         damage:
-          types:
+          groups:
             Brute: 2
       - !type:Jitter
         conditions:
@@ -681,7 +681,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 3
+            Poison: 2
       - !type:GenericStatusEffect
         key: Stun
         time: 3.0
@@ -1136,3 +1136,25 @@
               Burn: -5
             types:
               Poison: -2
+
+- type: reagent
+  id : Aloxadone
+  name: reagent-name-aloxadone
+  group: Medicine
+  desc: reagent-desc-aloxadone
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#89f77f"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:Temperature
+          max: 213.0
+        damage:
+          types:
+            Heat: -3.0
+            Shock: -3.0
+            Caustic: -1.0
