@@ -833,6 +833,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> NewPlayerThreshold =
             CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// How long an admin client can go without any input before being considered AFK.
+        /// </summary>
+        public static readonly CVarDef<float> AdminAfkTime =
+            CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
+
         /*
          * Explosions
          */
@@ -1557,6 +1563,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ReducedMotion =
             CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Screen shake intensity slider, controlling the intensity of the CameraRecoilSystem.
+        /// Goes from 0 (no recoil at all) to 1 (regular amounts of recoil)
+        /// </summary>
+        public static readonly CVarDef<float> ScreenShakeIntensity =
+            CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * CHAT
