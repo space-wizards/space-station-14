@@ -9,9 +9,9 @@
     layers:
     - state: old-radio
   - type: GhostRole
-    name: Syndicate Agent
-    description: Someone needs reinforcements. You, the first person the syndicate could find, will help them.
-    rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+    name: Агент Синдиката
+    description: Кому-то нужно подкрепление. Вы, первый человек, которого смог найти синдикат.
+    rules: Применяются обычные правила антагонистов синдиката. Работайте с теми, кто вас вызвал, и не причиняйте им вреда.
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgent
   - type: EmitSoundOnUse
@@ -35,8 +35,8 @@
   description: Calls in a specially trained monkey to assist you.
   components:
   - type: GhostRole
-    name: Syndicate Monkey Agent
-    description: Someone needs reinforcements. You, a trained monkey, will help them.
-    rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+    name: Обезьяна синдиката
+    description: Кому-то нужно подкрепление. Вы, дрессированная обезьянка.
+    rules: Применяются обычные правила антагонистов синдиката. Работайте с теми, кто вас вызвал, и не причиняйте им вреда.
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
