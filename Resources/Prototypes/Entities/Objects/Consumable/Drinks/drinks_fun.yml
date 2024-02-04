@@ -70,7 +70,7 @@
     solution: drink
 
 
-# Mopwata 
+# Mopwata
 - type: weightedRandomFillSolution
   id: RandomFillMopwata
   fills:
@@ -112,7 +112,6 @@
     - Mold
     - SpaceLube
     - SpaceGlue
-    - SoapyWater
     - SpaceCleaner
     - MilkSpoiled
     - FourteenLoko

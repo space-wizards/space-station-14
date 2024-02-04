@@ -9,6 +9,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
@@ -75,7 +76,11 @@ public sealed class SlipperySystem : EntitySystem
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
 
             if (component.SuperSlippery)
-                EnsureComp<SlidingComponent>(other);
+            {
+                var sliding = EnsureComp<SlidingComponent>(other);
+                sliding.CollidingEntities.Add(uid);
+                DebugTools.Assert(_physics.GetContactingEntities(other, physics).Contains(uid));
+            }
         }
 
         var playSound = !_statusEffects.HasStatusEffect(other, "KnockedDown");
