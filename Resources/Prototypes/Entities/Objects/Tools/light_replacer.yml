@@ -17,7 +17,6 @@
       amount: 5
   - type: Tag
     tags:
-      - LightReplacer
       - DroneUsable
   - type: StaticPrice
     price: 100

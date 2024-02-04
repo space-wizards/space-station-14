@@ -13,7 +13,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -181,6 +181,9 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
     private void OnActivateUI(Entity<CryoPodComponent> entity, ref AfterActivatableUIOpenEvent args)
     {
+        if (!entity.Comp.BodyContainer.ContainedEntity.HasValue)
+            return;
+
         TryComp<TemperatureComponent>(entity.Comp.BodyContainer.ContainedEntity, out var temp);
         TryComp<BloodstreamComponent>(entity.Comp.BodyContainer.ContainedEntity, out var bloodstream);
 
@@ -189,7 +192,8 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             HealthAnalyzerUiKey.Key,
             new HealthAnalyzerScannedUserMessage(GetNetEntity(entity.Comp.BodyContainer.ContainedEntity),
             temp?.CurrentTemperature ?? 0,
-            (bloodstream != null && _solutionContainerSystem.ResolveSolution(entity.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
+            (bloodstream != null && _solutionContainerSystem.ResolveSolution(entity.Comp.BodyContainer.ContainedEntity.Value,
+                bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 ? bloodSolution.FillFraction
                 : 0
         ));
@@ -208,10 +212,13 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.SolutionContainerName);
         if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out var containerSolution))
         {
-            args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
-            if (containerSolution.Volume == 0)
+            using (args.PushGroup(nameof(CryoPodComponent)))
             {
-                args.PushMarkup(Loc.GetString("cryo-pod-empty-beaker"));
+                args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
+                if (containerSolution.Volume == 0)
+                {
+                    args.PushMarkup(Loc.GetString("cryo-pod-empty-beaker"));
+                }
             }
         }
     }

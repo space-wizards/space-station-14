@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.IntegrationTests.Pair;
 using Content.Server.Administration.Managers;
@@ -38,7 +38,7 @@ public abstract class ToolshedTest : IInvocationContext
 
     protected virtual async Task TearDown()
     {
-        Assert.IsEmpty(_expectedErrors);
+        Assert.That(_expectedErrors, Is.Empty);
         ClearErrors();
     }
 

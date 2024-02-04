@@ -277,7 +277,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           stick: ""
-      - enum.DamageStateVisualLayers.Base:
           stick2: ""
   - type: Tag
     tags:

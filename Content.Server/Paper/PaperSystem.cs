@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -79,20 +79,24 @@ namespace Content.Server.Paper
             if (!args.IsInDetailsRange)
                 return;
 
-            if (paperComp.Content != "")
-                args.PushMarkup(
-                    Loc.GetString(
-                        "paper-component-examine-detail-has-words", ("paper", uid)
-                    )
-                );
-
-            if (paperComp.StampedBy.Count > 0)
+            using (args.PushGroup(nameof(PaperComponent)))
             {
-                var commaSeparated = string.Join(", ", paperComp.StampedBy.Select(s => Loc.GetString(s.StampedName)));
-                args.PushMarkup(
-                    Loc.GetString(
-                        "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
-                );
+                if (paperComp.Content != "")
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "paper-component-examine-detail-has-words", ("paper", uid)
+                        )
+                    );
+
+                if (paperComp.StampedBy.Count > 0)
+                {
+                    var commaSeparated =
+                        string.Join(", ", paperComp.StampedBy.Select(s => Loc.GetString(s.StampedName)));
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
+                    );
+                }
             }
         }
 

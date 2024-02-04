@@ -93,7 +93,7 @@
     requiredLegs: 1
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Weapons/punch3.ogg
+        path: /Audio/Weapons/punch3.ogg
     angle: 0
     animation: WeaponArcPunch
     damage:
@@ -107,6 +107,11 @@
     interactFailureString: petting-failure-generic
   - type: Speech
     speechVerb: Slime
+  - type: TypingIndicator
+    proto: slime
+  - type: Speech
+    speechVerb: Slime
+    speechSounds: Slime
   - type: TypingIndicator
     proto: slime
 

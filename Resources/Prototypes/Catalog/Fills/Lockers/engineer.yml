@@ -82,7 +82,7 @@
     contents:
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskGasAtmos
-      - id: YellowOxygenTankFilled
+      - id: OxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
@@ -146,8 +146,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHatHoodRad
-        amount: 2
       - id: ClothingOuterSuitRad
         amount: 2
       - id: GeigerCounter

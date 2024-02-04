@@ -56,6 +56,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,
+                SpawnPriorityPreference.None,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
@@ -83,7 +84,7 @@ namespace Content.IntegrationTests.Tests.Preferences
             var pair = await PoolManager.GetServerClient();
             var db = GetDb(pair.Server);
             // Database should be empty so a new GUID should do it.
-            Assert.Null(await db.GetPlayerPreferencesAsync(NewUserId()));
+            Assert.That(await db.GetPlayerPreferencesAsync(NewUserId()), Is.Null);
 
             await pair.CleanReturnAsync();
         }
