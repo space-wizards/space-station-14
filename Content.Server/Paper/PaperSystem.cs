@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
-using Content.Server.Roles.Jobs;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.UserInterface;
@@ -9,7 +8,6 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Mind.Components;
 using Content.Shared.Paper;
 using Content.Shared.PDA;
 using Content.Shared.Tag;
@@ -19,6 +17,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using static Content.Shared.Inventory.InventorySystem;
 using static Content.Shared.Paper.SharedPaperComponent;
+using Content.Shared.Access.Systems;
 
 namespace Content.Server.Paper
 {
@@ -32,8 +31,9 @@ namespace Content.Server.Paper
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly StationSystem _station = default!;
+        [Dependency] private readonly SharedIdCardSystem _idCard = default!;
 
         public override void Initialize()
         {
@@ -72,7 +72,7 @@ namespace Content.Server.Paper
                     _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState, appearance);
             }
 
-            paperComp.TagsState = new(null, null, null, null, null);
+            paperComp.TagsState = new();
         }
 
         private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
@@ -113,39 +113,21 @@ namespace Content.Server.Paper
 
         private void UpdateTagsState(EntityUid userUid, PaperComponent paperComp)
         {
-            if (paperComp.TagsState != null)
+            if (paperComp.TagsState is { } state)
             {
-                paperComp.TagsState = TryComp<MetaDataComponent>(userUid, out var metaEntity)
-                    ? paperComp.TagsState with { PersonName = metaEntity.EntityName }
-                    : paperComp.TagsState with { PersonName = Loc.GetString("paper-tags-person-name-default") };
+                // var state = paperComp.TagsState;
+                state.PersonName = Name(userUid);
 
                 var station = _station.GetOwningStation(userUid);
-                paperComp.TagsState = station is null
-                    ? paperComp.TagsState with { StationName = Loc.GetString("paper-tags-station-name-default") }
-                    : paperComp.TagsState with { StationName = Name(station.Value) };
+                state.StationName = station is null
+                    ? Loc.GetString("paper-tags-station-name-default")
+                    : Name(station.Value);
 
-                // Searches among the PDA slot, through which the IdCard Com content
-                // containing the position is obtained. This is necessary in order for
-                // the position in the tag to change, unlike the previous method.
-                var defaultJobTitle = Loc.GetString("paper-tags-person-job-default");
-                if (TryComp<InventoryComponent>(userUid, out var inventoryComponent))
-                {
-                    var slots = new InventorySlotEnumerator(inventoryComponent);
-                    while (slots.MoveNext(out var slot))
-                    {
-                        if (slot is { ID: "id", ContainedEntity: not null }
-                            && TryComp<PdaComponent>(slot.ContainedEntity.Value, out var pdaComponent)
-                            && TryComp<IdCardComponent>(pdaComponent.ContainedId, out var idCardComp))
-                        {
-                            var jobTitle = idCardComp.JobTitle;
-                            paperComp.TagsState =  paperComp.TagsState with { PersonJob = jobTitle };
-                            return;
-                        }
-                    }
+                state.PersonJob = _idCard.TryFindIdCard(userUid, out var idCard)
+                        ? idCard.Comp.JobTitle
+                        : Loc.GetString("paper-tags-person-job-default");
 
-                    // If the PDA and IdCard are not found, inserts the standard line.
-                    paperComp.TagsState =  paperComp.TagsState with { PersonJob = defaultJobTitle };
-                }
+                paperComp.TagsState = state;
             }
         }
 
@@ -216,8 +198,7 @@ namespace Content.Server.Paper
             {
                 paperComp.TagsState = paperComp.TagsState with
                 {
-                    WriteTime = _gameTiming.CurTime,
-                    WriteDate = DateTime.Now,
+                    WriteTime = _timing.CurTime,
                 };
             }
 

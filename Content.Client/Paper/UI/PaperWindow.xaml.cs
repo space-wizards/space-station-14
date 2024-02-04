@@ -44,7 +44,6 @@ namespace Content.Client.Paper.UI
             typeof(ItalicTag),
             typeof(TimeTag),
             typeof(NameTag),
-            typeof(DateTag),
             typeof(StationTag),
             typeof(JobTag),
         };

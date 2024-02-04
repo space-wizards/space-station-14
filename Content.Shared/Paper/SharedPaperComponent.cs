@@ -33,7 +33,13 @@ public abstract partial class SharedPaperComponent : Component
     }
 
     [Serializable, NetSerializable]
-    public record TagsState(TimeSpan? WriteTime, string? StationName, string? PersonName, string? PersonJob, DateTime? WriteDate);
+    public record TagsState
+    {
+        public TimeSpan? WriteTime { get; set; }
+        public string? StationName { get; set; }
+        public string? PersonName { get; set; }
+        public string? PersonJob { get; set; }
+    }
 
     [Serializable, NetSerializable]
     public enum PaperUiKey
