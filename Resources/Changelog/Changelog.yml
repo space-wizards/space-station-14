@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Scientists can now fabricate faux grass planet and ice tiles with a tier
-      2 civilian services research! They're just as good as the real thing, while
-      being removable.
-    type: Add
-  id: 5387
-  time: '2023-12-16T08:20:57.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Lawyers, librarians and reporters now spawn with a luxury pen in their
@@ -3878,3 +3870,10 @@
   id: 5886
   time: '2024-02-04T02:23:16.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24937
+- author: Tayrtahn
+  changes:
+  - message: Added opened/closed visuals and fill levels for a variety of drinks.
+    type: Add
+  id: 5887
+  time: '2024-02-04T20:13:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24600
