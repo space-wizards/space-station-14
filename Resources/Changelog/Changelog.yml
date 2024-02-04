@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Resprited the Kammerer, Double-Barrel, and Enforcer shotguns using sprites
-      courtesy of /tg/station.
-    type: Tweak
-  id: 5386
-  time: '2023-12-16T04:23:57.0000000+00:00'
 - author: mirrorcult
   changes:
   - message: Scientists can now fabricate faux grass planet and ice tiles with a tier
@@ -3878,3 +3871,10 @@
   id: 5885
   time: '2024-02-04T00:52:44.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24597
+- author: metalgearsloth
+  changes:
+  - message: Moving to open lockers is now predicted.
+    type: Fix
+  id: 5886
+  time: '2024-02-04T02:23:16.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24937
