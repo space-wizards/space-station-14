@@ -58,6 +58,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         base.Shutdown();
 
         _tracking.CalcTrackers -= CalcTrackers;
+        _adminManager.OnPermsChanged -= AdminPermsChanged;
     }
 
     private void CalcTrackers(ICommonSession player, HashSet<string> trackers)
@@ -144,7 +145,6 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     {
         _tracking.QueueRefreshTrackers(admin.Player);
     }
-
 
     private void OnPlayerAttached(PlayerAttachedEvent ev)
     {
