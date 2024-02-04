@@ -169,13 +169,13 @@ public sealed partial class StoreSystem
             component.RefundAllowed = true;
 
         //subtract the cash
-        foreach (var currency in listing.Cost)
+        foreach (var (currency, value) in listing.Cost)
         {
-            component.Balance[currency.Key] -= currency.Value;
+            component.Balance[currency] -= value;
 
-            component.BalanceSpent.TryAdd(currency.Key, FixedPoint2.Zero);
+            component.BalanceSpent.TryAdd(currency, FixedPoint2.Zero);
 
-            component.BalanceSpent[currency.Key] += currency.Value;
+            component.BalanceSpent[currency] += value;
         }
 
         //spawn entity
@@ -231,7 +231,7 @@ public sealed partial class StoreSystem
 
         if (listing is { ProductUpgradeID: not null, ProductActionEntity: not null })
         {
-            if (listing.ProductActionEntity != null && component.BoughtEntities.Contains(listing.ProductActionEntity.Value))
+            if (listing.ProductActionEntity != null)
             {
                 component.BoughtEntities.Remove(listing.ProductActionEntity.Value);
             }
@@ -320,29 +320,29 @@ public sealed partial class StoreSystem
             UpdateUserInterface(buyer, uid, component);
         }
 
-        if (!component.RefundAllowed || !component.BoughtEntities.Any())
+        if (!component.RefundAllowed || component.BoughtEntities.Count == 0)
             return;
 
-        foreach (var purchase in component.BoughtEntities.ToList())
+        for (var i = component.BoughtEntities.Count; i >= 0; i--)
         {
-            if (purchase.Valid)
-            {
-                component.BoughtEntities.Remove(purchase);
+            var purchase = component.BoughtEntities[i];
 
-                if (_actions.TryGetActionData(purchase, out var actionComponent))
-                {
-                    _actionContainer.RemoveAction(purchase, actionComponent);
-                    EntityManager.DeleteEntity(purchase);
-                }
-                else
-                {
-                    EntityManager.DeleteEntity(purchase);
-                }
+            if (!Exists(purchase))
+                continue;
+
+            component.BoughtEntities.RemoveAt(i);
+
+            if (_actions.TryGetActionData(purchase, out var actionComponent))
+            {
+                _actionContainer.RemoveAction(purchase, actionComponent);
             }
+
+            EntityManager.DeleteEntity(purchase);
         }
-        foreach (var currency in component.BalanceSpent)
+
+        foreach (var (currency, value) in component.BalanceSpent)
         {
-            component.Balance[currency.Key] += currency.Value;
+            component.Balance[currency] += value;
         }
         // Reset store back to its original state
         RefreshAllListings(component);
@@ -360,7 +360,7 @@ public sealed partial class StoreSystem
     private bool IsOnStartingMap(EntityUid store, StoreComponent component)
     {
         var xform = Transform(store);
-        return component.StartingMap == xform.MapID;
+        return component.StartingMap == xform.MapUid;
     }
 
     /// <summary>

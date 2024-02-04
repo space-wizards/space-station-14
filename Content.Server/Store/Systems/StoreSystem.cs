@@ -43,7 +43,7 @@ public sealed partial class StoreSystem : EntitySystem
     {
         RefreshAllListings(component);
         InitializeFromPreset(component.Preset, uid, component);
-        component.StartingMap = Transform(uid).MapID;
+        component.StartingMap = Transform(uid).MapUid;
     }
 
     private void OnStartup(EntityUid uid, StoreComponent component, ComponentStartup args)
