@@ -1,6 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Robust.Shared.Network;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
@@ -20,6 +21,7 @@ public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -62,9 +64,8 @@ public sealed class SlipperySystem : EntitySystem
 
         //TODO: If it's after 2024 March and this popup is still here, remove it
         // Only here so people who don't read even the changelog won't think soap suddenly broke
-        // Can't be popupclient because the goal is to let every onlooker know that this was not a glitch or "omg noslips"
-        _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), uid);
-
+        if (_netManager.IsServer)
+            _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), uid, PopupType.Medium);
     }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
