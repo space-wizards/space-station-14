@@ -97,7 +97,7 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnFollowerMove(EntityUid uid, FollowerComponent component, ref MoveInputEvent args)
     {
-        if ((args.Component.HeldMoveButtons & MoveButtons.AnyDirection) != MoveButtons.None)
+        if (args.HasDirectionalMovement)
             StopFollowingEntity(uid, component.Following);
     }
 
