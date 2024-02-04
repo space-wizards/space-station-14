@@ -412,11 +412,6 @@ public sealed partial class RadarControl : BaseShuttleControl
         handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, color);
     }
 
-    private Vector2 ScalePosition(Vector2 value)
-    {
-        return value * MinimapScale + MidPointVector;
-    }
-
     private Vector2 InverseScalePosition(Vector2 value)
     {
         return (value - MidPointVector) / MinimapScale;

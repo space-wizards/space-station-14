@@ -4,28 +4,46 @@
                xmlns:controls1="clr-namespace:Content.Client.UserInterface.Controls"
                xmlns:ui="clr-namespace:Content.Client.Shuttles.UI">
     <ui:DockingControl Name="DockingControl"
-                       Visible="False"
                        MouseFilter="Stop"
-                       Margin="5 4 10 5"
-                       HorizontalExpand="True"
+                       VerticalAlignment="Stretch"
                        VerticalExpand="True"
-                       VerticalAlignment="Top"/>
-    <!-- Buffer -->
-    <controls:Control HorizontalExpand="True"/>
+                       HorizontalExpand="True"
+                       Margin="5 4 10 5"/>
     <controls:BoxContainer Name="RightDisplayDock"
-                  VerticalAlignment="Top"
-                  HorizontalAlignment="Right"
-                  MinWidth="256"
-                  MaxWidth="256"
-                  Align="Center"
-                  Margin="5 0 5 5"
-                  Orientation="Vertical">
-        <controls:BoxContainer Orientation="Vertical">
-            <controls1:StripeBack MinSize="48 48">
-                <controls:Label Name="DockingPortsLabel" Text="{controls:Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
-            </controls1:StripeBack>
-            <controls:BoxContainer Name="DockPorts"
-                          Orientation="Vertical"/>
-        </controls:BoxContainer>
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Right"
+                           MinWidth="256"
+                           MaxWidth="256"
+                           Align="Center"
+                           Margin="5 0 5 5"
+                           Orientation="Vertical">
+        <controls1:StripeBack MinSize="48 48">
+            <controls:Label Name="DockingSettingsLabel" Text="{controls:Loc 'shuttle-console-dock-settings'}" HorizontalAlignment="Center"/>
+        </controls1:StripeBack>
+        <!--
+        <controls:GridContainer Columns="2"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                HorizontalExpand="True"
+                                Margin="3"
+                                Name="DockingSettings">
+            <controls:Label Text="{controls:Loc 'shuttle-console-docking-code'}"/>
+            <controls:Label Name="DockCode"
+                            Text=""
+                            HorizontalExpand="True"
+                            Align="Right"/>
+        </controls:GridContainer>
+        -->
+        <controls1:StripeBack MinSize="48 48">
+            <controls:Label Name="DockedLabel" Text="{controls:Loc 'shuttle-console-docked'}" HorizontalAlignment="Center"/>
+        </controls1:StripeBack>
+        <controls:BoxContainer Name="DockedWith" Orientation="Vertical"/>
+        <controls1:StripeBack MinSize="48 48">
+            <controls:Label Name="DockingPortsLabel" Text="{controls:Loc 'shuttle-console-docks-label'}" HorizontalAlignment="Center"/>
+        </controls1:StripeBack>
+        <controls:ScrollContainer VerticalExpand="True" HScrollEnabled="False"
+                                  ReturnMeasure="True">
+            <controls:BoxContainer Name="DockPorts" Orientation="Vertical"/>
+        </controls:ScrollContainer>
     </controls:BoxContainer>
 </controls:BoxContainer>

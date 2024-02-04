@@ -37,7 +37,7 @@
                       Margin="5">
             <ui:NavScreen Name="NavContainer" Visible="False"/>
             <ui:MapScreen Name="MapContainer" Visible="False"/>
-            <controls:MapGridControl Name="DockContainer" Visible="False"/>
+            <ui:DockingScreen Name="DockContainer" Visible="False"/>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

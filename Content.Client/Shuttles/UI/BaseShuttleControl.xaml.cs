@@ -18,7 +18,6 @@ public partial class BaseShuttleControl : MapGridControl
 
     public BaseShuttleControl() : this(32f, 32f, 32f)
     {
-        RobustXamlLoader.Load(this);
     }
 
     public BaseShuttleControl(float minRange, float maxRange, float range) : base(minRange, maxRange, range)
