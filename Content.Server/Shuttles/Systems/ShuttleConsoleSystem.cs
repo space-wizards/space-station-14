@@ -22,12 +22,12 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
@@ -73,7 +73,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<DockEvent>(OnDock);
         SubscribeLocalEvent<UndockEvent>(OnUndock);
 
-        SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
         SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
 
         SubscribeLocalEvent<FTLDestinationComponent, ComponentStartup>(OnFtlDestStartup);
@@ -253,12 +252,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         var shuttleGridUid = consoleXform?.GridUid;
 
         var ftlState = FTLState.Available;
-        var ftlTime = TimeSpan.Zero;
+        var stateDuration = 0f;
 
-        if (TryComp<FTLComponent>(shuttleGridUid, out var shuttleFtl))
+        if (TryComp<FTLComponent>(shuttleGridUid, out var shuttleFtl) && shuttleFtl.LifeStage < ComponentLifeStage.Stopping)
         {
             ftlState = shuttleFtl.State;
-            ftlTime = _timing.CurTime + TimeSpan.FromSeconds(shuttleFtl.Accumulator);
+            stateDuration = _shuttle.GetStateDuration(shuttleFtl);
         }
 
         // Only bother getting FTL data if we can FTL.
@@ -275,7 +274,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             _ui.SetUiState(bui, new ShuttleConsoleBoundInterfaceState(
                 ftlState,
-                ftlTime,
+                stateDuration,
                 beacons ?? new List<ShuttleBeacon>(),
                 exclusions ?? new List<ShuttleExclusion>(),
                 range,
@@ -308,27 +307,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             RemovePilot(uid, comp);
         }
-    }
-
-    /// <summary>
-    /// If pilot is moved then we'll stop them from piloting.
-    /// </summary>
-    private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
-    {
-        if (component.Console == null || component.Position == null)
-        {
-            DebugTools.Assert(component.Position == null && component.Console == null);
-            EntityManager.RemoveComponent<PilotComponent>(uid);
-            return;
-        }
-
-        if (args.NewPosition.TryDistance(EntityManager, component.Position.Value, out var distance) &&
-            distance < PilotComponent.BreakDistance)
-        {
-            return;
-        }
-
-        RemovePilot(uid, component);
     }
 
     protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)

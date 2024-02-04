@@ -110,6 +110,24 @@ public sealed partial class ShuttleSystem
         return mapUid;
     }
 
+    public float GetStateDuration(FTLComponent component)
+    {
+        var state = component.State;
+
+        switch (state)
+        {
+            case FTLState.Starting:
+            case FTLState.Travelling:
+            case FTLState.Arriving:
+            case FTLState.Cooldown:
+                return component.Accumulator;
+            case FTLState.Available:
+                return 0f;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
     /// <summary>
     /// Updates the whitelist for this FTL destination.
     /// </summary>

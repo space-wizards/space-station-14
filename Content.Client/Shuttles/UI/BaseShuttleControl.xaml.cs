@@ -14,7 +14,6 @@ namespace Content.Client.Shuttles.UI;
 [Virtual]
 public partial class BaseShuttleControl : MapGridControl
 {
-    protected static readonly Color BackingColor = new Color(0.08f, 0.08f, 0.08f);
     protected Font Font;
 
     public BaseShuttleControl() : this(32f, 32f, 32f)
@@ -30,9 +29,6 @@ public partial class BaseShuttleControl : MapGridControl
 
     protected void DrawCircles(DrawingHandleScreen handle)
     {
-        var backing = BackingColor;
-        handle.DrawRect(new UIBox2(0f, Height, Width, 0f), backing);
-
         // Equatorial lines
         var gridLines = Color.LightGray.WithAlpha(0.01f);
 

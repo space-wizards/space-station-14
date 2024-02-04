@@ -97,6 +97,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                 break;
             case ShuttleConsoleMode.Map:
                 MapContainer.Visible = true;
+                MapContainer.Startup();
                 break;
             case ShuttleConsoleMode.Dock:
                 DockContainer.Visible = true;

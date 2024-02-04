@@ -14,9 +14,9 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
     public readonly FTLState FTLState;
 
     /// <summary>
-    ///  When the next FTL state change happens.
+    /// How long the FTL state takes.
     /// </summary>
-    public readonly TimeSpan FTLTime;
+    public float FTLDuration;
 
     public List<ShuttleBeacon> Destinations;
 
@@ -24,7 +24,7 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
 
     public ShuttleConsoleBoundInterfaceState(
         FTLState ftlState,
-        TimeSpan ftlTime,
+        float ftlDuration,
         List<ShuttleBeacon> destinations,
         List<ShuttleExclusion> exclusions,
         float maxRange,
@@ -33,7 +33,7 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
         List<DockingInterfaceState> docks) : base(maxRange, coordinates, angle, docks)
     {
         FTLState = ftlState;
-        FTLTime = ftlTime;
+        FTLDuration = ftlDuration;
         Destinations = destinations;
         Exclusions = exclusions;
     }

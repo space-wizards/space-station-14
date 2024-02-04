@@ -129,6 +129,7 @@ public sealed partial class RadarControl : BaseShuttleControl
     {
         base.Draw(handle);
 
+        DrawBacking(handle);
         DrawCircles(handle);
 
         // No data

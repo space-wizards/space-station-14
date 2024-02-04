@@ -23,9 +23,14 @@
                                     VerticalExpand="True"
                                     HorizontalAlignment="Center"/>
                 </controls1:StripeBack>
+                <controls:Label Name="MapFTLState"
+                                Text="{controls:Loc 'shuttle-console-ftl-state-Available'}"
+                                VerticalExpand="True"
+                                HorizontalAlignment="Center"/>
                 <controls:ProgressBar Name="FTLBar" HorizontalExpand="True"
                                       Margin="5"
-                                      MaxValue="0.0"
+                                      MinValue="0.0"
+                                      MaxValue="1.0"
                                       Value="1.0"/>
                 <controls:BoxContainer Orientation="Vertical">
                 <!-- Normal buttons -->

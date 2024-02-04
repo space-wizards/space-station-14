@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Shuttles.UI;
 
@@ -16,10 +17,15 @@ namespace Content.Client.Shuttles.UI;
 public sealed partial class MapScreen : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    private SharedTransformSystem _xformSystem;
+    private readonly SharedMapSystem _maps;
+    private readonly SharedTransformSystem _xformSystem;
 
     private EntityUid? _shuttleEntity;
+
+    private FTLState _state;
+    private float _ftlDuration;
 
     /// <summary>
     /// When the next FTL state change happens.
@@ -36,6 +42,7 @@ public sealed partial class MapScreen : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _maps = _entManager.System<SharedMapSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
 
         MapRebuildButton.OnPressed += MapRebuildPressed;
@@ -61,25 +68,39 @@ public sealed partial class MapScreen : BoxContainer
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState state)
     {
-        var ftlState = state.FTLState;
-        _nextFtlTime = state.FTLTime;
+        // Only network the accumulator due to ping making the thing fonky.
+        // This should work better with predicting network states as they come in.
+        _state = state.FTLState;
+        _ftlDuration = state.FTLDuration;
+        _nextFtlTime = _timing.CurTime + TimeSpan.FromSeconds(_ftlDuration);
+        MapRadar.InFtl = true;
+        MapFTLState.Text = Loc.GetString($"shuttle-console-ftl-state-{_state.ToString()}");
 
-        switch (ftlState)
+        switch (_state)
         {
-            case FTLState.Arriving:
-                _ftlStyle.BackgroundColor = Color.Goldenrod;
+            case FTLState.Available:
+                _ftlStyle.BackgroundColor = Color.FromHex("#80C71F");
+                MapRadar.InFtl = false;
                 break;
             case FTLState.Starting:
-                _ftlStyle.BackgroundColor = Color.Blue;
+                _ftlStyle.BackgroundColor = Color.FromHex("#169C9C");
                 break;
             case FTLState.Travelling:
-                _ftlStyle.BackgroundColor = Color.Gold;
+                _ftlStyle.BackgroundColor = Color.FromHex("#8932B8");
                 break;
-            case FTLState.Available:
-                _ftlStyle.BackgroundColor = Color.LimeGreen;
+            case FTLState.Arriving:
+                _ftlStyle.BackgroundColor = Color.FromHex("#F9801D");
                 break;
             case FTLState.Cooldown:
-                _ftlStyle.BackgroundColor = Color.Red;
+                // Scroll to the FTL spot
+                if (_entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform))
+                {
+                    var targetOffset = _maps.GetGridPosition(_shuttleEntity.Value);
+                    MapRadar.SetMap(shuttleXform.MapID, targetOffset, recentering: true);
+                }
+
+                _ftlStyle.BackgroundColor = Color.FromHex("#B02E26");
+                MapRadar.InFtl = false;
                 break;
             default:
                 throw new NotImplementedException();
@@ -235,22 +256,54 @@ public sealed partial class MapScreen : BoxContainer
 
     private void OnGridPress(EntityUid gridUid)
     {
-        var mapPos = _xformSystem.GetMapCoordinates(gridUid);
+        switch (_state)
+        {
+            case FTLState.Available:
+                break;
+            case FTLState.Cooldown:
+                break;
+            default:
+                return;
+        }
+
+        var gridXform = _entManager.GetComponent<TransformComponent>(gridUid);
+        var mapPos = _maps.GetGridPosition((gridUid, null, gridXform));
 
         // If it's our map then scroll, otherwise just set position there.
-        if (MapRadar.ViewingMap == mapPos.MapId)
-        {
-            MapRadar.TargetOffset = mapPos.Position;
-            MapRadar.ForceRecenter();
-        }
-        else
-        {
-            MapRadar.SetMap(mapPos.MapId, mapPos.Position);
-        }
+        MapRadar.SetMap(gridXform.MapID, mapPos, recentering: true);
     }
 
     public void SetMap(MapId mapId, Vector2 position)
     {
         MapRadar.SetMap(mapId, position);
+        MapRadar.Offset = position;
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        var ftlDiff = (float) (_nextFtlTime - _timing.CurTime).TotalSeconds;
+
+        float ftlRatio;
+
+        if (_ftlDuration.Equals(0f))
+        {
+            ftlRatio = 1f;
+        }
+        else
+        {
+            ftlRatio = Math.Clamp(1f - (ftlDiff / _ftlDuration), 0f, 1f);
+        }
+
+        FTLBar.Value = ftlRatio;
+    }
+
+    public void Startup()
+    {
+        if (_entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform))
+        {
+            SetMap(shuttleXform.MapID, _maps.GetGridPosition((_shuttleEntity.Value, null, shuttleXform)));
+        }
     }
 }

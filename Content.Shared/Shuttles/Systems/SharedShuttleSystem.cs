@@ -79,13 +79,10 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         // This is the already adjusted position
         var targetPosition = mapCoordinates.Position;
 
-        // If it's a cross-map FTL no range limit.
-        if (mapCoordinates.MapId == shuttleXform.MapID)
+        // Check range even if it's cross-map.
+        if ((targetPosition - ourPos).Length() > FTLRange)
         {
-            if ((targetPosition - ourPos).Length() > FTLRange)
-            {
-                return false;
-            }
+            return false;
         }
 
         // Check exclusion zones.

@@ -18,6 +18,8 @@ public partial class MapGridControl : BoxContainer
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
 
+    protected static readonly Color BackingColor = new Color(0.08f, 0.08f, 0.08f);
+
     /* Dragging */
     protected virtual bool Draggable { get; } = false;
 
@@ -184,6 +186,12 @@ public partial class MapGridControl : BoxContainer
         }
 
         return Offset == TargetOffset;
+    }
+
+    protected void DrawBacking(DrawingHandleScreen handle)
+    {
+        var backing = BackingColor;
+        handle.DrawRect(new UIBox2(0f, Height, Width, 0f), backing);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
