@@ -545,6 +545,7 @@
           3: { state: reinf_construct-3, visible: true}
           4: { state: reinf_construct-4, visible: true}
           5: { state: reinf_construct-5, visible: true}
+  - type: ReinforcedWallReplacementMarker
   - type: StaticPrice
     price: 150
   - type: RadiationBlocker
@@ -840,6 +841,7 @@
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
+  - type: WallReplacementMarker
   - type: Construction
     graph: Girder
     node: wall
