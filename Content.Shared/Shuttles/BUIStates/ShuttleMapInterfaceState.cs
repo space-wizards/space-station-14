@@ -7,7 +7,7 @@ namespace Content.Shared.Shuttles.BUIStates;
 /// Handles BUI data for Map screen.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ShuttleMapBoundState
+public sealed class ShuttleMapInterfaceState
 {
     /// <summary>
     /// The current FTL state.
@@ -23,7 +23,7 @@ public sealed class ShuttleMapBoundState
 
     public List<ShuttleExclusion> Exclusions;
 
-    public ShuttleMapBoundState(
+    public ShuttleMapInterfaceState(
         FTLState ftlState,
         float ftlDuration,
         List<ShuttleBeacon> destinations,

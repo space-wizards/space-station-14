@@ -46,7 +46,7 @@ public sealed partial class NavScreen : BoxContainer
         args.Button.Pressed = NavRadar.ShowDocks;
     }
 
-    public void UpdateState(ShuttleBoundUserInterfaceState scc)
+    public void UpdateState(NavInterfaceState scc)
     {
         NavRadar.UpdateState(scc);
     }

@@ -26,7 +26,6 @@ namespace Content.Client.Pinpointer.UI;
 public partial class NavMapControl : MapGridControl
 {
     [Dependency] private IResourceCache _cache = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SharedTransformSystem _transformSystem;
 
     public EntityUid? Owner;
@@ -98,7 +97,7 @@ public partial class NavMapControl : MapGridControl
     {
         IoCManager.InjectDependencies(this);
 
-        _transformSystem = _entManager.System<SharedTransformSystem>();
+        _transformSystem = EntManager.System<SharedTransformSystem>();
         BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
 
         RectClipContent = true;
@@ -149,8 +148,8 @@ public partial class NavMapControl : MapGridControl
 
     public void ForceNavMapUpdate()
     {
-        _entManager.TryGetComponent(MapUid, out _navMap);
-        _entManager.TryGetComponent(MapUid, out _grid);
+        EntManager.TryGetComponent(MapUid, out _navMap);
+        EntManager.TryGetComponent(MapUid, out _grid);
 
         UpdateNavMap();
     }
@@ -196,7 +195,7 @@ public partial class NavMapControl : MapGridControl
                 if (!blip.Selectable)
                     continue;
 
-                var currentDistance = (blip.Coordinates.ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
+                var currentDistance = (blip.Coordinates.ToMapPos(EntManager, _transformSystem) - worldPosition).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
@@ -239,11 +238,11 @@ public partial class NavMapControl : MapGridControl
         base.Draw(handle);
 
         // Get the components necessary for drawing the navmap
-        _entManager.TryGetComponent(MapUid, out _navMap);
-        _entManager.TryGetComponent(MapUid, out _grid);
-        _entManager.TryGetComponent(MapUid, out _xform);
-        _entManager.TryGetComponent(MapUid, out _physics);
-        _entManager.TryGetComponent(MapUid, out _fixtures);
+        EntManager.TryGetComponent(MapUid, out _navMap);
+        EntManager.TryGetComponent(MapUid, out _grid);
+        EntManager.TryGetComponent(MapUid, out _xform);
+        EntManager.TryGetComponent(MapUid, out _physics);
+        EntManager.TryGetComponent(MapUid, out _fixtures);
 
         // Map re-centering
         _recenter.Disabled = DrawRecenter();
@@ -390,7 +389,7 @@ public partial class NavMapControl : MapGridControl
         {
             if (lit && value.Visible)
             {
-                var mapPos = coord.ToMap(_entManager, _transformSystem);
+                var mapPos = coord.ToMap(EntManager, _transformSystem);
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
@@ -416,7 +415,7 @@ public partial class NavMapControl : MapGridControl
             if (!iconVertexUVs.TryGetValue((blip.Texture, blip.Color), out var vertexUVs))
                 vertexUVs = new();
 
-            var mapPos = blip.Coordinates.ToMap(_entManager, _transformSystem);
+            var mapPos = blip.Coordinates.ToMap(EntManager, _transformSystem);
 
             if (mapPos.MapId != MapId.Nullspace)
             {

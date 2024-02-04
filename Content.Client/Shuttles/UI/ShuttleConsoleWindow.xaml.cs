@@ -124,17 +124,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         Dock,
     }
 
-    public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
-    {
-        NavContainer.SetMatrix(coordinates, angle);
-    }
-
     public void UpdateState(ShuttleBoundUserInterfaceState cState)
     {
-        NavContainer.UpdateState(cState);
-        var coordinates = _entManager.GetCoordinates(cState.Coordinates);
+        var coordinates = _entManager.GetCoordinates(cState.NavState.Coordinates);
         NavContainer.SetShuttle(coordinates?.EntityId);
         MapContainer.SetShuttle(coordinates?.EntityId);
-        MapContainer.UpdateState(cState);
+
+        NavContainer.UpdateState(cState.NavState);
+        MapContainer.UpdateState(cState.MapState);
+        DockContainer.UpdateState(coordinates?.EntityId, cState.DockState);
     }
 }

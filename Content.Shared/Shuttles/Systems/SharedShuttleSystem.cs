@@ -30,6 +30,25 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
+    public bool CanDraw(EntityUid gridUid, PhysicsComponent? physics = null, IFFComponent? iffComp = null)
+    {
+        if (!Resolve(gridUid, ref physics))
+            return true;
+
+        if (physics.Mass < 10f)
+        {
+            return false;
+        }
+
+        if (!Resolve(gridUid, ref iffComp, false))
+        {
+            return true;
+        }
+
+        // Hide it entirely.
+        return (iffComp.Flags & IFFFlags.Hide) == 0x0;
+    }
+
     public bool IsBeaconMap(EntityUid mapUid)
     {
         return TryComp(mapUid, out FTLDestinationComponent? ftlDest) && ftlDest.BeaconsOnly;

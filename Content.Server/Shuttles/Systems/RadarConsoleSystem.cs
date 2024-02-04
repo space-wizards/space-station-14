@@ -47,7 +47,18 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 
         if (_uiSystem.TryGetUi(uid, RadarConsoleUiKey.Key, out var bui))
         {
-            var state = _console.GetNavState();
+            NavInterfaceState state;
+            var docks = _console.GetAllDocks();
+
+            if (coordinates != null && angle != null)
+            {
+                state = _console.GetNavState(uid, docks, coordinates.Value, angle.Value);
+            }
+            else
+            {
+                state = _console.GetNavState(uid, docks);
+            }
+
             _uiSystem.SetUiState(bui, new NavBoundUserInterfaceState(state));
         }
     }

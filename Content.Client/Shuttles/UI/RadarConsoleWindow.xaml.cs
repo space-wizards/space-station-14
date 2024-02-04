@@ -20,9 +20,4 @@ public sealed partial class RadarConsoleWindow : FancyWindow,
     {
         RadarScreen.UpdateState(scc);
     }
-
-    public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
-    {
-        RadarScreen.SetMatrix(coordinates, angle);
-    }
 }

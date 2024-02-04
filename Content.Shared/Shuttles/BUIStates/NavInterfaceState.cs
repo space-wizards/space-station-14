@@ -18,14 +18,18 @@ public sealed class NavInterfaceState
     /// </summary>
     public Angle? Angle;
 
+    public Dictionary<NetEntity, List<DockingPortState>> Docks;
+
     public NavInterfaceState(
         float maxRange,
         NetCoordinates? coordinates,
-        Angle? angle)
+        Angle? angle,
+        Dictionary<NetEntity, List<DockingPortState>> docks)
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
         Angle = angle;
+        Docks = docks;
     }
 }
 

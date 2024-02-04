@@ -20,9 +20,7 @@ namespace Content.Client.Shuttles.UI;
 [GenerateTypedNameReferences]
 public sealed partial class RadarControl : BaseShuttleControl
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    private readonly SharedMapSystem _maps;
     private readonly SharedShuttleSystem _shuttles;
     private readonly SharedTransformSystem _transform;
 
@@ -33,7 +31,7 @@ public sealed partial class RadarControl : BaseShuttleControl
 
     private Angle? _rotation;
 
-    private readonly Dictionary<EntityUid, List<DockingPortState>> _docks = new();
+    private Dictionary<NetEntity, List<DockingPortState>> _docks = new();
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
@@ -53,9 +51,8 @@ public sealed partial class RadarControl : BaseShuttleControl
     public RadarControl() : base(64f, 256f, 256f)
     {
         RobustXamlLoader.Load(this);
-        _maps = _entManager.System<SharedMapSystem>();
-        _shuttles = _entManager.System<SharedShuttleSystem>();
-        _transform = _entManager.System<SharedTransformSystem>();
+        _shuttles = EntManager.System<SharedShuttleSystem>();
+        _transform = EntManager.System<SharedTransformSystem>();
     }
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
@@ -101,9 +98,11 @@ public sealed partial class RadarControl : BaseShuttleControl
         return coords;
     }
 
-    public void UpdateState(NavInterfaceState ls)
+    public void UpdateState(NavInterfaceState state)
     {
-        WorldMaxRange = ls.MaxRange;
+        SetMatrix(EntManager.GetCoordinates(state.Coordinates), state.Angle);
+
+        WorldMaxRange = state.MaxRange;
 
         if (WorldMaxRange < WorldRange)
         {
@@ -115,14 +114,7 @@ public sealed partial class RadarControl : BaseShuttleControl
 
         ActualRadarRange = Math.Clamp(ActualRadarRange, WorldMinRange, WorldMaxRange);
 
-        _docks.Clear();
-
-        foreach (var state in ls.Docks)
-        {
-            var coordinates = state.Coordinates;
-            var grid = _docks.GetOrNew(_entManager.GetEntity(coordinates.NetEntity));
-            grid.Add(state);
-        }
+        _docks = state.Docks;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -138,9 +130,9 @@ public sealed partial class RadarControl : BaseShuttleControl
             return;
         }
 
-        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        var fixturesQuery = _entManager.GetEntityQuery<FixturesComponent>();
-        var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+        var xformQuery = EntManager.GetEntityQuery<TransformComponent>();
+        var fixturesQuery = EntManager.GetEntityQuery<FixturesComponent>();
+        var bodyQuery = EntManager.GetEntityQuery<PhysicsComponent>();
 
         if (!xformQuery.TryGetComponent(_coordinates.Value.EntityId, out var xform)
             || xform.MapID == MapId.Nullspace)
@@ -154,7 +146,7 @@ public sealed partial class RadarControl : BaseShuttleControl
 
         // Draw our grid in detail
         var ourGridId = xform.GridUid;
-        if (_entManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid) &&
+        if (EntManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid) &&
             fixturesQuery.HasComponent(ourGridId.Value))
         {
             var ourGridMatrix = _transform.GetWorldMatrix(ourGridId.Value);
@@ -171,7 +163,7 @@ public sealed partial class RadarControl : BaseShuttleControl
 
         // Draw radar position on the station
         var radarPos = invertedPosition;
-        var radarVertRadius = 2f;
+        const float radarVertRadius = 2f;
 
         var radarPosVerts = new Vector2[]
         {
@@ -183,7 +175,6 @@ public sealed partial class RadarControl : BaseShuttleControl
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, radarPosVerts, Color.Lime);
 
-        var shown = new HashSet<EntityUid>();
         var viewBounds = new Box2Rotated(new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(pos), rot, pos);
         var viewAABB = viewBounds.CalcBoundingBox();
 
@@ -198,21 +189,11 @@ public sealed partial class RadarControl : BaseShuttleControl
                 continue;
 
             var gridBody = bodyQuery.GetComponent(gUid);
-            if (gridBody.Mass < 10f)
-            {
+            EntManager.TryGetComponent<IFFComponent>(gUid, out var iff);
+
+            if (!_shuttles.CanDraw(gUid, gridBody, iff))
                 continue;
-            }
 
-            _entManager.TryGetComponent<IFFComponent>(gUid, out var iff);
-
-            // Hide it entirely.
-            if (iff != null &&
-                (iff.Flags & IFFFlags.Hide) != 0x0)
-            {
-                continue;
-            }
-
-            shown.Add(gUid);
             var gridMatrix = _transform.GetWorldMatrix(gUid);
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
             var color = _shuttles.GetIFFColor(grid, self: false, iff);
@@ -266,8 +247,9 @@ public sealed partial class RadarControl : BaseShuttleControl
             return;
 
         const float DockScale = 1f;
+        var nent = EntManager.GetNetEntity(uid);
 
-        if (_docks.TryGetValue(uid, out var docks))
+        if (_docks.TryGetValue(nent, out var docks))
         {
             foreach (var state in docks)
             {
@@ -298,118 +280,6 @@ public sealed partial class RadarControl : BaseShuttleControl
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
             }
         }
-    }
-
-    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, Entity<MapGridComponent> grid, Color color)
-    {
-        var rator = _maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
-        var edges = new ValueList<Vector2>();
-        var tileTris = new ValueList<Vector2>();
-        const bool DrawInterior = true;
-
-        while (rator.MoveNext(out var tileRef))
-        {
-            // TODO: Short-circuit interior chunk nodes
-            // This can be optimised a lot more if required.
-            var tileVec = _maps.TileCenterToVector(grid, tileRef.Value.GridIndices);
-
-            /*
-             * You may be wondering what the fuck is going on here.
-             * Well you see originally I tried drawing the interiors by fixture, but the problem is
-             * you get rounding issues and get noticeable aliasing (at least if you don't overdraw and use alpha).
-             * Hence per-tile should alleviate it.
-             */
-            var bl = tileVec;
-            var br = tileVec + new Vector2(grid.Comp.TileSize, 0f);
-            var tr = tileVec + new Vector2(grid.Comp.TileSize, grid.Comp.TileSize);
-            var tl = tileVec + new Vector2(0f, grid.Comp.TileSize);
-
-            var adjustedBL = matrix.Transform(bl);
-            var adjustedBR = matrix.Transform(br);
-            var adjustedTR = matrix.Transform(tr);
-            var adjustedTL = matrix.Transform(tl);
-
-            var scaledBL = ScalePosition(new Vector2(adjustedBL.X, -adjustedBL.Y));
-            var scaledBR = ScalePosition(new Vector2(adjustedBR.X, -adjustedBR.Y));
-            var scaledTR = ScalePosition(new Vector2(adjustedTR.X, -adjustedTR.Y));
-            var scaledTL = ScalePosition(new Vector2(adjustedTL.X, -adjustedTL.Y));
-
-            if (DrawInterior)
-            {
-                // Draw 2 triangles for the quad.
-                tileTris.Add(scaledBL);
-                tileTris.Add(scaledBR);
-                tileTris.Add(scaledTL);
-
-                tileTris.Add(scaledBR);
-                tileTris.Add(scaledTL);
-                tileTris.Add(scaledTR);
-            }
-
-            // Iterate edges and see which we can draw
-            for (var i = 0; i < 4; i++)
-            {
-                var dir = (DirectionFlag) Math.Pow(2, i);
-                var dirVec = dir.AsDir().ToIntVec();
-
-                if (!_maps.GetTileRef(grid.Owner, grid.Comp, tileRef.Value.GridIndices + dirVec).Tile.IsEmpty)
-                    continue;
-
-                Vector2 start;
-                Vector2 end;
-                Vector2 actualStart;
-                Vector2 actualEnd;
-
-                // Draw line
-                // Could probably rotate this but this might be faster?
-                switch (dir)
-                {
-                    case DirectionFlag.South:
-                        start = adjustedBL;
-                        end = adjustedBR;
-
-                        actualStart = scaledBL;
-                        actualEnd = scaledBR;
-                        break;
-                    case DirectionFlag.East:
-                        start = adjustedBR;
-                        end = adjustedTR;
-
-                        actualStart = scaledBR;
-                        actualEnd = scaledTR;
-                        break;
-                    case DirectionFlag.North:
-                        start = adjustedTR;
-                        end = adjustedTL;
-
-                        actualStart = scaledTR;
-                        actualEnd = scaledTL;
-                        break;
-                    case DirectionFlag.West:
-                        start = adjustedTL;
-                        end = adjustedBL;
-
-                        actualStart = scaledTL;
-                        actualEnd = scaledBL;
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-
-                if (start.Length() > CornerRadarRange && end.Length() > CornerRadarRange)
-                    continue;
-
-                edges.Add(actualStart);
-                edges.Add(actualEnd);
-            }
-        }
-
-        if (DrawInterior)
-        {
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, tileTris.Span, color.WithAlpha(0.05f));
-        }
-
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, color);
     }
 
     private Vector2 InverseScalePosition(Vector2 value)

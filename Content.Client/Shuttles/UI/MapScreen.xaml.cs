@@ -66,7 +66,7 @@ public sealed partial class MapScreen : BoxContainer
         };
     }
 
-    public void UpdateState(ShuttleBoundUserInterfaceState state)
+    public void UpdateState(ShuttleMapInterfaceState state)
     {
         // Only network the accumulator due to ping making the thing fonky.
         // This should work better with predicting network states as they come in.

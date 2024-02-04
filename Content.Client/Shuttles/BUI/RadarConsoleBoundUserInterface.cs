@@ -37,9 +37,9 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
-        if (state is not NavInterfaceState cState) return;
+        if (state is not NavBoundUserInterfaceState cState)
+            return;
 
-        _window?.SetMatrix(EntMan.GetCoordinates(cState.Coordinates), cState.Angle);
-        _window?.UpdateState(cState);
+        _window?.UpdateState(cState.State);
     }
 }

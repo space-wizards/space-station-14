@@ -7,10 +7,10 @@ namespace Content.Shared.Shuttles.BUIStates;
 public sealed class ShuttleBoundUserInterfaceState : BoundUserInterfaceState
 {
     public NavInterfaceState NavState;
-    public ShuttleMapBoundState MapState;
-    public DockingPortState DockState;
+    public ShuttleMapInterfaceState MapState;
+    public DockingInterfaceState DockState;
 
-    public ShuttleBoundUserInterfaceState(NavInterfaceState navState, ShuttleMapBoundState mapState, DockingPortState dockState)
+    public ShuttleBoundUserInterfaceState(NavInterfaceState navState, ShuttleMapInterfaceState mapState, DockingInterfaceState dockState)
     {
         NavState = navState;
         MapState = mapState;

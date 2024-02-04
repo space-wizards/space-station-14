@@ -4,6 +4,7 @@ shuttle-pilot-end = Stopped piloting
 shuttle-console-prevent = You are unable to pilot this ship.
 
 # NAV
+
 shuttle-console-display-label = Display
 
 shuttle-console-position = Position:
@@ -14,6 +15,7 @@ shuttle-console-angular-velocity = Angular velocity:
 shuttle-console-unknown = Unknown
 shuttle-console-iff-label = {$name} ({$distance}m)
 
+shuttle-console-nav-settings = Settings
 shuttle-console-iff-toggle = Show IFF
 shuttle-console-dock-toggle = Show docks
 
