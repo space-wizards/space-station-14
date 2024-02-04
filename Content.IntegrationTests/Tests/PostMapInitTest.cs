@@ -60,7 +60,8 @@ namespace Content.IntegrationTests.Tests
             "Marathon",
             "MeteorArena",
             "Atlas",
-            "Reach"    
+            "Reach",
+            "Train"
         };
 
         /// <summary>
