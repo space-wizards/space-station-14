@@ -513,7 +513,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         return foundBeacon != default;
     }
 
-    public void UpdateState(ShuttleConsoleBoundInterfaceState state)
+    public void UpdateState(ShuttleBoundUserInterfaceState state)
     {
         _destinations = state.Destinations;
         _exclusions = state.Exclusions;

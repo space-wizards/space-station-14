@@ -11,15 +11,10 @@ public sealed partial class DockingScreen : BoxContainer
     /// <summary>
     /// Stored by GridID then by docks
     /// </summary>
-    public Dictionary<NetEntity, List<DockingInterfaceState>> Docks = new();
+    public Dictionary<NetEntity, List<DockingPortState>> Docks = new();
 
     public DockingScreen()
     {
         RobustXamlLoader.Load(this);
-    }
-
-    public void UpdateState(ShuttleConsoleBoundInterfaceState state)
-    {
-        Docks = state.Docks;
     }
 }

@@ -11,7 +11,7 @@ namespace Content.Client.Shuttles.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class ShuttleConsoleWindow : FancyWindow,
-    IComputerWindow<ShuttleConsoleBoundInterfaceState>
+    IComputerWindow<ShuttleBoundUserInterfaceState>
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
@@ -129,7 +129,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         NavContainer.SetMatrix(coordinates, angle);
     }
 
-    public void UpdateState(ShuttleConsoleBoundInterfaceState cState)
+    public void UpdateState(ShuttleBoundUserInterfaceState cState)
     {
         NavContainer.UpdateState(cState);
         var coordinates = _entManager.GetCoordinates(cState.Coordinates);

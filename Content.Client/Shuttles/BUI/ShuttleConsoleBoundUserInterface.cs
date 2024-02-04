@@ -58,7 +58,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
-        if (state is not ShuttleConsoleBoundInterfaceState cState)
+        if (state is not ShuttleBoundUserInterfaceState cState)
             return;
 
         _window?.SetMatrix(EntMan.GetCoordinates(cState.Coordinates), cState.Angle);

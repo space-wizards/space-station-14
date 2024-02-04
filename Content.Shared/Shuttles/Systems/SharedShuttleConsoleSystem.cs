@@ -1,5 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Events;
+using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Serialization;
 
@@ -46,6 +47,32 @@ namespace Content.Shared.Shuttles.Systems
                 return;
 
             args.Cancel();
+        }
+
+        public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity)
+        {
+            if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
+                return new NavInterfaceState(0f, null, null);
+
+            return new NavInterfaceState(
+                entity.Comp1.MaxRange,
+                GetNetCoordinates(entity.Comp2.Coordinates),
+                entity.Comp2.LocalRotation);
+        }
+
+        public DockingInterfaceState GetDockState()
+        {
+            return new DockingInterfaceState(
+                component.MaxRange,
+                GetNetCoordinates(coordinates),
+                angle,
+                new List<DockingPortState>()
+            );
+        }
+
+        public ShuttleMapBoundState GetMapState(EntityUid shuttle)
+        {
+            return new ShuttleMapBoundState();
         }
     }
 }

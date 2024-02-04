@@ -207,10 +207,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// <summary>
     /// Returns the position and angle of all dockingcomponents.
     /// </summary>
-    private List<DockingInterfaceState> GetAllDocks()
+    private List<DockingPortState> GetAllDocks()
     {
         // TODO: NEED TO MAKE SURE THIS UPDATES ON ANCHORING CHANGES!
-        var result = new List<DockingInterfaceState>();
+        var result = new List<DockingPortState>();
         var query = AllEntityQuery<DockingComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var xform))
@@ -218,7 +218,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             if (xform.ParentUid != xform.GridUid)
                 continue;
 
-            var state = new DockingInterfaceState()
+            var state = new DockingPortState()
             {
                 Coordinates = GetNetCoordinates(xform.Coordinates),
                 Angle = xform.LocalRotation,
@@ -233,7 +233,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         return result;
     }
 
-    private void UpdateState(EntityUid consoleUid, List<ShuttleBeacon>? beacons = null, List<ShuttleExclusion>? exclusions = null, List<DockingInterfaceState>? docks = null)
+    private void UpdateState(EntityUid consoleUid, List<ShuttleBeacon>? beacons = null, List<ShuttleExclusion>? exclusions = null, List<DockingPortState>? docks = null)
     {
         EntityUid? entity = consoleUid;
 
@@ -272,7 +272,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         if (_ui.TryGetUi(consoleUid, ShuttleConsoleUiKey.Key, out var bui))
         {
-            _ui.SetUiState(bui, new ShuttleConsoleBoundInterfaceState(
+            _ui.SetUiState(bui, new ShuttleBoundUserInterfaceState(
                 ftlState,
                 stateDuration,
                 beacons ?? new List<ShuttleBeacon>(),

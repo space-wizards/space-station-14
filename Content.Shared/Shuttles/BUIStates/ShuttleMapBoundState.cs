@@ -1,12 +1,13 @@
-using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.BUIStates;
 
+/// <summary>
+/// Handles BUI data for Map screen.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfaceState
+public sealed class ShuttleMapBoundState
 {
     /// <summary>
     /// The current FTL state.
@@ -22,15 +23,11 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
 
     public List<ShuttleExclusion> Exclusions;
 
-    public ShuttleConsoleBoundInterfaceState(
+    public ShuttleMapBoundState(
         FTLState ftlState,
         float ftlDuration,
         List<ShuttleBeacon> destinations,
-        List<ShuttleExclusion> exclusions,
-        float maxRange,
-        NetCoordinates? coordinates,
-        Angle? angle,
-        List<DockingInterfaceState> docks) : base(maxRange, coordinates, angle, docks)
+        List<ShuttleExclusion> exclusions)
     {
         FTLState = ftlState;
         FTLDuration = ftlDuration;
@@ -38,9 +35,3 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
         Exclusions = exclusions;
     }
 }
-
-[Serializable, NetSerializable]
-public readonly record struct ShuttleBeacon(NetEntity Entity, NetCoordinates Coordinates, string Destination);
-
-[Serializable, NetSerializable]
-public record struct ShuttleExclusion(NetCoordinates Coordinates, float Range);

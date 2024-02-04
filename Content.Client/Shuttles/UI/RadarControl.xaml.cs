@@ -33,7 +33,7 @@ public sealed partial class RadarControl : BaseShuttleControl
 
     private Angle? _rotation;
 
-    private readonly Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
+    private readonly Dictionary<EntityUid, List<DockingPortState>> _docks = new();
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
@@ -101,7 +101,7 @@ public sealed partial class RadarControl : BaseShuttleControl
         return coords;
     }
 
-    public void UpdateState(RadarConsoleBoundInterfaceState ls)
+    public void UpdateState(NavInterfaceState ls)
     {
         WorldMaxRange = ls.MaxRange;
 
