@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/b13d244d761a07e200a9a41730bd446e776020d5",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "honkhulk",
+      "directions": 4
+    },
+    {
+      "name": "banana tree",
+      "directions": 4
+    },
+    {
+      "name": "long_face",
+      "directions": 4
+    },
+    {
+      "name": "pie spewer",
+      "directions": 4
+    },
+    {
+      "name": "lube",
+      "directions": 4
+    },
+    {
+      "name": "honkmunculus",
+      "directions": 4
+    },
+    {
+      "name": "giggles",
+      "directions": 4
+    },
+    {
+      "name": "chlown",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "scary_clown",
+      "directions": 4
+    },
+    {
+      "name": "fleshclown",
+      "directions": 4
+    },
+    {
+      "name": "destroyer",
+      "directions": 4
+    },
+    {
+      "name": "clowns",
+      "directions": 4
+    },
+    {
+      "name": "mutant",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "honkling",
+      "directions": 4
+    },
+    {
+      "name": "clown",
+      "directions": 4
+    },
+    {
+      "name": "glutton",
+      "directions": 4
+    },
+    {
+      "name": "glutton_mouth",
+      "directions": 4
+    },
+    {
+      "name": "glutton_tongue",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
