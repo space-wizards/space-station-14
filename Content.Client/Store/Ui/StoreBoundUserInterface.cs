@@ -1,12 +1,15 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Store.Ui;
 
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
+    private IPrototypeManager _prototypeManager = default!;
+
     [ViewVariables]
     private StoreMenu? _menu;
 
@@ -106,8 +109,8 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         var filteredListings = new HashSet<ListingData>(_listings);
         if (!string.IsNullOrEmpty(_search))
         {
-            filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData).Trim().ToLowerInvariant().Contains(_search) &&
-                                                        !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData).Trim().ToLowerInvariant().Contains(_search));
+            filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&
+                                                        !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search));
         }
         _menu.PopulateStoreCategoryButtons(filteredListings);
         _menu.UpdateListing(filteredListings.ToList());
