@@ -133,6 +133,11 @@
       collection: BananiumHorn
       params:
         variation: 0.246
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn

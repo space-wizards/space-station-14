@@ -526,6 +526,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: icon-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -667,6 +669,8 @@
         - ReagentId: Mead
           Quantity: 150
   - type: Drink
+  - type: Label
+    currentLabel: mead
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -754,7 +758,7 @@
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkDrGibbJug
-  name: dr gibb jug
+  name: dr gibb. jug
   description: yeah I don't know either...
   components:
   - type: SolutionContainerManager
