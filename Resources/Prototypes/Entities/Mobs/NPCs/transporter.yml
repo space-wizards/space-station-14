@@ -1,13 +1,14 @@
 - type: entity
+  parent: BaseMob
   id: Transporter
   name: Transporter
   description: A simple robot capable of carrying a single item.
   components:
     - type: Sprite # If you're reading this, I forgot to add a new sprite for this and you need to tell me.
       sprite: Objects/Specific/Cargo/Transporters/transporter.rsi
-      snapCardinals: true
       layers:
         - state: icon
+      noRot: false
     - type: Appearance
     - type: Fixtures
       fixtures:
@@ -28,6 +29,9 @@
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
+    - type: ContainerContainer
+      containers:
+        item: !type:ContainerSlot {}
     - type: HTN
       rootTask:
         task: TransporterCompound
