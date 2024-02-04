@@ -30,14 +30,16 @@ public enum GeneralStationRecordConsoleKey : byte
 public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
 {
     /// <summary>
-    ///     Current selected key.
+    /// Current selected key.
+    /// Station is always the station that owns the console.
     /// </summary>
-    public (NetEntity, uint)? SelectedKey { get; }
-    public GeneralStationRecord? Record { get; }
-    public Dictionary<(NetEntity, uint), string>? RecordListing { get; }
-    public GeneralStationRecordsFilter? Filter { get; }
-    public GeneralStationRecordConsoleState((NetEntity, uint)? key, GeneralStationRecord? record,
-        Dictionary<(NetEntity, uint), string>? recordListing, GeneralStationRecordsFilter? newFilter)
+    public readonly uint? SelectedKey;
+    public readonly GeneralStationRecord? Record;
+    public readonly Dictionary<uint, string>? RecordListing;
+    public readonly StationRecordsFilter? Filter;
+
+    public GeneralStationRecordConsoleState(uint? key, GeneralStationRecord? record,
+        Dictionary<uint, string>? recordListing, StationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         Record = record;
@@ -45,16 +47,24 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
         Filter = newFilter;
     }
 
+    public GeneralStationRecordConsoleState() : this(null, null, null, null)
+    {
+    }
+
     public bool IsEmpty() => SelectedKey == null
         && Record == null && RecordListing == null;
 }
 
+/// <summary>
+/// Select a specific crewmember's record, or deselect.
+/// Used by any kind of records console including general and criminal.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
+public sealed class SelectStationRecord : BoundUserInterfaceMessage
 {
-    public (NetEntity, uint)? SelectedKey { get; }
+    public readonly uint? SelectedKey;
 
-    public SelectGeneralStationRecord((NetEntity, uint)? selectedKey)
+    public SelectStationRecord(uint? selectedKey)
     {
         SelectedKey = selectedKey;
     }
