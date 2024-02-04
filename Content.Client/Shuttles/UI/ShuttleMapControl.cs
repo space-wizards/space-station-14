@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Client.Shuttles.Systems;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
-using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -11,7 +10,6 @@ using Robust.Shared.Collections;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -42,7 +40,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     private readonly EntityQuery<PhysicsComponent> _physicsQuery;
     private List<Entity<MapGridComponent>> _grids = new();
 
-    private List<ShuttleDestination> _destinations = new();
+    private List<ShuttleBeacon> _destinations = new();
     private List<ShuttleExclusion> _exclusions = new();
 
     /// <summary>
@@ -56,6 +54,8 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     /// Raised when a request to FTL to a particular spot is raised.
     /// </summary>
     public event Action<MapCoordinates, Angle>? RequestFTL;
+
+    public event Action<NetEntity, Angle>? RequestBeaconFTL;
 
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
@@ -96,9 +96,23 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         {
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                // We'll send the "adjusted" position and server will adjust it back when relevant.
-                var mapCoords = new MapCoordinates(InverseMapPosition(args.RelativePosition), ViewingMap);
-                RequestFTL?.Invoke(mapCoords, _ftlAngle);
+                var mapUid = _mapManager.GetMapEntityId(ViewingMap);
+
+                var beaconsOnly = _entManager.TryGetComponent(mapUid, out FTLDestinationComponent? destComp) &&
+                                  destComp.BeaconsOnly;
+
+                var mapTransform = Matrix3.CreateInverseTransform(Offset, Angle.Zero);
+
+                if (beaconsOnly && TryGetBeacon(mapTransform, args.RelativePosition, PixelRect, out var foundBeacon, out _))
+                {
+                    RequestBeaconFTL?.Invoke(foundBeacon.Entity, _ftlAngle);
+                }
+                else
+                {
+                    // We'll send the "adjusted" position and server will adjust it back when relevant.
+                    var mapCoords = new MapCoordinates(InverseMapPosition(args.RelativePosition), ViewingMap);
+                    RequestFTL?.Invoke(mapCoords, _ftlAngle);
+                }
             }
         }
 
@@ -181,6 +195,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         DrawRecenter();
         DrawParallax(handle);
 
+        var viewedMapUid = _mapManager.GetMapEntityId(ViewingMap);
         var matty = Matrix3.CreateInverseTransform(Offset, Angle.Zero);
         var realTime = _timing.RealTime;
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
@@ -191,11 +206,12 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         // Do it up here because we want this layered below most things.
         if (FtlMode)
         {
-            if (_shuttleEntity != null)
+            if (_entManager.TryGetComponent<TransformComponent>(_shuttleEntity, out var shuttleXform) &&
+                shuttleXform.MapID == ViewingMap)
             {
                 var gridUid = _shuttleEntity.Value;
                 var gridPhysics = _physicsQuery.GetComponent(gridUid);
-                var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(gridUid);
+                var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(shuttleXform);
                 gridPos = _maps.GetGridPosition((gridUid, gridPhysics), gridPos, gridRot);
 
                 var gridRelativePos = matty.Transform(gridPos);
@@ -334,6 +350,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
             {
                 var mouseLocalPos = GetLocalPosition(mousePos);
                 var controlBounds = GlobalPixelRect;
+                var controlLocalBounds = PixelRect;
 
                 // If mouse inbounds then draw it.
                 if (_shuttleEntity != null && controlBounds.Contains(mousePos.Position.Floored()) &&
@@ -341,8 +358,15 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                     shuttleXform.MapID != MapId.Nullspace)
                 {
                     // If it's a beacon only map then snap the mouse to a nearby spot.
-                    var beaconsOnly = _entManager.TryGetComponent(shuttleXform.MapUid, out FTLDestinationComponent? destComp) &&
-                                      destComp.BeaconsOnly;
+                    var beaconsOnly = _shuttles.IsBeaconMap(viewedMapUid);
+
+                    ShuttleBeacon foundBeacon = default;
+
+                    // Check for beacons around mouse and snap to that.
+                    if (beaconsOnly && TryGetBeacon(matty, mouseLocalPos, controlLocalBounds, out foundBeacon, out var foundLocalPos))
+                    {
+                        mouseLocalPos = foundLocalPos;
+                    }
 
                     var grid = _entManager.GetComponent<MapGridComponent>(_shuttleEntity.Value);
 
@@ -353,7 +377,8 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                     var mouseMapPos = InverseMapPosition(mouseLocalPos);
 
                     var mapId = shuttleXform.MapID;
-                    var ftlFree = _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(shuttleXform.MapUid!.Value, mouseMapPos), _ftlAngle, _exclusions);
+                    var ftlFree = (!beaconsOnly || foundBeacon != default) &&
+                                  _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(shuttleXform.MapUid!.Value, mouseMapPos), _ftlAngle, _exclusions);
 
                     var color = ftlFree ? Color.LimeGreen : Color.Magenta;
 
@@ -394,6 +419,48 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                 }
             }
         }
+    }
+
+    private bool TryGetBeacon(Matrix3 mapTransform, Vector2 mousePos, UIBox2i area, out ShuttleBeacon foundBeacon, out Vector2 foundLocalPos)
+    {
+        // In pixels
+        const float BeaconSnapRange = 32f;
+        float nearestValue = float.MaxValue;
+        foundLocalPos = Vector2.Zero;
+        foundBeacon = default;
+
+        foreach (var beacon in _destinations)
+        {
+            var beaconCoords = _xformSystem.ToMapCoordinates(_entManager.GetCoordinates(beacon.Coordinates));
+
+            if (beaconCoords.MapId != ViewingMap)
+                continue;
+
+            // Invalid beacon?
+            if (!_shuttles.CanFTLBeacon(beacon.Coordinates))
+                continue;
+
+            var position = mapTransform.Transform(beaconCoords.Position);
+            var localPos = ScalePosition(position with {Y = -position.Y});
+
+            // If beacon not on screen then ignore it.
+            if (!area.Contains(localPos.Floored()))
+                continue;
+
+            var distance = (localPos - mousePos).Length();
+
+            if (distance > BeaconSnapRange ||
+                distance > nearestValue)
+            {
+                continue;
+            }
+
+            foundLocalPos = localPos;
+            nearestValue = distance;
+            foundBeacon = beacon;
+        }
+
+        return foundBeacon != default;
     }
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState state)

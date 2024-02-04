@@ -18,14 +18,14 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
     /// </summary>
     public readonly TimeSpan FTLTime;
 
-    public List<ShuttleDestination> Destinations;
+    public List<ShuttleBeacon> Destinations;
 
     public List<ShuttleExclusion> Exclusions;
 
     public ShuttleConsoleBoundInterfaceState(
         FTLState ftlState,
         TimeSpan ftlTime,
-        List<ShuttleDestination> destinations,
+        List<ShuttleBeacon> destinations,
         List<ShuttleExclusion> exclusions,
         float maxRange,
         NetCoordinates? coordinates,
@@ -40,7 +40,7 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
 }
 
 [Serializable, NetSerializable]
-public readonly record struct ShuttleDestination(NetCoordinates Entity, string Destination, bool Enabled);
+public readonly record struct ShuttleBeacon(NetEntity Entity, NetCoordinates Coordinates, string Destination);
 
 [Serializable, NetSerializable]
 public record struct ShuttleExclusion(NetCoordinates Coordinates, float Range);

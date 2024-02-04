@@ -3,7 +3,7 @@
   parent: MarkerBase
   name: FTL point
   components:
-    - type: FTLDestination
+    - type: FTLBeacon
     - type: Sprite
       state: pink
 

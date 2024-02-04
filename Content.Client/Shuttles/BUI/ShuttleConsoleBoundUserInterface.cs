@@ -24,6 +24,16 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
 
         _window.RequestFTL += OnFTLRequest;
+        _window.RequestBeaconFTL += OnFTLBeaconRequest;
+    }
+
+    private void OnFTLBeaconRequest(NetEntity ent, Angle angle)
+    {
+        SendMessage(new ShuttleConsoleFTLBeaconMessage()
+        {
+            Beacon = ent,
+            Angle = angle,
+        });
     }
 
     private void OnFTLRequest(MapCoordinates obj, Angle angle)

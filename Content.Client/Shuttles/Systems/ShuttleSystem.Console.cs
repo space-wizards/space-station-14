@@ -11,7 +11,7 @@ public sealed partial class ShuttleSystem
 
     public Texture GetTexture(Entity<ShuttleMapParallaxComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
         {
             return _resource.GetTexture(ShuttleMapParallaxComponent.FallbackTexture);
         }

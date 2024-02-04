@@ -29,6 +29,7 @@ public sealed partial class MapScreen : BoxContainer
     private StyleBoxFlat _ftlStyle;
 
     public event Action<MapCoordinates, Angle>? RequestFTL;
+    public event Action<NetEntity, Angle>? RequestBeaconFTL;
 
     public MapScreen()
     {
@@ -50,6 +51,11 @@ public sealed partial class MapScreen : BoxContainer
         MapRadar.RequestFTL += (coords, angle) =>
         {
             RequestFTL?.Invoke(coords, angle);
+        };
+
+        MapRadar.RequestBeaconFTL += (ent, angle) =>
+        {
+            RequestBeaconFTL?.Invoke(ent, angle);
         };
     }
 

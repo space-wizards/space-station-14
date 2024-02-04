@@ -115,7 +115,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         foreach (var entity in _consoles)
         {
-            UpdateState(entity, exclusions, docks);
+            UpdateState(entity, exclusions: exclusions, docks: docks);
         }
     }
 
@@ -131,7 +131,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         while (query.MoveNext(out var uid, out _))
         {
-            UpdateState(uid, exclusions, docks);
+            UpdateState(uid, exclusions: exclusions, docks: docks);
         }
     }
 
@@ -234,7 +234,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         return result;
     }
 
-    private void UpdateState(EntityUid consoleUid, List<ShuttleExclusion>? exclusions = null, List<DockingInterfaceState>? docks = null)
+    private void UpdateState(EntityUid consoleUid, List<ShuttleBeacon>? beacons = null, List<ShuttleExclusion>? exclusions = null, List<DockingInterfaceState>? docks = null)
     {
         EntityUid? entity = consoleUid;
 
@@ -252,7 +252,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         var shuttleGridUid = consoleXform?.GridUid;
 
-        var destinations = new List<ShuttleDestination>();
         var ftlState = FTLState.Available;
         var ftlTime = TimeSpan.Zero;
 
@@ -264,47 +263,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         // Only bother getting FTL data if we can FTL.
         if (entity != null && shuttleGridUid != null &&
-            (TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) && shuttleBody.Mass < ShuttleSystem.FTLMassLimit))
+            TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) && shuttleBody.Mass < ShuttleSystem.FTLMassLimit)
         {
-            // Can't go anywhere when in FTL.
-            var locked = shuttleFtl != null || Paused(shuttleGridUid.Value);
-
-            // Can't cache it because it may have a whitelist for the particular console.
-            // Include paused as we still want to show CentCom.
-            var destQuery = AllEntityQuery<FTLDestinationComponent>();
-
-            while (destQuery.MoveNext(out var destUid, out var comp))
-            {
-                // Can't warp to itself or if it's not on the whitelist (console or shuttle).
-                if (destUid == shuttleGridUid ||
-                    comp.Whitelist?.IsValid(entity.Value) == false &&
-                    (shuttleGridUid == null || comp.Whitelist?.IsValid(shuttleGridUid.Value, EntityManager) == false))
-                {
-                    continue;
-                }
-
-                var meta = _metaQuery.GetComponent(destUid);
-                var name = meta.EntityName;
-
-                if (string.IsNullOrEmpty(name))
-                    name = Loc.GetString("shuttle-console-unknown");
-
-                var canTravel = !locked &&
-                                comp.Enabled &&
-                                (!TryComp<FTLComponent>(destUid, out var ftl) || ftl.State == FTLState.Cooldown);
-
-                // Can't travel to same map (yet)
-                var destXform = _xformQuery.GetComponent(destUid);
-
-                if (canTravel && consoleXform?.MapUid == destXform.MapUid)
-                {
-                    canTravel = false;
-                }
-
-                destinations.Add(new ShuttleDestination(GetNetCoordinates(destXform.Coordinates), name, canTravel));
-            }
-
-            exclusions = new List<ShuttleExclusion>();
+            GetBeacons(ref beacons);
             GetExclusions(ref exclusions);
         }
 
@@ -315,7 +276,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             _ui.SetUiState(bui, new ShuttleConsoleBoundInterfaceState(
                 ftlState,
                 ftlTime,
-                destinations,
+                beacons ?? new List<ShuttleBeacon>(),
                 exclusions ?? new List<ShuttleExclusion>(),
                 range,
                 GetNetCoordinates(consoleXform?.Coordinates),

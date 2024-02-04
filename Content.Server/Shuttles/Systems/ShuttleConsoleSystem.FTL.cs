@@ -1,6 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -35,18 +36,22 @@ public sealed partial class ShuttleConsoleSystem
 
     private void OnBeaconFTLMessage(Entity<ShuttleConsoleComponent> ent, ref ShuttleConsoleFTLBeaconMessage args)
     {
-        var targetUid = GetEntity(args.Beacon);
+        var beaconEnt = GetEntity(args.Beacon);
+        if (!_xformQuery.TryGetComponent(beaconEnt, out var targetXform))
+        {
+            return;
+        }
+
+        var nCoordinates = new NetCoordinates(GetNetEntity(targetXform.ParentUid), targetXform.LocalPosition);
 
         // Check target exists
-        if (!Exists(targetUid) ||
-            !_xformQuery.TryGetComponent(targetUid, out var targetXform) ||
-            !targetXform.Anchored)
+        if (!_shuttle.CanFTLBeacon(nCoordinates))
         {
             return;
         }
 
         var angle = args.Angle.Reduced();
-        var targetCoordinates = new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetUid));
+        var targetCoordinates = new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetXform));
 
         ConsoleFTL(ent, true, targetCoordinates, angle, targetXform.MapID);
     }
@@ -55,16 +60,37 @@ public sealed partial class ShuttleConsoleSystem
     {
         var mapUid = _mapManager.GetMapEntityId(args.Coordinates.MapId);
 
-        if (!Exists(mapUid))
+        // If it's beacons only block all position messages.
+        if (!Exists(mapUid) || _shuttle.IsBeaconMap(mapUid))
         {
             return;
         }
 
         var targetCoordinates = new EntityCoordinates(mapUid, args.Coordinates.Position);
-        ConsoleFTL(entity, false, targetCoordinates, args.Angle, args.Coordinates.MapId);
+        var angle = args.Angle.Reduced();
+        ConsoleFTL(entity, false, targetCoordinates, angle, args.Coordinates.MapId);
     }
 
-    private void GetExclusions(ref List<ShuttleExclusion> exclusions)
+    private void GetBeacons(ref List<ShuttleBeacon>? beacons)
+    {
+        var beaconQuery = AllEntityQuery<FTLBeaconComponent>();
+
+        while (beaconQuery.MoveNext(out var destUid, out _))
+        {
+            var meta = _metaQuery.GetComponent(destUid);
+            var name = meta.EntityName;
+
+            if (string.IsNullOrEmpty(name))
+                name = Loc.GetString("shuttle-console-unknown");
+
+            // Can't travel to same map (yet)
+            var destXform = _xformQuery.GetComponent(destUid);
+            beacons ??= new List<ShuttleBeacon>();
+            beacons.Add(new ShuttleBeacon(GetNetEntity(destUid), GetNetCoordinates(destXform.Coordinates), name));
+        }
+    }
+
+    private void GetExclusions(ref List<ShuttleExclusion>? exclusions)
     {
         var query = AllEntityQuery<FTLExclusionComponent, TransformComponent>();
 
@@ -73,6 +99,7 @@ public sealed partial class ShuttleConsoleSystem
             if (!comp.Enabled)
                 continue;
 
+            exclusions ??= new List<ShuttleExclusion>();
             exclusions.Add(new ShuttleExclusion(GetNetCoordinates(xform.Coordinates), comp.Range));
         }
     }
@@ -105,7 +132,7 @@ public sealed partial class ShuttleConsoleSystem
             return;
         }
 
-        List<ShuttleExclusion> exclusions = new();
+        List<ShuttleExclusion>? exclusions = null;
         GetExclusions(ref exclusions);
 
         if (!beacon && !_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle, exclusions))
