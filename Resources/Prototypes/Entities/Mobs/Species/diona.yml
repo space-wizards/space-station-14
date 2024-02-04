@@ -99,7 +99,7 @@
   - type: IgnoreKudzu
   - type: IgniteOnHeatDamage
     fireStacks: 1
-    threshold: 15
+    threshold: 12
   - type: GibAction
     actionPrototype: DionaGibAction
     allowedStates:
