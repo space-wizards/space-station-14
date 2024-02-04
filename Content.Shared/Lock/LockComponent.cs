@@ -31,7 +31,7 @@ public sealed partial class LockComponent : Component
     /// Whether or not the lock is unlocked by simply clicking.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool UnlockedOnCLick = true;
+    public bool UnlockOnCLick = true;
 
     /// <summary>
     /// The sound played when unlocked.
