@@ -457,7 +457,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         var newEntityUid = Spawn(newHumanoidData.EntityPrototype.ID, targetTransformComp.Coordinates);
         var newEntityUidTransformComp = Transform(newEntityUid);
 
-        SendToPausedMap(source, targetTransformComp);
+        SendToPausedMap(newEntityUid, newEntityUidTransformComp);
 
         newHumanoidData.EntityUid = newEntityUid;
         _metaData.SetEntityName(newEntityUid, targetMeta.EntityName);
