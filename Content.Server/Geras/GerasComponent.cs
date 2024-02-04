@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Geras;
@@ -9,7 +10,7 @@ namespace Content.Server.Geras;
 [RegisterComponent]
 public sealed partial class GerasComponent : Component
 {
-    [DataField] public ProtoId<EntityPrototype> GerasPolymorphId = "SlimeMorphGeras";
+    [DataField] public ProtoId<PolymorphPrototype> GerasPolymorphId = "SlimeMorphGeras";
 
     [DataField] public ProtoId<EntityPrototype> GerasAction = "ActionMorphGeras";
 
