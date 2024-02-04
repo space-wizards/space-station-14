@@ -11,6 +11,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
@@ -19,7 +20,6 @@ using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Utility;
-using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
 namespace Content.Shared.Buckle;
 
@@ -356,11 +356,11 @@ public abstract partial class SharedBuckleSystem
         RaiseLocalEvent(ev.BuckledEntity, ref ev);
         RaiseLocalEvent(ev.StrapEntity, ref ev);
 
-        if (TryComp<PullableComponent>(buckleUid, out var ownerPullable))
+        if (TryComp<SharedPullableComponent>(buckleUid, out var ownerPullable))
         {
             if (ownerPullable.Puller != null)
             {
-                _pulling.TryStopPull(buckleUid, ownerPullable);
+                _pulling.TryStopPull(ownerPullable);
             }
         }
 
@@ -369,12 +369,12 @@ public abstract partial class SharedBuckleSystem
             _physics.ResetDynamics(physics);
         }
 
-        if (!buckleComp.PullStrap && TryComp<PullableComponent>(strapUid, out var toPullable))
+        if (!buckleComp.PullStrap && TryComp<SharedPullableComponent>(strapUid, out var toPullable))
         {
             if (toPullable.Puller == buckleUid)
             {
                 // can't pull it and buckle to it at the same time
-                _pulling.TryStopPull(strapUid, toPullable);
+                _pulling.TryStopPull(toPullable);
             }
         }
 
