@@ -168,6 +168,11 @@ public sealed partial class MapScreen : BoxContainer
 
             var mapName = mapMetadata.EntityName;
 
+            if (string.IsNullOrEmpty(mapName))
+            {
+                mapName = Loc.GetString("shuttle-console-unknown-map");
+            }
+
             var heading = new CollapsibleHeading(mapName);
 
             heading.MinHeight = 32f;
