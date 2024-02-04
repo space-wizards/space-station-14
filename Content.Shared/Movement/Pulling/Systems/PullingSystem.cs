@@ -369,6 +369,17 @@ public sealed class PullingSystem : EntitySystem
                 return false;
         }
 
+        // Is the pullable currently being pulled by something else?
+        if (pullableComp.Puller != null)
+        {
+            // Uhhh
+            if (pullableComp.Puller == pullerUid)
+                return false;
+
+            if (!TryStopPull(pullableUid, pullableComp, pullerUid))
+                return false;
+        }
+
         var pullAttempt = new PullAttemptEvent(pullerUid, pullableUid);
         RaiseLocalEvent(pullerUid, pullAttempt);
 
