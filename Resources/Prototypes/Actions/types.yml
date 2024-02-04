@@ -164,8 +164,8 @@
     itemIconStyle: BigAction
     priority: -20
     icon:
-      sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
-      state: icon
+      sprite: Mobs/Aliens/slimes.rsi
+      state: blue_adult_slime
     event: !type:MorphIntoGeras
 
 - type: entity

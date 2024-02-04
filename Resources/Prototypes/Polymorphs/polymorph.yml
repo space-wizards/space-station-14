@@ -77,13 +77,14 @@
 
 - type: polymorph
   id: SlimeMorphGeras
-  entity: MobSlimesGeras
-  transferName: false
-  transferHumanoidAppearance: false
-  inventory: Drop
-  transferDamage: true
-  revertOnDeath: true
-  revertOnCrit: true
+  configuration:
+    entity: MobSlimesGeras
+    transferName: false
+    transferHumanoidAppearance: false
+    inventory: Drop
+    transferDamage: true
+    revertOnDeath: true
+    revertOnCrit: true
 
 # this is a test for transferring some visual appearance stuff
 - type: polymorph
