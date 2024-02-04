@@ -195,10 +195,14 @@ public sealed partial class ShuttleSystem
     public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, bool beacon)
     {
         var mapUid = _mapManager.GetMapEntityId(targetMap);
+        var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
+
+        if (shuttleMap == targetMap)
+            return true;
 
         if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) ||
             !destination.Enabled ||
-           (destination.BeaconsOnly && !beacon))
+            destination.BeaconsOnly && !beacon)
         {
             return false;
         }

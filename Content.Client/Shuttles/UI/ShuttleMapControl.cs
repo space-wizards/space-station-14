@@ -222,9 +222,10 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                     continue;
                 }
 
-                var localPos = ScalePosition(mapCoords.Position);
+                var adjustedPos = matty.Transform(mapCoords.Position);
+                var localPos = ScalePosition(adjustedPos with { Y = -adjustedPos.Y});
                 handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor.WithAlpha(0.05f));
-                handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor);
+                handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor, filled: false);
             }
         }
 
