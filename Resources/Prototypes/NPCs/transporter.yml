@@ -4,8 +4,19 @@
     - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
-            proto: FindNearestTransporterCharger
+            proto: FindItemForTransport
+
+        - !type:HTNPrimitiveTask
+          operator: !type:TransporterClaimOperator
 
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: true
+
+#        - !type:HTNPrimitiveTask
+#          operator: !type:UtilityOperator
+#            proto: FindReceiver
+#
+#        - !type:HTNPrimitiveTask
+#          operator: !type:MoveToOperator
+#            pathfindInPlanning: true

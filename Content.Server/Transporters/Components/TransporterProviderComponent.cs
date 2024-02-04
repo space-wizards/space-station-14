@@ -10,7 +10,7 @@ public sealed partial class TransporterProviderComponent : Component
     public EntityUid? AssociatedReceiver;
 
     [ViewVariables(VVAccess.ReadOnly)]
-    public List<EntityUid?> CurrentItems;
+    public List<EntityUid?> CurrentUnclaimedItems;
 
-    public bool HasItems => CurrentItems.Count > 0;
+    public bool HasItems => CurrentUnclaimedItems.Count > 0;
 }
