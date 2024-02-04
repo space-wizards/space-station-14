@@ -56,9 +56,9 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullableComponent, CollisionChangeEvent>(OnPullableCollisionChange);
         SubscribeLocalEvent<PullableComponent, JointRemovedEvent>(OnJointRemoved);
         SubscribeLocalEvent<PullableComponent, GetVerbsEvent<Verb>>(AddPullVerbs);
-        SubscribeLocalEvent<PullableComponent, EntInsertedIntoContainerMessage>(OnPullableContainerInsert);
+        SubscribeLocalEvent<PullableComponent, EntGotInsertedIntoContainerMessage>(OnPullableContainerInsert);
 
-        SubscribeLocalEvent<PullerComponent, EntInsertedIntoContainerMessage>(OnPullerContainerInsert);
+        SubscribeLocalEvent<PullerComponent, EntGotInsertedIntoContainerMessage>(OnPullerContainerInsert);
         SubscribeLocalEvent<PullerComponent, EntityUnpausedEvent>(OnPullerUnpaused);
         SubscribeLocalEvent<PullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<PullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
@@ -69,7 +69,7 @@ public sealed class PullingSystem : EntitySystem
             .Register<PullingSystem>();
     }
 
-    private void OnPullerContainerInsert(Entity<PullerComponent> ent, ref EntInsertedIntoContainerMessage args)
+    private void OnPullerContainerInsert(Entity<PullerComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
         if (ent.Comp.Pulling == null) return;
 
@@ -79,7 +79,7 @@ public sealed class PullingSystem : EntitySystem
         TryStopPull(ent.Comp.Pulling.Value, pulling, ent.Owner);
     }
 
-    private void OnPullableContainerInsert(Entity<PullableComponent> ent, ref EntInsertedIntoContainerMessage args)
+    private void OnPullableContainerInsert(Entity<PullableComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
         TryStopPull(ent.Owner, ent.Comp);
     }
