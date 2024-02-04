@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Chefs get black pepper packets in their lockers.
-    type: Tweak
-  id: 5385
-  time: '2023-12-16T03:20:51.0000000+00:00'
 - author: Flareguy
   changes:
   - message: Resprited the Kammerer, Double-Barrel, and Enforcer shotguns using sprites
@@ -3874,3 +3868,13 @@
   id: 5884
   time: '2024-02-04T00:50:24.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24869
+- author: themias
+  changes:
+  - message: Added face bandanas
+    type: Add
+  - message: Bandanas can be switched between head and face type with an alt verb
+      (Fold)
+    type: Tweak
+  id: 5885
+  time: '2024-02-04T00:52:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24597
