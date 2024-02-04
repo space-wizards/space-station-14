@@ -16,22 +16,13 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         base.Open();
 
         _window = new();
-        _window.OnKeySelected += OnKeySelected;
-        _window.OnFiltersChanged += OnFiltersChanged;
+        _window.OnKeySelected += key =>
+            SendMessage(new SelectStationRecord(key));
+        _window.OnFiltersChanged += (type, filterValue) =>
+            SendMessage(new SetStationRecordFilter(type, filterValue));
         _window.OnClose += Close;
 
         _window.OpenCentered();
-    }
-
-    private void OnKeySelected(uint? key)
-    {
-        SendMessage(new SelectStationRecord(key));
-    }
-
-    private void OnFiltersChanged(
-        StationRecordFilterType type, string filterValue)
-    {
-        SendMessage(new SetStationRecordFilter(type, filterValue));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

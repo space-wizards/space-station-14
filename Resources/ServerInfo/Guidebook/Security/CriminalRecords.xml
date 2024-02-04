@@ -1,6 +1,6 @@
 ﻿<Document>
   # Criminal Records
-  Criminal records are a console accessible in every station's security department, it serves the purpose of tracking and managing every crime anybody in the crew manifest has ever committed.
+  The criminal records console is accessible in every station's security department, it serves the purpose of tracking and managing the criminal history and status of anybody part of the crew manifest.
 
   <Box>
   <GuideEntityEmbed Entity="ComputerCriminalRecords"/>
@@ -11,14 +11,14 @@
   The UI is composed by the following elements:
   - A search bar that has a filter next to it that lets you filter the crewmembers by their names, fingerprints or DNA.
 
-  - A list of all the crewmembers in the manifest, selecting one of the entries will make the criminal records of a crewmember appear.
+  - A list of all the crewmembers in the manifest, selecting one of the entries will make the criminal records of a crewmember appear. The list is filtered by the search bar so make sure it's empty if you want an overall overview!
 
   - The criminal records themselves
 
   In the record section you can:
     - See security-related information about a crewmember like their name, fingerprints and DNA.
 
-    - Change the security status between None, Wanted and Detained. When setting it to Wanted you will be asked to write a reason.
+    - Change the security status between [color=gray]None[/color], [color=yellow]Wanted[/color] and [color=red]Detained[/color]. When setting it to Wanted you will be asked to write a reason.
 
     - If they are wanted, you can see the reason given below the status dropdown.
 

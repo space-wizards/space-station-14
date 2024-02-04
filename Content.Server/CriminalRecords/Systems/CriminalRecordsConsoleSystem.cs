@@ -10,7 +10,6 @@ using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.CriminalRecords.Systems;
@@ -31,7 +30,8 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
 
-        Subs.BuiEvents<CriminalRecordsConsoleComponent>(CriminalRecordsConsoleKey.Key, subs => {
+        Subs.BuiEvents<CriminalRecordsConsoleComponent>(CriminalRecordsConsoleKey.Key, subs =>
+        {
             subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
             subs.Event<SelectStationRecord>(OnKeySelected);
             subs.Event<SetStationRecordFilter>(OnFiltersChanged);
@@ -104,14 +104,8 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is {} fullName)
             officer = fullName;
 
-        (string, object)[] args;
-        if (reason != null)
-            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason) };
-        else
-            args = new (string, object)[] { ("name", name), ("officer", officer) };
-
         // figure out which radio message to send depending on transition
-        var message = (oldStatus, msg.Status) switch
+        var statusString = (oldStatus, msg.Status) switch
         {
             // going from wanted or detained on the spot
             (_, SecurityStatus.Detained) => "detained",
@@ -124,7 +118,9 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             // this is impossible
             _ => "not-wanted"
         };
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel, ent);
+        var message = Loc.GetString($"criminal-records-console-{statusString}", ("name", name), ("officer", officer),
+            reason != null ? ("reason", reason) : default!);
+        _radio.SendRadioMessage(ent, message, ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
     }
@@ -177,8 +173,8 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         {
             // get records to display when a crewmember is selected
             var key = new StationRecordKey(id, owningStation.Value);
-            _stationRecords.TryGetRecord<GeneralStationRecord>(key, out state.StationRecord, stationRecords);
-            _stationRecords.TryGetRecord<CriminalRecord>(key, out state.CriminalRecord, stationRecords);
+            _stationRecords.TryGetRecord(key, out state.StationRecord, stationRecords);
+            _stationRecords.TryGetRecord(key, out state.CriminalRecord, stationRecords);
             state.SelectedKey = id;
         }
 
