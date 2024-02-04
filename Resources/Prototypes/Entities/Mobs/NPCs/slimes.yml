@@ -107,10 +107,6 @@
     interactFailureString: petting-failure-generic
   - type: Speech
     speechVerb: Slime
-  - type: TypingIndicator
-    proto: slime
-  - type: Speech
-    speechVerb: Slime
     speechSounds: Slime
   - type: TypingIndicator
     proto: slime
