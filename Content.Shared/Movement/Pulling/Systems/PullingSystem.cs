@@ -191,6 +191,7 @@ public sealed class PullingSystem : EntitySystem
         // No more joints with puller -> force stop pull.
         if (TryComp<PullerComponent>(pullableComp.Puller, out var pullerComp))
         {
+            _alertsSystem.ClearAlert(pullableComp.Puller.Value, AlertType.Pulling);
             pullerComp.Pulling = null;
             Dirty(pullableComp.Puller.Value, pullerComp);
         }
@@ -198,6 +199,9 @@ public sealed class PullingSystem : EntitySystem
         pullableComp.PullJointId = null;
         pullableComp.Puller = null;
         Dirty(pullableUid, pullableComp);
+
+
+        _alertsSystem.ClearAlert(pullableUid, AlertType.Pulled);
     }
 
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
@@ -471,8 +475,6 @@ public sealed class PullingSystem : EntitySystem
 
         // Messaging
         var message = new PullStoppedMessage(pullerUid, pullableUid);
-        _alertsSystem.ClearAlert(pullerUid, AlertType.Pulling);
-        _alertsSystem.ClearAlert(pullableUid, AlertType.Pulled);
         _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(pullerUid):user} stopped pulling {ToPrettyString(pullableUid):target}");
 
