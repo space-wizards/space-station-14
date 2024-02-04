@@ -256,9 +256,6 @@ public sealed partial class StoreSystem
             RaiseLocalEvent(listing.ProductEvent);
         }
 
-        if (component.BoughtEntities.Any())
-            component.RefundAllowed = true;
-
         //log dat shit.
         _admin.Add(LogType.StorePurchase, LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{Loc.GetString(listing.Name)}\" from {ToPrettyString(uid)}");
