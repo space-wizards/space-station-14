@@ -172,6 +172,8 @@ public sealed class PullingSystem : EntitySystem
 
     private void OnJointRemoved(EntityUid uid, PullableComponent component, JointRemovedEvent args)
     {
+        // Just handles the joint getting nuked without going through pulling system (valid behavior).
+
         // Not relevant / pullable state handle it.
         if (component.Puller != args.OtherEntity ||
             args.Joint.ID != component.PullJointId ||
@@ -180,26 +182,45 @@ public sealed class PullingSystem : EntitySystem
             return;
         }
 
-        if (args.Joint.ID != component.PullJointId)
+        if (args.Joint.ID != component.PullJointId || component.Puller == null)
             return;
 
-        CleanupPulling(uid, component);
+        StopPulling(uid, component);
     }
 
-    private void CleanupPulling(EntityUid pullableUid, PullableComponent pullableComp)
+    /// <summary>
+    /// Forces pulling to stop and handles cleanup.
+    /// </summary>
+    private void StopPulling(EntityUid pullableUid, PullableComponent pullableComp)
     {
+        if (!_timing.ApplyingState)
+        {
+            if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
+            {
+                _physics.SetFixedRotation(pullableUid, pullableComp.PrevFixedRotation, body: pullablePhysics);
+            }
+        }
+
         // No more joints with puller -> force stop pull.
         if (TryComp<PullerComponent>(pullableComp.Puller, out var pullerComp))
         {
-            _alertsSystem.ClearAlert(pullableComp.Puller.Value, AlertType.Pulling);
+            var pullerUid = pullableComp.Puller.Value;
+            _alertsSystem.ClearAlert(pullerUid, AlertType.Pulling);
             pullerComp.Pulling = null;
             Dirty(pullableComp.Puller.Value, pullerComp);
+
+            // Messaging
+            var message = new PullStoppedMessage(pullerUid, pullableUid);
+            _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(pullerUid):user} stopped pulling {ToPrettyString(pullableUid):target}");
+
+            RaiseLocalEvent(pullerUid, message);
+            RaiseLocalEvent(pullableUid, message);
         }
 
         pullableComp.PullJointId = null;
         pullableComp.Puller = null;
         Dirty(pullableUid, pullableComp);
-
 
         _alertsSystem.ClearAlert(pullableUid, AlertType.Pulled);
     }
@@ -448,7 +469,6 @@ public sealed class PullingSystem : EntitySystem
         if (pullerUidNull == null)
             return false;
 
-        var pullerUid = pullerUidNull.Value;
         var msg = new AttemptStopPullingEvent(user);
         RaiseLocalEvent(pullableUid, msg, true);
 
@@ -458,11 +478,6 @@ public sealed class PullingSystem : EntitySystem
         // Stop pulling confirmed!
         if (!_timing.ApplyingState)
         {
-            if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
-            {
-                _physics.SetFixedRotation(pullableUid, pullable.PrevFixedRotation, body: pullablePhysics);
-            }
-
             // Joint shutdown
             if (pullable.PullJointId != null)
             {
@@ -471,15 +486,7 @@ public sealed class PullingSystem : EntitySystem
             }
         }
 
-        CleanupPulling(pullableUid, pullable);
-
-        // Messaging
-        var message = new PullStoppedMessage(pullerUid, pullableUid);
-        _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(pullerUid):user} stopped pulling {ToPrettyString(pullableUid):target}");
-
-        RaiseLocalEvent(pullerUid, message);
-        RaiseLocalEvent(pullableUid, message);
+        StopPulling(pullableUid, pullable);
         return true;
     }
 }
