@@ -3,7 +3,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
-using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Popups;
@@ -17,12 +16,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.UserInterface;
-using Robust.Shared.Player;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -227,7 +222,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                 Coordinates = GetNetCoordinates(xform.Coordinates),
                 Angle = xform.LocalRotation,
                 Entity = GetNetEntity(uid),
-                Connected = comp.Docked,
+                GridDockedWith =
+                    _xformQuery.TryGetComponent(comp.DockedWith, out var otherDockXform) ?
+                    GetNetEntity(otherDockXform.GridUid) :
+                    null,
                 Color = comp.RadarColor,
                 HighlightedColor = comp.HighlightedRadarColor,
             };

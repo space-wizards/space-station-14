@@ -34,7 +34,7 @@ shuttle-console-map-rebuild = Scan for objects
 
 shuttle-console-no-signal = No signal
 
-shuttle-console-map-objects = Objects
+shuttle-console-map-objects = Sector objects
 
 # DOCK
 

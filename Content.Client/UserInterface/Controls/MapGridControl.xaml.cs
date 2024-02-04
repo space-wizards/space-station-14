@@ -61,7 +61,7 @@ public partial class MapGridControl : BoxContainer
     /// </summary>
     protected float ActualRadarRange;
 
-    protected float CornerRadarRange => MathF.Sqrt(ActualRadarRange * ActualRadarRange + ActualRadarRange * ActualRadarRange);
+    protected float CornerRadarRange => MathF.Sqrt(ActualRadarRange * ActualRadarRange + ActualRadarRange * ActualRadarRange) * 1.1f;
 
     /// <summary>
     /// Controls the maximum distance that will display.

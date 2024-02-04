@@ -12,7 +12,7 @@ public sealed class DockingPortState
     public NetCoordinates Coordinates;
     public Angle Angle;
     public NetEntity Entity;
-    public bool Connected;
-    public Color Color;
-    public Color HighlightedColor;
+    public bool Connected => GridDockedWith != null;
+
+    public NetEntity? GridDockedWith;
 }

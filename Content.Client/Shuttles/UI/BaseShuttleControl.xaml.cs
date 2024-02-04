@@ -72,18 +72,19 @@ public partial class BaseShuttleControl : MapGridControl
         }
     }
 
-    protected void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, Entity<MapGridComponent> grid, Color color)
+    protected void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, Entity<MapGridComponent> grid, Color color, float alpha = 0.01f)
     {
         var rator = Maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
         var edges = new ValueList<Vector2>();
         var tileTris = new ValueList<Vector2>();
         const bool DrawInterior = true;
+        var tileBatchCount = 256;
 
         while (rator.MoveNext(out var tileRef))
         {
             // TODO: Short-circuit interior chunk nodes
             // This can be optimised a lot more if required.
-            var tileVec = Maps.TileCenterToVector(grid, tileRef.Value.GridIndices);
+            var tileVec = Maps.TileToVector(grid, tileRef.Value.GridIndices);
 
             /*
              * You may be wondering what the fuck is going on here.
@@ -174,13 +175,25 @@ public partial class BaseShuttleControl : MapGridControl
                 edges.Add(actualStart);
                 edges.Add(actualEnd);
             }
+
+            if (tileTris.Count > tileBatchCount)
+            {
+                FlushGridDraw(handle, ref tileTris, ref edges, color, DrawInterior, alpha);
+            }
         }
 
-        if (DrawInterior)
+        FlushGridDraw(handle, ref tileTris, ref edges, color, DrawInterior, alpha);
+    }
+
+    private void FlushGridDraw(DrawingHandleScreen handle, ref ValueList<Vector2> tileTris, ref ValueList<Vector2> edges, Color color, bool drawInterior, float alpha)
+    {
+        if (drawInterior)
         {
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, tileTris.Span, color.WithAlpha(0.05f));
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, tileTris.Span, color.WithAlpha(alpha));
         }
 
         handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, color);
+        tileTris.Clear();
+        edges.Clear();
     }
 }

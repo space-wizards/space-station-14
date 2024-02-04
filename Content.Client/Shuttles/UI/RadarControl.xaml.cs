@@ -37,11 +37,6 @@ public sealed partial class RadarControl : BaseShuttleControl
     public bool ShowDocks { get; set; } = true;
 
     /// <summary>
-    /// Currently hovered docked to show on the map.
-    /// </summary>
-    public NetEntity? HighlightedDock;
-
-    /// <summary>
     /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
     /// </summary>
     public Action<EntityCoordinates>? OnRadarClick;
@@ -140,9 +135,12 @@ public sealed partial class RadarControl : BaseShuttleControl
             return;
         }
 
-        var (pos, rot) = _transform.GetWorldPositionRotation(xform);
+        var mapPos = _transform.ToMapCoordinates(_coordinates.Value);
         var offset = _coordinates.Value.Position;
-        var offsetMatrix = Matrix3.CreateInverseTransform(pos, rot + _rotation.Value);
+        var posMatrix = Matrix3.CreateTransform(offset, _rotation.Value);
+        var (_, ourEntRot, ourEntMatrix) = _transform.GetWorldPositionRotationMatrix(_coordinates.Value.EntityId);
+        Matrix3.Multiply(posMatrix, ourEntMatrix, out var ourWorldMatrix);
+        var ourWorldMatrixInvert = ourWorldMatrix.Invert();
 
         // Draw our grid in detail
         var ourGridId = xform.GridUid;
@@ -150,7 +148,7 @@ public sealed partial class RadarControl : BaseShuttleControl
             fixturesQuery.HasComponent(ourGridId.Value))
         {
             var ourGridMatrix = _transform.GetWorldMatrix(ourGridId.Value);
-            Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
+            Matrix3.Multiply(in ourGridMatrix, in ourWorldMatrixInvert, out var matrix);
             var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
 
             DrawGrid(handle, matrix, (ourGridId.Value, ourGrid), color);
@@ -175,11 +173,12 @@ public sealed partial class RadarControl : BaseShuttleControl
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, radarPosVerts, Color.Lime);
 
-        var viewBounds = new Box2Rotated(new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(pos), rot, pos);
+        var rot = ourEntRot + _rotation.Value;
+        var viewBounds = new Box2Rotated(new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(mapPos.Position), rot, mapPos.Position);
         var viewAABB = viewBounds.CalcBoundingBox();
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
+        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
 
         // Draw other grids... differently
         foreach (var grid in _grids)
@@ -195,7 +194,7 @@ public sealed partial class RadarControl : BaseShuttleControl
                 continue;
 
             var gridMatrix = _transform.GetWorldMatrix(gUid);
-            Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
+            Matrix3.Multiply(in gridMatrix, in ourWorldMatrixInvert, out var matty);
             var color = _shuttles.GetIFFColor(grid, self: false, iff);
 
             // Others default:
@@ -246,7 +245,7 @@ public sealed partial class RadarControl : BaseShuttleControl
         if (!ShowDocks)
             return;
 
-        const float DockScale = 1f;
+        const float DockScale = 0.5f;
         var nent = EntManager.GetNetEntity(uid);
 
         if (_docks.TryGetValue(nent, out var docks))
@@ -259,7 +258,7 @@ public sealed partial class RadarControl : BaseShuttleControl
                 if (uiPosition.Length() > WorldRange - DockScale)
                     continue;
 
-                var color = HighlightedDock == state.Entity ? state.HighlightedColor : state.Color;
+                var color = Color.ToSrgb(Color.Pink);
 
                 var verts = new[]
                 {
