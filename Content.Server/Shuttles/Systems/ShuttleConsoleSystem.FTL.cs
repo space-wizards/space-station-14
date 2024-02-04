@@ -1,5 +1,6 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -13,6 +14,13 @@ public sealed partial class ShuttleConsoleSystem
     {
         SubscribeLocalEvent<FTLBeaconComponent, ComponentStartup>(OnBeaconStartup);
         SubscribeLocalEvent<FTLBeaconComponent, AnchorStateChangedEvent>(OnBeaconAnchorChanged);
+
+        SubscribeLocalEvent<FTLExclusionComponent, ComponentStartup>(OnExclusionStartup);
+    }
+
+    private void OnExclusionStartup(Entity<FTLExclusionComponent> ent, ref ComponentStartup args)
+    {
+        RefreshShuttleConsoles();
     }
 
     private void OnBeaconStartup(Entity<FTLBeaconComponent> ent, ref ComponentStartup args)
@@ -56,6 +64,19 @@ public sealed partial class ShuttleConsoleSystem
         ConsoleFTL(entity, false, targetCoordinates, args.Angle, args.Coordinates.MapId);
     }
 
+    private void GetExclusions(ref List<ShuttleExclusion> exclusions)
+    {
+        var query = AllEntityQuery<FTLExclusionComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var comp, out var xform))
+        {
+            if (!comp.Enabled)
+                continue;
+
+            exclusions.Add(new ShuttleExclusion(GetNetCoordinates(xform.Coordinates), comp.Range));
+        }
+    }
+
     /// <summary>
     /// Handles shuttle console FTLs.
     /// </summary>
@@ -84,7 +105,10 @@ public sealed partial class ShuttleConsoleSystem
             return;
         }
 
-        if (!beacon && !_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle))
+        List<ShuttleExclusion> exclusions = new();
+        GetExclusions(ref exclusions);
+
+        if (!beacon && !_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle, exclusions))
         {
             return;
         }

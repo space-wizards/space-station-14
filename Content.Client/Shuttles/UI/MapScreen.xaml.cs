@@ -78,6 +78,8 @@ public sealed partial class MapScreen : BoxContainer
             default:
                 throw new NotImplementedException();
         }
+
+        MapRadar.UpdateState(state);
     }
 
     private void FtlPreviewToggled(BaseButton.ButtonToggledEventArgs obj)

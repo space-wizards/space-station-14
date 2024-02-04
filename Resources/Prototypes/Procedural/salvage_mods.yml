@@ -1,6 +1,7 @@
 # Markers
 - type: entity
   id: SalvageShuttleMarker
+  name: Salvage shuttle marker
   parent: FTLPoint
 
 # Biome mods -> at least 1 required

@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Client.Shuttles.Systems;
+using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
@@ -9,6 +11,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -24,9 +27,9 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _inputs = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    private SharedMapSystem _maps;
-    private SharedShuttleSystem _shuttles;
-    private SharedTransformSystem _xformSystem;
+    private readonly SharedMapSystem _maps;
+    private readonly ShuttleSystem _shuttles;
+    private readonly SharedTransformSystem _xformSystem;
 
     protected override bool Draggable => true;
 
@@ -34,11 +37,13 @@ public sealed class ShuttleMapControl : BaseShuttleControl
 
     private EntityUid? _shuttleEntity;
 
-    private Font _font;
-    private Texture _backgroundTexture;
+    private readonly Font _font;
 
-    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private readonly EntityQuery<PhysicsComponent> _physicsQuery;
     private List<Entity<MapGridComponent>> _grids = new();
+
+    private List<ShuttleDestination> _destinations = new();
+    private List<ShuttleExclusion> _exclusions = new();
 
     /// <summary>
     /// Toggles FTL mode on. This shows a pre-vis for FTLing a grid.
@@ -55,14 +60,13 @@ public sealed class ShuttleMapControl : BaseShuttleControl
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
         _maps = _entManager.System<SharedMapSystem>();
-        _shuttles = _entManager.System<SharedShuttleSystem>();
+        _shuttles = _entManager.System<ShuttleSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
 
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
-        _backgroundTexture = cache.GetResource<TextureResource>("/Textures/Parallaxes/space_map2.png");
     }
 
     public void SetMap(MapId mapId, Vector2 offset)
@@ -116,10 +120,12 @@ public sealed class ShuttleMapControl : BaseShuttleControl
 
     private void DrawParallax(DrawingHandleScreen handle)
     {
-        // TODO: Move this garbage to parallaxsystem or the likes.
+        if (!_entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) || shuttleXform.MapUid == null)
+            return;
 
+        // TODO: Move this garbage to parallaxsystem or the likes.
         // Draw background texture
-        var tex = _backgroundTexture;
+        var tex = _shuttles.GetTexture(shuttleXform.MapUid.Value);
 
         // Size of the texture in world units.
         var size = tex.Size * MinimapScale * 1f;
@@ -185,22 +191,40 @@ public sealed class ShuttleMapControl : BaseShuttleControl
         // Do it up here because we want this layered below most things.
         if (FtlMode)
         {
-            foreach (var grid in _grids)
+            if (_shuttleEntity != null)
             {
-                var gridPhysics = _physicsQuery.GetComponent(grid);
-                var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(grid);
-                gridPos = _maps.GetGridPosition((grid, gridPhysics), gridPos, gridRot);
+                var gridUid = _shuttleEntity.Value;
+                var gridPhysics = _physicsQuery.GetComponent(gridUid);
+                var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(gridUid);
+                gridPos = _maps.GetGridPosition((gridUid, gridPhysics), gridPos, gridRot);
 
                 var gridRelativePos = matty.Transform(gridPos);
                 gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
                 var gridUiPos = ScalePosition(gridRelativePos);
 
-                if (grid.Owner == _shuttleEntity)
+                var range = _shuttles.GetFTLRange(gridUid);
+                range *= MinimapScale;
+                handle.DrawCircle(gridUiPos, range, Color.Gold, filled: false);
+            }
+
+            var exclusionColor = Color.Red;
+
+            foreach (var exclusion in _exclusions)
+            {
+                // Check if it even intersects the viewport.
+                var coords = _entManager.GetCoordinates(exclusion.Coordinates);
+                var mapCoords = _xformSystem.ToMapCoordinates(coords);
+                var enlargedBounds = viewBox.Enlarged(exclusion.Range);
+
+                if (mapCoords.MapId != ViewingMap ||
+                    !enlargedBounds.Contains(mapCoords.Position))
                 {
-                    var range = _shuttles.GetFTLRange(grid.Owner);
-                    range *= MinimapScale;
-                    handle.DrawCircle(gridUiPos, range, Color.Gold, filled: false);
+                    continue;
                 }
+
+                var localPos = ScalePosition(mapCoords.Position);
+                handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor.WithAlpha(0.05f));
+                handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor);
             }
         }
 
@@ -315,6 +339,10 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                     _entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) &&
                     shuttleXform.MapID != MapId.Nullspace)
                 {
+                    // If it's a beacon only map then snap the mouse to a nearby spot.
+                    var beaconsOnly = _entManager.TryGetComponent(shuttleXform.MapUid, out FTLDestinationComponent? destComp) &&
+                                      destComp.BeaconsOnly;
+
                     var grid = _entManager.GetComponent<MapGridComponent>(_shuttleEntity.Value);
 
                     var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(shuttleXform);
@@ -324,7 +352,7 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                     var mouseMapPos = InverseMapPosition(mouseLocalPos);
 
                     var mapId = shuttleXform.MapID;
-                    var ftlFree = _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(shuttleXform.MapUid!.Value, mouseMapPos), _ftlAngle);
+                    var ftlFree = _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(shuttleXform.MapUid!.Value, mouseMapPos), _ftlAngle, _exclusions);
 
                     var color = ftlFree ? Color.LimeGreen : Color.Magenta;
 
@@ -365,5 +393,11 @@ public sealed class ShuttleMapControl : BaseShuttleControl
                 }
             }
         }
+    }
+
+    public void UpdateState(ShuttleConsoleBoundInterfaceState state)
+    {
+        _destinations = state.Destinations;
+        _exclusions = state.Exclusions;
     }
 }

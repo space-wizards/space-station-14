@@ -108,12 +108,14 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public void RefreshShuttleConsoles(EntityUid gridUid)
     {
         var docks = GetAllDocks();
+        var exclusions = new List<ShuttleExclusion>();
+        GetExclusions(ref exclusions);
         _consoles.Clear();
         _lookup.GetChildEntities(gridUid, _consoles);
 
         foreach (var entity in _consoles)
         {
-            UpdateState(entity, docks);
+            UpdateState(entity, exclusions, docks);
         }
     }
 
@@ -123,11 +125,13 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public void RefreshShuttleConsoles()
     {
         var docks = GetAllDocks();
+        var exclusions = new List<ShuttleExclusion>();
+        GetExclusions(ref exclusions);
         var query = AllEntityQuery<ShuttleConsoleComponent>();
 
         while (query.MoveNext(out var uid, out _))
         {
-            UpdateState(uid, docks);
+            UpdateState(uid, exclusions, docks);
         }
     }
 
@@ -230,7 +234,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         return result;
     }
 
-    private void UpdateState(EntityUid consoleUid, List<DockingInterfaceState>? docks = null)
+    private void UpdateState(EntityUid consoleUid, List<ShuttleExclusion>? exclusions = null, List<DockingInterfaceState>? docks = null)
     {
         EntityUid? entity = consoleUid;
 
@@ -248,7 +252,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         var shuttleGridUid = consoleXform?.GridUid;
 
-        var destinations = new List<(NetEntity, string, bool)>();
+        var destinations = new List<ShuttleDestination>();
         var ftlState = FTLState.Available;
         var ftlTime = TimeSpan.Zero;
 
@@ -258,10 +262,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             ftlTime = _timing.CurTime + TimeSpan.FromSeconds(shuttleFtl.Accumulator);
         }
 
-        // Mass too large
-        // TODO: Need FTL drives
+        // Only bother getting FTL data if we can FTL.
         if (entity != null && shuttleGridUid != null &&
-            (!TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) || shuttleBody.Mass < ShuttleSystem.FTLMassLimit))
+            (TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) && shuttleBody.Mass < ShuttleSystem.FTLMassLimit))
         {
             // Can't go anywhere when in FTL.
             var locked = shuttleFtl != null || Paused(shuttleGridUid.Value);
@@ -291,13 +294,18 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                                 (!TryComp<FTLComponent>(destUid, out var ftl) || ftl.State == FTLState.Cooldown);
 
                 // Can't travel to same map (yet)
-                if (canTravel && consoleXform?.MapUid == Transform(destUid).MapUid)
+                var destXform = _xformQuery.GetComponent(destUid);
+
+                if (canTravel && consoleXform?.MapUid == destXform.MapUid)
                 {
                     canTravel = false;
                 }
 
-                destinations.Add((GetNetEntity(destUid), name, canTravel));
+                destinations.Add(new ShuttleDestination(GetNetCoordinates(destXform.Coordinates), name, canTravel));
             }
+
+            exclusions = new List<ShuttleExclusion>();
+            GetExclusions(ref exclusions);
         }
 
         docks ??= GetAllDocks();
@@ -308,6 +316,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                 ftlState,
                 ftlTime,
                 destinations,
+                exclusions ?? new List<ShuttleExclusion>(),
                 range,
                 GetNetCoordinates(consoleXform?.Coordinates),
                 consoleXform?.LocalRotation,

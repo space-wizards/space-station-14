@@ -1,3 +1,4 @@
+using Content.Shared.Shuttles.BUIStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -44,7 +45,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Returns true if the spot is free to be FTLd to (not close to any objects and in range).
     /// </summary>
-    public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle)
+    public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusion> exclusionZones)
     {
         if (!_physicsQuery.TryGetComponent(shuttleUid, out var shuttlePhysics) ||
             !_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform))
@@ -69,6 +70,19 @@ public abstract partial class SharedShuttleSystem : EntitySystem
             {
                 return false;
             }
+        }
+
+        // Check exclusion zones.
+        // This needs to be passed in manually due to PVS.
+        foreach (var exclusion in exclusionZones)
+        {
+            var exclusionCoords = _xformSystem.ToMapCoordinates(GetCoordinates(exclusion.Coordinates));
+
+            if (exclusionCoords.MapId != mapCoordinates.MapId)
+                continue;
+
+            if ((mapCoordinates.Position - exclusionCoords.Position).Length() <= exclusion.Range)
+                return false;
         }
 
         var ourFTLBuffer = GetFTLBufferRange(shuttleUid);

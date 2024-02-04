@@ -139,6 +139,9 @@ public partial class MapGridControl : BoxContainer
         ActualRadarRange = Math.Clamp(ActualRadarRange + value, WorldMinRange, WorldMaxRange);
     }
 
+    /// <summary>
+    /// Converts map coordinates to the local control.
+    /// </summary>
     protected Vector2 ScalePosition(Vector2 value)
     {
         return value * MinimapScale + MidPointVector;

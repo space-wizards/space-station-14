@@ -6,3 +6,13 @@
     - type: FTLDestination
     - type: Sprite
       state: pink
+
+- type: entity
+  id: FTLExclusion
+  parent: MarkerBase
+  name: FTL exclusion point
+  components:
+    - type: FTLExclusion
+      range: 32
+    - type: Sprite
+      state: pink
