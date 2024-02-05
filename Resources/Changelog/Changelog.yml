@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added brother of cak - bread dog! 5 cognizine, sausage bread, animal
-      heart, cooked spaceshrooms and 15 second in microwave = bread dog.
-    type: Add
-  id: 5393
-  time: '2023-12-16T08:30:20.0000000+00:00'
 - author: Ubaser
   changes:
   - message: Chemistry now has vials, similar to bottles but are much more durable.
@@ -3883,3 +3876,10 @@
   id: 5892
   time: '2024-02-05T23:03:04.754935+00:00'
   url: null
+- author: themias
+  changes:
+  - message: Outlaw Glasses fully hide your identity again
+    type: Tweak
+  id: 5893
+  time: '2024-02-05T23:23:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24971
