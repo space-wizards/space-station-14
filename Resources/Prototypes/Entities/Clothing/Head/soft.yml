@@ -6,6 +6,8 @@
   - type: Appearance
   - type: Foldable
     canFoldInsideContainer: true
+    unfoldVerbText: fold-flip-verb
+    foldVerbText: fold-flip-verb
   - type: FoldableClothing
     foldedEquippedPrefix: flipped
     foldedHeldPrefix: flipped
