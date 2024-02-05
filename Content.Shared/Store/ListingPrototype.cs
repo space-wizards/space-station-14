@@ -163,7 +163,6 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             ProductEntity = ProductEntity,
             ProductAction = ProductAction,
             ProductUpgradeID = ProductUpgradeID,
-            ProductActionEntity = ProductActionEntity,
             ProductEvent = ProductEvent,
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
