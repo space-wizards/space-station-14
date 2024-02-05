@@ -7,6 +7,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Paint;
 
+/// <summary>
+/// Entity when used on another entity will paint target entity.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedPaintSystem))]
 public sealed partial class PaintComponent : Component
@@ -24,7 +27,7 @@ public sealed partial class PaintComponent : Component
     public string Solution = "drink";
 
     /// <summary>
-    /// Solution on the entity that contains the paint.
+    /// How long the doafter will take.
     /// </summary>
     [DataField]
     public int Delay = 2;

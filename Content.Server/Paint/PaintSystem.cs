@@ -61,8 +61,8 @@ public sealed class PaintSystem : SharedPaintSystem
 
         var verb = new UtilityVerb()
         {
-            Act = () => {
-
+            Act = () =>
+            {
                 var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.Delay, new PaintDoAfterEvent(), uid, target: args.Target, used: uid)
                 {
                     BreakOnTargetMove = true,
@@ -79,7 +79,6 @@ public sealed class PaintSystem : SharedPaintSystem
             Text = paintText,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/paint.svg.192dpi.png"))
         };
-
         args.Verbs.Add(verb);
     }
 
@@ -121,16 +120,14 @@ public sealed class PaintSystem : SharedPaintSystem
             return;
 
         if (!TryPaint(entity, target))
+        {
             _popup.PopupEntity(Loc.GetString("paint-empty", ("used", args.Used)), args.User, args.User, PopupType.Medium);
-        return;
-
+            return;
+        }
     }
 
     private bool TryPaint(Entity<PaintComponent> reagent, EntityUid target)
     {
-        if (HasComp<PaintedComponent>(target))
-            return false;
-
         if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target))
             return false;
 
