@@ -1213,7 +1213,16 @@
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
     state: icon
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
   - type: Glue
     consumptionUnit: 10
   - type: Item
