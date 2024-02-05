@@ -34,10 +34,20 @@ namespace Content.Client.Paint
 
             var sprite = args.Sprite;
 
-            for (var layer = 0; layer < sprite.AllLayers.Count(); ++layer)
+            for (var intlayer = 0; intlayer < sprite.AllLayers.Count(); ++intlayer)
             {
-                sprite.LayerSetColor(layer, component.Color);
-                sprite.LayerSetShader(layer, component.ShaderName);
+                foreach (var spriteLayer in sprite.AllLayers)
+                {
+                    if (spriteLayer is not Layer layer)
+                        continue;
+
+                    if (layer.Shader == null)
+                        sprite.LayerSetShader(intlayer, component.ShaderName);
+
+                    sprite.LayerSetColor(intlayer, component.Color);
+                }
+
+
             }
         }
 
