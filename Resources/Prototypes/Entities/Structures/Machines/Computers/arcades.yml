@@ -45,7 +45,6 @@
   - type: SpamEmitSound
     minInterval: 30
     maxInterval: 90
-    playChance: 0.6
     sound:
       collection: ArcadeNoise
       params:
