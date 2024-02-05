@@ -1,66 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Scientists can now fabricate faux grass planet and ice tiles with a tier
-      2 civilian services research! They're just as good as the real thing, while
-      being removable.
-    type: Add
-  id: 5387
-  time: '2023-12-16T08:20:57.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Lawyers, librarians and reporters now spawn with a luxury pen in their
-      PDA.
-    type: Add
-  id: 5388
-  time: '2023-12-16T08:21:24.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: Added 9 new cargo bounties!
-    type: Add
-  id: 5389
-  time: '2023-12-16T08:23:35.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - message: Everyone can toggle fire alarms now, not just atmos
-    type: Tweak
-  id: 5390
-  time: '2023-12-16T08:24:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: A variety of chemicals can now be decomposed via electrolysis or centrifugal
-      force.
-    type: Add
-  id: 5391
-  time: '2023-12-16T08:26:12.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - message: Ejecting a tank from a canister will now try to put it in your hand first
-    type: Fix
-  id: 5392
-  time: '2023-12-16T08:28:28.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: Added brother of cak - bread dog! 5 cognizine, sausage bread, animal
-      heart, cooked spaceshrooms and 15 second in microwave = bread dog.
-    type: Add
-  id: 5393
-  time: '2023-12-16T08:30:20.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: Chemistry now has vials, similar to bottles but are much more durable.
-    type: Add
-  id: 5394
-  time: '2023-12-16T14:29:54.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Added Poppy the Safety Opposum!
-    type: Add
-  - message: Opossums have received some new sprites. Old sprites are still available
-      to be spawned in by admins.
-    type: Tweak
-  id: 5395
-  time: '2023-12-16T14:34:54.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Fixed explosion resistance from bags being applied to the wearer.
@@ -3878,3 +3816,71 @@
   id: 5886
   time: '2024-02-04T02:23:16.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24937
+- author: Tayrtahn
+  changes:
+  - message: Added opened/closed visuals and fill levels for a variety of drinks.
+    type: Add
+  id: 5887
+  time: '2024-02-04T20:13:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24600
+- author: deltanedas
+  changes:
+  - message: Grilles are no longer incredibly strong.
+    type: Tweak
+  id: 5888
+  time: '2024-02-04T20:48:06.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24881
+- author: Scribbles0
+  changes:
+  - message: Holoparasites can now autoattack at their max attack rate when holding
+      down their attack button.
+    type: Add
+  id: 5889
+  time: '2024-02-04T23:01:49.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24944
+- author: EdenTheLiznerd
+  changes:
+  - message: Sectech no longer says "Let's crack communist skulls!" It now says "Let's
+      crack syndicate skulls!"
+    type: Tweak
+  id: 5890
+  time: '2024-02-05T12:24:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24965
+- author: Varen
+  changes:
+  - message: Rebalanced electrocution damage to ramp up slower with power levels.
+    type: Tweak
+  id: 5891
+  time: '2024-02-05T18:47:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24829
+- author: ficcialfaint and deltanedas
+  changes:
+  - message: Criminal records and the console that manages them have been added to
+      the game. They also have a guidebook entry.
+    type: Add
+  id: 5892
+  time: '2024-02-05T23:03:04.754935+00:00'
+  url: null
+- author: themias
+  changes:
+  - message: Outlaw Glasses fully hide your identity again
+    type: Tweak
+  id: 5893
+  time: '2024-02-05T23:23:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24971
+- author: Emisse
+  changes:
+  - message: Nonstandard pens now embed again. (explosive pen good again)
+    type: Tweak
+  id: 5894
+  time: '2024-02-05T23:30:06.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24849
+- author: FungiFellow
+  changes:
+  - message: Altered content of several Borg Modules for QoL
+    type: Tweak
+  - message: Removed Gas Analyzer Module
+    type: Remove
+  id: 5895
+  time: '2024-02-05T23:46:39.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24702
