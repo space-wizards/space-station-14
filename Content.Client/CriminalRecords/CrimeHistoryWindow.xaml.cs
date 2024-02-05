@@ -50,7 +50,6 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
             _dialog.OnConfirmed += responses =>
             {
                 var line = responses[field];
-                // TODO: whenever the console is moved to shared unhardcode this
                 if (line.Length < 1 || line.Length > _maxLength)
                     return;
 
