@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
+using Content.Shared.CriminalRecords.Components;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Client.Player;
@@ -27,7 +28,9 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
     {
         base.Open();
 
-        _window = new(Owner, _playerManager, _proto, _random, _accessReader);
+        var comp = EntMan.GetComponent<CriminalRecordsConsoleComponent>(Owner);
+
+        _window = new(Owner, comp.MaxStringLength, _playerManager, _proto, _random, _accessReader);
         _window.OnKeySelected += key =>
             SendMessage(new SelectStationRecord(key));
         _window.OnFiltersChanged += (type, filterValue) =>
@@ -40,7 +43,7 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         _window.OnHistoryClosed += () => _historyWindow?.Close();
         _window.OnClose += Close;
 
-        _historyWindow = new();
+        _historyWindow = new(comp.MaxStringLength);
         _historyWindow.OnAddHistory += line => SendMessage(new CriminalRecordAddHistory(line));
         _historyWindow.OnDeleteHistory += index => SendMessage(new CriminalRecordDeleteHistory(index));
 
