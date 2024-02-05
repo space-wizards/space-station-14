@@ -1,0 +1,50 @@
+﻿- type: decal
+  id: GreyStationSign1
+  tags: ["station"]
+  sprite:
+    sprite: GreyStation/Decals/greystationsign.rsi
+    state: greystationsign1
+
+- type: decal
+  id: GreyStationSign2
+  tags: ["station"]
+  sprite:
+    sprite: GreyStation/Decals/greystationsign.rsi
+    state: greystationsign2
+
+- type: decal
+  id: GreyStationSign3
+  tags: ["station"]
+  sprite:
+    sprite: GreyStation/Decals/greystationsign.rsi
+    state: greystationsign3
+
+- type: decal
+  id: GreyStationSign4
+  tags: ["station"]
+  sprite:
+    sprite: GreyStation/Decals/greystationsign.rsi
+    state: greystationsign4
+
+- type: decal
+  id: GreyStationSign5
+  tags: ["station"]
+  sprite:
+    sprite: GreyStation/Decals/greystationsign.rsi
+    state: greystationsign5
+
+- type: decal
+  id: GreyStationSign6
+  tags: ["station"]
+  sprite:
+    sprite: GreyStation/Decals/greystationsign.rsi
+    state: greystationsign6
+
+- type: decal
+  id: GreyStationSign7
+  tags: ["station"]
+  sprite:
+    sprite: GreyStation/Decals/greystationsign.rsi
+    state: greystationsign7
+
+
