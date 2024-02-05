@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Medical.Components;
 
 /// <summary>
-///    After scanning, retrieves the target Uid to use with its related UI.
+/// After scanning, retrieves the target Uid to use with its related UI.
 /// </summary>
 [RegisterComponent]
 [Access(typeof(HealthAnalyzerSystem))]

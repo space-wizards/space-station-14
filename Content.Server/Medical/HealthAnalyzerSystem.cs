@@ -20,13 +20,13 @@ namespace Content.Server.Medical
 {
     public sealed class HealthAnalyzerSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly PowerCellSystem _cell = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -44,15 +44,10 @@ namespace Content.Server.Medical
 
         public override void Update(float frameTime)
         {
-            base.Update(frameTime);
-
-            var query = EntityQueryEnumerator<ActiveHealthMonitoredComponent, TransformComponent>();
-            while (query.MoveNext(out var entityUid, out var activeHealthComponent, out var entityTransform))
+            var monitoredQuery = EntityQueryEnumerator<ActiveHealthMonitoredComponent, TransformComponent>();
+            var analyzerQuery = EntityQueryEnumerator<HealthAnalyzerComponent, TransformComponent>();
+            while (monitoredQuery.MoveNext(out var entityUid, out var activeHealthComponent, out var entityTransform))
             {
-                //If the component is somehow orphaned, remove it
-                if (activeHealthComponent.ActiveAnalyzers.Count == 0)
-                    RemCompDeferred<ActiveHealthMonitoredComponent>(entityUid);
-
                 //Update rate limited to 1 second
                 if (activeHealthComponent.NextUpdate > _timing.CurTime)
                     continue;
@@ -60,17 +55,13 @@ namespace Content.Server.Medical
                 activeHealthComponent.NextUpdate = _timing.CurTime + activeHealthComponent.UpdateInterval;
 
                 //Send updates to each health analyzer every cref
-                foreach (var healthAnalyzer in activeHealthComponent.ActiveAnalyzers)
+                while (analyzerQuery.MoveNext(out var healthAnalyzer, out var healthAnalyzerComponent, out var healthAnalyzerTransform))
                 {
-                    //Ensure only health analyzers
-                    if (!TryComp<HealthAnalyzerComponent>(healthAnalyzer, out var healthAnalyzerComponent))
-                    {
-                        StopAnalyzingEntity(entityUid, healthAnalyzer, activeHealthComponent);
+                    if (healthAnalyzerComponent.ScannedEntity != entityUid)
                         continue;
-                    }
 
                     //Get distance between health analyzer and the scanned entity
-                    var healthAnalyserPosition = Transform(healthAnalyzer).Coordinates;
+                    var healthAnalyserPosition = healthAnalyzerTransform.Coordinates;
 
                     if (!healthAnalyserPosition.InRange(EntityManager, _transformSystem, entityTransform.Coordinates, healthAnalyzerComponent.MaxScanRange))
                     {
@@ -177,9 +168,7 @@ namespace Content.Server.Medical
         /// <param name="healthAnalyzer">The health analyzer that should receive the updates</param>
         private void BeginAnalyzingEntity(EntityUid target, Entity<HealthAnalyzerComponent> healthAnalyzer)
         {
-            var healthBeingAnalyzedComponent = EnsureComp<ActiveHealthMonitoredComponent>(target);
-
-            healthBeingAnalyzedComponent.ActiveAnalyzers.Add(healthAnalyzer);
+            EnsureComp<ActiveHealthMonitoredComponent>(target);
 
             //Link the health analyzer to the scanned entity
             healthAnalyzer.Comp.ScannedEntity = target;
@@ -200,13 +189,6 @@ namespace Content.Server.Medical
         {
             if (!Resolve(target, ref healthMonitoredComponent, false))
                 return;
-
-            //Remove analyzer from the list
-            healthMonitoredComponent.ActiveAnalyzers.Remove(healthAnalyzer);
-
-            //If we were the last, remove the component
-            if (healthMonitoredComponent.ActiveAnalyzers.Count == 0)
-                RemCompDeferred<ActiveHealthMonitoredComponent>(target);
 
             //If somehow healthAnalyzer is not a health analyzer, just skip the rest
             if (!Resolve(healthAnalyzer, ref healthAnalyzerComponent))
@@ -241,7 +223,6 @@ namespace Content.Server.Medical
             var bloodAmount = float.NaN;
 
             if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
-                bloodstream != null &&
                 _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 bloodAmount = bloodSolution.FillFraction;
 
