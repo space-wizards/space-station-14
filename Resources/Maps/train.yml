@@ -372,12 +372,12 @@ entities:
             color: '#00B2FFFF'
             id: ArrowsGreyscale
           decals:
-            1502: -18,-254
+            1460: -18,-254
         - node:
             color: '#FF0000FF'
             id: ArrowsGreyscale
           decals:
-            1503: -18,-251
+            1461: -18,-251
         - node:
             color: '#FFFFFFFF'
             id: Bot
@@ -435,12 +435,12 @@ entities:
             color: '#00B2FFFF'
             id: BoxGreyscale
           decals:
-            1501: -16,-254
+            1459: -16,-254
         - node:
             color: '#FF0000FF'
             id: BoxGreyscale
           decals:
-            1504: -16,-251
+            1462: -16,-251
         - node:
             color: '#FFFFFFFF'
             id: BrickTileDarkInnerNe
@@ -938,8 +938,8 @@ entities:
             id: BushCOne
           decals:
             193: 2.5288224,-40.980873
-            1474: -3,-375
-            1475: 3,-375
+            1436: -3,-375
+            1437: 3,-375
         - node:
             color: '#FFFFFFFF'
             id: BushCTwo
@@ -960,8 +960,8 @@ entities:
             id: Bushb1
           decals:
             1271: -1,-387
-            1470: 1,-373
-            1471: 0,-374
+            1432: 1,-373
+            1433: 0,-374
         - node:
             color: '#FFFFFFFF'
             id: Bushb3
@@ -972,12 +972,12 @@ entities:
             1274: 6,-384
             1275: -5,-384
             1276: 5,-398
-            1472: -2,-374
+            1434: -2,-374
         - node:
             color: '#FFFFFFFF'
             id: Bushc3
           decals:
-            1473: 3,-374
+            1435: 3,-374
         - node:
             color: '#FFFFFFFF'
             id: Bushd1
@@ -1117,20 +1117,20 @@ entities:
             id: Grassa2
           decals:
             1267: -2,-388
-            1476: -1,-374
+            1438: -1,-374
         - node:
             color: '#FFFFFFFF'
             id: Grassa3
           decals:
             1270: -2,-387
-            1478: 1,-374
-            1479: 2,-374
+            1440: 1,-374
+            1441: 2,-374
         - node:
             color: '#FFFFFFFF'
             id: Grassa5
           decals:
-            1480: -3,-374
-            1481: 2,-373
+            1442: -3,-374
+            1443: 2,-373
         - node:
             color: '#FFFFFFFF'
             id: Grassb1
@@ -1145,7 +1145,7 @@ entities:
             203: 4.2479715,-41.057957
             209: 0.60386777,-40.880844
             211: 1.6455414,-39.61602
-            1483: 4,-374
+            1445: 4,-374
         - node:
             color: '#FFFFFFFF'
             id: Grassb3
@@ -1169,8 +1169,8 @@ entities:
             210: 3.1142914,-39.694145
             1268: -2,-389
             1269: -1,-388
-            1477: -1,-373
-            1482: -4,-374
+            1439: -1,-373
+            1444: -4,-374
         - node:
             color: '#FFFFFFFF'
             id: Grassc3
@@ -1297,19 +1297,19 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileDarkLineN
           decals:
-            1484: -3,-371
-            1485: -4,-371
-            1486: -5,-371
-            1487: -6,-371
-            1488: -2,-371
-            1489: -1,-371
-            1490: 0,-371
-            1491: 1,-371
-            1492: 2,-371
-            1493: 3,-371
-            1494: 4,-371
-            1495: 5,-371
-            1496: 6,-371
+            1446: -3,-371
+            1447: -4,-371
+            1448: -5,-371
+            1449: -6,-371
+            1450: -2,-371
+            1451: -1,-371
+            1452: 0,-371
+            1453: 1,-371
+            1454: 2,-371
+            1455: 3,-371
+            1456: 4,-371
+            1457: 5,-371
+            1458: 6,-371
         - node:
             color: '#FFFFFFFF'
             id: MiniTileDarkLineS
@@ -1388,9 +1388,9 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelCornerNe
           decals:
-            1340: 2,-357
-            1346: 3,-360
-            1365: 4,-361
+            1331: 2,-357
+            1337: 3,-360
+            1353: 4,-361
         - node:
             color: '#999453FF'
             id: MiniTileSteelCornerNw
@@ -1405,9 +1405,9 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelCornerNw
           decals:
-            1341: -2,-357
-            1347: -3,-360
-            1355: -7,-361
+            1332: -2,-357
+            1338: -3,-360
+            1346: -7,-361
         - node:
             color: '#999453FF'
             id: MiniTileSteelCornerSe
@@ -1442,7 +1442,7 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelCornerSw
           decals:
-            1356: -7,-362
+            1347: -7,-362
         - node:
             color: '#D381C996'
             id: MiniTileSteelInnerNe
@@ -1453,8 +1453,8 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelInnerNe
           decals:
-            1349: 2,-360
-            1350: 3,-361
+            1340: 2,-360
+            1341: 3,-361
         - node:
             color: '#FFFFFFFF'
             id: MiniTileSteelInnerNe
@@ -1470,8 +1470,8 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelInnerNw
           decals:
-            1348: -2,-360
-            1351: -3,-361
+            1339: -2,-360
+            1342: -3,-361
         - node:
             color: '#FFFFFFFF'
             id: MiniTileSteelInnerNw
@@ -1494,12 +1494,12 @@ entities:
             id: MiniTileSteelInnerSw
           decals:
             1106: 9,-309
-            1330: -1,-298
+            1327: -1,-298
         - node:
             color: '#DE3A3A96'
             id: MiniTileSteelInnerSw
           decals:
-            1430: -4,-362
+            1401: -4,-362
         - node:
             color: '#FFFFFFFF'
             id: MiniTileSteelInnerSw
@@ -1510,14 +1510,14 @@ entities:
             color: '#5A64BC93'
             id: MiniTileSteelLineE
           decals:
-            1468: 7,-367
-            1469: 7,-368
+            1430: 7,-367
+            1431: 7,-368
         - node:
             color: '#5ABC5A93'
             id: MiniTileSteelLineE
           decals:
-            1454: -6,-367
-            1455: -6,-368
+            1418: -6,-367
+            1419: -6,-368
         - node:
             color: '#999453FF'
             id: MiniTileSteelLineE
@@ -1546,14 +1546,14 @@ entities:
             color: '#A45ABC93'
             id: MiniTileSteelLineE
           decals:
-            1458: -6,-364
-            1459: -6,-365
+            1422: -6,-364
+            1423: -6,-365
         - node:
             color: '#BCBC5A93'
             id: MiniTileSteelLineE
           decals:
-            1464: 7,-364
-            1465: 7,-365
+            1426: 7,-364
+            1427: 7,-365
         - node:
             color: '#D381C996'
             id: MiniTileSteelLineE
@@ -1578,14 +1578,14 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelLineE
           decals:
-            1336: 2,-359
-            1345: 2,-358
-            1366: 4,-362
-            1367: 4,-363
-            1368: 4,-364
-            1369: 4,-365
-            1370: 4,-366
-            1371: 4,-367
+            1328: 2,-359
+            1336: 2,-358
+            1354: 4,-362
+            1355: 4,-363
+            1356: 4,-364
+            1357: 4,-365
+            1358: 4,-366
+            1359: 4,-367
         - node:
             color: '#FFFFFFFF'
             id: MiniTileSteelLineE
@@ -1646,12 +1646,12 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelLineN
           decals:
-            1342: -1,-357
-            1343: 0,-357
-            1344: 1,-357
-            1352: -4,-361
-            1353: -5,-361
-            1354: -6,-361
+            1333: -1,-357
+            1334: 0,-357
+            1335: 1,-357
+            1343: -4,-361
+            1344: -5,-361
+            1345: -6,-361
         - node:
             color: '#FFFFFFFF'
             id: MiniTileSteelLineN
@@ -1704,8 +1704,8 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileSteelLineS
           decals:
-            1357: -6,-362
-            1358: -5,-362
+            1348: -6,-362
+            1349: -5,-362
         - node:
             color: '#FFFFFFFF'
             id: MiniTileSteelLineS
@@ -1729,14 +1729,14 @@ entities:
             color: '#5A64BC93'
             id: MiniTileSteelLineW
           decals:
-            1466: 6,-367
-            1467: 6,-368
+            1428: 6,-367
+            1429: 6,-368
         - node:
             color: '#5ABC5A93'
             id: MiniTileSteelLineW
           decals:
-            1452: -7,-367
-            1453: -7,-368
+            1416: -7,-367
+            1417: -7,-368
         - node:
             color: '#999453FF'
             id: MiniTileSteelLineW
@@ -1773,52 +1773,52 @@ entities:
             color: '#A45ABC93'
             id: MiniTileSteelLineW
           decals:
-            1456: -7,-364
-            1457: -7,-365
+            1420: -7,-364
+            1421: -7,-365
         - node:
             color: '#BCBC5A93'
             id: MiniTileSteelLineW
           decals:
-            1462: 6,-364
-            1463: 6,-365
+            1424: 6,-364
+            1425: 6,-365
         - node:
             color: '#D381C996'
             id: MiniTileSteelLineW
           decals:
             796: -6,-55
-            1308: -1,-299
-            1309: -1,-300
-            1310: -1,-301
-            1311: -1,-302
-            1312: -1,-304
-            1313: -1,-303
-            1314: -1,-305
-            1315: -1,-306
-            1316: -1,-307
-            1317: -1,-308
-            1318: -1,-309
-            1319: -1,-310
-            1320: -1,-311
-            1321: -1,-312
-            1322: -1,-313
-            1323: -1,-314
-            1324: -1,-315
-            1325: -1,-316
-            1326: -1,-317
-            1327: -1,-318
-            1328: -1,-319
-            1329: -1,-320
+            1305: -1,-299
+            1306: -1,-300
+            1307: -1,-301
+            1308: -1,-302
+            1309: -1,-304
+            1310: -1,-303
+            1311: -1,-305
+            1312: -1,-306
+            1313: -1,-307
+            1314: -1,-308
+            1315: -1,-309
+            1316: -1,-310
+            1317: -1,-311
+            1318: -1,-312
+            1319: -1,-313
+            1320: -1,-314
+            1321: -1,-315
+            1322: -1,-316
+            1323: -1,-317
+            1324: -1,-318
+            1325: -1,-319
+            1326: -1,-320
         - node:
             color: '#DE3A3A96'
             id: MiniTileSteelLineW
           decals:
-            1338: -2,-358
-            1339: -2,-359
-            1360: -4,-363
-            1361: -4,-364
-            1364: -4,-367
-            1446: -4,-365
-            1447: -4,-366
+            1329: -2,-358
+            1330: -2,-359
+            1350: -4,-363
+            1351: -4,-364
+            1352: -4,-367
+            1414: -4,-365
+            1415: -4,-366
         - node:
             color: '#FFFFFFFF'
             id: MiniTileSteelLineW
@@ -1904,7 +1904,7 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteCornerNe
           decals:
-            1438: 1,-363
+            1407: 1,-363
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteCornerNe
@@ -1965,7 +1965,7 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteCornerNw
           decals:
-            1436: -1,-363
+            1405: -1,-363
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteCornerNw
@@ -2021,7 +2021,7 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteCornerSe
           decals:
-            1443: 1,-367
+            1411: 1,-367
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteCornerSe
@@ -2079,7 +2079,7 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteCornerSw
           decals:
-            1444: -1,-367
+            1412: -1,-367
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteCornerSw
@@ -2144,15 +2144,15 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteInnerSe
           decals:
-            1394: -1,-360
-            1419: -0.99274474,-360.24985
-            1420: -1.2392695,-360.48846
-            1423: -1.509273,-360.75446
-            1424: -1.7440581,-361.01657
-            1425: -1.9944961,-361.2552
-            1426: -2.241021,-361.4977
-            1427: -2.4992852,-361.7559
-            1429: -2.7401419,-362.00235
+            1378: -1,-360
+            1393: -0.99274474,-360.24985
+            1394: -1.2392695,-360.48846
+            1395: -1.509273,-360.75446
+            1396: -1.7440581,-361.01657
+            1397: -1.9944961,-361.2552
+            1398: -2.241021,-361.4977
+            1399: -2.4992852,-361.7559
+            1400: -2.7401419,-362.00235
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteInnerSw
@@ -2169,15 +2169,15 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteInnerSw
           decals:
-            1397: 1,-360
-            1409: 2.7602181,-362.00235
-            1410: 2.5136933,-361.7559
-            1413: 2.2476032,-361.486
-            1414: 2.0089047,-361.2591
-            1415: 1.7467272,-360.98135
-            1416: 1.4884634,-360.74664
-            1417: 1.2419386,-360.49628
-            1418: 0.9993266,-360.24985
+            1379: 1,-360
+            1385: 2.7602181,-362.00235
+            1386: 2.5136933,-361.7559
+            1387: 2.2476032,-361.486
+            1388: 2.0089047,-361.2591
+            1389: 1.7467272,-360.98135
+            1390: 1.4884634,-360.74664
+            1391: 1.2419386,-360.49628
+            1392: 0.9993266,-360.24985
         - node:
             color: '#334E6DC8'
             id: MiniTileWhiteLineE
@@ -2288,14 +2288,14 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteLineE
           decals:
-            1400: -3,-363
-            1401: -3,-364
-            1402: -3,-365
-            1403: -3,-366
-            1404: -3,-367
-            1439: 1,-364
-            1440: 1,-365
-            1441: 1,-366
+            1380: -3,-363
+            1381: -3,-364
+            1382: -3,-365
+            1383: -3,-366
+            1384: -3,-367
+            1408: 1,-364
+            1409: 1,-365
+            1410: 1,-366
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteLineE
@@ -2387,7 +2387,7 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteLineN
           decals:
-            1437: 0,-363
+            1406: 0,-363
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteLineN
@@ -2480,8 +2480,8 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteLineS
           decals:
-            1393: 0,-360
-            1445: 0,-367
+            1377: 0,-360
+            1413: 0,-367
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteLineS
@@ -2596,14 +2596,14 @@ entities:
             color: '#DE3A3A96'
             id: MiniTileWhiteLineW
           decals:
-            1384: 3,-367
-            1385: 3,-366
-            1386: 3,-365
-            1387: 3,-364
-            1388: 3,-363
-            1433: -1,-366
-            1434: -1,-365
-            1435: -1,-364
+            1372: 3,-367
+            1373: 3,-366
+            1374: 3,-365
+            1375: 3,-364
+            1376: 3,-363
+            1402: -1,-366
+            1403: -1,-365
+            1404: -1,-364
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteLineW
@@ -2676,7 +2676,7 @@ entities:
             color: '#DE3A3A96'
             id: WarnCornerGreyscaleNE
           decals:
-            1374: -4,-356
+            1362: -4,-356
         - node:
             color: '#334E6DC8'
             id: WarnCornerGreyscaleNW
@@ -2691,9 +2691,9 @@ entities:
             color: '#DE3A3A96'
             id: WarnCornerGreyscaleNW
           decals:
-            1372: -6,-357
-            1373: -5,-356
-            1375: -7,-358
+            1360: -6,-357
+            1361: -5,-356
+            1363: -7,-358
         - node:
             color: '#334E6DC8'
             id: WarnCornerGreyscaleSE
@@ -2708,7 +2708,7 @@ entities:
             color: '#DE3A3A96'
             id: WarnCornerGreyscaleSE
           decals:
-            1379: -4,-359
+            1367: -4,-359
         - node:
             color: '#334E6DC8'
             id: WarnCornerGreyscaleSW
@@ -2723,7 +2723,7 @@ entities:
             color: '#DE3A3A96'
             id: WarnCornerGreyscaleSW
           decals:
-            1376: -7,-359
+            1364: -7,-359
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerNE
@@ -2749,8 +2749,8 @@ entities:
             id: WarnCornerSmallGreyscaleNW
           decals:
             15: -3,-4
-            1382: -6,-358
-            1383: -5,-357
+            1370: -6,-358
+            1371: -5,-357
         - node:
             color: '#DE7ADF93'
             id: WarnCornerSmallGreyscaleNW
@@ -2819,8 +2819,8 @@ entities:
             1226: 0,-342
             1227: 0,-341
             1228: 0,-340
-            1380: -4,-358
-            1381: -4,-357
+            1368: -4,-358
+            1369: -4,-357
         - node:
             color: '#EFB34196'
             id: WarnLineGreyscaleE
@@ -2903,8 +2903,8 @@ entities:
             17: -3,-4
             18: -2,-4
             19: -1,-4
-            1377: -6,-359
-            1378: -5,-359
+            1365: -6,-359
+            1366: -5,-359
         - node:
             color: '#EFB34196'
             id: WarnLineGreyscaleS
@@ -4234,6 +4234,7 @@ entities:
             0: 4096
           -2,-84:
             0: 61183
+            3: 256
           -2,-83:
             0: 61166
           -2,-82:
@@ -4258,6 +4259,7 @@ entities:
             0: 8831
           2,-84:
             0: 17
+            3: 256
           0,-88:
             0: 65399
           0,-87:
@@ -4338,6 +4340,7 @@ entities:
             0: 53247
           -2,-93:
             0: 65262
+            3: 256
           -2,-96:
             0: 52974
           -2,-94:
@@ -4370,6 +4373,7 @@ entities:
             0: 65535
           2,-93:
             0: 4096
+            3: 256
           0,-98:
             0: 65535
           0,-97:
@@ -7650,8 +7654,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13358
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 4689
     components:
     - type: Transform
@@ -7660,8 +7662,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13383
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 5103
     components:
     - type: Transform
@@ -7671,8 +7671,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13306
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 5262
     components:
     - type: Transform
@@ -7682,8 +7680,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13306
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13072
     components:
     - type: Transform
@@ -7693,8 +7689,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13080
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13073
     components:
     - type: Transform
@@ -7704,8 +7698,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 12935
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13083
     components:
     - type: Transform
@@ -7715,8 +7707,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13105
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13106
     components:
     - type: Transform
@@ -7726,8 +7716,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13109
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13107
     components:
     - type: Transform
@@ -7737,8 +7725,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13110
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13118
     components:
     - type: Transform
@@ -7748,8 +7734,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13116
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13119
     components:
     - type: Transform
@@ -7759,8 +7743,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13115
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13120
     components:
     - type: Transform
@@ -7770,8 +7752,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13115
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13121
     components:
     - type: Transform
@@ -7781,8 +7761,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13117
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13122
     components:
     - type: Transform
@@ -7792,8 +7770,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13124
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13125
     components:
     - type: Transform
@@ -7803,8 +7779,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13147
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13126
     components:
     - type: Transform
@@ -7814,8 +7788,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13148
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13130
     components:
     - type: Transform
@@ -7825,8 +7797,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13150
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13131
     components:
     - type: Transform
@@ -7836,8 +7806,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13151
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13137
     components:
     - type: Transform
@@ -7847,8 +7815,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13146
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13149
     components:
     - type: Transform
@@ -7858,8 +7824,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13161
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13153
     components:
     - type: Transform
@@ -7869,8 +7833,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13152
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13154
     components:
     - type: Transform
@@ -7880,8 +7842,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13161
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13164
     components:
     - type: Transform
@@ -7891,8 +7851,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13165
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13167
     components:
     - type: Transform
@@ -7901,8 +7859,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13168
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13169
     components:
     - type: Transform
@@ -7912,8 +7868,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13166
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13170
     components:
     - type: Transform
@@ -7922,24 +7876,18 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13171
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13175
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-141.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13177
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-149.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13179
     components:
     - type: Transform
@@ -7949,8 +7897,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13180
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13181
     components:
     - type: Transform
@@ -7960,8 +7906,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13182
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13183
     components:
     - type: Transform
@@ -7970,8 +7914,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13185
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13184
     components:
     - type: Transform
@@ -7980,8 +7922,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13185
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13186
     components:
     - type: Transform
@@ -7991,8 +7931,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13187
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13188
     components:
     - type: Transform
@@ -8002,8 +7940,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13189
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13206
     components:
     - type: Transform
@@ -8012,8 +7948,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13209
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13210
     components:
     - type: Transform
@@ -8023,8 +7957,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13211
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13212
     components:
     - type: Transform
@@ -8034,8 +7966,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13213
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13214
     components:
     - type: Transform
@@ -8045,8 +7975,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13216
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13217
     components:
     - type: Transform
@@ -8056,8 +7984,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13218
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13219
     components:
     - type: Transform
@@ -8066,8 +7992,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13220
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13221
     components:
     - type: Transform
@@ -8077,16 +8001,12 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13241
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13222
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-197.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13227
     components:
     - type: Transform
@@ -8096,8 +8016,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13244
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13238
     components:
     - type: Transform
@@ -8107,8 +8025,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13239
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13246
     components:
     - type: Transform
@@ -8118,8 +8034,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13247
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13248
     components:
     - type: Transform
@@ -8129,8 +8043,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13249
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13250
     components:
     - type: Transform
@@ -8140,8 +8052,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13251
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13253
     components:
     - type: Transform
@@ -8151,8 +8061,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13252
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13254
     components:
     - type: Transform
@@ -8162,8 +8070,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13252
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13255
     components:
     - type: Transform
@@ -8173,8 +8079,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13252
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13256
     components:
     - type: Transform
@@ -8184,8 +8088,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13263
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13257
     components:
     - type: Transform
@@ -8195,8 +8097,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13262
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13258
     components:
     - type: Transform
@@ -8206,8 +8106,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13261
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13259
     components:
     - type: Transform
@@ -8217,8 +8115,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13260
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13268
     components:
     - type: Transform
@@ -8228,8 +8124,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13269
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13270
     components:
     - type: Transform
@@ -8239,16 +8133,12 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13269
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13292
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,-258.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13293
     components:
     - type: Transform
@@ -8258,8 +8148,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13298
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13294
     components:
     - type: Transform
@@ -8269,8 +8157,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13297
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13295
     components:
     - type: Transform
@@ -8280,8 +8166,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13296
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13300
     components:
     - type: Transform
@@ -8291,8 +8175,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13301
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13302
     components:
     - type: Transform
@@ -8302,8 +8184,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13303
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13307
     components:
     - type: Transform
@@ -8313,8 +8193,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13308
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13316
     components:
     - type: Transform
@@ -8324,8 +8202,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13317
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13318
     components:
     - type: Transform
@@ -8334,8 +8210,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13322
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13323
     components:
     - type: Transform
@@ -8344,8 +8218,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2277
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13325
     components:
     - type: Transform
@@ -8355,8 +8227,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13333
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13326
     components:
     - type: Transform
@@ -8366,8 +8236,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13333
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13334
     components:
     - type: Transform
@@ -8377,8 +8245,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13335
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13336
     components:
     - type: Transform
@@ -8388,8 +8254,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13341
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13337
     components:
     - type: Transform
@@ -8399,8 +8263,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13341
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13359
     components:
     - type: Transform
@@ -8410,8 +8272,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13365
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13366
     components:
     - type: Transform
@@ -8420,8 +8280,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13370
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13371
     components:
     - type: Transform
@@ -8431,8 +8289,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13374
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13378
     components:
     - type: Transform
@@ -8442,8 +8298,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13375
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13379
     components:
     - type: Transform
@@ -8453,8 +8307,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13375
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13380
     components:
     - type: Transform
@@ -8464,8 +8316,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13382
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13384
     components:
     - type: Transform
@@ -8476,8 +8326,6 @@ entities:
       deviceLists:
       - 13391
       - 13397
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13392
     components:
     - type: Transform
@@ -8486,8 +8334,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13397
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13398
     components:
     - type: Transform
@@ -8497,8 +8343,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13400
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13401
     components:
     - type: Transform
@@ -8508,8 +8352,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13402
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13403
     components:
     - type: Transform
@@ -8519,8 +8361,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13404
     components:
     - type: Transform
@@ -8530,8 +8370,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13405
     components:
     - type: Transform
@@ -8541,8 +8379,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13407
     components:
     - type: Transform
@@ -8552,8 +8388,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13409
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13422
     components:
     - type: Transform
@@ -8562,8 +8396,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13426
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13423
     components:
     - type: Transform
@@ -8572,8 +8404,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13421
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13424
     components:
     - type: Transform
@@ -8582,8 +8412,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13421
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13425
     components:
     - type: Transform
@@ -8592,8 +8420,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13426
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 13427
     components:
     - type: Transform
@@ -8602,8 +8428,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13429
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: AltarSpawner
   entities:
   - uid: 2584
@@ -58171,7 +57995,7 @@ entities:
       pos: 8.5,-176.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -63524.773
+      secondsUntilStateChange: -63589.594
       state: Closing
   - uid: 11796
     components:
