@@ -1,6 +1,4 @@
-using Content.Shared.Sound.Components;
-
-namespace Content.Server.Sound.Components
+namespace Content.Shared.Sound.Components
 {
     /// <summary>
     /// Repeatedly plays a sound with a randomized delay.
@@ -38,7 +36,7 @@ namespace Content.Server.Sound.Components
         /// Do not set this directly, use <see cref="EmitSoundSystem.SetEnabled"/>
         /// </summary>
         [DataField]
-        [Access(typeof(EmitSoundSystem))]
+        [Access(typeof(SharedEmitSoundSystem))]
         public bool Enabled = true;
 
         /// <summary>

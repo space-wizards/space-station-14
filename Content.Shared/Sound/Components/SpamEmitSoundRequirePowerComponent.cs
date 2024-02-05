@@ -1,4 +1,4 @@
-namespace Content.Server.Sound.Components;
+namespace Content.Shared.Sound.Components;
 
 /// <summary>
 /// Enables or disables an SpamEmitSound component depending

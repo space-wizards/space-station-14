@@ -1,13 +1,12 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Sound.Components;
+using Content.Shared.Sound;
+using Content.Shared.Sound.Components;
 
 namespace Content.Server.Sound;
 
-public sealed partial class SpamEmitSoundRequirePowerSystem : EntitySystem
+public sealed partial class SpamEmitSoundRequirePowerSystem : SharedSpamEmitSoundRequirePowerSystem
 {
-    [Dependency] private readonly EmitSoundSystem _emitSound = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -20,7 +19,7 @@ public sealed partial class SpamEmitSoundRequirePowerSystem : EntitySystem
     {
         if (TryComp<SpamEmitSoundComponent>(entity.Owner, out var comp))
         {
-            _emitSound.SetEnabled((entity, comp), args.Powered);
+            EmitSound.SetEnabled((entity, comp), args.Powered);
         }
     }
 
@@ -28,7 +27,7 @@ public sealed partial class SpamEmitSoundRequirePowerSystem : EntitySystem
     {
         if (TryComp<SpamEmitSoundComponent>(entity.Owner, out var comp))
         {
-            _emitSound.SetEnabled((entity, comp), args.Supply);
+            EmitSound.SetEnabled((entity, comp), args.Supply);
         }
     }
 }

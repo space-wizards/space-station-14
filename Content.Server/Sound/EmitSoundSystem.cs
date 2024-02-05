@@ -2,7 +2,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Sound.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Sound;
-using Robust.Shared.Random;
+using Content.Shared.Sound.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Sound;
@@ -74,7 +74,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
             : entity.Comp.MaxInterval);
     }
 
-    public void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
+    public override void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
     {
         if (!Resolve(entity, ref entity.Comp, false))
             return;

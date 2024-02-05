@@ -150,4 +150,8 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
         }
     }
+
+    public virtual void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
+    {
+    }
 }
