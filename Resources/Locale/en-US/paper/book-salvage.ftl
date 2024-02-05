@@ -124,3 +124,119 @@ book-text-detective = CHAPTER 1: SMALL ADVENTURES IN A BIG STATION
       Things always go wild here.. I'll never look at clowns the same.
 
       The question is.. Who did it?
+
+book-text-sex-and-the-singularity = NEVER DO THIS. This book is a showcase of shame and disgrace. Repeating things shown here will not end well for you so DON'T DO IT.
+
+      "I'm ready, baby." Said Annabelle Lee, reclining naked on the captain's bed. She was an attractive lass, with a beard like Lincoln's and a smile of yellow teeth. Fridge grinned, his armour heavy and bulky.
+
+      "Alright..." He growled, sending shivers down Annabelle's back. He listened to his headset.
+
+      "Singularity in Security!" Came the crackly voice of Joe Q, before he grimaced and switched off the headset.
+
+      "That doesn't sound good." Said Fridge. He looked at Annabelle and ripped off his armour, exposing his thin and trembling form. Annabelle smiled.
+
+      "Fuuuck." She said, curling her greasy hair.
+
+      Fridge looked at her, one eye trembling. He could not control his space horniness any longer, he had a taste for buttocks.
+
+      "You too." He choked, and jumped on her, doing her like a grown man living in the basement would do a doll. Annabelle was impressed.
+
+      "Oh yeah!" She cried, pissing herself a little. "Don't stop!"
+
+      Fridge struggled to remember a famous Earth phrase, from the great war hero McDonalds.
+
+      "Mmm..." He said, and remembered it. "Loving it!"
+
+      "Oh god, help us!" Came Joe Q's screaming voice from Annabelle's headset. "It's eating Cash! Fuck, Jesus Christ!"
+
+      Annabelle pouted, listening to Joe's dying screams. "Fuck," She cried. "I'm gonna take off my headset. This is ruining it for me!"
+
+      Fridge nodded while doing her, agreeing. "So goddamn loud." He began to do her harder, like his stepfather had taught him.
+
+      "C-Can't..." Moaned Annabelle. "Oh, well...Oh god, yes!"
+
+      She slumped back as Fridge finished, his moustache sweaty and moist.
+
+      "Y...You're amazing...sir..." She panted.
+
+      Fridge grinned, putting his armour back on. "You're amazing too, Annabelle...thank god I don't have a camera in here..."
+
+      Annabelle giggled, putting a hand to her mouth.
+
+      "Heh." Laughed Fridge.
+
+      Lee leaned back. "I think this is the most fun I've ever had on a trip here."
+
+      "Me too." Nodded Fridge.
+
+      "ALERT. ALERT." The AI's voice boomed from a speaker. "THE SHUTTLE HAS BEEN CALLED. TEN MINUTES UNTIL SHUTTLE ARRIVAL."
+
+      "Fuck!" Shouted Annabelle, irritated. "I hate it when they call the cab early!"
+
+      "Probably the only fun too..." Said Fridge, swinging his backpack over his shoulders.
+
+      Annabelle sat up, putting on her semen stained jumpsuit. "It must be hard being captain."
+
+      Fridge whistled. "I've been on this hellhole a LONG time. And I've seen crazy shit."
+
+      Annabelle was curious now. She looked up at the captain.
+
+      "Like what?" She said, tilting her head.
+
+      Fridge looked off into the distance, remembering thousands of horrific days gone past.
+
+      "Red spacesuited maniacs called Syndicates. Green shit that eats everything."
+
+      Annabelle listened intently, occasionally offering a 'what are they' or a 'oh no!'.
+
+      "Strange monsters that can turn into monkeys and steal your DNA." Continued Fridge, remembering finding the former HoS drained of all life in a tunnel. "Space vine shit that takes over the station."
+
+      Annabelle was sympathetic. "How can you handle it all? I get scared whenever there's even a bit of an air problem."
+
+      Fridge rubbed his moustache, checking his PDA absentmindedly.
+
+      "We don't really handle it..." He explained. "Cent-Com gets Nanotrasen to get off their lazy ass and come fix the station for once. Since the engineers don't know how..."
+
+      He listened to his headset. Silence.
+
+      "I think we should go now." He said, quickly. "The singularity could be here at any moment."
+
+      "Okay." Nodded Annabelle. "Don't leave me."
+
+      Fridge looked at her. "You coming?"
+
+      "Just trying to stand up..." Groaned Annabelle, grunting as her back straightened. Fridge had certainly plowed her hard. "That was a workout..."
+
+      Just then, the wall in front of them went flying, into the gaping maw of the singularity, it's light blue colour and black center making it look like some sort of eye.
+
+      "What the fuck...?" Breathed Fridge, looking right into it.
+
+      "Oh god!" Screamed Annabelle. She slipped and went flying with into the singularity, reduced to gibs.
+
+      "Shit!" Cried Fridge, before he too went into the singularity.
+
+      Fridge opened his eyes. He was standing on the bridge. He looked down at himself, transparent. He was a ghost. Annabelle was there, looking at him.
+
+      "Hold me..." She breathed. Fridge hugged her.
+
+      "Well..." He said. "We're dead now."
+
+      "I regret nothing." Smiled Annabelle. She giggled, sadly.
+
+      "Should've left earlier!" Laughed Fridge, his voice full of sorrow.
+
+      They heard the voice of the still living AI come from the speaker.
+
+      "ATTENTION." It said. "THE CAPTAIN HAS BEEN SHOT WITH A SINGULARITY CANNON FOR FUCKING ON THE JOB."
+
+      Annabelle didn't register it for a second. "Probably, yeah..." She continued.
+
+      Then she realized what the AI had said. She began laughing, hysterically.
+
+      "How many ghosts were watching us?" Asked Fridge, looking around. Another ghost appeared. It was like a man, but with a horse for a head. Tann Honey, Fridge recognised him.
+
+      "Fridge." Neighed Tann Honey. "The admins saw."
+
+      The couple's expressions turned to horror.
+
+      "All of us."
