@@ -25,6 +25,10 @@
   components:
   - type: Foldable
     folded: true
+  - type: Clothing
+    equippedPrefix: flipped
+  - type: Item
+    heldPrefix: flipped
   - type: Sprite
     layers:
     - state: icon
