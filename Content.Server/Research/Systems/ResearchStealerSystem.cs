@@ -36,4 +36,4 @@ public sealed class ResearchStealerSystem : SharedResearchStealerSystem
 /// Techs contains every technology id researched.
 /// </summary>
 [ByRefEvent]
-public record struct ResearchStolenEvent(EntityUid Used, EntityUid Target, List<String> Techs);
+public record struct ResearchStolenEvent(EntityUid Used, EntityUid Target, List<string> Techs);
