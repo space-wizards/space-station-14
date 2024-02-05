@@ -1,4 +1,3 @@
-using Content.Server.NPC.HTN;
 using Content.Server.Transporters.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Item;
@@ -44,6 +43,16 @@ public sealed partial class TransporterSystem : EntitySystem
         RemComp(item, mark);
     }
 
+    public bool UnclaimedItemsExist()
+    {
+        foreach (var mark in EntityQuery<MarkedForTransportComponent>())
+        {
+            if (!mark.Claimed)
+                return true;
+        }
+        return false;
+    }
+
     public bool TransporterAttemptGrab(EntityUid transporter, EntityUid item)
     {
         if (!TryComp(transporter, out ContainerManagerComponent? containerMan))
@@ -67,7 +76,12 @@ public sealed partial class TransporterSystem : EntitySystem
             return false;
 
         var item = container.ContainedEntities[0]; // There's only one.
-        return _containers.Remove(item, container, destination:receiver.ToCoordinates());
+        if (_containers.Remove(item, container, destination: receiver.ToCoordinates()))
+        {
+            UnmarkForTransport(item);
+            return true;
+        }
+        return false;
     }
 
     public void OnProviderCollide(EntityUid uid, TransporterProviderComponent component, ref StartCollideEvent args)
