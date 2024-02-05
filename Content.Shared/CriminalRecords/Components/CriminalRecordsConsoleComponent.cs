@@ -1,15 +1,15 @@
-using Content.Server.CriminalRecords.Systems;
+using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Radio;
 using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.CriminalRecords.Components;
+namespace Content.Shared.CriminalRecords.Components;
 
 /// <summary>
 /// A component for Criminal Record Console storing an active station record key and a currently applied filter
 /// </summary>
 [RegisterComponent]
-[Access(typeof(CriminalRecordsConsoleSystem))]
+[Access(typeof(SharedCriminalRecordsConsoleSystem))]
 public sealed partial class CriminalRecordsConsoleComponent : Component
 {
     /// <summary>

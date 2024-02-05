@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Everyone can toggle fire alarms now, not just atmos
-    type: Tweak
-  id: 5390
-  time: '2023-12-16T08:24:00.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: A variety of chemicals can now be decomposed via electrolysis or centrifugal
@@ -3879,3 +3873,11 @@
   id: 5889
   time: '2024-02-04T23:01:49.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24944
+- author: EdenTheLiznerd
+  changes:
+  - message: Sectech no longer says "Let's crack communist skulls!" It now says "Let's
+      crack syndicate skulls!"
+    type: Tweak
+  id: 5890
+  time: '2024-02-05T12:24:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24965
