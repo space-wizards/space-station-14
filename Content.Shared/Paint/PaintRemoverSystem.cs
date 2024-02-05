@@ -1,6 +1,7 @@
 using Content.Shared.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.DoAfter;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -23,6 +24,7 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
 
         SubscribeLocalEvent<PaintRemoverComponent, AfterInteractEvent>(OnInteract);
         SubscribeLocalEvent<PaintRemoverComponent, PaintRemoverDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<PaintRemoverComponent, GetVerbsEvent<UtilityVerb>>(OnPaintRemoveVerb);
     }
 
     // When entity is painted, remove paint from that entity.
@@ -63,5 +65,31 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
         Dirty(target, paint);
 
         args.Handled = true;
+    }
+
+    private void OnPaintRemoveVerb(EntityUid uid, PaintRemoverComponent component, GetVerbsEvent<UtilityVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var paintremovalText = Loc.GetString("paint-remove-verb");
+
+        var verb = new UtilityVerb()
+        {
+            Act = () => {
+
+                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new PaintRemoverDoAfterEvent(), uid, args.Target, uid)
+                {
+                    BreakOnUserMove = true,
+                    BreakOnDamage = true,
+                    BreakOnTargetMove = true,
+                    MovementThreshold = 1.0f,
+                });
+            },
+
+            Text = paintremovalText
+        };
+
+        args.Verbs.Add(verb);
     }
 }

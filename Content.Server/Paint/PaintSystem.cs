@@ -5,6 +5,8 @@ using Content.Shared.Interaction;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Humanoid;
+using Robust.Shared.Utility;
+using Content.Shared.Verbs;
 using Content.Shared.SubFloor;
 
 namespace Content.Server.Paint;
@@ -26,14 +28,18 @@ public sealed class PaintSystem : SharedPaintSystem
 
         SubscribeLocalEvent<PaintComponent, AfterInteractEvent>(OnInteract);
         SubscribeLocalEvent<PaintComponent, PaintDoAfterEvent>(OnPaint);
+        SubscribeLocalEvent<PaintComponent, GetVerbsEvent<UtilityVerb>>(OnPaintVerb);
     }
 
     private void OnInteract(EntityUid uid, PaintComponent component, AfterInteractEvent args)
     {
-        if (args.Handled)
+        if (!args.CanReach)
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, 2f, new PaintDoAfterEvent(), args.Used, target: args.Target, used: args.Used)
+        if (args.Target is not { Valid: true } target)
+            return;
+
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.Delay, new PaintDoAfterEvent(), args.Used, target: target, used: args.Used)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -44,6 +50,37 @@ public sealed class PaintSystem : SharedPaintSystem
 
         if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
             return;
+    }
+
+    private void OnPaintVerb(EntityUid uid, PaintComponent component, GetVerbsEvent<UtilityVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var paintText = Loc.GetString("paint-verb");
+
+        var verb = new UtilityVerb()
+        {
+            Act = () => {
+
+                var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.Delay, new PaintDoAfterEvent(), uid, target: args.Target, used: uid)
+                {
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    BreakOnDamage = true,
+                    NeedHand = true,
+                    BreakOnHandChange = true
+                };
+
+                if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+                    return;
+            },
+
+            Text = paintText,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/paint.svg.192dpi.png"))
+        };
+
+        args.Verbs.Add(verb);
     }
 
     private void OnPaint(Entity<PaintComponent> entity, ref PaintDoAfterEvent args)

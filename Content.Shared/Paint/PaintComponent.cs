@@ -24,6 +24,12 @@ public sealed partial class PaintComponent : Component
     public string Solution = "drink";
 
     /// <summary>
+    /// Solution on the entity that contains the paint.
+    /// </summary>
+    [DataField]
+    public int Delay = 2;
+
+    /// <summary>
     /// Reagent that will be used as paint.
     /// </summary>
     [DataField, AutoNetworkedField]
