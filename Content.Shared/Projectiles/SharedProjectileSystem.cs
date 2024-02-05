@@ -4,7 +4,6 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -28,7 +27,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly StandingStateSystem _standing = default!;
 
     public override void Initialize()
     {
@@ -36,7 +34,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
         SubscribeLocalEvent<ProjectileComponent, AfterProjectileHitEvent>(AfterProjectileHit);
-        SubscribeLocalEvent<ProjectileComponent, ProjectileCollideEvent> (OnProjectileCollide);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
@@ -203,19 +200,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         //you want to give the ability to penetrate entities.
         if(component.DeleteOnCollide)
             component.DeleteOnCollide = false;
-    }
-
-    /// <summary>
-    ///     Cancels the collision of a projectile when it collides with an entity on the floor that is not it's target.
-    /// </summary>
-    private void OnProjectileCollide(EntityUid uid, ProjectileComponent component, ref ProjectileCollideEvent args)
-    {
-        if (TryComp<TargetedProjectileComponent>(uid, out var targeted) &&
-            args.OtherEntity != targeted.Target &&
-            _standing.IsDown(args.OtherEntity))
-        {
-            args.Cancelled = true;
-        }
     }
 }
 

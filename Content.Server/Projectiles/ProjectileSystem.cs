@@ -32,7 +32,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
-        //Checks if the colliding entity is laying on the floor.
+        //Checks if the colliding entity is laying down
         var projectileCollideEvent = new ProjectileCollideEvent(args.OtherEntity);
         RaiseLocalEvent(uid, ref projectileCollideEvent);
         if(projectileCollideEvent.Cancelled)

@@ -142,9 +142,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (ent != GetEntity(msg.Gun))
             return;
 
-        //Only aim at the ground if the target has the LayingDownLayer
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
         var target = GetEntity(msg.Target);
+        //Only aim at the ground if the target has a standing state.
         gun.Target = HasComp<StandingStateComponent>(target) ? target : null;
 
         Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
