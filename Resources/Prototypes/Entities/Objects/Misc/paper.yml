@@ -274,6 +274,21 @@
     materialComposition:
       Steel: 25
 
+- type: entity
+  parent: Pen
+  id: PenEmbeddable
+  abstract: true
+  components:
+  - type: EmbeddableProjectile
+    offset: 0.3,0.0
+    removalTime: 0.0
+  - type: ThrowingAngle
+    angle: 315
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
 - type: entity
@@ -289,7 +304,7 @@
 
 - type: entity
   name: Cybersun pen
-  parent: Pen
+  parent: PenEmbeddable
   id: CyberPen
   description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
   components:
@@ -318,7 +333,7 @@
 
 - type: entity
   name: captain's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenCap
   description: 'A luxurious fountain pen for the captain of the station.'
   components:
@@ -341,7 +356,7 @@
 
 - type: entity
   name: hop's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenHop
   description: 'A luxurious fountain pen for the hop of the station.'
   components:
