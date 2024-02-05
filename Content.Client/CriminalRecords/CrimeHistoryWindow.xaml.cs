@@ -15,12 +15,15 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
     public Action<string>? OnAddHistory;
     public Action<uint>? OnDeleteHistory;
 
+    private uint _maxLength;
     private uint? _index;
     private DialogWindow? _dialog;
 
-    public CrimeHistoryWindow()
+    public CrimeHistoryWindow(uint maxLength)
     {
         RobustXamlLoader.Load(this);
+
+        _maxLength = maxLength;
 
         OnClose += () =>
         {
@@ -47,8 +50,7 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
             _dialog.OnConfirmed += responses =>
             {
                 var line = responses[field];
-                // TODO: whenever the console is moved to shared unhardcode this
-                if (line.Length < 1 || line.Length > 256)
+                if (line.Length < 1 || line.Length > _maxLength)
                     return;
 
                 OnAddHistory?.Invoke(line);
