@@ -138,6 +138,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         {
             AddEntry(entry.Id, parent, addedEntries);
         }
+        Tree.SetAllExpanded(true);
     }
 
     private TreeItem? AddEntry(string id, TreeItem? parent, HashSet<string> addedEntries)
