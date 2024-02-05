@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: Mobs/Demons/ratvar.rsi
     drawdepth: Ghosts
-    scale: 2.0,2.0
+    scale: 1.15,1.15
     layers:
     - state: ratvar
       shader: unshaded
