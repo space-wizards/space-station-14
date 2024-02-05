@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Ejecting a tank from a canister will now try to put it in your hand first
-    type: Fix
-  id: 5392
-  time: '2023-12-16T08:28:28.0000000+00:00'
 - author: TheShuEd
   changes:
   - message: Added brother of cak - bread dog! 5 cognizine, sausage bread, animal
@@ -3881,3 +3875,11 @@
   id: 5891
   time: '2024-02-05T18:47:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24829
+- author: ficcialfaint and deltanedas
+  changes:
+  - message: Criminal records and the console that manages them have been added to
+      the game. They also have a guidebook entry.
+    type: Add
+  id: 5892
+  time: '2024-02-05T23:03:04.754935+00:00'
+  url: null
