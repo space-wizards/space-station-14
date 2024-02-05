@@ -63,9 +63,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private const string DamageType = "Shock";
 
     // Multiply and shift the log scale for shock damage.
-    private const float ElectrifiedScaleLogCoefficent = 1.35f;
-    private const float ElectrifiedShiftDamage = 1.67f;
-    private const float ElectrifiedDamageSupplyCoefficent = 0.00001f;
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
 
@@ -215,6 +212,16 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrifiedAct(uid, args.User, siemens, electrified);
     }
 
+    private float CalculateElectrifiedDamageScale(float power)
+    {
+        // A logarithm allows a curve of damage that grows quickly, but slows down dramatically past a value. This keeps the damage to a reasonable range.
+        const float DamageShift = 1.67f; // Shifts the curve for an overall higher or lower damage baseline
+        const float CeilingCoefficent = 1.35f; // Adjusts the approach to maximum damage, higher = Higher top damage
+        const float LogGrowth = 0.00001f; // Adjusts the growth speed of the curve
+
+        return DamageShift + MathF.Log(power * LogGrowth) * CeilingCoefficent;
+    }
+
     public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
         float siemens = 1,
         ElectrifiedComponent? electrified = null,
@@ -265,7 +272,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         // Initial damage scales off of the available supply on the principle that the victim has shorted the entire powernet through their body.
-        var damageScale = ElectrifiedShiftDamage + MathF.Log(supp * ElectrifiedDamageSupplyCoefficent) * ElectrifiedScaleLogCoefficent;
+        var damageScale = CalculateElectrifiedDamageScale(supp);
         if (damageScale <= 0f)
             return false;
 
