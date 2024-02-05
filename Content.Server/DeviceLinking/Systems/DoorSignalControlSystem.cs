@@ -59,8 +59,7 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State is DoorState.Closed or DoorState.Open)
-                        _doorSystem.TryToggleDoor(uid, door);
+                    _doorSystem.TryToggleDoor(uid, door);
                 }
             }
             else if (args.Port == component.InBolt)
