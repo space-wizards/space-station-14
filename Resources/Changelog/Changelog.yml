@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: A variety of chemicals can now be decomposed via electrolysis or centrifugal
-      force.
-    type: Add
-  id: 5391
-  time: '2023-12-16T08:26:12.0000000+00:00'
 - author: mirrorcult
   changes:
   - message: Ejecting a tank from a canister will now try to put it in your hand first
@@ -3881,3 +3874,10 @@
   id: 5890
   time: '2024-02-05T12:24:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24965
+- author: Varen
+  changes:
+  - message: Rebalanced electrocution damage to ramp up slower with power levels.
+    type: Tweak
+  id: 5891
+  time: '2024-02-05T18:47:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24829
