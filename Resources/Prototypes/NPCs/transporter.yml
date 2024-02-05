@@ -1,7 +1,12 @@
 - type: htnCompound
   id: TransporterCompound
   branches:
-    - tasks:
+    - preconditions:
+        - !type:UnclaimedItemsExistencePrecondition
+        - !type:ObjectsInContainerPrecondition
+            container: item
+            noObjects: true
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: FindItemForTransport
@@ -16,13 +21,14 @@
         - !type:HTNPrimitiveTask
           operator: !type:TransporterGrabItemOperator
 
-        - !type:HTNPrimitiveTask
-          operator: !type:UtilityOperator
-            proto: FindReceiver
 
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            pathfindInPlanning: true
+#        - !type:HTNPrimitiveTask
+#          operator: !type:UtilityOperator
+#            proto: FindTransporterReceiver
 
-        - !type:HTNPrimitiveTask
-          operator: !type:TransporterDropItemOperator
+#        - !type:HTNPrimitiveTask
+#          operator: !type:MoveToOperator
+#            pathfindInPlanning: true
+
+#        - !type:HTNPrimitiveTask
+#          operator: !type:TransporterDropItemOperator

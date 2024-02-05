@@ -200,7 +200,7 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
-  id: FindReceiver
+  id: FindTransporterReceiver
   query:
     - !type:ComponentQuery
       components:
@@ -223,7 +223,7 @@
         preset: TargetDistance
 
 - type: utilityQuery
-  id: FindProvider
+  id: FindTransporterProvider
   query:
     - !type:ComponentQuery
       components:
