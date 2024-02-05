@@ -9,7 +9,6 @@
   - type: FoldableClothing
     foldedEquippedPrefix: flipped
     foldedHeldPrefix: flipped
-    foldedNameSuffix: flipped
   - type: Sprite
     layers:
     - state: icon
