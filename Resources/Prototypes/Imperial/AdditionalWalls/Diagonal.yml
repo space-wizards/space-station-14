@@ -1,0 +1,47 @@
+- type: entity
+  parent: WallShuttleDiagonal
+  id: WallGoldDiagonalImp
+  name: solid wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Imperial/AdditionalWalls/gold_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Imperial/AdditionalWalls/gold_diagonal.rsi
+    state: state0
+  - type: Occluder
+    boundingBox: "-0.12,-0.5,0.5,0.12"
+
+- type: entity
+  parent: WallShuttleDiagonal
+  id: WallGoldDiagonalImp2
+  name: solid wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Imperial/AdditionalWalls/gold_diagonal2.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Imperial/AdditionalWalls/gold_diagonal2.rsi
+    state: state0
+  - type: Occluder
+    boundingBox: "-0.12,-0.5,0.5,0.12"
