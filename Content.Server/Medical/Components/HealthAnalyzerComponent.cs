@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Medical.Components;
 
@@ -9,6 +10,18 @@ namespace Content.Server.Medical.Components;
 [Access(typeof(HealthAnalyzerSystem))]
 public sealed partial class HealthAnalyzerComponent : Component
 {
+    /// <summary>
+    /// When should the next update be sent for the patient
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
+
+    /// <summary>
+    /// The delay between patient health updates
+    /// </summary>
+    [DataField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+
     /// <summary>
     /// How long it takes to scan someone.
     /// </summary>

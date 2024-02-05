@@ -16,222 +16,185 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Medical
+namespace Content.Server.Medical;
+
+public sealed class HealthAnalyzerSystem : EntitySystem
 {
-    public sealed class HealthAnalyzerSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly PowerCellSystem _cell = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        SubscribeLocalEvent<HealthAnalyzerComponent, EntityUnpausedEvent>(OnEntityUnpaused);
+        SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
+        SubscribeLocalEvent<HealthAnalyzerComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
+        SubscribeLocalEvent<HealthAnalyzerComponent, DroppedEvent>(OnDropped);
+    }
 
-        public override void Initialize()
+    public override void Update(float frameTime)
+    {
+        var analyzerQuery = EntityQueryEnumerator<HealthAnalyzerComponent, TransformComponent>();
+        while (analyzerQuery.MoveNext(out var uid, out var component, out var transform))
         {
-            base.Initialize();
+            //Update rate limited to 1 second
+            if (component.NextUpdate > _timing.CurTime)
+                continue;
 
-            SubscribeLocalEvent<ActiveHealthMonitoredComponent, ComponentStartup>(OnActiveHealthMonitoredStartup);
+            if (component.ScannedEntity is not {} patient)
+                continue;
 
-            SubscribeLocalEvent<HealthAnalyzerComponent, ComponentShutdown>(OnHealthAnalyserShutdown);
-            SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
-            SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
-            SubscribeLocalEvent<HealthAnalyzerComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
-            SubscribeLocalEvent<HealthAnalyzerComponent, DroppedEvent>(OnDropped);
-        }
+            component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
-        public override void Update(float frameTime)
-        {
-            var monitoredQuery = EntityQueryEnumerator<ActiveHealthMonitoredComponent, TransformComponent>();
-            var analyzerQuery = EntityQueryEnumerator<HealthAnalyzerComponent, TransformComponent>();
-            while (monitoredQuery.MoveNext(out var entityUid, out var activeHealthComponent, out var entityTransform))
+            //Get distance between health analyzer and the scanned entity
+            var patientCoordinates = Transform(patient).Coordinates;
+            if (!patientCoordinates.InRange(EntityManager, _transformSystem, transform.Coordinates, component.MaxScanRange))
             {
-                //Update rate limited to 1 second
-                if (activeHealthComponent.NextUpdate > _timing.CurTime)
-                    continue;
-
-                activeHealthComponent.NextUpdate = _timing.CurTime + activeHealthComponent.UpdateInterval;
-
-                //Send updates to each health analyzer every cref
-                while (analyzerQuery.MoveNext(out var healthAnalyzer, out var healthAnalyzerComponent, out var healthAnalyzerTransform))
-                {
-                    if (healthAnalyzerComponent.ScannedEntity != entityUid)
-                        continue;
-
-                    //Get distance between health analyzer and the scanned entity
-                    var healthAnalyserPosition = healthAnalyzerTransform.Coordinates;
-
-                    if (!healthAnalyserPosition.InRange(EntityManager, _transformSystem, entityTransform.Coordinates, healthAnalyzerComponent.MaxScanRange))
-                    {
-                        //Range too far, disable updates
-                        StopAnalyzingEntity(entityUid, healthAnalyzer, activeHealthComponent, healthAnalyzerComponent);
-                        continue;
-                    }
-
-                    UpdateScannedUser(healthAnalyzer, entityUid, true);
-                }
+                //Range too far, disable updates
+                StopAnalyzingEntity((uid, component), patient);
+                continue;
             }
-        }
 
-        /// <summary>
-        /// Sets the next update time
-        /// </summary>
-        private void OnActiveHealthMonitoredStartup(Entity<ActiveHealthMonitoredComponent> entity, ref ComponentStartup args)
+            UpdateScannedUser(uid, patient, true);
+        }
+    }
+
+    private void OnEntityUnpaused(Entity<HealthAnalyzerComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextUpdate += args.PausedTime;
+    }
+
+    /// <summary>
+    /// Trigger the doafter for scanning
+    /// </summary>
+    private void OnAfterInteract(Entity<HealthAnalyzerComponent> uid, ref AfterInteractEvent args)
+    {
+        if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
+            return;
+
+        _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid);
+
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
-            entity.Comp.NextUpdate = _timing.CurTime + entity.Comp.UpdateInterval;
-        }
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            NeedHand = true
+        });
+    }
 
-        /// <summary>
-        /// Stop analyzing when the health analyzer is removed
-        /// </summary>
-        private void OnHealthAnalyserShutdown(Entity<HealthAnalyzerComponent> healthAnalyzer, ref ComponentShutdown args)
-        {
-            if (healthAnalyzer.Comp.ScannedEntity.HasValue)
-                StopAnalyzingEntity(healthAnalyzer.Comp.ScannedEntity.Value, healthAnalyzer);
-        }
+    private void OnDoAfter(Entity<HealthAnalyzerComponent> uid, ref HealthAnalyzerDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(uid, user: args.User))
+            return;
 
-        /// <summary>
-        /// Trigger the doafter for scanning
-        /// </summary>
-        private void OnAfterInteract(Entity<HealthAnalyzerComponent> healthAnalyzer, ref AfterInteractEvent args)
-        {
-            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(healthAnalyzer, user: args.User))
-                return;
+        _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
 
-            _audio.PlayPvs(healthAnalyzer.Comp.ScanningBeginSound, healthAnalyzer);
+        OpenUserInterface(args.User, uid);
+        BeginAnalyzingEntity(uid, args.Target.Value);
+        args.Handled = true;
+    }
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, healthAnalyzer.Comp.ScanDelay, new HealthAnalyzerDoAfterEvent(), healthAnalyzer, target: args.Target, used: healthAnalyzer)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                NeedHand = true
-            });
-        }
+    /// <summary>
+    /// Turn off when placed into a storage item or moved between slots/hands
+    /// </summary>
+    private void OnInsertedIntoContainer(Entity<HealthAnalyzerComponent> uid, ref EntGotInsertedIntoContainerMessage args)
+    {
+        if (uid.Comp.ScannedEntity is { } patient)
+            StopAnalyzingEntity(uid, patient);
+    }
 
-        private void OnDoAfter(Entity<HealthAnalyzerComponent> healthAnalyzer, ref HealthAnalyzerDoAfterEvent args)
-        {
-            if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(healthAnalyzer, user: args.User))
-                return;
+    /// <summary>
+    /// Disable continuous updates once battery is dead
+    /// </summary>
+    private void OnPowerCellSlotEmpty(Entity<HealthAnalyzerComponent> uid, ref PowerCellSlotEmptyEvent args)
+    {
+        if (uid.Comp.ScannedEntity is { } patient)
+            StopAnalyzingEntity(uid, patient);
+    }
 
-            _audio.PlayPvs(healthAnalyzer.Comp.ScanningEndSound, healthAnalyzer);
+    /// <summary>
+    /// Turn off the analyser when dropped
+    /// </summary>
+    private void OnDropped(Entity<HealthAnalyzerComponent> uid, ref DroppedEvent args)
+    {
+        if (uid.Comp.ScannedEntity is { } patient)
+            StopAnalyzingEntity(uid, patient);
+    }
 
-            //If we were already analyzing someone, stop
-            if (healthAnalyzer.Comp.ScannedEntity.HasValue)
-                StopAnalyzingEntity(healthAnalyzer.Comp.ScannedEntity.Value, healthAnalyzer, healthAnalyzerComponent: healthAnalyzer.Comp);
+    private void OpenUserInterface(EntityUid user, EntityUid analyzer)
+    {
+        if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
+            return;
 
-            OpenUserInterface(args.User, healthAnalyzer);
-            BeginAnalyzingEntity(args.Target.Value, healthAnalyzer);
-            args.Handled = true;
-        }
+        _uiSystem.OpenUi(ui, actor.PlayerSession);
+    }
 
-        /// <summary>
-        /// Turn off when placed into a storage item or moved between slots/hands
-        /// </summary>
-        private void OnInsertedIntoContainer(Entity<HealthAnalyzerComponent> healthAnalyzer, ref EntGotInsertedIntoContainerMessage args)
-        {
-            if (healthAnalyzer.Comp.ScannedEntity.HasValue)
-                StopAnalyzingEntity(healthAnalyzer.Comp.ScannedEntity.Value, healthAnalyzer);
-        }
+    /// <summary>
+    /// Mark the entity as having its health analyzed, and link the analyzer to it
+    /// </summary>
+    /// <param name="healthAnalyzer">The health analyzer that should receive the updates</param>
+    /// <param name="target">The entity to start analyzing</param>
+    private void BeginAnalyzingEntity(Entity<HealthAnalyzerComponent> healthAnalyzer, EntityUid target)
+    {
+        //Link the health analyzer to the scanned entity
+        healthAnalyzer.Comp.ScannedEntity = target;
 
-        /// <summary>
-        /// Disable continuous updates once battery is dead
-        /// </summary>
-        private void OnPowerCellSlotEmpty(Entity<HealthAnalyzerComponent> healthAnalyzer, ref PowerCellSlotEmptyEvent args)
-        {
-            if (healthAnalyzer.Comp.ScannedEntity.HasValue)
-                StopAnalyzingEntity(healthAnalyzer.Comp.ScannedEntity.Value, healthAnalyzer);
-        }
+        _cell.SetPowerCellDrawEnabled(healthAnalyzer, true);
 
-        /// <summary>
-        /// Turn off the analyser when dropped
-        /// </summary>
-        private void OnDropped(Entity<HealthAnalyzerComponent> healthAnalyzer, ref DroppedEvent args)
-        {
-            if (healthAnalyzer.Comp.ScannedEntity.HasValue)
-                StopAnalyzingEntity(healthAnalyzer.Comp.ScannedEntity.Value, healthAnalyzer);
-        }
+        UpdateScannedUser(healthAnalyzer, target, true);
+    }
 
-        private void OpenUserInterface(EntityUid user, EntityUid analyzer)
-        {
-            if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
-                return;
+    /// <summary>
+    /// Remove the analyzer from the active list, and remove the component if it has no active analyzers
+    /// </summary>
+    /// <param name="healthAnalyzer">The health analyzer that's receiving the updates</param>
+    /// <param name="target">The entity to analyze</param>
+    private void StopAnalyzingEntity(Entity<HealthAnalyzerComponent> healthAnalyzer, EntityUid target)
+    {
+        //Unlink the analyzer
+        healthAnalyzer.Comp.ScannedEntity = null;
 
-            _uiSystem.OpenUi(ui, actor.PlayerSession);
-        }
+        _cell.SetPowerCellDrawEnabled(target, false);
 
-        /// <summary>
-        /// Mark the entity as having its health analyzed, and link the analyzer to it
-        /// </summary>
-        /// <param name="target">The entity to start analyzing</param>
-        /// <param name="healthAnalyzer">The health analyzer that should receive the updates</param>
-        private void BeginAnalyzingEntity(EntityUid target, Entity<HealthAnalyzerComponent> healthAnalyzer)
-        {
-            EnsureComp<ActiveHealthMonitoredComponent>(target);
+        UpdateScannedUser(healthAnalyzer, target, false);
+    }
 
-            //Link the health analyzer to the scanned entity
-            healthAnalyzer.Comp.ScannedEntity = target;
+    /// <summary>
+    /// Send an update for the target to the healthAnalyzer
+    /// </summary>
+    /// <param name="healthAnalyzer">The health analyzer</param>
+    /// <param name="target">The entity being scanned</param>
+    /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
+    public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
+    {
+        if (!_uiSystem.TryGetUi(healthAnalyzer, HealthAnalyzerUiKey.Key, out var ui))
+            return;
 
-            _cell.SetPowerCellDrawEnabled(healthAnalyzer.Owner, true);
+        if (!HasComp<DamageableComponent>(target))
+            return;
 
-            UpdateScannedUser(healthAnalyzer.Owner, target, true);
-        }
+        var bodyTemperature = float.NaN;
 
-        /// <summary>
-        /// Remove the analyzer from the active list, and remove the component if it has no active analyzers
-        /// </summary>
-        /// <param name="target">The entity to analyzing</param>
-        /// <param name="healthAnalyzer">The health analyzer that was receiving the updates</param>
-        /// <param name="healthMonitoredComponent">Optional active health monitored component from the target</param>
-        /// <param name="healthAnalyzerComponent">Optional health analyzer component</param>
-        private void StopAnalyzingEntity(EntityUid target, EntityUid healthAnalyzer, ActiveHealthMonitoredComponent? healthMonitoredComponent = null, HealthAnalyzerComponent? healthAnalyzerComponent = null)
-        {
-            if (!Resolve(target, ref healthMonitoredComponent, false))
-                return;
+        if (TryComp<TemperatureComponent>(target, out var temp))
+            bodyTemperature = temp.CurrentTemperature;
 
-            //If somehow healthAnalyzer is not a health analyzer, just skip the rest
-            if (!Resolve(healthAnalyzer, ref healthAnalyzerComponent))
-                return;
+        var bloodAmount = float.NaN;
 
-            //Unlink the analyzer
-            healthAnalyzerComponent.ScannedEntity = null;
+        if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
+            _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
+            bloodAmount = bloodSolution.FillFraction;
 
-            UpdateScannedUser(healthAnalyzer, target, false);
-            _cell.SetPowerCellDrawEnabled(target, false);
-        }
-
-        /// <summary>
-        /// Send an update for the target to the healthAnalyzer
-        /// </summary>
-        /// <param name="healthAnalyzer">The health analyzer</param>
-        /// <param name="target">The entity being scanned</param>
-        /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
-        public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
-        {
-            if (!_uiSystem.TryGetUi(healthAnalyzer, HealthAnalyzerUiKey.Key, out var ui))
-                return;
-
-            if (!HasComp<DamageableComponent>(target))
-                return;
-
-            var bodyTemperature = float.NaN;
-
-            if (TryComp<TemperatureComponent>(target, out var temp))
-                bodyTemperature = temp.CurrentTemperature;
-
-            var bloodAmount = float.NaN;
-
-            if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
-                _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
-                bloodAmount = bloodSolution.FillFraction;
-
-            _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
-                GetNetEntity(target),
-                bodyTemperature,
-                bloodAmount,
-                scanMode
-            ));
-        }
+        _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
+            GetNetEntity(target),
+            bodyTemperature,
+            bloodAmount,
+            scanMode
+        ));
     }
 }
