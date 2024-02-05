@@ -35,6 +35,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public Action? OnHistoryClosed;
     public Action<SecurityStatus, string>? OnDialogConfirmed;
 
+    private uint _maxLength;
     private bool _isPopulating;
     private bool _access;
     private uint? _selectedKey;
@@ -44,7 +45,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private StationRecordFilterType _currentFilterType;
 
-    public CriminalRecordsConsoleWindow(EntityUid console, IPlayerManager playerManager, IPrototypeManager prototypeManager, IRobustRandom robustRandom, AccessReaderSystem accessReader)
+    public CriminalRecordsConsoleWindow(EntityUid console, uint maxLength, IPlayerManager playerManager, IPrototypeManager prototypeManager, IRobustRandom robustRandom, AccessReaderSystem accessReader)
     {
         RobustXamlLoader.Load(this);
 
@@ -54,6 +55,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _random = robustRandom;
         _accessReader = accessReader;
 
+        _maxLength = maxLength;
         _currentFilterType = StationRecordFilterType.Name;
 
         OpenCentered();
@@ -246,8 +248,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _reasonDialog.OnConfirmed += responses =>
         {
             var reason = responses[field];
-            // TODO: same as history unhardcode
-            if (reason.Length < 1 || reason.Length > 256)
+            if (reason.Length < 1 || reason.Length > _maxLength)
                 return;
 
             OnDialogConfirmed?.Invoke(SecurityStatus.Wanted, reason);
