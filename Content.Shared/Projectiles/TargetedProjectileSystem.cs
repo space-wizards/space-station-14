@@ -10,19 +10,18 @@ public sealed class TargetedProjectileSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ProjectileComponent, ProjectileCollideEvent> (OnProjectileCollide);
+        SubscribeLocalEvent<TargetedProjectileComponent, ProjectileCollideEvent> (OnProjectileCollide);
     }
 
     /// <summary>
-    ///     Cancels the collision of a projectile when it collides with an entity that is laying down but not it's target.
+    ///         Cancels the collision of a projectile when it collides with an entity that is laying down but not it's target.
     /// </summary>
-    private void OnProjectileCollide(EntityUid uid, ProjectileComponent component, ref ProjectileCollideEvent args)
+    private void OnProjectileCollide(EntityUid uid, TargetedProjectileComponent component, ref ProjectileCollideEvent args)
     {
-        if (TryComp<TargetedProjectileComponent>(uid, out var targeted) &&
-            args.OtherEntity != targeted.Target &&
-            _standing.IsDown(args.OtherEntity))
-        {
-            args.Cancelled = true;
-        }
+        if(args.OtherEntity == component.Target ||
+           !_standing.IsDown(args.OtherEntity))
+            return;
+
+        args.Cancelled = true;
     }
 }
