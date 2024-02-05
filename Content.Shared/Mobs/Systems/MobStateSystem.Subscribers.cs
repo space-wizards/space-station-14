@@ -15,6 +15,7 @@ using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Systems;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -42,6 +43,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
+        SubscribeLocalEvent<MobStateComponent, OnHitScanHitEvent>(OnHitScanHit);
     }
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
@@ -164,6 +166,20 @@ public partial class MobStateSystem
 
     private void OnAttemptPacifiedAttack(Entity<MobStateComponent> ent, ref AttemptPacifiedAttackEvent args)
     {
+        args.Cancelled = true;
+    }
+
+    private void OnHitScanHit(EntityUid uid, MobStateComponent component, ref OnHitScanHitEvent args)
+    {
+        //Always hit the target if it was aimed at by the player.
+        if (args.GunTarget == args.HitEntity)
+            return;
+
+        //Only hit targets that are standing and not dead.
+        if(component.CurrentState != MobState.Dead &&
+           !_standing.IsDown(uid))
+            return;
+
         args.Cancelled = true;
     }
 

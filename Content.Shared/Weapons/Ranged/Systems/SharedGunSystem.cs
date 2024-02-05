@@ -564,6 +564,12 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
+/// <summary>
+///     Raised on the target of a hitscan after it collided with the hitscans's collision ray.
+/// </summary>
+[ByRefEvent]
+public record struct OnHitScanHitEvent(EntityUid HitEntity, EntityUid? GunTarget , bool Cancelled = false);
+
 public enum EffectLayers : byte
 {
     Unshaded,

@@ -179,7 +179,7 @@ namespace Content.Shared.Standing
                         continue;
 
                     _physics.SetCollisionLayer(uid, key, fixture,
-                        (fixture.CollisionLayer & ~((int) standingState.LayingDownLayer | (int) CollisionGroup.LowImpassable)) | (int) standingState.StandingLayer,
+                        (fixture.CollisionLayer & ~(int) standingState.LayingDownLayer) | (int) standingState.StandingLayer,
                         manager: fixtureComponent);
                 }
             }

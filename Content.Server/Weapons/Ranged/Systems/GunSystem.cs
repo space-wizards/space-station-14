@@ -214,11 +214,13 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             var result = rayCastResults[0];
 
-                            //Check if an entity is laying down.
+                            //Check if an entity is able to be hit.
                             foreach (var target in rayCastResults)
                             {
-                                if (_standing.IsDown(target.HitEntity) &&
-                                    gun.Target != target.HitEntity)
+                                var hitScanHitEvent = new OnHitScanHitEvent(target.HitEntity, gun.Target);
+                                RaiseLocalEvent(target.HitEntity, ref hitScanHitEvent);
+
+                                if(hitScanHitEvent.Cancelled)
                                     continue;
 
                                 result = target;
