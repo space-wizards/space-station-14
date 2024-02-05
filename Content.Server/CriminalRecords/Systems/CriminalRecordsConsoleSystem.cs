@@ -104,6 +104,12 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is {} fullName)
             officer = fullName;
 
+        (string, object)[] args;
+        if (reason != null)
+            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason) };
+        else
+            args = new (string, object)[] { ("name", name), ("officer", officer) };
+
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
         {
@@ -118,9 +124,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             // this is impossible
             _ => "not-wanted"
         };
-        var message = Loc.GetString($"criminal-records-console-{statusString}", ("name", name), ("officer", officer),
-            reason != null ? ("reason", reason) : default!);
-        _radio.SendRadioMessage(ent, message, ent.Comp.SecurityChannel, ent);
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
     }
