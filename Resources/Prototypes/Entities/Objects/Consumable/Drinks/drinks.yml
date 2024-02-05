@@ -77,6 +77,23 @@
   - type: ExaminableSolution
     solution: drink
 
+- type: entity
+  id: DrinkGlassVisualsFills
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+      - state: icon_empty
+        map: ["enum.SolutionContainerLayers.Base"]
+      - state: fill-5
+        map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+    changeColor: false
+
+
 # Transformable container - normal glass
 - type: entity
   name: metamorphic glass

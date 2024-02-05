@@ -638,7 +638,10 @@
   color: "#3E1B00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
