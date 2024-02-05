@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: Added Poppy the Safety Opposum!
-    type: Add
-  - message: Opossums have received some new sprites. Old sprites are still available
-      to be spawned in by admins.
-    type: Tweak
-  id: 5395
-  time: '2023-12-16T14:34:54.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Fixed explosion resistance from bags being applied to the wearer.
@@ -3884,3 +3875,12 @@
   id: 5894
   time: '2024-02-05T23:30:06.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24849
+- author: FungiFellow
+  changes:
+  - message: Altered content of several Borg Modules for QoL
+    type: Tweak
+  - message: Removed Gas Analyzer Module
+    type: Remove
+  id: 5895
+  time: '2024-02-05T23:46:39.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24702
