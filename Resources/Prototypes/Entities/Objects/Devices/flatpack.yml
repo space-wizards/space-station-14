@@ -50,6 +50,8 @@
   - type: Sprite
     layers:
     - state: solar-assembly-part
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFlatpack
