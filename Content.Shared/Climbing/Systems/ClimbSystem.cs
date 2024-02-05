@@ -185,7 +185,12 @@ public sealed partial class ClimbSystem : VirtualController
         // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
-            Act = () => TryClimb(args.User, args.User, args.Target, out _, component),
+            Act = () =>
+            {
+                // This is a bit of a hack, but it makes bonkables work without redoing the whole system.
+                var ev = new DragDropTargetEvent(args.User, args.User);
+                RaiseLocalEvent(uid, ref ev);
+            },
             Text = Loc.GetString("comp-climbable-verb-climb")
         });
     }
