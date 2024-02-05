@@ -30,7 +30,6 @@ public sealed class ActionContainerSystem : EntitySystem
         SubscribeLocalEvent<ActionsContainerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionsContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<ActionsContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
-        SubscribeLocalEvent<ActionsContainerComponent, ActionAddedEvent>(OnActionAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindRemovedMessage>(OnMindRemoved);
     }
@@ -310,9 +309,6 @@ public sealed class ActionContainerSystem : EntitySystem
 
         data.Container = uid;
         Dirty(uid, component);
-
-        var ev = new ActionAddedEvent(args.Entity, data);
-        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnEntityRemoved(EntityUid uid, ActionsContainerComponent component, EntRemovedFromContainerMessage args)
@@ -328,50 +324,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!_actions.TryGetActionData(args.Entity, out var data, false))
             return;
 
-        // No event - the only entity that should care about this is the entity that the action was provided to.
-        if (data.AttachedEntity != null)
-            _actions.RemoveAction(data.AttachedEntity.Value, args.Entity, null, data);
-
-        var ev = new ActionRemovedEvent(args.Entity, data);
-        RaiseLocalEvent(uid, ref ev);
         data.Container = null;
-    }
-
-    private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
-    {
-        if (TryComp<MindComponent>(uid, out var mindComp) && mindComp.OwnedEntity != null && HasComp<ActionsContainerComponent>(mindComp.OwnedEntity.Value))
-            _actions.GrantContainedAction(mindComp.OwnedEntity.Value, uid, args.Action);
-    }
-}
-
-/// <summary>
-/// Raised directed at an action container when a new action entity gets inserted.
-/// </summary>
-[ByRefEvent]
-public readonly struct ActionAddedEvent
-{
-    public readonly EntityUid Action;
-    public readonly BaseActionComponent Component;
-
-    public ActionAddedEvent(EntityUid action, BaseActionComponent component)
-    {
-        Action = action;
-        Component = component;
-    }
-}
-
-/// <summary>
-/// Raised directed at an action container when an action entity gets removed.
-/// </summary>
-[ByRefEvent]
-public readonly struct ActionRemovedEvent
-{
-    public readonly EntityUid Action;
-    public readonly BaseActionComponent Component;
-
-    public ActionRemovedEvent(EntityUid action, BaseActionComponent component)
-    {
-        Action = action;
-        Component = component;
+        Dirty(uid, component);
     }
 }

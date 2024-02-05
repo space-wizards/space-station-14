@@ -648,6 +648,13 @@ public abstract class SharedActionsSystem : EntitySystem
     /// </summary>
     protected virtual void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp, BaseActionComponent action)
     {
+        if (TryComp<MindComponent>(performer, out var mindComp) &&
+            mindComp.OwnedEntity != null &&
+            HasComp<ActionsContainerComponent>(mindComp.OwnedEntity.Value))
+        {
+            GrantContainedAction(mindComp.OwnedEntity.Value, performer, actionId);
+        }
+
         // See client-side system for UI code.
     }
 
