@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Inhands based off of:https://github.com/space-wizards/space-station-14/tree/master/Resources/Textures/Clothing/OuterClothing/Coats/jensencoat.rsi, Recolored by PursuitinAshes, Icon from https://github.com/tgstation/tgstation/blob/master/icons/obj/clothing/suits/jacket.dmi, Equipped from https://github.com/tgstation/tgstation/blob/master/icons/mob/clothing/suits/jacket.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}
