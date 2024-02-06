@@ -35,6 +35,7 @@ public abstract class SharedCriminalRecordsHackerSystem : EntitySystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
+        args.Handled = true;
     }
 }
 
