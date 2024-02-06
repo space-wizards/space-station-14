@@ -127,6 +127,10 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+    Oculine:
+      Min: 2
+      Max: 6
+      PotencyDivisor: 20
     Vitamin:
       Min: 1
       Max: 4

@@ -60,6 +60,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
     }
@@ -175,6 +176,12 @@ public abstract class SharedDoorSystem : EntitySystem
         args.BaseTime = door.PryTime;
     }
 
+    private void OnBeforePry(EntityUid uid, DoorComponent door, ref BeforePryEvent args)
+    {
+        if (door.State == DoorState.Welded || !door.CanPry)
+            args.Cancelled = true;
+    }
+
     /// <summary>
     ///     Update the door state/visuals and play an access denied sound when a user without access interacts with the
     ///     door.
@@ -205,9 +212,9 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
-        if (door.State == DoorState.Closed)
+        if (door.State is DoorState.Closed or DoorState.Denying)
         {
-            return TryOpen(uid, door, user, predicted);
+            return TryOpen(uid, door, user, predicted, quiet: door.State == DoorState.Denying);
         }
         else if (door.State == DoorState.Open)
         {
@@ -460,7 +467,7 @@ public abstract class SharedDoorSystem : EntitySystem
             //If the colliding entity is a slippable item ignore it by the airlock
             if (otherPhysics.CollisionLayer == (int)CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int)CollisionGroup.ItemMask)
                 continue;
-            
+
             //For when doors need to close over conveyor belts
             if (otherPhysics.CollisionLayer == (int) CollisionGroup.ConveyorMask)
                 continue;
