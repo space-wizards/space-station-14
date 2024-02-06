@@ -1,4 +1,6 @@
-﻿using Content.Shared.Medical.Wounding.Components;
+﻿using Content.Shared.Damage;
+using Content.Shared.Gibbing.Systems;
+using Content.Shared.Medical.Wounding.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -8,6 +10,8 @@ public sealed partial class WoundSystem : EntitySystem
 {
     private readonly SharedContainerSystem _containerSystem = default!;
     private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly GibbingSystem _gibbingSystem = default!;
+    private readonly DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {

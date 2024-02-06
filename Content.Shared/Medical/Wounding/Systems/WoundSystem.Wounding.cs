@@ -3,17 +3,31 @@ using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Gibbing.Events;
+using Content.Shared.Gibbing.Systems;
 using Content.Shared.Medical.Wounding.Components;
+using Content.Shared.Medical.Wounding.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Wounding.Systems;
 
 public sealed partial class WoundSystem
 {
+    private const float SplatterDamageMult = 1.0f;
+
+
+    public WoundSystem(SharedContainerSystem containerSystem, IPrototypeManager prototypeManager, GibbingSystem gibbingSystem, DamageableSystem damageableSystem)
+    {
+        _containerSystem = containerSystem;
+        _prototypeManager = prototypeManager;
+        _gibbingSystem = gibbingSystem;
+        _damageableSystem = damageableSystem;
+    }
+
     private void InitWounding()
     {
         SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnWoundableDamaged);
-
     }
 
     private void OnWoundableDamaged(EntityUid owner, WoundableComponent woundable, ref DamageChangedEvent args)
@@ -24,7 +38,7 @@ public sealed partial class WoundSystem
             return;
         foreach (var (damageTypeId, damage) in args.DamageDelta.DamageDict)
         {
-            ApplyWounds(owner, damageTypeId, damage, woundable);
+            TryApplyWounds(owner, damageTypeId, damage, woundable);
         }
     }
 
@@ -34,23 +48,41 @@ public sealed partial class WoundSystem
     /// <param name="woundableEnt">Target Woundable entity</param>
     /// <param name="woundPrototype">Prototype Id of the wound being spawned</param>
     /// <param name="woundable">Woundable Component</param>
+    /// <param name="damageType">Damage type we are applying</param>
+    /// <param name="damage">The amount of damage applied</param>
     /// <returns>A woundable entity if successful, null if not</returns>
     public Entity<WoundComponent>? CreateWound(EntityUid  woundableEnt,EntProtoId woundPrototype,
-        WoundableComponent? woundable = null)
+        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null)
     {
-        if (!Resolve(woundableEnt, ref woundable)
-            || EntityManager.TrySpawnInContainer(woundPrototype, woundableEnt,
-                WoundableComponent.WoundableContainerId, out var woundEntId)
-            || !TryComp(woundEntId, out WoundComponent? wound)
-            )
-            return null;
-        wound.Body = woundable.Body;
-        wound.RootWoundable = woundable.RootWoundable;
-        SubtractWoundableValues(woundableEnt, woundable, wound.IntegrityDamage, wound.IntegrityDebuff,
-            wound.HealthDamage, wound.HealthDebuff);
-        CheckWoundableThresholds(woundableEnt, woundable);
-        return new Entity<WoundComponent>(woundEntId.Value, wound);
+        return !Resolve(woundableEnt, ref woundable) ? null : CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage);
     }
+
+    public bool RemoveWound(EntityUid woundEnt, bool fullyHeal, WoundComponent? woundComp = null)
+    {
+        if (!Resolve(woundEnt, ref woundComp))
+            return false;
+        var woundableParent = woundComp.ParentWoundable;
+        _containerSystem.TryRemoveFromContainer(woundEnt, true);
+        var woundable = new Entity<WoundableComponent>(woundableParent, Comp<WoundableComponent>(woundableParent));
+        var wound = new Entity<WoundComponent>(woundEnt, woundComp);
+
+        if (fullyHeal)
+        {
+            var onWoundHealed = new WoundHealedEvent(woundable, wound);
+            RaiseRelayedWoundEvent(woundable, wound, ref onWoundHealed);
+            woundable.Comp.HealthCap += wound.Comp.HealthDebuff/100 * wound.Comp.AppliedDamage;
+            woundable.Comp.IntegrityCap += wound.Comp.IntegrityDebuff/100 * wound.Comp.AppliedDamage;
+            woundable.Comp.Integrity += wound.Comp.IntegrityDamage/100 * wound.Comp.AppliedDamage;
+        }
+        else
+        {
+            var onWoundRemoved = new WoundRemovedEvent(woundable, wound);
+            RaiseRelayedWoundEvent(woundable, wound, ref onWoundRemoved);
+        }
+        EntityManager.DeleteEntity(wound);
+        return true;
+    }
+
 
     /// <summary>
     /// Try to Create a new wound on a woundable from the specified wound prototype
@@ -59,11 +91,16 @@ public sealed partial class WoundSystem
     /// <param name="woundPrototype">Prototype Id of the wound being spawned</param>
     /// <param name="createdWound">The created wound</param>
     /// <param name="woundable">Woundable Component</param>
+    /// <param name="damageType">Damage type we are applying</param>
+    /// <param name="damage">The amount of damage applied</param>
     /// <returns>True when successful, false when not</returns>
     public bool TryCreateWound(EntityUid woundableEnt, EntProtoId woundPrototype, [NotNullWhen(true)]out Entity<WoundComponent>? createdWound,
-        WoundableComponent? woundable = null)
+        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null)
     {
-        createdWound = CreateWound(woundableEnt, woundPrototype, woundable);
+        createdWound = null;
+        if (!Resolve(woundableEnt, ref woundable))
+            return false;
+        createdWound = CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage);
         return createdWound != null;
     }
 
@@ -85,8 +122,7 @@ public sealed partial class WoundSystem
            )
             return false;
         removedWound = new Entity<WoundComponent>(woundEnt, wound);
-        SubtractWoundableValues(woundCont.Owner, woundable,-wound.IntegrityDamage, -wound.IntegrityDebuff, -wound.HealthDamage,
-            -wound.HealthDebuff);
+
         Dirty(woundCont.Owner, woundable);
         if (destroy)
         {
@@ -132,88 +168,123 @@ public sealed partial class WoundSystem
         return woundProtoId != null;
     }
 
-    public bool ApplyWounds(EntityUid targetWoundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
+    public bool TryApplyWounds(EntityUid targetWoundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
         WoundableComponent? woundable = null)
     {
         if (!Resolve(targetWoundable, ref woundable)
-            || !TryGetWoundProtoFromDamage(targetWoundable, damageType, damage, out var woundProtoId, out _,woundable)
-            || !TryCreateWound(targetWoundable, woundProtoId.Value, out var woundEnt, woundable)
-            )
+            || !TryGetWoundProtoFromDamage(targetWoundable, damageType, damage, out var woundProtoId, out var overflow, woundable)
+            || !TryCreateWound(targetWoundable, woundProtoId.Value, out var createdWound, damageType, damage, woundable))
             return false;
-
+        //TODO: Apply overflow to adjacent/attached parts
         return true;
     }
 
-
     /// <summary>
-    /// This exists in case you want to force set woundable damage values for some reason!
-    /// Since it can cause wound damage to desync from the woundable.
-    /// WARNING: Only use this if you know you are doing! This will definitely break shit if used improperly!
+    /// Create a new wound on a woundable from the specified wound prototype
     /// </summary>
-    /// <param name="woundableEnt">Target Woundable Entity</param>
-    /// <param name="woundable">Woundable Component</param>
-    /// <param name="integrity">How much integrity damage to set the woundable to</param>
-    /// <param name="integrityCap">How much integrity cap to set the woundable to</param>
-    /// <param name="health">How much health to set the woundable to</param>
-    /// <param name="healthCap">How much health cap to set the woundable to</param>
-    private void SetWoundableValues(EntityUid woundableEnt, WoundableComponent woundable,
-        FixedPoint2 integrity, FixedPoint2 integrityCap, FixedPoint2 health, FixedPoint2 healthCap)
+    /// <param name="woundableEnt">Target Woundable entity</param>
+    /// <param name="woundPrototype">Prototype Id of the wound being spawned</param>
+    /// <param name="woundableComp">Woundable Component</param>
+    /// <param name="damageType">Damage type used to create this wound</param>
+    /// <param name="appliedDamage">The amount of damage applied to create this wound</param>
+    /// <returns>A woundable entity if successful, null if not</returns>
+    private Entity<WoundComponent>? CreateWound_Internal(EntityUid woundableEnt, EntProtoId woundPrototype,
+        WoundableComponent woundableComp, ProtoId<DamageTypePrototype> damageType, FixedPoint2 appliedDamage)
     {
-        woundable.IntegrityCap = FixedPoint2.Clamp(integrityCap, 0, woundable.MaxIntegrity);
-        woundable.HealthCap = FixedPoint2.Clamp(healthCap, 0, woundable.MaxHealth);
+        if (EntityManager.TrySpawnInContainer(woundPrototype, woundableEnt,
+                WoundableComponent.WoundableContainerId, out var woundEntId)
+            || !TryComp(woundEntId, out WoundComponent? woundComp)
+           )
+            return null;
+        var woundable = new Entity<WoundableComponent>(woundableEnt, woundableComp);
+        var wound = new Entity<WoundComponent>(woundEntId.Value, woundComp);
 
-        woundable.Integrity = FixedPoint2.Clamp(integrity, 0, woundable.IntegrityCap);
-        woundable.Health = FixedPoint2.Clamp(health, 0, woundable.HealthCap);
-        Dirty(woundableEnt, woundable);
+        wound.Comp.Body = woundable.Comp.Body;
+        wound.Comp.ParentWoundable = woundable.Owner;
+        wound.Comp.RootWoundable = woundable.Comp.RootWoundable;
+        wound.Comp.AppliedDamage = appliedDamage;
+        wound.Comp.AppliedDamageType = damageType;
+        var newWoundEvent = new CreateWoundAttemptEvent(woundable, wound);
+        RaiseRelayedWoundEvent(woundable, wound, ref newWoundEvent);
+        if (newWoundEvent.Canceled)
+        {
+            EntityManager.DeleteEntity(woundEntId);
+            return null;
+        }
+        ApplyWoundEffects(wound, woundable);
+        return new Entity<WoundComponent>(woundEntId.Value, wound);
     }
 
-    /// <summary>
-    /// Subtract values from a woundable. Use this when you want to update any of the core woundable damage values
-    /// This is automatically called when a wound is added to a woundable!
-    /// Only use this if you want to directly cause or heal damage on a woundable!
-    /// Be careful of causing desyncs with wounds damage!
-    /// </summary>
-    /// <param name="woundableEnt">target woundable entity</param>
-    /// <param name="woundable">woundable component</param>
-    /// <param name="integrity">How much integrity damage to subtract from the woundable</param>
-    /// <param name="integrityCap">How much integrity cap to subtract from the woundable</param>
-    /// <param name="health">How much health to subtract from the woundable</param>
-    /// <param name="healthCap">How much health cap to subtract from the woundable</param>
-    private void SubtractWoundableValues(EntityUid woundableEnt, WoundableComponent woundable,
-        FixedPoint2 integrity, FixedPoint2 integrityCap, FixedPoint2 health, FixedPoint2 healthCap)
+    private void ApplyWoundEffects(Entity<WoundComponent> wound, Entity<WoundableComponent> woundable)
     {
-        woundable.IntegrityCap = FixedPoint2.Clamp(woundable.IntegrityCap-integrityCap, 0, woundable.MaxIntegrity);
-        woundable.HealthCap = FixedPoint2.Clamp(woundable.HealthCap-healthCap, 0, woundable.MaxHealth);
-
-        woundable.Integrity = FixedPoint2.Clamp(woundable.Integrity-integrity, 0, woundable.IntegrityCap);
-        woundable.Health -= FixedPoint2.Clamp(woundable.Health-health, 0, woundable.HealthCap);
-        Dirty(woundableEnt, woundable);
+        woundable.Comp.HealthCap -= wound.Comp.HealthDebuff/100 * wound.Comp.AppliedDamage;
+        woundable.Comp.IntegrityCap -= wound.Comp.IntegrityDebuff/100 * wound.Comp.AppliedDamage;
+        woundable.Comp.Integrity -= wound.Comp.IntegrityDamage/100 * wound.Comp.AppliedDamage;
+        var woundApplied = new WoundAppliedEvent(woundable, wound);
+        RaiseRelayedWoundEvent(woundable, wound, ref woundApplied);
+        Dirty(wound);
+        CheckWoundableValues(woundable.Owner, out var overflow ,wound.Comp.AppliedDamageType, woundable.Comp);
     }
 
-    /// <summary>
-    /// Checks data on woundable and handles gibbing/destruction if certain thresholds are reached
-    /// </summary>
-    /// <param name="woundableEnt">Target woundable Entity</param>
-    /// <param name="woundable">Woundable Component</param>
-    public void CheckWoundableThresholds(EntityUid woundableEnt, WoundableComponent? woundable  = null)
+    public bool CheckWoundableValues(EntityUid target, out FixedPoint2 overflow, ProtoId<DamageTypePrototype> damageType,
+        WoundableComponent? woundable = null)
     {
-        if (!Resolve(woundableEnt, ref woundable))
-            return;
-
-        //TODO: efficency stuff will go here
+        overflow = 0;
+        if (!Resolve(target, ref woundable))
+            return false;
+        if (woundable.HealthCap < woundable.Health)
+        {
+            woundable.Health = woundable.HealthCap;
+        }
+        if (woundable.HealthCap < 0)
+            woundable.HealthCap = 0;
 
         if (woundable.Health < 0)
         {
             woundable.Integrity += woundable.Health;
             woundable.Health = 0;
         }
-        //dirty before we do the destroy check
-        Dirty(woundableEnt, woundable);
+
+        if (woundable.IntegrityCap < woundable.Integrity)
+        {
+            woundable.Integrity = woundable.IntegrityCap;
+        }
 
         if (woundable.Integrity <= 0)
         {
-            //GIB :D
+            overflow = -woundable.Integrity;
+            GibWoundable(target, woundable, damageType, overflow);
+            return true;
         }
+        Dirty(target, woundable);
+        return false;
+    }
+
+    private void GibWoundable(EntityUid woundableEnt, WoundableComponent woundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 splatDamage)
+    {
+        if (!_containerSystem.TryGetContainer(woundableEnt, WoundableComponent.WoundableContainerId, out var container))
+            return;
+        var woundCount = container.ContainedEntities.Count;
+        foreach (var woundEnt in container.ContainedEntities)
+        {
+            RemoveWound(woundEnt, false);
+        }
+
+        var outerEnt = woundable.Body ?? woundable.RootWoundable;
+
+        _gibbingSystem.TryGibEntity(outerEnt, woundableEnt, GibType.Gib, GibContentsOption.Drop, out var droppedEnts);
+        var damageSpec = new DamageSpecifier();
+        damageSpec.DamageDict.Add(damageType, splatDamage/woundCount * SplatterDamageMult);
+        foreach (var targetEnt in droppedEnts)
+        {
+            _damageableSystem.TryChangeDamage(targetEnt, damageSpec);
+        }
+    }
+
+    private void RaiseRelayedWoundEvent<T>(Entity<WoundableComponent> woundable, Entity<WoundComponent> wound,ref T woundEvent) where T : struct
+    {
+        RaiseLocalEvent(woundable.Owner, ref woundEvent);
+        RaiseLocalEvent(wound.Owner, ref woundEvent);
     }
 
 }

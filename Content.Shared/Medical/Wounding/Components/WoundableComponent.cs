@@ -17,7 +17,7 @@ public sealed partial class WoundableComponent : Component
     public EntityUid? Body;
 
     [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public EntityUid? RootWoundable;
+    public EntityUid RootWoundable;
 
     public const string WoundableContainerId = "Wounds";
 
@@ -33,24 +33,51 @@ public sealed partial class WoundableComponent : Component
     [DataField(required:true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<WoundingMetadata,DamageTypePrototype>)), AutoNetworkedField]
     public Dictionary<string, WoundingMetadata> Config = new();
 
+
+    /// <summary>
+    /// This woundable's current health, this is tracked separately from damagable's health and will differ!
+    /// Health will slowly regenerate overtime.
+    /// When health reaches 0, all damage will be taken as integrity, which does not heal natural.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Health = -1; //this is set during comp init or overriden when defined
 
+    /// <summary>
+    /// The current cap of health.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 HealthCap = -1; //this is set during comp init
 
+    /// <summary>
+    /// The absolute maximum possible health
+    /// </summary>
     [DataField(required: true),ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 MaxHealth = 50;
 
+    /// <summary>
+    /// This woundable's current integrity, if integrity reaches 0, this entity is gibbed/destroyed!
+    /// Integrity does NOT heal naturally and must be treated to heal.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Integrity = -1; //this is set during comp init or overriden when defined
 
+    /// <summary>
+    /// The current cap of integrity
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 IntegrityCap = -1; //this is set during comp init
 
+    /// <summary>
+    /// The absolute maximum possible integrity
+    /// </summary>
     [DataField(required: true),ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 MaxIntegrity = 10;
 
+
+    /// <summary>
+    /// Helper property for getting Health and Integrity together as a hitpoint pool.
+    /// Don't show this to players as we want to avoid presenting absolute numbers for health/medical status.
+    /// </summary>
     public FixedPoint2 HitPoints => Health + Integrity;
 
 }
