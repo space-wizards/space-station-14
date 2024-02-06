@@ -108,7 +108,8 @@ public sealed class BodySystem : SharedBodySystem
     }
 
     public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null,
-        bool deleteItems = false, bool deleteBrain = false, GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null)
+        bool deleteItems = false, bool deleteBrain = false, GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null,
+        Vector2? splatDirection = null, float splatModifier = 1, Angle splatCone = default)
     {
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();

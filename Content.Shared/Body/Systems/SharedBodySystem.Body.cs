@@ -30,6 +30,8 @@ public partial class SharedBodySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly GibbingSystem _gibbingSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    private const float GibletLaunchImpulse = 8;
+    private const float GibletLaunchImpulseVariance = 3;
     private void InitializeBody()
     {
         // Body here to handle root body parts.
@@ -271,7 +273,8 @@ public partial class SharedBodySystem
 
     public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
         BodyComponent? body = null ,bool deleteItems = false, bool deleteBrain = false,
-        GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null)
+        GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null, Vector2? splatDirection = null,
+        float splatModifier = 1, Angle splatCone = default)
     {
         var gibs = new HashSet<EntityUid>();
 
@@ -289,14 +292,18 @@ public partial class SharedBodySystem
         foreach (var part in parts)
         {
 
-            _gibbingSystem.TryGibEntityWithRef(bodyId, part.Id, GibOption.Gib, GibContentsOption.Skip, ref gibs, playAudio: false);
+            _gibbingSystem.TryGibEntityWithRef(bodyId, part.Id, GibType.Gib, GibContentsOption.Skip, ref gibs,
+                playAudio: false, launchGibs:true, launchDirection:splatDirection, launchImpulse: GibletLaunchImpulse * splatModifier,
+                launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
 
             if (!gibOrgans)
                 continue;
 
             foreach (var organ in GetPartOrgans(part.Id, part.Component))
             {
-                _gibbingSystem.TryGibEntityWithRef(bodyId, organ.Id, GibOption.Drop, GibContentsOption.Skip, ref gibs, playAudio: false);
+                _gibbingSystem.TryGibEntityWithRef(bodyId, organ.Id, GibType.Drop, GibContentsOption.Skip,
+                    ref gibs, playAudio: false, launchImpulse: GibletLaunchImpulse* splatModifier,
+                    launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
             }
         }
         if(TryComp<InventoryComponent>(bodyId, out var inventory))

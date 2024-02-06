@@ -7,8 +7,8 @@ namespace Content.Shared.Gibbing.Events;
 /// </summary>
 /// <param name="Target">The entity being gibed</param>
 /// <param name="GibletCount">how many giblets to spawn</param>
-/// <param name="GibOption">What type of gibbing is occuring</param>
-[ByRefEvent] public record struct AttemptEntityGibEvent(EntityUid Target, int GibletCount, GibOption GibOption);
+/// <param name="GibType">What type of gibbing is occuring</param>
+[ByRefEvent] public record struct AttemptEntityGibEvent(EntityUid Target, int GibletCount, GibType GibType);
 
 /// <summary>
 /// Called immediately after we gib the target entity
@@ -18,7 +18,7 @@ namespace Content.Shared.Gibbing.Events;
 [ByRefEvent] public record struct EntityGibbedEvent(EntityUid Target, List<EntityUid> DroppedEntities);
 
 [Serializable, NetSerializable]
-public enum GibOption : byte
+public enum GibType : byte
 {
     Skip,
     Drop,

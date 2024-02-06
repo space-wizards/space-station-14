@@ -23,6 +23,9 @@
   - type: Tag
     tags:
       - Trash
+  - type: Gibbable
+    gibPrototypes: [ ]
+    gibCount: 3
   - type: Extractable
     juiceSolution:
       reagents:
