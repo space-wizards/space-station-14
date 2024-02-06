@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Standardized all material sheets to 10u of total reagents when grinded.
-      Alloys are still worth the sum of their parts.
-    type: Tweak
-  - message: You can now grind plastic into oil and phosphorous.
-    type: Tweak
-  - message: Steel sheets no longer contain trace amounts of lead in them.
-    type: Tweak
-  id: 5398
-  time: '2023-12-16T20:52:11.0000000+00:00'
 - author: SlamBamActionman
   changes:
   - message: Discord bot Changelog now includes hyperlinks to the PRs.
@@ -3887,3 +3876,11 @@
   id: 5897
   time: '2024-02-06T16:25:07.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24979
+- author: snebl
+  changes:
+  - message: Fixed the glass version of cargo airlock looking like an engineering
+      door when opened.
+    type: Fix
+  id: 5898
+  time: '2024-02-06T19:38:39.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25003
