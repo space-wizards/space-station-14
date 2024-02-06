@@ -301,6 +301,11 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             if (Timing.CurTime < containedComp.GracePeriodEndTime)
                 continue;
 
+            if (containedComp.Cryostorage == null ||
+                !TryComp<CryostorageComponent>(containedComp.Cryostorage, out var cryo) ||
+                cryo.StoredPlayers.Contains(uid))
+                continue;
+
             Mind.TryGetMind(uid, out _, out var mindComp);
             var id = mindComp?.UserId ?? containedComp.UserId;
             HandleEnterCryostorage((uid, containedComp), id);
