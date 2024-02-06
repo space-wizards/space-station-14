@@ -989,6 +989,9 @@
     damage:
       types:
         Heat: 1
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Appearance
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: fire
