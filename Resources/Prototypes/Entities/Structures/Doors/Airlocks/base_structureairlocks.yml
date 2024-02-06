@@ -134,6 +134,7 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+    department: Civilian
   - type: AccessReader
   - type: StaticPrice
     price: 150
