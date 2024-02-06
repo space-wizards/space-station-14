@@ -109,7 +109,7 @@ public sealed class BodySystem : SharedBodySystem
 
     public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null,
         bool deleteItems = false, bool deleteBrain = false, GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null,
-        Vector2? splatDirection = null, float splatModifier = 1, Angle splatCone = default)
+        bool launchGibs = true, Vector2? splatDirection = null, float splatModifier = 1, Angle splatCone = default)
     {
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();
@@ -121,28 +121,8 @@ public sealed class BodySystem : SharedBodySystem
         if (xform.MapUid == null)
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems, deleteBrain);
-
-        var coordinates = xform.Coordinates;
-        var filter = Filter.Pvs(bodyId, entityManager: EntityManager);
-        var audio = AudioParams.Default.WithVariation(0.025f);
-
-        //_audio.PlayStatic(body.GibSound, filter, coordinates, true, audio);
-
-        foreach (var entity in gibs)
-        {
-            if (deleteItems)
-            {
-                if (!HasComp<BrainComponent>(entity) || deleteBrain)
-                {
-                    //QueueDel(entity);
-                }
-            }
-            else
-            {
-                //SharedTransform.SetCoordinates(entity, coordinates.Offset(_random.NextVector2(.3f)));
-            }
-        }
+        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems, deleteBrain, launchGibs: launchGibs,
+            splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
         RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));
         QueueDel(bodyId);
 

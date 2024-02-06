@@ -71,7 +71,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     private readonly bool _adminLoocEnabled = true;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
-    private const string _chatNamePalette = "Material";
+    private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
 
     public override void Initialize()
@@ -84,7 +84,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
 
-        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(_chatNamePalette).Colors.Values.ToArray();
+        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(ChatNamePalette).Colors.Values.ToArray();
         _chatNameColors = new string[nameColors.Length];
         for (var i = 0; i < nameColors.Length; i++)
         {

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
@@ -41,17 +41,19 @@ public sealed class GibbingSystem : EntitySystem
     /// <param name="launchGibs">Should we launch giblets or just drop them</param>
     /// <param name="launchDirection">The direction to launch giblets (if we are launching them!)</param>
     /// <param name="launchImpulse">The impluse to launch giblets at(if we are launching them!)</param>
+    /// /// <param name="logMissingGibable">Should we log if we are missing a gibbableComp when we call this function</param>
     /// <param name="launchImpulseVariance">The variation in giblet launch impulse (if we are launching them!)</param>
     /// <returns>True if successful, false if not</returns>
     public bool TryGibEntity(EntityUid outerEntity, EntityUid target, GibType gibType, GibContentsOption gibContentsOption,
         out HashSet<EntityUid> droppedEntities, GibbableComponent? gibable = null, bool launchGibs = true,
         Vector2 launchDirection = default, float launchImpulse = 0f, float launchImpulseVariance = 0f, Angle launchCone = default,
-        float randomSpreadMod = 1.0f, bool playAudio = true, List<string>? allowedContainers = null, List<string>? excludedContainers = null)
+        float randomSpreadMod = 1.0f, bool playAudio = true, List<string>? allowedContainers = null,
+        List<string>? excludedContainers = null, bool logMissingGibable = false)
     {
         droppedEntities = new();
         return TryGibEntityWithRef(outerEntity, target, gibType, gibContentsOption, ref droppedEntities, gibable,
             launchGibs, launchDirection, launchImpulse, launchImpulseVariance, launchCone, randomSpreadMod, playAudio,
-            allowedContainers, excludedContainers);
+            allowedContainers, excludedContainers, logMissingGibable);
     }
 
 
@@ -74,14 +76,27 @@ public sealed class GibbingSystem : EntitySystem
     /// <param name="launchDirection">The direction to launch giblets (if we are launching them!)</param>
     /// <param name="launchImpulse">The impluse to launch giblets at(if we are launching them!)</param>
     /// <param name="launchImpulseVariance">The variation in giblet launch impulse (if we are launching them!)</param>
+    /// <param name="logMissingGibable">Should we log if we are missing a gibbableComp when we call this function</param>
     /// <returns>True if successful, false if not</returns>
     public bool TryGibEntityWithRef(EntityUid outerEntity, EntityUid target, GibType gibType, GibContentsOption gibContentsOption,
         ref HashSet<EntityUid> droppedEntities, GibbableComponent? gibable = null, bool launchGibs = true,
         Vector2? launchDirection = null, float launchImpulse = 0f, float launchImpulseVariance = 0f, Angle launchCone = default,
-        float randomSpreadMod = 1.0f, bool playAudio = true, List<string>? allowedContainers = null, List<string>? excludedContainers = null)
+        float randomSpreadMod = 1.0f, bool playAudio = true, List<string>? allowedContainers = null,
+        List<string>? excludedContainers = null, bool logMissingGibable = false)
     {
         if (!Resolve(target, ref gibable, logMissing: false))
+        {
+            DropEntity(target, Transform(outerEntity), randomSpreadMod, null, ref droppedEntities,
+                launchGibs, launchDirection, launchImpulse, launchImpulseVariance, launchCone);
+            if (logMissingGibable)
+            {
+                Log.Warning($"{ToPrettyString(target)} does not have a GibbableComponent! " +
+                            $"This is not required but may cause issues contained items to not be dropped.");
+            }
+
             return false;
+        }
+
         if (gibType == GibType.Skip && gibContentsOption == GibContentsOption.Skip)
             return true;
         if (launchGibs)
@@ -159,9 +174,12 @@ public sealed class GibbingSystem : EntitySystem
         ref HashSet<EntityUid> droppedEntities, bool flingEntity, Vector2? scatterDirection, float scatterImpulse,
         float scatterImpulseVariance, Angle scatterCone)
     {
-        if (!Resolve(target, ref gibable, logMissing: false))
-            return;
-        var gibAttemptEvent = new AttemptEntityGibEvent(target, gibable.GibCount, GibType.Drop);
+        var gibCount = 0;
+        if (Resolve(target, ref gibable, logMissing: false))
+        {
+            gibCount = gibable.GibCount;
+        }
+        var gibAttemptEvent = new AttemptEntityGibEvent(target, gibCount, GibType.Drop);
         RaiseLocalEvent(target, ref gibAttemptEvent);
         switch (gibAttemptEvent.GibType)
         {
@@ -189,9 +207,14 @@ public sealed class GibbingSystem : EntitySystem
         float scatterImpulseVariance, Angle scatterCone, bool deleteTarget = true)
     {
         var localGibs = new List<EntityUid>();
-        if (!Resolve(target, ref gibable, logMissing: false))
-            return localGibs;
-        var gibAttemptEvent = new AttemptEntityGibEvent(target, gibable.GibCount, GibType.Drop);
+        var gibCount = 0;
+        var gibProtoCount = 0;
+        if (Resolve(target, ref gibable, logMissing: false))
+        {
+            gibCount = gibable.GibCount;
+            gibProtoCount = gibable.GibPrototypes.Count;
+        }
+        var gibAttemptEvent = new AttemptEntityGibEvent(target, gibCount, GibType.Drop);
         RaiseLocalEvent(target, ref gibAttemptEvent);
         switch (gibAttemptEvent.GibType)
         {
@@ -204,7 +227,7 @@ public sealed class GibbingSystem : EntitySystem
                 return localGibs;
         }
 
-        if (gibable.GibPrototypes.Count > 0)
+        if (gibable != null && gibProtoCount > 0)
         {
             if (flingEntity)
             {

@@ -28,6 +28,7 @@
     tags:
     - Document
     - Trash
+    - Paper
   - type: Appearance
   - type: PaperVisuals
   - type: Flammable
@@ -56,6 +57,17 @@
               max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Food
+    solution: food
+    delay: 7
+    forceFeedDelay: 7
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 1
 
 - type: entity
   name: paper scrap
@@ -261,6 +273,12 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+
+- type: entity
+  parent: Pen
+  id: PenEmbeddable
+  abstract: true
+  components:
   - type: EmbeddableProjectile
     offset: 0.3,0.0
     removalTime: 0.0
@@ -286,9 +304,9 @@
 
 - type: entity
   name: Cybersun pen
-  parent: Pen
+  parent: PenEmbeddable
   id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
   components:
   - type: Tag
     tags:
@@ -300,10 +318,6 @@
     state: overpriced_pen
   - type: MeleeWeapon
     wideAnimationRotation: -45
-    damage:
-      types:
-        Piercing: 15
-  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 15
@@ -319,7 +333,7 @@
 
 - type: entity
   name: captain's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenCap
   description: 'A luxurious fountain pen for the captain of the station.'
   components:
@@ -342,7 +356,7 @@
 
 - type: entity
   name: hop's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenHop
   description: 'A luxurious fountain pen for the hop of the station.'
   components:

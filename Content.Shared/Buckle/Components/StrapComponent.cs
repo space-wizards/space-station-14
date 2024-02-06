@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared.Alert;
-using Content.Shared.Vehicle;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -9,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Buckle.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedBuckleSystem), typeof(SharedVehicleSystem))]
+[Access(typeof(SharedBuckleSystem))]
 public sealed partial class StrapComponent : Component
 {
     /// <summary>

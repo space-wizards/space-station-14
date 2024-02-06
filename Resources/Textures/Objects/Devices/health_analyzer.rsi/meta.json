@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "airloss, brute, toxin and burn edited from /tg/station https://github.com/tgstation/tgstation/tree/master genetic edited from https://iconscout.com/free-icon/dna-2130814 with license CC BY 4.0",
+  "copyright": "airloss, brute, toxin and burn edited from /tg/station https://github.com/tgstation/tgstation/tree/master genetic edited from https://iconscout.com/free-icon/dna-2130814 with license CC BY 4.0. malnutrition from https://github.com/space-wizards/space-station-14/tree/73d7837fabb31a7691a1db47ff64903cbec5dd32/Resources/Textures/Interface/Alerts/hunger.rsi",
   "states": [
     {
       "name": "airloss"
@@ -24,6 +24,9 @@
     },
     {
       "name": "unknown"
+    },
+    {
+      "name": "malnutrition"
     }
   ]
 }

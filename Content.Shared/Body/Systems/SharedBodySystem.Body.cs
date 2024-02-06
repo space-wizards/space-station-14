@@ -272,8 +272,8 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
-        BodyComponent? body = null ,bool deleteItems = false, bool deleteBrain = false,
-        GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null, Vector2? splatDirection = null,
+        BodyComponent? body = null ,bool deleteItems = false, bool deleteBrain = false, GibbableComponent? gibbable = null,
+        SoundSpecifier? gibSound = null, bool launchGibs = true, Vector2? splatDirection = null,
         float splatModifier = 1, Angle splatCone = default)
     {
         var gibs = new HashSet<EntityUid>();
