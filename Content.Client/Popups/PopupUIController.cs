@@ -44,6 +44,7 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
             return;
 
         UIManager.RootControl.RemoveChild(_popupControl);
+        _popupControl = null;
     }
 
     public void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleScreen handle, Vector2 position, float scale)
