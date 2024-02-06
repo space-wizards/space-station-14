@@ -184,13 +184,30 @@ public abstract class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
         SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>(OnPlayerAttached);
 
+        SubscribeLocalEvent<AlertAutoRemoveComponent, EntityUnpausedEvent>(OnAutoRemoveUnPaused);
+
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(HandlePrototypesReloaded);
         LoadPrototypes();
     }
 
-
     // TODO: Subscribe to EntityUnpausedEvent for the component and bump all the timers by pausedtime (see existing implementations) so this still works if a server is saved and then loaded.
+    private void OnAutoRemoveUnPaused(EntityUid uid, AlertAutoRemoveComponent comp, EntityUnpausedEvent args)
+    {
+        foreach (var alert in comp.Alerts)
+        {
+            var state = new AlertState
+            {
+                Severity = alert.Value.Severity,
+                Cooldown = alert.Value.Cooldown,
+                AutoRemove =  alert.Value.AutoRemove + args.PausedTime,
+                Type = alert.Value.Type
+            };
+            comp.Alerts[alert.Key] = state;
+        }
+        Dirty(uid, comp);
+    }
+
     // TODO: Also use RemCompDeferred and avoid touching the components during iteration.
     public override void Update(float frameTime)
     {
@@ -201,7 +218,7 @@ public abstract class AlertsSystem : EntitySystem
         {
             if (autoComp.Alerts.Count <= 0 || !TryComp<AlertsComponent>(uid, out var alertComp))
             {
-                EntityManager.RemoveComponent<AlertAutoRemoveComponent>(uid);
+                RemCompDeferred(uid, autoComp);
                 continue;
             }
 
