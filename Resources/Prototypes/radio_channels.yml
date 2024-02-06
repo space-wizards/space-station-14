@@ -95,3 +95,17 @@
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
+
+- type: radioChannel
+  id: Bugged1
+  name: chat-radio-bugged1
+  keycode: '0' #its never talked on,so this is kinda pointless, but the game shits if I don't specify one.
+  frequency: 1136
+  color: "#8f4a4b" # same as syndicate because thats funnier.
+
+- type: radioChannel
+  id: Bugged2
+  name: chat-radio-bugged2
+  keycode: '9'
+  frequency: 1952
+  color: "#8f4a4b" # same as syndicate because thats funnier.

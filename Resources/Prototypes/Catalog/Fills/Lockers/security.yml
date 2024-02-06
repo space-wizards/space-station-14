@@ -123,6 +123,8 @@
       - id: BoxForensicPad
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
+      - id: BoxSurveillance1
+      - id: BoxSurveillance2
 
 - type: entity
   id: ClosetBombFilled
