@@ -7,7 +7,7 @@
     HorizontalExpand="True"
     VerticalExpand="True"
     MinSize="465 225">
-    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+    <PanelContainer Name="ChatBoxBackgroundPanel" Access="Public" HorizontalExpand="True" VerticalExpand="True">
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BackgroundColor="#25252ADD" />
         </PanelContainer.PanelOverride>
