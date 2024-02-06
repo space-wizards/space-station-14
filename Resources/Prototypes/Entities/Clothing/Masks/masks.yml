@@ -41,7 +41,7 @@
   parent: ClothingMaskGas
   id: ClothingMaskGasSyndicate
   name: syndicate gas mask
-  description: A close-fitting tactical mask that can be connected to an air supply.
+  description: A close-fitting tactical mask that can be connected to an air supply with integrated particle filter
   components:
   - type: Sprite
     sprite: Clothing/Mask/gassyndicate.rsi
@@ -56,6 +56,7 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: FilterMask
 
 - type: entity
   parent: ClothingMaskGas
@@ -102,7 +103,7 @@
   parent: ClothingMaskGas
   id: ClothingMaskGasExplorer
   name: explorer gas mask
-  description: A military-grade gas mask that can be connected to an air supply.
+  description: A military-grade gas mask that can be connected to an air supply with a old particle filter
   components:
   - type: Sprite
     sprite: Clothing/Mask/gasexplorer.rsi
@@ -115,6 +116,7 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+  - type: FilterMask
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -318,7 +320,7 @@
   parent: ClothingMaskGasExplorer
   id: ClothingMaskGasSwat
   name: swat gas mask
-  description: A elite issue Security gas mask.
+  description: A elite issue Security gas mask with integrated particle filter
   components:
   - type: Sprite
     sprite: Clothing/Mask/swat.rsi
@@ -327,6 +329,7 @@
   - type: Tag
     tags:
     - HidesHair
+  - type: FilterMask
 
 - type: entity
   parent: ClothingMaskGasExplorer

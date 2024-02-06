@@ -41,6 +41,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
+    [Dependency] private readonly SmokeFilterystem _smokefilter = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -275,7 +276,7 @@ public sealed class SmokeSystem : EntitySystem
         if (!_solutionContainerSystem.ResolveSolution(entity, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
             return;
 
-        var blockIngestion = _internals.AreInternalsWorking(entity);
+        var blockIngestion = _internals.AreInternalsWorking(entity) || _smokefilter.AreFilterWorking(entity); //ADD the component check
 
         var cloneSolution = solution.Clone();
         var availableTransfer = FixedPoint2.Min(cloneSolution.Volume, component.TransferRate);
