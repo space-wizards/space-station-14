@@ -1,4 +1,3 @@
-using Content.Server.CriminalRecords.Components;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -6,6 +5,8 @@ using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
+using Content.Shared.CriminalRecords.Components;
+using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
@@ -14,7 +15,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.CriminalRecords.Systems;
 
-public sealed class CriminalRecordsConsoleSystem : EntitySystem
+/// <summary>
+/// Handles all UI for criminal records console
+/// </summary>
+public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
