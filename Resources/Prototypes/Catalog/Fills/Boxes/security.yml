@@ -118,7 +118,7 @@
       amount: 2
     - id: RadioBugged2
       amount: 2
-    - od: PaperWrittenSurveillanceInstructions
+    - id: PaperWrittenSurveillanceInstructions
   - type: Sprite
     layers:
       - state: box_security
