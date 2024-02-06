@@ -3,6 +3,7 @@
   mapName: 'Train'
   mapPath: /Maps/train.yml
   minPlayers: 10
+  maxPlayers: 50
   stations:
     Train:
       stationProto: StandardNanotrasenStation
@@ -32,7 +33,7 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 4, 4 ]
+            StationEngineer: [ 5, 5 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
