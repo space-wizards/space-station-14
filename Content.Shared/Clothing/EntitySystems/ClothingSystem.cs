@@ -91,17 +91,6 @@ public abstract class ClothingSystem : EntitySystem
         component.InSlot = args.Slot;
         if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, HairTag))
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, false);
-        if (!TryComp<MeleeSoundComponent>(uid, out var srcSoundComp))
-        {
-            return;
-        }
-        if (!TryComp<MeleeSoundComponent>(args.Equipee, out var dstSoundComp))
-        {
-            dstSoundComp = EntityManager.AddComponent<MeleeSoundComponent>(args.Equipee);
-        }
-
-        dstSoundComp.
-
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
@@ -109,13 +98,6 @@ public abstract class ClothingSystem : EntitySystem
         component.InSlot = null;
         if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, HairTag))
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, true);
-        // Remove component from the wearer.
-        // How do I ensure it's the same component?
-        if (TryComp<MeleeSoundComponent>(args.Equipee, out var soundComp))
-        {
-            EntityManager.RemoveComponent(args.Equipee, soundComp);
-        }
-
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
