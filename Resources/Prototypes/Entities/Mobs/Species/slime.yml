@@ -5,9 +5,6 @@
   abstract: true
   components:
   - type: Hunger
-    starvationDamage:
-      types:
-        Bloodloss: 0.5
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi

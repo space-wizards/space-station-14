@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.GhostKick;
 using Robust.Server.Player;
@@ -71,6 +71,6 @@ public sealed class GhostKickCommand : IConsoleCommand
             return;
         }
 
-        ghostKick.DoDisconnect(player.ConnectedClient, reason);
+        ghostKick.DoDisconnect(player.Channel, reason);
     }
 }
