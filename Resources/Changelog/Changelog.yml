@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Added the power sensor for checking power stats in logic circuits.
-    type: Add
-  id: 5397
-  time: '2023-12-16T18:32:42.0000000+00:00'
 - author: Flareguy
   changes:
   - message: Standardized all material sheets to 10u of total reagents when grinded.
@@ -3885,3 +3879,11 @@
   id: 5896
   time: '2024-02-06T13:20:10.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22449
+- author: ada-please
+  changes:
+  - message: A Surveillance Camera Monitor Board has been added to the Syndicate Observation
+      Kit.
+    type: Add
+  id: 5897
+  time: '2024-02-06T16:25:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24979
