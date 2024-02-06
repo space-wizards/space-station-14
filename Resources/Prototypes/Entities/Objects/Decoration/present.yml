@@ -260,6 +260,10 @@
         orGroup: GiftPool
       - id: FoodBoxDonkpocketPizza
         orGroup: GiftPool
+      - id: FoodBoxDonkpocketStonk
+        orGroup: GiftPool
+      - id: FoodBoxDonkpocketCarp
+        orGroup: GiftPool
       - id: FoodBoxDonkpocketBerry
         orGroup: GiftPool
       - id: FoodBoxDonkpocketHonk
