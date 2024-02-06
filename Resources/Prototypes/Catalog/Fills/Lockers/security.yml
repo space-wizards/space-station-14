@@ -123,6 +123,7 @@
       - id: BoxForensicPad
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
+      - id: HoloprojectorSecurity
       - id: BoxSurveillance1
       - id: BoxSurveillance2
 
