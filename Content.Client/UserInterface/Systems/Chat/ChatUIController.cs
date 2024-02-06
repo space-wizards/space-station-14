@@ -222,7 +222,7 @@ public sealed class ChatUIController : UIController
         var viewportContainer = UIManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
         SetSpeechBubbleRoot(viewportContainer);
 
-        SetChatWindowBackgroundTransparency(_config.GetCVar(CCVars.ChatWindowTransparency));
+        SetChatWindowTransparency(_config.GetCVar(CCVars.ChatWindowTransparency));
     }
 
     public void OnScreenUnload()
@@ -232,10 +232,10 @@ public sealed class ChatUIController : UIController
 
     private void OnChatWindowTransparencyChanged(float transparency)
     {
-        SetChatWindowBackgroundTransparency(transparency);
+        SetChatWindowTransparency(transparency);
     }
 
-    private void SetChatWindowBackgroundTransparency(float transparency)
+    private void SetChatWindowTransparency(float transparency)
     {
         var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
 
