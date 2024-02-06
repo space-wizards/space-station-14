@@ -1,0 +1,22 @@
+- type: entity
+  name: stun baton
+  parent: Stunbaton
+  id: AdvancedStunbaton
+  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
+  components:
+  - type: Sprite
+    sprite: Imperial/AdvancedStunBaton/stunbaton.rsi
+  - type: Stunbaton
+    energyPerUse: 25
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  # - type: QualityOfItem
+  #   qualityWeights:
+  #     0: 0
+  #     1: 0
+  #     2: 0
+  #     3: 80
+  #     4: 20
+  #     5: 0
+  #     6: 0

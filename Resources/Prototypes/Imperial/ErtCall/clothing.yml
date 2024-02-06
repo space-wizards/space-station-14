@@ -18,6 +18,19 @@
         - id: BoxSurvival
 
 - type: entity
+  id: ClothingBeltSecurityERTCallFilled
+  parent: ClothingBeltSecurity
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: GrenadeFlashBang
+      - id: GrenadeFlashBang
+      - id: AdvancedStunbaton
+      - id: Handcuffs
+      - id: Handcuffs
+
+- type: entity
   noSpawn: false
   parent: ClothingBackpackERTMedical
   id: ClothingBackpackCallERTMedicalFilled

@@ -3,7 +3,7 @@
   id: ErtCallUplinkStunbaton
   name: ert-uplink-melee-stunbaton-name
   description: ert-uplink-melee-stunbaton-desc
-  productEntity: Stunbaton
+  productEntity: AdvancedStunbaton
   cost:
     BlueSpaceCube: 5
   categories:
