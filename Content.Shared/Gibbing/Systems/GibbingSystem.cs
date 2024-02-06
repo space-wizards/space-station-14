@@ -80,7 +80,7 @@ public sealed class GibbingSystem : EntitySystem
         Vector2? launchDirection = null, float launchImpulse = 0f, float launchImpulseVariance = 0f, Angle launchCone = default,
         float randomSpreadMod = 1.0f, bool playAudio = true, List<string>? allowedContainers = null, List<string>? excludedContainers = null)
     {
-        if (!Resolve(target, ref gibable, logMissing: false))
+        if (!Resolve(target, ref gibable, logMissing: true))
             return false;
         if (gibType == GibType.Skip && gibContentsOption == GibContentsOption.Skip)
             return true;
