@@ -23,7 +23,7 @@
                    StyleClasses="LabelKeyText"/>
             <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
             <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'ui-options-chat-background-transparency'}" Margin="8 0" />
+            <Label Text="{Loc 'ui-options-chat-window-transparency'}" Margin="8 0" />
                 <Slider Name="ChatWindowTransparencySlider"
                         MinValue="0"
                         MaxValue="100"

@@ -242,7 +242,7 @@ public sealed class ChatUIController : UIController
         if (chatBox == null)
             return;
 
-        chatBox.ChatBoxBackgroundPanel.PanelOverride = new StyleBoxFlat
+        chatBox.ChatWindowPanel.PanelOverride = new StyleBoxFlat
         {
             BackgroundColor = Color.FromHex("#25252A").WithAlpha(1 - transparency)
         };

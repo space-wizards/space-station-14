@@ -101,7 +101,7 @@ namespace Content.Client.Options.UI.Tabs
 
         private void OnChatBackgroundTransparencySliderChanged(Range obj)
         {
-            ChatWindowTransparencyLabel.Text = Loc.GetString("ui-options-chat-background-transparency-percent", ("transparency", ChatWindowTransparencySlider.Value / 100f));
+            ChatWindowTransparencyLabel.Text = Loc.GetString("ui-options-chat-window-transparency-percent", ("transparency", ChatWindowTransparencySlider.Value / 100f));
             UpdateApplyButton();
         }
 
