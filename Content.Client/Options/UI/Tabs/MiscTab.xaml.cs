@@ -77,8 +77,8 @@ namespace Content.Client.Options.UI.Tabs
             OpaqueStorageWindowCheckBox.Pressed = _cfg.GetCVar(CCVars.OpaqueStorageWindow);
             FancySpeechBubblesCheckBox.Pressed = _cfg.GetCVar(CCVars.ChatEnableFancyBubbles);
             FancyNameBackgroundsCheckBox.Pressed = _cfg.GetCVar(CCVars.ChatFancyNameBackground);
-            ChatWindowTransparencySlider.Value = _cfg.GetCVar(CCVars.ChatWindowTransparency) * 100f;
             ReducedMotionCheckBox.Pressed = _cfg.GetCVar(CCVars.ReducedMotion);
+            ChatWindowTransparencySlider.Value = _cfg.GetCVar(CCVars.ChatWindowTransparency) * 100f;
             ScreenShakeIntensitySlider.Value = _cfg.GetCVar(CCVars.ScreenShakeIntensity) * 100f;
             // ToggleWalk.Pressed = _cfg.GetCVar(CCVars.ToggleWalk);
             StaticStorageUI.Pressed = _cfg.GetCVar(CCVars.StaticStorageUI);
