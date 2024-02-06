@@ -8,7 +8,6 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
-using Content.Shared.Weapons.Melee.Components;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
