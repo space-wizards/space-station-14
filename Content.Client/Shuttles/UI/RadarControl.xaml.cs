@@ -245,7 +245,7 @@ public sealed partial class RadarControl : BaseShuttleControl
         if (!ShowDocks)
             return;
 
-        const float DockScale = 0.5f;
+        const float DockScale = 0.6f;
         var nent = EntManager.GetNetEntity(uid);
 
         if (_docks.TryGetValue(nent, out var docks))
@@ -258,7 +258,7 @@ public sealed partial class RadarControl : BaseShuttleControl
                 if (uiPosition.Length() > WorldRange - DockScale)
                     continue;
 
-                var color = Color.ToSrgb(Color.Pink);
+                var color = Color.ToSrgb(Color.Magenta);
 
                 var verts = new[]
                 {

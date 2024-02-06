@@ -78,7 +78,7 @@ public partial class BaseShuttleControl : MapGridControl
         var edges = new ValueList<Vector2>();
         var tileTris = new ValueList<Vector2>();
         const bool DrawInterior = true;
-        var tileBatchCount = 256;
+        const int tileBatchCount = 256;
 
         while (rator.MoveNext(out var tileRef))
         {
