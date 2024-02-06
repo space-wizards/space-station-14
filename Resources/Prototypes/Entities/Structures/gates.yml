@@ -130,7 +130,7 @@
   parent: BaseLogicItem
   id: MemoryCell
   name: memory cell
-  description: Stores a signal which can be changed depending on input and enable ports.
+  description: A D-Latch circuit that stores a signal which can be changed depending on input and enable ports.
   components:
   - type: Sprite
     layers:
