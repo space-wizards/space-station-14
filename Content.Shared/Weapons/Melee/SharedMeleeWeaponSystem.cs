@@ -34,7 +34,6 @@ namespace Content.Shared.Weapons.Melee;
 
 public abstract class SharedMeleeWeaponSystem : EntitySystem
 {
-    //
     [Dependency] protected readonly IGameTiming              Timing          = default!;
     [Dependency] protected readonly IMapManager              MapManager      = default!;
     [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
@@ -76,10 +75,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         SubscribeLocalEvent<ItemToggleMeleeWeaponComponent, ItemToggledEvent>(OnItemToggle);
 
-        SubscribeAllEvent  <HeavyAttackEvent>(OnHeavyAttack);
-        SubscribeAllEvent  <LightAttackEvent>(OnLightAttack);
-        SubscribeAllEvent  <DisarmAttackEvent>(OnDisarmAttack);
-        SubscribeAllEvent  <StopAttackEvent>(OnStopAttack);
+        SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
+        SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
+        SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
+        SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
 
 #if DEBUG
         SubscribeLocalEvent<MeleeWeaponComponent,
