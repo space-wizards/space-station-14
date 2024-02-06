@@ -13,6 +13,20 @@
       shader: unshaded
 
 - type: entity
+  parent: MobRatvarBase
+  id: MobRatvarSpawn
+  suffix: Spawn
+  components:
+  - type: Sprite
+    layers:
+    - state: spawn
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 3.5
+  - type: SpawnOnDespawn
+    prototype: MobRatvar
+
+- type: entity
   parent: [MobRatvarBase, BaseMob]
   id: MobRatvar
   components:
