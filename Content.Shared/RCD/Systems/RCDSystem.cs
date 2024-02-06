@@ -103,7 +103,7 @@ public class RCDSystem : EntitySystem
         if (args.Session.AttachedEntity != null)
         {
             // Popup message
-            var msg = (component.CachedPrototype.Prototype != null) ?
+            var msg = !string.IsNullOrEmpty(component.CachedPrototype.Prototype) ?
                 Loc.GetString("rcd-component-change-build-mode", ("name", Loc.GetString(component.CachedPrototype.SetName))) :
                 Loc.GetString("rcd-component-change-mode", ("mode", Loc.GetString(component.CachedPrototype.SetName)));
 
@@ -116,7 +116,7 @@ public class RCDSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var msg = (component.CachedPrototype.Prototype != null) ?
+        var msg = !string.IsNullOrEmpty(component.CachedPrototype.Prototype) ?
             Loc.GetString("rcd-component-examine-build-details", ("name", Loc.GetString(component.CachedPrototype.SetName))) :
             Loc.GetString("rcd-component-examine-mode-details", ("mode", Loc.GetString(component.CachedPrototype.SetName)));
 
