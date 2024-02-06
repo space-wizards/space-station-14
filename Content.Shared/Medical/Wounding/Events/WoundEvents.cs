@@ -22,6 +22,13 @@ public record struct WoundRemovedEvent(
     Entity<WoundComponent> Wound);
 
 [ByRefEvent]
+public record struct RemoveWoundAttemptEvent(
+    Entity<WoundableComponent> TargetWoundable,
+    Entity<WoundComponent> WoundToRemove,
+    bool CancelRemove = false);
+
+
+[ByRefEvent]
 public record struct WoundHealedEvent(
     Entity<WoundableComponent> ParentWoundable,
     Entity<WoundComponent> Wound);

@@ -50,21 +50,37 @@ public sealed partial class WoundSystem
     /// <param name="woundable">Woundable Component</param>
     /// <param name="damageType">Damage type we are applying</param>
     /// <param name="damage">The amount of damage applied</param>
+    /// <param name="force">Prevent canceling creating this wound</param>
     /// <returns>A woundable entity if successful, null if not</returns>
     public Entity<WoundComponent>? CreateWound(EntityUid  woundableEnt,EntProtoId woundPrototype,
-        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null)
+        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null, bool force = false)
     {
-        return !Resolve(woundableEnt, ref woundable) ? null : CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage);
+        return !Resolve(woundableEnt, ref woundable) ? null : CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage, force);
     }
 
-    public bool RemoveWound(EntityUid woundEnt, bool fullyHeal, WoundComponent? woundComp = null)
+
+    /// <summary>
+    ///  Attempt to remove a wound
+    /// </summary>
+    /// <param name="woundEnt">The wound entity to remove</param>
+    /// <param name="fullyHeal">Does this count as "fully healing" the wound, or just removal</param>
+    /// <param name="woundComp">The wound component to remove</param>
+    /// <param name="force">Prevent canceling the wound removal</param>
+    /// <returns>True if successful, false if not</returns>
+    public bool TryRemoveWound(EntityUid woundEnt, bool fullyHeal, WoundComponent? woundComp = null, bool force = false)
     {
         if (!Resolve(woundEnt, ref woundComp))
             return false;
         var woundableParent = woundComp.ParentWoundable;
-        _containerSystem.TryRemoveFromContainer(woundEnt, true);
         var woundable = new Entity<WoundableComponent>(woundableParent, Comp<WoundableComponent>(woundableParent));
         var wound = new Entity<WoundComponent>(woundEnt, woundComp);
+
+        var onRemoveWoundAttempt = new RemoveWoundAttemptEvent(woundable, wound);
+        RaiseRelayedWoundEvent(woundable, wound, ref onRemoveWoundAttempt);
+        if (!force && onRemoveWoundAttempt.CancelRemove)
+            return false;
+
+        _containerSystem.TryRemoveFromContainer(woundEnt, true);
 
         if (fullyHeal)
         {
@@ -93,43 +109,16 @@ public sealed partial class WoundSystem
     /// <param name="woundable">Woundable Component</param>
     /// <param name="damageType">Damage type we are applying</param>
     /// <param name="damage">The amount of damage applied</param>
+    /// <param name="force">Prevent canceling creating this wound</param>
     /// <returns>True when successful, false when not</returns>
     public bool TryCreateWound(EntityUid woundableEnt, EntProtoId woundPrototype, [NotNullWhen(true)]out Entity<WoundComponent>? createdWound,
-        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null)
+        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null, bool force = false)
     {
         createdWound = null;
         if (!Resolve(woundableEnt, ref woundable))
             return false;
-        createdWound = CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage);
+        createdWound = CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage, force);
         return createdWound != null;
-    }
-
-    /// <summary>
-    /// Remove a wound from its parent woundable and optionally destroy it
-    /// </summary>
-    /// <param name="woundEnt">Target Wound Entity</param>
-    /// <param name="wound">Wound Component</param>
-    /// <param name="destroy">Should we destroy the removed wound</param>
-    /// <returns>True if succcessful, false if not</returns>
-    public bool TryRemoveWound(EntityUid woundEnt, out Entity<WoundComponent>? removedWound, WoundComponent? wound = null,
-        bool destroy = true)
-    {
-        removedWound = null;
-        if (!Resolve(woundEnt, ref wound)
-            ||! _containerSystem.TryGetContainingContainer(woundEnt, out var woundCont)
-            ||! TryComp(woundCont.Owner,out WoundableComponent? woundable)
-            ||! _containerSystem.RemoveEntity(woundCont.Owner, woundEnt)
-           )
-            return false;
-        removedWound = new Entity<WoundComponent>(woundEnt, wound);
-
-        Dirty(woundCont.Owner, woundable);
-        if (destroy)
-        {
-            removedWound = null;
-            EntityManager.DeleteEntity(woundEnt);
-        }
-        return true;
     }
 
     /// <summary>
@@ -140,6 +129,7 @@ public sealed partial class WoundSystem
     /// <param name="damage">Damage being applied</param>
     /// <param name="woundProtoId">Found WoundProtoId</param>
     /// <param name="woundable">Woundable comp</param>
+    /// <param name="overflow">The amount of damage exceeding the max cap</param>
     /// <returns>True if a woundProto is found, false if not</returns>
     public bool TryGetWoundProtoFromDamage(EntityUid woundableEnt,ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
         [NotNullWhen(true)] out EntProtoId? woundProtoId, out FixedPoint2 overflow,
@@ -169,7 +159,7 @@ public sealed partial class WoundSystem
     }
 
     public bool TryApplyWounds(EntityUid targetWoundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
-        WoundableComponent? woundable = null)
+        WoundableComponent? woundable = null, bool force = false)
     {
         if (!Resolve(targetWoundable, ref woundable)
             || !TryGetWoundProtoFromDamage(targetWoundable, damageType, damage, out var woundProtoId, out var overflow, woundable)
@@ -189,7 +179,7 @@ public sealed partial class WoundSystem
     /// <param name="appliedDamage">The amount of damage applied to create this wound</param>
     /// <returns>A woundable entity if successful, null if not</returns>
     private Entity<WoundComponent>? CreateWound_Internal(EntityUid woundableEnt, EntProtoId woundPrototype,
-        WoundableComponent woundableComp, ProtoId<DamageTypePrototype> damageType, FixedPoint2 appliedDamage)
+        WoundableComponent woundableComp, ProtoId<DamageTypePrototype> damageType, FixedPoint2 appliedDamage, bool force)
     {
         if (EntityManager.TrySpawnInContainer(woundPrototype, woundableEnt,
                 WoundableComponent.WoundableContainerId, out var woundEntId)
@@ -206,7 +196,7 @@ public sealed partial class WoundSystem
         wound.Comp.AppliedDamageType = damageType;
         var newWoundEvent = new CreateWoundAttemptEvent(woundable, wound);
         RaiseRelayedWoundEvent(woundable, wound, ref newWoundEvent);
-        if (newWoundEvent.Canceled)
+        if (!force && newWoundEvent.Canceled)
         {
             EntityManager.DeleteEntity(woundEntId);
             return null;
@@ -223,10 +213,19 @@ public sealed partial class WoundSystem
         var woundApplied = new WoundAppliedEvent(woundable, wound);
         RaiseRelayedWoundEvent(woundable, wound, ref woundApplied);
         Dirty(wound);
-        CheckWoundableValues(woundable.Owner, out var overflow ,wound.Comp.AppliedDamageType, woundable.Comp);
+        CheckGibWoundable(woundable.Owner, out var overflow ,wound.Comp.AppliedDamageType, woundable.Comp);
     }
 
-    public bool CheckWoundableValues(EntityUid target, out FixedPoint2 overflow, ProtoId<DamageTypePrototype> damageType,
+    /// <summary>
+    /// Check to make sure woundable values are within thresholds and trigger gibbing if too much damage has been taken.
+    /// This is automatically called when adding/removing wounds or applying damage. Manually call this if you modify a woundable's damage.
+    /// </summary>
+    /// <param name="target">The woundable entity</param>
+    /// <param name="overflow">how much damage is left over after gibbing</param>
+    /// <param name="damageType">The damage type we applied</param>
+    /// <param name="woundable">The woundable component</param>
+    /// <returns>True if we gibbed the part, false if we did not</returns>
+    public bool CheckGibWoundable(EntityUid target, out FixedPoint2 overflow, ProtoId<DamageTypePrototype> damageType,
         WoundableComponent? woundable = null)
     {
         overflow = 0;
@@ -267,7 +266,7 @@ public sealed partial class WoundSystem
         var woundCount = container.ContainedEntities.Count;
         foreach (var woundEnt in container.ContainedEntities)
         {
-            RemoveWound(woundEnt, false);
+            TryRemoveWound(woundEnt, false);
         }
 
         var outerEnt = woundable.Body ?? woundable.RootWoundable;
