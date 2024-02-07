@@ -1,10 +1,12 @@
-namespace Content.Server.Mousetrap;
+using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Mousetrap;
+
+[RegisterComponent, NetworkedComponent]
 public sealed partial class MousetrapComponent : Component
 {
     [ViewVariables]
-	[DataField("isActive")]
+    [DataField("isActive")]
     public bool IsActive = false;
 
     /// <summary>

@@ -1,8 +1,9 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.SprayPainter;
+namespace Content.Shared.SprayPainter.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SprayPainterComponent : Component
 {
     [DataField("spraySound")]
