@@ -31,6 +31,7 @@ shuttle-console-ftl-state-Cooldown = Cooldown
 shuttle-console-map-settings = Settings
 shuttle-console-ftl-button = FTL
 shuttle-console-map-rebuild = Scan for objects
+shuttle-console-map-beacons = Show beacons
 
 shuttle-console-no-signal = No signal
 

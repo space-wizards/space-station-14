@@ -19,7 +19,7 @@ public sealed class ShuttleBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public readonly record struct ShuttleBeacon(NetEntity Entity, NetCoordinates Coordinates, string Destination);
+public readonly record struct ShuttleBeacon(NetEntity Entity, NetCoordinates Coordinates, string Name);
 
 [Serializable, NetSerializable]
 public record struct ShuttleExclusion(NetCoordinates Coordinates, float Range);

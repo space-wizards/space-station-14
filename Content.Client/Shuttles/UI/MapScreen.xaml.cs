@@ -64,6 +64,11 @@ public sealed partial class MapScreen : BoxContainer
         {
             RequestBeaconFTL?.Invoke(ent, angle);
         };
+
+        MapBeaconsButton.OnToggled += args =>
+        {
+            MapRadar.ShowBeacons = args.Pressed;
+        };
     }
 
     public void UpdateState(ShuttleMapInterfaceState state)
