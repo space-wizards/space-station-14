@@ -215,6 +215,7 @@ public abstract class AlertsSystem : EntitySystem
         var query = EntityQueryEnumerator<AlertAutoRemoveComponent>();
         while (query.MoveNext(out var uid, out var autoComp))
         {
+            var dirtyComp = false;
             if (autoComp.Alerts.Count <= 0 || !TryComp<AlertsComponent>(uid, out var alertComp))
             {
                 RemCompDeferred(uid, autoComp);
@@ -228,8 +229,10 @@ public abstract class AlertsSystem : EntitySystem
 
                 autoComp.Alerts.Remove(alertKey);
                 alertComp.Alerts.Remove(alertKey);
-                Dirty(uid, alertComp);
+                dirtyComp = true;
             }
+            if (dirtyComp)
+                Dirty(uid, alertComp);
         }
     }
 
