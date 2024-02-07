@@ -8,7 +8,7 @@
     Potassium:
       amount: 1
   products:
-    Dylovene: 3
+    Dylovene: 4
 
 - type: reaction
   id: Ethylredoxrazine
@@ -42,7 +42,7 @@
     Hydrogen:
       amount: 1
   products:
-    Arithrazine: 2
+    Arithrazine: 3
 
 - type: reaction
   id: Bicaridine
@@ -52,7 +52,7 @@
     Carbon:
       amount: 1
   products:
-    Bicaridine: 2
+    Bicaridine: 3
 
 - type: reaction
   id: Cryoxadone
@@ -64,7 +64,7 @@
     Oxygen:
       amount: 1
   products:
-    Cryoxadone: 3
+    Cryoxadone: 4
 
 - type: reaction
   id: Doxarubixadone
@@ -88,7 +88,7 @@
     Hydroxide:
       amount: 1
   products:
-    Epinephrine: 4
+    Epinephrine: 5
 
 - type: reaction
   id: Dermaline
@@ -100,7 +100,7 @@
     Phosphorus:
       amount: 1
   products:
-    Dermaline: 3
+    Dermaline: 4
 
 - type: reaction
   id: Dexalin
@@ -111,7 +111,7 @@
       amount: 1
       catalyst: true
   products:
-    Dexalin: 3
+    Dexalin: 4
 
 - type: reaction
   id: DexalinPlus
@@ -133,7 +133,7 @@
     Dylovene:
       amount: 1
   products:
-    Hyronalin: 2
+    Hyronalin: 3
 
 - type: reaction
   id: Inaprovaline
@@ -179,7 +179,7 @@
     Carbon:
       amount: 1
   products:
-    Kelotane: 2
+    Kelotane: 4
 
 - type: reaction
   id: Leporazine
@@ -214,15 +214,15 @@
     Ammonia:
       amount: 1
     Blood:
-      amount: 2
+      amount: 1
   products:
-    Ambuzol: 4
+    Ambuzol: 3
 
 - type: reaction
   id: AmbuzolPlus
   reactants:
     Ambuzol:
-      amount: 5
+      amount: 10
     ZombieBlood:
       amount: 15
   products:
@@ -239,17 +239,17 @@
     Water:
       amount: 1
   products:
-    Synaptizine: 3
+    Synaptizine: 4
 
 - type: reaction
   id: Tricordrazine
   reactants:
     Inaprovaline:
-      amount: 1
+      amount: 2
     Dylovene:
       amount: 1
   products:
-    Tricordrazine: 2
+    Tricordrazine: 6
 
 - type: reaction
   id: HeartbreakerToxin
@@ -272,7 +272,7 @@
     Water:
       amount: 1
   products:
-    Impedrezene: 1
+    Impedrezene: 2
 
 - type: reaction
   id: Lexorin
@@ -333,7 +333,7 @@
       amount: 1
       catalyst: true
   products:
-    Ultravasculine: 2
+    Ultravasculine: 3
 
 - type: reaction
   id: Oculine
@@ -343,9 +343,9 @@
     Blood:
       amount: 1
     Hydroxide:
-      amount: 2
+      amount: 1
   products:
-    Oculine: 4
+    Oculine: 3
 
 - type: reaction
   id: Siderlac
@@ -361,13 +361,13 @@
   id: Cognizine
   reactants:
     CarpoToxin:
-      amount: 1
+      amount: 2
     Siderlac:
       amount: 1
     Acetone:
       amount: 1
   products:
-    Cognizine: 1
+    Cognizine: 5
 
 - type: reaction
   id: Sigynate
@@ -381,11 +381,11 @@
     Kelotane:
       amount: 1
     Water:
-      amount: 1
+      amount: 2
     Sugar:
       amount: 1
   products:
-    Sigynate: 4
+    Sigynate: 6
 
 - type: reaction
   id: Saline
@@ -403,11 +403,11 @@
   minTemp: 335
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
-      amount: 1
+      amount: 2
     Benzene:
       amount: 1
   products:
-    Lacerinol: 2
+    Lacerinol: 4
 
 - type: reaction
   id: Puncturase
@@ -415,24 +415,24 @@
   minTemp: 325
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
-      amount: 1
+      amount: 2
     Hydroxide:
       amount: 1
   products:
-    Puncturase: 2
+    Puncturase: 4
 
 - type: reaction
   id: Bruizine
   impact: Medium
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
-      amount: 1
+      amount: 2
     Lithium:
       amount: 0.9
     Sugar:
       amount: 1
   products:
-    Bruizine: 2
+    Bruizine: 5
 
 - type: reaction
   id: BicarLacerinol # mixing any two brute medications will make Razorium
@@ -516,7 +516,7 @@
     Ethanol:
       amount: 1
   products:
-    Diphenhydramine: 3
+    Diphenhydramine: 4
 
 - type: reaction
   id: Pyrazine
@@ -530,7 +530,7 @@
     Carbon:
       amount: 1
   products:
-    Pyrazine: 3
+    Pyrazine: 6
 
 - type: reaction
   id: Insuzine
@@ -546,7 +546,7 @@
     Benzene:
       amount: 1
   products:
-    Insuzine: 3
+    Insuzine: 4
     Ash: 1
 
 - type: reaction
@@ -561,7 +561,7 @@
     Cryoxadone:
       amount: 2
   products:
-    Necrosol: 2
+    Necrosol: 3
 
 - type: reaction
   id: Aloxadone
@@ -574,4 +574,4 @@
     Sigynate:
       amount: 2
   products:
-      Aloxadone: 4
+      Aloxadone: 5
