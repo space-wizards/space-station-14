@@ -1,0 +1,104 @@
+﻿#Leader
+- type: entity
+  #noSpawn: true
+  id: SpawnERTLeaderEVAPresetAlternative
+  name: ERT leader
+  suffix: EVA, Alter
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-leader-eva-name-alternative
+      description: ertcall-leader-eva-desc-alternative
+      rules: ertcall-leader-eva-rules-alternative
+    - type: GhostRoleMobSpawner
+      prototype: ERTLeaderEVAPresetAlternative
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertleadereva
+
+#Medic
+- type: entity
+  #noSpawn: true
+  id: SpawnERTMedicEVAPresetAlternative
+  name: ERT medic
+  suffix: EVA, Alter
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-medic-eva-name-alternative
+      description: ertcall-medic-eva-desc-alternative
+      rules: ertcall-medic-eva-rules-alternative
+    - type: GhostRoleMobSpawner
+      prototype: ERTMedicEVAPresetAlternative
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertmedicaleva
+
+#Security
+- type: entity
+  #noSpawn: true
+  id: SpawnERTSecurityEVAPresetAlternative
+  name: ERT security
+  suffix: EVA, Alter
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-security-eva-name-alternative
+      description: ertcall-security-eva-desc-alternative
+      rules: ertcall-security-eva-rules-alternative
+    - type: GhostRoleMobSpawner
+      prototype: ERTSecurityEVAPresetAlternative
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertsecurityeva
+
+#Engineer
+- type: entity
+  #noSpawn: true
+  id: SpawnERTEngineerEVAPresetAlternative
+  name: ERT engineer
+  suffix: EVA, Alter
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-engineer-eva-name-alternative
+      description: ertcall-engineer-eva-desc-alternative
+      rules: ertcall-engineer-eva-rules-alternative
+    - type: GhostRoleMobSpawner
+      prototype: ERTEngineerEVAPresetAlternative
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertengineereva
+
+#Junitor
+- type: entity
+  #noSpawn: true
+  id: SpawnERTJanitorEVAPresetAlternative
+  name: ERT junitor
+  suffix: EVA, Alter
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-junitor-eva-name-alternative
+      description: ertcall-junitor-eva-desc-alternative
+      rules: ertcall-junitor-eva-rules-alternative
+    - type: GhostRoleMobSpawner
+      prototype: ERTJanitorEVAPresetAlternative
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertjanitoreva
