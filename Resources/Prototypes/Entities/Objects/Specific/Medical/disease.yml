@@ -20,7 +20,7 @@
     - Botany
 
 - type: entity
-  parent: BaseAmmoProvider # trust
+  parent: BaseAmmoProvider # this is for cycling swabs out and not spawning 30 entities, trust
   id: BoxMouthSwab
   name: sterile swab dispenser
   description: Dispenses 30 sterile swabs, extremely useful for botany.
