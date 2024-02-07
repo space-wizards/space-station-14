@@ -1,9 +1,9 @@
 ﻿- type: entity
   parent: BaseComputer
   id: ComputerCommsCentComm
-  name: Коммуникационная консоль
-  suffix: Центральное командование
-  description: Компьютер, используемый для объявления объявлений на всей станции с помощью клавиатуры, установки соответствующего уровня оповещения и вызова аварийного шаттла.
+  name: communications computer
+  suffix: Central Command
+  description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
   components:
     - type: Sprite
       layers:
