@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Mind;
 using Content.Server.Station.Systems;
 using Content.Server.Forensics;
@@ -6,6 +5,7 @@ using Content.Server.StationRecords.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Server.Station.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Destructible;
@@ -22,7 +22,6 @@ using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Content.Server.Warps;
 using Content.Server._CD.Storage.Components;
 
 namespace Content.Server.CryoSleep;
@@ -34,7 +33,6 @@ public sealed class CryoSleepSystem : EntitySystem
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly SharedJobSystem _sharedJobSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
@@ -42,6 +40,7 @@ public sealed class CryoSleepSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -117,7 +116,7 @@ public sealed class CryoSleepSystem : EntitySystem
         // Remove the record. Hopefully.
         foreach (var item in _inventory.GetHandOrInventoryEntities(body.Value))
         {
-            if (TryComp(item, out PdaComponent? pda) && TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) && keyStorage.Key is { } key && _stationRecords.TryGetRecord(key.OriginStation, key, out GeneralStationRecord? record))
+            if (TryComp(item, out PdaComponent? pda) && TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) && keyStorage.Key is { } key && _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
             {
                 if (TryComp(body, out DnaComponent? dna) &&
                     dna.DNA != record.DNA)
@@ -131,7 +130,7 @@ public sealed class CryoSleepSystem : EntitySystem
                     continue;
                 }
 
-                _stationRecords.RemoveRecord(key.OriginStation, key);
+                _stationRecords.RemoveRecord(key);
                 Del(item);
             }
         }
@@ -142,30 +141,25 @@ public sealed class CryoSleepSystem : EntitySystem
         _gameTicker.OnGhostAttempt(mindId, false, true, mind: mind);
         EntityManager.DeleteEntity(body);
 
-        // This is awful, it feels awful, and I hate it. Warp points are really the only thing I can confirm exists on every station, though CC might cause issues so ideally I'd use one with a var set
-        var query = EntityQueryEnumerator<WarpPointComponent>();
-        query.MoveNext(out var warpPoint, out var comp);
-
-        // sets job slot
-        var xform = Transform(warpPoint);
-
-        if (!xform.GridUid.HasValue)
+        if (!TryComp<MindComponent>(mindId, out var mindComp) || mindComp.UserId == null)
             return;
 
-        var station = _stationSystem.GetOwningStation(xform.GridUid.Value);
-        if (!station.HasValue)
-           return;
+        foreach (var station in _station.GetStationsSet())
+        {
+            if (!TryComp<StationJobsComponent>(station, out var stationJobs))
+               continue;
 
-        if (job == null)
-            return;
+            if (!_stationJobsSystem.TryGetPlayerJobs(station, mindComp.UserId.Value, out var jobs, stationJobs))
+                continue;
 
-        _stationJobsSystem.TryGetJobSlot(station.Value, job, out var amount);
-        if (!amount.HasValue)
-            return;
+            foreach (var item in jobs)
+            {
+               _stationJobsSystem.TryAdjustJobSlot(station, item, 1, clamp: true);
+               _chatSystem.DispatchStationAnnouncement(station, Loc.GetString("cryo-leave-announcement", ("character", name!), ("job", job.LocalizedName)), "Cryo Pod", false);
+            }
 
-        _stationJobsSystem.TrySetJobSlot(station.Value, job, (int) amount.Value + 1, true);
-
-        _chatSystem.DispatchStationAnnouncement(station.Value, Loc.GetString("cryo-leave-announcement", ("character", name!), ("job", job.LocalizedName)), "Cryo Pod", false);
+            _stationJobsSystem.TryRemovePlayerJobs(station, mindComp.UserId.Value, stationJobs);
+        }
     }
 
     private bool EjectBody(EntityUid pod, CryoSleepComponent component)
@@ -237,14 +231,15 @@ public sealed class CryoSleepSystem : EntitySystem
         var query = EntityQueryEnumerator<LostAndFoundComponent>();
         query.MoveNext(out var locker, out var lostAndFoundComponent);
 
-        //// Make sure the locker exists and has storage
-        //if (!locker.Valid || !TryComp<EntityStorageComponent>(uid, out var lockerStorageComp))
-        //    return;
+        // Make sure the locker exists and has storage
+        if (!locker.Valid)
+            return;
+
         TryComp<EntityStorageComponent>(uid, out var lockerStorageComp);
 
         var coordinates = Transform(locker).Coordinates;
 
-        // Go through their inventory and put everything in al ocker
+        // Go through their inventory and put everything in a locker
         foreach (var item in _inventory.GetHandOrInventoryEntities(uid))
         {
             if (!item.IsValid() || !TryComp<MetaDataComponent>(item, out var comp))
