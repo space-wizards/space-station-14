@@ -499,7 +499,7 @@
       - state: darts
 
 - type: entity
-  name: polen swab box
+  name: pollen swab box
   parent: BoxCardboard
   id: BoxPollenSwab
   components:
