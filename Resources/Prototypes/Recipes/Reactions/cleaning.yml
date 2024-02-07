@@ -18,17 +18,17 @@
     Water:
       amount: 1
   products:
-    SpaceCleaner: 2
+    SpaceCleaner: 4
 
 - type: reaction
   id: SpaceLube
   impact: Medium
   reactants:
     Water:
-      amount: 1
+      amount: 0.5
     Fersilicite:
       amount: 1
     Oxygen:
-      amount: 1
+      amount: 0.5
   products:
-    SpaceLube: 5
+    SpaceLube: 15 #more chance it leaks out, punish the clowns and messy chemists but reward precision
