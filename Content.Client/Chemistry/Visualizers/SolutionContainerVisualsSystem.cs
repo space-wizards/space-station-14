@@ -59,7 +59,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         // a giant error sign and error for debug.
         if (fraction > 1f)
         {
-            Logger.Error("Attempted to set solution container visuals volume ratio on " + ToPrettyString(uid) + " to a value greater than 1. Volume should never be greater than max volume!");
+            Log.Error("Attempted to set solution container visuals volume ratio on " + ToPrettyString(uid) + " to a value greater than 1. Volume should never be greater than max volume!");
             fraction = 1f;
         }
         if (component.Metamorphic)
