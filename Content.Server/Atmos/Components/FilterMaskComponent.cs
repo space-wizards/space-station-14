@@ -1,16 +1,14 @@
-///using Content.Shared.Inventory;
-using Content.Server.Body.Systems;
-namespace Content.Server.Atmos.Components
+
+namespace Content.Server.Atmos.Components;
+
+/// <summary>
+/// Used in head and mask with a smoke gas filter.
+/// </summary>
+[RegisterComponent]
+[ComponentProtoName("FilterMask")]
+public sealed partial class FilterMaskComponent : Component
 {
-    /// <summary>
-    /// Used in breath tool with a smoke gas filter.
-    /// </summary>
-    [RegisterComponent]
-    [Access(typeof(SmokeFilterSystem))]
-    [ComponentProtoName("FilterMask")]
-    public sealed partial class FilterMaskComponent : Component
-    {
-        [DataField("IsUsed")]
-        public bool IsActive = false;
-    }
+    [DataField]
+    public bool IsActive = false;
 }
+
