@@ -56,3 +56,34 @@
       inputContainer: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+
+- type: entity
+  parent: MaterialReclaimer #too different so different parent
+  id: ReagentGrinderIndustrial
+  name: industrial reagent grinder
+  description: An industrial reagent grinder.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      output:
+        maxVol: 250
+  - type: MaterialReclaimer
+    whitelist:
+      components:
+      - Extractable #same as reagent grinder
+    blacklist:
+      tags:
+      - HighRiskItem #ian meat
+    efficiency: 0.75 #holy shit this baby is fast so like
+  - type: Sprite
+    sprite: Structures/Machines/recycling.rsi
+    layers:
+      - state: grinder-b0
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.DamageStateVisualLayers.Base:
+          True: { state: grinder-b1}
+          False: { state: grinder-b0}
+  - type: Machine
+    board: ReagentGrinderIndustrialMachineCircuitboard

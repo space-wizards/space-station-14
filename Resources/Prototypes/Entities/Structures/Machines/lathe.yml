@@ -450,6 +450,7 @@
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
+      - ReagentGrinderIndustrialMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
