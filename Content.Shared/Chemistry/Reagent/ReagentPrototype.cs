@@ -89,6 +89,15 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SpriteSpecifier? MetamorphicSprite { get; private set; } = null;
 
+        [DataField]
+        public int MetamorphicMaxFillLevels { get; private set; } = 0;
+
+        [DataField]
+        public string? MetamorphicFillBaseName { get; private set; } = null;
+
+        [DataField]
+        public bool MetamorphicChangeColor;
+
         /// <summary>
         /// If this reagent is part of a puddle is it slippery.
         /// </summary>
