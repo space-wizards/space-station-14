@@ -8,7 +8,7 @@
     Ethanol:
       amount: 1
   products:
-    Napalm: 3
+    Napalm: 4
 
 - type: reaction
   id: Phlogiston
@@ -27,7 +27,7 @@
     messages: [ "phlogiston-plasma-created" ]
     type: Pvs
   products:
-    Phlogiston: 3
+    Phlogiston: 4
 
 - type: reaction
   id: ChlorineTrifluoride
@@ -70,6 +70,6 @@
     WeldingFuel:
       amount: 10
   products:
-    Ethanol: 5
+    Ethanol: 4
     Hydrogen: 3
-    Sulfur: 2
+    Sulfur: 3
