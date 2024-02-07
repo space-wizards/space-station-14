@@ -1,5 +1,6 @@
 using Content.Shared.Popups;
 using Content.Shared.Paint;
+using Content.Shared.Sprite;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Server.Chemistry.Containers.EntitySystems;
@@ -90,7 +91,7 @@ public sealed class PaintSystem : SharedPaintSystem
         if (args.Target is not { Valid: true } target)
             return;
 
-        if (HasComp<PaintedComponent>(target))
+        if (HasComp<PaintedComponent>(target) || HasComp<RandomSpriteComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("paint-failure-painted", ("target", args.Target)), args.User, args.User, PopupType.Medium);
             return;

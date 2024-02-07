@@ -4,6 +4,8 @@ using static Robust.Client.GameObjects.SpriteComponent;
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Paint;
+using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Paint
 {
@@ -14,6 +16,10 @@ namespace Content.Client.Paint
         /// </summary>
 
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
+        public ShaderInstance? Shader; // in Robust.Client.Graphics so cannot move to shared component.
+
         public override void Initialize()
         {
             base.Initialize();
@@ -23,9 +29,11 @@ namespace Content.Client.Paint
             SubscribeLocalEvent<PaintedComponent, EquipmentVisualsUpdatedEvent>(OnEquipmentVisualsUpdated);
         }
 
-        // Applies the shader and color to all sprite layers for the entity.
         protected override void OnAppearanceChange(EntityUid uid, PaintedComponent component, ref AppearanceChangeEvent args)
         {
+            // ShaderPrototype sadly in Robust.Client, cannot move to shared component.
+            Shader = _protoMan.Index<ShaderPrototype>(component.ShaderName).Instance();
+
             if (args.Sprite == null)
                 return;
 
@@ -34,24 +42,20 @@ namespace Content.Client.Paint
 
             var sprite = args.Sprite;
 
-            for (var intlayer = 0; intlayer < sprite.AllLayers.Count(); ++intlayer)
+
+            foreach (var spriteLayer in sprite.AllLayers)
             {
-                foreach (var spriteLayer in sprite.AllLayers)
+                if (spriteLayer is not Layer layer)
+                    continue;
+
+                if (layer.Shader == null) // If shader isn't null we dont want to replace the original shader.
                 {
-                    if (spriteLayer is not Layer layer)
-                        continue;
-
-                    if (layer.Shader == null)
-                        sprite.LayerSetShader(intlayer, component.ShaderName);
-
-                    sprite.LayerSetColor(intlayer, component.Color);
+                    layer.Shader = Shader;
+                    layer.Color = component.Color;
                 }
-
-
             }
         }
 
-        // Shader and Color for the held sprites.
         private void OnHeldVisualsUpdated(EntityUid uid, PaintedComponent component, HeldVisualsUpdatedEvent args)
         {
             if (args.RevealedLayers.Count == 0)
@@ -70,7 +74,6 @@ namespace Content.Client.Paint
             }
         }
 
-        // shader and color for the clothing equipped sprites.
         private void OnEquipmentVisualsUpdated(EntityUid uid, PaintedComponent component, EquipmentVisualsUpdatedEvent args)
         {
             if (args.RevealedLayers.Count == 0)
@@ -89,20 +92,27 @@ namespace Content.Client.Paint
             }
         }
 
-        // Removes the shader and color from the sprite layers when component is removed. 
         private void OnShutdown(EntityUid uid, PaintedComponent component, ref ComponentShutdown args)
         {
             if (!TryComp(uid, out SpriteComponent? sprite))
                 return;
 
             component.BeforeColor = sprite.Color;
+            Shader = _protoMan.Index<ShaderPrototype>(component.ShaderName).Instance();
 
             if (!Terminating(uid))
             {
-                for (var layer = 0; layer < sprite.AllLayers.Count(); ++layer)
+                foreach (var spriteLayer in sprite.AllLayers)
                 {
-                    sprite.LayerSetShader(layer, null, null);
-                    sprite.LayerSetColor(layer, component.BeforeColor);
+                    if (spriteLayer is not Layer layer)
+                        continue;
+
+                    if (layer.Shader == Shader) // If shader isn't same as one in component we need to ignore it.
+                    {
+                        layer.Shader = null;
+                        if (layer.Color == component.Color) // If color isn't the same as one in component we don't want to change it.
+                            layer.Color = component.BeforeColor;
+                    }
                 }
             }
         }

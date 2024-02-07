@@ -2,6 +2,7 @@ using Content.Shared.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.DoAfter;
 using Content.Shared.Verbs;
+using Content.Shared.Sprite;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
