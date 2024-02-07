@@ -41,7 +41,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly SmokeFilterystem _smokefilter = default!;
+    [Dependency] private readonly SmokeFilterSystem _smokefilter = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;

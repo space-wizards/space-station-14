@@ -329,7 +329,6 @@
   - type: Tag
     tags:
     - HidesHair
-  - type: FilterMask
 
 - type: entity
   parent: ClothingMaskGasExplorer

@@ -4,31 +4,31 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory;
 
 namespace Content.Server.Body.Systems;
-public sealed class SmokeFilterystem : EntitySystem
+
+public sealed class SmokeFilterSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
-
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SmokeFilterComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<SmokeFilterComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<SmokeFilterComponent, ItemMaskToggledEvent>(OnMaskToggled);
+        SubscribeLocalEvent<FilterMaskComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<FilterMaskComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<FilterMaskComponent, ItemMaskToggledEvent>(OnMaskToggled);
     }
 
-    private void OnGotUnequipped(EntityUid uid, SmokeFilterComponent component, GotUnequippedEvent args)
+    private void OnGotUnequipped(EntityUid uid, FilterMaskComponent component, GotUnequippedEvent args)
     {
         component.IsActive = false;
     }
 
-    private void OnGotEquipped(EntityUid uid, SmokeFilterComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid uid, FilterMaskComponent component, GotEquippedEvent args)
     {
         component.IsActive = true;
 
     }
 
-    private void OnMaskToggled(Entity<SmokeFilterComponent> ent, ref ItemMaskToggledEvent args)
+    private void OnMaskToggled(Entity<FilterMaskComponent> ent, ref ItemMaskToggledEvent args)
     {
         if (args.IsToggled || args.IsEquip)
         {
@@ -44,7 +44,7 @@ public sealed class SmokeFilterystem : EntitySystem
     public bool AreFilterWorking(EntityUid uid)
     {
 
-        SmokeFilterComponent? filter;
+        FilterMaskComponent? filter;
 
         if (_inventory.TryGetSlotEntity(uid, "mask", out var maskUid) &&
             TryComp(maskUid, out filter) &&
