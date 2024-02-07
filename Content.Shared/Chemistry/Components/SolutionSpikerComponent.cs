@@ -19,6 +19,13 @@ public sealed partial class SolutionSpikerComponent : Component
     public bool IgnoreEmpty;
 
     /// <summary>
+    /// If true, the entity is deleted after spiking.
+    /// This is almost certainly what you want.
+    /// </summary>
+    [DataField]
+    public bool Delete = true;
+
+    /// <summary>
     ///     What should pop up when spiking with this entity.
     /// </summary>
     [DataField]

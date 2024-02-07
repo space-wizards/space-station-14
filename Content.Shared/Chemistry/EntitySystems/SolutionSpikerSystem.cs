@@ -60,6 +60,7 @@ public sealed class SolutionSpikerSystem : EntitySystem
 
         _popup.PopupClient(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
         sourceSolution.RemoveAllSolution();
-        QueueDel(source);
+        if (spikableSource.Delete)
+            QueueDel(source);
     }
 }
