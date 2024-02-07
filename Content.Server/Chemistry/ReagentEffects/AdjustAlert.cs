@@ -36,8 +36,7 @@ public sealed partial class AdjustAlert : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        var alertSys = EntitySystem.Get<AlertsSystem>();
-        // TODO: Use EntityManager for the entitysystem static resolve.
+        var alertSys = args.EntityManager.EntitySysManager.GetEntitySystem<AlertsSystem>();
         if (!args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))
             return;
 
