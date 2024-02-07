@@ -112,7 +112,7 @@ public sealed class RoboticsConsoleSystem : EntitySystem
         };
 
         _deviceNetwork.QueuePacket(ent, args.Address, payload);
-        _adminLogger.Add(LogType.RoboticsConsole, LogImpact.High, $"{ToPrettyString(user):user} disabled borg {data.Name} with address {args.Address}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user):user} disabled borg {data.Name} with address {args.Address}");
     }
 
     private void OnDestroy(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDestroyMessage args)
@@ -136,7 +136,7 @@ public sealed class RoboticsConsoleSystem : EntitySystem
 
         var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));
         _radio.SendRadioMessage(ent, message, ent.Comp.RadioChannel, ent);
-        _adminLogger.Add(LogType.RoboticsConsole, LogImpact.Extreme, $"{ToPrettyString(user):user} destroyed borg {data.Name} with address {args.Address}");
+        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(user):user} destroyed borg {data.Name} with address {args.Address}");
 
         ent.Comp.NextDestroy = now + ent.Comp.DestroyCooldown;
     }
