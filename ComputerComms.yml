@@ -1,0 +1,36 @@
+﻿- type: entity
+  parent: BaseComputer
+  id: ComputerCommsCentComm
+  name: Коммуникационная консоль
+  suffix: Центральное командование
+  description: Компьютер, используемый для объявления объявлений на всей станции с помощью клавиатуры, установки соответствующего уровня оповещения и вызова аварийного шаттла.
+  components:
+    - type: Sprite
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: ["computerLayerScreen"]
+          state: comm
+        - map: ["computerLayerKeys"]
+          state: generic_keys
+    - type: AccessReader
+      access: [[ "Command" ]]
+    - type: CommunicationsConsole
+      title: comms-console-announcement-title-centcom
+    - type: ActivatableUI
+      key: enum.CommunicationsConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.CommunicationsConsoleUiKey.Key
+          type: CommunicationsConsoleBoundUserInterface
+    - type: Computer
+      board: CommsComputerCircuitboard
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#3c5eb5"
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: StrongMetallic
