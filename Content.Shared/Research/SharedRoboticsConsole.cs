@@ -69,13 +69,13 @@ public record struct CyborgControlData
     /// Chassis prototype of the borg.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId Chassis;
+    public EntProtoId Chassis = string.Empty;
 
     /// <summary>
     /// Name of the borg's entity, including its silicon id.
     /// </summary>
     [DataField(required: true)]
-    public string Name;
+    public string Name = string.Empty;
 
     /// <summary>
     /// Battery charge from 0 to 1.
@@ -101,7 +101,16 @@ public record struct CyborgControlData
     /// Set by the console when receiving the packet.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan Timeout;
+    public TimeSpan Timeout = TimeSpan.Zero;
+
+    public CyborgControlData(string chassis, string name, float charge, int moduleCount, bool hasBrain)
+    {
+        Chassis = chassis;
+        Name = name;
+        Charge = charge;
+        ModuleCount = moduleCount;
+        HasBrain = hasBrain;
+    }
 }
 
 public static class RoboticsConsoleConstants
