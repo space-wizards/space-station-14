@@ -38,6 +38,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
         SubscribeLocalEvent<RadiationCollectorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RadiationCollectorComponent, EntInsertedIntoContainerMessage>(OnTankChanged);
         SubscribeLocalEvent<RadiationCollectorComponent, EntRemovedFromContainerMessage>(OnTankChanged);
+        SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
     }
 
     private bool TryGetLoadedGasTank(EntityUid uid, [NotNullWhen(true)] out GasTankComponent? gasTankComponent)
@@ -107,18 +108,32 @@ public sealed class RadiationCollectorSystem : EntitySystem
             }
         }
 
-        // No idea if this is even vaguely accurate to the previous logic.
-        // The maths is copied from that logic even though it works differently.
-        // But the previous logic would also make the radiation collectors never ever stop providing energy.
-        // And since frameTime was used there, I'm assuming that this is what the intent was.
-        // This still won't stop things being potentially hilariously unbalanced though.
-        if (TryComp<BatteryComponent>(uid, out var batteryComponent))
+        if (TryComp<PowerSupplierComponent>(uid, out var comp))
         {
-            _batterySystem.SetCharge(uid, charge, batteryComponent);
+            int powerHoldoverTicks = _gameTiming.TickRate * 2; // number of ticks to hold radiation
+            component.PowerTicksLeft = powerHoldoverTicks;
+            comp.MaxSupply = component.Enabled ? charge : 0;
         }
 
         // Update appearance
         UpdatePressureIndicatorAppearance(uid, component, gasTankComponent);
+    }
+
+    private void PostSync(NetworkBatteryPostSync ev)
+    {
+        // This is run every power tick. Used to decrement the PowerTicksLeft counter.
+        var query = EntityQueryEnumerator<RadiationCollectorComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            if (component.PowerTicksLeft > 0)
+            {
+                component.PowerTicksLeft -= 1;
+            }
+            else if (TryComp<PowerSupplierComponent>(uid, out var comp))
+            {
+                comp.MaxSupply = 0;
+            }
+        }
     }
 
     private void OnExamined(EntityUid uid, RadiationCollectorComponent component, ExaminedEvent args)
