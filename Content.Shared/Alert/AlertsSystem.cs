@@ -191,7 +191,6 @@ public abstract class AlertsSystem : EntitySystem
         LoadPrototypes();
     }
 
-    // TODO: Subscribe to EntityUnpausedEvent for the component and bump all the timers by pausedtime (see existing implementations) so this still works if a server is saved and then loaded.
     private void OnAutoRemoveUnPaused(EntityUid uid, AlertAutoRemoveComponent comp, EntityUnpausedEvent args)
     {
         foreach (var alert in comp.Alerts)
@@ -208,7 +207,7 @@ public abstract class AlertsSystem : EntitySystem
         Dirty(uid, comp);
     }
 
-    // TODO: Also use RemCompDeferred and avoid touching the components during iteration.
+    // TODO: and avoid touching the components during iteration.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
