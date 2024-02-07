@@ -5,6 +5,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -292,7 +293,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     {
         // Reactive entities have a chance to get a touch reaction from slipping on a puddle
         // (i.e. it is implied they fell face first onto it or something)
-        if (!HasComp<ReactiveComponent>(args.Slipped))
+        if (!HasComp<ReactiveComponent>(args.Slipped) || HasComp<SlidingComponent>(args.Slipped))
             return;
 
         // Eventually probably have some system of 'body coverage' to tweak the probability but for now just 0.5
@@ -505,10 +506,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Solution addedSolution,
         bool sound = true,
         bool checkForOverflow = true,
-        PuddleComponent? puddleComponent = null)
+        PuddleComponent? puddleComponent = null,
+        SolutionContainerManagerComponent? sol = null)
     {
-        if (!Resolve(puddleUid, ref puddleComponent))
+        if (!Resolve(puddleUid, ref puddleComponent, ref sol))
             return false;
+
+        _solutionContainerSystem.EnsureAllSolutions((puddleUid, sol));
 
         if (addedSolution.Volume == 0 ||
             !_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName,

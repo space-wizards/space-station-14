@@ -3,6 +3,7 @@
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                Title="{Loc 'power-monitoring-window-title'}"
+               Resizable="False"
                SetSize="1120 750"
                MinSize="1120 750">
     <BoxContainer Orientation="Vertical">
@@ -36,7 +37,7 @@
                     <TextureRect Stretch="KeepAspectCentered"
                                  TexturePath="/Textures/Interface/NavMap/beveled_hexagon.png"
                                  SetSize="16 16"
-                                 Modulate="#ff4500"                               
+                                 Modulate="#ff4500"
                                  Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-smes'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
@@ -53,7 +54,7 @@
                     <Label Text="{Loc 'power-monitoring-window-label-apc'}"/>
                 </BoxContainer>
             </BoxContainer>
-            
+
             <!-- Power status -->
             <BoxContainer Orientation="Vertical" VerticalExpand="True" SetWidth="440" Margin="0 0 10 10">
 
@@ -101,7 +102,7 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
-    
+
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />

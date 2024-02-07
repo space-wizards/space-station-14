@@ -85,7 +85,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
   - type: GuideHelp
     guides:
@@ -176,8 +176,8 @@
       SetParticleEpsilon: AnomalousParticleEpsilon
       SetParticleZeta: AnomalousParticleZeta
     fireBurstSize: 1
-    baseFireBurstDelayMin: 2
-    baseFireBurstDelayMax: 6
+    fireBurstDelayMin: 2
+    fireBurstDelayMax: 6
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: GuideHelp
@@ -296,6 +296,7 @@
         acts: ["Breakage"]
   - type: ActivatableUI
     key: enum.AnomalyGeneratorUiKey.Key
+  - type: ActivatableUIRequiresAccess
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
@@ -318,6 +319,8 @@
   - type: WiresVisuals
   - type: StaticPrice
     price: 5000
+  - type: AccessReader
+    access: [["Research"]]
   - type: GuideHelp
     guides:
     - AnomalousResearch

@@ -18,8 +18,8 @@
     - SimpleHostile
   - type: MovementIgnoreGravity
   - type: MovementSpeedModifier
-    baseWalkSpeed: 5.5
-    baseSprintSpeed: 5.5
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 3.5
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Elemental/living_light/luminous_person.rsi
@@ -33,7 +33,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      50: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      20: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -70,15 +73,15 @@
       types:
         Heat: -0.2
   - type: NoSlip
+  - type: Pullable
   - type: ZombieImmune
   - type: NameIdentifier
     group: GenericNumber
   - type: GhostTakeoverAvailable
   - type: PointLight
-    color: "#e4de6c"
-    radius: 8
-    softness: 2
-    energy: 5
+    radius: 3.0
+    energy: 4.5
+    color: "#6270bb"
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBells
@@ -87,16 +90,17 @@
   - type: Tag
     tags:
       - FootstepSound
-      - DoorBumpOpener
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: GlassBreak
 
 - type: entity
   id: MobLuminousPerson
@@ -105,7 +109,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 16
+        Heat: 10
     animation: WeaponArcFist
   - type: StaminaDamageOnHit
     damage: 16
@@ -139,16 +143,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 8
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 80
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        Heat: 6
 
 - type: entity
   id: MobLuminousEntity
@@ -167,7 +162,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      60: Dead
+      40: Dead
   - type: DamageStateVisuals
     states:
       Alive:
@@ -181,7 +176,7 @@
       types:
         Heat: 5
   - type: HitscanBatteryAmmoProvider
-    proto: Pulse
+    proto: RedLaser
     fireCost: 140
   - type: Battery
     maxCharge: 1000
@@ -200,12 +195,3 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
     soundEmpty:
       path: /Audio/Items/Lighters/lighter_off.ogg
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]

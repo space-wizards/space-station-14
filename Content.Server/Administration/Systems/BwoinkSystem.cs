@@ -6,6 +6,7 @@ using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
@@ -44,6 +45,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly AdminSystem _adminSystem = default!;
         [Dependency] private readonly IGameMapManager _mapManager = default!;
         [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
+        [Dependency] private readonly IAfkManager _afkManager = default!;
 
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
@@ -413,8 +415,7 @@ namespace Content.Server.Administration.Systems
 
         private EmbedBuilder GenerateEmbed(ICommonSession session)
         {
-            var clr = GetTargetAdmins().Count > 0 ? Color.Green : Color.Red;
-
+            var clr = GetNonAfkAdmins().Count > 0 ? Color.Green : Color.Red;
             var job = "No entity attached";
             if (session.AttachedEntity.HasValue)
             {
@@ -561,7 +562,7 @@ namespace Content.Server.Administration.Systems
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
-                if (!admins.Contains(session.ConnectedClient))
+                if (!admins.Contains(session.Channel))
                 {
                     // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
                     if (_overrideClientName != string.Empty)
@@ -581,10 +582,10 @@ namespace Content.Server.Administration.Systems
                             overrideMsgText = $"{senderSession.Name}: {escapedText}"; // Not an admin, name is not overridden.
                         }
 
-                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.ConnectedClient);
+                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.Channel);
                     }
                     else
-                        RaiseNetworkEvent(msg, session.ConnectedClient);
+                        RaiseNetworkEvent(msg, session.Channel);
                 }
             }
 
@@ -593,8 +594,9 @@ namespace Content.Server.Administration.Systems
             {
                 if (!_messageQueues.ContainsKey(msg.UserId))
                     _messageQueues[msg.UserId] = new Queue<string>();
-
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, EscapeMarkdown(message.Text), !personalChannel, admins.Count == 0));
+                
+                var nonAfkAdmins = GetNonAfkAdmins();
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, EscapeMarkdown(message.Text), !personalChannel, nonAfkAdmins == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -603,16 +605,23 @@ namespace Content.Server.Administration.Systems
             // No admin online, let the player know
             var systemText = Loc.GetString("bwoink-system-starmute-message-no-other-users");
             var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
-            RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
+            RaiseNetworkEvent(starMuteMsg, senderSession.Channel);
         }
 
-        // Returns all online admins with AHelp access
+        private IList<INetChannel> GetNonAfkAdmins()
+        {
+            return _adminManager.ActiveAdmins
+                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) && !_afkManager.IsAfk(p))
+                .Select(p => p.Channel)
+                .ToList();
+        }
+
         private IList<INetChannel> GetTargetAdmins()
         {
             return _adminManager.ActiveAdmins
-               .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
-               .Select(p => p.ConnectedClient)
-               .ToList();
+                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
+                .Select(p => p.Channel)
+                .ToList();
         }
 
         private string GenerateAHelpMessage(string username, string message, bool admin, bool noReceivers = false)
@@ -620,7 +629,6 @@ namespace Content.Server.Administration.Systems
             var stringbuilder = new StringBuilder();
 
             stringbuilder.Append($@"`{_gameTicker.RoundDuration():hh\:mm\:ss}` - ");
-
             if (admin)
                 stringbuilder.Append(":outbox_tray:");
             else if (noReceivers)

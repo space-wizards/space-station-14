@@ -1,6 +1,8 @@
 ﻿using Content.Server.Station.Systems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -74,6 +76,13 @@ public sealed partial class StationJobsComponent : Component
     /// </summary>
     [DataField("overflowJobs", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
     public HashSet<string> OverflowJobs = new();
+
+    /// <summary>
+    /// A dictionary relating a NetUserId to the jobs they have on station.
+    /// An OOC way to track where job slots have gone.
+    /// </summary>
+    [DataField]
+    public Dictionary<NetUserId, List<ProtoId<JobPrototype>>> PlayerJobs = new();
 
     [DataField("availableJobs", required: true,
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<int?>, JobPrototype>))]
