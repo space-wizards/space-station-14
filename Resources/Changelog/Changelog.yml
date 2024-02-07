@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Discord bot Changelog now includes hyperlinks to the PRs.
-    type: Add
-  id: 5399
-  time: '2023-12-16T21:00:59.0000000+00:00'
-  url: null
 - author: brainfood1183
   changes:
   - message: Crystals now drop crystal shards, you can use them to craft colored light
@@ -3884,3 +3877,10 @@
   id: 5898
   time: '2024-02-06T19:38:39.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25003
+- author: Mangohydra
+  changes:
+  - message: New cargo shuttle for fland
+    type: Tweak
+  id: 5899
+  time: '2024-02-07T08:49:06.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25016
