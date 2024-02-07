@@ -682,7 +682,10 @@
   color: "#A68310"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/devilskiss.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: DoctorsDelight
