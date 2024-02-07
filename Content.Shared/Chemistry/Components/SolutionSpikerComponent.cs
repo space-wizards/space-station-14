@@ -2,7 +2,7 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Shared.Chemistry.Components;
 
-[RegisterComponent, Access(typeof(SolutionSpikerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SolutionSpikerSystem))]
 public sealed partial class SolutionSpikerComponent : Component
 {
     /// <summary>
