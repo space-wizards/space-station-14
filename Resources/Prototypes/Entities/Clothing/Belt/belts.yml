@@ -221,7 +221,6 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
-        - JanicartKeys
       components:
         - LightReplacer
   - type: ItemMapper
