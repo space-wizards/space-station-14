@@ -197,7 +197,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
         {
-            if (userId != null && Mind.TryGetMind(userId.Value, out var mind))
+            if (userId != null && Mind.TryGetMind(userId.Value, out var mind) &&
+                HasComp<CryostorageContainedComponent>(mind.Value.Comp.CurrentEntity))
             {
                 _gameTicker.OnGhostAttempt(mind.Value, false);
             }
@@ -299,11 +300,6 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
                 continue;
 
             if (Timing.CurTime < containedComp.GracePeriodEndTime)
-                continue;
-
-            if (containedComp.Cryostorage == null ||
-                !TryComp<CryostorageComponent>(containedComp.Cryostorage, out var cryo) ||
-                cryo.StoredPlayers.Contains(uid))
                 continue;
 
             Mind.TryGetMind(uid, out _, out var mindComp);
