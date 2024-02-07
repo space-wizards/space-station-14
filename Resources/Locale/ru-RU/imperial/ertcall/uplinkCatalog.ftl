@@ -10,8 +10,8 @@ store-category-ert-uplink-utilities = Утилиты
 store-category-ert-uplink-junitor = Уборка
 store-category-ert-uplink-pointless = Разное
 
-ert-uplink-melee-stunbaton-name = { ent-Stunbaton }
-ert-uplink-melee-stunbaton-desc = { ent-Stunbaton.desc }
+ert-uplink-melee-stunbaton-name = { ent-AdvancedStunbaton }
+ert-uplink-melee-stunbaton-desc = { ent-AdvancedStunbaton.desc }
 ert-uplink-melee-machete-name = { ent-Machete }
 ert-uplink-melee-machete-desc = { ent-Machete.desc }
 ert-uplink-melee-combatknife-name = { ent-CombatKnife }

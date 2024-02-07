@@ -28,7 +28,7 @@
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityFilled
+    belt: ClothingBeltSecurityERTCallFilled
     pocket1: ERTUplinkLeader
 
 #Medic
