@@ -695,10 +695,10 @@
   categories:
     - UplinkImplants
     conditions:
-      - !type:StoreWhitelistCondition
-        whitelist:
-          tags:
-            - NukeOpsUplink
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
  
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
