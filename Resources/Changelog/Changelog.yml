@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JoeHammad
-  changes:
-  - message: Paramedics now have a rollerbed in their bag by default
-    type: Add
-  id: 5405
-  time: '2023-12-17T09:55:29.0000000+00:00'
-  url: null
 - author: Ilya246
   changes:
   - message: Large cardboard boxes and stealth boxes now inherit their mover's access.
@@ -3883,3 +3876,10 @@
   id: 5904
   time: '2024-02-08T23:17:01.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24997
+- author: Sk1tch
+  changes:
+  - message: Guidebook entries are now alphabetically sorted
+    type: Tweak
+  id: 5905
+  time: '2024-02-08T23:23:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24963
