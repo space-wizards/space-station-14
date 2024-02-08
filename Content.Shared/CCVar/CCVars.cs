@@ -1564,6 +1564,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ReducedMotion =
             CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// Screen shake intensity slider, controlling the intensity of the CameraRecoilSystem.
+        /// Goes from 0 (no recoil at all) to 1 (regular amounts of recoil)
+        /// </summary>
+        public static readonly CVarDef<float> ScreenShakeIntensity =
+            CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
         /*
          * CHAT
          */
