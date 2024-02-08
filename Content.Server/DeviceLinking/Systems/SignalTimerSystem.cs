@@ -186,7 +186,7 @@ public sealed class SignalTimerSystem : EntitySystem
         if (appearance != null)
         {
             _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, timer.TriggerTime, appearance);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, "", appearance);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, string.Empty, appearance);
         }
 
         _signalSystem.InvokePort(uid, component.StartPort);
