@@ -1,0 +1,105 @@
+﻿#ERT START
+#Leader
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTLeaderEVAPresetAlternative
+  name: ERT leader
+  suffix: EVA, Alter
+  components:
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitaryLeader
+        - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertleadereva
+    - type: Loadout
+      prototypes: [ ERTCallLeaderGearEVAAlternative ]
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+
+#Medic
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTMedicEVAPresetAlternative
+  name: ERT medic
+  suffix: EVA, Alter
+  components:
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitary
+        - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertmedicaleva
+    - type: Loadout
+      prototypes: [ ERTCallMedicalGearEVAAlternative ]
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+
+#Security
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTSecurityEVAPresetAlternative
+  name: ERT security
+  suffix: EVA, Alter
+  components:
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitary
+        - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertsecurityeva
+    - type: Loadout
+      prototypes: [ ERTCallSecurityGearEVAAlternative ]
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+
+#Engineer
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTEngineerEVAPresetAlternative
+  name: ERT engineer
+  suffix: EVA, Alter
+  components:
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitary
+        - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertengineereva
+    - type: Loadout
+      prototypes: [ ERTCallEngineerGearEVAAlternative ]
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+
+#Janitor
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTJanitorEVAPresetAlternative
+  name: ERT janitor
+  suffix: EVA, Alter
+  components:
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitary
+        - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertjanitoreva
+    - type: Loadout
+      prototypes: [ ERTCallJanitorGearEVAAlternative ]
+    - type: RandomHumanoidAppearance
+      randomizeName: false

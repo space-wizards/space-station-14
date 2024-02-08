@@ -1,0 +1,158 @@
+﻿#ERT Leader Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitERTLeaderAlternative
+  name: ERT leader's hardsuit
+  description: A protective hardsuit worn by members of an emergency response team.
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertleader.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertleader.rsi
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitERTLeaderAlternative
+
+#ERT Engineer Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTEngineerAlternative
+  name: ERT engineer's hardsuit
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertengineer.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertengineer.rsi
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitERTEngineerAlternative
+
+#ERT Medic Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndieElite
+  id: ClothingOuterHardsuitERTMedicalAlternative
+  name: ERT medic's hardsuit
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertmedical.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertmedical.rsi
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitERTMedicalAlternative
+
+#ERT Security Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTSecurityAlternative
+  name: ERT security's hardsuit
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertsecurity.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertsecurity.rsi
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitERTSecurityAlternative
+
+#ERT Janitor Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTJanitorAlternative
+  name: ERT janitor's hardsuit
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertjanitor.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertjanitor.rsi
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitERTJanitorAlternative
+
+#Helmets
+#Leader
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  id: ClothingHeadHelmetHardsuitERTLeaderAlternative
+  noSpawn: true
+  name: ERT leader hardsuit helmet
+  description: A special hardsuit helmet worn by members of an emergency response team.
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/Head/Hardsuits/ertleader.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/Head/Hardsuits/ertleader.rsi
+    - type: PointLight
+      color: "#addbff"
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Heat: 0.9
+
+#ERT Engineer Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndie
+  id: ClothingHeadHelmetHardsuitERTEngineerAlternative
+  noSpawn: true
+  name: ERT engineer hardsuit helmet
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/Head/Hardsuits/ertengineer.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/Head/Hardsuits/ertengineer.rsi
+    - type: PointLight
+      color: "#f4ffad"
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Heat: 0.9
+
+#ERT Medical Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieElite
+  id: ClothingHeadHelmetHardsuitERTMedicalAlternative
+  noSpawn: true
+  name: ERT medic hardsuit helmet
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/Head/Hardsuits/ertmedical.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/Head/Hardsuits/ertmedical.rsi
+    - type: PointLight
+      color: "#adffec"
+
+#ERT Security Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndie
+  id: ClothingHeadHelmetHardsuitERTSecurityAlternative
+  noSpawn: true
+  name: ERT security hardsuit helmet
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/Head/Hardsuits/ertsecurity.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/Head/Hardsuits/ertsecurity.rsi
+    - type: PointLight
+      color: "#ffadc6"
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Heat: 0.9
+
+#ERT Janitor Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndie
+  id: ClothingHeadHelmetHardsuitERTJanitorAlternative
+  noSpawn: true
+  name: ERT janitor hardsuit helmet
+  components:
+    - type: Sprite
+      sprite: Imperial/Clothing/Head/Hardsuits/ertjanitor.rsi
+    - type: Clothing
+      sprite: Imperial/Clothing/Head/Hardsuits/ertjanitor.rsi
+    - type: PointLight
+      color: "#cbadff"
