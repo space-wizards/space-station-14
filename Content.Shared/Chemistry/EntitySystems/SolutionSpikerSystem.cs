@@ -1,12 +1,9 @@
-using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction;
 
-namespace Content.Server.Chemistry.EntitySystems;
+namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
 ///     Entity system used to handle when solution containers are 'spiked'
@@ -17,11 +14,10 @@ namespace Content.Server.Chemistry.EntitySystems;
 ///     Examples of spikable entity interactions include pills being dropped into glasses,
 ///     eggs being cracked into bowls, and so on.
 /// </summary>
-public sealed class SolutionSpikableSystem : EntitySystem
+public sealed class SolutionSpikerSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TriggerSystem _triggerSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
 
     public override void Initialize()
     {
@@ -47,23 +43,24 @@ public sealed class SolutionSpikableSystem : EntitySystem
     {
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)
-            || !_solutionContainerSystem.TryGetRefillableSolution((target, spikableTarget, managerTarget), out var targetSoln, out var targetSolution)
-            || !_solutionContainerSystem.TryGetSolution((source, managerSource), spikableSource.SourceSolution, out _, out var sourceSolution))
+            || !_solution.TryGetRefillableSolution((target, spikableTarget, managerTarget), out var targetSoln, out var targetSolution)
+            || !_solution.TryGetSolution((source, managerSource), spikableSource.SourceSolution, out _, out var sourceSolution))
         {
             return;
         }
 
         if (targetSolution.Volume == 0 && !spikableSource.IgnoreEmpty)
         {
-            _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", target), ("spike-entity", source)), user, user);
+            _popup.PopupClient(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", target), ("spike-entity", source)), user, user);
             return;
         }
 
-        if (!_solutionContainerSystem.ForceAddSolution(targetSoln.Value, sourceSolution))
+        if (!_solution.ForceAddSolution(targetSoln.Value, sourceSolution))
             return;
 
-        _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
+        _popup.PopupClient(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
         sourceSolution.RemoveAllSolution();
-        _triggerSystem.Trigger(source, user);
+        if (spikableSource.Delete)
+            QueueDel(source);
     }
 }
