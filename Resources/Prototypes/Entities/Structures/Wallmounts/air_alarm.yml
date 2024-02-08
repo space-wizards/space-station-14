@@ -30,6 +30,10 @@
     - AirDanger
     - AirWarning
     - AirNormal
+    lastSignals:
+      AirDanger: false
+      AirWarning: false
+      AirNormal: false
   - type: AtmosAlarmable
     syncWith:
     - AirAlarm
