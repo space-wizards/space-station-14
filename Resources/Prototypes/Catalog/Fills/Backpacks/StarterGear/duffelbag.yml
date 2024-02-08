@@ -35,7 +35,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalSecurity
+      - id: BoxSurvival
       - id: ForensicPad
       - id: ForensicScanner
 

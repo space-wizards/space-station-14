@@ -1,29 +1,44 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.SprayPainter.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SprayPainterComponent : Component
 {
-    [DataField("spraySound")]
+    [DataField]
     public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");
 
-    [DataField("airlockSprayTime")]
-    public float AirlockSprayTime = 3.0f;
+    [DataField]
+    public TimeSpan AirlockSprayTime = TimeSpan.FromSeconds(3);
 
-    [DataField("pipeSprayTime")]
-    public float PipeSprayTime = 1.0f;
+    [DataField]
+    public TimeSpan PipeSprayTime = TimeSpan.FromSeconds(1);
 
-    [DataField("isSpraying")]
-    public bool IsSpraying = false;
+    /// <summary>
+    /// DoAfterId for airlock spraying.
+    /// Pipes do not track doafters so you can spray multiple at once.
+    /// </summary>
+    [DataField]
+    public DoAfterId? AirlockDoAfter;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Pipe color chosen to spray with.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public string? PickedColor;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("colorPalette")]
+    /// <summary>
+    /// Pipe colors that can be selected.
+    /// </summary>
+    [DataField]
     public Dictionary<string, Color> ColorPalette = new();
 
-    public int Index = default!;
+    /// <summary>
+    /// Airlock style index selected.
+    /// After prototype reload this might not be the same style but it will never be out of bounds.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int Index;
 }
