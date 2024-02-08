@@ -63,7 +63,10 @@
   color: "#0099FF"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/curacaoglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -213,7 +216,10 @@
   color: "#00FF33"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/emeraldglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: NTCahors
