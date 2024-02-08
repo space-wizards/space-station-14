@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Content.Shared.CCVar;
@@ -94,7 +95,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 
         foreach (var (smiley, replacement) in SmileyToEmote)
         {
-            if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture) && (input.EndsWith(" "+smiley, true, CultureInfo.InvariantCulture) || input.Equals(smiley, CultureInfo.InvariantCultureIgnoreCase)))
+            if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture) && (input.EndsWith(" "+smiley, true, CultureInfo.InvariantCulture) || input.Equals(smiley, StringComparison.InvariantCultureIgnoreCase)))
             {
                 sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
                 emote = Loc.GetString(replacement, ("ent", speaker));
