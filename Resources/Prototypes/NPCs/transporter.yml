@@ -1,0 +1,11 @@
+- type: htnCompound
+  id: TransporterCompound
+  branches:
+    - preconditions:
+      - !type:PowerCellChargePrecondition
+        watts: 30
+      tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:SpeakOperator
+          speech: AAAAAAAAAAAAAAA
+
