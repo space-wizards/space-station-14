@@ -3,6 +3,7 @@ using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
 using Robust.Shared.Utility;
+using Content.Server.Bed.Cryostorage;
 using Content.Server.Respawn;
 using Content.Server.Shuttles.Events;
 
@@ -22,6 +23,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
+        SubscribeLocalEvent<BeforeEnterCryostorageEvent>(OnBeforeEnterCryostorage);
+        SubscribeLocalEvent<AfterExitCryostorageEvent>(OnAfterExitCryostorage);
         SubscribeLocalEvent<SpecialRespawnEvent>(OnSpecialRespawn);
     }
 
@@ -52,7 +55,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             LocateTarget(uid, component);
     }
 
-    private void OnLocateTarget(ref FTLCompletedEvent ev)
+    private void OnLocateTarget(ref FTLCompletedEvent args)
     {
         // This feels kind of expensive, but it only happens once per hyperspace jump
 
@@ -69,13 +72,45 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    private void OnSpecialRespawn(SpecialRespawnEvent ev)
+    private void OnBeforeEnterCryostorage(BeforeEnterCryostorageEvent args)
     {
         var query = EntityQueryEnumerator<PinpointerComponent>();
 
         while (query.MoveNext(out var uid, out var pinpointer))
-            if (pinpointer.Target == ev.OldEntity)
-                SetTarget(uid, ev.NewEntity, pinpointer);
+            if (pinpointer.Target == args.Entity)
+                SetTarget(uid, args.Cryostorage.Owner, pinpointer);
+    }
+
+    private void OnAfterExitCryostorage(AfterExitCryostorageEvent args)
+    {
+        var query = EntityQueryEnumerator<PinpointerComponent>();
+
+        while (query.MoveNext(out var uid, out var pinpointer))
+        {
+            if (pinpointer == null || pinpointer.Target != args.Cryostorage.Owner)
+                continue;
+
+            if (string.IsNullOrEmpty(pinpointer!.Component) || !EntityManager.ComponentFactory.TryGetRegistration(pinpointer!.Component, out var reg))
+            {
+                Log.Error($"Unable to find component registration for {pinpointer.Component} for pinpointer!");
+                DebugTools.Assert(false);
+                continue;
+            }
+
+            if (!HasComp(args.Entity, reg.Type))
+                continue;
+
+            SetTarget(uid, args.Entity, pinpointer);
+        }
+    }
+
+    private void OnSpecialRespawn(SpecialRespawnEvent args)
+    {
+        var query = EntityQueryEnumerator<PinpointerComponent>();
+
+        while (query.MoveNext(out var uid, out var pinpointer))
+            if (pinpointer.Target == args.OldEntity)
+                SetTarget(uid, args.NewEntity, pinpointer);
     }
 
     private void LocateTarget(EntityUid uid, PinpointerComponent component)

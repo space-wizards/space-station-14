@@ -72,13 +72,12 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
     private void OnRemoveItemBuiMessage(Entity<CryostorageComponent> ent, ref CryostorageRemoveItemBuiMessage args)
     {
-        var (_, comp) = ent;
         if (args.Session.AttachedEntity is not { } attachedEntity)
             return;
 
         var cryoContained = GetEntity(args.StoredEntity);
 
-        if (!comp.StoredPlayers.Contains(cryoContained) || !IsInPausedMap(cryoContained))
+        if (!ent.Comp.StoredPlayers.Contains(cryoContained) || !IsInPausedMap(cryoContained))
             return;
 
         if (!HasComp<HandsComponent>(attachedEntity))
@@ -112,6 +111,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         _transform.SetCoordinates(entity.Value, Transform(attachedEntity).Coordinates);
         _hands.PickupOrDrop(attachedEntity, entity.Value);
         UpdateCryostorageUIState(ent);
+        RaiseLocalEvent(ent.Owner, new AfterExitCryostorageEvent(entity.Value, ent), true);
     }
 
     private void UpdateCryostorageUIState(Entity<CryostorageComponent> ent)
@@ -197,15 +197,14 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         }
 
         var cryostorageEnt = new Entity<CryostorageComponent>(cryostorageUid.Value, cryostorageComponent);
-        var ev = new BeforeEnterCryostorageEvent(cryostorageEnt);
         var enumerator = _inventory.GetSlotEnumerator(ent.Owner);
 
         while (enumerator.NextItem(out var itemUid))
-            RaiseEventAllItems(itemUid, ev);
+            RaiseEventAllItems(itemUid, cryostorageEnt);
 
         foreach (var hand in _hands.EnumerateHands(ent.Owner))
             if (hand.HeldEntity != null)
-                RaiseEventAllItems(hand.HeldEntity.Value, ev);
+                RaiseEventAllItems(hand.HeldEntity.Value, cryostorageEnt);
 
         if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
         {
@@ -222,13 +221,13 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageUid.Value)}");
     }
 
-    private void RaiseEventAllItems(EntityUid entity, BeforeEnterCryostorageEvent ev)
+    private void RaiseEventAllItems(EntityUid entity, Entity<CryostorageComponent> cryostorageEnt)
     {
         if (TryComp<StorageComponent>(entity, out var storageComp))
             foreach (var child in storageComp.StoredItems.Keys)
-                RaiseEventAllItems(child, ev);
+                RaiseEventAllItems(child, cryostorageEnt);
 
-        RaiseLocalEvent(entity, ev);
+        RaiseLocalEvent(entity, new BeforeEnterCryostorageEvent(entity, cryostorageEnt), true);
     }
 
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)
@@ -331,10 +330,24 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
 public sealed class BeforeEnterCryostorageEvent : EntityEventArgs
 {
+    public EntityUid Entity { get; }
     public Entity<CryostorageComponent> Cryostorage { get; }
 
-    public BeforeEnterCryostorageEvent(Entity<CryostorageComponent> cryostorage)
+    public BeforeEnterCryostorageEvent(EntityUid entity, Entity<CryostorageComponent> cryostorage)
     {
+        Entity = entity;
+        Cryostorage = cryostorage;
+    }
+}
+
+public sealed class AfterExitCryostorageEvent : EntityEventArgs
+{
+    public EntityUid Entity { get; }
+    public Entity<CryostorageComponent> Cryostorage { get; }
+
+    public AfterExitCryostorageEvent(EntityUid entity, Entity<CryostorageComponent> cryostorage)
+    {
+        Entity = entity;
         Cryostorage = cryostorage;
     }
 }
