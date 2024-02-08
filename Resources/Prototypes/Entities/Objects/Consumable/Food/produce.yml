@@ -174,22 +174,21 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 7.5
-        Caustic: 7.5
+        Heat: 4.5
+        Caustic: 4.5
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: SulfuricAcid
-          Quantity: 15
+          Quantity: 9
         - ReagentId: FluorosulfuricAcid
-          Quantity: 15
+          Quantity: 9
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 6
+    transferAmount: 2
     solution: food
-    pierceArmor: true # We do a little trolling
   - type: Extractable
     grindableSolutionName: food
 
