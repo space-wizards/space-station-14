@@ -2,6 +2,7 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Robust.Client.Console;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -15,6 +16,7 @@ namespace Content.Client.Administration.Managers
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
         [Dependency] private readonly IResourceManager _res = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
 
         private AdminData? _adminData;
         private readonly HashSet<string> _availableCommands = new();
@@ -99,6 +101,9 @@ namespace Content.Client.Administration.Managers
             {
                 var flagsText = string.Join("|", AdminFlagsHelper.FlagsToNames(_adminData.Flags));
                 Logger.InfoS("admin", $"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
+
+                if (_adminData.Active)
+                    _userInterface.DebugMonitors.SetMonitor(DebugMonitor.Coords, true);
             }
             else
             {
