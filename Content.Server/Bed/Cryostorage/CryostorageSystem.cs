@@ -14,6 +14,7 @@ using Content.Shared.Climbing.Systems;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
+using Content.Shared.Storage;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -162,8 +163,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     public void HandleEnterCryostorage(Entity<CryostorageContainedComponent> ent, NetUserId? userId)
     {
         var comp = ent.Comp;
-        var cryostorageEnt = ent.Comp.Cryostorage;
-        if (!TryComp<CryostorageComponent>(cryostorageEnt, out var cryostorageComponent))
+        var cryostorageUid = ent.Comp.Cryostorage;
+        if (!TryComp<CryostorageComponent>(cryostorageUid, out var cryostorageComponent))
             return;
 
         // if we have a session, we use that to add back in all the job slots the player had.
@@ -195,6 +196,17 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             return;
         }
 
+        var cryostorageEnt = new Entity<CryostorageComponent>(cryostorageUid.Value, cryostorageComponent);
+        var ev = new BeforeEnterCryostorageEvent(cryostorageEnt);
+        var enumerator = _inventory.GetSlotEnumerator(ent.Owner);
+
+        while (enumerator.NextItem(out var itemUid))
+            RaiseEventAllItems(itemUid, ev);
+
+        foreach (var hand in _hands.EnumerateHands(ent.Owner))
+            if (hand.HeldEntity != null)
+                RaiseEventAllItems(hand.HeldEntity.Value, ev);
+
         if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
         {
             if (userId != null && Mind.TryGetMind(userId.Value, out var mind))
@@ -206,8 +218,17 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         _transform.SetParent(ent, PausedMap.Value);
         cryostorageComponent.StoredPlayers.Add(ent);
         Dirty(ent, comp);
-        UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
-        AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageEnt.Value)}");
+        UpdateCryostorageUIState(cryostorageEnt);
+        AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageUid.Value)}");
+    }
+
+    private void RaiseEventAllItems(EntityUid entity, BeforeEnterCryostorageEvent ev)
+    {
+        if (TryComp<StorageComponent>(entity, out var storageComp))
+            foreach (var child in storageComp.StoredItems.Keys)
+                RaiseEventAllItems(child, ev);
+
+        RaiseLocalEvent(entity, ev);
     }
 
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)
@@ -305,5 +326,15 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             var id = mindComp?.UserId ?? containedComp.UserId;
             HandleEnterCryostorage((uid, containedComp), id);
         }
+    }
+}
+
+public sealed class BeforeEnterCryostorageEvent : EntityEventArgs
+{
+    public Entity<CryostorageComponent> Cryostorage { get; }
+
+    public BeforeEnterCryostorageEvent(Entity<CryostorageComponent> cryostorage)
+    {
+        Cryostorage = cryostorage;
     }
 }

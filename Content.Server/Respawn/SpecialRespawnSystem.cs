@@ -6,6 +6,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.Maps;
+using Content.Server.Bed.Cryostorage;
 using Content.Shared.Physics;
 using Content.Shared.Respawn;
 using Robust.Shared.Map;
@@ -30,6 +31,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
         SubscribeLocalEvent<SpecialRespawnSetupEvent>(OnSpecialRespawnSetup);
         SubscribeLocalEvent<SpecialRespawnComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<SpecialRespawnComponent, BeforeEnterCryostorageEvent>(OnBeforeEnterCryostorage);
         SubscribeLocalEvent<SpecialRespawnComponent, EntityTerminatingEvent>(OnTermination);
     }
 
@@ -73,6 +75,11 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     {
         var ev = new SpecialRespawnSetupEvent(uid);
         QueueLocalEvent(ev);
+    }
+
+    private void OnBeforeEnterCryostorage(EntityUid uid, SpecialRespawnComponent component, BeforeEnterCryostorageEvent ev)
+    {
+        EntityManager.DeleteEntity(uid);
     }
 
     private void OnTermination(EntityUid uid, SpecialRespawnComponent component, ref EntityTerminatingEvent args)
@@ -129,6 +136,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     private void Respawn(EntityUid oldEntity, string prototype, EntityCoordinates coords)
     {
         var entity = Spawn(prototype, coords);
+        RaiseLocalEvent(entity, new SpecialRespawnEvent(entity, oldEntity, coords), true);
         _adminLog.Add(LogType.Respawn, LogImpact.High, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {coords.ToMap(EntityManager)} as {ToPrettyString(entity)}");
         _chat.SendAdminAlert($"{MetaData(oldEntity).EntityName} was deleted and was respawned as {ToPrettyString(entity)}");
     }
@@ -189,5 +197,19 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             return false;
 
         return true;
+    }
+}
+
+public sealed class SpecialRespawnEvent : EntityEventArgs
+{
+    public EntityUid NewEntity { get; }
+    public EntityUid OldEntity { get; }
+    public EntityCoordinates Coordinates { get; }
+
+    public SpecialRespawnEvent(EntityUid newEntity, EntityUid oldEntity, EntityCoordinates coordinates)
+    {
+        NewEntity = newEntity;
+        OldEntity = oldEntity;
+        Coordinates = coordinates;
     }
 }

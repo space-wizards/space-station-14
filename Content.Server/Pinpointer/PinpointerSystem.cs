@@ -3,8 +3,8 @@ using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
 using Robust.Shared.Utility;
+using Content.Server.Respawn;
 using Content.Server.Shuttles.Events;
-using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Pinpointer;
 
@@ -22,6 +22,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
+        SubscribeLocalEvent<SpecialRespawnEvent>(OnSpecialRespawn);
     }
 
     public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
@@ -64,8 +65,17 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (pinpointer.CanRetarget)
                 continue;
 
-            LocateTarget(uid, pinpointer);
+                LocateTarget(uid, pinpointer);
         }
+    }
+
+    private void OnSpecialRespawn(SpecialRespawnEvent ev)
+    {
+        var query = EntityQueryEnumerator<PinpointerComponent>();
+
+        while (query.MoveNext(out var uid, out var pinpointer))
+            if (pinpointer.Target == ev.OldEntity)
+                SetTarget(uid, ev.NewEntity, pinpointer);
     }
 
     private void LocateTarget(EntityUid uid, PinpointerComponent component)
@@ -125,22 +135,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         // return uid with a smallest distance
         return l.Count > 0 ? l.First().Value : null;
-    }
-
-    /// <summary>
-    ///     Set pinpointers target to track
-    /// </summary>
-    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
-    {
-        if (!Resolve(uid, ref pinpointer))
-            return;
-
-        if (pinpointer.Target == target)
-            return;
-
-        pinpointer.Target = target;
-        if (pinpointer.IsActive)
-            UpdateDirectionToTarget(uid, pinpointer);
     }
 
     /// <summary>
