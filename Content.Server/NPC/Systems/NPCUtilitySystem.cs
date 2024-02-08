@@ -380,7 +380,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 throw new NotImplementedException();
             case ItemNotClaimedCon:
             {
-                if (TryComp(targetUid, out MarkedForTransportComponent? mark) &&
+                if (TryComp(targetUid, out TransporterMarkedComponent? mark) &&
                     mark.Claimed)
                     return 0f;
 

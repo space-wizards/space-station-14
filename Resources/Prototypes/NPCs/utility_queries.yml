@@ -199,53 +199,6 @@
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
 
-- type: utilityQuery
-  id: FindTransporterReceiver
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: TransporterReceiver
-  considerations:
-    - !type:IsCorrectReceiverCon
-      curve: !type:BoolCurve
-
-- type: utilityQuery
-  id: FindItemForTransport
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: MarkedForTransport
-  considerations:
-    - !type:ItemNotClaimedCon
-      curve: !type:BoolCurve
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-
-- type: utilityQuery
-  id: FindTransporterProvider
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: TransporterProvider
-  considerations:
-    - !type:ProviderHasItemsCon
-      curve: !type:BoolCurve
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-
-- type: utilityQuery
-  id: FindNearestTransporterCharger
-  query:
-    - !type:ComponentQuery
-      components:
-        - type: TransporterCharger
-  considerations:
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-
 #- type: utilityQuery
 #  id: NearbyShoes
 #  query:

@@ -1,7 +1,7 @@
 namespace Content.Server.Transporters.Components;
 
 [RegisterComponent]
-public sealed partial class MarkedForTransportComponent : Component
+public sealed partial class TransporterMarkedComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? AssociatedProvider;
@@ -12,5 +12,6 @@ public sealed partial class MarkedForTransportComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ClaimingTransporter;
 
-    public bool Claimed => ClaimingTransporter is not null;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Claimed;
 }

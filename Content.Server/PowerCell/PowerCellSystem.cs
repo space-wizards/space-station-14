@@ -138,7 +138,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     /// Returns whether the entity has a slotted battery and charge for the requested action.
     /// </summary>
     /// <param name="user">Popup to this user with the relevant detail if specified.</param>
-    public bool HasCharge(EntityUid uid, float charge, PowerCellSlotComponent? component = null, EntityUid? user = null)
+    public bool HasCharge(EntityUid uid, float charge, PowerCellSlotComponent? component = null, EntityUid? user = null, bool? percentage = null)
     {
         if (!TryGetBatteryFromSlot(uid, out var battery, component))
         {
@@ -148,7 +148,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        if (battery.CurrentCharge < charge)
+        if (battery.CurrentCharge / (percentage ?? false ? battery.CurrentCharge : 1) < charge)
         {
             if (user != null)
                 _popup.PopupEntity(Loc.GetString("power-cell-insufficient"), uid, user.Value);
