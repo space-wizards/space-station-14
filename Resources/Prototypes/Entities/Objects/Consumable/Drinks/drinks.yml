@@ -78,22 +78,6 @@
     solution: drink
 
 - type: entity
-  id: DrinkGlassVisualsFills5
-  abstract: true
-  components:
-  - type: Sprite
-    layers:
-      - state: icon_empty
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: fill-5
-        map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: fill-
-    changeColor: false
-
-- type: entity
   id: DrinkGlassVisualsFills3
   abstract: true
   components:
@@ -106,6 +90,38 @@
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
+    fillBaseName: fill-
+    changeColor: false
+
+- type: entity
+  id: DrinkGlassVisualsFills4
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+      - state: icon_empty
+        map: ["enum.SolutionContainerLayers.Base"]
+      - state: fill-4
+        map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: fill-
+    changeColor: false
+
+- type: entity
+  id: DrinkGlassVisualsFills5
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+      - state: icon_empty
+        map: ["enum.SolutionContainerLayers.Base"]
+      - state: fill-5
+        map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
     fillBaseName: fill-
     changeColor: false
 
