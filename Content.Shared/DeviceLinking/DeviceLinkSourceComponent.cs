@@ -21,6 +21,14 @@ public sealed partial class DeviceLinkSourceComponent : Component
     public Dictionary<string, HashSet<EntityUid>> Outputs = new();
 
     /// <summary>
+    /// If set to High or Low, the last signal state for a given port.
+    /// Used when linking ports of devices that are currently outputting a signal.
+    /// Only set by <c>DeviceLinkSystem.SendSignal</c>.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, bool> LastSignals = new();
+
+    /// <summary>
     /// The list of source to sink ports for each linked sink entity for easier managing of links
     /// </summary>
     [DataField("linkedPorts")]
