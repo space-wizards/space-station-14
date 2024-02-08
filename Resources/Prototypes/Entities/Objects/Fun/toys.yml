@@ -1019,7 +1019,7 @@
   parent: BasePlushie
   id: ToyAmongPequeno
   name: among pequeno
-  description: sus!
+  description: The Visordemon!
   components:
   - type: Sprite
     sprite: Objects/Fun/pequeno.rsi
