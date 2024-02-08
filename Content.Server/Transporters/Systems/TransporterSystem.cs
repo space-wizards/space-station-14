@@ -1,12 +1,10 @@
-using System.Security.Principal;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
+using Content.Server.PowerCell;
 using Content.Server.Transporters.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.Item;
-using Content.Shared.Pinpointer;
-using Microsoft.CodeAnalysis.QuickInfo;
+using Content.Shared.PowerCell.Components;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Transporters.Systems;
@@ -14,24 +12,66 @@ namespace Content.Server.Transporters.Systems;
 public sealed partial class TransporterSystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _containers = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly NPCSystem _npc = default!;
 
     public readonly string ContainerKey = "item";
+
+    private readonly HashSet<Entity<TransporterComponent>> _transporters = new();
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<TransporterProviderComponent, StartCollideEvent>(OnProviderCollide); // fingerprints unrecognizable
-        SubscribeLocalEvent<TransporterProviderComponent, EndCollideEvent>(OnProviderEndCollide); 
+        SubscribeLocalEvent<TransporterProviderComponent, EndCollideEvent>(OnProviderEndCollide);
+
+        SubscribeLocalEvent<TransporterComponent, ComponentInit>(OnTransporterInit);
+        SubscribeLocalEvent<TransporterComponent, PowerCellChangedEvent>(OnPowerCellChanged);
 
         SubscribeLocalEvent<TransporterMarkedComponent, GettingPickedUpAttemptEvent>(OnMarkedPickup);
     }
 
     public override void Update(float frameTime)
     {
-        var transporters = EntityQuery<TransporterComponent>();
-        foreach (var transporter in transporters)
+        foreach (var transporter in _transporters)
         {
+            if (transporter.Comp.Deleted)
+            {
+                _transporters.Remove(transporter);
+                continue;
+            }
 
+            if (Paused(transporter))
+                continue;
+
+            UpdateTransporter(transporter, frameTime);
+        }
+    }
+
+    public void UpdateTransporter(Entity<TransporterComponent> uid, float frameTime)
+    {
+        _powerCell.TryUseCharge(uid, frameTime * uid.Comp.Wattage);
+    }
+
+    public void OnTransporterInit(EntityUid uid, TransporterComponent component, ref ComponentInit args)
+    {
+        _transporters.Add((uid, component));
+        _npc.SleepNPC(uid);
+    }
+
+    public void OnPowerCellChanged(EntityUid uid, TransporterComponent component, ref PowerCellChangedEvent args)
+    {
+        if (!TryComp(uid, out HTNComponent? htn))
+            return;
+
+        if (args.Ejected)
+        {
+            _npc.SleepNPC(uid);
+        }
+
+        if (!_npc.IsAwake(uid, htn))
+        {
+            _npc.WakeNPC(uid);
         }
     }
 

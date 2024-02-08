@@ -38,6 +38,7 @@
       slots:
         cell_slot:
           name: power-cell-slot-component-slot-name-default
+    - type: Transporter
     - type: HTN
       rootTask:
         task: TransporterCompound
