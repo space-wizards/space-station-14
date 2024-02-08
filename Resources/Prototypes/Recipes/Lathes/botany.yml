@@ -1,5 +1,5 @@
 - type: latheRecipe
-  id: HydroponicsToolMiniHoe
+  id: MiniHoe
   result: HydroponicsToolMiniHoe
   completetime: 2
   materials:
@@ -23,7 +23,7 @@
     Plastic: 100
 
 - type: latheRecipe
-  id: HydroponicsToolSpade
+  id: Spade
   result: HydroponicsToolSpade
   completetime: 2
   materials:
@@ -31,21 +31,12 @@
     Plastic: 100
     
 - type: latheRecipe
-  id: HydroponicsToolClippers
+  id: Clippers
   result: HydroponicsToolClippers
   completetime: 2
   materials:
     Steel: 200
     Plastic: 100
-
-- type: latheRecipe
-  id: PlantBag
-  result: PlantBag
-  completetime: 2
-  materials:
-    Steel: 200
-    Plastic: 100
-    Cloth: 200
 
 - type: latheRecipe
   id: Plantanalyzer

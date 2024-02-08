@@ -31,9 +31,10 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         OnButton.Group = _buttonGroup;
         OffButton.Group = _buttonGroup;
 
-        OnButton.OnPressed += _ => owner.AdvPressed(true); //-> PABUI.cs
+        OnButton.OnPressed += _ => owner.AdvPressed(true);
         OffButton.OnPressed += _ => owner.AdvPressed(false);
     }
+
     public void Populate(PlantAnalyzerScannedSeedPlantInformation msg)
     {
         var target = _entityManager.GetEntity(msg.TargetEntity);
@@ -46,7 +47,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         }
         NoData.Visible = false;
 
-        if (msg.ScanMode)   //switch display to the settings of the received msg
+        if (msg.ScanMode) // switch display to the settings of the received msg
         {
             OnButton.ToggleMode = true;
             OnButton.Pressed = true;
@@ -56,10 +57,11 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             OffButton.ToggleMode = true;
             OffButton.Pressed = true;
         }
+
         PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-seed", ("seedName", msg.SeedName));
         if (msg.IsTray) PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-plant", ("seedName", msg.SeedName));
 
-        //Basics
+        // Basics
         Yield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
         Potency.Text = Loc.GetString("plant-analyzer-plant-potency-text", ("seedPotency", msg.SeedPotency));
         Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", msg.Repeat));
@@ -69,7 +71,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         Lifespan.Text = Loc.GetString("plant-analyzer-plant-lifespan-text", ("lifespan", msg.Lifespan));
         Maturation.Text = Loc.GetString("plant-analyzer-plant-maturation-text", ("maturation", msg.Maturation));
         GrowthStages.Text = Loc.GetString("plant-analyzer-plant-growthstages-text", ("growthStages", msg.GrowthStages));
-        //Tolerances
+        // Tolerances
         NutrientUsage.Text = Loc.GetString("plant-analyzer-tolerance-nutrientusage", ("nutrientUsage", msg.NutrientConsumption));
         WaterUsage.Text = Loc.GetString("plant-analyzer-tolerance-waterusage", ("waterUsage", msg.WaterConsumption));
         IdealHeat.Text = Loc.GetString("plant-analyzer-tolerance-idealheat", ("idealHeat", msg.IdealHeat));
@@ -81,7 +83,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         HighPressureTolerance.Text = Loc.GetString("plant-analyzer-tolerance-highpress", ("highPressureTolerance", msg.HighPressureTolerance));
         PestTolerance.Text = Loc.GetString("plant-analyzer-tolerance-pesttoler", ("pestTolerance", msg.PestTolerance));
         WeedTolerance.Text = Loc.GetString("plant-analyzer-tolerance-weedtoler", ("weedTolerance", msg.WeedTolerance));
-        //Misc
+        // Misc
         Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
         PlantSpeciation.Text = Loc.GetString("plant-analyzer-plant-speciation-text", ("speciation", msg.PlantSpeciation));
         ExtraInfo.Text = "";

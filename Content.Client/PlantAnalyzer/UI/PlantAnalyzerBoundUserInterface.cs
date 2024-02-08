@@ -22,7 +22,7 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         };
         _window.SetHeight = 350;
         _window.OnClose += Close;
-        _window.OpenCentered();
+        _window.OpenCenteredLeft();
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -36,9 +36,9 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         _window.Populate(cast);
     }
 
-    public void AdvPressed(bool mode)
+    public void AdvPressed(bool scanMode)
     {
-        SendMessage(new PlantAnalyzerSetMode(mode)); //called by xaml.cs
+        SendMessage(new PlantAnalyzerSetMode(scanMode));
     }
 
     protected override void Dispose(bool disposing)

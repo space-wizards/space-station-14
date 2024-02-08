@@ -15,7 +15,6 @@
         <BoxContainer Name="Top">
             <Label Name="NoData" Text="{Loc 'plant-analyzer-window-no-seed-information-text'}" Margin="20 10 10 10" />
         </BoxContainer>
-
         <TabContainer Name="Tabs" Margin="10 5 10 5" HorizontalExpand="True" VerticalExpand="True">
             <ScrollContainer Name="{Loc 'plant-analyzer-window-tab-basics'}" HorizontalExpand="True" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True" >
@@ -54,6 +53,5 @@
                 </BoxContainer>
             </ScrollContainer>
         </TabContainer>
-
     </GridContainer>
 </controls:FancyWindow>
