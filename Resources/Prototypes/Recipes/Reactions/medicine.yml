@@ -100,7 +100,7 @@
     Phosphorus:
       amount: 1
   products:
-    Dermaline: 4
+    Dermaline: 2
 
 - type: reaction
   id: Dexalin
@@ -145,7 +145,7 @@
     Sugar:
       amount: 1
   products:
-    Inaprovaline: 3
+    Inaprovaline: 4
 
 - type: reaction
   id: Ipecac
@@ -157,7 +157,7 @@
     Ammonia:
       amount: 1
   products:
-    Ipecac: 2
+    Ipecac: 4
 
 - type: reaction
   id: TranexamicAcid
@@ -179,7 +179,7 @@
     Carbon:
       amount: 1
   products:
-    Kelotane: 4
+    Kelotane: 6
 
 - type: reaction
   id: Leporazine
@@ -249,7 +249,7 @@
     Dylovene:
       amount: 1
   products:
-    Tricordrazine: 6
+    Tricordrazine: 4
 
 - type: reaction
   id: HeartbreakerToxin
@@ -432,7 +432,7 @@
     Sugar:
       amount: 1
   products:
-    Bruizine: 5
+    Bruizine: 4
 
 - type: reaction
   id: BicarLacerinol # mixing any two brute medications will make Razorium
@@ -546,8 +546,8 @@
     Benzene:
       amount: 1
   products:
-    Insuzine: 4
-    Ash: 1
+    Insuzine: 6
+    Ash: 2
 
 - type: reaction
   id: Necrosol
