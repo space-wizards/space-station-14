@@ -3,9 +3,12 @@
   branches:
     - preconditions:
       - !type:PowerCellChargePrecondition
-        watts: 30
+        watts: 80
       tasks:
       - !type:HTNPrimitiveTask
-        operator: !type:SpeakOperator
-          speech: AAAAAAAAAAAAAAA
+        operator: !type:UtilityOperator
+          proto: NearbyTransporterCharger
+
+      - !type:HTNPrimitiveTask
+        operator: !type:MoveToOperator
 

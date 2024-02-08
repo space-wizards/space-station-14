@@ -4,7 +4,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 
 public sealed partial class PowerCellChargePrecondition : HTNPrecondition
 {
-    private PowerCellSystem _powercell = default!;
+    private PowerCellSystem _powerCell = default!;
     [DataField("greaterThan")] public bool GreaterThan;
     [DataField("percent")] public float? Percentage;
     [DataField("watts")] public float? Watts;
@@ -12,7 +12,7 @@ public sealed partial class PowerCellChargePrecondition : HTNPrecondition
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _powercell = sysManager.GetEntitySystem<PowerCellSystem>();
+        _powerCell = sysManager.GetEntitySystem<PowerCellSystem>();
     }
 
     public override bool IsMet(NPCBlackboard blackboard)
@@ -21,13 +21,13 @@ public sealed partial class PowerCellChargePrecondition : HTNPrecondition
 
         if (Watts is not null)
         {
-            if (_powercell.HasCharge(owner, Watts.Value))
+            if (_powerCell.HasCharge(owner, Watts.Value))
                 return GreaterThan;
             return !GreaterThan;
         }
         else if (Percentage is not null)
         {
-            if (_powercell.HasCharge(owner, Percentage.Value, percentage: true))
+            if (_powerCell.HasCharge(owner, Percentage.Value, percentage: true))
                 return GreaterThan;
             return !GreaterThan;
         }
