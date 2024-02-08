@@ -694,7 +694,7 @@
     Telecrystal: 4
   categories:
     - UplinkImplants
-    conditions:
+  conditions:
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
