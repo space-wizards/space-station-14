@@ -692,14 +692,7 @@
   productEntity: DeathAcidifierImplanter
   cost:
     Telecrystal: 4
-  categories:
-  - UplinkImplants
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
-
+ 
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
   name: uplink-uplink-implanter-name
