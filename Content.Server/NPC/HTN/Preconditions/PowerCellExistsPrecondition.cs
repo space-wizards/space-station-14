@@ -1,16 +1,14 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
+using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
-public sealed partial class PowerCellComparisonPrecondition : HTNPrecondition
+public sealed partial class PowerCellExistsPrecondition : HTNPrecondition
 {
     private PowerCellSystem _powercell = default!;
-    [DataField("useWatts")] public bool UseWatts;
-    [DataField("greaterThan")] public bool GreaterThan;
-    [DataField("percent")] public float? Percentage;
-    [DataField("watts")] public float? Watts;
+    [DataField] public bool Exists = true;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -22,7 +20,10 @@ public sealed partial class PowerCellComparisonPrecondition : HTNPrecondition
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
+        _powercell.TryGetBatteryFromSlot(owner, out EntityUid? cell, out _);
+        if (cell is {})
+            return Exists;
 
-        return GreaterThan; // not implemented lol
+        return !Exists;
     }
 }

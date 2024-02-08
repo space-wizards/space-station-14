@@ -15,7 +15,7 @@
         fix1:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
+            bounds: "-0.5, -0.5, 0.5, 0.5"
           density: 10
           mask:
             - SmallMobMask
@@ -28,10 +28,16 @@
             damage: 100
           behaviors:
             - !type:DoActsBehavior
-              acts: ["Destruction"]
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
     - type: ContainerContainer
       containers:
         item: !type:ContainerSlot {}
+        cell_slot: !type:ContainerSlot {}
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
     - type: HTN
       rootTask:
         task: TransporterCompound

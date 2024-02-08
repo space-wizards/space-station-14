@@ -2,33 +2,10 @@
   id: TransporterCompound
   branches:
     - preconditions:
-        - !type:UnclaimedItemsExistencePrecondition
-        - !type:ObjectsInContainerPrecondition
-            container: item
-            noObjects: true
+      - !type:PowerCellChargePrecondition
+        watts: 30
       tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:UtilityOperator
-            proto: FindItemForTransport
+      - !type:HTNPrimitiveTask
+        operator: !type:SpeakOperator
+          speech: AAAAAAAAAAAAAAA
 
-        - !type:HTNPrimitiveTask
-          operator: !type:TransporterClaimOperator
-
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            pathfindInPlanning: true
-
-        - !type:HTNPrimitiveTask
-          operator: !type:TransporterGrabItemOperator
-
-
-#        - !type:HTNPrimitiveTask
-#          operator: !type:UtilityOperator
-#            proto: FindTransporterReceiver
-
-#        - !type:HTNPrimitiveTask
-#          operator: !type:MoveToOperator
-#            pathfindInPlanning: true
-
-#        - !type:HTNPrimitiveTask
-#          operator: !type:TransporterDropItemOperator
