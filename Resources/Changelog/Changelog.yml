@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Pens now embed and deal damage on throw like spears.
-    type: Add
-  id: 5401
-  time: '2023-12-16T22:23:08.0000000+00:00'
-  url: null
 - author: Emisse
   changes:
   - message: Svalinn Laser Pistol and accompanying T3 tech.
@@ -3883,3 +3876,10 @@
   id: 5900
   time: '2024-02-08T23:07:42.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25057
+- author: Ubaser
+  changes:
+  - message: T-Ray scanner sprite is tweaked.
+    type: Tweak
+  id: 5901
+  time: '2024-02-08T23:09:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25047
