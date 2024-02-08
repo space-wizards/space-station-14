@@ -17,14 +17,14 @@ public sealed class SmokeFilterSystem : EntitySystem
         SubscribeLocalEvent<FilterMaskComponent, ItemMaskToggledEvent>(OnMaskToggled);
     }
 
-    private void OnGotUnequipped(Entity<FilterMaskComponent> ent, ref GotUnequippedEvent args)
+    private void OnGotUnequipped(EntityUid entity, FilterMaskComponent component, GotUnequippedEvent args)
     {
-        ent.Comp.IsActive = false;
+        component.IsActive = false;
     }
 
-    private void OnGotEquipped(Entity<FilterMaskComponent> ent, ref GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid entity, FilterMaskComponent component, GotEquippedEvent args)
     {
-        ent.Comp.IsActive = true;
+        component.IsActive = true;
 
     }
 
