@@ -247,6 +247,10 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: GuideHelp
+    guides:
+    - RTG
+    - Power
   - type: Destructible
     thresholds:
       - trigger:
