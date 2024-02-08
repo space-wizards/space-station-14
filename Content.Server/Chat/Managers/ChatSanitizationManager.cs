@@ -63,6 +63,8 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "lmao.", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
         { "lol.", "chatsan-laughs" },
+        { "lel", "chatsan-laughs" },
+        { "lel.", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
         { "kek.", "chatsan-laughs" },
         { "rofl", "chatsan-laughs" },
@@ -92,7 +94,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 
         foreach (var (smiley, replacement) in SmileyToEmote)
         {
-            if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture))
+            if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture) && (input.EndsWith(" "+smiley, true, CultureInfo.InvariantCulture) || input.Equals(smiley, CultureInfo.InvariantCultureIgnoreCase)))
             {
                 sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
                 emote = Loc.GetString(replacement, ("ent", speaker));
