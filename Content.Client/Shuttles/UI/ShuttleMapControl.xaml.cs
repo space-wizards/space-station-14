@@ -264,6 +264,15 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var beaconsOnly = _shuttles.IsBeaconMap(viewedMapUid);
         var controlLocalBounds = PixelRect;
 
+        /* TODO:
+         * - On the build press sort all grids on map in range, then every say 0.2-0.5 seconds add another one to map objects list up to a hard limit of 2s. Sort by your map then pick another map randomly. These get stored as the visible objects. Also need to do the same for beacons.
+            - MapRadar needs to ONLY show stuff we have map objects for.
+
+            - Map should show no signal until scan button pressed?
+            - Play ping sound on scan press
+            - Cooldown on press
+         */
+
         if (ShowBeacons)
         {
             var beaconColor = Color.AliceBlue;
