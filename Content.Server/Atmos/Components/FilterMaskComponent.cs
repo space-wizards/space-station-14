@@ -5,7 +5,6 @@ namespace Content.Server.Atmos.Components;
 /// Used in head and mask with a smoke gas filter.
 /// </summary>
 [RegisterComponent, Access(typeof(SmokeFilterSystem))]
-///[ComponentProtoName("FilterMask")]
 public sealed partial class FilterMaskComponent : Component
 {
     [DataField]
