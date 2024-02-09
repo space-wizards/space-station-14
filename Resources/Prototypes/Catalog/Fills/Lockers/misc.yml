@@ -155,16 +155,8 @@
         - id: DrinkSpaceLube
           prob: 0.20
         - id: TapeRecorder
-          prob: 0.05
-        - id: BlueCassetteTape
-          prob: 0.05
-        - id: RedCassetteTape
-          prob: 0.05
-        - id: YellowCassetteTape
-          prob: 0.05
-        - id: PurpleCassetteTape
-          prob: 0.05
-        - id: WhiteCassetteTape
+          prob: 0.02
+        - id: CassetteTape
           prob: 0.05
         - id: BarberScissors
           prob: 0.05

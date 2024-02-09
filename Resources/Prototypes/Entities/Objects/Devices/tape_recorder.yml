@@ -42,13 +42,13 @@
   name: cassette tape
   parent: BaseItem
   description: A magnetic tape that can hold up to three minutes of content on either side.
-  id: BaseCassetteTape
-  abstract: true
+  id: CassetteTape
   components:
     - type: Sprite
       sprite: Objects/Devices/cassette_tapes.rsi
       layers:
       - state: tape_greyscale
+        map: [ "enum.DamageStateVisualLayers.Base" ]
       - state: tape_ribbonoverlay
         map: [ "enum.ToggleVisuals.Layer" ]
         visible: false
@@ -65,71 +65,15 @@
           enum.ToggleVisuals.Layer:
             True: { visible: true }
             False: { visible: false }
-
-- type: entity
-  name: blue cassette tape
-  parent: BaseCassetteTape
-  id: BlueCassetteTape
-  components:
-    - type: Sprite
-      layers:
-        - state: tape_blue
-        - state: tape_ribbonoverlay
-          map: [ "enum.ToggleVisuals.Layer" ]
-          visible: false
-
-- type: entity
-  name: red cassette tape
-  parent: BaseCassetteTape
-  id: RedCassetteTape
-  components:
-    - type: Sprite
-      layers:
-        - state: tape_red
-        - state: tape_ribbonoverlay
-          map: [ "enum.ToggleVisuals.Layer" ]
-          visible: false
-
-- type: entity
-  name: yellow cassette tape
-  parent: BaseCassetteTape
-  id: YellowCassetteTape
-  components:
-    - type: Sprite
-      layers:
-        - state: tape_yellow
-        - state: tape_ribbonoverlay
-          map: [ "enum.ToggleVisuals.Layer" ]
-          visible: false
-
-- type: entity
-  name: purple cassette tape
-  parent: BaseCassetteTape
-  id: PurpleCassetteTape
-  components:
-    - type: Sprite
-      layers:
-        - state: tape_purple
-        - state: tape_ribbonoverlay
-          map: [ "enum.ToggleVisuals.Layer" ]
-          visible: false
-
-- type: entity
-  name: white cassette tape
-  parent: BaseCassetteTape
-  id: WhiteCassetteTape
-  components:
-    - type: Sprite
-      layers:
-        - state: tape_white
-        - state: tape_ribbonoverlay
-          map: [ "enum.ToggleVisuals.Layer" ]
-          visible: false
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            tape_greyscale: Rainbow
 
 - type: entity
   suffix: Interview with Garry Smosh
-  parent: WhiteCassetteTape
-  id: WhiteCassetteTapeInterview
+  parent: CassetteTape
+  id: CassetteTapeInterview
   components:
     - type: TapeCassette
       maxCapacity: 180
@@ -182,13 +126,13 @@
   components:
     - type: StorageFill
       contents:
-        - id: BlueCassetteTape
+        - id: CassetteTape
           amount: 1
-        - id: RedCassetteTape
+        - id: CassetteTape
           amount: 1
-        - id: PurpleCassetteTape
+        - id: CassetteTape
           amount: 1
-        - id: WhiteCassetteTape
+        - id: CassetteTape
           amount: 1
         - id: TapeRecorder
           amount: 1
