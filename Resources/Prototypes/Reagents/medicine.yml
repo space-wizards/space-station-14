@@ -322,8 +322,8 @@
             Asphyxiation: -3
             Poison: -0.5
           groups:
-            Brute: -0.1
-            Burn: -0.1
+            Brute: -1
+            Burn: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
