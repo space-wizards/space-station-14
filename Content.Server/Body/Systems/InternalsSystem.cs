@@ -40,7 +40,7 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<InternalsComponent, InternalsDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<AutoBreathMaskComponent, ConnectedBreathToolEvent>(OnAutoBreathMaskConnected);
+        SubscribeLocalEvent<BreathToolComponent, ConnectedBreathToolEvent>(OnBreathMaskConnected);
     }
 
     public override void Update(float frameTime)
@@ -60,15 +60,18 @@ public sealed class InternalsSystem : EntitySystem
         }
     }
 
-    private void OnAutoBreathMaskConnected(EntityUid uid, AutoBreathMaskComponent comp, ConnectedBreathToolEvent args)
+    private void OnBreathMaskConnected(EntityUid uid, BreathToolComponent comp, ConnectedBreathToolEvent args)
     {
-        // activating on the next tick, because at spawn we can't be sure the gas tank will be equipped before the breath mask
+        if (!comp.AutomaticActivation)
+            return;
+
+        // delaying until next tick, because at spawn we can't be sure the gas tank will spawn before the mask
         EnsureComp<InternalsDelayedActivationComponent>(args.User, out var delayComp);
         delayComp.Time= _timing.CurTime + TimeSpan.FromTicks(1);
         delayComp.Entity = args.User;
 
-        if (comp.SingleUse)
-            RemCompDeferred<AutoBreathMaskComponent>(uid);
+        // this is currently only used for roundstart activation, so we turn the feature off afterwards
+        comp.AutomaticActivation = false;
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, InternalsComponent component, GetVerbsEvent<InteractionVerb> args)
