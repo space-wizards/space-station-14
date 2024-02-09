@@ -551,6 +551,21 @@
     Telecrystal: 2
   categories:
   - UplinkUtility
+  
+- type: listing
+  id: UplinkClothingEyesHudSyndicate
+  name: uplink-clothing-eyes-hud-syndicate-name
+  description: uplink-clothing-eyes-hud-syndicate-desc
+  productEntity: ClothingEyesHudSyndicate
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkRadioJammer

@@ -142,6 +142,9 @@ uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instan
 uplink-voice-mask-name = Voice Mask
 uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of. Also utilizes cutting-edge chameleon technology.
 
+uplink-clothing-eyes-hud-syndicate-name = Syndicate Visor
+uplink-clothing-eyes-hud-syndicate-desc = The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
+
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
