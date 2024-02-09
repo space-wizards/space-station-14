@@ -64,10 +64,10 @@
     stock: 1
 
 - type: listing
-  id: ChangelingTHCSting
+  id: ChangelingLSDSting
   name: Hallucination Sting
   description: Silently injects the victim with hallucinogenic chemicals. Uses 5 chemicals on sting.
-  productAction: ActionLingStingTHC
+  productAction: ActionLingStingLSD
   cost:
     EvolutionPoints: 1
   categories:
