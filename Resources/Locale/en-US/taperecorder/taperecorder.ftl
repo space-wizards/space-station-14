@@ -16,6 +16,8 @@ tape-recorder-recording = The tape recorder is in [color=red]recording[/color] m
 
 tape-recorder-rewinding = The tape recorder is in [color=yellow]rewinding[/color] mode.
 
+tape-recorder-locked = Cant eject while the tape recorder is running.
+
 verb-tape-recorder-record = Switch to Recording Mode
 
 verb-tape-recorder-playback = Switch to Playback Mode

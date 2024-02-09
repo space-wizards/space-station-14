@@ -16,7 +16,13 @@ public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCasset
     /// The name of the entity that spoke
     /// </summary>
     [DataField]
-    public LocId Name = "tape-recorder-voice-unknown";
+    public string? Name;
+
+    /// <summary>
+    /// Default name as fallback
+    /// </summary>
+    [DataField]
+    public LocId DefaultName = "tape-recorder-voice-unknown";
 
     /// <summary>
     /// What was spoken
@@ -24,17 +30,11 @@ public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCasset
     [DataField]
     public string Message = string.Empty;
 
-    /// <summary>
-    /// If this message has been flushed to the tape, used to handle erasing of old entries
-    /// </summary>
-    public bool Flushed = false;
-
     public TapeCassetteRecordedMessage(float timestamp, string name, string message)
     {
         Timestamp = timestamp;
         Name = name;
         Message = message;
-        Flushed = false;
     }
 
     public int CompareTo(TapeCassetteRecordedMessage? other)

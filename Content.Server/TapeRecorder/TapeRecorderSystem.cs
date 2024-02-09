@@ -3,7 +3,6 @@ using Content.Server.Speech;
 using Content.Server.VoiceMask;
 using Content.Shared.TapeRecorder;
 using Content.Shared.TapeRecorder.Components;
-using Content.Shared.Verbs;
 using System.Linq;
 
 namespace Content.Server.TapeRecorder;
@@ -17,15 +16,14 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RecordingTapeRecorderComponent, ListenEvent>(OnListen);
+        SubscribeLocalEvent<TapeRecorderComponent, ListenEvent>(OnListen);
     }
 
     protected override bool ProcessRecordingTapeRecorder(Entity<TapeRecorderComponent> tapeRecorder, float frameTime)
     {
         if (!base.ProcessRecordingTapeRecorder(tapeRecorder, frameTime))
         {
-            StopRecording(tapeRecorder);
-            SetMode(tapeRecorder, TapeRecorderMode.Stopped, false);
+            Stop(tapeRecorder, changeMode: true);
             return false;
         }
 
@@ -36,8 +34,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     {
         if (!base.ProcessPlayingTapeRecorder(tapeRecorder, frameTime))
         {
-            StopPlayback(tapeRecorder);
-            SetMode(tapeRecorder, TapeRecorderMode.Stopped, false);
+            Stop(tapeRecorder, changeMode: true);
             return false;
         }
 
@@ -48,8 +45,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     {
         if (!base.ProcessRewindingTapeRecorder(tapeRecorder, frameTime))
         {
-            StopRewinding(tapeRecorder);
-            SetMode(tapeRecorder, TapeRecorderMode.Stopped, false);
+            Stop(tapeRecorder, changeMode: true);
             return false;
         }
 
@@ -68,26 +64,21 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         {
             //Change the voice to match the speaker
             if (voiceMaskComponent != null)
-                voiceMaskComponent.VoiceName = messageToBeReplayed.Name;
+                voiceMaskComponent.VoiceName = messageToBeReplayed.Name ?? messageToBeReplayed.DefaultName;
             //Play the message
             _chatSystem.TrySendInGameICMessage(tapeRecorder, messageToBeReplayed.Message, InGameICChatType.Speak, false);
         }
     }
 
-   
-
     /// <summary>
     /// Whenever someone speaks within listening range, record it to tape
     /// </summary>
-    private void OnListen(Entity<RecordingTapeRecorderComponent> tapeRecorder, ref ListenEvent args)
+    private void OnListen(Entity<TapeRecorderComponent> tapeRecorder, ref ListenEvent args)
     {
-        var cassette = _itemSlotsSystem.GetItemOrNull(tapeRecorder, SlotName);
-
-        if (cassette == null)
+        if (tapeRecorder.Comp.Mode != TapeRecorderMode.Recording || !tapeRecorder.Comp.Active)
             return;
 
-
-        if (!TryComp<TapeCassetteComponent>(cassette, out var tapeCassetteComponent))
+        if (!TryGetTapeCassette(tapeRecorder, out var cassette))
             return;
 
         //Handle someone using a voice changer
@@ -95,7 +86,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         RaiseLocalEvent(args.Source, nameEv);
 
         //Add a new entry to the tape
-        tapeCassetteComponent.RecordedData.Add(new TapeCassetteRecordedMessage(tapeCassetteComponent.CurrentPosition, nameEv.Name, args.Message));
+        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, nameEv.Name, args.Message));
     }
 
 
@@ -106,6 +97,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     {
         if (base.StartPlayback(tapeRecorder, user))
         {
+            //Server only component
             EnsureComp<VoiceMaskComponent>(tapeRecorder);
             return true;
         }

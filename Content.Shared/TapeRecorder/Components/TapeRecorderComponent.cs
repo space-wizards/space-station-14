@@ -26,7 +26,7 @@ public sealed partial class TapeRecorderComponent : Component
     /// How fast can this tape recorder rewind
     /// Acts as a multiplier for the frameTime
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float RewindSpeed = 3f;
 
     /// <summary>
@@ -66,32 +66,36 @@ public sealed partial class TapeRecorderComponent : Component
 
     [DataField]
     public SpriteSpecifier RewindIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rewindarrow.svg.192dpi.png"));
-}
 
-/// <summary>
-/// Currently recording tape recorder
-/// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed partial class RecordingTapeRecorderComponent : Component
-{
-}
+    //Locale references
+    [DataField]
+    public LocId TextCantEject = "tape-recorder-locked";
 
-/// <summary>
-/// Currently rewinding tape recorder
-/// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed partial class RewindingTapeRecorderComponent : Component
-{
-}
+    [DataField]
+    public LocId TextModePlaying = "tape-recorder-playing";
 
-/// <summary>
-/// Currently playing tape recorder
-/// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed partial class PlayingTapeRecorderComponent : Component
-{
-}
+    [DataField]
+    public LocId TextModeRecording = "tape-recorder-recording";
 
+    [DataField]
+    public LocId TextModeRewinding = "tape-recorder-rewinding";
+
+    [DataField]
+    public LocId TextModeStopped = "tape-recorder-stopped";
+
+    [DataField]
+    public LocId TextModeEmpty = "tape-recorder-empty";
+
+    [DataField]
+    public LocId TextVerbPlay = "verb-tape-recorder-playback";
+
+    [DataField]
+    public LocId TextVerbRecord = "verb-tape-recorder-record";
+
+    [DataField]
+    public LocId TextVerbRewind = "verb-tape-recorder-rewind";
+
+}
 
 [Serializable, NetSerializable]
 public enum TapeRecorderVisuals : byte

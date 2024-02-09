@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.TapeRecorder.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedTapeRecorderSystem))]
 public sealed partial class TapeCassetteComponent : Component
 {
@@ -14,30 +14,41 @@ public sealed partial class TapeCassetteComponent : Component
 
     /// <summary>
     /// The current position within the tape we are at, in seconds
-    /// Networked for client side prediction
+    /// Only dirtied when the tape recorder is stopped
     /// </summary>
-    //Annoyingly im seeing a 8 - 10% discrepency between client server frame times - as such this needs to be auto networked
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CurrentPosition = 0f;
 
     /// <summary>
     /// Maximum capacity of this tape
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan MaxCapacity = TimeSpan.FromSeconds(120);
 
     /// <summary>
     /// How long to spool the tape after it was damaged
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan RepairDelay = TimeSpan.FromSeconds(3);
 
+    //Locale references
     [DataField]
-    public LocId Unintelligable = "tape-recorder-voice-unintelligible";
+    public LocId TextUnintelligable = "tape-recorder-voice-unintelligible";
 
     [DataField]
-    public LocId CorruptionCharacter = "tape-recorder-message-corruption";
+    public LocId TextCorruptionCharacter = "tape-recorder-message-corruption";
+
+    [DataField]
+    public LocId TextExamine = "tape-cassette-position";
+
+    [DataField]
+    public LocId TextDamaged = "tape-cassette-damaged";
+
+    /// <summary>
+    /// Temporary storage for all heard messages that need processing
+    /// </summary>
+    [DataField]
+    public List<TapeCassetteRecordedMessage> Buffer = new();
 }
 
 /// <summary>
