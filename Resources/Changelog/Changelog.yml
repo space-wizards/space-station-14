@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: brainfood1183
-  changes:
-  - message: Crystals now drop crystal shards, you can use them to craft colored light
-      tubes.
-    type: Add
-  id: 5400
-  time: '2023-12-16T22:20:14.0000000+00:00'
-  url: null
-- author: Ilya246
-  changes:
-  - message: Pens now embed and deal damage on throw like spears.
-    type: Add
-  id: 5401
-  time: '2023-12-16T22:23:08.0000000+00:00'
-  url: null
-- author: Emisse
-  changes:
-  - message: Svalinn Laser Pistol and accompanying T3 tech.
-    type: Add
-  id: 5402
-  time: '2023-12-17T03:43:50.0000000+00:00'
-  url: null
-- author: mirrorcult
-  changes:
-  - message: You can now pet the recycler
-    type: Add
-  id: 5403
-  time: '2023-12-17T07:44:37.0000000+00:00'
-  url: null
-- author: Ubaser
-  changes:
-  - message: Mindbreaker is now hallucinogenic.
-    type: Tweak
-  id: 5404
-  time: '2023-12-17T07:44:54.0000000+00:00'
-  url: null
-- author: JoeHammad
-  changes:
-  - message: Paramedics now have a rollerbed in their bag by default
-    type: Add
-  id: 5405
-  time: '2023-12-17T09:55:29.0000000+00:00'
-  url: null
 - author: Ilya246
   changes:
   - message: Large cardboard boxes and stealth boxes now inherit their mover's access.
@@ -3884,3 +3841,45 @@
   id: 5899
   time: '2024-02-07T08:49:06.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25016
+- author: Ilya246
+  changes:
+  - message: Atmos devices can now be built behind directional windows and on lattice.
+    type: Tweak
+  id: 5900
+  time: '2024-02-08T23:07:42.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25057
+- author: Ubaser
+  changes:
+  - message: T-Ray scanner sprite is tweaked.
+    type: Tweak
+  id: 5901
+  time: '2024-02-08T23:09:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25047
+- author: nikthechampiongr
+  changes:
+  - message: Brig timers display their label properly again.
+    type: Fix
+  id: 5902
+  time: '2024-02-08T23:12:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25033
+- author: vero5123
+  changes:
+  - message: fixes mop buckets being indestructible.
+    type: Fix
+  id: 5903
+  time: '2024-02-08T23:15:12.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25001
+- author: Adrian16199
+  changes:
+  - message: Added a straw hat that can be crafted with wheat.
+    type: Add
+  id: 5904
+  time: '2024-02-08T23:17:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24997
+- author: Sk1tch
+  changes:
+  - message: Guidebook entries are now alphabetically sorted
+    type: Tweak
+  id: 5905
+  time: '2024-02-08T23:23:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24963
