@@ -36737,8 +36737,6 @@ entities:
     - type: Transform
       pos: 5.5,17.5
       parent: 30
-    - type: Lock
-      locked: False
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
