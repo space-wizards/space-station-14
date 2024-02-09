@@ -61,6 +61,7 @@
     solution: food
     delay: 7
     forceFeedDelay: 7
+  - type: BadFood
   - type: SolutionContainerManager
     solutions:
       food:
