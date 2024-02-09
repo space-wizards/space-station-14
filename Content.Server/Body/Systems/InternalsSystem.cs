@@ -1,7 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
-using Content.Server.Hands.Systems;
+//using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -11,21 +11,23 @@ using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
+//using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
 public sealed class InternalsSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    //[Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
+    //[Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public const SlotFlags InventorySlots = SlotFlags.POCKET | SlotFlags.BELT;
 
@@ -38,6 +40,35 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<InternalsComponent, InternalsDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<AutoBreathMaskComponent, ConnectedBreathToolEvent>(OnAutoBreathMaskConnected);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<InternalsDelayedActivationComponent>();
+        while (query.MoveNext(out var uid, out var delayComp))
+        {
+            if (_timing.CurTime < delayComp.Time)
+                return;
+
+            if (TryComp<InternalsComponent>(uid, out var comp))
+                ToggleInternals(delayComp.Entity , delayComp.Entity , false, comp);
+
+            RemCompDeferred<InternalsDelayedActivationComponent>(uid);
+        }
+    }
+
+    private void OnAutoBreathMaskConnected(EntityUid uid, AutoBreathMaskComponent comp, ConnectedBreathToolEvent args)
+    {
+        // activating on the next tick, because at spawn we can't be sure the gas tank will be equipped before the breath mask
+        EnsureComp<InternalsDelayedActivationComponent>(args.User, out var delayComp);
+        delayComp.Time= _timing.CurTime + TimeSpan.FromTicks(1);
+        delayComp.Entity = args.User;
+
+        if (comp.SingleUse)
+            RemCompDeferred<AutoBreathMaskComponent>(uid);
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, InternalsComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -171,6 +202,9 @@ public sealed class InternalsSystem : EntitySystem
         }
 
         component.BreathToolEntity = toolEntity;
+
+        var connected = new ConnectedBreathToolEvent(toolEntity, owner, component);
+        RaiseLocalEvent(toolEntity, connected);
         _alerts.ShowAlert(owner, AlertType.Internals, GetSeverity(component));
     }
 
@@ -259,5 +293,30 @@ public sealed class InternalsSystem : EntitySystem
         }
 
         return null;
+    }
+}
+
+/// <summary>
+/// Raised on a breathing mask entity after it was equipped on a mob and successfully connected to the mob's InternalsComponent
+/// </summary>
+public sealed class ConnectedBreathToolEvent : EntityEventArgs
+{
+    /// <summary>
+    /// The mask that was equipped
+    /// </summary>
+    public readonly EntityUid Mask;
+
+    /// <summary>
+    /// The mob that just equipped the mask
+    /// </summary>
+    public readonly EntityUid User;
+
+    public readonly InternalsComponent IntComp;
+
+    public ConnectedBreathToolEvent (EntityUid mask, EntityUid user,  InternalsComponent intComp)
+    {
+        Mask = mask;
+        User = user;
+        IntComp = intComp;
     }
 }
