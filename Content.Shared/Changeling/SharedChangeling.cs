@@ -12,7 +12,7 @@ public sealed partial class LingStingExtractActionEvent : EntityTargetActionEven
 {
 }
 
-public sealed partial class LingStingTHCActionEvent : EntityTargetActionEvent
+public sealed partial class LingStingLSDActionEvent : EntityTargetActionEvent
 {
 }
 

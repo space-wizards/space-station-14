@@ -83,9 +83,9 @@
     canTargetSelf: false
 
 - type: entity
-  id: ActionLingStingTHC
+  id: ActionLingStingLSD
   name: Hallucination Sting
-  description: Injects large doses of hallucinogenic chemicals into the victim. The victim should not know they've been stung, unless they're another changeling. Uses 5 chemicals.
+  description: Injects large doses of hallucinogenic chemicals into the victim after a short delay. The victim should not know they've been stung, unless they're another changeling. Uses 5 chemicals.
   noSpawn: true
   components:
   - type: EntityTargetAction
@@ -95,7 +95,7 @@
     whitelist:
       components:
       - Body
-    event: !type:LingStingTHCActionEvent
+    event: !type:LingStingLSDActionEvent
     useDelay: 30
     canTargetSelf: false
 

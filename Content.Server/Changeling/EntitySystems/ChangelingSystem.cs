@@ -8,26 +8,26 @@ using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Content.Shared.Store;
 using Content.Server.Traitor.Uplink;
-using Content.Shared.Damage;
 using Content.Server.Body.Systems;
+using Content.Server.Body.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Server.Polymorph.Systems;
 using System.Linq;
-using Content.Shared.Polymorph;
 using Content.Server.Forensics;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Actions;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared.Alert;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -44,6 +44,9 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainers = default!;
+    [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly StomachSystem _stomach = default!;
+    [Dependency] private readonly ReactiveSystem _reaction = default!;
 
     public override void Initialize()
     {
@@ -140,20 +143,38 @@ public sealed partial class ChangelingSystem : EntitySystem
         return true;
     }
 
-    private void TryReagentStingTarget(EntityUid uid, EntityUid target, ChangelingComponent component, string reagentId, FixedPoint2 reagentAmount)
+    private void TryReagentStingTarget(EntityUid uid, EntityUid target, ChangelingComponent component, string reagentId, FixedPoint2 reagentAmount, bool doDigestionDelay = false)
     {
         if (TryStingTarget(uid, target, component))
         {
             var solution = new Solution();
             solution.AddReagent(reagentId, reagentAmount);
 
-            if (!_solutionContainers.TryGetInjectableSolution(target, out var targetSoln, out var targetSolution))
-                return;
+            if (doDigestionDelay)
+            {
+                if (!TryComp<BodyComponent>(target, out var body))
+                    return;
+                if (!_body.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
+                    return;
 
-            if (!targetSolution.CanAddSolution(solution))
-                return;
+                var firstStomach = stomachs.FirstOrNull(stomach => _stomach.CanTransferSolution(stomach.Comp.Owner, solution, stomach.Comp));
 
-            _solutionContainers.TryAddSolution(targetSoln.Value, solution);
+                if (firstStomach == null)
+                    return;
+
+                _reaction.DoEntityReaction(target, solution, ReactionMethod.Ingestion);
+                //TODO: Grab the stomach UIDs somehow without using Owner
+                _stomach.TryTransferSolution(firstStomach.Value.Comp.Owner, solution, firstStomach.Value.Comp);
+            }
+            else
+            {
+                if (!_solutionContainers.TryGetInjectableSolution(target, out var targetSoln, out var targetSolution))
+                    return;
+                if (!targetSolution.CanAddSolution(solution))
+                    return;
+
+                _solutionContainers.TryAddSolution(targetSoln.Value, solution);
+            }
         }
     }
 

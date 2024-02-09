@@ -49,7 +49,7 @@ public sealed partial class ChangelingSystem
         SubscribeLocalEvent<ChangelingComponent, LingEMPActionEvent>(OnLingEmp);
 
         SubscribeLocalEvent<ChangelingComponent, LingStingExtractActionEvent>(OnLingDNASting);
-        SubscribeLocalEvent<ChangelingComponent, LingStingTHCActionEvent>(OnLingTHCSting);
+        SubscribeLocalEvent<ChangelingComponent, LingStingLSDActionEvent>(OnLingLSDSting);
     }
 
     private void StartAbsorbing(EntityUid uid, ChangelingComponent component, LingAbsorbActionEvent args)
@@ -492,7 +492,7 @@ public sealed partial class ChangelingSystem
         }
     }
 
-    private void OnLingTHCSting(EntityUid uid, ChangelingComponent component, LingStingTHCActionEvent args)
+    private void OnLingLSDSting(EntityUid uid, ChangelingComponent component, LingStingLSDActionEvent args)
     {
         if (args.Handled)
             return;
@@ -502,7 +502,7 @@ public sealed partial class ChangelingSystem
         if (!TryUseAbility(uid, component, component.ChemicalsCostFive))
             return;
 
-        TryReagentStingTarget(uid, target, component, "THC", FixedPoint2.New(50));
+        TryReagentStingTarget(uid, target, component, "MindbreakerToxin", FixedPoint2.New(50), true);
 
         args.Handled = true;
 
