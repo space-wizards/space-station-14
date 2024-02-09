@@ -104,21 +104,3 @@
     sprite: DeltaV/Clothing/Head/Hats/dircap.rsi
   - type: Clothing
     sprite: DeltaV/Clothing/Head/Hats/dircap.rsi
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatStrawHat
-  name: straw hat
-  description: A fancy hat for hot days! Not recommended to wear near fires.
-  components:
-  - type: Sprite
-    sprite: DeltaV/Clothing/Head/Hats/straw_hat.rsi
-  - type: Clothing
-    sprite: DeltaV/Clothing/Head/Hats/straw_hat.rsi
-  - type: Construction
-    graph: StrawHat
-    node: strawhat
-  - type: Tag
-    tags:
-    - HamsterWearable
-

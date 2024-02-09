@@ -2,6 +2,3 @@
 
 - type: Tag
   id: BeltSlotNotBelt #not a 'belt'
-
-- type: Tag
-  id: Wheat
