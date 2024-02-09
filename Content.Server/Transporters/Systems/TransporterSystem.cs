@@ -17,15 +17,12 @@ public sealed partial class TransporterSystem : EntitySystem
 
     public readonly string ContainerKey = "item";
 
-    private readonly HashSet<Entity<TransporterComponent>> _transporters = new();
-
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<TransporterProviderComponent, StartCollideEvent>(OnProviderCollide); // fingerprints unrecognizable
         SubscribeLocalEvent<TransporterProviderComponent, EndCollideEvent>(OnProviderEndCollide);
 
-        SubscribeLocalEvent<TransporterComponent, ComponentInit>(OnTransporterInit);
         SubscribeLocalEvent<TransporterComponent, PowerCellChangedEvent>(OnPowerCellChanged);
 
         SubscribeLocalEvent<TransporterMarkedComponent, GettingPickedUpAttemptEvent>(OnMarkedPickup);
@@ -33,18 +30,21 @@ public sealed partial class TransporterSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var transporter in _transporters)
+        foreach (var transporter in GetTransporters())
         {
-            if (transporter.Comp.Deleted)
-            {
-                _transporters.Remove(transporter);
-                continue;
-            }
-
             if (Paused(transporter))
                 continue;
 
             UpdateTransporter(transporter, frameTime);
+        }
+    }
+
+    public IEnumerable<Entity<TransporterComponent>> GetTransporters()
+    {
+        var query = EntityQueryEnumerator<TransporterComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            yield return (uid, component);
         }
     }
 
@@ -53,26 +53,10 @@ public sealed partial class TransporterSystem : EntitySystem
         _powerCell.TryUseCharge(uid, frameTime * uid.Comp.Wattage);
     }
 
-    public void OnTransporterInit(EntityUid uid, TransporterComponent component, ref ComponentInit args)
-    {
-        _transporters.Add((uid, component));
-        _npc.SleepNPC(uid);
-    }
 
     public void OnPowerCellChanged(EntityUid uid, TransporterComponent component, ref PowerCellChangedEvent args)
     {
-        if (!TryComp(uid, out HTNComponent? htn))
-            return;
 
-        if (args.Ejected)
-        {
-            _npc.SleepNPC(uid);
-        }
-
-        if (!_npc.IsAwake(uid, htn))
-        {
-            _npc.WakeNPC(uid);
-        }
     }
 
     public void AddItemToProvider(Entity<TransporterProviderComponent> provider, Entity<TransporterMarkedComponent> item)

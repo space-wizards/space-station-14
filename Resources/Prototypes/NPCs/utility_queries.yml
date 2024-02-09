@@ -204,11 +204,23 @@
   query:
   - !type:ComponentQuery
     components:
-      - type: TransporterCharger
+    - type: TransporterCharger
   considerations:
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
+  - !type:TargetDistanceCon
+    curve: !type:PresetCurve
+      preset: TargetDistance
+
+
+- type: utilityQuery
+  id: NearbyTransporterProvider
+  query:
+  - !type:ComponentQuery
+    components:
+    - type: TransporterProvider
+  considerations:
+  - !type:TargetDistanceCon
+    curve: !type:PresetCurve
+      preset: TargetDistance
 
 #- type: utilityQuery
 #  id: NearbyShoes

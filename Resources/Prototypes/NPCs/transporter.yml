@@ -1,14 +1,25 @@
 - type: htnCompound
   id: TransporterCompound
   branches:
-    - preconditions:
+  - preconditions:
+    - !type:PowerCellExistsPrecondition
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyTransporterCharger
+      preconditions:
       - !type:PowerCellChargePrecondition
         watts: 80
-      tasks:
-      - !type:HTNPrimitiveTask
-        operator: !type:UtilityOperator
-          proto: NearbyTransporterCharger
 
-      - !type:HTNPrimitiveTask
-        operator: !type:MoveToOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyTransporterProvider
+      preconditions:
+      - !type:PowerCellChargePrecondition
+        greaterThan: true
+        watts: 80
+
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+
 
