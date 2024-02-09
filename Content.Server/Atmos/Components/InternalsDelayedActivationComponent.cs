@@ -2,6 +2,7 @@
 
 /// <summary>
 /// This entity will try to toggle their internals at the specified time
+/// This component is automatically created and deleted by InternalsSystem
 /// </summary>
 [RegisterComponent]
 public sealed partial class InternalsDelayedActivationComponent : Component

@@ -1,7 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
-//using Content.Server.Hands.Systems;
+using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -11,7 +11,7 @@ using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-//using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -19,12 +19,12 @@ namespace Content.Server.Body.Systems;
 
 public sealed class InternalsSystem : EntitySystem
 {
-    //[Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
-    //[Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -254,7 +254,7 @@ public sealed class InternalsSystem : EntitySystem
         if (component.BreathToolEntity == null || !AreInternalsWorking(component))
             return 2;
 
-        // If pressure in the tank is below low pressure threshhold, flash warning on internals UI
+        // If pressure in the tank is below low pressure threshold, flash warning on internals UI
         if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank) && gasTank.IsLowPressure)
             return 0;
 
