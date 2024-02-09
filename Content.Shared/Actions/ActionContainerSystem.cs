@@ -268,7 +268,7 @@ public sealed class ActionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if the given entity has an action prototype in their actions container.
+    /// Checks if the entity has the action prototype in their actions container.
     /// </summary>
     public bool HasAction(EntityUid uid, string prototypeID, ActionsContainerComponent? actionsContainerComp = null)
     {
