@@ -1,8 +1,8 @@
 - type: entity
-  name: crusher
+  abstract: true
   parent: BaseItem
   id: BaseWeaponCrusher # Crusher? But I...
-  abstract: true
+  name: crusher
   description: An early design of the proto-kinetic accelerator.
   components:
   - type: Sharp
@@ -13,7 +13,6 @@
     radius: 4
 
 - type: entity
-  name: crusher
   parent: BaseWeaponCrusher
   id: WeaponCrusher
   components:
@@ -44,20 +43,22 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
+    attackRate: 1.5
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 8
-        Slash: 2
+        Blunt: 10
+        Slash: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
         Blunt: 2.5
         Slash: 2.5
+        Structural: 30
   - type: GunRequiresWield
   - type: Item
-    size: 150
+    size: Ginormous
   - type: DisarmMalus
   - type: Tool
     qualities:
@@ -65,51 +66,41 @@
   - type: Prying
 
 - type: entity
-  name: crusher dagger
   parent: BaseWeaponCrusher
   id: WeaponCrusherDagger
-  description: A scaled down version of a proto-kinetic crusher, usually used in a last ditch scenario.
+  name: crusher dagger
+  description: A scaled down version of a proto-kinetic crusher. Uses kinetic energy to vibrate the blade at high speeds.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
     state: icon
   - type: MeleeWeapon
+    autoAttack: true
     wideAnimationRotation: -135
-    attackRate: 1.5
+    attackRate: 2
     damage:
       types:
-        Slash: 6.5
-  - type: Item
-    size: 10
+        Slash: 15
   - type: Tag
     tags:
     - Knife
 
 # Like a crusher... but better
 - type: entity
-  name: crusher glaive
   parent: WeaponCrusher
   id: WeaponCrusherGlaive
+  name: crusher glaive
   description: An early design of the proto-kinetic accelerator, in glaive form.
   components:
-  - type: Tag
-    tags:
-      - Pickaxe
-  - type: UseDelayOnShoot
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
   - type: UseDelay
     delay: 1.9
-  - type: Gun
-    fireRate: 1
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 0.5
   - type: LeechOnMarker
     leech:
       groups:
-        Brute: -15
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+        Brute: -21
   - type: MeleeWeapon
-    wideAnimationRotation: -135
-    attackRate: 1.25
-  - type: Item
-    size: 150
+  - type: Tag
+    tags:
+      - Pickaxe

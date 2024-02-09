@@ -1,6 +1,29 @@
 ﻿namespace Content.Server.Sticky.Events;
 
 /// <summary>
+///     Risen on sticky entity to see if it can stick to another entity.
+/// </summary>
+[ByRefEvent]
+public record struct AttemptEntityStickEvent(EntityUid Target, EntityUid User)
+{
+    public readonly EntityUid Target = Target;
+    public readonly EntityUid User = User;
+    public bool Cancelled = false;
+}
+
+/// <summary>
+///     Risen on sticky entity to see if it can unstick from another entity.
+/// </summary>
+[ByRefEvent]
+public record struct AttemptEntityUnstickEvent(EntityUid Target, EntityUid User)
+{
+    public readonly EntityUid Target = Target;
+    public readonly EntityUid User = User;
+    public bool Cancelled = false;
+}
+
+
+/// <summary>
 ///     Risen on sticky entity when it was stuck to other entity.
 /// </summary>
 public sealed class EntityStuckEvent : EntityEventArgs

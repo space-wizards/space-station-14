@@ -50,7 +50,7 @@
   - type: ItemSlots
   - type: SmokingPipe
     bowl_slot:
-      name: Bowl
+      name: smoking-pipe-slot-component-slot-name-bowl
       whitelist:
         tags:
           - Smokable
@@ -61,7 +61,7 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 30
 
 - type: entity
   parent: BaseItem

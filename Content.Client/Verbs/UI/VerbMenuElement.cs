@@ -33,11 +33,14 @@ namespace Content.Client.Verbs.UI
 
             Label.SetOnlyStyleClass(verb.TextStyleClass);
 
+            // There are no confirmations in debug fam.
+#if !DEBUG
             if (verb.ConfirmationPopup)
             {
                 ExpansionIndicator.SetOnlyStyleClass(StyleClassVerbMenuConfirmationTexture);
                 ExpansionIndicator.Visible = true;
             }
+#endif
 
             var entManager = IoCManager.Resolve<IEntityManager>();
 

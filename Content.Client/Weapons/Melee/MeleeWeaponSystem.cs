@@ -16,7 +16,8 @@ using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -68,7 +69,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
         var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
 
-        if (useDown != BoundKeyState.Down && altDown != BoundKeyState.Down)
+        if (weapon.AutoAttack || useDown != BoundKeyState.Down && altDown != BoundKeyState.Down)
         {
             if (weapon.Attacking)
             {

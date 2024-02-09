@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
@@ -35,6 +36,7 @@ public abstract class SharedMechSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -45,6 +47,8 @@ public abstract class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MechComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<MechComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
+        SubscribeLocalEvent<MechComponent, DragDropTargetEvent>(OnDragDrop);
+        SubscribeLocalEvent<MechComponent, CanDropTargetEvent>(OnCanDragDrop);
 
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
         SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
@@ -187,7 +191,7 @@ public abstract class SharedMechSystem : EntitySystem
             ? Loc.GetString("mech-equipment-select-popup", ("item", component.CurrentSelectedEquipment))
             : Loc.GetString("mech-equipment-select-none-popup");
 
-        if (_timing.IsFirstTimePredicted)
+        if (_net.IsServer)
             _popup.PopupEntity(popupString, uid);
 
         Dirty(component);
@@ -216,7 +220,7 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         equipmentComponent.EquipmentOwner = uid;
-        component.EquipmentContainer.Insert(toInsert, EntityManager);
+        _container.Insert(toInsert, component.EquipmentContainer);
         var ev = new MechEquipmentInsertedEvent(uid);
         RaiseLocalEvent(toInsert, ref ev);
         UpdateUserInterface(uid, component);
@@ -254,7 +258,7 @@ public abstract class SharedMechSystem : EntitySystem
             CycleEquipment(uid, component);
 
         equipmentComponent.EquipmentOwner = null;
-        component.EquipmentContainer.Remove(toRemove, EntityManager);
+        _container.Remove(toRemove, component.EquipmentContainer);
         UpdateUserInterface(uid, component);
     }
 
@@ -360,7 +364,7 @@ public abstract class SharedMechSystem : EntitySystem
             return false;
 
         SetupUser(uid, toInsert.Value);
-        component.PilotSlot.Insert(toInsert.Value, EntityManager);
+        _container.Insert(toInsert.Value, component.PilotSlot);
         UpdateAppearance(uid, component);
         return true;
     }
@@ -420,6 +424,29 @@ public abstract class SharedMechSystem : EntitySystem
         _appearance.SetData(uid, MechVisuals.Open, IsEmpty(component), appearance);
         _appearance.SetData(uid, MechVisuals.Broken, component.Broken, appearance);
     }
+
+    private void OnDragDrop(EntityUid uid, MechComponent component, ref DragDropTargetEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Dragged, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
+        {
+            BreakOnUserMove = true,
+        };
+
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
+    }
+
+    private void OnCanDragDrop(EntityUid uid, MechComponent component, ref CanDropTargetEvent args)
+    {
+        args.Handled = true;
+
+        args.CanDrop |= !component.Broken && CanInsert(uid, args.Dragged, component);
+    }
+
 }
 
 /// <summary>

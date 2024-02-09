@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Humanoid.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Prototypes;
@@ -30,6 +31,7 @@ namespace Content.IntegrationTests.Tests
             var entityMan = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
+            var mapSystem = entityMan.System<SharedMapSystem>();
 
             await server.WaitPost(() =>
             {
@@ -40,12 +42,13 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
+
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     // TODO: Fix this better in engine.
-                    grid.SetTile(Vector2i.Zero, new Tile(1));
+                    mapSystem.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
@@ -60,7 +63,9 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
+                    }
                 }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
@@ -112,8 +117,10 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
-                };
+                    }
+                }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
                 foreach (var (uid, meta) in entityMetas)
@@ -162,11 +169,11 @@ namespace Content.IntegrationTests.Tests
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     var ent = sEntMan.SpawnEntity(protoId, new EntityCoordinates(grid.Owner, 0.5f, 0.5f));
                     foreach (var (_, component) in sEntMan.GetNetComponents(ent))
                     {
-                        sEntMan.Dirty(component);
+                        sEntMan.Dirty(ent, component);
                     }
                 }
             });
@@ -184,7 +191,9 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
+                    }
                 }
 
                 var entityMetas = Query<MetaDataComponent>(sEntMan).ToList();
@@ -215,6 +224,7 @@ namespace Content.IntegrationTests.Tests
         {
             var settings = new PoolSettings { Connected = true, Dirty = true };
             await using var pair = await PoolManager.GetServerClient(settings);
+            var mapManager = pair.Server.ResolveDependency<IMapManager>();
             var server = pair.Server;
             var client = pair.Client;
 
@@ -232,6 +242,8 @@ namespace Content.IntegrationTests.Tests
                 "GhostRoleMobSpawner",
                 "NukeOperativeSpawner",
                 "TimedSpawner",
+                // makes an announcement on mapInit.
+                "AnnounceOnSpawn",
             };
 
             Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
@@ -244,16 +256,18 @@ namespace Content.IntegrationTests.Tests
                 .Select(p => p.ID)
                 .ToList();
 
-            MapCoordinates coords = default;
+            protoIds.Sort();
+            var mapId = MapId.Nullspace;
+
             await server.WaitPost(() =>
             {
-                var map = server.MapMan.CreateMap();
-                coords = new MapCoordinates(default, map);
+               mapId = mapManager.CreateMap();
             });
+
+            var coords = new MapCoordinates(Vector2.Zero, mapId);
 
             await pair.RunTicksSync(3);
 
-            List<string> badPrototypes = new();
             foreach (var protoId in protoIds)
             {
                 // TODO fix ninja
@@ -270,27 +284,50 @@ namespace Content.IntegrationTests.Tests
                 // If the entity deleted itself, check that it didn't spawn other entities
                 if (!server.EntMan.EntityExists(uid))
                 {
-                    if (server.EntMan.EntityCount != count || client.EntMan.EntityCount != clientCount)
-                        badPrototypes.Add(protoId);
+                    if (server.EntMan.EntityCount != count)
+                    {
+                        Assert.Fail($"Server prototype {protoId} failed on deleting itself");
+                    }
+
+                    if (client.EntMan.EntityCount != clientCount)
+                    {
+                        Assert.Fail($"Client prototype {protoId} failed on deleting itself\n" +
+                                    $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                    $"Server was {count}.");
+                    }
                     continue;
                 }
 
                 // Check that the number of entities has increased.
-                if (server.EntMan.EntityCount <= count || client.EntMan.EntityCount <= clientCount)
+                if (server.EntMan.EntityCount <= count)
                 {
-                    badPrototypes.Add(protoId);
-                    continue;
+                    Assert.Fail($"Server prototype {protoId} failed on spawning as entity count didn't increase");
+                }
+
+                if (client.EntMan.EntityCount <= clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on spawning as entity count didn't increase" +
+                                $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
+                                $"Server was {count}");
                 }
 
                 await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
                 await pair.RunTicksSync(3);
 
                 // Check that the number of entities has gone back to the original value.
-                if (server.EntMan.EntityCount != count || client.EntMan.EntityCount != clientCount)
-                    badPrototypes.Add(protoId);
+                if (server.EntMan.EntityCount != count)
+                {
+                    Assert.Fail($"Server prototype {protoId} failed on deletion count didn't reset properly");
+                }
+
+                if (client.EntMan.EntityCount != clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly:\n" +
+                                $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                $"Server was {count}.");
+                }
             }
 
-            Assert.That(badPrototypes, Is.Empty);
             await pair.CleanReturnAsync();
         }
 
@@ -303,7 +340,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionExposeData",
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
-                "GridFillComponent",
+                "GridFill",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
                 "Broadphase",
@@ -322,9 +359,10 @@ namespace Content.IntegrationTests.Tests
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+            var mapSystem = entityManager.System<SharedMapSystem>();
             var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
-            MapGridComponent grid = default;
+            Entity<MapGridComponent> grid = default!;
 
             await server.WaitPost(() =>
             {
@@ -333,13 +371,13 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                grid = mapManager.CreateGrid(mapId);
+                grid = mapManager.CreateGridEntity(mapId);
 
                 var tileDefinition = tileDefinitionManager["Plating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = grid.ToCoordinates();
+                var coordinates = new EntityCoordinates(grid.Owner, Vector2.Zero);
 
-                grid.SetTile(coordinates, tile);
+                mapSystem.SetTile(grid.Owner, grid.Comp!, coordinates, tile);
 
                 mapManager.DoMapInitialize(mapId);
             });
@@ -350,7 +388,7 @@ namespace Content.IntegrationTests.Tests
             {
                 Assert.Multiple(() =>
                 {
-                    var testLocation = grid.ToCoordinates();
+                    var testLocation = new EntityCoordinates(grid.Owner, Vector2.Zero);
 
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {
@@ -375,7 +413,6 @@ namespace Content.IntegrationTests.Tests
                             continue;
                         }
 
-                        component.Owner = entity;
                         logmill.Debug($"Adding component: {name}");
 
                         Assert.DoesNotThrow(() =>

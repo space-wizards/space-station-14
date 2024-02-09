@@ -3,6 +3,7 @@ using System.Globalization;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Commands
 {
@@ -16,7 +17,7 @@ namespace Content.Server.Commands
         /// sending a failure to the performer if unable to.
         /// </summary>
         public static bool TryGetSessionByUsernameOrId(IConsoleShell shell,
-            string usernameOrId, IPlayerSession performer, [NotNullWhen(true)] out IPlayerSession? session)
+            string usernameOrId, ICommonSession performer, [NotNullWhen(true)] out ICommonSession? session)
         {
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
             if (plyMgr.TryGetSessionByUsername(usernameOrId, out session)) return true;
@@ -36,7 +37,7 @@ namespace Content.Server.Commands
         /// sending a failure to the performer if unable to.
         /// </summary>
         public static bool TryGetAttachedEntityByUsernameOrId(IConsoleShell shell,
-            string usernameOrId, IPlayerSession performer, out EntityUid attachedEntity)
+            string usernameOrId, ICommonSession performer, out EntityUid attachedEntity)
         {
             attachedEntity = default;
             if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
@@ -67,7 +68,7 @@ namespace Content.Server.Commands
                 transform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$NAME", entMan.GetComponent<MetaDataComponent>(ent).EntityName);
 
-            if (shell.Player is IPlayerSession player)
+            if (shell.Player is { } player)
             {
                 if (player.AttachedEntity is {Valid: true} p)
                 {

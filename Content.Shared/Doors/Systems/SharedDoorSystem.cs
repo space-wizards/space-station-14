@@ -14,6 +14,8 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
+using Content.Shared.Prying.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -58,6 +60,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
     }
@@ -171,6 +174,12 @@ public abstract class SharedDoorSystem : EntitySystem
     private void OnPryTimeModifier(EntityUid uid, DoorComponent door, ref GetPryTimeModifierEvent args)
     {
         args.BaseTime = door.PryTime;
+    }
+
+    private void OnBeforePry(EntityUid uid, DoorComponent door, ref BeforePryEvent args)
+    {
+        if (door.State == DoorState.Welded || !door.CanPry)
+            args.Cancelled = true;
     }
 
     /// <summary>
@@ -457,6 +466,10 @@ public abstract class SharedDoorSystem : EntitySystem
 
             //If the colliding entity is a slippable item ignore it by the airlock
             if (otherPhysics.CollisionLayer == (int)CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int)CollisionGroup.ItemMask)
+                continue;
+
+            //For when doors need to close over conveyor belts
+            if (otherPhysics.CollisionLayer == (int) CollisionGroup.ConveyorMask)
                 continue;
 
             if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)

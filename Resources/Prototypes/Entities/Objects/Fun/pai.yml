@@ -15,6 +15,8 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.StationMapUiKey.Key
+      type: UntrackedStationMapBoundUserInterface
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -67,11 +69,12 @@
           Off: { state: pai-off-overlay }
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
+  - type: StationMap
 
 - type: entity
   parent: PersonalAI
   id: SyndicatePersonalAI
-  name: Syndicate personal ai device
+  name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
   components:
   - type: Sprite
@@ -80,6 +83,7 @@
     - state: pai-base
     - state: syndicate-pai-off-overlay
       shader: unshaded
+      map: ["screen"]
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
@@ -99,6 +103,34 @@
           On: { state: syndicate-pai-on-overlay }
 
 - type: entity
+  parent: PersonalAI
+  id: PotatoAI
+  name: potato artificial intelligence
+  description: It's a potato. You forced it to be sentient, you monster.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: potato-base
+    - state: potato-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-potato
+    roleDescription: pai-system-role-description-potato
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: potato-off-overlay }
+          Searching: { state: potato-searching-overlay }
+          On: { state: potato-on-overlay }
+  - type: Construction
+    graph: PotatoAI
+    node: potatoai
+
+- type: entity
   id: ActionPAIPlayMidi
   name: Play MIDI
   description: Open your portable MIDI interface to soothe your owner.
@@ -109,3 +141,15 @@
     icon: Interface/Actions/pai-midi.png
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
+
+- type: entity
+  id: ActionPAIOpenMap
+  name: Open Map
+  description: Open your map interface and guide your owner.
+  noSpawn: true
+  components:
+    - type: InstantAction
+      checkCanInteract: false
+      icon: Interface/home.png
+      event: !type:OpenUiActionEvent
+        key: enum.StationMapUiKey.Key

@@ -2,8 +2,8 @@ using System.Collections.Immutable;
 using System.Net;
 using System.Threading.Tasks;
 using Content.Shared.Database;
-using Robust.Server.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Managers;
 
@@ -55,5 +55,5 @@ public interface IBanManager
     /// Sends role bans to the target
     /// </summary>
     /// <param name="pSession">Player's session</param>
-    public void SendRoleBans(IPlayerSession pSession);
+    public void SendRoleBans(ICommonSession pSession);
 }

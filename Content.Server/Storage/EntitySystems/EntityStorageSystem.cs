@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Explosion;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
@@ -31,6 +33,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         base.Initialize();
 
         /* CompRef things */
+        SubscribeLocalEvent<EntityStorageComponent, EntityUnpausedEvent>(OnEntityUnpausedEvent);
         SubscribeLocalEvent<EntityStorageComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<EntityStorageComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });
@@ -46,6 +49,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
+        SubscribeLocalEvent<EntityStorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
@@ -96,6 +100,11 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
             Popup.PopupEntity(msg, args.User, args.User);
             args.Cancel();
         }
+    }
+
+    private void OnExploded(Entity<EntityStorageComponent> ent, ref BeforeExplodeEvent args)
+    {
+        args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
     }
 
     protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)

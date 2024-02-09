@@ -1,5 +1,10 @@
 using System.Numerics;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Camera;
+using Content.Shared.Database;
 using Content.Shared.Gravity;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
@@ -25,10 +30,11 @@ public sealed class ThrowingSystem : EntitySystem
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public void TryThrow(
         EntityUid uid,
@@ -110,14 +116,19 @@ public sealed class ThrowingSystem : EntitySystem
         if (projectileQuery.TryGetComponent(uid, out var proj) && !proj.OnlyCollideWhenShot)
             return;
 
-        var comp = EnsureComp<ThrownItemComponent>(uid);
+        var comp = new ThrownItemComponent();
         comp.Thrower = user;
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
         var time = direction.Length() / strength;
         comp.ThrownTime = _gameTiming.CurTime;
-        comp.LandTime = time < FlyTime ? default : comp.ThrownTime + TimeSpan.FromSeconds(time - FlyTime);
+        // did we launch this with something stronger than our hands?
+        if (TryComp<HandsComponent>(comp.Thrower, out var hands) && strength > hands.ThrowForceMultiplier)
+            comp.LandTime = comp.ThrownTime + TimeSpan.FromSeconds(time);
+        else
+            comp.LandTime = time < FlyTime ? default : comp.ThrownTime + TimeSpan.FromSeconds(time - FlyTime);
         comp.PlayLandSound = playSound;
+        AddComp(uid, comp, true);
 
         ThrowingAngleComponent? throwingAngle = null;
 
@@ -135,13 +146,15 @@ public sealed class ThrowingSystem : EntitySystem
             _transform.SetLocalRotation(uid, angle + offset);
         }
 
+        var throwEvent = new ThrownEvent(user, uid);
+        RaiseLocalEvent(uid, ref throwEvent, true);
         if (user != null)
-            _interactionSystem.ThrownInteraction(user.Value, uid);
+            _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity}");
 
         var impulseVector = direction.Normalized() * strength * physics.Mass;
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
-        if (comp.LandTime <= TimeSpan.Zero)
+        if (comp.LandTime == null || comp.LandTime <= TimeSpan.Zero)
         {
             _thrownSystem.LandComponent(uid, comp, physics, playSound);
         }
@@ -150,9 +163,13 @@ public sealed class ThrowingSystem : EntitySystem
             _physics.SetBodyStatus(physics, BodyStatus.InAir);
         }
 
+        if (user == null)
+            return;
+
+        _recoil.KickCamera(user.Value, -direction * 0.04f);
+
         // Give thrower an impulse in the other direction
-        if (user != null &&
-            pushbackRatio != 0.0f &&
+        if (pushbackRatio != 0.0f &&
             physics.Mass > 0f &&
             TryComp(user.Value, out PhysicsComponent? userPhysics) &&
             _gravity.IsWeightless(user.Value, userPhysics))

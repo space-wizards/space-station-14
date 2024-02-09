@@ -80,7 +80,7 @@ foreach (var record in reader.GetRecords<Row>())
 
     var tier = tiers[0];
     var tierName = content.Included.SingleOrDefault(i => i.Id == tier.Id && i.Type == tier.Type)?.Attributes.Title;
-    if (tierName == null)
+    if (tierName == null || tierName == "Free")
         continue;
 
     if (record.Trigger == "members:delete")

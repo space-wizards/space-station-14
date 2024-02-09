@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Speech.Components
 {
     [Prototype("accent")]
-    public sealed class ReplacementAccentPrototype : IPrototype
+    public sealed partial class ReplacementAccentPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]

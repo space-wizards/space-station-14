@@ -1,0 +1,7 @@
+- files:
+  - buzz_sigh.ogg
+  - buzz_two.ogg
+  - ping.ogg
+  copyright: '"buzz_sigh.ogg", "buzz_two.ogg", and "ping.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound

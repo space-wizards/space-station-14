@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Server.Spawners.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.Item;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -15,14 +17,70 @@ public sealed partial class StorageSystem
         if (component.Contents.Count == 0)
             return;
 
-        TryComp<StorageComponent>(uid, out var storageComp);
-        TryComp<EntityStorageComponent>(uid, out var entityStorageComp);
-
-        if (entityStorageComp == null && storageComp == null)
+        if (TryComp<StorageComponent>(uid, out var storageComp))
+        {
+            FillStorage((uid, component, storageComp));
+        }
+        else if (TryComp<EntityStorageComponent>(uid, out var entityStorageComp))
+        {
+            FillEntityStorage((uid, component, entityStorageComp));
+        }
+        else
         {
             Log.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
-            return;
         }
+    }
+
+    private void FillStorage(Entity<StorageFillComponent?, StorageComponent?> entity)
+    {
+        var (uid, component, storage) = entity;
+
+        if (!Resolve(uid, ref component, ref storage))
+            return;
+
+        var coordinates = Transform(uid).Coordinates;
+
+        var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, Random);
+
+        var items = new List<Entity<ItemComponent>>();
+        foreach (var spawnPrototype in spawnItems)
+        {
+            var ent = Spawn(spawnPrototype, coordinates);
+
+            // No, you are not allowed to fill a container with entity spawners.
+            DebugTools.Assert(!_prototype.Index<EntityPrototype>(spawnPrototype)
+                .HasComponent(typeof(RandomSpawnerComponent)));
+
+            if (!TryComp<ItemComponent>(ent, out var itemComp))
+            {
+                Log.Error($"Tried to fill {ToPrettyString(entity)} with non-item {spawnPrototype}.");
+                Del(ent);
+                continue;
+            }
+
+            items.Add((ent, itemComp));
+        }
+
+        // we order the items from biggest to smallest to try and reduce poor placement in the grid.
+        var sortedItems = items
+            .OrderByDescending(x => ItemSystem.GetItemShape(x.Comp).GetArea());
+
+        foreach (var ent in sortedItems)
+        {
+            if (Insert(uid, ent, out _, out var reason, storageComp: storage, playSound: false))
+                continue;
+
+            Log.Error($"Tried to StorageFill {ToPrettyString(ent)} inside {ToPrettyString(uid)} but can't. reason: {reason}");
+            Del(ent);
+        }
+    }
+
+    private void FillEntityStorage(Entity<StorageFillComponent?, EntityStorageComponent?> entity)
+    {
+        var (uid, component, entityStorageComp) = entity;
+
+        if (!Resolve(uid, ref component, ref entityStorageComp))
+            return;
 
         var coordinates = Transform(uid).Coordinates;
 
@@ -32,17 +90,14 @@ public sealed partial class StorageSystem
             // No, you are not allowed to fill a container with entity spawners.
             DebugTools.Assert(!_prototype.Index<EntityPrototype>(item)
                 .HasComponent(typeof(RandomSpawnerComponent)));
-            var ent = EntityManager.SpawnEntity(item, coordinates);
+            var ent = Spawn(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS
             if (entityStorageComp != null && EntityStorage.Insert(ent, uid, entityStorageComp))
                 continue;
 
-            if (storageComp != null && Insert(uid, ent, out _, storageComp: storageComp, playSound: false))
-                continue;
-
             Log.Error($"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
-            EntityManager.DeleteEntity(ent);
+            Del(ent);
         }
     }
 }

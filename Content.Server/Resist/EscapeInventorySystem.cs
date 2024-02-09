@@ -7,6 +7,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Resist;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -38,8 +39,18 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
+        if (!args.HasDirectionalMovement)
+            return;
+
         if (!_containerSystem.TryGetContainingContainer(uid, out var container) || !_actionBlockerSystem.CanInteract(uid, container.Owner))
             return;
+
+        // Make sure there's nothing stopped the removal (like being glued)
+        if (!_containerSystem.CanRemove(uid, container))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
+            return;
+        }
 
         // Contested
         if (_handsSystem.IsHolding(container.Owner, uid, out var inHand))
@@ -53,7 +64,10 @@ public sealed class EscapeInventorySystem : EntitySystem
                 contestResults = 1;
 
             if (contestResults >= MaximumMassDisadvantage)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
                 return;
+            }
 
             AttemptEscape(uid, container.Owner, component, contestResults);
             return;
@@ -80,7 +94,6 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.DoAfter))
             return;
 
-        Dirty(user, component);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, user);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
     }
@@ -88,7 +101,6 @@ public sealed class EscapeInventorySystem : EntitySystem
     private void OnEscape(EntityUid uid, CanEscapeInventoryComponent component, EscapeInventoryEvent args)
     {
         component.DoAfter = null;
-        Dirty(uid, component);
 
         if (args.Handled || args.Cancelled)
             return;

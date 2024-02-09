@@ -1,10 +1,10 @@
 using Content.Server.Explosion.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -18,6 +18,7 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<OnUseTimerTriggerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
+        SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomTimerTriggerMapInit);
     }
 
     private void OnStuck(EntityUid uid, OnUseTimerTriggerComponent component, EntityStuckEvent args)
@@ -45,7 +46,7 @@ public sealed partial class TriggerSystem
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, OnUseTimerTriggerComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
 
         if (component.UseVerbInstead)
@@ -114,6 +115,16 @@ public sealed partial class TriggerSystem
         }
     }
 
+    private void OnRandomTimerTriggerMapInit(Entity<RandomTimerTriggerComponent> ent, ref MapInitEvent args)
+    {
+        var (_, comp) = ent;
+
+        if (!TryComp<OnUseTimerTriggerComponent>(ent, out var timerTriggerComp))
+            return;
+
+        timerTriggerComp.Delay = _random.NextFloat(comp.Min, comp.Max);
+    }
+
     private void CycleDelay(OnUseTimerTriggerComponent component, EntityUid user)
     {
         if (component.DelayOptions == null || component.DelayOptions.Count == 1)
@@ -159,6 +170,8 @@ public sealed partial class TriggerSystem
     {
         if (args.Handled || HasComp<AutomatedTimerComponent>(uid) || component.UseVerbInstead)
             return;
+
+        _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
 
         HandleTimerTrigger(
             uid,

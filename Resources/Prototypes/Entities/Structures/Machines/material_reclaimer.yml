@@ -51,6 +51,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
@@ -81,7 +84,7 @@
       path: /Audio/Ambience/Objects/crushing.ogg
       params:
         volume: 5
-        maxdistance: 5
+        maxDistance: 5
         loop: true
   - type: MaterialStorage
     insertOnInteract: false

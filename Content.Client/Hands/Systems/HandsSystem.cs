@@ -6,6 +6,7 @@ using Content.Client.Verbs.UI;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -13,6 +14,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Hands.Systems
@@ -42,8 +44,8 @@ namespace Content.Client.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
-            SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
+            SubscribeLocalEvent<HandsComponent, LocalPlayerAttachedEvent>(HandlePlayerAttached);
+            SubscribeLocalEvent<HandsComponent, LocalPlayerDetachedEvent>(HandlePlayerDetached);
             SubscribeLocalEvent<HandsComponent, ComponentStartup>(OnHandsStartup);
             SubscribeLocalEvent<HandsComponent, ComponentShutdown>(OnHandsShutdown);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
@@ -95,7 +97,8 @@ namespace Content.Client.Hands.Systems
                     }
                 }
 
-                component.SortedHands = new(state.HandNames);
+                component.SortedHands.Clear();
+                component.SortedHands.AddRange(state.HandNames);
                 var sorted = addedHands.OrderBy(hand => component.SortedHands.IndexOf(hand.Name));
 
                 foreach (var hand in sorted)
@@ -250,7 +253,7 @@ namespace Content.Client.Hands.Systems
 
             OnPlayerItemAdded?.Invoke(hand.Name, args.Entity);
 
-            if (HasComp<HandVirtualItemComponent>(args.Entity))
+            if (HasComp<VirtualItemComponent>(args.Entity))
                 OnPlayerHandBlocked?.Invoke(hand.Name);
         }
 
@@ -268,7 +271,7 @@ namespace Content.Client.Hands.Systems
 
             OnPlayerItemRemoved?.Invoke(hand.Name, args.Entity);
 
-            if (HasComp<HandVirtualItemComponent>(args.Entity))
+            if (HasComp<VirtualItemComponent>(args.Entity))
                 OnPlayerHandUnblocked?.Invoke(hand.Name);
         }
 
@@ -360,12 +363,12 @@ namespace Content.Client.Hands.Systems
 
         #region Gui
 
-        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
+        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, LocalPlayerAttachedEvent args)
         {
             OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
+        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, LocalPlayerDetachedEvent args)
         {
             OnPlayerHandsRemoved?.Invoke();
         }

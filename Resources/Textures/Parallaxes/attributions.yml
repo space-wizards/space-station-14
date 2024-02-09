@@ -7,3 +7,8 @@
   license: "CC0-1.0"
   copyright: "adapted from Screaming Brain Studios"
   source: "https://opengameart.org/content/seamless-space-backgrounds"
+
+- files: ["gas_giant.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "made by brainfood1183 (github) for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/gas_giant.png"

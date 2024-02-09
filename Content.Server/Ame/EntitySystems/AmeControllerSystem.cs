@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer;
@@ -15,7 +16,9 @@ using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ame.EntitySystems;
@@ -23,6 +26,7 @@ namespace Content.Server.Ame.EntitySystems;
 public sealed class AmeControllerSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
@@ -173,7 +177,7 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Exists(jar))
             return;
 
-        controller.JarSlot.Remove(jar!.Value);
+        _containerSystem.Remove(jar!.Value, controller.JarSlot);
         UpdateUi(uid, controller);
         if (Exists(user))
             _handsSystem.PickupOrDrop(user, jar!.Value);
@@ -233,7 +237,15 @@ public sealed class AmeControllerSystem : EntitySystem
             safeLimit = group.CoreCount * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
-            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
+        {
+            if (_gameTiming.CurTime > controller.EffectCooldown)
+            {
+                _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
+                _audioSystem.PlayGlobal("/Audio/Misc/adminlarm.ogg",
+                    Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
+                controller.EffectCooldown = _gameTiming.CurTime + controller.CooldownDuration;
+            }
+        }
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
@@ -251,6 +263,7 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             < 10 => AmeControllerState.Fuck,
             < 50 => AmeControllerState.Critical,
+            < 80 => AmeControllerState.Warning,
             _ => AmeControllerState.On,
         };
 
@@ -291,7 +304,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
         }
 
-        comp.JarSlot.Insert(args.Used);
+        _containerSystem.Insert(args.Used, comp.JarSlot);
         _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-success"), uid, args.User, PopupType.Medium);
 
         UpdateUi(uid, comp);

@@ -20,7 +20,7 @@ public sealed partial class SalvageSystem
         data.ActiveMission = args.Index;
         var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
-        UpdateConsoles(data);
+        UpdateConsoles((station.Value, data));
     }
 
     private void OnSalvageConsoleInit(Entity<SalvageExpeditionConsoleComponent> console, ref ComponentInit args)
@@ -33,7 +33,7 @@ public sealed partial class SalvageSystem
         UpdateConsole(console);
     }
 
-    private void UpdateConsoles(SalvageExpeditionDataComponent component)
+    private void UpdateConsoles(Entity<SalvageExpeditionDataComponent> component)
     {
         var state = GetState(component);
 
@@ -42,7 +42,7 @@ public sealed partial class SalvageSystem
         {
             var station = _station.GetOwningStation(uid, xform);
 
-            if (station != uid)
+            if (station != component.Owner)
                 continue;
 
             _ui.TrySetUiState(uid, SalvageConsoleUiKey.Expedition, state, ui: uiComp);

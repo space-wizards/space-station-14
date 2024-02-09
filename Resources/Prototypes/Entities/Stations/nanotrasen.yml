@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: BaseStationNanotrasen
   components:
@@ -14,10 +14,12 @@
     - BaseStationJobsSpawning
     - BaseStationRecords
     - BaseStationArrivals
+    - BaseStationGateway
     - BaseStationShuttles
     - BaseStationCentcomm
     - BaseStationEvacuation
     - BaseStationAlertLevels
+    - BaseStationMagnet
     - BaseStationExpeditions
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible

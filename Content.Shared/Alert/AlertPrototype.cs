@@ -8,7 +8,7 @@ namespace Content.Shared.Alert
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
     [Prototype("alert")]
-    public sealed class AlertPrototype : IPrototype, ISerializationHooks
+    public sealed partial class AlertPrototype : IPrototype, ISerializationHooks
     {
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();

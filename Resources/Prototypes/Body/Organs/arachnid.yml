@@ -28,7 +28,7 @@
 - type: entity
   id: OrganArachnidStomach
   parent: OrganAnimalStomach
-  name: Stomach
+  name: stomach
   description: "Gross. This is hard to stomach."
   components:
   - type: Sprite
@@ -94,7 +94,7 @@
   - type: Metabolizer
     updateFrequency: 1.5
     maxReagents: 2
-    metabolizerTypes: [Animal]
+    metabolizerTypes: [Arachnid]
     groups:
     - id: Medicine
     - id: Poison

@@ -7,34 +7,32 @@ namespace Content.Server.IgnitionSource;
 /// <summary>
 /// This handles ignition, Jez basically coded this.
 /// </summary>
-///
 public sealed class IgnitionSourceSystem : EntitySystem
 {
-    /// <inheritdoc/>
-    ///
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<IgnitionSourceComponent,IsHotEvent>(OnIsHot);
+
+        SubscribeLocalEvent<IgnitionSourceComponent, IsHotEvent>(OnIsHot);
     }
 
-    private void OnIsHot(EntityUid uid, IgnitionSourceComponent component, IsHotEvent args)
+    private void OnIsHot(Entity<IgnitionSourceComponent> ent, ref IsHotEvent args)
     {
-        SetIgnited(uid, args.IsHot, component);
+        SetIgnited((ent.Owner, ent.Comp), args.IsHot);
     }
 
     /// <summary>
     /// Simply sets the ignited field to the ignited param.
     /// </summary>
-    public void SetIgnited(EntityUid uid, bool ignited = true, IgnitionSourceComponent? comp = null)
+    public void SetIgnited(Entity<IgnitionSourceComponent?> ent, bool ignited = true)
     {
-        if (!Resolve(uid, ref comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        comp.Ignited = ignited;
+        ent.Comp.Ignited = ignited;
     }
 
     public override void Update(float frameTime)
@@ -42,17 +40,16 @@ public sealed class IgnitionSourceSystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<IgnitionSourceComponent, TransformComponent>();
-        while (query.MoveNext(out var source, out var component, out var transform))
+        while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (!component.Ignited)
+            if (!comp.Ignited)
                 continue;
 
-            if (transform.GridUid is { } gridUid)
+            if (xform.GridUid is { } gridUid)
             {
-                var position = _transformSystem.GetGridOrMapTilePosition(source, transform);
-                _atmosphereSystem.HotspotExpose(gridUid, position, component.Temperature, 50, source, true);
+                var position = _transform.GetGridOrMapTilePosition(uid, xform);
+                _atmosphere.HotspotExpose(gridUid, position, comp.Temperature, 50, uid, true);
             }
         }
-
     }
 }

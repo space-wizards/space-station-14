@@ -329,6 +329,9 @@ namespace Content.Shared.Stacks
             if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
                 return false;
 
+            if (insertStack.StackTypeId != targetStack.StackTypeId)
+                return false;
+
             var available = GetAvailableSpace(targetStack);
 
             if (available <= 0)

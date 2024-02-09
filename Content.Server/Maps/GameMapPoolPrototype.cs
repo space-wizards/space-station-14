@@ -8,7 +8,7 @@ namespace Content.Server.Maps;
 /// Prototype that holds a pool of maps that can be indexed based on the map pool CCVar.
 /// </summary>
 [Prototype("gameMapPool"), PublicAPI]
-public sealed class GameMapPoolPrototype : IPrototype
+public sealed partial class GameMapPoolPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

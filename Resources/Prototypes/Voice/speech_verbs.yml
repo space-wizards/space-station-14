@@ -121,3 +121,10 @@
   - chat-speech-verb-ghost-3
   - chat-speech-verb-ghost-4
   - chat-speech-verb-mumble
+
+- type: speechVerb
+  id: Electricity
+  speechVerbStrings:
+  - chat-speech-verb-electricity-1
+  - chat-speech-verb-electricity-2
+  - chat-speech-verb-electricity-3
