@@ -3,6 +3,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
 using Content.Server.Inventory;
+using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -54,6 +55,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         SubscribeLocalEvent<CryostorageContainedComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         SubscribeLocalEvent<CryostorageContainedComponent, MindRemovedMessage>(OnMindRemoved);
+
+        SubscribeLocalEvent<GetPinpointerProxyEvent>(OnGetPinpointerProxy);
 
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
@@ -111,7 +114,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         _transform.SetCoordinates(entity.Value, Transform(attachedEntity).Coordinates);
         _hands.PickupOrDrop(attachedEntity, entity.Value);
         UpdateCryostorageUIState(ent);
-        RaiseLocalEvent(ent.Owner, new AfterExitCryostorageEvent(entity.Value, ent), true);
+        RecursiveRaiseEvent(entity.Value, f => new AfterExitCryostorageEvent(f, ent));
     }
 
     private void UpdateCryostorageUIState(Entity<CryostorageComponent> ent)
@@ -189,22 +192,11 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         _audio.PlayPvs(cryostorageComponent.RemoveSound, ent);
 
-        EnsurePausedMap();
-        if (PausedMap == null)
-        {
-            Log.Error("CryoSleep map was unexpectedly null");
+        if (!EnsurePausedMap())
             return;
-        }
 
         var cryostorageEnt = new Entity<CryostorageComponent>(cryostorageUid.Value, cryostorageComponent);
-        var enumerator = _inventory.GetSlotEnumerator(ent.Owner);
-
-        while (enumerator.NextItem(out var itemUid))
-            RaiseEventAllItems(itemUid, cryostorageEnt);
-
-        foreach (var hand in _hands.EnumerateHands(ent.Owner))
-            if (hand.HeldEntity != null)
-                RaiseEventAllItems(hand.HeldEntity.Value, cryostorageEnt);
+        RecursiveRaiseEvent(ent.Owner, f => new BeforeEnterCryostorageEvent(f, cryostorageEnt));
 
         if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
         {
@@ -214,20 +206,27 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             }
         }
         comp.AllowReEnteringBody = false;
-        _transform.SetParent(ent, PausedMap.Value);
+        _transform.SetParent(ent, PausedMap!.Value);
         cryostorageComponent.StoredPlayers.Add(ent);
         Dirty(ent, comp);
         UpdateCryostorageUIState(cryostorageEnt);
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageUid.Value)}");
     }
 
-    private void RaiseEventAllItems(EntityUid entity, Entity<CryostorageComponent> cryostorageEnt)
+    // Raise an event on an entity and it's children, from bottom to top
+    private void RecursiveRaiseEvent<TEvent>(EntityUid entity, Func<EntityUid, TEvent> constructor)
+        where TEvent : notnull
     {
-        if (TryComp<StorageComponent>(entity, out var storageComp))
-            foreach (var child in storageComp.StoredItems.Keys)
-                RaiseEventAllItems(child, cryostorageEnt);
+        if (!TryComp<TransformComponent>(entity, out var entityXform))
+            return;
 
-        RaiseLocalEvent(entity, new BeforeEnterCryostorageEvent(entity, cryostorageEnt), true);
+        var enumerator = entityXform.ChildEnumerator;
+
+        while (enumerator.MoveNext(out var child))
+            RecursiveRaiseEvent(child, constructor);
+
+        var ev = constructor(entity);
+        RaiseLocalEvent(entity, ref ev, true);
     }
 
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)
@@ -275,6 +274,61 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var msg = Loc.GetString(locKey, ("time", comp.GracePeriod.TotalMinutes));
         if (TryComp<ActorComponent>(args.Entity, out var actor))
             _chatManager.ChatMessageToOne(ChatChannel.Server, msg, msg, uid, false, actor.PlayerSession.Channel);
+    }
+
+    /// <summary>
+    /// Responds to <see cref="PinpointerSystem"/> and looks for a cryogenic storage unit that contains the pinpointer's target.
+    /// <summary/>
+    private void OnGetPinpointerProxy(ref GetPinpointerProxyEvent args)
+    {
+        if (args.Proxy != null)
+            return;
+
+        if (!EnsurePausedMap())
+            return;
+
+        if (!Resolve(args.Entity.Owner, ref args.Entity.Comp!) ||
+            !Resolve(args.Pinpointer.Owner, ref args.Pinpointer.Comp!))
+            return;
+
+        if (args.MapId != args.Pinpointer.Comp.MapID)
+            return;
+
+        // Search for a cryogenic storage unit on the same map as the pinpointer.
+        var query = EntityQueryEnumerator<CryostorageComponent, TransformComponent>();
+
+        while (query.MoveNext(out var cryoUid, out var cryoComp, out var cryoXform))
+        {
+            if (args.MapId != cryoXform.MapID)
+                continue;
+
+            foreach (var contained in cryoComp.StoredPlayers)
+            {
+                if (!RecursiveCheckTarget(contained, args.Entity.Owner))
+                    continue;
+
+                args.Proxy = (cryoUid, cryoXform);
+                return;
+            }
+        }
+    }
+
+    // Check if the contained player or any of their children are our target.
+    private bool RecursiveCheckTarget(EntityUid entity, EntityUid target)
+    {
+        if (!TryComp<TransformComponent>(entity, out var entityXform))
+            return false;
+
+        if (entity == target)
+            return true;
+
+        var enumerator = entityXform.ChildEnumerator;
+
+        while (enumerator.MoveNext(out var child))
+            if (RecursiveCheckTarget(child, target))
+                return true;
+
+        return false;
     }
 
     private IEnumerable<CryostorageContainedPlayerData> GetAllContainedData(Entity<CryostorageComponent> ent)
@@ -328,26 +382,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     }
 }
 
-public sealed class BeforeEnterCryostorageEvent : EntityEventArgs
-{
-    public EntityUid Entity { get; }
-    public Entity<CryostorageComponent> Cryostorage { get; }
+[ByRefEvent]
+public record struct BeforeEnterCryostorageEvent(EntityUid Entity, Entity<CryostorageComponent> Cryostorage);
 
-    public BeforeEnterCryostorageEvent(EntityUid entity, Entity<CryostorageComponent> cryostorage)
-    {
-        Entity = entity;
-        Cryostorage = cryostorage;
-    }
-}
-
-public sealed class AfterExitCryostorageEvent : EntityEventArgs
-{
-    public EntityUid Entity { get; }
-    public Entity<CryostorageComponent> Cryostorage { get; }
-
-    public AfterExitCryostorageEvent(EntityUid entity, Entity<CryostorageComponent> cryostorage)
-    {
-        Entity = entity;
-        Cryostorage = cryostorage;
-    }
-}
+[ByRefEvent]
+public record struct AfterExitCryostorageEvent(EntityUid Entity, Entity<CryostorageComponent> Cryostorage);

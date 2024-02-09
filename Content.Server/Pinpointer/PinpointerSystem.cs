@@ -2,6 +2,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Content.Server.Bed.Cryostorage;
 using Content.Server.Respawn;
@@ -68,11 +69,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (pinpointer.CanRetarget)
                 continue;
 
-                LocateTarget(uid, pinpointer);
+            LocateTarget(uid, pinpointer);
         }
     }
 
-    private void OnBeforeEnterCryostorage(BeforeEnterCryostorageEvent args)
+    private void OnBeforeEnterCryostorage(ref BeforeEnterCryostorageEvent args)
     {
         var query = EntityQueryEnumerator<PinpointerComponent>();
 
@@ -81,7 +82,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 SetTarget(uid, args.Cryostorage.Owner, pinpointer);
     }
 
-    private void OnAfterExitCryostorage(AfterExitCryostorageEvent args)
+    private void OnAfterExitCryostorage(ref AfterExitCryostorageEvent args)
     {
         var query = EntityQueryEnumerator<PinpointerComponent>();
 
@@ -145,6 +146,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     /// <summary>
     ///     Try to find the closest entity from whitelist on a current map
+    ///     Raises <see cref="EventNameHere"/> to look for entities that make use of paused maps
     ///     Will return null if can't find anything
     /// </summary>
     private EntityUid? FindTargetFromComponent(EntityUid uid, Type whitelist, TransformComponent? transform = null)
@@ -156,20 +158,37 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         // sort all entities in distance increasing order
         var mapId = transform.MapID;
-        var l = new SortedList<float, EntityUid>();
         var worldPos = _transform.GetWorldPosition(transform);
+        var sortedList = new SortedList<float, EntityUid>();
 
-        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
+        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist, true))
         {
-            if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
+            if (!_xformQuery.TryGetComponent(otherUid, out var otherXform))
                 continue;
 
-            var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
-            l.TryAdd(dist, otherUid);
+            var result = new Entity<TransformComponent>(otherUid, otherXform);
+
+            if (otherXform.MapID != mapId)
+            {
+                // check for edge cases, such as cryogenic storage units
+                var ev = new GetPinpointerProxyEvent(result, (uid, transform), mapId);
+                RaiseLocalEvent(ref ev);
+
+                if (ev.Proxy == null)
+                    continue;
+
+                if (ev.Proxy.Value.Comp.MapID != mapId)
+                    continue;
+
+                result = ev.Proxy.Value;
+            }
+
+            var dist = (_transform.GetWorldPosition(result.Comp) - worldPos).LengthSquared();
+            sortedList.TryAdd(dist, result.Owner);
         }
 
         // return uid with a smallest distance
-        return l.Count > 0 ? l.First().Value : null;
+        return sortedList.Count > 0 ? sortedList.First().Value : null;
     }
 
     /// <summary>
@@ -189,6 +208,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         var dirVec = CalculateDirection(uid, target.Value);
         var oldDist = pinpointer.DistanceToTarget;
+
         if (dirVec != null)
         {
             var angle = dirVec.Value.ToWorldAngle();
@@ -198,8 +218,10 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
         else
         {
+            TrySetArrowAngle(uid, Angle.Zero, pinpointer);
             SetDistance(uid, Distance.Unknown, pinpointer);
         }
+
         if (oldDist != pinpointer.DistanceToTarget)
             UpdateAppearance(uid, pinpointer);
     }
@@ -240,3 +262,29 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return Distance.Far;
     }
 }
+
+
+/// <summary>
+/// Raised by <see cref="PinpointerSystem"/> to check for an off-map 'proxy' of the target entity.
+/// This event should be responded to by systems that send entities to other maps with the intention of brining them back later.
+/// The event is considered handled once a proxy has been assigned.
+/// <summary/>
+/// <param name="Entity">The off-map target.<param/>
+/// <param name="Pinpointer">The pinpointer.<param/>
+/// <param name="MapId">The map id of the pinpointer.<param/>
+/// <param name="Proxy">An entity on the same map as the pinpointer.<param/>
+[ByRefEvent]
+public record struct GetPinpointerProxyEvent
+{
+    public Entity<TransformComponent> Entity;
+    public Entity<TransformComponent> Pinpointer;
+    public MapId MapId;
+    public Entity<TransformComponent>? Proxy = null;
+
+    public GetPinpointerProxyEvent(Entity<TransformComponent> entity, Entity<TransformComponent> pinpointer, MapId mapId)
+    {
+        Entity = entity;
+        Pinpointer = pinpointer;
+        MapId = mapId;
+    }
+};

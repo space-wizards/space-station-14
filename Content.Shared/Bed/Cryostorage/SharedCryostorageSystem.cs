@@ -24,6 +24,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
     [Dependency] protected readonly SharedMindSystem Mind = default!;
 
     protected EntityUid? PausedMap { get; private set; }
+    protected MapId? PausedId { get; private set; }
 
     protected bool CryoSleepRejoiningEnabled;
 
@@ -164,17 +165,38 @@ public abstract class SharedCryostorageSystem : EntitySystem
             return;
 
         EntityManager.DeleteEntity(PausedMap.Value);
+        PausedId = null;
         PausedMap = null;
     }
 
-    protected void EnsurePausedMap()
+    protected bool EnsurePausedMap()
+    {
+        if (!CheckPausedMap())
+        {
+            Log.Error("Cryosleep failed to ensure a paused map.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool CheckPausedMap()
     {
         if (PausedMap != null && Exists(PausedMap))
-            return;
+            return true;
 
-        var map = _mapManager.CreateMap();
-        _mapManager.SetMapPaused(map, true);
-        PausedMap = _mapManager.GetMapEntityId(map);
+        PausedId = _mapManager.CreateMap();
+
+        if (PausedId.Value == MapId.Nullspace)
+            return false;
+
+        _mapManager.SetMapPaused(PausedId.Value, true);
+        PausedMap = _mapManager.GetMapEntityId(PausedId.Value);
+
+        if (PausedMap == null)
+            return false;
+
+        return true;
     }
 
     public bool IsInPausedMap(Entity<TransformComponent?> entity)
