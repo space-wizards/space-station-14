@@ -246,9 +246,9 @@
     contents:
       - id: BoxSurvival
       - id: TapeRecorder
-      - id: BlueCassetteTape
-      - id: RedCassetteTape
-      - id: YellowCassetteTape
+      - id: CassetteTape
+      - id: CassetteTape
+      - id: CassetteTape
 
 # ERT
 

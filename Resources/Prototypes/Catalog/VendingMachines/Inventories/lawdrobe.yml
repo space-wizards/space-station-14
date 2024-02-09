@@ -14,11 +14,7 @@
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
     ClothingNeckLawyerbadge: 2
-    BlueCassetteTape: 2
-    RedCassetteTape: 2
-    YellowCassetteTape: 2
-    PurpleCassetteTape: 2
-    WhiteCassetteTape: 2
-    TapeRecorder: 1
+    CassetteTape: 8
+    TapeRecorder: 2
   emaggedInventory:
     CyberPen: 1
