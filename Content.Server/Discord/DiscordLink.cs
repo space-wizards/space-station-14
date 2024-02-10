@@ -76,6 +76,8 @@ public sealed class DiscordLink : IPostInjectInit
         if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token)
         {
             _sawmill.Info("No Discord token specified, not connecting.");
+            // The Bot is not connected, so we need to set the client to null, because some methods check if the bot is connected using a null check on the client.
+            _client = null;
             return;
         }
 
@@ -86,6 +88,7 @@ public sealed class DiscordLink : IPostInjectInit
             // It is valid to not have a Discord token set which is why the above check is an info.
             // But if you have a token set, you should also have a guild ID and prefix set.
             _sawmill.Warning("No Discord guild ID or prefix specified, not connecting.");
+            _client = null;
             return;
         }
 
