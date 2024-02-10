@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Database;
+using Content.Shared._CD.Records;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -63,7 +64,9 @@ namespace Content.IntegrationTests.Tests.Preferences
                 },
                 PreferenceUnavailableMode.StayInLobby,
                 new List<string> (),
-                new List<string>()
+                new List<string>(),
+                // CD: test records
+                CharacterRecords.DefaultRecords()
             );
         }
 

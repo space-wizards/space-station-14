@@ -32,6 +32,9 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
+// CD: imports
+using Content.Server._CD.Records;
+
 namespace Content.Server.Administration.Systems
 {
     public sealed class AdminSystem : EntitySystem
@@ -52,6 +55,9 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+
+        // CD: for erasing records on erase ban
+        [Dependency] private readonly CharacterRecordsSystem _cdRecords = default!;
 
         private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -376,6 +382,9 @@ namespace Content.Server.Administration.Systems
                         _hands.TryDrop(entity.Value, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
                     }
                 }
+
+                // CD: Erase Character Records on ban
+                _cdRecords.DeleteAllRecords(entity.Value);
             }
 
             _minds.WipeMind(player);

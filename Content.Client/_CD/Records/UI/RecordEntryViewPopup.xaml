@@ -1,0 +1,18 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MinSize="500 700"
+                      Title="{Loc 'cd-records-entry-view-popup-title'}">
+    <BoxContainer Margin="10" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="5">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" >
+            <Label Text="{Loc 'cd-character-records-entry-view-title'}" StyleClasses="LabelBig"/>
+            <Control HorizontalExpand="True" />
+            <Label HorizontalAlignment="Right" Name="EntryTitle" HorizontalExpand="True" StyleClasses="LabelBig" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" >
+            <Label Text="{Loc 'cd-character-records-entry-view-involved'}" StyleClasses="LabelBig"/>
+            <Control HorizontalExpand="True" />
+            <Label HorizontalAlignment="Right" Name="EntryInvolved" HorizontalExpand="True" StyleClasses="LabelBig"/>
+        </BoxContainer>
+        <RichTextLabel Name="EntryDesc" HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Stretch"/>
+    </BoxContainer>
+</controls:FancyWindow>

@@ -47,6 +47,8 @@
       - key: enum.GeneralStationRecordConsoleKey.Key
         # who the fuck named this bruh
         type: GeneralStationRecordConsoleBoundUserInterface
+      - key: enum.CharacterRecordConsoleKey.Key
+        type: CharacterRecordConsoleBoundUserInterface
   - type: IntrinsicUI
     uis:
       - key: enum.SolarControlConsoleUiKey.Key
@@ -59,6 +61,8 @@
         toggleAction: ActionAGhostShowCargo
       - key: enum.CrewMonitoringUIKey.Key
         toggleAction: ActionAGhostShowCrewMonitoring
+      - key: enum.CharacterRecordConsoleKey.Key
+        toggleAction: ActionAGhostShowCharacterRecords
       - key: enum.GeneralStationRecordConsoleKey.Key
         toggleAction: ActionAGhostShowStationRecords
   - type: SolarControlConsole # look ma i AM the computer!
@@ -90,6 +94,10 @@
   - type: InventorySlots
   - type: Loadout
     prototypes: [ MobAghostGear ]
+  - type: CharacterRecordConsole
+    consoleType: Admin
+    # Needed for security records console functionality
+  - type: CriminalRecordsConsole
 
 - type: entity
   id: ActionAGhostShowSolar
@@ -168,3 +176,17 @@
     keywords: [ "AI", "console", "interface" ]
     priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
+
+- type: entity
+  id: ActionAGhostShowCharacterRecords
+  name: Character Records Interface
+  description: View all of the character records
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+    iconOn: Structures/Machines/parts.rsi/box_2.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -10
+    event: !type:ToggleIntrinsicUIEvent { key: enum.CharacterRecordConsoleKey.Key }
+

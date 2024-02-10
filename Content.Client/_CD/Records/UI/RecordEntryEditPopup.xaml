@@ -1,0 +1,13 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MinSize="500 700"
+                      Title="{Loc 'cd-records-entry-edit-popup-title'}">
+    <BoxContainer Margin="10" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="5">
+        <LineEdit Name="TitleEdit" HorizontalExpand="True" PlaceHolder="{Loc 'cd-records-entry-edit-popup-title-placeholder'}"/>
+        <LineEdit Name="InvolvedEdit" HorizontalExpand="True" PlaceHolder="{Loc 'cd-records-entry-edit-popup-involved-placeholder'}"/>
+        <TextEdit Name="DescriptionEdit" HorizontalExpand="True" VerticalExpand="True" StyleClasses="BackgroundDark" />
+        <PanelContainer StyleClasses="BackgroundDark">
+            <Button Access="Public" Name="SaveButton" Text="{Loc 'cd-records-entry-edit-popup-save'}"/>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

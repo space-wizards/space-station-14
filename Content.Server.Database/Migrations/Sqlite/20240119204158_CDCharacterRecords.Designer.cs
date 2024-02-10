@@ -3,6 +3,7 @@ using System;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,12 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    partial class SqliteServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240119204158_CDCharacterRecords")]
+    partial class CDCharacterRecords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -764,10 +767,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int>("Slot")
                         .HasColumnType("INTEGER")
                         .HasColumnName("slot");
-
-                    b.Property<int>("SpawnPriority")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("spawn_priority");
 
                     b.Property<string>("Species")
                         .IsRequired()

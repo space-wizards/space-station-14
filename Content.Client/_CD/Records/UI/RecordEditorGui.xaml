@@ -1,0 +1,68 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:cdrecords="clr-namespace:Content.Client._CD.Records.UI">
+    <BoxContainer Orientation="Vertical">
+         <ScrollContainer VerticalExpand="True">
+             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10">
+                 <!-- Height, Weight -->
+                 <GridContainer Columns="2">
+                     <BoxContainer HorizontalExpand="True" SeparationOverride="2">
+                         <Label Text="{Loc 'humanoid-profile-editor-cd-records-height'}" />
+                         <Control HorizontalExpand="True" MinSize="5 0" />
+                         <LineEdit Name="HeightEdit" HorizontalAlignment="Right" MinSize="60 0" />
+                         <Label Name="HeightImperialLabel" MinWidth="60" />
+                     </BoxContainer>
+                     <BoxContainer HorizontalExpand="True" SeparationOverride="2">
+                         <Label Text="{Loc 'humanoid-profile-editor-cd-records-weight'}" />
+                         <Control HorizontalExpand="True" MinSize="5 0" />
+                         <LineEdit Name="WeightEdit" HorizontalAlignment="Right" MinSize="60 0" />
+                         <Label Name="WeightImperialLabel" MinWidth="70"/>
+                     </BoxContainer>
+                 </GridContainer>
+                 <!-- Emergency Contact -->
+                 <BoxContainer Orientation="Horizontal">
+                     <Label Text="{Loc 'humanoid-profile-editor-cd-records-contact-name'}" />
+                     <Control HorizontalExpand="True" />
+                     <LineEdit Name="ContactNameEdit" HorizontalAlignment="Right" MinSize="270 0"/>
+                 </BoxContainer>
+                 <Control MinSize="0 20"/>
+                 <!-- Employment stuff -->
+                 <BoxContainer HorizontalExpand="True">
+                     <Label Text="{Loc 'humanoid-profile-editor-cd-records-work-authorization'}" />
+                     <Control HorizontalExpand="True" MinSize="5 0" />
+                     <CheckBox Name="WorkAuthCheckBox" HorizontalAlignment="Right"/>
+                 </BoxContainer>
+                 <Control MinSize="0 20"/>
+                 <!-- Security stuff -->
+                 <BoxContainer Orientation="Horizontal">
+                     <Label Text="{Loc 'humanoid-profile-editor-cd-records-identifying-features'}" />
+                     <Control HorizontalExpand="True" />
+                     <LineEdit Name="IdentifyingFeaturesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
+                 </BoxContainer>
+                 <Control MinSize="0 20"/>
+                 <!-- Medical stuff -->
+                 <BoxContainer Orientation="Horizontal">
+                     <Label Text="{Loc 'humanoid-profile-editor-cd-records-allergies'}" />
+                     <Control HorizontalExpand="True" />
+                     <LineEdit Name="AllergiesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
+                 </BoxContainer>
+                 <BoxContainer Orientation="Horizontal">
+                     <Label Text="{Loc 'humanoid-profile-editor-cd-records-drug-allergies'}" />
+                     <Control HorizontalExpand="True" />
+                     <LineEdit Name="DrugAllergiesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
+                 </BoxContainer>
+                 <BoxContainer Orientation="Horizontal">
+                     <Label Text="{Loc 'humanoid-profile-editor-cd-records-postmortem'}" />
+                     <Control HorizontalExpand="True" />
+                     <LineEdit Name="PostmortemEdit" HorizontalAlignment="Right" MinSize="350 0"/>
+                 </BoxContainer>
+                 <Control MinSize="0 20"/>
+                 <!-- Entry editor -->
+                 <TabContainer Name="EntryEditorTabs" VerticalExpand="True" HorizontalExpand="True" Margin="10">
+                     <cdrecords:RecordEditorEntrySelector Name="EmploymentEntrySelector"/>
+                     <cdrecords:RecordEditorEntrySelector Name="MedicalEntrySelector"/>
+                     <cdrecords:RecordEditorEntrySelector Name="SecurityEntrySelector"/>
+                 </TabContainer>
+             </BoxContainer>
+         </ScrollContainer>
+    </BoxContainer>
+</Control>
