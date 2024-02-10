@@ -3873,16 +3873,3 @@
   id: 5911
   time: '2024-02-10T09:17:26.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24975
-- author: bhenrich
-  changes:
-  - message: Added fun!
-    type: Add
-  - message: Removed fun!
-    type: Remove
-  - message: Changed fun!
-    type: Tweak
-  - message: Fixed fun!
-    type: Fix
-  id: 5912
-  time: '2024-02-10T17:25:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25106
