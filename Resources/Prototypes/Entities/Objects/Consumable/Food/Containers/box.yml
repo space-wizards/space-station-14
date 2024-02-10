@@ -389,6 +389,32 @@
 
 - type: entity
   parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketStonk
+  name: box of limited edition stonk-pockets
+  components:
+  - type: Sprite
+    state: stonk-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketStonk
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketCarp
+  name: box of carp-pockets
+  components:
+  - type: Sprite
+    state: carp-box
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketCarp
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
   id: FoodBoxDonkpocketBerry
   name: box of berry-flavoured donk-pockets
   components:

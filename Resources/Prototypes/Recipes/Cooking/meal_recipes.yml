@@ -1379,7 +1379,7 @@
   name: cat cake recipe
   result: MobCatCake
   time: 15
-  reagents: 
+  reagents:
     Milk: 15
     Cognizine: 5
   solids:
@@ -1479,6 +1479,23 @@
   time: 5
   solids:
     FoodDonkpocketBerry: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketStonk
+  name: warm stonk-pocket recipe
+  result: FoodDonkpocketStonkWarm
+  time: 5
+  solids:
+    FoodDonkpocketStonk: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketCarp
+  name: warm carp-pocket recipe
+  result: FoodDonkpocketCarpWarm
+  time: 5
+  solids:
+    FoodDonkpocketCarp: 1
+
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
