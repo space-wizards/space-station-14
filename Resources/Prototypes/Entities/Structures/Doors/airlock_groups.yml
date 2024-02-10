@@ -58,3 +58,19 @@
   iconPriority: 40
   stylePaths:
     shuttle:     Structures/Doors/Airlocks/Glass/shuttle.rsi
+
+# fun
+- type: airlockDepartments
+  id: Departments
+  departments:
+    atmospherics: Engineering
+    basic: Civilian
+    cargo: Cargo
+    command: Command
+    engineering: Engineering
+    freezer: Civilian
+    maintenance: Civilian
+    medical: Medical
+    science: Science
+    security: Security
+    virology: Medical

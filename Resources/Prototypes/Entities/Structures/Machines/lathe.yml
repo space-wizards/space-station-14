@@ -134,7 +134,6 @@
       - TrashBag
       - PowerCellSmall
       - PowerCellMedium
-      - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -253,13 +252,16 @@
   - type: Lathe
     idleState: icon
     runningState: building
+    staticRecipes:
+    - LargeBeaker
+    - Dropper
+    - ClothingEyesGlassesChemical
     dynamicRecipes:
       - PowerDrill
       - MiningDrill
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
-      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -268,11 +270,8 @@
       - HoloprojectorField
       - Saw
       - Hemostat
-      - Beaker
-      - LargeBeaker
       - CryostasisBeaker
       - SyringeCryostasis
-      - Dropper
       - Syringe
       - Implanter
       - PillCanister
@@ -311,7 +310,6 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
-      - ClothingEyesGlassesChemical
       - FauxTileAstroGrass
       - FauxTileAstroIce
       - OreBagOfHolding
@@ -370,7 +368,10 @@
     - MaterialReclaimerMachineCircuitboard
     - ElectrolysisUnitMachineCircuitboard
     - CentrifugeMachineCircuitboard
+    - ChemDispenserMachineCircuitboard
+    - ChemMasterMachineCircuitboard
     - CondenserMachineCircuitBoard
+    - HotplateMachineCircuitboard
     - UniformPrinterMachineCircuitboard
     - FloorGreenCircuit
     - FloorBlueCircuit
@@ -383,8 +384,6 @@
       - CryoPodMachineCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
       - BiomassReclaimerMachineCircuitboard
       - BiofabricatorMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
@@ -402,7 +401,6 @@
       - AutolatheHyperConvectionMachineCircuitboard
       - ProtolatheHyperConvectionMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
-      - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - ElectricGrillMachineCircuitboard
       - FatExtractorMachineCircuitboard
@@ -532,7 +530,6 @@
     - BorgModuleAdvancedCleaning
     - BorgModuleMining
     - BorgModuleGrapplingGun
-    - BorgModuleGasAnalyzer
     - BorgModuleAdvancedTool
     - BorgModuleRCD
     - BorgModuleArtifact
@@ -805,15 +802,18 @@
       - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
+      - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
       - Beaker
+      - LargeBeaker
+      - Dropper
+      - Jug
       - Syringe
       - Implanter
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
-      - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -825,21 +825,18 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
-    dynamicRecipes:
-      - HandheldCrewMonitor
-      - ClothingHandsGlovesNitrile
-      - CryostasisBeaker
-      - LargeBeaker
-      - Dropper
       - Scalpel
       - Retractor
       - Cautery
       - Drill
       - Saw
       - Hemostat
+      - ClothingEyesGlassesChemical
+    dynamicRecipes:
+      - ChemicalPayload
+      - CryostasisBeaker
       - BluespaceBeaker
       - SyringeBluespace
-      - Jug
       - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
@@ -932,10 +929,12 @@
       - ClothingUniformJumpsuitPrisoner
       - ClothingUniformJumpskirtPrisoner
       - ClothingHeadHatQMsoft
+      - ClothingHeadHatBeretQM
       - ClothingUniformJumpsuitQM
       - ClothingUniformJumpskirtQM
       - ClothingUniformJumpsuitQMTurtleneck
       - ClothingUniformJumpskirtQMTurtleneck
+      - ClothingUniformJumpsuitQMFormal
       - ClothingHeadHatBeretRND
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
@@ -990,6 +989,15 @@
       - ClothingNeckTieRed
       - ClothingNeckTieDet
       - ClothingNeckTieSci
+      # Scarfs - All scarfs avaible in winterdrobe
+      - ClothingNeckScarfStripedGreen
+      - ClothingNeckScarfStripedBlue
+      - ClothingNeckScarfStripedRed
+      - ClothingNeckScarfStripedBrown
+      - ClothingNeckScarfStripedLightBlue
+      - ClothingNeckScarfStripedOrange
+      - ClothingNeckScarfStripedBlack
+      - ClothingNeckScarfStripedPurple
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingHeadHatCentcomcap
