@@ -310,7 +310,7 @@ public partial class SharedBodySystem
             foreach (var organ in GetPartOrgans(part.Id, part.Component))
             {
                 _gibbingSystem.TryGibEntityWithRef(bodyId, organ.Id, GibType.Drop, GibContentsOption.Skip,
-                    ref gibs, playAudio: false, launchImpulse: GibletLaunchImpulse* splatModifier,
+                    ref gibs, playAudio: false, launchImpulse: GibletLaunchImpulse * splatModifier,
                     launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
             }
         }

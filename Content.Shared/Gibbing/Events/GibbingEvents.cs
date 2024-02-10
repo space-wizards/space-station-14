@@ -2,6 +2,23 @@
 
 namespace Content.Shared.Gibbing.Events;
 
+
+
+/// <summary>
+/// Called just before we actually gib the target entity
+/// </summary>
+/// <param name="Target">The entity being gibed</param>
+/// <param name="GibType">What type of gibbing is occuring</param>
+/// <param name="AllowedContainers">Containers we are allow to gib</param>
+/// <param name="ExcludedContainers">Containers we are allow not allowed to gib</param>
+[ByRefEvent] public record struct AttemptEntityContentsGibEvent(
+    EntityUid Target,
+    GibContentsOption GibType,
+    List<string>? AllowedContainers,
+    List<string>? ExcludedContainers
+    );
+
+
 /// <summary>
 /// Called just before we actually gib the target entity
 /// </summary>
