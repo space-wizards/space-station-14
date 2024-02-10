@@ -396,7 +396,14 @@ namespace Content.Server.Administration.Systems
 
             var embed = GenerateEmbed(playerUid);
 
-            var relay = await _discord.GetGuild()
+            var guild = _discord.GetGuild();
+            if (guild is null)
+            {
+                _sawmill.Error("Requested new relay, but guild was not found.");
+                return null;
+            }
+
+            var relay = await guild
                     .GetForumChannel(_channelId)
                     .CreatePostAsync(title,
                         ThreadArchiveDuration.OneHour,

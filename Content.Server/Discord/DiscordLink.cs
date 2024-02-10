@@ -78,6 +78,17 @@ public sealed class DiscordLink : IPostInjectInit
             _sawmill.Info("No Discord token specified, not connecting.");
             return;
         }
+
+        // If the Guild ID is empty OR the prefix is empty, we don't want to connect to Discord.
+        if (_configuration.GetCVar(CCVars.DiscordGuildId) == string.Empty || _configuration.GetCVar(CCVars.DiscordPrefix) == string.Empty)
+        {
+            // This is a warning, not info, because it's a configuration error.
+            // It is valid to not have a Discord token set which is why the above check is an info.
+            // But if you have a token set, you should also have a guild ID and prefix set.
+            _sawmill.Warning("No Discord guild ID or prefix specified, not connecting.");
+            return;
+        }
+
         _botToken = token;
         // Since you cannot change the token while the server is running / the DiscordLink is initialized,
         // we can just set the token without updating it every time the cvar changes.
@@ -199,42 +210,37 @@ public sealed class DiscordLink : IPostInjectInit
         // Default to none to avoid lazy programmers forgetting to set it. Wouldn't want to ping everyone by accident.
         allowedMentions ??= AllowedMentions.None;
 
-        if (_client is null)
+        var guild = GetGuild();
+        if (guild is null)
         {
-            // If the bot is turned off, don't send a warning. It's totally valid for servers to run without the Discord link set up.
-            if (_botToken == string.Empty)
-                return;
-            _sawmill.Error("Tried to send a Discord message but the client is null! Is the token not set?");
             return;
         }
 
-        if (_guildId == 0)
+        var textChannel = guild.GetTextChannel(channel);
+        if (textChannel is null)
         {
-            _sawmill.Error("Tried to send a Discord message but the guild ID is not set! Blow up now!");
+            _sawmill.Error("Tried to send a message to a channel that doesn't exist!");
             return;
         }
-
-        _client.GetGuild(_guildId)
-            .GetTextChannel(channel)
-            .SendMessageAsync(message, isTTS, embed, null, allowedMentions);
+        textChannel.SendMessageAsync(message, isTTS, embed, null, allowedMentions);
     }
 
-    public SocketGuild GetGuild()
+    public SocketGuild? GetGuild()
     {
         // While I don't expect this to ever be null when this gets called, it's better to be safe than sorry.
         if (_client is null)
         {
             if (_botToken == string.Empty)
-                return null!;
+                return null; // If the bot is turned off, don't send a warning. It's totally valid for servers to run without the Discord link set up.
             _sawmill.Error("Tried to get a Discord guild but the client is null! Is the token not set?");
-            return null!;
+            return null;
         }
 
         // Same as above, but for the guild ID.
         if (_guildId == 0)
         {
             _sawmill.Error("Tried to get a Discord guild but the guild ID is not set! Blow up now!");
-            return null!;
+            return null;
         }
 
         return _client.GetGuild(_guildId);
