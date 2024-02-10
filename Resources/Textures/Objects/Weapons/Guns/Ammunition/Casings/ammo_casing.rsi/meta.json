@@ -11,6 +11,18 @@
             "name": "base"
         },
         {
+            "name": "practice"
+        },
+        {
+            "name": "rubber"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "uranium"
+        },
+        {
             "name": "base-spent"
         }
     ]
