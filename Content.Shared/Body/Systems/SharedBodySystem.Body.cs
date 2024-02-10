@@ -280,8 +280,7 @@ public partial class SharedBodySystem
         Vector2? splatDirection = null,
         float splatModifier = 1,
         Angle splatCone = default,
-        SoundSpecifier? gibSound = null,
-        AudioParams? gibAudioParams = null
+        SoundSpecifier? gibSoundOverride = null
         )
     {
         var gibs = new HashSet<EntityUid>();
@@ -292,7 +291,7 @@ public partial class SharedBodySystem
         var root = GetRootPartOrNull(bodyId, body);
         if (root != null && TryComp(root.Value.Entity, out GibbableComponent? gibbable))
         {
-            gibSound ??= gibbable.GibSound;
+            gibSoundOverride ??= gibbable.GibSound;
         }
         var parts = GetBodyChildren(bodyId, body).ToArray();
         gibs.EnsureCapacity(parts.Length);
@@ -321,7 +320,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
-        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null);
+        _audioSystem.PlayPredicted(gibSoundOverride, Transform(bodyId).Coordinates, null);
         return gibs;
     }
 }

@@ -116,8 +116,7 @@ public sealed class BodySystem : SharedBodySystem
         Vector2? splatDirection = null,
         float splatModifier = 1,
         Angle splatCone = default,
-        SoundSpecifier? gibSound = null,
-        AudioParams? gibAudioParams = null
+        SoundSpecifier? gibSoundOverride = null
     )
     {
         if (!Resolve(bodyId, ref body, false))
