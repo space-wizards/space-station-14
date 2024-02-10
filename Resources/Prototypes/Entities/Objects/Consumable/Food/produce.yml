@@ -52,6 +52,9 @@
           Quantity: 10
   - type: Produce
     seedId: wheat
+  - type: Tag
+    tags:
+    - Wheat 
 
 - type: entity
   name: oat bushel
@@ -91,6 +94,36 @@
           Quantity: 10
   - type: Produce
     seedId: sugarcane
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodLaughinPeaPod
+  name: laughin' pea pod
+  description: The clown's favorite plant.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - peas
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Sugar
+          Quantity: 2
+        - ReagentId: Laughter
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: LaughinSyrup
+        Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
+  - type: Produce
+    seedId: laughinPea
 
 - type: entity
   name: tower-cap log
