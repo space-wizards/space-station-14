@@ -149,6 +149,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
         if (!Resolve(uid, ref id))
             return false;
 
+        id.JobDepartments.Clear();
         foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
         {
             if (department.Roles.Contains(job.ID))
