@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Changed hypodart cost from 3 to 2 tc
-    type: Tweak
-  id: 5407
-  time: '2023-12-17T16:08:11.0000000+00:00'
-  url: null
 - author: yathxyz
   changes:
   - message: Fixed nix devShell
@@ -3883,3 +3876,11 @@
   id: 5906
   time: '2024-02-10T02:06:02.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25088
+- author: Potato1234_x
+  changes:
+  - message: Added laughin' peas, a new mutation for peas that can be ground into
+      Laughter, a chem that forces people to laugh.
+    type: Add
+  id: 5907
+  time: '2024-02-10T08:21:44.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25089
