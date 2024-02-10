@@ -293,7 +293,6 @@ public partial class SharedBodySystem
         if (root != null && TryComp(root.Value.Entity, out GibbableComponent? gibbable))
         {
             gibSound ??= gibbable.GibSound;
-            gibAudioParams ??= gibbable.GibAudioParams;
         }
         var parts = GetBodyChildren(bodyId, body).ToArray();
         gibs.EnsureCapacity(parts.Length);

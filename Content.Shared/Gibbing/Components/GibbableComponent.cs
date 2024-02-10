@@ -31,10 +31,4 @@ public sealed partial class GibbableComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float GibScatterRange = 0.3f;
-
-    /// <summary>
-    /// Audio parameters for when the gibbing sound is played
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public AudioParams GibAudioParams = AudioParams.Default.WithVariation(0.025f);
 }
