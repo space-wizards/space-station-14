@@ -73,7 +73,7 @@ public sealed class DiscordLink : IPostInjectInit
         _client.Log += Log;
         _client.MessageReceived += OnCommandReceivedInternal;
         _client.MessageReceived += OnMessageReceivedInternal;
-        if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token)
+        if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token || token == string.Empty)
         {
             _sawmill.Info("No Discord token specified, not connecting.");
             // The Bot is not connected, so we need to set the client to null, because some methods check if the bot is connected using a null check on the client.

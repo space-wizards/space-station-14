@@ -141,6 +141,12 @@ namespace Content.Server.Administration.Systems
 
         private void OnChannelIdChanged(string obj)
         {
+            if (string.IsNullOrEmpty(obj))
+            {
+                // No warning, this is a valid case. The relay is just disabled.
+                return;
+            }
+
             if (!ulong.TryParse(obj, out var id))
             {
                 _sawmill.Warning("Invalid channel ID.");
