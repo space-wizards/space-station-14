@@ -27,8 +27,8 @@ public sealed partial class RecordEntryViewPopup : FancyWindow
 
     public void SetContents(CharacterRecords.RecordEntry entry)
     {
-        EntryTitle.Text = entry.Title;
-        EntryInvolved.Text = entry.Involved;
+        EntryTitle.SetMessage(entry.Title);
+        EntryInvolved.SetMessage(entry.Involved);
         EntryDesc.SetMessage(FormattedMessage.FromMarkup(entry.Description.Trim()), AllowedTags);
     }
 }

@@ -63,8 +63,6 @@
         toggleAction: ActionAGhostShowCrewMonitoring
       - key: enum.CharacterRecordConsoleKey.Key
         toggleAction: ActionAGhostShowCharacterRecords
-      - key: enum.GeneralStationRecordConsoleKey.Key
-        toggleAction: ActionAGhostShowStationRecords
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom

@@ -7,15 +7,16 @@ namespace Content.Shared._CD.Records;
 [Serializable, NetSerializable]
 public sealed class CharacterRecords
 {
+    private const int TextShortLen = 64;
     private const int TextMedLen = 128;
-    private const int TextVeryLargeLen = 512;
+    private const int TextVeryLargeLen = 2048;
 
     /* Basic info */
 
     // Additional data is fetched from the Profile
 
     // All
-    public const int MaxHeight = 500;
+    public const int MaxHeight = 800;
     public int Height { get; private set; }
     public const int MaxWeight = 300;
     public int Weight { get; private set; }
@@ -185,11 +186,11 @@ public sealed class CharacterRecords
         Height = Math.Clamp(Height, 0, MaxHeight);
         Weight = Math.Clamp(Weight, 0, MaxWeight);
         EmergencyContactName =
-            ClampString(EmergencyContactName, HumanoidCharacterProfile.MaxNameLength);
-        IdentifyingFeatures = ClampString(IdentifyingFeatures, TextMedLen);
-        Allergies = ClampString(Allergies, TextMedLen);
-        DrugAllergies = ClampString(DrugAllergies, TextMedLen);
-        PostmortemInstructions = ClampString(PostmortemInstructions, TextMedLen);
+            ClampString(EmergencyContactName, TextShortLen);
+        IdentifyingFeatures = ClampString(IdentifyingFeatures, TextShortLen);
+        Allergies = ClampString(Allergies, TextShortLen);
+        DrugAllergies = ClampString(DrugAllergies, TextShortLen);
+        PostmortemInstructions = ClampString(PostmortemInstructions, TextShortLen);
 
         EnsureValidEntries(EmploymentEntries);
         EnsureValidEntries(MedicalEntries);

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
@@ -61,29 +60,29 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
 
         var characterRecords = _characterRecords.QueryRecords(station.Value);
         // Get the name and station records key display from the list of records
-        var names = characterRecords
-            .Where(kv =>
+        var names = new Dictionary<NetEntity, (string, uint?)>();
+        foreach (var (uid, r) in characterRecords)
+        {
+            // Apply any filter the user has set
+            if (console.Filter != null)
             {
-                // Apply any filter the user has set
-                if (console.Filter != null)
-                {
-                    return !IsSkippedRecord(console.Filter, kv.Value);
-                }
+                if (IsSkippedRecord(console.Filter, r))
+                    continue;
+            }
 
-                return true;
-            })
-            .Select(r =>
+            var netEnt = _entityManager.GetNetEntity(uid);
+            if (names.ContainsKey(netEnt))
+                Log.Error($"We somehow have duplicate character record keys, NetEntity: {netEnt}, Entity: {entity}, Character Name: {r.Name}");
+            if (console.ConsoleType == RecordConsoleType.Admin)
             {
-                var netEnt = _entityManager.GetNetEntity(r.Key);
                 // Admins get additional info to make it easier to run commands
-                if (console.ConsoleType == RecordConsoleType.Admin)
-                {
-                    return (netEnt, ($"{r.Value.Name} ({netEnt}, {r.Value.JobTitle}", r.Value.StationRecordsKey));
-                }
-
-                return (netEnt, ($"{r.Value.Name} ({r.Value.JobTitle})", r.Value.StationRecordsKey));
-            })
-            .ToDictionary();
+                names[netEnt] = ($"{r.Name} ({netEnt}, {r.JobTitle}", r.StationRecordsKey);
+            }
+            else
+            {
+                names[netEnt] = ($"{r.Name} ({r.JobTitle})", r.StationRecordsKey);
+            }
+        }
 
         var record = console.Selected == null ? null : characterRecords[_entityManager.GetEntity(console.Selected.Value)];
         (SecurityStatus, string?)? securityStatus = null;
