@@ -1,0 +1,26 @@
+- type: marking
+  id: LizardChestDragonwings
+  bodyPart: Tail
+  markingCategory: Chest
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _CD/Mobs/Customization/reptilian_parts.rsi
+    state: body_dragonwings
+
+- type: marking
+  id: LizardHeadLEDVisor
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#808080"
+  sprites:
+  - sprite: _CD/Mobs/Customization/reptilian_parts.rsi
+    state: head_ledvisor_primary
+  - sprite: _CD/Mobs/Customization/reptilian_parts.rsi
+    state: head_ledvisor_secondary
+  - sprite: _CD/Mobs/Customization/reptilian_parts.rsi
+    state: head_ledvisor_tertiary
