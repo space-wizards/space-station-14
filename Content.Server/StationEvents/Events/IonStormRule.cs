@@ -1,3 +1,4 @@
+using Content.Server._CD.Traits;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Laws;
 using Content.Server.Station.Components;
@@ -12,6 +13,10 @@ using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+// Used in CD's System
+using Content.Server.Chat.Managers;
+using Content.Shared.Chat;
+using Robust.Shared.Player;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -20,6 +25,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SiliconLawSystem _siliconLaw = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!; // Used for CD's System
 
     // funny
     [ValidatePrototypeId<DatasetPrototype>]
@@ -65,6 +71,22 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
 
         if (!TryGetRandomStation(out var chosenStation))
             return;
+
+        // CD Change - Go through everyone with the SynthComponent and inform them a storm is happening.
+        var synthQuery = EntityQueryEnumerator<SynthComponent>();
+        while (synthQuery.MoveNext(out var ent, out var synthComp))
+        {
+            if (RobustRandom.Prob(synthComp.AlertChance))
+                continue;
+
+            if (!TryComp<ActorComponent>(ent, out var actor))
+                continue;
+
+            var msg = Loc.GetString("station-event-ion-storm-synth");
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+            _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Yellow);
+        }
+        // End of CD change
 
         var query = EntityQueryEnumerator<SiliconLawBoundComponent, TransformComponent, IonStormTargetComponent>();
         while (query.MoveNext(out var ent, out var lawBound, out var xform, out var target))

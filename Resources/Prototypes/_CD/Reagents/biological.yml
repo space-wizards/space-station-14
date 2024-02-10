@@ -1,0 +1,23 @@
+- type: reagent
+  id: SynthBlood
+  name: reagent-name-synth-blood
+  group: Biological
+  desc: reagent-desc-synth-blood
+  flavor: metallic
+  color: "#00b8f5"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-reflective
+  slippery: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+        conditions:
+          - !type:OrganType
+            type: Human
+            shouldHave: false
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
