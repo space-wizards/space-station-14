@@ -166,7 +166,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     /// </summary>
     private PlayerCount CountActivePlayers()
     {
-        var allPlayers = _playerManager.ServerSessions.ToList();
+        var allPlayers = _playerManager.Sessions.ToList();
         var count = new PlayerCount();
         foreach (var player in allPlayers)
         {

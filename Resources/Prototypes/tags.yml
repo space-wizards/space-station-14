@@ -53,6 +53,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Bomb
+
+- type: Tag
   id: Book
 
 - type: Tag
@@ -582,6 +585,9 @@
   id: GuideEmbeded
 
 - type: Tag
+  id: Hacking
+
+- type: Tag
   id: Hamster
 
 - type: Tag
@@ -688,6 +694,9 @@
 
 - type: Tag
   id: JawsOfLife
+
+- type: Tag
+  id: Jetpack
 
 - type: Tag
   id: Katana
@@ -964,6 +973,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: Rifle
 
 - type: Tag
   id: RifleStock

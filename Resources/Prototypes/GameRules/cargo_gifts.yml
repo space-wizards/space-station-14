@@ -107,7 +107,7 @@
       duration: 120
       minimumPlayers: 30
       chaos:
-        Jani: -200
+        Mess: -200
       earliestStart: 20
     - type: CargoGiftsRule
       description: cargo-gift-cleaning

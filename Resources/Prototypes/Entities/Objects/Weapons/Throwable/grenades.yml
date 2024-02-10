@@ -30,8 +30,8 @@
   - type: Appearance
   - type: AnimationPlayer
   - type: Tag
-  tags:
-    - Grenade
+    tags:
+      - Grenade
   - type: GenericVisualizer
     visuals:
       enum.Trigger.TriggerVisuals.VisualState:

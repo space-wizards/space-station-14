@@ -1,6 +1,6 @@
-﻿using Content.Server.StationEvents.Metric.Components;
+﻿using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -24,11 +24,11 @@ public sealed class PuddleMetricSystem : ChaosMetricSystem<PuddleMetricComponent
         var mess = FixedPoint2.Zero;
         while (query.MoveNext(out var puddleUid, out var puddle, out var solutionMgr))
         {
-            if (!_solutionContainerSystem.TryGetSolution(puddleUid, puddle.SolutionName, out var puddleSolution, solutionMgr))
+            if (!_solutionContainerSystem.TryGetSolution(puddleUid, puddle.SolutionName, out var puddleSolution))
                 continue;
 
             FixedPoint2 puddleChaos = 0.0f;
-            foreach (var substance in puddleSolution.Contents)
+            foreach (var substance in puddleSolution.Value.Comp.Solution.Contents)
             {
                 FixedPoint2 substanceChaos = component.Puddles.GetValueOrDefault(substance.Reagent.Prototype, component.PuddleDefault);
                 puddleChaos += substanceChaos * substance.Quantity;

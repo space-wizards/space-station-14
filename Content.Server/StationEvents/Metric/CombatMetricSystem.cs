@@ -112,7 +112,7 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
                 }
                 else
                 {
-                    medical += damage.Damage.Total * combatMetric.MedicalMultiplier;
+                    medical += damage.Damage.GetTotal() * combatMetric.MedicalMultiplier;
                     if (mobState.CurrentState == MobState.Critical)
                     {
                         medical += combatMetric.CritScore;
