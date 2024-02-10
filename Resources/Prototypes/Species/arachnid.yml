@@ -44,7 +44,7 @@
   onlyWhitelisted: true
   points:
     Hair:
-      points: 0
+      points: 1
       required: false
     FacialHair:
       points: 0
@@ -61,13 +61,13 @@
       required: true
       defaultMarkings: [ ArachnidCheliceraeDownwards ]
     Chest:
-      points: 1
+      points: 3
       required: false
     Legs:
-      points: 2
+      points: 6
       required: false
     Arms:
-      points: 2
+      points: 6
       required: false
 
 - type: humanoidBaseSprite
