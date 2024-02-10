@@ -40,6 +40,8 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 
         SubscribeLocalEvent<TurfWarRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
         SubscribeLocalEvent<TurfWarRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
+
+        SubscribeLocalEvent<TurfTaggerRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent args)
@@ -230,5 +232,11 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         args.Minds = new List<EntityUid>(ent.Comp.Minds.Values);
         args.AgentName = Loc.GetString("turf-war-round-end-agent-name");
         args.HideObjectives = true;
+    }
+
+    private void OnGetBriefing(Entity<TurfTaggerRoleComponent> ent, ref GetBriefingEvent args)
+    {
+        var name = Loc.GetString($"department-{ent.Comp.Department}");
+        args.Append(Loc.GetString("turf-tagger-role-briefing", ("department", name)));
     }
 }

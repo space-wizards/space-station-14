@@ -7,6 +7,10 @@ turf-tagger-role-greeting =
     You are taking part in a turf war on this station.
     Use your spray painter to tag up turf, claim the station for your department!
 
+turf-tagger-role-briefing =
+    You are tagging turf for the {$department} department.
+    Spray doors with the department's style to win!
+
 turf-war-round-end-header = These departments participated in the Turf War:
 turf-war-round-end-result = {$department} was #{$place} with {$count} {$count ->
     [one] door
