@@ -17,7 +17,7 @@
                 variation: 0.08
   - type: Flashable
     collisionGroup:
-    - InteractImpassable
+    - None
   - type: DamagedByFlashing
     flashDamage:
       types:
