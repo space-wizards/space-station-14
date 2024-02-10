@@ -15,6 +15,7 @@ public sealed class SmokeFilterSystem : EntitySystem
         SubscribeLocalEvent<FilterMaskComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<FilterMaskComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<FilterMaskComponent, ItemMaskToggledEvent>(OnMaskToggled);
+        SubscribeLocalEvent<FilterWorkingEvent>(AreFilterWorking);
     }
 
     private void OnGotUnequipped(Entity<FilterMaskComponent> ent, ref GotUnequippedEvent args)
@@ -41,25 +42,28 @@ public sealed class SmokeFilterSystem : EntitySystem
     }
 
 
-    public bool AreFilterWorking(EntityUid uid)
+    private void AreFilterWorking(ref FilterWorkingEvent args)
     {
-
+        EntityUid uid = args.Uid;
         FilterMaskComponent? filter;
-
+        args.IsActive = false;
         if (_inventory.TryGetSlotEntity(uid, "mask", out var maskUid) &&
             TryComp(maskUid, out filter) &&
             filter.IsActive)
         {
-            return true;
+            args.IsActive = true;
         }
 
         if (_inventory.TryGetSlotEntity(uid, "head", out var headUid) &&
             TryComp(headUid, out filter) &&
             filter.IsActive)
         {
-            return true;
+            args.IsActive = true;
         }
-        return false;
     }
 
 }
+
+
+[ByRefEvent]
+public record struct FilterWorkingEvent(EntityUid Uid, bool IsActive);

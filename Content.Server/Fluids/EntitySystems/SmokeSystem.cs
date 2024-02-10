@@ -281,7 +281,11 @@ public sealed class SmokeSystem : EntitySystem
         var cloneSolution = solution.Clone();
         var availableTransfer = FixedPoint2.Min(cloneSolution.Volume, component.TransferRate);
         var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
-        if (!blockIngestion && _smokeFilter.AreFilterWorking(entity))
+
+        var ev = new FilterWorkingEvent(entity, false);
+        RaiseLocalEvent(entity, ref ev, true);
+
+        if (!blockIngestion && ev.IsActive)
             transferAmount = transferAmount * 0.3;
         var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
