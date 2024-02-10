@@ -8,17 +8,33 @@ namespace Content.Shared.Gibbing.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(GibbingSystem))]
 public sealed partial class GibbableComponent : Component
 {
-    [DataField(required:true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Giblet entity prototypes to randomly select from when spawning additional giblets
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public List<EntProtoId> GibPrototypes = new();
 
-    [DataField(required:true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public int GibCount = 3;
+    /// <summary>
+    /// Number of giblet entities to spawn in addition to entity contents
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int GibCount;
 
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Sound to be played when this entity is gibbed, only played when playsound is true on the gibbing function
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib");
 
-    public const float GibScatterRange = 0.3f;
+    /// <summary>
+    /// Max distance giblets can be dropped from an entity when NOT using physics-based scattering
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float GibScatterRange = 0.3f;
 
-    public static readonly AudioParams GibAudioParams = AudioParams.Default.WithVariation(0.025f);
-
+    /// <summary>
+    /// Audio parameters for when the gibbing sound is played
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public AudioParams GibAudioParams = AudioParams.Default.WithVariation(0.025f);
 }
