@@ -321,7 +321,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
-        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null, gibAudioParams);
+        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null);
         return gibs;
     }
 }
