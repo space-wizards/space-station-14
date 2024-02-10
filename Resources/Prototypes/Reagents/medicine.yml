@@ -566,6 +566,33 @@
         probability: 0.05
 
 - type: reagent
+  id: PolypyryliumOligomers
+  name: reagent-name-polypyrylium-oligomers
+  group: Medicine
+  desc: reagent-desc-polypyrylium-oligomers
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: violets
+  color: "#9423FF"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -3.5
+          types:
+            Asphyxiation: -2.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 3.5
+      - !type:ModifyBleedAmount
+        amount: -0.25
+
+- type: reagent
   id: Ambuzol
   name: reagent-name-ambuzol
   group: Medicine
