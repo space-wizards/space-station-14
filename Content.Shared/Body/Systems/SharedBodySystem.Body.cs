@@ -293,7 +293,6 @@ public partial class SharedBodySystem
         if (root != null && TryComp(root.Value.Entity, out GibbableComponent? gibbable))
         {
             gibSound ??= gibbable.GibSound;
-            gibAudioParams ??= gibbable.GibAudioParams;
         }
         var parts = GetBodyChildren(bodyId, body).ToArray();
         gibs.EnsureCapacity(parts.Length);
@@ -322,7 +321,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
-        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null, gibAudioParams);
+        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null);
         return gibs;
     }
 }

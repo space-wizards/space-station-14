@@ -185,8 +185,7 @@ public sealed class GibbingSystem : EntitySystem
 
         if (playAudio)
         {
-            _audioSystem.PlayPredicted(gibbable.Comp.GibSound, parentXform.Coordinates, null,
-                gibbable.Comp.GibAudioParams);
+            _audioSystem.PlayPredicted(gibbable.Comp.GibSound, parentXform.Coordinates, null);
         }
 
         if (gibType == GibType.Gib)
@@ -335,7 +334,7 @@ public sealed class GibbingSystem : EntitySystem
                 ? coords
                 : coords.Offset(_random.NextVector2(gibbable.GibScatterRange * randomSpreadModifier.Value)));
         if (playSound)
-            _audioSystem.PlayPredicted(gibbable.GibSound, coords, null, gibbable.GibAudioParams);
+            _audioSystem.PlayPredicted(gibbable.GibSound, coords, null);
         _transformSystem.SetWorldRotation(gibletEntity.Value, _random.NextAngle());
         return true;
     }
