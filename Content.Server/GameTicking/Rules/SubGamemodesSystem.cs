@@ -20,7 +20,7 @@ public sealed class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
             GameTicker.AddGameRule(id);
 
             // if limited, stop rolling rules once the limit is reached
-            if (count == comp.Limit)
+            if (++count == comp.Limit)
                 return;
         }
     }
