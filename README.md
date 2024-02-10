@@ -1,3 +1,9 @@
+# Deep Station 14
+Deep Station 14 is a fork of SS14 with a focus on a more "classic" space station experience, respecting our contributors efforts and a more open administrative and project management approach. Check out our [Discord](https://discord.gg/4gGSWyNbQF) to get involved in the conversation and development.
+
+All information below this point refers to upstream which we are forked from.
+___
+
 <p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
 
 Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), our homegrown engine written in C#.
