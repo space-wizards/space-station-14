@@ -52,6 +52,9 @@
           Quantity: 10
   - type: Produce
     seedId: wheat
+  - type: Tag
+    tags:
+    - Wheat 
 
 - type: entity
   name: oat bushel
