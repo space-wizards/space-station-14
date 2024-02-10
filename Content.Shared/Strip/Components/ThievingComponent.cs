@@ -1,3 +1,6 @@
+using Content.Shared.Actions;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Strip.Components;
 
 /// <summary>
@@ -19,4 +22,27 @@ public sealed partial class ThievingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("stealthy")]
     public bool Stealthy;
+}
+
+[RegisterComponent]
+public sealed partial class ToggleableThievingComponent : Component
+{
+
+    [DataField]
+    public EntProtoId ThievingToggleActionProto = "ActionToggleThieving";
+
+    [DataField]
+    public EntityUid? ThievingToggleAction;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Stealthy = true;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+
+    public float StripTimeReduction = 0;
+}
+
+public sealed partial class ToggleThievingActionEvent : InstantActionEvent
+{
+
 }
