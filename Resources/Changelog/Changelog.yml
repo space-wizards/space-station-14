@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: Ubaser
   changes:
-  - message: Traitors and Nukies can now purchase a Chemical Synthesis Kit for 4TC
-      which contains Vestine.
-    type: Add
-  - message: Nocturine, Tazinide, Stimulants, Lexorin and Mute Toxin are now locked
-      behind Vestine.
-    type: Tweak
-  - message: Lexorin and Heartbreaker toxin are buffed, while Licoxide is nerfed.
-    type: Tweak
-  - message: You can no longer purchase Nocturine through the uplink.
-    type: Remove
-  id: 5412
-  time: '2023-12-18T02:40:28.0000000+00:00'
-  url: null
-- author: Ubaser
-  changes:
   - message: Janitors now get rubber gloves for cleaning.
     type: Add
   id: 5413
@@ -3888,3 +3873,16 @@
   id: 5911
   time: '2024-02-10T09:17:26.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24975
+- author: bhenrich
+  changes:
+  - message: Added fun!
+    type: Add
+  - message: Removed fun!
+    type: Remove
+  - message: Changed fun!
+    type: Tweak
+  - message: Fixed fun!
+    type: Fix
+  id: 5912
+  time: '2024-02-10T17:25:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25106
