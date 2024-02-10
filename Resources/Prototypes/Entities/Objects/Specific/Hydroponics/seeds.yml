@@ -154,6 +154,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of tea plant seeds
+  id: TeaPlantSeeds
+  components:
+    - type: Seed
+      seedId: teaPlant
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of tower cap spores
   id: TowercapSeeds
   components:
@@ -529,6 +539,16 @@
       seedId: pumpkin
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/pumpkin.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of blumpkin seeds
+  id: BlumpkinSeeds
+  components:
+    - type: Seed
+      seedId: blumpkin
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blumpkin.rsi
 
 - type: entity
   parent: SeedBase

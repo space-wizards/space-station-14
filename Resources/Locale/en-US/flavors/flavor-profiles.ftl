@@ -112,7 +112,7 @@ flavor-complex-corn = like corn
 flavor-complex-banana = like bananas
 flavor-complex-apple = like apples
 flavor-complex-cotton = like cottons
-flavor-complex-bungo = like bungo
+flavor-complex-bungo = like tropical sweetness
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
@@ -167,6 +167,7 @@ flavor-complex-lost-friendship = like lost friendship
 flavor-complex-light = like a light gone out
 flavor-complex-profits = like profits
 flavor-complex-fishops = like the dreaded fishops
+flavor-complex-blumpkin = like a mouthful of pool water
 
 # Drink-specific flavors.
 

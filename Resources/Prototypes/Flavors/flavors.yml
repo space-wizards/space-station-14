@@ -1008,3 +1008,8 @@
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
+
+- type: flavor
+  id: blumpkin
+  flavorType: Complex
+  description: flavor-complex-blumpkin

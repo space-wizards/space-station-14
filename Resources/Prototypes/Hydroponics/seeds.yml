@@ -323,6 +323,31 @@
       PotencyDivisor: 5
 
 - type: seed
+  id: teaPlant
+  name: seeds-teaplant-name
+  noun: seeds-noun-seeds
+  displayName: seeds-teaplant-display-name
+  plantRsi: Objects/Specific/Hydroponics/tea_plant.rsi
+  packetPrototype: TeaPlantSeeds
+  productPrototypes:
+    - LeavesTea
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 5
+  production: 3
+  yield: 2
+  potency: 20
+  growthStages: 5
+  waterConsumption: 0.6
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
   id: towercap
   name: seeds-towercap-name
   noun: seeds-noun-spores
@@ -1373,6 +1398,8 @@
   packetPrototype: PumpkinSeeds
   productPrototypes:
     - FoodPumpkin
+  mutationPrototypes:
+    - blumpkin
   lifespan: 55
   maturation: 10
   production: 4
@@ -1385,6 +1412,36 @@
       Min: 1
       Max: 20
       PotencyDivisor: 5
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: blumpkin
+  name: seeds-blumpkin-name
+  noun: seeds-noun-seeds
+  displayName: seeds-blumpkin-display-name
+  plantRsi: Objects/Specific/Hydroponics/blumpkin.rsi
+  packetPrototype: BlumpkinSeeds
+  productPrototypes:
+    - FoodBlumpkin
+  lifespan: 55
+  maturation: 10
+  production: 4
+  yield: 2
+  potency: 10
+  idealHeat: 288
+  growthStages: 3
+  chemicals:
+    Ammonia:
+      Min: 1
+      Max: 13
+      PotencyDivisor: 4
+    Chlorine:
+      Min: 1
+      Max: 7
+      PotencyDivisor: 2
     Vitamin:
       Min: 1
       Max: 5

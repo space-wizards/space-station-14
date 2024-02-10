@@ -27,6 +27,24 @@
   color: "#660099"
 
 - type: reagent
+  id: JuiceBlumpkin
+  name: reagent-name-juice-blumpkin
+  parent: BaseJuice
+  desc: reagent-desc-juice-blumpkin
+  physicalDesc: reagent-physical-desc-blumpkin
+  flavor: blumpkin
+  color: "#00BFFF"
+
+- type: reagent
+  id: JuiceBungo
+  name: reagent-name-juice-bungo
+  parent: BaseJuice
+  desc: reagent-desc-juice-bungo
+  physicalDesc: reagent-physical-desc-tart
+  flavor: bungo
+  color: "#F9E43D"
+
+- type: reagent
   id: JuiceCarrot
   name: reagent-name-juice-carrot
   parent: BaseJuice

@@ -1602,6 +1602,11 @@
     sprite: Objects/Specific/Hydroponics/bungo.rsi
   - type: Produce
     seedId: bungo
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBungo
+        Quantity: 10
   - type: Tag
     tags:
     - Fruit
@@ -1702,6 +1707,56 @@
     spawned:
     - id: CarvedPumpkin
     - id: PumpkinSeeds
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: blumpkin
+  parent: FoodProduceBase
+  id: FoodBlumpkin
+  description: A large, blue... berry. Seriously.
+  components:
+  - type: Item
+    size: Small
+  - type: FlavorProfile
+    flavors:
+      - blumpkin
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Ammonia
+          Quantity: 13
+        - ReagentId: Chlorine
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBlumpkin
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/blumpkin.rsi
+  - type: Produce
+    seedId: blumpkin
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 16
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - Fruit
