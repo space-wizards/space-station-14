@@ -225,9 +225,18 @@ namespace Content.Server.Administration.Systems
                 {
                     case SessionStatus.Connected:
                         relay.channel.SendMessageAsync($"**Warning**: {e.Session.Name} has reconnected. Further messages will be relayed to them.");
+                        // Also send it in the in-game chat. This is to make sure admins in-game are aware of the reconnection.
+                        foreach (var admin in GetTargetAdmins())
+                        {
+                            RaiseNetworkEvent(new BwoinkTextMessage(e.Session.UserId, e.Session.UserId, "Player has reconnected."), admin);
+                        }
                         break;
                     case SessionStatus.Disconnected:
                         relay.channel.SendMessageAsync($"**Warning**: {e.Session.Name} has disconnected. Any messages sent to them will not be received.");
+                        foreach (var admin in GetTargetAdmins())
+                        {
+                            RaiseNetworkEvent(new BwoinkTextMessage(e.Session.UserId, e.Session.UserId, "Player has disconnected."), admin);
+                        }
                         break;
                 }
             }
