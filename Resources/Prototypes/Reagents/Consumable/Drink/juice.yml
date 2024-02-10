@@ -31,7 +31,7 @@
   name: reagent-name-juice-blumpkin
   parent: BaseJuice
   desc: reagent-desc-juice-blumpkin
-  physicalDesc: reagent-physical-desc-blumpkin
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: blumpkin
   color: "#00BFFF"
 
