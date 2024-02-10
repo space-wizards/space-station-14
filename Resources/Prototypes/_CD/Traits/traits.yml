@@ -1,0 +1,6 @@
+﻿- type: trait
+  id: Synthetic
+  name: trait-synth-name
+  description: trait-synth-desc
+  components:
+    - type: Synth
