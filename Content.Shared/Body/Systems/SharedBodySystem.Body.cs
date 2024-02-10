@@ -271,10 +271,18 @@ public partial class SharedBodySystem
         }
     }
 
-    public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
-        BodyComponent? body = null ,bool deleteItems = false, bool deleteBrain = false, GibbableComponent? gibbable = null,
-        SoundSpecifier? gibSound = null, bool launchGibs = true, Vector2? splatDirection = null,
-        float splatModifier = 1, Angle splatCone = default)
+    public virtual HashSet<EntityUid> GibBody(
+        EntityUid bodyId,
+        bool gibOrgans = false,
+        BodyComponent? body = null ,
+        bool deleteItems = false,
+        bool launchGibs = true,
+        Vector2? splatDirection = null,
+        float splatModifier = 1,
+        Angle splatCone = default,
+        SoundSpecifier? gibSound = null,
+        AudioParams? gibAudioParams = null
+        )
     {
         var gibs = new HashSet<EntityUid>();
 
@@ -282,10 +290,10 @@ public partial class SharedBodySystem
             return gibs;
 
         var root = GetRootPartOrNull(bodyId, body);
-        if (root != null && gibSound == null)
+        if (root != null && TryComp(root.Value.Entity, out GibbableComponent? gibbable))
         {
-            if (Resolve(root.Value.Entity, ref gibbable))
-                gibSound = gibbable.GibSound;
+            gibSound ??= gibbable.GibSound;
+            gibAudioParams ??= gibbable.GibAudioParams;
         }
         var parts = GetBodyChildren(bodyId, body).ToArray();
         gibs.EnsureCapacity(parts.Length);
@@ -314,7 +322,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
-        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null, GibbableComponent.GibAudioParams);
+        _audioSystem.PlayPredicted(gibSound, Transform(bodyId).Coordinates, null, gibAudioParams);
         return gibs;
     }
 }

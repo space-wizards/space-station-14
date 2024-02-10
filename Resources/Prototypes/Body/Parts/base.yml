@@ -10,8 +10,6 @@
     damageContainer: Biological
   - type: BodyPart
   - type: Gibbable
-    gibPrototypes: []
-    gibCount: 3
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

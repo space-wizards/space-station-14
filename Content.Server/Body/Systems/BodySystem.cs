@@ -107,9 +107,18 @@ public sealed class BodySystem : SharedBodySystem
         _humanoidSystem.SetLayersVisibility(bodyUid, layers, false, true, humanoid);
     }
 
-    public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null,
-        bool deleteItems = false, bool deleteBrain = false, GibbableComponent? gibbable = null, SoundSpecifier? gibSound = null,
-        bool launchGibs = true, Vector2? splatDirection = null, float splatModifier = 1, Angle splatCone = default)
+    public override HashSet<EntityUid> GibBody(
+        EntityUid bodyId,
+        bool gibOrgans = false,
+        BodyComponent? body = null ,
+        bool deleteItems = false,
+        bool launchGibs = true,
+        Vector2? splatDirection = null,
+        float splatModifier = 1,
+        Angle splatCone = default,
+        SoundSpecifier? gibSound = null,
+        AudioParams? gibAudioParams = null
+    )
     {
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();
@@ -121,7 +130,7 @@ public sealed class BodySystem : SharedBodySystem
         if (xform.MapUid == null)
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems, deleteBrain, launchGibs: launchGibs,
+        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems, launchGibs: launchGibs,
             splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
         RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));
         QueueDel(bodyId);
