@@ -35,18 +35,13 @@ public sealed partial class WoundSystem
         if (woundable.Comp2.Modifier <= 0)
             return;
         var attemptEv = new WoundableHealAttemptEvent(woundable);
-        RaiseLocalEvent(woundable,ref attemptEv);
+        RaiseRelayedLocalEvent(new Entity<WoundableComponent>(woundable.Owner, woundable.Comp1), null, ref attemptEv);
         if (attemptEv.Canceled)
             return;
-        var oldHealth = woundable.Comp1.Health;
-        woundable.Comp1.Health += woundable.Comp1.Health * (woundable.Comp1.HealPercentage / 100 * woundable.Comp2.Modifier);
-        var ev = new WoundableHealUpdateEvent(woundable, oldHealth);
-        RaiseLocalEvent(woundable,ref ev);
-        //Clamp after raising event in case subscriber modifies health
-        if (!ClampWoundableValues(new Entity<WoundableComponent?>(woundable, woundable.Comp1)))
-            return;
-        Log.Error($"{ToPrettyString(woundable)} ran a heal update on a woundable with 0 or less integrity, " +
-                  $"this should never happen! Make sure that gibbing check occurs before healing in this case!");
+        AddWoundableHealth(
+            new Entity<WoundableComponent?>(woundable, woundable.Comp1),
+            woundable.Comp1.Health * (woundable.Comp1.HealPercentage / 100 * woundable.Comp2.Modifier)
+            );
     }
 
     private void TickWoundHealing(Entity<WoundComponent, HealableComponent> wound)
@@ -54,12 +49,12 @@ public sealed partial class WoundSystem
         if (wound.Comp2.Modifier <= 0)
             return;
         var attemptEv = new WoundHealAttemptEvent(wound);
-        RaiseLocalEvent(wound,ref attemptEv);
+        RaiseRelayedLocalEvent(null,new Entity<WoundComponent>(wound.Owner, wound.Comp1), ref attemptEv);
         if (attemptEv.Canceled)
             return;
-        var oldSeverity = wound.Comp1.Severity;
-        wound.Comp1.Severity += wound.Comp1.Severity - wound.Comp1.Severity * wound.Comp2.Modifier;
-        var ev = new WoundHealUpdateEvent(wound, oldSeverity);
-        RaiseLocalEvent(wound,ref ev);
+        AddWoundSeverity(
+           new Entity<WoundComponent?>(wound, wound.Comp1),
+           wound.Comp1.Severity - wound.Comp1.Severity * wound.Comp2.Modifier
+           );
     }
 }

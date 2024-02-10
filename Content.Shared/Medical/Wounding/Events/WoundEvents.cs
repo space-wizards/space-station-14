@@ -37,10 +37,13 @@ public record struct WoundFullyHealedEvent(
 public record struct WoundableHealAttemptEvent(Entity<WoundableComponent, HealableComponent> TargetWoundable, bool Canceled = false);
 
 [ByRefEvent]
-public record struct WoundableHealUpdateEvent(Entity<WoundableComponent, HealableComponent> TargetWoundable, FixedPoint2 OldHealth);
+public record struct WoundableHealthChangedEvent(Entity<WoundableComponent> TargetWoundable, FixedPoint2 HealthDelta);
+
+[ByRefEvent]
+public record struct WoundableIntegrityChangedEvent(Entity<WoundableComponent> TargetWoundable, FixedPoint2 HealthDelta);
 
 [ByRefEvent]
 public record struct WoundHealAttemptEvent(Entity<WoundComponent, HealableComponent> TargetWound, bool Canceled = false);
 
 [ByRefEvent]
-public record struct WoundHealUpdateEvent(Entity<WoundComponent, HealableComponent> TargetWound, FixedPoint2 OldSeverity);
+public record struct WoundSeverityChangedEvent(Entity<WoundComponent> TargetWound, FixedPoint2 SeverityDelta);

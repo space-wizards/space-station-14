@@ -30,7 +30,7 @@ public sealed partial class WoundSystem
         SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnWoundableDamaged);
     }
 
-    private void OnWoundableDamaged(EntityUid owner, WoundableComponent woundable, ref DamageChangedEvent args)
+    private void OnWoundableDamaged(EntityUid owner, WoundableComponent woundableComp, ref DamageChangedEvent args)
     {
         //Do not handle damage if it is being set instead of being changed.
         //We will handle that with another listener
@@ -38,7 +38,12 @@ public sealed partial class WoundSystem
             return;
         foreach (var (damageTypeId, damage) in args.DamageDelta.DamageDict)
         {
-            TryApplyWounds(owner, damageTypeId, damage, woundable);
+            //If damage is negative (healing) skip because wound healing is handled with internal logic.
+            if (damage < 0)
+                continue;
+            var woundable = new Entity<WoundableComponent?>(owner, woundableComp);
+            TryApplyWounds(woundable, damageTypeId, damage);
+            RelayDamageToWoundable(woundable, damageTypeId, damage);
         }
     }
 
@@ -76,7 +81,7 @@ public sealed partial class WoundSystem
         var wound = new Entity<WoundComponent>(woundEnt, woundComp);
 
         var onRemoveWoundAttempt = new RemoveWoundAttemptEvent(woundable, wound);
-        RaiseRelayedWoundEvent(woundable, wound, ref onRemoveWoundAttempt);
+        RaiseRelayedLocalEvent(woundable, wound, ref onRemoveWoundAttempt);
         if (!force && onRemoveWoundAttempt.CancelRemove)
             return false;
 
@@ -85,7 +90,7 @@ public sealed partial class WoundSystem
         if (fullyHeal)
         {
             var onWoundHealed = new WoundFullyHealedEvent(woundable, wound);
-            RaiseRelayedWoundEvent(woundable, wound, ref onWoundHealed);
+            RaiseRelayedLocalEvent(woundable, wound, ref onWoundHealed);
             woundable.Comp.HealthCap += wound.Comp.HealthDebuff/100 * wound.Comp.AppliedDamage;
             woundable.Comp.IntegrityCap += wound.Comp.IntegrityDebuff/100 * wound.Comp.AppliedDamage;
             woundable.Comp.Integrity += wound.Comp.IntegrityDamage/100 * wound.Comp.AppliedDamage;
@@ -93,7 +98,7 @@ public sealed partial class WoundSystem
         else
         {
             var onWoundRemoved = new WoundRemovedEvent(woundable, wound);
-            RaiseRelayedWoundEvent(woundable, wound, ref onWoundRemoved);
+            RaiseRelayedLocalEvent(woundable, wound, ref onWoundRemoved);
         }
         EntityManager.DeleteEntity(wound);
         return true;
@@ -111,34 +116,32 @@ public sealed partial class WoundSystem
     /// <param name="damage">The amount of damage applied</param>
     /// <param name="force">Prevent canceling creating this wound</param>
     /// <returns>True when successful, false when not</returns>
-    public bool TryCreateWound(EntityUid woundableEnt, EntProtoId woundPrototype, [NotNullWhen(true)]out Entity<WoundComponent>? createdWound,
-        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null, bool force = false)
+    public bool TryCreateWound(Entity<WoundableComponent?> woundable, EntProtoId woundPrototype, [NotNullWhen(true)]out Entity<WoundComponent>? createdWound,
+        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, bool force = false)
     {
         createdWound = null;
-        if (!Resolve(woundableEnt, ref woundable))
+        if (!Resolve(woundable, ref woundable.Comp))
             return false;
-        createdWound = CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage, force);
+        createdWound = CreateWound_Internal(woundable, woundPrototype, woundable.Comp, damageType, damage, force);
         return createdWound != null;
     }
 
     /// <summary>
     /// Tries to get the appropriate wound for the specified damage type and damage amount
     /// </summary>
-    /// <param name="woundableEnt">Woundable Entity</param>
+    /// <param name="woundable">Woundable Entity/comp</param>
     /// <param name="damageType">Damage type to check</param>
     /// <param name="damage">Damage being applied</param>
     /// <param name="woundProtoId">Found WoundProtoId</param>
-    /// <param name="woundable">Woundable comp</param>
     /// <param name="overflow">The amount of damage exceeding the max cap</param>
     /// <returns>True if a woundProto is found, false if not</returns>
-    public bool TryGetWoundProtoFromDamage(EntityUid woundableEnt,ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
-        [NotNullWhen(true)] out EntProtoId? woundProtoId, out FixedPoint2 overflow,
-        WoundableComponent? woundable = null)
+    public bool TryGetWoundProtoFromDamage(Entity<WoundableComponent?> woundable,ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
+        [NotNullWhen(true)] out EntProtoId? woundProtoId, out FixedPoint2 overflow)
     {
         overflow = 0;
         woundProtoId = null;
-        if (!Resolve(woundableEnt, ref woundable)
-            || !woundable.Config.TryGetValue(damageType, out var metadata)
+        if (!Resolve(woundable, ref woundable.Comp)
+            || !woundable.Comp.Config.TryGetValue(damageType, out var metadata)
             )
             return false;
         var adjDamage = damage * metadata.Scaling;
@@ -158,12 +161,19 @@ public sealed partial class WoundSystem
         return woundProtoId != null;
     }
 
-    public bool TryApplyWounds(EntityUid targetWoundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
-        WoundableComponent? woundable = null, bool force = false)
+    /// <summary>
+    /// Tries to apply wounds to the specified woundable based on the damage and damagetype
+    /// </summary>
+    /// <param name="targetWoundable"></param>
+    /// <param name="damageType"></param>
+    /// <param name="damage"></param>
+    /// <param name="woundable"></param>
+    /// <returns></returns>
+    public bool TryApplyWounds(Entity<WoundableComponent?> woundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage)
     {
-        if (!Resolve(targetWoundable, ref woundable)
-            || !TryGetWoundProtoFromDamage(targetWoundable, damageType, damage, out var woundProtoId, out var overflow, woundable)
-            || !TryCreateWound(targetWoundable, woundProtoId.Value, out var createdWound, damageType, damage, woundable))
+        if (!Resolve(woundable, ref woundable.Comp)
+            || !TryGetWoundProtoFromDamage(woundable, damageType, damage, out var woundProtoId, out var overflow)
+            || !TryCreateWound(woundable, woundProtoId.Value, out var createdWound, damageType, damage))
             return false;
         //TODO: Apply overflow to adjacent/attached parts
         return true;
@@ -195,7 +205,7 @@ public sealed partial class WoundSystem
         wound.Comp.AppliedDamage = appliedDamage;
         wound.Comp.AppliedDamageType = damageType;
         var newWoundEvent = new CreateWoundAttemptEvent(woundable, wound);
-        RaiseRelayedWoundEvent(woundable, wound, ref newWoundEvent);
+        RaiseRelayedLocalEvent(woundable, wound, ref newWoundEvent);
         if (!force && newWoundEvent.Canceled)
         {
             EntityManager.DeleteEntity(woundEntId);
@@ -207,14 +217,18 @@ public sealed partial class WoundSystem
 
     private void ApplyWoundEffects(Entity<WoundComponent> wound, Entity<WoundableComponent> woundable, ProtoId<DamageTypePrototype> damageType)
     {
+        woundable.Comp.LastAppliedDamageType = damageType;
         woundable.Comp.HealthCap -= wound.Comp.HealthDebuff/100 * wound.Comp.AppliedDamage;
         woundable.Comp.IntegrityCap -= wound.Comp.IntegrityDebuff/100 * wound.Comp.AppliedDamage;
         woundable.Comp.Integrity -= wound.Comp.IntegrityDamage/100 * wound.Comp.AppliedDamage;
-        woundable.Comp.LastAppliedDamageType = damageType;
+        if (woundable.Comp.Health > woundable.Comp.HealthCap)
+            SetWoundableHealth(new Entity<WoundableComponent?>(woundable, woundable.Comp), woundable.Comp.HealthCap);
+        if (woundable.Comp.Integrity > woundable.Comp.IntegrityCap)
+            SetWoundableIntegrity(new Entity<WoundableComponent?>(woundable, woundable.Comp), woundable.Comp.HealthCap);
         var woundApplied = new WoundAppliedEvent(woundable, wound);
-        RaiseRelayedWoundEvent(woundable, wound, ref woundApplied);
+        RaiseRelayedLocalEvent(woundable, wound, ref woundApplied);
         Dirty(wound);
-        ShouldGibWoundable(new Entity<WoundableComponent?>(woundable, woundable.Comp), out var overflow, damageType);
+        CheckWoundableGibbing(woundable, woundable.Comp, damageType);
     }
 
     /// <summary>
@@ -253,7 +267,7 @@ public sealed partial class WoundSystem
         }
 
         if (!dirty)
-            Dirty(woundable, woundable.Comp);
+            Dirty(woundable);
         return woundable.Comp.Integrity <= 0;
     }
 
@@ -262,25 +276,18 @@ public sealed partial class WoundSystem
     /// Check to make sure woundable values are within thresholds and trigger gibbing if too much damage has been taken.
     /// This is automatically called when adding/removing wounds or applying damage. Manually call this if you modify a woundable's damage.
     /// </summary>
-    /// <param name="target">The woundable entity</param>
-    /// <param name="overflow">how much damage is left over after gibbing</param>
-    /// <param name="woundable">The woundable component</param>
+    /// <param name="woundable">The woundable entity/component</param>
     /// <param name="damageTypeOverride">Optional override for the type of damage to use for overflow</param>
     /// <returns>True if we gibbed the part, false if we did not</returns>
-    public bool ShouldGibWoundable(Entity<WoundableComponent?> woundable, out FixedPoint2 overflow,
+    private bool CheckWoundableGibbing(EntityUid woundableEnt, WoundableComponent woundable,
         ProtoId<DamageTypePrototype>? damageTypeOverride = null)
     {
-
-        overflow = 0;
-        if (!Resolve(woundable, ref woundable.Comp))
+        if (woundable.Integrity > 0)
             return false;
-        var damageType = woundable.Comp.LastAppliedDamageType;
+        var damageType = woundable.LastAppliedDamageType;
         if (damageTypeOverride != null)
             damageType = damageTypeOverride.Value;
-        if (!ClampWoundableValues(woundable))
-            return false;
-        overflow = -woundable.Comp.Integrity;
-        GibWoundable(woundable, woundable.Comp, damageType, overflow);
+        GibWoundable(woundableEnt, woundable, damageType, -woundable.Integrity);
         return true;
     }
 
@@ -305,10 +312,12 @@ public sealed partial class WoundSystem
         }
     }
 
-    private void RaiseRelayedWoundEvent<T>(Entity<WoundableComponent> woundable, Entity<WoundComponent> wound,ref T woundEvent) where T : struct
+    private void RelayDamageToWoundable(Entity<WoundableComponent?> woundable,
+        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage)
     {
-        RaiseLocalEvent(woundable.Owner, ref woundEvent);
-        RaiseLocalEvent(wound.Owner, ref woundEvent);
+        if (damage == 0)
+            return;
+        AddWoundableHealth(woundable, -damage, damageType);
     }
 
 }
