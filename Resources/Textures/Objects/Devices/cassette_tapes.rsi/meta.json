@@ -11,21 +11,6 @@
       "name": "tape_greyscale"
     },
     {
-      "name": "tape_white"
-    },
-    {
-      "name": "tape_blue"
-    },
-    {
-      "name": "tape_red"
-    },
-    {
-      "name": "tape_yellow"
-    },
-    {
-      "name": "tape_purple"
-    },
-    {
       "name": "tape_ribbonoverlay"
     }
   ]
