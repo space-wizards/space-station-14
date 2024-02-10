@@ -35,6 +35,13 @@ public sealed partial class WoundComponent : Component
     public FixedPoint2 Severity = 100;
 
     /// <summary>
+    /// How much severity we should remove from this wound during a healing update.
+    /// This is only used if a healableComponent is also present
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public FixedPoint2 HealAmount = 1;
+
+    /// <summary>
     /// What damage type is this woundable associated with
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]

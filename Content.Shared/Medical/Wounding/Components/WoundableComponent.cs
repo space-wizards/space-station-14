@@ -33,6 +33,19 @@ public sealed partial class WoundableComponent : Component
     [DataField(required:true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<WoundingMetadata,DamageTypePrototype>)), AutoNetworkedField]
     public Dictionary<string, WoundingMetadata> Config = new();
 
+    /// <summary>
+    /// Last applied Damagetype
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    public ProtoId<DamageTypePrototype> LastAppliedDamageType;
+
+    /// <summary>
+    /// What percentage of CURRENT HEALTH should be healed each healing update.
+    /// This is only used if a healableComponent is also present.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public FixedPoint2 HealPercentage = 1.5;
+
 
     /// <summary>
     /// This woundable's current health, this is tracked separately from damagable's health and will differ!
