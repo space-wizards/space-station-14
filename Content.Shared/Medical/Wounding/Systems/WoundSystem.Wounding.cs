@@ -214,48 +214,47 @@ public sealed partial class WoundSystem
         var woundApplied = new WoundAppliedEvent(woundable, wound);
         RaiseRelayedWoundEvent(woundable, wound, ref woundApplied);
         Dirty(wound);
-        ShouldGibWoundable(woundable.Owner, out var overflow, woundable.Comp, damageType);
+        ShouldGibWoundable(new Entity<WoundableComponent?>(woundable, woundable.Comp), out var overflow, damageType);
     }
 
     /// <summary>
     /// Clamps the values of a woundable within the proper range.
     /// </summary>
-    /// <param name="target">Entity that owns this woundable</param>
     /// <param name="woundable">Woundable being clamped</param>
     /// <returns>Returns true if integrity is zero or negative, returns false if invalid or if integrity is greater than 0</returns>
-    public bool ClampWoundableValues(EntityUid target, WoundableComponent? woundable= null)
+    public bool ClampWoundableValues(Entity<WoundableComponent?> woundable)
     {
         var dirty = false;
-        if (!Resolve(target, ref woundable))
+        if (!Resolve(woundable, ref woundable.Comp))
             return false;
-        if (woundable.HealthCap < woundable.Health)
+        if (woundable.Comp.HealthCap < woundable.Comp.Health)
         {
-            woundable.Health = woundable.HealthCap;
+            woundable.Comp.Health = woundable.Comp.HealthCap;
             dirty = true;
         }
 
-        if (woundable.HealthCap < 0)
+        if (woundable.Comp.HealthCap < 0)
         {
-            woundable.HealthCap = 0;
+            woundable.Comp.HealthCap = 0;
             dirty = true;
         }
 
-        if (woundable.Health < 0)
+        if (woundable.Comp.Health < 0)
         {
-            woundable.Integrity += woundable.Health;
-            woundable.Health = 0;
+            woundable.Comp.Integrity += woundable.Comp.Health;
+            woundable.Comp.Health = 0;
             dirty = true;
         }
 
-        if (woundable.IntegrityCap < woundable.Integrity)
+        if (woundable.Comp.IntegrityCap < woundable.Comp.Integrity)
         {
-            woundable.Integrity = woundable.IntegrityCap;
+            woundable.Comp.Integrity = woundable.Comp.IntegrityCap;
             dirty = true;
         }
 
         if (!dirty)
-            Dirty(target, woundable);
-        return woundable.Integrity <= 0;
+            Dirty(woundable, woundable.Comp);
+        return woundable.Comp.Integrity <= 0;
     }
 
 
@@ -268,20 +267,20 @@ public sealed partial class WoundSystem
     /// <param name="woundable">The woundable component</param>
     /// <param name="damageTypeOverride">Optional override for the type of damage to use for overflow</param>
     /// <returns>True if we gibbed the part, false if we did not</returns>
-    public bool ShouldGibWoundable(EntityUid target, out FixedPoint2 overflow,
-        WoundableComponent? woundable = null, ProtoId<DamageTypePrototype>? damageTypeOverride = null)
+    public bool ShouldGibWoundable(Entity<WoundableComponent?> woundable, out FixedPoint2 overflow,
+        ProtoId<DamageTypePrototype>? damageTypeOverride = null)
     {
 
         overflow = 0;
-        if (!Resolve(target, ref woundable))
+        if (!Resolve(woundable, ref woundable.Comp))
             return false;
-        var damageType = woundable.LastAppliedDamageType;
+        var damageType = woundable.Comp.LastAppliedDamageType;
         if (damageTypeOverride != null)
             damageType = damageTypeOverride.Value;
-        if (!ClampWoundableValues(target, woundable))
+        if (!ClampWoundableValues(woundable))
             return false;
-        overflow = -woundable.Integrity;
-        GibWoundable(target, woundable, damageType, overflow);
+        overflow = -woundable.Comp.Integrity;
+        GibWoundable(woundable, woundable.Comp, damageType, overflow);
         return true;
     }
 
