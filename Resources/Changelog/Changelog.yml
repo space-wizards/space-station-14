@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Aexxie
-  changes:
-  - message: Added RCDs to all engineering lockers.
-    type: Add
-  id: 5411
-  time: '2023-12-18T02:38:37.0000000+00:00'
-  url: null
 - author: Ubaser
   changes:
   - message: Traitors and Nukies can now purchase a Chemical Synthesis Kit for 4TC
@@ -3885,3 +3878,13 @@
   id: 5910
   time: '2024-02-10T08:51:11.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24987
+- author: themias
+  changes:
+  - message: The ID card console now correctly updates the ID's department when you
+      update its job
+    type: Fix
+  - message: The Agent ID will update its department depending on the selected icon
+    type: Fix
+  id: 5911
+  time: '2024-02-10T09:17:26.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24975
