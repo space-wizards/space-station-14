@@ -116,6 +116,10 @@ public sealed class GibbingSystem : EntitySystem
 
         var parentXform = Transform(outerEntity);
         HashSet<BaseContainer> validContainers = new();
+        var gibContentsAttempt =
+            new AttemptEntityContentsGibEvent(gibbable, gibContentsOption, allowedContainers, excludedContainers);
+        RaiseLocalEvent(gibbable, ref gibContentsAttempt);
+
         foreach (var container in _containerSystem.GetAllContainers(gibbable))
         {
             var valid = true;
