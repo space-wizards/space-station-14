@@ -10,7 +10,7 @@
 #uplink categoires
 - type: storeCategory
   id: UplinkWeaponry
-  name: store-category-weaponry
+  name: store-category-weapons
   priority: 0
 
 - type: storeCategory
