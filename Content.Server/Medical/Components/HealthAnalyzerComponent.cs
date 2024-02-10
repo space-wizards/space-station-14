@@ -7,7 +7,7 @@ namespace Content.Server.Medical.Components;
 /// After scanning, retrieves the target Uid to use with its related UI.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(HealthAnalyzerSystem))]
+[Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
 public sealed partial class HealthAnalyzerComponent : Component
 {
     /// <summary>
