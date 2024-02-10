@@ -1,8 +1,5 @@
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
@@ -57,8 +54,13 @@ namespace Content.Server.Administration.Systems
         private string _serverName = string.Empty;
         private readonly HashSet<NetUserId> _processingChannels = new();
         private readonly Dictionary<NetUserId, (RestThreadChannel channel, GameRunLevel lastRunLevel)> _relayMessages = new();
+        /// <summary>
+        ///     A dictionary of old relays that were removed from the relay messages.
+        ///     This is used to give a reference to the old relay channel to the admins. If for example, the round restarts, as the relay messages are cleared, the old relays are moved here.
+        /// </summary>
+        private readonly Dictionary<NetUserId, (RestThreadChannel channel, GameRunLevel lastRunLevel)> _oldRelayMessages = new();
         private ulong _channelId = 0;
-        private string _prefix = "!";
+        private bool _showThatTheMessageWasFromDiscord = true;
 
         public override void Initialize()
         {
@@ -69,58 +71,45 @@ namespace Content.Server.Administration.Systems
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _config.OnValueChanged(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
-            _config.OnValueChanged(CCVars.DiscordPrefix, OnDiscordPrefixChanged, true);
+            _config.OnValueChanged(CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged, true);
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            if (_discord.Client is not null)
-            {
-                _discord.Client.MessageReceived += OnDiscordMessageReceived;
-                _discord.Client.MessageReceived += OnReceiveNewRelay;
-            }
+            _discord.OnMessageReceived += OnDiscordMessageReceived;
+            _discord.OnCommandReceived += OnReceiveNewRelay;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
         }
 
-        private void OnDiscordPrefixChanged(string obj)
+        private void OnShowDiscordChanged(bool show)
         {
-            if (obj == string.Empty)
-            {
-                _sawmill.Warning("Discord prefix is empty. Setting to default.");
-                obj = "!";
-            }
-            _prefix = obj;
+            _showThatTheMessageWasFromDiscord = show;
         }
-
-        private async Task<Task> OnReceiveNewRelay(SocketMessage arg)
+        private async void OnReceiveNewRelay(CommandReceivedEventArgs commandArgs)
         {
-            if (arg.Author.IsBot)
-                return Task.CompletedTask;
-
-            if (!arg.Content.StartsWith(_prefix + "ahelp")) // Not an ahelp request
-                return Task.CompletedTask;
+            if (commandArgs.Command != "ahelp")
+                return;
 
             // Check if args are valid
-            var args = arg.Content.Split(" ");
-            if (args.Length != 2)
+            if (commandArgs.Arguments.Length != 1)
             {
                 // Don't respond to user, multiple servers may be running on the same bot.
-                return Task.CompletedTask;
+                return;
             }
 
             // Try to find user
-            var username = args[1];
+            var username = commandArgs.Arguments[0];
             if (!_playerManager.TryGetSessionByUsername(username, out var session))
             {
                 // Don't respond to user, multiple servers may be running on the same bot.
-                return Task.CompletedTask;
+                return;
             }
 
             // Check if user is already in ahelp
             if (_relayMessages.TryGetValue(session.UserId, out var relay))
             {
-                await arg.Channel.SendMessageAsync("**Warning**: There is already an ahelp thread for this player.");
-                await arg.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
-                return Task.CompletedTask;
+                await commandArgs.Message.Channel.SendMessageAsync("**Warning**: There is already an ahelp thread for this player.");
+                await commandArgs.Message.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
+                return;
             }
 
             var charName = _minds.GetCharacterName(session.UserId);
@@ -129,16 +118,16 @@ namespace Content.Server.Administration.Systems
             if (lookup is null)
             {
                 _sawmill.Warning($"Failed to lookup Discord ID for {charName} ({session.UserId}).");
-                await arg.Channel.SendMessageAsync("**Warning**: Failed to lookup Discord ID for player.");
-                return Task.CompletedTask;
+                await commandArgs.Message.Channel.SendMessageAsync("**Warning**: Failed to lookup Discord ID for player.");
+                return;
             }
 
             // Create new ahelp thread
             var channel = await RequestNewRelay($"{lookup.Username} ({charName}) - {_gameTicker.RoundId}", session.UserId);
             if (channel is null)
             {
-                await arg.Channel.SendMessageAsync("**Warning**: Failed to create ahelp thread.");
-                return Task.CompletedTask;
+                await commandArgs.Message.Channel.SendMessageAsync("**Warning**: Failed to create ahelp thread.");
+                return;
             }
 
             // Add to relay messages
@@ -146,9 +135,8 @@ namespace Content.Server.Administration.Systems
             _relayMessages[session.UserId] = relay;
 
             // Notify admins
-            await channel.SendMessageAsync($"**Info:** Thread created. Further messages will be relayed to the player. <@{arg.Author.Id}>");
-            await arg.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
-            return Task.CompletedTask;
+            await channel.SendMessageAsync($"**Info:** Thread created. Further messages will be relayed to the player. <@{commandArgs.Message.Author.Id}>");
+            await commandArgs.Message.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
         }
 
         private void OnChannelIdChanged(string obj)
@@ -162,16 +150,16 @@ namespace Content.Server.Administration.Systems
             _channelId = id;
         }
 
-        private Task OnDiscordMessageReceived(SocketMessage arg)
+        private void OnDiscordMessageReceived(SocketMessage arg)
         {
             if (arg.Channel is not SocketThreadChannel threadChannel)
-                return Task.CompletedTask;
+                return;
 
             if (threadChannel.ParentChannel.Id != _channelId)
-                return Task.CompletedTask;
+                return;
 
             if (arg.Author.IsBot) // Not ignoring bots would probably cause a loop.
-                return Task.CompletedTask;
+                return;
 
             foreach (var messages in _relayMessages)
             {
@@ -189,10 +177,11 @@ namespace Content.Server.Administration.Systems
                 if (arg.Content.Trim().StartsWith("-"))
                     continue; // That is a comment for breadmemes to discuss within the thread
 
-                // Command handling
-                if (arg.Content.StartsWith(_prefix))
+                // Command handling.
+                // I do this here instead of OnCommandReceived because I need to know the session and I want to avoid code duplication.
+                if (arg.Content.StartsWith(_discord.BotPrefix))
                 {
-                    var contentWithoutPrefix = arg.Content.Remove(0, _prefix.Length);
+                    var contentWithoutPrefix = arg.Content.Remove(0, _discord.BotPrefix.Length);
                     switch (contentWithoutPrefix)
                     {
                         case "status":
@@ -208,6 +197,8 @@ namespace Content.Server.Administration.Systems
 
                 // It was originally blue, but that blue tone was too dark, then lucky said I should make it yellow. So now it's yellow.
                 var content = "[color=yellow] (d) " + arg.Author.Username + "[/color]: " + arg.Content;
+                if (!_showThatTheMessageWasFromDiscord)
+                    content = "[color=red]" + arg.Author.Username + "[/color]: " + arg.Content;
 
                 var msg = new BwoinkTextMessage(messages.Key, messages.Key, content);
                 RaiseNetworkEvent(msg, session.ConnectedClient);
@@ -219,8 +210,6 @@ namespace Content.Server.Administration.Systems
                     RaiseNetworkEvent(msg, admin);
                 }
             }
-
-            return Task.CompletedTask;
         }
 
         private void OnOverrideChanged(string obj)
@@ -246,7 +235,7 @@ namespace Content.Server.Administration.Systems
             if (e.NewStatus != SessionStatus.InGame)
                 return;
 
-            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(_discord.Client is not null), e.Session);
+            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(_discord.IsConnected), e.Session);
         }
 
         private void OnGameRunLevelChanged(GameRunLevelChangedEvent args)
@@ -272,6 +261,18 @@ namespace Content.Server.Administration.Systems
                 args.New is not (GameRunLevel.PreRoundLobby or GameRunLevel.InRound))
             {
                 return;
+            }
+
+            _oldRelayMessages.Clear();
+            foreach (var item in _relayMessages)
+            {
+                _oldRelayMessages.Add(item.Key, item.Value);
+            }
+
+            // Send info message to the relay channels, that the relay is now OFF.
+            foreach (var relayMessage in _relayMessages)
+            {
+                relayMessage.Value.channel.SendMessageAsync("**Warning**: Relay closed. Server is restarting or round ended. Any messages sent to will not be received.");
             }
 
             _relayMessages.Clear();
@@ -309,26 +310,26 @@ namespace Content.Server.Administration.Systems
 
         public override void Shutdown()
         {
+            base.Shutdown();
+
+            _sawmill.Debug("Shutting down AHELP system. Sending shutdown messages to all relay channels.");
             foreach (var message in _relayMessages)
             {
                 message.Value.channel.SendMessageAsync("**Warning**: Server is shutting down. Any messages sent to will not be received.", false, null,null, AllowedMentions.None);
             }
 
-            base.Shutdown();
             _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
             _config.UnsubValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged);
             _config.UnsubValueChanged(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged);
-            _config.UnsubValueChanged(CCVars.DiscordPrefix, OnDiscordPrefixChanged);
+            _config.UnsubValueChanged(CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged);
 
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            if (_discord.Client is not null)
-            {
-                _discord.Client.MessageReceived -= OnDiscordMessageReceived;
-                _discord.Client.MessageReceived -= OnReceiveNewRelay;
-            }
+            _discord.OnMessageReceived -= OnDiscordMessageReceived;
+            _discord.OnCommandReceived -= OnReceiveNewRelay;
 
             _relayMessages.Clear(); // Just in case.
+            _oldRelayMessages.Clear();
         }
 
 
@@ -385,7 +386,7 @@ namespace Content.Server.Administration.Systems
 
         private async Task<RestThreadChannel?> RequestNewRelay(string title, NetUserId targetPlayer)
         {
-            if (_discord.Client is null)
+            if (!_discord.IsConnected)
                 return null;
             if (!_playerManager.TryGetSessionById(targetPlayer, out var playerUid))
             {
@@ -407,7 +408,14 @@ namespace Content.Server.Administration.Systems
             // If the relay is not null, give a list of available commands for the admins to use.
             if (relay is not null)
             {
-                await relay.SendMessageAsync($"Use `{_prefix}status` to regenerate the status embed as seen above. `-` in the beginning of a message will be cause the message to not be relayed to the player.");
+                await relay.SendMessageAsync($"Use `{_discord.BotPrefix}status` to regenerate the status embed as seen above. `-` in the beginning of a message will be cause the message to not be relayed to the player.");
+
+                // Check if there are old relays for this player, if so, inform the admins about it.
+                if (_oldRelayMessages.TryGetValue(targetPlayer, out var oldRelay))
+                {
+                    await relay.SendMessageAsync($"**Info**: Jump to previous thread: <#{oldRelay.channel.Id}>");
+                    _oldRelayMessages.Remove(targetPlayer);
+                }
             }
 
             return relay;
@@ -417,11 +425,18 @@ namespace Content.Server.Administration.Systems
         {
             var clr = GetNonAfkAdmins().Count > 0 ? Color.Green : Color.Red;
             var job = "No entity attached";
+            var entityName = "No entity attached";
             if (session.AttachedEntity.HasValue)
             {
                 if (_idCardSystem.TryFindIdCard(session.AttachedEntity.Value, out var idCard))
                 {
                     job = idCard.Comp.JobTitle ?? "Unknown";
+                }
+
+                var name = Prototype(session.AttachedEntity.Value);
+                if (name != null)
+                {
+                    entityName = name.ID;
                 }
             }
 
@@ -479,6 +494,11 @@ namespace Content.Server.Administration.Systems
                     {
                         Name = "Job on ID card",
                         Value = job
+                    },
+                    new()
+                    {
+                        Name = "Current Entity Name",
+                        Value = entityName
                     },
                     new()
                     {
@@ -589,14 +609,14 @@ namespace Content.Server.Administration.Systems
                 }
             }
 
-            var sendsWebhook = _discord.Client is not null && _channelId != 0;
+            var sendsWebhook = _discord.IsConnected && _channelId != 0;
             if (sendsWebhook)
             {
                 if (!_messageQueues.ContainsKey(msg.UserId))
                     _messageQueues[msg.UserId] = new Queue<string>();
-                
+
                 var nonAfkAdmins = GetNonAfkAdmins();
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, EscapeMarkdown(message.Text), !personalChannel, nonAfkAdmins == 0));
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, EscapeMarkdown(message.Text), !personalChannel, nonAfkAdmins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)

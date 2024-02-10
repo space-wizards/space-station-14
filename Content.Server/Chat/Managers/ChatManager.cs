@@ -72,16 +72,16 @@ namespace Content.Server.Chat.Managers
             _configurationManager.OnValueChanged(CCVars.OocRelayChannelId, OnOocChannelChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminRelayChannelId, OnAdminChannelChanged, true);
 
-            _discordLink.Client!.MessageReceived += MessageReceived;
+            _discordLink.OnMessageReceived += MessageReceived;
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
-        private Task MessageReceived(SocketMessage arg)
+        private void MessageReceived(SocketMessage arg)
         {
             if (arg.Author.IsBot)
             {
-                return Task.CompletedTask;
+                return;
             }
             if (arg.Channel.Id == _relayChannelId)
             {
@@ -97,7 +97,6 @@ namespace Content.Server.Chat.Managers
                     SendAdminChat("(D) " + arg.Author.Username, arg.Content);
                 });
             }
-            return Task.CompletedTask;
         }
 
         private void OnAdminChannelChanged(string id)

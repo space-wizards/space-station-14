@@ -400,19 +400,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Discord bot token for link stuff.
+        ///     The token used to authenticate with Discord.
         /// </summary>
         public static readonly CVarDef<string> DiscordToken =
             CVarDef.Create("discord.token", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         /// <summary>
-        ///     The Discord guild ID to use for link stuff.
+        ///     The Discord guild ID to use for commands as well as for several other features.
         /// </summary>
         public static readonly CVarDef<string> DiscordGuildId =
             CVarDef.Create("discord.guild_id", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Prefix for the Discord bot.
+        ///     Prefix used for commands for the Discord bot.
         /// </summary>
         public static readonly CVarDef<string> DiscordPrefix =
             CVarDef.Create("discord.prefix", "!", CVar.SERVERONLY);
@@ -856,6 +856,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AdminAfkTime =
             CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If this is true, the ahelp relay shows that the response was from discord. If this is false, all messages an admin sends will be shown as if the admin was ingame.
+        /// </summary>
+        /// <returns></returns>
+        public static readonly CVarDef<bool> AdminAhelpRelayShowDiscord =
+            CVarDef.Create("admin.ahelp_relay_show_discord", true, CVar.SERVERONLY);
 
         /*
          * Explosions
