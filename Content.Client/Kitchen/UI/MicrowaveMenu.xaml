@@ -25,7 +25,6 @@
                     StyleClasses="transparentBackgroundItemList"
                     SelectMode="Button"
                     SizeFlagsStretchRatio="3"
-                    ItemSeparation="5"
                     MinSize="100 128">
                     <!-- Ingredients are added here by code -->
                 </ItemList>
@@ -107,7 +106,7 @@
     </BoxContainer>
     <PanelContainer Name="DisableCookingPanelOverlay" MouseFilter="Stop">
         <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E55" />
+            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
         </PanelContainer.PanelOverride>
     </PanelContainer>
 </controls:FancyWindow>

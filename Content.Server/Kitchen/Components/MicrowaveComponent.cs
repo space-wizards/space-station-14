@@ -60,7 +60,7 @@ namespace Content.Server.Kitchen.Components
         /// Tracks the elapsed time of the current cook timer.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentCookTimerElapsedTime = 0;
+        public TimeSpan CurrentCookTimeEnd = TimeSpan.Zero;
 
         /// <summary>
         /// The maximum number of seconds a microwave can be set to.

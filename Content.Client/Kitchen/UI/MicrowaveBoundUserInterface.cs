@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -18,12 +19,20 @@ namespace Content.Client.Kitchen.UI
 
         [ViewVariables]
         private readonly Dictionary<int, ReagentQuantity> _reagents = new();
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        public MicrowaveUpdateUserInterfaceState currentState = default!;
 
         private IEntityManager _entManager;
 
         public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             _entManager = IoCManager.Resolve<IEntityManager>();
+        }
+
+        public TimeSpan GetCurrentTime()
+        {
+            return _gameTiming.CurTime;
         }
 
         protected override void Open()
@@ -61,10 +70,7 @@ namespace Content.Client.Kitchen.UI
 
                     _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
                                                          ("time", Loc.GetString("microwave-menu-instant-button")));
-
                 }
-
-
             };
         }
 
@@ -91,6 +97,7 @@ namespace Content.Client.Kitchen.UI
 
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
+            currentState = cState;
 
             // TODO move this to a component state and ensure the net ids.
             RefreshContentsDisplay(_entManager.GetEntityArray(cState.ContainedSolids));
@@ -98,9 +105,11 @@ namespace Content.Client.Kitchen.UI
             if (_menu == null) return;
 
             //Set the cook time info label
-            var cookTime = cState.ActiveButtonIndex == 0
+            var cookTime = cState.ActiveButtonIndex == 0 
                 ? Loc.GetString("microwave-menu-instant-button")
-                : cState.CurrentCookTimerElapsedTime.ToString();
+                : cState.CurrentCookTime.ToString();
+
+
             _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
                                                          ("time", cookTime));
             _menu.StartButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;

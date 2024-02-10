@@ -2,6 +2,7 @@
 using Robust.Client.UserInterface.Controls;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -16,12 +17,14 @@ namespace Content.Client.Kitchen.UI
         public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
 
         public ButtonGroup CookTimeButtonGroup { get; }
+        private readonly MicrowaveBoundUserInterface _owner;
 
         public MicrowaveMenu(MicrowaveBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
             CookTimeButtonGroup = new ButtonGroup();
             InstantCookButton.Group = CookTimeButtonGroup;
+            _owner = owner;
             InstantCookButton.OnPressed += args =>
             {
                 OnCookTimeSelected?.Invoke(args, 0);
@@ -57,6 +60,19 @@ namespace Content.Client.Kitchen.UI
         public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
         {
             DisableCookingPanelOverlay.Visible = shouldDisable;
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            if(!_owner.currentState.IsMicrowaveBusy)
+                return;
+
+            if(_owner.currentState.CurrentCookTimeEnd > _owner.GetCurrentTime())
+            {
+                CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
+                ("time",_owner.currentState.CurrentCookTimeEnd.Subtract(_owner.GetCurrentTime()).Seconds)); 
+            }
         }
     }
 }
