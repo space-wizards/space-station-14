@@ -118,7 +118,6 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
-  - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
 
