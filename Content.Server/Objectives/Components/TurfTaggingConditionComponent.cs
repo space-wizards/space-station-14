@@ -13,25 +13,25 @@ public sealed partial class TurfTaggingConditionComponent : Component
     /// <summary>
     /// Doors the best department has.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int Best;
 
     /// <summary>
     /// Doors your department has.
     /// If it's the same as best, you are winning.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int Doors;
 
     /// <summary>
     /// When the cached values were last updated.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextCache = TimeSpan.Zero;
 
     /// <summary>
     /// How long to use cached values before updating them again.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan CacheExpiry = TimeSpan.FromSeconds(10);
 }
