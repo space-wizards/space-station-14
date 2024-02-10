@@ -7,49 +7,29 @@
   - type: StorageFill
     contents:
       - id: PlushieBee
-        prob: 0.1
       - id: PlushieNar
-        prob: 0.1
       - id: PlushieCarp
-        prob: 0.1
       - id: PlushieNuke
-        prob: 0.1
       - id: PlushieSlime
-        prob: 0.1
       - id: PlushieSnake
-        prob: 0.1
       - id: PlushieLizard
-        prob: 0.1
       - id: PlushieSpaceLizard
-        prob: 0.1
       - id: PlushieVox
-        prob: 0.1
       - id: PlushieRouny
-        prob: 0.1
       - id: PlushieRatvar
-        prob: 0.1
       - id: PlushieSharkBlue
-        prob: 0.1
         orGroup: PlushieShark
       - id: PlushieSharkGrey
-        prob: 0.1
         orGroup: PlushieShark
       - id: PlushieAtmosian
-        prob: 0.1
       - id: PlushieDiona
-        prob: 0.1
       - id: PlushieXeno
-        prob: 0.1
       - id: PlushieHampter
-        prob: 0.1
       - id: PlushieMoth
-        prob: 0.1
       - id: PlushieArachind
-        prob: 0.1
       - id: PlushiePenguin
-        prob: 0.1
       - id: PlushieScientist
-        prob: 0.1
+      - id: PlushieRobotics
 
 - type: entity
   id: CrateFunLizardPlushieBulk
@@ -60,9 +40,13 @@
   - type: StorageFill
     contents:
       - id: PlushieLizard
-        amount: 3
-      - id: PlushieSpaceLizard
         amount: 2
+      - id: PlushieSpaceLizard
+        amount: 1
+      - id: PlushieScientist
+        amount: 1
+      - id: PlushieRobotics
+        amount: 1
 
 - type: entity
   id: CrateFunInstrumentsVariety

@@ -13,5 +13,3 @@
       - id: NodeScanner
       - id: NetworkConfigurator
         prob: 0.5
-      - id: PlushieScientist
-        prob: 0.2
