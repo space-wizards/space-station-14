@@ -364,23 +364,11 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        /// URL of the Discord webhook which will relay all ahelp messages.
-        /// </summary>
-        public static readonly CVarDef<string> DiscordAHelpWebhook =
-            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
-
-        /// <summary>
         /// The server icon to use in the Discord ahelp embed footer.
         /// Valid values are specified at https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure.
         /// </summary>
         public static readonly CVarDef<string> DiscordAHelpFooterIcon =
             CVarDef.Create("discord.ahelp_footer_icon", string.Empty, CVar.SERVERONLY);
-
-        /// <summary>
-        /// The avatar to use for the webhook. Should be an URL.
-        /// </summary>
-        public static readonly CVarDef<string> DiscordAHelpAvatar =
-            CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
         /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook.
