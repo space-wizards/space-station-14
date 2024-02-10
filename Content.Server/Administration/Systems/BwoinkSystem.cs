@@ -418,7 +418,7 @@ namespace Content.Server.Administration.Systems
                 bwoinkText = $"{senderSession.Name}";
             }
 
-            bwoinkText = (message.PlaySound ? "" : "(S) ") + bwoinkText + ": " + escapedText;
+            bwoinkText = $"{(message.PlaySound ? "" : "(S) ")}{bwoinkText}: {escapedText}";
 
             var playSound = senderAHelpAdmin && message.PlaySound;
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound);
@@ -456,7 +456,7 @@ namespace Content.Server.Administration.Systems
                             overrideMsgText = $"{senderSession.Name}"; // Not an admin, name is not overridden.
                         }
 
-                        overrideMsgText = (message.PlaySound ? "" : "(S) ") + overrideMsgText + ": " + escapedText;
+                        overrideMsgText = $"{(message.PlaySound ? "" : "(S) ")}{overrideMsgText}: {escapedText}";
 
                         RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText, playSound: playSound), session.Channel);
                     }
