@@ -6,10 +6,6 @@ namespace Content.Shared.Medical.Wounding.Systems;
 
 public sealed partial class WoundSystem
 {
-    private void InitHealing()
-    {
-    }
-
     private void HealingUpdate(float frameTime)
     {
         var woundableQuery = EntityManager.EntityQueryEnumerator<WoundableComponent, HealableComponent>();
