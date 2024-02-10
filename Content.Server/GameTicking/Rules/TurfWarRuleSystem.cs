@@ -223,7 +223,6 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
             var name = Loc.GetString($"department-{department}");
             args.Text += "\n" + Loc.GetString("turf-war-round-end-result", ("place", i + 1), ("department", name), ("count", count));
         }
-        // TODO: show total doors for each department
     }
 
     private void OnObjectivesTextGetInfo(Entity<TurfWarRuleComponent> ent, ref ObjectivesTextGetInfoEvent args)
