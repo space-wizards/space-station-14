@@ -12,12 +12,12 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(GameDirectorSystem))]
 public sealed partial class GameDirectorComponent : Component
 {
-    public const float MinimumTimeUntilFirstEvent = 300;
+    public const float MinimumTimeUntilFirstEvent = 300; // in seconds
 
     /// <summary>
     ///   How long until the next check for an event runs
-    /// </summary>
     ///   Default value is how long until first event is allowed
+    /// </summary>
     [DataField("timeNextEvent", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TimeNextEvent;
 
@@ -105,7 +105,7 @@ public sealed partial class StoryPrototype : IPrototype
 }
 
 /// <summary>
-///   A point in the story of the station where the dynamic system tries to achieve a certian level of chaos
+///   A point in the story of the station where the dynamic system tries to achieve a certain level of chaos
 ///   for instance you want a battle (goal has lots of hostiles)
 ///   then the next beat you might want a restoration of peace (goal has a balanced combat score)
 ///   then you might want to have the station heal up (goal has low medical, atmos and power scores)

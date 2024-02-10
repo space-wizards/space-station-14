@@ -9,8 +9,8 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class VentClogRuleComponent : Component
 {
     /// <summary>
-    ///   Somewhat safe chemicals to put in foam that probably won't instantly kill you.
-    ///   There is a small chance of using any reagent, ignoring this.
+    /// Somewhat safe chemicals to put in foam that probably won't instantly kill you.
+    /// There is a small chance of using any reagent, ignoring this.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
     public IReadOnlyList<string> SafeishVentChemicals = new[]
@@ -19,7 +19,7 @@ public sealed partial class VentClogRuleComponent : Component
     };
 
     /// <summary>
-    ///   Sound played when foam is being created.
+    /// Sound played when foam is being created.
     /// </summary>
     [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/extinguish.ogg");
@@ -37,13 +37,13 @@ public sealed partial class VentClogRuleComponent : Component
     public int Spread = 16;
 
     /// <summary>
-    ///   How long the foam lasts for
+    /// How long the foam lasts for
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Time = 20f;
 
     /// <summary>
-    ///   Reagents that gets the weak numbers used instead of regular ones.
+    /// Reagents that gets the weak numbers used instead of regular ones.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
     public IReadOnlyList<string> WeakReagents = new[]
@@ -52,13 +52,13 @@ public sealed partial class VentClogRuleComponent : Component
     };
 
     /// <summary>
-    ///   Quantity of weak reagents to put in the foam.
+    /// Quantity of weak reagents to put in the foam.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int WeakReagentQuantity = 50;
 
     /// <summary>
-    ///   Spread of the foam for weak reagents.
+    /// Spread of the foam for weak reagents.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int WeakSpread = 3;

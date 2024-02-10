@@ -20,7 +20,6 @@ public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, DoorMetricComponent component,
         CalculateChaosEvent args)
     {
-
         var firelockQ = GetEntityQuery<FirelockComponent>();
         var airlockQ = GetEntityQuery<AirlockComponent>();
 

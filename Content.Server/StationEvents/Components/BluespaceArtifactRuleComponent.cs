@@ -5,8 +5,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
-///   This is used for an event that spawns an artifact
-///   somewhere random on the station.
+/// This is used for an event that spawns an artifact
+/// somewhere random on the station.
 /// </summary>
 [RegisterComponent, Access(typeof(BluespaceArtifactRule))]
 public sealed partial class BluespaceArtifactRuleComponent : Component

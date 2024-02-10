@@ -9,7 +9,7 @@ public sealed partial class MeteorSwarmRuleComponent : Component
     public float Cooldown;
 
     /// <summary>
-    ///   We'll send a specific amount of waves of meteors towards the station per ending rather than using a timer.
+    /// We'll send a specific amount of waves of meteors towards the station per ending rather than using a timer.
     /// </summary>
     [DataField("waveCounter")]
     public int WaveCounter;

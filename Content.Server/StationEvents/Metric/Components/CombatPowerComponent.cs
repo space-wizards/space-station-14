@@ -9,7 +9,6 @@ namespace Content.Server.StationEvents.Metric.Components;
 [RegisterComponent, Access(typeof(CombatMetricSystem))]
 public sealed partial class CombatPowerComponent : Component
 {
-
     /// <summary>
     ///   Threat, expressed as a multiplier (1x is similar to a single player)
     /// </summary>

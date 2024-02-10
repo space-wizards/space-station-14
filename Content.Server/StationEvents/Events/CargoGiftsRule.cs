@@ -25,7 +25,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
     }
 
     /// <summary>
-    ///   Called on an active gamerule entity in the Update function
+    /// Called on an active gamerule entity in the Update function
     /// </summary>
     protected override void ActiveTick(EntityUid uid, CargoGiftsRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
@@ -44,7 +44,6 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
                 !TryComp<StationDataComponent>(station, out var stationData))
             return;
 
-        // TODO: Metric using StationBankAccountComponent
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoDb))
         {
             return;
@@ -80,9 +79,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
         {
             // We're done here!
             _ticker.EndGameRule(uid, gameRule);
-
         }
-
     }
 
 }

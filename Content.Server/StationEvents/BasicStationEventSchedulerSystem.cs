@@ -12,8 +12,8 @@ using Robust.Shared.Utility;
 namespace Content.Server.StationEvents
 {
     /// <summary>
-    ///   The basic event scheduler rule, loosely based off of /tg/ events, which most
-    ///   game presets use.
+    ///     The basic event scheduler rule, loosely based off of /tg/ events, which most
+    ///     game presets use.
     /// </summary>
     [UsedImplicitly]
     public sealed class BasicStationEventSchedulerSystem : GameRuleSystem<BasicStationEventSchedulerComponent>
@@ -53,7 +53,7 @@ namespace Content.Server.StationEvents
         }
 
         /// <summary>
-        ///   Reset the event timer once the event is done.
+        /// Reset the event timer once the event is done.
         /// </summary>
         private void ResetTimer(BasicStationEventSchedulerComponent component)
         {
