@@ -381,4 +381,4 @@
         - state: book5
     - type: ThievingGranter
       stealthy: true
-      stripTimeReduction: 1.5 #Equivilent to normal thieving gloves
+      #stripTimeReduction: 1.5 #Equivilent to normal thieving gloves
