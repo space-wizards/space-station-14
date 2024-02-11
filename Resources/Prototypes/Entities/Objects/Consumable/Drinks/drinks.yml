@@ -1234,13 +1234,6 @@
   id: DrinkMilkshake
   suffix: milkshake
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: DrinkMilkshake
-          Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/milkshake.rsi
     state: icon
