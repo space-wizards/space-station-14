@@ -40,11 +40,9 @@ namespace Content.Server.Explosion.EntitySystems
 
                 if (message.Length >= component.MinLength && message.Length <= component.MaxLength)
                     FinishRecording(ent, args.Source, args.Message);
-
-                if (message.Length > component.MaxLength)
+                else if (message.Length > component.MaxLength)
                     _popupSystem.PopupEntity(Loc.GetString("popup-trigger-voice-record-failed-too-long"), ent);
-
-                if (message.Length < component.MinLength)
+                else if (message.Length < component.MinLength)
                     _popupSystem.PopupEntity(Loc.GetString("popup-trigger-voice-record-failed-too-short"), ent);
 
                 return;
