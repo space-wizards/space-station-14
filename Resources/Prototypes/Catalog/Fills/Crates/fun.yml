@@ -38,9 +38,9 @@
   - type: StorageFill
     contents:
       - id: PlushieLizard
-        amount: 3
+        amount: 10
       - id: PlushieSpaceLizard
-        amount: 2
+        amount: 4
 
 - type: entity
   id: CrateFunInstrumentsVariety
