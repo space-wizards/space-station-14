@@ -209,7 +209,7 @@ public sealed class InternalsSystem : EntitySystem
         component.BreathToolEntity = toolEntity;
 
         var connected = new ConnectedBreathToolEvent(toolEntity, owner, component);
-        RaiseLocalEvent(toolEntity, connected);
+        RaiseLocalEvent(toolEntity, ref connected);
         _alerts.ShowAlert(owner, AlertType.Internals, GetSeverity(component));
     }
 
@@ -304,24 +304,8 @@ public sealed class InternalsSystem : EntitySystem
 /// <summary>
 /// Raised on a breathing mask entity after it was equipped on a mob and successfully connected to the mob's InternalsComponent
 /// </summary>
-public sealed class ConnectedBreathToolEvent : EntityEventArgs
-{
-    /// <summary>
-    /// The mask that was equipped
-    /// </summary>
-    public readonly EntityUid Mask;
-
-    /// <summary>
-    /// The mob that just equipped the mask
-    /// </summary>
-    public readonly EntityUid User;
-
-    public readonly InternalsComponent IntComp;
-
-    public ConnectedBreathToolEvent (EntityUid mask, EntityUid user,  InternalsComponent intComp)
-    {
-        Mask = mask;
-        User = user;
-        IntComp = intComp;
-    }
-}
+/// <param name="Mask">The mask that was equipped</param>
+/// <param name="User">The mob that just equipped the mask</param>
+/// <param name="IntComp">The mob's component</param>
+[ByRefEvent]
+public readonly record struct ConnectedBreathToolEvent (EntityUid Mask,  EntityUid User, InternalsComponent IntComp );
