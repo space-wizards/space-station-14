@@ -5,6 +5,7 @@ using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Internals;
