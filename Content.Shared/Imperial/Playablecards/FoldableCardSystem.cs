@@ -119,6 +119,8 @@ public sealed class FoldableCardSystem : EntitySystem
     {
         if (!CanToggleFold(uid, component))
             return;
+        if (!args.CanInteract || !args.CanAccess)
+            return;
 
         AlternativeVerb verb = new()
         {
