@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -35,15 +36,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
     }
 
     #region Sending & Receiving
-    /// <summary>
-    /// Sends a network payload directed at the sink entity.
-    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
-    /// </summary>
-    /// <param name="uid">The source uid that invokes the port</param>
-    /// <param name="port">The port to invoke</param>
-    /// <param name="data">Optional data to send along</param>
-    /// <param name="sourceComponent"></param>
-    public void InvokePort(EntityUid uid, string port, NetworkPayload? data = null, DeviceLinkSourceComponent? sourceComponent = null)
+    public override void InvokePort(EntityUid uid, string port, NetworkPayload? data = null, DeviceLinkSourceComponent? sourceComponent = null)
     {
         if (!Resolve(uid, ref sourceComponent) || !sourceComponent.Outputs.TryGetValue(port, out var sinks))
             return;
