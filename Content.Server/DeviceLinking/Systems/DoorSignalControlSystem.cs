@@ -1,6 +1,7 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.Doors.Systems;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
@@ -59,8 +60,7 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State is DoorState.Closed or DoorState.Open)
-                        _doorSystem.TryToggleDoor(uid, door);
+                    _doorSystem.TryToggleDoor(uid, door);
                 }
             }
             else if (args.Port == component.InBolt)

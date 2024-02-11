@@ -42,7 +42,6 @@
         - !type:OrganType
           type: Moth
 
-
 - type: reagent
   id: BuzzochloricBees
   name: reagent-name-buzzochloric-bees
@@ -297,6 +296,27 @@
         visualType: LargeCaution
         messages: [ "fresium-effect-frozen"]
         probability: 0.4
+
+- type: reagent
+  id: Laughter
+  name: reagent-name-laughter
+  group: Special
+  desc: reagent-desc-laughter
+  physicalDesc: reagent-physical-desc-funny
+  flavor: funny
+  color: "#FF4DD2"
+  slippery: true #clown juice gotta slip
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Emote
+        emote: Laugh
+        probability: 0.3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "laughter-effect-control-laughter" ]
+        probability: 0.2
 
 - type: reagent
   id: JuiceThatMakesYouWeh

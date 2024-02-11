@@ -79,7 +79,46 @@
       Glass: 100
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  id: DrinkBottleVisualsOpenable
+  abstract: true
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Sprite
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+
+- type: entity
+  id: DrinkBottleVisualsAll
+  abstract: true
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon_empty"}
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alco-bottle.rsi
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkAbsintheBottleFull
   name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
@@ -94,7 +133,7 @@
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkBlueCuracaoBottleFull
   name: Miss Blue Curacao
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
@@ -106,10 +145,19 @@
         - ReagentId: BlueCuracao
           Quantity: 100
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/alco-blue.rsi
+    sprite: Objects/Consumable/Drinks/alco-bottle.rsi
+    layers:
+      - state: icon_blue
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkBottleOfNothingFull
   name: bottle of nothing
   description: A bottle filled with nothing.
@@ -124,7 +172,7 @@
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkChampagneBottleFull
   name: champagne bottle
   description: Only people devoid of imagination can't find an excuse for champagne.
@@ -139,7 +187,7 @@
     sprite: Objects/Consumable/Drinks/champagnebottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkCognacBottleFull
   name: cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
@@ -156,7 +204,7 @@
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkColaBottleFull
   name: space cola bottle
   description: Cola. In space.
@@ -172,9 +220,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
 
-
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkGrenadineBottleFull
   name: briar rose grenadine syrup bottle
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
@@ -190,9 +237,11 @@
     opened: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkGinBottleFull
   name: Griffeater gin
   description: A bottle of high quality gin, produced in the New London Space Station.
@@ -209,7 +258,7 @@
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkGildlagerBottleFull
   name: gildlager bottle
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
@@ -224,7 +273,7 @@
     sprite: Objects/Consumable/Drinks/gildlagerbottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkCoffeeLiqueurBottleFull
   name: coffee liqueur bottle
   description: The great taste of coffee with none of the benifits.
@@ -241,7 +290,7 @@
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkMelonLiquorBottleFull
   name: emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
@@ -253,10 +302,19 @@
         - ReagentId: MelonLiquor
           Quantity: 100
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/alco-green.rsi
+    sprite: Objects/Consumable/Drinks/alco-bottle.rsi
+    layers:
+      - state: icon_green
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkPatronBottleFull
   name: wrapp artiste patron bottle
   description: Silver laced tequilla, served in space night clubs across the galaxy.
@@ -271,7 +329,7 @@
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkPoisonWinebottleFull
   name: warlock's velvet bottle
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
@@ -286,7 +344,7 @@
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkRumBottleFull
   name: captain pete's Cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
@@ -303,7 +361,7 @@
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkSpaceMountainWindBottleFull
   name: space mountain wind bottle
   description: Blows right through you like a space wind.
@@ -321,7 +379,7 @@
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkSpaceUpBottleFull
   name: space-up bottle
   description: Tastes like a hull breach in your mouth.
@@ -339,7 +397,7 @@
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkTequilaBottleFull
   name: caccavo guaranteed quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
@@ -356,7 +414,7 @@
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkVermouthBottleFull
   name: goldeneye vermouth bottle
   description: Sweet, sweet dryness!
@@ -373,7 +431,7 @@
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkVodkaBottleFull
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
@@ -390,7 +448,7 @@
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkWhiskeyBottleFull
   name: uncle git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
@@ -407,7 +465,7 @@
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkWineBottleFull
   name: doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
@@ -426,7 +484,7 @@
 # Small Bottles
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkBeerBottleFull
   name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
@@ -444,7 +502,7 @@
     sprite: Objects/Consumable/Drinks/beer.rsi
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkBeerGrowler # Needs to be renamed DrinkBeerBottleFull
   name: Beer Growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
@@ -463,7 +521,7 @@
 
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkAleBottleFull
   name: Magm-Ale
   description: A true dorf's drink of choice.
@@ -482,7 +540,7 @@
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkAleBottleFullGrowler
   name: Magm-Ale Growler
   description: A true dorf's drink of choice. XL growler bottle.
@@ -500,7 +558,7 @@
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
@@ -519,6 +577,7 @@
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
     layers:
       - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
       - state: icon-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
@@ -526,6 +585,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: icon-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -562,7 +623,7 @@
 # Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkJuiceLimeCartonXL
   name: lime juice XL
   description: Sweet-sour goodness.
@@ -581,7 +642,7 @@
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkJuiceOrangeCartonXL
   name: orange juice XL
   description: Full of vitamins and deliciousness!
@@ -600,7 +661,7 @@
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkCreamCartonXL
   name: Milk Cream XL
   description: It's cream. Made from milk. What else did you think you'd find in there?
@@ -667,6 +728,8 @@
         - ReagentId: Mead
           Quantity: 150
   - type: Drink
+  - type: Label
+    currentLabel: mead
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -754,7 +817,7 @@
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkDrGibbJug
-  name: dr gibb jug
+  name: dr gibb. jug
   description: yeah I don't know either...
   components:
   - type: SolutionContainerManager
