@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -19,6 +20,7 @@ public sealed partial class MapScreen : BoxContainer
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    private readonly SharedAudioSystem _audio;
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSystem;
 
@@ -42,6 +44,7 @@ public sealed partial class MapScreen : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _audio = _entManager.System<SharedAudioSystem>();
         _maps = _entManager.System<SharedMapSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
 
@@ -138,6 +141,14 @@ public sealed partial class MapScreen : BoxContainer
 
             BuildMapObjects();
         }
+    }
+
+    /// <summary>
+    /// Does a sonar-like effect on the map.
+    /// </summary>
+    public void PingMap()
+    {
+        _audio.PlayEntity()
     }
 
     private void MapRebuildPressed(BaseButton.ButtonEventArgs obj)
