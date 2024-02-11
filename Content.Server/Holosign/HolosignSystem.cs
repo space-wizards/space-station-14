@@ -44,8 +44,8 @@ public sealed class HolosignSystem : EntitySystem
     {
 
         if (args.Handled
-            || !args.CanReach // only allow placement in reachable range
-            || !_powerCell.TryUseCharge(uid, component.ChargeUse) // only uses charge if battery exists and in interactable range
+            || !args.CanReach // prevent placing out of range
+            || !_powerCell.TryUseCharge(uid, component.ChargeUse) // if no battery or no charge, doesn't work
             )
             return;
 
