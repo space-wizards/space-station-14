@@ -17,7 +17,6 @@ namespace Content.Client.Administration.Managers
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
-
         private AdminData? _adminData;
         private readonly HashSet<string> _availableCommands = new();
 

@@ -12,7 +12,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();
