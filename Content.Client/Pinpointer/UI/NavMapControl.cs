@@ -642,14 +642,16 @@ public partial class NavMapControl : MapGridControl
 public struct NavMapBlip
 {
     public EntityCoordinates Coordinates;
+    public MapCoordinates MapCoordinates;
     public Texture Texture;
     public Color Color;
     public bool Blinks;
     public bool Selectable;
 
-    public NavMapBlip(EntityCoordinates coordinates, Texture texture, Color color, bool blinks, bool selectable = true)
+    public NavMapBlip(EntityCoordinates coordinates, MapCoordinates mapCoordinates, Texture texture, Color color, bool blinks, bool selectable = true)
     {
         Coordinates = coordinates;
+        MapCoordinates = mapCoordinates;
         Texture = texture;
         Color = color;
         Blinks = blinks;

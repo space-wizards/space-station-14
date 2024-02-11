@@ -1,6 +1,7 @@
 using Content.Client.Pinpointer.UI;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Medical.CrewMonitoring;
 
@@ -63,7 +64,9 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
             if (!LocalizedNames.TryGetValue(netEntity, out var name))
                 name = "Unknown";
 
-            var message = name + "\nLocation: [x = " + MathF.Round(blip.Coordinates.X) + ", y = " + MathF.Round(blip.Coordinates.Y) + "]";
+            // Text location of the blip will display GPS coordinates for the purpose of being able to find a person via GPS
+            // Previously it displayed coordinates relative to the center of the station, which had no use.
+            var message = name + "\nLocation: [x = " + MathF.Round(blip.MapCoordinates.X) + ", y = " + MathF.Round(blip.MapCoordinates.Y) + "]";
 
             _trackedEntityLabel.Text = message;
             _trackedEntityPanel.Visible = true;

@@ -18,6 +18,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     private readonly IEntityManager _entManager;
     private readonly SpriteSystem _spriteSystem;
     private readonly IGameTiming _gameTiming;
+    private readonly SharedTransformSystem _transformSystem;
 
     private const float BlinkFrequency = 1f;
 
@@ -39,6 +40,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _gameTiming = IoCManager.Resolve<IGameTiming>();
+        _transformSystem = _entManager.System<SharedTransformSystem>();
 
         _spriteSystem = _entManager.System<SpriteSystem>();
         _owner = owner;
@@ -166,7 +168,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (monitorCoords != null && mon != null)
         {
             var texture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
-            var blip = new NavMapBlip(monitorCoords.Value, texture, Color.Cyan, true, false);
+            var blip = new NavMapBlip(monitorCoords.Value, monitorCoords.Value.ToMap(_entManager, _transformSystem), texture, Color.Cyan, true, false);
             NavMap.TrackedEntities[mon.Value] = blip;
         }
 
@@ -233,7 +235,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (_focusEntity != null && usedEntity != _focusEntity && !entitiesOfInterest.Contains(usedEntity.Value))
             modulator = Color.DimGray;
 
-        var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color * modulator, blink);
+        var blip = new NavMapBlip(coords, coords.ToMap(_entManager, _transformSystem), _spriteSystem.Frame0(texture), color * modulator, blink);
         NavMap.TrackedEntities[netEntity] = blip;
     }
 
