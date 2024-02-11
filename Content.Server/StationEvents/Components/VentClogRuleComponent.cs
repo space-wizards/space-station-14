@@ -25,13 +25,13 @@ public sealed partial class VentClogRuleComponent : Component
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/extinguish.ogg");
 
     /// <summary>
-    /// The standard reagent quantity to put in the foam, modfied by event severity.
+    /// The standard reagent quantity to put in the foam, modified by event severity.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int ReagentQuantity = 100;
 
     /// <summary>
-    /// The standard spreading of the foam, not modfied by event severity.
+    /// The standard spreading of the foam, not modified by event severity.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Spread = 16;

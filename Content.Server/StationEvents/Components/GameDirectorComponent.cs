@@ -18,51 +18,52 @@ public sealed partial class GameDirectorComponent : Component
     ///   How long until the next check for an event runs
     ///   Default value is how long until first event is allowed
     /// </summary>
-    [DataField("timeNextEvent", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TimeNextEvent;
 
     /// <summary>
     ///   When the current beat started
     /// </summary>
-    [DataField("beatStart", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan BeatStart;
 
     /// <summary>
     ///   The chaos we measured last time we ran
     ///   This is helpful for ViewVariables and perhaps as a cache to hold chaos for other functions to use.
     /// </summary>
-    [DataField("currentChaos"), ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ChaosMetrics CurrentChaos = new();
 
     /// <summary>
-    ///   The story we are currently executing from stories (for easier debugging)
+    ///   The story we are currently executing from stories (for easier debugging). Since it is for
+    ///   debugging, it does not need a DataField.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<StoryBeatPrototype> CurrentStoryName;
+    public ProtoId<StoryPrototype> CurrentStoryName;
 
     /// <summary>
     ///   Remaining beats in the story we are currently executing (a list of beat IDs)
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public List<ProtoId<StoryBeatPrototype>> RemainingBeats = new();
 
     /// <summary>
     ///   Which stories the director can choose from (so we can change flavor of director by loading different stories)
     ///   One of these get picked randomly each time the current story is exhausted.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StoryPrototype>[]? Stories;
 
     /// <summary>
     ///   A beat name we always use when we cannot find any stories to use.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StoryBeatPrototype> FallbackBeatName = "Peace";
 
     /// <summary>
     ///   All the events that are allowed to run in the current story.
     /// </summary>
-    [DataField("possibleEvents"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public List<PossibleEvent> PossibleEvents = new();
     // Could have Chaos multipliers here, or multipliers per player (so stories are harder with more players).
 }
@@ -82,25 +83,25 @@ public sealed partial class StoryPrototype : IPrototype
     /// <summary>
     ///   A human-readable description string for logging / admins
     /// </summary>
-    [DataField("description"), ViewVariables(VVAccess.ReadWrite)]
-    public string Description = "<Story>";
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string Description;
 
     /// <summary>
     ///   Minimum number of players on the station to pick this story
     /// </summary>
-    [DataField("minPlayers"), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int MinPlayers = -1;
 
     /// <summary>
     ///   Maximum number of players on the station to pick this story
     /// </summary>
-    [DataField("maxPlayers"), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int MaxPlayers = Int32.MaxValue;
 
     /// <summary>
     ///   List of beat-ids in this story.
     /// </summary>
-    [DataField("beats", customTypeSerializer: typeof(PrototypeIdArraySerializer<StoryBeatPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StoryBeatPrototype>[]? Beats;
 }
 
@@ -127,13 +128,13 @@ public sealed partial class StoryBeatPrototype : IPrototype
     /// <summary>
     ///   A human-readable description string for logging / admins
     /// </summary>
-    [DataField("description"), ViewVariables(VVAccess.ReadWrite)]
-    public string Description = "<StoryBeat>";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string Description;
 
     /// <summary>
     ///   Which chaos levels we are driving in this beat and the values we are aiming for
     /// </summary>
-    [DataField("goal"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ChaosMetrics Goal = new ChaosMetrics();
 
     /// <summary>
@@ -142,7 +143,7 @@ public sealed partial class StoryBeatPrototype : IPrototype
     ///   If the current metrics get worse than any of these, end the story beat
     ///   For instance, too many hostiles or too little atmos
     /// </summary>
-    [DataField("endIfAnyWorse"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ChaosMetrics EndIfAnyWorse = new ChaosMetrics();
 
     /// <summary>
@@ -151,33 +152,33 @@ public sealed partial class StoryBeatPrototype : IPrototype
     ///   If the current metrics get better than all of these, end the story beat
     ///   For instance, medical, atmos, hostiles are all under control.
     /// </summary>
-    [DataField("endIfAllBetter"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ChaosMetrics EndIfAllBetter = new ChaosMetrics();
 
     /// <summary>
     ///   The number of seconds that we will remain in this state at minimum
     /// </summary>
-    [DataField("minSecs"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MinSecs = 480.0f;
 
     /// <summary>
     ///   The number of seconds that we will remain in this state at maximum
     /// </summary>
-    [DataField("maxSecs"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxSecs = 1200.0f;
 
     /// <summary>
     ///   Seconds between events during this beat (min)
     ///   2 minute default (120)
     /// </summary>
-    [DataField("eventDelayMin"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EventDelayMin = 120.0f;
 
     /// <summary>
     ///   Seconds between events during this beat (min)
     ///   6 minute default (360)
     /// </summary>
-    [DataField("eventDelayMax"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EventDelayMax = 360.0f;
 
     /// <summary>
@@ -188,7 +189,7 @@ public sealed partial class StoryBeatPrototype : IPrototype
     ///  pick randomly from the top few events (RandomEventLimit).
     /// By tuning RandomEventLimit you can decide on a per beat basis how much the director is "directing" and
     ///  how much it's acting like a random system. Some randomness is often good to spice things up.
-    [DataField("randomEventLimit"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int RandomEventLimit = 3;
 }
 
@@ -210,7 +211,7 @@ public sealed partial class PossibleEvent
     ///   Used by the GameDirector, which picks an event expected to make the desired chaos changes.
     ///   Copy of the StationEventComponent.Chaos field from the relevant event.
     /// </summary>
-    [DataField("chaos"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ChaosMetrics Chaos = new();
 
     public PossibleEvent()
