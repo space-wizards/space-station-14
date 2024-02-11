@@ -4,7 +4,6 @@ using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Tests.DeviceNetwork;
-using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
 using Robust.Shared;

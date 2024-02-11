@@ -17,7 +17,6 @@ using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 
 namespace Content.Server.SensorMonitoring;
 
