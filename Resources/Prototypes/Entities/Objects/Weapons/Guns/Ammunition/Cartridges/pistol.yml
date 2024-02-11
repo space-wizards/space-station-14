@@ -34,11 +34,10 @@
   - type: CartridgeAmmo
     proto: BulletPistolPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
-      - state: practice
-        map: ["enum.AmmoVisualLayers.Base"]
-
+      - state: base
+      - state: tip
+        color: "#dbdbdb"
 
 - type: entity
   id: CartridgePistolRubber
@@ -48,10 +47,10 @@
   - type: CartridgeAmmo
     proto: BulletPistolRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
-      - state: rubber
-        map: ["enum.AmmoVisualLayers.Base"]
+      - state: base
+      - state: tip
+        color: "#43c4f7"
 
 - type: entity
   id: CartridgePistolIncendiary
@@ -61,10 +60,10 @@
   - type: CartridgeAmmo
     proto: BulletPistolIncendiary
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
-      - state: incendiary
-        map: ["enum.AmmoVisualLayers.Base"]
+      - state: base
+      - state: tip
+        color: "#ff6e52"
 
 - type: entity
   id: CartridgePistolUranium
@@ -74,7 +73,7 @@
   - type: CartridgeAmmo
     proto: BulletPistolUranium
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
-      - state: uranium
-        map: ["enum.AmmoVisualLayers.Base"]
+      - state: base
+      - state: tip
+        color: "#49fc2d"
