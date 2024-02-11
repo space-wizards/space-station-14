@@ -2222,6 +2222,9 @@
         collection: FootstepClownFast
     - type: Speech
       speechVerb: Cluwne
+    - type: Bloodstream
+      bloodMaxVolume: 150
+      bloodReagent: Laughter
 
 - type: entity
   name: possum
