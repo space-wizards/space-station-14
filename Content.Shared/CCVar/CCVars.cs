@@ -1653,7 +1653,7 @@ namespace Content.Shared.CCVar
         /// The time you must spend reading the rules, before the "Request" button is enabled
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
-            CVarDef.Create("ghost.role_time", 10f, CVar.REPLICATED);
+            CVarDef.Create("ghost.role_time", 10f, CVar.SERVER | CVar.REPLICATED); //Imperial fix cvar
 
         /*
          * Fire alarm
