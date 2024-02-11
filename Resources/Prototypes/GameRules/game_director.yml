@@ -3,7 +3,7 @@
   id: GameDirector
   parent: BaseGameRule
   noSpawn: true
-  abstract: true
+  # not abstract so that we can spawn an empty game director to just measure metrics
   components:
     - type: GameDirector
       storyBeats:

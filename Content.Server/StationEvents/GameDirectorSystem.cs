@@ -88,8 +88,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     {
         // This deletes all existing metrics and sets them up again.
         SetupEvents(scheduler, CountActivePlayers());
-        scheduler.TimeNextEvent = _timing.CurTime + TimeSpan.FromSeconds(GameDirectorComponent.MinimumTimeUntilFirstEvent);
-        LogMessage($"Started, first event in {GameDirectorComponent.MinimumTimeUntilFirstEvent} seconds");
     }
 
     /// <summary>
@@ -123,15 +121,27 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             return;
         }
 
-        // Somewhat expensive process of invoking the metric systems which iterate through entities to determine
-        //   how bad things currently are on the station.
-        ChaosMetrics chaos;
-        var count = CountActivePlayers();
-
-        chaos = CalculateChaos(uid);
+        ChaosMetrics chaos = CalculateChaos(uid);
         scheduler.CurrentChaos = chaos;
+        LogMessage($"Chaos is: {chaos}");
+
+        if (scheduler.Stories == null || scheduler.Stories.Count() <= 0)
+        {
+            // No stories (e.g. dummy game rule for printing metrics), end game rule now
+            GameTicker.EndGameRule(uid, gameRule);
+            return;
+        }
+
+        // This is the first event, add an automatic delay
+        if (scheduler.TimeNextEvent == TimeSpan.Zero)
+        {
+            scheduler.TimeNextEvent = _timing.CurTime + TimeSpan.FromSeconds(GameDirectorComponent.MinimumTimeUntilFirstEvent);
+            LogMessage($"Started, first event in {GameDirectorComponent.MinimumTimeUntilFirstEvent} seconds");
+            return;
+        }
 
         // Decide what story beat to work with (which sets chaos goals)
+        var count = CountActivePlayers();
         var beat = DetermineNextBeat(scheduler, chaos, count);
 
         // Pick the best events (which move the station towards the chaos desired by the beat)
@@ -140,7 +150,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         // Run the best event here, if we have any to pick from.
         if (bestEvents.Count > 0)
         {
-            LogMessage($"Chaos is: {chaos}");
             // Sorts the possible events and then picks semi-randomly.
             // when beat.RandomEventLimit is 1 it's always the "best" event picked. Higher values
             // allow more events to be randomly selected.
