@@ -79,11 +79,19 @@ public partial class SharedBodySystem
                 Dirty(organ, organComp);
 
                 if (organComp.Body != null)
-                    RaiseLocalEvent(organ, new RemovedFromPartInBodyEvent(organComp.Body.Value, uid));
+                {
+                    var ev = new OrganRemovedFromBodyEvent(organComp.Body.Value, uid);
+                    RaiseLocalEvent(organ, ref ev);
+                }
+
 
                 organComp.Body = bodyUid;
                 if (bodyUid != null)
-                    RaiseLocalEvent(organ, new AddedToPartInBodyEvent(bodyUid.Value, uid));
+                {
+                    var ev = new OrganAddedToBodyEvent(bodyUid.Value, uid);
+                    RaiseLocalEvent(organ, ref ev);
+                }
+
             }
         }
 
@@ -111,8 +119,14 @@ public partial class SharedBodySystem
         Dirty(partUid, component);
         component.Body = bodyUid;
 
-        var ev = new BodyPartAddedEvent(slotId, component);
+        var ev = new BodyPartAddedEvent(slotId, partUid, component);
         RaiseLocalEvent(bodyUid, ref ev);
+
+        if (bodyComp != null)
+        {
+            var ev2 = new BodyPartAddedToBodyEvent(slotId, bodyUid, bodyComp, component);
+            RaiseLocalEvent(partUid, ref ev2);
+        }
 
         AddLeg(partUid, bodyUid, component, bodyComp);
     }
@@ -129,8 +143,13 @@ public partial class SharedBodySystem
         Dirty(partUid, component);
         component.Body = null;
 
-        var ev = new BodyPartRemovedEvent(slotId, component);
+        var ev = new BodyPartRemovedEvent(slotId, partUid, component);
         RaiseLocalEvent(bodyUid, ref ev);
+        if (bodyComp != null)
+        {
+            var ev2 = new BodyPartRemovedFromBodyEvent(slotId, bodyUid, bodyComp, component);
+            RaiseLocalEvent(partUid, ref ev2);
+        }
 
         RemoveLeg(partUid, bodyUid, component);
         PartRemoveDamage(bodyUid, component, bodyComp);

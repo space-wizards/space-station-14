@@ -24,6 +24,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
+using BrainComponent = Content.Shared.Medical.Organs.Components.BrainComponent;
 
 namespace Content.Server.Magic;
 

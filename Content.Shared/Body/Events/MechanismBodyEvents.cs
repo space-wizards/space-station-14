@@ -6,56 +6,24 @@
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part.
     /// </summary>
-    public sealed class AddedToPartEvent : EntityEventArgs
-    {
-        public EntityUid Part;
-
-        public AddedToPartEvent(EntityUid part)
-        {
-            Part = part;
-        }
-    }
+    [ByRefEvent]
+    public readonly record struct OrganAddedEvent(EntityUid Part);
 
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part within a body.
     /// </summary>
-    public sealed class AddedToPartInBodyEvent : EntityEventArgs
-    {
-        public EntityUid Body;
-        public EntityUid Part;
-
-        public AddedToPartInBodyEvent(EntityUid body, EntityUid part)
-        {
-            Body = body;
-            Part = part;
-        }
-    }
+    [ByRefEvent]
+    public readonly record struct OrganAddedToBodyEvent(EntityUid Body, EntityUid Part);
 
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part.
     /// </summary>
-    public sealed class RemovedFromPartEvent : EntityEventArgs
-    {
-        public EntityUid OldPart;
-
-        public RemovedFromPartEvent(EntityUid oldPart)
-        {
-            OldPart = oldPart;
-        }
-    }
+    [ByRefEvent]
+    public readonly record struct OrganRemovedEvent(EntityUid OldPart);
 
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part within a body.
     /// </summary>
-    public sealed class RemovedFromPartInBodyEvent : EntityEventArgs
-    {
-        public EntityUid OldBody;
-        public EntityUid OldPart;
-
-        public RemovedFromPartInBodyEvent(EntityUid oldBody, EntityUid oldPart)
-        {
-            OldBody = oldBody;
-            OldPart = oldPart;
-        }
-    }
+    [ByRefEvent]
+    public readonly record struct OrganRemovedFromBodyEvent(EntityUid OldBody, EntityUid OldPart);
 }

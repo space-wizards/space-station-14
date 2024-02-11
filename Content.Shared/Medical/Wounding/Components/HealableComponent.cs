@@ -12,7 +12,7 @@ public sealed partial class HealableComponent : Component
     [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan NextUpdate = default;
 
-    [AutoNetworkedField, DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 Modifier = 1.0;
 
 }

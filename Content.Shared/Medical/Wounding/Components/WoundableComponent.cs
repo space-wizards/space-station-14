@@ -13,10 +13,10 @@ namespace Content.Shared.Medical.Wounding.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(WoundSystem))]
 public sealed partial class WoundableComponent : Component
 {
-    [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Body;
 
-    [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid RootWoundable;
 
     public const string WoundableContainerId = "Wounds";
@@ -36,7 +36,7 @@ public sealed partial class WoundableComponent : Component
     /// <summary>
     /// Last applied Damagetype
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField,ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public ProtoId<DamageTypePrototype> LastAppliedDamageType;
 
     /// <summary>
@@ -58,7 +58,7 @@ public sealed partial class WoundableComponent : Component
     /// <summary>
     /// The current cap of health.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 HealthCap = -1; //this is set during comp init
 
     /// <summary>
@@ -77,7 +77,7 @@ public sealed partial class WoundableComponent : Component
     /// <summary>
     /// The current cap of integrity
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 IntegrityCap = -1; //this is set during comp init
 
     /// <summary>
