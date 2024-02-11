@@ -40,7 +40,7 @@
   beats:
     - Peace
     - AttackMild
-    - EngineeringIssues
+    - PowerIssues
 
 - type: story
   id: Science
@@ -50,7 +50,7 @@
     - Peace
     - MadScience
     - Peace
-    - EngineeringIssues
+    - PowerIssues
     - RepairStation
 
 - type: story
@@ -59,7 +59,7 @@
   beats:
     - Peace
     - AttackMild
-    - EngineeringIssues
+    - PowerIssues
 
 - type: story
   id: ScienceAttack
@@ -70,7 +70,7 @@
     - MadScience
     - AttackMild
     - Peace
-    - EngineeringIssues
+    - PowerIssues
     - RepairStation
 
 - type: story
@@ -80,7 +80,7 @@
   beats:
     - Peace
     - AttackMild
-    - EngineeringIssues
+    - PowerIssues
     - Attackers
     - RestoreOrder
     - RepairStation
