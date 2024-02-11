@@ -63,12 +63,6 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
-    eleos:
-      announcement: alert-level-eleos-announcement
-      selectable: false
-      disableSelection: true
-      color: LightGreen
-      emergencyLightColor: LightGreen
     navy:
       announcement: alert-level-navy-announcement
       selectable: false
@@ -83,12 +77,6 @@
       color: Brown
       emergencyLightColor: Brown
       forceEnableEmergencyLights: true
-    whiskey:
-      announcement: alert-level-whiskey-announcement
-      selectable: false
-      disableSelection: true
-      color: "#C19A6B" #because for some reason lightbrown isnt recognized by the game. nani?
-      emergencyLightColor: "#C19A6B"
     cyan:
       announcement: alert-level-cyan-announcement
       selectable: false
@@ -111,11 +99,4 @@
       disableSelection: true
       color: DarkOrange
       emergencyLightColor: DarkOrange
-      forceEnableEmergencyLights: true
-    boogie:
-      announcement: alert-level-boogie-announcement
-      selectable: false
-      disableSelection: true
-      color: Pink
-      emergencyLightColor: Pink
       forceEnableEmergencyLights: true

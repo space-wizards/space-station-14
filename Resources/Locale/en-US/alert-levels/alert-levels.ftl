@@ -8,8 +8,8 @@ alert-level-green-announcement = It is now safe to return to your workplaces.
 alert-level-green-instructions = Do your job.
 
 alert-level-blue = Blue
-alert-level-blue-announcement = I hate everything.
-alert-level-blue-instructions = I swear to god if this shows up.
+alert-level-blue-announcement = There is a confirmed threat to the station. Security should perform random checks. Crewmembers are advised to be vigilant and report suspicious activity to security.
+alert-level-blue-instructions = Crewmembers are advised to be vigilant and report suspicious activity to security.
 
 alert-level-red = Red
 alert-level-red-announcement = There is an immediate threat to the station. Security should prepare to use lethal force if necessary. Crewmembers should find a safe place to shelter in, and are advised to follow any present authorities.
@@ -35,10 +35,6 @@ alert-level-epsilon = Epsilon
 alert-level-epsilon-announcement = Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated.
 alert-level-epsilon-instructions = Consider all contracts terminated.
 
-alert-level-eleos = Eleos
-alert-level-eleos-announcement = Station crew is to have a mandatory unpaid break period. It also smells faintly like olives.
-alert-level-eleos-instructions = Go on break.
-
 alert-level-navy = Navy
 alert-level-navy-announcement = Central Command has ordered the Navy security level on the station. Special guests will be visiting the station. Security is to be on guard and escort the guests as needed. Crewmembers should look professional and tidy their work places.
 alert-level-navy-instructions = Be on your best behaviour.
@@ -47,22 +43,14 @@ alert-level-brown = Brown
 alert-level-brown-announcement = The station is deemed to be very filthy. Grab cleaning tools and start cleaning around the station.
 alert-level-brown-instructions = Help clean the station.
 
-alert-level-whiskey = Whiskey
-alert-level-whiskey-announcement = Everyone is required to get drunk! Pizza and alchohol included!
-alert-level-whiskey-instructions = Get drunk as you can.
-
 alert-level-cyan = Cyan
 alert-level-cyan-announcement = A unprobable time paradox casued by certain crewmembers has been detected in the timeline. Future Central Command is deploying a unit to fix the paradox.
 alert-level-cyan-instructions = Time paradox detected.
 
 alert-level-beige = Beige
-alert-level-beige-announcement = Central Command has seen the shit going on the station, and is just dissapointed in everyone on board. Everyone should feel shame.
+alert-level-beige-announcement = Central Command has seen the shit going on the station, and is just dissapointed in everyone on board. Everyone is required to feel shame.
 alert-level-beige-instructions = Feel shame, for you are a dissapointment to NT.
 
 alert-level-lima = Lima
 alert-level-lima-announcement = Central Command has ordered the Lima security level on the station. There is currently a supernatural or eldritch level abnormallity to the station. All staff on board is investigate and eliminate the abnormallity.
 alert-level-lima-instructions = Investigate and eliminate the supernatural threat to the station.
-
-alert-level-boogie = Boogie
-alert-level-boogie-announcement = ITS BOOGIE TIME! Get on that dance floor and show off your moves! Party time all the time!
-alert-level-boogie-instructions = Get down and party!
