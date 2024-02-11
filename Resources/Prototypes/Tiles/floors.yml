@@ -17,11 +17,6 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorSteelOnClockwork
-  parent: FloorSteel
-  baseTurf: PlatingBrass
-
-- type: tile
   id: FloorSteelCheckerLight
   name: tiles-steel-floor-checker-light
   sprite: /Textures/Tiles/cafeteria.png
@@ -196,6 +191,42 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorBrassFilled
+  name: tiles-brass-floor-filled
+  sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor_filled.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassFilled
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorBrassFilledOnPlating
+  name: tiles-brass-floor-filled-onplate
+  parent: FloorBrassFilled
+  baseTurf: Plating
+  
+- type: tile
+  id: FloorBrassReebe
+  name: tiles-brass-floor-reebe
+  sprite: /Textures/Tiles/Misc/clockwork/reebe.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassReebe
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorBrassReebeOnPlating
+  name: tiles-brass-floor-reebe-onplate
+  parent: FloorBrassReebe
+  baseTurf: Plating
+
+- type: tile
   id: FloorPlastic
   name: tiles-plastic-floor
   sprite: /Textures/Tiles/plastic.png
@@ -232,11 +263,6 @@
     collection: BarestepWood
   itemDrop: FloorTileItemWood
   heatCapacity: 10000
-  
-- type: tile
-  id: FloorWoodOnClockwork
-  parent: FloorWood
-  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorWhite
@@ -255,11 +281,6 @@
     collection: FootstepTile
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
-
-- type: tile
-  id: FloorWhiteOnClockwork
-  parent: FloorWhite
-  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorWhiteMini
@@ -434,11 +455,6 @@
     collection: FootstepTile
   itemDrop: FloorTileItemDark
   heatCapacity: 10000
-
-- type: tile
-  id: FloorDarkOnClockwork
-  parent: FloorDark
-  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorDarkMini
@@ -619,11 +635,6 @@
     collection: FootstepHull
   itemDrop: FloorTileItemReinforced
   heatCapacity: 10000
-
-- type: tile
-  id: FloorReinforcedOnClockwork
-  parent: FloorReinforced
-  baseTurf: PlatingBrass
 
 - type: tile
   id: FloorMono
@@ -1279,11 +1290,6 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorGoldOnClockwork
-  parent: FloorGold
-  baseTurf: PlatingBrass
-
-- type: tile
   id: FloorSilver
   name: tiles-silver-tile
   sprite: /Textures/Tiles/silver.png
@@ -1811,11 +1817,6 @@
   itemDrop: FloorTileItemAstroGrass
   heatCapacity: 10000
 
-- type: tile
-  id: FloorAstroGrassOnClockwork
-  parent: FloorAstroGrass
-  baseTurf: PlatingBrass
-
 # Ice
 - type: tile
   id: FloorAstroIce
@@ -1830,8 +1831,3 @@
   mobFrictionNoInput: 0.05
   mobAcceleration: 2
   itemDrop: FloorTileItemAstroIce
-
-- type: tile
-  id: FloorAstroIceOnClockwork
-  parent: FloorAstroIce
-  baseTurf: PlatingBrass

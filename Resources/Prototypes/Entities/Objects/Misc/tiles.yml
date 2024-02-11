@@ -57,7 +57,6 @@
     outputs:
       - Plating
       - FloorSteel
-      - FloorSteelOnClockwork #oh god, is this the only way to get tiles to work on different platings?
   - type: Stack
     stackType: FloorTileSteel
   - type: Construction
@@ -120,7 +119,6 @@
     outputs:
       - Plating
       - FloorWood
-      - FloorWoodOnClockwork
   - type: Stack
     stackType: FloorTileWood
   - type: Construction
@@ -140,7 +138,6 @@
     outputs:
       - Plating
       - FloorWhite
-      - FloorWhiteOnClockwork
   - type: Stack
     stackType: FloorTileWhite
   - type: Construction
@@ -160,7 +157,6 @@
     outputs:
       - Plating
       - FloorDark
-      - FloorDarkOnClockwork
   - type: Stack
     stackType: FloorTileDark
   - type: Construction
@@ -196,7 +192,6 @@
     outputs:
       - Plating
       - FloorReinforced
-      - FloorReinforcedOnClockwork
   - type: Stack
     stackType: FloorTileReinforced
 
@@ -233,6 +228,65 @@
       - FloorLino
   - type: Stack
     stackType: FloorTileLino
+
+- type: entity
+  name: brass plate
+  parent: FloorTileItemBase
+  id: FloorTileItemBrass
+  components:
+  - type: Sprite
+    state: brass
+  - type: Item
+    heldPrefix: brass
+  - type: FloorTile
+    outputs:
+      - PlatingBrass
+  - type: Stack
+    stackType: FloorTileBrassPlate
+  - type: Construction
+    graph: TilesBrass
+    node: brassPlate
+
+
+- type: entity
+  name: filled brass plate
+  parent: FloorTileItemBase
+  id: FloorTileItemBrassFilled
+  components:
+  - type: Sprite
+    state: brass-filled
+  - type: Item
+    heldPrefix: brass
+  - type: FloorTile
+    outputs:
+      - PlatingBrass
+      - FloorBrassFilled
+      - FloorBrassFilledOnPlating
+  - type: Stack
+    stackType: FloorTileBrassFilled
+  - type: Construction
+    graph: TilesBrass
+    node: filledPlate
+
+- type: entity
+  name: smooth brass plate
+  parent: FloorTileItemBase
+  id: FloorTileItemBrassReebe
+  components:
+  - type: Sprite
+    state: reebe
+  - type: Item
+    heldPrefix: brass
+  - type: FloorTile
+    outputs:
+      - PlatingBrass
+      - FloorBrassReebe
+      - FloorBrassReebeOnPlating
+  - type: Stack
+    stackType: FloorTileBrassReebe
+  - type: Construction
+    graph: TilesBrass
+    node: reebe
 
 - type: entity
   name: dirty tile
@@ -764,7 +818,6 @@
     outputs:
       - Plating
       - FloorGold
-      - FloorGoldOnClockwork
   - type: Stack
     stackType: FloorTileGold
 
@@ -984,7 +1037,6 @@
     outputs:
     - Plating
     - FloorAstroGrass
-    - FloorAstroGrassOnClockwork
   - type: Stack
     stackType: FloorTileAstroGrass
 
@@ -1002,6 +1054,5 @@
     outputs:
     - Plating
     - FloorAstroIce
-    - FloorAstroIceOnClockwork
   - type: Stack
     stackType: FloorTileAstroIce

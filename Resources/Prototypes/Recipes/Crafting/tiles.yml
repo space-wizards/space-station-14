@@ -23,6 +23,39 @@
   objectType: Item
 
 - type: construction
+  name: brass plate
+  id: TileBrassPlate
+  graph: TilesBrass
+  startNode: start
+  targetNode: brassPlate
+  category: construction-category-tiles
+  description: "Four pieces of brass station plating. Can only be placed on lattices."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: brass }
+  objectType: Item
+  
+- type: construction
+  name: filled brass plate
+  id: TileBrassFilled
+  graph: TilesBrass
+  startNode: start
+  targetNode: filledPlate
+  category: construction-category-tiles
+  description: "Four pieces of brass station flooring."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: brass-filled }
+  objectType: Item
+  
+- type: construction
+  name: smooth brass plate
+  id: TileBrassReebe
+  graph: TilesBrass
+  startNode: start
+  targetNode: reebe
+  category: construction-category-tiles
+  description: "Four pieces of smooth brass station flooring."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: reebe }
+  objectType: Item
+
+- type: construction
   name: white tile
   id: TileWhite
   graph: TileWhite
