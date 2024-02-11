@@ -287,19 +287,12 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         if (!EnsurePausedMap())
             return;
 
-        if (!Resolve(args.Entity.Owner, ref args.Entity.Comp!) ||
-            !Resolve(args.Pinpointer.Owner, ref args.Pinpointer.Comp!))
-            return;
-
-        if (args.MapId != args.Pinpointer.Comp.MapID)
-            return;
-
         // Search for a cryogenic storage unit on the same map as the pinpointer.
         var query = EntityQueryEnumerator<CryostorageComponent, TransformComponent>();
 
         while (query.MoveNext(out var cryoUid, out var cryoComp, out var cryoXform))
         {
-            if (args.MapId != cryoXform.MapID)
+            if (args.Pinpointer.Comp.MapID != cryoXform.MapID)
                 continue;
 
             foreach (var contained in cryoComp.StoredPlayers)
@@ -382,8 +375,38 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     }
 }
 
+/// <summary>
+/// Raised by <see cref="CryostorageSystem"><cref/> on an entity and all of it's children prior to being parented to a separate, paused map.
+/// </summary>
+/// <param name="Entity">The entity or a child of the entity about to be parented to a paused map.</param>
+/// <param name="Cryostorage">The cryostorage unit.</param>
 [ByRefEvent]
-public record struct BeforeEnterCryostorageEvent(EntityUid Entity, Entity<CryostorageComponent> Cryostorage);
+public readonly struct BeforeEnterCryostorageEvent
+{
+    public readonly EntityUid Entity;
+    public readonly Entity<CryostorageComponent> Cryostorage;
 
+    public BeforeEnterCryostorageEvent(EntityUid entity, Entity<CryostorageComponent> cryostorage)
+    {
+        Entity = entity;
+        Cryostorage = cryostorage;
+    }
+}
+
+/// <summary>
+/// Raised by <see cref="CryostorageSystem"><cref/> on an entity and all of it's children after being returned to the map the cryostorage unit is on.
+/// </summary>
+/// <param name="Entity">The entity or a child of the entity about to be parented back to the map the cryostorage unit is on.</param>
+/// <param name="Cryostorage">The cryostorage unit.</param>
 [ByRefEvent]
-public record struct AfterExitCryostorageEvent(EntityUid Entity, Entity<CryostorageComponent> Cryostorage);
+public readonly struct AfterExitCryostorageEvent
+{
+    public readonly EntityUid Entity;
+    public readonly Entity<CryostorageComponent> Cryostorage;
+
+    public AfterExitCryostorageEvent(EntityUid entity, Entity<CryostorageComponent> cryostorage)
+    {
+        Entity = entity;
+        Cryostorage = cryostorage;
+    }
+}

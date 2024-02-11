@@ -1,5 +1,6 @@
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Robust.Shared.Map;
@@ -105,7 +106,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    private void OnSpecialRespawn(SpecialRespawnEvent args)
+    private void OnSpecialRespawn(ref SpecialRespawnEvent args)
     {
         var query = EntityQueryEnumerator<PinpointerComponent>();
 
@@ -171,7 +172,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (otherXform.MapID != mapId)
             {
                 // check for edge cases, such as cryogenic storage units
-                var ev = new GetPinpointerProxyEvent(result, (uid, transform), mapId);
+                var ev = new GetPinpointerProxyEvent(result, (uid, transform));
                 RaiseLocalEvent(ref ev);
 
                 if (ev.Proxy == null)
@@ -274,17 +275,15 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 /// <param name="MapId">The map id of the pinpointer.<param/>
 /// <param name="Proxy">An entity on the same map as the pinpointer.<param/>
 [ByRefEvent]
-public record struct GetPinpointerProxyEvent
+public struct GetPinpointerProxyEvent
 {
-    public Entity<TransformComponent> Entity;
-    public Entity<TransformComponent> Pinpointer;
-    public MapId MapId;
+    public readonly Entity<TransformComponent> Entity;
+    public readonly Entity<TransformComponent> Pinpointer;
     public Entity<TransformComponent>? Proxy = null;
 
-    public GetPinpointerProxyEvent(Entity<TransformComponent> entity, Entity<TransformComponent> pinpointer, MapId mapId)
+    public GetPinpointerProxyEvent(Entity<TransformComponent> entity, Entity<TransformComponent> pinpointer)
     {
         Entity = entity;
         Pinpointer = pinpointer;
-        MapId = mapId;
     }
 };
