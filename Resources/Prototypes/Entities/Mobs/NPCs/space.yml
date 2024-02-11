@@ -110,8 +110,6 @@
     interactFailureString: petting-failure-bear
     interactSuccessSound:
       path: /Audio/Animals/sloth_squeak.ogg
-  - type: CombatPower
-    factor: 2 # times more dangerous than a crew-member
 
 - type: entity
   id: MobBearSpaceSalvage

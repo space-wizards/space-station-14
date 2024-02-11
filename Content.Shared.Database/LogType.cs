@@ -96,5 +96,5 @@ public enum LogType
     ChatRateLimited = 87,
     AtmosTemperatureChanged = 88,
 
-    GameDirector = 100,
+    GameDirector = 89,
 }
