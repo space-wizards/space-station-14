@@ -89,4 +89,4 @@
     layers:
       - state: base
       - state: tip
-        color: "#49fc2d"
+        color: "#65fe08"
