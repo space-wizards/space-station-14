@@ -151,7 +151,7 @@ public sealed class GibbingSystem : EntitySystem
             }
             case GibContentsOption.Gib:
             {
-                foreach (var container in _containerSystem.GetAllContainers(gibbable))
+                foreach (var container in validContainers)
                 {
                     foreach (var ent in container.ContainedEntities)
                     {
