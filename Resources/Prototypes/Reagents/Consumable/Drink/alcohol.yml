@@ -90,7 +90,9 @@
   recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
   metabolisms:
     Drink:
       effects:
@@ -687,7 +689,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bravebullglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 5
+  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
@@ -732,7 +734,10 @@
   color: "#a70000"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/demonsblood.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: DevilsKiss
@@ -816,7 +821,10 @@
   color: "#2E6671"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/erikasurprise.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: GargleBlaster
@@ -828,7 +836,10 @@
   color: "#9cc8b4"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/gargleblasterglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -848,7 +859,10 @@
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/ginfizzglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -868,7 +882,10 @@
   color: "#004166"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/gintonicglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
