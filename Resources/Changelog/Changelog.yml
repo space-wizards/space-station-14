@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: You can now walk into external and shuttle airlocks to open them, like
-      all other airlocks.
-    type: Tweak
-  id: 5415
-  time: '2023-12-18T19:44:50.0000000+00:00'
-  url: null
 - author: iacore
   changes:
   - message: normal closets can now be constructed and deconstructed
@@ -3881,3 +3873,10 @@
   id: 5914
   time: '2024-02-11T06:23:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24748
+- author: Ubaser
+  changes:
+  - message: Grinding ectoplasm now gives Necrosol.
+    type: Tweak
+  id: 5915
+  time: '2024-02-11T06:24:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25053
