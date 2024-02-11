@@ -164,6 +164,7 @@
   suffix: Brain
   description: Contains the brain of a formerly fully-formed Diona. Killing this would kill the Diona forever. You monster.
   components:
+  - type: IsDeadIC
   - type: Body
     prototype: AnimalNymphBrain
 
@@ -175,6 +176,7 @@
   suffix: Stomach
   description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
   components:
+  - type: IsDeadIC
   - type: Body
     prototype: AnimalNymphStomach
 
@@ -186,5 +188,6 @@
   suffix: Lungs
   description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 
   components:
+  - type: IsDeadIC
   - type: Body
     prototype: AnimalNymphLungs
