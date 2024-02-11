@@ -67,4 +67,7 @@ public sealed partial class InstrumentComponent : SharedInstrumentComponent
     public int PlayerTick => Renderer?.PlayerTick ?? 0;
 
     public void PlaybackEndedInvoke() => OnMidiPlaybackEnded?.Invoke();
+
+    [ViewVariables]
+    public List<string> TrackNames = new();
 }

@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments.UI;
 
@@ -55,12 +56,15 @@ public sealed partial class ChannelsMenu : DefaultWindow
     {
         ChannelList.Clear();
 
-        for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
+        for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
-            var item = ChannelList.AddItem(_owner.Loc.GetString("instrument-component-channel-name",
-                ("number", i)), null, true, i);
+            string channelName;
+            if (_owner.Instrument != null && _owner.Instrument.TrackNames.TryGetValue(i, out var trackName))
+                channelName = trackName;
+            else
+                channelName = _owner.Loc.GetString("instrument-component-channel-name", ("number", i));
 
-            item.Selected = !_owner.Instrument?.FilteredChannels[i] ?? false;
+            ChannelList.AddItem(channelName, null, true, i).Selected = !_owner.Instrument?.FilteredChannels[i] ?? false;
         }
     }
 }

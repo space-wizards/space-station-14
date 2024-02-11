@@ -18,6 +18,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly IMidiManager _midiManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
 
     public readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
     public int MaxMidiEventsPerBatch { get; private set; }
@@ -269,6 +270,40 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         SetMaster(uid, null);
         instrument.MidiEventBuffer.Clear();
         instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
+        instrument.TrackNames = new List<string>();
+
+        var sawmill = _logManager.GetSawmill("midi.midifile");
+
+        try
+        {
+            // This is non-critical and it can throw because of file parsing, so, uh
+            var loader = new MidiFile(data.ToArray());
+
+            foreach (var track in loader.Tracks)
+            {
+                foreach (var ev in track.TextEvents)
+                {
+                    switch (ev.TextEventType)
+                    {
+                        case TextEventType.TrackName:
+                            sawmill.Debug($"MidiFile found a track name! {ev.Value}");
+
+                            instrument?.TrackNames.Add(ev.Value);
+
+                            break;
+                        case TextEventType.Text:
+                        case TextEventType.Lyric:
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            sawmill.Error($"Got an exception whilst trying to parse the loaded MIDI for track names! {e}");
+        }
+
         return true;
     }
 
