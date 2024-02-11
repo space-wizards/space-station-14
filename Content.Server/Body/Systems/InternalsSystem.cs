@@ -53,7 +53,8 @@ public sealed class InternalsSystem : EntitySystem
             if (_timing.CurTime < delayComp.Time)
                 return;
 
-            if (TryComp<InternalsComponent>(uid, out var comp))
+            if (TryComp<InternalsComponent>(uid, out var comp) &&
+                !AreInternalsWorking(comp))
                 ToggleInternals(delayComp.Entity , delayComp.Entity , false, comp);
 
             RemCompDeferred<InternalsDelayedActivationComponent>(uid);
