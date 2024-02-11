@@ -85,21 +85,21 @@
 - type: stack
   id: FloorTileBrassPlate
   name: brass plate
-  spawn: FloorTileBrassPlate
+  spawn: FloorTileItemBrass
   maxCount: 30
   itemSize: 5
 
 - type: stack
   id: FloorTileBrassFilled
   name: filled brass plate
-  spawn: FloorTileBrassFilled
+  spawn: FloorTileItemBrassFilled
   maxCount: 30
   itemSize: 5
   
 - type: stack
   id: FloorTileBrassReebe
   name: smooth brass plate
-  spawn: FloorTileBrassReebe
+  spawn: FloorTileItemBrassReebe
   maxCount: 30
   itemSize: 5
 
