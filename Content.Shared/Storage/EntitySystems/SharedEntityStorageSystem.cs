@@ -48,13 +48,19 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public const string ContainerName = "entity_storage";
 
+    protected void OnEntityUnpausedEvent(EntityUid uid, SharedEntityStorageComponent component, EntityUnpausedEvent args)
+    {
+        component.NextInternalOpenAttempt += args.PausedTime;
+    }
+
     protected void OnGetState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentGetState args)
     {
         args.State = new EntityStorageComponentState(component.Open,
             component.Capacity,
             component.IsCollidableWhenOpen,
             component.OpenOnMove,
-            component.EnteringRange);
+            component.EnteringRange,
+            component.NextInternalOpenAttempt);
     }
 
     protected void OnHandleState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentHandleState args)
@@ -66,6 +72,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         component.IsCollidableWhenOpen = state.IsCollidableWhenOpen;
         component.OpenOnMove = state.OpenOnMove;
         component.EnteringRange = state.EnteringRange;
+        component.NextInternalOpenAttempt = state.NextInternalOpenAttempt;
     }
 
     protected virtual void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
@@ -123,10 +130,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!HasComp<HandsComponent>(args.Entity))
             return;
 
-        if (_timing.CurTime < component.LastInternalOpenAttempt + SharedEntityStorageComponent.InternalOpenAttemptDelay)
+        if (_timing.CurTime < component.NextInternalOpenAttempt)
             return;
 
-        component.LastInternalOpenAttempt = _timing.CurTime;
+        component.NextInternalOpenAttempt = _timing.CurTime + SharedEntityStorageComponent.InternalOpenAttemptDelay;
+        Dirty(uid, component);
+
         if (component.OpenOnMove)
         {
             TryOpenStorage(args.Entity, uid);
@@ -259,7 +268,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         ModifyComponents(uid, component);
         if (_net.IsClient && _timing.IsFirstTimePredicted)
             _audio.PlayPvs(component.CloseSound, uid);
-        component.LastInternalOpenAttempt = default;
+
         var afterev = new StorageAfterCloseEvent();
         RaiseLocalEvent(uid, ref afterev);
     }

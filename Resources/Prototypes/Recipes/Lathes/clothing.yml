@@ -475,6 +475,13 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitQMFormal
+  result: ClothingUniformJumpsuitQMFormal
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpskirtQM
   result: ClothingUniformJumpskirtQM
   completetime: 4
@@ -974,6 +981,14 @@
 - type: latheRecipe
   id: ClothingHeadHatBeretEngineering
   result: ClothingHeadHatBeretEngineering
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretQM
+  result: ClothingHeadHatBeretQM
   completetime: 2
   materials:
     Cloth: 100

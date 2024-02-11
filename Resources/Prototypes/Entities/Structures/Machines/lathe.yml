@@ -530,7 +530,6 @@
     - BorgModuleAdvancedCleaning
     - BorgModuleMining
     - BorgModuleGrapplingGun
-    - BorgModuleGasAnalyzer
     - BorgModuleAdvancedTool
     - BorgModuleRCD
     - BorgModuleArtifact
@@ -930,10 +929,12 @@
       - ClothingUniformJumpsuitPrisoner
       - ClothingUniformJumpskirtPrisoner
       - ClothingHeadHatQMsoft
+      - ClothingHeadHatBeretQM
       - ClothingUniformJumpsuitQM
       - ClothingUniformJumpskirtQM
       - ClothingUniformJumpsuitQMTurtleneck
       - ClothingUniformJumpskirtQMTurtleneck
+      - ClothingUniformJumpsuitQMFormal
       - ClothingHeadHatBeretRND
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
