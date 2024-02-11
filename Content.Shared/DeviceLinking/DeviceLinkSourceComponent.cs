@@ -26,7 +26,7 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// Only set by <c>DeviceLinkSystem.SendSignal</c>.
     /// </summary>
     [DataField]
-    public Dictionary<string, bool> LastSignals = new();
+    public Dictionary<ProtoId<SourcePortPrototype>, bool> LastSignals = new();
 
     /// <summary>
     /// The list of source to sink ports for each linked sink entity for easier managing of links
