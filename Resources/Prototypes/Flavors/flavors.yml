@@ -873,7 +873,7 @@
   id: spaceshroomcooked
   flavorType: Complex
   description: flavor-complex-spaceshroom-cooked
-  
+
 - type: flavor
   id: lostfriendship
   flavorType: Complex
@@ -903,3 +903,8 @@
   id: light
   flavorType: Complex
   description: flavor-complex-light
+
+- type: flavor
+  id: weh
+  flavorType: Base
+  description: flavor-weh

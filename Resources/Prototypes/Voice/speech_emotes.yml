@@ -206,3 +206,8 @@
   chatMessages: ["emote-deathgasp"]
   chatTriggers:
   - deathgasp
+
+- type: emote
+  id: Weh
+  category: Vocal
+  chatMessages: [Weh!]
