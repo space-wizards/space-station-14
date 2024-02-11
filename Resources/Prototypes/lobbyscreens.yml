@@ -20,14 +20,18 @@
 
 #Imperial space title screens
 
+# - type: lobbyBackground
+#   id: Imperial1
+#   background: /Textures/LobbyScreens/imperial1.png
+
+# - type: lobbyBackground
+#   id: Imperial2
+#   background: /Textures/LobbyScreens/imperial2.png
+
+# - type: lobbyBackground
+#   id: Imperial3
+#   background: /Textures/LobbyScreens/imperial3.png
+
 - type: lobbyBackground
   id: Imperial1
-  background: /Textures/LobbyScreens/imperial1.png
-
-- type: lobbyBackground
-  id: Imperial2
-  background: /Textures/LobbyScreens/imperial2.png
-
-- type: lobbyBackground
-  id: Imperial3
-  background: /Textures/LobbyScreens/imperial3.png
+  background: /Textures/LobbyScreens/imperialDefault.jpg
