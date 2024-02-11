@@ -49,7 +49,7 @@
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
   - type: EyeProtection
-      reduction: 1.5
+    reduction: 1.5
   - type: Armor
     modifiers:
       coefficients:

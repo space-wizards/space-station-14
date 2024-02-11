@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 namespace Content.Client.Eye.Components
 {
  [DataDefinition]
-    public sealed class NightVision
+    public sealed partial class NightVision
     {
         [DataField("color", customTypeSerializer:typeof(ColorSerializer)), ViewVariables(VVAccess.ReadWrite)] public Color Color = Color.White;
         [DataField("range"), ViewVariables(VVAccess.ReadWrite)] public float Range = 0.5f;
@@ -18,7 +18,7 @@ namespace Content.Client.Eye.Components
     }
 
     [DataDefinition]
-    public sealed class AutoExpose
+    public sealed partial class AutoExpose
     {
         [DataField("min"), ViewVariables(VVAccess.ReadWrite)]
         public float Min = 0.4f;
@@ -47,7 +47,7 @@ namespace Content.Client.Eye.Components
     }
 
     [RegisterComponent]
-    public sealed class EyeTraitsComponent : Component
+    public sealed partial class EyeTraitsComponent : Component
     {
         // Characters natural traits
         [DataField("nightVision"), ViewVariables(VVAccess.ReadWrite)]

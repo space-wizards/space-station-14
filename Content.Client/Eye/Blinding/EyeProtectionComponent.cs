@@ -7,7 +7,7 @@ namespace Content.Client.Eye.Blinding;
 /// For welding masks, sunglasses, etc.
 /// </summary>
 [RegisterComponent]
-public sealed class EyeProtectionComponent : SharedEyeProtectionComponent
+public sealed partial class EyeProtectionComponent : SharedEyeProtectionComponent
 {
     /// <summary>
     /// When worn, these glasses override nightvision as so
