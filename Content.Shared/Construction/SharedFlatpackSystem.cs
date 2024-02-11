@@ -20,7 +20,6 @@ namespace Content.Shared.Construction;
 public abstract class SharedFlatpackSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
