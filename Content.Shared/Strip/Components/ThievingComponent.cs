@@ -7,25 +7,24 @@ namespace Content.Shared.Strip.Components;
 /// Give this to an entity when you want to decrease stripping times
 /// </summary>
 [RegisterComponent]
-public sealed partial class ThievingComponent : Component
+[Virtual]
+public partial class ThievingComponent : Component
 {
     /// <summary>
     /// How much the strip time should be shortened by
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("stripTimeReduction")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float StripTimeReduction = 0.5f;
 
     /// <summary>
     /// Should it notify the user if they're stripping a pocket?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("stealthy")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Stealthy;
 }
 
 [RegisterComponent]
-public sealed partial class ToggleableThievingComponent : Component
+public sealed partial class ToggleableThievingComponent : ThievingComponent
 {
 
     [DataField]
@@ -33,13 +32,15 @@ public sealed partial class ToggleableThievingComponent : Component
 
     [DataField]
     public EntityUid? ThievingToggleAction;
+}
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Stealthy = true;
+/// <summary>
+/// When an item with this component is used, grant the user the ToggleableThievingComponent
+/// </summary>
+[RegisterComponent]
+public sealed partial class ThievingGranterComponent : ThievingComponent
+{
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-
-    public float StripTimeReduction = 0;
 }
 
 public sealed partial class ToggleThievingActionEvent : InstantActionEvent

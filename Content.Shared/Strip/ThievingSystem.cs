@@ -1,8 +1,10 @@
 using Content.Shared.Actions;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 
 namespace Content.Shared.Strip;
@@ -11,7 +13,7 @@ public sealed class ThievingSystem : EntitySystem
 {
 
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -23,6 +25,22 @@ public sealed class ThievingSystem : EntitySystem
         SubscribeLocalEvent<ToggleableThievingComponent, ComponentInit>(OnToggleableThievingInit);
         SubscribeLocalEvent<ToggleableThievingComponent, ComponentRemove>(OnToggleableThievingRemoved);
         SubscribeLocalEvent<ToggleableThievingComponent, ToggleThievingActionEvent>(OnToggleThieving);
+
+        SubscribeLocalEvent<ThievingGranterComponent, UseInHandEvent>(OnUseThievingGranter);
+    }
+
+    private void OnUseThievingGranter(EntityUid uid, ThievingGranterComponent component, UseInHandEvent args)
+    {
+        if (HasComp<ToggleableThievingComponent>(args.User))
+        {
+            return;
+        }
+
+        var newComp = EnsureComp<ToggleableThievingComponent>(args.User);
+        newComp.Stealthy = component.Stealthy;
+        newComp.StripTimeReduction = component.StripTimeReduction;
+
+        RemComp<ThievingGranterComponent>(uid);
     }
 
     private void OnToggleThieving(EntityUid uid, ToggleableThievingComponent component, ToggleThievingActionEvent args)
@@ -32,9 +50,9 @@ public sealed class ThievingSystem : EntitySystem
 
         if (HasComp<ThievingComponent>(args.Performer))
         {
-            //Remove
             RemComp<ThievingComponent>(args.Performer);
             _actionsSystem.SetToggled(component.ThievingToggleAction, false);
+            _popupSystem.PopupClient(Loc.GetString("thieving-disable"), args.Performer, args.Performer);
             args.Handled = true;
         }
         else
@@ -43,8 +61,12 @@ public sealed class ThievingSystem : EntitySystem
             thievingComp.Stealthy = component.Stealthy;
             thievingComp.StripTimeReduction = component.StripTimeReduction;
             _actionsSystem.SetToggled(component.ThievingToggleAction, true);
+            _popupSystem.PopupClient(Loc.GetString("thieving-enable"), args.Performer, args.Performer);
             args.Handled = true;
         }
+
+        if (args.Handled)
+            _actionsSystem.StartUseDelay(component.ThievingToggleAction);
     }
 
     private void OnToggleableThievingInit(EntityUid uid, ToggleableThievingComponent component, ComponentInit args)

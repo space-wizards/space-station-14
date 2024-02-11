@@ -397,3 +397,6 @@ uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. R
 
 uplink-hypodart-name = Hypodart
 uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir for chemicals. It can store up to 7u reagents in itself, and instantly inject when it hits the target. Starts empty.
+
+uplink-pickpocketing-name = The Art of Pickpocketing
+uplink-pickpocketing-desc = A book written by a master thief of the syndicate. It contains all of their skills and tricks regarding pickpocketing.

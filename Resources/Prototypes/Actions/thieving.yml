@@ -1,0 +1,16 @@
+- type: entity
+  id: ActionToggleThieving
+  name: Toggle Thieving Skills
+  description: Focus your mind and body to relieve the unwary of their belongings.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    event: !type:ToggleThievingActionEvent
+    icon:
+      sprite: Interface/Actions/thieving.rsi
+      state: iconOff
+    iconOn:
+      sprite: Interface/Actions/thieving.rsi
+      state: icon
+    useDelay: 1

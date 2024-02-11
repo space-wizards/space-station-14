@@ -368,3 +368,17 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-vents
+
+- type: entity
+  parent: BaseItem
+  id: BookSyndiPickpocketing
+  name: "The Art of Pickpocketing"
+  description: A guide on how to choose your marks and make what is their - yours.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book5
+    - type: ThievingGranter
+      stealthy: true
+      stripTimeReduction: 1.5 #Equivilent to normal thieving gloves

@@ -1458,6 +1458,16 @@
         tags:
           - NukeOpsUplink
 
+- type: listing
+  id: UplinkArtOfPickpocketing
+  name: uplink-pickpocketing-name
+  description: uplink-pickpocketing-desc
+  productEntity: BookSyndiPickpocketing
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkMisc
+
  # Pointless
 
 - type: listing
