@@ -18,13 +18,13 @@ public sealed partial class GameDirectorComponent : Component
     ///   How long until the next check for an event runs
     ///   Default value is how long until first event is allowed
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TimeNextEvent;
 
     /// <summary>
     ///   When the current beat started
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan BeatStart;
 
     /// <summary>
