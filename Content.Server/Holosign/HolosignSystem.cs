@@ -1,10 +1,8 @@
-using Content.Shared.Interaction.Events;
 using Content.Shared.Examine;
 using Content.Shared.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Interaction;
-using Content.Shared.Physics;
 
 namespace Content.Server.Holosign;
 
