@@ -626,6 +626,7 @@ namespace Content.Shared.Movement.Systems
         Left = 4,
         Right = 8,
         Walk = 16,
+        AnyDirection = Up | Down | Left | Right,
     }
 
     [Flags]

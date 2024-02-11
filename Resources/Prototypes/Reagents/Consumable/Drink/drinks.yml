@@ -319,7 +319,7 @@
   parent: BaseDrink
   desc: reagent-desc-tonic-water
   physicalDesc: reagent-physical-desc-fizzy
-  flavor: water
+  flavor: tonicwater
   color: "#0064C8"
 
 - type: reagent

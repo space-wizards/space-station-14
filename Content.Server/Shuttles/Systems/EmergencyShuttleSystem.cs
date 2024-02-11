@@ -5,12 +5,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
-using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
+using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
@@ -18,6 +18,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Tag;
@@ -235,8 +236,18 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 [ShuttleTimerMasks.ShuttleTime] = countdownTime,
                 [ShuttleTimerMasks.SourceTime] = countdownTime,
                 [ShuttleTimerMasks.DestTime] = countdownTime,
-                [ShuttleTimerMasks.Text] = new string?[] { "BYE!" }
             };
+
+            // by popular request
+            // https://discord.com/channels/310555209753690112/770682801607278632/1189989482234126356
+            if (_random.Next(1000) == 0)
+            {
+                payload.Add(ScreenMasks.Text, ShuttleTimerMasks.Kill);
+                payload.Add(ScreenMasks.Color, Color.Red);
+            }
+            else
+                payload.Add(ScreenMasks.Text, ShuttleTimerMasks.Bye);
+
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
     }
