@@ -15837,13 +15837,6 @@ entities:
     - type: Transform
       pos: -14.519806,-23.287313
       parent: 5350
-- proto: BoxSechud
-  entities:
-  - uid: 2686
-    components:
-    - type: Transform
-      pos: 2.5457363,42.596703
-      parent: 5350
 - proto: BoxShotgunIncendiary
   entities:
   - uid: 3116
@@ -60342,23 +60335,6 @@ entities:
     components:
     - type: Transform
       pos: 54.41529,14.40629
-      parent: 5350
-- proto: ClothingEyesGlassesSecurity
-  entities:
-  - uid: 10420
-    components:
-    - type: Transform
-      pos: -3.442388,40.441223
-      parent: 5350
-  - uid: 10421
-    components:
-    - type: Transform
-      pos: -3.458013,40.5506
-      parent: 5350
-  - uid: 10497
-    components:
-    - type: Transform
-      pos: 18.535847,41.55662
       parent: 5350
 - proto: ClothingEyesGlassesSunglasses
   entities:
