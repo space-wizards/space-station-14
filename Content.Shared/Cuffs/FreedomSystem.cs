@@ -21,6 +21,10 @@ public sealed class FreedomSystem : EntitySystem
 
     private void OnMapInit(Entity<FreedomComponent> ent, ref MapInitEvent args)
     {
+        // test is mapinit for some reason
+        if (ent.Comp.Action == string.Empty)
+            return;
+
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
     }
 
