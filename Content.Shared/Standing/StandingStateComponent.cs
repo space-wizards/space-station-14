@@ -33,7 +33,7 @@ namespace Content.Shared.Standing
         ///     The CollisionLayer that will be subtracted from the entity's CollisionLayer when it falls down.
         /// </summary>
         [DataField]
-        public CollisionGroup StandingLayer = CollisionGroup.BulletImpassable | CollisionGroup.Opaque;
+        public CollisionGroup StandingLayer = CollisionGroup.MobLayer;
 
         /// <summary>
         ///     The CollisionLayer that will be added to the entity's CollisionLayer when it falls down.
