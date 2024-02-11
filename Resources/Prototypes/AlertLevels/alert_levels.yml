@@ -68,8 +68,8 @@
       selectable: false
       sound: /Audio/Misc/notice1.ogg
       disableSelection: true
-      color: DarkBlue #change to something more readable.
-      emergencyLightColor: DarkBlue
+      color: "#454679" 
+      emergencyLightColor: "#454679"
     brown:
       announcement: alert-level-brown-announcement
       selectable: false
