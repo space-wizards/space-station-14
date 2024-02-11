@@ -19,8 +19,6 @@ public sealed partial class LawDisplay : Control
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public event Action<BaseButton.ButtonEventArgs>? OnLawAnnouncementButtonPressed;
-
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
     {
         RobustXamlLoader.Load(this);

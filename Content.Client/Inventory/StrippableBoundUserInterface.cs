@@ -30,10 +30,9 @@ namespace Content.Client.Inventory
     [UsedImplicitly]
     public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        private readonly ExamineSystem _examine = default!;
-        private readonly InventorySystem _inv = default!;
+        private readonly ExamineSystem _examine;
+        private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
 
         [ViewVariables]

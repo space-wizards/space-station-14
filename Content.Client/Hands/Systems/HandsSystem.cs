@@ -22,7 +22,6 @@ namespace Content.Client.Hands.Systems
     [UsedImplicitly]
     public sealed class HandsSystem : SharedHandsSystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
