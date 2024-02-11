@@ -1,7 +1,9 @@
 - type: entity
   save: false
   name: Urist McSkelly
-  parent: BaseMobOrganic
+  parent:
+  - MobFlammable
+  - BaseMobSpecies
   id: BaseMobSkeletonPerson
   abstract: true
   components:
@@ -17,19 +19,13 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Skeleton
-  - type: Barotrauma #no space damage.
-    damage:
-      types:
-        Blunt: 0
-  - type: Bloodstream
-    maxBleedAmount: 0
-    bloodReagent: Milk
-    bloodlossDamage: #no bloodloss damage. overriding base components
-      types:
-        Bloodloss: 0
-    bloodlossHealDamage:
-      types:
-        Bloodloss: 0
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#555555AA"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -49,6 +45,8 @@
       60: 0.9
       80: 0.7
   - type: Speech
+    speechVerb: Skeleton
+  - type: ZombieImmune
   - type: Vocal
     sounds:
       Male: Skeleton
@@ -67,14 +65,47 @@
           - MobMask
         layer:
           - MobLayer
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ Milk, MilkGoat, MilkSoy, MilkSpoiled ]
+      # add new types of milk to reagents as they appear, oat milk isn't on the list
+      # because turns out oat milk has 1/30th the amount of calcium in it compared to the rest
+      # even if it's a meme - I did research
+      methods: [ Touch ]
+      effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          groups:
+            Burn: -2 # healing obviously up to discussion
+            Brute: -1.5 # these groups are the only 2 possible ways to damage a skeleton
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "skeleton-healed-by-milk-popup" ]
+        probability: 0.25
+    - reagents: [ MilkOat ]
+      methods: [ Touch ]
+      effects:
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
+          probability: 0.5
+  - type: FireVisuals
+    alternateState: Standing
 
 - type: entity
-  save: false
-  name: Urist McSkelly
-  parent: BaseMobOrganicDummy
+  parent: BaseSpeciesDummy
   id: MobSkeletonPersonDummy
   noSpawn: true
-  description: A dummy skeleton meant to be used in character setup.
   components:
     - type: HumanoidAppearance
       species: Skeleton

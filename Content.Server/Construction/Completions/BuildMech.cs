@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Completions;
 /// for right now, the cell that was used in construction.
 /// </summary>
 [UsedImplicitly, DataDefinition]
-public sealed class BuildMech : IGraphAction
+public sealed partial class BuildMech : IGraphAction
 {
     [DataField("mechPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string MechPrototype = string.Empty;
@@ -54,7 +54,7 @@ public sealed class BuildMech : IGraphAction
             return;
         }
 
-        container.Remove(cell);
+        containerSystem.Remove(cell, container);
 
         var transform = entityManager.GetComponent<TransformComponent>(uid);
         var mech = entityManager.SpawnEntity(MechPrototype, transform.Coordinates);
@@ -62,7 +62,7 @@ public sealed class BuildMech : IGraphAction
         if (entityManager.TryGetComponent<MechComponent>(mech, out var mechComp) && mechComp.BatterySlot.ContainedEntity == null)
         {
             mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
-            mechComp.BatterySlot.Insert(cell);
+            containerSystem.Insert(cell, mechComp.BatterySlot);
         }
 
         var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);

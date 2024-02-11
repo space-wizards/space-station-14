@@ -2,13 +2,13 @@
 using System.Numerics;
 using Content.Server.Worldgen.Components;
 using Content.Server.Worldgen.Components.Debris;
-using Content.Server.Worldgen.Systems.GC;
 using Content.Server.Worldgen.Tools;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Worldgen.Systems.Debris;
 
@@ -17,7 +17,6 @@ namespace Content.Server.Worldgen.Systems.Debris;
 /// </summary>
 public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
 {
-    [Dependency] private readonly GCQueueSystem _gc = default!;
     [Dependency] private readonly NoiseIndexSystem _noiseIndex = default!;
     [Dependency] private readonly PoissonDiskSampler _sampler = default!;
     [Dependency] private readonly TransformSystem _xformSys = default!;
@@ -35,17 +34,8 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
         SubscribeLocalEvent<DebrisFeaturePlacerControllerComponent, WorldChunkUnloadedEvent>(OnChunkUnloaded);
         SubscribeLocalEvent<OwnedDebrisComponent, ComponentShutdown>(OnDebrisShutdown);
         SubscribeLocalEvent<OwnedDebrisComponent, MoveEvent>(OnDebrisMove);
-        SubscribeLocalEvent<OwnedDebrisComponent, TryCancelGC>(OnTryCancelGC);
         SubscribeLocalEvent<SimpleDebrisSelectorComponent, TryGetPlaceableDebrisFeatureEvent>(
             OnTryGetPlacableDebrisEvent);
-    }
-
-    /// <summary>
-    ///     Handles GC cancellation in case the chunk is still loaded.
-    /// </summary>
-    private void OnTryCancelGC(EntityUid uid, OwnedDebrisComponent component, ref TryCancelGC args)
-    {
-        args.Cancelled |= HasComp<LoadedChunkComponent>(component.OwningController);
     }
 
     /// <summary>
@@ -57,7 +47,7 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
             return; // Redundant logic, prolly needs it's own handler for your custom system.
 
         var placer = Comp<DebrisFeaturePlacerControllerComponent>(component.OwningController);
-        var xform = Transform(uid);
+        var xform = args.Component;
         var ownerXform = Transform(component.OwningController);
         if (xform.MapUid is null || ownerXform.MapUid is null)
             return; // not our problem
@@ -102,12 +92,6 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
     private void OnChunkUnloaded(EntityUid uid, DebrisFeaturePlacerControllerComponent component,
         ref WorldChunkUnloadedEvent args)
     {
-        foreach (var (_, debris) in component.OwnedDebris)
-        {
-            if (debris is not null)
-                _gc.TryGCEntity(debris.Value); // gonb.
-        }
-
         component.DoSpawns = true;
     }
 
@@ -179,6 +163,12 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
         var failures = 0; // Avoid severe log spam.
         foreach (var point in points)
         {
+            if (component.OwnedDebris.TryGetValue(point, out var existing))
+            {
+                DebugTools.Assert(Exists(existing));
+                continue;
+            }
+
             var pointDensity = _noiseIndex.Evaluate(uid, densityChannel, WorldGen.WorldToChunkCoords(point));
             if (pointDensity == 0 && component.DensityClip || _random.Prob(component.RandomCancellationChance))
                 continue;

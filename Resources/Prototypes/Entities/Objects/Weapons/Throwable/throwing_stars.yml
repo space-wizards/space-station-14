@@ -1,0 +1,52 @@
+- type: entity
+  parent: BaseItem
+  id: ThrowingStar
+  name: throwing star
+  description: An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/throwing_star.rsi
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        base:
+          festive: { state: festive }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 8
+        Piercing: 10
+  - type: StaminaDamageOnCollide
+    damage: 45
+  - type: StaminaDamageOnEmbed
+    damage: 10
+
+- type: entity
+  parent: ThrowingStar
+  id: ThrowingStarNinja
+  name: ninja throwing star
+  components:
+  # prevent ninja crashing server + filling bag with 20 stars to instakill a single person
+  # also limits the crew's use
+  - type: TimedDespawn
+    lifetime: 30

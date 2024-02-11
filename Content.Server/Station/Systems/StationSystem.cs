@@ -6,6 +6,7 @@ using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Station;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -34,6 +35,8 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -84,7 +87,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), e.Session);
+            RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), e.Session);
         }
     }
 
@@ -92,7 +95,7 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentStartup args)
     {
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
 
         var metaData = MetaData(uid);
         RaiseLocalEvent(new StationInitializedEvent(uid));
@@ -107,7 +110,7 @@ public sealed class StationSystem : EntitySystem
             RemComp<StationMemberComponent>(grid);
         }
 
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -208,6 +211,23 @@ public sealed class StationSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns the total number of tiles contained in the station's grids.
+    /// </summary>
+    public int GetTileCount(StationDataComponent component)
+    {
+        var count = 0;
+        foreach (var gridUid in component.Grids)
+        {
+            if (!TryComp<MapGridComponent>(gridUid, out var grid))
+                continue;
+
+            count += _map.GetAllTiles(gridUid, grid).Count();
+        }
+
+        return count;
+    }
+
+    /// <summary>
     /// Tries to retrieve a filter for everything in the station the source is on.
     /// </summary>
     /// <param name="source">The entity to use to find the station.</param>
@@ -238,7 +258,7 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
+            if (!TryComp(gridUid, out MapGridComponent? grid) ||
                 !xformQuery.TryGetComponent(gridUid, out var xform))
                 continue;
 
@@ -305,8 +325,8 @@ public sealed class StationSystem : EntitySystem
             AddGridToStation(station, grid, null, data, name);
         }
 
-        var ev = new StationPostInitEvent();
-        RaiseLocalEvent(station, ref ev);
+        var ev = new StationPostInitEvent((station, data));
+        RaiseLocalEvent(station, ref ev, true);
 
         return station;
     }
@@ -328,9 +348,9 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         if (!string.IsNullOrEmpty(name))
-            MetaData(mapGrid).EntityName = name;
+            _metaData.SetEntityName(mapGrid, name);
 
-        var stationMember = AddComp<StationMemberComponent>(mapGrid);
+        var stationMember = EnsureComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
         stationData.Grids.Add(mapGrid);
 
@@ -376,7 +396,7 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         var oldName = metaData.EntityName;
-        metaData.EntityName = name;
+        _metaData.SetEntityName(station, name, metaData);
 
         if (loud)
         {
@@ -398,6 +418,14 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         QueueDel(station);
+    }
+
+    public EntityUid? GetOwningStation(EntityUid? entity, TransformComponent? xform = null)
+    {
+        if (entity == null)
+            return null;
+
+        return GetOwningStation(entity.Value, xform);
     }
 
     /// <summary>
@@ -428,7 +456,7 @@ public sealed class StationSystem : EntitySystem
 
         if (xform.GridUid == EntityUid.Invalid)
         {
-            Logger.Debug("A");
+            Log.Debug("A");
             return null;
         }
 
@@ -437,12 +465,39 @@ public sealed class StationSystem : EntitySystem
 
     public List<EntityUid> GetStations()
     {
-        return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToList();
+        var stations = new List<EntityUid>();
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            stations.Add(uid);
+        }
+
+        return stations;
     }
 
     public HashSet<EntityUid> GetStationsSet()
     {
-        return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToHashSet();
+        var stations = new HashSet<EntityUid>();
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            stations.Add(uid);
+        }
+
+        return stations;
+    }
+
+    public List<(string Name, NetEntity Entity)> GetStationNames()
+    {
+        var stations = GetStationsSet();
+        var stats = new List<(string Name, NetEntity Station)>();
+
+        foreach (var weh in stations)
+        {
+            stats.Add((MetaData(weh).EntityName, GetNetEntity(weh)));
+        }
+
+        return stats;
     }
 
     /// <summary>

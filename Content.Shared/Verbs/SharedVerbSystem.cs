@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory.VirtualItem;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Verbs
@@ -24,14 +25,17 @@ namespace Content.Shared.Verbs
             if (user == null)
                 return;
 
+            if (!TryGetEntity(args.Target, out var target))
+                return;
+
             // It is possible that client-side prediction can cause this event to be raised after the target entity has
             // been deleted. So we need to check that the entity still exists.
-            if (Deleted(args.Target) || Deleted(user))
+            if (Deleted(user))
                 return;
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
-            var verbs = GetLocalVerbs(args.Target, user.Value, args.RequestedVerb.GetType());
+            var verbs = GetLocalVerbs(target.Value, user.Value, args.RequestedVerb.GetType());
 
             // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
             // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
@@ -39,7 +43,7 @@ namespace Content.Shared.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                ExecuteVerb(verb, user.Value, args.Target);
+                ExecuteVerb(verb, user.Value, target.Value);
         }
 
         /// <summary>
@@ -66,7 +70,7 @@ namespace Content.Shared.Verbs
             else if (_interactionSystem.InRangeUnobstructed(user, target))
             {
                 // Note that being in a container does not count as an obstruction for InRangeUnobstructed
-                // Therefore, we need extra checks to ensure the item is actually accessible: 
+                // Therefore, we need extra checks to ensure the item is actually accessible:
                 if (ContainerSystem.IsInSameOrParentContainer(user, target))
                     canAccess = true;
                 else
@@ -81,15 +85,23 @@ namespace Content.Shared.Verbs
             EntityUid? @using = null;
             if (TryComp(user, out HandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
             {
-                @using = hands.ActiveHandEntity;
-
-                // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
-                // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
-                // their sprite.
-
-                if (TryComp(@using, out HandVirtualItemComponent? pull))
+                // if we don't actually have any hands, pass in a null value for the events.
+                if (hands.Count == 0)
                 {
-                    @using = pull.BlockingEntity;
+                    hands = null;
+                }
+                else
+                {
+                    @using = hands.ActiveHandEntity;
+
+                    // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
+                    // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
+                    // their sprite.
+
+                    if (TryComp(@using, out VirtualItemComponent? pull))
+                    {
+                        @using = pull.BlockingEntity;
+                    }
                 }
             }
 

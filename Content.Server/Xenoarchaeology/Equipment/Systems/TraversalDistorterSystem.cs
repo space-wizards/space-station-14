@@ -1,20 +1,17 @@
-﻿using Content.Server.Construction;
-using Content.Server.Popups;
+﻿using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
-using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Robust.Shared.Physics.Events;
-using Robust.Shared.Player;
+using Content.Shared.Placeable;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
 public sealed class TraversalDistorterSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -23,11 +20,9 @@ public sealed class TraversalDistorterSystem : EntitySystem
 
         SubscribeLocalEvent<TraversalDistorterComponent, ActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<TraversalDistorterComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<TraversalDistorterComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<TraversalDistorterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
-        SubscribeLocalEvent<TraversalDistorterComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<TraversalDistorterComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<TraversalDistorterComponent, ItemPlacedEvent>(OnItemPlaced);
+        SubscribeLocalEvent<TraversalDistorterComponent, ItemRemovedEvent>(OnItemRemoved);
     }
 
     private void OnInit(EntityUid uid, TraversalDistorterComponent component, MapInitEvent args)
@@ -73,39 +68,19 @@ public sealed class TraversalDistorterSystem : EntitySystem
                 examine = Loc.GetString("traversal-distorter-desc-out");
                 break;
         }
-        args.Message.AddMarkup(examine);
+
+        args.PushMarkup(examine);
     }
 
-    private void OnRefreshParts(EntityUid uid, TraversalDistorterComponent component, RefreshPartsEvent args)
+    private void OnItemPlaced(EntityUid uid, TraversalDistorterComponent component, ref ItemPlacedEvent args)
     {
-        var biasRating = args.PartRatings[component.MachinePartBiasChance];
-
-        component.BiasChance = component.BaseBiasChance * MathF.Pow(component.PartRatingBiasChance, biasRating - 1);
-    }
-
-    private void OnUpgradeExamine(EntityUid uid, TraversalDistorterComponent component, UpgradeExamineEvent args)
-    {
-        args.AddPercentageUpgrade("traversal-distorter-upgrade-bias", component.BiasChance / component.BaseBiasChance);
-    }
-
-    private void OnCollide(EntityUid uid, TraversalDistorterComponent component, ref StartCollideEvent args)
-    {
-        var otherEnt = args.OtherEntity;
-
-        if (!HasComp<ArtifactComponent>(otherEnt))
-            return;
-
-        var bias = EnsureComp<BiasedArtifactComponent>(otherEnt);
+        var bias = EnsureComp<BiasedArtifactComponent>(args.OtherEntity);
         bias.Provider = uid;
     }
 
-    private void OnEndCollide(EntityUid uid, TraversalDistorterComponent component, ref EndCollideEvent args)
+    private void OnItemRemoved(EntityUid uid, TraversalDistorterComponent component, ref ItemRemovedEvent args)
     {
         var otherEnt = args.OtherEntity;
-
-        if (!HasComp<ArtifactComponent>(otherEnt))
-            return;
-
         if (TryComp<BiasedArtifactComponent>(otherEnt, out var bias) && bias.Provider == uid)
             RemComp(otherEnt, bias);
     }

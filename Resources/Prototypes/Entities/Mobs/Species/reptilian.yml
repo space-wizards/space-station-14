@@ -1,16 +1,15 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobReptilian
   abstract: true
   components:
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
-    starvationDamage:
-      types:
-        Cold: 1
+  - type: Puller
+    needsHands: false
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -23,9 +22,14 @@
     spawned:
     - id: FoodMeatLizard
       amount: 5
+  - type: Inventory
+    speciesId: reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
+    speechVerb: Reptilian
+  - type: TypingIndicator
+    proto: lizard
   - type: Vocal
     sounds:
       Male: UnisexReptilian
@@ -35,34 +39,28 @@
     damageContainer: Biological
     damageModifierSet: Scale
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
-    animation: WeaponArcPunch
+    animation: WeaponArcClaw
     damage:
       types:
-        Piercing: 5
+        Slash: 5
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
     currentTemperature: 310.15
-    specificHeat: 46
+    specificHeat: 42
     coldDamage:
       types:
-        Cold : 0.2 #per second, scales with temperature & other constants
+        Cold : 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.7
-    baseSprintSpeed : 4.5
-  - type: Perishable
+        Heat : 1.5 #per second, scales with temperature & other constants
+  - type: Wagging
 
 - type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobReptilianDummy
   noSpawn: true
   description: A dummy reptilian meant to be used in character setup.

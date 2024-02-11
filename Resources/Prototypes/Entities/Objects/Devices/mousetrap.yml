@@ -57,3 +57,13 @@
     - type: Tag
       tags:
         - DroneUsable
+
+- type: entity
+  name: mousetrap
+  suffix: Armed
+  parent: Mousetrap
+  id: MousetrapArmed
+  description: Useful for catching rodents sneaking into your kitchen.
+  components:
+    - type: Mousetrap
+      isActive: true

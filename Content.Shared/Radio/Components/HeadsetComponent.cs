@@ -6,7 +6,7 @@ namespace Content.Shared.Radio.Components;
 ///     This component relays radio messages to the parent entity's chat when equipped.
 /// </summary>
 [RegisterComponent]
-public sealed class HeadsetComponent : Component
+public sealed partial class HeadsetComponent : Component
 {
     [DataField("enabled")]
     public bool Enabled = true;

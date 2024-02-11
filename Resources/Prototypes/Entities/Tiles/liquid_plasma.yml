@@ -1,0 +1,50 @@
+﻿- type: entity
+  id: FloorLiquidPlasmaEntity
+  name: liquid plasma
+  description: Sweet, expensive nectar. Don't consume.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+      - Catwalk
+  - type: Lava
+    fireStacks: 0.75
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Clickable
+  - type: Sprite
+    sprite: Tiles/Planet/liquid_plasma.rsi
+    drawdepth: BelowFloor
+    layers:
+    - state: plasma
+      shader: unshaded
+  - type: Icon
+    sprite: Tiles/Planet/liquid_plasma.rsi
+    state: full
+  - type: IconSmooth
+    key: floor
+    base: plasma
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - SlipLayer
+        mask:
+        - ItemMask
+        density: 1000
+        hard: false
+  - type: Tag
+    tags:
+    - HideContextMenu

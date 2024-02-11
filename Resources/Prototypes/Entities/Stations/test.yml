@@ -1,0 +1,11 @@
+﻿# Station prototype for cut-down test maps that don't need all the infrastructure.
+- type: entity
+  id: TestStation
+  parent:
+    - BaseStation
+    - BaseStationJobsSpawning
+    - BaseStationRecords
+    - BaseStationAlertLevels
+  noSpawn: true
+  components:
+    - type: Transform

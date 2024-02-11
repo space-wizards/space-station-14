@@ -1,5 +1,6 @@
 using Content.Server.ParticleAccelerator.Wires;
 using Content.Shared.Singularity.Components;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.ParticleAccelerator.Components;
 
@@ -10,7 +11,7 @@ namespace Content.Server.ParticleAccelerator.Components;
 ///     Also contains primary logic for actual PA behavior, part scanning, etc...
 /// </summary>
 [RegisterComponent]
-public sealed class ParticleAcceleratorControlBoxComponent : Component
+public sealed partial class ParticleAcceleratorControlBoxComponent : Component
 {
     /// <summary>
     /// Whether the PA parts have been correctly arranged to make a functional device.
@@ -166,6 +167,18 @@ public sealed class ParticleAcceleratorControlBoxComponent : Component
     /// </summary>
     [ViewVariables]
     public bool StrengthLocked = false;
+
+    /// <summary>
+    /// Time at which the admin alarm sound effect can next be played.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan EffectCooldown;
+
+    /// <summary>
+    /// Time between admin alarm sound effects. Prevents spam
+    /// </summary>
+    [DataField]
+    public TimeSpan CooldownDuration = TimeSpan.FromSeconds(10f);
 
     /// <summary>
     /// Whether the PA can be turned on.

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Strip.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class StrippableComponent : Component
+    public sealed partial class StrippableComponent : Component
     {
         /// <summary>
         /// The strip delay for hands.

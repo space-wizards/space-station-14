@@ -1,5 +1,7 @@
+using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
@@ -8,12 +10,16 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Destructible
 {
@@ -23,6 +29,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
 
+        [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
         [Dependency] public readonly AudioSystem AudioSystem = default!;
         [Dependency] public readonly BodySystem BodySystem = default!;
         [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
@@ -31,8 +38,10 @@ namespace Content.Server.Destructible
         [Dependency] public readonly TriggerSystem TriggerSystem = default!;
         [Dependency] public readonly SolutionContainerSystem SolutionContainerSystem = default!;
         [Dependency] public readonly PuddleSystem PuddleSystem = default!;
+        [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IComponentFactory ComponentFactory = default!;
+        [Dependency] public readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -50,6 +59,27 @@ namespace Content.Server.Destructible
                 if (threshold.Reached(args.Damageable, this))
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
+
+                    // Convert behaviors into string for logs
+                    var triggeredBehaviors = string.Join(", ", threshold.Behaviors.Select(b =>
+                    {
+                        if (b is DoActsBehavior doActsBehavior)
+                        {
+                            return $"{b.GetType().Name}:{doActsBehavior.Acts.ToString()}";
+                        }
+                        return b.GetType().Name;
+                    }));
+
+                    if (args.Origin != null)
+                    {
+                        _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
+                            $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                    }
+                    else
+                    {
+                        _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
+                            $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                    }
 
                     threshold.Execute(uid, this, EntityManager, args.Origin);
                 }

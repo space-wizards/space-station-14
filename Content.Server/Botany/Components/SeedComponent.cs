@@ -1,10 +1,11 @@
 using Content.Server.Botany.Systems;
+using Content.Shared.Botany.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent, Access(typeof(BotanySystem))]
-    public sealed class SeedComponent : Component
+    public sealed partial class SeedComponent : SharedSeedComponent
     {
         /// <summary>
         ///     Seed data containing information about the plant type & properties that this seed can grow seed. If
@@ -18,6 +19,6 @@ namespace Content.Server.Botany.Components
         ///     Name of a base seed prototype that is used if <see cref="Seed"/> is null.
         /// </summary>
         [DataField("seedId", customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
-        public readonly string? SeedId;
+        public string? SeedId;
     }
 }

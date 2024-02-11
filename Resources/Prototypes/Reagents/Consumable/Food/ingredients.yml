@@ -65,10 +65,26 @@
 
 - type: reagent
   id: Egg
+  name: reagent-name-raw-egg
+  group: Foods
+  desc: reagent-desc-raw-egg
+  physicalDesc: reagent-physical-desc-mucus-like
+  flavor: raw-egg
+  color: white
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: UncookedAnimalProteins
+        amount: 0.5
+
+- type: reagent
+  id: EggCooked
   name: reagent-name-egg
   group: Foods
   desc: reagent-desc-egg
-  physicalDesc: reagent-physical-desc-mucus-like
+  physicalDesc: reagent-physical-desc-fluffy
   flavor: egg
   color: white
   recognizable: true
@@ -77,7 +93,7 @@
       effects:
       - !type:AdjustReagent
         reagent: Protein
-        amount: 0.5
+        amount: 1
 
 - type: reagent
   id: Blackpepper
@@ -197,3 +213,47 @@
           type: Local
           messages: [ "capsaicin-effect-light-burn" ]
           probability: 0.2
+
+- type: reagent
+  id: CocoaPowder #Candy and chocolate
+  name: reagent-name-cocoapowder
+  group: Foods
+  desc: reagent-desc-cocoapowder
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: chocolate
+  color: "#800000"
+  meltingPoint: 146.0
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:ReagentThreshold #Only satiates when eaten with nutriment
+          reagent: Nutriment
+          min: 0.1
+        factor: 1
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWeeds
+    amount: 2
+  - !type:PlantAdjustPests
+    amount: 2
+
+- type: reagent
+  id: Butter
+  name: reagent-name-butter
+  group: Foods
+  desc: reagent-desc-butter
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: butter
+  color: yellow
+  meltingPoint: 32.0
+  boilingPoint: 100.0
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75

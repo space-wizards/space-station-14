@@ -64,6 +64,9 @@ namespace Content.Client.Ame.UI
 
             CoreCount.Text = $"{castState.CoreCount}";
             InjectionAmount.Text = $"{castState.InjectionAmount}";
+            // format power statistics to pretty numbers
+            CurrentPowerSupply.Text = $"{castState.CurrentPowerSupply.ToString("N1")}";
+            TargetedPowerSupply.Text = $"{castState.TargetedPowerSupply.ToString("N1")}";
         }
     }
 }

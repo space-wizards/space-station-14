@@ -6,6 +6,6 @@ namespace Content.Shared.DoAfter;
 ///     Added to entities that are currently performing any doafters.
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveDoAfterComponent : Component
+public sealed partial class ActiveDoAfterComponent : Component
 {
 }

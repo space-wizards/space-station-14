@@ -5,7 +5,6 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction;
@@ -74,7 +73,7 @@ public sealed partial class ConstructionSystem
 
         foreach (var entity in component.PartContainer.ContainedEntities)
         {
-            if (TryComp<MachinePartComponent?>(entity, out var machinePart))
+            if (TryComp<MachinePartComponent>(entity, out var machinePart))
                 parts.Add(machinePart);
         }
 
@@ -125,12 +124,12 @@ public sealed partial class ConstructionSystem
 
         var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(uid).Coordinates);
 
-        if (!component.BoardContainer.Insert(board))
+        if (!_container.Insert(board, component.BoardContainer))
         {
             throw new Exception($"Couldn't insert board with prototype {component.BoardPrototype} to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}!");
         }
 
-        if (!TryComp<MachineBoardComponent?>(board, out var machineBoard))
+        if (!TryComp<MachineBoardComponent>(board, out var machineBoard))
         {
             throw new Exception($"Entity with prototype {component.BoardPrototype} doesn't have a {nameof(MachineBoardComponent)}!");
         }
@@ -143,8 +142,8 @@ public sealed partial class ConstructionSystem
             {
                 var p = EntityManager.SpawnEntity(partProto.StockPartPrototype, xform.Coordinates);
 
-                if (!partContainer.Insert(p))
-                    throw new Exception($"Couldn't insert machine part of type {part} to machine with prototype {partProto.StockPartPrototype ?? "N/A"}!");
+                if (!_container.Insert(p, partContainer))
+                    throw new Exception($"Couldn't insert machine part of type {part} to machine with prototype {partProto.StockPartPrototype}!");
             }
         }
 
@@ -152,7 +151,7 @@ public sealed partial class ConstructionSystem
         {
             var stack = _stackSystem.Spawn(amount, stackType, Transform(uid).Coordinates);
 
-            if (!partContainer.Insert(stack))
+            if (!_container.Insert(stack, partContainer))
                 throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
         }
 
@@ -162,7 +161,7 @@ public sealed partial class ConstructionSystem
             {
                 var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
-                if(!partContainer.Insert(c))
+                if(!_container.Insert(c, partContainer))
                     throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }
@@ -173,7 +172,7 @@ public sealed partial class ConstructionSystem
             {
                 var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
-                if(!partContainer.Insert(c))
+                if(!_container.Insert(c, partContainer))
                     throw new Exception($"Couldn't insert machine component part with default prototype '{tagName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }
@@ -184,7 +183,7 @@ public sealed class RefreshPartsEvent : EntityEventArgs
 {
     public IReadOnlyList<MachinePartComponent> Parts = new List<MachinePartComponent>();
 
-    public Dictionary<string, float> PartRatings = new Dictionary<string, float>();
+    public Dictionary<string, float> PartRatings = new();
 }
 
 public sealed class UpgradeExamineEvent : EntityEventArgs

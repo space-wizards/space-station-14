@@ -6,15 +6,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class CreateGas : ReagentEffect
+public sealed partial class CreateGas : ReagentEffect
 {
-    [DataField("gas", required: true)]
+    [DataField(required: true)]
     public Gas Gas = default!;
 
     /// <summary>
     ///     For each unit consumed, how many moles of gas should be created?
     /// </summary>
-    [DataField("multiplier")]
+    [DataField]
     public float Multiplier = 3f;
 
     public override bool ShouldLog => true;

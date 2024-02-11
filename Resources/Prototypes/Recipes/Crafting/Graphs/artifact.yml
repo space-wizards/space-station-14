@@ -2,31 +2,12 @@
   id: Artifact
   start: start
   graph:
-    - node: start
-      edges:
-      - to: done
-        steps:
-        - tag: ArtifactFragment
-          name: artifact fragment
-          icon:
-            sprite: Objects/Specific/Xenoarchaeology/artifact_fragments.rsi
-            state: ancientball1
-        - tag: ArtifactFragment
-          name: artifact fragment
-          icon:
-            sprite: Objects/Specific/Xenoarchaeology/artifact_fragments.rsi
-            state: ancientball2
-        - tag: ArtifactFragment
-          name: artifact fragment
-          icon:
-            sprite: Objects/Specific/Xenoarchaeology/artifact_fragments.rsi
-            state: ancientball3
-        - tag: ArtifactFragment
-          name: artifact fragment
-          icon:
-            sprite: Objects/Specific/Xenoarchaeology/artifact_fragments.rsi
-            state: ancientball4
-          doAfter: 5
-
-    - node: done
-      entity: VariedXenoArtifactItem
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: ArtifactFragment
+        amount: 4
+        doAfter: 5
+  - node: done
+    entity: VariedXenoArtifactItem

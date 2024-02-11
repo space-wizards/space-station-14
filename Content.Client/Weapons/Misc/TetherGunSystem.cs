@@ -64,7 +64,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         }
 
         var mousePos = _input.MouseScreenPosition;
-        var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
+        var mouseWorldPos = _eyeManager.PixelToMap(mousePos);
 
         if (mouseWorldPos.MapId == MapId.Nullspace)
             return;
@@ -91,7 +91,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         RaisePredictiveEvent(new RequestTetherMoveEvent()
         {
-            Coordinates = coords
+            Coordinates = GetNetCoordinates(coords)
         });
     }
 

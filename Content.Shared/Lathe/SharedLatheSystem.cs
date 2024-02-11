@@ -1,10 +1,10 @@
-﻿using Content.Shared.Materials;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System.Net.Mail;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Lathe;
 
@@ -16,24 +16,15 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
+    private readonly Dictionary<string, List<LatheRecipePrototype>> _inverseRecipeDictionary = new();
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LatheComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<LatheComponent, ComponentHandleState>(OnHandleState);
-    }
-
-    private void OnGetState(EntityUid uid, LatheComponent component, ref ComponentGetState args)
-    {
-        args.State = new LatheComponentState(component.MaterialUseMultiplier);
-    }
-
-    private void OnHandleState(EntityUid uid, LatheComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not LatheComponentState state)
-            return;
-        component.MaterialUseMultiplier = state.MaterialUseMultiplier;
+        SubscribeLocalEvent<EmagLatheRecipesComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+        BuildInverseRecipeDictionary();
     }
 
     [PublicAPI]
@@ -53,25 +44,43 @@ public abstract class SharedLatheSystem : EntitySystem
         {
             var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, component.MaterialUseMultiplier);
 
-            if (_materialStorage.GetMaterialAmount(component.Owner, material) < adjustedAmount * amount)
+            if (_materialStorage.GetMaterialAmount(uid, material) < adjustedAmount * amount)
                 return false;
         }
         return true;
+    }
+
+    private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
+    {
+        args.Handled = true;
     }
 
     public static int AdjustMaterial(int original, bool reduce, float multiplier)
         => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
 
     protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
-}
 
-[Serializable, NetSerializable]
-public sealed class LatheComponentState : ComponentState
-{
-    public float MaterialUseMultiplier;
-
-    public LatheComponentState(float materialUseMultiplier)
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
     {
-        MaterialUseMultiplier = materialUseMultiplier;
+        if (!obj.WasModified<LatheRecipePrototype>())
+            return;
+        BuildInverseRecipeDictionary();
+    }
+
+    private void BuildInverseRecipeDictionary()
+    {
+        _inverseRecipeDictionary.Clear();
+        foreach (var latheRecipe in _proto.EnumeratePrototypes<LatheRecipePrototype>())
+        {
+            _inverseRecipeDictionary.GetOrNew(latheRecipe.Result).Add(latheRecipe);
+        }
+    }
+
+    public bool TryGetRecipesFromEntity(string prototype, [NotNullWhen(true)] out List<LatheRecipePrototype>? recipes)
+    {
+        recipes = new();
+        if (_inverseRecipeDictionary.TryGetValue(prototype, out var r))
+            recipes.AddRange(r);
+        return recipes.Count != 0;
     }
 }

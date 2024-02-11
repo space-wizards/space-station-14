@@ -1,12 +1,10 @@
-using System.Linq;
-using System.Text;
 using Content.Server.Nutrition.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
-using Microsoft.VisualBasic;
+using Content.Shared.Nutrition;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -83,9 +81,9 @@ public sealed class FlavorProfileSystem : EntitySystem
     private HashSet<string> GetFlavorsFromReagents(Solution solution, int desiredAmount, HashSet<string>? toIgnore = null)
     {
         var flavors = new HashSet<string>();
-        foreach (var reagent in solution.Contents)
+        foreach (var (reagent, quantity) in solution.GetReagentPrototypes(_prototypeManager))
         {
-            if (toIgnore != null && toIgnore.Contains(reagent.ReagentId))
+            if (toIgnore != null && toIgnore.Contains(reagent.ID))
             {
                 continue;
             }
@@ -95,16 +93,14 @@ public sealed class FlavorProfileSystem : EntitySystem
                 break;
             }
 
-            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
             // don't care if the quantity is negligible
-            if (reagent.Quantity < proto.FlavorMinimum)
+            if (quantity < reagent.FlavorMinimum)
             {
                 continue;
             }
 
-            var flavor = proto.Flavor;
-
-            flavors.Add(flavor);
+            if (reagent.Flavor != null)
+                flavors.Add(reagent.Flavor);
         }
 
         return flavors;

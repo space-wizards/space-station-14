@@ -9,10 +9,9 @@
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/glass.rsi
-    size: 30
+    size: Normal
   - type: StaticPrice
     price: 0
-  - type: ItemStatus
   - type: Tag
     tags:
     - Sheet
@@ -37,6 +36,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -44,6 +45,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      glass: 
+        canReact: false
 
 - type: entity
   parent: SheetGlassBase
@@ -73,6 +78,25 @@
   - type: Construction
     graph: Glass
     node: SheetGlass
+  - type: Extractable
+    grindableSolutionName: glass
+  - type: SolutionContainerManager
+    solutions:
+      glass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+
+- type: entity
+  parent: SheetGlass
+  id: SheetGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: glass
+  - type: Stack
+    stackType: Glass
+    count: 10
 
 - type: entity
   parent: SheetGlass
@@ -84,8 +108,15 @@
   - type: Stack
     stackType: Glass
     count: 1
-  - type: Item
-    size: 1
+
+- type: entity
+  parent: SheetGlass
+  id: SheetGlassLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
 
 - type: entity
   parent: SheetGlassBase
@@ -132,6 +163,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
@@ -151,9 +184,20 @@
   - type: Stack
     stackType: ReinforcedGlass
     count: 1
-  - type: Item
-    size: 1
-
+  - type: Extractable
+    grindableSolutionName: rglass
+  - type: SolutionContainerManager
+    solutions:
+      rglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 4.5
+        - ReagentId: Carbon
+          Quantity: 0.5
+        canReact: false
+        
 - type: entity
   parent: SheetGlassBase
   id: SheetPGlass
@@ -178,7 +222,6 @@
       map: ["base"]
   - type: Item
     heldPrefix: pglass
-    size: 30
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -197,6 +240,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
@@ -216,8 +261,17 @@
   - type: Stack
     stackType: PlasmaGlass
     count: 1
-  - type: Item
-    size: 1
+  - type: Extractable
+    grindableSolutionName: pglass
+  - type: SolutionContainerManager
+    solutions:
+      pglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+        - ReagentId: Plasma
+          Quantity: 10
+        canReact: false
 
 - type: entity
   parent: SheetPGlass
@@ -246,6 +300,21 @@
   - type: Construction
     graph: Glass
     node: SheetRPGlass
+  - type: Extractable
+    grindableSolutionName: rpglass
+  - type: SolutionContainerManager
+    solutions:
+      rpglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+        - ReagentId: Plasma
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 4.5
+        - ReagentId: Carbon
+          Quantity: 0.5
+        canReact: false
 
 - type: entity
   parent: SheetRPGlass
@@ -258,8 +327,6 @@
   - type: Stack
     stackType: ReinforcedPlasmaGlass
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetGlassBase
@@ -303,6 +370,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassUranium:
@@ -310,6 +379,17 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Extractable
+    grindableSolutionName: uglass
+  - type: SolutionContainerManager
+    solutions:
+      uglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+        - ReagentId: Uranium
+          Quantity: 10
+        canReact: false
 
 - type: entity
   parent: SheetUGlass
@@ -322,8 +402,6 @@
   - type: Stack
     stackType: UraniumGlass
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetUGlass
@@ -351,7 +429,22 @@
   - type: Construction
     graph: Glass
     node: SheetRUGlass
-
+  - type: Extractable
+    grindableSolutionName: ruglass
+  - type: SolutionContainerManager
+    solutions:
+      ruglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+        - ReagentId: Uranium
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 4.5
+        - ReagentId: Carbon
+          Quantity: 0.5
+        canReact: false 
+    
 - type: entity
   parent: SheetRUGlass
   id: SheetRUGlass1
@@ -363,5 +456,3 @@
   - type: Stack
     stackType: ReinforcedUraniumGlass
     count: 1
-  - type: Item
-    size: 1

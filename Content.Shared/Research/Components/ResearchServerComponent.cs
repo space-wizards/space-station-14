@@ -41,7 +41,7 @@ public sealed partial class ResearchServerComponent : Component
     public TimeSpan NextUpdateTime = TimeSpan.Zero;
 
     [DataField("researchConsoleUpdateTime"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly TimeSpan ResearchConsoleUpdateTime = TimeSpan.FromSeconds(1);
+    public TimeSpan ResearchConsoleUpdateTime = TimeSpan.FromSeconds(1);
 }
 
 /// <summary>

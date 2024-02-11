@@ -17,8 +17,6 @@
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
   - type: SpentAmmoVisuals
-  - type: StaticPrice
-    price: 10
 
 - type: entity
   id: CartridgePistol
@@ -27,14 +25,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletPistol
-
-- type: entity
-  id: CartridgePistolHighVelocity
-  name: cartridge (.35 auto high-velocity)
-  parent: BaseCartridgePistol
-  components:
-  - type: CartridgeAmmo
-    proto: BulletPistolHighVelocity
 
 - type: entity
   id: CartridgePistolPractice
@@ -59,3 +49,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletPistolIncendiary
+
+- type: entity
+  id: CartridgePistolUranium
+  name: cartridge (.35 auto uranium)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletPistolUranium

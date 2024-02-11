@@ -12,6 +12,8 @@ namespace Content.Client.Replay.UI;
 [Virtual]
 public class ReplaySpectateEntityState : GameplayState
 {
+    [Dependency] private readonly ContentReplayPlaybackManager _replayManager = default!;
+
     protected override void Startup()
     {
         base.Startup();
@@ -21,11 +23,13 @@ public class ReplaySpectateEntityState : GameplayState
             return;
 
         screen.ShowWidget<GameTopMenuBar>(false);
-        SetAnchorAndMarginPreset(screen.GetOrAddWidget<ReplayControlWidget>(), LayoutPreset.TopLeft, margin: 10);
+        var replayWidget = screen.GetOrAddWidget<ReplayControlWidget>();
+        SetAnchorAndMarginPreset(replayWidget, LayoutPreset.TopLeft, margin: 10);
+        replayWidget.Visible = !_replayManager.IsScreenshotMode;
 
         foreach (var chatbox in UserInterfaceManager.GetUIController<ChatUIController>().Chats)
         {
-            chatbox.ChatInput.Visible = false;
+            chatbox.ChatInput.Visible = _replayManager.IsScreenshotMode;
         }
     }
 

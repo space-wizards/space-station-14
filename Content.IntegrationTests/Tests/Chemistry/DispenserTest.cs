@@ -1,6 +1,7 @@
 using Content.Client.Chemistry.UI;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Chemistry;
+using Content.Server.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
@@ -24,12 +25,12 @@ public sealed class DispenserTest : InteractionTest
         await Interact();
 
         // Eject beaker via BUI.
-        var ev = new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName);
+        var ev = new ItemSlotButtonPressedEvent(SharedReagentDispenser.OutputSlotName);
         await SendBui(ReagentDispenserUiKey.Key, ev);
 
         // Beaker is back in the player's hands
         Assert.That(Hands.ActiveHandEntity, Is.Not.Null);
-        AssertPrototype("Beaker", Hands.ActiveHandEntity);
+        AssertPrototype("Beaker", SEntMan.GetNetEntity(Hands.ActiveHandEntity));
 
         // Re-insert the beaker
         await Interact();
@@ -40,6 +41,6 @@ public sealed class DispenserTest : InteractionTest
         await ClickControl<ReagentDispenserWindow>(nameof(ReagentDispenserWindow.EjectButton));
         await RunTicks(5);
         Assert.That(Hands.ActiveHandEntity, Is.Not.Null);
-        AssertPrototype("Beaker", Hands.ActiveHandEntity);
+        AssertPrototype("Beaker", SEntMan.GetNetEntity(Hands.ActiveHandEntity));
     }
 }

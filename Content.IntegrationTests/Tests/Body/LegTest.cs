@@ -14,6 +14,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(BodyComponent))]
     public sealed class LegTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: HumanBodyAndAppearanceDummy
@@ -28,12 +29,8 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             EntityUid human = default!;
             AppearanceComponent appearance = null;
@@ -41,6 +38,7 @@ namespace Content.IntegrationTests.Tests.Body
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var appearanceSystem = entityManager.System<SharedAppearanceSystem>();
+            var xformSystem = entityManager.System<SharedTransformSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -63,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 foreach (var leg in legs)
                 {
-                    bodySystem.DropPart(leg.Id, leg.Component);
+                    xformSystem.DetachParentToNull(leg.Id, entityManager.GetComponent<TransformComponent>(leg.Id));
                 }
             });
 
@@ -75,7 +73,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.That(state, Is.EqualTo(RotationState.Horizontal));
 #pragma warning restore NUnit2045
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

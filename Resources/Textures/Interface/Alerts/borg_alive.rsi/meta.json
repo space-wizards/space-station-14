@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original from https://github.com/tgstation/tgstation/blob/42ebbb4202b472cf94561974a30e00a0b00e11bc/icons/mob/screen1_robot.dmi, edited by @Doru991",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "health0"
+    },
+    {
+      "name": "health1"
+    },
+    {
+      "name": "health2"
+    },
+    {
+      "name": "health3"
+    },
+    {
+      "name": "health4"
+    }
+  ]
+}

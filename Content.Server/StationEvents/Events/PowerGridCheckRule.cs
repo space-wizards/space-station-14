@@ -1,14 +1,14 @@
+using System.Threading;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Components;
+using Content.Server.StationEvents.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using System.Threading;
-using Content.Server.Power.EntitySystems;
 using Timer = Robust.Shared.Timing.Timer;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
-using Content.Server.StationEvents.Components;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -17,13 +17,6 @@ namespace Content.Server.StationEvents.Events
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<PowerGridCheckDisabledComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
-        }
-
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
             base.Started(uid, component, gameRule, args);
@@ -31,11 +24,13 @@ namespace Content.Server.StationEvents.Events
             if (!TryGetRandomStation(out var chosenStation))
                 return;
 
+            component.AffectedStation = chosenStation.Value;
+
             var query = AllEntityQuery<ApcComponent, TransformComponent>();
-            while (query.MoveNext(out var target, out var apc, out var transform))
+            while (query.MoveNext(out var apcUid ,out var apc, out var transform))
             {
                 if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
-                    component.Powered.Add(target);
+                    component.Powered.Add(apcUid);
             }
 
             RobustRandom.Shuffle(component.Powered);
@@ -54,10 +49,9 @@ namespace Content.Server.StationEvents.Events
 
                 if (TryComp(entity, out ApcComponent? apcComponent))
                 {
-                    if (!apcComponent.MainBreakerEnabled)
+                    if(!apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(entity, apcComponent);
                 }
-                RemComp<PowerGridCheckDisabledComponent>(entity);
             }
 
             // Can't use the default EndAudio
@@ -95,14 +89,8 @@ namespace Content.Server.StationEvents.Events
                     if (apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(selected, apcComponent);
                 }
-                EnsureComp<PowerGridCheckDisabledComponent>(selected);
                 component.Unpowered.Add(selected);
             }
-        }
-
-        private void OnApcToggleMainBreaker(EntityUid uid, PowerGridCheckDisabledComponent component, ref ApcToggleMainBreakerAttemptEvent args)
-        {
-            args.Cancelled = true;
         }
     }
 }

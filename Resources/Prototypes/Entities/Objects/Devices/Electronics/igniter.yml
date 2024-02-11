@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseItem
+  id: Igniter
+  name: igniter
+  description: Creates a spark when activated by a signal.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/igniter.rsi
+    state: icon
+  - type: IgnitionSource
+    temperature: 800
+  - type: IgniteOnTrigger
+  - type: TriggerOnSignal
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: UseDelay # prevent sound spam
+  - type: Tag
+    tags:
+    - Igniter

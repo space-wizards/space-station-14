@@ -15,6 +15,10 @@
       Glass: 100
   - type: StaticPrice
     price: 50
+  - type: Tag
+    tags:
+    - DroneUsable
+    - WhitelistChameleon
 
 - type: entity
   parent: WeldingMaskBase
@@ -28,6 +32,7 @@
     sprite: Clothing/Head/Welding/welding.rsi
   - type: Tag
     tags:
+    - DroneUsable
     - HamsterWearable
     - WhitelistChameleon
 

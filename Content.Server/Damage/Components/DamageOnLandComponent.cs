@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
-    public sealed class DamageOnLandComponent : Component
+    public sealed partial class DamageOnLandComponent : Component
     {
         [DataField("ignoreResistances")]
         [ViewVariables(VVAccess.ReadWrite)]

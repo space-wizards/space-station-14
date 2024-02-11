@@ -13,19 +13,18 @@ public sealed class SecretStartsTest
     [Test]
     public async Task TestSecretStarts()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
-        {
-            NoClient = true,
-            Dirty = true,
-        });
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
 
-        var server = pairTracker.Pair.Server;
+        var server = pair.Server;
         await server.WaitIdleAsync();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
 
         await server.WaitAssertion(() =>
         {
-            gameTicker.StartGameRule("Secret");
+            // this mimics roundflow:
+            // rules added, then round starts
+            gameTicker.AddGameRule("Secret");
+            gameTicker.StartGamePresetRules();
         });
 
         // Wait three ticks for any random update loops that might happen
@@ -42,6 +41,6 @@ public sealed class SecretStartsTest
             gameTicker.ClearGameRules();
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

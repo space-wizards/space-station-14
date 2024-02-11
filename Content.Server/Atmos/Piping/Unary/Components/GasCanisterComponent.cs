@@ -1,10 +1,11 @@
 using Content.Shared.Atmos;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public sealed class GasCanisterComponent : Component, IGasMixtureHolder
+    public sealed partial class GasCanisterComponent : Component, IGasMixtureHolder
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("port")]
@@ -15,7 +16,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("container")]
-        public string ContainerName { get; set; } = "GasCanisterTankHolder";
+        public string ContainerName { get; set; } = "tank_slot";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public ItemSlot GasTankSlot = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("gasMixture")]

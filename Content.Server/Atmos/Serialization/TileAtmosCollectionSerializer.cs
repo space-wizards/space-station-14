@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Serialization;
 
-public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>, ITypeCopier<Dictionary<Vector2i, TileAtmosphere>>
+public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>, ITypeCopier<Dictionary<Vector2i, TileAtmosphere>>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -156,7 +156,7 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
     }
 
     [DataDefinition]
-    private struct TileAtmosData
+    private partial struct TileAtmosData
     {
         [DataField("chunkSize")] public int ChunkSize;
 
@@ -166,13 +166,13 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
     }
 
     [DataDefinition]
-    private record struct TileAtmosChunk()
+    private partial record struct TileAtmosChunk()
     {
         /// <summary>
         /// Key is unique mix and value is bitflag of the affected tiles.
         /// </summary>
         [IncludeDataField(customTypeSerializer: typeof(DictionarySerializer<int, uint>))]
-        public readonly Dictionary<int, uint> Data = new();
+        public Dictionary<int, uint> Data = new();
     }
 
     public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target,

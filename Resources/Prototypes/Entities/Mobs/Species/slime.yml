@@ -1,13 +1,10 @@
 - type: entity
   name: Urist McSlime
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobSlimePerson
   abstract: true
   components:
   - type: Hunger
-    starvationDamage:
-      types:
-        Bloodloss: 0.5
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
@@ -18,7 +15,10 @@
   - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
+    speechVerb: Slime
     speechSounds: Slime
+  - type: TypingIndicator
+    proto: slime
   - type: Vocal
     sounds:
       Male: MaleSlime
@@ -37,7 +37,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.45 #per second, scales with pressure and other constants. Slighty more than humans.
+        Blunt: 0.60 #per second, scales with pressure and other constants. Slighty more than humans.
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -75,12 +75,9 @@
     maxSaturation: 15
 
 - type: entity
-  save: false
-  name: Urist McHands
   parent: MobHumanDummy
   id: MobSlimePersonDummy
   noSpawn: true
-  description: A dummy slime meant to be used in character setup.
   components:
     - type: HumanoidAppearance
       species: SlimePerson

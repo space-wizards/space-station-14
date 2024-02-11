@@ -1,14 +1,13 @@
+using Content.Server.Atmos.Components;
+using Content.Server.Singularity.Components;
+using Content.Shared.Ghost;
+using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
-
-using Content.Shared.Singularity.EntitySystems;
-
-using Content.Server.Ghost.Components;
-using Content.Server.Singularity.Components;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -59,11 +58,12 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
         if(!_timing.IsFirstTimePredicted)
             return;
 
-        foreach(var (gravWell, xform) in EntityManager.EntityQuery<GravityWellComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<GravityWellComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var gravWell, out var xform))
         {
             var curTime = _timing.CurTime;
             if (gravWell.NextPulseTime <= curTime)
-                Update(gravWell.Owner, curTime - gravWell.LastPulseTime, gravWell, xform);
+                Update(uid, curTime - gravWell.LastPulseTime, gravWell, xform);
         }
     }
 
@@ -192,6 +192,9 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             {
                 continue;
             }
+
+            if (TryComp<MovedByPressureComponent>(entity, out var movedPressure) && !movedPressure.Enabled) //Ignore magboots users
+                continue;
 
             if(!CanGravPulseAffect(entity))
                 continue;

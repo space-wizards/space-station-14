@@ -12,8 +12,8 @@ public sealed class NPCTest
     [Test]
     public async Task CompoundRecursion()
     {
-        var pool = await PoolManager.GetServerClient(new PoolSettings() { NoClient = true });
-        var server = pool.Pair.Server;
+        var pool = await PoolManager.GetServerClient();
+        var server = pool.Server;
 
         await server.WaitIdleAsync();
 

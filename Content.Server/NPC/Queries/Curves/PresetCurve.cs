@@ -2,7 +2,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.NPC.Queries.Curves;
 
-public sealed class PresetCurve : IUtilityCurve
+public sealed partial class PresetCurve : IUtilityCurve
 {
-    [DataField("preset", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<UtilityCurvePresetPrototype>))] public readonly string Preset = default!;
+    [DataField("preset", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<UtilityCurvePresetPrototype>))] public  string Preset = default!;
 }

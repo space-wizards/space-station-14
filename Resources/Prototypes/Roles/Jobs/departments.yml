@@ -11,8 +11,10 @@
   id: Civilian
   description: department-Civilian-description
   color: "#9FED58"
+  weight: -10
   roles:
   - Bartender
+  - Borg
   - Botanist
   - Boxer
   - Chaplain
@@ -26,7 +28,9 @@
   - Musician
   - Passenger
   - Reporter
+  - Visitor
   - Zookeeper
+  - Detective
   - ServiceWorker
 
 - type: department
@@ -42,6 +46,8 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
+  primary: false
+  weight: 100
 
 - type: department
   id: Engineering
@@ -50,7 +56,6 @@
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
-  - SeniorEngineer
   - StationEngineer
   - TechnicalAssistant
 
@@ -65,18 +70,16 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
-  - SeniorPhysician
 
 - type: department
   id: Security
   description: department-Security-description
   color: "#DE3A3A"
+  weight: 20
   roles:
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
-  - SeniorOfficer
-  - Detective
   - Warden
 
 - type: department
@@ -85,7 +88,6 @@
   color: "#D381C9"
   roles:
   - ResearchDirector
-  - SeniorResearcher
   - Scientist
   - ResearchAssistant
 
@@ -93,8 +95,10 @@
   id: Specific
   description: department-Specific-description
   color: "#9FED58"
+  weight: 10
   roles:
   - Boxer
   - Reporter
   - Zookeeper
   - Psychologist
+  primary: false

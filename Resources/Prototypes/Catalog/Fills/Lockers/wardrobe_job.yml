@@ -158,7 +158,7 @@
        - id: ClothingUniformJumpsuitSec
        - id: ClothingBackpackSecurity
        - id: ClothingShoesBootsJack
-       - id: ClothingEyesGlassesSecurity
+       - id: ClothingEyesGlassesSunglasses
        - id: ClothingHeadHelmetBasic
        - id: ClothingOuterArmorBasic
        - id: ClothingUniformJumpskirtSec
@@ -167,7 +167,7 @@
    id: WardrobeCargoFilled
    suffix: Filled
    parent: WardrobeCargo
-   description: "This locker? Maybe 500 spacebucks. Brotherhood? Priceless."
+   description: "This locker? Maybe 500 spesos. Brotherhood? Priceless."
    components:
    - type: StorageFill
      contents:

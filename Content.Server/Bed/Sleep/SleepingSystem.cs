@@ -1,7 +1,6 @@
-using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Server.Sound.Components;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
@@ -10,28 +9,28 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.StatusEffect;
 using Content.Shared.Slippery;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Bed.Sleep
 {
     public sealed class SleepingSystem : SharedSleepingSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+
+        [ValidatePrototypeId<EntityPrototype>] public const string SleepActionId = "ActionSleep";
 
         public override void Initialize()
         {
@@ -39,6 +38,7 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<MobStateComponent, SleepStateChangedEvent>(OnSleepStateChanged);
             SubscribeLocalEvent<SleepingComponent, DamageChangedEvent>(OnDamageChanged);
             SubscribeLocalEvent<MobStateComponent, SleepActionEvent>(OnSleepAction);
+            SubscribeLocalEvent<ActionsContainerComponent, SleepActionEvent>(OnBedSleepAction);
             SubscribeLocalEvent<MobStateComponent, WakeActionEvent>(OnWakeAction);
             SubscribeLocalEvent<SleepingComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
@@ -53,7 +53,6 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnSleepStateChanged(EntityUid uid, MobStateComponent component, SleepStateChangedEvent args)
         {
-            _prototypeManager.TryIndex<InstantActionPrototype>("Wake", out var wakeAction);
             if (args.FellAsleep)
             {
                 // Expiring status effects would remove the components needed for sleeping
@@ -72,16 +71,8 @@ namespace Content.Server.Bed.Sleep
                     emitSound.PopUp = sleepSound.PopUp;
                 }
 
-                if (wakeAction != null)
-                {
-                    var wakeInstance = new InstantAction(wakeAction);
-                    wakeInstance.Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
-                    _actionsSystem.AddAction(uid, wakeInstance, null);
-                }
                 return;
             }
-            if (wakeAction != null)
-                _actionsSystem.RemoveAction(uid, wakeAction);
 
             RemComp<StunnedComponent>(uid);
             RemComp<KnockedDownComponent>(uid);
@@ -89,20 +80,25 @@ namespace Content.Server.Bed.Sleep
         }
 
         /// <summary>
-        /// Wake up if we take an instance of more than 2 damage.
+        /// Wake up on taking an instance of damage at least the value of WakeThreshold.
         /// </summary>
         private void OnDamageChanged(EntityUid uid, SleepingComponent component, DamageChangedEvent args)
         {
             if (!args.DamageIncreased || args.DamageDelta == null)
                 return;
 
-            if (args.DamageDelta.Total >= component.WakeThreshold)
+            if (args.DamageDelta.GetTotal() >= component.WakeThreshold)
                 TryWaking(uid, component);
         }
 
         private void OnSleepAction(EntityUid uid, MobStateComponent component, SleepActionEvent args)
         {
             TrySleeping(uid);
+        }
+
+        private void OnBedSleepAction(EntityUid uid, ActionsContainerComponent component, SleepActionEvent args)
+        {
+            TrySleeping(args.Performer);
         }
 
         private void OnWakeAction(EntityUid uid, MobStateComponent component, WakeActionEvent args)
@@ -192,10 +188,8 @@ namespace Content.Server.Bed.Sleep
 
             var tryingToSleepEvent = new TryingToSleepEvent(uid);
             RaiseLocalEvent(uid, ref tryingToSleepEvent);
-            if (tryingToSleepEvent.Cancelled) return false;
-
-            if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
-                _actionsSystem.RemoveAction(uid, sleepAction);
+            if (tryingToSleepEvent.Cancelled)
+                return false;
 
             EnsureComp<SleepingComponent>(uid);
             return true;

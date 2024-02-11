@@ -40,6 +40,8 @@ air-alarm-ui-mode-none = None
 ### General
 
 air-alarm-ui-widget-enable = Enabled
+air-alarm-ui-widget-copy = Copy settings to similar devices
+air-alarm-ui-widget-copy-tooltip = Copies the settings of this device to all devices in this air alarm tab.
 air-alarm-ui-widget-ignore = Ignore
 air-alarm-ui-atmos-net-device-label = Address: {$address}
 

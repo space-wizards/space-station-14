@@ -1,5 +1,5 @@
 using Content.Shared.Eye.Blinding;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Server.Popups;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
@@ -44,7 +44,7 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
         if (uiList == null)
             return;
 
-        Queue<BoundUserInterface> closeList = new(); // foreach collection modified moment
+        Queue<PlayerBoundUserInterface> closeList = new(); // foreach collection modified moment
 
         foreach (var ui in uiList)
         {

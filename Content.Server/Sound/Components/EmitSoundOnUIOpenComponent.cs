@@ -6,7 +6,7 @@ namespace Content.Server.Sound.Components
     /// Simple sound emitter that emits sound on AfterActivatableUIOpenEvent
     /// </summary>
     [RegisterComponent]
-    public sealed class EmitSoundOnUIOpenComponent : BaseEmitSoundComponent
+    public sealed partial class EmitSoundOnUIOpenComponent : BaseEmitSoundComponent
     {
     }
 }

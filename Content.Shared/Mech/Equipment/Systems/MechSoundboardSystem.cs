@@ -1,9 +1,7 @@
-using Content.Shared.Mech;
-using Content.Shared.Mech.Equipment.Components;
-using Content.Shared.Mech.Equipment.Systems;
-using Content.Shared.Timing;
-using Robust.Shared.Audio;
 using System.Linq;
+using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Timing;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Mech.Equipment.Systems;
 
@@ -31,7 +29,7 @@ public sealed class MechSoundboardSystem : EntitySystem
         {
             Sounds = sounds.ToList()
         };
-        args.States.Add(uid, state);
+        args.States.Add(GetNetEntity(uid), state);
     }
 
     private void OnSoundboardMessage(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiMessageRelayEvent args)
@@ -46,12 +44,11 @@ public sealed class MechSoundboardSystem : EntitySystem
         if (msg.Sound >= comp.Sounds.Count)
             return;
 
-        if (_useDelay.ActiveDelay(uid))
+        if (TryComp(uid, out UseDelayComponent? useDelay)
+            && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         // honk!!!!!
-        var mech = equipment.EquipmentOwner.Value;
-        _useDelay.BeginDelay(uid);
         _audio.PlayPvs(comp.Sounds[msg.Sound], uid);
     }
 }

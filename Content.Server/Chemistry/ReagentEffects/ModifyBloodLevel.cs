@@ -6,12 +6,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class ModifyBloodLevel : ReagentEffect
+public sealed partial class ModifyBloodLevel : ReagentEffect
 {
-    [DataField("scaled")]
+    [DataField]
     public bool Scaled = false;
 
-    [DataField("amount")]
+    [DataField]
     public FixedPoint2 Amount = 1.0f;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

@@ -6,6 +6,10 @@
   name: animal
 
 - type: metabolizerType
+  id: Bloodsucker
+  name: bloodsucker
+
+- type: metabolizerType
   id: Dragon
   name: dragon
 
@@ -32,3 +36,11 @@
 - type: metabolizerType
   id: Dwarf
   name: dwarf
+
+- type: metabolizerType
+  id: Moth
+  name: moth
+
+- type: metabolizerType
+  id: Arachnid
+  name: arachnid

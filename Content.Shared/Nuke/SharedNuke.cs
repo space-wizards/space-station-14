@@ -32,7 +32,7 @@ namespace Content.Shared.Nuke
     }
 
     [Serializable, NetSerializable]
-    public sealed class NukeDisarmDoAfterEvent : SimpleDoAfterEvent
+    public sealed partial class NukeDisarmDoAfterEvent : SimpleDoAfterEvent
     {
     }
 }

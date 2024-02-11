@@ -1,3 +1,5 @@
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Fluids.Components;
@@ -11,10 +13,15 @@ namespace Content.Shared.Fluids.Components;
 /// Later this can be refactored into a proper Plunger component if needed.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedDrainSystem))]
-public sealed class DrainComponent : Component
+public sealed partial class DrainComponent : Component
 {
     public const string SolutionName = "drainBuffer";
+
+    [ValidatePrototypeId<TagPrototype>]
     public const string PlungerTag = "Plunger";
+
+    [DataField]
+    public Entity<SolutionComponent>? Solution = null;
 
     [DataField("accumulator")]
     public float Accumulator = 0f;

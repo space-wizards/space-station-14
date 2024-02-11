@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: BaseStationNanotrasen
   components:
@@ -14,11 +14,14 @@
     - BaseStationJobsSpawning
     - BaseStationRecords
     - BaseStationArrivals
+    - BaseStationGateway
     - BaseStationShuttles
     - BaseStationCentcomm
     - BaseStationEvacuation
     - BaseStationAlertLevels
+    - BaseStationMagnet
     - BaseStationExpeditions
+    - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
   noSpawn: true
@@ -31,6 +34,17 @@
     - BaseStation
     - BaseStationAlertLevels
     - BaseStationNanotrasen
+  noSpawn: true
+  components:
+    - type: Transform
+
+- type: entity
+  id: StandardStationArena
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationNanotrasen
   noSpawn: true
   components:
     - type: Transform

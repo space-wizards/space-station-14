@@ -1,10 +1,14 @@
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
+using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lube;
 using Content.Shared.Popups;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Lube;
@@ -15,15 +19,16 @@ public sealed class LubeSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
     }
 
-    private void OnInteract(EntityUid uid, LubeComponent component, AfterInteractEvent args)
+    private void OnInteract(Entity<LubeComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -31,15 +36,10 @@ public sealed class LubeSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
-        {
-            return;
-        }
-
-        if (TryLube(uid, component, target))
+        if (TryLube(entity, target, args.User))
         {
             args.Handled = true;
-            _audio.PlayPvs(component.Squeeze, uid);
+            _audio.PlayPvs(entity.Comp.Squeeze, entity);
             _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
         }
         else
@@ -48,21 +48,22 @@ public sealed class LubeSystem : EntitySystem
         }
     }
 
-    private bool TryLube(EntityUid uid, LubeComponent component, EntityUid target)
+    private bool TryLube(Entity<LubeComponent> lube, EntityUid target, EntityUid actor)
     {
         if (HasComp<LubedComponent>(target) || !HasComp<ItemComponent>(target))
         {
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(lube.Owner, lube.Comp.Solution, out _, out var solution))
         {
-            var quantity = solution.RemoveReagent(component.Reagent, component.Consumption);
+            var quantity = solution.RemoveReagent(lube.Comp.Reagent, lube.Comp.Consumption);
             if (quantity > 0)
             {
                 var lubed = EnsureComp<LubedComponent>(target);
-                lubed.SlipsLeft = _random.Next(component.MinSlips * quantity.Int(), component.MaxSlips * quantity.Int());
-                lubed.SlipStrength = component.SlipStrength;
+                lubed.SlipsLeft = _random.Next(lube.Comp.MinSlips * quantity.Int(), lube.Comp.MaxSlips * quantity.Int());
+                lubed.SlipStrength = lube.Comp.SlipStrength;
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(lube.Owner):tool}");
                 return true;
             }
         }

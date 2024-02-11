@@ -80,7 +80,7 @@ public sealed class ListContainerTest : RobustUnitTest
     {
         /*
          * 6 items * 10 height + 5 separation * 3 height = 75
-         * One items should be off the render
+         * One item should be off the render
          * 0 13 26 39 52 65 | 75 height
          */
         var root = new Control { MinSize = new Vector2(50, 60) };

@@ -7,6 +7,12 @@ namespace Content.Shared.CartridgeLoader;
 [Serializable, NetSerializable]
 public class CartridgeLoaderUiState : BoundUserInterfaceState
 {
-    public EntityUid? ActiveUI;
-    public List<EntityUid> Programs = new();
+    public NetEntity? ActiveUI;
+    public List<NetEntity> Programs;
+
+    public CartridgeLoaderUiState(List<NetEntity> programs, NetEntity? activeUI)
+    {
+        Programs = programs;
+        ActiveUI = activeUI;
+    }
 }

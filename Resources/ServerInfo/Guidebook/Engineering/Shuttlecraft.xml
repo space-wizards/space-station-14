@@ -10,7 +10,7 @@ Shuttle construction is simple and easy, albeit rather expensive and hard to pul
 <GuideEntityEmbed Entity="Gyroscope"/>
 <GuideEntityEmbed Entity="ComputerShuttle"/>
 <GuideEntityEmbed Entity="SubstationBasic"/>
-<GuideEntityEmbed Entity="GeneratorPlasma"/>
+<GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
 </Box>
 <Box>
 <GuideEntityEmbed Entity="CableHVStack"/>

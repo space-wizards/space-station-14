@@ -1,46 +1,50 @@
-using Content.Shared.Actions.Events;
-using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
+using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Wieldable;
 
 public sealed class WieldableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandVirtualItemSystem _virtualItemSystem = default!;
+    [Dependency] private readonly SharedVirtualItemSystem _virtualItemSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<WieldableComponent, WieldableDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
-        SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, AttemptShootEvent>(OnShootAttempt);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
+        SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
@@ -61,34 +65,32 @@ public sealed class WieldableSystem : EntitySystem
             !wieldable.Wielded)
         {
             args.Cancelled = true;
-            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+
+            if (!HasComp<MeleeWeaponComponent>(uid) && !HasComp<MeleeRequiresWieldComponent>(uid))
+            {
+                args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+            }
         }
     }
 
     private void OnGunUnwielded(EntityUid uid, GunWieldBonusComponent component, ItemUnwieldedEvent args)
     {
-        if (!TryComp<GunComponent>(uid, out var gun))
-            return;
-
-        gun.MinAngle -= component.MinAngle;
-        gun.MaxAngle -= component.MaxAngle;
-        Dirty(gun);
+        _gun.RefreshModifiers(uid);
     }
 
     private void OnGunWielded(EntityUid uid, GunWieldBonusComponent component, ref ItemWieldedEvent args)
     {
-        if (!TryComp<GunComponent>(uid, out var gun))
-            return;
-
-        gun.MinAngle += component.MinAngle;
-        gun.MaxAngle += component.MaxAngle;
-        Dirty(gun);
+        _gun.RefreshModifiers(uid);
     }
 
-    private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
+    private void OnGunRefreshModifiers(Entity<GunWieldBonusComponent> bonus, ref GunRefreshModifiersEvent args)
     {
-        if (component.Wielded)
-            args.Cancel();
+        if (TryComp(bonus, out WieldableComponent? wield) &&
+            wield.Wielded)
+        {
+            args.MinAngle += bonus.Comp.MinAngle;
+            args.MaxAngle += bonus.Comp.MaxAngle;
+        }
     }
 
     private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -107,8 +109,8 @@ public sealed class WieldableSystem : EntitySystem
         {
             Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
             Act = component.Wielded
-                ? () => AttemptUnwield(uid, component, args.User)
-                : () => AttemptWield(uid, component, args.User)
+                ? () => TryUnwield(uid, component, args.User)
+                : () => TryWield(uid, component, args.User)
         };
 
         args.Verbs.Add(verb);
@@ -118,18 +120,19 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        if(!component.Wielded)
-            AttemptWield(uid, component, args.User);
+
+        if (!component.Wielded)
+            args.Handled = TryWield(uid, component, args.User);
         else
-            AttemptUnwield(uid, component, args.User);
+            args.Handled = TryUnwield(uid, component, args.User);
     }
 
-    public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
+    public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
     {
         // Do they have enough hands free?
         if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
         {
-            if(!quiet)
+            if (!quiet)
                 _popupSystem.PopupClient(Loc.GetString("wieldable-component-no-hands"), user, user);
             return false;
         }
@@ -158,87 +161,78 @@ public sealed class WieldableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Attempts to wield an item, creating a DoAfter..
+    ///     Attempts to wield an item, starting a UseDelay after.
     /// </summary>
-    public void AttemptWield(EntityUid used, WieldableComponent component, EntityUid user)
+    /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         if (!CanWield(used, component, user))
-            return;
+            return false;
+
         var ev = new BeforeWieldEvent();
         RaiseLocalEvent(used, ev);
 
         if (ev.Cancelled)
-            return;
+            return false;
 
-        var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
-        {
-            BreakOnUserMove = false,
-            BreakOnDamage = true
-        };
-
-        _doAfter.TryStartDoAfter(doargs);
-    }
-
-    /// <summary>
-    ///     Attempts to unwield an item, with no DoAfter.
-    /// </summary>
-    public void AttemptUnwield(EntityUid used, WieldableComponent component, EntityUid user)
-    {
-        var ev = new BeforeUnwieldEvent();
-        RaiseLocalEvent(used, ev);
-
-        if (ev.Cancelled)
-            return;
-
-        var targEv = new ItemUnwieldedEvent(user);
-
-        RaiseLocalEvent(used, targEv);
-    }
-
-    private void OnDoAfter(EntityUid uid, WieldableComponent component, DoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled || !CanWield(uid, component, args.Args.User) || component.Wielded)
-            return;
-
-        if (TryComp<ItemComponent>(uid, out var item))
+        if (TryComp<ItemComponent>(used, out var item))
         {
             component.OldInhandPrefix = item.HeldPrefix;
-            _itemSystem.SetHeldPrefix(uid, component.WieldedInhandPrefix, item);
+            _itemSystem.SetHeldPrefix(used, component.WieldedInhandPrefix, component: item);
         }
 
         component.Wielded = true;
 
         if (component.WieldSound != null)
-            _audioSystem.PlayPredicted(component.WieldSound, uid, args.User);
+            _audioSystem.PlayPredicted(component.WieldSound, used, user);
 
         for (var i = 0; i < component.FreeHandsRequired; i++)
         {
-            _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.Args.User);
+            _virtualItemSystem.TrySpawnVirtualItemInHand(used, user);
         }
 
-        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
-        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", args.Args.User),("item", uid)), args.Args.User, Filter.PvsExcept(args.Args.User), true);
+        if (TryComp(used, out UseDelayComponent? useDelay)
+            && !_delay.TryResetDelay((used, useDelay), true))
+            return false;
 
-        var ev = new ItemWieldedEvent();
-        RaiseLocalEvent(uid, ref ev);
+        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
+        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used)), user, Filter.PvsExcept(user), true);
 
-        Dirty(component);
-        args.Handled = true;
+        var targEv = new ItemWieldedEvent();
+        RaiseLocalEvent(used, ref targEv);
+
+        Dirty(used, component);
+        return true;
+    }
+
+    /// <summary>
+    ///     Attempts to unwield an item, with no DoAfter.
+    /// </summary>
+    /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool TryUnwield(EntityUid used, WieldableComponent component, EntityUid user)
+    {
+        var ev = new BeforeUnwieldEvent();
+        RaiseLocalEvent(used, ev);
+
+        if (ev.Cancelled)
+            return false;
+
+        component.Wielded = false;
+        var targEv = new ItemUnwieldedEvent(user);
+
+        RaiseLocalEvent(used, targEv);
+        return true;
     }
 
     private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
     {
         if (args.User == null)
             return;
-        if (!component.Wielded)
-            return;
 
         if (TryComp<ItemComponent>(uid, out var item))
         {
-            _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, item);
+            _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, component: item);
         }
-
-        component.Wielded = false;
 
         if (!args.Force) // don't play sound/popup if this was a forced unwield
         {
@@ -251,7 +245,9 @@ public sealed class WieldableSystem : EntitySystem
                 ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
         }
 
-        Dirty(component);
+        _appearance.SetData(uid, WieldableVisuals.Wielded, false);
+
+        Dirty(uid, component);
         _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
     }
 
@@ -259,19 +255,21 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (!component.Wielded || uid != args.Unequipped)
             return;
+
         RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true), true);
     }
 
     private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)
     {
         if (args.BlockingEntity == uid && component.Wielded)
-            AttemptUnwield(args.BlockingEntity, component, args.User);
+            TryUnwield(args.BlockingEntity, component, args.User);
     }
 
     private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)
     {
         if (!TryComp<WieldableComponent>(uid, out var wield))
             return;
+
         if (!wield.Wielded)
             return;
 

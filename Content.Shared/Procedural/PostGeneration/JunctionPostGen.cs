@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Places the specified entities at junction areas.
 /// </summary>
-public sealed class JunctionPostGen : IPostDunGen
+public sealed partial class JunctionPostGen : IPostDunGen
 {
     /// <summary>
     /// Width to check for junctions.

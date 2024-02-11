@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: BasicRobotics
@@ -11,11 +11,6 @@
   cost: 5000
   recipeUnlocks:
   - ProximitySensor
-  - LeftArmBorg
-  - LightHeadBorg
-  - RightArmBorg
-  - LeftLegBorg
-  - RightLegBorg
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 
@@ -27,10 +22,12 @@
     state: icon
   discipline: Experimental
   tier: 1
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - AnomalyScanner
   - AnomalyLocator
+  - AnomalyLocatorWide
+  - BorgModuleAnomaly
   - APECircuitboard
   - AnomalyVesselCircuitboard
 
@@ -42,9 +39,10 @@
     state: display
   discipline: Experimental
   tier: 1
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
   - NodeScanner
+  - BorgModuleArtifact
   - AnalysisComputerCircuitboard
   - ArtifactAnalyzerMachineCircuitboard
 
@@ -64,29 +62,27 @@
   id: MagnetsTech
   name: research-technology-magnets-tech
   icon:
-    sprite: Clothing/Shoes/Boots/magboots.rsi
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+    state: icon
+  discipline: Experimental
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ClothingShoesBootsMagSci
+
+- type: technology
+  id: AnomalyCoreHarnessing
+  name: research-technology-anomaly-harnessing
+  icon:
+    sprite: Objects/Weapons/Melee/gorilla.rsi
     state: icon
   discipline: Experimental
   tier: 1
   cost: 10000
   recipeUnlocks:
-  - ClothingShoesBootsMag
+  - WeaponGauntletGorilla
 
 # Tier 2
-
-- type: technology
-  id: AdvancedParts
-  name: research-technology-advanced-parts
-  icon:
-    sprite: Objects/Misc/stock_parts.rsi
-    state: advanced_matter_bin
-  discipline: Experimental
-  tier: 2
-  cost: 15000
-  recipeUnlocks:
-  - AdvancedCapacitorStockPart
-  - AdvancedMatterBinStockPart
-  - NanoManipulatorStockPart
 
 - type: technology
   id: AbnormalArtifactManipulation
@@ -99,21 +95,21 @@
   cost: 5000
   recipeUnlocks:
   - TraversalDistorterMachineCircuitboard
+  - ArtifactCrusherMachineCircuitboard
 
 - type: technology
-  id: MobileAnomalyTech
-  name: research-technology-mobile-anomaly-tech
+  id: AdvancedAnomalyResearch
+  name: research-technology-advanced-anomaly-research
   icon:
-    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+    sprite: Structures/Machines/anomaly_sync.rsi
     state: base
   discipline: Experimental
   tier: 2
   cost: 10000
   recipeUnlocks:
   - WeaponPistolCHIMP
-  - CartridgeAnomalousParticleDelta
-  - CartridgeAnomalousParticleEpsilon
-  - CartridgeAnomalousParticleZeta
+  - AnomalySynchronizerCircuitboard
+  - AnomalyVesselExperimentalCircuitboard
   technologyPrerequisites:
   - BasicAnomalousResearch
 
@@ -129,21 +125,20 @@
   recipeUnlocks:
   - RPED
 
-# Tier 3
-
 - type: technology
-  id: SuperParts
-  name: research-technology-super-parts
+  id: DeterrenceTechnologies
+  name: research-technology-deterrence
   icon:
-    sprite: Objects/Misc/stock_parts.rsi
-    state: super_matter_bin
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
   discipline: Experimental
-  tier: 3
-  cost: 15000
+  tier: 2
+  cost: 7500
   recipeUnlocks:
-  - SuperCapacitorStockPart
-  - SuperMatterBinStockPart
-  - PicoManipulatorStockPart
+  - WeaponParticleDecelerator
+  - HoloprojectorField
+
+# Tier 3
 
 - type: technology
   id: GravityManipulation
@@ -157,3 +152,15 @@
   recipeUnlocks:
     - WeaponForceGun
     - WeaponTetherGun
+
+- type: technology
+  id: QuantumLeaping
+  name: research-technology-quantum-leaping
+  icon:
+    sprite: Objects/Devices/swapper.rsi
+    state: icon
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - DeviceQuantumSpinInverter

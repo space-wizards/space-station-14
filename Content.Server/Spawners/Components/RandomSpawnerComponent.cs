@@ -1,21 +1,23 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
-    public sealed class RandomSpawnerComponent : ConditionalSpawnerComponent
+    public sealed partial class RandomSpawnerComponent : ConditionalSpawnerComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("rarePrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public List<string> RarePrototypes { get; set; } = new();
+        [DataField]
+        public List<EntProtoId> RarePrototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("rareChance")]
+        [DataField]
         public float RareChance { get; set; } = 0.05f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("offset")]
+        [DataField]
         public float Offset { get; set; } = 0.2f;
+
+        [DataField]
+        public bool DeleteSpawnerAfterSpawn = true;
     }
 }

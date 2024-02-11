@@ -5,7 +5,7 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
     [Access(typeof(GasMixerSystem))]
-    public sealed class GasMixerComponent : Component
+    public sealed partial class GasMixerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

@@ -4,7 +4,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 ///     Activate artifact by touching, attacking or pulling it.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactInteractionTriggerComponent : Component
+public sealed partial class ArtifactInteractionTriggerComponent : Component
 {
     /// <summary>
     ///     Should artifact be activated just by touching with empty hand?

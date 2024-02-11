@@ -2,7 +2,7 @@ namespace Content.Client.Storage.Visualizers;
 
 [RegisterComponent]
 [Access(typeof(EntityStorageVisualizerSystem))]
-public sealed class EntityStorageVisualsComponent : Component
+public sealed partial class EntityStorageVisualsComponent : Component
 {
     /// <summary>
     /// The RSI state used for the base layer of the storage entity sprite while the storage is closed.
@@ -45,4 +45,16 @@ public sealed class EntityStorageVisualsComponent : Component
     [DataField("stateUnlocked")]
     [ViewVariables(VVAccess.ReadWrite)]
     public string? StateUnlocked = "unlocked";
+
+    /// <summary>
+    /// The drawdepth the object has when it's open
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int? OpenDrawDepth;
+
+    /// <summary>
+    /// The drawdepth the object has when it's closed
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int? ClosedDrawDepth;
 }

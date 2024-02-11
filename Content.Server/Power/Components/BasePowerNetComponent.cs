@@ -7,7 +7,7 @@ namespace Content.Server.Power.Components
 
     }
 
-    public abstract class BasePowerNetComponent : BaseNetConnectorComponent<IPowerNet>
+    public abstract partial class BasePowerNetComponent : BaseNetConnectorComponent<IPowerNet>
     {
     }
 }

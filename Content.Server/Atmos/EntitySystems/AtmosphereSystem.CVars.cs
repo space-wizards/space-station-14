@@ -16,11 +16,22 @@ namespace Content.Server.Atmos.EntitySystems
         public bool MonstermosDepressurization { get; private set; }
         public bool MonstermosRipTiles { get; private set; }
         public bool GridImpulse { get; private set; }
+        public float SpacingEscapeRatio { get; private set; }
+        public float SpacingMinGas { get; private set; }
+        public float SpacingMaxWind { get; private set; }
         public bool Superconduction { get; private set; }
         public bool ExcitedGroups { get; private set; }
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
+        public float Speedup { get; private set; }
+        public float HeatScale { get; private set; }
+
+        /// <summary>
+        /// Time between each atmos sub-update.  If you are writing an atmos device, use AtmosDeviceUpdateEvent.dt
+        /// instead of this value, because atmos devices do not update each are sub-update and sometimes are skipped to
+        /// meet the tick deadline.
+        /// </summary>
         public float AtmosTime => 1f / AtmosTickRate;
 
         private void InitializeCVars()
@@ -34,9 +45,14 @@ namespace Content.Server.Atmos.EntitySystems
             _cfg.OnValueChanged(CCVars.MonstermosDepressurization, value => MonstermosDepressurization = value, true);
             _cfg.OnValueChanged(CCVars.MonstermosRipTiles, value => MonstermosRipTiles = value, true);
             _cfg.OnValueChanged(CCVars.AtmosGridImpulse, value => GridImpulse = value, true);
+            _cfg.OnValueChanged(CCVars.AtmosSpacingEscapeRatio, value => SpacingEscapeRatio = value, true);
+            _cfg.OnValueChanged(CCVars.AtmosSpacingMinGas, value => SpacingMinGas = value, true);
+            _cfg.OnValueChanged(CCVars.AtmosSpacingMaxWind, value => SpacingMaxWind = value, true);
             _cfg.OnValueChanged(CCVars.Superconduction, value => Superconduction = value, true);
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, value => AtmosMaxProcessTime = value, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, value => AtmosTickRate = value, true);
+            _cfg.OnValueChanged(CCVars.AtmosSpeedup, value => Speedup = value, true);
+            _cfg.OnValueChanged(CCVars.AtmosHeatScale, value => { HeatScale = value; InitializeGases(); }, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroups, value => ExcitedGroups = value, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, value => ExcitedGroupsSpaceIsAllConsuming = value, true);
         }

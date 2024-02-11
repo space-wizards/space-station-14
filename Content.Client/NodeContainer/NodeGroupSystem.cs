@@ -69,7 +69,7 @@ namespace Content.Client.NodeContainer
 
             Entities = Groups.Values
                 .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
-                .GroupBy(n => n.nodeData.Entity)
+                .GroupBy(n => GetEntity(n.nodeData.Entity))
                 .ToDictionary(g => g.Key, g => g.ToArray());
 
             NodeLookup = Groups.Values

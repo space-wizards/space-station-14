@@ -27,6 +27,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             _decalPlacerController = UserInterfaceManager.GetUIController<DecalPlacerUIController>();
 
             var adminManager = IoCManager.Resolve<IClientAdminManager>();
+            adminManager.AdminStatusUpdated += OnStatusUpdate;
 
             // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
             // TODO: This will probably need some command check at some point
@@ -34,8 +35,15 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             SpawnTilesButton.OnPressed += SpawnTilesButtonOnOnPressed;
             SpawnDecalsButton.OnPressed += SpawnDecalsButtonOnPressed;
             LoadGamePrototypeButton.OnPressed += LoadGamePrototypeButtonOnPressed;
-            LoadGamePrototypeButton.Disabled = !adminManager.HasFlag(AdminFlags.Query);
-            LoadBlueprintsButton.Disabled = !adminManager.HasFlag(AdminFlags.Mapping);
+            LoadGamePrototypeButton.Disabled = !adminManager.CanCommand("loadprototype");
+            LoadBlueprintsButton.Disabled = !adminManager.CanCommand("loadgrid");
+        }
+
+        private void OnStatusUpdate()
+        {
+            var adminManager = IoCManager.Resolve<IClientAdminManager>();
+            LoadGamePrototypeButton.Disabled = !adminManager.CanCommand("loadprototype");
+            LoadBlueprintsButton.Disabled = !adminManager.CanCommand("loadgrid");
         }
 
         private void LoadGamePrototypeButtonOnPressed(BaseButton.ButtonEventArgs obj)

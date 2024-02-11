@@ -49,6 +49,11 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWebSilk:
+              min: 0
+              max: 1
     - type: Temperature
       heatDamage:
         types:
@@ -61,7 +66,7 @@
         types: {}
       damage:
         types:
-          Heat: 1
+          Heat: 5
     - type: Reactive
       groups:
         Flammable: [Touch]
@@ -148,7 +153,7 @@
         types: {}
       damage:
         types:
-          Heat: 1
+          Heat: 5
     - type: Reactive
       groups:
         Flammable: [Touch]

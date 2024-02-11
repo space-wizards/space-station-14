@@ -1,26 +1,24 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Ghost.Components;
-using Content.Server.Players;
 using Content.Server.Pointing.Components;
-using Content.Server.Visible;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
+using Content.Shared.Examine;
+using Content.Shared.Eye;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Mobs.Systems;
+using Content.Shared.Mind;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 
@@ -35,9 +33,9 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
@@ -49,6 +47,15 @@ namespace Content.Server.Pointing.EntitySystems
         private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new();
 
         private const float PointingRange = 15f;
+
+        private void GetCompState(Entity<PointingArrowComponent> entity, ref ComponentGetState args)
+        {
+            args.State = new SharedPointingArrowComponentState
+            {
+                StartPosition = entity.Comp.StartPosition,
+                EndTime = entity.Comp.EndTime
+            };
+        }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
@@ -64,6 +71,8 @@ namespace Content.Server.Pointing.EntitySystems
         private void SendMessage(EntityUid source, IEnumerable<ICommonSession> viewers, EntityUid pointed, string selfMessage,
             string viewerMessage, string? viewerPointedAtMessage = null)
         {
+            var netSource = GetNetEntity(source);
+
             foreach (var viewer in viewers)
             {
                 if (viewer.AttachedEntity is not {Valid: true} viewerEntity)
@@ -77,10 +86,10 @@ namespace Content.Server.Pointing.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, source), viewerEntity);
+                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, netSource), viewerEntity);
             }
 
-            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
+            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, netSource));
         }
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
@@ -91,21 +100,21 @@ namespace Content.Server.Pointing.EntitySystems
             }
             else
             {
-                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+                return ExamineSystemShared.InRangeUnOccluded(pointer, coordinates, 15, predicate: e => e == pointer);
             }
         }
 
-        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid pointed)
+        public bool TryPoint(ICommonSession? session, EntityCoordinates coordsPointed, EntityUid pointed)
         {
             if (session?.AttachedEntity is not { } player)
             {
-                Logger.Warning($"Player {session} attempted to point without any attached entity");
+                Log.Warning($"Player {session} attempted to point without any attached entity");
                 return false;
             }
 
-            if (!coords.IsValid(EntityManager))
+            if (!coordsPointed.IsValid(EntityManager))
             {
-                Logger.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
+                Log.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coordsPointed}");
                 return false;
             }
 
@@ -121,33 +130,30 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            // Checking mob state directly instead of some action blocker, as many action blockers are blocked for
-            // ghosts and there is no obvious choice for pointing.
-            if (_mobState.IsIncapacitated(player))
+            if (!CanPoint(player))
             {
                 return false;
             }
 
-            if (HasComp<SleepingComponent>(player))
-            {
-                return false;
-            }
-
-            if (!InRange(player, coords))
+            if (!InRange(player, coordsPointed))
             {
                 _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, player);
                 return false;
             }
 
+            var mapCoordsPointed = coordsPointed.ToMap(EntityManager);
+            _rotateToFaceSystem.TryFaceCoordinates(player, mapCoordsPointed.Position);
 
-            var mapCoords = coords.ToMap(EntityManager);
-            _rotateToFaceSystem.TryFaceCoordinates(player, mapCoords.Position);
-
-            var arrow = EntityManager.SpawnEntity("PointingArrow", coords);
+            var arrow = EntityManager.SpawnEntity("PointingArrow", coordsPointed);
 
             if (TryComp<PointingArrowComponent>(arrow, out var pointing))
             {
-                pointing.EndTime = _gameTiming.CurTime + TimeSpan.FromSeconds(4);
+                if (TryComp(player, out TransformComponent? xformPlayer))
+                    pointing.StartPosition = EntityCoordinates.FromMap(arrow, xformPlayer.Coordinates.ToMap(EntityManager)).Position;
+
+                pointing.EndTime = _gameTiming.CurTime + PointDuration;
+
+                Dirty(arrow, pointing);
             }
 
             if (EntityQuery<PointingArrowAngeringComponent>().FirstOrDefault() != null)
@@ -163,13 +169,14 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
                 layer = playerVisibility.Layer;
-                _visibilitySystem.SetLayer(arrowVisibility, layer);
+                _visibilitySystem.SetLayer(arrow, arrowVisibility, layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
-            bool ViewerPredicate(IPlayerSession playerSession)
+            bool ViewerPredicate(ICommonSession playerSession)
             {
-                if (playerSession.ContentData()?.Mind?.CurrentEntity is not {Valid: true} ent ||
+                if (!_minds.TryGetMind(playerSession, out _, out var mind) ||
+                    mind.CurrentEntity is not { Valid: true } ent ||
                     !TryComp(ent, out EyeComponent? eyeComp) ||
                     (eyeComp.VisibilityMask & layer) == 0)
                     return false;
@@ -178,7 +185,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
 
             var viewers = Filter.Empty()
-                .AddWhere(session1 => ViewerPredicate((IPlayerSession) session1))
+                .AddWhere(session1 => ViewerPredicate(session1))
                 .Recipients;
 
             string selfMessage;
@@ -200,6 +207,11 @@ namespace Content.Server.Pointing.EntitySystems
 
                 viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
 
+                var ev = new AfterPointedAtEvent(pointed);
+                RaiseLocalEvent(player, ref ev);
+                var gotev = new AfterGotPointedAtEvent(player);
+                RaiseLocalEvent(pointed, ref gotev);
+
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {ToPrettyString(pointed):target} {Transform(pointed).Coordinates}");
             }
             else
@@ -207,10 +219,10 @@ namespace Content.Server.Pointing.EntitySystems
                 TileRef? tileRef = null;
                 string? position = null;
 
-                if (_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid))
+                if (_mapManager.TryFindGridAt(mapCoordsPointed, out var gridUid, out var grid))
                 {
-                    position = $"EntId={gridUid} {grid.WorldToTile(mapCoords.Position)}";
-                    tileRef = grid.GetTileRef(grid.WorldToTile(mapCoords.Position));
+                    position = $"EntId={gridUid} {grid.WorldToTile(mapCoordsPointed.Position)}";
+                    tileRef = grid.GetTileRef(grid.WorldToTile(mapCoordsPointed.Position));
                 }
 
                 var tileDef = _tileDefinitionManager[tileRef?.Tile.TypeId ?? 0];
@@ -220,7 +232,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", name));
 
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {name} {(position == null ? mapCoords : position)}");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {name} {(position == null ? mapCoordsPointed : position)}");
             }
 
             _pointers[session] = _gameTiming.CurTime;
@@ -234,6 +246,8 @@ namespace Content.Server.Pointing.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<PointingArrowComponent, ComponentGetState>(GetCompState);
+
             SubscribeNetworkEvent<PointingAttemptEvent>(OnPointAttempt);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
@@ -245,10 +259,12 @@ namespace Content.Server.Pointing.EntitySystems
 
         private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            if (TryComp(ev.Target, out TransformComponent? xform))
-                TryPoint(args.SenderSession, xform.Coordinates, ev.Target);
+            var target = GetEntity(ev.Target);
+
+            if (TryComp(target, out TransformComponent? xformTarget))
+                TryPoint(args.SenderSession, xformTarget.Coordinates, target);
             else
-                Logger.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
+                Log.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
         }
 
         public override void Shutdown()
@@ -263,26 +279,28 @@ namespace Content.Server.Pointing.EntitySystems
         {
             var currentTime = _gameTiming.CurTime;
 
-            foreach (var component in EntityQuery<PointingArrowComponent>(true))
+            var query = AllEntityQuery<PointingArrowComponent>();
+            while (query.MoveNext(out var uid, out var component))
             {
-                Update(component, currentTime);
+                Update((uid, component), currentTime);
             }
         }
 
-        private void Update(PointingArrowComponent component, TimeSpan currentTime)
+        private void Update(Entity<PointingArrowComponent> pointing, TimeSpan currentTime)
         {
             // TODO: That pause PR
+            var component = pointing.Comp;
             if (component.EndTime > currentTime)
                 return;
 
             if (component.Rogue)
             {
-                RemComp<PointingArrowComponent>(component.Owner);
-                EnsureComp<RoguePointingArrowComponent>(component.Owner);
+                RemComp<PointingArrowComponent>(pointing);
+                EnsureComp<RoguePointingArrowComponent>(pointing);
                 return;
             }
 
-            Del(component.Owner);
+            Del(pointing);
         }
     }
 }

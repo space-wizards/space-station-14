@@ -1,0 +1,320 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/faf6db214927874c19b8fa8585d26b5d40de1acc",
+  "states": [
+    {
+      "name": "clown",
+      "directions": 4
+    },
+    {
+      "name": "clown_e",
+      "directions": 4
+    },
+    {
+      "name": "clown_e_r",
+      "directions": 4
+    },
+    {
+      "name": "clown_l",
+      "directions": 4
+    },
+    {
+      "name": "engineer",
+      "directions": 4
+    },
+    {
+      "name": "engineer_e",
+      "directions": 4
+    },
+    {
+      "name": "engineer_e_r",
+      "directions": 4
+    },
+    {
+      "name": "engineer_l",
+      "directions": 4
+    },
+    {
+      "name": "janitor",
+      "directions": 4
+    },
+    {
+      "name": "janitor_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "janitor_e",
+      "directions": 4
+    },
+    {
+      "name": "janitor_e_r",
+      "directions": 4
+    },
+    {
+      "name": "janitor_l",
+      "directions": 4
+    },
+    {
+      "name": "medical",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "medical_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "medical_e",
+      "directions": 4
+    },
+    {
+      "name": "medical_e_r",
+      "directions": 4
+    },
+    {
+      "name": "medical_l",
+      "directions": 4
+    },
+    {
+      "name": "miner",
+      "directions": 4
+    },
+    {
+      "name": "miner_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "miner_e",
+      "directions": 4
+    },
+    {
+      "name": "miner_e_r",
+      "directions": 4
+    },
+    {
+      "name": "miner_l",
+      "directions": 4
+    },
+    {
+      "name": "robot",
+      "directions": 4
+    },
+    {
+      "name": "robot_e",
+      "directions": 4
+    },
+    {
+      "name": "robot_e_r",
+      "directions": 4
+    },
+    {
+      "name": "robot_l",
+      "directions": 4
+    },
+    {
+      "name": "peace",
+      "directions": 4
+    },
+    {
+      "name": "peace_e",
+      "directions": 4
+    },
+    {
+      "name": "peace_e_r",
+      "directions": 4
+    },
+    {
+      "name": "peace_l",
+      "directions": 4
+    },
+    {
+      "name": "service",
+      "directions": 4
+    },
+    {
+      "name": "service_e",
+      "directions": 4
+    },
+    {
+      "name": "service_e_r",
+      "directions": 4
+    },
+    {
+      "name": "service_l",
+      "directions": 4
+    },
+	{
+      "name": "synd_sec",
+      "directions": 4
+    },
+    {
+      "name": "synd_sec_e",
+      "directions": 4
+    },
+    {
+      "name": "synd_sec_l",
+      "directions": 4
+    },
+	{
+      "name": "synd_medical",
+      "directions": 4
+    },
+    {
+      "name": "synd_medical_l",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "synd_medical_e",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+          "name": "synd_engi",
+          "directions": 4
+    },
+	{
+      "name": "synd_engi_e",
+      "directions": 4
+    },
+    {
+      "name": "synd_engi_l",
+      "directions": 4
+    }
+
+  ]
+}

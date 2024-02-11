@@ -1,7 +1,4 @@
-﻿action-name-blocking = Block
-action-description-blocking = Raise or lower your shield.
-
-action-popup-blocking-user = You raise your {$shield}!
+﻿action-popup-blocking-user = You raise your {$shield}!
 action-popup-blocking-disabling-user = You lower your {$shield}!
 
 action-popup-blocking-other = {CAPITALIZE(THE($blockerName))} raises {POSS-ADJ($blockerName)} {$shield}!

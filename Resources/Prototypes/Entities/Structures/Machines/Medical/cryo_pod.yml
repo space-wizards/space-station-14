@@ -51,8 +51,8 @@
   - type: WiresVisuals
   - type: WiresPanel
   - type: Wires
-    BoardName: "Cryo pod"
-    LayoutId: CryoPod
+    boardName: wires-board-name-cryopod
+    layoutId: CryoPod
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -63,6 +63,9 @@
         damage: 100
       behaviors:
         - !type:EmptyAllContainersBehaviour
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WindowShatter
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
         - !type:DoActsBehavior

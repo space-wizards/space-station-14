@@ -2,12 +2,18 @@ using Content.Server.Chat.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-public sealed class SpeakOperator : HTNOperator
+public sealed partial class SpeakOperator : HTNOperator
 {
     private ChatSystem _chat = default!;
 
     [DataField("speech", required: true)]
     public string Speech = string.Empty;
+
+    /// <summary>
+    /// Whether to hide message from chat window and logs.
+    /// </summary>
+    [DataField]
+    public bool Hidden;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -19,7 +25,7 @@ public sealed class SpeakOperator : HTNOperator
     {
         var speaker = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        _chat.TrySendInGameICMessage(speaker, Loc.GetString(Speech), InGameICChatType.Speak, false);
+        _chat.TrySendInGameICMessage(speaker, Loc.GetString(Speech), InGameICChatType.Speak, hideChat: Hidden, hideLog: Hidden);
         return base.Update(blackboard, frameTime);
     }
 }

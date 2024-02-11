@@ -3,20 +3,11 @@
   parent: BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:
-    - type: InteractionPopup
-      successChance: 1
-      interactSuccessString: hugging-success-generic
-      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-      messagePerceivedByOthers: hugging-success-generic-others
-    - type: MindContainer
-      showExamineInfo: true
-    - type: Input
-      context: "human"
-    - type: MobMover
-    - type: InputMover
-    - type: Alerts
-    - type: Actions
-    - type: Eye
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
     - type: EyeTraits
       autoExpose: # Enhanced Dwarf-level night vision
         max: 10
@@ -27,15 +18,9 @@
         range: 0.8
         power: 0.4
         color: "#FFE0E0FF"
-    - type: CameraRecoil
-    - type: Examiner
-    - type: CanHostGuardian
-    - type: NpcFactionMember
-      factions:
-        - NanoTrasen
 
 - type: entity
-  name: Skeleton Pirate
+  name: skeleton pirate
   parent: MobSkeletonPerson
   id: MobSkeletonPirate
   components:
@@ -49,7 +34,7 @@
 
 
 - type: entity
-  name: Skeleton Biker
+  name: skeleton biker
   parent: MobSkeletonPerson
   id: MobSkeletonBiker
   components:
@@ -59,4 +44,17 @@
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SkeletonBiker]
+  - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonPerson
+  id: MobSkeletonCloset
+  name: closet skeleton
+  components:
+  - type: GhostRole
+    name: ghost-role-information-closet-skeleton-name
+    description: ghost-role-information-closet-skeleton-description
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [LimitedPassengerGear]
   - type: RandomHumanoidAppearance

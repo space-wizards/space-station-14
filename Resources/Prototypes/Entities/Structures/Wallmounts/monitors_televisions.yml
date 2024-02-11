@@ -5,6 +5,7 @@
   description: Finally, some decent reception around here...
   components:
   - type: Sprite
+    drawdepth: SmallObjects
     layers:
     - map: ["computerLayerBody"]
       state: television

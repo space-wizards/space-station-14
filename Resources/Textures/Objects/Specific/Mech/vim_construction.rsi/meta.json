@@ -1,0 +1,35 @@
+{
+  "copyright" : "Based on tgstation at https://github.com/tgstation/tgstation/blob/adf4605b24258e9c96fa985e1d11912add6aae19/icons/obj/vehicles.dmi and modified by @deltanedas (github)",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chassis"
+    },
+    {
+      "name": "harness"
+    },
+    {
+      "name": "left_leg"
+    },
+    {
+      "name": "right_leg"
+    },
+    {
+      "name": "helmet"
+    },
+    {
+      "name": "vim0"
+    },
+    {
+      "name": "vim1"
+    },
+    {
+      "name": "vim2"
+    }
+  ]
+}

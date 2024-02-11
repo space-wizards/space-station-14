@@ -20,7 +20,7 @@ public sealed class PuddleDebugOverlaySystem : SharedPuddleDebugOverlaySystem
 
     private void RenderDebugData(PuddleOverlayDebugMessage message)
     {
-        TileData[message.GridUid] = message;
+        TileData[GetEntity(message.GridUid)] = message;
         if (_overlay != null)
             return;
 

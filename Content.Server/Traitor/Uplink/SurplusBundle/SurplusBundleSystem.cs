@@ -1,8 +1,8 @@
 using System.Linq;
-using Content.Server.Store.Systems;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.Store;
+using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Store;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -50,7 +50,7 @@ public sealed class SurplusBundleSystem : EntitySystem
         foreach (var item in content)
         {
             var ent = EntityManager.SpawnEntity(item.ProductEntity, cords);
-            _entityStorage.Insert(ent, component.Owner);
+            _entityStorage.Insert(ent, uid);
         }
     }
 

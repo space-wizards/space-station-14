@@ -1,15 +1,14 @@
 ﻿namespace Content.Server.IgnitionSource;
 
 /// <summary>
-/// This is used for...
+/// This is used for creating atmosphere hotspots while ignited to start reactions such as fire.
 /// </summary>
-[RegisterComponent]
-[Access(typeof(IgnitionSourceSystem))]
-public sealed class IgnitionSourceComponent : Component
+[RegisterComponent, Access(typeof(IgnitionSourceSystem))]
+public sealed partial class IgnitionSourceComponent : Component
 {
-    [DataField("ignited")]
-    public bool Ignited = false;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Ignited;
 
-    [DataField("temperature", required: true)]
-    public int Temperature;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int Temperature = 700;
 }

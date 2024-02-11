@@ -6,7 +6,7 @@ namespace Content.Server.NPC.Queries;
 /// Utility queries that run regularly to update an NPC without re-doing their thinking logic.
 /// </summary>
 [DataDefinition]
-public sealed class UtilityService
+public sealed partial class UtilityService
 {
     /// <summary>
     /// Identifier to use for this service. This is used to track its cooldown.

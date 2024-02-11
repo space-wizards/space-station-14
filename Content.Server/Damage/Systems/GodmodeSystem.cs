@@ -1,98 +1,37 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Damage.Components;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
-using Content.Shared.FixedPoint;
-using Content.Shared.Rejuvenate;
-using Content.Shared.StatusEffect;
-using JetBrains.Annotations;
 
-namespace Content.Server.Damage.Systems
+namespace Content.Server.Damage.Systems;
+
+public sealed class GodmodeSystem : SharedGodmodeSystem
 {
-    [UsedImplicitly]
-    public sealed class GodmodeSystem : EntitySystem
+    public override void EnableGodmode(EntityUid uid, GodmodeComponent? godmode = null)
     {
-        [Dependency] private readonly DamageableSystem _damageable = default!;
+        godmode ??= EnsureComp<GodmodeComponent>(uid);
 
-        public override void Initialize()
+        base.EnableGodmode(uid, godmode);
+
+        if (TryComp<MovedByPressureComponent>(uid, out var moved))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<GodmodeComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
-            SubscribeLocalEvent<GodmodeComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffect);
-            SubscribeLocalEvent<GodmodeComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
+            godmode.WasMovedByPressure = moved.Enabled;
+            moved.Enabled = false;
         }
+    }
 
-        private void OnBeforeDamageChanged(EntityUid uid, GodmodeComponent component, ref BeforeDamageChangedEvent args)
+    public override void DisableGodmode(EntityUid uid, GodmodeComponent? godmode = null)
+    {
+    	if (!Resolve(uid, ref godmode, false))
+    	    return;
+
+        base.DisableGodmode(uid, godmode);
+
+        if (godmode.Deleted)
+            return;
+
+        if (TryComp<MovedByPressureComponent>(uid, out var moved))
         {
-            args.Cancelled = true;
-        }
-
-        private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
-        {
-            args.Cancelled = true;
-        }
-
-        private void OnBeforeStaminaDamage(EntityUid uid, GodmodeComponent component, ref BeforeStaminaDamageEvent args)
-        {
-            args.Cancelled = true;
-        }
-
-        public void EnableGodmode(EntityUid uid)
-        {
-            var godmode = EnsureComp<GodmodeComponent>(uid);
-
-            if (TryComp<MovedByPressureComponent>(uid, out var moved))
-            {
-                godmode.WasMovedByPressure = moved.Enabled;
-                moved.Enabled = false;
-            }
-
-            if (TryComp<DamageableComponent>(uid, out var damageable))
-            {
-                godmode.OldDamage = new(damageable.Damage);
-            }
-
-            // Rejuv to cover other stuff
-            RaiseLocalEvent(uid, new RejuvenateEvent());
-        }
-
-        public void DisableGodmode(EntityUid uid)
-        {
-            if (!TryComp<GodmodeComponent>(uid, out var godmode))
-                return;
-
-            if (TryComp<MovedByPressureComponent>(uid, out var moved))
-            {
-                moved.Enabled = godmode.WasMovedByPressure;
-            }
-
-            if (!TryComp<DamageableComponent>(uid, out var damageable))
-                return;
-
-            if (godmode.OldDamage != null)
-            {
-                _damageable.SetDamage(uid, damageable, godmode.OldDamage);
-            }
-
-            RemComp<GodmodeComponent>(uid);
-        }
-
-        /// <summary>
-        ///     Toggles godmode for a given entity.
-        /// </summary>
-        /// <param name="uid">The entity to toggle godmode for.</param>
-        /// <returns>true if enabled, false if disabled.</returns>
-        public bool ToggleGodmode(EntityUid uid)
-        {
-            if (HasComp<GodmodeComponent>(uid))
-            {
-                DisableGodmode(uid);
-                return false;
-            }
-
-            EnableGodmode(uid);
-            return true;
+            moved.Enabled = godmode.WasMovedByPressure;
         }
     }
 }

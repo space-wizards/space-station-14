@@ -5,13 +5,13 @@
 /// containing goods for fulfilling bounties.
 /// </summary>
 [RegisterComponent]
-public sealed class CargoBountyLabelComponent : Component
+public sealed partial class CargoBountyLabelComponent : Component
 {
     /// <summary>
     /// The ID for the bounty this label corresponds to.
     /// </summary>
-    [DataField("id"), ViewVariables(VVAccess.ReadWrite)]
-    public int Id;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string Id = string.Empty;
 
     /// <summary>
     /// Used to prevent recursion in calculating the price.

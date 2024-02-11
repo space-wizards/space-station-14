@@ -19,6 +19,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
     {
         var nodes = new List<ValidationNode>();
         var prototypes = dependencies.Resolve<IPrototypeManager>();
+        var factory = dependencies.Resolve<IComponentFactory>();
 
         var connections = new List<string>();
         if (slot.TryGet("connections", out SequenceDataNode? connectionsNode))
@@ -57,7 +58,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                     continue;
                 }
 
-                if (!organPrototype.HasComponent<OrganComponent>())
+                if (!organPrototype.HasComponent<OrganComponent>(factory))
                 {
                     nodes.Add(new ErrorNode(value, $"Organ {organ.Value} does not have a body component"));
                 }
@@ -178,9 +179,10 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         }
 
         var slots = new Dictionary<string, BodyPrototypeSlot>();
+
         foreach (var (slotId, (part, connections, organs)) in allConnections)
         {
-            var slot = new BodyPrototypeSlot(part, connections, organs);
+            var slot = new BodyPrototypeSlot(part != null ? new EntProtoId(part) : null!, connections ?? new HashSet<string>(), organs ?? new Dictionary<string, string>());
             slots.Add(slotId, slot);
         }
 

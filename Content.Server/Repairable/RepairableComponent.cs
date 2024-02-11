@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Repairable
 {
     [RegisterComponent]
-    public sealed class RepairableComponent : Component
+    public sealed partial class RepairableComponent : Component
     {
         /// <summary>
         ///     All the damage to change information is stored in this <see cref="DamageSpecifier"/>.
@@ -31,5 +31,11 @@ namespace Content.Server.Repairable
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("selfRepairPenalty")]
         public float SelfRepairPenalty = 3f;
+
+        /// <summary>
+        /// Whether or not an entity is allowed to repair itself.
+        /// </summary>
+        [DataField("allowSelfRepair")]
+        public bool AllowSelfRepair = true;
     }
 }

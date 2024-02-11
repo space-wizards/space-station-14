@@ -9,7 +9,7 @@ namespace Content.Server.Holiday.Christmas;
 /// This is used for gifts with COMPLETELY random things.
 /// </summary>
 [RegisterComponent, Access(typeof(RandomGiftSystem))]
-public sealed class RandomGiftComponent : Component
+public sealed partial class RandomGiftComponent : Component
 {
     /// <summary>
     /// The wrapper entity to spawn when unwrapping the gift.

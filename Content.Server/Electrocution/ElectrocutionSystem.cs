@@ -12,19 +12,22 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -34,29 +37,32 @@ namespace Content.Server.Electrocution;
 
 public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 {
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedJitteringSystem _jittering = default!;
-    [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
+    [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
+
+    [ValidatePrototypeId<DamageTypePrototype>]
     private const string DamageType = "Shock";
 
-    // Yes, this is absurdly small for a reason.
-    private const float ElectrifiedDamagePerWatt = 0.0015f;
-
+    // Multiply and shift the log scale for shock damage.
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
 
@@ -96,7 +102,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             var timePassed = Math.Min(frameTime, electrocution.TimeLeft);
 
             electrocution.TimeLeft -= timePassed;
-            electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedDamagePerWatt * timePassed;
+            electrocution.AccumulatedDamage += electrocution.BaseDamage * (consumer.ReceivedPower / consumer.DrawRate) * timePassed;
 
             if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
                 continue;
@@ -111,7 +117,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                 if (actual != null)
                 {
                     _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
+                        $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.GetTotal():damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
                 }
             }
             QueueDel(uid);
@@ -138,10 +144,15 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
         if (electrified.NoWindowInTile)
         {
-            foreach (var entity in transform.Coordinates.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
+            var tileRef = transform.Coordinates.GetTileRef(EntityManager, _mapManager);
+
+            if (tileRef != null)
             {
-                if (_tag.HasTag(entity, "Window"))
-                    return false;
+                foreach (var entity in _entityLookup.GetLocalEntitiesIntersecting(tileRef.Value, flags: LookupFlags.StaticSundries))
+                {
+                    if (_tag.HasTag(entity, "Window"))
+                        return false;
+                }
             }
         }
         if (electrified.UsesApcPower)
@@ -166,7 +177,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!electrified.OnAttacked)
             return;
 
-        if (_meleeWeapon.GetDamage(args.Used, args.User).Total == 0)
+        if (!_meleeWeapon.GetDamage(args.Used, args.User).Any())
             return;
 
         TryDoElectrifiedAct(uid, args.User, 1, electrified);
@@ -180,18 +191,13 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnLightAttacked(EntityUid uid, PoweredLightComponent component, AttackedEvent args)
     {
-
-        if (_meleeWeapon.GetDamage(args.Used, args.User).Total == 0)
+        if (!component.CurrentLit || args.Used != args.User)
             return;
 
-        if (args.Used != args.User)
-            return;
-
-        if (component.CurrentLit == false)
+        if (!_meleeWeapon.GetDamage(args.Used, args.User).Any())
             return;
 
         DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, 1);
-
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -200,10 +206,20 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return;
 
         var siemens = TryComp<InsulatedComponent>(args.Used, out var insulation)
-            ? insulation.SiemensCoefficient
+            ? insulation.Coefficient
             : 1;
 
         TryDoElectrifiedAct(uid, args.User, siemens, electrified);
+    }
+
+    private float CalculateElectrifiedDamageScale(float power)
+    {
+        // A logarithm allows a curve of damage that grows quickly, but slows down dramatically past a value. This keeps the damage to a reasonable range.
+        const float DamageShift = 1.67f; // Shifts the curve for an overall higher or lower damage baseline
+        const float CeilingCoefficent = 1.35f; // Adjusts the approach to maximum damage, higher = Higher top damage
+        const float LogGrowth = 0.00001f; // Adjusts the growth speed of the curve
+
+        return DamageShift + MathF.Log(power * LogGrowth) * CeilingCoefficent;
     }
 
     public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
@@ -222,7 +238,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, true);
 
         siemens *= electrified.SiemensCoefficient;
-        if (siemens <= 0 || !DoCommonElectrocutionAttempt(targetUid, uid, ref siemens))
+        if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
             return false; // If electrocution would fail, do nothing.
 
         var targets = new List<(EntityUid entity, int depth)>();
@@ -246,15 +262,19 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         var node = PoweredNode(uid, electrified, nodeContainer);
-        if (node == null)
+        if (node?.NodeGroup is not IBasePowerNet powerNet)
             return false;
 
-        var (damageMult, timeMult) = node.NodeGroupID switch
-        {
-            NodeGroupID.HVPower => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
-            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
-            _ => (1f, 1f)
-        };
+        var net = powerNet.NetworkNode;
+        var supp = net.LastCombinedMaxSupply;
+
+        if (supp <= 0f)
+            return false;
+
+        // Initial damage scales off of the available supply on the principle that the victim has shorted the entire powernet through their body.
+        var damageScale = CalculateElectrifiedDamageScale(supp);
+        if (damageScale <= 0f)
+            return false;
 
         {
             var lastRet = true;
@@ -265,8 +285,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageMult),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeMult),
+                    (int) MathF.Ceiling(electrified.ShockDamage * damageScale * MathF.Pow(RecursiveDamageMultiplier, depth)),
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Min(1f + MathF.Log2(1f + damageScale), 3f) * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient);
             }
@@ -285,7 +305,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             if (id != null &&
                 _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
-                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
+                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedMaxSupply: > 0 } })
             {
                 return tryNode;
             }
@@ -293,26 +313,18 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
     }
 
-        /// <param name="uid">Entity being electrocuted.</param>
-        /// <param name="sourceUid">Source entity of the electrocution.</param>
-        /// <param name="shockDamage">How much shock damage the entity takes.</param>
-        /// <param name="time">How long the entity will be stunned.</param>
-        /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumilated) if the entity is already electrocuted?</param>
-        /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
-        /// <param name="statusEffects">Status effects to apply to the entity.</param>
-        /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
-        /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
-        public bool TryDoElectrocution(
-            EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
-        {
-            if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
-                || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
-                return false;
+    /// <inheritdoc/>
+    public override bool TryDoElectrocution(
+        EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
+        StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
+    {
+        if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
+            || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+            return false;
 
-            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
-            return true;
-        }
+        RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
+        return true;
+    }
 
     private bool TryDoElectrocutionPowered(
         EntityUid uid,
@@ -328,12 +340,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
             return false;
 
+        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+            return false;
+
         // Coefficient needs to be higher than this to do a powered electrocution!
         if (siemensCoefficient <= 0.5f)
-            return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects);
-
-        if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects))
-            return false;
+            return true;
 
         if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
             return true;
@@ -349,7 +361,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         // This shows up in the power monitor.
         // Yes. Yes exactly.
-        MetaData(electrocutionEntity).EntityName = MetaData(uid).EntityName;
+        _metaData.SetEntityName(electrocutionEntity, MetaData(uid).EntityName);
 
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;
@@ -419,7 +431,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             if (actual != null)
             {
                 _adminLogger.Add(LogType.Electrocution,
-                    $"{ToPrettyString(uid):entity} received {actual.Total:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
+                    $"{ToPrettyString(uid):entity} received {actual.GetTotal():damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
             }
         }
 
@@ -430,17 +442,18 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         var filter = Filter.PvsExcept(uid, entityManager: EntityManager);
 
+        var identifiedUid = Identity.Entity(uid, ent: EntityManager);
         // TODO: Allow being able to pass EntityUid to Loc...
         if (sourceUid != null)
         {
             _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
+                ("mob", identifiedUid), ("source", (sourceUid.Value))), uid, filter, true);
             PlayElectrocutionSound(uid, sourceUid.Value);
         }
         else
         {
             _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
-                ("mob", uid)), uid, filter, true);
+                ("mob", identifiedUid)), uid, filter, true);
         }
 
         return true;
@@ -491,7 +504,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void PlayElectrocutionSound(EntityUid targetUid, EntityUid sourceUid, ElectrifiedComponent? electrified = null)
     {
-        if (!Resolve(sourceUid, ref electrified) || !electrified.PlaySoundOnShock)
+        if (!Resolve(sourceUid, ref electrified, false) || !electrified.PlaySoundOnShock)
         {
             return;
         }

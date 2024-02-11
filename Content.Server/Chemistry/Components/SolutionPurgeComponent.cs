@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(SolutionPurgeSystem))]
-public sealed class SolutionPurgeComponent : Component
+public sealed partial class SolutionPurgeComponent : Component
 {
     /// <summary>
     /// The name of the solution to detract from.

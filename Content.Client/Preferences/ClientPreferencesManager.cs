@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Preferences;
+using Robust.Client;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
@@ -16,6 +17,7 @@ namespace Content.Client.Preferences
     public sealed class ClientPreferencesManager : IClientPreferencesManager
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IBaseClient _baseClient = default!;
 
         public event Action? OnServerDataLoaded;
 
@@ -28,6 +30,17 @@ namespace Content.Client.Preferences
             _netManager.RegisterNetMessage<MsgUpdateCharacter>();
             _netManager.RegisterNetMessage<MsgSelectCharacter>();
             _netManager.RegisterNetMessage<MsgDeleteCharacter>();
+
+            _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
+        }
+
+        private void BaseClientOnRunLevelChanged(object? sender, RunLevelChangedEventArgs e)
+        {
+            if (e.NewLevel == ClientRunLevel.Initialize)
+            {
+                Settings = default!;
+                Preferences = default!;
+            }
         }
 
         public void SelectCharacter(ICharacterProfile profile)

@@ -1,6 +1,5 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
@@ -21,6 +20,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -44,12 +44,18 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
         SubscribeLocalEvent<ShuttleConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChange);
         SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
-        SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleConsoleFTLRequestMessage>(OnDestinationMessage);
-        SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
+        Subs.BuiEvents<ShuttleConsoleComponent>(ShuttleConsoleUiKey.Key, subs =>
+        {
+            subs.Event<ShuttleConsoleFTLRequestMessage>(OnDestinationMessage);
+            subs.Event<BoundUIClosedEvent>(OnConsoleUIClose);
+        });
 
         SubscribeLocalEvent<DroneConsoleComponent, ConsoleShuttleEvent>(OnCargoGetConsole);
         SubscribeLocalEvent<DroneConsoleComponent, AfterActivatableUIOpenEvent>(OnDronePilotConsoleOpen);
-        SubscribeLocalEvent<DroneConsoleComponent, BoundUIClosedEvent>(OnDronePilotConsoleClose);
+        Subs.BuiEvents<DroneConsoleComponent>(ShuttleConsoleUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnDronePilotConsoleClose);
+        });
 
         SubscribeLocalEvent<DockEvent>(OnDock);
         SubscribeLocalEvent<UndockEvent>(OnUndock);
@@ -74,7 +80,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component,
         ShuttleConsoleFTLRequestMessage args)
     {
-        if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest))
+        var destination = GetEntity(args.Destination);
+
+        if (!TryComp<FTLDestinationComponent>(destination, out var dest))
         {
             return;
         }
@@ -118,11 +126,14 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        var dock = HasComp<MapComponent>(args.Destination) && HasComp<MapGridComponent>(args.Destination);
+        var dock = HasComp<MapComponent>(destination) && HasComp<MapGridComponent>(destination);
         var tagEv = new FTLTagEvent();
         RaiseLocalEvent(xform.GridUid.Value, ref tagEv);
 
-        _shuttle.FTLTravel(xform.GridUid.Value, shuttle, args.Destination, dock: dock, priorityTag: tagEv.Tag);
+        var ev = new ShuttleConsoleFTLTravelStartEvent(uid);
+        RaiseLocalEvent(ref ev);
+
+        _shuttle.FTLTravel(xform.GridUid.Value, shuttle, destination, dock: dock, priorityTag: tagEv.Tag);
     }
 
     private void OnDock(DockEvent ev)
@@ -211,7 +222,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             RemovePilot(user, pilotComponent);
 
-            // This feels backwards; is this intended to be a toggle? 
+            // This feels backwards; is this intended to be a toggle?
             if (console == uid)
                 return false;
         }
@@ -222,7 +233,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private void OnGetState(EntityUid uid, PilotComponent component, ref ComponentGetState args)
     {
-        args.State = new PilotComponentState(component.Console);
+        args.State = new PilotComponentState(GetNetEntity(component.Console));
     }
 
     /// <summary>
@@ -241,9 +252,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
             var state = new DockingInterfaceState()
             {
-                Coordinates = xform.Coordinates,
+                Coordinates = GetNetCoordinates(xform.Coordinates),
                 Angle = xform.LocalRotation,
-                Entity = uid,
+                Entity = GetNetEntity(uid),
                 Connected = comp.Docked,
                 Color = comp.RadarColor,
                 HighlightedColor = comp.HighlightedRadarColor,
@@ -272,7 +283,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         var shuttleGridUid = consoleXform?.GridUid;
 
-        var destinations = new List<(EntityUid, string, bool)>();
+        var destinations = new List<(NetEntity, string, bool)>();
         var ftlState = FTLState.Available;
         var ftlTime = TimeSpan.Zero;
 
@@ -321,22 +332,24 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                     canTravel = false;
                 }
 
-                destinations.Add((destUid, name, canTravel));
+                destinations.Add((GetNetEntity(destUid), name, canTravel));
             }
         }
 
         docks ??= GetAllDocks();
 
         if (_ui.TryGetUi(consoleUid, ShuttleConsoleUiKey.Key, out var bui))
-            UserInterfaceSystem.SetUiState(bui, new ShuttleConsoleBoundInterfaceState(
+        {
+            _ui.SetUiState(bui, new ShuttleConsoleBoundInterfaceState(
                 ftlState,
                 ftlTime,
                 destinations,
                 range,
-                consoleXform?.Coordinates,
+                GetNetCoordinates(consoleXform?.Coordinates),
                 consoleXform?.LocalRotation,
                 docks
             ));
+        }
     }
 
     public override void Update(float frameTime)

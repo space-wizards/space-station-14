@@ -32,11 +32,12 @@ public sealed class MapMigrationSystem : EntitySystem
         if (!TryReadFile(out var mappings))
             return;
 
+        // Verify that all of the entries map to valid entity prototypes.
         foreach (var node in mappings.Values)
         {
             var newId = ((ValueDataNode) node).Value;
             if (!string.IsNullOrEmpty(newId) && newId != "null")
-                DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(newId));
+                DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(newId), $"{newId} is not an entity prototype.");
         }
 #endif
     }

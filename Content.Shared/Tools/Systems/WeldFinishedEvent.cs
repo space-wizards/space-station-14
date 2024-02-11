@@ -8,6 +8,6 @@ namespace Content.Shared.Tools.Systems;
 ///     use <see cref="WeldableChangedEvent"/> to get updated status.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class WeldFinishedEvent : SimpleDoAfterEvent
+public sealed partial class WeldFinishedEvent : SimpleDoAfterEvent
 {
 }

@@ -1,12 +1,12 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Atmos.Monitor.Components;
 
 [RegisterComponent]
-public sealed class AtmosMonitorComponent : Component
+public sealed partial class AtmosMonitorComponent : Component
 {
     // Whether this monitor can send alarms,
     // or recieve atmos command events.
@@ -19,19 +19,19 @@ public sealed class AtmosMonitorComponent : Component
     // Note that this cancels every single network
     // event, including ones that may not be
     // related to atmos monitor events.
-    [ViewVariables]
+    [DataField("netEnabled")]
     public bool NetEnabled = true;
 
-    [DataField("temperatureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThreshold>)))]
-    public readonly string? TemperatureThresholdId;
+    [DataField("temperatureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
+    public string? TemperatureThresholdId;
 
-    [ViewVariables]
+    [DataField("temperatureThreshold")]
     public AtmosAlarmThreshold? TemperatureThreshold;
 
-    [DataField("pressureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThreshold>)))]
-    public readonly string? PressureThresholdId;
+    [DataField("pressureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
+    public string? PressureThresholdId;
 
-    [ViewVariables]
+    [DataField("pressureThreshold")]
     public AtmosAlarmThreshold? PressureThreshold;
 
     // monitor fire - much different from temperature
@@ -41,14 +41,11 @@ public sealed class AtmosMonitorComponent : Component
     [DataField("monitorFire")]
     public bool MonitorFire = false;
 
-    // really messy but this is parsed at runtime after
-    // prototypes are initialized, there's no
-    // way without implementing a new
-    // type serializer
-    [DataField("gasThresholds")]
-    public Dictionary<Gas, string>? GasThresholdIds;
+    [DataField("gasThresholdPrototypes",
+        customTypeSerializer:typeof(PrototypeIdValueDictionarySerializer<Gas, AtmosAlarmThresholdPrototype>))]
+    public Dictionary<Gas, string>? GasThresholdPrototypes;
 
-    [ViewVariables]
+    [DataField("gasThresholds")]
     public Dictionary<Gas, AtmosAlarmThreshold>? GasThresholds;
 
     // Stores a reference to the gas on the tile this is on.
@@ -56,14 +53,16 @@ public sealed class AtmosMonitorComponent : Component
     public GasMixture? TileGas;
 
     // Stores the last alarm state of this alarm.
-    [ViewVariables]
+    [DataField("lastAlarmState")]
     public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
 
-    [ViewVariables] public HashSet<AtmosMonitorThresholdType> TrippedThresholds = new();
+    [DataField("trippedThresholds")]
+    public HashSet<AtmosMonitorThresholdType> TrippedThresholds = new();
 
     /// <summary>
     ///     Registered devices in this atmos monitor. Alerts will be sent directly
     ///     to these devices.
     /// </summary>
-    [ViewVariables] public HashSet<string> RegisteredDevices = new();
+    [DataField("registeredDevices")]
+    public HashSet<string> RegisteredDevices = new();
 }

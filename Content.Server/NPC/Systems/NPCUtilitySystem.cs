@@ -1,6 +1,4 @@
-using System.Linq;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Examine;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
@@ -15,14 +13,15 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
-using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.NPC.Systems;
 
@@ -39,18 +38,27 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+    [Dependency] private readonly WeldableSystem _weldable = default!;
 
+    private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
 
+    // Temporary caches.
+    private List<EntityUid> _entityList = new();
+    private HashSet<Entity<IComponent>> _entitySet = new();
+    private List<EntityPrototype.ComponentRegistryEntry> _compTypes = new();
+
     public override void Initialize()
     {
         base.Initialize();
+        _puddleQuery = GetEntityQuery<PuddleComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
@@ -154,6 +162,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!TryComp<FoodComponent>(targetUid, out var food))
                     return 0f;
 
+                // mice can't eat unpeeled bananas, need monkey's help
+                if (_openable.IsClosed(targetUid))
+                    return 0f;
+
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
@@ -171,7 +183,11 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case DrinkValueCon:
             {
-                if (!TryComp<DrinkComponent>(targetUid, out var drink) || !drink.Opened)
+                if (!TryComp<DrinkComponent>(targetUid, out var drink))
+                    return 0f;
+
+                // can't drink closed drinks
+                if (_openable.IsClosed(targetUid))
                     return 0f;
 
                 // only drink when thirsty
@@ -189,13 +205,23 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
+            case OrderedTargetCon:
+            {
+                if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.CurrentOrderedTarget, out var orderedTarget, EntityManager))
+                    return 0f;
+
+                if (targetUid != orderedTarget)
+                    return 0f;
+
+                return 1f;
+            }
             case TargetAccessibleCon:
             {
                 if (_container.TryGetContainingContainer(targetUid, out var container))
                 {
                     if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                     {
-                        if (storageComponent is { IsWeldedShut: true, Open: false })
+                        if (storageComponent is { Open: false } && _weldable.IsWelded(container.Owner))
                         {
                             return 0.0f;
                         }
@@ -305,7 +331,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             {
                 if (TryComp<MeleeWeaponComponent>(targetUid, out var melee))
                 {
-                    return melee.Damage.Total.Float() * melee.AttackRate / 100f;
+                    return melee.Damage.GetTotal().Float() * melee.AttackRate / 100f;
                 }
 
                 return 0f;
@@ -340,12 +366,31 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case ComponentQuery compQuery:
             {
-                var mapPos = Transform(owner).MapPosition;
-                var comps = compQuery.Components.Values.ToList();
-                var compZero = comps[0];
-                comps.RemoveAt(0);
+                if (compQuery.Components.Count == 0)
+                    return;
 
-                foreach (var comp in _lookup.GetComponentsInRange(compZero.Component.GetType(), mapPos, vision))
+                var mapPos = _xformQuery.GetComponent(owner).MapPosition;
+                _compTypes.Clear();
+                var i = -1;
+                EntityPrototype.ComponentRegistryEntry compZero = default!;
+
+                foreach (var compType in compQuery.Components.Values)
+                {
+                    i++;
+
+                    if (i == 0)
+                    {
+                        compZero = compType;
+                        continue;
+                    }
+
+                    _compTypes.Add(compType);
+                }
+
+                _entitySet.Clear();
+                _lookup.GetEntitiesInRange(compZero.Component.GetType(), mapPos, vision, _entitySet);
+
+                foreach (var comp in _entitySet)
                 {
                     var ent = comp.Owner;
 
@@ -354,7 +399,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                     var othersFound = true;
 
-                    foreach (var compOther in comps)
+                    foreach (var compOther in _compTypes)
                     {
                         if (!HasComp(ent, compOther.Component.GetType()))
                         {
@@ -408,7 +453,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
         while (enumerator.MoveNext(out var child))
         {
-            RecursiveAdd(child.Value, entities);
+            RecursiveAdd(child, entities);
         }
     }
 
@@ -418,7 +463,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case ComponentFilter compFilter:
             {
-                var toRemove = new ValueList<EntityUid>();
+                _entityList.Clear();
 
                 foreach (var ent in entities)
                 {
@@ -427,12 +472,12 @@ public sealed class NPCUtilitySystem : EntitySystem
                         if (HasComp(ent, comp.Value.Component.GetType()))
                             continue;
 
-                        toRemove.Add(ent);
+                        _entityList.Add(ent);
                         break;
                     }
                 }
 
-                foreach (var ent in toRemove)
+                foreach (var ent in _entityList)
                 {
                     entities.Remove(ent);
                 }
@@ -441,20 +486,19 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case PuddleFilter:
             {
-                var puddleQuery = GetEntityQuery<PuddleComponent>();
-                var toRemove = new ValueList<EntityUid>();
+                _entityList.Clear();
 
                 foreach (var ent in entities)
                 {
-                    if (!puddleQuery.TryGetComponent(ent, out var puddleComp) ||
-                        !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out var sol) ||
+                    if (!_puddleQuery.TryGetComponent(ent, out var puddleComp) ||
+                        !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out _, out var sol) ||
                         _puddle.CanFullyEvaporate(sol))
                     {
-                        toRemove.Add(ent);
+                        _entityList.Add(ent);
                     }
                 }
 
-                foreach (var ent in toRemove)
+                foreach (var ent in _entityList)
                 {
                     entities.Remove(ent);
                 }

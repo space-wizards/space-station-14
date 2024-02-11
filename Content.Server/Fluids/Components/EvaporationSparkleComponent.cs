@@ -4,7 +4,7 @@ namespace Content.Server.Fluids.Components;
 /// Used to track evaporation sparkles so we can delete if necessary.
 /// </summary>
 [RegisterComponent]
-public sealed class EvaporationSparkleComponent : Component
+public sealed partial class EvaporationSparkleComponent : Component
 {
 
 }

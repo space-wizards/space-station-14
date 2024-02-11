@@ -28,7 +28,7 @@ namespace Content.Client.Access.UI
         private string? _lastJobProto;
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<string> accessLevels)
+            List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -55,7 +55,7 @@ namespace Content.Client.Access.UI
 
             foreach (var job in jobs)
             {
-                if (!job.SetPreference)
+                if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
                 {
                     continue;
                 }

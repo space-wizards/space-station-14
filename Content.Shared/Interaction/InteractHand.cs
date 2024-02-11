@@ -39,6 +39,20 @@ namespace Content.Shared.Interaction
     }
 
     /// <summary>
+    /// Raised on the user before interacting on an entity with bare hand.
+    /// Interaction is cancelled if this event is handled, so set it to true if you do custom interaction logic.
+    /// </summary>
+    public sealed class BeforeInteractHandEvent : HandledEntityEventArgs
+    {
+        public EntityUid Target { get; }
+
+        public BeforeInteractHandEvent(EntityUid target)
+        {
+            Target = target;
+        }
+    }
+
+    /// <summary>
     /// Low-level interaction event used for entities without hands.
     /// </summary>
     /// <remarks>

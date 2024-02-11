@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             for (var i = 0; i < GasPrototypes.Length; i++)
             {
-                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
                 GasReagents[i] = GasPrototypes[i].Reagent;
             }
         }
@@ -43,10 +43,21 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Calculates the heat capacity for a gas mixture.
         /// </summary>
-        public float GetHeatCapacity(GasMixture mixture)
+        /// <param name="mixture">The mixture whose heat capacity should be calculated</param>
+        /// <param name="applyScaling"> Whether the internal heat capacity scaling should be applied. This should not be
+        /// used outside of atmospheric related heat transfer.</param>
+        /// <returns></returns>
+        public float GetHeatCapacity(GasMixture mixture, bool applyScaling)
         {
-            return GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
+            var scale = GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
+
+            // By default GetHeatCapacityCalculation() has the heat-scale divisor pre-applied.
+            // So if we want the un-scaled heat capacity, we have to multiply by the scale.
+            return applyScaling ? scale : scale * HeatScale;
         }
+
+        private float GetHeatCapacity(GasMixture mixture)
+            =>  GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private float GetHeatCapacityCalculation(float[] moles, bool space)
@@ -59,7 +70,17 @@ namespace Content.Server.Atmos.EntitySystems
 
             Span<float> tmp = stackalloc float[moles.Length];
             NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
+            // Adjust heat capacity by speedup, because this is primarily what
+            // determines how quickly gases heat up/cool.
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+        }
+
+        /// <summary>
+        ///     Return speedup factor for pumped or flow-based devices that depend on MaxTransferRate.
+        /// </summary>
+        public float PumpSpeedup()
+        {
+            return Speedup;
         }
 
         /// <summary>
@@ -79,6 +100,16 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
+        ///     Add 'dQ' Joules of energy into 'mixture'.
+        /// </summary>
+        public void AddHeat(GasMixture mixture, float dQ)
+        {
+            var c = GetHeatCapacity(mixture);
+            float dT = dQ / c;
+            mixture.Temperature += dT;
+        }
+
+        /// <summary>
         ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
         ///     The <see cref="giver"/> gas mixture is not modified by this method.
         /// </summary>
@@ -91,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var receiverHeatCapacity = GetHeatCapacity(receiver);
                 var giverHeatCapacity = GetHeatCapacity(giver);
                 var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
-                if (combinedHeatCapacity > 0f)
+                if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
                     receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                 }
@@ -135,7 +166,7 @@ namespace Content.Server.Atmos.EntitySystems
                         sourceHeatCapacity ??= GetHeatCapacity(source);
                         var receiverHeatCapacity = GetHeatCapacity(receiver);
                         var combinedHeatCapacity = receiverHeatCapacity + sourceHeatCapacity.Value * fraction;
-                        if (combinedHeatCapacity > 0f)
+                        if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
                             receiver.Temperature = (GetThermalEnergy(source, sourceHeatCapacity.Value * fraction) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                     }
                 }
@@ -300,7 +331,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                     var req = prototype.MinimumRequirements[i];
 
-                    if (!(mixture.GetMoles(i) < req)) continue;
+                    if (!(mixture.GetMoles(i) < req))
+                        continue;
+
                     doReaction = false;
                     break;
                 }
@@ -308,7 +341,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!doReaction)
                     continue;
 
-                reaction = prototype.React(mixture, holder, this);
+                reaction = prototype.React(mixture, holder, this, HeatScale);
                 if(reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }

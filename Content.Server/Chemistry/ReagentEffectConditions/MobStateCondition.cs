@@ -5,18 +5,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
-    public sealed class MobStateCondition : ReagentEffectCondition
+    public sealed partial class MobStateCondition : ReagentEffectCondition
     {
-
-
-        [DataField("mobstate")]
-        public MobState mobstate = MobState.Alive;
+        [DataField]
+        public MobState Mobstate = MobState.Alive;
 
         public override bool Condition(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out MobStateComponent? mobState))
             {
-                if (mobState.CurrentState == mobstate)
+                if (mobState.CurrentState == Mobstate)
                     return true;
             }
 
@@ -25,7 +23,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override string GuidebookExplanation(IPrototypeManager prototype)
         {
-            return Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", mobstate));
+            return Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", Mobstate));
         }
     }
 }

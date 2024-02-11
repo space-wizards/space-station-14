@@ -10,16 +10,6 @@
   - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
-  - type: Bloodstream
-    bloodReagent: Oil
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -41,6 +31,14 @@
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -48,11 +46,10 @@
     - Piercing
     - Heat
     - Shock
+    locPrefix: silicon
   - type: MovedByPressure
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
-  - type: DrawableSolution
-    solution: bloodstream
   - type: StatusEffects
     allowed:
     - Stun
@@ -78,8 +75,11 @@
     thresholds:
       0: Alive
       120: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+    showOverlays: false
   - type: Stamina
-    excess: 120
+    critThreshold: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -102,6 +102,11 @@
   - type: GuideHelp
     guides:
     - Robotics
+  - type: Speech
+    speechVerb: Robotic
+  - type: TypingIndicator
+    proto: robot
+  - type: ZombieImmune
 
 - type: entity
   parent: MobSiliconBase
@@ -113,15 +118,14 @@
     sound:
       collection: BikeHorn
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
   - type: Slippery
     launchForwardsMultiplier: 2
+  - type: Speech
+    speechVerb: Cluwne
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       slips:
@@ -162,11 +166,7 @@
     sound:
       collection: CluwneHorn
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: jonkbot
-  - type: Slippery
-    launchForwardsMultiplier: 2
   - type: Construction
     graph: JonkBot
     node: bot
@@ -195,7 +195,6 @@
   description: The creep of automation now threatening space janitors.
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
   - type: Construction
@@ -244,18 +243,28 @@
   description: No substitute for a doctor, but better than nothing.
   components:
   - type: Medibot
+    treatments:
+      Alive:
+        reagent: Tricordrazine
+        quantity: 30
+        minDamage: 0
+        maxDamage: 50
+      Critical:
+        reagent: Inaprovaline
+        quantity: 15
   - type: EmaggableMedibot
-    # when you are fine, medibot will help you go sleep
-    standardMed: ChloralHydrate
-    standardMedAmount: 15
-    # when you are crit, medibot will help you have fun
-    emergencyMed: SpaceDrugs
-    emergencyMedAmount: 25
+    replacements:
+      # when you are fine, medibot will help you go sleep
+      Alive:
+        reagent: ChloralHydrate
+        quantity: 15
+      # when you are crit, medibot will help you have fun
+      Critical:
+        reagent: SpaceDrugs
+        quantity: 25
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
-  - type: Speech
   - type: HTN
     rootTask:
       task: MedibotCompound
@@ -269,6 +278,12 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
 
 - type: entity
   parent: MobSiliconBase
@@ -283,7 +298,6 @@
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mimebot

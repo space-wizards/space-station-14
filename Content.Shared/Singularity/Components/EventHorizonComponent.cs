@@ -11,7 +11,7 @@ namespace Content.Shared.Singularity.Components;
 /// </summary>
 [Access(friends: typeof(SharedEventHorizonSystem))]
 [RegisterComponent, NetworkedComponent]
-public sealed class EventHorizonComponent : Component
+public sealed partial class EventHorizonComponent : Component
 {
     /// <summary>
     /// The radius of the event horizon within which it will destroy all entities and tiles.
@@ -20,6 +20,18 @@ public sealed class EventHorizonComponent : Component
     /// </summary>
     [DataField("radius")]
     public float Radius;
+
+    /// <summary>
+    /// involves periodically destroying tiles within a specified radius
+    /// </summary>
+    [DataField]
+    public bool ConsumeTiles = true;
+
+    /// <summary>
+    /// involves periodically destroying entities within a specified radius. Does not affect collide destruction of entities.
+    /// </summary>
+    [DataField]
+    public bool ConsumeEntities = true;
 
     /// <summary>
     /// Whether the event horizon can consume/destroy the devices built to contain it.

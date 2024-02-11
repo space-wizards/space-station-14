@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WeaponProtoKineticAcceleratorBase
   abstract: true
   parent: BaseItem
@@ -7,14 +7,13 @@
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    size: 30
+    size: Normal
   - type: GunWieldBonus
     minAngle: -43
     maxAngle: -43
   - type: Wieldable
-    wieldedInhandPrefix: null
   - type: Gun
-    fireRate: 0.75
+    fireRate: 0.5
     selectedMode: SemiAuto
     angleDecay: 45
     minAngle: 44
@@ -28,9 +27,10 @@
   - type: GenericVisualizer
     visuals:
       enum.AmmoVisuals.HasAmmo:
-        overlay:
+        empty-icon:
           True: { visible: False }
           False: { visible: True }
+        #todo: add other 'empty' animations
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.75
     rechargeSound:
@@ -40,8 +40,10 @@
     capacity: 1
     count: 1
   - type: Clothing
-    #sprite: WRITEMEWRITEMEWRITEME
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     quickEquip: false
     slots:
     - suitStorage
     - Belt
+  - type: UseDelay
+    delay: 1

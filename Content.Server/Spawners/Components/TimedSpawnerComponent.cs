@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
-    public sealed class TimedSpawnerComponent : Component, ISerializationHooks
+    public sealed partial class TimedSpawnerComponent : Component, ISerializationHooks
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]

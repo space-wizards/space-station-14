@@ -1,6 +1,6 @@
+using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
-using Content.Server.Body.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -9,9 +9,9 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// Basically smoke and foam reactions.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ChemCleanBloodstream : ReagentEffect
+    public sealed partial class ChemCleanBloodstream : ReagentEffect
     {
-        [DataField("cleanseRate")]
+        [DataField]
         public float CleanseRate = 3.0f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

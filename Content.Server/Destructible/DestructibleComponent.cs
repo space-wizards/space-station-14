@@ -7,7 +7,7 @@ namespace Content.Server.Destructible
     ///     and triggers thresholds when reached.
     /// </summary>
     [RegisterComponent]
-    public sealed class DestructibleComponent : Component
+    public sealed partial class DestructibleComponent : Component
     {
         [DataField("thresholds")]
         public List<DamageThreshold> Thresholds = new();

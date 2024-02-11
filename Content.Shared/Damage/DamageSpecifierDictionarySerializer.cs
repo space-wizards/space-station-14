@@ -39,12 +39,12 @@ public sealed class DamageSpecifierDictionarySerializer : ITypeReader<Dictionary
     {
         var dict = instanceProvider != null ? instanceProvider() : new();
         // Add all the damage types by just copying the type dictionary (if it is not null).
-        if (node.TryGet("types", out var typesNode))
+        if (node.TryGet<MappingDataNode>("types", out var typesNode))
         {
             serializationManager.Read(typesNode, instanceProvider: () => dict, notNullableOverride: true);
         }
 
-        if (!node.TryGet("groups", out var groupsNode))
+        if (!node.TryGet<MappingDataNode>("groups", out var groupsNode))
             return dict;
 
         // Then resolve damage groups and add them

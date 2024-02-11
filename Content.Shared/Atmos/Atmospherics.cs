@@ -46,6 +46,15 @@ namespace Content.Shared.Atmos
         public const float T20C = 293.15f;
 
         /// <summary>
+        ///     Do not allow any gas mixture temperatures to exceed this number. It is occasionally possible
+        ///     to have very small heat capacity (e.g. room that was just unspaced) and for large amounts of
+        ///     energy to be transferred to it, even for a brief moment. However, this messes up subsequent
+        ///     calculations and so cap it here. The physical interpretation is that at this temperature, any
+        ///     gas that you would have transforms into plasma.
+        /// </summary>
+        public const float Tmax = 262144; // 1/64 of max safe integer, any values above will result in a ~0.03K epsilon
+
+        /// <summary>
         ///     Liters in a cell.
         /// </summary>
         public const float CellVolume = 2500f;
@@ -123,7 +132,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.5f;
+        public const float MinimumTemperatureDeltaToConsider = 0.01f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -179,11 +188,11 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
         /// </summary>
-        public const float FireHydrogenEnergyReleased = 560000f;
+        public const float FireHydrogenEnergyReleased = 284e3f; // hydrogen is 284 kJ/mol
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 3000000f;
+        public const float FirePlasmaEnergyReleased = 160e3f; // methane is 16 kJ/mol, plus plasma's spark of magic
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
@@ -198,7 +207,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
         /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 430000f;
+        public const float MinimumTritiumOxyburnEnergy = 143000f;
 
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
@@ -216,7 +225,7 @@ namespace Content.Shared.Atmos
         ///     Remove X mol of nitrogen for each mol of frezon.
         /// </summary>
         public const float FrezonNitrogenCoolRatio = 5;
-        public const float FrezonCoolEnergyReleased = -3000000f;
+        public const float FrezonCoolEnergyReleased = -600e3f;
         public const float FrezonCoolRateModifier = 20f;
 
         public const float FrezonProductionMaxEfficiencyTemperature = 73.15f;
@@ -237,9 +246,14 @@ namespace Content.Shared.Atmos
         public const float FrezonProductionConversionRate = 50f;
 
         /// <summary>
-        ///     How many mol of frezon can be converted into miasma in one cycle.
+        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
         /// </summary>
-        public const float MiasmicSubsumationMaxConversionRate = 5f;
+        public const float N2ODecompositionRate = 2f;
+
+        /// <summary>
+        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
+        /// </summary>
+        public const float AmmoniaOxygenReactionRate = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
@@ -309,25 +323,6 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MaxTransferRate = 200;
 
-        /// <summary>
-        ///     What fraction of air from a spaced tile escapes every tick.
-        ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
-        /// </summary>
-        public const float SpacingEscapeRatio = 0.05f;
-
-        /// <summary>
-        ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
-        ///     Since the decay due to SpacingEscapeRatio follows a curve, it would never reach 0.0 exactly
-        ///     unless we truncate it somewhere.
-        /// </summary>
-        public const float SpacingMinGas = 2.0f;
-
-        /// <summary>
-        ///     How much wind can go through a single tile before that tile doesn't depressurize itself
-        ///     (I.e spacing is limited in large rooms heading into smaller spaces)
-        /// </summary>
-        public const float SpacingMaxWind = 500.0f;
-
         #endregion
     }
 
@@ -343,7 +338,7 @@ namespace Content.Shared.Atmos
         Plasma = 3,
         Tritium = 4,
         WaterVapor = 5,
-        Miasma = 6,
+        Ammonia = 6,
         NitrousOxide = 7,
         Frezon = 8
     }

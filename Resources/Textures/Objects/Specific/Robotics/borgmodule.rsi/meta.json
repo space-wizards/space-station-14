@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "engineering"
+    },
+    {
+      "name": "generic"
+    },
+    {
+      "name": "icon-anomalies"
+    },
+    {
+      "name": "icon-appraisal"
+    },
+    {
+      "name": "icon-artifacts"
+    },
+    {
+      "name": "icon-cables"
+    },
+    {
+      "name": "icon-chemist"
+    },
+    {
+      "name": "icon-clown"
+    },
+    {
+      "name": "icon-construction"
+    },
+    {
+      "name": "icon-defib"
+    },
+    {
+      "name": "icon-diagnosis"
+    },
+    {
+      "name": "icon-fire-extinguisher"
+    },
+    {
+      "name": "icon-gardening"
+    },
+    {
+      "name": "icon-gas-analyzer"
+    },
+    {
+      "name": "icon-gps"
+    },
+    {
+      "name": "icon-grappling-gun"
+    },
+    {
+      "name": "icon-harvesting"
+    },
+    {
+      "name": "icon-light-replacer"
+    },
+    {
+      "name": "icon-mining"
+    },
+    {
+      "name": "icon-mop"
+    },
+    {
+      "name": "icon-mop-adv"
+    },
+    {
+      "name": "icon-musique"
+    },
+    {
+      "name": "icon-pen"
+    },
+    {
+      "name": "icon-radiation"
+    },
+    {
+      "name": "icon-rcd"
+    },
+    {
+      "name": "icon-template"
+    },
+    {
+      "name": "icon-tools-adv"
+    },
+    {
+      "name": "icon-tools"
+    },
+    {
+      "name": "icon-trash-bag"
+    },
+    {
+      "name": "icon-treatment"
+    },
+    {
+      "name": "icon-syndicate"
+    },
+    {
+      "name": "janitor"
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "science"
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "service"
+    },
+    {
+      "name": "syndicate"
+    }
+  ]
+}

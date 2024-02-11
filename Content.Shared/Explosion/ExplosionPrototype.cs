@@ -14,30 +14,30 @@ namespace Content.Shared.Explosion;
 ///     that map of airtight entities. This could be done, but is just not yet implemented.
 /// </remarks>
 [Prototype("explosion")]
-public sealed class ExplosionPrototype : IPrototype
+public sealed partial class ExplosionPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     Damage to deal to entities. This is scaled by the explosion intensity.
     /// </summary>
     [DataField("damagePerIntensity", required: true)]
-    public readonly DamageSpecifier DamagePerIntensity = default!;
+    public DamageSpecifier DamagePerIntensity = default!;
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakChance")]
-    private readonly float[] _tileBreakChance = { 0f, 1f };
+    private float[] _tileBreakChance = { 0f, 1f };
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakChance"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakIntensity")]
-    private readonly float[] _tileBreakIntensity = {0f, 15f };
+    private float[] _tileBreakIntensity = {0f, 15f };
 
     /// <summary>
     ///     When a tile is broken by an explosion, the intensity is reduced by this amount and is used to try and
@@ -48,25 +48,43 @@ public sealed class ExplosionPrototype : IPrototype
     ///     chance to create a space tile.
     /// </remarks>
     [DataField("tileBreakRerollReduction")]
-    public readonly float TileBreakRerollReduction = 10f;
+    public float TileBreakRerollReduction = 10f;
 
     /// <summary>
     ///     Color emitted by a point light at the center of the explosion.
     /// </summary>
     [DataField("lightColor")]
-    public readonly Color LightColor = Color.Orange;
+    public Color LightColor = Color.Orange;
 
     /// <summary>
     ///     Color used to modulate the fire texture.
     /// </summary>
     [DataField("fireColor")]
-    public readonly Color? FireColor;
+    public Color? FireColor;
 
-    [DataField("Sound")]
-    public readonly SoundSpecifier Sound = new SoundCollectionSpecifier("explosion");
+    /// <summary>
+    ///     If an explosion finishes in less than this many iterations, play a small sound instead.
+    /// </summary>
+    /// <remarks>
+    ///     This value is tuned such that a minibomb is considered small, but just about anything larger is normal
+    /// </remarks>
+    [DataField("smallSoundIterationThreshold")]
+    public int SmallSoundIterationThreshold = 6;
+
+    [DataField("sound")]
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
+
+    [DataField("smallSound")]
+    public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
+
+    [DataField("soundFar")]
+    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
+
+    [DataField("smallSoundFar")]
+    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
 
     [DataField("texturePath")]
-    public readonly ResPath TexturePath = new("/Textures/Effects/fire.rsi");
+    public ResPath TexturePath = new("/Textures/Effects/fire.rsi");
 
     /// <summary>
     ///     How intense does the explosion have to be at a tile to advance to the next fire texture state?
@@ -77,7 +95,7 @@ public sealed class ExplosionPrototype : IPrototype
     // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
     // steal code from.
     [DataField("fireStates")]
-    public readonly int FireStates = 3;
+    public int FireStates = 3;
 
     /// <summary>
     ///     Basic function for linear interpolation of the _tileBreakChance and _tileBreakIntensity arrays

@@ -12,11 +12,12 @@ namespace Content.IntegrationTests.Tests.Utility
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
 
-        private static readonly string Prototypes = $@"
+        [TestPrototypes]
+        private const string Prototypes = $@"
 - type: Tag
-  id: ValidTag
+  id: WhitelistTestValidTag
 - type: Tag
-  id: InvalidTag
+  id: WhitelistTestInvalidTag
 
 - type: entity
   id: WhitelistDummy
@@ -30,37 +31,37 @@ namespace Content.IntegrationTests.Tests.Utility
           components:
           - {ValidComponent}
           tags:
-          - ValidTag
+          - WhitelistTestValidTag
 
 - type: entity
   id: InvalidComponentDummy
   components:
   - type: {InvalidComponent}
 - type: entity
-  id: InvalidTagDummy
+  id: WhitelistTestInvalidTagDummy
   components:
   - type: Tag
     tags:
-    - InvalidTag
+    - WhitelistTestInvalidTag
 
 - type: entity
   id: ValidComponentDummy
   components:
   - type: {ValidComponent}
 - type: entity
-  id: ValidTagDummy
+  id: WhitelistTestValidTagDummy
   components:
   - type: Tag
     tags:
-    - ValidTag";
+    - WhitelistTestValidTag";
 
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
             var mapCoordinates = testMap.MapCoords;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -68,16 +69,16 @@ namespace Content.IntegrationTests.Tests.Utility
             await server.WaitAssertion(() =>
             {
                 var validComponent = sEntities.SpawnEntity("ValidComponentDummy", mapCoordinates);
-                var validTag = sEntities.SpawnEntity("ValidTagDummy", mapCoordinates);
+                var WhitelistTestValidTag = sEntities.SpawnEntity("WhitelistTestValidTagDummy", mapCoordinates);
 
                 var invalidComponent = sEntities.SpawnEntity("InvalidComponentDummy", mapCoordinates);
-                var invalidTag = sEntities.SpawnEntity("InvalidTagDummy", mapCoordinates);
+                var WhitelistTestInvalidTag = sEntities.SpawnEntity("WhitelistTestInvalidTagDummy", mapCoordinates);
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
                 {
                     Components = new[] { $"{ValidComponent}" },
-                    Tags = new() { "ValidTag" }
+                    Tags = new() { "WhitelistTestValidTag" }
                 };
                 whitelistInst.UpdateRegistrations();
                 Assert.That(whitelistInst, Is.Not.Null);
@@ -91,10 +92,10 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.Multiple(() =>
                 {
                     Assert.That(whitelistInst.IsValid(validComponent), Is.True);
-                    Assert.That(whitelistInst.IsValid(validTag), Is.True);
+                    Assert.That(whitelistInst.IsValid(WhitelistTestValidTag), Is.True);
 
                     Assert.That(whitelistInst.IsValid(invalidComponent), Is.False);
-                    Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
+                    Assert.That(whitelistInst.IsValid(WhitelistTestInvalidTag), Is.False);
                 });
 
                 // Test from serialized
@@ -111,13 +112,13 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.Multiple(() =>
                 {
                     Assert.That(whitelistSer.IsValid(validComponent), Is.True);
-                    Assert.That(whitelistSer.IsValid(validTag), Is.True);
+                    Assert.That(whitelistSer.IsValid(WhitelistTestValidTag), Is.True);
 
                     Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
-                    Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
+                    Assert.That(whitelistSer.IsValid(WhitelistTestInvalidTag), Is.False);
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

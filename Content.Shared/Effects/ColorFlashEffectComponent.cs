@@ -4,7 +4,7 @@ namespace Content.Shared.Effects;
 /// Stores the original sprite color for flashing entity to be able to restore it later.
 /// </summary>
 [RegisterComponent]
-public sealed class ColorFlashEffectComponent : Component
+public sealed partial class ColorFlashEffectComponent : Component
 {
     [ViewVariables]
     public Color Color = Color.White;

@@ -8,12 +8,9 @@ namespace Content.Shared.Cargo.Components;
 /// Present on cargo shuttles to provide metadata such as preventing spam calling.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedCargoSystem))]
-public sealed class CargoShuttleComponent : Component
+public sealed partial class CargoShuttleComponent : Component
 {
-    /// <summary>
-    ///     The paper-type prototype to spawn with the order information.
-    /// </summary>
-    [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrinterOutput = "PaperCargoInvoice";
-
+    /*
+     * Still needed for drone console for now.
+     */
 }

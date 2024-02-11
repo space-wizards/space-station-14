@@ -1,45 +1,36 @@
-using System.Threading;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Timing
+namespace Content.Shared.Timing;
+
+/// <summary>
+/// Timer that creates a cooldown each time an object is activated/used
+/// </summary>
+/// <remarks>
+/// Currently it only supports a single delay per entity, this means that for things that have two delay interactions they will share one timer, so this can cause issues. For example, the bible has a delay when opening the storage UI and when applying it's interaction effect, and they share the same delay.
+/// </remarks>
+[RegisterComponent]
+[NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(UseDelaySystem))]
+public sealed partial class UseDelayComponent : Component
 {
     /// <summary>
-    /// Timer that creates a cooldown each time an object is activated/used
+    /// When the delay starts.
     /// </summary>
-    [RegisterComponent]
-    [NetworkedComponent]
-    public sealed class UseDelayComponent : Component
-    {
-        public TimeSpan LastUseTime;
+    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan DelayStartTime;
 
-        public TimeSpan? DelayEndTime;
+    /// <summary>
+    /// When the delay ends.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan DelayEndTime;
 
-        [DataField("delay")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public TimeSpan Delay = TimeSpan.FromSeconds(1);
-
-        /// <summary>
-        ///     Stores remaining delay pausing (and eventually, serialization).
-        /// </summary>
-        [DataField("remainingDelay")]
-        public TimeSpan? RemainingDelay;
-
-        public bool ActiveDelay => DelayEndTime != null;
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class UseDelayComponentState : ComponentState
-    {
-        public readonly TimeSpan LastUseTime;
-        public readonly TimeSpan Delay;
-        public readonly TimeSpan? DelayEndTime;
-
-        public UseDelayComponentState(TimeSpan lastUseTime, TimeSpan delay, TimeSpan? delayEndTime)
-        {
-            LastUseTime = lastUseTime;
-            Delay = delay;
-            DelayEndTime = delayEndTime;
-        }
-    }
+    /// <summary>
+    /// Default delay time
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public TimeSpan Delay = TimeSpan.FromSeconds(1);
 }

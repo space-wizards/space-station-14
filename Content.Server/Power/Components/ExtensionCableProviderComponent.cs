@@ -4,7 +4,7 @@ namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     [Access(typeof(ExtensionCableSystem))]
-    public sealed class ExtensionCableProviderComponent : Component
+    public sealed partial class ExtensionCableProviderComponent : Component
     {
         /// <summary>
         ///     The max distance this can connect to <see cref="ExtensionCableReceiverComponent"/>s from.

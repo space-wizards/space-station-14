@@ -1,14 +1,17 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
 sealed class TileReplaceCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
+
     // ReSharper disable once StringLiteralTypo
     public string Command => "tilereplace";
     public string Description => "Replaces one tile with another.";
@@ -16,8 +19,7 @@ sealed class TileReplaceCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player as IPlayerSession;
-        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var player = shell.Player;
         EntityUid? gridId;
         string tileIdA;
         string tileIdB;
@@ -31,12 +33,13 @@ sealed class TileReplaceCommand : IConsoleCommand
                     return;
                 }
 
-                gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
+                gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                 tileIdA = args[0];
                 tileIdB = args[1];
                 break;
             case 3:
-                if (!EntityUid.TryParse(args[0], out var id))
+                if (!NetEntity.TryParse(args[0], out var idNet) ||
+                    !_entManager.TryGetEntity(idNet, out var id))
                 {
                     shell.WriteLine($"{args[0]} is not a valid entity.");
                     return;
@@ -51,18 +54,16 @@ sealed class TileReplaceCommand : IConsoleCommand
                 return;
         }
 
-        var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-        var tileA = tileDefinitionManager[tileIdA];
-        var tileB = tileDefinitionManager[tileIdB];
+        var tileA = _tileDef[tileIdA];
+        var tileB = _tileDef[tileIdB];
 
-        var mapManager = IoCManager.Resolve<IMapManager>();
-        if (!mapManager.TryGetGrid(gridId, out var grid))
+        if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
             shell.WriteLine($"No grid exists with id {gridId}");
             return;
         }
 
-        if (!entityManager.EntityExists(grid.Owner))
+        if (!_entManager.EntityExists(gridId))
         {
             shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
             return;

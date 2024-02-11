@@ -10,24 +10,24 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for stimulants and tranqs. Attempts to find a MovementSpeedModifier on the target,
     /// adding one if not there and to change the movespeed
     /// </summary>
-    public sealed class MovespeedModifier : ReagentEffect
+    public sealed partial class MovespeedModifier : ReagentEffect
     {
         /// <summary>
         /// How much the entities' walk speed is multiplied by.
         /// </summary>
-        [DataField("walkSpeedModifier")]
+        [DataField]
         public float WalkSpeedModifier { get; set; } = 1;
 
         /// <summary>
         /// How much the entities' run speed is multiplied by.
         /// </summary>
-        [DataField("sprintSpeedModifier")]
+        [DataField]
         public float SprintSpeedModifier { get; set; } = 1;
 
         /// <summary>
         /// How long the modifier applies (in seconds) when metabolized.
         /// </summary>
-        [DataField("statusLifetime")]
+        [DataField]
         public float StatusLifetime = 2f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

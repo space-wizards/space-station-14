@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.Components
     /// </summary>
     [RegisterComponent, Serializable,
      Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
-    public sealed class GridAtmosphereComponent : Component
+    public sealed partial class GridAtmosphereComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Simulated { get; set; } = true;
@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         [IncludeDataField(customTypeSerializer:typeof(TileAtmosCollectionSerializer))]
-        public readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
+        public Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
         [ViewVariables]
         public readonly HashSet<TileAtmosphere> ActiveTiles = new(1000);
@@ -62,25 +62,25 @@ namespace Content.Server.Atmos.Components
         public readonly HashSet<IPipeNet> PipeNets = new();
 
         [ViewVariables]
-        public readonly HashSet<AtmosDeviceComponent> AtmosDevices = new();
+        public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
 
         [ViewVariables]
-        public Queue<TileAtmosphere> CurrentRunTiles = new();
+        public readonly Queue<TileAtmosphere> CurrentRunTiles = new();
 
         [ViewVariables]
-        public Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
+        public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
 
         [ViewVariables]
-        public Queue<IPipeNet> CurrentRunPipeNet = new();
+        public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
 
         [ViewVariables]
-        public Queue<AtmosDeviceComponent> CurrentRunAtmosDevices = new();
+        public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();
 
         [ViewVariables]
         public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
 
         [ViewVariables]
-        public Queue<Vector2i> CurrentRunInvalidatedCoordinates = new();
+        public readonly Queue<Vector2i> CurrentRunInvalidatedCoordinates = new();
 
         [ViewVariables]
         public int InvalidatedCoordsCount => InvalidatedCoords.Count;

@@ -1,5 +1,7 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
+using Content.Server.Humanoid;
+using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
@@ -7,6 +9,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -19,6 +22,9 @@ public class IdentitySystem : SharedIdentitySystem
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -30,6 +36,8 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Update(float frameTime)
@@ -48,14 +56,12 @@ public class IdentitySystem : SharedIdentitySystem
     }
 
     // This is where the magic happens
-    protected override void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, IdentityComponent component, MapInitEvent args)
     {
-        base.OnComponentInit(uid, component, args);
-
         var ident = Spawn(null, Transform(uid).Coordinates);
 
         QueueIdentityUpdate(uid);
-        component.IdentityEntitySlot.Insert(ident);
+        _container.Insert(ident, component.IdentityEntitySlot);
     }
 
     /// <summary>
@@ -98,7 +104,7 @@ public class IdentitySystem : SharedIdentitySystem
         if (name == Name(ident))
             return;
 
-        MetaData(ident).EntityName = name;
+        _metaData.SetEntityName(ident, name);
 
         _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
         RaiseLocalEvent(new IdentityChangedEvent(uid, ident));
@@ -122,17 +128,20 @@ public class IdentitySystem : SharedIdentitySystem
     {
         int age = 18;
         Gender gender = Gender.Epicene;
+        string species = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
         // Always use their actual age and gender, since that can't really be changed by an ID.
         if (Resolve(target, ref appearance, false))
         {
             gender = appearance.Gender;
             age = appearance.Age;
+            species = appearance.Species;
         }
 
+        var ageString = _humanoid.GetAgeRepresentation(species, age);
         var trueName = Name(target);
         if (!Resolve(target, ref inventory, false))
-            return new(trueName, age, gender, string.Empty);
+            return new(trueName, gender, ageString, string.Empty);
 
         string? presumedJob = null;
         string? presumedName = null;
@@ -140,12 +149,12 @@ public class IdentitySystem : SharedIdentitySystem
         // Get their name and job from their ID for their presumed name.
         if (_idCard.TryFindIdCard(target, out var id))
         {
-            presumedName = string.IsNullOrWhiteSpace(id.FullName) ? null : id.FullName;
-            presumedJob = id.JobTitle?.ToLowerInvariant();
+            presumedName = string.IsNullOrWhiteSpace(id.Comp.FullName) ? null : id.Comp.FullName;
+            presumedJob = id.Comp.JobTitle?.ToLowerInvariant();
         }
 
         // If it didn't find a job, that's fine.
-        return new(trueName, age, gender, presumedName, presumedJob);
+        return new(trueName, gender, ageString, presumedName, presumedJob);
     }
 
     #endregion

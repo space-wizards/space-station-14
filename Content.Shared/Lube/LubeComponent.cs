@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Lube;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class LubeComponent : Component
+public sealed partial class LubeComponent : Component
 {
     [DataField("squeeze")]
     public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");

@@ -8,7 +8,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed class DamageTrigger : IThresholdTrigger
+    public sealed partial class DamageTrigger : IThresholdTrigger
     {
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.

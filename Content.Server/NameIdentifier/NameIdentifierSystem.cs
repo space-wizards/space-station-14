@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using Content.Shared.GameTicking;
+﻿using Content.Shared.GameTicking;
 using Content.Shared.NameIdentifier;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.NameIdentifier;
 
@@ -15,12 +13,13 @@ public sealed class NameIdentifierSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     /// <summary>
     /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
     /// </summary>
     [ViewVariables]
-    public Dictionary<string, List<int>> CurrentIds = new();
+    public readonly Dictionary<string, List<int>> CurrentIds = new();
 
     public override void Initialize()
     {
@@ -29,9 +28,9 @@ public sealed class NameIdentifierSystem : EntitySystem
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReloadPrototypes);
 
         InitialSetupPrototypes();
-        _prototypeManager.PrototypesReloaded += OnReloadPrototypes;
     }
 
     private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
@@ -47,11 +46,13 @@ public sealed class NameIdentifierSystem : EntitySystem
         }
     }
 
-    public override void Shutdown()
+    /// <summary>
+    ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
+    ///     but does not set the entity's name.
+    /// </summary>
+    public string GenerateUniqueName(EntityUid uid, ProtoId<NameIdentifierGroupPrototype> proto, out int randomVal)
     {
-        base.Shutdown();
-
-        _prototypeManager.PrototypesReloaded -= OnReloadPrototypes;
+        return GenerateUniqueName(uid, _prototypeManager.Index(proto), out randomVal);
     }
 
     /// <summary>
@@ -103,11 +104,16 @@ public sealed class NameIdentifierSystem : EntitySystem
             component.Identifier = id;
         }
 
+        component.FullIdentifier = group.FullName
+            ? uniqueName
+            : $"({uniqueName})";
+
         var meta = MetaData(uid);
         // "DR-1234" as opposed to "drone (DR-1234)"
-        meta.EntityName = group.FullName
+        _metaData.SetEntityName(uid, group.FullName
             ? uniqueName
-            : $"{meta.EntityName} ({uniqueName})";
+            : $"{meta.EntityName} ({uniqueName})", meta);
+        Dirty(component);
     }
 
     private void InitialSetupPrototypes()

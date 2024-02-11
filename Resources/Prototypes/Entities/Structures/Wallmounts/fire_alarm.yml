@@ -42,8 +42,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: FireAlarm
-  - type: AccessReader
-    access: [ [ "Atmospherics" ] ]
+  - type: ContainerFill
+    containers:
+      board: [ FireAlarmElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Appearance
   - type: WiresVisuals
   - type: AlertLevelDisplay
@@ -60,8 +64,8 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Fire Alarm"
-    LayoutId: FireAlarm
+    boardName: wires-board-name-firealarm
+    layoutId: FireAlarm
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
@@ -95,7 +99,9 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalGlassBreak
+              params:
+                volume: -4
   placement:
     mode: SnapgridCenter
     snap:

@@ -15,7 +15,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class AddGasWindow : DefaultWindow
     {
-        private List<EntityUid>? _gridData;
+        private List<NetEntity>? _gridData;
         private IEnumerable<GasPrototype>? _gasData;
 
         protected override void EnteredTree()
@@ -25,11 +25,12 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             var gridQuery = entManager.AllEntityQueryEnumerator<MapGridComponent>();
-            _gridData ??= new List<EntityUid>();
+            _gridData ??= new List<NetEntity>();
             _gridData.Clear();
 
             while (gridQuery.MoveNext(out var uid, out _))
             {
+                _gridData.Add(entManager.GetNetEntity(uid));
                 var player = playerManager.LocalPlayer?.ControlledEntity;
                 var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
                 GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
@@ -60,7 +61,6 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
             var gasList = _gasData.ToList();
             var gasId = gasList[GasOptions.SelectedId].ID;
-
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"addgas {TileXSpin.Value} {TileYSpin.Value} {gridIndex} {gasId} {AmountSpin.Value}");
         }

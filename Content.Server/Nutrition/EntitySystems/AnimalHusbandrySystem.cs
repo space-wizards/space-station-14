@@ -1,16 +1,18 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Interaction.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -21,17 +23,19 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// </summary>
 public sealed class AnimalHusbandrySystem : EntitySystem
 {
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
+    private readonly HashSet<EntityUid> _birthQueue = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -82,7 +86,13 @@ public sealed class AnimalHusbandrySystem : EntitySystem
             return false;
 
         var xform = Transform(uid);
-        var partners = _entityLookup.GetComponentsInRange<ReproductivePartnerComponent>(xform.Coordinates, component.BreedRange);
+
+        var partners = new HashSet<Entity<ReproductivePartnerComponent>>();
+        _entityLookup.GetEntitiesInRange(xform.Coordinates, component.BreedRange, partners);
+
+        if (partners.Count >= component.Capacity)
+            return false;
+
         foreach (var comp in partners)
         {
             var partner = comp.Owner;
@@ -197,6 +207,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         foreach (var spawn in spawns)
         {
             var offspring = Spawn(spawn, xform.Coordinates.Offset(_random.NextVector2(0.3f)));
+            _transform.AttachToGridOrMap(offspring);
             if (component.MakeOffspringInfant)
             {
                 var infant = AddComp<InfantComponent>(offspring);
@@ -215,7 +226,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        HashSet<EntityUid> birthQueue = new();
+        _birthQueue.Clear();
         _failedAttempts.Clear();
 
         var query = EntityQueryEnumerator<ReproductiveComponent>();
@@ -223,7 +234,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         {
             if (reproductive.GestationEndTime != null && _timing.CurTime >= reproductive.GestationEndTime)
             {
-                birthQueue.Add(uid);
+                _birthQueue.Add(uid);
             }
 
             if (_timing.CurTime < reproductive.NextBreedAttempt)
@@ -237,7 +248,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
             TryReproduceNearby(uid, reproductive);
         }
 
-        foreach (var queued in birthQueue)
+        foreach (var queued in _birthQueue)
         {
             Birth(queued);
         }

@@ -18,15 +18,28 @@ namespace Content.IntegrationTests.Tests.Station;
 [TestOf(typeof(StationJobsSystem))]
 public sealed class StationJobsTest
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: playTimeTracker
-  id: Dummy
+  id: PlayTimeDummyAssistant
+
+- type: playTimeTracker
+  id: PlayTimeDummyMime
+
+- type: playTimeTracker
+  id: PlayTimeDummyClown
+
+- type: playTimeTracker
+  id: PlayTimeDummyCaptain
+
+- type: playTimeTracker
+  id: PlayTimeDummyChaplain
 
 - type: gameMap
   id: FooStation
   minPlayers: 0
   mapName: FooStation
-  mapPath: Maps/Tests/empty.yml
+  mapPath: /Maps/Test/empty.yml
   stations:
     Station:
       mapNameTemplate: FooStation
@@ -34,7 +47,7 @@ public sealed class StationJobsTest
       components:
         - type: StationJobs
           overflowJobs:
-          - Assistant
+          - Passenger
           availableJobs:
             TMime: [0, -1]
             TAssistant: [-1, -1]
@@ -43,26 +56,26 @@ public sealed class StationJobsTest
 
 - type: job
   id: TAssistant
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummyAssistant
 
 - type: job
   id: TMime
   weight: 20
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummyMime
 
 - type: job
   id: TClown
   weight: -10
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummyClown
 
 - type: job
   id: TCaptain
   weight: 10
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummyCaptain
 
 - type: job
   id: TChaplain
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummyChaplain
 ";
 
     private const int StationCount = 100;
@@ -73,12 +86,8 @@ public sealed class StationJobsTest
     [Test]
     public async Task AssignJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
@@ -145,18 +154,14 @@ public sealed class StationJobsTest
                 Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AdjustJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -200,18 +205,14 @@ public sealed class StationJobsTest
                 Assert.That(stationJobs.IsJobUnlimited(station, "TChaplain"), "Could not make TChaplain unlimited.");
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task InvalidRoundstartJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
 
@@ -243,7 +244,7 @@ public sealed class StationJobsTest
                 }
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }
 

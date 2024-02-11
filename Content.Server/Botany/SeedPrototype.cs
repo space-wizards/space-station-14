@@ -54,17 +54,34 @@ public enum HarvestType : byte
 */
 
 [DataDefinition]
-public struct SeedChemQuantity
+public partial struct SeedChemQuantity
 {
+    /// <summary>
+    /// Minimum amount of chemical that is added to produce, regardless of the potency
+    /// </summary>
     [DataField("Min")] public int Min;
+
+    /// <summary>
+    /// Maximum amount of chemical that can be produced after taking plant potency into account.
+    /// </summary>
     [DataField("Max")] public int Max;
+
+    /// <summary>
+    /// When chemicals are added to produce, the potency of the seed is divided with this value. Final chemical amount is the result plus the `Min` value.
+    /// Example: PotencyDivisor of 20 with seed potency of 55 results in 2.75, 55/20 = 2.75. If minimum is 1 then final result will be 3.75 of that chemical, 55/20+1 = 3.75.
+    /// </summary>
     [DataField("PotencyDivisor")] public int PotencyDivisor;
+
+    /// <summary>
+    /// Inherent chemical is one that is NOT result of mutation or crossbreeding. These chemicals are removed if species mutation is executed.
+    /// </summary>
+    [DataField("Inherent")] public bool Inherent = true;
 }
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
 [Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(ReagentEffect), typeof(MutationSystem))]
-public class SeedData
+public partial class SeedData
 {
     #region Tracking
 
@@ -125,9 +142,9 @@ public class SeedData
 
     #region Tolerances
 
-    [DataField("nutrientConsumption")] public float NutrientConsumption = 0.25f;
+    [DataField("nutrientConsumption")] public float NutrientConsumption = 0.75f;
 
-    [DataField("waterConsumption")] public float WaterConsumption = 3f;
+    [DataField("waterConsumption")] public float WaterConsumption = 0.5f;
     [DataField("idealHeat")] public float IdealHeat = 293f;
     [DataField("heatTolerance")] public float HeatTolerance = 10f;
     [DataField("idealLight")] public float IdealLight = 7f;
@@ -168,7 +185,7 @@ public class SeedData
     [DataField("seedless")] public bool Seedless = false;
 
     /// <summary>
-    ///     If true, rapidly decrease health while growing. Used to kill off
+    ///     If false, rapidly decrease health while growing. Used to kill off
     ///     plants with "bad" mutations.
     /// </summary>
     [DataField("viable")] public bool Viable = true;
@@ -228,6 +245,12 @@ public class SeedData
 
     #endregion
 
+    /// <summary>
+    ///     The seed prototypes this seed may mutate into when prompted to.
+    /// </summary>
+    [DataField("mutationPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
+    public List<string> MutationPrototypes = new();
+
     public SeedData Clone()
     {
         DebugTools.Assert(!Immutable, "There should be no need to clone an immutable seed.");
@@ -241,6 +264,7 @@ public class SeedData
 
             PacketPrototype = PacketPrototype,
             ProductPrototypes = new List<string>(ProductPrototypes),
+            MutationPrototypes = new List<string>(MutationPrototypes),
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
             ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),
@@ -283,6 +307,84 @@ public class SeedData
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,
         };
+
+        return newSeed;
+    }
+
+
+    /// <summary>
+    /// Handles copying most species defining data from 'other' to this seed while keeping the accumulated mutations intact.
+    /// </summary>
+    public SeedData SpeciesChange(SeedData other)
+    {
+        var newSeed = new SeedData
+        {
+            Name = other.Name,
+            Noun = other.Noun,
+            DisplayName = other.DisplayName,
+            Mysterious = other.Mysterious,
+
+            PacketPrototype = other.PacketPrototype,
+            ProductPrototypes = new List<string>(other.ProductPrototypes),
+            MutationPrototypes = new List<string>(other.MutationPrototypes),
+
+            Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
+            ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
+            ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),
+
+            NutrientConsumption = NutrientConsumption,
+            WaterConsumption = WaterConsumption,
+            IdealHeat = IdealHeat,
+            HeatTolerance = HeatTolerance,
+            IdealLight = IdealLight,
+            LightTolerance = LightTolerance,
+            ToxinsTolerance = ToxinsTolerance,
+            LowPressureTolerance = LowPressureTolerance,
+            HighPressureTolerance = HighPressureTolerance,
+            PestTolerance = PestTolerance,
+            WeedTolerance = WeedTolerance,
+
+            Endurance = Endurance,
+            Yield = Yield,
+            Lifespan = Lifespan,
+            Maturation = Maturation,
+            Production = Production,
+            GrowthStages = other.GrowthStages,
+            HarvestRepeat = HarvestRepeat,
+            Potency = Potency,
+
+            Seedless = Seedless,
+            Viable = Viable,
+            Slip = Slip,
+            Sentient = Sentient,
+            Ligneous = Ligneous,
+
+            PlantRsi = other.PlantRsi,
+            PlantIconState = other.PlantIconState,
+            Bioluminescent = Bioluminescent,
+            CanScream = CanScream,
+            TurnIntoKudzu = TurnIntoKudzu,
+            BioluminescentColor = BioluminescentColor,
+            SplatPrototype = other.SplatPrototype,
+
+            // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
+            Unique = true,
+        };
+
+        // Adding the new chemicals from the new species.
+        foreach (var otherChem in other.Chemicals)
+        {
+            newSeed.Chemicals.TryAdd(otherChem.Key, otherChem.Value);
+        }
+
+        // Removing the inherent chemicals from the old species. Leaving mutated/crossbread ones intact.
+        foreach (var originalChem in newSeed.Chemicals)
+        {
+            if (!other.Chemicals.ContainsKey(originalChem.Key) && originalChem.Value.Inherent)
+            {
+                newSeed.Chemicals.Remove(originalChem.Key);
+            }
+        }
 
         return newSeed;
     }

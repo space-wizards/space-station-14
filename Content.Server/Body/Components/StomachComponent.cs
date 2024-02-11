@@ -1,38 +1,45 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.FixedPoint;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
-    public sealed class StomachComponent : Component
+    public sealed partial class StomachComponent : Component
     {
         public float AccumulatedFrameTime;
 
         /// <summary>
         ///     How fast should this component update, in seconds?
         /// </summary>
-        [DataField("updateInterval")]
+        [DataField]
         public float UpdateInterval = 1.0f;
+
+        /// <summary>
+        ///     The solution inside of this stomach this transfers reagents to the body.
+        /// </summary>
+        [DataField]
+        public Entity<SolutionComponent>? Solution = null;
 
         /// <summary>
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
-        [DataField("bodySolutionName")]
+        [DataField]
         public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being
         ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
-        [DataField("digestionDelay")]
+        [DataField]
         public float DigestionDelay = 20;
 
         /// <summary>
         ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
         /// </summary>
-        [DataField("specialDigestible")]
+        [DataField]
         public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
@@ -46,14 +53,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         public sealed class ReagentDelta
         {
-            public readonly string ReagentId;
-            public readonly FixedPoint2 Quantity;
+            public readonly ReagentQuantity ReagentQuantity;
             public float Lifetime { get; private set; }
 
-            public ReagentDelta(string reagentId, FixedPoint2 quantity)
+            public ReagentDelta(ReagentQuantity reagentQuantity)
             {
-                ReagentId = reagentId;
-                Quantity = quantity;
+                ReagentQuantity = reagentQuantity;
                 Lifetime = 0.0f;
             }
 

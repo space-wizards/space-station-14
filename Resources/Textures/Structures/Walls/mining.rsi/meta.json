@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/f743754ec3ef446c8172388431effa73aeddb7ff#diff-b429dd7fccbca60d740d4887c1077a178abf1efffe57e7ae2a0b607c8a9e2202 and modified.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	  {
+      "name": "full"
+    }, 
+	  {
+      "name": "mining0",
+	    "directions": 4
+    },
+	  {
+      "name": "mining1",
+	    "directions": 4
+    },
+	  {
+      "name": "mining2",
+	    "directions": 4
+    },
+	  {
+      "name": "mining3",
+	    "directions": 4
+    },
+	  {
+      "name": "mining4",
+	    "directions": 4
+    },
+	  {
+      "name": "mining5",
+	    "directions": 4
+    },
+	  {
+      "name": "mining6",
+	    "directions": 4
+    },
+	  {
+      "name": "mining7",
+	    "directions": 4
+    }
+  ]
+}

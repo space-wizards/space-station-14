@@ -1,28 +1,33 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
-using Content.Server.Flash.Components;
+using Content.Shared.Flash.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Payload.Components;
-using Robust.Shared.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
+using Content.Shared.Weapons.Ranged.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -58,8 +63,11 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {
@@ -72,6 +80,7 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeVoice();
             InitializeMobstate();
 
+            SubscribeLocalEvent<TriggerOnSpawnComponent, MapInitEvent>(OnSpawnTriggered);
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
@@ -84,7 +93,30 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
+
+            SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(OnAnchorTrigger);
+            SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
             SubscribeLocalEvent<RattleComponent, TriggerEvent>(HandleRattleTrigger);
+        }
+
+        private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
+        {
+            _audio.PlayPvs(component.Sound, uid);
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<SoundOnTriggerComponent>(uid);
+        }
+
+        private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
+        {
+            var xform = Transform(uid);
+
+            if (xform.Anchored)
+                return;
+
+            _transformSystem.AnchorEntity(uid, xform);
+
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<AnchorOnTriggerComponent>(uid);
         }
 
         private void OnSpawnTrigger(EntityUid uid, SpawnOnTriggerComponent component, TriggerEvent args)
@@ -105,14 +137,12 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-        #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
             args.Handled = true;
         }
-        #endregion
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
@@ -125,14 +155,14 @@ namespace Content.Server.Explosion.EntitySystems
             if (!TryComp<TransformComponent>(uid, out var xform))
                 return;
 
-            _body.GibBody(xform.ParentUid, deleteItems: component.DeleteItems);
+            _body.GibBody(xform.ParentUid, true, deleteItems: component.DeleteItems);
 
             args.Handled = true;
         }
 
         private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
         {
-            if (!TryComp<SubdermalImplantComponent?>(uid, out var implanted))
+            if (!TryComp<SubdermalImplantComponent>(uid, out var implanted))
                 return;
 
             if (implanted.ImplantedEntity == null)
@@ -162,19 +192,24 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
-            if (args.OurFixture.ID == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
-                Trigger(component.Owner);
+            if (args.OurFixtureId == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
+                Trigger(uid);
+        }
+
+        private void OnSpawnTriggered(EntityUid uid, TriggerOnSpawnComponent component, MapInitEvent args)
+        {
+            Trigger(uid);
         }
 
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
-            Trigger(component.Owner, args.User);
+            Trigger(uid, args.User);
             args.Handled = true;
         }
 
         private void OnImplantTrigger(EntityUid uid, TriggerImplantActionComponent component, ActivateImplantEvent args)
         {
-            Trigger(uid);
+            args.Handled = Trigger(uid);
         }
 
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
@@ -199,7 +234,15 @@ namespace Content.Server.Explosion.EntitySystems
             return triggerEvent.Handled;
         }
 
-        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)
+        public void TryDelay(EntityUid uid, float amount, ActiveTimerTriggerComponent? comp = null)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            comp.TimeRemaining += amount;
+        }
+
+        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay, float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)
         {
             if (delay <= 0)
             {
@@ -214,17 +257,23 @@ namespace Content.Server.Explosion.EntitySystems
             if (user != null)
             {
                 // Check if entity is bomb/mod. grenade/etc
-                if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
+                if (_container.TryGetContainer(uid, "payload", out BaseContainer? container) &&
                     container.ContainedEntities.Count > 0 &&
                     TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {
                     // If a beaker is missing, the entity won't explode, so no reason to log it
-                    if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||
-                        !TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
+                    if (chemicalPayloadComponent?.BeakerSlotA.Item is not { } beakerA ||
+                        chemicalPayloadComponent?.BeakerSlotB.Item is not { } beakerB ||
+                        !TryComp(beakerA, out SolutionContainerManagerComponent? containerA) ||
+                        !TryComp(beakerB, out SolutionContainerManagerComponent? containerB) ||
+                        !TryComp(beakerA, out FitsInDispenserComponent? fitsA) ||
+                        !TryComp(beakerB, out FitsInDispenserComponent? fitsB) ||
+                        !_solutionContainerSystem.TryGetSolution((beakerA, containerA), fitsA.Solution, out _, out var solutionA) ||
+                        !_solutionContainerSystem.TryGetSolution((beakerB, containerB), fitsB.Solution, out _, out var solutionB))
                         return;
 
                     _adminLogger.Add(LogType.Trigger,
-                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains {SolutionContainerSystem.ToPrettyString(solutionA)} in one beaker and {SolutionContainerSystem.ToPrettyString(solutionB)} in the other.");
                 }
                 else
                 {

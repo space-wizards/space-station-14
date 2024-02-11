@@ -1,4 +1,4 @@
-- type: weightedRandom
+- type: weightedRandomEntity
   id: SalvageRewardCommon
   weights:
     # basic materials
@@ -10,7 +10,6 @@
     CrateEngineeringAMEJar: 0.25
     CrateFoodPizzaLarge: 0.25
     CrateFoodSoftdrinks: 0.25
-    CrateFunATV: 0.25
     CrateFunInstrumentsVariety: 0.25
     CrateSalvageEquipment: 0.25
     RandomArtifactSpawner: 0.25
@@ -20,7 +19,7 @@
     SpaceCash500: 0.5
     SpaceCash1000: 0.25
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: SalvageRewardRare
   weights:
     # rare materials
@@ -52,7 +51,7 @@
     SpaceCash1000: 0.75
     SpaceCash2500: 0.5
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: SalvageRewardEpic
   weights:
     # rare machinery

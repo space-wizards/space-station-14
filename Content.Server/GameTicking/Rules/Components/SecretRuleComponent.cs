@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(SecretRuleSystem))]
-public sealed class SecretRuleComponent : Component
+public sealed partial class SecretRuleComponent : Component
 {
     /// <summary>
     /// The gamerules that get added by secret.

@@ -11,12 +11,12 @@ namespace Content.Server.Chemistry.ReagentEffects;
 ///     Tries to force someone to emote (scream, laugh, etc).
 /// </summary>
 [UsedImplicitly]
-public sealed class Emote : ReagentEffect
+public sealed partial class Emote : ReagentEffect
 {
     [DataField("emote", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string? EmoteId;
 
-    [DataField("showInChat")]
+    [DataField]
     public bool ShowInChat;
 
     // JUSTIFICATION: Emoting is flavor, so same reason popup messages are not in here.

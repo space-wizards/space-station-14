@@ -12,6 +12,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Pulling
 {
@@ -23,6 +25,7 @@ namespace Content.Shared.Pulling
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
@@ -56,12 +59,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!_containerSystem.IsInSameOrNoContainer(puller, pulled))
+            if(_containerSystem.IsEntityInContainer(puller) || _containerSystem.IsEntityInContainer(pulled))
             {
                 return false;
             }
 
-            if (EntityManager.TryGetComponent<BuckleComponent?>(puller, out var buckle))
+            if (EntityManager.TryGetComponent(puller, out BuckleComponent? buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
                 if (buckle is { PullStrap: false, Buckled: true } && (buckle.LastEntityBuckledTo == pulled))
@@ -90,6 +93,9 @@ namespace Content.Shared.Pulling
 
         public bool TryStopPull(SharedPullableComponent pullable, EntityUid? user = null)
         {
+            if (_timing.ApplyingState)
+                return false;
+
             if (!pullable.BeingPulled)
             {
                 return false;
@@ -113,11 +119,11 @@ namespace Content.Shared.Pulling
 
         public bool TryStartPull(EntityUid puller, EntityUid pullable)
         {
-            if (!EntityManager.TryGetComponent<SharedPullerComponent?>(puller, out var pullerComp))
+            if (!EntityManager.TryGetComponent(puller, out SharedPullerComponent? pullerComp))
             {
                 return false;
             }
-            if (!EntityManager.TryGetComponent<SharedPullableComponent?>(pullable, out var pullableComp))
+            if (!EntityManager.TryGetComponent(pullable, out SharedPullableComponent? pullableComp))
             {
                 return false;
             }
@@ -127,6 +133,9 @@ namespace Content.Shared.Pulling
         // The main "start pulling" function.
         public bool TryStartPull(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
+            if (_timing.ApplyingState)
+                return false;
+
             if (puller.Pulling == pullable.Owner)
                 return true;
 
@@ -154,7 +163,7 @@ namespace Content.Shared.Pulling
             var oldPullable = puller.Pulling;
             if (oldPullable != null)
             {
-                if (EntityManager.TryGetComponent<SharedPullableComponent?>(oldPullable.Value, out var oldPullableComp))
+                if (EntityManager.TryGetComponent(oldPullable.Value, out SharedPullableComponent? oldPullableComp))
                 {
                     if (!TryStopPull(oldPullableComp))
                     {

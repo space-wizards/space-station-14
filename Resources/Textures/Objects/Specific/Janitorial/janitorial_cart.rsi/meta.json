@@ -20,6 +20,10 @@
             "directions": 4
         },
         {
+            "name": "cart_advmop",
+            "directions": 4
+        },
+        {
             "name": "cart_bucket",
             "directions": 4
         },

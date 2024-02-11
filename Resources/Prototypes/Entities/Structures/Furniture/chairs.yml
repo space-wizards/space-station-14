@@ -24,7 +24,7 @@
     noRot: true
   - type: Strap
     position: Stand
-    buckleOffset: "0,0.15"
+    buckleOffset: "0,-0.05"
   - type: Pullable
   - type: Damageable
     damageContainer: Inorganic
@@ -45,7 +45,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
   - type: StaticPrice
     price: 10
 
@@ -67,12 +67,22 @@
     node: chair
 
 - type: entity
+  name: chair
+  id: ChairGreyscale
+  parent: Chair
+  suffix: White
+  components:
+  - type: Sprite
+    state: chair-greyscale
+
+- type: entity
   name: stool
   id: Stool
   parent: SeatBase
   description: Apply butt.
   components:
   - type: Anchorable
+  - type: Rotatable
   - type: Sprite
     state: stool
   - type: Construction
@@ -102,6 +112,7 @@
   id: ChairOfficeLight
   parent: SeatBase
   components:
+  - type: Anchorable
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Sprite
@@ -180,7 +191,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -195,11 +206,9 @@
 - type: entity
   name: ritual chair
   id: ChairRitual
-  parent: SeatBase
+  parent: ChairWood
   description: Looks uncomfortable.
   components:
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: ritual
   - type: Construction
@@ -212,7 +221,6 @@
   name: meat chair
   description: Uncomfortably sweaty.
   components:
-  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: meat
@@ -223,11 +231,9 @@
 - type: entity
   name: cursed chair
   id: ChairCursed
-  parent: SeatBase
+  parent: ChairWood
   description: It's staring back.
   components:
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: cursed
   - type: Strap
@@ -244,8 +250,54 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Voice/Human/womanlaugh.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
     graph: RitualSeat
     node: chairCursed
+
+- type: entity
+  name: web chair
+  id: ChairWeb
+  description: For true web developers.
+  parent: SeatBase
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/Web/chair.rsi
+    state: icon
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 1
+  - type: Construction
+    graph: WebStructures
+    node: chair
 
 - type: entity
   parent: [SeatBase, BaseFoldable]
@@ -263,7 +315,7 @@
       map: ["foldedLayer"]
       visible: false
   - type: Item
-    size: 50
+    size: Huge
   - type: Appearance
   - type: MeleeWeapon
     damage:
@@ -282,3 +334,22 @@
   components:
   - type: Foldable
     folded: true
+
+- type: entity
+  name: steel bench
+  id: SteelBench
+  parent: SeatBase
+  description: A long chair made for a metro. Really standard design.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: steel-bench
+  - type: Construction
+    graph: Seat
+    node: chairSteelBench
+

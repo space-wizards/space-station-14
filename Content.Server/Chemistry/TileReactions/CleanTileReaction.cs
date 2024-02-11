@@ -1,5 +1,4 @@
-using System.Linq;
-using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -7,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Linq;
 
 namespace Content.Server.Chemistry.TileReactions;
 
@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.TileReactions;
 /// Turns all of the reagents on a puddle into water.
 /// </summary>
 [DataDefinition]
-public sealed class CleanTileReaction : ITileReaction
+public sealed partial class CleanTileReaction : ITileReaction
 {
     /// <summary>
     /// How much it costs to clean 1 unit of reagent.
@@ -28,13 +28,13 @@ public sealed class CleanTileReaction : ITileReaction
     /// <summary>
     /// What reagent to replace the tile conents with.
     /// </summary>
-    [DataField("reagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string ReplacementReagent = "Water";
 
     FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
-        var entities = entMan.System<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
+        var entities = entMan.System<EntityLookupSystem>().GetLocalEntitiesIntersecting(tile, 0f).ToArray();
         var puddleQuery = entMan.GetEntityQuery<PuddleComponent>();
         var solutionContainerSystem = entMan.System<SolutionContainerSystem>();
         // Multiply as the amount we can actually purge is higher than the react amount.
@@ -43,17 +43,16 @@ public sealed class CleanTileReaction : ITileReaction
         foreach (var entity in entities)
         {
             if (!puddleQuery.TryGetComponent(entity, out var puddle) ||
-                !solutionContainerSystem.TryGetSolution(entity, puddle.SolutionName, out var puddleSolution))
+                !solutionContainerSystem.TryGetSolution(entity, puddle.SolutionName, out var puddleSolution, out _))
             {
                 continue;
             }
 
-            var purgeable =
-                solutionContainerSystem.SplitSolutionWithout(entity, puddleSolution, purgeAmount, ReplacementReagent, reagent.ID);
+            var purgeable = solutionContainerSystem.SplitSolutionWithout(puddleSolution.Value, purgeAmount, ReplacementReagent, reagent.ID);
 
             purgeAmount -= purgeable.Volume;
 
-            solutionContainerSystem.TryAddSolution(entity, puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
+            solutionContainerSystem.TryAddSolution(puddleSolution.Value, new Solution(ReplacementReagent, purgeable.Volume));
 
             if (purgeable.Volume <= FixedPoint2.Zero)
                 break;

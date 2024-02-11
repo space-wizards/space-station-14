@@ -8,9 +8,9 @@ using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 
@@ -167,9 +167,9 @@ namespace Content.Server.Preferences.Managers
         }
 
         // Should only be called via UserDbDataManager.
-        public async Task LoadData(IPlayerSession session, CancellationToken cancel)
+        public async Task LoadData(ICommonSession session, CancellationToken cancel)
         {
-            if (!ShouldStorePrefs(session.ConnectedClient.AuthType))
+            if (!ShouldStorePrefs(session.Channel.AuthType))
             {
                 // Don't store data for guests.
                 var prefsData = new PlayerPrefData
@@ -202,17 +202,17 @@ namespace Content.Server.Preferences.Managers
                     {
                         MaxCharacterSlots = MaxCharacterSlots
                     };
-                    _netManager.ServerSendMessage(msg, session.ConnectedClient);
+                    _netManager.ServerSendMessage(msg, session.Channel);
                 }
             }
         }
 
-        public void OnClientDisconnected(IPlayerSession session)
+        public void OnClientDisconnected(ICommonSession session)
         {
             _cachedPlayerPrefs.Remove(session.UserId);
         }
 
-        public bool HavePreferencesLoaded(IPlayerSession session)
+        public bool HavePreferencesLoaded(ICommonSession session)
         {
             return _cachedPlayerPrefs.ContainsKey(session.UserId);
         }

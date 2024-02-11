@@ -26,8 +26,10 @@ public sealed partial class StoreSystem
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var uid) || !float.TryParse(args[2], out var id))
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid) || !float.TryParse(args[2], out var id))
+        {
             return;
+        }
 
         if (!TryComp<StoreComponent>(uid, out var store))
             return;
@@ -37,7 +39,7 @@ public sealed partial class StoreSystem
             { args[1], id }
         };
 
-        TryAddCurrency(currency, uid, store);
+        TryAddCurrency(currency, uid.Value, store);
     }
 
     private CompletionResult AddCurrencyCommandCompletions(IConsoleShell shell, string[] args)
@@ -53,7 +55,7 @@ public sealed partial class StoreSystem
             return CompletionResult.FromHintOptions(allStores, "<uid>");
         }
 
-        if (args.Length == 2 && EntityUid.TryParse(args[0], out var uid))
+        if (args.Length == 2 && NetEntity.TryParse(args[0], out var uidNet) && TryGetEntity(uidNet, out var uid))
         {
             if (TryComp<StoreComponent>(uid, out var store))
                 return CompletionResult.FromHintOptions(store.CurrencyWhitelist, "<currency prototype>");

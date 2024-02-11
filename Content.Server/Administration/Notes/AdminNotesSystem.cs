@@ -1,13 +1,13 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.EUI;
-using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Notes;
@@ -83,9 +83,10 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
                 var ui = new AdminMessageEui();
                 _euis.OpenEui(ui, e.Session);
                 ui.SetMessage(message);
+				
+				// Only send the message if they haven't seen it yet
+				_chat.DispatchServerMessage(e.Session, messageString);
             }
-            // Send the message anyway
-            _chat.DispatchServerMessage(e.Session, messageString);
         }
     }
 

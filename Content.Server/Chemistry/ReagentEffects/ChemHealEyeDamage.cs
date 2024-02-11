@@ -10,12 +10,12 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Heal or apply eye damage
     /// </summary>
     [UsedImplicitly]
-    public sealed class ChemHealEyeDamage : ReagentEffect
+    public sealed partial class ChemHealEyeDamage : ReagentEffect
     {
         /// <summary>
         /// How much eye damage to add.
         /// </summary>
-        [DataField("amount")]
+        [DataField]
         public int Amount = -1;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

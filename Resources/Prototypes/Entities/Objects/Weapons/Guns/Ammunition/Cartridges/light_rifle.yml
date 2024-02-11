@@ -17,8 +17,6 @@
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
   - type: SpentAmmoVisuals
-  - type: StaticPrice
-    price: 10
 
 - type: entity
   id: CartridgeLightRifle
@@ -27,14 +25,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifle
-
-- type: entity
-  id: CartridgeLightRifleHighVelocity
-  name: cartridge (.30 rifle high-velocity)
-  parent: BaseCartridgeLightRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifleHighVelocity
 
 - type: entity
   id: CartridgeLightRiflePractice
@@ -59,3 +49,12 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleIncendiary
+
+- type: entity
+  id: CartridgeLightRifleUranium
+  name: cartridge (.30 rifle uranium)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRifleUranium
+

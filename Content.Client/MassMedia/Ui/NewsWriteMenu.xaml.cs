@@ -9,9 +9,6 @@ namespace Content.Client.MassMedia.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class NewsWriteMenu : DefaultWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     public event Action? ShareButtonPressed;
     public event Action<int>? DeleteButtonPressed;
 

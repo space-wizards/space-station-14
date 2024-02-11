@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgStation at commit https://github.com/tgstation/tgstation/blob/4a367160a204db4c5b51c1f811a3b899f0bde3ea/icons/obj/stationobjs.dmi",
+    "copyright": "Taken from tgStation at commit https://github.com/tgstation/tgstation/blob/4a367160a204db4c5b51c1f811a3b899f0bde3ea/icons/obj/stationobjs.dmi and repaletted using old tg sprites by mirrorcult, portal-artifact recolored by TheShuEd",
     "states": [
         {
             "name": "portal-blue",
@@ -26,7 +26,7 @@
             ]
         },
         {
-            "name": "portal",
+            "name": "portal-artifact",
             "delays": [
                 [
                     0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,

@@ -8,7 +8,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class Computus : DefaultHolidayShouldCelebrate
+    public sealed partial class Computus : DefaultHolidayShouldCelebrate
     {
         [DataField("daysEarly")]
         private byte _daysEarly = 1;

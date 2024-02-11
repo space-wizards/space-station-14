@@ -29,26 +29,31 @@
           state: "smes-op1"
           shader: unshaded
     - type: Smes
-    - type: UpgradeBattery
-      maxChargeMultiplier: 2
-      baseMaxCharge: 8000000
     - type: Appearance
     - type: Battery
       startingCharge: 0
+      maxCharge: 8000000
     - type: ExaminableBattery
     - type: NodeContainer
       examinable: true
       nodes:
         input:
-          !type:CableDeviceNode
-          nodeGroupID: HVPower
-        output:
           !type:CableTerminalPortNode
           nodeGroupID: HVPower
-    - type: BatteryCharger
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: PowerMonitoringDevice
+      group: SMES
+      sourceNode: input
+      loadNode: output
+      collectionName: smes
+      sprite: Structures/Power/smes.rsi
+      state: static
+    - type: BatteryDischarger
       voltage: High
       node: output
-    - type: BatteryDischarger
+    - type: BatteryCharger
       voltage: High
       node: input
     - type: PowerNetworkBattery
@@ -63,8 +68,8 @@
       castShadows: false
     - type: WiresPanel
     - type: Wires
-      BoardName: "SMES"
-      LayoutId: SMES
+      boardName: wires-board-name-smes
+      layoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
@@ -78,6 +83,15 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: StrongMetallic
+    - type: BatterySensor
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-smes
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
 
 # SMES' in use
 

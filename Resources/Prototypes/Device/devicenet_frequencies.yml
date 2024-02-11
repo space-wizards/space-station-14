@@ -1,4 +1,14 @@
 - type: deviceFrequency
+  id: ShuttleTimer
+  name: device-frequency-prototype-name-shuttle-timer
+  frequency: 2450
+
+- type: deviceFrequency
+  id: ArrivalsShuttleTimer
+  name: device-frequency-prototype-name-arrivals-shuttle-timer
+  frequency: 2451
+
+- type: deviceFrequency
   id: SurveillanceCamera
   name: device-frequency-prototype-name-surveillance-camera
   frequency: 1926 # i only have so many of these, y'know?

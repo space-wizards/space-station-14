@@ -1,16 +1,30 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: UtensilBase
   abstract: true
   components:
   - type: Sprite
     sprite: Objects/Misc/utensils.rsi
-  - type: Item
+  - type: Item # TODO add inhand sprites for all utensils
     sprite: Objects/Misc/utensils.rsi
   - type: Tag
     tags:
-    - Trash
+    - Metal
   - type: SpaceGarbage
+
+- type: entity
+  parent: UtensilBase
+  id: UtensilBasePlastic
+  abstract: true
+  components:
+  - type: Utensil
+    breakChance: 0.20
+  - type: StaticPrice
+    price: 0
+  - type: Tag
+    tags:
+     - Plastic
+     - Trash
 
 - type: entity
   parent: UtensilBase
@@ -28,30 +42,23 @@
     types:
     - Fork
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     attackRate: 1.5
     damage:
       types:
         Piercing: 5
 
 - type: entity
-  parent: UtensilBase
+  parent: UtensilBasePlastic
   id: ForkPlastic
   name: plastic fork
   description: An eating utensil, perfect for stabbing.
   components:
   - type: Sprite
     state: plastic_fork
-  - type: Item
   - type: Utensil
     types:
     - Fork
-    breakChance: 0.20
-  - type: Tag
-    tags:
-      - Plastic
-      - Trash
-  - type: StaticPrice
-    price: 0
 
 - type: entity
   parent: UtensilBase
@@ -59,9 +66,6 @@
   name: spoon
   description: There is no spoon.
   components:
-  - type: Tag
-    tags:
-    - Metal
   - type: Sprite
     state: spoon
   - type: Item
@@ -70,21 +74,20 @@
     types:
     - Spoon
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     attackRate: 1.5
     damage:
       types:
         Blunt: 1
+  - type: Shovel
+    speedModifier: 0.1 # you can try
 
 - type: entity
-  parent: UtensilBase
+  parent: UtensilBasePlastic
   id: SpoonPlastic
   name: plastic spoon
   description: There is no spoon.
   components:
-  - type: Tag
-    tags:
-    - Plastic
-    - Trash
   - type: Sprite
     state: plastic_spoon
   - type: Item
@@ -92,7 +95,8 @@
   - type: Utensil
     types:
     - Spoon
-    breakChance: 0.20
+  - type: Shovel
+    speedModifier: 0.1 # you can try
 
 - type: entity
   parent: UtensilBase
@@ -100,16 +104,8 @@
   name: plastic knife
   description: That's not a knife. This is a knife.
   components:
-  - type: Tag
-    tags:
-    - Plastic
-    - Trash
   - type: Sprite
     state: plastic_knife
-  - type: Item
   - type: Utensil
     types:
     - Knife
-    breakChance: 0.20
-  - type: StaticPrice
-    price: 0

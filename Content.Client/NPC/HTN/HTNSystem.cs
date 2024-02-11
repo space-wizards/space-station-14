@@ -46,7 +46,7 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnHTNMessage(HTNMessage ev)
     {
-        if (!TryComp<HTNComponent>(ev.Uid, out var htn))
+        if (!TryComp<HTNComponent>(GetEntity(ev.Uid), out var htn))
             return;
 
         htn.DebugText = ev.Text;

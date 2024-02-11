@@ -46,12 +46,12 @@ namespace Content.Server.Speech.Muting
 
         private void OnSpeakAttempt(EntityUid uid, MutedComponent component, SpeakAttemptEvent args)
         {
+            // TODO something better than this.
+
             if (HasComp<MimePowersComponent>(uid))
                 _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
-
-            if (HasComp<PuppetDummyComponent>(uid))
-                _popupSystem.PopupEntity(Loc.GetString("dummy-cant-speak"), uid, uid);
-
+            else if (HasComp<VentriloquistPuppetComponent>(uid))
+                _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-cant-speak"), uid, uid);
             else
                 _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, uid);
 

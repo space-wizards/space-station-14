@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
 
-public sealed class DoorBoltLightWireAction : ComponentWireAction<DoorBoltComponent>
+public sealed partial class DoorBoltLightWireAction : ComponentWireAction<DoorBoltComponent>
 {
     public override Color Color { get; set; } = Color.Lime;
     public override string Name { get; set; } = "wire-name-bolt-light";

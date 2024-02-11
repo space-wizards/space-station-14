@@ -1,12 +1,12 @@
+using System.Linq;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.FixedPoint;
-using System.Linq;
 
 namespace Content.Shared.Store;
 
@@ -17,8 +17,12 @@ namespace Content.Shared.Store;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public class ListingData : IEquatable<ListingData>, ICloneable
+public partial class ListingData : IEquatable<ListingData>, ICloneable
 {
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
     /// <summary>
     /// The name of the listing. If empty, uses the entity's name (if present)
     /// </summary>
@@ -71,8 +75,22 @@ public class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The action that is given when the listing is purchased.
     /// </summary>
-    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ProductAction;
+
+    /// <summary>
+    ///     The listing ID of the related upgrade listing. Can be used to link a <see cref="ProductAction"/> to an
+    ///         upgrade or to use standalone as an upgrade
+    /// </summary>
+    [DataField]
+    public ProtoId<ListingPrototype>? ProductUpgradeID;
+
+    /// <summary>
+    ///     Keeps track of the current action entity this is tied to, for action upgrades
+    /// </summary>
+    [DataField]
+    [NonSerialized]
+    public EntityUid? ProductActionEntity;
 
     /// <summary>
     /// The event that is broadcast when the listing is purchased.
@@ -85,6 +103,12 @@ public class ListingData : IEquatable<ListingData>, ICloneable
     /// </summary>
     public int PurchaseAmount = 0;
 
+    /// <summary>
+    /// Used to delay purchase of some items.
+    /// </summary>
+    [DataField("restockTime")]
+    public int RestockTime;
+
     public bool Equals(ListingData? listing)
     {
         if (listing == null)
@@ -96,7 +120,8 @@ public class ListingData : IEquatable<ListingData>, ICloneable
             Description != listing.Description ||
             ProductEntity != listing.ProductEntity ||
             ProductAction != listing.ProductAction ||
-            ProductEvent != listing.ProductEvent)
+            ProductEvent != listing.ProductEvent ||
+            RestockTime != listing.RestockTime)
             return false;
 
         if (Icon != null && !Icon.Equals(listing.Icon))
@@ -126,6 +151,7 @@ public class ListingData : IEquatable<ListingData>, ICloneable
     {
         return new ListingData
         {
+            ID = ID,
             Name = Name,
             Description = Description,
             Categories = Categories,
@@ -135,8 +161,11 @@ public class ListingData : IEquatable<ListingData>, ICloneable
             Priority = Priority,
             ProductEntity = ProductEntity,
             ProductAction = ProductAction,
+            ProductUpgradeID = ProductUpgradeID,
+            ProductActionEntity = ProductActionEntity,
             ProductEvent = ProductEvent,
             PurchaseAmount = PurchaseAmount,
+            RestockTime = RestockTime,
         };
     }
 }
@@ -148,9 +177,7 @@ public class ListingData : IEquatable<ListingData>, ICloneable
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class ListingPrototype : ListingData, IPrototype
+public sealed partial class ListingPrototype : ListingData, IPrototype
 {
-    [ViewVariables]
-    [IdDataField]
-    public string ID { get; } = default!;
+
 }

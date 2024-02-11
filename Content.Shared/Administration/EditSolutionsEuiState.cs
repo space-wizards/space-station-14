@@ -1,19 +1,21 @@
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
-using Content.Shared.Chemistry.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
     public sealed class EditSolutionsEuiState : EuiStateBase
     {
-        public readonly EntityUid Target;
-        public readonly Dictionary<string, Solution>? Solutions;
+        public readonly NetEntity Target;
+        public readonly List<(string, NetEntity)>? Solutions;
+        public readonly GameTick Tick;
 
-        public EditSolutionsEuiState(EntityUid target, Dictionary<string, Solution>? solutions)
+        public EditSolutionsEuiState(NetEntity target, List<(string, NetEntity)>? solutions, GameTick tick)
         {
             Target = target;
             Solutions = solutions;
+            Tick = tick;
         }
     }
 }

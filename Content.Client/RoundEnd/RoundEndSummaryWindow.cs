@@ -33,11 +33,11 @@ namespace Content.Client.RoundEnd
             RoundId = roundId;
             var roundEndTabs = new TabContainer();
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
-            roundEndTabs.AddChild(MakePlayerManifestoTab(info));
+            roundEndTabs.AddChild(MakePlayerManifestTab(info));
 
             Contents.AddChild(roundEndTabs);
 
-            OpenCentered();
+            OpenCenteredRight();
             MoveToFront();
         }
 
@@ -90,12 +90,12 @@ namespace Content.Client.RoundEnd
             return roundEndSummaryTab;
         }
 
-        private BoxContainer MakePlayerManifestoTab(RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
+        private BoxContainer MakePlayerManifestTab(RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
         {
             var playerManifestTab = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
-                Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
+                Name = Loc.GetString("round-end-summary-window-player-manifest-tab-title")
             };
 
             var playerInfoContainerScrollbox = new ScrollContainer
@@ -125,16 +125,15 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                if (_entityManager.TryGetComponent(playerInfo.PlayerEntityUid, out SpriteComponent? sprite))
+                if (playerInfo.PlayerNetEntity != null)
                 {
-                    hBox.AddChild(new SpriteView
-                    {
-                        Sprite = sprite,
-                        OverrideDirection = Direction.South,
-                        VerticalAlignment = VAlignment.Center,
-                        SetSize = new Vector2(32, 32),
-                        VerticalExpand = true,
-                    });
+                    hBox.AddChild(new SpriteView(playerInfo.PlayerNetEntity.Value, _entityManager)
+                        {
+                            OverrideDirection = Direction.South,
+                            VerticalAlignment = VAlignment.Center,
+                            SetSize = new Vector2(32, 32),
+                            VerticalExpand = true,
+                        });
                 }
 
                 if (playerInfo.PlayerICName != null)

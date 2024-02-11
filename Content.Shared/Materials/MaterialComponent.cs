@@ -6,7 +6,7 @@ namespace Content.Shared.Materials;
 /// The material amounts themselves are in <see cref="PhysicalCompositionComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class MaterialComponent : Component
+public sealed partial class MaterialComponent : Component
 {
 
 }

@@ -1,68 +1,72 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Materials;
 
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedMaterialStorageSystem))]
-[RegisterComponent, NetworkedComponent]
-public sealed class MaterialStorageComponent : Component
+public sealed partial class MaterialStorageComponent : Component
 {
-    [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
-    public Dictionary<string, int> Storage { get; set; } = new();
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<MaterialPrototype>, int> Storage { get; set; } = new();
 
     /// <summary>
     /// Whether or not interacting with the materialstorage inserts the material in hand.
     /// </summary>
-    [DataField("insertOnInteract")]
+    [DataField]
     public bool InsertOnInteract = true;
 
     /// <summary>
     ///     How much material the storage can store in total.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("storageLimit")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public int? StorageLimit;
 
     /// <summary>
     /// Whitelist for specifying the kind of items that can be insert into this entity.
     /// </summary>
-    [DataField("whitelist")]
-    public EntityWhitelist? EntityWhitelist;
+    [DataField]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Whether or not to drop contained materials when deconstructed.
     /// </summary>
-    [DataField("dropOnDeconstruct")]
+    [DataField]
     public bool DropOnDeconstruct = true;
 
     /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
-    [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
-    public List<string>? MaterialWhiteList;
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<MaterialPrototype>>? MaterialWhiteList;
 
     /// <summary>
     /// Whether or not the visualization for the insertion animation
     /// should ignore the color of the material being inserted.
     /// </summary>
-    [DataField("ignoreColor")]
+    [DataField]
     public bool IgnoreColor;
 
     /// <summary>
     /// The sound that plays when inserting an item into the storage
     /// </summary>
-    [DataField("insertingSound")]
+    [DataField]
     public SoundSpecifier? InsertingSound;
 
     /// <summary>
     /// How long the inserting animation will play
     /// </summary>
-    [DataField("insertionTime")]
+    [DataField]
     public TimeSpan InsertionTime = TimeSpan.FromSeconds(0.79f); // 0.01 off for animation timing
+
+    /// <summary>
+    /// Whether the storage can eject the materials stored within it
+    /// </summary>
+    [DataField]
+    public bool CanEjectStoredMaterials = true;
 }
 
 [Serializable, NetSerializable]
@@ -94,19 +98,24 @@ public record struct GetMaterialWhitelistEvent(EntityUid Storage)
 {
     public readonly EntityUid Storage = Storage;
 
-    public List<string> Whitelist = new();
+    public List<ProtoId<MaterialPrototype>> Whitelist = new();
 }
 
+/// <summary>
+/// Message sent to try and eject a material from a storage
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class MaterialStorageComponentState : ComponentState
+public sealed class EjectMaterialMessage : EntityEventArgs
 {
-    public Dictionary<string, int> Storage;
+    public NetEntity Entity;
+    public string Material;
+    public int SheetsToExtract;
 
-    public List<string>? MaterialWhitelist;
-
-    public MaterialStorageComponentState(Dictionary<string, int> storage, List<string>? materialWhitelist)
+    public EjectMaterialMessage(NetEntity entity, string material, int sheetsToExtract)
     {
-        Storage = storage;
-        MaterialWhitelist = materialWhitelist;
+        Entity = entity;
+        Material = material;
+        SheetsToExtract = sheetsToExtract;
     }
 }
+

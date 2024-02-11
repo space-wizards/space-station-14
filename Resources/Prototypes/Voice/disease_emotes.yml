@@ -43,8 +43,3 @@
   id: Snore
   category: Vocal
   chatMessages: [snores]
-
-- type: emote
-  id: Honk
-  category: Vocal
-  chatMessages: [honks]

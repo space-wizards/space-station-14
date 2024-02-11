@@ -1,6 +1,9 @@
-﻿using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Whitelist;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Power.Generator;
 
@@ -8,17 +11,31 @@ namespace Content.Server.Power.Generator;
 /// This is used for chemical fuel input into generators.
 /// </summary>
 [RegisterComponent, Access(typeof(GeneratorSystem))]
-public sealed class ChemicalFuelGeneratorAdapterComponent : Component
+public sealed partial class ChemicalFuelGeneratorAdapterComponent : Component
 {
     /// <summary>
-    /// The acceptable list of input entities.
+    /// A dictionary relating a reagent to accept as fuel to a value to multiply reagent amount by to get fuel amount.
     /// </summary>
-    [DataField("whitelist")]
-    public EntityWhitelist? Whitelist;
+    [DataField]
+    public Dictionary<ProtoId<ReagentPrototype>, float> Reagents = new();
 
     /// <summary>
-    /// The conversion factor for different chems you can put in.
+    /// The name of <see cref="Solution"/>.
     /// </summary>
-    [DataField("chemConversionFactors", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<float, ReagentPrototype>))]
-    public Dictionary<string, float> ChemConversionFactors = default!;
+    [DataField("solution")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string SolutionName = "tank";
+
+    /// <summary>
+    /// The solution on the <see cref="SolutionContainerManagerComponent"/> to use.
+    /// </summary>
+    [DataField("solutionRef")]
+    public Entity<SolutionComponent>? Solution = null;
+
+    /// <summary>
+    /// How much reagent (can be fractional) is left in the generator.
+    /// Stored in units of <see cref="FixedPoint2.Epsilon"/>.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<ReagentPrototype>, float> FractionalReagents = new();
 }

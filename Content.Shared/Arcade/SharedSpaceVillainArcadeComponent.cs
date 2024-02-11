@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Arcade
 {
-    public abstract class SharedSpaceVillainArcadeComponent : Component
+    public abstract partial class SharedSpaceVillainArcadeComponent : Component
     {
         [Serializable, NetSerializable]
         public enum Indicators

@@ -4,12 +4,15 @@ using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Prying.Systems;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -36,9 +39,10 @@ namespace Content.Server.Construction
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent,
-                new []{typeof(AnchorableSystem)},
+                new []{typeof(AnchorableSystem), typeof(PryingSystem), typeof(WeldableSystem)},
                 new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, PartAssemblyPartInsertedEvent>(EnqueueEvent);
         }
 
         /// <summary>
@@ -238,7 +242,7 @@ namespace Content.Server.Construction
                     interactDoAfter.User,
                     interactDoAfter.Used!.Value,
                     uid,
-                    interactDoAfter.ClickLocation);
+                    GetCoordinates(interactDoAfter.ClickLocation));
 
                 doAfterState = DoAfterState.Completed;
             }
@@ -279,9 +283,9 @@ namespace Content.Server.Construction
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
                     {
-                        var doAfterEv = new ConstructionInteractDoAfterEvent(interactUsing);
+                        var doAfterEv = new ConstructionInteractDoAfterEvent(EntityManager, interactUsing);
 
-                        var doAfterEventArgs = new DoAfterArgs(interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
+                        var doAfterEventArgs = new DoAfterArgs(EntityManager, interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
                         {
                             BreakOnDamage = false,
                             BreakOnTargetMove = true,
@@ -325,7 +329,7 @@ namespace Content.Server.Construction
                         construction.Containers.Add(store);
 
                         // The container doesn't necessarily need to exist, so we ensure it.
-                        _container.EnsureContainer<Container>(uid, store).Insert(insert);
+                        _container.Insert(insert, _container.EnsureContainer<Container>(uid, store));
                     }
                     else
                     {
@@ -365,7 +369,7 @@ namespace Content.Server.Construction
                         uid,
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
-                        new ConstructionInteractDoAfterEvent(interactUsing),
+                        new ConstructionInteractDoAfterEvent(EntityManager, interactUsing),
                         out var doAfter);
 
                     return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
@@ -376,16 +380,45 @@ namespace Content.Server.Construction
                     if (ev is not OnTemperatureChangeEvent)
                         break;
 
-                    if (TryComp<TemperatureComponent>(uid, out var tempComp))
-                    {
-                        if ((!temperatureChangeStep.MinTemperature.HasValue || tempComp.CurrentTemperature >= temperatureChangeStep.MinTemperature.Value) &&
-                            (!temperatureChangeStep.MaxTemperature.HasValue || tempComp.CurrentTemperature <= temperatureChangeStep.MaxTemperature.Value))
-                        {
-                            return HandleResult.True;
-                        }
-                    }
-                    return HandleResult.False;
+                    // Some things, like microwaves, might need to block the temperature construction step from kicking in, or override it entirely.
+                    var tempEvent = new OnConstructionTemperatureEvent();
+                    RaiseLocalEvent(uid, tempEvent, true);
 
+                    if (tempEvent.Result is not null)
+                        return tempEvent.Result.Value;
+
+                    // prefer using InternalTemperature since that's more accurate for cooking.
+                    float temp;
+                    if (TryComp<InternalTemperatureComponent>(uid, out var internalTemp))
+                    {
+                        temp = internalTemp.Temperature;
+                    }
+                    else if (TryComp<TemperatureComponent>(uid, out var tempComp))
+                    {
+                        temp = tempComp.CurrentTemperature;
+                    }
+                    else
+                    {
+                        return HandleResult.False;
+                    }
+
+                    if ((!temperatureChangeStep.MinTemperature.HasValue || temp >= temperatureChangeStep.MinTemperature.Value) &&
+                        (!temperatureChangeStep.MaxTemperature.HasValue || temp <= temperatureChangeStep.MaxTemperature.Value))
+                    {
+                        return HandleResult.True;
+                    }
+
+                    return HandleResult.False;
+                }
+
+                case PartAssemblyConstructionGraphStep partAssemblyStep:
+                {
+                    if (ev is not PartAssemblyPartInsertedEvent)
+                        break;
+
+                    if (partAssemblyStep.Condition(uid, EntityManager))
+                        return HandleResult.True;
+                    return HandleResult.False;
                 }
 
                 #endregion
@@ -562,34 +595,39 @@ namespace Content.Server.Construction
             /// </summary>
             Completed
         }
+    }
+
+    /// <summary>
+    ///     Specifies the result after attempting to handle a specific step with an event.
+    /// </summary>
+    public enum HandleResult : byte
+    {
+        /// <summary>
+        ///     The interaction wasn't handled or validated.
+        /// </summary>
+        False,
 
         /// <summary>
-        ///     Specifies the result after attempting to handle a specific step with an event.
+        ///     The interaction would be handled successfully. Nothing was modified.
         /// </summary>
-        private enum HandleResult : byte
-        {
-            /// <summary>
-            ///     The interaction wasn't handled or validated.
-            /// </summary>
-            False,
+        Validated,
 
-            /// <summary>
-            ///     The interaction would be handled successfully. Nothing was modified.
-            /// </summary>
-            Validated,
+        /// <summary>
+        ///     The interaction was handled successfully.
+        /// </summary>
+        True,
 
-            /// <summary>
-            ///     The interaction was handled successfully.
-            /// </summary>
-            True,
+        /// <summary>
+        ///     The interaction is waiting on a DoAfter now.
+        ///     This means the interaction started the DoAfter.
+        /// </summary>
+        DoAfter,
+    }
 
-            /// <summary>
-            ///     The interaction is waiting on a DoAfter now.
-            ///     This means the interaction started the DoAfter.
-            /// </summary>
-            DoAfter,
-        }
+    #endregion
 
-        #endregion
+    public sealed class OnConstructionTemperatureEvent : HandledEntityEventArgs
+    {
+        public HandleResult? Result;
     }
 }

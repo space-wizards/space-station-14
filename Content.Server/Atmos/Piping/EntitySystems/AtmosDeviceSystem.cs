@@ -11,10 +11,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
-        private readonly AtmosDeviceUpdateEvent _updateEvent = new();
+        private float _timer;
 
-        private float _timer = 0f;
-        private readonly HashSet<AtmosDeviceComponent> _joinedDevices = new();
+        // Set of atmos devices that are off-grid but have JoinSystem set.
+        private readonly HashSet<Entity<AtmosDeviceComponent>> _joinedDevices = new();
+
+        private static AtmosDeviceDisabledEvent _disabledEv = new();
+        private static AtmosDeviceEnabledEvent _enabledEv = new();
 
         public override void Initialize()
         {
@@ -27,45 +30,30 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
 
-        private bool CanJoinAtmosphere(AtmosDeviceComponent component, TransformComponent transform)
+        public void JoinAtmosphere(Entity<AtmosDeviceComponent> ent)
         {
-            return (!component.RequireAnchored || transform.Anchored) && transform.GridUid != null;
-        }
+            var component = ent.Comp;
+            var transform = Transform(ent);
 
-        public void JoinAtmosphere(AtmosDeviceComponent component)
-        {
-            var transform = Transform(component.Owner);
-
-            if (!CanJoinAtmosphere(component, transform))
-            {
+            if (component.RequireAnchored && !transform.Anchored)
                 return;
-            }
 
-            // TODO: low-hanging fruit for perf improvements around here
+            // Attempt to add device to a grid atmosphere.
+            bool onGrid = (transform.GridUid != null) && _atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component);
 
-            // GridUid is not null because we can join atmosphere.
-            // We try to add the device to a valid atmosphere, and if we can't, try to add it to the entity system.
-            if (!_atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component))
+            if (!onGrid && component.JoinSystem)
             {
-                if (component.JoinSystem)
-                {
-                    _joinedDevices.Add(component);
-                    component.JoinedSystem = true;
-                }
-                else
-                {
-                    return;
-                }
+                _joinedDevices.Add(ent);
+                component.JoinedSystem = true;
             }
-
 
             component.LastProcess = _gameTiming.CurTime;
-
-            RaiseLocalEvent(component.Owner, new AtmosDeviceEnabledEvent(), false);
+            RaiseLocalEvent(ent, ref _enabledEv);
         }
 
-        public void LeaveAtmosphere(AtmosDeviceComponent component)
+        public void LeaveAtmosphere(Entity<AtmosDeviceComponent> ent)
         {
+            var component = ent.Comp;
             // Try to remove the component from an atmosphere, and if not
             if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, component))
             {
@@ -76,47 +64,51 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             if (component.JoinedSystem)
             {
-                _joinedDevices.Remove(component);
+                _joinedDevices.Remove(ent);
                 component.JoinedSystem = false;
             }
 
             component.LastProcess = TimeSpan.Zero;
-            RaiseLocalEvent(component.Owner, new AtmosDeviceDisabledEvent(), false);
+            RaiseLocalEvent(ent, ref _disabledEv);
         }
 
-        public void RejoinAtmosphere(AtmosDeviceComponent component)
+        public void RejoinAtmosphere(Entity<AtmosDeviceComponent> component)
         {
             LeaveAtmosphere(component);
             JoinAtmosphere(component);
         }
 
-        private void OnDeviceInitialize(EntityUid uid, AtmosDeviceComponent component, ComponentInit args)
+        private void OnDeviceInitialize(Entity<AtmosDeviceComponent> ent, ref ComponentInit args)
         {
-            JoinAtmosphere(component);
+            JoinAtmosphere(ent);
         }
 
-        private void OnDeviceShutdown(EntityUid uid, AtmosDeviceComponent component, ComponentShutdown args)
+        private void OnDeviceShutdown(Entity<AtmosDeviceComponent> ent, ref ComponentShutdown args)
         {
-            LeaveAtmosphere(component);
+            LeaveAtmosphere(ent);
         }
 
-        private void OnDeviceAnchorChanged(EntityUid uid, AtmosDeviceComponent component, ref AnchorStateChangedEvent args)
+        private void OnDeviceAnchorChanged(Entity<AtmosDeviceComponent> ent, ref AnchorStateChangedEvent args)
         {
             // Do nothing if the component doesn't require being anchored to function.
-            if (!component.RequireAnchored)
+            if (!ent.Comp.RequireAnchored)
                 return;
 
             if (args.Anchored)
-                JoinAtmosphere(component);
+                JoinAtmosphere(ent);
             else
-                LeaveAtmosphere(component);
+                LeaveAtmosphere(ent);
         }
 
-        private void OnDeviceParentChanged(EntityUid uid, AtmosDeviceComponent component, ref EntParentChangedMessage args)
+        private void OnDeviceParentChanged(Entity<AtmosDeviceComponent> ent, ref EntParentChangedMessage args)
         {
-            RejoinAtmosphere(component);
+            RejoinAtmosphere(ent);
         }
 
+        /// <summary>
+        /// Update atmos devices that are off-grid but have JoinSystem set. For devices updates when
+        /// a device is on a grid, see AtmosphereSystem:UpdateProcessing().
+        /// </summary>
         public override void Update(float frameTime)
         {
             _timer += frameTime;
@@ -127,10 +119,11 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             _timer -= _atmosphereSystem.AtmosTime;
 
             var time = _gameTiming.CurTime;
+            var ev = new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime);
             foreach (var device in _joinedDevices)
             {
-                RaiseLocalEvent(device.Owner, _updateEvent, false);
-                device.LastProcess = time;
+                RaiseLocalEvent(device, ref ev);
+                device.Comp.LastProcess = time;
             }
         }
     }

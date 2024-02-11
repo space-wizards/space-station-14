@@ -1,18 +1,8 @@
-﻿using Content.Shared.Light.Component;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
+using Content.Shared.Light.Components;
 
 namespace Content.Client.Light.Components;
 
 [RegisterComponent]
-[NetworkedComponent]
-public sealed class EmergencyLightComponent : SharedEmergencyLightComponent
+public sealed partial class EmergencyLightComponent : SharedEmergencyLightComponent
 {
-}
-
-public enum EmergencyLightVisualLayers
-{
-    Base,
-    LightOff,
-    LightOn,
 }

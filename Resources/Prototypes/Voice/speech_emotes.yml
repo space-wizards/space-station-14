@@ -52,6 +52,20 @@
     - giggles!
     - giggling
     - giggled
+    - chortle
+    - chortle.
+    - chortle!
+    - chortles
+    - chortles.
+    - chortles!
+    - chortling
+    - chortling.
+    - chortling!
+
+- type: emote
+  id: Honk
+  category: Vocal
+  chatMessages: [honks]
 
 - type: emote
   id: Sigh
@@ -94,6 +108,14 @@
     - cries
     - cries.
     - cries!
+    - sob
+    - sob.
+    - sobs
+    - sobs.
+    - sobs!
+    - sobbing
+    - sobbing.
+    - sobbing!
 
 - type: emote
   id: Squish
@@ -109,6 +131,48 @@
     - squishes
     - squishes.
     - squishes!
+
+- type: emote
+  id: Chitter
+  category: Vocal
+  chatMessages: [chitters.]
+  chatTriggers:
+   - chitter
+   - chitter.
+   - chitter!
+   - chitters
+   - chitters.
+   - chitters!
+   - chittered
+   - chittered.
+   - chittered!
+
+- type: emote
+  id: Squeak
+  category: Vocal
+  chatMessages: [squeaks.]
+  chatTriggers:
+   - squeak
+   - squeak.
+   - squeak!
+   - squeaks
+   - squeaks.
+   - squeaks!
+   - squeaked
+   - squeaked.
+   - squeaked!
+
+- type: emote
+  id: Click
+  category: Vocal
+  chatMessages: [click.]
+  chatTriggers:
+   - click
+   - click.
+   - click!
+   - clicks
+   - clicks.
+   - clicks!
 
 # hand emotes
 - type: emote
@@ -154,3 +218,26 @@
     - salutes.
     - salutes!
 
+- type: emote
+  id: DefaultDeathgasp
+  chatMessages: ["emote-deathgasp"]
+  chatTriggers:
+  - deathgasp
+
+- type: emote
+  id: Buzz
+  category: Vocal
+  chatMessages: [buzz!]
+  chatTriggers:
+    - buzzing
+    - buzzing!
+    - buzzing.
+    - buzz
+    - buzz.
+    - buzz!
+    - buzzed
+    - buzzed.
+    - buzzed!
+    - buzzes
+    - buzzes.
+    - buzzes!

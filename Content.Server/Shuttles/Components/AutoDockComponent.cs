@@ -5,7 +5,7 @@ namespace Content.Server.Shuttles.Components;
 /// We track it because checking every dock constantly would be expensive.
 /// </summary>
 [RegisterComponent]
-public sealed class AutoDockComponent : Component
+public sealed partial class AutoDockComponent : Component
 {
     /// <summary>
     /// Track who has requested autodocking so we can know when to be removed.

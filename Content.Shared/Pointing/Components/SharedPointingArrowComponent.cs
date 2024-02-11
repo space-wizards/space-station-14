@@ -1,13 +1,22 @@
 using Robust.Shared.GameStates;
+using System.Numerics;
 
 namespace Content.Shared.Pointing.Components;
 
 [NetworkedComponent]
-public abstract class SharedPointingArrowComponent : Component
+public abstract partial class SharedPointingArrowComponent : Component
 {
+    /// <summary>
+    /// The position of the sender when the point began.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Vector2 StartPosition;
+
     /// <summary>
     /// When the pointing arrow ends
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("endTime")]
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan EndTime;
 }

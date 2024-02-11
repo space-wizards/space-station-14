@@ -10,15 +10,15 @@ namespace Content.Client.Instruments.UI
 {
     public sealed class InstrumentBoundUserInterface : BoundUserInterface
     {
-        [Dependency] public readonly IEntityManager Entities = default!;
+        public IEntityManager Entities => EntMan;
         [Dependency] public readonly IMidiManager MidiManager = default!;
         [Dependency] public readonly IFileDialogManager FileDialogManager = default!;
         [Dependency] public readonly IPlayerManager PlayerManager = default!;
         [Dependency] public readonly ILocalizationManager Loc = default!;
 
-        public readonly InstrumentSystem Instruments = default!;
-        public readonly ActionBlockerSystem ActionBlocker = default!;
-        public readonly SharedInteractionSystem Interactions = default!;
+        public readonly InstrumentSystem Instruments;
+        public readonly ActionBlockerSystem ActionBlocker;
+        public readonly SharedInteractionSystem Interactions;
 
         [ViewVariables] private InstrumentMenu? _instrumentMenu;
         [ViewVariables] private BandMenu? _bandMenu;
@@ -40,7 +40,7 @@ namespace Content.Client.Instruments.UI
             switch (message)
             {
                 case InstrumentBandResponseBuiMessage bandRx:
-                    _bandMenu?.Populate(bandRx.Nearby);
+                    _bandMenu?.Populate(bandRx.Nearby, EntMan);
                     break;
                 default:
                     break;
@@ -49,7 +49,7 @@ namespace Content.Client.Instruments.UI
 
         protected override void Open()
         {
-            if (!EntMan.TryGetComponent<InstrumentComponent?>(Owner, out var instrument))
+            if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
                 return;
 
             Instrument = instrument;

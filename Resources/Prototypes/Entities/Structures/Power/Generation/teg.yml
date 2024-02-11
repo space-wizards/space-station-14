@@ -1,0 +1,200 @@
+﻿- type: entity
+  id: TegCenter
+  name: thermo-electric generator
+  description: A high efficiency generator that uses energy transfer between hot and cold gases to produce electricity.
+  parent: BaseMachinePowered
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Transform
+      noRot: false
+    - type: Sprite
+      sprite: Structures/Power/Generation/teg.rsi
+      layers:
+        - state: teg
+        - state: teg_mid
+          shader: unshaded
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: teg-op1
+          shader: unshaded
+          visible: false
+          map: [ "enum.TegVisualLayers.PowerOutput" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+        enum.TegVisuals.PowerOutput:
+          enum.TegVisualLayers.PowerOutput:
+            0: { visible: false }
+            1: { visible: true, state: teg-op1 }
+            2: { visible: true, state: teg-op2 }
+            3: { visible: true, state: teg-op3 }
+            4: { visible: true, state: teg-op4 }
+            5: { visible: true, state: teg-op5 }
+            6: { visible: true, state: teg-op6 }
+            7: { visible: true, state: teg-op7 }
+            8: { visible: true, state: teg-op8 }
+            9: { visible: true, state: teg-op9 }
+            10: { visible: true, state: teg-op10 }
+            11: { visible: true, state: teg-op11 }
+
+    - type: Anchorable
+    - type: Pullable
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        teg:
+          !type:TegNodeGenerator
+          nodeGroupID: Teg
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNode: output
+      sprite: Structures/Power/Generation/teg.rsi
+      state: static
+    - type: Rotatable
+
+    # Note that only the TEG center is an AtmosDevice.
+    # It fires processing on behalf of its connected circulators.
+    - type: AtmosDevice
+    - type: TegGenerator
+
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-teg
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+
+    - type: PowerSupplier
+      # Have practically irrelevant supply ramping.
+      # Ramping is effectively implemented by the TEG manually,
+      # due to how power output is handled.
+      supplyRampRate: 100000000
+      supplyRampTolerance: 10000000000
+
+    - type: Appearance
+    - type: ApcPowerReceiver
+      powerLoad: 1000
+
+    - type: LitOnPowered
+    - type: PointLight
+      enabled: false
+      castShadows: false
+      radius: 1.5
+      color: "#FFAA00"
+
+    - type: AmbientSound
+      volume: -4
+      range: 6
+      enabled: false
+      sound:
+        path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+    - type: GuideHelp
+      guides: [ TEG, Power ]
+    - type: StealTarget
+      stealGroup: Teg
+
+- type: entity
+  id: TegCirculator
+  name: circulator
+  description: Passes gas through the thermo-electric generator to exchange heat. Has an inlet and outlet port.
+  parent: BaseMachine
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Transform
+      noRot: false
+
+    # visuals
+    - type: Sprite
+      sprite: Structures/Power/Generation/teg.rsi
+      layers:
+        - state: circ-0
+          map: [ "enum.TegVisualLayers.CirculatorBase" ]
+        - state: circ-0-light
+          shader: unshaded
+          map: [ "enum.TegVisualLayers.CirculatorLight" ]
+
+    - type: GenericVisualizer
+      visuals:
+        enum.TegVisuals.CirculatorPower:
+          enum.TegVisualLayers.CirculatorLight:
+            True: { visible: true }
+            False: { visible: false }
+        enum.TegVisuals.CirculatorSpeed:
+          enum.TegVisualLayers.CirculatorBase:
+            SpeedStill: { state: circ-0 }
+            SpeedSlow: { state: circ-1 }
+            SpeedFast: { state: circ-2 }
+          enum.TegVisualLayers.CirculatorLight:
+            SpeedStill: { state: circ-0-light }
+            SpeedSlow: { state: circ-1-light }
+            SpeedFast: { state: circ-2-light }
+
+    - type: Appearance
+    - type: PointLight
+      enabled: false
+      castShadows: false
+      radius: 1.5
+      color: "#CC00FF"
+
+    # tags
+    - type: Tag
+      tags:
+        - Pipe
+        - Unstackable
+
+    # basic interactions
+    - type: Rotatable
+    - type: Anchorable
+    - type: Pullable
+    - type: GuideHelp
+      guides: [ TEG, Power ]
+
+    # functionality
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+          volume: 100
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+          volume: 100
+        circulator:
+          !type:TegNodeCirculator
+          nodeGroupID: Teg
+
+    - type: AtmosUnsafeUnanchor
+    - type: TegCirculator
+    - type: StealTarget
+      stealGroup: Teg
+
+- # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
+  type: entity
+  id: TegCirculatorArrow
+  noSpawn: true
+  components:
+    - type: Sprite
+      sprite: Markers/teg_arrow.rsi
+      color: "#FFFFFFBB"
+      layers:
+        - state: arrow
+          offset: 0, 0.75
+        - state: arrow
+          offset: 0, -0.75
+    - type: TimedDespawn
+      lifetime: 2
+    - type: Tag
+      tags:
+        - HideContextMenu

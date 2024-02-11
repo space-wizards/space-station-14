@@ -6,7 +6,7 @@ namespace Content.Server.Shuttles.Components;
 /// Added to a designated arrivals station for players to spawn at, if enabled.
 /// </summary>
 [RegisterComponent, Access(typeof(ArrivalsSystem))]
-public sealed class ArrivalsSourceComponent : Component
+public sealed partial class ArrivalsSourceComponent : Component
 {
 
 }

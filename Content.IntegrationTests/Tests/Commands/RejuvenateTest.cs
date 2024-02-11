@@ -15,6 +15,7 @@ namespace Content.IntegrationTests.Tests.Commands
     [TestOf(typeof(RejuvenateSystem))]
     public sealed class RejuvenateTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: DamageableDummy
@@ -32,14 +33,9 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var mobStateSystem = entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
             var damSystem = entManager.EntitySysManager.GetEntitySystem<DamageableSystem>();
@@ -93,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Commands
                     Assert.That(damageable.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

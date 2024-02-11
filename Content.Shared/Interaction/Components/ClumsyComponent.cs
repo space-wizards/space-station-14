@@ -7,7 +7,7 @@ namespace Content.Shared.Interaction.Components
     /// A simple clumsy tag-component.
     /// </summary>
     [RegisterComponent]
-    public sealed class ClumsyComponent : Component
+    public sealed partial class ClumsyComponent : Component
     {
         [DataField("clumsyDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

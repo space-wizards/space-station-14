@@ -22,7 +22,7 @@
   - type: StorageFill
     contents:
       - id: PillCanister
-        amount: 6
+        amount: 9
   - type: Sprite
     layers:
       - state: box
@@ -52,7 +52,7 @@
   - type: StorageFill
     contents:
       - id: ClothingMaskSterile
-        amount: 6
+        amount: 4
   - type: Sprite
     layers:
       - state: box
@@ -72,7 +72,7 @@
     layers:
       - state: box
       - state: latex
-      
+
 - type: entity
   name: nitrile gloves box
   parent: BoxCardboard
@@ -93,14 +93,21 @@
   parent: BoxCardboard
   id: BoxMouthSwab
   components:
+  - type: Storage
+    grid:
+    - 0,0,4,3
   - type: StorageFill
     contents:
       - id: DiseaseSwab
-        amount: 30
+        amount: 10
   - type: Sprite
     layers:
       - state: box
       - state: swab
+  - type: GuideHelp
+    guides:
+  # - Virology (when it's back)
+    - Botany
 
 - type: entity
   name: body bag box
@@ -111,7 +118,7 @@
   - type: StorageFill
     contents:
       - id: BodyBag_Folded
-        amount: 5
+        amount: 4
   - type: Sprite
     layers:
       - state: box
@@ -119,3 +126,21 @@
     whitelist:
       tags:
         - BodyBag
+
+- type: entity
+  name: vial box
+  parent: BoxCardboard
+  id: BoxVial
+  description: A box full of vials.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: StorageFill
+    contents:
+      - id: BaseChemistryEmptyVial
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: vials

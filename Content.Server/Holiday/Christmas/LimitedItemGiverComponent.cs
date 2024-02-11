@@ -8,7 +8,7 @@ namespace Content.Server.Holiday.Christmas;
 /// This is used for granting items to lucky souls, exactly once.
 /// </summary>
 [RegisterComponent, Access(typeof(LimitedItemGiverSystem))]
-public sealed class LimitedItemGiverComponent : Component
+public sealed partial class LimitedItemGiverComponent : Component
 {
     /// <summary>
     /// Santa knows who you are behind the screen, only one gift per player per round!

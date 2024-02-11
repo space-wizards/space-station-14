@@ -15,6 +15,8 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.StationMapUiKey.Key
+      type: UntrackedStationMapBoundUserInterface
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -25,23 +27,33 @@
   - type: Input
     context: "human"
   - type: PAI
-    midiAction:
-      name: action-name-pai-play-midi
-      checkCanInteract: false
-      icon: Interface/Actions/pai-midi.png
-      description: action-description-pai-play-midi
-      event: !type:OpenUiActionEvent
-        key: enum.InstrumentUiKey.Key
+  - type: BlockMovement
+  - type: ToggleableGhostRole
+    examineTextMindPresent: pai-system-pai-installed
+    examineTextMindSearching: pai-system-still-searching
+    examineTextNoMind: pai-system-off
+    beginSearchingText: pai-system-searching
+    roleName: pai-system-role-name
+    roleDescription: pai-system-role-description
+    wipeVerbText: pai-system-wipe-device-verb-text
+    wipeVerbPopup: pai-system-wiped-device
+    stopSearchVerbText: pai-system-stop-searching-verb-text
+    stopSearchVerbPopup: pai-system-stopped-searching
   - type: Examiner
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
   - type: ActiveRadio
     channels:
+    - Binary
     - Common
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
@@ -52,8 +64,92 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PAIVisuals.Status:
+      enum.ToggleableGhostRoleVisuals.Status:
         screen:
           Off: { state: pai-off-overlay }
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
+  - type: StationMap
+
+- type: entity
+  parent: PersonalAI
+  id: SyndicatePersonalAI
+  name: syndicate personal ai device
+  description: Your Syndicate pal who's fun to be with!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: pai-base
+    - state: syndicate-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-syndicate
+    roleDescription: pai-system-role-description-syndicate
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: syndicate-pai-off-overlay }
+          Searching: { state: syndicate-pai-searching-overlay }
+          On: { state: syndicate-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: PotatoAI
+  name: potato artificial intelligence
+  description: It's a potato. You forced it to be sentient, you monster.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: potato-base
+    - state: potato-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-potato
+    roleDescription: pai-system-role-description-potato
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: potato-off-overlay }
+          Searching: { state: potato-searching-overlay }
+          On: { state: potato-on-overlay }
+  - type: Construction
+    graph: PotatoAI
+    node: potatoai
+
+- type: entity
+  id: ActionPAIPlayMidi
+  name: Play MIDI
+  description: Open your portable MIDI interface to soothe your owner.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon: Interface/Actions/pai-midi.png
+    event: !type:OpenUiActionEvent
+      key: enum.InstrumentUiKey.Key
+
+- type: entity
+  id: ActionPAIOpenMap
+  name: Open Map
+  description: Open your map interface and guide your owner.
+  noSpawn: true
+  components:
+    - type: InstantAction
+      checkCanInteract: false
+      icon: Interface/home.png
+      event: !type:OpenUiActionEvent
+        key: enum.StationMapUiKey.Key

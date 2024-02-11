@@ -1,0 +1,18 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               Title="{Loc 'war-declarator-ui-header'}">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="440">
+        <TextEdit Name="MessageEdit"
+                  HorizontalExpand="True"
+                  MinHeight="200"
+                  Access="Public" />
+        <Button Name="WarButton"
+                Text="{Loc 'war-declarator-ui-war-button'}"
+                StyleClasses="Caution"
+                Access="Public"/>
+        <Label Name="StatusLabel"
+               Access="Public"/>
+        <Label Name="InfoLabel"
+               Access="Public"/>
+    </BoxContainer>
+</DefaultWindow>

@@ -8,6 +8,8 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Fun)]
 public sealed class OwoifyCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     public string Command => "owoify";
 
     public string Description => "For when you need everything to be cat. Uses OwOAccent's formatting on the name and description of an entity.";
@@ -22,22 +24,25 @@ public sealed class OwoifyCommand : IConsoleCommand
             return;
         }
 
-        var entityManager = IoCManager.Resolve<IEntityManager>();
-
         if (!int.TryParse(args[0], out var targetId))
         {
             shell.WriteLine(Loc.GetString("shell-argument-must-be-number"));
             return;
         }
 
-        var eUid = new EntityUid(targetId);
+        var nent = new NetEntity(targetId);
 
-        var meta = entityManager.GetComponent<MetaDataComponent>(eUid);
+        if (!_entManager.TryGetEntity(nent, out var eUid))
+        {
+            return;
+        }
 
-        var random = IoCManager.Resolve<IRobustRandom>();
-        var owoSys = EntitySystem.Get<OwOAccentSystem>();
+        var meta = _entManager.GetComponent<MetaDataComponent>(eUid.Value);
 
-        meta.EntityName = owoSys.Accentuate(meta.EntityName);
-        meta.EntityDescription = owoSys.Accentuate(meta.EntityDescription);
+        var owoSys = _entManager.System<OwOAccentSystem>();
+        var metaDataSys = _entManager.System<MetaDataSystem>();
+
+        metaDataSys.SetEntityName(eUid.Value, owoSys.Accentuate(meta.EntityName), meta);
+        metaDataSys.SetEntityDescription(eUid.Value, owoSys.Accentuate(meta.EntityDescription), meta);
     }
 }

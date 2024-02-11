@@ -7,8 +7,8 @@ namespace Content.Server.Nuke;
 ///     This is a separate component because the fake nuclear bomb keg exists.
 /// </remarks>
 [RegisterComponent]
-public sealed class NukeLabelComponent : Component
+public sealed partial class NukeLabelComponent : Component
 {
-    [DataField("prefix")] public string NukeLabel = "nuke-label-nanotrasen";
-    [DataField("serialLength")] public int SerialLength = 6;
+    [DataField] public LocId Prefix = "nuke-label-nanotrasen";
+    [DataField] public int SerialLength = 6;
 }

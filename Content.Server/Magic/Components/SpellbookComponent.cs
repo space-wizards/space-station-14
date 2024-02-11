@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions.ActionTypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Magic.Components;
@@ -7,28 +7,20 @@ namespace Content.Server.Magic.Components;
 /// Spellbooks for having an entity learn spells as long as they've read the book and it's in their hand.
 /// </summary>
 [RegisterComponent]
-public sealed class SpellbookComponent : Component
+public sealed partial class SpellbookComponent : Component
 {
     /// <summary>
     /// List of spells that this book has. This is a combination of the WorldSpells, EntitySpells, and InstantSpells.
     /// </summary>
     [ViewVariables]
-    public readonly List<ActionType> Spells = new();
+    public readonly List<EntityUid> Spells = new();
 
     /// <summary>
     /// The three fields below is just used for initialization.
     /// </summary>
-    [DataField("worldSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, WorldTargetActionPrototype>))]
+    [DataField("spells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<string, int> WorldSpells = new();
-
-    [DataField("entitySpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityTargetActionPrototype>))]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<string, int> EntitySpells = new();
-
-    [DataField("instantSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, InstantActionPrototype>))]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<string, int> InstantSpells = new();
+    public Dictionary<string, int> SpellActions = new();
 
     [DataField("learnTime")]
     [ViewVariables(VVAccess.ReadWrite)]

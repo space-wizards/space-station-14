@@ -1,8 +1,8 @@
-﻿using Content.Shared.Lightning.Components;
+using Content.Shared.Lightning.Components;
 
 namespace Content.Server.Lightning.Components;
 [RegisterComponent]
-public sealed class LightningComponent : SharedLightningComponent
+public sealed partial class LightningComponent : SharedLightningComponent
 {
 
 }

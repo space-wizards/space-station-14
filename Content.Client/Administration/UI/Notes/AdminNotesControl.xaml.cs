@@ -87,10 +87,62 @@ public sealed partial class AdminNotesControl : Control
         };
 
         _popup.OnDeletePressed += (noteId, noteType) => NoteDeleted?.Invoke(noteId, noteType);
+        _popup.OnPopupHide += OnPopupHide;
+
         var box = UIBox2.FromDimensions(UserInterfaceManager.MousePositionScaled.Position, Vector2.One);
         _popup.Open(box);
 
         return true;
+    }
+
+    private void OnPopupHide()
+    {
+        if (_popup == null ||
+            !Inputs.TryGetValue((_popup.NoteId, _popup.NoteType), out var input))
+        {
+            return;
+        }
+
+        UpdateNoteLineAlpha(input);
+    }
+
+    private void NoteMouseEntered(GUIMouseHoverEventArgs args)
+    {
+        if (args.SourceControl is not AdminNotesLine line)
+            return;
+
+        line.Modulate = line.Modulate.WithAlpha(1f);
+    }
+
+    private void NoteMouseExited(GUIMouseHoverEventArgs args)
+    {
+        if (args.SourceControl is not AdminNotesLine line)
+            return;
+
+        if (_popup?.NoteId == line.Note.Id && _popup.Visible)
+            return;
+
+        UpdateNoteLineAlpha(line);
+    }
+
+    private void UpdateNoteLineAlpha(AdminNotesLine input)
+    {
+        var timeDiff = DateTime.UtcNow - input.Note.CreatedAt;
+        float alpha;
+        if (_noteFreshDays == 0 || timeDiff.TotalDays <= _noteFreshDays)
+        {
+            alpha = 1f;
+        }
+        else if (_noteStaleDays == 0 || timeDiff.TotalDays > _noteStaleDays)
+        {
+            alpha = 0f;
+        }
+        else
+        {
+            alpha = (float) (1 - Math.Clamp((timeDiff.TotalDays - _noteFreshDays) / (_noteStaleDays - _noteFreshDays), 0, 1));
+        }
+
+        input.Modulate = input.Modulate.WithAlpha(alpha);
     }
 
     public void SetNotes(Dictionary<(int, NoteType), SharedAdminNote> notes)
@@ -119,25 +171,17 @@ public sealed partial class AdminNotesControl : Control
 
             input = new AdminNotesLine(_sprites, note);
             input.OnClicked += NoteClicked;
+            input.OnMouseEntered += NoteMouseEntered;
+            input.OnMouseExited += NoteMouseExited;
 
-            var timeDiff = DateTime.UtcNow - note.CreatedAt;
-            float alpha;
-            if (_noteFreshDays == 0 || timeDiff.TotalDays <= _noteFreshDays)
+            UpdateNoteLineAlpha(input);
+
+            if (input.Modulate.A == 0)
             {
-                alpha = 1f;
-            }
-            else if (_noteStaleDays == 0 || timeDiff.TotalDays > _noteStaleDays)
-            {
-                alpha = 0f;
                 input.Visible = false;
                 showMoreButtonVisible = true;
             }
-            else
-            {
-                alpha = (float) (1 - Math.Clamp((timeDiff.TotalDays - _noteFreshDays) / (_noteStaleDays - _noteFreshDays), 0, 1));
-            }
 
-            input.Modulate = input.Modulate.WithAlpha(alpha);
             Notes.AddChild(input);
             Inputs[(note.Id, note.NoteType)] = input;
             ShowMoreButton.Visible = showMoreButtonVisible;

@@ -17,10 +17,8 @@
       shader: unshaded
     - state: full
       shader: unshaded
-  - type: UpgradeBattery
-    maxChargeMultiplier: 2
-    baseMaxCharge: 2500000
   - type: Battery
+    maxCharge: 2500000
     startingCharge: 0
   - type: ExaminableBattery
   - type: PointLight
@@ -37,6 +35,13 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    collectionName: substation
+    sprite: Structures/Power/substation.rsi
+    state: substation_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -49,6 +54,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
+  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
@@ -65,13 +71,21 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
-      - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+      - !type:SpawnEntitiesBehavior
         spawn:
           MachineFrameDestroyed:
             min: 1
             max: 1
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            - 0 # oxygen
+            - 0 # nitrogen
+            - 340.5701689 # carbon dioxide
+          temperature: 373.15
   - type: Explosive
     explosionType: Default
     maxIntensity: 100
@@ -79,8 +93,8 @@
     totalIntensity: 200
   - type: WiresPanel
   - type: Wires
-    BoardName: "Substation"
-    LayoutId: Substation
+    boardName: wires-board-name-substation
+    layoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: StationInfiniteBatteryTarget
@@ -122,6 +136,12 @@
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
+  - type: ContainerFill
+    containers:
+      board: [ WallmountSubstationElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
@@ -149,6 +169,12 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    sprite: Structures/Power/substation.rsi
+    state: substation_wall_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -161,6 +187,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
@@ -178,7 +205,7 @@
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
   - type: Construction
     graph: WallmountSubstation
     node: substation

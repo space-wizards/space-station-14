@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by aleksh (discord) for Space Station 14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "barrier",
+      "directions": 4
+    },
+    {
+      "name": "barrier_dead"
+    },
+    {
+      "name": "barrier_naked",
+      "directions": 4
+    },
+    {
+      "name": "barrier_naked_dead"
+    },
+    {
+      "name": "crawler",
+      "directions": 4
+    },
+    {
+      "name": "crawler_dead"
+    },
+    {
+      "name": "enforcer",
+      "directions": 4
+    },
+    {
+      "name": "enforcer_dead"
+    },
+    {
+      "name": "fossilegg"
+    },
+    {
+      "name": "fossilegg_dead"
+    },
+    {
+      "name": "glider",
+      "directions": 4
+    },
+    {
+      "name": "glider_dead"
+    },
+    {
+      "name": "harvester",
+      "directions": 4
+    },
+    {
+      "name": "harvester_dead"
+    },
+    {
+      "name": "molder",
+      "directions": 4
+    },
+    {
+      "name": "molder_dead"
+    },
+    {
+      "name": "pouncer",
+      "directions": 4
+    },
+    {
+      "name": "pouncer_dead"
+    },
+    {
+      "name": "skitter",
+      "directions": 4
+    },
+    {
+      "name": "skitter_dead"
+    },
+    {
+      "name": "slurva",
+      "directions": 4
+    },
+    {
+      "name": "slurva_dead"
+    },
+    {
+      "name": "swiper",
+      "directions": 4
+    },
+    {
+      "name": "swiper_dead"
+    }
+  ]
+}

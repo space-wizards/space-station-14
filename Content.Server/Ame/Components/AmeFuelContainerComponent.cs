@@ -5,7 +5,7 @@ namespace Content.Server.Ame.Components;
 /// TODO: network and put in shared
 /// </summary>
 [RegisterComponent]
-public sealed class AmeFuelContainerComponent : Component
+public sealed partial class AmeFuelContainerComponent : Component
 {
     /// <summary>
     /// The amount of fuel in the jar.

@@ -1,13 +1,9 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 VerticalExpand="True" HorizontalExpand="True"
                 Title="{Loc admin-remarks-title}"
                 SetSize="600 400">
-    <PanelContainer>
-        <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#25252A" />
-        </PanelContainer.PanelOverride>
+    <PanelContainer StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Vertical" Margin="4">
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
                 <BoxContainer Orientation="Vertical" Name="NotesContainer" Access="Public" VerticalExpand="True" />

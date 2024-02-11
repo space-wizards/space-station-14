@@ -16,7 +16,7 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
 
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
         {
-            Logger.Error($"Unknown typing indicator id: {component.Prototype}");
+            Log.Error($"Unknown typing indicator id: {component.Prototype}");
             return;
         }
 

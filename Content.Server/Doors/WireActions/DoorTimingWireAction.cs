@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
 
-public sealed class DoorTimingWireAction : ComponentWireAction<AirlockComponent>
+public sealed partial class DoorTimingWireAction : ComponentWireAction<AirlockComponent>
 {
     public override Color Color { get; set; } = Color.Orange;
     public override string Name { get; set; } = "wire-name-door-timer";

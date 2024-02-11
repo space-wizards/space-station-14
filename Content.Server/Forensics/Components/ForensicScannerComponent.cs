@@ -6,27 +6,33 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Forensics
 {
     [RegisterComponent]
-    public sealed class ForensicScannerComponent : Component
+    public sealed partial class ForensicScannerComponent : Component
     {
         public CancellationTokenSource? CancelToken;
 
         /// <summary>
         /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), DataField("fingerprints")]
         public List<string> Fingerprints = new();
 
         /// <summary>
         /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), DataField("fibers")]
         public List<string> Fibers = new();
 
         /// <summary>
         /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), DataField("dnas")]
         public List<string> DNAs = new();
+
+        /// <summary>
+        /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly), DataField("residues")]
+        public List<string> Residues = new();
 
         /// <summary>
         /// What is the name of the entity that was scanned last?

@@ -1,6 +1,7 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ghost-roles-window-title'}"
-            MinSize="375 275">
+            MinSize="450 400"
+            SetSize="400 500">
     <Label Name="NoRolesMessage"
            Text="{Loc 'ghost-roles-window-no-roles-available-label'}"
            VerticalAlignment="Top" />

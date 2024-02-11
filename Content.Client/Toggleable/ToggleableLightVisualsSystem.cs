@@ -13,6 +13,7 @@ namespace Content.Client.Toggleable;
 public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLightVisualsComponent>
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
     public override void Initialize()
     {
@@ -29,7 +30,7 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
         var modulate = AppearanceSystem.TryGetData<Color>(uid, ToggleableLightVisuals.Color, out var color, args.Component);
 
         // Update the item's sprite
-        if (args.Sprite != null && args.Sprite.LayerMapTryGet(component.SpriteLayer, out var layer))
+        if (args.Sprite != null && component.SpriteLayer != null && args.Sprite.LayerMapTryGet(component.SpriteLayer, out var layer))
         {
             args.Sprite.LayerSetVisible(layer, enabled);
             if (modulate)
@@ -40,9 +41,11 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
         if (TryComp(uid, out PointLightComponent? light))
         {
             DebugTools.Assert(!light.NetSyncEnabled, "light visualizers require point lights without net-sync");
-            light.Enabled = enabled;
+            _lights.SetEnabled(uid, enabled, light);
             if (enabled && modulate)
-                light.Color = color;
+            {
+                _lights.SetColor(uid, color, light);
+            }
         }
 
         // update clothing & in-hand visuals.

@@ -15,28 +15,7 @@ namespace Content.Shared.Access.Systems
             base.Initialize();
 
             SubscribeLocalEvent<AccessComponent, MapInitEvent>(OnAccessInit);
-            SubscribeLocalEvent<AccessComponent, ComponentGetState>(OnAccessGetState);
-            SubscribeLocalEvent<AccessComponent, ComponentHandleState>(OnAccessHandleState);
-        }
-
-        private void OnAccessHandleState(EntityUid uid, AccessComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not AccessComponentState state) return;
-
-            // Don't do = because prediction and refs
-            component.Tags.Clear();
-            component.Groups.Clear();
-            component.Tags.UnionWith(state.Tags);
-            component.Groups.UnionWith(state.Groups);
-        }
-
-        private void OnAccessGetState(EntityUid uid, AccessComponent component, ref ComponentGetState args)
-        {
-            args.State = new AccessComponentState()
-            {
-                Tags = component.Tags,
-                Groups = component.Groups,
-            };
+            SubscribeLocalEvent<AccessComponent, GetAccessTagsEvent>(OnGetAccessTags);
         }
 
         private void OnAccessInit(EntityUid uid, AccessComponent component, MapInitEvent args)
@@ -50,6 +29,22 @@ namespace Content.Shared.Access.Systems
                 component.Tags.UnionWith(proto.Tags);
                 Dirty(component);
             }
+        }
+
+        private void OnGetAccessTags(EntityUid uid, AccessComponent component, ref GetAccessTagsEvent args)
+        {
+            if (!component.Enabled)
+                return;
+
+            args.Tags.UnionWith(component.Tags);
+        }
+
+        public void SetAccessEnabled(EntityUid uid, bool val, AccessComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return;
+            component.Enabled = val;
+            Dirty(uid, component);
         }
 
         /// <summary>
@@ -121,13 +116,6 @@ namespace Content.Shared.Access.Systems
                 access.Tags.UnionWith(prototype.ExtendedAccess);
                 TryAddGroups(uid, prototype.ExtendedAccessGroups, access);
             }
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class AccessComponentState : ComponentState
-        {
-            public HashSet<string> Tags = new();
-            public HashSet<string> Groups = new();
         }
     }
 }

@@ -8,41 +8,56 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest : IEntityEventSubscriber
+    public sealed class RoundEndTest
     {
+        private sealed class RoundEndTestSystem : EntitySystem
+        {
+            public int Count;
+
+            public override void Initialize()
+            {
+                base.Initialize();
+                SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnd);
+            }
+
+            private void OnRoundEnd(RoundEndSystemChangedEvent ev)
+            {
+                Interlocked.Increment(ref Count);
+            }
+        }
+
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                DummyTicker = false,
+                Connected = true,
+                Dirty = true
+            });
 
-            var server = pairTracker.Pair.Server;
+            var server = pair.Server;
 
-            var entManager = server.ResolveDependency<IEntityManager>();
             var config = server.ResolveDependency<IConfigurationManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
             var ticker = sysManager.GetEntitySystem<GameTicker>();
             var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
-
-            var eventCount = 0;
+            var sys = server.System<RoundEndTestSystem>();
+            sys.Count = 0;
 
             await server.WaitAssertion(() =>
             {
                 config.SetCVar(CCVars.GameLobbyEnabled, true);
                 config.SetCVar(CCVars.EmergencyShuttleMinTransitTime, 1f);
                 config.SetCVar(CCVars.EmergencyShuttleDockTime, 1f);
+                config.SetCVar(CCVars.RoundRestartTime, 1f);
 
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromMilliseconds(100);
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMilliseconds(300);
-                roundEndSystem.DefaultRestartRoundDuration = TimeSpan.FromMilliseconds(100);
             });
 
             await server.WaitAssertion(() =>
             {
-                var bus = entManager.EventBus;
-                bus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, _ =>
-                {
-                    Interlocked.Increment(ref eventCount);
-                });
 
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
@@ -113,10 +128,10 @@ namespace Content.IntegrationTests.Tests
             async Task WaitForEvent()
             {
                 var timeout = Task.Delay(TimeSpan.FromSeconds(10));
-                var currentCount = Thread.VolatileRead(ref eventCount);
-                while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
+                var currentCount = Thread.VolatileRead(ref sys.Count);
+                while (currentCount == Thread.VolatileRead(ref sys.Count) && !timeout.IsCompleted)
                 {
-                    await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+                    await pair.RunTicksSync(5);
                 }
                 if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
             }
@@ -127,15 +142,13 @@ namespace Content.IntegrationTests.Tests
                 config.SetCVar(CCVars.GameLobbyEnabled, false);
                 config.SetCVar(CCVars.EmergencyShuttleMinTransitTime, CCVars.EmergencyShuttleMinTransitTime.DefaultValue);
                 config.SetCVar(CCVars.EmergencyShuttleDockTime, CCVars.EmergencyShuttleDockTime.DefaultValue);
+                config.SetCVar(CCVars.RoundRestartTime, CCVars.RoundRestartTime.DefaultValue);
 
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromSeconds(30);
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);
-                roundEndSystem.DefaultRestartRoundDuration = TimeSpan.FromMinutes(1);
                 ticker.RestartRound();
             });
-            await PoolManager.ReallyBeIdle(pairTracker.Pair, 10);
-
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

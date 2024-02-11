@@ -41,6 +41,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
@@ -49,8 +52,8 @@
     board: TelecomServerCircuitboard
   - type: WiresPanel
   - type: Wires
-    BoardName: "TelecomServer"
-    LayoutId: TelecomServer
+    boardName: wires-board-name-telecomserver
+    layoutId: TelecomServer
   - type: Transform
     anchored: true
   - type: Pullable

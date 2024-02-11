@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EntityAnchored : IGraphCondition
+    public sealed partial class EntityAnchored : IGraphCondition
     {
         [DataField("anchored")] public bool Anchored { get; private set; } = true;
 

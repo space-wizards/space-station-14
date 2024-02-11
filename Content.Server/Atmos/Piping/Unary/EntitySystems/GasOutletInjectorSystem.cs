@@ -7,8 +7,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -16,7 +14,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     public sealed class GasOutletInjectorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
@@ -42,13 +39,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         public void UpdateAppearance(EntityUid uid, GasOutletInjectorComponent component, AppearanceComponent? appearance = null)
         {
-            if (!Resolve(component.Owner, ref appearance, false))
+            if (!Resolve(uid, ref appearance, false))
                 return;
 
             _appearance.SetData(uid, OutletInjectorVisuals.Enabled, component.Enabled, appearance);
         }
 
-        private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, AtmosDeviceUpdateEvent args)
+        private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, ref AtmosDeviceUpdateEvent args)
         {
             if (!injector.Enabled)
                 return;
@@ -73,10 +70,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment.Pressure > injector.MaxPressure)
                 return;
 
-            var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var timeDelta = args.dt;
 
             // TODO adjust ratio so that environment does not go above MaxPressure?
-            var ratio = MathF.Min(1f, timeDelta * injector.TransferRate / inlet.Air.Volume);
+            var ratio = MathF.Min(1f, timeDelta * injector.TransferRate * _atmosphereSystem.PumpSpeedup() / inlet.Air.Volume);
             var removed = inlet.Air.RemoveRatio(ratio);
 
             _atmosphereSystem.Merge(environment, removed);

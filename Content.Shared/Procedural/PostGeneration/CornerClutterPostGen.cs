@@ -5,7 +5,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Spawns entities inside corners.
 /// </summary>
-public sealed class CornerClutterPostGen : IPostDunGen
+public sealed partial class CornerClutterPostGen : IPostDunGen
 {
     [DataField("chance")]
     public float Chance = 0.50f;

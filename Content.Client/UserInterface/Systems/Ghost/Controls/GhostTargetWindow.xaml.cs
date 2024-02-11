@@ -11,13 +11,15 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
     [GenerateTypedNameReferences]
     public sealed partial class GhostTargetWindow : DefaultWindow
     {
-        private List<(string, EntityUid)> _warps = new();
+        private List<(string, NetEntity)> _warps = new();
+        private string _searchText = string.Empty;
 
-        public event Action<EntityUid>? WarpClicked;
+        public event Action<NetEntity>? WarpClicked;
 
         public GhostTargetWindow()
         {
             RobustXamlLoader.Load(this);
+            SearchBar.OnTextChanged += OnSearchTextChanged;
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)
@@ -60,9 +62,31 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                 };
 
                 currentButtonRef.OnPressed += _ => WarpClicked?.Invoke(warpTarget);
+                currentButtonRef.Visible = ButtonIsVisible(currentButtonRef);
 
                 ButtonContainer.AddChild(currentButtonRef);
             }
+        }
+
+        private bool ButtonIsVisible(Button button)
+        {
+            return string.IsNullOrEmpty(_searchText) || button.Text == null || button.Text.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void UpdateVisibleButtons()
+        {
+            foreach (var child in ButtonContainer.Children)
+            {
+                if (child is Button button)
+                    button.Visible = ButtonIsVisible(button);
+            }
+        }
+
+        private void OnSearchTextChanged(LineEdit.LineEditEventArgs args)
+        {
+            _searchText = args.Text;
+
+            UpdateVisibleButtons();
         }
     }
 }

@@ -3,10 +3,10 @@
 namespace Content.Shared.NameIdentifier;
 
 [Prototype("nameIdentifierGroup")]
-public sealed class NameIdentifierGroupPrototype : IPrototype
+public sealed partial class NameIdentifierGroupPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     Should the identifier become the full name, or just append?

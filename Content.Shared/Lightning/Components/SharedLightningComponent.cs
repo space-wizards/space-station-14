@@ -1,4 +1,4 @@
-﻿using Content.Shared.Physics;
+using Content.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -6,7 +6,7 @@ namespace Content.Shared.Lightning.Components;
 /// <summary>
 /// Handles how lightning acts and is spawned. Use the ShootLightning method to fire lightning from one user to a target.
 /// </summary>
-public abstract class SharedLightningComponent : Component
+public abstract partial class SharedLightningComponent : Component
 {
     /// <summary>
     /// Can this lightning arc?

@@ -18,6 +18,10 @@
     {
         "name": "corner_small",
         "directions": 4
+    },
+    {
+        "name": "round",
+        "directions": 4
     }
   ]
 }

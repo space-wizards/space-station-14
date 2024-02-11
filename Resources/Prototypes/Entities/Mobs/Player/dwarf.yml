@@ -4,21 +4,6 @@
   parent: BaseMobDwarf
   id: MobDwarf
   components:
-    - type: CombatMode
-    - type: InteractionPopup
-      successChance: 1
-      interactSuccessString: hugging-success-generic
-      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-      messagePerceivedByOthers: hugging-success-generic-others
-    - type: MindContainer
-      showExamineInfo: true
-    - type: Input
-      context: "human"
-    - type: MobMover
-    - type: InputMover
-    - type: Alerts
-    - type: Actions
-    - type: Eye
     - type: EyeTraits
       autoExpose: # Enhanced Dwarf night vision
         max: 10
@@ -28,9 +13,3 @@
         lightIntolerance: 0.3
         range: 0.8
         power: 0.4
-    - type: CameraRecoil
-    - type: Examiner
-    - type: CanHostGuardian
-    - type: NpcFactionMember
-      factions:
-        - NanoTrasen
