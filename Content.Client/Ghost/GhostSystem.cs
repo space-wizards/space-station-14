@@ -41,7 +41,7 @@ namespace Content.Client.Ghost
             }
         }
 
-        public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalPlayer?.ControlledEntity);
+        public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalEntity);
         public bool IsGhost => Player != null;
 
         public event Action<GhostComponent>? PlayerRemoved;

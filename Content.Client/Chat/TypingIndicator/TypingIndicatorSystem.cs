@@ -68,7 +68,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         _isClientTyping = isClientTyping;
 
         // check if player controls any pawn
-        if (_playerManager.LocalPlayer?.ControlledEntity == null)
+        if (_playerManager.LocalEntity == null)
             return;
 
         // send a networked event to server

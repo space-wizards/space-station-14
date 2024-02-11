@@ -66,12 +66,10 @@ namespace Content.Client.Examine
         {
             if (!args.User.Valid)
                 return;
-            if (_playerManager.LocalPlayer == null)
-                return;
             if (_examineTooltipOpen == null)
                 return;
 
-            if (item == _examinedEntity && args.User == _playerManager.LocalPlayer.ControlledEntity)
+            if (item == _examinedEntity && args.User == _playerManager.LocalEntity)
                 CloseTooltip();
         }
 
@@ -118,7 +116,7 @@ namespace Content.Client.Examine
                 return false;
             }
 
-            _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
+            _playerEntity = _playerManager.LocalEntity ?? default;
 
             if (_playerEntity == default || !CanExamine(_playerEntity, entity))
             {
@@ -149,7 +147,7 @@ namespace Content.Client.Examine
 
         private void OnExamineInfoResponse(ExamineSystemMessages.ExamineInfoResponseMessage ev)
         {
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            var player = _playerManager.LocalEntity;
             if (player == null)
                 return;
 
@@ -356,7 +354,7 @@ namespace Content.Client.Examine
 
         public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
-            var playerEnt = userOverride ?? _playerManager.LocalPlayer?.ControlledEntity;
+            var playerEnt = userOverride ?? _playerManager.LocalEntity;
             if (playerEnt == null)
                 return;
 

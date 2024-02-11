@@ -228,7 +228,7 @@ public sealed partial class ContentAudioSystem
 
     private AmbientMusicPrototype? GetAmbience()
     {
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null)
             return null;

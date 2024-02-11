@@ -268,7 +268,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return false;
         }
 
-        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        var player = _playerManager.LocalEntity;
 
         // still in range of the thing we are dragging?
         if (player == null || !_interactionSystem.InRangeUnobstructed(player.Value, _draggedEntity.Value))
@@ -345,7 +345,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return false;
         }
 
-        var localPlayer = _playerManager.LocalPlayer?.ControlledEntity;
+        var localPlayer = _playerManager.LocalEntity;
 
         if (localPlayer == null || !Exists(_draggedEntity))
         {
@@ -409,7 +409,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return;
         }
 
-        var user = _playerManager.LocalPlayer?.ControlledEntity;
+        var user = _playerManager.LocalEntity;
 
         if (user == null)
             return;
