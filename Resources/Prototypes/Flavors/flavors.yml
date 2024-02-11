@@ -1010,11 +1010,6 @@
   description: flavor-weh
 
 - type: flavor
-  id: profits
-  flavorType: Complex
-  description: flavor-complex-profits
-
-- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
