@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Janitors now get rubber gloves for cleaning.
-    type: Add
-  id: 5413
-  time: '2023-12-18T03:11:19.0000000+00:00'
-  url: null
 - author: Velcroboy
   changes:
   - message: Added coal. Coal has been added to the steel recipe in the Ore Processor.
@@ -3873,3 +3866,20 @@
   id: 5911
   time: '2024-02-10T09:17:26.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24975
+- author: Nimfar11
+  changes:
+  - message: Adds a glass showcase for an antique laser pistol.
+    type: Add
+  id: 5912
+  time: '2024-02-10T23:36:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25104
+- author: Jezithyr
+  changes:
+  - message: Changed gibbing to now rotate giblets randomly when they are spawned.
+    type: Tweak
+  - message: Giblets are now thrown around the body instead of spawning in a rough
+      pile.
+    type: Tweak
+  id: 5913
+  time: '2024-02-10T23:37:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24989
