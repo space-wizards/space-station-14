@@ -21,7 +21,7 @@ namespace Content.Server.Atmos.Components
         /// Tool will automatically turn on internals when it is next equipped
         /// This feature will turn itself off after the first time it's used
         /// </summary>
-        [DataField("automaticActivation")]
+        [DataField]
         public bool AutomaticActivation = false;
     }
 }
