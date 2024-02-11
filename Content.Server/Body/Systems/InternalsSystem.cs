@@ -51,7 +51,7 @@ public sealed class InternalsSystem : EntitySystem
         while (query.MoveNext(out var uid, out var delayComp))
         {
             if (_timing.CurTime < delayComp.Time)
-                return;
+                continue;
 
             if (TryComp<InternalsComponent>(uid, out var comp) &&
                 !AreInternalsWorking(comp))
