@@ -53,7 +53,7 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
 
         foreach (var key in allTags)
         {
-            threat += component.itemThreat.GetValueOrDefault(key);
+            threat += component.ItemThreat.GetValueOrDefault(key);
         }
 
         if (threat > component.maxItemThreat)

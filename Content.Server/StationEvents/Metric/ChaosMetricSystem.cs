@@ -5,7 +5,7 @@ using Content.Server.StationEvents.Metric.Components;
 namespace Content.Server.StationEvents.Metric;
 
 /// <summary>
-///   Baseclass for systems which measure chaos.
+///   Base class for systems which measure chaos.
 ///   Chaos (in ChaosMetrics) is used by the GameDirector to decide which event should run next
 ///   Subclasses can either calculate chaos in that instant or subscribe to events to track state
 ///   over time in their component.
