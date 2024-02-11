@@ -37,27 +37,27 @@ public sealed partial class GameDirectorComponent : Component
     /// <summary>
     ///   The story we are currently executing from stories (for easier debugging)
     /// </summary>
-    [DataField("currentStoryName"), ViewVariables(VVAccess.ReadOnly)]
-    public string CurrentStoryName = "";
+    [ViewVariables(VVAccess.ReadOnly)]
+    public ProtoId<StoryBeatPrototype> CurrentStoryName;
 
     /// <summary>
     ///   Remaining beats in the story we are currently executing (a list of beat IDs)
     /// </summary>
-    [DataField("remainingBeats", customTypeSerializer: typeof(PrototypeIdListSerializer<StoryBeatPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> RemainingBeats = new();
+    [ViewVariables(VVAccess.ReadWrite)]
+    public List<ProtoId<StoryBeatPrototype>> RemainingBeats = new();
 
     /// <summary>
     ///   Which stories the director can choose from (so we can change flavor of director by loading different stories)
     ///   One of these get picked randomly each time the current story is exhausted.
     /// </summary>
-    [DataField("stories", customTypeSerializer: typeof(PrototypeIdArraySerializer<StoryPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string[]? Stories;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<StoryPrototype>[]? Stories;
 
     /// <summary>
     ///   A beat name we always use when we cannot find any stories to use.
     /// </summary>
-    [DataField("fallbackBeatName", customTypeSerializer: typeof(PrototypeIdSerializer<StoryBeatPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string FallbackBeatName = "Peace";
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<StoryBeatPrototype> FallbackBeatName = "Peace";
 
     /// <summary>
     ///   All the events that are allowed to run in the current story.
@@ -101,7 +101,7 @@ public sealed partial class StoryPrototype : IPrototype
     ///   List of beat-ids in this story.
     /// </summary>
     [DataField("beats", customTypeSerializer: typeof(PrototypeIdArraySerializer<StoryBeatPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string[]? Beats;
+    public ProtoId<StoryBeatPrototype>[]? Beats;
 }
 
 /// <summary>
@@ -202,8 +202,8 @@ public sealed partial class PossibleEvent
     /// <summary>
     ///   ID of a station event prototype (anomaly, spiders, pizzas, etc) that could occur
     /// </summary>
-    [DataField("stationEvent", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string StationEvent = "";
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId StationEvent;
 
     /// <summary>
     ///   Expected Chaos changes when this event occurs.
@@ -217,7 +217,7 @@ public sealed partial class PossibleEvent
     {
     }
 
-    public PossibleEvent(string stationEvent, ChaosMetrics chaos)
+    public PossibleEvent(EntProtoId stationEvent, ChaosMetrics chaos)
     {
         StationEvent = stationEvent;
         Chaos = chaos;
