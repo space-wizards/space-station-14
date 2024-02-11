@@ -4,13 +4,13 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Interaction;
+using Content.Shared.Physics;
 
 namespace Content.Server.Holosign;
 
 public sealed class HolosignSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
 
