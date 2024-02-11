@@ -63,3 +63,59 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    eleos:
+      announcement: alert-level-eleos-announcement
+      selectable: false
+      disableSelection: true
+      color: LightGreen
+      emergencyLightColor: LightGreen
+    navy:
+      announcement: alert-level-navy-announcement
+      selectable: false
+      sound: /Audio/Misc/notice1.ogg
+      disableSelection: true
+      color: DarkBlue #change to something more readable.
+      emergencyLightColor: DarkBlue
+    brown:
+      announcement: alert-level-brown-announcement
+      selectable: false
+      disableSelection: true
+      color: Brown
+      emergencyLightColor: Brown
+      forceEnableEmergencyLights: true
+    whiskey:
+      announcement: alert-level-whiskey-announcement
+      selectable: false
+      disableSelection: true
+      color: "#C19A6B" #because for some reason lightbrown isnt recognized by the game. nani?
+      emergencyLightColor: "#C19A6B"
+    cyan:
+      announcement: alert-level-cyan-announcement
+      selectable: false
+      sound: /Audio/Misc/bluealert.ogg
+      disableSelection: true
+      color: Cyan
+      emergencyLightColor: Cyan
+      forceEnableEmergencyLights: true
+    beige:
+      announcement: alert-level-beige-announcement
+      selectable: false
+      sound: /Audio/Misc/notice1.ogg
+      disableSelection: true
+      color: Tan
+      emergencyLightColor: Tan
+    lima:
+      announcement: alert-level-lima-announcement
+      selectable: false
+      sound: /Audio/Misc/siren.ogg
+      disableSelection: true
+      color: DarkOrange
+      emergencyLightColor: DarkOrange
+      forceEnableEmergencyLights: true
+    boogie:
+      announcement: alert-level-boogie-announcement
+      selectable: false
+      disableSelection: true
+      color: Pink
+      emergencyLightColor: Pink
+      forceEnableEmergencyLights: true
