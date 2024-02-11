@@ -113,7 +113,7 @@
     ports:
     - PowerCharging
     - PowerDischarging
-    ports:
+    lastSignals:
       PowerCharging: false
       PowerDischarging: false
   - type: Construction
