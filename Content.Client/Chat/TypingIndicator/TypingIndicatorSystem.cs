@@ -20,7 +20,8 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
     public override void Initialize()
     {
         base.Initialize();
-        _cfg.OnValueChanged(CCVars.ChatShowTypingIndicator, OnShowTypingChanged);
+
+        Subs.CVar(_cfg, CCVars.ChatShowTypingIndicator, OnShowTypingChanged);
     }
 
     public void ClientChangedChatText()

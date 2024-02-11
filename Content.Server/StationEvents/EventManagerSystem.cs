@@ -28,7 +28,7 @@ public sealed class EventManagerSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("events");
 
-        _configurationManager.OnValueChanged(CCVars.EventsEnabled, SetEnabled, true);
+        Subs.CVar(_configurationManager, CCVars.EventsEnabled, SetEnabled, true);
 
         SubscribeLocalEvent<StationEventComponent, EntityUnpausedEvent>(OnUnpaused);
     }
@@ -38,12 +38,6 @@ public sealed class EventManagerSystem : EntitySystem
         component.StartTime += args.PausedTime;
         if (component.EndTime != null)
             component.EndTime = component.EndTime.Value + args.PausedTime;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _configurationManager.UnsubValueChanged(CCVars.EventsEnabled, SetEnabled);
     }
 
     /// <summary>

@@ -109,7 +109,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         UpdatesOutsidePrediction = true;
         UpdatesAfter.Add(typeof(SharedEyeSystem));
 
-        _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
+        Subs.CVar(_cfgMan, CCVars.DragDropDeadZone, SetDeadZone, true);
 
         _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
         _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
@@ -126,7 +126,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
     public override void Shutdown()
     {
-        _cfgMan.UnsubValueChanged(CCVars.DragDropDeadZone, SetDeadZone);
         CommandBinds.Unregister<DragDropSystem>();
         base.Shutdown();
     }

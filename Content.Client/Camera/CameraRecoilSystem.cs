@@ -16,14 +16,7 @@ public sealed class CameraRecoilSystem : SharedCameraRecoilSystem
         base.Initialize();
         SubscribeNetworkEvent<CameraKickEvent>(OnCameraKick);
 
-        _configManager.OnValueChanged(CCVars.ScreenShakeIntensity, OnCvarChanged, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configManager.UnsubValueChanged(CCVars.ScreenShakeIntensity, OnCvarChanged);
+        Subs.CVar(_configManager, CCVars.ScreenShakeIntensity, OnCvarChanged, true);
     }
 
     private void OnCvarChanged(float value)

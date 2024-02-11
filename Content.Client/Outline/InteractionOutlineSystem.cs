@@ -40,15 +40,8 @@ public sealed class InteractionOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+        Subs.CVar(_configManager, CCVars.OutlineEnabled, SetCvarEnabled);
         UpdatesAfter.Add(typeof(SharedEyeSystem));
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configManager.UnsubValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
     }
 
     public void SetCvarEnabled(bool cvarEnabled)

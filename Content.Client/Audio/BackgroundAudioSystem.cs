@@ -34,8 +34,8 @@ public sealed class BackgroundAudioSystem : EntitySystem
     {
         base.Initialize();
 
-        _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
-        _configManager.OnValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
+        Subs.CVar(_configManager, CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
+        Subs.CVar(_configManager, CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
 
         _stateManager.OnStateChanged += StateManagerOnStateChanged;
 
@@ -49,9 +49,6 @@ public sealed class BackgroundAudioSystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-
-        _configManager.UnsubValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
-        _configManager.UnsubValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
 
         _stateManager.OnStateChanged -= StateManagerOnStateChanged;
 
