@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Fixed compatability with old changelog format.
-    type: Fix
-  id: 5422
-  time: '2023-12-19T05:22:24.0000000+00:00'
-  url: null
-- author: notafet
-  changes:
-  - message: Security sunglasses, researchable from arsenal technology, now display
-      the security HUD.
-    type: Tweak
-  id: 5423
-  time: '2023-12-19T08:29:07.0000000+00:00'
-  url: null
 - author: Emisse
   changes:
   - message: Captain clothing items have been resprited
@@ -3873,3 +3858,17 @@
   id: 5921
   time: '2024-02-12T03:02:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25103
+- author: PoorMansDreams
+  changes:
+  - message: Buyable Janitorial Trolley!
+    type: Add
+  id: 5922
+  time: '2024-02-12T06:35:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25139
+- author: Plykiya
+  changes:
+  - message: Stun batons and stun prods now display their hits remaining.
+    type: Tweak
+  id: 5923
+  time: '2024-02-12T06:36:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25141
