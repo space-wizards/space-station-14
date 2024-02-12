@@ -52,11 +52,11 @@
     showInHands: false
   - type: Body
     prototype: Drone
-  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadio
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Binary
     - Common

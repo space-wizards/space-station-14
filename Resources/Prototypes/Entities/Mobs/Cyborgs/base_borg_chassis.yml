@@ -83,13 +83,13 @@
     templateId: borg
   - type: Hands
     showInHands: false
-  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadio
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
     - Common
     - Science
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Binary
     - Common
@@ -246,7 +246,7 @@
       channels:
         - Binary
         - Syndicate
-    - type: ActiveRadio
+    - type: Radioable
       channels:
         - Syndicate
     - type: ShowSyndicateIcons

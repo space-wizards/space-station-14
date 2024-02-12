@@ -392,7 +392,7 @@
       state: rd_key
   - type: ResearchClient
   - type: ResearchConsole
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Science
   - type: TechnologyDatabase
@@ -941,6 +941,7 @@
   - type: Speech
     speechVerb: Robotic
   - type: SurveillanceCameraSpeaker
+    - type: LocalChattable
   - type: SurveillanceCameraMonitor
     speechEnabled: true
   - type: ActivatableUI

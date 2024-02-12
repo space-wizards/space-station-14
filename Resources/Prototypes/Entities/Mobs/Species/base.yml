@@ -221,6 +221,10 @@
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
+  # Chat abilities
+  - type: LocalChattable
+  - type: Whisperable
+  - type: Emoteable
 
 - type: entity
   save: false

@@ -42,6 +42,7 @@
     - type: GuideHelp
       guides:
       - Medical Doctor
+    - type: LocalChattable
 
 - type: entity
   id: Defibrillator

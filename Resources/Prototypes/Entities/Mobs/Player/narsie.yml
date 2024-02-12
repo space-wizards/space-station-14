@@ -68,8 +68,8 @@
     context: "ghost"
   - type: MovementIgnoreGravity
   # narnar hears all
-  - type: IntrinsicRadioReceiver
-  - type: ActiveRadio
+  - type: IntrinsicRadio
+  - type: Radioable
     channels:
     - Binary
     - Common

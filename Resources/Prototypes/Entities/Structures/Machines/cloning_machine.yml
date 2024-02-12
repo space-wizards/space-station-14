@@ -77,3 +77,4 @@
   - type: GuideHelp
     guides:
     - Cloning
+  - type: LocalChattable # It can blurt out information into local chat

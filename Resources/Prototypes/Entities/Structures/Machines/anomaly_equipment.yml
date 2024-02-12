@@ -77,8 +77,7 @@
     canCreateVacuum: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+        - trigger: !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:DoActsBehavior
@@ -303,7 +302,7 @@
       - key: enum.AnomalyGeneratorUiKey.Key
         type: AnomalyGeneratorBoundUserInterface
   - type: Appearance
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Science
   - type: GenericVisualizer

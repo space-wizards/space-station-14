@@ -37,8 +37,8 @@
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: MovementIgnoreGravity
-  - type: IntrinsicRadioReceiver
-  - type: ActiveRadio
+  - type: IntrinsicRadio
+  - type: Radioable
     receiveAllChannels: true
     globalReceive: true
   - type: Physics

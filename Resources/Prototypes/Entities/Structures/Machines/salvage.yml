@@ -34,8 +34,8 @@
     noRot: false
   - type: Appearance
   - type: Rotatable
-  - type: IntrinsicRadioReceiver
-  - type: ActiveRadio
+  - type: IntrinsicRadio
+  - type: Radioable
     channels:
     - Supply
   - type: SalvageMagnet

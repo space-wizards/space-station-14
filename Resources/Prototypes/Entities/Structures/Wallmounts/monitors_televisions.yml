@@ -162,6 +162,7 @@
   - type: DeviceNetworkRequiresPower
   - type: Speech
   - type: SurveillanceCameraSpeaker
+  - type: LocalChattable
   - type: SurveillanceCameraMonitor
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key

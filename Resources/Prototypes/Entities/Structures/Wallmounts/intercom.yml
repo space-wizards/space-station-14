@@ -16,6 +16,7 @@
     toggleOnInteract: false
   - type: RadioSpeaker
     toggleOnInteract: false
+  - type: LocalChattable
   - type: Intercom
   - type: Speech
     speechVerb: Robotic

@@ -74,11 +74,11 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
-  - type: IntrinsicRadioReceiver
+    - type: IntrinsicRadio
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
-  - type: ActiveRadio
+    - type: Radioable
     channels:
     - Binary
     - Common
@@ -101,6 +101,7 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+    - type: LocalChattable
 
 - type: entity
   parent: VendingMachine
@@ -120,8 +121,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+          shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.16,0.3,0.40"
         mask:
         - MachineMask
@@ -2007,4 +2007,3 @@
     ejectDelay: 2
   - type: AccessReader
     access: [["SyndicateAgent"]]
-

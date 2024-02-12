@@ -12,6 +12,7 @@
   - type: Speech
   - type: RadioSpeaker
     toggleOnInteract: false
+  - type: LocalChattable
   - type: ActivatableUI
     key: enum.IntercomUiKey.Key
   - type: Intercom

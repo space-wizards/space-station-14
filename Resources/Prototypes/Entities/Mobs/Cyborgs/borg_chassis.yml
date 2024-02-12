@@ -65,7 +65,7 @@
     - Binary
     - Common
     - Science
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Supply
     - Binary
@@ -108,7 +108,7 @@
     - Binary
     - Common
     - Science
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Engineering
     - Binary
@@ -159,7 +159,7 @@
     - Binary
     - Common
     - Science
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Service
     - Binary
@@ -210,7 +210,7 @@
     - Binary
     - Common
     - Science
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Medical
     - Binary
@@ -253,7 +253,7 @@
     - Binary
     - Common
     - Science
-  - type: ActiveRadio
+  - type: Radioable
     channels:
     - Service
     - Binary

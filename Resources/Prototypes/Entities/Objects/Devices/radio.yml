@@ -9,6 +9,7 @@
   - type: RadioSpeaker
     channels:
     - Handheld
+  - type: LocalChattable
   - type: Speech
     speechVerb: Robotic
   - type: Sprite
