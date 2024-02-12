@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -33,7 +34,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            EntitySystem.Get<ChatSystem>().TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Looc, false, shell, player);
+            EntitySystem.Get<ServerLOOCSystem>().SendLoocMessage(entity, message);
         }
     }
 }

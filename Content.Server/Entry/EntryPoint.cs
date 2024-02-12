@@ -1,9 +1,12 @@
+using System.IO;
+using System.Text.Unicode;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.V2.Censorship;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -36,6 +39,7 @@ namespace Content.Server.Entry
     {
         internal const string ConfigPresetsDir = "/ConfigPresets/";
         private const string ConfigPresetsDirBuild = $"{ConfigPresetsDir}Build/";
+        private const string CensorDir = $"{ConfigPresetsDir}Censorship/";
 
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
@@ -82,6 +86,7 @@ namespace Content.Server.Entry
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var dest = configManager.GetCVar(CCVars.DestinationFile);
             IoCManager.Resolve<ContentLocalizationManager>().Initialize();
+
             if (string.IsNullOrEmpty(dest)) //hacky but it keeps load times for the generator down.
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
@@ -107,6 +112,8 @@ namespace Content.Server.Entry
                 _updateManager.Initialize();
                 _playTimeTracking.Initialize();
             }
+
+            InitChatCensor(cfg, res);
         }
 
         public override void PostInit()
@@ -161,6 +168,82 @@ namespace Content.Server.Entry
                     _playTimeTracking?.Update();
                     break;
             }
+        }
+
+        private static void InitChatCensor(IConfigurationManager cfg, IResourceManager res)
+        {
+            var simpleCensor = InitSimpleCensor(cfg, res);
+
+            ChatCensor.With(simpleCensor.Censor);
+            ChatCensor.Build();
+        }
+
+        private static SimpleCensor InitSimpleCensor(IConfigurationManager cfg, IResourceManager res)
+        {
+            var simpleCensor = new SimpleCensor();
+
+            if (!string.IsNullOrEmpty(cfg.GetCVar<string>(CCVars.CensorshipFilterFile)))
+            {
+                var chatFilter = FillList(cfg, res, CCVars.CensorshipFilterFile);
+                var falsePositives = FillList(cfg, res, CCVars.FalsePositiveFilterFile);
+                var falseNegatives = FillList(cfg, res, CCVars.FalseNegativeFilterFile);
+
+                simpleCensor.WithCustomDictionary(chatFilter, falsePositives, falseNegatives);
+            }
+
+            if (cfg.GetCVar(CCVars.FilterChatForSpaces))
+            {
+                simpleCensor.WithSanitizeSpaces();
+            }
+
+            if (cfg.GetCVar(CCVars.FilterChatForL33TSpeak))
+            {
+                simpleCensor.WithSanitizeL33TSpeak();
+            }
+
+            if (cfg.GetCVar(CCVars.FilterChatForSpecialChars))
+            {
+                simpleCensor.WithSanitizeSpecialCharacters();
+            }
+
+            if (cfg.GetCVar(CCVars.FilterChatForNonLatin))
+            {
+                simpleCensor.WithRanges(new HashSet<UnicodeRange> {UnicodeRanges.BasicLatin, UnicodeRanges.Latin1Supplement});
+            }
+
+            return simpleCensor;
+        }
+
+        private static List<string> FillList(IConfigurationManager cfg, IResourceManager res, CVarDef<string> fileName)
+        {
+            var wordList = new List<string>();
+
+            var file = cfg.GetCVar(fileName);
+            if (string.IsNullOrEmpty(file))
+                return wordList;
+
+            if (!res.TryContentFileRead($"{CensorDir}{file}", out var fileStream))
+                return wordList;
+
+            var reader = new StreamReader(fileStream);
+            while (!reader.EndOfStream)
+            {
+                var item = reader.ReadLine();
+                if (string.IsNullOrEmpty(item))
+                {
+                    continue;
+                }
+
+                // Allow for comment lines
+                if (item[0] == '#')
+                {
+                    continue;
+                }
+
+                wordList.Add(item);
+            }
+
+            return wordList;
         }
 
         protected override void Dispose(bool disposing)

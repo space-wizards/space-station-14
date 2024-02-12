@@ -1,11 +1,13 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Humanoid;
+using Content.Server.Popups;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
 using Content.Shared.Toggleable;
 using Content.Shared.Wagging;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Wagging;
 
@@ -15,8 +17,10 @@ namespace Content.Server.Wagging;
 public sealed class WaggingSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default !;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -66,7 +70,13 @@ public sealed class WaggingSystem : EntitySystem
         if (markings.Count == 0)
             return false;
 
+        if (_timing.CurTime - wagging.TimeBetweenToggles < wagging.LastSwitchTime)
+        {
+            return false;
+        }
+
         wagging.Wagging = !wagging.Wagging;
+        wagging.LastSwitchTime = _timing.CurTime;
 
         for (var idx = 0; idx < markings.Count; idx++) // Animate all possible tails
         {
@@ -99,6 +109,8 @@ public sealed class WaggingSystem : EntitySystem
             _humanoidAppearance.SetMarkingId(uid, MarkingCategories.Tail, idx, newMarkingId,
                 humanoid: humanoid);
         }
+
+        _popupSystem.PopupEntity(Loc.GetString(wagging.Wagging ? "wagging-emote-start" : "wagging-emote-stop", ("ent", uid)), uid);
 
         return true;
     }

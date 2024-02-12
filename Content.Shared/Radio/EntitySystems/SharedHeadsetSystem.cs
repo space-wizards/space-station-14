@@ -16,23 +16,30 @@ public abstract class SharedHeadsetSystem : EntitySystem
 
     private void OnGetDefault(EntityUid uid, HeadsetComponent component, InventoryRelayedEvent<GetDefaultRadioChannelEvent> args)
     {
-        if (!component.Enabled || !component.IsEquipped)
+        if (!component.Enabled || component.CurrentlyWornBy == null)
         {
             // don't provide default channels from pocket slots.
             return;
         }
 
         if (TryComp(uid, out EncryptionKeyHolderComponent? keyHolder))
-            args.Args.Channel ??= keyHolder.DefaultChannel; 
+            args.Args.Channel ??= keyHolder.DefaultChannel;
     }
 
     protected virtual void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
     {
-        component.IsEquipped = args.SlotFlags.HasFlag(component.RequiredSlot);
+        if (args.SlotFlags.HasFlag(component.RequiredSlot))
+        {
+            component.CurrentlyWornBy = args.Equipee;
+
+            return;
+        }
+
+        component.CurrentlyWornBy = null;
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
     {
-        component.IsEquipped = false;
+        component.CurrentlyWornBy = null;
     }
 }

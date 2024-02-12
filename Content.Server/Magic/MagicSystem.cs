@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Doors.Systems;
 using Content.Server.Magic.Components;
 using Content.Server.Weapons.Ranged.Systems;
@@ -46,7 +47,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ServerLocalChatSystem _chat = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
@@ -402,7 +403,6 @@ public sealed class MagicSystem : EntitySystem
         if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
             return;
 
-        _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(speak.Speech),
-            InGameICChatType.Speak, false);
+        _chat.TrySendLocalChatMessage(args.Performer, Loc.GetString(speak.Speech),  hideInChatLog: true);
     }
 }

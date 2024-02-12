@@ -4,6 +4,7 @@ using Content.Shared.Popups;
 using Content.Shared.Mobs;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Stunnable;
@@ -12,6 +13,8 @@ using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Chat.V2;
+using Content.Shared.Chat.V2.Components;
 using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio;
@@ -27,7 +30,8 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ServerEmoteSystem _emote = default!;
+    [Dependency] private readonly SharedEmoteSoundsSystem _emoteSounds = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
@@ -89,19 +93,27 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
+        args.Handled = _emoteSounds.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 
         if (_robustRandom.Prob(component.GiggleRandomChance))
         {
             _audio.PlayPvs(component.SpawnSound, uid);
-            _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, ChatTransmitRange.Normal);
+
+            if (TryComp<EmoteableComponent>(uid, out var comp))
+            {
+                _emote.SendEmoteMessage(uid, "honks", comp.Range);
+            }
         }
 
         else if (_robustRandom.Prob(component.KnockChance))
         {
             _audio.PlayPvs(component.KnockSound, uid);
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
-            _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
+
+            if (TryComp<EmoteableComponent>(uid, out var comp))
+            {
+                _emote.SendEmoteMessage(uid, "spasms", comp.Range);
+            }
         }
     }
 }

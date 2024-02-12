@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.V2;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.Popups;
@@ -23,6 +24,7 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly ServerLocalChatSystem _localChat = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
 
     public override void Initialize()
@@ -81,8 +83,7 @@ public sealed class PrayerSystem : EntitySystem
         var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
-        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.Channel);
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity.Value):player} received subtle message from {source.Name}: {message}");
+        _localChat.SendSubtleLocalChatMessage(source, target, message);
     }
 
     /// <summary>

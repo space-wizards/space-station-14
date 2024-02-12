@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Chat.V2;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
@@ -9,6 +10,7 @@ using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Radio;
 using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -23,6 +25,7 @@ public sealed partial class SalvageSystem
      */
 
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly ServerRadioSystem _radio = default!;
 
     private void InitializeRunner()
     {
@@ -69,16 +72,10 @@ public sealed partial class SalvageSystem
     {
         var mapId = Comp<MapComponent>(mapUid).MapId;
 
-        // I love TComms and chat!!!
-        _chat.ChatMessageToManyFiltered(
-            Filter.BroadcastMap(mapId),
-            ChatChannel.Radio,
-            text,
-            text,
-            _mapManager.GetMapEntityId(mapId),
-            false,
-            true,
-            null);
+        // We'll assume they probably want it on Engineering.
+        // So uh
+        // Don't go on a expedition if you don't have the right channel access :nods:
+        _radio.SendRadioMessage(_mapManager.GetMapEntityId(mapId), text, _prototypeManager.Index<RadioChannelPrototype>("Engineering"), filter: Filter.BroadcastMap(mapId));
     }
 
     private void OnFTLRequest(ref FTLRequestEvent ev)

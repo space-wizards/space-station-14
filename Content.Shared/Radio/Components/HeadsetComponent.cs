@@ -10,9 +10,12 @@ public sealed partial class HeadsetComponent : Component
 {
     [DataField("enabled")]
     public bool Enabled = true;
-
-    public bool IsEquipped = false;
-
+    
     [DataField("requiredSlot")]
     public SlotFlags RequiredSlot = SlotFlags.EARS;
+
+    /// <summary>
+    /// Who is this headset currently worn by?
+    /// </summary>
+    public EntityUid? CurrentlyWornBy;
 }

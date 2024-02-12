@@ -69,15 +69,18 @@ namespace Content.Server.Chat.Managers
 
         private void OnOocEnabledChanged(bool val)
         {
-            if (_oocEnabled == val) return;
+            if (_oocEnabled == val)
+                return;
 
             _oocEnabled = val;
+
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
         }
 
         private void OnAdminOocEnabledChanged(bool val)
         {
-            if (_adminOocEnabled == val) return;
+            if (_adminOocEnabled == val)
+                return;
 
             _adminOocEnabled = val;
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));

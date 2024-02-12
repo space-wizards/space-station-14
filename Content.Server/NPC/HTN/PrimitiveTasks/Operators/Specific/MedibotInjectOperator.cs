@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.NPC.Components;
 using Content.Shared.Damage;
@@ -14,7 +15,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
-    private ChatSystem _chat = default!;
+    private ServerLocalChatSystem _chat = default!;
     private MedibotSystem _medibot = default!;
     private SharedAudioSystem _audio = default!;
     private SharedInteractionSystem _interaction = default!;
@@ -30,7 +31,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _chat = sysManager.GetEntitySystem<ChatSystem>();
+        _chat = sysManager.GetEntitySystem<ServerLocalChatSystem>();
         _medibot = sysManager.GetEntitySystem<MedibotSystem>();
         _audio = sysManager.GetEntitySystem<SharedAudioSystem>();
         _interaction = sysManager.GetEntitySystem<SharedInteractionSystem>();
@@ -82,7 +83,8 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         _solutionContainer.TryAddReagent(injectable.Value, treatment.Reagent, treatment.Quantity, out _);
         _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
         _audio.PlayPvs(botComp.InjectSound, target);
-        _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: true, hideLog: true);
+        _chat.TrySendLocalChatMessage(owner, Loc.GetString("medibot-finish-inject"),  hideInChatLog: true);
+
         return HTNOperatorStatus.Finished;
     }
 }

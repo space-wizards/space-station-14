@@ -1,10 +1,11 @@
 using Content.Server.Chat;
+using Content.Server.Chat.V2;
 
 namespace Content.Server.Chat.Systems;
 
 public sealed class AnnounceOnSpawnSystem : EntitySystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
 
     public override void Initialize()
     {
@@ -17,6 +18,6 @@ public sealed class AnnounceOnSpawnSystem : EntitySystem
     {
         var message = Loc.GetString(comp.Message);
         var sender = comp.Sender != null ? Loc.GetString(comp.Sender) : "Central Command";
-        _chat.DispatchGlobalAnnouncement(message, sender, playSound: true, comp.Sound, comp.Color);
+        _announce.DispatchGlobalAnnouncement(message, sender, playSound: true, comp.Sound, comp.Color);
     }
 }

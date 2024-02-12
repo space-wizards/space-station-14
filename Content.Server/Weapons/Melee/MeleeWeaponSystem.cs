@@ -29,6 +29,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Chat.V2;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -36,7 +37,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ServerLocalChatSystem _chat = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -243,11 +244,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        if (comp.Battlecry != null)//If the battlecry is set to empty, doesn't speak
+        if (comp.Battlecry != null)
         {
-            _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
+            _chat.TrySendLocalChatMessage(args.User, comp.Battlecry,  hideInChatLog: true);
         }
-
     }
 
     private void OnChemicalInjectorHit(Entity<MeleeChemicalInjectorComponent> entity, ref MeleeHitEvent args)

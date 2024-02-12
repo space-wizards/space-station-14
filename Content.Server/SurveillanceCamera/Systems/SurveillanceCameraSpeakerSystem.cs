@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Speech;
 using Content.Shared.Speech;
 using Robust.Shared.Audio;
@@ -16,10 +17,8 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SpeechSoundSystem _speechSound = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly ServerLocalChatSystem _chat = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -55,7 +54,6 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
         var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
             ("originalName", nameEv.Name));
 
-        // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, nameOverride: name);
+        _chat.TrySendLocalChatMessage(uid, args.Message, name,  hideInChatLog: true);
     }
 }

@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -28,11 +29,10 @@ public sealed partial class Emote : ReagentEffect
         if (EmoteId == null)
             return;
 
-        var chatSys = args.EntityManager.System<ChatSystem>();
+        var emote = args.EntityManager.System<ServerEmoteSystem>();
         if (ShowInChat)
-            chatSys.TryEmoteWithChat(args.SolutionEntity, EmoteId, ChatTransmitRange.GhostRangeLimit);
+            emote.TryEmoteWithChat(args.SolutionEntity, EmoteId);
         else
-            chatSys.TryEmoteWithoutChat(args.SolutionEntity, EmoteId);
-
+            emote.TryEmoteWithoutChat(args.SolutionEntity, EmoteId);
     }
 }

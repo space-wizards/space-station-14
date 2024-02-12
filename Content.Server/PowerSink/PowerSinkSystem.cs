@@ -2,10 +2,9 @@
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Robust.Shared.Utility;
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Station.Systems;
 using Robust.Shared.Timing;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.PowerSink
@@ -27,7 +26,7 @@ namespace Content.Server.PowerSink
         private readonly TimeSpan _explosionDelayTime = TimeSpan.FromSeconds(1.465);
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationSystem _station = default!;
@@ -133,10 +132,10 @@ namespace Content.Server.PowerSink
             if (station == null)
                 return;
 
-            _chat.DispatchStationAnnouncement(
+            _announce.DispatchStationAnnouncement(
                 station.Value,
                 Loc.GetString("powersink-immiment-explosion-announcement"),
-                playDefaultSound: true,
+                playSound: true,
                 colorOverride: Color.Yellow
             );
         }

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using Content.Shared.Chat.V2;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.IoC;
 using Content.Shared.Maps;
@@ -46,6 +47,8 @@ namespace Content.Shared.Entry
 
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
+            IoCManager.Resolve<IEmoteConfigManager>().Initialize();
+            IoCManager.Resolve<IChatUtilities>().Initialize();
 
 #if DEBUG
             var configMan = IoCManager.Resolve<IConfigurationManager>();

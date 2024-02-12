@@ -9,6 +9,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
+    // TODO: this should be defined in YAML instead
     private static readonly Dictionary<string, string> SmileyToEmote = new()
     {
         // I could've done this with regex, but felt it wasn't the right idea.

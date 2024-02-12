@@ -1,7 +1,9 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Shared.Administration;
+using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Robust.Shared.Console;
 
@@ -24,7 +26,7 @@ public sealed class OSay : LocalizedCommands
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromHintOptions( Enum.GetNames(typeof(InGameICChatType)),
+            return CompletionResult.FromHintOptions(Enum.GetNames(typeof(InGameICChatType)),
                 Loc.GetString("osay-command-arg-type"));
         }
 
@@ -56,7 +58,24 @@ public sealed class OSay : LocalizedCommands
         if (string.IsNullOrEmpty(message))
             return;
 
-        _entityManager.System<ChatSystem>().TrySendInGameICMessage(source.Value, message, chatType, false);
+        switch (chatType)
+        {
+            case InGameICChatType.Speak:
+                _entityManager.System<ServerLocalChatSystem>().TrySendLocalChatMessage(source.Value, message);
+
+                break;
+            case InGameICChatType.Emote:
+                _entityManager.System<ServerEmoteSystem>().TrySendEmoteMessage(source.Value, message);
+
+                break;
+            case InGameICChatType.Whisper:
+                _entityManager.System<ServerWhisperSystem>().TrySendWhisperMessage(source.Value, message);
+
+                break;
+            default:
+                return;
+        }
+
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(shell.Player != null ? shell.Player.Name : "An administrator")} forced {_entityManager.ToPrettyString(source.Value)} to {args[1]}: {message}");
     }
 }

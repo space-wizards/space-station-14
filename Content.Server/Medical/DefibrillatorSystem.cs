@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Rotting;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.EUI;
@@ -32,7 +33,7 @@ namespace Content.Server.Medical;
 public sealed class DefibrillatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ChatSystem _chatManager = default!;
+    [Dependency] private readonly ServerLocalChatSystem _chat = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
@@ -219,13 +220,11 @@ public sealed class DefibrillatorSystem : EntitySystem
         var dead = true;
         if (_rotting.IsRotten(target))
         {
-            _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-rotten"),
-                InGameICChatType.Speak, true);
+            _chat.TrySendLocalChatMessage(uid, Loc.GetString("defibrillator-rotten"),  hideInChatLog: true);
         }
         else if (HasComp<UnrevivableComponent>(target))
         {
-            _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-unrevivable"),
-                InGameICChatType.Speak, true);
+            _chat.TrySendLocalChatMessage(uid, Loc.GetString("defibrillator-unrevivable"),  hideInChatLog: true);
         }
         else
         {
@@ -252,8 +251,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             }
             else
             {
-                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
-                    InGameICChatType.Speak, true);
+                _chat.TrySendLocalChatMessage(uid, Loc.GetString("defibrillator-no-mind"),  hideInChatLog: true);
             }
         }
 

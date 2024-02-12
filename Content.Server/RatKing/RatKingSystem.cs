@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
@@ -21,7 +22,7 @@ namespace Content.Server.RatKing
     public sealed class RatKingSystem : SharedRatKingSystem
     {
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly ServerLocalChatSystem _chat = default!;
         [Dependency] private readonly HTNSystem _htn = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
@@ -126,7 +127,7 @@ namespace Content.Server.RatKing
                 return;
 
             var msg = Random.Pick(datasetPrototype.Values);
-            _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
+            _chat.TrySendLocalChatMessage(uid, msg,  hideInChatLog: true);
         }
     }
 }

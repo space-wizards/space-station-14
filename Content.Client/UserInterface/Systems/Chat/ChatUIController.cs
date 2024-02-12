@@ -6,9 +6,11 @@ using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.TypingIndicator;
 using Content.Client.Chat.UI;
+using Content.Client.Chat.V2;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.Popups;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -16,9 +18,12 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Decals;
+using Content.Shared.Chat.V2;
 using Content.Shared.Damage.ForceSay;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Input;
+using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -55,16 +60,28 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
+
+    // LEGACY CHAT SYSTEM
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
+    // CHAT V2
+    [UISystemDependency] private readonly ClientLocalChatSystem _localChat = default!;
+    [UISystemDependency] private readonly ClientWhisperSystem _whisper = default!;
+    [UISystemDependency] private readonly ClientEmoteSystem _emote = default!;
+    [UISystemDependency] private readonly ClientRadioSystem _radio = default!;
+    [UISystemDependency] private readonly ClientLoocSystem _looc = default!;
+    [UISystemDependency] private readonly ClientDeadChatSystem _deadChat = default!;
+
+    [UISystemDependency] private readonly PopupSystem _popup = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -181,6 +198,20 @@ public sealed class ChatUIController : UIController
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
         _cfg.OnValueChanged(CCVars.ChatEnableColorName, (value) => { _chatNameColorsEnabled = value; });
         _chatNameColorsEnabled = _cfg.GetCVar(CCVars.ChatEnableColorName);
+
+        // Chat V2 system
+        SubscribeNetworkEvent<EntityLocalChattedEvent>(OnLocallyChattedMessage);
+        SubscribeNetworkEvent<EntityWhisperedEvent>(OnWhisperedMessage);
+        SubscribeNetworkEvent<EntityWhisperedObfuscatedlyEvent>(OnWhisperedMessage);
+        SubscribeNetworkEvent<EntityWhisperedTotallyObfuscatedlyEvent>(OnWhisperedMessage);
+        SubscribeNetworkEvent<EntityEmotedEvent>(OnEmotedMessage);
+        SubscribeNetworkEvent<EntityRadioedEvent>(OnRadioedMessage);
+        SubscribeNetworkEvent<EntityLoocedEvent>(OnLoocMessage);
+        SubscribeNetworkEvent<EntityDeadChattedEvent>(OnDeadChatMessage);
+
+        SubscribeNetworkEvent<LocalChatAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<WhisperAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<EmoteAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Emoter), ev.Reason));
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -495,7 +526,7 @@ public sealed class ChatUIController : UIController
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
             // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
-            if (_ghost is not {IsGhost: true})
+            if (_ghost is not { IsGhost: true })
             {
                 CanSendChannels |= ChatSelectChannel.Local;
                 CanSendChannels |= ChatSelectChannel.Whisper;
@@ -505,7 +536,7 @@ public sealed class ChatUIController : UIController
         }
 
         // Only ghosts and admins can send / see deadchat.
-        if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true})
+        if (_admin.HasFlag(AdminFlags.Admin) || _ghost is { IsGhost: true })
         {
             FilterableChannels |= ChatChannel.Dead;
             CanSendChannels |= ChatSelectChannel.Dead;
@@ -635,18 +666,20 @@ public sealed class ChatUIController : UIController
 
     public ChatSelectChannel MapLocalIfGhost(ChatSelectChannel channel)
     {
-        if (channel == ChatSelectChannel.Local && _ghost is {IsGhost: true})
+        if (channel == ChatSelectChannel.Local && _ghost is { IsGhost: true })
             return ChatSelectChannel.Dead;
 
         return channel;
     }
 
-    private bool TryGetRadioChannel(string text, out RadioChannelPrototype? radioChannel)
+    private bool TryGetRadioChannel(string text, out RadioChannelPrototype? radioChannel, out string message)
     {
         radioChannel = null;
+        message = "";
+
         return _player.LocalEntity is EntityUid { Valid: true } uid
            && _chatSys != null
-           && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
+           && _chatSys.TryProccessRadioMessage(uid, text, out message, out radioChannel, quiet: true);
     }
 
     public void UpdateSelectedChannel(ChatBox box)
@@ -662,30 +695,37 @@ public sealed class ChatUIController : UIController
     public (ChatSelectChannel chatChannel, string text, RadioChannelPrototype? radioChannel) SplitInputContents(string text)
     {
         text = text.Trim();
+
         if (text.Length == 0)
             return (ChatSelectChannel.None, text, null);
 
-        // We only cut off prefix only if it is not a radio or local channel, which both map to the same /say command
-        // because ????????
-
-        ChatSelectChannel chatChannel;
-        if (TryGetRadioChannel(text, out var radioChannel))
-            chatChannel = ChatSelectChannel.Radio;
-        else
-            chatChannel = PrefixToChannel.GetValueOrDefault(text[0]);
+        var chatChannel = TryGetRadioChannel(text, out var radioChannel, out var message)
+            ? ChatSelectChannel.Radio
+            : PrefixToChannel.GetValueOrDefault(text[0]);
 
         if ((CanSendChannels & chatChannel) == 0)
             return (ChatSelectChannel.None, text, null);
 
-        if (chatChannel == ChatSelectChannel.Radio)
-            return (chatChannel, text, radioChannel);
-
-        if (chatChannel == ChatSelectChannel.Local)
+        switch (chatChannel)
         {
-            if (_ghost?.IsGhost != true)
+            case ChatSelectChannel.Radio:
+                return (chatChannel, message, radioChannel);
+            case ChatSelectChannel.Local when _ghost?.IsGhost != true:
                 return (chatChannel, text, null);
-            else
+            case ChatSelectChannel.Local:
                 chatChannel = ChatSelectChannel.Dead;
+
+                break;
+            case ChatSelectChannel.None:
+            case ChatSelectChannel.Whisper:
+            case ChatSelectChannel.LOOC:
+            case ChatSelectChannel.OOC:
+            case ChatSelectChannel.Emotes:
+            case ChatSelectChannel.Dead:
+            case ChatSelectChannel.Admin:
+            case ChatSelectChannel.Console:
+            default:
+                break;
         }
 
         return (chatChannel, text[1..].TrimStart(), null);
@@ -696,6 +736,7 @@ public sealed class ChatUIController : UIController
         _typingIndicator?.ClientSubmittedChatText();
 
         var text = box.ChatInput.Input.Text;
+
         box.ChatInput.Input.Clear();
         box.ChatInput.Input.ReleaseKeyboardFocus();
         UpdateSelectedChannel(box);
@@ -703,9 +744,9 @@ public sealed class ChatUIController : UIController
         if (string.IsNullOrWhiteSpace(text))
             return;
 
-        (var prefixChannel, text, var _) = SplitInputContents(text);
+        (var prefixChannel, text, var radioChannel) = SplitInputContents(text);
 
-        // Check if message is longer than the character limit
+        // Check if message is longer than the character limit; if so prevent it being sent.
         if (text.Length > MaxMessageLength)
         {
             var locWarning = Loc.GetString("chat-manager-max-message-length",
@@ -716,13 +757,89 @@ public sealed class ChatUIController : UIController
 
         if (prefixChannel != ChatSelectChannel.None)
             channel = prefixChannel;
-        else if (channel == ChatSelectChannel.Radio)
-        {
-            // radio must have prefix as it goes through the say command.
-            text = $";{text}";
-        }
 
-        _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel);
+        text = SharedChatSystem.FilterAccidentalInput(text);
+
+        switch (channel)
+        {
+            case ChatSelectChannel.Local:
+                if (!_player.LocalEntity.HasValue)
+                    return;
+
+                if (!_localChat.SendMessage(_player.LocalEntity.Value, text, out var chatFailReason))
+                {
+                    HandleMessageFailure(_player.LocalEntity.Value, chatFailReason);
+                }
+
+                break;
+            case ChatSelectChannel.Whisper:
+                if (!_player.LocalEntity.HasValue)
+                    return;
+
+                if (!_whisper.SendMessage(_player.LocalEntity.Value, text, out var whisperFailReason))
+                {
+                    HandleMessageFailure(_player.LocalEntity.Value, whisperFailReason);
+                }
+
+                break;
+            case ChatSelectChannel.Emotes:
+                if (!_player.LocalEntity.HasValue)
+                    return;
+
+                if (!_emote.SendMessage(_player.LocalEntity.Value, text, out var emoteFailReason))
+                {
+                    HandleMessageFailure(_player.LocalEntity.Value, emoteFailReason);
+                }
+
+                break;
+            case ChatSelectChannel.Radio:
+                if (!_player.LocalEntity.HasValue)
+                    return;
+
+                if (radioChannel == null)
+                {
+                    HandleMessageFailure(_player.LocalEntity.Value, "No radio channel!");
+                }
+                else if (!_radio.SendMessage(_player.LocalEntity.Value, text, radioChannel, out var radioFailReason))
+                {
+                    HandleMessageFailure(_player.LocalEntity.Value, radioFailReason);
+                }
+
+                break;
+            case ChatSelectChannel.LOOC:
+                if (!_player.LocalEntity.HasValue)
+                    return;
+
+                if (!_looc.SendMessage(_player.LocalEntity.Value, text, out var loocFailReason))
+                {
+                    HandleMessageFailure(_player.LocalEntity.Value, loocFailReason);
+                }
+
+                break;
+            case ChatSelectChannel.Dead:
+                if (!_player.LocalEntity.HasValue)
+                    return;
+
+                if (!_deadChat.SendMessage(_player.LocalEntity.Value, text, out var deadChatFailReason))
+                {
+                    HandleMessageFailure(_player.LocalEntity.Value, deadChatFailReason);
+                }
+
+                break;
+            case ChatSelectChannel.OOC:
+            case ChatSelectChannel.Admin:
+            case ChatSelectChannel.Console:
+            case ChatSelectChannel.None:
+            default:
+                // LEGACY CHAT MANAGEMENT SYSTEM
+                _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel);
+                break;
+        }
+    }
+
+    public void HandleMessageFailure(EntityUid sender, string reasonForFailure)
+    {
+        _popup.PopupEntity(reasonForFailure, sender);
     }
 
     private void OnDamageForceSay(DamageForceSayEvent ev, EntitySessionEventArgs _)
@@ -775,6 +892,221 @@ public sealed class ChatUIController : UIController
         }
     }
 
+    // Chat V2
+    // TODO: don't pass in the events directly; getting events unpacked means data transport is decoupled from UI
+    // functionality.
+
+    private void OnLocallyChattedMessage(EntityLocalChattedEvent ev, EntitySessionEventArgs args)
+    {
+        var asName = ev.AsName;
+
+        if (ev.AsColor.Length > 0)
+        {
+            asName = $"[color={ev.AsColor}]{ev.AsName}[/color]";
+        }
+
+        string wrappedMessage;
+
+        if (ev.IsSubtle)
+        {
+            wrappedMessage = ev.Message;
+        }
+        else
+        {
+            // Wrapped message tech debt woo
+            wrappedMessage = Loc.GetString(ev.IsBold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
+                ("entityName", asName),
+                ("verb", Loc.GetString(ev.Verb)),
+                ("fontType", ev.FontId),
+                ("fontSize", ev.FontSize),
+                ("message", FormattedMessage.EscapeText(ev.Message)));
+        }
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, wrappedMessage, ev.Speaker, null);
+
+        if (!ev.HideInLog)
+        {
+            History.Add((_timing.CurTick, fakeChatMessage));
+            MessageAdded?.Invoke(fakeChatMessage);
+        }
+        else
+        {
+            _sawmill.Log(LogLevel.Debug, $"Skipping message {wrappedMessage}");
+        }
+
+        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Say);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnWhisperedMessage(EntityWhisperedEvent ev, EntitySessionEventArgs args)
+    {
+        var asName = ev.AsName;
+
+        if (ev.AsColor.Length > 0)
+        {
+            asName = $"[color={ev.AsColor}]{ev.AsName}[/color]";
+        }
+
+        // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
+        var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", asName), ("message", $"[italic]{ev.Message}[/italic]"));
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.Message, wrappedMessage, ev.Speaker, null);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Whisper);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnWhisperedMessage(EntityWhisperedObfuscatedlyEvent ev, EntitySessionEventArgs args)
+    {
+        var asName = ev.AsName;
+
+        if (ev.AsColor.Length > 0)
+        {
+            asName = $"[color={ev.AsColor}]{ev.AsName}[/color]";
+        }
+
+        // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
+        var message = FormattedMessage.EscapeText(ev.ObfuscatedMessage);
+
+        var wrappedObfuscatedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", asName), ("message", $"[italic]{message}[/italic]"));
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.ObfuscatedMessage, wrappedObfuscatedMessage, ev.Speaker, null);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Whisper);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnWhisperedMessage(EntityWhisperedTotallyObfuscatedlyEvent ev, EntitySessionEventArgs args)
+    {
+        // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
+        var message = FormattedMessage.EscapeText(ev.ObfuscatedMessage);
+        var wrappedUnknownMessage = Loc.GetString("chat-manager-entity-whisper-unknown-wrap-message", ("message", $"[italic]{message}[/italic]"));
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.ObfuscatedMessage, wrappedUnknownMessage, ev.Speaker, null);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Whisper);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnEmotedMessage(EntityEmotedEvent ev, EntitySessionEventArgs args)
+    {
+        // Wrapped message tech debt woo.
+        var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
+            ("entityName", ev.AsName),
+            ("entity", EntityManager.GetEntity(ev.Emoter)),
+            ("message", ev.Message));
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Emotes, ev.Message, wrappedMessage, ev.Emoter, null);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Emote);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnRadioedMessage(EntityRadioedEvent ev, EntitySessionEventArgs args)
+    {
+        var channel = _prototype.Index<RadioChannelPrototype>(ev.Channel);
+        string wrappedMessage;
+        Color? overrideColor = null;
+
+        if (ev.IsAnnouncement)
+        {
+            wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", ev.AsName), ("message", FormattedMessage.EscapeText(ev.Message)));
+            overrideColor = ev.MessageColorOverride;
+        }
+        else
+        {
+            wrappedMessage = Loc.GetString(ev.IsBold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
+                ("color", channel.Color),
+                ("fontType", ev.FontId),
+                ("fontSize", ev.FontSize),
+                ("verb", Loc.GetString(ev.Verb)),
+                ("channel", $@"\[{channel.LocalizedName}\]"),
+                ("name", ev.AsName),
+                ("message", ev.Message));
+        }
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Radio, ev.Message, wrappedMessage, ev.Speaker, null, colorOverride: overrideColor);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        // TODO: Talk with the UI people about if chat messages should appear above people's heads. I really like the idea, it would make things more readable.
+        // Getting things out of the log would be nice. AddRadioBubble(...)?
+        // AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Emote);
+
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnLoocMessage(EntityLoocedEvent ev, EntitySessionEventArgs args)
+    {
+        var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
+            ("entityName", ev.AsName),
+            ("message", FormattedMessage.EscapeText(ev.Message)));
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.LOOC, ev.Message, wrappedMessage, ev.Speaker, null);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Looc);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnDeadChatMessage(EntityDeadChattedEvent ev, EntitySessionEventArgs args)
+    {
+        string wrappedMessage;
+
+        if (ev.IsAdmin)
+        {
+            wrappedMessage = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
+                ("userName", ev.Name),
+                ("message", FormattedMessage.EscapeText(ev.Message)));
+        }
+        else
+        {
+            wrappedMessage = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
+                ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
+                ("playerName", ev.Name),
+                ("message", FormattedMessage.EscapeText(ev.Message)));
+        }
+
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Dead, ev.Message, wrappedMessage, ev.Speaker, null);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        _replayRecording.RecordClientMessage(ev);
+    }
+
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
         // color the name unless it's something like "the old man"
@@ -818,7 +1150,7 @@ public sealed class ChatUIController : UIController
                 break;
 
             case ChatChannel.Dead:
-                if (_ghost is not {IsGhost: true})
+                if (_ghost is not { IsGhost: true })
                     break;
 
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);

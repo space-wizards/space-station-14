@@ -1,4 +1,4 @@
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -32,8 +32,7 @@ namespace Content.Server.Administration.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = EntitySystem.Get<ChatSystem>();
-            chat.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
+            EntitySystem.Get<ServerDeadChatSystem>().SendDeadChatMessage(entity, message);
         }
     }
 }

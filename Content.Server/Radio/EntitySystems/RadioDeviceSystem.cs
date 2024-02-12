@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -8,6 +9,8 @@ using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Chat;
+using Content.Shared.Chat.V2;
+using Content.Shared.Chat.V2.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radio;
@@ -18,19 +21,19 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Radio.EntitySystems;
 
 /// <summary>
-///     This system handles radio speakers and microphones (which together form a hand-held radio).
+/// This system handles radio speakers and microphones (which together form hand-held radios).
 /// </summary>
 public sealed class RadioDeviceSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly ServerLocalChatSystem _localChat = default!;
+    [Dependency] private readonly ServerRadioSystem _radioSystem = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-    // Used to prevent a shitter from using a bunch of radios to spam chat.
+    // Used to prevent shitters from using a bunch of radios to spam chat.
     private HashSet<(string, EntityUid)> _recentlySent = new();
 
     public override void Initialize()
@@ -45,7 +48,7 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         SubscribeLocalEvent<RadioSpeakerComponent, ComponentInit>(OnSpeakerInit);
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
-        SubscribeLocalEvent<RadioSpeakerComponent, RadioReceiveEvent>(OnReceiveRadio);
+        SubscribeLocalEvent<RadioSpeakerComponent, EntityRadioedEvent>(OnReceiveRadio);
 
         SubscribeLocalEvent<IntercomComponent, BeforeActivatableUIOpenEvent>(OnBeforeIntercomUiOpen);
         SubscribeLocalEvent<IntercomComponent, ToggleIntercomMicMessage>(OnToggleIntercomMic);
@@ -59,7 +62,6 @@ public sealed class RadioDeviceSystem : EntitySystem
         _recentlySent.Clear();
     }
 
-
     #region Component Init
     private void OnMicrophoneInit(EntityUid uid, RadioMicrophoneComponent component, ComponentInit args)
     {
@@ -72,9 +74,9 @@ public sealed class RadioDeviceSystem : EntitySystem
     private void OnSpeakerInit(EntityUid uid, RadioSpeakerComponent component, ComponentInit args)
     {
         if (component.Enabled)
-            EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
+            EnsureComp<RadioableComponent>(uid).Channels.UnionWith(component.Channels);
         else
-            RemCompDeferred<ActiveRadioComponent>(uid);
+            RemCompDeferred<RadioableComponent>(uid);
     }
     #endregion
 
@@ -160,9 +162,9 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         _appearance.SetData(uid, RadioDeviceVisuals.Speaker, component.Enabled);
         if (component.Enabled)
-            EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
+            EnsureComp<RadioableComponent>(uid).Channels.UnionWith(component.Channels);
         else
-            RemCompDeferred<ActiveRadioComponent>(uid);
+            RemCompDeferred<RadioableComponent>(uid);
     }
     #endregion
 
@@ -187,7 +189,7 @@ public sealed class RadioDeviceSystem : EntitySystem
             return; // no feedback loops please.
 
         if (_recentlySent.Add((args.Message, args.Source)))
-            _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), uid);
+            _radioSystem.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
@@ -199,16 +201,14 @@ public sealed class RadioDeviceSystem : EntitySystem
         }
     }
 
-    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioReceiveEvent args)
+    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref EntityRadioedEvent args)
     {
-        var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
-        RaiseLocalEvent(args.MessageSource, nameEv);
+        var entityUid = GetEntity(args.Speaker);
 
-        var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
-            ("originalName", nameEv.Name));
+        var nameEv = new TransformSpeakerNameEvent(entityUid, Name(entityUid));
+        RaiseLocalEvent(entityUid, nameEv);
 
-        // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Whisper, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
+        _localChat.TrySendLocalChatMessage(uid, args.Message, $"{Name(uid)} ({nameEv.Name})", true);
     }
 
     private void OnBeforeIntercomUiOpen(EntityUid uid, IntercomComponent component, BeforeActivatableUIOpenEvent args)

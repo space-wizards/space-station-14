@@ -1,6 +1,8 @@
 using Content.Server.Advertisements;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Power.Components;
+using Content.Shared.Chat.V2.Components;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -13,7 +15,7 @@ namespace Content.Server.Advertise
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly ServerLocalChatSystem _chat = default!;
 
         /// <summary>
         /// The maximum amount of time between checking if advertisements should be displayed
@@ -70,8 +72,10 @@ namespace Content.Server.Advertise
             if (!Resolve(uid, ref advertise))
                 return;
 
-            if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
+            if (!_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
+                return;
+
+            _chat.TrySendLocalChatMessage(uid, Loc.GetString(_random.Pick(advertisements.Advertisements)), hideInChatLog: true);
         }
 
         public void SayThankYou(EntityUid uid, AdvertiseComponent? advertise = null)
@@ -79,10 +83,11 @@ namespace Content.Server.Advertise
             if (!Resolve(uid, ref advertise))
                 return;
 
-            if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-            {
-                _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.ThankYous), ("name", Name(uid))), InGameICChatType.Speak, true);
-            }
+            if (!_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
+                return;
+
+            if (TryComp<LocalChattableComponent>(uid, out var chat))
+                _chat.SendLocalChatMessage(uid, Loc.GetString(_random.Pick(advertisements.ThankYous), ("name", Name(uid))), chat.Range);
         }
 
         public void SetEnabled(EntityUid uid, bool enable, AdvertiseComponent? advertise = null)

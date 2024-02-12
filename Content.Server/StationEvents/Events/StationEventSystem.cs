@@ -1,21 +1,15 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents.Events;
@@ -29,10 +23,8 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] protected readonly ChatSystem ChatSystem = default!;
+    [Dependency] protected readonly ServerAnnouncementSystem _announce = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] protected readonly StationSystem StationSystem = default!;
 
     protected ISawmill Sawmill = default!;
@@ -56,7 +48,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
 
         if (stationEvent.StartAnnouncement != null)
         {
-            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: Color.Gold);
+            _announce.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: Color.Gold);
         }
 
         Audio.PlayGlobal(stationEvent.StartAudio, Filter.Broadcast(), true);
@@ -95,7 +87,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
 
         if (stationEvent.EndAnnouncement != null)
         {
-            ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: Color.Gold);
+            _announce.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: Color.Gold);
         }
 
         Audio.PlayGlobal(stationEvent.EndAudio, Filter.Broadcast(), true);

@@ -1,8 +1,7 @@
 using System.Linq;
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -13,7 +12,7 @@ public sealed class AlertLevelSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
@@ -178,7 +177,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
         if (announce)
         {
-            _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
+            _announce.DispatchStationAnnouncement(station, announcementFull, playSound: playDefault,
                 colorOverride: detail.Color, sender: stationName);
         }
 

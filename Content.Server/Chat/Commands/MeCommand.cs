@@ -1,5 +1,7 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Shared.Administration;
+using Content.Shared.Emoting;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 
@@ -36,8 +38,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>()
-                .TrySendInGameICMessage(playerEntity, message, InGameICChatType.Emote, ChatTransmitRange.Normal, false, shell, player);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ServerEmoteSystem>().TrySendEmoteMessage(playerEntity, message);
         }
     }
 }

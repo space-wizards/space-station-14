@@ -1,14 +1,17 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
+using Content.Shared.Chat.V2;
+using Content.Shared.Interaction;
 using Robust.Shared.Player;
-using static Content.Server.Chat.Systems.ChatSystem;
+using static Content.Server.Chat.Systems.ServerOocSystem;
 
 namespace Content.Server.SurveillanceCamera;
 
 public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -16,35 +19,82 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenEvent>(RelayEntityMessage);
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenAttemptEvent>(CanListen);
-        SubscribeLocalEvent<ExpandICChatRecipientstEvent>(OnExpandRecipients);
+
+        SubscribeLocalEvent<EntityLocalChattedEvent>(DuplicateLocalChatEventsIfInRange);
+        SubscribeLocalEvent<EntityWhisperedLocalEvent>(DuplicateWhisperEventsIfInRange);
     }
 
-    private void OnExpandRecipients(ExpandICChatRecipientstEvent ev)
+    private void DuplicateLocalChatEventsIfInRange(EntityLocalChattedEvent ev)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var sourceXform = Transform(ev.Source);
+        var sourceXform = Transform(GetEntity(ev.Speaker));
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
-        // This function ensures that chat popups appear on camera views that have connected microphones.
         foreach (var (_, __, camera, xform) in EntityQuery<SurveillanceCameraMicrophoneComponent, ActiveListenerComponent, SurveillanceCameraComponent, TransformComponent>())
         {
             if (camera.ActiveViewers.Count == 0)
                 continue;
 
-            // get range to camera. This way wispers will still appear as obfuscated if they are too far from the camera's microphone
             var range = (xform.MapID != sourceXform.MapID)
                 ? -1
                 : (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length();
 
-            if (range < 0 || range > ev.VoiceRange)
+            if (range < 0 || range > ev.Range)
                 continue;
 
             foreach (var viewer in camera.ActiveViewers)
             {
-                // if the player has not already received the chat message, send it to them but don't log it to the chat
-                // window. This is simply so that it appears in camera.
                 if (TryComp(viewer, out ActorComponent? actor))
-                    ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false, true));
+                {
+                    RaiseNetworkEvent(ev, actor.PlayerSession);
+                }
+            }
+        }
+    }
+
+    private void DuplicateWhisperEventsIfInRange(EntityWhisperedLocalEvent ev)
+    {
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var sourceXform = Transform(GetEntity(ev.Speaker));
+        var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
+
+        foreach (var (_, __, camera, xform) in EntityQuery<SurveillanceCameraMicrophoneComponent, ActiveListenerComponent, SurveillanceCameraComponent, TransformComponent>())
+        {
+            if (camera.ActiveViewers.Count == 0)
+                continue;
+
+            var range = (xform.MapID != sourceXform.MapID)
+                ? -1
+                : (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length();
+
+            EntityEventArgs outMsg;
+
+            if (range < 0 || range > ev.MaxRange)
+                // Not in range
+                continue;
+
+            if (range < ev.MinRange)
+            {
+                outMsg = new EntityWhisperedEvent(ev.Speaker, ev.AsName, ev.FontId, ev.FontSize, ev.IsBold, ev.AsColor,
+                    ev.MinRange, ev.Message);
+            }
+            else if (_interactionSystem.InRangeUnobstructed(_xforms.GetMapCoordinates(xform), GetEntity(ev.Speaker), ev.MaxRange, Shared.Physics.CollisionGroup.Opaque))
+            {
+                outMsg = new EntityWhisperedObfuscatedlyEvent(ev.Speaker, ev.AsName, ev.FontId, ev.FontSize, ev.IsBold, ev.AsColor,
+                    ev.MaxRange, ev.ObfuscatedMessage);
+            }
+            else
+            {
+                outMsg = new EntityWhisperedTotallyObfuscatedlyEvent(ev.Speaker, ev.FontId, ev.FontSize, ev.IsBold,
+                    ev.MaxRange, ev.ObfuscatedMessage);
+            }
+
+            foreach (var viewer in camera.ActiveViewers)
+            {
+                if (TryComp(viewer, out ActorComponent? actor))
+                {
+                    RaiseNetworkEvent(outMsg, actor.PlayerSession);
+                }
             }
         }
     }
@@ -75,22 +125,6 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         {
             RaiseLocalEvent(monitor, ev);
         }
-    }
-
-    public void SetEnabled(EntityUid uid, bool value, SurveillanceCameraMicrophoneComponent? microphone = null)
-    {
-        if (!Resolve(uid, ref microphone))
-            return;
-
-        if (value == microphone.Enabled)
-            return;
-
-        microphone.Enabled = value;
-
-        if (value)
-            EnsureComp<ActiveListenerComponent>(uid).Range = microphone.Range;
-        else
-            RemCompDeferred<ActiveListenerComponent>(uid);
     }
 }
 

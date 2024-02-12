@@ -1,4 +1,5 @@
-﻿using Content.Shared.Humanoid.Markings;
+﻿using Content.Shared.Chat.V2;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Localizations;
 
 namespace Content.Shared.IoC
@@ -8,7 +9,9 @@ namespace Content.Shared.IoC
         public static void Register()
         {
             IoCManager.Register<MarkingManager, MarkingManager>();
+            IoCManager.Register<IEmoteConfigManager, EmoteConfigManager>();
             IoCManager.Register<ContentLocalizationManager, ContentLocalizationManager>();
+            IoCManager.Register<IChatUtilities, SharedChatUtilitiesManager>();
         }
     }
 }

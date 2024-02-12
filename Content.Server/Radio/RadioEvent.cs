@@ -3,11 +3,8 @@ using Content.Shared.Radio;
 
 namespace Content.Server.Radio;
 
-[ByRefEvent]
-public readonly record struct RadioReceiveEvent(string Message, EntityUid MessageSource, RadioChannelPrototype Channel, MsgChatMessage ChatMsg);
-
 /// <summary>
-/// Use this event to cancel sending message per receiver
+/// Use this event to cancel sending message per receiver, such as by solar flares.
 /// </summary>
 [ByRefEvent]
 public record struct RadioReceiveAttemptEvent(RadioChannelPrototype Channel, EntityUid RadioSource, EntityUid RadioReceiver)
@@ -19,7 +16,7 @@ public record struct RadioReceiveAttemptEvent(RadioChannelPrototype Channel, Ent
 }
 
 /// <summary>
-/// Use this event to cancel sending message to every receiver
+/// Use this event to cancel sending message to every receiver, such as by EMPs and radio jammers.
 /// </summary>
 [ByRefEvent]
 public record struct RadioSendAttemptEvent(RadioChannelPrototype Channel, EntityUid RadioSource)

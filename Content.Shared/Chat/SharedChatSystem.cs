@@ -175,9 +175,9 @@ public abstract class SharedChatSystem : EntitySystem
             if (index - 1 >= 0 && char.IsLetter(message[index - 1]))
                 continue;
 
-            var beforeTarget = message.Substring(0, index);
+            var beforeTarget = message[..index];
             var target = message.Substring(index, theWordI.Length);
-            var afterTarget = message.Substring(index + theWordI.Length);
+            var afterTarget = message[(index + theWordI.Length)..];
 
             message = beforeTarget + target.ToUpper() + afterTarget;
         }
@@ -231,6 +231,7 @@ public abstract class SharedChatSystem : EntitySystem
 
         return rawmsg;
     }
+
     public static string GetStringInsideTag(ChatMessage message, string tag)
     {
         var rawmsg = message.WrappedMessage;
@@ -240,5 +241,39 @@ public abstract class SharedChatSystem : EntitySystem
             return "";
         tagStart += tag.Length + 2;
         return rawmsg.Substring(tagStart, tagEnd - tagStart);
+    }
+
+    public static string FilterAccidentalInput(string input)
+    {
+        var trim = input.ToLower().Trim();
+
+        // TODO: 't' is the shortcut used to open chat; find this magic string's owner!
+        if (trim[0] != 't' || trim.Length < 2)
+            return input;
+
+        switch (trim[1])
+        {
+            case ConsolePrefix:
+                return input[2..];
+            case LOOCPrefix:
+                return input[2..];
+            case OOCPrefix:
+                return input[2..];
+            case AdminPrefix:
+                return input[2..];
+            case EmotesPrefix:
+                return input[2..];
+            case DeadPrefix:
+                return input[2..];
+            case LocalPrefix:
+                return input[2..];
+            case RadioCommonPrefix:
+            case RadioChannelPrefix:
+                return input[1..];
+            case WhisperPrefix:
+                return input[2..];
+            default:
+                return input;
+        }
     }
 }

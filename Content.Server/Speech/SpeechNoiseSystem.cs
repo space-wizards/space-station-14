@@ -1,6 +1,7 @@
 using Robust.Shared.Audio;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Shared.Chat.V2;
 using Content.Shared.Speech;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -21,7 +22,7 @@ namespace Content.Server.Speech
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpeechComponent, EntitySpokeEvent>(OnEntitySpoke);
+            SubscribeLocalEvent<SpeechComponent, EntityLocalChattedEvent>(OnEntitySpoke);
         }
 
         public SoundSpecifier? GetSpeechSound(Entity<SpeechComponent> ent, string message)
@@ -58,7 +59,7 @@ namespace Content.Server.Speech
             return contextSound;
         }
 
-        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, EntitySpokeEvent args)
+        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, EntityLocalChattedEvent args)
         {
             if (component.SpeechSounds == null)
                 return;

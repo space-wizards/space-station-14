@@ -4,7 +4,7 @@ using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Communications;
 using Content.Server.RandomMetadata;
 using Content.Server.GameTicking.Rules.Components;
@@ -60,7 +60,7 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -211,7 +211,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var nukieRule = comps.Value.Item1;
         nukieRule.WarDeclaredTime = _gameTiming.CurTime;
-        _chat.DispatchGlobalAnnouncement(msg, title, announcementSound: announcementSound, colorOverride: colorOverride);
+        _announce.DispatchGlobalAnnouncement(msg, title, announcementSound: announcementSound, colorOverride: colorOverride);
         DistributeExtraTC(nukieRule);
         _warDeclarator.RefreshAllUI(comps.Value.Item1, comps.Value.Item2);
     }

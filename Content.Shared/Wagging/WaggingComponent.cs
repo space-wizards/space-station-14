@@ -29,5 +29,9 @@ public sealed partial class WaggingComponent : Component
     /// Is the entity currently wagging.
     /// </summary>
     [DataField]
-    public bool Wagging = false;
+    public bool Wagging;
+
+    public TimeSpan LastSwitchTime;
+
+    public TimeSpan TimeBetweenToggles = TimeSpan.FromSeconds(1.0);
 }

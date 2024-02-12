@@ -4,11 +4,14 @@ using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     private void InitializeConsole()
     {
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleUnlockTechnologyMessage>(OnConsoleUnlock);
@@ -41,7 +44,7 @@ public sealed partial class ResearchSystem
         var message = Loc.GetString("research-console-unlock-technology-radio-broadcast",
             ("technology", Loc.GetString(technologyPrototype.Name)),
             ("amount", technologyPrototype.Cost));
-        _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+        _radio.SendRadioMessage(uid, message, _prototypeManager.Index(component.AnnouncementChannel));
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
     }

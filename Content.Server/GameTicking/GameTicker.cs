@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
@@ -54,7 +55,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly ArrivalsSystem _arrivals = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly GhostSystem _ghost = default!;

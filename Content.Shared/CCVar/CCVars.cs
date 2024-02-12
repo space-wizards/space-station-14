@@ -839,6 +839,62 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AdminAfkTime =
             CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Censorship file to load during startup. This is just a single-column CSV text file of words to purge from chat.
+        /// Different servers can have different censored words, to cope with different community expectations.
+        /// </summary>
+        /// <remarks>"English.txt" is valid. "English" is not.</remarks>
+        public static readonly CVarDef<string> CensorshipFilterFile =
+            CVarDef.Create("admin.censored_words_file", "", CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Censorship file to load during startup. This is just a single-column CSV text file of known-fine words with
+        /// unfortunate substrings.
+        /// </summary>
+        /// <remarks>"English.txt" is valid. "English" is not. If "foo" is a filtered word, adding "foob" to this list
+        /// means instances of "foob" will not be censored.</remarks>
+        public static readonly CVarDef<string> FalsePositiveFilterFile =
+            CVarDef.Create("admin.censored_false_positives_file", "", CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Censorship file to load during startup. This is just a single-column CSV text file of known-bad words with
+        /// unfortunate substrings that also have known-good substrings.
+        /// </summary>
+        /// <remarks>"English.txt" is valid. "English" is not. If "foo" is a filtered word and "foob" is on the false
+        /// positive list, adding "fooby" to this list means instances of "fooby" will be censored.</remarks>
+        public static readonly CVarDef<string> FalseNegativeFilterFile =
+            CVarDef.Create("admin.censored_false_negative_file", "", CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Does the chat censor make sure p eople can' t u se spa    ces to hide filtered words?
+        /// </summary>
+        /// <remarks>Can cause false positives. (e.g. "superman batman" would become "super*** ***man" if "manbat" is a
+        /// filtered word).</remarks>
+        public static readonly CVarDef<bool> FilterChatForSpaces =
+            CVarDef.Create("admin.censored_chat_use_spaces", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Does the chat censor make sure pe0pl3 c4n't us3 s0m3 l00kalik3 c#4r4ct3rs to hide filtered words?
+        /// </summary>
+        /// <remarks>Can cause false positives.</remarks>
+        public static readonly CVarDef<bool> FilterChatForL33TSpeak =
+            CVarDef.Create("admin.censored_chat_use_l33tspeak", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Does the chat censor make sure pe|op*e c@an't use !special character?s to hide filtered words?
+        /// </summary>
+        /// <remarks>Can cause false positives.</remarks>
+        public static readonly CVarDef<bool> FilterChatForSpecialChars =
+            CVarDef.Create("admin.censored_chat_use_special_chars", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Does the chat censor replace non-Latin characters with question marks?
+        /// </summary>
+        /// <remarks>This only really effects people attempting to talk in cyrillic languages like Russian or Ukrainian,
+        /// because the font blocks fancier alphabets like Chinese.</remarks>
+        public static readonly CVarDef<bool> FilterChatForNonLatin =
+            CVarDef.Create("admin.censored_chat_block_non_latin", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
         /*
          * Explosions
          */
@@ -1584,7 +1640,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         /// <seealso cref="ChatRateLimitCount"/>
         public static readonly CVarDef<int> ChatRateLimitPeriod =
-            CVarDef.Create("chat.rate_limit_period", 2, CVar.SERVERONLY);
+            CVarDef.Create("chat.rate_limit_period", 5, CVar.SERVERONLY);
 
         /// <summary>
         /// How many chat messages are allowed in a single rate limit period.
@@ -1596,7 +1652,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="ChatRateLimitPeriod"/>
         /// <seealso cref="ChatRateLimitAnnounceAdmins"/>
         public static readonly CVarDef<int> ChatRateLimitCount =
-            CVarDef.Create("chat.rate_limit_count", 10, CVar.SERVERONLY);
+            CVarDef.Create("chat.rate_limit_count", 5, CVar.SERVERONLY);
 
         /// <summary>
         /// If true, announce when a player breached chat rate limit to game administrators.
@@ -2004,6 +2060,8 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> ReplayAutoRecordTempDir =
             CVarDef.Create("replay.auto_record_temp_dir", "", CVar.SERVERONLY);
+
+
 
         /*
          * Miscellaneous

@@ -1,180 +1,169 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Systems;
-using Content.Server.Power.Components;
+using Content.Server.Emp;
 using Content.Server.Radio.Components;
-using Content.Server.VoiceMask;
-using Content.Shared.Chat;
-using Content.Shared.Database;
+using Content.Shared.Chat.V2;
+using Content.Shared.Chat.V2.Components;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
-using Content.Shared.Speech;
-using Robust.Shared.Map;
-using Robust.Shared.Network;
+using Content.Shared.Radio.EntitySystems;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Replays;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
 
 /// <summary>
-///     This system handles intrinsic radios and the general process of converting radio messages into chat messages.
+/// Manages the transmission of radio messages to listeners.
 /// </summary>
-public sealed class RadioSystem : EntitySystem
+public sealed class RadioSystem : SharedHeadsetSystem
 {
-    [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-
-    // set used to prevent radio feedback loops.
-    private readonly HashSet<string> _messages = new();
-
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<IntrinsicRadioReceiverComponent, RadioReceiveEvent>(OnIntrinsicReceive);
-        SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, EntitySpokeEvent>(OnIntrinsicSpeak);
+        SubscribeLocalEvent<HeadsetComponent, EntityRadioedEvent>(OnHeadsetReceive);
+        SubscribeLocalEvent<IntrinsicRadioComponent, EntityRadioedEvent>(OnIntrinsicRadioReceive);
+        SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
+
+        SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
-    private void OnIntrinsicSpeak(EntityUid uid, IntrinsicRadioTransmitterComponent component, EntitySpokeEvent args)
+    private static void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
     {
-        if (args.Channel != null && component.Channels.Contains(args.Channel.ID))
-        {
-            SendRadioMessage(uid, args.Message, args.Channel, uid);
-            args.Channel = null; // prevent duplicate messages from other listeners.
-        }
-    }
-
-    private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
-    {
-        if (TryComp(uid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
-    }
-
-    /// <summary>
-    /// Send radio message to all active radio listeners
-    /// </summary>
-    public void SendRadioMessage(EntityUid messageSource, string message, ProtoId<RadioChannelPrototype> channel, EntityUid radioSource, bool escapeMarkup = true)
-    {
-        SendRadioMessage(messageSource, message, _prototype.Index(channel), radioSource, escapeMarkup: escapeMarkup);
-    }
-
-    /// <summary>
-    /// Send radio message to all active radio listeners
-    /// </summary>
-    /// <param name="messageSource">Entity that spoke the message</param>
-    /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
-    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
-    {
-        // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
-        if (!_messages.Add(message))
+        if (!component.Enabled)
             return;
 
-        var name = TryComp(messageSource, out VoiceMaskComponent? mask) && mask.Enabled
-            ? mask.VoiceName
-            : MetaData(messageSource).EntityName;
-
-        name = FormattedMessage.EscapeText(name);
-
-        SpeechVerbPrototype speech;
-        if (mask != null
-            && mask.Enabled
-            && mask.SpeechVerb != null
-            && _prototype.TryIndex<SpeechVerbPrototype>(mask.SpeechVerb, out var proto))
-        {
-            speech = proto;
-        }
-        else
-            speech = _chat.GetSpeechVerb(messageSource, message);
-
-        var content = escapeMarkup
-            ? FormattedMessage.EscapeText(message)
-            : message;
-
-        var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
-            ("color", channel.Color),
-            ("fontType", speech.FontId),
-            ("fontSize", speech.FontSize),
-            ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
-            ("channel", $"\\[{channel.LocalizedName}\\]"),
-            ("name", name),
-            ("message", content));
-
-        // most radios are relayed to chat, so lets parse the chat message beforehand
-        var chat = new ChatMessage(
-            ChatChannel.Radio,
-            message,
-            wrappedMessage,
-            NetEntity.Invalid,
-            null);
-        var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
-
-        var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
-        RaiseLocalEvent(ref sendAttemptEv);
-        RaiseLocalEvent(radioSource, ref sendAttemptEv);
-        var canSend = !sendAttemptEv.Cancelled;
-
-        var sourceMapId = Transform(radioSource).MapID;
-        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
-        var hasMicro = HasComp<RadioMicrophoneComponent>(radioSource);
-
-        var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
-        var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
-        while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
-        {
-            if (!radio.ReceiveAllChannels)
-            {
-                if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) &&
-                                                             !intercom.SupportedChannels.Contains(channel.ID)))
-                    continue;
-            }
-
-            if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
-                continue;
-
-            // don't need telecom server for long range channels or handheld radios and intercoms
-            var needServer = !channel.LongRange && (!hasMicro || !speakerQuery.HasComponent(receiver));
-            if (needServer && !hasActiveServer)
-                continue;
-
-            // check if message can be sent to specific receiver
-            var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
-            RaiseLocalEvent(ref attemptEv);
-            RaiseLocalEvent(receiver, ref attemptEv);
-            if (attemptEv.Cancelled)
-                continue;
-
-            // send the message
-            RaiseLocalEvent(receiver, ref ev);
-        }
-
-        if (name != Name(messageSource))
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
-        else
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
-
-        _replay.RecordServerMessage(chat);
-        _messages.Remove(message);
+        args.Affected = true;
+        args.Disabled = true;
     }
 
-    /// <inheritdoc cref="TelecomServerComponent"/>
-    private bool HasActiveServer(MapId mapId, string channelId)
+    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent headset, EntityRadioedEvent ev)
     {
-        var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
-        foreach (var (_, keys, power, transform) in servers)
+        if (!TryComp<ActorComponent>(headset.CurrentlyWornBy, out var actor))
+            return;
+
+        RaiseNetworkEvent(ev, actor.PlayerSession);
+    }
+
+    private void OnIntrinsicRadioReceive(EntityUid uid, IntrinsicRadioComponent _, ref EntityRadioedEvent ev)
+    {
+        if (!TryComp<ActorComponent>(uid, out var actor))
+            return;
+
+        RaiseNetworkEvent(ev, actor.PlayerSession);
+    }
+
+    private void OnKeysChanged(EntityUid uid, HeadsetComponent component, EncryptionChannelsChangedEvent args)
+    {
+        UpdateHeadsetRadioChannels(uid, component, args.Component);
+    }
+
+    private void UpdateHeadsetRadioChannels(EntityUid uid, HeadsetComponent headset, EncryptionKeyHolderComponent? keyHolder = null)
+    {
+        // make sure to not add Radioable when headset is being deleted
+        if (!headset.Enabled || MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        if (!Resolve(uid, ref keyHolder))
+            return;
+
+        if (keyHolder.Channels.Count == 0)
+            RemComp<RadioableComponent>(uid);
+        else
+            EnsureComp<RadioableComponent>(uid).Channels = new HashSet<string>(keyHolder.Channels);
+    }
+
+    /// <summary>
+    /// Make sure the user of the headset can radio on the channels provided by the headset, without messing up their
+    /// capacity to innately radio (e.g. via an implant, being a borg...)
+    /// </summary>
+    private void UpdateUserRadioChannels(EntityUid equipment, EntityUid equipee, HeadsetComponent headset)
+    {
+        // make sure to not add Radioable when headset is being deleted
+        if (!headset.Enabled || MetaData(equipment).EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        if (!TryComp<RadioableComponent>(equipment, out var radio))
+            return;
+
+        var channels = new HashSet<string>(radio.Channels);
+
+        if (TryComp<IntrinsicRadioTransmitterComponent>(equipee, out var intrinsicRadio))
         {
-            if (transform.MapID == mapId &&
-                power.Powered &&
-                keys.Channels.Contains(channelId))
+            foreach (var intrinsicChannel in intrinsicRadio.Channels)
             {
-                return true;
+                channels.Add(intrinsicChannel);
             }
         }
-        return false;
+
+        if (channels.Count == 0)
+            RemComp<RadioableComponent>(equipee);
+        else
+            EnsureComp<RadioableComponent>(equipee).Channels = channels;
+    }
+
+    /// <summary>
+    /// Make sure that the user loses access to any radio channels they only have via the headset.
+    /// </summary>
+    private void RemoveChannelsFromUser(EntityUid equipment, EntityUid equipee)
+    {
+        if (!TryComp<RadioableComponent>(equipment, out var radio))
+            return;
+
+        var channels = new HashSet<string>();
+
+        if (TryComp<IntrinsicRadioTransmitterComponent>(equipee, out var intrinsicRadio))
+        {
+            foreach (var intrinsicChannel in intrinsicRadio.Channels)
+            {
+                channels.Add(intrinsicChannel);
+            }
+        }
+
+        if (channels.Count == 0)
+            RemComp<RadioableComponent>(equipee);
+        else
+            EnsureComp<RadioableComponent>(equipee).Channels = channels;
+    }
+
+    protected override void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
+    {
+        base.OnGotEquipped(uid, component, args);
+
+        if (component.CurrentlyWornBy == null || !component.Enabled)
+            return;
+
+        UpdateHeadsetRadioChannels(uid, component);
+        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
+    }
+
+    protected override void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
+    {
+        base.OnGotUnequipped(uid, component, args);
+
+        RemComp<RadioableComponent>(uid);
+        RemoveChannelsFromUser(uid, args.Equipee);
+    }
+
+    public void SetEnabled(EntityUid uid, bool isEnabled, HeadsetComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.Enabled == isEnabled)
+            return;
+
+        if (!isEnabled)
+        {
+            RemCompDeferred<RadioableComponent>(uid);
+
+            if (component.CurrentlyWornBy != null)
+                RemoveChannelsFromUser(uid, component.CurrentlyWornBy.Value);
+
+            return;
+        }
+
+        if (component.CurrentlyWornBy == null)
+            return;
+
+        UpdateHeadsetRadioChannels(uid, component);
+        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
     }
 }

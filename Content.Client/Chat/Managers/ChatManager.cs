@@ -23,7 +23,6 @@ namespace Content.Client.Chat.Managers
 
         public void SendMessage(string text, ChatSelectChannel channel)
         {
-            var str = text.ToString();
             switch (channel)
             {
                 case ChatSelectChannel.Console:
@@ -31,42 +30,28 @@ namespace Content.Client.Chat.Managers
                     _consoleHost.ExecuteCommand(text);
                     break;
 
-                case ChatSelectChannel.LOOC:
-                    _consoleHost.ExecuteCommand($"looc \"{CommandParsing.Escape(str)}\"");
-                    break;
-
                 case ChatSelectChannel.OOC:
-                    _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(str)}\"");
+                    _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(text)}\"");
                     break;
 
                 case ChatSelectChannel.Admin:
-                    _consoleHost.ExecuteCommand($"asay \"{CommandParsing.Escape(str)}\"");
-                    break;
-
-                case ChatSelectChannel.Emotes:
-                    _consoleHost.ExecuteCommand($"me \"{CommandParsing.Escape(str)}\"");
+                    _consoleHost.ExecuteCommand($"asay \"{CommandParsing.Escape(text)}\"");
                     break;
 
                 case ChatSelectChannel.Dead:
                     if (_systems.GetEntitySystemOrNull<GhostSystem>() is {IsGhost: true})
-                        goto case ChatSelectChannel.Local;
+                        return;
 
                     if (_adminMgr.HasFlag(AdminFlags.Admin))
-                        _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(str)}\"");
+                        _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(text)}\"");
                     else
                         _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                     break;
-
-                // TODO sepearate radio and say into separate commands.
-                case ChatSelectChannel.Radio:
+                case ChatSelectChannel.None:
                 case ChatSelectChannel.Local:
-                    _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");
-                    break;
-
                 case ChatSelectChannel.Whisper:
-                    _consoleHost.ExecuteCommand($"whisper \"{CommandParsing.Escape(str)}\"");
-                    break;
-
+                case ChatSelectChannel.Radio:
+                case ChatSelectChannel.Emotes:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
             }

@@ -1,7 +1,6 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
@@ -12,12 +11,14 @@ namespace Content.Server.Administration.UI
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        private readonly ChatSystem _chatSystem;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        private readonly ServerAnnouncementSystem _announcement;
 
         public AdminAnnounceEui()
         {
             IoCManager.InjectDependencies(this);
-            _chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+            _announcement = _entityManager.System<ServerAnnouncementSystem>();
         }
 
         public override void Opened()
@@ -50,8 +51,10 @@ namespace Content.Server.Administration.UI
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:
-                            _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
+                            _announcement.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
                             break;
+                        default:
+                            return;
                     }
 
                     StateDirty();

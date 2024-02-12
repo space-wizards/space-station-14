@@ -42,4 +42,24 @@ public sealed class ContentPlayerData
         UserId = userId;
         Name = name;
     }
+
+    /// <summary>
+    /// The rate at which this player has been sending messages. Allows for rate-limiting.
+    /// </summary>
+    public int MessageCount;
+
+    /// <summary>
+    /// When the current count for this session expires.
+    /// </summary>
+    public TimeSpan MessageCountExpiresAt;
+
+    /// <summary>
+    /// Whether rate limiting has been announced to the player
+    /// </summary>
+    public bool RateLimitAnnouncedToPlayer;
+
+    /// <summary>
+    /// When can an announcement to admins next be sent at.
+    /// </summary>
+    public TimeSpan CanAnnounceToAdminsNextAt;
 }

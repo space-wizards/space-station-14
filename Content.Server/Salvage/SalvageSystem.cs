@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.V2;
 using Content.Server.Gravity;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
@@ -50,7 +51,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly GravitySystem _gravity = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly RadioSystem _radioSystem = default!;
+        [Dependency] private readonly ServerRadioSystem _radioSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
@@ -77,7 +78,7 @@ namespace Content.Server.Salvage
         {
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
             var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);
-            _radioSystem.SendRadioMessage(source, message, channel, source);
+            _radioSystem.SendRadioMessage(source, message, channel);
         }
 
         public override void Update(float frameTime)

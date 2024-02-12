@@ -1,3 +1,5 @@
+using Content.Server.Chat.V2;
+
 namespace Content.Server.Chat.Systems;
 
 using Content.Shared.Chat.Prototypes;
@@ -12,7 +14,7 @@ public sealed class EmoteOnDamageSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly ServerEmoteSystem _emote = default!;
 
     public override void Initialize()
     {
@@ -44,11 +46,11 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         var emote = _random.Pick(emoteOnDamage.Emotes);
         if (emoteOnDamage.WithChat)
         {
-            _chatSystem.TryEmoteWithChat(uid, emote, emoteOnDamage.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
+            _emote.TryEmoteWithChat(uid, emote);
         }
         else
         {
-            _chatSystem.TryEmoteWithoutChat(uid,emote);
+            _emote.TryEmoteWithoutChat(uid,emote);
         }
 
         emoteOnDamage.LastEmoteTime = _gameTiming.CurTime;
