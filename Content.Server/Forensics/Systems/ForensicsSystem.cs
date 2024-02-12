@@ -76,8 +76,15 @@ namespace Content.Server.Forensics
         private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
         {
             var target = EnsureComp<ForensicsComponent>(args.Target);
-            target.DNAs.AddRange(ent.Comp.DNAs);
-            target.Fibers.AddRange(ent.Comp.Fibers);
+            foreach (var dna in ent.Comp.DNAs)
+            {
+                target.DNAs.Add(dna);
+            }
+
+            foreach (var fiber in ent.Comp.Fibers)
+            {
+                target.Fibers.Add(fiber);
+            }
         }
 
         private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
