@@ -941,7 +941,7 @@
   - type: Speech
     speechVerb: Robotic
   - type: SurveillanceCameraSpeaker
-    - type: LocalChattable
+  - type: LocalChattable
   - type: SurveillanceCameraMonitor
     speechEnabled: true
   - type: ActivatableUI
