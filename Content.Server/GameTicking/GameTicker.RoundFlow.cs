@@ -46,7 +46,7 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private GameRunLevel _runLevel;
 
-        private RoundEndMessageEvent.RoundEndPlayerInfo[] _replayRoundPlayerInfo = null!;
+        private RoundEndMessageEvent.RoundEndPlayerInfo[]? _replayRoundPlayerInfo;
 
         private string? _replayRoundText;
 
