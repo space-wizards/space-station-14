@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
@@ -45,6 +46,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+        [Dependency] private readonly SharedActionsSystem _action = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
@@ -85,11 +87,22 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckAct);
+            SubscribeLocalEvent<CuffableComponent, UncuffSelfActionEvent>(OnUncuffSelf);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
+        }
+
+        private void OnUncuffSelf(EntityUid uid, CuffableComponent component, UncuffSelfActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            TryUncuff(uid, uid);
+
+            args.Handled = true;
         }
 
         private void OnUncuffAttempt(ref UncuffAttemptEvent args)
@@ -172,9 +185,15 @@ namespace Content.Shared.Cuffs
             _actionBlocker.UpdateCanMove(uid);
 
             if (component.CanStillInteract)
+            {
+                _action.RemoveAction(uid, component.UncuffAction);
                 _alerts.ClearAlert(uid, AlertType.Handcuffed);
+            }
             else
+            {
+                component.UncuffAction = _action.AddAction(uid, "ActionUncuffSelf");
                 _alerts.ShowAlert(uid, AlertType.Handcuffed);
+            }
 
             var ev = new CuffedStateChangeEvent();
             RaiseLocalEvent(uid, ref ev);
@@ -589,11 +608,6 @@ namespace Content.Shared.Cuffs
 
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is trying to uncuff {ToPrettyString(target)}");
 
-            if (isOwner)
-            {
-                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, true, false);
-            }
-
             if (_net.IsServer)
             {
                 _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-observer",
@@ -603,7 +617,6 @@ namespace Content.Shared.Cuffs
 
                 if (target == user)
                 {
-                    _color.RaiseEffect(Color.Red, new List<EntityUid>() { user }, Filter.Pvs(user, entityManager: EntityManager));
                     _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
                 }
                 else
@@ -635,6 +648,14 @@ namespace Content.Shared.Cuffs
 
             cuff.Removing = true;
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
+
+            var isOwner = user == target;
+
+            if (isOwner)
+            {
+                _color.RaiseEffect(Color.Red, new List<EntityUid>() { target }, Filter.Pvs(target, entityManager: EntityManager));
+                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, true, false);
+            }
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 
@@ -730,6 +751,11 @@ namespace Content.Shared.Cuffs
         [Serializable, NetSerializable]
         private sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent
         {
+        }
+
+        public sealed partial class UncuffSelfActionEvent : InstantActionEvent
+        {
+
         }
     }
 }

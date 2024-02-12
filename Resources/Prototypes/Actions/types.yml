@@ -328,3 +328,15 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
+
+- type: entity
+  id: ActionUncuffSelf
+  name: action-name-uncuff-self
+  description: action-description-uncuff-self
+  noSpawn: true
+  components:
+    - type: InstantAction
+      icon: { sprite: Objects/Misc/handcuffs.rsi, state: handcuff }
+      useDelay: 5
+      event: !type:UncuffSelfActionEvent
+      checkCanInteract: false

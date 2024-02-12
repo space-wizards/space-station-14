@@ -128,7 +128,6 @@
 
 - type: alert
   id: Handcuffed
-  onClick: !type:RemoveCuffs  { }
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
   name: alerts-handcuffed-name
   description: alerts-handcuffed-desc
