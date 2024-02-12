@@ -16,6 +16,9 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
+
+    //TODO: fix how consciousness cap/clamping works, do not actually clamp the value, use either consciousnessCap/Consciousness depending on which is lower instead!
+
     public override void Initialize()
     {
         SubscribeLocalEvent<ConsciousnessComponent,UpdateMobStateEvent>(OnMobstateChanged);
