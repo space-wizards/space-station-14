@@ -10,9 +10,6 @@
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
     bodyIconState: body-overlay
-    damageOnResist:
-      types:
-        Blunt: 18
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -52,9 +49,6 @@
       path: /Audio/Items/Handcuffs/rope_breakout.ogg
     startBreakoutSound:
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
-    damageOnResist:
-      types:
-        Blunt: 9
   - type: Construction
     graph: makeshifthandcuffs
     node: cuffscable
@@ -96,9 +90,6 @@
       path: /Audio/Items/Handcuffs/rope_breakout.ogg
     startBreakoutSound:
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
-    damageOnResist:
-      types:
-        Blunt: 0
   - type: Sprite
     sprite: Objects/Misc/zipties.rsi
     state: cuff
@@ -157,9 +148,6 @@
   - type: Handcuff
     cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
     breakoutTime: 100
-    damageOnResist:
-      types:
-        Blunt: 0
     cuffTime: 10
     uncuffTime: 10
     stunBonus: 4

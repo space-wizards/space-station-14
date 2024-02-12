@@ -7,7 +7,6 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
-using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Effects;
@@ -50,7 +49,6 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-        [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -650,12 +648,6 @@ namespace Content.Shared.Cuffs
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
             var isOwner = user == target;
-
-            if (isOwner)
-            {
-                _color.RaiseEffect(Color.Red, new List<EntityUid>() { target }, Filter.Pvs(target, entityManager: EntityManager));
-                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, true, false);
-            }
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 

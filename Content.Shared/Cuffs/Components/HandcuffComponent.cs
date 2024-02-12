@@ -52,15 +52,6 @@ public sealed partial class HandcuffComponent : Component
     [DataField]
     public bool Removing;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier DamageOnResist = new()
-    {
-        DamageDict = new()
-             {
-                 { "Blunt", 3.0 },
-             }
-    };
-
     /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.
     /// </summary>
