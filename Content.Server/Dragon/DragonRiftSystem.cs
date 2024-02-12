@@ -19,7 +19,7 @@ namespace Content.Server.Dragon;
 /// </summary>
 public sealed class DragonRiftSystem : EntitySystem
 {
-    [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DragonSystem _dragon = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
@@ -68,7 +68,7 @@ public sealed class DragonRiftSystem : EntitySystem
                 Dirty(comp);
 
                 var location = xform.LocalPosition;
-                _announce.DispatchGlobalAnnouncement(Loc.GetString("carp-rift-warning", ("location", location)), playSound: false, colorOverride: Color.Red);
+                _chat.DispatchGlobalAnnouncement(Loc.GetString("carp-rift-warning", ("location", location)), playSound: false, colorOverride: Color.Red);
                 _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
                 _navMap.SetBeaconEnabled(uid, true);
             }

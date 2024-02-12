@@ -12,7 +12,7 @@ public sealed class AlertLevelSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
@@ -177,7 +177,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
         if (announce)
         {
-            _announce.DispatchStationAnnouncement(station, announcementFull, playSound: playDefault,
+            _chat.DispatchStationAnnouncement(station, announcementFull, playSound: playDefault,
                 colorOverride: detail.Color, sender: stationName);
         }
 

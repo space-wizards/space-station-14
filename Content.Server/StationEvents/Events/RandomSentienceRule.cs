@@ -54,7 +54,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
         }
         foreach (var station in stationsToNotify)
         {
-            _announce.DispatchStationAnnouncement(
+            Chat.DispatchStationAnnouncement(
                 station,
                 Loc.GetString("station-event-random-sentience-announcement",
                     ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),

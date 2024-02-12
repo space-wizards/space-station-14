@@ -19,30 +19,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
-public sealed class ServerLocalChatSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly ServerEmoteSystem _emote = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
-    [Dependency] private readonly ReplacementAccentSystem _repAccent = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ILogManager _logger = default!;
-    [Dependency] private readonly IChatRateLimiter _rateLimiter = default!;
-    [Dependency] private readonly IChatUtilities _chatUtilities = default!;
-
-    public override void Initialize()
+    public void InitializeLocalChat()
     {
-        base.Initialize();
-
         // A client attempts to chat using a given entity
-        SubscribeNetworkEvent<LocalChatAttemptedEvent>((msg, args) => { HandleAttemptChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
+        SubscribeNetworkEvent<LocalChatAttemptedEvent>((msg, args) => { HandleAttemptLocalChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
     }
 
-    private void HandleAttemptChatMessage(ICommonSession player, NetEntity entity, string message)
+    private void HandleAttemptLocalChatMessage(ICommonSession player, NetEntity entity, string message)
     {
         var entityUid = GetEntity(entity);
 
@@ -53,8 +38,10 @@ public sealed class ServerLocalChatSystem : EntitySystem
         }
 
         // Are they rate-limited
-        if (IsRateLimited(entityUid))
+        if (IsRateLimited(entityUid, out var reason))
         {
+            RaiseNetworkEvent(new LocalChatAttemptFailedEvent(entity, reason), player);
+
             return;
         }
 
@@ -66,10 +53,10 @@ public sealed class ServerLocalChatSystem : EntitySystem
             return;
         }
 
-        var maxMessageLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
+        var maxMessageLen = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
 
         // Is the message too long?
-        if (message.Length > _configurationManager.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > _configuration.GetCVar(CCVars.ChatMaxMessageLength))
         {
             RaiseNetworkEvent(
                 new LocalChatAttemptFailedEvent(
@@ -104,21 +91,11 @@ public sealed class ServerLocalChatSystem : EntitySystem
     /// <param name="asName">Override the name this entity will appear as.</param>
     public void SendLocalChatMessage(EntityUid entityUid, string message, float range, string asName = "", bool hideInLog = false)
     {
-        // TODO: formatting for languages should be its own code that can be called via a manager!
-        var shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
-                                       || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
-
-        message = SanitizeInGameICMessage(
-            entityUid,
-            message,
-            out var emoteStr,
-            _configuration.GetCVar(CCVars.ChatPunctuation),
-            shouldCapitalizeTheWordI
-        );
+        message = SanitizeInCharacterMessage(entityUid,message,out var emoteStr);
 
         if (emoteStr?.Length > 0)
         {
-            _emote.TrySendEmoteMessage(entityUid, emoteStr, asName, true);
+            TrySendEmoteMessage(entityUid, emoteStr, asName, true);
         }
 
         if (string.IsNullOrEmpty(message))
@@ -178,7 +155,7 @@ public sealed class ServerLocalChatSystem : EntitySystem
         RaiseLocalEvent(entityUid, msgOut, true);
 
         // Now fire it off to legal recipients
-        foreach (var session in GetRecipients(entityUid, range))
+        foreach (var session in GetLocalChatRecipients(entityUid, range))
         {
             RaiseNetworkEvent(msgOut, session);
         }
@@ -211,57 +188,8 @@ public sealed class ServerLocalChatSystem : EntitySystem
 
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity):player} received subtle message from {source.Name}: {message}");
     }
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool punctuate = false, bool capitalizeTheWordI = true)
-    {
-        message = message.Trim();
-        ChatCensor.Censor(message, out message);
-        message = _repAccent.ApplyReplacements(message, "chatsanitize");
-        message = _chatUtilities.CapitalizeFirstLetter(message);
 
-        if (capitalizeTheWordI)
-            message = _chatUtilities.CapitalizeIPronoun(message);
-
-        if (punctuate)
-            message = _chatUtilities.AddAPeriod(message);
-
-        _sanitizer.TrySanitizeOutSmilies(message, source, out message, out emoteStr);
-
-        return message;
-    }
-
-    private bool IsRateLimited(EntityUid entityUid)
-    {
-        if (!_rateLimiter.IsRateLimited(entityUid, out var reason))
-            return false;
-
-        if (!string.IsNullOrEmpty(reason))
-        {
-            RaiseNetworkEvent(new LocalChatAttemptFailedEvent(GetNetEntity(entityUid),reason), entityUid);
-        }
-
-        return true;
-    }
-
-    private string TransformSpeech(EntityUid sender, string message)
-    {
-        // TODO: This is to do with the accent system as it currently exists. We're not refactoring accents at the
-        // moment but this will need to be changed when this is looked into.
-        var ev = new TransformSpeechEvent(sender, message);
-        RaiseLocalEvent(ev);
-
-        return ev.Message;
-    }
-
-    private string GetSpeakerName(EntityUid entityToBeNamed)
-    {
-        // More wonkiness with raised local events...
-        var nameEv = new TransformSpeakerNameEvent(entityToBeNamed, Name(entityToBeNamed));
-        RaiseLocalEvent(entityToBeNamed, nameEv);
-
-        return nameEv.Name;
-    }
-
-    private List<ICommonSession> GetRecipients(EntityUid source, float range)
+    private List<ICommonSession> GetLocalChatRecipients(EntityUid source, float range)
     {
         var recipients = new List<ICommonSession>();
 

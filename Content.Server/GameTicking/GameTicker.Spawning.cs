@@ -217,7 +217,7 @@ namespace Content.Server.GameTicking
 
             if (lateJoin && !silent)
             {
-                _announce.DispatchStationAnnouncement(station,
+                _chat.DispatchStationAnnouncement(station,
                     Loc.GetString(
                         "latejoin-arrival-announcement",
                     ("character", MetaData(mob).EntityName),

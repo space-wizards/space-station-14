@@ -34,7 +34,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            EntitySystem.Get<ServerLOOCSystem>().SendLoocMessage(entity, message);
+            EntitySystem.Get<ChatSystem>().SendLoocMessage(entity, message);
         }
     }
 }

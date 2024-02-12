@@ -33,7 +33,7 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -401,7 +401,7 @@ public sealed class StationSystem : EntitySystem
 
         if (loud)
         {
-            _announce.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
+            _chat.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
         }
 
         RaiseLocalEvent(station, new StationRenamedEvent(oldName, name), true);

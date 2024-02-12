@@ -21,7 +21,7 @@ namespace Content.Server.Research.Systems
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly ServerRadioSystem _radio = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
 
         public override void Initialize()
         {

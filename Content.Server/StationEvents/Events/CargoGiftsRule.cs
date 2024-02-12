@@ -21,7 +21,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
 
         var str = Loc.GetString(component.Announce,
             ("sender", Loc.GetString(component.Sender)), ("description", Loc.GetString(component.Description)), ("dest", Loc.GetString(component.Dest)));
-        _announce.DispatchGlobalAnnouncement(str, colorOverride: Color.FromHex("#18abf5"));
+        Chat.DispatchGlobalAnnouncement(str, colorOverride: Color.FromHex("#18abf5"));
     }
 
     /// <summary>

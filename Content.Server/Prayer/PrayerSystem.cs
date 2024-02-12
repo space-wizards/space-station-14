@@ -24,7 +24,7 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly ServerLocalChatSystem _localChat = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
 
     public override void Initialize()
@@ -83,7 +83,7 @@ public sealed class PrayerSystem : EntitySystem
         var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
-        _localChat.SendSubtleLocalChatMessage(source, target, message);
+        _chat.SendSubtleLocalChatMessage(source, target, message);
     }
 
     /// <summary>

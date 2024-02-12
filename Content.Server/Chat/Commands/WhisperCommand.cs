@@ -37,7 +37,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ServerWhisperSystem>().TrySendWhisperMessage(playerEntity, message);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>().TrySendWhisperMessage(playerEntity, message);
         }
     }
 }

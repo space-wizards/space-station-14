@@ -13,7 +13,7 @@ public sealed class AutoEmoteSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ServerEmoteSystem _emote = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -47,11 +47,11 @@ public sealed class AutoEmoteSystem : EntitySystem
 
                 if (autoEmotePrototype.WithChat)
                 {
-                    _emote.TryEmoteWithChat(uid, autoEmotePrototype.EmoteId);
+                    _chat.TryEmoteWithChat(uid, autoEmotePrototype.EmoteId);
                 }
                 else
                 {
-                    _emote.TryEmoteWithoutChat(uid, autoEmotePrototype.EmoteId);
+                    _chat.TryEmoteWithoutChat(uid, autoEmotePrototype.EmoteId);
                 }
             }
         }

@@ -5,7 +5,7 @@ namespace Content.Server.Chat.Systems;
 
 public sealed class AnnounceOnSpawnSystem : EntitySystem
 {
-    [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -16,8 +16,6 @@ public sealed class AnnounceOnSpawnSystem : EntitySystem
 
     private void OnInit(EntityUid uid, AnnounceOnSpawnComponent comp, MapInitEvent args)
     {
-        var message = Loc.GetString(comp.Message);
-        var sender = comp.Sender != null ? Loc.GetString(comp.Sender) : "Central Command";
-        _announce.DispatchGlobalAnnouncement(message, sender, playSound: true, comp.Sound, comp.Color);
+        _chat.DispatchGlobalAnnouncement(Loc.GetString(comp.Message), comp.Sender != null ? Loc.GetString(comp.Sender) : "Central Command", playSound: true, comp.Sound, comp.Color);
     }
 }

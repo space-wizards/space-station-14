@@ -1252,7 +1252,15 @@ namespace Content.Shared.CCVar
          * LOOC
          */
 
+        /// <summary>
+        /// Is LOOC enabled?
+        /// </summary>
         public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
+
+        /// <summary>
+        /// How far does LOOC transmit?
+        /// </summary>
+        public static readonly CVarDef<float> LoocRange = CVarDef.Create("looc.range", 10.0f, CVar.NOTIFY | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);

@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -17,24 +18,22 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
-public sealed class ServerLOOCSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly IChatRateLimiter _rateLimiter = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IAdminManager _admin = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly IServerLoocManager _loocManager = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly ServerDeadChatSystem _deadChat = default!;
+    public bool LoocEnabled { get; private set; } = true;
+    public bool DeadLoocEnabled { get; private set; }
+    public bool CritLoocEnabled { get; private set; }
 
-    public override void Initialize()
+    public void InitializeLoocChat()
     {
         base.Initialize();
 
         // A client attempts to chat using a given entity
         SubscribeNetworkEvent<LoocAttemptedEvent>((msg, args) => { HandleAttemptChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
+
+        _configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
+        _configuration.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
+        _configuration.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
     }
 
     private void HandleAttemptChatMessage(ICommonSession player, NetEntity entity, string message)
@@ -43,32 +42,28 @@ public sealed class ServerLOOCSystem : EntitySystem
 
         if (player.AttachedEntity != entityUid)
         {
-            // Nice try bozo.
             return;
         }
 
-        // Are they rate-limited
-        if (IsRateLimited(entityUid))
+        if (IsRateLimited(entityUid, out var reason))
         {
+            RaiseNetworkEvent(new LoocAttemptFailedEvent(entity, reason), player);
+
             return;
         }
 
-        var maxMessageLen = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
-
-        // Is the message too long?
-        if (message.Length > _configuration.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > _maxChatMessageLength)
         {
             RaiseNetworkEvent(
                 new LoocAttemptFailedEvent(
                     entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", maxMessageLen))
+                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", _maxChatMessageLength))
                 ),
                 player);
 
             return;
         }
 
-        // All good; let's actually send a chat message.
         SendLoocMessage(entityUid, message);
     }
 
@@ -77,61 +72,38 @@ public sealed class ServerLOOCSystem : EntitySystem
         message = SanitizeMessage(message);
 
         // If dead player LOOC is disabled, unless you are an aghost, send dead messages to dead chat
-        if (!_admin.IsAdmin(source) && !_loocManager.DeadLoocEnabled &&
+        if (!_admin.IsAdmin(source) && !DeadLoocEnabled &&
             (HasComp<GhostComponent>(source) || _mobState.IsDead(source)))
-            _deadChat.SendDeadChatMessage(source, message);
+            SendDeadChatMessage(source, message);
 
         // If crit player LOOC is disabled, don't send the message at all.
-
-        if (!_loocManager.CritLoocEnabled && _mobState.IsCritical(source))
+        if (!CritLoocEnabled && _mobState.IsCritical(source))
             return;
 
         var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
 
-        if (!_admin.IsAdmin(source) && !_loocManager.LoocEnabled)
+        if (!_admin.IsAdmin(source) && !LoocEnabled)
             return;
+
+        var range = _configuration.GetCVar(CCVars.LoocRange);
 
         var msgOut = new EntityLoocedEvent(
             GetNetEntity(source),
             name,
             message,
-            IServerLoocManager.LoocVoiceRange
+            range
         );
 
-        // Now fire it off to legal recipients
-        foreach (var session in GetRecipients(source))
-        {
+        foreach (var session in GetLoocRecipients(source, range))
             RaiseNetworkEvent(msgOut, session);
-        }
 
         if (_playerManager.TryGetSessionByEntity(source, out var commonSession))
-        {
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {commonSession:Player}: {message}");
-        }
 
         _replay.RecordServerMessage(msgOut);
     }
 
-    private bool IsRateLimited(EntityUid entityUid)
-    {
-        if (!_rateLimiter.IsRateLimited(entityUid, out var reason))
-            return false;
-
-        if (!string.IsNullOrEmpty(reason))
-        {
-            RaiseNetworkEvent(new LoocAttemptFailedEvent(GetNetEntity(entityUid),reason), entityUid);
-        }
-
-        return true;
-    }
-
-    private string SanitizeMessage(string message)
-    {
-        return message.Trim();
-    }
-
-
-    private List<ICommonSession> GetRecipients(EntityUid source)
+    private List<ICommonSession> GetLoocRecipients(EntityUid source, float range)
     {
         var recipients = new List<ICommonSession>();
 
@@ -153,10 +125,39 @@ public sealed class ServerLOOCSystem : EntitySystem
                 continue;
 
             // even if they are a ghost hearer, in some situations we still need the range
-            if (ghostHearing.HasComponent(playerEntity) || sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < IServerLoocManager.LoocVoiceRange)
+            if (ghostHearing.HasComponent(playerEntity) || sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < range)
                 recipients.Add(player);
         }
 
         return recipients;
+    }
+
+    private void OnLoocEnabledChanged(bool val)
+    {
+        if (LoocEnabled == val)
+            return;
+
+        LoocEnabled = val;
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
+    }
+
+    private void OnDeadLoocEnabledChanged(bool val)
+    {
+        if (DeadLoocEnabled == val) return;
+
+        DeadLoocEnabled = val;
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
+    }
+
+    private void OnCritLoocEnabledChanged(bool val)
+    {
+        if (CritLoocEnabled == val)
+            return;
+
+        CritLoocEnabled = val;
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
     }
 }

@@ -27,8 +27,7 @@ public sealed class RadioDeviceSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ServerLocalChatSystem _localChat = default!;
-    [Dependency] private readonly ServerRadioSystem _radioSystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -189,7 +188,7 @@ public sealed class RadioDeviceSystem : EntitySystem
             return; // no feedback loops please.
 
         if (_recentlySent.Add((args.Message, args.Source)))
-            _radioSystem.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
+            _chat.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
@@ -208,7 +207,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         var nameEv = new TransformSpeakerNameEvent(entityUid, Name(entityUid));
         RaiseLocalEvent(entityUid, nameEv);
 
-        _localChat.TrySendLocalChatMessage(uid, args.Message, $"{Name(uid)} ({nameEv.Name})", true);
+        _chat.TrySendLocalChatMessage(uid, args.Message, $"{Name(uid)} ({nameEv.Name})", true);
     }
 
     private void OnBeforeIntercomUiOpen(EntityUid uid, IntercomComponent component, BeforeActivatableUIOpenEvent args)

@@ -17,7 +17,7 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SpeechSoundSystem _speechSound = default!;
-    [Dependency] private readonly ServerLocalChatSystem _chat = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     /// <inheritdoc/>

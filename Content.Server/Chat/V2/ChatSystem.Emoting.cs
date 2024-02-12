@@ -18,22 +18,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
-public sealed class ServerEmoteSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ILogManager _logger = default!;
-    [Dependency] private readonly IEmoteConfigManager _emoteConfig = default!;
-    [Dependency] private readonly IChatRateLimiter _rateLimiter = default!;
-    [Dependency] private readonly IChatUtilities _chatUtilities = default!;
-
-    public override void Initialize()
+    public void InitializeEmoting()
     {
         base.Initialize();
 
@@ -52,8 +39,10 @@ public sealed class ServerEmoteSystem : EntitySystem
         }
 
         // Are they rate-limited
-        if (IsRateLimited(entityUid))
+        if (IsRateLimited(entityUid, out var reason))
         {
+            RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, reason), player);
+
             return;
         }
 
@@ -65,10 +54,10 @@ public sealed class ServerEmoteSystem : EntitySystem
             return;
         }
 
-        var maxMessageLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
+        var maxMessageLen = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
 
         // Is the message too long?
-        if (message.Length > _configurationManager.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > _configuration.GetCVar(CCVars.ChatMaxMessageLength))
         {
             RaiseNetworkEvent(
                 new EmoteAttemptFailedEvent(
@@ -107,19 +96,9 @@ public sealed class ServerEmoteSystem : EntitySystem
         // Capitalizing I still happens for emotes in English for correctness of grammar, even though emotes are
         // written in the third person in English.
 
-        // TODO: formatting for languages should be its own code that can be called via a manager!
-        var shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
-                                       || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
+        message = SanitizeInCharacterMessage(entityUid, message, out var emoteStr);
 
-        message = SanitizeInGameICMessage(
-            entityUid,
-            message,
-            out var emoteStr,
-            _configuration.GetCVar(CCVars.ChatPunctuation),
-            shouldCapitalizeTheWordI
-        );
-
-        if (!string.IsNullOrEmpty(emoteStr))
+        if (!string.IsNullOrEmpty(emoteStr) && !isRecursive)
         {
             // If they wrote something like '@dances really badly lol` then this converts to `Urist dances really badly` and `Urist laughs`.
             // We trim this to only allowing one recursion; this prevents an abusive message like `lol lol lol lol lol lol lol lol lol lol`
@@ -178,7 +157,7 @@ public sealed class ServerEmoteSystem : EntitySystem
         RaiseLocalEvent(entityUid, msgOut, true);
 
         // Now fire it off to legal recipients
-        foreach (var session in GetRecipients(entityUid, range))
+        foreach (var session in GetEmoteRecipients(entityUid, range))
         {
             RaiseNetworkEvent(msgOut, session);
         }
@@ -188,41 +167,7 @@ public sealed class ServerEmoteSystem : EntitySystem
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(entityUid):user} as {asName}: {message}");
     }
 
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool punctuate = false, bool capitalizeTheWordI = true)
-    {
-        message = message.Trim();
-
-        if (capitalizeTheWordI)
-            message = _chatUtilities.CapitalizeIPronoun(message);
-
-        if (punctuate)
-            message = _chatUtilities.AddAPeriod(message);
-
-        _sanitizer.TrySanitizeOutSmilies(message, source, out message, out emoteStr);
-
-        return message;
-    }
-
-    private bool IsRateLimited(EntityUid entityUid)
-    {
-        if (!_rateLimiter.IsRateLimited(entityUid, out var reason))
-            return false;
-
-        if (!string.IsNullOrEmpty(reason))
-        {
-            RaiseNetworkEvent(
-                new LocalChatAttemptFailedEvent(
-                    GetNetEntity(entityUid),
-                    Loc.GetString(Loc.GetString("chat-manager-rate-limited"))
-                ),
-                entityUid
-            );
-        }
-
-        return true;
-    }
-
-    private List<ICommonSession> GetRecipients(EntityUid source, float range)
+    private List<ICommonSession> GetEmoteRecipients(EntityUid source, float range)
     {
         var recipients = new List<ICommonSession>();
 
@@ -256,7 +201,7 @@ public sealed class ServerEmoteSystem : EntitySystem
         if (!TryComp<EmoteableComponent>(source, out var comp))
             return;
 
-        if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var emote))
+        if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
             return;
 
         // check if proto has valid message for chat
@@ -277,7 +222,7 @@ public sealed class ServerEmoteSystem : EntitySystem
         if (!TryComp<EmoteableComponent>(source, out var comp))
             return;
 
-        if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var emote))
+        if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
             return;
 
         // EmoteEvent is used by a number of other systems to do things. We can't easily migrate and encapsulate that work here.

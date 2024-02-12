@@ -13,12 +13,12 @@ namespace Content.Server.Administration.UI
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private readonly ServerAnnouncementSystem _announcement;
+        private readonly ChatSystem _chat;
 
         public AdminAnnounceEui()
         {
             IoCManager.InjectDependencies(this);
-            _announcement = _entityManager.System<ServerAnnouncementSystem>();
+            _chat = _entityManager.System<ChatSystem>();
         }
 
         public override void Opened()
@@ -51,7 +51,7 @@ namespace Content.Server.Administration.UI
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:
-                            _announcement.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
+                            _chat.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
                             break;
                         default:
                             return;

@@ -74,7 +74,7 @@
     maxIntensity: 20
     intensitySlope: 30
     totalIntensity: 30
-     canCreateVacuum: false
+    canCreateVacuum: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -84,7 +84,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
-        sound
+        sound:
           collection: MetalGlassBreak
       - !type:ExplodeBehavior
   - type: GuideHelp

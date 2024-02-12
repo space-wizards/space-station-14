@@ -29,7 +29,7 @@ public sealed partial class Emote : ReagentEffect
         if (EmoteId == null)
             return;
 
-        var emote = args.EntityManager.System<ServerEmoteSystem>();
+        var emote = args.EntityManager.System<ChatSystem>();
         if (ShowInChat)
             emote.TryEmoteWithChat(args.SolutionEntity, EmoteId);
         else

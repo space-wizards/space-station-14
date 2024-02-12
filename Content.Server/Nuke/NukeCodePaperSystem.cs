@@ -14,7 +14,7 @@ namespace Content.Server.Nuke
     public sealed class NukeCodePaperSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ServerAnnouncementSystem _announce = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
@@ -80,7 +80,7 @@ namespace Content.Server.Nuke
             if (wasSent)
             {
                 var msg = Loc.GetString("nuke-component-announcement-send-codes");
-                _announce.DispatchStationAnnouncement(station, msg, colorOverride: Color.Red);
+                _chat.DispatchStationAnnouncement(station, msg, colorOverride: Color.Red);
             }
 
             return wasSent;

@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
 public sealed partial class SpeakOperator : HTNOperator
 {
-    private ServerLocalChatSystem _chat = default!;
+    private ChatSystem _chat = default!;
 
     [DataField("speech", required: true)]
     public string Speech = string.Empty;
@@ -19,7 +19,7 @@ public sealed partial class SpeakOperator : HTNOperator
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ServerLocalChatSystem>();
+        _chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)

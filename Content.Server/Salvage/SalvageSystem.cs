@@ -38,7 +38,6 @@ namespace Content.Server.Salvage
 {
     public sealed partial class SalvageSystem : SharedSalvageSystem
     {
-        [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
@@ -51,7 +50,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly GravitySystem _gravity = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly ServerRadioSystem _radioSystem = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
@@ -78,7 +77,7 @@ namespace Content.Server.Salvage
         {
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
             var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);
-            _radioSystem.SendRadioMessage(source, message, channel);
+            _chat.SendRadioMessage(source, message, channel);
         }
 
         public override void Update(float frameTime)

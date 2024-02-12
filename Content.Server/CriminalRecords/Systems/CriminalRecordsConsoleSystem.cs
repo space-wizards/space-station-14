@@ -25,7 +25,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ServerRadioSystem _radio = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -132,7 +132,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             _ => "not-wanted"
         };
 
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), _proto.Index(ent.Comp.SecurityChannel));
+        _chat.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), _proto.Index(ent.Comp.SecurityChannel));
 
         UpdateUserInterface(ent);
     }

@@ -33,7 +33,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly MaterialStorageSystem _material = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly ServerRadioSystem _radio = default!;
+    [Dependency] private readonly ChatSystem _radio = default!;
     [Dependency] private readonly RadiationSystem _radiation = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;

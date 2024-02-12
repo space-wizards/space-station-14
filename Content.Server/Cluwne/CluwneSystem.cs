@@ -30,7 +30,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ServerEmoteSystem _emote = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedEmoteSoundsSystem _emoteSounds = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -101,7 +101,7 @@ public sealed class CluwneSystem : EntitySystem
 
             if (TryComp<EmoteableComponent>(uid, out var comp))
             {
-                _emote.SendEmoteMessage(uid, "honks", comp.Range);
+                _chat.SendEmoteMessage(uid, "honks", comp.Range);
             }
         }
 
@@ -112,7 +112,7 @@ public sealed class CluwneSystem : EntitySystem
 
             if (TryComp<EmoteableComponent>(uid, out var comp))
             {
-                _emote.SendEmoteMessage(uid, "spasms", comp.Range);
+                _chat.SendEmoteMessage(uid, "spasms", comp.Range);
             }
         }
     }

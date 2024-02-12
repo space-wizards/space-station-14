@@ -121,7 +121,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-          shape: !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.3,-0.16,0.3,0.40"
         mask:
         - MachineMask

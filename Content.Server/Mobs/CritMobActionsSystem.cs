@@ -16,7 +16,7 @@ namespace Content.Server.Mobs;
 /// </summary>
 public sealed class CritMobActionsSystem : EntitySystem
 {
-    [Dependency] private readonly ServerWhisperSystem _whisper = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DeathgaspSystem _deathGasp = default!;
     [Dependency] private readonly IServerConsoleHost _host = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -76,7 +76,7 @@ public sealed class CritMobActionsSystem : EntitySystem
                 }
                 lastWords += "...";
 
-                _whisper.TrySendWhisperMessage(uid, lastWords);
+                _chat.TrySendWhisperMessage(uid, lastWords);
                 _host.ExecuteCommand(actor.PlayerSession, "ghost");
             });
 

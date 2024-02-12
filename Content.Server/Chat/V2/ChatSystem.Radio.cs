@@ -33,27 +33,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
-public sealed class ServerRadioSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly ServerEmoteSystem _emote = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
-    [Dependency] private readonly ReplacementAccentSystem _repAccent = default!;
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ILogManager _logger = default!;
-    [Dependency] private readonly IChatRateLimiter _rateLimiter = default!;
-    [Dependency] private readonly IChatUtilities _chatUtilities = default!;
-    [Dependency] private readonly ServerWhisperSystem _whisper = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-
-    public override void Initialize()
+    public void InitializeRadio()
     {
-        base.Initialize();
-
-        // A client attempts to chat using a given entity
         SubscribeNetworkEvent<RadioAttemptedEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel); });
     }
 
@@ -68,8 +51,10 @@ public sealed class ServerRadioSystem : EntitySystem
         }
 
         // Are they rate-limited
-        if (IsRateLimited(entityUid))
+        if (IsRateLimited(entityUid, out var reason))
         {
+            RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, reason), player);
+
             return;
         }
 
@@ -90,7 +75,7 @@ public sealed class ServerRadioSystem : EntitySystem
             return;
         }
 
-        if (!_prototype.TryIndex(channel, out RadioChannelPrototype? radioChannelProto))
+        if (!_proto.TryIndex(channel, out RadioChannelPrototype? radioChannelProto))
         {
             // TODO: Add locstring
             RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, $"The {channel} radio channel doesn't exist!"), player);
@@ -98,10 +83,10 @@ public sealed class ServerRadioSystem : EntitySystem
             return;
         }
 
-        var maxMessageLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
+        var maxMessageLen = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
 
         // Is the message too long?
-        if (message.Length > _configurationManager.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > _configuration.GetCVar(CCVars.ChatMaxMessageLength))
         {
             RaiseNetworkEvent(
                 new LocalChatAttemptFailedEvent(
@@ -127,22 +112,16 @@ public sealed class ServerRadioSystem : EntitySystem
     /// <param name="filter">Override the normal selection of listeners with a specific filter. Useful for off-map activities like salvaging.</param>
     public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "", Filter? filter = null)
     {
-        // TODO: formatting for languages should be its own code that can be called via a manager!
-        var shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
-                                       || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
-
-        message = SanitizeInGameICMessage(
+        message = SanitizeInCharacterMessage(
             entityUid,
             message,
-            out var emoteStr,
-            _configuration.GetCVar(CCVars.ChatPunctuation),
-            shouldCapitalizeTheWordI
+            out var emoteStr
         );
 
         // If you lol on the radio, you should lol in the emote chat.
         if (emoteStr?.Length > 0)
         {
-            _emote.TrySendEmoteMessage(entityUid, emoteStr, asName, true);
+            TrySendEmoteMessage(entityUid, emoteStr, asName, true);
         }
 
         if (string.IsNullOrEmpty(message))
@@ -150,7 +129,7 @@ public sealed class ServerRadioSystem : EntitySystem
             return;
         }
 
-        _whisper.TrySendWhisperMessage(entityUid, message, asName);
+        TrySendWhisperMessage(entityUid, message, asName);
 
         // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
         try
@@ -182,7 +161,7 @@ public sealed class ServerRadioSystem : EntitySystem
         {
             asName = mask.VoiceName;
 
-            if (mask.SpeechVerb != null && _prototype.TryIndex<SpeechVerbPrototype>(mask.SpeechVerb, out var proto))
+            if (mask.SpeechVerb != null && _proto.TryIndex<SpeechVerbPrototype>(mask.SpeechVerb, out var proto))
             {
                 verb = proto;
             }
@@ -217,55 +196,6 @@ public sealed class ServerRadioSystem : EntitySystem
         // And finally, stash it in the replay and log.
         _replay.RecordServerMessage(msgOut);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio from {ToPrettyString(entityUid):user} on {channel} as {asName}: {message}");
-    }
-
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool punctuate = false, bool capitalizeTheWordI = true)
-    {
-        message = message.Trim();
-        message = _repAccent.ApplyReplacements(message, "chatsanitize");
-        message = _chatUtilities.CapitalizeFirstLetter(message);
-
-        if (capitalizeTheWordI)
-            message = _chatUtilities.CapitalizeIPronoun(message);
-
-        if (punctuate)
-            message = _chatUtilities.AddAPeriod(message);
-
-        _sanitizer.TrySanitizeOutSmilies(message, source, out message, out emoteStr);
-
-        return message;
-    }
-
-    private bool IsRateLimited(EntityUid entityUid)
-    {
-        if (!_rateLimiter.IsRateLimited(entityUid, out var reason))
-            return false;
-
-        if (!string.IsNullOrEmpty(reason))
-        {
-            RaiseNetworkEvent(new LocalChatAttemptFailedEvent(GetNetEntity(entityUid),reason), entityUid);
-        }
-
-        return true;
-    }
-
-    private string TransformSpeech(EntityUid sender, string message)
-    {
-        // TODO: This is to do with the accent system as it currently exists. We're not refactoring accents at the
-        // moment but this will need to be changed when this is looked into.
-        var ev = new TransformSpeechEvent(sender, message);
-        RaiseLocalEvent(ev);
-
-        return ev.Message;
-    }
-
-    private string GetSpeakerName(EntityUid entityToBeNamed)
-    {
-        // More wonkiness with raised local events...
-        var nameEv = new TransformSpeakerNameEvent(entityToBeNamed, Name(entityToBeNamed));
-        RaiseLocalEvent(entityToBeNamed, nameEv);
-
-        return nameEv.Name;
     }
 
     /// <summary>

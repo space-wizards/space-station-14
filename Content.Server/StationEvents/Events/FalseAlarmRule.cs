@@ -21,7 +21,7 @@ public sealed class FalseAlarmRule : StationEventSystem<FalseAlarmRuleComponent>
 
         if (picked.StartAnnouncement != null)
         {
-            _announce.DispatchGlobalAnnouncement(Loc.GetString(picked.StartAnnouncement), playSound: false, colorOverride: Color.Gold);
+            Chat.DispatchGlobalAnnouncement(Loc.GetString(picked.StartAnnouncement), playSound: false, colorOverride: Color.Gold);
         }
         Audio.PlayGlobal(picked.StartAudio, Filter.Broadcast(), true);
     }

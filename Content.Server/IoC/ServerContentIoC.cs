@@ -60,8 +60,6 @@ namespace Content.Server.IoC
             IoCManager.Register<PoissonDiskSampler>();
             IoCManager.Register<DiscordWebhook>();
             IoCManager.Register<ServerDbEntryManager>();
-            IoCManager.Register<IChatRateLimiter, ChatRateLimitingManager>();
-            IoCManager.Register<IServerLoocManager, ServerLoocManager>();
         }
     }
 }

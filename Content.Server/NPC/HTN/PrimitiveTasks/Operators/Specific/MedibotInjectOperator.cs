@@ -15,7 +15,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
-    private ServerLocalChatSystem _chat = default!;
+    private ChatSystem _chat = default!;
     private MedibotSystem _medibot = default!;
     private SharedAudioSystem _audio = default!;
     private SharedInteractionSystem _interaction = default!;
@@ -31,7 +31,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _chat = sysManager.GetEntitySystem<ServerLocalChatSystem>();
+        _chat = sysManager.GetEntitySystem<ChatSystem>();
         _medibot = sysManager.GetEntitySystem<MedibotSystem>();
         _audio = sysManager.GetEntitySystem<SharedAudioSystem>();
         _interaction = sysManager.GetEntitySystem<SharedInteractionSystem>();

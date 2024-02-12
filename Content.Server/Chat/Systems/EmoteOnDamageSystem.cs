@@ -14,7 +14,7 @@ public sealed class EmoteOnDamageSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ServerEmoteSystem _emote = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -46,11 +46,11 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         var emote = _random.Pick(emoteOnDamage.Emotes);
         if (emoteOnDamage.WithChat)
         {
-            _emote.TryEmoteWithChat(uid, emote);
+            _chat.TryEmoteWithChat(uid, emote);
         }
         else
         {
-            _emote.TryEmoteWithoutChat(uid,emote);
+            _chat.TryEmoteWithoutChat(uid,emote);
         }
 
         emoteOnDamage.LastEmoteTime = _gameTiming.CurTime;

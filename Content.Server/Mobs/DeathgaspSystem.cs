@@ -9,7 +9,7 @@ namespace Content.Server.Mobs;
 /// <see cref="DeathgaspComponent"/>
 public sealed class DeathgaspSystem: EntitySystem
 {
-    [Dependency] private readonly ServerEmoteSystem _emote = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -38,7 +38,7 @@ public sealed class DeathgaspSystem: EntitySystem
         if (HasComp<MutedComponent>(uid))
             return false;
 
-        _emote.TryEmoteWithChat(uid, component.Prototype);
+        _chat.TryEmoteWithChat(uid, component.Prototype);
 
         return true;
     }

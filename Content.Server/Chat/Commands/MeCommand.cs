@@ -38,7 +38,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ServerEmoteSystem>().TrySendEmoteMessage(playerEntity, message);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>().TrySendEmoteMessage(playerEntity, message);
         }
     }
 }

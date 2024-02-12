@@ -53,7 +53,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly PuddleSystem _puddleSystem = default!;
-        [Dependency] private readonly ServerLocalChatSystem _chat = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;

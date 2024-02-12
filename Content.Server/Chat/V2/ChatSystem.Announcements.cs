@@ -1,22 +1,13 @@
-﻿using Content.Server.Administration.Logs;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
+﻿using Content.Server.Station.Components;
 using Content.Shared.Chat.V2;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Replays;
 
 namespace Content.Server.Chat.V2;
 
-public sealed class ServerAnnouncementSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
     private const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
     private const string DefaultAnnouncementChannel = "Common";
 
@@ -26,6 +17,7 @@ public sealed class ServerAnnouncementSystem : EntitySystem
     /// <param name="message">The contents of the message</param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
     /// <param name="playSound">Play the announcement sound</param>
+    /// <param name="announcementSound">The announcement sound to play</param>
     /// <param name="colorOverride">Optional color for the announcement message</param>
     public void DispatchGlobalAnnouncement(
         string message,
@@ -64,7 +56,8 @@ public sealed class ServerAnnouncementSystem : EntitySystem
     /// <param name="source">The entity making the announcement (used to determine the station)</param>
     /// <param name="message">The contents of the message</param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
-    /// <param name="playDefaultSound">Play the announcement sound</param>
+    /// <param name="playSound">Play the announcement sound</param>
+    /// <param name="announcementSound">The announcement sound to play</param>
     /// <param name="colorOverride">Optional color for the announcement message</param>
     public void DispatchStationAnnouncement(
         EntityUid source,

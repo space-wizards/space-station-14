@@ -22,12 +22,11 @@ namespace Content.Server.RatKing
     public sealed class RatKingSystem : SharedRatKingSystem
     {
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
-        [Dependency] private readonly ServerLocalChatSystem _chat = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly HTNSystem _htn = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly TransformSystem _xform = default!;
 
         public override void Initialize()
         {

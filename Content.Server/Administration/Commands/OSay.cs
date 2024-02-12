@@ -61,15 +61,15 @@ public sealed class OSay : LocalizedCommands
         switch (chatType)
         {
             case InGameICChatType.Speak:
-                _entityManager.System<ServerLocalChatSystem>().TrySendLocalChatMessage(source.Value, message);
+                _entityManager.System<ChatSystem>().TrySendLocalChatMessage(source.Value, message);
 
                 break;
             case InGameICChatType.Emote:
-                _entityManager.System<ServerEmoteSystem>().TrySendEmoteMessage(source.Value, message);
+                _entityManager.System<ChatSystem>().TrySendEmoteMessage(source.Value, message);
 
                 break;
             case InGameICChatType.Whisper:
-                _entityManager.System<ServerWhisperSystem>().TrySendWhisperMessage(source.Value, message);
+                _entityManager.System<ChatSystem>().TrySendWhisperMessage(source.Value, message);
 
                 break;
             default:

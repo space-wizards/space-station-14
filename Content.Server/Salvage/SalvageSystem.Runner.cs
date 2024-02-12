@@ -25,7 +25,6 @@ public sealed partial class SalvageSystem
      */
 
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ServerRadioSystem _radio = default!;
 
     private void InitializeRunner()
     {
@@ -75,7 +74,7 @@ public sealed partial class SalvageSystem
         // We'll assume they probably want it on Engineering.
         // So uh
         // Don't go on a expedition if you don't have the right channel access :nods:
-        _radio.SendRadioMessage(_mapManager.GetMapEntityId(mapId), text, _prototypeManager.Index<RadioChannelPrototype>("Engineering"), filter: Filter.BroadcastMap(mapId));
+        _chat.SendRadioMessage(_mapManager.GetMapEntityId(mapId), text, _prototypeManager.Index<RadioChannelPrototype>("Engineering"), filter: Filter.BroadcastMap(mapId));
     }
 
     private void OnFTLRequest(ref FTLRequestEvent ev)

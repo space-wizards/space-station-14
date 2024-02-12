@@ -15,7 +15,7 @@ namespace Content.Server.Advertise
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ServerLocalChatSystem _chat = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
 
         /// <summary>
         /// The maximum amount of time between checking if advertisements should be displayed

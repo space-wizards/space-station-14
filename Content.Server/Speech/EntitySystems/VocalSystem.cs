@@ -18,7 +18,7 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ServerEmoteSystem _emote = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedEmoteSoundsSystem _emoteSounds = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
 
@@ -75,7 +75,7 @@ public sealed class VocalSystem : EntitySystem
         if (args.Handled)
             return;
 
-        _emote.TryEmoteWithChat(uid, component.ScreamId);
+        _chat.TryEmoteWithChat(uid, component.ScreamId);
         args.Handled = true;
     }
 
