@@ -13,6 +13,7 @@
     tags:
       - DroneUsable
       - RawMaterial
+      - NoPaint
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

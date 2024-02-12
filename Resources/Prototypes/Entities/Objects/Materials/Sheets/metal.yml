@@ -16,6 +16,7 @@
     - Sheet
     - Metal
     - DroneUsable
+    - NoPaint
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

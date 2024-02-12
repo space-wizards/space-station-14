@@ -18,6 +18,7 @@
   - type: Tag
     tags:
       - DroneUsable
+      - NoPaint
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
