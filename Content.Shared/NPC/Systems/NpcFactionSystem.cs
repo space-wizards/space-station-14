@@ -19,7 +19,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// To avoid prototype mutability we store an intermediary data class that gets used instead.
     /// </summary>
-    private FrozenDictionary<ProtoId<NpcFactionPrototype>, FactionData> _factions = FrozenDictionary<ProtoId<NpcFactionPrototype>, FactionData>.Empty;
+    private FrozenDictionary<string, FactionData> _factions = FrozenDictionary<string, FactionData>.Empty;
 
     public override void Initialize()
     {
@@ -42,7 +42,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
 
     private void OnFactionStartup(Entity<NpcFactionMemberComponent> ent, ref ComponentStartup args)
     {
-        RefreshFactions(memberComponent);
+        RefreshFactions(ent);
     }
 
     /// <summary>
@@ -65,6 +65,17 @@ public sealed partial class NpcFactionSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether an entity is a member of a faction.
+    /// </summary>
+    public bool IsMember(Entity<NpcFactionMemberComponent?> ent, string faction)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.Factions.Contains(faction);
+    }
+
+    /// <summary>
     /// Adds this entity to the particular faction.
     /// </summary>
     public void AddFaction(Entity<NpcFactionMemberComponent?> ent, string faction, bool dirty = true)
@@ -80,7 +91,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
             return;
 
         if (dirty)
-            RefreshFactions(ent);
+            RefreshFactions((ent, ent.Comp));
     }
 
     /// <summary>
@@ -101,7 +112,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
             return;
 
         if (dirty)
-            RefreshFactions(ent);
+            RefreshFactions((ent, ent.Comp));
     }
 
     /// <summary>
@@ -115,7 +126,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
         ent.Comp.Factions.Clear();
 
         if (dirty)
-            RefreshFactions(ent);
+            RefreshFactions((ent, ent.Comp));
     }
 
     public IEnumerable<EntityUid> GetNearbyHostiles(Entity<NpcFactionMemberComponent?, FactionExceptionComponent?> ent, float range)
@@ -123,14 +134,18 @@ public sealed partial class NpcFactionSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp1, false))
             return Array.Empty<EntityUid>();
 
-        var hostiles = GetNearbyFactions(ent, range, ent.Comp1.HostileFactions);
+        var hostiles = GetNearbyFactions(ent, range, ent.Comp1.HostileFactions)
+            // ignore mobs that have both hostile faction and the same faction,
+            // otherwise having multiple factions is strictly negative
+            .Where(target => IsEntityFriendly((ent, ent.Comp1), target))
         if (!Resolve(ent, ref ent.Comp2, false))
             return hostiles;
 
         // ignore anything from enemy faction that we are explicitly friendly towards
+        var faction = (ent.Owner, ent.Comp2);
         return hostiles
-            .Union(GetHostiles((ent, ent.Comp2)))
-            .Where(target => !IsIgnored(entity, target, factionException));
+            .Union(GetHostiles(faction))
+            .Where(target => !IsIgnored(faction, target));
     }
 
     public IEnumerable<EntityUid> GetNearbyFriendlies(Entity<NpcFactionMemberComponent?> ent, float range)

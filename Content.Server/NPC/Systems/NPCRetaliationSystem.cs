@@ -1,3 +1,4 @@
+using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Components;
@@ -39,26 +40,19 @@ public sealed class NPCRetaliationSystem : EntitySystem
         TryRetaliate(ent, args.Source);
     }
 
-    public bool TryRetaliate(Entity<NPCRetaliationComponent?, FactionExceptionComponent?> ent, EntityUid target)
+    public bool TryRetaliate(Entity<NPCRetaliationComponent> ent, EntityUid target)
     {
-        if (!Resolve(ent, ref ent.Comp1))
-            return false;
-
-        // FactionException will be added if it doesnt exist, not an error
-        Resolve(ent, ref ent.Comp2, false);
-        var exception = (ent.Owner, ent.Comp2);
-
         // don't retaliate against inanimate objects.
         if (!HasComp<MobStateComponent>(target))
             return false;
 
         // don't retaliate against the same faction
-        if (_npcFaction.IsEntityFriendly(exception, target))
+        if (_npcFaction.IsEntityFriendly(ent.Owner, target))
             return false;
 
-        _npcFaction.AggroEntity(exception, target);
-        if (ent.Comp1.AttackMemoryLength is { } memoryLength)
-            ent.Comp1.AttackMemories[target] = _timing.CurTime + memoryLength;
+        _npcFaction.AggroEntity(ent.Owner, target);
+        if (ent.Comp.AttackMemoryLength is {} memoryLength)
+            ent.Comp.AttackMemories[target] = _timing.CurTime + memoryLength;
 
         return true;
     }
