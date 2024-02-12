@@ -1,4 +1,5 @@
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.Components;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics.Components;
@@ -27,6 +28,7 @@ namespace Content.Server.Forensics
 
             SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
@@ -69,6 +71,13 @@ namespace Content.Server.Forensics
                         component.DNAs.Add(hitEntityComp.DNA);
                 }
             }
+        }
+
+        private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
+        {
+            var target = EnsureComp<ForensicsComponent>(args.Target);
+            target.DNAs.AddRange(ent.Comp.DNAs);
+            target.Fibers.AddRange(ent.Comp.Fibers);
         }
 
         private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
