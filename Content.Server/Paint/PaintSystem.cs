@@ -40,17 +40,7 @@ public sealed class PaintSystem : SharedPaintSystem
         if (args.Target is not { Valid: true } target)
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.Delay, new PaintDoAfterEvent(), args.Used, target: target, used: args.Used)
-        {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            BreakOnDamage = true,
-            NeedHand = true,
-            BreakOnHandChange = true
-        };
-
-        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
-            return;
+        PrepPaint(uid, component, target, args.User);
     }
 
     private void OnPaintVerb(EntityUid uid, PaintComponent component, GetVerbsEvent<UtilityVerb> args)
@@ -64,17 +54,7 @@ public sealed class PaintSystem : SharedPaintSystem
         {
             Act = () =>
             {
-                var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.Delay, new PaintDoAfterEvent(), uid, target: args.Target, used: uid)
-                {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    BreakOnDamage = true,
-                    NeedHand = true,
-                    BreakOnHandChange = true
-                };
-
-                if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
-                    return;
+                PrepPaint(uid, component, args.Target, args.User);
             },
 
             Text = paintText,
@@ -82,6 +62,22 @@ public sealed class PaintSystem : SharedPaintSystem
         };
         args.Verbs.Add(verb);
     }
+    private void PrepPaint(EntityUid uid, PaintComponent component, EntityUid target, EntityUid user)
+    {
+
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, component.Delay, new PaintDoAfterEvent(), uid, target: target, used: uid)
+        {
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            NeedHand = true,
+            BreakOnHandChange = true
+        };
+
+        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+            return;
+    }
+
 
     private void OnPaint(Entity<PaintComponent> entity, ref PaintDoAfterEvent args)
     {
