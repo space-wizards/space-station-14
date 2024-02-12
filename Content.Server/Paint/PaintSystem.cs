@@ -9,6 +9,8 @@ using Content.Shared.Humanoid;
 using Robust.Shared.Utility;
 using Content.Shared.Verbs;
 using Content.Shared.SubFloor;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Inventory;
 
 namespace Content.Server.Paint;
 
@@ -22,6 +24,7 @@ public sealed class PaintSystem : SharedPaintSystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -99,6 +102,7 @@ public sealed class PaintSystem : SharedPaintSystem
             return;
         }
 
+
         if (TryPaint(entity, target))
         {
             EnsureComp<PaintedComponent>(target, out PaintedComponent? paint);
@@ -107,6 +111,32 @@ public sealed class PaintSystem : SharedPaintSystem
             paint.Color = entity.Comp.Color; // set the target color to the color specified in the spray paint yml.
             _audio.PlayPvs(entity.Comp.Spray, entity);
             paint.Enabled = true;
+
+            if (HasComp<MobStateComponent>(target)) // Paint any clothing the target is wearing.
+            {
+                if (_inventory.TryGetSlots(target, out var slotDefinitions))
+                {
+                    foreach (var slot in slotDefinitions)
+                    {
+                        if (!_inventory.TryGetSlotEntity(target, slot.Name, out var slotEnt))
+                            continue;
+
+                        if (slotEnt == null)
+                            return;
+
+                        if (HasComp<PaintedComponent>(slotEnt.Value) || !entity.Comp.Blacklist?.IsValid(slotEnt.Value, EntityManager) != true
+                            || HasComp<RandomSpriteComponent>(slotEnt.Value) || HasComp<HumanoidAppearanceComponent>(slotEnt.Value))
+                            return;
+
+                        EnsureComp<PaintedComponent>(slotEnt.Value, out PaintedComponent? slotpaint);
+                        EnsureComp<AppearanceComponent>(slotEnt.Value);
+                        slotpaint.Color = entity.Comp.Color;
+                        _appearanceSystem.SetData(slotEnt.Value, PaintVisuals.Painted, true);
+                        Dirty(slotEnt.Value, slotpaint);
+                    }
+                }
+            }
+
             _popup.PopupEntity(Loc.GetString("paint-success", ("target", args.Target)), args.User, args.User, PopupType.Medium);
             _appearanceSystem.SetData(target, PaintVisuals.Painted, true);
             Dirty(target, paint);
