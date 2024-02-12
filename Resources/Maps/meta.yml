@@ -15837,13 +15837,6 @@ entities:
     - type: Transform
       pos: -14.519806,-23.287313
       parent: 5350
-- proto: BoxSechud
-  entities:
-  - uid: 2686
-    components:
-    - type: Transform
-      pos: 2.5457363,42.596703
-      parent: 5350
 - proto: BoxShotgunIncendiary
   entities:
   - uid: 3116
@@ -36249,6 +36242,16 @@ entities:
     - type: Transform
       pos: -25.5,54.5
       parent: 5350
+  - uid: 8415
+    components:
+    - type: Transform
+      pos: -29.5,60.5
+      parent: 5350
+  - uid: 8416
+    components:
+    - type: Transform
+      pos: -30.5,60.5
+      parent: 5350
   - uid: 8621
     components:
     - type: Transform
@@ -36438,6 +36441,16 @@ entities:
     components:
     - type: Transform
       pos: 48.5,13.5
+      parent: 5350
+  - uid: 9290
+    components:
+    - type: Transform
+      pos: -30.5,62.5
+      parent: 5350
+  - uid: 9291
+    components:
+    - type: Transform
+      pos: -29.5,62.5
       parent: 5350
   - uid: 9478
     components:
@@ -36938,6 +36951,26 @@ entities:
     components:
     - type: Transform
       pos: -39.5,52.5
+      parent: 5350
+  - uid: 10297
+    components:
+    - type: Transform
+      pos: -28.5,62.5
+      parent: 5350
+  - uid: 10387
+    components:
+    - type: Transform
+      pos: -27.5,62.5
+      parent: 5350
+  - uid: 10388
+    components:
+    - type: Transform
+      pos: -26.5,62.5
+      parent: 5350
+  - uid: 10432
+    components:
+    - type: Transform
+      pos: -25.5,62.5
       parent: 5350
   - uid: 10550
     components:
@@ -39204,6 +39237,11 @@ entities:
     - type: Transform
       pos: 71.5,8.5
       parent: 5350
+  - uid: 14291
+    components:
+    - type: Transform
+      pos: -28.5,60.5
+      parent: 5350
   - uid: 14999
     components:
     - type: Transform
@@ -39213,6 +39251,21 @@ entities:
     components:
     - type: Transform
       pos: 72.5,8.5
+      parent: 5350
+  - uid: 15639
+    components:
+    - type: Transform
+      pos: -27.5,60.5
+      parent: 5350
+  - uid: 15640
+    components:
+    - type: Transform
+      pos: -26.5,60.5
+      parent: 5350
+  - uid: 15667
+    components:
+    - type: Transform
+      pos: -25.5,60.5
       parent: 5350
   - uid: 16151
     components:
@@ -60282,23 +60335,6 @@ entities:
     components:
     - type: Transform
       pos: 54.41529,14.40629
-      parent: 5350
-- proto: ClothingEyesGlassesSecurity
-  entities:
-  - uid: 10420
-    components:
-    - type: Transform
-      pos: -3.442388,40.441223
-      parent: 5350
-  - uid: 10421
-    components:
-    - type: Transform
-      pos: -3.458013,40.5506
-      parent: 5350
-  - uid: 10497
-    components:
-    - type: Transform
-      pos: 18.535847,41.55662
       parent: 5350
 - proto: ClothingEyesGlassesSunglasses
   entities:
@@ -116310,13 +116346,6 @@ entities:
     - type: Transform
       pos: 10.629476,34.365833
       parent: 5350
-- proto: HandheldCrewMonitor
-  entities:
-  - uid: 16241
-    components:
-    - type: Transform
-      pos: -17.467426,-36.423878
-      parent: 5350
 - proto: HandheldGPSBasic
   entities:
   - uid: 3571
@@ -120683,6 +120712,16 @@ entities:
     components:
     - type: Transform
       pos: -16.506245,-14.163311
+      parent: 5350
+  - uid: 3638
+    components:
+    - type: Transform
+      pos: -43.593536,23.615883
+      parent: 5350
+  - uid: 3639
+    components:
+    - type: Transform
+      pos: -43.374786,23.584633
       parent: 5350
 - proto: PaintingAmogusTriptych
   entities:
@@ -138869,32 +138908,6 @@ entities:
     - type: Transform
       pos: -3.5,30.5
       parent: 5350
-- proto: SpawnVehicleATV
-  entities:
-  - uid: 24625
-    components:
-    - type: Transform
-      pos: -8.5,-35.5
-      parent: 5350
-- proto: SpawnVehicleJanicart
-  entities:
-  - uid: 9291
-    components:
-    - type: Transform
-      pos: -23.5,28.5
-      parent: 5350
-- proto: SpawnVehicleSecway
-  entities:
-  - uid: 8415
-    components:
-    - type: Transform
-      pos: -4.5,28.5
-      parent: 5350
-  - uid: 10297
-    components:
-    - type: Transform
-      pos: 4.5,34.5
-      parent: 5350
 - proto: SprayBottle
   entities:
   - uid: 14634
@@ -145484,32 +145497,6 @@ entities:
     components:
     - type: Transform
       pos: -46.53311,-52.435802
-      parent: 5350
-- proto: VehicleKeyATV
-  entities:
-  - uid: 24646
-    components:
-    - type: Transform
-      pos: -7.4760914,-35.418602
-      parent: 5350
-- proto: VehicleKeyJanicart
-  entities:
-  - uid: 9290
-    components:
-    - type: Transform
-      pos: -28.519938,26.44267
-      parent: 5350
-- proto: VehicleKeySecway
-  entities:
-  - uid: 8416
-    components:
-    - type: Transform
-      pos: -2.5585675,29.702742
-      parent: 5350
-  - uid: 10432
-    components:
-    - type: Transform
-      pos: 4.4444723,36.563564
       parent: 5350
 - proto: VendingBarDrobe
   entities:
@@ -169077,17 +169064,5 @@ entities:
     components:
     - type: Transform
       pos: 45.520813,-8.421944
-      parent: 5350
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 3638
-    components:
-    - type: Transform
-      pos: -43.593536,23.615883
-      parent: 5350
-  - uid: 3639
-    components:
-    - type: Transform
-      pos: -43.374786,23.584633
       parent: 5350
 ...

@@ -7,6 +7,110 @@
     state: fulltile_overlay
 
 - type: decal
+  id: BrickBoxOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_box
+
+- type: decal
+  id: BrickCornerOverlayNE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_corner_ne
+
+- type: decal
+  id: BrickCornerOverlayNW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_corner_nw
+
+- type: decal
+  id: BrickCornerOverlaySE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_corner_se
+
+- type: decal
+  id: BrickCornerOverlaySW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_corner_sw
+
+- type: decal
+  id: BrickEndOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_end_e
+
+- type: decal
+  id: BrickEndOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_end_n
+
+- type: decal
+  id: BrickEndOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_end_s
+
+- type: decal
+  id: BrickEndOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_end_w
+
+- type: decal
+  id: BrickLineOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_line_e
+
+- type: decal
+  id: BrickLineOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_line_n
+
+- type: decal
+  id: BrickLineOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_line_s
+
+- type: decal
+  id: BrickLineOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: brick_line_w
+
+- type: decal
   id: HalfTileOverlayGreyscale
   tags: ["station", "overlay"]
   defaultCustomColor: true
@@ -199,12 +303,140 @@
     state: minitile_diagonal_b
 
 - type: decal
-  id: MonoOverlay
+  id: MiniTileBoxOverlay
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
-    state: mono
+    state: minitile_box
+
+- type: decal
+  id: MiniTileCornerOverlayNE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_corner_ne
+
+- type: decal
+  id: MiniTileCornerOverlayNW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_corner_nw
+
+- type: decal
+  id: MiniTileCornerOverlaySE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_corner_se
+
+- type: decal
+  id: MiniTileCornerOverlaySW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_corner_sw
+
+- type: decal
+  id: MiniTileEndOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_end_e
+
+- type: decal
+  id: MiniTileEndOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_end_n
+
+- type: decal
+  id: MiniTileEndOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_end_s
+
+- type: decal
+  id: MiniTileEndOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_end_w
+
+- type: decal
+  id: MiniTileInnerOverlayNE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_inner_ne
+
+- type: decal
+  id: MiniTileInnerOverlayNW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_inner_nw
+
+- type: decal
+  id: MiniTileInnerOverlaySE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_inner_se
+
+- type: decal
+  id: MiniTileInnerOverlaySW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_inner_sw
+
+- type: decal
+  id: MiniTileLineOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_line_e
+
+- type: decal
+  id: MiniTileLineOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_line_n
+
+- type: decal
+  id: MiniTileLineOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_line_s
+
+- type: decal
+  id: MiniTileLineOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_line_w
 
 - type: decal
   id: OffsetOverlay
