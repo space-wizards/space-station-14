@@ -17,6 +17,7 @@ using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using SharedChatSystem = Content.Shared.Chat.SharedChatSystem;
 
 namespace Content.Server.Radio.EntitySystems;
 

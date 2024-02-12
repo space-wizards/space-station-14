@@ -1,6 +1,30 @@
-﻿using Robust.Shared.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.CCVar;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chat.V2;
+
+public partial class SharedChatSystem
+{
+    public bool SendLoocChatMessage(EntityUid speaker, string message, [NotNullWhen(false)] out string? reason)
+    {
+        var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
+
+        if (message.Length > messageMaxLen)
+        {
+            reason = Loc.GetString("chat-manager-max-message-length",
+                ("maxMessageLength", messageMaxLen));
+
+            return false;
+        }
+
+        RaiseNetworkEvent(new LoocAttemptedEvent(GetNetEntity(speaker), message));
+
+        reason = null;
+
+        return true;
+    }
+}
 
 /// <summary>
 /// Raised when a mob tries to speak in LOOC.
@@ -22,7 +46,7 @@ public sealed class LoocAttemptedEvent : EntityEventArgs
 /// Raised when a character speaks in LOOC.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EntityLoocedEvent : EntityEventArgs
+public class EntityLoocedEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
@@ -53,4 +77,3 @@ public sealed class LoocAttemptFailedEvent : EntityEventArgs
         Reason = reason;
     }
 }
-

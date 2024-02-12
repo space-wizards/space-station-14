@@ -17,7 +17,6 @@ using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Cluwne;
@@ -31,7 +30,6 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly SharedEmoteSoundsSystem _emoteSounds = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
@@ -93,7 +91,7 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.Handled = _emoteSounds.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 
         if (_robustRandom.Prob(component.GiggleRandomChance))
         {

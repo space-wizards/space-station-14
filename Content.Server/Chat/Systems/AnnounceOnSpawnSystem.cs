@@ -1,4 +1,3 @@
-using Content.Server.Chat;
 using Content.Server.Chat.V2;
 
 namespace Content.Server.Chat.Systems;

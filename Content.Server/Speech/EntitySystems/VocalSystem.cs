@@ -19,7 +19,6 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly SharedEmoteSoundsSystem _emoteSounds = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
 
     public override void Initialize()
@@ -67,7 +66,7 @@ public sealed class VocalSystem : EntitySystem
         }
 
         // just play regular sound based on emote proto
-        args.Handled = _emoteSounds.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
     }
 
     private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)
@@ -87,7 +86,7 @@ public sealed class VocalSystem : EntitySystem
             return true;
         }
 
-        return _emoteSounds.TryPlayEmoteSound(uid, component.EmoteSounds, component.ScreamId);
+        return _chat.TryPlayEmoteSound(uid, component.EmoteSounds, component.ScreamId);
     }
 
     private void LoadSounds(EntityUid uid, VocalComponent component, Sex? sex = null)

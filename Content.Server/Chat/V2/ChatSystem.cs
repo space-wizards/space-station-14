@@ -22,7 +22,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Chat.V2;
 
-public sealed partial class ChatSystem : EntitySystem
+public sealed partial class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
@@ -35,8 +35,6 @@ public sealed partial class ChatSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ILogManager _logger = default!;
-    [Dependency] private readonly IEmoteConfigManager _emoteConfig = default!;
-    [Dependency] private readonly IChatUtilities _chatUtilities = default!;
     [Dependency] private readonly ReplacementAccentSystem _repAccent = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
@@ -84,13 +82,13 @@ public sealed partial class ChatSystem : EntitySystem
         message = message.Trim();
         ChatCensor.Censor(message, out message);
         message = _repAccent.ApplyReplacements(message, "chatsanitize");
-        message = _chatUtilities.CapitalizeFirstLetter(message);
+        message = CapitalizeFirstLetter(message);
 
         if (_shouldCapitalizeTheWordI)
-            message = _chatUtilities.CapitalizeIPronoun(message);
+            message = CapitalizeIPronoun(message);
 
         if (_shouldPunctuate)
-            message = _chatUtilities.AddAPeriod(message);
+            message = AddAPeriod(message);
 
         _sanitizer.TrySanitizeOutSmilies(message, source, out message, out emoteStr);
 
@@ -101,13 +99,13 @@ public sealed partial class ChatSystem : EntitySystem
     {
         message = message.Trim();
         ChatCensor.Censor(message, out message);
-        message = _chatUtilities.CapitalizeFirstLetter(message);
+        message = CapitalizeFirstLetter(message);
 
         if (_shouldCapitalizeTheWordI)
-            message = _chatUtilities.CapitalizeIPronoun(message);
+            message = CapitalizeIPronoun(message);
 
         if (punctuate)
-            message = _chatUtilities.AddAPeriod(message);
+            message = AddAPeriod(message);
 
         return message;
     }
@@ -161,8 +159,7 @@ public sealed partial class ChatSystem : EntitySystem
             {
                 _chatManager.SendAdminAlert(Loc.GetString("chat-manager-rate-limit-admin-announcement", ("player", session.Name)));
 
-                var delay = _configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdminsDelay);
-                data.CanAnnounceToAdminsNextAt = time + TimeSpan.FromSeconds(delay);
+                data.CanAnnounceToAdminsNextAt = time + TimeSpan.FromSeconds(_chatRateLimitAnnounceAdminDelay);
             }
         }
 

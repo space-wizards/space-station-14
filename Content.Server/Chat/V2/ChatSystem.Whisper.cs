@@ -118,14 +118,14 @@ public sealed partial class ChatSystem
         if (string.IsNullOrEmpty(asName))
             asName = GetSpeakerName(entityUid);
 
-        var obfuscatedMessage = _chatUtilities.ObfuscateMessageReadability(message, 0.2f);
-        var verb = _chatUtilities.GetSpeechVerb(entityUid, message);
+        var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
+        var verb = GetSpeechVerb(entityUid, message);
         var name = FormattedMessage.EscapeText(asName);
         var nameColor = "";
 
         // color the name unless it's something like "the old man"
         if (!TryComp<GrammarComponent>(entityUid, out var grammar) || grammar.ProperNoun == true)
-            nameColor = _chatUtilities.GetNameColor(name);
+            nameColor = GetNameColor(name);
 
         var msgOut = new EntityWhisperedEvent(
             GetNetEntity(entityUid),

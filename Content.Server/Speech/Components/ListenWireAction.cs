@@ -1,5 +1,4 @@
 using Content.Server.Speech.Components;
-using Content.Server.Chat.Systems;
 using Content.Server.VoiceMask;
 using Content.Server.Wires;
 using Content.Shared.Chat.V2;
@@ -11,7 +10,7 @@ namespace Content.Server.Speech;
 public sealed partial class ListenWireAction : BaseToggleWireAction
 {
     private WiresSystem _wires = default!;
-    private IChatUtilities _chat = default!;
+    private SharedChatSystem _chat = default!;
 
     /// <summary>
     /// Length of the gibberish string sent when pulsing the wire
@@ -37,7 +36,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         base.Initialize();
 
         _wires = EntityManager.System<WiresSystem>();
-        _chat = IoCManager.Resolve<IChatUtilities>();
+        _chat = IoCManager.Resolve<SharedChatSystem>();
     }
     public override StatusLightState? GetLightState(Wire wire)
     {

@@ -127,7 +127,7 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
         }
 
-        var verb = _chatUtilities.GetSpeechVerb(entityUid, message);
+        var verb = GetSpeechVerb(entityUid, message);
 
         var name = FormattedMessage.EscapeText(asName);
 
@@ -135,7 +135,7 @@ public sealed partial class ChatSystem
 
         // color the name unless it's something like "the old man"
         if (!TryComp<GrammarComponent>(entityUid, out var grammar) || grammar.ProperNoun == true)
-            nameColor = _chatUtilities.GetNameColor(name);
+            nameColor = GetNameColor(name);
 
         var msgOut = new EntityLocalChattedEvent(
             GetNetEntity(entityUid),
@@ -168,7 +168,7 @@ public sealed partial class ChatSystem
     public void SendSubtleLocalChatMessage(ICommonSession source, ICommonSession target, string message)
     {
         // Use any ol' verb here.
-        var verb = _chatUtilities.GetSpeechVerb(EntityUid.Invalid, message);
+        var verb = GetSpeechVerb(EntityUid.Invalid, message);
 
         var msgOut = new EntityLocalChattedEvent(
             GetNetEntity(EntityUid.Invalid),

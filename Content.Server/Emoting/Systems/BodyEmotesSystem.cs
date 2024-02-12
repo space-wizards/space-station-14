@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Emoting.Components;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chat.V2;
@@ -10,7 +11,7 @@ namespace Content.Server.Emoting.Systems;
 public sealed class BodyEmotesSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedEmoteSoundsSystem _emoteSound = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -44,6 +45,6 @@ public sealed class BodyEmotesSystem : EntitySystem
         if (!TryComp(uid, out HandsComponent? hands) || hands.Count <= 0)
             return false;
 
-        return _emoteSound.TryPlayEmoteSound(uid, component.Sounds, emote);
+        return _chat.TryPlayEmoteSound(uid, component.Sounds, emote);
     }
 }

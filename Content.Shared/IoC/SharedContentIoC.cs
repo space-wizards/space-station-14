@@ -9,9 +9,7 @@ namespace Content.Shared.IoC
         public static void Register()
         {
             IoCManager.Register<MarkingManager, MarkingManager>();
-            IoCManager.Register<IEmoteConfigManager, EmoteConfigManager>();
             IoCManager.Register<ContentLocalizationManager, ContentLocalizationManager>();
-            IoCManager.Register<IChatUtilities, SharedChatUtilitiesManager>();
         }
     }
 }

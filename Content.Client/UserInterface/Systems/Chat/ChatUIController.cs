@@ -43,6 +43,7 @@ using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using ChatSystem = Content.Client.Chat.V2.ChatSystem;
+using SharedChatSystem = Content.Shared.Chat.SharedChatSystem;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 

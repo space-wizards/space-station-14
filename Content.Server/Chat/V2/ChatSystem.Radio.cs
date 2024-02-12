@@ -155,7 +155,7 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
         }
 
-        SpeechVerbPrototype verb = _chatUtilities.GetSpeechVerb(entityUid, message);
+        SpeechVerbPrototype verb = GetSpeechVerb(entityUid, message);
 
         if (TryComp<VoiceMaskComponent>(entityUid, out var mask))
         {

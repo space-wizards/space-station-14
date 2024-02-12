@@ -4,7 +4,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.V2;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.Discord;
@@ -22,7 +21,6 @@ using Content.Server.Voting.Managers;
 using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
-using Content.Shared.Chat.V2;
 using Content.Shared.Kitchen;
 
 namespace Content.Server.IoC

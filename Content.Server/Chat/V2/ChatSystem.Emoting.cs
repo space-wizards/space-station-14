@@ -136,7 +136,7 @@ public sealed partial class ChatSystem
 
         var name = FormattedMessage.EscapeText(asName);
 
-        var emote = _emoteConfig.GetEmote(message);
+        var emote = GetEmote(message);
         if (emote != null)
         {
             // EmoteEvent is used by a number of other systems to do things. We can't easily migrate and encapsulate that work here.

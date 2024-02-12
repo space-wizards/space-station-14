@@ -1,12 +1,8 @@
-﻿using Content.Shared.Administration.Managers;
-using Content.Shared.Mobs.Systems;
-using Robust.Shared.Configuration;
+﻿using Content.Shared.Chat.V2;
 
 namespace Content.Client.Chat.V2;
 
-public sealed partial class ChatSystem
+public sealed class ChatSystem : SharedChatSystem
 {
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
 }

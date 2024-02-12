@@ -47,8 +47,6 @@ namespace Content.Shared.Entry
 
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
-            IoCManager.Resolve<IEmoteConfigManager>().Initialize();
-            IoCManager.Resolve<IChatUtilities>().Initialize();
 
 #if DEBUG
             var configMan = IoCManager.Resolve<IConfigurationManager>();

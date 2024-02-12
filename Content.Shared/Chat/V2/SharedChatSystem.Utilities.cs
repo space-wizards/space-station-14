@@ -2,66 +2,11 @@
 using System.Text;
 using Content.Shared.Decals;
 using Content.Shared.Speech;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Chat.V2;
 
-/// <summary>
-/// Contains common utilities used across various chat systems
-/// </summary>
-public interface IChatUtilities
-{
-    public void Initialize();
-
-    /// <summary>
-    /// Get a consistent chat color for a given name.
-    /// </summary>
-    /// <param name="name">The name to get the color for</param>
-    /// <returns>A color. It will always be the same for a given string.</returns>
-    public string GetNameColor(string name);
-
-    /// <summary>
-    /// Obfuscate a message with a given chance of each character being visible.
-    /// </summary>
-    /// <param name="message">The message to obfuscate.</param>
-    /// <param name="chance">The decimal chance (0-1 bounded) that a character is not obfuscated.</param>
-    /// <returns>The obfuscated message.</returns>
-    public string ObfuscateMessageReadability(string message, float chance);
-
-    /// <summary>
-    /// Get an appropriate speech verb for a provided entity and message.
-    /// </summary>
-    /// <param name="source">The speaking entity.</param>
-    /// <param name="message">The message they want to say.</param>
-    /// <returns>An appropriate speech verb prototype.</returns>
-    public SpeechVerbPrototype GetSpeechVerb(EntityUid source, string message);
-
-    /// <summary>
-    /// Add a period to the message.
-    /// </summary>
-    /// <param name="message">The message to add a period to.</param>
-    /// <returns>The message, plus a period.</returns>
-    public string AddAPeriod(string message);
-
-    /// <summary>
-    /// Make sure the I pronoun is capitalized in a message.
-    /// </summary>
-    /// <param name="message">The message to format.</param>
-    /// <returns>The formatted message.</returns>
-    public string CapitalizeIPronoun(string message);
-
-    /// <summary>
-    /// Make sure the first letter is capitalized.
-    /// </summary>
-    /// <param name="message">The message to format.</param>
-    /// <returns>The formatted message.</returns>
-    public string CapitalizeFirstLetter(string message);
-
-    public string BuildGibberishString(IReadOnlyList<char> charOptions, int length);
-}
-
-public sealed class SharedChatUtilitiesManager : IChatUtilities
+public partial class SharedChatSystem
 {
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "Material";
@@ -69,14 +14,9 @@ public sealed class SharedChatUtilitiesManager : IChatUtilities
     [ValidatePrototypeId<SpeechVerbPrototype>]
     public const string DefaultSpeechVerb = "Default";
 
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     private string[] _chatNameColors = default!;
 
-    public void Initialize()
+    public void InitializeUtilities()
     {
         var nameColors = _prototype.Index<ColorPalettePrototype>(ChatNamePalette).Colors.Values.ToArray();
         _chatNameColors = new string[nameColors.Length];
