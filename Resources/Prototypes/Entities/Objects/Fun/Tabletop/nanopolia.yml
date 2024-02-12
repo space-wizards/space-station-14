@@ -2,7 +2,7 @@
 - type: entity
   parent: BaseBoardEntity
   id: NanopoliaBoard
-  name: nanopolia board
+  name: nanobusines board
   description: Cross test and circle board game famous for destroying countless friendships.
   components:
   - type: Sprite
@@ -18,7 +18,7 @@
 # Nanopolia tabletop item (item only visible in tabletop game)
 - type: entity
   id: NanopoliaBoardTabletop
-  name: nanopolia
+  name: nanobusines
   parent: BaseBoardTabletop
   noSpawn: true
   components:

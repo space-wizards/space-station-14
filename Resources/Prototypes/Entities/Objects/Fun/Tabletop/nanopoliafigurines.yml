@@ -2,7 +2,7 @@
   id: NanapoliaTabletopPiece
   parent: BaseTabletopPiece
   abstract: true
-  description: A figurine from nanopolia
+  description: A figurine from nanobusines
   components:
   - type: Sprite
     noRot: true
@@ -61,7 +61,7 @@
 - type: entity
   parent: BoxCardboard
   id: NanopoliaBox
-  name: Nanopolia Box Tabletop
+  name: Nanobusines Box Tabletop
   description: It looks like this is an early version of the game that Nanotrasen gives out to workers to evaluate its interestingness
   components:
   - type: Sprite
@@ -115,7 +115,7 @@
 - type: entity
   parent: BoxCardboard
   id: NanopoliaCardBox
-  name: Nanopolia Card Box
+  name: Nanobusines Card Box
   description: Coleccion card from Nanopolia
   components:
   - type: Sprite
