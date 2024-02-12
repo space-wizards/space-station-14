@@ -129,7 +129,12 @@ public sealed partial class ChatSystem
             return;
         }
 
-        TrySendWhisperMessage(entityUid, message, asName);
+        // If you don't have intrinsic radio, you need to whisper to send a message using your voice box.
+        if (TryComp<IntrinsicRadioTransmitterComponent>(entityUid, out var comp))
+        {
+            if (!comp.Channels.Contains(channel.ID))
+                TrySendWhisperMessage(entityUid, message, asName);
+        }
 
         // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
         try
