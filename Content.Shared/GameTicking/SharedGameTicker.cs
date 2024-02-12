@@ -144,20 +144,36 @@ namespace Content.Shared.GameTicking
         }
     }
 
-    [Serializable, NetSerializable]
-    public sealed class RoundEndMessageEvent : EntityEventArgs
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class RoundEndMessageEvent : EntityEventArgs
     {
-        [Serializable, NetSerializable]
-        public struct RoundEndPlayerInfo
+        [Serializable, NetSerializable, DataDefinition]
+        public partial struct RoundEndPlayerInfo
         {
+            [DataField]
             public string PlayerOOCName;
+
+            [DataField]
             public string? PlayerICName;
+
+            [DataField]
             public string PlayerGuid;
+
+            [DataField]
             public string Role;
+
+            [DataField]
             public string JobRole;
+
             public NetEntity? PlayerNetEntity;
+
+            [DataField]
             public bool Antag;
+
+            [DataField]
             public bool Observer;
+
+            [DataField]
             public bool Connected;
         }
 

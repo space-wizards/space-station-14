@@ -46,7 +46,8 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private GameRunLevel _runLevel;
 
-        private Array? _replayRoundPlayerInfo;
+        private RoundEndMessageEvent.RoundEndPlayerInfo[] _replayRoundPlayerInfo = null!;
+
         private string? _replayRoundText;
 
         [ViewVariables]
@@ -375,7 +376,7 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerGuid = userId.ToString() ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
+                    PlayerGuid = userId?.ToString() ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     PlayerNetEntity = GetNetEntity(entity),
                     Role = antag
                         ? roles.First(role => role.Antagonist).Name

@@ -2,10 +2,11 @@
 using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Replays;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
-using YamlDotNet.Serialization;
 
 namespace Content.Server.GameTicking;
 
@@ -13,6 +14,8 @@ public sealed partial class GameTicker
 {
     [Dependency] private readonly IReplayRecordingManager _replays = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
+    [Dependency] private readonly ISerializationManager _serialman = default!;
+
 
     private ISawmill _sawmillReplays = default!;
 
@@ -118,29 +121,18 @@ public sealed partial class GameTicker
 
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
-
+        metadata["roundEndPlayers"] = SerializeToYaml(_replayRoundPlayerInfo);
+        metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
+        metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
         // These should be set to null to prepare them for the next round.
-        if (_replayRoundPlayerInfo != null)
-        {
-            string finalPlayers = SerializeToYaml(_replayRoundPlayerInfo);
-            metadata["roundEndPlayers"] = new ValueDataNode(finalPlayers);
-            metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
-            metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
-            _replayRoundPlayerInfo = null;
-            _replayRoundText = null;
-        }
-        else
-        {
-            // If theres no players then there probably nothing interesting in round end text worth saving.
-            metadata["roundEndPlayers"] = new ValueDataNode(string.Empty);
-            metadata["roundEndText"] = new ValueDataNode(string.Empty);
-        }
+        _replayRoundPlayerInfo = null!;
+        _replayRoundText = null;
     }
 
-    private static string SerializeToYaml<T>(T data)
+    private DataNode SerializeToYaml<T>(T data)
     {
-        var serializer = new SerializerBuilder().Build();
-        return serializer.Serialize(data!);
+        var result = _serialman.WriteValue(data);
+        return result;
     }
 
     private ResPath GetAutoReplayPath()
