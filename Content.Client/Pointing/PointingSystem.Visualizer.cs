@@ -1,7 +1,8 @@
 using Content.Client.Pointing.Components;
 using Content.Shared.Pointing;
-using Robust.Client.GameObjects;
 using Robust.Client.Animations;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.Animations;
 using System.Numerics;
 
@@ -9,7 +10,9 @@ namespace Content.Client.Pointing;
 
 public sealed partial class PointingSystem : SharedPointingSystem
 {
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     public void InitializeVisualizer()
     {
@@ -26,6 +29,8 @@ public sealed partial class PointingSystem : SharedPointingSystem
     {
         if (_animationPlayer.HasRunningAnimation(uid, animationKey))
             return;
+
+        startPosition = new Angle(_eyeManager.CurrentEye.Rotation + _transformSystem.GetWorldRotation(uid)).RotateVec(startPosition);
 
         var animation = new Animation
         {
