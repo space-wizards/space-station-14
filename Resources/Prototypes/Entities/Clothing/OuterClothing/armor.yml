@@ -140,27 +140,6 @@
   - type: GroupExamine
 
 - type: entity
-  parent: ClothingOuterBaseLarge
-  id: ClothingOuterArmorHeavy
-  name: heavy armor suit
-  description: A heavily armored suit that protects against excessive damage.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.2
-        Slash: 0.2
-        Piercing: 0.2
-        Heat: 0.5
-        Radiation: 0
-        Caustic: 0.75
-  - type: GroupExamine
-
-- type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyGreen
   name: green heavy armor suit
