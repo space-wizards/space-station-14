@@ -60,7 +60,7 @@
       paper:
         reagents:
         - ReagentId: Cellulose
-          Quantity: 10
+          Quantity: 3
 
 
 - type: entity

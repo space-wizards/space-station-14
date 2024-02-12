@@ -45,8 +45,7 @@
   suffix: Powered
   components:
   - type: PowerCellDraw
-    drawRate: 0
-    useRate: 20
+    drawRate: 1.2 #Calculated for 5 minutes on a small cell
   - type: ActivatableUIRequiresPowerCell
 
 - type: entity

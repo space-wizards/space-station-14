@@ -14,9 +14,10 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Server.Power.EntitySystems;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems

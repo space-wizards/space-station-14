@@ -91,6 +91,7 @@ reagent-physical-desc-energizing = energizing
 reagent-physical-desc-exhilarating = exhilarating
 reagent-physical-desc-vibrant = vibrant
 reagent-physical-desc-fluffy = fluffy
+reagent-physical-desc-funny = funny
 reagent-physical-desc-alkaline = alkaline
 reagent-physical-desc-reflective = reflective
 reagent-physical-desc-holy = holy
