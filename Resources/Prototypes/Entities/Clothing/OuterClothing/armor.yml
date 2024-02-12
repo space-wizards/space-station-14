@@ -119,7 +119,7 @@
   - type: GroupExamine
 
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: ClothingOuterBaseGinormous
   id: ClothingOuterArmorHeavy
   name: heavy armor suit
   description: A heavily armored suit that protects against excessive damage.
@@ -131,11 +131,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.2
-        Slash: 0.2
-        Piercing: 0.2
+        Blunt: 0.25
+        Slash: 0.25
+        Piercing: 0.25
         Heat: 0.5
-        Radiation: 0
+        Radiation: 0.35
         Caustic: 0.75
   - type: GroupExamine
 
