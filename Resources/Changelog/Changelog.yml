@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: The fireaxe can now fight fires (melee hits reduce fire stacks).
-    type: Tweak
-  id: 5419
-  time: '2023-12-19T02:41:33.0000000+00:00'
-  url: null
 - author: SapphicOverload
   changes:
   - message: EVA and hardsuit helmets now allow breathing from gas tanks without a
@@ -3874,3 +3867,11 @@
   id: 5918
   time: '2024-02-11T20:47:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25119
+- author: Plykiya
+  changes:
+  - message: Door remotes no longer have their 5G signals absorbed by mobs, machines,
+      or Ian's cute butt.
+    type: Fix
+  id: 5919
+  time: '2024-02-12T02:34:13.532550+00:00'
+  url: null
