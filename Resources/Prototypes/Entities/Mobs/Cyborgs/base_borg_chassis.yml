@@ -89,6 +89,9 @@
     - Binary
     - Common
     - Science
+  - type: LocalChattable # Borgs get to chat like real people. Mostly because not being able to do so is really boring.
+  - type: Whisperable
+  - type: Emoteable
   - type: Radioable
     channels:
     - Binary

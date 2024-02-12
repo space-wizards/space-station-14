@@ -26,6 +26,9 @@
     channels:
     - Binary
     - Common
+  - type: LocalChattable
+  - type: Whisperable
+  - type: Emoteable
   - type: NameIdentifier
     group: MMI
   - type: DoAfter
@@ -94,6 +97,9 @@
     - type: IntrinsicRadioTransmitter
       channels:
       - Binary
+    - type: LocalChattable
+    - type: Whisperable
+    - type: Emoteable
     - type: Radioable
       channels:
       - Binary
