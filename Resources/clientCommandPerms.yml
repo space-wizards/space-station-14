@@ -53,7 +53,7 @@
     - menuvis
     - resetent
     - resetallents
-    - togglehealthoverlay
+    - showhealthbars
     - toggledecals
     - nodevis
     - nodevisfilter
