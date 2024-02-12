@@ -1712,16 +1712,16 @@
     - Fruit
 
 - type: entity
-  name: blumpkin
+  name: bloompkin
   parent: FoodProduceBase
-  id: FoodBlumpkin
+  id: FoodBloompkin
   description: A large, blue... berry. Seriously.
   components:
   - type: Item
     size: Small
   - type: FlavorProfile
     flavors:
-      - blumpkin
+      - bloompkin
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1736,12 +1736,12 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: JuiceBlumpkin
+      - ReagentId: JuiceBloompkin
         Quantity: 10
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/blumpkin.rsi
+    sprite: Objects/Specific/Hydroponics/bloompkin.rsi
   - type: Produce
-    seedId: blumpkin
+    seedId: bloompkin
   - type: Damageable
     damageContainer: Biological
   - type: Destructible
