@@ -350,6 +350,8 @@
   - type: Tag
     tags:
     - HidesHair
+    - WhitelistChameleon
+    - ClothMade
 
 - type: entity
   parent: ClothingHeadBase
@@ -490,6 +492,8 @@
   - type: Tag
     tags:
     - HidesHair
+    - WhitelistChameleon
+    - ClothMade
 
 - type: entity
   parent: ClothingHeadBase
