@@ -1,5 +1,4 @@
 using Content.Server.Administration.UI;
-using Content.Server.Chat.V2;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
