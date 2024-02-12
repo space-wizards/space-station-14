@@ -86,9 +86,9 @@ namespace Content.Server.Forensics
                 target.Fibers.Add(fiber);
             }
 
-            foreach (var fingerprint in ent.Comp.Fingerprints);
+            foreach (var print in ent.Comp.Fingerprints)
             {
-                target.Fingerprints.Add(fingerprint);
+                target.Fingerprints.Add(print);
             }
         }
 
