@@ -101,6 +101,7 @@
       - AirTank
       - GasAnalyzer
       - UtilityBelt
+      - GasConduit
       - Fulton
       - FultonBeacon
       - Pickaxe

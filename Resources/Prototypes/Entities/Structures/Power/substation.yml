@@ -13,10 +13,40 @@
     snapCardinals: true
     layers:
     - state: substation
-    - state: screen
+      map: ["substationBase"]
+    - state: screen0
+      map: ["substationScreen"]
       shader: unshaded
     - state: full
+      map: ["substationBattery"]
       shader: unshaded
+  - type: Substation
+    conduitSlotId: conduit_slot
+  - type: ContainerContainer
+    containers:
+      conduit_slot: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      conduit_slot:
+        ejectOnInteract: true
+        name: gas conduit
+        startingItem: GasConduitFilled
+        whitelist:
+          tags:
+          - Conduit
+  - type: SubstationVisuals
+    screenLayer: "substationScreen"
+    integrityStates:
+      Healthy: screen0
+      Unhealthy: screen1
+      Bad: screen2
+  - type: Appearance
+  - type: UpgradeBattery
+    maxChargeMultiplier: 2
+    baseMaxCharge: 2500000
+  - type: UpgradePowerSupplyRamping
+    scaling: Linear
+    supplyRampingMultiplier: 1
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
@@ -71,7 +101,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalGlassBreak
+          path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -142,6 +172,20 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+      conduit_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      conduit_slot:
+        ejectOnInteract: true
+        name: gas conduit
+        startingItem: GasConduitFilled
+        whitelist:
+          tags:
+          - Conduit
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-substation
+    layoutId: Substation
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
@@ -154,8 +198,19 @@
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
-    - state: screen
+      map: ["substationBase"]
+    - state: screen0
+      map: ["substationScreen"]
       shader: unshaded
+  - type: Substation
+    conduitSlotId: conduit_slot
+  - type: SubstationVisuals
+    screenLayer: "substationScreen"
+    integrityStates:
+      Healthy: screen0
+      Unhealthy: screen1
+      Bad: screen2
+  - type: Appearance
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
@@ -205,7 +260,7 @@
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalGlassBreak
+          path: /Audio/Effects/metalbreak.ogg
   - type: Construction
     graph: WallmountSubstation
     node: substation
@@ -235,6 +290,14 @@
   components:
   - type: Battery
     startingCharge: 0
+  - type: ItemSlots
+    slots:
+      conduit_slot:
+        ejectOnInteract: true
+        name: HV Conduit
+        startingItem:
+  - type: Substation
+    state: Bad
 
 - type: entity
   parent: BaseSubstationWall
@@ -244,6 +307,23 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 2000000
+
+- type: entity
+  parent: BaseSubstationWall
+  id: SubstationWallBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    maxCharge: 2000000
+    startingCharge: 0
+  - type: ItemSlots
+    slots:
+      conduit_slot:
+        ejectOnInteract: true
+        name: HV Conduit
+        startingItem:
+  - type: Substation
+    state: Bad
 
 # Construction Frame
 - type: entity

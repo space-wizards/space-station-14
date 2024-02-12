@@ -135,6 +135,14 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: GasConduit
+  result: GasConduit
+  completetime: 2
+  materials:
+    Steel: 200
+    Glass: 200
+
+- type: latheRecipe
   id: FauxTileAstroGrass
   result: FloorTileItemAstroGrass
   completetime: 1
