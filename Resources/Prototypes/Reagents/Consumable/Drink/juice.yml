@@ -27,12 +27,12 @@
   color: "#660099"
 
 - type: reagent
-  id: JuiceBlumpkin
-  name: reagent-name-juice-blumpkin
+  id: JuiceBloompkin
+  name: reagent-name-juice-bloompkin
   parent: BaseJuice
-  desc: reagent-desc-juice-blumpkin
+  desc: reagent-desc-juice-bloompkin
   physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: blumpkin
+  flavor: bloompkin
   color: "#00BFFF"
 
 - type: reagent

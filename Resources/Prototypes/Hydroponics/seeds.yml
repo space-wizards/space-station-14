@@ -1399,7 +1399,7 @@
   productPrototypes:
     - FoodPumpkin
   mutationPrototypes:
-    - blumpkin
+    - bloompkin
   lifespan: 55
   maturation: 10
   production: 4
@@ -1418,14 +1418,14 @@
       PotencyDivisor: 20
 
 - type: seed
-  id: blumpkin
-  name: seeds-blumpkin-name
+  id: bloompkin
+  name: seeds-bloompkin-name
   noun: seeds-noun-seeds
-  displayName: seeds-blumpkin-display-name
-  plantRsi: Objects/Specific/Hydroponics/blumpkin.rsi
-  packetPrototype: BlumpkinSeeds
+  displayName: seeds-bloompkin-display-name
+  plantRsi: Objects/Specific/Hydroponics/bloompkin.rsi
+  packetPrototype: BloompkinSeeds
   productPrototypes:
-    - FoodBlumpkin
+    - FoodBloompkin
   lifespan: 55
   maturation: 10
   production: 4
