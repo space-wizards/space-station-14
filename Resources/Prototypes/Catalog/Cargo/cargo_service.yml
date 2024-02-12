@@ -177,3 +177,14 @@
   cost: 1000
   category: Service
   group: market
+
+- type: cargoProduct
+  id: ServiceJanitorTrolley
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+    state: icon-cart
+  product: JanitorialTrolley
+  cost: 300
+  category: Service
+  group: market
+
