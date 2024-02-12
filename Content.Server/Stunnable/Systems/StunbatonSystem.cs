@@ -48,6 +48,12 @@ namespace Content.Server.Stunnable.Systems
             ? Loc.GetString("comp-stunbaton-examined-on")
             : Loc.GetString("comp-stunbaton-examined-off");
             args.PushMarkup(onMsg);
+
+            if (TryComp<BatteryComponent>(entity.Owner, out var battery))
+            {
+                var count = (int) (battery.CurrentCharge / entity.Comp.EnergyPerUse);
+                args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
+            }
         }
 
         private void ToggleDone(Entity<StunbatonComponent> entity, ref ItemToggledEvent args)
