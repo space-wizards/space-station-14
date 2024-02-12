@@ -28,7 +28,7 @@
   id: ClothingOuterArmorBasicSlim
   name: armor vest
   suffix: slim
-  description: A slim Type I armored vest that provides decent protection against most types of damage.
+  description: A slim Type I armored vest that provides decent protection against most types of damage bruh
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
