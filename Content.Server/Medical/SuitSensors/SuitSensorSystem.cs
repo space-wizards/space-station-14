@@ -8,6 +8,7 @@ using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Damage;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
