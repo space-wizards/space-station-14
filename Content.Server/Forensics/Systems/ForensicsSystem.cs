@@ -85,6 +85,11 @@ namespace Content.Server.Forensics
             {
                 target.Fibers.Add(fiber);
             }
+
+            foreach (var fingerprint in ent.Comp.Fingerprints);
+            {
+                target.Fingerprints.Add(fingerprint);
+            }
         }
 
         private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
