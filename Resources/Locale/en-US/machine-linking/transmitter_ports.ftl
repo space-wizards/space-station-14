@@ -66,3 +66,16 @@ signal-port-description-power-charging = This port is invoked with HIGH when the
 
 signal-port-name-power-discharging = Discharging
 signal-port-description-power-discharging = This port is invoked with HIGH when the battery is losing charge and LOW when not.
+
+signal-port-name-object-sensor-1 = 1 object
+signal-port-description-object-sensor-1 = This port is invoked when there is at least 1 colliding object.
+
+signal-port-name-object-sensor-2 = 2 objects
+signal-port-description-object-sensor-2 = This port is invoked when there are at least 2 colliding objects.
+
+signal-port-name-object-sensor-3 = 3 objects
+signal-port-description-object-sensor-3 = This port is invoked when there are at least 3 colliding objects.
+
+signal-port-name-object-sensor-4-or-more = 4 or more
+signal-port-description-object-sensor-4-or-more = This port is invoked when there are at least 4 colliding objects.
+
