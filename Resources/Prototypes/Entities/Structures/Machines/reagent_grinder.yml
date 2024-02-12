@@ -83,10 +83,6 @@
     board: ReagentGrinderIndustrialMachineCircuitboard
   - type: GenericVisualizer
     visuals:
-      enum.RecyclerVisuals.Bloody:
-        enum.RecyclerVisualLayers.Main:
-          True: { visible: false }
-          False: { visible: true }
       enum.ConveyorVisuals.State:
         enum.RecyclerVisualLayers.Main:
           Forward: { state: grinder-b1 }
