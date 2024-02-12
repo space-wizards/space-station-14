@@ -153,7 +153,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
             return;
 
         var comp = EnsureComp<DeviceLinkSourceComponent>(uid);
-        comp.Ports ??= new HashSet<string>();
+        comp.Ports ??= new HashSet<ProtoId<SourcePortPrototype>>();
 
         foreach (var port in ports)
         {
@@ -233,10 +233,10 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// Returns the links of a source
     /// </summary>
     /// <returns>A list of sink and source port ids that are linked together</returns>
-    public HashSet<(string source, string sink)> GetLinks(EntityUid sourceUid, EntityUid sinkUid, DeviceLinkSourceComponent? sourceComponent = null)
+    public HashSet<(ProtoId<SourcePortPrototype> source, ProtoId<SinkPortPrototype> sink)> GetLinks(EntityUid sourceUid, EntityUid sinkUid, DeviceLinkSourceComponent? sourceComponent = null)
     {
         if (!Resolve(sourceUid, ref sourceComponent) || !sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var links))
-            return new HashSet<(string source, string sink)>();
+            return new HashSet<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)>();
 
         return links;
     }
