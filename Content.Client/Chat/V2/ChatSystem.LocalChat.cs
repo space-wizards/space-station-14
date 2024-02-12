@@ -2,21 +2,18 @@
 using Content.Shared.CCVar;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.Chat.V2;
 
-public sealed class ClientEmoteSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-    public bool SendMessage(EntityUid emoter, string message, [NotNullWhen(false)] out string? reason)
+    public bool SendLocalChatMessage(EntityUid speaker, string message, [NotNullWhen(false)] out string? reason)
     {
-        // Sanity check: you might not be able to emote (although this would be unlikely?)
-        if (!TryComp<EmoteableComponent>(emoter, out _))
+        // Sanity check: if you can't chat you shouldn't be chatting.
+        if (!TryComp<LocalChattableComponent>(speaker, out var chattable))
         {
             // TODO: Add locstring
-            reason = "You can't emote";
+            reason = "You can't talk in local chat";
 
             return false;
         }
@@ -31,7 +28,7 @@ public sealed class ClientEmoteSystem : EntitySystem
             return false;
         }
 
-        RaiseNetworkEvent(new EmoteAttemptedEvent(GetNetEntity(emoter), message));
+        RaiseNetworkEvent(new LocalChatAttemptedEvent(GetNetEntity(speaker), message));
 
         reason = null;
 

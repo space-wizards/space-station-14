@@ -1,19 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Radio;
-using Content.Shared.Radio.Components;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.Chat.V2;
 
-public sealed class ClientRadioSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-    public bool SendMessage(EntityUid speaker, string message, RadioChannelPrototype radioChannel, [NotNullWhen(false)] out string? reason)
+    public bool SendRadioMessage(EntityUid speaker, string message, RadioChannelPrototype radioChannel, [NotNullWhen(false)] out string? reason)
     {
         // Sanity check: if you can't chat you shouldn't be chatting.
         if (!TryComp<RadioableComponent>(speaker, out var radioable))

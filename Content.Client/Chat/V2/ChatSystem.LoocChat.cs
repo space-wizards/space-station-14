@@ -1,16 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.V2;
-using Content.Shared.Chat.V2.Components;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.Chat.V2;
 
-public sealed class ClientLoocSystem : EntitySystem
+public sealed partial class ChatSystem
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-    public bool SendMessage(EntityUid speaker, string message, [NotNullWhen(false)] out string? reason)
+    public bool SendLoocChatMessage(EntityUid speaker, string message, [NotNullWhen(false)] out string? reason)
     {
         var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
 

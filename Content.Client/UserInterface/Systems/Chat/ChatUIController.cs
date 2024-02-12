@@ -42,6 +42,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using ChatSystem = Content.Client.Chat.V2.ChatSystem;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
@@ -67,20 +68,14 @@ public sealed class ChatUIController : UIController
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
 
     // LEGACY CHAT SYSTEM
-    [UISystemDependency] private readonly ChatSystem? _chatSys = default;
+    [UISystemDependency] private readonly Client.Chat.ChatSystem? _chatSys = default;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
     // CHAT V2
-    [UISystemDependency] private readonly ClientLocalChatSystem _localChat = default!;
-    [UISystemDependency] private readonly ClientWhisperSystem _whisper = default!;
-    [UISystemDependency] private readonly ClientEmoteSystem _emote = default!;
-    [UISystemDependency] private readonly ClientRadioSystem _radio = default!;
-    [UISystemDependency] private readonly ClientLoocSystem _looc = default!;
-    [UISystemDependency] private readonly ClientDeadChatSystem _deadChat = default!;
-
+    [UISystemDependency] private readonly ChatSystem _chat = default!;
     [UISystemDependency] private readonly PopupSystem _popup = default!;
 
     private ISawmill _sawmill = default!;
@@ -766,7 +761,7 @@ public sealed class ChatUIController : UIController
                 if (!_player.LocalEntity.HasValue)
                     return;
 
-                if (!_localChat.SendMessage(_player.LocalEntity.Value, text, out var chatFailReason))
+                if (!_chat.SendLocalChatMessage(_player.LocalEntity.Value, text, out var chatFailReason))
                 {
                     HandleMessageFailure(_player.LocalEntity.Value, chatFailReason);
                 }
@@ -776,7 +771,7 @@ public sealed class ChatUIController : UIController
                 if (!_player.LocalEntity.HasValue)
                     return;
 
-                if (!_whisper.SendMessage(_player.LocalEntity.Value, text, out var whisperFailReason))
+                if (!_chat.SendWhisperMessage(_player.LocalEntity.Value, text, out var whisperFailReason))
                 {
                     HandleMessageFailure(_player.LocalEntity.Value, whisperFailReason);
                 }
@@ -786,7 +781,7 @@ public sealed class ChatUIController : UIController
                 if (!_player.LocalEntity.HasValue)
                     return;
 
-                if (!_emote.SendMessage(_player.LocalEntity.Value, text, out var emoteFailReason))
+                if (!_chat.SendEmoteMessage(_player.LocalEntity.Value, text, out var emoteFailReason))
                 {
                     HandleMessageFailure(_player.LocalEntity.Value, emoteFailReason);
                 }
@@ -800,7 +795,7 @@ public sealed class ChatUIController : UIController
                 {
                     HandleMessageFailure(_player.LocalEntity.Value, "No radio channel!");
                 }
-                else if (!_radio.SendMessage(_player.LocalEntity.Value, text, radioChannel, out var radioFailReason))
+                else if (!_chat.SendRadioMessage(_player.LocalEntity.Value, text, radioChannel, out var radioFailReason))
                 {
                     HandleMessageFailure(_player.LocalEntity.Value, radioFailReason);
                 }
@@ -810,7 +805,7 @@ public sealed class ChatUIController : UIController
                 if (!_player.LocalEntity.HasValue)
                     return;
 
-                if (!_looc.SendMessage(_player.LocalEntity.Value, text, out var loocFailReason))
+                if (!_chat.SendLoocChatMessage(_player.LocalEntity.Value, text, out var loocFailReason))
                 {
                     HandleMessageFailure(_player.LocalEntity.Value, loocFailReason);
                 }
@@ -820,7 +815,7 @@ public sealed class ChatUIController : UIController
                 if (!_player.LocalEntity.HasValue)
                     return;
 
-                if (!_deadChat.SendMessage(_player.LocalEntity.Value, text, out var deadChatFailReason))
+                if (!_chat.SendDeadChatMessage(_player.LocalEntity.Value, text, out var deadChatFailReason))
                 {
                     HandleMessageFailure(_player.LocalEntity.Value, deadChatFailReason);
                 }
