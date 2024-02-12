@@ -7,8 +7,8 @@ reagent-desc-juice-banana = The raw essence of a banana. HONK.
 reagent-name-juice-berry = berry juice
 reagent-desc-juice-berry = A delicious blend of several different kinds of berries.
 
-reagent-name-juice-blumpkin = blumpkin juice
-reagent-desc-juice-blumpkin = The juice of a blumpkin. Smells like pool water.
+reagent-name-juice-bloompkin = bloompkin juice
+reagent-desc-juice-bloompkin = The juice of a bloompkin. Smells like pool water.
 
 reagent-name-juice-bungo = bungo juice
 reagent-desc-juice-bungo = The juice of a bungo fruit. Exotic!
