@@ -4,6 +4,8 @@ using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind.Commands;
 using Content.Server.PDA;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -44,12 +46,23 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
+    [Dependency] private readonly ArrivalsSystem _arrivalsSystem = default!;
+    [Dependency] private readonly ContainerSpawnPointSystem _containerSpawnPointSystem = default!;
+
     private bool _randomizeCharacters;
+
+    private Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>> _spawnerCallbacks = new();
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         _configurationManager.OnValueChanged(CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
+
+        _spawnerCallbacks = new Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>>()
+        {
+            { SpawnPriorityPreference.Arrivals, _arrivalsSystem.HandlePlayerSpawning },
+            { SpawnPriorityPreference.Cryosleep, _containerSpawnPointSystem.HandlePlayerSpawning }
+        };
     }
 
     /// <summary>
@@ -70,6 +83,30 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         var ev = new PlayerSpawningEvent(job, profile, station);
+
+        if (station != null && profile != null)
+        {
+            /// Try to call the character's preferred spawner first.
+            if (_spawnerCallbacks.TryGetValue(profile.SpawnPriority, out var preferredSpawner))
+            {
+                preferredSpawner(ev);
+
+                foreach (var (key, remainingSpawner) in _spawnerCallbacks)
+                {
+                    if (key == profile.SpawnPriority)
+                        continue;
+
+                    remainingSpawner(ev);
+                }
+            }
+            else
+            {
+                /// Call all of them in the typical order.
+                foreach (var typicalSpawner in _spawnerCallbacks.Values)
+                    typicalSpawner(ev);
+            }
+        }
+
         RaiseLocalEvent(ev);
 
         DebugTools.Assert(ev.SpawnResult is { Valid: true } or null);

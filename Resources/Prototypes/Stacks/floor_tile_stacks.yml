@@ -146,6 +146,20 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileStackShuttleGrey
+  name: grey shuttle tile
+  spawn: FloorTileItemShuttleGrey
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileStackShuttleBlack
+  name: black shuttle tile
+  spawn: FloorTileItemShuttleBlack
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileStackEighties
   name: eighties floor tile
   spawn: FloorTileItemEighties
