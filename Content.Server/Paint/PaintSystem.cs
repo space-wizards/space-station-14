@@ -112,7 +112,7 @@ public sealed class PaintSystem : SharedPaintSystem
             _audio.PlayPvs(entity.Comp.Spray, entity);
             paint.Enabled = true;
 
-            if (HasComp<MobStateComponent>(target)) // Paint any clothing the target is wearing.
+            if (HasComp<InventoryComponent>(target)) // Paint any clothing the target is wearing.
             {
                 if (_inventory.TryGetSlots(target, out var slotDefinitions))
                 {
