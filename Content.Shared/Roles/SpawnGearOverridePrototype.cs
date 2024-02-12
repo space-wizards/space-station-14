@@ -13,6 +13,12 @@ public sealed partial class SpawnGearOverridePrototype : IPrototype
     public SpawnGearOverrideType? OverrideType { get; private set; } = null;
 
     /// <summary>
+    /// This is the list of roles that will use this override. If null, the override will apply to any role.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<JobPrototype>>? Role { get; private set; } = null;
+
+    /// <summary>
     /// This is the gear template that will be applied.
     /// If you modify the Backpack or Jumpsuit, you should also modify DuffelBag and Satchel or InnerClothingSkirt, otherwise they will overwrite your change if the user has chosen those alternate options.
     /// </summary>

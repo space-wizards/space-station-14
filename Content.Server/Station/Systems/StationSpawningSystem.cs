@@ -176,7 +176,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (prototype?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            SpawnGearOverrideSpecies(species.SpawnGearOverride, startingGear);
+            SpawnGearOverrideSpecies(species.SpawnGearOverride, startingGear, job);
             EquipStartingGear(entity.Value, startingGear, profile);
             if (profile != null)
                 EquipIdCard(entity.Value, profile.Name, prototype, station);
@@ -213,7 +213,8 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// </summary>
     /// <param name="overrideList">Incoming starting gear change templates.</param>
     /// <param name="startingGear">Current starting gear.</param>
-    private void SpawnGearOverrideSpecies(List<string> overrideList, StartingGearPrototype startingGear)
+    /// <param name="job">The mob's role or job.</param>
+    private void SpawnGearOverrideSpecies(List<string> overrideList, StartingGearPrototype startingGear, JobComponent? job)
     {
         foreach (var listEntry in overrideList)
         {
@@ -222,6 +223,15 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             var template = input.GearTemplate;
 
             if (template is null)
+                continue;
+
+            if (input.Role is not null
+                && (job?.Prototype is null))
+                continue;
+
+            if (input.Role is not null
+                && job?.Prototype is not null
+                && !input.Role.Contains(job.Prototype.Value))
                 continue;
 
             switch(type)

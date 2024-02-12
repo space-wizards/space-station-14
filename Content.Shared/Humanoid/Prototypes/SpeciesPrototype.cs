@@ -73,6 +73,7 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     /// <summary>
     /// List of prototypes that will modify the starting gear specified on the job prototype
+    /// When defining multiple overrides for a species, play close attention to ordering so later templates do not unintentionally override changes.
     /// </summary>
     [DataField("spawnGearOverride", required: false, customTypeSerializer:typeof(PrototypeIdListSerializer<SpawnGearOverridePrototype>))]
     public List<string> SpawnGearOverride { get; private set; } = new();
