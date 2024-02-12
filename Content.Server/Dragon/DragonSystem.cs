@@ -55,6 +55,7 @@ public sealed partial class DragonSystem : EntitySystem
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
         SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<DragonComponent, GenericAntagCreatedEvent>(OnCreated);
+        SubscribeLocalEvent<DragonComponent, EntityZombifiedEvent>(OnZombified);
     }
 
     public override void Update(float frameTime)
@@ -200,6 +201,12 @@ public sealed partial class DragonSystem : EntitySystem
         {
             Briefing = Loc.GetString("dragon-role-briefing")
         }, mind);
+    }
+
+    private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)
+    {
+        // prevent carp attacking zombie dragon
+        _faction.AddFaction(ent.Owner, ent.Comp.Faction);
     }
 
     private void Roar(EntityUid uid, DragonComponent comp)
