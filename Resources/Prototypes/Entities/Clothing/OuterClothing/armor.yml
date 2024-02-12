@@ -22,27 +22,6 @@
   - type: ExplosionResistance
     damageCoefficient: 0.90
 
-- type: entity
-  parent: ClothingOuterBaseGinormous
-  id: ClothingOuterArmorHeavy
-  name: heavy armor suit
-  description: A heavily armored suit that protects against excessive damage.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.25
-        Slash: 0.25
-        Piercing: 0.25
-        Heat: 0.5
-        Radiation: 0.35
-        Caustic: 0.75
-  - type: GroupExamine
-
 #Alternate / slim basic armor vest
 - type: entity
   parent: ClothingOuterArmorBasic
