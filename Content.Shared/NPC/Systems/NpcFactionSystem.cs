@@ -137,7 +137,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
         var hostiles = GetNearbyFactions(ent, range, ent.Comp1.HostileFactions)
             // ignore mobs that have both hostile faction and the same faction,
             // otherwise having multiple factions is strictly negative
-            .Where(target => IsEntityFriendly((ent, ent.Comp1), target))
+            .Where(target => IsEntityFriendly((ent, ent.Comp1), target));
         if (!Resolve(ent, ref ent.Comp2, false))
             return hostiles;
 

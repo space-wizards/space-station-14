@@ -20,7 +20,7 @@ public sealed class PettableFriendSystem : EntitySystem
         SubscribeLocalEvent<PettableFriendComponent, GotRehydratedEvent>(OnRehydrated);
     }
 
-    private void OnUseInHand(Entity<PettableFriendComponent> ent, UseInHandEvent args)
+    private void OnUseInHand(Entity<PettableFriendComponent> ent, ref UseInHandEvent args)
     {
         var (uid, comp) = ent;
         var user = args.User;

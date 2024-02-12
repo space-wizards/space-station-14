@@ -64,10 +64,11 @@ public sealed partial class NpcFactionSystem
     /// </summary>
     public IEnumerable<EntityUid> GetHostiles(Entity<FactionExceptionComponent?> ent)
     {
-        if (!Resolve(ent, ref comp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return Array.Empty<EntityUid>();
 
-        return ent.Comp.Hostiles;
+        // evil c#
+        return ent.Comp!.Hostiles;
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public sealed partial class NpcFactionSystem
         ent.Comp ??= EnsureComp<FactionExceptionComponent>(ent);
         ent.Comp.Ignored.Add(target);
         target.Comp ??= EnsureComp<FactionExceptionTrackerComponent>(target);
-        target.Comp.Entities.Add(uid);
+        target.Comp.Entities.Add(ent);
     }
 
     /// <summary>
