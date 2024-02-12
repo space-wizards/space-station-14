@@ -74,11 +74,11 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
-    - type: IntrinsicRadio
+  - type: IntrinsicRadio
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
-    - type: Radioable
+  - type: Radioable
     channels:
     - Binary
     - Common
@@ -101,7 +101,7 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
-    - type: LocalChattable
+  - type: LocalChattable
 
 - type: entity
   parent: VendingMachine
