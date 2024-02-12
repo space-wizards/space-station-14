@@ -1,9 +1,9 @@
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.Components;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Interaction;

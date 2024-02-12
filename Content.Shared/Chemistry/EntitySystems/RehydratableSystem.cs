@@ -1,17 +1,15 @@
-using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
 
-namespace Content.Server.Chemistry.EntitySystems;
+namespace Content.Shared.Chemistry.EntitySystems;
 
 public sealed class RehydratableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
 
     public override void Initialize()
     {
@@ -20,21 +18,21 @@ public sealed class RehydratableSystem : EntitySystem
         SubscribeLocalEvent<RehydratableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
-    private void OnSolutionChange(Entity<RehydratableComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionContainerChangedEvent args)
     {
-        var quantity = _solutions.GetTotalPrototypeQuantity(entity, entity.Comp.CatalystPrototype);
-        if (quantity != FixedPoint2.Zero && quantity >= entity.Comp.CatalystMinimum)
+        var quantity = _solutions.GetTotalPrototypeQuantity(ent, ent.Comp.CatalystPrototype);
+        if (quantity != FixedPoint2.Zero && quantity >= ent.Comp.CatalystMinimum)
         {
-            Expand(entity);
+            Expand(ent);
         }
     }
 
     // Try not to make this public if you can help it.
-    private void Expand(Entity<RehydratableComponent> entity)
+    private void Expand(Entity<RehydratableComponent> ent)
     {
-        var (uid, comp) = entity;
+        var (uid, comp) = ent;
 
-        _popups.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), uid);
+        _popup.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), uid);
 
         var randomMob = _random.Pick(comp.PossibleSpawns);
 
