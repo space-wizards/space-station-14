@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Actions;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
@@ -28,6 +27,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
@@ -45,7 +45,6 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-        [Dependency] private readonly SharedActionsSystem _action = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
@@ -58,6 +57,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly UseDelaySystem _delay = default!;
 
         public override void Initialize()
         {
@@ -85,22 +85,11 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckAct);
-            SubscribeLocalEvent<CuffableComponent, UncuffSelfActionEvent>(OnUncuffSelf);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
-        }
-
-        private void OnUncuffSelf(EntityUid uid, CuffableComponent component, UncuffSelfActionEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            TryUncuff(uid, uid);
-
-            args.Handled = true;
         }
 
         private void OnUncuffAttempt(ref UncuffAttemptEvent args)
@@ -183,15 +172,9 @@ namespace Content.Shared.Cuffs
             _actionBlocker.UpdateCanMove(uid);
 
             if (component.CanStillInteract)
-            {
-                _action.RemoveAction(uid, component.UncuffAction);
                 _alerts.ClearAlert(uid, AlertType.Handcuffed);
-            }
             else
-            {
-                component.UncuffAction = _action.AddAction(uid, "ActionUncuffSelf");
                 _alerts.ShowAlert(uid, AlertType.Handcuffed);
-            }
 
             var ev = new CuffedStateChangeEvent();
             RaiseLocalEvent(uid, ref ev);
@@ -592,6 +575,18 @@ namespace Content.Shared.Cuffs
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
+
+            if (isOwner)
+            {
+                if (!TryComp(cuffsToRemove.Value, out UseDelayComponent? useDelay))
+                    return;
+
+                if (!_delay.TryResetDelay((cuffsToRemove.Value, useDelay), true))
+                {
+                    return;
+                }
+            }
+
             var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
             {
                 BreakOnUserMove = true,
@@ -743,11 +738,6 @@ namespace Content.Shared.Cuffs
         [Serializable, NetSerializable]
         private sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent
         {
-        }
-
-        public sealed partial class UncuffSelfActionEvent : InstantActionEvent
-        {
-
         }
     }
 }
