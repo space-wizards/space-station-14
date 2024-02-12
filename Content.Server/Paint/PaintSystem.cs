@@ -81,7 +81,6 @@ public sealed class PaintSystem : SharedPaintSystem
             return;
     }
 
-
     private void OnPaint(Entity<PaintComponent> entity, ref PaintDoAfterEvent args)
     {
         if (args.Target == null)
