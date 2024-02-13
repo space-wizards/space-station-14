@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGODiamond
-  changes:
-  - message: Item size cannot be misinterpreted now.
-    type: Fix
-  id: 5426
-  time: '2023-12-20T00:31:39.0000000+00:00'
-  url: null
 - author: Veritius
   changes:
   - message: Ethylredoxrazine is more effective at treating drunkness.
@@ -3872,3 +3865,11 @@
   id: 5925
   time: '2024-02-12T20:44:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25150
+- author: EdenTheLiznerd
+  changes:
+  - message: Deathnettles are no longer able to bypass armor and don't do as much
+      damage
+    type: Tweak
+  id: 5926
+  time: '2024-02-13T01:20:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25068
