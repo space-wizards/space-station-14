@@ -374,6 +374,7 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Beaker
     - Beaker
     - BorgDropper

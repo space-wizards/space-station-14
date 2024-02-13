@@ -210,6 +210,12 @@
     - Binary
     - Common
     - Science
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
   - type: ActiveRadio
     channels:
     - Medical
@@ -319,6 +325,12 @@
           - BorgModuleSyndicate
       hasMindState: synd_medical_e
       noMindState: synd_medical
+    - type: ShowHealthBars
+      damageContainers:
+      - Biological
+    - type: ShowHealthIcons
+      damageContainers:
+      - Biological
     - type: Construction
       node: syndicatemedical
 
