@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: whateverusername0
   changes:
-  - message: "Miasma now reacts with oxygen at 50\xB0C to produce nitrous oxide and\
-      \ water vapor."
-    type: Add
-  id: 5435
-  time: '2023-12-21T00:14:59.0000000+00:00'
-  url: null
-- author: whateverusername0
-  changes:
   - message: Nitrous oxide now decomposes at high temperatures.
     type: Add
   id: 5436
@@ -3879,3 +3871,10 @@
   id: 5934
   time: '2024-02-13T22:08:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24780
+- author: TheShuEd
+  changes:
+  - message: Darkness is coming. A new shadow anomaly added.
+    type: Add
+  id: 5935
+  time: '2024-02-13T22:12:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24629
