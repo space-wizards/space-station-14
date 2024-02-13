@@ -38,6 +38,7 @@ criminal-records-console-detained = {$name} has been detained by {$officer}.
 criminal-records-console-released = {$name} has been released by {$officer}.
 criminal-records-console-not-wanted = {$name} is no longer wanted.
 criminal-records-console-paroled = {$name} has been released on parole by {$officer}.
+criminal-records-console-not-parole = {$name} is no longer on parole.
 
 ## Filters
 
