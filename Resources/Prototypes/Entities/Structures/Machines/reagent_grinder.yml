@@ -88,3 +88,13 @@
           Forward: { state: grinder-b1 }
           Reverse: { state: grinder-b1 }
           Off: { state: grinder-b0 }
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_parts
+    - machine_board
