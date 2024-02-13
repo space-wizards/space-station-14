@@ -819,13 +819,13 @@
   desc: reagent-desc-erika-surprise
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
-  color: "#2E6671"
+  color: "#67bc50"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/erikasurprise.rsi
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: GargleBlaster
@@ -926,13 +926,13 @@
   desc: reagent-desc-grog
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
-  color: "#664300"
+  color: "#e3e77b"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/grogglass.rsi
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: HippiesDelight
@@ -1123,6 +1123,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Martini
@@ -1247,10 +1248,13 @@
   desc: reagent-desc-red-mead
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
-  color: "#C73C00"
+  color: "#bc5550"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/red_meadglass.rsi
-    state: icon
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Sbiten
