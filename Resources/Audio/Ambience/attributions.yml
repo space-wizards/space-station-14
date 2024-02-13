@@ -96,3 +96,9 @@
   license: "CC0-1.0"
   copyright: "Taken from /vg/station"
   source: "https://github.com/vgstation-coders/vgstation13/commit/23303188abe6fe31b114a218a1950d7325a23730"
+
+
+- files: ["anomaly_scary.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by dimbark1, edited and converted to mono by TheShuEd (github)"
+  source: "https://freesound.org/people/dimbark1/sounds/316797/"

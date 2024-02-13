@@ -264,6 +264,8 @@
   params:
     variation: 0.125
   sounds:
+    Buzz:
+      path: /Audio/Voice/Moth/moth_scream.ogg
     Scream:
       path: /Audio/Voice/Moth/moth_scream.ogg
     Laugh:
@@ -295,6 +297,10 @@
       path: /Audio/Voice/Diona/diona_snap.ogg
       params:
         volume: -10
+    Salute:
+      path: /Audio/Voice/Diona/diona_salute.ogg
+      params:
+       volume: -5
 
 # mobs
 - type: emoteSounds

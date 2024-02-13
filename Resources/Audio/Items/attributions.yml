@@ -63,11 +63,16 @@
   copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
   source: "https://freesound.org/people/volivieri/sounds/37190/"
 
+- files: ["bottle_close1.ogg"]
+  license: "CC0-1.0"
+  copyright: "User MellowAudio on freesound.org. Modified by Tayrtahn on github."
+  source: "https://freesound.org/people/MellowAudio/sounds/591485/"
+
 - files: ["bow_pull.ogg"]
   license: "CC-BY-3.0"
   copyright: "User jzdnvdoosj on freesound.org. Converted to ogg by mirrorcult"
   source: "https://freesound.org/people/jzdnvdoosj/sounds/626262/"
-  
+
 - files: ["candle_blowing.ogg"]
   license: "CC-BY-NC-3.0"
   copyright: "Created by Bee09, converted to OGG, cropped and converted to mono by TheShuEd"
@@ -82,12 +87,17 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station"
   source: "https://github.com/tgstation/tgstation/commit/c61c452d78425d89920b41ed5f95fd190e733a3c"
-  
+
 - files: ["scissors.ogg"]
   license: "CC0-1.0"
   copyright: "User Hanbaal on freesound.org. Converted to ogg by TheShuEd"
   source: "https://freesound.org/people/Hanbaal/sounds/178669/"
-  
+
+- files: ["newton_cradle.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "User LoafDV on freesound.org. Converted to ogg end edited by lzk228"
+  source: "https://freesound.org/people/LoafDV/sounds/131596/"
+
 - files: ["shovel_dig.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation, modified by themias (github) for ss14"

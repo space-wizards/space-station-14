@@ -36,22 +36,6 @@
   - VimHarness
 
 - type: technology
-  id: FoodService
-  name: research-technology-food-service
-  icon:
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer1
-  discipline: CivilianServices
-  tier: 1
-  cost: 7500
-  recipeUnlocks: #remove all of these once we have more kitchen equipment
-  - MicrowaveMachineCircuitboard
-  - ReagentGrinderMachineCircuitboard
-  - ElectricGrillMachineCircuitboard
-  - BoozeDispenserMachineCircuitboard
-  - SodaDispenserMachineCircuitboard
-
-- type: technology
   id: AudioVisualCommunication
   name: research-technology-audio-visual-communication
   icon:
@@ -107,9 +91,11 @@
     state: display
   discipline: CivilianServices
   tier: 1
-  cost: 5000
+  cost: 7500
   recipeUnlocks:
   - FatExtractorMachineCircuitboard
+  - BiofabricatorMachineCircuitboard
+  - BiomassReclaimerMachineCircuitboard
 
 # Tier 2
 
@@ -125,6 +111,35 @@
   recipeUnlocks:
   - FauxTileAstroGrass
   - FauxTileAstroIce
+
+- type: technology
+  id: BiochemicalStasis
+  name: research-technology-biochemical-stasis
+  icon:
+    sprite: Structures/Machines/stasis_bed.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - StasisBedMachineCircuitboard
+  - CryoPodMachineCircuitboard
+  - CryostasisBeaker
+  - SyringeCryostasis
+
+- type: technology
+  id: MechanizedTreatment
+  name: research-technology-mechanized-treatment
+  icon:
+    sprite: Mobs/Silicon/chassis.rsi
+    state: medical
+  discipline: CivilianServices
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - BorgModuleAdvancedTreatment
+  - BorgModuleDiagnosis
+  - BorgModuleDefibrillator
 
 - type: technology
   id: AdvancedCleaning
@@ -197,3 +212,16 @@
   cost: 10000
   recipeUnlocks:
   - ClothingShoesBootsSpeed
+
+- type: technology
+  id: BluespaceChemistry
+  name: research-technology-bluespace-chemistry
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
+    state: beakerbluespace
+  discipline: CivilianServices
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - BluespaceBeaker
+  - SyringeBluespace

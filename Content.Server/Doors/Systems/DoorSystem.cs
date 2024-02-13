@@ -28,8 +28,6 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
 
-
-        SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforeDoorPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
@@ -124,12 +122,6 @@ public sealed class DoorSystem : SharedDoorSystem
         else if (component.State == DoorState.Welded)
             SetState(uid, DoorState.Closed, component);
     }
-
-    private void OnBeforeDoorPry(EntityUid id, DoorComponent door, ref BeforePryEvent args)
-    {
-        if (door.State == DoorState.Welded || !door.CanPry)
-            args.Cancelled = true;
-    }
     #endregion
 
 
@@ -144,13 +136,13 @@ public sealed class DoorSystem : SharedDoorSystem
         if (!door.BumpOpen)
             return;
 
-        if (door.State != DoorState.Closed)
+        if (door.State is not (DoorState.Closed or DoorState.Denying))
             return;
 
         var otherUid = args.OtherEntity;
 
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
-            TryOpen(uid, door, otherUid);
+            TryOpen(uid, door, otherUid, quiet: door.State == DoorState.Denying);
     }
     private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {

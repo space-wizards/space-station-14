@@ -70,13 +70,13 @@ namespace Content.Server.Administration.Systems
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
 
-            _config.OnValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged, true);
 
             SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -188,14 +188,6 @@ namespace Content.Server.Administration.Systems
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
-
-            _config.UnsubValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -349,7 +341,7 @@ namespace Content.Server.Administration.Systems
                     if (TryComp(item, out PdaComponent? pda) &&
                         TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
                         keyStorage.Key is { } key &&
-                        _stationRecords.TryGetRecord(key.OriginStation, key, out GeneralStationRecord? record))
+                        _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
                     {
                         if (TryComp(entity, out DnaComponent? dna) &&
                             dna.DNA != record.DNA)
@@ -363,7 +355,7 @@ namespace Content.Server.Administration.Systems
                             continue;
                         }
 
-                        _stationRecords.RemoveRecord(key.OriginStation, key);
+                        _stationRecords.RemoveRecord(key);
                         Del(item);
                     }
                 }

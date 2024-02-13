@@ -53,6 +53,7 @@ petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($tar
 petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target)} growls, making you think twice.
 petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost bites your fingers!
 petting-failure-nymph = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} moves their branches away.
+petting-failure-shadow = You're trying to pet {THE($target)}, but your hand passes through the cold darkness of his body.
 
 ## Petting silicons
 
