@@ -17,7 +17,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -54,7 +53,6 @@ public sealed class GasCanisterSystem : EntitySystem
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterHoldingTankEjectMessage>(OnHoldingTankEjectMessage);
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleasePressureMessage>(OnCanisterChangeReleasePressure);
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleaseValveMessage>(OnCanisterChangeReleaseValve);
-        SubscribeLocalEvent<GasCanisterComponent, LockToggledEvent>(OnLockToggled);
     }
 
     /// <summary>
@@ -78,11 +76,6 @@ public sealed class GasCanisterSystem : EntitySystem
     {
         // Ensure container
         _slots.AddItemSlot(uid, comp.ContainerName, comp.GasTankSlot);
-
-        if (TryComp<LockComponent>(uid, out var lockComp))
-        {
-            _appearance.SetData(uid, GasCanisterVisuals.Locked, lockComp.Locked);
-        }
     }
 
     private void DirtyUI(EntityUid uid,
@@ -307,11 +300,6 @@ public sealed class GasCanisterSystem : EntitySystem
     private void OnAnalyzed(EntityUid uid, GasCanisterComponent component, GasAnalyzerScanEvent args)
     {
         args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
-    }
-
-    private void OnLockToggled(EntityUid uid, GasCanisterComponent component, ref LockToggledEvent args)
-    {
-        _appearance.SetData(uid, GasCanisterVisuals.Locked, args.Locked);
     }
 
     /// <summary>

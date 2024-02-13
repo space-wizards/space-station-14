@@ -11,7 +11,7 @@
             "name": "idle"
         },
         {
-            "name": "deployed",
+            "name": "locked",
             "delays": [
                 [
                     0.1,

@@ -140,7 +140,7 @@
     - state: locked
       shader: unshaded
       visible: false
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
   - type: Transform
     noRot: false
   - type: Fixtures
