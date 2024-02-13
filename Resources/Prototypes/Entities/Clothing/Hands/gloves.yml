@@ -177,7 +177,7 @@
 - type: entity
   parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesClockwork
-  name: Clockwork Gauntlets
+  name: clockwork gauntlets
   description: Heavy gauntlets with brass reinforcement. #when clockcult is implemented it should say "Heavy, shock-resistant gauntlets with brass reinforcement"
   components:
   - type: Sprite
