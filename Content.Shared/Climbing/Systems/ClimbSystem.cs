@@ -62,22 +62,12 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
-        SubscribeLocalEvent<ClimbingComponent, EntityUnpausedEvent>(OnClimbableUnpaused);
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
 
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
-    }
-
-    private void OnClimbableUnpaused(EntityUid uid, ClimbingComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextTransition == null)
-            return;
-
-        component.NextTransition = component.NextTransition.Value + args.PausedTime;
-        Dirty(uid, component);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)

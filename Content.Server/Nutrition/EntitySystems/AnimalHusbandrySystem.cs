@@ -40,21 +40,9 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<ReproductiveComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<ReproductiveComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<InfantComponent, EntityUnpausedEvent>(OnInfantUnpaused);
         SubscribeLocalEvent<InfantComponent, ComponentStartup>(OnInfantStartup);
         SubscribeLocalEvent<InfantComponent, ComponentShutdown>(OnInfantShutdown);
-    }
-
-    private void OnUnpaused(EntityUid uid, ReproductiveComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextBreedAttempt += args.PausedTime;
-    }
-
-    private void OnInfantUnpaused(EntityUid uid, InfantComponent component, ref EntityUnpausedEvent args)
-    {
-        component.InfantEndTime += args.PausedTime;
     }
 
     // we express EZ-pass terminate the pregnancy if a player takes the role

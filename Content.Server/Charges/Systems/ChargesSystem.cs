@@ -10,13 +10,6 @@ public sealed class ChargesSystem : SharedChargesSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AutoRechargeComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -30,11 +23,6 @@ public sealed class ChargesSystem : SharedChargesSystem
             AddCharges(uid, 1, charges);
             recharge.NextChargeTime = _timing.CurTime + recharge.RechargeDuration;
         }
-    }
-
-    private void OnUnpaused(EntityUid uid, AutoRechargeComponent comp, ref EntityUnpausedEvent args)
-    {
-        comp.NextChargeTime += args.PausedTime;
     }
 
     protected override void OnExamine(EntityUid uid, LimitedChargesComponent comp, ExaminedEvent args)

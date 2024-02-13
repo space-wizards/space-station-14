@@ -33,7 +33,6 @@ public sealed class SwapTeleporterSystem : EntitySystem
         SubscribeLocalEvent<SwapTeleporterComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<SwapTeleporterComponent, ExaminedEvent>(OnExamined);
 
-        SubscribeLocalEvent<SwapTeleporterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<SwapTeleporterComponent, ComponentShutdown>(OnShutdown);
 
         _xformQuery = GetEntityQuery<TransformComponent>();
@@ -215,11 +214,6 @@ public sealed class SwapTeleporterSystem : EntitySystem
                     ("second", (int) ((comp.NextTeleportUse - _timing.CurTime).TotalSeconds + 0.5f))));
             }
         }
-    }
-
-    private void OnUnpaused(Entity<SwapTeleporterComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextTeleportUse += args.PausedTime;
     }
 
     private void OnShutdown(Entity<SwapTeleporterComponent> ent, ref ComponentShutdown args)

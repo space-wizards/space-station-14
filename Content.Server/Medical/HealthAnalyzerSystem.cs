@@ -30,7 +30,6 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<HealthAnalyzerComponent, EntityUnpausedEvent>(OnEntityUnpaused);
         SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
@@ -63,11 +62,6 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
             UpdateScannedUser(uid, patient, true);
         }
-    }
-
-    private void OnEntityUnpaused(Entity<HealthAnalyzerComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUpdate += args.PausedTime;
     }
 
     /// <summary>

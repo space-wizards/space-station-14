@@ -28,14 +28,7 @@ public sealed class PacificationSystem : EntitySystem
         SubscribeLocalEvent<PacifiedComponent, BeforeThrowEvent>(OnBeforeThrow);
         SubscribeLocalEvent<PacifiedComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<PacifiedComponent, ShotAttemptedEvent>(OnShootAttempt);
-        SubscribeLocalEvent<PacifiedComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<PacifismDangerousAttackComponent, AttemptPacifiedAttackEvent>(OnPacifiedDangerousAttack);
-    }
-
-    private void OnUnpaused(Entity<PacifiedComponent> ent, ref EntityUnpausedEvent args)
-    {
-        if (ent.Comp.NextPopupTime != null)
-            ent.Comp.NextPopupTime = ent.Comp.NextPopupTime.Value + args.PausedTime;
     }
 
     private bool PacifiedCanAttack(EntityUid user, EntityUid target, [NotNullWhen(false)] out string? reason)

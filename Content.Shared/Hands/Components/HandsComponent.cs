@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(SharedHandsSystem))]
 public sealed partial class HandsComponent : Component
 {
@@ -62,6 +62,7 @@ public sealed partial class HandsComponent : Component
     ///     The time at which throws will be allowed again.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan NextThrowTime;
 
     /// <summary>

@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// <summary>
 ///     Responsible for handling recharging a basic entity ammo provider over time.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class RechargeBasicEntityAmmoComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
@@ -25,5 +25,6 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
     [ViewVariables(VVAccess.ReadWrite),
      DataField("nextCharge", customTypeSerializer:typeof(TimeOffsetSerializer)),
     AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan? NextCharge;
 }

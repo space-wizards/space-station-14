@@ -7,7 +7,7 @@ namespace Content.Shared.Chasm;
 /// <summary>
 ///     Added to entities which have started falling into a chasm.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class ChasmFallingComponent : Component
 {
     /// <summary>
@@ -23,6 +23,7 @@ public sealed partial class ChasmFallingComponent : Component
     public TimeSpan DeletionTime = TimeSpan.FromSeconds(1.8f);
 
     [DataField("nextDeletionTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextDeletionTime = TimeSpan.Zero;
 
     /// <summary>

@@ -8,7 +8,7 @@ namespace Content.Server.Gateway.Components;
 /// <summary>
 /// Controlling gateway that links to other gateway destinations on the server.
 /// </summary>
-[RegisterComponent, Access(typeof(GatewaySystem))]
+[RegisterComponent, Access(typeof(GatewaySystem)), AutoGenerateComponentPause]
 public sealed partial class GatewayComponent : Component
 {
     /// <summary>
@@ -61,5 +61,6 @@ public sealed partial class GatewayComponent : Component
     /// The time at which the portal can next be opened.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextReady;
 }

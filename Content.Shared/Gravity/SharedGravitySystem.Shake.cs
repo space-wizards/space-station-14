@@ -5,16 +5,6 @@ public abstract partial class SharedGravitySystem
     protected const float GravityKick = 100.0f;
     protected const float ShakeCooldown = 0.2f;
 
-    private void InitializeShake()
-    {
-        SubscribeLocalEvent<GravityShakeComponent, EntityUnpausedEvent>(OnShakeUnpaused);
-    }
-
-    private void OnShakeUnpaused(EntityUid uid, GravityShakeComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextShake += args.PausedTime;
-    }
-
     private void UpdateShake()
     {
         var curTime = Timing.CurTime;

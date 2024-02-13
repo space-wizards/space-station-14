@@ -21,17 +21,8 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, ExaminedEvent>(OnExamined);
-    }
-
-    private void OnUnpaused(EntityUid uid, RechargeBasicEntityAmmoComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextCharge == null)
-            return;
-
-        component.NextCharge = component.NextCharge.Value + args.PausedTime;
     }
 
     public override void Update(float frameTime)

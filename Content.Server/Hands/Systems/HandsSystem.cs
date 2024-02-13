@@ -47,7 +47,6 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
-            SubscribeLocalEvent<HandsComponent, EntityUnpausedEvent>(OnUnpaused);
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
 
@@ -68,10 +67,6 @@ namespace Content.Server.Hands.Systems
             args.State = new HandsComponentState(hands);
         }
 
-        private void OnUnpaused(Entity<HandsComponent> ent, ref EntityUnpausedEvent args)
-        {
-            ent.Comp.NextThrowTime += args.PausedTime;
-        }
 
         private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
         {
