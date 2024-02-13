@@ -146,7 +146,7 @@ public class DockingControl : Control
 
         // Draw nearby grids
         var worldPos = _xformSystem.GetWorldMatrix(gridXform).Transform(Coordinates.Value.Position);
-        var gridInvMatrix = gridXform.InvWorldMatrix;
+        var gridInvMatrix = _xformSystem.GetInvWorldMatrix(gridXform);
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 
         // TODO: Getting some overdraw so need to fix that.
