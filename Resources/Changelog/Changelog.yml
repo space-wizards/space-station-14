@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Crates and lockers are slightly easier to bust open but still harder
-      than before.
-    type: Tweak
-  - message: Solid walls are easier to break but reinforced are the same.
-    type: Tweak
-  id: 5437
-  time: '2023-12-21T03:03:06.0000000+00:00'
-  url: null
 - author: mirrorcult
   changes:
   - message: Miasma has been renamed to Ammonia
@@ -3882,3 +3872,15 @@
   id: 5936
   time: '2024-02-13T22:16:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24547
+- author: TheShuEd
+  changes:
+  - message: Remote signallers are now limited to a 15-tile radius
+    type: Tweak
+  - message: Added an advanced remote signaler, with a range of 30 tiles.
+    type: Add
+  - message: the anomaly synchronizer consumes much less power, and no longer causes
+      the anomaly pulses when powering down.
+    type: Tweak
+  id: 5937
+  time: '2024-02-13T22:19:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24461
