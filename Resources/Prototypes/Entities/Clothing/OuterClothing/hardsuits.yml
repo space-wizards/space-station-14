@@ -543,6 +543,8 @@
         Heat: 0.2
         Radiation: 0.01
         Caustic: 0.5
+  - type: Item
+    size: Huge
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
