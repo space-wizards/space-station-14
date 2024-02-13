@@ -13,6 +13,8 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+
     private ISawmill _sawmill = default!;
 
     public const string InvokedPort = "link_port";
@@ -531,7 +533,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     private bool InRange(EntityUid sourceUid, EntityUid sinkUid, float range)
     {
         // TODO: This should be using an existing method and also coordinates inrange instead.
-        return Transform(sourceUid).MapPosition.InRange(Transform(sinkUid).MapPosition, range);
+        return _xformSystem.GetMapCoordinates(sourceUid).InRange(_xformSystem.GetMapCoordinates(sinkUid), range);
     }
 
     private void SendNewLinkEvent(EntityUid? user, EntityUid sourceUid, string source, EntityUid sinkUid, string sink)
