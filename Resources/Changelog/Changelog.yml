@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: whateverusername0
-  changes:
-  - message: Nitrous oxide now decomposes at high temperatures.
-    type: Add
-  id: 5436
-  time: '2023-12-21T01:33:08.0000000+00:00'
-  url: null
 - author: Emisse
   changes:
   - message: Crates and lockers are slightly easier to bust open but still harder
@@ -3878,3 +3871,14 @@
   id: 5935
   time: '2024-02-13T22:12:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24629
+- author: jamessimo
+  changes:
+  - message: Microwave UI enhancements
+    type: Tweak
+  - message: Microwaves now tell you how much time is left when cooking
+    type: Tweak
+  - message: Microwaves UI now uses prediction for user inputs.
+    type: Fix
+  id: 5936
+  time: '2024-02-13T22:16:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24547
