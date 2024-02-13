@@ -8,7 +8,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite # TODO: add sprite for maintenance panel open
+  - type: Sprite # TODO: add sprite for maintenance panel open. This will show the nitrogen booster there or not.
     sprite: Structures/Power/substation.rsi
     snapCardinals: true
     layers:
@@ -21,19 +21,19 @@
       map: ["substationBattery"]
       shader: unshaded
   - type: Substation
-    conduitSlotId: conduit_slot
+    NitrogenBoosterSlotId: NitrogenBooster_slot
   - type: ContainerContainer
     containers:
-      conduit_slot: !type:ContainerSlot {}
+      NitrogenBooster_slot: !type:ContainerSlot {}
   - type: ItemSlots
     slots:
-      conduit_slot:
+      NitrogenBooster_slot:
         ejectOnInteract: true
-        name: gas conduit
-        startingItem: GasConduitFilled
+        name: nitrogen booster gas tank
+        startingItem: GasTankNitrogenBoosterFilled
         whitelist:
           tags:
-          - Conduit
+          - NitrogenBooster
   - type: SubstationVisuals
     screenLayer: "substationScreen"
     integrityStates:
@@ -41,12 +41,6 @@
       Unhealthy: screen1
       Bad: screen2
   - type: Appearance
-  - type: UpgradeBattery
-    maxChargeMultiplier: 2
-    baseMaxCharge: 2500000
-  - type: UpgradePowerSupplyRamping
-    scaling: Linear
-    supplyRampingMultiplier: 1
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
@@ -172,16 +166,16 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
-      conduit_slot: !type:ContainerSlot
+      NitrogenBooster_slot: !type:ContainerSlot
   - type: ItemSlots
     slots:
-      conduit_slot:
+      NitrogenBooster_slot:
         ejectOnInteract: true
-        name: gas conduit
-        startingItem: GasConduitFilled
+        name: nitrogen booster
+        startingItem: GasTankNitrogenBoosterFilled
         whitelist:
           tags:
-          - Conduit
+          - GasTankNitrogenBoosterFilled
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-substation
@@ -203,7 +197,7 @@
       map: ["substationScreen"]
       shader: unshaded
   - type: Substation
-    conduitSlotId: conduit_slot
+    NitrogenBoosterSlotId: NitrogenBooster_slot
   - type: SubstationVisuals
     screenLayer: "substationScreen"
     integrityStates:
@@ -292,9 +286,9 @@
     startingCharge: 0
   - type: ItemSlots
     slots:
-      conduit_slot:
+      NitrogenBooster_slot:
         ejectOnInteract: true
-        name: HV Conduit
+        name: nitrogen booster gas tank
         startingItem:
   - type: Substation
     state: Bad
@@ -318,9 +312,9 @@
     startingCharge: 0
   - type: ItemSlots
     slots:
-      conduit_slot:
+      NitrogenBooster_slot:
         ejectOnInteract: true
-        name: HV Conduit
+        name: nitrogen booster gas tank
         startingItem:
   - type: Substation
     state: Bad

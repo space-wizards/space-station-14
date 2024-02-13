@@ -241,14 +241,14 @@
 
 - type: entity
   parent: GasTankRoundBase
-  id: GasConduit
-  name: gas conduit
-  description: A bulky ceramic conduit filled with gas. Used in high power machines such as substations.   
+  id: GasTankNitrogenBooster
+  name: nitrogen booster
+  description: A bulky tank filled with nitrogen designed to maintain substations.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/gasconduit.rsi
+    sprite: Objects/Tanks/nitrogenbooster.rsi
   - type: Item
-    sprite: Objects/Tanks/gasconduit.rsi
+    sprite: Objects/Tanks/nitrogenbooster.rsi
   - type: GasTank
     outputPressure: 101.3
     air:
@@ -256,8 +256,4 @@
       temperature: 293.15
   - type: Tag
     tags:
-    - Conduit
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
-      Glass: 100
+    - NitrogenBooster

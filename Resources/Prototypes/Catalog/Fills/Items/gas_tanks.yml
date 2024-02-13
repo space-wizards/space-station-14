@@ -223,9 +223,9 @@
       temperature: 293.15
 
 - type: entity
-  id: GasConduitFilled
-  parent: GasConduit
-  name: gas conduit
+  id: GasTankNitrogenBoosterFilled
+  parent: GasTankNitrogenBooster
+  name: nitrogen booster
   suffix: Filled
   components:
   - type: GasTank
@@ -234,7 +234,7 @@
       volume: 5
       moles:
         - 0           # oxygen
-        - 1.025689525 # nitrogen
+        - 2.051379050 # nitrogen
         - 0           # CO2
-        - 1.025689525 # plasma
+        - 0           # plasma
       temperature: 293.15

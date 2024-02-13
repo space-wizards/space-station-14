@@ -14,9 +14,9 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class SubstationSystem : EntitySystem 
+public sealed class SubstationSystem : EntitySystem
 {
-    
+
     [Dependency] private readonly PointLightSystem _lightSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _sharedLightSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
@@ -37,30 +37,29 @@ public sealed class SubstationSystem : EntitySystem
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
-        SubscribeLocalEvent<SubstationComponent, UpgradeExamineEvent>(OnConduitLifetimeUpgradeExamine);
         SubscribeLocalEvent<SubstationComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SubstationComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<SubstationComponent, GasAnalyzerScanEvent>(OnAnalyzed);
 
-        SubscribeLocalEvent<SubstationComponent, EntInsertedIntoContainerMessage>(OnConduitInserted);
-        SubscribeLocalEvent<SubstationComponent, EntRemovedFromContainerMessage>(OnConduitRemoved);
-        SubscribeLocalEvent<SubstationComponent, ContainerIsInsertingAttemptEvent>(OnConduitInsertAttempt);
-        SubscribeLocalEvent<SubstationComponent, ContainerIsRemovingAttemptEvent>(OnConduitRemoveAttempt);
+        SubscribeLocalEvent<SubstationComponent, EntInsertedIntoContainerMessage>(OnNitrogenBoosterInserted);
+        SubscribeLocalEvent<SubstationComponent, EntRemovedFromContainerMessage>(OnNitrogenBoosterRemoved);
+        SubscribeLocalEvent<SubstationComponent, ContainerIsInsertingAttemptEvent>(OnNitrogenBoosterInsertAttempt);
+        SubscribeLocalEvent<SubstationComponent, ContainerIsRemovingAttemptEvent>(OnNitrogenBoosterRemoveAttempt);
     }
 
-    private void OnExamine(EntityUid uid, SubstationComponent component, ExaminedEvent args) 
+    private void OnExamine(EntityUid uid, SubstationComponent component, ExaminedEvent args)
     {
         if(args.IsInDetailsRange)
         {
-            if(!GetConduitMixture(uid, out var mix))
+            if(!GetNitrogenBoosterMixture(uid, out var mix))
             {
                 args.PushMarkup(
-                    Loc.GetString("substation-component-examine-no-conduit"));
+                    Loc.GetString("substation-component-examine-no-nitrogenbooster"));
                 return;
             }
             else
             {
-                var integrity = CheckConduitIntegrity(component, mix);
+                var integrity = CheckNitrogenBoosterIntegrity(component, mix);
                 if(integrity > 0.0f)
                 {
                     var integrityPercentRounded = (int)integrity;
@@ -80,18 +79,6 @@ public sealed class SubstationSystem : EntitySystem
         }
     }
 
-    private void OnConduitLifetimeUpgradeExamine(EntityUid uid, SubstationComponent component, UpgradeExamineEvent args)
-    {
-        TryComp<UpgradePowerSupplyRampingComponent>(uid, out var upgrade);
-        if(upgrade == null)
-            return;
-        
-        if(upgrade.ActualScalar < 3)
-            args.AddPercentageUpgrade("upgrade-conduit-lifetime", upgrade.ActualScalar);
-        else
-            args.AddMaxUpgrade("upgrade-conduit-lifetime");
-    }
-
     public override void Update(float deltaTime)
     {
 
@@ -108,7 +95,7 @@ public sealed class SubstationSystem : EntitySystem
             {
                 if(subs.State == SubstationIntegrityState.Healthy)
                     continue;
-                
+
                 if(!_lightSystem.TryGetLight(uid, out var shlight))
                     return;
 
@@ -129,50 +116,15 @@ public sealed class SubstationSystem : EntitySystem
             }
             return;
         }
-
-        var query = EntityQueryEnumerator<SubstationComponent, PowerNetworkBatteryComponent, UpgradePowerSupplyRampingComponent>();
-        while(query.MoveNext(out var uid, out var subs, out var battery, out var upgrade))
-        {
-            
-            if(!GetConduitMixture(uid, out var conduit))
-                continue;
-
-            if(subs.DecayEnabled && subs.LastIntegrity >= 0.0f && upgrade.ActualScalar < 3f)
-            {
-                ConsumeConduitGas(deltaTime, upgrade.ActualScalar, subs, battery, conduit);
-                var conduitIntegrity = CheckConduitIntegrity(subs, conduit);
-
-                if(conduitIntegrity <= 0.0f)
-                {
-                    ShutdownSubstation(uid, subs);
-                    _substationDecayTimer = _defaultSubstationDecayTimeout;
-                    _substationDecayEnabled = false;
-
-                    subs.LastIntegrity = conduitIntegrity;
-                    continue;
-                }
-
-                if(conduitIntegrity < 30f && subs.LastIntegrity >= 30f)
-                {
-                    ChangeState(uid, SubstationIntegrityState.Bad, subs);
-                }
-                else if(conduitIntegrity < 70f && subs.LastIntegrity >= 70f)
-                {
-                    ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
-                }
-
-                subs.LastIntegrity = conduitIntegrity;
-            }
-        }
     }
 
-    private void ConsumeConduitGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
+    private void ConsumeNitrogenBoosterGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
     {
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
         var initialPlasma = mixture.GetMoles(Gas.Plasma);
 
-        var molesConsumed = (subs.InitialConduitMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
-        
+        var molesConsumed = (subs.InitialNitrogenBoosterMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
+
         var minimumReaction = Math.Min(initialN2, initialPlasma) * molesConsumed / 2;
 
         mixture.AdjustMoles(Gas.Nitrogen, -minimumReaction);
@@ -180,10 +132,10 @@ public sealed class SubstationSystem : EntitySystem
         mixture.AdjustMoles(Gas.NitrousOxide, minimumReaction*2);
     }
 
-    private float CheckConduitIntegrity(SubstationComponent subs, GasMixture mixture)
+    private float CheckNitrogenBoosterIntegrity(SubstationComponent subs, GasMixture mixture)
     {
 
-        if(subs.InitialConduitMoles <= 0f)
+        if(subs.InitialNitrogenBoosterMoles <= 0f)
             return 0f;
 
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
@@ -191,39 +143,39 @@ public sealed class SubstationSystem : EntitySystem
 
         var usableMoles = Math.Min(initialN2, initialPlasma);
         //return in percentage points;
-        return 100 * usableMoles / (subs.InitialConduitMoles / 2);
+        return 100 * usableMoles / (subs.InitialNitrogenBoosterMoles / 2);
     }
 
-    private void ConduitChanged(EntityUid uid, SubstationComponent subs)
+    private void NitrogenBoosterChanged(EntityUid uid, SubstationComponent subs)
     {
-        if(!GetConduitMixture(uid, out var mix))
+        if(!GetNitrogenBoosterMixture(uid, out var mix))
         {
             ShutdownSubstation(uid, subs);
             subs.LastIntegrity = 0f;
             return;
         }
-        
-        var initialConduitMoles = 0f;
+
+        var initialNitrogenBoosterMoles = 0f;
         for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
-            initialConduitMoles += mix.GetMoles(i);
+            initialNitrogenBoosterMoles += mix.GetMoles(i);
         }
 
-        subs.InitialConduitMoles = initialConduitMoles;
+        subs.InitialNitrogenBoosterMoles = initialNitrogenBoosterMoles;
 
-        var conduitIntegrity = CheckConduitIntegrity(subs, mix);
+        var NitrogenBoosterIntegrity = CheckNitrogenBoosterIntegrity(subs, mix);
 
-        if(conduitIntegrity <= 0.0f)
+        if(NitrogenBoosterIntegrity <= 0.0f)
         {
             ShutdownSubstation(uid, subs);
-            subs.LastIntegrity = conduitIntegrity;
+            subs.LastIntegrity = NitrogenBoosterIntegrity;
             return;
         }
-        if(conduitIntegrity < 30f)
+        if(NitrogenBoosterIntegrity < 30f)
         {
             ChangeState(uid, SubstationIntegrityState.Bad, subs);
         }
-        else if(conduitIntegrity < 70f)
+        else if(NitrogenBoosterIntegrity < 70f)
         {
             ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
         }
@@ -231,7 +183,7 @@ public sealed class SubstationSystem : EntitySystem
         {
             ChangeState(uid, SubstationIntegrityState.Healthy, subs);
         }
-        subs.LastIntegrity = conduitIntegrity;
+        subs.LastIntegrity = NitrogenBoosterIntegrity;
     }
 
     private void ShutdownSubstation(EntityUid uid, SubstationComponent subs)
@@ -257,7 +209,7 @@ public sealed class SubstationSystem : EntitySystem
 
         ChangeState(uid, SubstationIntegrityState.Healthy, subs);
 
-        if(GetConduitMixture(uid, out var mix))
+        if(GetNitrogenBoosterMixture(uid, out var mix))
         {
             mix.SetMoles(Gas.Nitrogen, 1.025689525f);
             mix.SetMoles(Gas.Plasma, 1.025689525f);
@@ -326,7 +278,7 @@ public sealed class SubstationSystem : EntitySystem
         if(!TryComp<ContainerManagerComponent>(uid, out var containers))
             return;
 
-        if(!containers.TryGetContainer(slot.ConduitSlotId, out var container))
+        if(!containers.TryGetContainer(slot.NitrogenBoosterSlotId, out var container))
             return;
 
         if(container.ContainedEntities.Count > 0)
@@ -335,32 +287,32 @@ public sealed class SubstationSystem : EntitySystem
         }
     }
 
-    private bool GetConduitMixture(EntityUid uid, [NotNullWhen(true)] out GasMixture? mix)
+    private bool GetNitrogenBoosterMixture(EntityUid uid, [NotNullWhen(true)] out GasMixture? mix)
     {
         mix = null;
 
         if(!TryComp<SubstationComponent>(uid, out var subs) || !TryComp<ContainerManagerComponent>(uid, out var containers))
             return false;
 
-        if(!containers.TryGetContainer(subs.ConduitSlotId, out var container))
+        if(!containers.TryGetContainer(subs.NitrogenBoosterSlotId, out var container))
             return false;
-        
+
         if(container.ContainedEntities.Count > 0)
         {
             var gasTank = Comp<GasTankComponent>(container.ContainedEntities[0]);
             mix = gasTank.Air;
             return true;
         }
-        
+
         return false;
     }
 
-    private void OnConduitInsertAttempt(EntityUid uid, SubstationComponent component, ContainerIsInsertingAttemptEvent args)
+    private void OnNitrogenBoosterInsertAttempt(EntityUid uid, SubstationComponent component, ContainerIsInsertingAttemptEvent args)
     {
         if(!component.Initialized)
             return;
 
-        if(args.Container.ID != component.ConduitSlotId)
+        if(args.Container.ID != component.NitrogenBoosterSlotId)
             return;
 
         if(!TryComp<WiresPanelComponent>(uid, out var panel))
@@ -368,7 +320,7 @@ public sealed class SubstationSystem : EntitySystem
             args.Cancel();
             return;
         }
-        
+
         //for when the substation is initialized.
         if(component.AllowInsert)
         {
@@ -380,44 +332,44 @@ public sealed class SubstationSystem : EntitySystem
         {
             args.Cancel();
         }
-        
+
     }
 
-    private void OnConduitRemoveAttempt(EntityUid uid, SubstationComponent component, ContainerIsRemovingAttemptEvent args)
+    private void OnNitrogenBoosterRemoveAttempt(EntityUid uid, SubstationComponent component, ContainerIsRemovingAttemptEvent args)
     {
         if(!component.Initialized)
             return;
 
-        if(args.Container.ID != component.ConduitSlotId)
+        if(args.Container.ID != component.NitrogenBoosterSlotId)
             return;
 
         if(!TryComp<WiresPanelComponent>(uid, out var panel))
             return;
-        
+
         if(!panel.Open)
         {
             args.Cancel();
         }
-        
+
     }
 
-    private void OnConduitInserted(EntityUid uid, SubstationComponent component, EntInsertedIntoContainerMessage args)
+    private void OnNitrogenBoosterInserted(EntityUid uid, SubstationComponent component, EntInsertedIntoContainerMessage args)
     {
         if(!component.Initialized)
             return;
 
-        if(args.Container.ID != component.ConduitSlotId)
+        if(args.Container.ID != component.NitrogenBoosterSlotId)
             return;
-        
-        ConduitChanged(uid, component);
+
+        NitrogenBoosterChanged(uid, component);
     }
 
-    private void OnConduitRemoved(EntityUid uid, SubstationComponent component, EntRemovedFromContainerMessage args)
+    private void OnNitrogenBoosterRemoved(EntityUid uid, SubstationComponent component, EntRemovedFromContainerMessage args)
     {
-        if(args.Container.ID != component.ConduitSlotId)
+        if(args.Container.ID != component.NitrogenBoosterSlotId)
             return;
-        
-        ConduitChanged(uid, component);
+
+        NitrogenBoosterChanged(uid, component);
     }
 
 }
