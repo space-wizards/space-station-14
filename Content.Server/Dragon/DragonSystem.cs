@@ -155,7 +155,7 @@ public sealed partial class DragonSystem : EntitySystem
         }
 
         // cant put a rift on solars
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(xform.WorldPosition, RiftTileRadius), false))
+        foreach (var tile in grid.GetTilesIntersecting(new Circle(_xformSystem.GetWorldPosition(xform), RiftTileRadius), false))
         {
             if (!tile.IsSpace(_tileDef))
                 continue;

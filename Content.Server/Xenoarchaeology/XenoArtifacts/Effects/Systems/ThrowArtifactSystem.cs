@@ -33,7 +33,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
         if (_map.TryGetGrid(xform.GridUid, out var grid))
         {
             var tiles = grid.GetTilesIntersecting(
-                Box2.CenteredAround(xform.WorldPosition, new Vector2(component.Range * 2, component.Range)));
+                Box2.CenteredAround(_xformSystem.GetWorldPosition(xform), new Vector2(component.Range * 2, component.Range)));
 
             foreach (var tile in tiles)
             {

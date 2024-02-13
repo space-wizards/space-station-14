@@ -22,6 +22,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -68,7 +69,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             };
 
             _physics.ApplyLinearImpulse(uid, vel, body: phys);
-            xform.LocalRotation = (vel - xform.WorldPosition).ToWorldAngle() + MathHelper.PiOver2;
+            xform.LocalRotation = (vel - _xformSystem.GetWorldPosition(xform)).ToWorldAngle() + MathHelper.PiOver2;
         }
     }
 
