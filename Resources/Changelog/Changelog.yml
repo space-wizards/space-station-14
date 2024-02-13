@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Velcroboy
-  changes:
-  - message: Fixed coal not generating!
-    type: Fix
-  id: 5434
-  time: '2023-12-20T23:46:20.0000000+00:00'
-  url: null
 - author: whateverusername0
   changes:
   - message: "Miasma now reacts with oxygen at 50\xB0C to produce nitrous oxide and\
@@ -3878,3 +3871,11 @@
   id: 5933
   time: '2024-02-13T22:03:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24948
+- author: Tayrtahn
+  changes:
+  - message: Drink bottles can now be opened and closed from the verbs menu, and some
+      have been given tamper-evident seals.
+    type: Add
+  id: 5934
+  time: '2024-02-13T22:08:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24780
