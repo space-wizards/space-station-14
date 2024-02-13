@@ -65,7 +65,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             var vel = component.DirectionOverride.Degrees switch
             {
                 0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
-                _ => xform.WorldRotation.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
+                _ => _xformSystem.GetWorldRotation(xform).RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
             };
 
             _physics.ApplyLinearImpulse(uid, vel, body: phys);

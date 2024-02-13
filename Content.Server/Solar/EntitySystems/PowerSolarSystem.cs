@@ -113,7 +113,7 @@ namespace Content.Server.Solar.EntitySystems
                 while (query.MoveNext(out var uid, out var panel, out var xform))
                 {
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
-                    xform.WorldRotation = TargetPanelRotation;
+                    _xformSystem.SetWorldRotation(xform, TargetPanelRotation);
                     _updateQueue.Enqueue((uid, panel));
                 }
             }
@@ -136,7 +136,7 @@ namespace Content.Server.Solar.EntitySystems
             // directly downwards (abs(theta) = pi) = coverage -1
             // as TowardsSun + = CCW,
             // panelRelativeToSun should - = CW
-            var panelRelativeToSun = xform.WorldRotation - TowardsSun;
+            var panelRelativeToSun = _xformSystem.GetWorldRotation(xform) - TowardsSun;
             // essentially, given cos = X & sin = Y & Y is 'downwards',
             // then for the first 90 degrees of rotation in either direction,
             // this plots the lower-right quadrant of a circle.

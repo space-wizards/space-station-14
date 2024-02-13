@@ -75,13 +75,13 @@ namespace Content.Server.Pointing.EntitySystems
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);
 
-                    transform.WorldRotation = newAngle;
+                    _xformSystem.SetWorldRotation(transform, newAngle);
 
                     UpdateAppearance(uid, component, transform);
                     continue;
                 }
 
-                transform.WorldRotation += Angle.FromDegrees(20);
+                _xformSystem.SetWorldRotation(transform, _xformSystem.GetWorldRotation(transform) + Angle.FromDegrees(20));
 
                 UpdateAppearance(uid, component, transform);
 
