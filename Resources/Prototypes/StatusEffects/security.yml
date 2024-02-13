@@ -1,5 +1,6 @@
 - type: statusIcon
   id: SecurityIcon
+  abstract: true
   priority: 1
   locationPreference: Left
 
