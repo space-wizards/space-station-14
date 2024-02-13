@@ -1,6 +1,9 @@
-﻿namespace Content.Server.Atmos.Components;
+﻿using Content.Server.Temperature.Systems;
+
+namespace Content.Server.Atmos.Components;
 
 [RegisterComponent]
+[Access(typeof(TemperatureSystem))]
 public sealed partial class TemperatureProtectionComponent : Component
 {
     /// <summary>
