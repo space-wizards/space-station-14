@@ -18,11 +18,11 @@ public sealed class RadioSystem : SharedHeadsetSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
+        SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
+
         SubscribeLocalEvent<HeadsetComponent, EntityRadioedEvent>(OnHeadsetReceive);
         SubscribeLocalEvent<IntrinsicRadioComponent, EntityRadioedEvent>(OnIntrinsicRadioReceive);
-        SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
-
-        SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private static void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
@@ -53,6 +53,51 @@ public sealed class RadioSystem : SharedHeadsetSystem
     private void OnKeysChanged(EntityUid uid, HeadsetComponent component, EncryptionChannelsChangedEvent args)
     {
         UpdateHeadsetRadioChannels(uid, component, args.Component);
+    }
+
+    protected override void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
+    {
+        base.OnGotEquipped(uid, component, args);
+
+        if (component.CurrentlyWornBy == null || !component.Enabled)
+            return;
+
+        UpdateHeadsetRadioChannels(uid, component);
+        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
+    }
+
+    protected override void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
+    {
+        base.OnGotUnequipped(uid, component, args);
+
+        RemComp<RadioableComponent>(uid);
+
+        RemoveChannelsFromUser(args.Equipee);
+    }
+
+    public void SetEnabled(EntityUid uid, bool isEnabled, HeadsetComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.Enabled == isEnabled)
+            return;
+
+        if (!isEnabled)
+        {
+            RemCompDeferred<RadioableComponent>(uid);
+
+            if (component.CurrentlyWornBy != null)
+                RemoveChannelsFromUser(component.CurrentlyWornBy.Value);
+
+            return;
+        }
+
+        if (component.CurrentlyWornBy == null)
+            return;
+
+        UpdateHeadsetRadioChannels(uid, component);
+        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
     }
 
     private void UpdateHeadsetRadioChannels(EntityUid uid, HeadsetComponent headset, EncryptionKeyHolderComponent? keyHolder = null)
@@ -102,11 +147,8 @@ public sealed class RadioSystem : SharedHeadsetSystem
     /// <summary>
     /// Make sure that the user loses access to any radio channels they only have via the headset.
     /// </summary>
-    private void RemoveChannelsFromUser(EntityUid equipment, EntityUid equipee)
+    private void RemoveChannelsFromUser(EntityUid equipee)
     {
-        if (!TryComp<RadioableComponent>(equipment, out var radio))
-            return;
-
         var channels = new HashSet<string>();
 
         if (TryComp<IntrinsicRadioTransmitterComponent>(equipee, out var intrinsicRadio))
@@ -117,53 +159,9 @@ public sealed class RadioSystem : SharedHeadsetSystem
             }
         }
 
-        if (channels.Count == 0)
-            RemComp<RadioableComponent>(equipee);
-        else
+        if (channels.Count > 0)
             EnsureComp<RadioableComponent>(equipee).Channels = channels;
-    }
-
-    protected override void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
-    {
-        base.OnGotEquipped(uid, component, args);
-
-        if (component.CurrentlyWornBy == null || !component.Enabled)
-            return;
-
-        UpdateHeadsetRadioChannels(uid, component);
-        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
-    }
-
-    protected override void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
-    {
-        base.OnGotUnequipped(uid, component, args);
-
-        RemComp<RadioableComponent>(uid);
-        RemoveChannelsFromUser(uid, args.Equipee);
-    }
-
-    public void SetEnabled(EntityUid uid, bool isEnabled, HeadsetComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.Enabled == isEnabled)
-            return;
-
-        if (!isEnabled)
-        {
-            RemCompDeferred<RadioableComponent>(uid);
-
-            if (component.CurrentlyWornBy != null)
-                RemoveChannelsFromUser(uid, component.CurrentlyWornBy.Value);
-
-            return;
-        }
-
-        if (component.CurrentlyWornBy == null)
-            return;
-
-        UpdateHeadsetRadioChannels(uid, component);
-        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
+        else
+            RemComp<RadioableComponent>(equipee);
     }
 }

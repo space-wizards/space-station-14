@@ -192,7 +192,7 @@ public sealed partial class ChatSystem
         else
         {
             // Now fire it off to receivers locally. They'll handle shipping it back to their owning client if needed.
-            foreach (var receiver in GetReceivers(entityUid, channel))
+            foreach (var receiver in GetRadioReceivers(entityUid, channel))
             {
                 RaiseLocalEvent(receiver, msgOut);
             }
@@ -211,7 +211,7 @@ public sealed partial class ChatSystem
     ///
     /// Radios are also inherently server-side; the communication of a radio speaking into a player's ear is client-facing.
     /// </summary>
-    private List<EntityUid> GetReceivers(EntityUid source, RadioChannelPrototype channel)
+    private List<EntityUid> GetRadioReceivers(EntityUid source, RadioChannelPrototype channel)
     {
         var recipients = new List<EntityUid>();
 
