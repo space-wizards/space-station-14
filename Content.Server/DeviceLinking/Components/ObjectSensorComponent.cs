@@ -1,5 +1,7 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
+using Content.Shared.Tools;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeviceLinking.Components;
@@ -22,11 +24,17 @@ public sealed partial class ObjectSensorComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<SinkPortPrototype> OutputPort4OrMore = "ObjectSensor4OrMoreObjects";
 
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<ToolQualityPrototype> CycleQuality = "Screwing";
+
     [ViewVariables]
     public int Contacting = 0;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ObjectSensorMode Mode = ObjectSensorMode.Living;
+
+    [DataField]
+    public SoundSpecifier CycleSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 }
 
 public enum ObjectSensorMode
