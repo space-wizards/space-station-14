@@ -1,5 +1,7 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.IdentityManagement;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
@@ -13,6 +15,7 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string JobIconForNoId = "JobIconNoId";
@@ -74,7 +77,13 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
                 result.Add(icon);
         }
 
-        // Add arrest icons here, WYCI.
+        if (TryComp<IdentityComponent>(uid, out var identity) &&
+            identity.TrueName == Identity.Name(uid, _entityManager) &&
+            identity.StatusIcon != null)
+        {
+            if (_prototypeMan.TryIndex<StatusIconPrototype>(identity.StatusIcon.Value.Id, out var securityIcon))
+                result.Add(securityIcon);
+        }
 
         return result;
     }

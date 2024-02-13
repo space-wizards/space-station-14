@@ -71,7 +71,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
-        if ((msg.Status == SecurityStatus.Wanted) != (msg.Reason != null))
+        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null))
             return;
 
         if (!CheckSelected(ent, msg.Session, out var mob, out var key))
@@ -131,6 +131,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
+        UpdateCriminalIdentity(name, msg.Status);
     }
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)

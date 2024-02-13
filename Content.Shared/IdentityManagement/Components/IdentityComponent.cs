@@ -1,6 +1,8 @@
-﻿using Content.Shared.Humanoid.Prototypes;
+﻿using Content.Shared.StatusIcon;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.IdentityManagement.Components;
 
@@ -11,11 +13,23 @@ namespace Content.Shared.IdentityManagement.Components;
 /// <remarks>
 ///     This is a <see cref="ContainerSlot"/> and not just a datum entity because we do sort of care that it gets deleted and sent with the user.
 /// </remarks>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class IdentityComponent : Component
 {
     [ViewVariables]
     public ContainerSlot IdentityEntitySlot = default!;
+
+    /// <summary>
+    ///     The true identity of the entity that has this component.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string TrueName = "";
+
+    /// <summary>
+    ///     The icon that should be displayed on a security hud if the identity isn't obfuscated.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<StatusIconPrototype>? StatusIcon;
 }
 
 /// <summary>

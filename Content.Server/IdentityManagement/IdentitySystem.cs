@@ -84,6 +84,7 @@ public class IdentitySystem : SharedIdentitySystem
 
         var representation = GetIdentityRepresentation(uid);
         var name = GetIdentityName(uid, representation);
+        identity.TrueName = representation.TrueName;
 
         // Clone the old entity's grammar to the identity entity, for loc purposes.
         if (TryComp<GrammarComponent>(uid, out var grammar))
