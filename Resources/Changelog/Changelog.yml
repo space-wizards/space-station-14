@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: joshepvodka
-  changes:
-  - message: CentCom bureaucrats are now twice as powerful with their new custom-made
-      clipboards and folders.
-    type: Add
-  id: 5432
-  time: '2023-12-20T23:29:35.0000000+00:00'
-  url: null
 - author: PJB3005
   changes:
   - message: Fix starting to follow a moving player as a ghost causing your camera
@@ -3878,3 +3870,12 @@
   id: 5931
   time: '2024-02-13T21:40:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25167
+- author: Agoichi
+  changes:
+  - message: All hoods have tag "Hides Hair"
+    type: Tweak
+  - message: Plague Doctor's hat and Witch hat (with red hair) have tag "Hides Hair"
+    type: Tweak
+  id: 5932
+  time: '2024-02-13T21:43:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25142
