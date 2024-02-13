@@ -121,7 +121,7 @@ namespace Content.Server.Administration.Commands
                 var xformSystem = _entManager.System<SharedTransformSystem>();
 
                 xformSystem.SetCoordinates((playerEntity, xform, _entManager.GetComponent<MetaDataComponent>(playerEntity)), coords);
-                xform.AttachToGridOrMap();
+                xformSystem.AttachToGridOrMap(playerEntity, xform);
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
                     _entManager.System<SharedPhysicsSystem>().SetLinearVelocity(playerEntity, Vector2.Zero, body: physics);

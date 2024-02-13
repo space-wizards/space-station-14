@@ -279,7 +279,7 @@ public sealed class MagicSystem : EntitySystem
         if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
 
         _transformSystem.SetCoordinates(args.Performer, args.Target);
-        transform.AttachToGridOrMap();
+        _transformSystem.AttachToGridOrMap(args.Performer, transform);
         _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         Speak(args);
         args.Handled = true;
