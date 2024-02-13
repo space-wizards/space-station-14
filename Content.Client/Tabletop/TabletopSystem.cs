@@ -258,7 +258,7 @@ namespace Content.Client.Tabletop
             // Set the dragging player on the component to noone
             if (broadcast && _draggedEntity != null && EntityManager.HasComponent<TabletopDraggableComponent>(_draggedEntity.Value))
             {
-                RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), Transform(_draggedEntity.Value).MapPosition, GetNetEntity(_table!.Value)));
+                RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), Transforms.GetMapCoordinates(_draggedEntity.Value), GetNetEntity(_table!.Value)));
                 RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(GetNetEntity(_draggedEntity.Value), false));
             }
 
