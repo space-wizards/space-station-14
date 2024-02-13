@@ -238,8 +238,8 @@ namespace Content.Server.Strip
                 _popup.PopupEntity(message, target, target, PopupType.Large);
             }
 
-            var prefix = ev.Stealth ? "stealthily" : "";
-            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix} place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
+            var prefix = ev.Stealth ? "stealthily " : "";
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished)
@@ -306,8 +306,8 @@ namespace Content.Server.Strip
                 DuplicateCondition = DuplicateConditions.SameTool
             };
 
-            var prefix = ev.Stealth ? "stealthily" : "";
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix} place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
+            var prefix = ev.Stealth ? "stealthily " : "";
+                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
@@ -383,8 +383,8 @@ namespace Content.Server.Strip
                 }
             }
 
-            var prefix = ev.Stealth ? "stealthily" : "";
-            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix} strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
+            var prefix = ev.Stealth ? "stealthily " : "";
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished)
@@ -456,9 +456,9 @@ namespace Content.Server.Strip
                     strippable.Owner);
             }
 
-            var prefix = ev.Stealth ? "stealthily" : "";
+            var prefix = ev.Stealth ? "stealthily " : "";
             _adminLogger.Add(LogType.Stripping, LogImpact.Low,
-                $"{ToPrettyString(user):actor} is trying to {prefix} strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
+                $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished)
