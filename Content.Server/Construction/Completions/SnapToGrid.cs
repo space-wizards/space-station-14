@@ -14,8 +14,9 @@ namespace Content.Server.Construction.Completions
         {
             var transform = entityManager.GetComponent<TransformComponent>(uid);
 
+            var xformSystem = entityManager.System<SharedTransformSystem>();
             if (!transform.Anchored)
-                transform.Coordinates = transform.Coordinates.SnapToGrid(entityManager);
+                xformSystem.SetCoordinates((uid, transform, entityManager.GetComponent<MetaDataComponent>(uid)), transform.Coordinates.SnapToGrid(entityManager));
 
             if (SouthRotation)
             {

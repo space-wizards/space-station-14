@@ -530,7 +530,7 @@ namespace Content.Server.Construction
             var wasAnchored = xform.Anchored;
             if (wasAnchored)
                 _xformSystem.Unanchor(structure, xform);
-            xform.Coordinates = GetCoordinates(ev.Location);
+            _xformSystem.SetCoordinates((structure, xform, MetaData(structure)), GetCoordinates(ev.Location));
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
             if (wasAnchored)
                 _xformSystem.AnchorEntity((structure, xform));

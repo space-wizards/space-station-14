@@ -451,7 +451,7 @@ public abstract partial class SharedBuckleSystem
             _transform.SetWorldRotation(buckleXform, oldBuckledToWorldRot);
 
             if (strapComp.UnbuckleOffset != Vector2.Zero)
-                buckleXform.Coordinates = oldBuckledXform.Coordinates.Offset(strapComp.UnbuckleOffset);
+                _transform.SetCoordinates((buckleUid, buckleXform, MetaData(buckleUid)), oldBuckledXform.Coordinates.Offset(strapComp.UnbuckleOffset));
         }
 
         if (TryComp(buckleUid, out AppearanceComponent? appearance))
