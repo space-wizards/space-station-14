@@ -140,6 +140,7 @@ namespace Content.Client.NPC
         private readonly IMapManager _mapManager;
         private readonly PathfindingSystem _system;
         private readonly MapSystem _mapSystem;
+        private readonly SharedTransformSystem _xformSystem;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
 
@@ -161,6 +162,7 @@ namespace Content.Client.NPC
             _mapManager = mapManager;
             _system = system;
             _mapSystem = mapSystem;
+            _xformSystem = _entManager.System<SharedTransformSystem>();
             _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
 
@@ -541,7 +543,7 @@ namespace Content.Client.NPC
                         if (!_entManager.TryGetComponent<TransformComponent>(_entManager.GetEntity(node.GraphUid), out var graphXform))
                             continue;
 
-                        worldHandle.SetTransform(graphXform.WorldMatrix);
+                        worldHandle.SetTransform(_xformSystem.GetWorldMatrix(graphXform));
                         worldHandle.DrawRect(node.Box, Color.Orange.WithAlpha(0.10f));
                     }
                 }
@@ -565,7 +567,7 @@ namespace Content.Client.NPC
                                 continue;
 
                             matrix = graph;
-                            worldHandle.SetTransform(graphXform.WorldMatrix);
+                            worldHandle.SetTransform(_xformSystem.GetWorldMatrix(graphXform));
                         }
 
                         worldHandle.DrawRect(node.Box, new Color(0f, cost / highestGScore, 1f - (cost / highestGScore), 0.10f));

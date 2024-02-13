@@ -18,6 +18,7 @@ public class DockingControl : Control
 {
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;
+    private readonly SharedTransformSystem _xformSystem;
 
     private float _range = 8f;
     private float _rangeSquared = 0f;
@@ -50,6 +51,7 @@ public class DockingControl : Control
     {
         _entManager = IoCManager.Resolve<IEntityManager>();
         _mapManager = IoCManager.Resolve<IMapManager>();
+        _xformSystem = _entManager.System<SharedTransformSystem>();
         _rangeSquared = _range * _range;
         MinSize = new Vector2(SizeFull, SizeFull);
     }
@@ -143,7 +145,7 @@ public class DockingControl : Control
             ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f)))), Color.Green);
 
         // Draw nearby grids
-        var worldPos = gridXform.WorldMatrix.Transform(Coordinates.Value.Position);
+        var worldPos = _xformSystem.GetWorldMatrix(gridXform).Transform(Coordinates.Value.Position);
         var gridInvMatrix = gridXform.InvWorldMatrix;
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 
@@ -162,7 +164,7 @@ public class DockingControl : Control
             if (!_entManager.TryGetComponent<FixturesComponent>(grid, out var gridFixtures))
                 continue;
 
-            var gridMatrix = xformQuery.GetComponent(grid).WorldMatrix;
+            var gridMatrix = _xformSystem.GetWorldMatrix(grid);
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 

@@ -117,7 +117,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             return;
         }
 
-        var localToWorld = xform.WorldMatrix.Transform(_localPosition);
+        var localToWorld = _xformSystem.GetWorldMatrix(xform).Transform(_localPosition);
 
         if (localToWorld.EqualsApprox(mousePos.Position, 0.01f)) return;
 
