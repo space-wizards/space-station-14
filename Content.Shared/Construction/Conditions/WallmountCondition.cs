@@ -17,9 +17,10 @@ namespace Content.Shared.Construction.Conditions
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
+            var xfmSystem = entManager.System<SharedTransformSystem>();
 
             // get blueprint and user position
-            var userWorldPosition = entManager.GetComponent<TransformComponent>(user).WorldPosition;
+            var userWorldPosition = xfmSystem.GetWorldPosition(user);
             var objWorldPosition = location.ToMap(entManager).Position;
 
             // find direction from user to blueprint

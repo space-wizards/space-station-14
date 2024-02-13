@@ -187,6 +187,7 @@ namespace Content.Shared.Examine
 
             if (!ignoreInsideBlocker) return false;
 
+            var xfmSys = entMan.System<SharedTransformSystem>();
             foreach (var result in rayResults)
             {
                 if (!entMan.TryGetComponent(result.HitEntity, out OccluderComponent? o))
@@ -195,7 +196,7 @@ namespace Content.Shared.Examine
                 }
 
                 var bBox = o.BoundingBox;
-                bBox = bBox.Translated(entMan.GetComponent<TransformComponent>(result.HitEntity).WorldPosition);
+                bBox = bBox.Translated(xfmSys.GetWorldPosition(result.HitEntity));
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
