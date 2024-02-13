@@ -96,7 +96,7 @@ namespace Content.Shared.Chemistry.Reagent
         public string? MetamorphicFillBaseName { get; private set; } = null;
 
         [DataField]
-        public bool MetamorphicChangeColor { get; private set; }
+        public bool MetamorphicChangeColor { get; private set; } = true;
 
         /// <summary>
         /// If this reagent is part of a puddle is it slippery.

@@ -102,6 +102,10 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                 }
             }
         }
+        else
+        {
+            args.Sprite.LayerSetVisible(fillLayer, true);
+        }
 
         var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, maxFillLevels + 1);
 
