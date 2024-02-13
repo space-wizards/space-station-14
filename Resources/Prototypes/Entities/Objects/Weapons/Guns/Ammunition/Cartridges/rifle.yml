@@ -36,7 +36,9 @@
   - type: Sprite
     layers:
       - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#dbdbdb"
 
 
@@ -50,7 +52,9 @@
   - type: Sprite
     layers:
       - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#43c4f7"
 
 - type: entity
@@ -63,7 +67,9 @@
   - type: Sprite
     layers:
       - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#ff6e52"
 
 - type: entity
@@ -76,5 +82,7 @@
   - type: Sprite
     layers:
       - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#65fe08"
