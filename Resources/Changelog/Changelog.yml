@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Veritius
-  changes:
-  - message: Ethylredoxrazine is more effective at treating drunkness.
-    type: Tweak
-  id: 5427
-  time: '2023-12-20T02:20:04.0000000+00:00'
-  url: null
 - author: Errant
   changes:
   - message: HUD elements no longer violate the Geneva Conventions.
@@ -3873,3 +3866,11 @@
   id: 5926
   time: '2024-02-13T01:20:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25068
+- author: Vasilis
+  changes:
+  - message: You can now inspect peoples id's and health though glass if you are within
+      details range.
+    type: Tweak
+  id: 5927
+  time: '2024-02-13T06:41:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25163
