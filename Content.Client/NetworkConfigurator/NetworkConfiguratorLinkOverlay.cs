@@ -12,6 +12,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     private readonly DeviceListSystem _deviceListSystem;
+    private readonly SharedTransformSystem _xformSystem;
 
     public Dictionary<EntityUid, Color> Colors = new();
     public EntityUid? Action;
@@ -23,6 +24,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
         IoCManager.InjectDependencies(this);
 
         _deviceListSystem = _entityManager.System<DeviceListSystem>();
+        _xformSystem = _entityManager.System<SharedTransformSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -66,7 +68,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
                     continue;
                 }
 
-                args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, Colors[uid]);
+                args.WorldHandle.DrawLine(_xformSystem.GetWorldPosition(sourceTransform), _xformSystem.GetWorldPosition(linkTransform), Colors[uid]);
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Content.Client.Chat.UI
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
         [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
 
         public enum SpeechType : byte
@@ -82,6 +83,7 @@ namespace Content.Client.Chat.UI
         public SpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
         {
             IoCManager.InjectDependencies(this);
+            _xformSystem = _entityManager.System<SharedTransformSystem>();
             _senderEntity = senderEntity;
 
             // Use text clipping so new messages don't overlap old ones being pushed up.
@@ -140,7 +142,7 @@ namespace Content.Client.Chat.UI
             }
 
             var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec() * -EntityVerticalOffset;
-            var worldPos = xform.WorldPosition + offset;
+            var worldPos = _xformSystem.GetWorldPosition(xform) + offset;
 
             var lowerCenter = _eyeManager.WorldToScreen(worldPos) / UIScale;
             var screenPos = lowerCenter - new Vector2(ContentSize.X / 2, ContentSize.Y + _verticalOffsetAchieved);

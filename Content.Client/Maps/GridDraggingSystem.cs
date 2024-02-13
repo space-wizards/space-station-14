@@ -18,6 +18,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public bool Enabled { get; set; }
 
@@ -66,7 +67,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             xform.MapID == _lastMousePosition.Value.MapId)
         {
             var tickTime = _gameTiming.TickPeriod;
-            var distance = _lastMousePosition.Value.Position - xform.WorldPosition;
+            var distance = _lastMousePosition.Value.Position - _xformSystem.GetWorldPosition(xform);
             RaiseNetworkEvent(new GridDragVelocityRequest()
             {
                 Grid = GetNetEntity(_dragging.Value),
