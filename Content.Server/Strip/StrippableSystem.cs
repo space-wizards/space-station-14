@@ -244,7 +244,6 @@ namespace Content.Server.Strip
             }
             else
             {
-
                 _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
             }
 
@@ -402,7 +401,6 @@ namespace Content.Server.Strip
             }
             else
             {
-
                 _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
             }
 
@@ -483,7 +481,6 @@ namespace Content.Server.Strip
             }
             else
             {
-
                 _adminLogger.Add(LogType.Stripping, LogImpact.Low,
                     $"{ToPrettyString(user):actor} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
             }
