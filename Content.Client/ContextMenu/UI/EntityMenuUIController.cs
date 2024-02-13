@@ -148,7 +148,7 @@ namespace Content.Client.ContextMenu.UI
                     Uid = entity.Value,
                 };
 
-                var session = _playerManager.LocalPlayer?.Session;
+                var session = _playerManager.LocalSession;
                 if (session != null)
                 {
                     inputSys.HandleInputCommand(session, func, message);
@@ -189,7 +189,7 @@ namespace Content.Client.ContextMenu.UI
             if (!_context.RootMenu.Visible)
                 return;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } player ||
+            if (_playerManager.LocalEntity is not { } player ||
                 !player.IsValid())
                 return;
 

@@ -185,7 +185,7 @@ namespace Content.Client.Construction
             [NotNullWhen(true)] out EntityUid? ghost)
         {
             ghost = null;
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+            if (_playerManager.LocalEntity is not { } user ||
                 !user.IsValid())
             {
                 return false;

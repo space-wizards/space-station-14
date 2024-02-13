@@ -68,3 +68,26 @@
     lifetime: 120
   - type: Portal
     canTeleportToOtherMaps: true
+
+- type: entity
+  id: ShadowPortal
+  name: shadow rift
+  description: Looks unstable.
+  parent: [ BasePortal, BaseShadow ]
+  components:
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+  - type: Sprite
+    state: portal-artifact
+    color: "#793a80dd"
+  - type: PointLight
+    color: "#793a80dd"
+    radius: 3
+    energy: 1
+    netsync: false
+  - type: AmbientSound
+    range: 6
+    volume: -3
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg

@@ -7,7 +7,7 @@ using Content.Shared.Cloning.CloningConsole;
 namespace Content.Client.CloningConsole.UI
 {
     [GenerateTypedNameReferences]
-    public partial class CloningConsoleWindow : DefaultWindow
+    public sealed partial class CloningConsoleWindow : DefaultWindow
     {
         public CloningConsoleWindow()
         {

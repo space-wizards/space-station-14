@@ -18,7 +18,7 @@
                 Text="{Loc 'forensic-scanner-interface-clear'}" />
         </BoxContainer>
         <Label
-            Name="Name"
+            Name="NameLabel"
             Align="Center" />
         <Label
             Name="Diagnostics"
