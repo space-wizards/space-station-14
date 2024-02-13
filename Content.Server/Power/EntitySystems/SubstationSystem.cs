@@ -121,15 +121,13 @@ public sealed class SubstationSystem : EntitySystem
     private void ConsumeNitrogenBoosterGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
     {
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
-        var initialPlasma = mixture.GetMoles(Gas.Plasma);
 
         var molesConsumed = (subs.InitialNitrogenBoosterMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
 
-        var minimumReaction = Math.Min(initialN2, initialPlasma) * molesConsumed / 2;
+        var minimumReaction = (initialN2);
 
         mixture.AdjustMoles(Gas.Nitrogen, -minimumReaction);
-        mixture.AdjustMoles(Gas.Plasma, -minimumReaction);
-        mixture.AdjustMoles(Gas.NitrousOxide, minimumReaction*2);
+        mixture.AdjustMoles(Gas.NitrousOxide, minimumReaction/2);
     }
 
     private float CheckNitrogenBoosterIntegrity(SubstationComponent subs, GasMixture mixture)
@@ -139,11 +137,10 @@ public sealed class SubstationSystem : EntitySystem
             return 0f;
 
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
-        var initialPlasma = mixture.GetMoles(Gas.Plasma);
 
-        var usableMoles = Math.Min(initialN2, initialPlasma);
+        var usableMoles = (initialN2);
         //return in percentage points;
-        return 100 * usableMoles / (subs.InitialNitrogenBoosterMoles / 2);
+        return 100 * usableMoles / (subs.InitialNitrogenBoosterMoles);
     }
 
     private void NitrogenBoosterChanged(EntityUid uid, SubstationComponent subs)
@@ -212,7 +209,6 @@ public sealed class SubstationSystem : EntitySystem
         if(GetNitrogenBoosterMixture(uid, out var mix))
         {
             mix.SetMoles(Gas.Nitrogen, 1.025689525f);
-            mix.SetMoles(Gas.Plasma, 1.025689525f);
         }
     }
 
