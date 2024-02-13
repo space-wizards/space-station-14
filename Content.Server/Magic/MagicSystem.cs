@@ -322,7 +322,7 @@ public sealed class MagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
+        var direction = _transformSystem.GetWorldPosition(ev.Target) - _transformSystem.GetWorldPosition(ev.Performer);
         var impulseVector = direction * 10000;
 
         _physics.ApplyLinearImpulse(ev.Target, impulseVector);

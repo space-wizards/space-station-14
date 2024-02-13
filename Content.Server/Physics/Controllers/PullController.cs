@@ -146,7 +146,7 @@ namespace Content.Server.Physics.Controllers
 
                 // Now that's over with...
 
-                var pullerPosition = pullerXform.MapPosition;
+                var pullerPosition = TransformSystem.GetMapCoordinates((puller, pullerXform));
                 var movingTo = pullable.MovingTo.Value.ToMap(EntityManager, _transform);
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
@@ -163,7 +163,7 @@ namespace Content.Server.Physics.Controllers
                 }
 
                 var movingPosition = movingTo.Position;
-                var ownerPosition = pullableXform.MapPosition.Position;
+                var ownerPosition = TransformSystem.GetWorldPosition(pullableXform);
 
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length();

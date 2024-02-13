@@ -26,6 +26,7 @@ public sealed class SharpSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -97,7 +98,7 @@ public sealed class SharpSystem : EntitySystem
         }
 
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
-        var coords = Transform(args.Args.Target.Value).MapPosition;
+        var coords = _xformSystem.GetMapCoordinates(args.Args.Target.Value);
         EntityUid popupEnt = default!;
         foreach (var proto in spawnEntities)
         {

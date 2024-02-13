@@ -22,6 +22,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -94,7 +95,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         {
             var xform = Transform(entityGridUid.Value);
             var pos = xform.Coordinates;
-            var mapPos = xform.MapPosition;
+            var mapPos = _xformSystem.GetMapCoordinates((entityGridUid.Value, xform));
             var circle = new Circle(mapPos.Position, 2);
 
             var found = false;

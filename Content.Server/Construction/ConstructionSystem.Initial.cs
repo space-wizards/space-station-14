@@ -32,6 +32,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -82,7 +83,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            var pos = Transform(user).MapPosition;
+            var pos = _xformSystem.GetMapCoordinates(user);
 
             foreach (var near in _lookupSystem.GetEntitiesInRange(pos, 2f, LookupFlags.Contained | LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {

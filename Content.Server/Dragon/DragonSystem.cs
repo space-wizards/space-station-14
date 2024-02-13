@@ -28,6 +28,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -163,7 +164,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
         }
 
-        var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
+        var carpUid = Spawn(component.RiftPrototype, _xformSystem.GetMapCoordinates((uid, xform)));
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
     }
