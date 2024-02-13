@@ -392,8 +392,8 @@
       state: rd_key
   - type: ResearchClient
   - type: ResearchConsole
-  - type: Radioable
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Science
   - type: TechnologyDatabase
   - type: ActivatableUI

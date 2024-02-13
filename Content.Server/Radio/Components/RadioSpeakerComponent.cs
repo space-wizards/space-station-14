@@ -7,7 +7,7 @@ namespace Content.Server.Radio.Components;
 
 /// <summary>
 /// A component that listens for chatter on a radio channel and speaks it in local chat. This needs both
-/// RadioableComponent (to be detected on transmission) and LocalChattableComponent (to talk) to work.
+/// InternalRadio (to be detected on transmission) and LocalChattableComponent (to talk) to work.
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadioDeviceSystem))]

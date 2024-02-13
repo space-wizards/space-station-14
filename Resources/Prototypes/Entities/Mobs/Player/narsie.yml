@@ -67,10 +67,10 @@
   - type: Input
     context: "ghost"
   - type: MovementIgnoreGravity
-  # narnar hears all
-  - type: IntrinsicRadio
-  - type: Radioable
-    channels:
+  # narnar hears all...
+  - type: InternalRadio
+    # ... but says nothing
+    receiveChannels:
     - Binary
     - Common
     - Command

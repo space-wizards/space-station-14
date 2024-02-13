@@ -303,8 +303,8 @@
       - key: enum.AnomalyGeneratorUiKey.Key
         type: AnomalyGeneratorBoundUserInterface
   - type: Appearance
-  - type: Radioable
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Science
   - type: GenericVisualizer
     visuals:

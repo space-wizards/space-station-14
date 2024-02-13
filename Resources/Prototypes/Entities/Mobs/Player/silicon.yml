@@ -52,12 +52,13 @@
     showInHands: false
   - type: Body
     prototype: Drone
-  - type: IntrinsicRadio
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: LocalChattable # By default silicon life should be able to chat and do whatever real people do
+  - type: Whisperable
+  - type: Emoteable
+  - type: InternalRadio
+    sendChannels:
     - Binary
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Binary
     - Common
   - type: DoAfter

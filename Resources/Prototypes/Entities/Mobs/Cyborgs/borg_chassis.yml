@@ -59,14 +59,13 @@
     noMindState: miner_e_r
   - type: Construction
     node: mining
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Supply
     - Binary
     - Common
     - Science
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Supply
     - Binary
     - Common
@@ -102,14 +101,13 @@
     noMindState: engineer_e_r
   - type: Construction
     node: engineer
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Engineering
     - Binary
     - Common
     - Science
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Engineering
     - Binary
     - Common
@@ -153,14 +151,13 @@
     noMindState: janitor_e_r
   - type: Construction
     node: janitor
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Service
     - Binary
     - Common
     - Science
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Service
     - Binary
     - Common
@@ -204,14 +201,13 @@
     noMindState: medical_e_r
   - type: Construction
     node: medical
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Medical
     - Binary
     - Common
     - Science
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Medical
     - Binary
     - Common
@@ -247,14 +243,13 @@
     noMindState: service_e_r
   - type: Construction
     node: service
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Service
     - Binary
     - Common
     - Science
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Service
     - Binary
     - Common

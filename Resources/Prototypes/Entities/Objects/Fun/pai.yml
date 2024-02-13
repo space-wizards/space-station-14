@@ -40,12 +40,11 @@
     stopSearchVerbText: pai-system-stop-searching-verb-text
     stopSearchVerbPopup: pai-system-stopped-searching
   - type: Examiner
-  - type: IntrinsicRadio
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
+    # After the Great Mariah Carey Incident of November 26xx, PAIs were banned from communicating on open radio frequencies.
     - Binary
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Binary
     - Common
   - type: DoAfter
@@ -87,11 +86,10 @@
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Syndicate
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Syndicate
   - type: Appearance
   - type: GenericVisualizer

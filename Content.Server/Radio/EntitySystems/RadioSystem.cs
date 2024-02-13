@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Radio.EntitySystems;
 
 /// <summary>
-/// Manages the transmission of radio messages to listeners.
+/// Manages the transmission of intrinsic and headset radio messages to listeners.
 /// </summary>
 public sealed class RadioSystem : SharedHeadsetSystem
 {
@@ -22,7 +22,7 @@ public sealed class RadioSystem : SharedHeadsetSystem
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
 
         SubscribeLocalEvent<HeadsetComponent, EntityRadioedEvent>(OnHeadsetReceive);
-        SubscribeLocalEvent<IntrinsicRadioComponent, EntityRadioedEvent>(OnIntrinsicRadioReceive);
+        SubscribeLocalEvent<InternalRadioComponent, EntityRadioedEvent>(OnInternalRadioReceive);
     }
 
     private static void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
@@ -42,7 +42,7 @@ public sealed class RadioSystem : SharedHeadsetSystem
         RaiseNetworkEvent(ev, actor.PlayerSession);
     }
 
-    private void OnIntrinsicRadioReceive(EntityUid uid, IntrinsicRadioComponent _, ref EntityRadioedEvent ev)
+    private void OnInternalRadioReceive(EntityUid uid, InternalRadioComponent _, ref EntityRadioedEvent ev)
     {
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
@@ -63,16 +63,15 @@ public sealed class RadioSystem : SharedHeadsetSystem
             return;
 
         UpdateHeadsetRadioChannels(uid, component);
-        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
+
+        EnsureComp<HeadsetRadioableComponent>(args.Equipee).Channels = component.ChannelNames;
     }
 
     protected override void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
     {
         base.OnGotUnequipped(uid, component, args);
 
-        RemComp<RadioableComponent>(uid);
-
-        RemoveChannelsFromUser(args.Equipee);
+        RemComp<HeadsetRadioableComponent>(args.Equipee);
     }
 
     public void SetEnabled(EntityUid uid, bool isEnabled, HeadsetComponent? component = null)
@@ -85,10 +84,8 @@ public sealed class RadioSystem : SharedHeadsetSystem
 
         if (!isEnabled)
         {
-            RemCompDeferred<RadioableComponent>(uid);
-
             if (component.CurrentlyWornBy != null)
-                RemoveChannelsFromUser(component.CurrentlyWornBy.Value);
+                RemComp<HeadsetRadioableComponent>(component.CurrentlyWornBy.Value);
 
             return;
         }
@@ -97,7 +94,6 @@ public sealed class RadioSystem : SharedHeadsetSystem
             return;
 
         UpdateHeadsetRadioChannels(uid, component);
-        UpdateUserRadioChannels(uid, component.CurrentlyWornBy.Value, component);
     }
 
     private void UpdateHeadsetRadioChannels(EntityUid uid, HeadsetComponent headset, EncryptionKeyHolderComponent? keyHolder = null)
@@ -109,59 +105,6 @@ public sealed class RadioSystem : SharedHeadsetSystem
         if (!Resolve(uid, ref keyHolder))
             return;
 
-        if (keyHolder.Channels.Count == 0)
-            RemComp<RadioableComponent>(uid);
-        else
-            EnsureComp<RadioableComponent>(uid).Channels = new HashSet<string>(keyHolder.Channels);
-    }
-
-    /// <summary>
-    /// Make sure the user of the headset can radio on the channels provided by the headset, without messing up their
-    /// capacity to innately radio (e.g. via an implant, being a borg...)
-    /// </summary>
-    private void UpdateUserRadioChannels(EntityUid equipment, EntityUid equipee, HeadsetComponent headset)
-    {
-        // make sure to not add Radioable when headset is being deleted
-        if (!headset.Enabled || MetaData(equipment).EntityLifeStage >= EntityLifeStage.Terminating)
-            return;
-
-        if (!TryComp<RadioableComponent>(equipment, out var radio))
-            return;
-
-        var channels = new HashSet<string>(radio.Channels);
-
-        if (TryComp<IntrinsicRadioTransmitterComponent>(equipee, out var intrinsicRadio))
-        {
-            foreach (var intrinsicChannel in intrinsicRadio.Channels)
-            {
-                channels.Add(intrinsicChannel);
-            }
-        }
-
-        if (channels.Count == 0)
-            RemComp<RadioableComponent>(equipee);
-        else
-            EnsureComp<RadioableComponent>(equipee).Channels = channels;
-    }
-
-    /// <summary>
-    /// Make sure that the user loses access to any radio channels they only have via the headset.
-    /// </summary>
-    private void RemoveChannelsFromUser(EntityUid equipee)
-    {
-        var channels = new HashSet<string>();
-
-        if (TryComp<IntrinsicRadioTransmitterComponent>(equipee, out var intrinsicRadio))
-        {
-            foreach (var intrinsicChannel in intrinsicRadio.Channels)
-            {
-                channels.Add(intrinsicChannel);
-            }
-        }
-
-        if (channels.Count > 0)
-            EnsureComp<RadioableComponent>(equipee).Channels = channels;
-        else
-            RemComp<RadioableComponent>(equipee);
+        headset.ChannelNames = new HashSet<string>(keyHolder.Channels);
     }
 }

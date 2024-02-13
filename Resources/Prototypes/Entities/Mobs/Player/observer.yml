@@ -37,8 +37,9 @@
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: MovementIgnoreGravity
-  - type: IntrinsicRadio
-  - type: Radioable
+  - type: InternalRadio
+    # observers cannot chat on in-game radios for (hopefully) obvious reasons.
+    # what is this, an exorcism movie?
     receiveAllChannels: true
     globalReceive: true
   - type: Physics

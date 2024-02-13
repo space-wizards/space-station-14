@@ -36,7 +36,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         base.Initialize();
 
         _wires = EntityManager.System<WiresSystem>();
-        _chat = IoCManager.Resolve<SharedChatSystem>();
+        _chat = EntityManager.System<SharedChatSystem>();
     }
     public override StatusLightState? GetLightState(Wire wire)
     {

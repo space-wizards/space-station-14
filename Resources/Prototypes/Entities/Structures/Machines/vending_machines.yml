@@ -74,12 +74,10 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
-  - type: IntrinsicRadio
-  - type: IntrinsicRadioTransmitter
-    channels:
+  - type: InternalRadio
+    sendChannels:
     - Binary
-  - type: Radioable
-    channels:
+    receiveChannels:
     - Binary
     - Common
   - type: DoAfter

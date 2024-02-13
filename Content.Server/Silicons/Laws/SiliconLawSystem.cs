@@ -8,6 +8,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
+using Content.Shared.Chat.V2.Components;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
@@ -94,9 +95,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
     {
-        _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-        HashSet<string>? radioChannels = intrinsicRadio?.Channels;
-
+        _entityManager.TryGetComponent<InternalRadioComponent>(uid, out var comp);
+        var radioChannels = comp?.SendChannels;
         var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, args.Session);
     }

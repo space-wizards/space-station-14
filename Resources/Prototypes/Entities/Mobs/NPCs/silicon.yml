@@ -31,14 +31,16 @@
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
-  - type: IntrinsicRadio
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: Radioable
-    channels:
-    - Binary
-    - Common
+  - type: LocalChattable # By default silicon life should be able to chat and do whatever real people do
+  - type: Whisperable
+  - type: Emoteable
+  - type: InternalRadio
+    sendChannels:
+        - Binary
+    receiveChannels:
+        - Binary
+        - Common
+
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -107,9 +109,6 @@
   - type: TypingIndicator
     proto: robot
   - type: ZombieImmune
-  - type: LocalChattable # By default silicon life should be able to chat and do whatever real people do
-  - type: Whisperable
-  - type: Emoteable
 
 - type: entity
   parent: MobSiliconBase

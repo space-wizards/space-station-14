@@ -67104,8 +67104,10 @@ entities:
       enabled: True
     - type: ActiveListener
       range: 4
-    - type: Radioable
-      channels:
+    - type: InternalRadio
+      sendChannels:
+      - Handheld
+      receiveChannels:
       - Handheld
 - proto: RandomArcade
   entities:

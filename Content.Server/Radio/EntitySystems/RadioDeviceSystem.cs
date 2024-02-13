@@ -74,9 +74,9 @@ public sealed class RadioDeviceSystem : EntitySystem
     private void OnSpeakerInit(EntityUid uid, RadioSpeakerComponent component, ComponentInit args)
     {
         if (component.Enabled)
-            EnsureComp<RadioableComponent>(uid).Channels.UnionWith(component.Channels);
+            EnsureComp<HeadsetRadioableComponent>(uid).Channels.UnionWith(component.Channels);
         else
-            RemCompDeferred<RadioableComponent>(uid);
+            RemCompDeferred<HeadsetRadioableComponent>(uid);
     }
     #endregion
 
@@ -111,7 +111,9 @@ public sealed class RadioDeviceSystem : EntitySystem
     {
         if (args.Powered)
             return;
+
         SetMicrophoneEnabled(uid, null, false,  true, component);
+        RemComp<InternalRadioComponent>(uid);
     }
 
     public void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null)
@@ -162,9 +164,9 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         _appearance.SetData(uid, RadioDeviceVisuals.Speaker, component.Enabled);
         if (component.Enabled)
-            EnsureComp<RadioableComponent>(uid).Channels.UnionWith(component.Channels);
+            EnsureComp<HeadsetRadioableComponent>(uid).Channels.UnionWith(component.Channels);
         else
-            RemCompDeferred<RadioableComponent>(uid);
+            RemCompDeferred<HeadsetRadioableComponent>(uid);
     }
     #endregion
 
@@ -246,6 +248,11 @@ public sealed class RadioDeviceSystem : EntitySystem
             mic.BroadcastChannel = args.Channel;
         if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
             speaker.Channels = new(){ args.Channel };
+
+        var comp = EnsureComp<InternalRadioComponent>(uid);
+        comp.ReceiveChannels = new HashSet<string>() {args.Channel};
+        comp.SendChannels = new HashSet<string>() {args.Channel};
+
         UpdateIntercomUi(uid, component);
     }
 

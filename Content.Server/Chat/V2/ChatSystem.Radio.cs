@@ -1,34 +1,17 @@
-﻿using System.Globalization;
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Content.Server.Radio;
 using Content.Server.Radio.Components;
-using Content.Server.Speech.EntitySystems;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Server.VoiceMask;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Speech;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
@@ -37,10 +20,11 @@ public sealed partial class ChatSystem
 {
     public void InitializeRadio()
     {
-        SubscribeNetworkEvent<RadioAttemptedEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel); });
+        SubscribeNetworkEvent<HeadsetRadioAttemptedEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, false); });
+        SubscribeNetworkEvent<InternalRadioAttemptedEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, true); });
     }
 
-    private void HandleAttemptRadioMessage(ICommonSession player, NetEntity entity, string message, string channel)
+    private void HandleAttemptRadioMessage(ICommonSession player, NetEntity entity, string message, string channel, bool isInnate)
     {
         var entityUid = GetEntity(entity);
 
@@ -58,16 +42,34 @@ public sealed partial class ChatSystem
             return;
         }
 
-        // Sanity check: if you can't chat you shouldn't be chatting.
-        if (!TryComp<RadioableComponent>(entityUid, out var radioable))
-        {
-            RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, "You can't talk on any radio channel."), player);
+        HashSet<string> channels;
 
-            return;
+        // Sanity check: if you can't chat you shouldn't be chatting.
+        if (isInnate)
+        {
+            if (!TryComp<InternalRadioComponent>(entityUid, out var comp))
+            {
+                RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, "You can't talk on any radio channel."), player);
+
+                return;
+            }
+
+            channels = comp.SendChannels;
+        }
+        else
+        {
+            if (!TryComp<HeadsetRadioableComponent>(entityUid, out var comp))
+            {
+                RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, "You can't talk on any radio channel."), player);
+
+                return;
+            }
+
+            channels = comp.Channels;
         }
 
         // Using LINQ here, pls don't murder me PJB 🙏
-        if (!radioable.Channels.Contains(channel))
+        if (!channels.Contains(channel))
         {
             // TODO: Add locstring
             RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, $"You can't talk on the {channel} radio channel."), player);
@@ -83,15 +85,13 @@ public sealed partial class ChatSystem
             return;
         }
 
-        var maxMessageLen = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
-
         // Is the message too long?
-        if (message.Length > _configuration.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > _maxChatMessageLength)
         {
             RaiseNetworkEvent(
                 new LocalChatAttemptFailedEvent(
                     entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", maxMessageLen))
+                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", _maxChatMessageLength))
                     ),
                 player);
 
@@ -107,7 +107,7 @@ public sealed partial class ChatSystem
     /// </summary>
     /// <param name="entityUid">The entity who is chatting</param>
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
-    /// <param name="range">The range the audio can be heard in</param>
+    /// <param name="channel">The channel the message can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
     /// <param name="filter">Override the normal selection of listeners with a specific filter. Useful for off-map activities like salvaging.</param>
     public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "", Filter? filter = null)
@@ -130,10 +130,9 @@ public sealed partial class ChatSystem
         }
 
         // If you don't have intrinsic radio, you need to whisper to send a message using your voice box.
-        if (TryComp<IntrinsicRadioTransmitterComponent>(entityUid, out var comp))
+        if (! TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
         {
-            if (!comp.Channels.Contains(channel.ID))
-                TrySendWhisperMessage(entityUid, message, asName);
+            TrySendWhisperMessage(entityUid, message, asName);
         }
 
         // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
@@ -160,7 +159,7 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
         }
 
-        SpeechVerbPrototype verb = GetSpeechVerb(entityUid, message);
+        var verb = GetSpeechVerb(entityUid, message);
 
         if (TryComp<VoiceMaskComponent>(entityUid, out var mask))
         {
@@ -211,9 +210,9 @@ public sealed partial class ChatSystem
     ///
     /// Radios are also inherently server-side; the communication of a radio speaking into a player's ear is client-facing.
     /// </summary>
-    private List<EntityUid> GetRadioReceivers(EntityUid source, RadioChannelPrototype channel)
+    private HashSet<EntityUid> GetRadioReceivers(EntityUid source, RadioChannelPrototype channel)
     {
-        var recipients = new List<EntityUid>();
+        var recipients = new HashSet<EntityUid>();
 
         // Some systems like EMPs and jammers can block radios.
         var sendAttemptEv = new RadioSendAttemptEvent(channel, source);
@@ -234,46 +233,62 @@ public sealed partial class ChatSystem
 
         // Build our queries...
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
-        var radioQuery = EntityQueryEnumerator<RadioableComponent, TransformComponent>();
+        var radioQuery = EntityQueryEnumerator<HeadsetComponent, TransformComponent>();
+        var innateRadioQuery = EntityQueryEnumerator<InternalRadioComponent, TransformComponent>();
 
-        while (radioQuery.MoveNext(out var receiver, out var radio, out var transform))
+        while (radioQuery.MoveNext(out var receiver, out var headset, out var transform))
         {
-            if (!radio.CanListenOnAllChannels)
-            {
-                // If the radio can't use that channel, skip
-                if (!radio.Channels.Contains(channel.ID))
-                    continue;
+            if (IsValidRecipient(source, sourceMapId, channel, hasMicro, hasActiveServer, false, receiver,  headset.ChannelNames, transform, false, speakerQuery))
+                recipients.Add(receiver);
+        }
 
-                // If the intercom can't use that channel, skip.
-                // TODO: review this; my hunch is that it's redundant.
-                if (TryComp<IntercomComponent>(receiver, out var intercom) &&
-                    !intercom.SupportedChannels.Contains(channel.ID))
-                    continue;
-            }
-
-            switch (channel.LongRange)
-            {
-                // If the radio and channel are not global and the radio isn't on the sender's map, skip
-                case false when transform.MapID != sourceMapId && !radio.IsInfiniteRange:
-                    continue;
-                // Don't need telecom server for long range channels or handheld radios and intercoms
-                case false when (!hasMicro || !speakerQuery.HasComponent(receiver)) && !hasActiveServer:
-                    continue;
-            }
-
-            // check if message can be sent to specific receiver
-            var attemptEv = new RadioReceiveAttemptEvent(channel, source, receiver);
-
-            RaiseLocalEvent(ref attemptEv);
-            RaiseLocalEvent(receiver, ref attemptEv);
-
-            if (attemptEv.Cancelled)
-                continue;
-
-            recipients.Add(receiver);
+        while (innateRadioQuery.MoveNext(out var receiver, out var radio, out var transform))
+        {
+            if (IsValidRecipient(source, sourceMapId, channel, hasMicro, hasActiveServer, radio.IsInfiniteRange, receiver,  radio.ReceiveChannels, transform, radio.CanListenOnAllChannels, speakerQuery))
+                recipients.Add(receiver);
         }
 
         return recipients;
+    }
+
+    private bool IsValidRecipient(
+        EntityUid source,
+        MapId sourceMapId,
+        RadioChannelPrototype senderChannel,
+        bool sourceHasMicro,
+        bool channelHasServer,
+        bool isSourceInfiniteRange,
+        EntityUid receiver,
+        HashSet<string> receiverChannels,
+        TransformComponent? recipientTransform,
+        bool canListenOnAllChannels,
+        EntityQuery<RadioSpeakerComponent> speakerQuery
+    )
+    {
+        if (!canListenOnAllChannels)
+        {
+            // If the radio can't use that channel, skip
+            if (!receiverChannels.Contains(senderChannel.ID))
+                return false;
+        }
+
+        switch (senderChannel.LongRange)
+        {
+            // If the radio and channel are not global and the radio isn't on the sender's map, skip
+            case false when recipientTransform?.MapID != sourceMapId && !isSourceInfiniteRange:
+                return false;
+            // Don't need telecom server for long range channels or handheld radios and intercoms
+            case false when (!sourceHasMicro || !speakerQuery.HasComponent(receiver)) && !channelHasServer:
+                return false;
+        }
+
+        // check if message can be sent to specific receiver
+        var attemptEv = new RadioReceiveAttemptEvent(senderChannel, source, receiver);
+
+        RaiseLocalEvent(ref attemptEv);
+        RaiseLocalEvent(receiver, ref attemptEv);
+
+        return !attemptEv.Cancelled;
     }
 
     private bool HasActiveServer(MapId mapId, string channelId)

@@ -83,17 +83,15 @@
     templateId: borg
   - type: Hands
     showInHands: false
-  - type: IntrinsicRadio
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-    - Common
-    - Science
   - type: LocalChattable # Borgs get to chat like real people. Mostly because not being able to do so is really boring.
   - type: Whisperable
   - type: Emoteable
-  - type: Radioable
-    channels:
+  - type: InternalRadio
+    sendChannels:
+    - Binary
+    - Common
+    - Science
+    receiveChannels:
     - Binary
     - Common
     - Science
@@ -245,12 +243,10 @@
       access: [["SyndicateAgent"], ["NuclearOperative"]]
     - type: SiliconLawProvider
       laws: SyndicateStatic
-    - type: IntrinsicRadioTransmitter
-      channels:
-        - Binary
+    - type: InternalRadio
+      sendChannels:
         - Syndicate
-    - type: Radioable
-      channels:
+      receiveChannels:
         - Syndicate
     - type: ShowSyndicateIcons
     - type: MovementAlwaysTouching

@@ -3,7 +3,7 @@ using Content.Server.Radio.EntitySystems;
 namespace Content.Server.Radio.Components;
 
 /// <summary>
-/// When activated (<see cref="ActiveRadioJammerComponent"/>) prevents from sending messages in range
+/// When activated (<see cref="ActiveRadioJammerComponent"/>) prevents from sending messages in range.
 /// </summary>
 [RegisterComponent]
 [Access(typeof(JammerSystem))]

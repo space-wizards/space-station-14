@@ -18,17 +18,15 @@
   - type: BorgBrain
   - type: BlockMovement
   - type: Examiner
-  - type: IntrinsicRadio
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: Radioable
-    channels:
-    - Binary
-    - Common
   - type: LocalChattable
   - type: Whisperable
   - type: Emoteable
+  - type: InternalRadio
+    sendChannels:
+    - Binary
+    receiveChannels:
+    - Binary
+    - Common
   - type: NameIdentifier
     group: MMI
   - type: DoAfter
@@ -93,17 +91,15 @@
       stopSearchVerbPopup: positronic-brain-stopped-searching
     - type: Examiner
     - type: BorgBrain
-    - type: IntrinsicRadio
-    - type: IntrinsicRadioTransmitter
-      channels:
-      - Binary
     - type: LocalChattable
     - type: Whisperable
     - type: Emoteable
-    - type: Radioable
-      channels:
+    - type: InternalRadio
+      sendChannels:
       - Binary
+      receiveChannels:
       - Common
+      - Binary
     - type: NameIdentifier
       group: PositronicBrain
     - type: DoAfter
