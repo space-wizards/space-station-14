@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Veritius
-  changes:
-  - message: Ethylredoxrazine is more effective at treating drunkness.
-    type: Tweak
-  id: 5427
-  time: '2023-12-20T02:20:04.0000000+00:00'
-  url: null
-- author: Errant
-  changes:
-  - message: HUD elements no longer violate the Geneva Conventions.
-    type: Fix
-  id: 5428
-  time: '2023-12-20T04:28:03.0000000+00:00'
-  url: null
 - author: ERORR404V1
   changes:
   - message: NanoTrasen botanists have bred a new blinking plant
@@ -3873,3 +3859,18 @@
   id: 5926
   time: '2024-02-13T01:20:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25068
+- author: Vasilis
+  changes:
+  - message: You can now inspect peoples id's and health though glass if you are within
+      details range.
+    type: Tweak
+  id: 5927
+  time: '2024-02-13T06:41:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25163
+- author: metalgearsloth
+  changes:
+  - message: Fix decal error spam in console due to a missing overlay.
+    type: Fix
+  id: 5928
+  time: '2024-02-13T07:10:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25170
