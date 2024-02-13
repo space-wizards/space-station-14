@@ -119,7 +119,8 @@
   # funny people in zombie apocalypse vandalising instead of trying to survive
   - type: SubGamemodes
     rules:
-      TurfWar: 0.25
+    - id: TurfWar
+      prob: 0.25
 
 - type: entity
   noSpawn: true
