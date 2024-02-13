@@ -1,14 +1,13 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
-namespace Content.Server.DeviceLinking.Systems
+namespace Content.Shared.DeviceLinking.Systems
 {
     public sealed class TwoWayLeverSystem : EntitySystem
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private readonly SharedDeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         const string _leftToggleImage = "rotate_ccw.svg.192dpi.png";
@@ -111,6 +110,7 @@ namespace Content.Server.DeviceLinking.Systems
                 _ => throw new ArgumentOutOfRangeException()
             };
 
+            Dirty(uid, component);
             _signalSystem.InvokePort(uid, port);
         }
     }

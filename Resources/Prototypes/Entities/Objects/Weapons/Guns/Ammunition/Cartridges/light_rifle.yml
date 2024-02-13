@@ -33,6 +33,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRiflePractice
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#dbdbdb"
 
 - type: entity
   id: CartridgeLightRifleRubber
@@ -41,6 +46,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleRubber
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#43c4f7"
 
 - type: entity
   id: CartridgeLightRifleIncendiary
@@ -49,6 +59,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleIncendiary
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#ff6e52"
 
 - type: entity
   id: CartridgeLightRifleUranium
@@ -57,4 +72,8 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleUranium
-
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#65fe08"
