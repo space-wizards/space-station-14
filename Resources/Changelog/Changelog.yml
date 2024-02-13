@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ERORR404V1
-  changes:
-  - message: NanoTrasen botanists have bred a new blinking plant
-    type: Add
-  id: 5429
-  time: '2023-12-20T04:57:02.0000000+00:00'
-  url: null
 - author: qwerltaz
   changes:
   - message: Improve the gas analyzer interface.
@@ -3874,3 +3867,14 @@
   id: 5928
   time: '2024-02-13T07:10:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25170
+- author: jamessimo
+  changes:
+  - message: Can now "wink" with the text emote ;) or ;]
+    type: Add
+  - message: Can now "tearfully smile" with the text emote :') and similar variants
+    type: Add
+  - message: Added more ways to "cry" with the emote :'( and similar variants
+    type: Tweak
+  id: 5929
+  time: '2024-02-13T15:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25129
