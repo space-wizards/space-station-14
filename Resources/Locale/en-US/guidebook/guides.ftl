@@ -48,6 +48,7 @@ guide-entry-cyborgs = Cyborgs
 guide-entry-security = Security
 guide-entry-forensics = Forensics
 guide-entry-defusal = Large Bomb Defusal
+guide-entry-criminal-records = Criminal Records
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives

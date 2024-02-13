@@ -57,7 +57,7 @@ namespace Content.Shared.Examine
             if (MobStateSystem.IsIncapacitated(examiner))
                 return false;
 
-            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
+            if (!InRangeUnOccluded(examiner, entity, ExamineDetailsRange))
                 return false;
 
             // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
