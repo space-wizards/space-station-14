@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JoeHammad
-  changes:
-  - message: Fland now has its own shuttle, ported from ss13
-    type: Add
-  id: 5431
-  time: '2023-12-20T23:26:07.0000000+00:00'
-  url: null
 - author: joshepvodka
   changes:
   - message: CentCom bureaucrats are now twice as powerful with their new custom-made
@@ -3878,3 +3871,10 @@
   id: 5930
   time: '2024-02-13T21:37:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25176
+- author: PoorMansDreams
+  changes:
+  - message: Alternate ammo now has the proper appearance when spent.
+    type: Fix
+  id: 5931
+  time: '2024-02-13T21:40:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25167
