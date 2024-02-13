@@ -61,7 +61,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
                 _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)), uid);
 
                 access.Tags.Clear();
-                Dirty(access);
+                Dirty(uid, access);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} cleared access on {ToPrettyString(uid):entity}");
@@ -75,7 +75,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
             var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
 
             access.Tags.Add(random.ID);
-            Dirty(access);
+            Dirty(uid, access);
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
@@ -109,7 +109,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
         if (id.JobTitle == jobTitle)
             return true;
         id.JobTitle = jobTitle;
-        Dirty(id);
+        Dirty(uid, id);
         UpdateEntityName(uid, id);
 
         if (player != null)
@@ -187,7 +187,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
         if (id.FullName == fullName)
             return true;
         id.FullName = fullName;
-        Dirty(id);
+        Dirty(uid, id);
         UpdateEntityName(uid, id);
 
         if (player != null)

@@ -3,8 +3,6 @@ using Content.Shared.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates.Helpers;
-using Content.Shared.Explosion.Components.OnTrigger;
-using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 

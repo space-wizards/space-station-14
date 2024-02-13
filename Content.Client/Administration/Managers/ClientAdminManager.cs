@@ -15,11 +15,13 @@ namespace Content.Client.Administration.Managers
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
         [Dependency] private readonly IResourceManager _res = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
         private AdminData? _adminData;
         private readonly HashSet<string> _availableCommands = new();
 
         private readonly AdminCommandPermissions _localCommandPermissions = new();
+        private ISawmill _sawmill = default!;
 
         public event Action? AdminStatusUpdated;
 
@@ -92,17 +94,17 @@ namespace Content.Client.Administration.Managers
             }
 
             _availableCommands.UnionWith(message.AvailableCommands);
-            Logger.DebugS("admin", $"Have {message.AvailableCommands.Length} commands available");
+            _sawmill.Debug($"Have {message.AvailableCommands.Length} commands available");
 
             _adminData = message.Admin;
             if (_adminData != null)
             {
                 var flagsText = string.Join("|", AdminFlagsHelper.FlagsToNames(_adminData.Flags));
-                Logger.InfoS("admin", $"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
+                _sawmill.Info($"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
             }
             else
             {
-                Logger.InfoS("admin", "Updated admin status: Not admin");
+                _sawmill.Info("Updated admin status: Not admin");
             }
 
             AdminStatusUpdated?.Invoke();
@@ -114,18 +116,17 @@ namespace Content.Client.Administration.Managers
         void IPostInjectInit.PostInject()
         {
             _conGroup.Implementation = this;
+            _sawmill = _logManager.GetSawmill("admin");
         }
 
         public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
         {
-            return uid == _player.LocalPlayer?.ControlledEntity
-                ? _adminData
-                : null;
+            return uid == _player.LocalEntity ? _adminData : null;
         }
 
         public AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)
         {
-            if (_player.LocalPlayer?.UserId == session.UserId)
+            if (_player.LocalUser == session.UserId)
                 return _adminData;
 
             return null;
@@ -133,7 +134,7 @@ namespace Content.Client.Administration.Managers
 
         public AdminData? GetAdminData(bool includeDeAdmin = false)
         {
-            if (_player.LocalPlayer is { Session: { } session })
+            if (_player.LocalSession is { } session)
                 return GetAdminData(session, includeDeAdmin);
 
             return null;
