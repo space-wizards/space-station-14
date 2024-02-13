@@ -238,14 +238,8 @@ namespace Content.Server.Strip
                 _popup.PopupEntity(message, target, target, PopupType.Large);
             }
 
-            if (ev.Stealth)
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to stealthily place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
-            }
+            var prefix = ev.Stealth ? "stealthily" : "";
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix} place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished)
@@ -312,14 +306,8 @@ namespace Content.Server.Strip
                 DuplicateCondition = DuplicateConditions.SameTool
             };
 
-            if (ev.Stealth)
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to stealthily place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
-            }
+            var prefix = ev.Stealth ? "stealthily" : "";
+                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix} place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
@@ -395,14 +383,8 @@ namespace Content.Server.Strip
                 }
             }
 
-            if (ev.Stealth)
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to stealthily strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
-            }
+            var prefix = ev.Stealth ? "stealthily" : "";
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix} strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished)
@@ -474,16 +456,9 @@ namespace Content.Server.Strip
                     strippable.Owner);
             }
 
-            if (ev.Stealth)
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low,
-                    $"{ToPrettyString(user):actor} is trying to stealthily strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.Stripping, LogImpact.Low,
-                    $"{ToPrettyString(user):actor} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
-            }
+            var prefix = ev.Stealth ? "stealthily" : "";
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low,
+                $"{ToPrettyString(user):actor} is trying to {prefix} strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished)
