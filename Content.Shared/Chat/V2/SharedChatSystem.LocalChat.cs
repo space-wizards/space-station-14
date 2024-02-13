@@ -68,9 +68,8 @@ public sealed class EntityLocalChattedEvent : EntityEventArgs
     public string AsColor;
     public float Range;
     public bool HideInLog;
-    public bool IsSubtle;
 
-    public EntityLocalChattedEvent(NetEntity speaker, string asName, string withVerb, string fontId, int fontSize, bool isBold, string asColor, string message, float range, bool hideInLog, bool isSubtle = false)
+    public EntityLocalChattedEvent(NetEntity speaker, string asName, string withVerb, string fontId, int fontSize, bool isBold, string asColor, string message, float range, bool hideInLog)
     {
         Speaker = speaker;
         AsName = asName;
@@ -82,9 +81,33 @@ public sealed class EntityLocalChattedEvent : EntityEventArgs
         AsColor = asColor;
         Range = range;
         HideInLog = hideInLog;
-        IsSubtle = isSubtle;
     }
 }
+
+/// <summary>
+/// Raised when a character is given a subtle message in local chat.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class EntitySubtleLocalChattedEvent : EntityEventArgs
+{
+    public NetEntity Speaker;
+    public readonly string Message;
+    public string FontId;
+    public int FontSize;
+    public bool IsBold;
+    public bool HideInLog;
+
+    public EntitySubtleLocalChattedEvent(NetEntity speaker, string fontId, int fontSize, bool isBold, string message, bool hideInLog)
+    {
+        Speaker = speaker;
+        Message = message;
+        FontId = fontId;
+        FontSize = fontSize;
+        IsBold = isBold;
+        HideInLog = hideInLog;
+    }
+}
+
 
 /// <summary>
 /// Raised when a character has failed to speak in local chat.

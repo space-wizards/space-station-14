@@ -28,7 +28,7 @@ public sealed class ListeningSystem : EntitySystem
         PingListeners(GetEntity(ev.Speaker), ev.Message, ev.ObfuscatedMessage, ev.MinRange);
     }
 
-    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage, float whisperRange = 0.0f)
+    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage = null, float whisperRange = 0.0f)
     {
         // TODO whispering / audio volume? Microphone sensitivity?
         // for now, whispering just arbitrarily reduces the listener's max range.
@@ -39,7 +39,7 @@ public sealed class ListeningSystem : EntitySystem
 
         var attemptEv = new ListenAttemptEvent(source);
         var ev = new ListenEvent(message, source);
-        var obfuscatedEv = obfuscatedMessage == null ? null : new ListenEvent(obfuscatedMessage, source);
+        var obfuscatedEv = !string.IsNullOrEmpty(obfuscatedMessage) ? new ListenEvent(obfuscatedMessage, source) : null;
         var query = EntityQueryEnumerator<ActiveListenerComponent, TransformComponent>();
 
         while(query.MoveNext(out var listenerUid, out var listener, out var xform))

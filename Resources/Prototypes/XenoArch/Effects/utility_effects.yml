@@ -12,7 +12,7 @@
   - type: Speech
   - type: RadioSpeaker
     toggleOnInteract: false
-  - type: LocalChattable
+  - type: LocalChattable # So it can translate radio -> chat
   - type: ActivatableUI
     key: enum.IntercomUiKey.Key
   - type: Intercom

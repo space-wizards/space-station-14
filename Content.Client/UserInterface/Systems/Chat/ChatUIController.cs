@@ -197,6 +197,7 @@ public sealed class ChatUIController : UIController
 
         // Chat V2 system
         SubscribeNetworkEvent<EntityLocalChattedEvent>(OnLocallyChattedMessage);
+        SubscribeNetworkEvent<EntitySubtleLocalChattedEvent>(OnSubtleLocalChattedMessage);
         SubscribeNetworkEvent<EntityWhisperedEvent>(OnWhisperedMessage);
         SubscribeNetworkEvent<EntityWhisperedObfuscatedlyEvent>(OnWhisperedMessage);
         SubscribeNetworkEvent<EntityWhisperedTotallyObfuscatedlyEvent>(OnWhisperedMessage);
@@ -891,7 +892,6 @@ public sealed class ChatUIController : UIController
     // Chat V2
     // TODO: don't pass in the events directly; getting events unpacked means data transport is decoupled from UI
     // functionality.
-
     private void OnLocallyChattedMessage(EntityLocalChattedEvent ev, EntitySessionEventArgs args)
     {
         var asName = ev.AsName;
@@ -901,22 +901,12 @@ public sealed class ChatUIController : UIController
             asName = $"[color={ev.AsColor}]{ev.AsName}[/color]";
         }
 
-        string wrappedMessage;
-
-        if (ev.IsSubtle)
-        {
-            wrappedMessage = ev.Message;
-        }
-        else
-        {
-            // Wrapped message tech debt woo
-            wrappedMessage = Loc.GetString(ev.IsBold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
-                ("entityName", asName),
-                ("verb", Loc.GetString(ev.Verb)),
-                ("fontType", ev.FontId),
-                ("fontSize", ev.FontSize),
-                ("message", FormattedMessage.EscapeText(ev.Message)));
-        }
+        string wrappedMessage = Loc.GetString(ev.IsBold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
+            ("entityName", asName),
+            ("verb", Loc.GetString(ev.Verb)),
+            ("fontType", ev.FontId),
+            ("fontSize", ev.FontSize),
+            ("message", FormattedMessage.EscapeText(ev.Message)));
 
         // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
         // WrappedMessage also should be shot.
@@ -933,6 +923,25 @@ public sealed class ChatUIController : UIController
         }
 
         AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Say);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnSubtleLocalChattedMessage(EntitySubtleLocalChattedEvent ev, EntitySessionEventArgs args)
+    {
+        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
+        // WrappedMessage also should be shot.
+        var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, ev.Message, ev.Speaker, null);
+
+        if (!ev.HideInLog)
+        {
+            History.Add((_timing.CurTick, fakeChatMessage));
+            MessageAdded?.Invoke(fakeChatMessage);
+        }
+        else
+        {
+            _sawmill.Log(LogLevel.Debug, $"Skipping message {ev.Message}");
+        }
+
         _replayRecording.RecordClientMessage(ev);
     }
 

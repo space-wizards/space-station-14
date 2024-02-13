@@ -10,7 +10,7 @@ namespace Content.Server.Radio.Components;
 /// Listens for local chat messages and relays them to some radio frequency. Does not need RadioableComponent to work.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(RadioDeviceSystem))]
+[Access(typeof(RadioDevicesSystem))]
 public sealed partial class RadioMicrophoneComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]

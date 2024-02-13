@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
@@ -16,6 +17,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using SixLabors.ImageSharp.Processing;
 
 namespace Content.Server.Chat.V2;
 
@@ -72,6 +74,13 @@ public sealed partial class ChatSystem
         SendLocalChatMessage(entityUid, message, chattable.Range);
     }
 
+    /// <summary>
+    /// Try to end a chat in Local.
+    /// </summary>
+    /// <param name="entityUid">The entity who is chatting</param>
+    /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
+    /// <param name="asName">Override the name this entity will appear as.</param>
+    /// <param name="hideInChatLog">Should the chat message be hidden in the log?</param>
     public bool TrySendLocalChatMessage(EntityUid entityUid, string message, string asName = "", bool hideInChatLog = false)
     {
         if (!TryComp<LocalChattableComponent>(entityUid, out var chat))
@@ -89,6 +98,7 @@ public sealed partial class ChatSystem
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="range">The range the audio can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
+    /// <param name="hideInLog">Should the chat message be hidden in the log?</param>
     public void SendLocalChatMessage(EntityUid entityUid, string message, float range, string asName = "", bool hideInLog = false)
     {
         message = SanitizeInCharacterMessage(entityUid,message,out var emoteStr);
@@ -167,21 +177,16 @@ public sealed partial class ChatSystem
 
     public void SendSubtleLocalChatMessage(ICommonSession source, ICommonSession target, string message)
     {
-        // Use any ol' verb here.
+        // We need the default verb.
         var verb = GetSpeechVerb(EntityUid.Invalid, message);
 
-        var msgOut = new EntityLocalChattedEvent(
+        var msgOut = new EntitySubtleLocalChattedEvent(
             GetNetEntity(EntityUid.Invalid),
-            "",
-            "",
             verb.FontId,
             verb.FontSize,
             verb.Bold,
-            "",
             message,
-            0,
-            false,
-            isSubtle:true
+            false
         );
 
         RaiseNetworkEvent(msgOut, target);

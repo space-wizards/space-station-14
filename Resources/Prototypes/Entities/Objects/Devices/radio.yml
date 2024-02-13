@@ -4,24 +4,40 @@
   parent: BaseItem
   id: RadioHandheld
   components:
+  - type: Appearance
   - type: RadioMicrophone
     broadcastChannel: Handheld
   - type: RadioSpeaker
     channels:
     - Handheld
   - type: LocalChattable
-  - type: InternalRadio
   - type: Speech
     speechVerb: Robotic
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     layers:
-    - state: walkietalkie
+    - state: walkietalkie-off
     - state: walkietalkie-on
-    state: walkietalkie
+      map: [ "enum.RadioDeviceVisualLayers.Broadcasting" ]
+      visible: false
+      shader: unshaded
+    - state: walkietalkie-active
+      map: [ "enum.RadioDeviceVisualLayers.Speaker" ]
+      visible: false
+      shader: unshaded
   - type: Item
     sprite: Objects/Devices/communication.rsi
     heldPrefix: walkietalkie
   - type: Tag
     tags:
     - Radio
+  - type: GenericVisualizer
+    visuals:
+      enum.RadioDeviceVisuals.Broadcasting:
+        enum.RadioDeviceVisualLayers.Broadcasting:
+          True: { visible: true }
+          False: { visible: false }
+      enum.RadioDeviceVisuals.Speaker:
+        enum.RadioDeviceVisualLayers.Speaker:
+          True: { visible: true }
+          False: { visible: false }

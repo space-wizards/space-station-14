@@ -13,16 +13,14 @@ namespace Content.Server.Radio.EntitySystems;
 /// <summary>
 /// Manages the transmission of intrinsic and headset radio messages to listeners.
 /// </summary>
-public sealed class RadioSystem : SharedHeadsetSystem
+public sealed partial class HeadsetSystem : SharedHeadsetSystem
 {
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
-
-        SubscribeLocalEvent<HeadsetComponent, EntityRadioedEvent>(OnHeadsetReceive);
-        SubscribeLocalEvent<InternalRadioComponent, EntityRadioedEvent>(OnInternalRadioReceive);
+        SubscribeLocalEvent<HeadsetComponent, EntityRadioLocalEvent>(OnHeadsetReceive);
     }
 
     private static void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
@@ -34,20 +32,25 @@ public sealed class RadioSystem : SharedHeadsetSystem
         args.Disabled = true;
     }
 
-    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent headset, EntityRadioedEvent ev)
+    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent headset, EntityRadioLocalEvent ev)
     {
         if (!TryComp<ActorComponent>(headset.CurrentlyWornBy, out var actor))
             return;
 
-        RaiseNetworkEvent(ev, actor.PlayerSession);
-    }
+        var translated = new EntityRadioedEvent(
+            GetNetEntity(ev.Speaker),
+            ev.AsName,
+            ev.Message,
+            ev.Channel,
+            ev.Verb,
+            ev.FontId,
+            ev.FontSize,
+            ev.IsBold,
+            ev.IsAnnouncement,
+            ev.MessageColorOverride
+        );
 
-    private void OnInternalRadioReceive(EntityUid uid, InternalRadioComponent _, ref EntityRadioedEvent ev)
-    {
-        if (!TryComp<ActorComponent>(uid, out var actor))
-            return;
-
-        RaiseNetworkEvent(ev, actor.PlayerSession);
+        RaiseNetworkEvent(translated, actor.PlayerSession);
     }
 
     private void OnKeysChanged(EntityUid uid, HeadsetComponent component, EncryptionChannelsChangedEvent args)

@@ -106,6 +106,51 @@ public sealed class InternalRadioAttemptedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Raised when a character speaks on the radio.
+/// </summary>
+[Serializable]
+public sealed class EntityRadioLocalEvent : EntityEventArgs
+{
+    public EntityUid Speaker;
+    public EntityUid? Device;
+    public string AsName;
+    public readonly string Message;
+    public readonly string Channel;
+    public bool IsBold;
+    public string Verb;
+    public string FontId;
+    public int FontSize;
+    public bool IsAnnouncement;
+    public Color? MessageColorOverride;
+
+    public EntityRadioLocalEvent(
+        EntityUid speaker,
+        string asName,
+        string message,
+        string channel,
+        string withVerb = "",
+        string fontId = "",
+        int fontSize = 0,
+        bool isBold = false,
+        bool isAnnouncement = false,
+        Color? messageColorOverride = null,
+        EntityUid? device = null
+    )
+    {
+        Speaker = speaker;
+        Device = device;
+        AsName = asName;
+        Message = message;
+        Channel = channel;
+        Verb = withVerb;
+        FontId = fontId;
+        FontSize = fontSize;
+        IsBold = isBold;
+        IsAnnouncement = isAnnouncement;
+        MessageColorOverride = messageColorOverride;
+    }
+}
 
 /// <summary>
 /// Raised when a character speaks on the radio.
@@ -124,7 +169,8 @@ public sealed class EntityRadioedEvent : EntityEventArgs
     public bool IsAnnouncement;
     public Color? MessageColorOverride;
 
-    public EntityRadioedEvent(NetEntity speaker,
+    public EntityRadioedEvent(
+        NetEntity speaker,
         string asName,
         string message,
         string channel,
@@ -133,7 +179,8 @@ public sealed class EntityRadioedEvent : EntityEventArgs
         int fontSize = 0,
         bool isBold = false,
         bool isAnnouncement = false,
-        Color? messageColorOverride = null)
+        Color? messageColorOverride = null
+    )
     {
         Speaker = speaker;
         AsName = asName;

@@ -10,7 +10,7 @@ namespace Content.Server.Radio.Components;
 /// InternalRadio (to be detected on transmission) and LocalChattableComponent (to talk) to work.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(RadioDeviceSystem))]
+[Access(typeof(RadioDevicesSystem))]
 public sealed partial class RadioSpeakerComponent : Component
 {
     /// <summary>

@@ -28,7 +28,7 @@ public sealed partial class ChatSystem
         )
     {
         var msgOut = new EntityRadioedEvent(
-            GetNetEntity(default),
+            default,
             sender,
             message,
             DefaultAnnouncementChannel,
@@ -78,7 +78,7 @@ public sealed partial class ChatSystem
         var filter = _stationSystem.GetInStation(stationDataComp);
 
         var msgOut = new EntityRadioedEvent(
-            GetNetEntity(default),
+            default,
             sender,
             message,
             DefaultAnnouncementChannel,

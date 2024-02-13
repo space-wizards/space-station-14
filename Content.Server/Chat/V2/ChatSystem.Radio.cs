@@ -99,7 +99,7 @@ public sealed partial class ChatSystem
         }
 
         // All good; let's actually send a chat message.
-        SendRadioMessage(entityUid, message, radioChannelProto);
+        SendRadioMessage(entityUid, message, radioChannelProto, whisper: true);
     }
 
     /// <summary>
@@ -109,8 +109,10 @@ public sealed partial class ChatSystem
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="channel">The channel the message can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    /// <param name="filter">Override the normal selection of listeners with a specific filter. Useful for off-map activities like salvaging.</param>
-    public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "", Filter? filter = null)
+    /// <param name="allowList">Override the normal selection of listeners with a specific filter. Useful for off-map activities like salvaging.</param>
+    /// <param name="whisper">If this radio message should be whispered out.</param>
+    /// <param name="device">The entity of the RadioMicrophone that sent this message, if applicable.</param>
+    public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "", Filter? allowList = null, bool whisper = false, EntityUid? device = null)
     {
         message = SanitizeInCharacterMessage(
             entityUid,
@@ -132,7 +134,10 @@ public sealed partial class ChatSystem
         // If you don't have intrinsic radio, you need to whisper to send a message using your voice box.
         if (! TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
         {
-            TrySendWhisperMessage(entityUid, message, asName);
+            if (whisper)
+            {
+                TrySendWhisperMessage(entityUid, message, asName);
+            }
         }
 
         // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
@@ -173,20 +178,21 @@ public sealed partial class ChatSystem
 
         var name = FormattedMessage.EscapeText(asName);
 
-        var msgOut = new EntityRadioedEvent(
-            GetNetEntity(entityUid),
+        var msgOut = new EntityRadioLocalEvent(
+            entityUid,
             name,
             message,
             channel.ID,
             Loc.GetString(_random.Pick(verb.SpeechVerbStrings)),
             verb.FontId,
             verb.FontSize,
-            verb.Bold
+            verb.Bold,
+            device: device
         );
 
-        if (filter != null)
+        if (allowList != null)
         {
-            RaiseNetworkEvent(msgOut, filter);
+            RaiseNetworkEvent(msgOut, allowList);
         }
         else
         {
@@ -228,23 +234,28 @@ public sealed partial class ChatSystem
         var sourceMapId = Transform(source).MapID;
         // And if they're map-scoped they're usually tied to a breakable transmission server...
         var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
-        // And we can only send a message if we have a microphone...
-        var hasMicro = HasComp<RadioMicrophoneComponent>(source);
 
-        // Build our queries...
-        var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
-        var radioQuery = EntityQueryEnumerator<HeadsetComponent, TransformComponent>();
-        var innateRadioQuery = EntityQueryEnumerator<InternalRadioComponent, TransformComponent>();
-
-        while (radioQuery.MoveNext(out var receiver, out var headset, out var transform))
+        var headsets = EntityQueryEnumerator<HeadsetComponent, TransformComponent>();
+        while (headsets.MoveNext(out var receiver, out var headset, out var transform))
         {
-            if (IsValidRecipient(source, sourceMapId, channel, hasMicro, hasActiveServer, false, receiver,  headset.ChannelNames, transform, false, speakerQuery))
+            // Headsets are (currently) always short-range.
+            if (IsValidRecipient(source, sourceMapId, channel, hasActiveServer, true, receiver,  headset.ChannelNames, transform, false))
                 recipients.Add(receiver);
         }
 
-        while (innateRadioQuery.MoveNext(out var receiver, out var radio, out var transform))
+        var internals = EntityQueryEnumerator<InternalRadioComponent, TransformComponent>();
+        while (internals.MoveNext(out var receiver, out var radio, out var transform))
         {
-            if (IsValidRecipient(source, sourceMapId, channel, hasMicro, hasActiveServer, radio.IsInfiniteRange, receiver,  radio.ReceiveChannels, transform, radio.CanListenOnAllChannels, speakerQuery))
+            // Internal radios get their abilities through a myriad of means, from the mechanical to magical,
+            if (IsValidRecipient(source, sourceMapId, channel, hasActiveServer, !radio.IsInfiniteRange, receiver,  radio.ReceiveChannels, transform, radio.CanListenOnAllChannels))
+                recipients.Add(receiver);
+        }
+
+        var speakers = EntityQueryEnumerator<RadioSpeakerComponent, TransformComponent>();
+        while (speakers.MoveNext(out var receiver, out var speaker, out var transform))
+        {
+            // Radio speakers have infinite range. Their trade-off is usually that they require power.
+            if (IsValidRecipient(source, sourceMapId, channel, hasActiveServer, false, receiver, speaker.Channels, transform, false))
                 recipients.Add(receiver);
         }
 
@@ -255,31 +266,35 @@ public sealed partial class ChatSystem
         EntityUid source,
         MapId sourceMapId,
         RadioChannelPrototype senderChannel,
-        bool sourceHasMicro,
         bool channelHasServer,
-        bool isSourceInfiniteRange,
+        bool isSourceShortRange,
         EntityUid receiver,
         HashSet<string> receiverChannels,
         TransformComponent? recipientTransform,
-        bool canListenOnAllChannels,
-        EntityQuery<RadioSpeakerComponent> speakerQuery
+        bool canListenOnAllChannels
     )
     {
         if (!canListenOnAllChannels)
         {
-            // If the radio can't use that channel, skip
+            // Receivers must be open to receive the channel.
             if (!receiverChannels.Contains(senderChannel.ID))
                 return false;
         }
 
-        switch (senderChannel.LongRange)
+        // Radio microphones ignore range limitations, but usually need power to work.
+        if (!senderChannel.LongRange && !TryComp<RadioMicrophoneComponent>(source, out _))
         {
-            // If the radio and channel are not global and the radio isn't on the sender's map, skip
-            case false when recipientTransform?.MapID != sourceMapId && !isSourceInfiniteRange:
+            // Short-range radio needs a relay server.
+            if (!channelHasServer)
+            {
                 return false;
-            // Don't need telecom server for long range channels or handheld radios and intercoms
-            case false when (!sourceHasMicro || !speakerQuery.HasComponent(receiver)) && !channelHasServer:
+            }
+
+            // Short-range radio must be received on the same map as the sender.
+            if (isSourceShortRange && recipientTransform?.MapID != sourceMapId)
+            {
                 return false;
+            }
         }
 
         // check if message can be sent to specific receiver
