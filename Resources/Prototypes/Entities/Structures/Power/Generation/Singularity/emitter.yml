@@ -31,7 +31,7 @@
       shader: unshaded
       visible: false
       map: ["enum.EmitterVisualLayers.Lights"]
-    - state: lock
+    - state: locked
       shader: unshaded
       visible: false
       map: ["enum.LockVisualLayers.Lock"]
