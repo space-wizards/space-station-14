@@ -61,7 +61,9 @@ namespace Content.Shared.Placeable
                 return;
 
             if (surface.PlaceCentered)
-                Transform(args.Used).LocalPosition = Transform(uid).LocalPosition + surface.PositionOffset;
+            {
+                _xformSystem.SetLocalPosition(args.Used, Transform(uid).LocalPosition + surface.PositionOffset);
+            }
             else
                 _xformSystem.SetCoordinates(args.Used, args.ClickLocation);
 
