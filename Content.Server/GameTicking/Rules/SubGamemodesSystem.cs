@@ -1,27 +1,17 @@
 using Content.Server.GameTicking.Rules.Components;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-
     protected override void Added(EntityUid uid, SubGamemodesComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
-        var count = 0;
-        foreach (var (id, prob) in comp.Rules)
+        var picked = EntitySpawnCollection.GetSpawns(comp.Rules, RobustRandom);
+        foreach (var id in picked)
         {
-            if (!_random.Prob(prob))
-                continue;
-
+            Log.Info($"Starting gamerule {id} as a subgamemode of {ToPrettyString(uid):rule}");
             GameTicker.AddGameRule(id);
-
-            // if limited, stop rolling rules once the limit is reached
-            if (++count == comp.Limit)
-                return;
         }
     }
 }

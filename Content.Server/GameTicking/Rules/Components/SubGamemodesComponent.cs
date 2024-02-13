@@ -1,5 +1,5 @@
 using Content.Server.GameTicking.Rules;
-using Robust.Shared.Prototypes;
+using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -12,14 +12,9 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class SubGamemodesComponent : Component
 {
     /// <summary>
-    /// Dictionary of each gamerule prototype and the chance of it being added.
+    /// Spawn entries for each gamerule prototype.
+    /// Use orGroups if you want to limit rules.
     /// </summary>
     [DataField(required: true)]
-    public Dictionary<EntProtoId, float> Rules = new();
-
-    /// <summary>
-    /// If not null, how many rules this can successfully start.
-    /// </summary>
-    [DataField]
-    public uint? Limit;
+    public List<EntitySpawnEntry> Rules = new();
 }
