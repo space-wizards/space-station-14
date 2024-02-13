@@ -65,11 +65,11 @@
   flavor: alcohol
   color: "#0099FF"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/curacaoglass.rsi
+    sprite: Objects/Consumable/Drinks/thin_glass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -221,11 +221,11 @@
   flavor: watermelon
   color: "#00FF33"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/emeraldglass.rsi
+    sprite: Objects/Consumable/Drinks/thin_glass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: NTCahors
