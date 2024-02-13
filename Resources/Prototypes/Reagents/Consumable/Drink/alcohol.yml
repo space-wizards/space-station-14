@@ -14,7 +14,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -47,14 +47,14 @@
   desc: reagent-desc-beer
   physicalDesc: reagent-physical-desc-bubbly
   flavor: beer
-  color: "#cfa85f"
+  color: "#e3e77b"
   recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 4
+  metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: BlueCuracao
@@ -574,7 +574,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: BananaHonk
@@ -598,13 +598,13 @@
   desc: reagent-desc-barefoot
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
-  color: "#664300"
+  color: "#ff66cc"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/b&p.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: BeepskySmash
@@ -656,13 +656,13 @@
   desc: reagent-desc-bloody-mary
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bloodymary
-  color: "#660000"
+  color: "#df6a50"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id:  Booger
@@ -671,13 +671,13 @@
   desc: reagent-desc-booger
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
-  color: "#8CFF8C"
+  color: "#99ff00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/booger.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: BraveBull
@@ -738,7 +738,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: DevilsKiss
@@ -747,13 +747,13 @@
   desc: reagent-desc-devils-kiss
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
-  color: "#A68310"
+  color: "#ff0033"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/devilskiss.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: DoctorsDelight
@@ -909,7 +909,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -1231,7 +1231,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
