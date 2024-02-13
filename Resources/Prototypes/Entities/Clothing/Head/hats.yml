@@ -1027,7 +1027,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeretMmedic
+  id: ClothingHeadHatBeretMedic
   name: medical beret
   description: White beret that encourages you to be clean.
   components:
