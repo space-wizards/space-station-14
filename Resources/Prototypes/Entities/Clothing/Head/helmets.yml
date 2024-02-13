@@ -127,6 +127,30 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+#Clockwork Helmet
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetClockwork
+  name: clockwork helmet
+  description: A heavy helmet made of brass.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/clockwork.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/clockwork.rsi
+  - type: IngestionBlocker
+  - type: Armor #same as the cult helmet for balance reasons, change when clockcult becomes real
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags:
+    - HidesHair
+    - WhitelistChameleon
+
 #Cult Helmet
 - type: entity
   parent: ClothingHeadBase
