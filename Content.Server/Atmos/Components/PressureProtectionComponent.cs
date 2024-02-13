@@ -20,7 +20,7 @@ public sealed partial class PressureProtectionComponent : Component
 }
 
 /// <summary>
-/// Event raised on an entity with <see cref="PressureProtectionComponent"/> in order to adjust it's default values.
+/// Event raised on an entity with <see cref="PressureProtectionComponent"/> in order to adjust its default values.
 /// </summary>
 [ByRefEvent]
 public record struct GetPressureProtectionValuesEvent
