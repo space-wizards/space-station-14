@@ -84,7 +84,6 @@ public class IdentitySystem : SharedIdentitySystem
 
         var representation = GetIdentityRepresentation(uid);
         var name = GetIdentityName(uid, representation);
-        identity.TrueName = representation.TrueName;
 
         // Clone the old entity's grammar to the identity entity, for loc purposes.
         if (TryComp<GrammarComponent>(uid, out var grammar))
@@ -108,7 +107,8 @@ public class IdentitySystem : SharedIdentitySystem
         _metaData.SetEntityName(ident, name);
 
         _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
-        RaiseLocalEvent(new IdentityChangedEvent(uid, ident));
+        var identityChangedEvent = new IdentityChangedEvent(uid, ident);
+        RaiseLocalEvent(uid, ref identityChangedEvent);
     }
 
     private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
@@ -159,16 +159,4 @@ public class IdentitySystem : SharedIdentitySystem
     }
 
     #endregion
-}
-
-public sealed class IdentityChangedEvent : EntityEventArgs
-{
-    public EntityUid CharacterEntity;
-    public EntityUid IdentityEntity;
-
-    public IdentityChangedEvent(EntityUid characterEntity, EntityUid identityEntity)
-    {
-        CharacterEntity = characterEntity;
-        IdentityEntity = identityEntity;
-    }
 }

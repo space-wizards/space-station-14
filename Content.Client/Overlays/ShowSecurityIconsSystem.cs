@@ -1,7 +1,5 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.IdentityManagement;
-using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
@@ -77,13 +75,11 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
                 result.Add(icon);
         }
 
-        if (TryComp<IdentityComponent>(uid, out var identity) &&
-            identity.TrueName == Identity.Name(uid, _entityManager) &&
-            identity.StatusIcon != null)
-        {
-            if (_prototypeMan.TryIndex<StatusIconPrototype>(identity.StatusIcon.Value.Id, out var securityIcon))
-                result.Add(securityIcon);
-        }
+        var ev = new GetCriminalIconEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Icon != null && _prototypeMan.TryIndex<StatusIconPrototype>(ev.Icon.Value.Id, out var criminalIcon))
+            result.Add(criminalIcon);
 
         return result;
     }

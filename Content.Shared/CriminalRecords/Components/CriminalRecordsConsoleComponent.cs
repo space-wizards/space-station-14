@@ -1,6 +1,9 @@
 using Content.Shared.CriminalRecords.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
+using Content.Shared.Security;
 using Content.Shared.StationRecords;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CriminalRecords.Components;
@@ -8,8 +11,8 @@ namespace Content.Shared.CriminalRecords.Components;
 /// <summary>
 /// A component for Criminal Record Console storing an active station record key and a currently applied filter
 /// </summary>
-[RegisterComponent]
-[Access(typeof(SharedCriminalRecordsConsoleSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedCriminalRecordsConsoleSystem), typeof(SharedIdentitySystem))]
 public sealed partial class CriminalRecordsConsoleComponent : Component
 {
     /// <summary>
@@ -42,4 +45,11 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// </summary>
     [DataField]
     public uint MaxStringLength = 256;
+
+    /// <summary>
+    /// Dictionary of names and their associated wanted status.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<string, SecurityStatus> Criminals = new ();
+
 }

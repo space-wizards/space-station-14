@@ -71,7 +71,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
-        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null))
+        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) && msg.Status == SecurityStatus.Suspected != (msg.Reason != null))
             return;
 
         if (!CheckSelected(ent, msg.Session, out var mob, out var key))
@@ -117,20 +117,31 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
         {
-            // going from wanted or detained on the spot
+            // person has been detained
             (_, SecurityStatus.Detained) => "detained",
+            // person did something sus
+            (_, SecurityStatus.Suspected) => "suspected",
+            // released on parole
+            (_, SecurityStatus.Paroled) => "paroled",
             // prisoner did their time
-            (SecurityStatus.Detained, SecurityStatus.None) => "released",
-            // going from wanted to none, must have been a mistake
-            (_, SecurityStatus.None) => "not-wanted",
-            // going from none or detained, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
+            (_, SecurityStatus.Discharged) => "released",
+            // going from any other state to wanted, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
             (_, SecurityStatus.Wanted) => "wanted",
+            // person is no longer sus
+            (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
+            // going from wanted to none, must have been a mistake
+            (SecurityStatus.Wanted, SecurityStatus.None) => "not-wanted",
+            // criminal status removed
+            (SecurityStatus.Detained, SecurityStatus.None) => "released",
+            // criminal is no longer on parole
+            (SecurityStatus.Paroled, SecurityStatus.None) => "not-parole",
             // this is impossible
             _ => "not-wanted"
         };
         _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
+        UpdateCriminalNames(name,msg.Status);
         UpdateCriminalIdentity(name, msg.Status);
     }
 
