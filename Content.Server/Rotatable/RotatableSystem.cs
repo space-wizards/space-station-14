@@ -55,7 +55,7 @@ namespace Content.Server.Rotatable
             Verb resetRotation = new ()
             {
                 DoContactInteraction = true,
-                Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation = Angle.Zero,
+                Act = () => _xformSystem.SetLocalRotation(uid, Angle.Zero),
                 Category = VerbCategory.Rotate,
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/refresh.svg.192dpi.png")),
                 Text = "Reset",
@@ -67,7 +67,11 @@ namespace Content.Server.Rotatable
             // rotate clockwise
             Verb rotateCW = new()
             {
-                Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation -= component.Increment,
+                Act = () =>
+                {
+                    var xform = Transform(uid);
+                    _xformSystem.SetLocalRotation(uid, xform.LocalRotation - component.Increment, xform);
+                },
                 Category = VerbCategory.Rotate,
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png")),
                 Priority = -1,
@@ -78,7 +82,11 @@ namespace Content.Server.Rotatable
             // rotate counter-clockwise
             Verb rotateCCW = new()
             {
-                Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation += component.Increment,
+                Act = () =>
+                {
+                    var xform = Transform(uid);
+                    _xformSystem.SetLocalRotation(uid, xform.LocalRotation + component.Increment, xform);
+                },
                 Category = VerbCategory.Rotate,
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png")),
                 Priority = 0,
@@ -102,7 +110,7 @@ namespace Content.Server.Rotatable
             var oldTransform = EntityManager.GetComponent<TransformComponent>(uid);
             var entity = EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
             var newTransform = EntityManager.GetComponent<TransformComponent>(entity);
-            newTransform.LocalRotation = oldTransform.LocalRotation;
+            _xformSystem.SetLocalRotation(entity, oldTransform.LocalRotation, newTransform);
             _xformSystem.Unanchor(entity, newTransform);
             EntityManager.DeleteEntity(uid);
         }

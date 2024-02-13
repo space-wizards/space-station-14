@@ -277,7 +277,7 @@ public sealed partial class ShuttleSystem
                     var width = Comp<MapGridComponent>(uid).LocalAABB.Width;
                     _transform.SetCoordinates((uid, xform, MetaData(uid)), new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value),
                         new Vector2(_index + width / 2f, 0f)));
-                    xform.LocalRotation = Angle.Zero;
+                    _transform.SetLocalRotation(uid, Angle.Zero, xform);
                     _index += width + Buffer;
                     comp.Accumulator += comp.TravelTime - DefaultArrivalTime;
 

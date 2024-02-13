@@ -19,9 +19,7 @@ namespace Content.Server.Construction.Completions
                 xformSystem.SetCoordinates((uid, transform, entityManager.GetComponent<MetaDataComponent>(uid)), transform.Coordinates.SnapToGrid(entityManager));
 
             if (SouthRotation)
-            {
-                transform.LocalRotation = Angle.Zero;
-            }
+                xformSystem.SetLocalRotation(uid, Angle.Zero, transform);
         }
     }
 }
