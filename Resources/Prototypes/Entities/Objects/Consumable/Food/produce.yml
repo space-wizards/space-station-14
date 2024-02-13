@@ -214,13 +214,13 @@
       food:
         reagents:
         - ReagentId: SulfuricAcid
-          Quantity: 3
+          Quantity: 15 #GreyStation - They're death nettles, they should be able to kill
         - ReagentId: FluorosulfuricAcid
-          Quantity: 3
+          Quantity: 15 #GreyStation - They're death nettles, they should be able to kill
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 2
+    transferAmount: 6 #GreyStation - They're death nettles, they should be able to kill
     solution: food
   - type: Extractable
     grindableSolutionName: food
