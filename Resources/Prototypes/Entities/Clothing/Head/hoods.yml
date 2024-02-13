@@ -99,6 +99,20 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatHoodClockwork
+  name: clockwork hood
+  description: What is a clockwork cult without clockwork hoods?
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/clockwork_helmet_old.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/clockwork_helmet_old.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHoodCulthood
   name: cult hood
   description: There's no cult without cult hoods.

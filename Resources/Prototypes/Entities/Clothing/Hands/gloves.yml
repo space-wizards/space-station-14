@@ -175,6 +175,24 @@
   - type: FingerprintMask
 
 - type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesClockwork
+  name: Clockwork Gauntlets
+  description: Heavy gauntlets with brass reinforcement. #when clockcult is implemented it should say "Heavy, shock-resistant gauntlets with brass reinforcement"
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/clockwork_gauntlets.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/clockwork_gauntlets.rsi
+ # - type: Insulated
+ # - type: GloveHeatResistance         #uncomment when clockcult is implemented
+ #   heatResistance: 1400
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-orange
+  - type: FingerprintMask
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesPowerglove
   name: power gloves
