@@ -33,6 +33,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumPractice
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#dbdbdb"
 
 - type: entity
   id: CartridgeMagnumRubber
@@ -41,6 +46,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumRubber
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#43c4f7"
 
 - type: entity
   id: CartridgeMagnumIncendiary
@@ -49,6 +59,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumIncendiary
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#ff6e52"
 
 - type: entity
   id: CartridgeMagnumAP
@@ -57,6 +72,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumAP
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#0a0a0a"
 
 - type: entity
   id: CartridgeMagnumUranium
@@ -65,3 +85,8 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumUranium
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#65fe08"

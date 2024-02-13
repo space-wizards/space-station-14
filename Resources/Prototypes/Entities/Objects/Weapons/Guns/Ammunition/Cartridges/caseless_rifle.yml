@@ -36,6 +36,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePractice
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#dbdbdb"
 
 - type: entity
   id: CartridgeCaselessRifleRubber
@@ -44,3 +49,8 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifleRubber
+  - type: Sprite
+    layers:
+      - state: base
+      - state: tip
+        color: "#43c4f7"
