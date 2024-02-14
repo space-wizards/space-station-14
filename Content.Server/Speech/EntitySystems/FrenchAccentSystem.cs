@@ -2,8 +2,9 @@ using Content.Server.Speech.Components;
 using System.Text.RegularExpressions;
 
 namespace Content.Server.Speech.EntitySystems;
+
 /// <summary>
-/// Entity gains a french accent which modifies their speech by replacing th with z and h with '.
+/// System that gives the speaker a faux-French accent.
 /// </summary>
 public sealed class FrenchAccentSystem : EntitySystem
 {
