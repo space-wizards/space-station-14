@@ -16,4 +16,5 @@ public readonly record struct MindGetAllRolesEvent(List<RoleInfo> Roles);
 /// <param name="Name">Name of the role.</param>
 /// <param name="Antagonist">Whether or not this role makes this player an antagonist.</param>
 /// <param name="PlayTimeTrackerId">The <see cref="PlayTimeTrackerPrototype"/> id associated with the role.</param>
-public readonly record struct RoleInfo(Component Component, string Name, bool Antagonist, string? PlayTimeTrackerId);
+/// <param name="Prototype">The prototype ID of the role</param>
+public readonly record struct RoleInfo(Component Component, string Name, bool Antagonist, string? PlayTimeTrackerId, string Prototype);

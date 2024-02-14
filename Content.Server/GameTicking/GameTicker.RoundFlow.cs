@@ -376,12 +376,12 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerGuid = userId?.ToString() ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
+                    PlayerGuid = userId ?? null,
                     PlayerNetEntity = GetNetEntity(entity),
                     Role = antag
                         ? roles.First(role => role.Antagonist).Name
                         : roles.FirstOrDefault().Name ?? Loc.GetString("game-ticker-unknown-role"),
-                    JobRole = roles.FirstOrDefault(role => !role.Antagonist).Name ?? Loc.GetString("game-ticker-unknown-role"),
+                    RolePrototypes = string.Join(", ", roles.Select(role => role.Prototype)),
                     Antag = antag,
                     Observer = observer,
                     Connected = connected

@@ -1,4 +1,5 @@
 using Content.Shared.Roles;
+using Robust.Shared.Network;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -157,13 +158,13 @@ namespace Content.Shared.GameTicking
             public string? PlayerICName;
 
             [DataField]
-            public string PlayerGuid;
+            public NetUserId? PlayerGuid;
 
             [DataField]
             public string Role;
 
             [DataField]
-            public string JobRole;
+            public string RolePrototypes;
 
             public NetEntity? PlayerNetEntity;
 
