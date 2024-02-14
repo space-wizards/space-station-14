@@ -13,16 +13,16 @@ namespace Content.Server.DeviceLinking.Components;
 public sealed partial class ObjectSensorComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<SinkPortPrototype> OutputPort1 = "ObjectSensor1Object";
+    public ProtoId<SourcePortPrototype> OutputPort1 = "ObjectSensor1Object";
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<SinkPortPrototype> OutputPort2 = "ObjectSensor2Objects";
+    public ProtoId<SourcePortPrototype> OutputPort2 = "ObjectSensor2Objects";
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<SinkPortPrototype> OutputPort3 = "ObjectSensor3Objects";
+    public ProtoId<SourcePortPrototype> OutputPort3 = "ObjectSensor3Objects";
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<SinkPortPrototype> OutputPort4OrMore = "ObjectSensor4OrMoreObjects";
+    public ProtoId<SourcePortPrototype> OutputPort4OrMore = "ObjectSensor4OrMoreObjects";
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<ToolQualityPrototype> CycleQuality = "Screwing";

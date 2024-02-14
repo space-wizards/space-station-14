@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseMachine
   id: ObjectSensor
   name: object sensor
   description: A sensor that detects how many objects are near it.
@@ -9,17 +10,10 @@
     - state: base
     - state: or
       map: [ "enum.LogicGateLayers.Gate" ]
-  - type: Clickable
-  - type: InteractionOutline
   - type: SubFloorHide
-  - type: Anchorable
   - type: UseDelay
     delay: 0.5
   - type: CollisionWake
-  - type: Physics
-    bodyType: Dynamic
-    fixedRotation: false
-  - type: Pullable
   - type: Fixtures
     fixtures:
       fix1:
@@ -30,7 +24,7 @@
         - MachineLayer
         mask:
         - MachineMask
-        density: 1000
+        density: 100
         hard: false
   - type: ObjectSensor
   - type: DeviceLinkSource

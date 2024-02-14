@@ -40,46 +40,47 @@ public sealed class ObjectSensorSystem : EntitySystem
         var query = EntityQueryEnumerator<ObjectSensorComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
-            UpdateOutput(uid, component);
+            UpdateOutput((uid, component));
         }
     }
 
-    private void OnInteractUsing(EntityUid uid, ObjectSensorComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<ObjectSensorComponent> uid, ref InteractUsingEvent args)
     {
-        if (args.Handled || !_tool.HasQuality(args.Used, component.CycleQuality))
+        if (args.Handled || !_tool.HasQuality(args.Used, uid.Comp.CycleQuality))
             return;
 
         if (TryComp<UseDelayComponent>(uid, out var delay)
             && !_useDelay.TryResetDelay((uid, delay), true))
             return;
 
-        var mode = (int) component.Mode;
+        var mode = (int) uid.Comp.Mode;
         mode = ++mode % ModeCount;
-        component.Mode = (ObjectSensorMode) mode;
+        uid.Comp.Mode = (ObjectSensorMode) mode;
 
-        UpdateOutput(uid, component);
+        UpdateOutput(uid);
 
-        _audio.PlayPvs(component.CycleSound, uid);
-        var msg = Loc.GetString("object-sensor-cycle", ("mode", component.Mode.ToString()));
+        _audio.PlayPvs(uid.Comp.CycleSound, uid);
+        var msg = Loc.GetString("object-sensor-cycle", ("mode", uid.Comp.Mode.ToString()));
         _popup.PopupEntity(msg, uid, args.User);
     }
 
-    private void OnExamined(EntityUid uid, ObjectSensorComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<ObjectSensorComponent> uid, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString("object-sensor-examine", ("mode", component.Mode.ToString())));
+        args.PushMarkup(Loc.GetString("object-sensor-examine", ("mode", uid.Comp.Mode.ToString())));
     }
 
-    private void OnInit(EntityUid uid, ObjectSensorComponent component, ComponentInit args)
+    private void OnInit(Entity<ObjectSensorComponent> uid, ref ComponentInit args)
     {
-        _deviceLink.EnsureSourcePorts(uid, component.OutputPort1, component.OutputPort2, component.OutputPort3, component.OutputPort4OrMore);
+        _deviceLink.EnsureSourcePorts(uid, uid.Comp.OutputPort1, uid.Comp.OutputPort2, uid.Comp.OutputPort3, uid.Comp.OutputPort4OrMore);
     }
 
-    private void SetOut(EntityUid uid, ObjectSensorComponent component, int port, bool signal)
+    private void SetOut(Entity<ObjectSensorComponent> uid, int port, bool signal)
     {
-        Logger.Debug($"{ToPrettyString(uid)} {port} {signal}");
+        var component = uid.Comp;
+
         switch (port)
         {
             case 1:
@@ -91,16 +92,15 @@ public sealed class ObjectSensorSystem : EntitySystem
             case 3:
                 _deviceLink.SendSignal(uid, component.OutputPort3, signal);
                 break;
-            case 4:
+            default:
                 _deviceLink.SendSignal(uid, component.OutputPort4OrMore, signal);
                 break;
         }
     }
 
-    private void UpdateOutput(EntityUid uid, ObjectSensorComponent? component)
+    private void UpdateOutput(Entity<ObjectSensorComponent> uid)
     {
-        if (!Resolve(uid, ref component))
-            return;
+        var component = uid.Comp;
 
         var oldTotal = component.Contacting;
 
@@ -137,14 +137,14 @@ public sealed class ObjectSensorSystem : EntitySystem
         {
             for (var i = oldTotal; i <= (component.Contacting > 4 ? 4 : component.Contacting); i++)
             {
-                SetOut(uid, component, i, true);
+                SetOut(uid, i, true);
             }
         }
         else
         {
             for (var i = oldTotal; i >= component.Contacting; i--)
             {
-                SetOut(uid, component, i, false);
+                SetOut(uid, i, false);
             }
         }
     }
