@@ -17,15 +17,16 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
             locked = true;
 
         var isStorage = AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component);
+        var unlockedNotNull = comp.StateUnlocked != null;
 
         if (isStorage)
         {
             args.Sprite.LayerSetVisible(LockVisualLayers.Lock, !open);
         }
-        else
+        else if (!unlockedNotNull)
             args.Sprite.LayerSetVisible(LockVisualLayers.Lock, locked);
 
-        if (!isStorage && comp.StateUnlocked != null)
+        if (!isStorage && unlockedNotNull)
         {
             args.Sprite.LayerSetState(LockVisualLayers.Lock, locked ? comp.StateLocked : comp.StateUnlocked);
         }
