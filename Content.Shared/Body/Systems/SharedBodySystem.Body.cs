@@ -283,6 +283,15 @@ public partial class SharedBodySystem
         SoundSpecifier? gibSoundOverride = null
         )
     {
+        if (deleteItems)
+        {
+            var items = _inventory.GetHandOrInventoryEntities(bodyId);
+            foreach (var item in items)
+            {
+                QueueDel(item);
+            }
+        }
+
         var gibs = new HashSet<EntityUid>();
 
         if (!Resolve(bodyId, ref body, false))
