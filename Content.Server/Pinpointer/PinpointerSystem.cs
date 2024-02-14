@@ -2,7 +2,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Popups;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
@@ -12,7 +11,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
@@ -117,7 +115,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
-    protected override void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null, EntityUid? user = null)
+    protected override void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return;
@@ -193,7 +191,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Clears the list with stored targets and turns off the pinpointer.
     /// </summary>
-    private void RemoveAllStoredTargets(EntityUid uid, PinpointerComponent component, EntityUid? user)
+    private void RemoveAllStoredTargets(EntityUid uid, PinpointerComponent component)
     {
         for (var i = component.StoredTargets.Count - 1; i >= 0; i--)
         {
@@ -282,7 +280,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             args.Verbs.Add(new Verb()
             {
                 Text = Loc.GetString("reset-pinpointer-targets"),
-                Act = () => RemoveAllStoredTargets(uid, component, args.User),
+                Act = () => RemoveAllStoredTargets(uid, component),
                 Category = null,
                 Priority = 25
             });
