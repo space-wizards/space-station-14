@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hqlle
-  changes:
-  - message: Resprited carpet sprites.
-    type: Add
-  id: 5440
-  time: '2023-12-21T05:32:38.0000000+00:00'
-  url: null
 - author: CrigCrag
   changes:
   - message: Added Fresium, a military grade coolant that you SHOULD NOT INGEST OR
@@ -3881,3 +3874,10 @@
   id: 5939
   time: '2024-02-14T05:25:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25120
+- author: Zadeon
+  changes:
+  - message: Disablers now fit inside the suit storage slot.
+    type: Fix
+  id: 5940
+  time: '2024-02-14T23:07:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25238
