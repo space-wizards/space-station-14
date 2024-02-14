@@ -79,6 +79,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:

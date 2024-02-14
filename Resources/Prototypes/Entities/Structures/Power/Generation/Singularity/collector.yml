@@ -50,39 +50,37 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: input
+    collectionName: radiationCollector
+    sprite: Structures/Power/Generation/Singularity/collector.rsi
+    state: static
   - type: RadiationCollector
     chargeModifier: 7500
     radiationReactiveGases:
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1
         reactantBreakdownRate: 0.0001
-    # Note that this doesn't matter too much (see next comment)
-    # However it does act as a cap on power receivable via the collector.
-  - type: Battery
-    maxCharge: 100000
-    startingCharge: 0
-  - type: BatteryDischarger
-    # This is JUST a default. It has to be dynamically adjusted to ensure that the battery doesn't discharge "too fast" & run out immediately, while still scaling by input power.
-    activeSupplyRate: 100000
   - type: RadiationReceiver
+  - type: PowerSupplier
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
-  - type: PowerNetworkBattery
-    maxSupply: 1000000000
-    supplyRampTolerance: 1000000000
   - type: GuideHelp
     guides: [ Singularity, Power ]
   - type: ContainerContainer
     containers:
-      GasTank: !type:ContainerSlot {}
+      gas_tank: !type:ContainerSlot {}
   - type: ItemSlots
     slots:
-      GasTank:
+      gas_tank:
         startingItem: PlasmaTank
         whitelist:
           components:
           - GasTank
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   id: RadiationCollectorNoTank
@@ -91,11 +89,11 @@
   components:
   - type: ItemSlots
     slots:
-      GasTank:
+      gas_tank:
         whitelist:
           components:
           - GasTank
-        
+
 - type: entity
   id: RadiationCollectorFullTank
   suffix: Filled tank
@@ -103,7 +101,7 @@
   components:
   - type: ItemSlots
     slots:
-      GasTank:
+      gas_tank:
         startingItem: PlasmaTankFilled
         whitelist:
           components:

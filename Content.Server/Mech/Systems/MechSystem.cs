@@ -16,6 +16,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
+using Content.Server.Body.Systems;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -358,7 +359,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!Resolve(toInsert, ref battery, false))
             return;
 
-        component.BatterySlot.Insert(toInsert);
+        _container.Insert(toInsert, component.BatterySlot);
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 

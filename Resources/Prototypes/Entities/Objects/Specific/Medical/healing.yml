@@ -44,7 +44,7 @@
     stackType: Ointment
     count: 10
   - type: StackPrice
-    price: 10
+    price: 5
 
 - type: entity
   id: Ointment1
@@ -130,7 +130,7 @@
     stackType: Brutepack
     count: 10
   - type: StackPrice
-    price: 10
+    price: 5
 
 - type: entity
   id: Brutepack1
@@ -224,7 +224,32 @@
   components:
   - type: Stack
     lingering: true
-
+- type: entity
+  parent: BaseHealingItem
+  id: Tourniquet
+  name: tourniquet
+  description: Stops bleeding! Hopefully.
+  components:
+    - type: Tag
+      tags:
+        - SecBeltEquip
+    - type: Sprite
+      state: tourniquet
+    - type: Healing
+      damageContainers:
+        - Biological
+      damage:
+        groups:
+          Brute: 5 # Tourniquets HURT!
+        types:
+          Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
+      bloodlossModifier: -10 # Tourniquets stop bleeding
+      delay: 0.5
+      healingBeginSound:
+        path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      healingEndSound:
+        path: "/Audio/Items/Medical/brutepack_end.ogg"
+        
 - type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
@@ -293,7 +318,7 @@
   id: HealingToolbox
   name: healing toolbox
   description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
-  suffix: Do Not Map
+  suffix: DO NOT MAP
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healing_toolbox.rsi
@@ -769,4 +794,17 @@
         maxVol: 15
         reagents:
         - ReagentId: Romerol
+          Quantity: 15
+
+- type: entity
+  name: stimulants syringe
+  parent: BaseSyringe
+  id: SyringeStimulants
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Stimulants
           Quantity: 15

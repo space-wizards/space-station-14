@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Examine;
 
 namespace Content.Server.DeviceNetwork.Systems
@@ -20,6 +21,8 @@ namespace Content.Server.DeviceNetwork.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly DeviceListSystem _deviceLists = default!;
+        [Dependency] private readonly NetworkConfiguratorSystem _configurator = default!;
 
         private readonly Dictionary<int, DeviceNet> _networks = new(4);
         private readonly Queue<DeviceNetworkPacketEvent> _queueA = new();
@@ -143,15 +146,14 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnNetworkShutdown(EntityUid uid, DeviceNetworkComponent component, ComponentShutdown args)
         {
-            var eventArgs = new DeviceShutDownEvent(uid);
-
-            foreach (var shutdownSubscriberId in component.ShutdownSubscribers)
+            foreach (var list in component.DeviceLists)
             {
-                RaiseLocalEvent(shutdownSubscriberId, ref eventArgs);
+                _deviceLists.OnDeviceShutdown(list, (uid, component));
+            }
 
-                DeviceNetworkComponent? device = null!;
-                if (Resolve(shutdownSubscriberId, ref device))
-                    device.ShutdownSubscribers.Remove(uid);
+            foreach (var list in component.Configurators)
+            {
+                _configurator.OnDeviceShutdown(list, (uid, component));
             }
 
             GetNetwork(component.DeviceNetId).Remove(component);
@@ -265,36 +267,6 @@ namespace Content.Server.DeviceNetwork.Systems
             device.CustomAddress = false;
             device.Address = "";
             deviceNet.Add(device);
-        }
-
-        public void SubscribeToDeviceShutdown(
-            EntityUid subscriberId, EntityUid targetId,
-            DeviceNetworkComponent? subscribingDevice = null,
-            DeviceNetworkComponent? targetDevice = null)
-        {
-            if (subscriberId == targetId)
-                return;
-
-            if (!Resolve(subscriberId, ref subscribingDevice) || !Resolve(targetId, ref targetDevice))
-                return;
-
-            targetDevice.ShutdownSubscribers.Add(subscriberId);
-            subscribingDevice.ShutdownSubscribers.Add(targetId);
-        }
-
-        public void UnsubscribeFromDeviceShutdown(
-            EntityUid subscriberId, EntityUid targetId,
-            DeviceNetworkComponent? subscribingDevice = null,
-            DeviceNetworkComponent? targetDevice = null)
-        {
-            if (subscriberId == targetId)
-                return;
-
-            if (!Resolve(subscriberId, ref subscribingDevice) || !Resolve(targetId, ref targetDevice))
-                return;
-
-            targetDevice.ShutdownSubscribers.Remove(subscriberId);
-            subscribingDevice.ShutdownSubscribers.Remove(targetId);
         }
 
         /// <summary>
@@ -481,11 +453,4 @@ namespace Content.Server.DeviceNetwork.Systems
             Data = data;
         }
     }
-
-    /// <summary>
-    /// Gets raised on entities that subscribed to shutdown event of the shut down entity
-    /// </summary>
-    /// <param name="ShutDownEntityUid">The entity that was shut down</param>
-    [ByRefEvent]
-    public readonly record struct DeviceShutDownEvent(EntityUid ShutDownEntityUid);
 }

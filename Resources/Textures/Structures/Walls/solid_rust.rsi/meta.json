@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/67a5373b4649937dd63dd94153e05e8506f40a5d and modified.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "solid0",
+      "directions": 4
+    },
+    {
+      "name": "solid1",
+      "directions": 4
+    },
+    {
+      "name": "solid2",
+      "directions": 4
+    },
+    {
+      "name": "solid3",
+      "directions": 4
+    },
+    {
+      "name": "solid4",
+      "directions": 4
+    },
+    {
+      "name": "solid5",
+      "directions": 4
+    },
+    {
+      "name": "solid6",
+      "directions": 4
+    },
+    {
+      "name": "solid7",
+      "directions": 4
+    },
+    {
+      "name": "reinf_construct-0"
+    },
+    {
+      "name": "reinf_construct-1"
+    },
+    {
+      "name": "reinf_construct-2"
+    },
+    {
+      "name": "reinf_construct-3"
+    },
+    {
+      "name": "reinf_construct-4"
+    },
+    {
+      "name": "reinf_construct-5"
+    },
+    {
+      "name": "reinf_over0",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over1",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over2",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over3",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over4",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over5",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over6",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over7",
+      "directions": 4
+    },
+    {
+      "name": "rgeneric"
+    }
+  ]
+}

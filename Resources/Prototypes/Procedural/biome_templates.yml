@@ -70,15 +70,6 @@
     # Fill layer
     - !type:BiomeTileLayer
       threshold: -1
-      variants:
-        - 0
-      tile: FloorAsteroidSand
-    - !type:BiomeTileLayer
-      threshold: 0.80
-      noise:
-        seed: 1
-        noiseType: OpenSimplex2
-        frequency: 2
       tile: FloorAsteroidSand
 
 # Grass
@@ -302,27 +293,11 @@
         cellularReturnType: Distance2
       entities:
         - WallRockBasalt
-    # chasm time
-    - !type:BiomeEntityLayer
-      allowedTiles:
-      - FloorBasalt
-      threshold: 0.6
-      noise:
-        seed: 3
-        frequency: 0.02
-        fractalType: FBm
-        octaves: 5
-        lacunarity: 2
-        gain: 0.4
-      entities:
-      - FloorChasmEntity
     - !type:BiomeDummyLayer
       id: Loot
     # Fill basalt
     - !type:BiomeTileLayer
       threshold: -1
-      variants:
-        - 0
       tile: FloorBasalt
 
 # Snow
@@ -544,15 +519,6 @@
     # Fill chromite
     - !type:BiomeTileLayer
       threshold: -1
-      variants:
-        - 0
-      tile: FloorChromite
-    - !type:BiomeTileLayer
-      threshold: 0.25
-      noise:
-        seed: 1
-        noiseType: OpenSimplex2
-        frequency: 2
       tile: FloorChromite
 
 # Caves
@@ -607,12 +573,54 @@
     - !type:BiomeTileLayer
       threshold: -1.0
       tile: FloorAsteroidSand
-      variants:
-      - 0
-    - !type:BiomeTileLayer
-      threshold: 0.5
+
+# Asteroid
+- type: biomeTemplate
+  id: Asteroid
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 2
+        noiseType: OpenSimplex2
+        fractalType: PingPong
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - CrystalGreen
+        - CrystalPink
+        - CrystalOrange
+        - CrystalBlue
+        - CrystalCyan
+    - !type:BiomeEntityLayer
+      threshold: 0.95
       noise:
         seed: 1
         noiseType: OpenSimplex2
-        frequency: 2
+        frequency: 1
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - FloraStalagmite1
+        - FloraStalagmite2
+        - FloraStalagmite3
+        - FloraStalagmite4
+        - FloraStalagmite5
+        - FloraStalagmite6
+    - !type:BiomeEntityLayer
+      threshold: -0.6
+      invert: true
+      noise:
+        seed: 0
+        noiseType: Perlin
+        fractalType: Ridged
+        octaves: 1
+        frequency: 0.1
+        gain: 0.5
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - AsteroidRock
+    - !type:BiomeTileLayer
+      threshold: -1.0
       tile: FloorAsteroidSand

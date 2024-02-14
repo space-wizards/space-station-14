@@ -4,6 +4,7 @@ using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Inventory;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
+using Content.Client.UserInterface.Systems.Inventory.Widgets;
 using Content.Client.UserInterface.Systems.Storage;
 using Content.Client.UserInterface.Systems.Storage.Controls;
 using Robust.Client.UserInterface;
@@ -30,13 +31,12 @@ public sealed class HotbarUIController : UIController
         ReloadHotbar();
     }
 
-    public void Setup(HandsContainer handsContainer, ItemSlotButtonContainer inventoryBar, ItemStatusPanel handStatus, StorageContainer storageContainer)
+    public void Setup(HandsContainer handsContainer, ItemStatusPanel handStatus, StorageContainer storageContainer)
     {
         _inventory = UIManager.GetUIController<InventoryUIController>();
         _hands = UIManager.GetUIController<HandsUIController>();
         _storage = UIManager.GetUIController<StorageUIController>();
         _hands.RegisterHandContainer(handsContainer);
-        _inventory.RegisterInventoryBarContainer(inventoryBar);
         _storage.RegisterStorageContainer(storageContainer);
     }
 
@@ -47,25 +47,35 @@ public sealed class HotbarUIController : UIController
             return;
         }
 
-        var hotbar = UIManager.ActiveScreen.GetWidget<HotbarGui>();
+        if (UIManager.ActiveScreen.GetWidget<HotbarGui>() is { } hotbar)
+        {
+            foreach (var container in GetAllItemSlotContainers(hotbar))
+            {
+                // Yes, this is dirty.
+                container.SlotGroup = container.SlotGroup;
+            }
+        }
 
-        if (hotbar == null)
+        _hands?.ReloadHands();
+        _inventory?.ReloadSlots();
+
+        //todo move this over to its own hellhole
+        var inventory = UIManager.ActiveScreen.GetWidget<InventoryGui>();
+        if (inventory == null)
         {
             return;
         }
 
-        foreach (var container in GetAllItemSlotContainers(hotbar))
+        foreach (var container in GetAllItemSlotContainers(inventory))
         {
             // Yes, this is dirty.
             container.SlotGroup = container.SlotGroup;
         }
 
-        _hands?.ReloadHands();
-        _inventory?.ReloadSlots();
-        _inventory?.RegisterInventoryBarContainer(hotbar.InventoryHotbar);
+        _inventory?.RegisterInventoryBarContainer(inventory.InventoryHotbar);
     }
 
-    private IEnumerable<ItemSlotButtonContainer> GetAllItemSlotContainers(Control gui)
+    private static IEnumerable<ItemSlotButtonContainer> GetAllItemSlotContainers(Control gui)
     {
         var result = new List<ItemSlotButtonContainer>();
 

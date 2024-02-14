@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,14 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbBase
     {
+        private readonly ISawmill _opsLog;
+
+        /// <param name="opsLog">Sawmill to trace log database operations to.</param>
+        public ServerDbBase(ISawmill opsLog)
+        {
+            _opsLog = opsLog;
+        }
+
         #region Preferences
         public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
@@ -177,6 +186,8 @@ namespace Content.Server.Database
             if (Enum.TryParse<BackpackPreference>(profile.Backpack, true, out var backpackVal))
                 backpack = backpackVal;
 
+            var spawnPriority = (SpawnPriorityPreference) profile.SpawnPriority;
+
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
@@ -216,6 +227,7 @@ namespace Content.Server.Database
                 ),
                 clothing,
                 backpack,
+                spawnPriority,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList(),
@@ -570,7 +582,8 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied);
+            ConnectionDenyReason? denied,
+            int serverId);
 
         public async Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
         {
@@ -1374,7 +1387,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
-        protected abstract Task<DbGuard> GetDb();
+        protected abstract Task<DbGuard> GetDb([CallerMemberName] string? name = null);
+
+        protected void LogDbOp(string? name)
+        {
+            _opsLog.Verbose($"Running DB operation: {name ?? "unknown"}");
+        }
 
         protected abstract class DbGuard : IAsyncDisposable
         {

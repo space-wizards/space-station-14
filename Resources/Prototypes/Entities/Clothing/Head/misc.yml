@@ -183,6 +183,23 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDogEars
+  name: doggy ears
+  description: Only for good boys.
+  suffix: DO NOT MAP
+  components:
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: Sprite
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: AddAccentClothing
+    accent: BarkAccent
 
 - type: entity
   parent: ClothingHeadBase
@@ -196,3 +213,72 @@
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedRacoon
+  name: red racoon hat
+  description: Fluffy hat of red racoon!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/red_racoon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/red_racoon.rsi
+
+- type: entity
+  parent: Clothing
+  id: WaterDropletHat
+  name: water droplet
+  description: Makes 8-eyed friends 8 times more adorable!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/waterdroplet.rsi
+    state: icon
+  - type: Item
+    sprite: Clothing/Head/Misc/waterdroplet.rsi
+    size: Tiny
+    storedRotation: -90
+  - type: Clothing
+    slots:
+    - HEAD
+  - type: Food
+    solution: drink
+    useSound: /Audio/Items/drink.ogg
+    eatMessage: drink-component-try-use-drink-success-slurp
+    delay: 0.5
+    forceFeedDelay: 1.5
+  - type: FlavorProfile
+    flavors:
+      - water
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 2
+        reagents:
+        - ReagentId: Water
+          Quantity: 2
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: drink
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+  - type: StaticPrice
+    price: 1

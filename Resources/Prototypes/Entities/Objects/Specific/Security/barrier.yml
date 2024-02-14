@@ -45,6 +45,8 @@
   - type: Lock
     locked: false
     lockOnClick: true # toggle lock just by clicking on barrier
+    lockTime: 5
+    unlockTime: 5
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -67,7 +69,7 @@
             max: 5
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight

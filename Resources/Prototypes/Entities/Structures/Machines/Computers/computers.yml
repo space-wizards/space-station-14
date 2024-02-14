@@ -140,6 +140,8 @@
     color: "#c94242"
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
+  - type: StealTarget
+    stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -168,6 +170,8 @@
       color: "#c94242"
     - type: Computer
       board: SalvageShuttleConsoleCircuitboard
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -239,6 +243,7 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: NodeContainer
     examinable: true
     nodes:
@@ -246,6 +251,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ActivatableUI
+    singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:
@@ -279,8 +285,15 @@
   parent: BaseComputer
   id: ComputerCriminalRecords
   name: criminal records computer
-  description: This can be used to check criminal records.
+  description: This can be used to check criminal records. Only security can modify them.
   components:
+  - type: CriminalRecordsConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.CriminalRecordsConsoleKey.Key
+      type: CriminalRecordsConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CriminalRecordsConsoleKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -297,6 +310,11 @@
     color: "#1f8c28"
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
+  - type: AccessReader
+    access: [["Security"]]
+  - type: GuideHelp
+    guides:
+    - CriminalRecords
 
 - type: entity
   parent: BaseComputer
@@ -319,7 +337,7 @@
     board: StationRecordsComputerCircuitboard
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
 
 - type: entity
   parent: BaseComputer
@@ -480,6 +498,7 @@
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
   - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -541,6 +560,8 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
+  - type: DeviceNetwork
+    transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: UserInterface
@@ -854,6 +875,8 @@
       color: "#b89f25"
     - type: AccessReader
       access: [["Salvage"]]
+    - type: StealTarget
+      stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer

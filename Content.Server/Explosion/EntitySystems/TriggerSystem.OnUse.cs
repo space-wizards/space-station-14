@@ -1,6 +1,7 @@
 using Content.Server.Explosion.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -45,7 +46,7 @@ public sealed partial class TriggerSystem
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, OnUseTimerTriggerComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
 
         if (component.UseVerbInstead)
@@ -169,6 +170,8 @@ public sealed partial class TriggerSystem
     {
         if (args.Handled || HasComp<AutomatedTimerComponent>(uid) || component.UseVerbInstead)
             return;
+
+        _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
 
         HandleTimerTrigger(
             uid,

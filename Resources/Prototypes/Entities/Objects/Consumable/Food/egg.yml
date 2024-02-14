@@ -24,11 +24,12 @@
         reagents:
         - ReagentId: Egg
           Quantity: 6
+  - type: DrawableSolution
+    solution: food
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
     popup: spike-solution-egg
-  - type: DeleteOnTrigger
   # egg fragile
   - type: DamageOnHighSpeedImpact
     minimumSpeed: 0.1
@@ -108,7 +109,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           icon: ""
-      - enum.DamageStateVisualLayers.Base:
           white: ""
   - type: Construction
     graph: Egg

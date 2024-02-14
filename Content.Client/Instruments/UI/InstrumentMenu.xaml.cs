@@ -18,6 +18,8 @@ namespace Content.Client.Instruments.UI
     {
         private readonly InstrumentBoundUserInterface _owner;
 
+        private bool _isMidiFileDialogueWindowOpen;
+
         public InstrumentMenu(InstrumentBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
@@ -95,10 +97,20 @@ namespace Content.Client.Instruments.UI
 
         private async void MidiFileButtonOnOnPressed(ButtonEventArgs obj)
         {
+            if (_isMidiFileDialogueWindowOpen)
+                return;
+
             _owner.CloseBandMenu();
 
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
+
+            // TODO: Once the file dialogue manager can handle focusing or closing windows, improve this logic to close
+            // or focus the previously-opened window.
+            _isMidiFileDialogueWindowOpen = true;
+
             await using var file = await _owner.FileDialogManager.OpenFile(filters);
+
+            _isMidiFileDialogueWindowOpen = false;
 
             // did the instrument menu get closed while waiting for the user to select a file?
             if (Disposed)
@@ -110,20 +122,12 @@ namespace Content.Client.Instruments.UI
             if (file == null)
                 return;
 
-            /*if (!_midiManager.IsMidiFile(filename))
-            {
-                Logger.Warning($"Not a midi file! Chosen file: {filename}");
-                return;
-            }*/
-
             if (!PlayCheck())
                 return;
 
-            MidiStopButtonOnPressed(null);
             await using var memStream = new MemoryStream((int) file.Length);
-            // 100ms delay is due to a race condition or something idk.
-            // While we're waiting, load it into memory.
-            await Task.WhenAll(Timer.Delay(100), file.CopyToAsync(memStream));
+
+            await file.CopyToAsync(memStream);
 
             if (_owner.Instrument is not {} instrument
                 || !_owner.Instruments.OpenMidi(_owner.Owner, memStream.GetBuffer().AsSpan(0, (int) memStream.Length), instrument))
@@ -164,14 +168,14 @@ namespace Content.Client.Instruments.UI
             if (instrument == null)
                 return false;
 
-            var localPlayer = _owner.PlayerManager.LocalPlayer;
+            var localEntity = _owner.PlayerManager.LocalEntity;
 
             // If we don't have a player or controlled entity, we return.
-            if (localPlayer?.ControlledEntity == null)
+            if (localEntity == null)
                 return false;
 
             // By default, allow an instrument to play itself and skip all other checks
-            if (localPlayer.ControlledEntity == instrumentEnt)
+            if (localEntity == instrumentEnt)
                 return true;
 
             var container = _owner.Entities.System<SharedContainerSystem>();
@@ -179,14 +183,14 @@ namespace Content.Client.Instruments.UI
             container.TryGetContainingContainer(instrumentEnt, out var conMan);
 
             // If the instrument is handheld and we're not holding it, we return.
-            if ((instrument.Handheld && (conMan == null || conMan.Owner != localPlayer.ControlledEntity)))
+            if ((instrument.Handheld && (conMan == null || conMan.Owner != localEntity)))
                 return false;
 
-            if (!_owner.ActionBlocker.CanInteract(localPlayer.ControlledEntity.Value, instrumentEnt))
+            if (!_owner.ActionBlocker.CanInteract(localEntity.Value, instrumentEnt))
                 return false;
 
             // We check that we're in range unobstructed just in case.
-            return _owner.Interactions.InRangeUnobstructed(localPlayer.ControlledEntity.Value, instrumentEnt);
+            return _owner.Interactions.InRangeUnobstructed(localEntity.Value, instrumentEnt);
         }
 
         private void MidiStopButtonOnPressed(ButtonEventArgs? obj)

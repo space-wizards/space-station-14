@@ -42,6 +42,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AttachedClothingComponent, GotUnequippedEvent>(OnAttachedUnequip);
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
+        SubscribeLocalEvent<AttachedClothingComponent, BeingUnequippedAttemptEvent>(OnAttachedUnequipAttempt);
 
         SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(GetRelayedVerbs);
         SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
@@ -142,7 +143,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!_inventorySystem.TryUnequip(Transform(uid).ParentUid, toggleCom.Slot, force: true))
             return;
 
-        toggleCom.Container.Insert(uid, EntityManager);
+        _containerSystem.Insert(uid, toggleCom.Container);
         args.Handled = true;
     }
 
@@ -151,6 +152,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
     /// </summary>
     private void OnToggleableUnequip(EntityUid uid, ToggleableClothingComponent component, GotUnequippedEvent args)
     {
+        // If it's a part of PVS departure then don't handle it.
+        if (_timing.ApplyingState)
+            return;
+
         // If the attached clothing is not currently in the container, this just assumes that it is currently equipped.
         // This should maybe double check that the entity currently in the slot is actually the attached clothing, but
         // if its not, then something else has gone wrong already...
@@ -174,6 +179,11 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         if (component.ClothingUid != null && !_netMan.IsClient)
             QueueDel(component.ClothingUid.Value);
+    }
+
+    private void OnAttachedUnequipAttempt(EntityUid uid, AttachedClothingComponent component, BeingUnequippedAttemptEvent args)
+    {
+        args.Cancel();
     }
 
     private void OnRemoveAttached(EntityUid uid, AttachedClothingComponent component, ComponentRemove args)
@@ -219,8 +229,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         // As unequipped gets called in the middle of container removal, we cannot call a container-insert without causing issues.
         // So we delay it and process it during a system update:
-        if (toggleComp.ClothingUid != null)
-            toggleComp.Container?.Insert(toggleComp.ClothingUid.Value);
+        if (toggleComp.ClothingUid != null && toggleComp.Container != null)
+            _containerSystem.Insert(toggleComp.ClothingUid.Value, toggleComp.Container);
     }
 
     /// <summary>
@@ -242,7 +252,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         var parent = Transform(target).ParentUid;
         if (component.Container.ContainedEntity == null)
-            _inventorySystem.TryUnequip(user, parent, component.Slot);
+            _inventorySystem.TryUnequip(user, parent, component.Slot, force: true);
         else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
         {
             _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
@@ -292,7 +302,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             var attachedClothing = EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value);
             attachedClothing.AttachedUid = uid;
             Dirty(component.ClothingUid.Value, attachedClothing);
-            component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
+            _containerSystem.Insert(component.ClothingUid.Value, component.Container, containerXform: xform);
             Dirty(uid, component);
         }
 

@@ -273,7 +273,7 @@ namespace Content.Server.Voting.Managers
                 msg.Options[i] = ((ushort) entry.Votes, entry.Text);
             }
 
-            player.ConnectedClient.SendMessage(msg);
+            player.Channel.SendMessage(msg);
         }
 
         private void DirtyCanCallVoteAll()
@@ -303,7 +303,7 @@ namespace Content.Server.Voting.Managers
                 msg.VotesUnavailable = votesUnavailable.ToArray();
             }
 
-            _netManager.ServerSendMessage(msg, player.ConnectedClient);
+            _netManager.ServerSendMessage(msg, player.Channel);
         }
 
         private bool CanCallVote(
@@ -338,10 +338,6 @@ namespace Content.Server.Voting.Managers
             if (voteType != null && _standardVoteTimeout.TryGetValue(voteType.Value, out timeSpan))
                 return false;
 
-            // No, seriously, stop spamming the restart vote!
-            if (voteType == StandardVoteType.Restart && _cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
-                return false;
-
             // If only one Preset available thats not really a vote
             // Still allow vote if availbable one is different from current one
             if (voteType == StandardVoteType.Preset)
@@ -373,10 +369,16 @@ namespace Content.Server.Voting.Managers
                 .First()
                 .Select(e => e.Data)
                 .ToImmutableArray();
+            // Store all votes in order for webhooks
+            var voteTally = new List<int>(); 
+            foreach(var entry in v.Entries)
+            {
+                voteTally.Add(entry.Votes);
+            }
 
             v.Finished = true;
             v.Dirty = true;
-            var args = new VoteFinishedEventArgs(winners.Length == 1 ? winners[0] : null, winners);
+            var args = new VoteFinishedEventArgs(winners.Length == 1 ? winners[0] : null, winners, voteTally);
             v.OnFinished?.Invoke(_voteHandles[v.Id], args);
             DirtyCanCallVoteAll();
         }

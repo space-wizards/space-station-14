@@ -25,6 +25,9 @@
     ports:
       - Start
       - Timer
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
   - type: ActivatableUI
     key: enum.SignalTimerUiKey.Key
   - type: UserInterface
@@ -51,10 +54,15 @@
   - type: SignalTimer
     canEditLabel: true
   - type: TextScreenVisuals
+    color: FloralWhite
+    textOffset: 0,8
+    timerOffset: 0,8
+    textLength: 5
+    rows: 1
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
     noRot: true
   - type: Construction
     graph: Timer
@@ -88,8 +96,8 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   - type: Construction
     graph: Timer
     node: frame

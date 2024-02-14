@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
@@ -36,35 +37,26 @@ public abstract class SharedChatSystem : EntitySystem
     /// <summary>
     /// Cache of the keycodes for faster lookup.
     /// </summary>
-    private Dictionary<char, RadioChannelPrototype> _keyCodes = new();
+    private FrozenDictionary<char, RadioChannelPrototype> _keyCodes = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         DebugTools.Assert(_prototypeManager.HasIndex<RadioChannelPrototype>(CommonChannel));
-        _prototypeManager.PrototypesReloaded += OnPrototypeReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
         CacheRadios();
     }
 
-    private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+    protected virtual void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
-        if (obj.ByType.ContainsKey(typeof(RadioChannelPrototype)))
+        if (obj.WasModified<RadioChannelPrototype>())
             CacheRadios();
     }
 
     private void CacheRadios()
     {
-        _keyCodes.Clear();
-
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
-        {
-            _keyCodes.Add(proto.KeyCode, proto);
-        }
-    }
-
-    public override void Shutdown()
-    {
-        _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
+        _keyCodes = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>()
+            .ToFrozenDictionary(x => x.KeyCode);
     }
 
     /// <summary>
@@ -191,5 +183,62 @@ public abstract class SharedChatSystem : EntitySystem
         }
 
         return message;
+    }
+
+    public static string SanitizeAnnouncement(string message, int maxLength = 0, int maxNewlines = 2)
+    {
+        var trimmed = message.Trim();
+        if (maxLength > 0 && trimmed.Length > maxLength)
+        {
+            trimmed = $"{message[..maxLength]}...";
+        }
+
+        // No more than max newlines, other replaced to spaces
+        if (maxNewlines > 0)
+        {
+            var chars = trimmed.ToCharArray();
+            var newlines = 0;
+            for (var i = 0; i < chars.Length; i++)
+            {
+                if (chars[i] != '\n')
+                    continue;
+
+                if (newlines >= maxNewlines)
+                    chars[i] = ' ';
+
+                newlines++;
+            }
+
+            return new string(chars);
+        }
+
+        return trimmed;
+    }
+
+    public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{outerTag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{outerTag}]");
+        if (tagStart < 0 || tagEnd < 0) //If the outer tag is not found, the injection is not performed
+            return rawmsg;
+        tagStart += outerTag.Length + 2;
+
+        string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
+
+        rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
+        rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
+
+        return rawmsg;
+    }
+    public static string GetStringInsideTag(ChatMessage message, string tag)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{tag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
+        if (tagStart < 0 || tagEnd < 0)
+            return "";
+        tagStart += tag.Length + 2;
+        return rawmsg.Substring(tagStart, tagEnd - tagStart);
     }
 }

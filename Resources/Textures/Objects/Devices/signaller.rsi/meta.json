@@ -2,7 +2,7 @@
     "version": 1,
 
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Goonstation at commit https://github.com/goonstation/goonstation/commit/354d9635460c296dc7dce23ab39481dc4de6dc00",
+    "copyright": "Taken from Goonstation at commit https://github.com/goonstation/goonstation/commit/354d9635460c296dc7dce23ab39481dc4de6dc00, signaller2 created by TheShuEd",
 
     "size": {
         "x": 32,
@@ -11,6 +11,10 @@
     "states": [
         {
             "name": "signaller",
+            "directions": 1
+        },
+        {
+            "name": "signaller2",
             "directions": 1
         }
     ]

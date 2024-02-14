@@ -65,7 +65,7 @@ public sealed class EntityPickupAnimationSystem : EntitySystem
         despawn.Lifetime = 0.25f;
         _transform.SetLocalRotationNoLerp(animatableClone, initialAngle);
 
-        _animations.Play(animatableClone, animations, new Animation
+        _animations.Play(new Entity<AnimationPlayerComponent>(animatableClone, animations), new Animation
         {
             Length = TimeSpan.FromMilliseconds(125),
             AnimationTracks =

@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi, improvised ammo from https://github.com/tgstation/tgstation/ at commit fb2d71495bfe81446159ef528534193d09dd8d34",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi, improvised ammo from https://github.com/tgstation/tgstation/ at commit fb2d71495bfe81446159ef528534193d09dd8d34, uranium ammo is a modification of the slug sprite by Boaz1111",
     "states": [
         {
             "name": "base"
@@ -54,6 +54,12 @@
         },
         {
             "name": "slug-spent"
+        },
+        {
+            "name": "depleted-uranium"
+        },
+        {
+            "name": "depleted-uranium-spent"
         }
     ]
 }

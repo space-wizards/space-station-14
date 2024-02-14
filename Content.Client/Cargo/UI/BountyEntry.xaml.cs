@@ -12,7 +12,6 @@ namespace Content.Client.Cargo.UI;
 [GenerateTypedNameReferences]
 public sealed partial class BountyEntry : BoxContainer
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public Action? OnButtonPressed;
@@ -27,8 +26,6 @@ public sealed partial class BountyEntry : BoxContainer
         if (!_prototype.TryIndex<CargoBountyPrototype>(bounty.Bounty, out var bountyPrototype))
             return;
 
-        EndTime = bounty.EndTime;
-
         var items = new List<string>();
         foreach (var entry in bountyPrototype.Entries)
         {
@@ -39,16 +36,8 @@ public sealed partial class BountyEntry : BoxContainer
         ManifestLabel.SetMarkup(Loc.GetString("bounty-console-manifest-label", ("item", string.Join(", ", items))));
         RewardLabel.SetMarkup(Loc.GetString("bounty-console-reward-label", ("reward", bountyPrototype.Reward)));
         DescriptionLabel.SetMarkup(Loc.GetString("bounty-console-description-label", ("description", Loc.GetString(bountyPrototype.Description))));
-        IdLabel.Text = Loc.GetString("bounty-console-id-label", ("id", bounty.Id));
+        IdLabel.SetMarkup(Loc.GetString("bounty-console-id-label", ("id", bounty.Id)));
 
         PrintButton.OnPressed += _ => OnButtonPressed?.Invoke();
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-
-        var remaining = TimeSpan.FromSeconds(Math.Max((EndTime - _timing.CurTime).TotalSeconds, 0));
-        TimeLabel.SetMarkup(Loc.GetString("bounty-console-time-label", ("time", remaining.ToString("mm':'ss"))));
     }
 }

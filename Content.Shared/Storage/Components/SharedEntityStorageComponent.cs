@@ -14,7 +14,7 @@ public abstract partial class SharedEntityStorageComponent : Component
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
     public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
-    public TimeSpan LastInternalOpenAttempt;
+    public TimeSpan NextInternalOpenAttempt;
 
     /// <summary>
     ///     Collision masks that get removed when the storage gets opened.
@@ -124,12 +124,6 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
-
-    /// <summary>
-    /// Multiplier for explosion damage that gets applied to contained entities.
-    /// </summary>
-    [DataField]
-    public float ExplosionDamageCoefficient = 1;
 }
 
 [Serializable, NetSerializable]
@@ -145,13 +139,16 @@ public sealed class EntityStorageComponentState : ComponentState
 
     public float EnteringRange;
 
-    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange)
+    public TimeSpan NextInternalOpenAttempt;
+
+    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange, TimeSpan nextInternalOpenAttempt)
     {
         Open = open;
         Capacity = capacity;
         IsCollidableWhenOpen = isCollidableWhenOpen;
         OpenOnMove = openOnMove;
         EnteringRange = enteringRange;
+        NextInternalOpenAttempt = nextInternalOpenAttempt;
     }
 }
 

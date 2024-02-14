@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -14,7 +14,6 @@ namespace Content.Client.Explosion;
 public sealed class ExplosionOverlay : Overlay
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 

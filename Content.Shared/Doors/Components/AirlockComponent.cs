@@ -135,5 +135,12 @@ public sealed partial class AirlockComponent : Component
     [DataField]
     public float DenyAnimationTime = 0.3f;
 
+    /// <summary>
+    /// Pry modifier for a bolted airlock.
+    /// Currently only zombies can pry bolted airlocks.
+    /// </summary>
+    [DataField]
+    public float BoltedPryModifier = 3f;
+
     #endregion Graphics
 }

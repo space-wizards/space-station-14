@@ -1,16 +1,19 @@
-using Content.Server.Singularity.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Singularity.Components;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Shared.Radiation.Events;
-using Robust.Shared.Timing;
-using Robust.Shared.Containers;
-using Content.Server.Atmos.Components;
-using Content.Shared.Examine;
-using Content.Server.Atmos;
-using System.Diagnostics.CodeAnalysis;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Singularity.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Radiation.Events;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Timing;
+using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -20,6 +23,10 @@ public sealed class RadiationCollectorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly BatterySystem _batterySystem = default!;
+
+    private const string GasTankContainer = "gas_tank";
 
     public override void Initialize()
     {
@@ -31,17 +38,17 @@ public sealed class RadiationCollectorSystem : EntitySystem
         SubscribeLocalEvent<RadiationCollectorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RadiationCollectorComponent, EntInsertedIntoContainerMessage>(OnTankChanged);
         SubscribeLocalEvent<RadiationCollectorComponent, EntRemovedFromContainerMessage>(OnTankChanged);
+        SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
     }
 
     private bool TryGetLoadedGasTank(EntityUid uid, [NotNullWhen(true)] out GasTankComponent? gasTankComponent)
     {
         gasTankComponent = null;
-        var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, "GasTank");
 
-        if (container.ContainedEntity == null)
+        if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
             return false;
 
-        if (!EntityManager.TryGetComponent(container.ContainedEntity, out gasTankComponent))
+        if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
             return false;
 
         return true;
@@ -61,13 +68,10 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, RadiationCollectorComponent component, InteractHandEvent args)
     {
-        var curTime = _gameTiming.CurTime;
-
-        if (curTime < component.CoolDownEnd)
+        if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         ToggleCollector(uid, args.User, component);
-        component.CoolDownEnd = curTime + component.Cooldown;
     }
 
     private void OnRadiation(EntityUid uid, RadiationCollectorComponent component, OnIrradiatedEvent args)
@@ -82,7 +86,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
         foreach (var gas in component.RadiationReactiveGases)
         {
-            float reactantMol = gasTankComponent.Air.GetMoles(gas.Reactant);
+            float reactantMol = gasTankComponent.Air.GetMoles(gas.ReactantPrototype);
             float delta = args.TotalRads * reactantMol * gas.ReactantBreakdownRate;
 
             // We need to offset the huge power gains possible when using very cold gases
@@ -95,7 +99,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
             if (delta > 0)
             {
-                gasTankComponent.Air.AdjustMoles(gas.Reactant, -Math.Min(delta, reactantMol));
+                gasTankComponent.Air.AdjustMoles(gas.ReactantPrototype, -Math.Min(delta, reactantMol));
             }
 
             if (gas.Byproduct != null)
@@ -104,18 +108,32 @@ public sealed class RadiationCollectorSystem : EntitySystem
             }
         }
 
-        // No idea if this is even vaguely accurate to the previous logic.
-        // The maths is copied from that logic even though it works differently.
-        // But the previous logic would also make the radiation collectors never ever stop providing energy.
-        // And since frameTime was used there, I'm assuming that this is what the intent was.
-        // This still won't stop things being potentially hilariously unbalanced though.
-        if (TryComp<BatteryComponent>(uid, out var batteryComponent))
+        if (TryComp<PowerSupplierComponent>(uid, out var comp))
         {
-            batteryComponent.CurrentCharge += charge;
+            int powerHoldoverTicks = _gameTiming.TickRate * 2; // number of ticks to hold radiation
+            component.PowerTicksLeft = powerHoldoverTicks;
+            comp.MaxSupply = component.Enabled ? charge : 0;
         }
 
         // Update appearance
         UpdatePressureIndicatorAppearance(uid, component, gasTankComponent);
+    }
+
+    private void PostSync(NetworkBatteryPostSync ev)
+    {
+        // This is run every power tick. Used to decrement the PowerTicksLeft counter.
+        var query = EntityQueryEnumerator<RadiationCollectorComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            if (component.PowerTicksLeft > 0)
+            {
+                component.PowerTicksLeft -= 1;
+            }
+            else if (TryComp<PowerSupplierComponent>(uid, out var comp))
+            {
+                comp.MaxSupply = 0;
+            }
+        }
     }
 
     private void OnExamined(EntityUid uid, RadiationCollectorComponent component, ExaminedEvent args)

@@ -11,7 +11,6 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -36,7 +35,7 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
     {
         _itemSlotsSystem.RemoveItemSlot(uid, loader.CartridgeSlot);
         if (_container.TryGetContainer(uid, InstalledContainerId, out var cont))
-            cont.Shutdown(EntityManager, _netMan);
+            _container.ShutdownContainer(cont);
     }
 
     protected virtual void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)

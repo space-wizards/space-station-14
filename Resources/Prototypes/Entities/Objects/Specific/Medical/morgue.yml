@@ -2,7 +2,7 @@
   id: BodyBag_Container
   parent: BaseFoldable
   name: body bag
-  description: A plastic bag designed for the storage and transportation of cadavers.
+  description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   components:
   - type: Item
     size: Small
@@ -85,7 +85,7 @@
 - type: entity
   id: BodyBag_Folded
   name: body bag
-  description: A plastic bag designed for the storage and transportation of cadavers.
+  description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   parent: BodyBag_Container
   suffix: folded
   components:
@@ -118,7 +118,6 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
-  - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
 
@@ -141,9 +140,9 @@
           maxVol: 50
           reagents:
             - ReagentId: Ash
-              Quantity: 5
-            - ReagentId: SpaceLube
-              Quantity: 5
+              Quantity: 25
+            - ReagentId: Necrosol
+              Quantity: 25
     - type: GuideHelp
       guides:
       - MinorAntagonists

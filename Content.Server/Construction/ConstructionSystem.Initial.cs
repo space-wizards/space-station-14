@@ -133,14 +133,14 @@ namespace Content.Server.Construction
             {
                 foreach (var entity in container.ContainedEntities.ToArray())
                 {
-                    container.Remove(entity);
+                    _container.Remove(entity, container);
                 }
 
                 foreach (var cont in containers.Values)
                 {
                     foreach (var entity in cont.ContainedEntities.ToArray())
                     {
-                        cont.Remove(entity);
+                        _container.Remove(entity, cont);
                     }
                 }
 
@@ -150,10 +150,10 @@ namespace Content.Server.Construction
 
             void ShutdownContainers()
             {
-                container.Shutdown();
+                _container.ShutdownContainer(container);
                 foreach (var c in containers.Values.ToArray())
                 {
-                    c.Shutdown();
+                    _container.ShutdownContainer(c);
                 }
             }
 
@@ -188,10 +188,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(splitStack.Value))
+                                if (!_container.Insert(splitStack.Value, container))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
+                            else if (!_container.Insert(splitStack.Value, GetContainer(materialStep.Store)))
                                 continue;
 
                             handled = true;
@@ -217,10 +217,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
-                                if (!container.Insert(entity))
+                                if (!_container.Insert(entity, container))
                                     continue;
                             }
-                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
+                            else if (!_container.Insert(entity, GetContainer(arbitraryStep.Store)))
                                 continue;
 
                             handled = true;
@@ -269,7 +269,7 @@ namespace Content.Server.Construction
 
             if (!TryComp(newEntity, out ConstructionComponent? construction))
             {
-                _sawmill.Error($"Initial construction does not have a valid target entity! It is missing a ConstructionComponent.\nGraph: {graph.ID}, Initial Target: {edge.Target}, Ent. Prototype: {newEntityProto}\nCreated Entity {ToPrettyString(newEntity)} will be deleted.");
+                Log.Error($"Initial construction does not have a valid target entity! It is missing a ConstructionComponent.\nGraph: {graph.ID}, Initial Target: {edge.Target}, Ent. Prototype: {newEntityProto}\nCreated Entity {ToPrettyString(newEntity)} will be deleted.");
                 Del(newEntity); // Screw you, make proper construction graphs.
                 return null;
             }
@@ -284,8 +284,8 @@ namespace Content.Server.Construction
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
-                    cont.ForceRemove(entity);
-                    newCont.Insert(entity);
+                    _container.Remove(entity, cont, reparent: false, force: true);
+                    _container.Insert(entity, newCont);
                 }
             }
 
@@ -321,14 +321,14 @@ namespace Content.Server.Construction
         {
             if (!_prototypeManager.TryIndex(prototype, out ConstructionPrototype? constructionPrototype))
             {
-                _sawmill.Error($"Tried to start construction of invalid recipe '{prototype}'!");
+                Log.Error($"Tried to start construction of invalid recipe '{prototype}'!");
                 return false;
             }
 
             if (!_prototypeManager.TryIndex(constructionPrototype.Graph,
                     out ConstructionGraphPrototype? constructionGraph))
             {
-                _sawmill.Error(
+                Log.Error(
                     $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{prototype}'!");
                 return false;
             }
@@ -394,21 +394,21 @@ namespace Content.Server.Construction
         {
             if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
-                _sawmill.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
+                Log.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
 
             if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
-                _sawmill.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                Log.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
 
             if (args.SenderSession.AttachedEntity is not {Valid: true} user)
             {
-                _sawmill.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                Log.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
                 return;
             }
 

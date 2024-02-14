@@ -107,8 +107,8 @@ namespace Content.Server.GameTicking
                 return;
 
             Preset = preset;
-            UpdateInfoText();
             ValidateMap();
+            UpdateInfoText();
 
             if (force)
             {
@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
             return true;
         }
 
-        private void StartGamePresetRules()
+        public void StartGamePresetRules()
         {
             // May be touched by the preset during init.
             var rules = new List<EntityUid>(GetAddedGameRules());
@@ -316,7 +316,7 @@ namespace Content.Server.GameTicking
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
             var task = Task.Run(async () =>
             {
-                var server = await _db.AddOrGetServer(serverName);
+                var server = await _dbEntryManager.ServerEntity;
                 return await _db.AddNewRound(server, playerIds);
             });
 
