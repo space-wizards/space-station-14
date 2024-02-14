@@ -3,6 +3,10 @@
   name: job-name-clown
   description: job-description-clown
   playTimeTracker: JobClown
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security #Just so you understand what you're doing when you slip an officer chasing someone.
+      time: 36000 # 10 hrs
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop
