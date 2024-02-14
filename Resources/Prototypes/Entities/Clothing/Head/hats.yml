@@ -28,8 +28,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretFrench
-  name: french beret
-  description: A french beret, viva la France.
+  name: French beret
+  description: A French beret, "vive la France".
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_french.rsi

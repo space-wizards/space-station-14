@@ -24,9 +24,6 @@ trait-unrevivable-desc = You are unable to be revived by defibrillators.
 trait-pirate-accent-name = Pirate Accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
-trait-french-accent-name = French Accent
-trait-french-accent-desc = You like to throw random french words into your english out of protest.
-
 trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
 
