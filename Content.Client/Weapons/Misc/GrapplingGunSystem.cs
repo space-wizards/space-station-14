@@ -26,7 +26,7 @@ public sealed class GrapplingGunSystem : SharedGrapplingGunSystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        var local = _player.LocalPlayer?.ControlledEntity;
+        var local = _player.LocalEntity;
         var handUid = _hands.GetActiveHandEntity();
 
         if (!TryComp<GrapplingGunComponent>(handUid, out var grappling))
