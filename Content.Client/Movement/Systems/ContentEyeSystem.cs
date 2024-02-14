@@ -23,7 +23,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
     public void RequestToggleFov()
     {
-        if (_player.LocalPlayer?.ControlledEntity is { } player)
+        if (_player.LocalEntity is { } player)
             RequestToggleFov(player);
     }
 
