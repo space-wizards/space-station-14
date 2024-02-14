@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: joshepvodka
-  changes:
-  - message: NanoTrasen updated the designs for their emergency medipens. Space medipens
-      are now magenta colored and epi pens have a green band on them.
-    type: Tweak
-  id: 5439
-  time: '2023-12-21T05:30:58.0000000+00:00'
-  url: null
 - author: Hqlle
   changes:
   - message: Resprited carpet sprites.
@@ -3882,3 +3874,10 @@
   id: 5938
   time: '2024-02-14T01:14:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/23262
+- author: Plykiya
+  changes:
+  - message: Holosigns can now be placed at range. No more being eaten by forcefields!
+    type: Tweak
+  id: 5939
+  time: '2024-02-14T05:25:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25120
