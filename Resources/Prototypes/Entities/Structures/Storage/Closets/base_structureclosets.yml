@@ -180,6 +180,7 @@
   components:
   - type: AccessReader
   - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/wall_locker.rsi
     layers:
@@ -284,3 +285,4 @@
     stateBase: base
     stateDoorOpen: base
     stateDoorClosed: door
+  - type: LockVisuals

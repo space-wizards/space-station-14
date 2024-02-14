@@ -14,6 +14,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
   - type: Appearance
+  - type: LockVisuals
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic

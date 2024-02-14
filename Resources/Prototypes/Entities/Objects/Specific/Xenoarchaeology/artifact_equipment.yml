@@ -73,6 +73,7 @@
     - type: EntityStorageVisuals
       stateDoorOpen: artifact_container_open
       stateDoorClosed: artifact_container_door
+    - type: LockVisuals
     - type: ItemSlots
     - type: ContainerContainer
       containers:

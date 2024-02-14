@@ -83,6 +83,7 @@
   - type: Appearance
   - type: Lock
     locked: false
+  - type: LockVisuals
   - type: AccessReader
     access: [[ "Engineering" ]]
   - type: Machine

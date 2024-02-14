@@ -87,6 +87,7 @@
   id: CrateBaseSecure
   components:
   - type: Lock
+  - type: LockVisuals
   - type: AccessReader
   - type: Icon
     sprite: Structures/Storage/Crates/secure.rsi

@@ -71,18 +71,6 @@ public sealed partial class LockComponent : Component
     [DataField]
     [AutoNetworkedField]
     public TimeSpan UnlockTime;
-
-    /// <summary>
-    /// The RSI state used for the lock indicator while the entity is locked.
-    /// </summary>
-    [DataField]
-    public string? StateLocked = "locked";
-
-    /// <summary>
-    /// The RSI state used for the lock indicator entity is unlocked.
-    /// </summary>
-    [DataField]
-    public string? StateUnlocked = "unlocked";
 }
 
 /// <summary>
