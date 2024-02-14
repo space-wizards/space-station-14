@@ -1,0 +1,39 @@
+﻿<Document>
+  # Criminal Records
+  The criminal records console is accessible in every station's security department, it serves the purpose of tracking and managing the criminal history and status of anybody part of the crew manifest.
+
+  <Box>
+  <GuideEntityEmbed Entity="ComputerCriminalRecords"/>
+  </Box>
+
+  Anyone can open the console's UI, but only those with Security access can modify anything.
+
+  The UI is composed by the following elements:
+  - A search bar that has a filter next to it that lets you filter the crewmembers by their names, fingerprints or DNA.
+
+  - A list of all the crewmembers in the manifest, selecting one of the entries will make the criminal records of a crewmember appear. The list is filtered by the search bar so make sure it's empty if you want an overall overview!
+
+  - The criminal records themselves
+
+  In the record section you can:
+    - See security-related information about a crewmember like their name, fingerprints and DNA.
+
+    - Change the security status between [color=gray]None[/color], [color=yellow]Wanted[/color] and [color=red]Detained[/color]. When setting it to Wanted you will be asked to write a reason.
+
+    - If they are wanted, you can see the reason given below the status dropdown.
+
+    - Once someone has been arrested, update their status on the console so everyone knows they no longer need to be captured.
+
+    - After they've done their time, release them and update their status to None so nobody thinks they are an escaped convict.
+
+    - Open the Crime History window to check or modify it.
+
+  The Crime History window lists someone's crimes and can be modified in multiple ways:
+    - Automatically, just by setting someone's status to arrested. The reason will be added to "ARRESTED:" so it's easy to see the automated entries.
+
+    - Adding a new line by clicking "Add" and writing something in the input box. When adding a record, remember to mention their crime and sentence, the console will automatically insert the shift's time so you don't need to!
+
+    - Select a line of unwanted history and click "Delete" to remove it. Excellent for keeping records clean from the clown's stolen ID antics.
+
+  Now you can be the desk jockey you've always wanted to be.
+</Document>

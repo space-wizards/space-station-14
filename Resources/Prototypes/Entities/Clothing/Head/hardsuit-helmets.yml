@@ -722,6 +722,19 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
 
+#Mime Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitMime
+  name: mime hardsuit helmet
+  description: A mime hardsuit helmet.
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/mime.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/mime.rsi
+
 #Santas Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase

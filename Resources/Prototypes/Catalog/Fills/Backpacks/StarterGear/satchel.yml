@@ -44,13 +44,12 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchelSecurity
-  id: ClothingBackpackSatchelSecurityFilledDetective
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelFilledDetective
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalSecurity
-      - id: Flash
+      - id: BoxSurvival
       - id: ForensicPad
       - id: ForensicScanner
 
@@ -285,3 +284,15 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampMime
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelHolding
+  id: ClothingBackpackSatchelHoldingAdmin
+  components:
+  - type: StorageFill
+    contents:
+    - id: AdminPDA
+    - id: GasAnalyzer
+    - id: trayScanner
+  - type: Unremoveable

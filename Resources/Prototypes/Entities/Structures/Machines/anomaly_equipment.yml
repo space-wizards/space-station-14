@@ -296,6 +296,7 @@
         acts: ["Breakage"]
   - type: ActivatableUI
     key: enum.AnomalyGeneratorUiKey.Key
+  - type: ActivatableUIRequiresAccess
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
@@ -318,6 +319,8 @@
   - type: WiresVisuals
   - type: StaticPrice
     price: 5000
+  - type: AccessReader
+    access: [["Research"]]
   - type: GuideHelp
     guides:
     - AnomalousResearch

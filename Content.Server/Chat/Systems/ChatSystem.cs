@@ -71,7 +71,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     private readonly bool _adminLoocEnabled = true;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
-    private const string _chatNamePalette = "Material";
+    private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
 
     public override void Initialize()
@@ -84,7 +84,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
 
-        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(_chatNamePalette).Colors.Values.ToArray();
+        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(ChatNamePalette).Colors.Values.ToArray();
         _chatNameColors = new string[nameColors.Length];
         for (var i = 0; i < nameColors.Length; i++)
         {
@@ -425,11 +425,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         name = FormattedMessage.EscapeText(name);
 
         // color the name unless it's something like "the old man"
+        string coloredName = name;
         if (!TryComp<GrammarComponent>(source, out var grammar) || grammar.ProperNoun == true)
-            name = $"[color={GetNameColor(name)}]{name}[/color]";
+            coloredName = $"[color={GetNameColor(name)}]{name}[/color]";
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
-            ("entityName", name),
+            ("entityName", coloredName),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
