@@ -121,6 +121,7 @@
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorHeavy
+  suffix: DO NOT MAP
   name: heavy armor suit
   description: A heavily armored suit that protects against excessive damage.
   components:
@@ -165,6 +166,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyGreen
+  suffix: DO NOT MAP
   name: green heavy armor suit
   description: A heavily armored suit with green accents that protects against excessive damage.
   components:
@@ -176,6 +178,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyRed
+  suffix: DO NOT MAP
   name: red heavy armor suit
   description: A heavily armored suit with red accents that protects against excessive damage.
   components:
@@ -187,6 +190,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusblue
+  suffix: DO NOT MAP
   name: blue magus armor
   description: An blue armored suit that provides good protection.
   components:
@@ -198,6 +202,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusred
+  suffix: DO NOT MAP
   name: red magus armor
   description: A red armored suit that provides good protection.
   components:
