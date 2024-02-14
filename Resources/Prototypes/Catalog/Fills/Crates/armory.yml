@@ -73,7 +73,7 @@
 - type: entity
   id: CrateArmorySwatArmor
   parent: CrateWeaponSecure
-  name: SWAT armor crate
+  name: SWAT heavy armor crate
   description: Contains 2 SWAT Helmets, 2 SWAT Armor suits, 2 Combat Knives, 2 SWAT Masks, and 2 Assault Belts. A good kit for high-intensity combat
   components:
   - type: StorageFill
