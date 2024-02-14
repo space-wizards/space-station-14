@@ -1,4 +1,4 @@
-using Robust.Shared.Map;
+using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.BUIStates;
@@ -17,9 +17,3 @@ public sealed class ShuttleBoundUserInterfaceState : BoundUserInterfaceState
         DockState = dockState;
     }
 }
-
-[Serializable, NetSerializable]
-public readonly record struct ShuttleBeacon(NetEntity Entity, NetCoordinates Coordinates, string Name);
-
-[Serializable, NetSerializable]
-public record struct ShuttleExclusion(NetCoordinates Coordinates, float Range);

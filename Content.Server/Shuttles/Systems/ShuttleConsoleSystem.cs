@@ -12,6 +12,7 @@ using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
@@ -101,7 +102,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     public void RefreshShuttleConsoles(EntityUid gridUid)
     {
-        var exclusions = new List<ShuttleExclusion>();
+        var exclusions = new List<ShuttleExclusionObject>();
         GetExclusions(ref exclusions);
         _consoles.Clear();
         _lookup.GetChildEntities(gridUid, _consoles);
@@ -118,7 +119,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     public void RefreshShuttleConsoles()
     {
-        var exclusions = new List<ShuttleExclusion>();
+        var exclusions = new List<ShuttleExclusionObject>();
         GetExclusions(ref exclusions);
         var query = AllEntityQuery<ShuttleConsoleComponent>();
         DockingInterfaceState? dockState = null;
@@ -261,7 +262,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         else
         {
             navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>());
-            mapState = new ShuttleMapInterfaceState(FTLState.Invalid, 0f, new List<ShuttleBeacon>(), new List<ShuttleExclusion>());
+            mapState = new ShuttleMapInterfaceState(FTLState.Invalid, 0f, new List<ShuttleBeaconObject>(), new List<ShuttleExclusionObject>());
         }
 
         if (_ui.TryGetUi(consoleUid, ShuttleConsoleUiKey.Key, out var bui))
@@ -420,14 +421,14 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             stateDuration = _shuttle.GetStateDuration(shuttle.Comp);
         }
 
-        List<ShuttleBeacon>? beacons = null;
-        List<ShuttleExclusion>? exclusions = null;
+        List<ShuttleBeaconObject>? beacons = null;
+        List<ShuttleExclusionObject>? exclusions = null;
         GetBeacons(ref beacons);
         GetExclusions(ref exclusions);
 
         return new ShuttleMapInterfaceState(
             ftlState, stateDuration,
-            beacons ?? new List<ShuttleBeacon>(),
-            exclusions ?? new List<ShuttleExclusion>());
+            beacons ?? new List<ShuttleBeaconObject>(),
+            exclusions ?? new List<ShuttleExclusionObject>());
     }
 }

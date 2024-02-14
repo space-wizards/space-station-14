@@ -1,4 +1,5 @@
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.BUIStates;
@@ -19,15 +20,15 @@ public sealed class ShuttleMapInterfaceState
     /// </summary>
     public float FTLDuration;
 
-    public List<ShuttleBeacon> Destinations;
+    public List<ShuttleBeaconObject> Destinations;
 
-    public List<ShuttleExclusion> Exclusions;
+    public List<ShuttleExclusionObject> Exclusions;
 
     public ShuttleMapInterfaceState(
         FTLState ftlState,
         float ftlDuration,
-        List<ShuttleBeacon> destinations,
-        List<ShuttleExclusion> exclusions)
+        List<ShuttleBeaconObject> destinations,
+        List<ShuttleExclusionObject> exclusions)
     {
         FTLState = ftlState;
         FTLDuration = ftlDuration;

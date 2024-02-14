@@ -3,6 +3,7 @@ using Content.Server.Shuttles.Events;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
+using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -71,7 +72,7 @@ public sealed partial class ShuttleConsoleSystem
         ConsoleFTL(entity, false, targetCoordinates, angle, args.Coordinates.MapId);
     }
 
-    private void GetBeacons(ref List<ShuttleBeacon>? beacons)
+    private void GetBeacons(ref List<ShuttleBeaconObject>? beacons)
     {
         var beaconQuery = AllEntityQuery<FTLBeaconComponent>();
 
@@ -85,12 +86,12 @@ public sealed partial class ShuttleConsoleSystem
 
             // Can't travel to same map (yet)
             var destXform = _xformQuery.GetComponent(destUid);
-            beacons ??= new List<ShuttleBeacon>();
-            beacons.Add(new ShuttleBeacon(GetNetEntity(destUid), GetNetCoordinates(destXform.Coordinates), name));
+            beacons ??= new List<ShuttleBeaconObject>();
+            beacons.Add(new ShuttleBeaconObject(GetNetEntity(destUid), GetNetCoordinates(destXform.Coordinates), name));
         }
     }
 
-    private void GetExclusions(ref List<ShuttleExclusion>? exclusions)
+    private void GetExclusions(ref List<ShuttleExclusionObject>? exclusions)
     {
         var query = AllEntityQuery<FTLExclusionComponent, TransformComponent>();
 
@@ -99,8 +100,8 @@ public sealed partial class ShuttleConsoleSystem
             if (!comp.Enabled)
                 continue;
 
-            exclusions ??= new List<ShuttleExclusion>();
-            exclusions.Add(new ShuttleExclusion(GetNetCoordinates(xform.Coordinates), comp.Range));
+            exclusions ??= new List<ShuttleExclusionObject>();
+            exclusions.Add(new ShuttleExclusionObject(GetNetCoordinates(xform.Coordinates), comp.Range));
         }
     }
 
@@ -132,7 +133,7 @@ public sealed partial class ShuttleConsoleSystem
             return;
         }
 
-        List<ShuttleExclusion>? exclusions = null;
+        List<ShuttleExclusionObject>? exclusions = null;
         GetExclusions(ref exclusions);
 
         if (!beacon && !_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle, exclusions))

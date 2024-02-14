@@ -1,5 +1,6 @@
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -9,9 +10,9 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private   readonly IMapManager _mapManager = default!;
+    [Dependency] protected readonly SharedMapSystem Maps = default!;
+    [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
 
     public const float FTLRange = 512f;
     public const float FTLBufferRange = 8f;
@@ -28,6 +29,38 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         _gridQuery = GetEntityQuery<MapGridComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+    }
+
+    /// <summary>
+    /// Gets the list of map objects relevant for the specified map.
+    /// </summary>
+    public IEnumerable<(ShuttleExclusionObject Exclusion, MapCoordinates Coordinates)> GetExclusions(MapId mapId, List<ShuttleExclusionObject> exclusions)
+    {
+        foreach (var exc in exclusions)
+        {
+            var beaconCoords = XformSystem.ToMapCoordinates(GetCoordinates(exc.Coordinates));
+
+            if (beaconCoords.MapId != mapId)
+                continue;
+
+            yield return (exc, beaconCoords);
+        }
+    }
+
+    /// <summary>
+    /// Gets the list of map objects relevant for the specified map.
+    /// </summary>
+    public IEnumerable<(ShuttleBeaconObject Beacon, MapCoordinates Coordinates)> GetBeacons(MapId mapId, List<ShuttleBeaconObject> beacons)
+    {
+        foreach (var beacon in beacons)
+        {
+            var beaconCoords = XformSystem.ToMapCoordinates(GetCoordinates(beacon.Coordinates));
+
+            if (beaconCoords.MapId != mapId)
+                continue;
+
+            yield return (beacon, beaconCoords);
+        }
     }
 
     public bool CanDraw(EntityUid gridUid, PhysicsComponent? physics = null, IFFComponent? iffComp = null)
@@ -80,7 +113,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Returns true if the spot is free to be FTLd to (not close to any objects and in range).
     /// </summary>
-    public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusion>? exclusionZones)
+    public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusionObject>? exclusionZones)
     {
         if (!_physicsQuery.TryGetComponent(shuttleUid, out var shuttlePhysics) ||
             !_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform))
@@ -91,9 +124,9 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         // Just checks if any grids inside of a buffer range at the target position.
         _grids.Clear();
         var ftlRange = FTLRange;
-        var mapCoordinates = coordinates.ToMap(EntityManager, _xformSystem);
+        var mapCoordinates = coordinates.ToMap(EntityManager, XformSystem);
 
-        var ourPos = _maps.GetGridPosition((shuttleUid, shuttlePhysics, shuttleXform));
+        var ourPos = Maps.GetGridPosition((shuttleUid, shuttlePhysics, shuttleXform));
 
         // This is the already adjusted position
         var targetPosition = mapCoordinates.Position;
@@ -110,7 +143,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         {
             foreach (var exclusion in exclusionZones)
             {
-                var exclusionCoords = _xformSystem.ToMapCoordinates(GetCoordinates(exclusion.Coordinates));
+                var exclusionCoords = XformSystem.ToMapCoordinates(GetCoordinates(exclusion.Coordinates));
 
                 if (exclusionCoords.MapId != mapCoordinates.MapId)
                     continue;
