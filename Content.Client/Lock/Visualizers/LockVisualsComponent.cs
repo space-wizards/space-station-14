@@ -16,12 +16,5 @@ public sealed partial class LockVisualsComponent : Component
     /// </summary>
     [DataField("stateUnlocked")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string? StateUnlocked;
-
-    /// <summary>
-    /// The RSI state used for the lock indicator while storage is unlocked.
-    /// </summary>
-    [DataField("stateStorageUnlocked")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string? StateStorageUnlocked = "unlocked";
+    public string? StateUnlocked = "unlocked";
 }

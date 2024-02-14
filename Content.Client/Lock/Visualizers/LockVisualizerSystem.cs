@@ -9,30 +9,25 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
     protected override void OnAppearanceChange(EntityUid uid, LockVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null
-            || !args.Sprite.LayerExists(LockVisualLayers.Lock))
+            || !AppearanceSystem.TryGetData<bool>(uid, LockVisuals.Locked, out _, args.Component))
             return;
 
         // Lock state for the entity. TODO: It needs some organization, it doesn't look quite good
         if (!AppearanceSystem.TryGetData<bool>(uid, LockVisuals.Locked, out var locked, args.Component))
             locked = true;
 
-        var isStorage = AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component);
-        var unlockedNotNull = comp.StateUnlocked != null;
+        var unlockedStateExist = args.Sprite.BaseRSI?.TryGetState(comp.StateUnlocked, out _);
 
-        if (isStorage)
+        if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
         {
             args.Sprite.LayerSetVisible(LockVisualLayers.Lock, !open);
         }
-        else if (!unlockedNotNull)
+        else if (!(bool) unlockedStateExist!)
             args.Sprite.LayerSetVisible(LockVisualLayers.Lock, locked);
 
-        if (!isStorage && unlockedNotNull)
+        if (!open && (bool) unlockedStateExist!)
         {
             args.Sprite.LayerSetState(LockVisualLayers.Lock, locked ? comp.StateLocked : comp.StateUnlocked);
-        }
-        else if (!open && isStorage)
-        {
-            args.Sprite.LayerSetState(LockVisualLayers.Lock, locked ? comp.StateLocked : comp.StateStorageUnlocked);
         }
     }
 }
