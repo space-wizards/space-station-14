@@ -30,6 +30,7 @@ namespace Content.Shared.Toilet
             base.Initialize();
 
             SubscribeLocalEvent<ToiletComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<ToiletComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ToiletComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleSeatVerb);
             SubscribeLocalEvent<ToiletComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<ToiletComponent, ToiletPryDoAfterEvent>(OnToiletPried);
@@ -37,10 +38,13 @@ namespace Content.Shared.Toilet
             SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
         }
-
         private void OnInit(EntityUid uid, ToiletComponent component, ComponentInit args)
         {
             EnsureComp<SecretStashComponent>(uid);
+        }
+
+        private void OnMapInit(EntityUid uid, ToiletComponent component, MapInitEvent args)
+        {
             OnToiletSetup(uid);
         }
         private void OnToiletSetup(EntityUid uid, ToiletComponent? component = null)
