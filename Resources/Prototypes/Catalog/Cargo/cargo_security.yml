@@ -77,3 +77,13 @@
   cost: 1000
   category: Security
   group: market
+
+- type: cargoProduct
+  id: ArmorySwat
+  icon:
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+    state: icon
+  product: CrateArmorySwatArmor
+  cost: 10000
+  category: Security
+  group: market
