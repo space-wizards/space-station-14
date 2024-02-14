@@ -67,11 +67,11 @@ namespace Content.Server.Administration.Systems
             base.Initialize();
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
 
-            Subs.CVar(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
-            Subs.CVar(CVars.GameHostName, OnServerNameChanged, true);
-            Subs.CVar(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
-            Subs.CVar(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
-            Subs.CVar(CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged, true);
+            Subs.CVar(_config, CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
+            Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
+            Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
+            Subs.CVar(_config, CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
+            Subs.CVar(_config, CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged, true);
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _discord.OnMessageReceived += OnDiscordMessageReceived;
             _discord.OnCommandReceived += OnReceiveNewRelay;
