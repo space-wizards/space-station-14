@@ -84,6 +84,6 @@
     sprite: Clothing/OuterClothing/Armor/heavy.rsi
     state: icon
   product: CrateArmorySwatArmor
-  cost: 10000
+  cost: 12000
   category: Security
   group: market
