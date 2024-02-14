@@ -156,11 +156,11 @@
         Blunt: 0.35
         Slash: 0.35
         Piercing: 0.35
-        Heat: 0.4
-        Radiation: 0.4
-        Caustic: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.35
+    damageCoefficient: 0.5
   - type: GroupExamine
 
 - type: entity
