@@ -111,3 +111,8 @@
   license: "CC0-1.0"
   copyright: "Created by ldezem on Freesound.com, cropped and converted to Mono by TheShuEd"
   source: "https://freesound.org/people/ldezem/sounds/528238/"
+
+- files: ["anomaly_scary.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by dimbark1, edited and converted to mono by TheShuEd"
+  source: "https://freesound.org/people/dimbark1/sounds/316797/"

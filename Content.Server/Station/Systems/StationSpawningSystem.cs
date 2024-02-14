@@ -56,7 +56,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _configurationManager.OnValueChanged(CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
+        Subs.CVar(_configurationManager, CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
 
         _spawnerCallbacks = new Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>>()
         {

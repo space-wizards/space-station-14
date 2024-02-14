@@ -84,6 +84,17 @@
 
 - type: entity
   parent: SeedBase
+  id: LaughinPeaSeeds
+  name: packet of laughin' pea pods
+  description: "These seeds give off a very soft purple glow.. they should grow into Laughin' Peas."
+  components:
+    - type: Seed
+      seedId: laughinPea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lemon seeds
   id: LemonSeeds
   components:
