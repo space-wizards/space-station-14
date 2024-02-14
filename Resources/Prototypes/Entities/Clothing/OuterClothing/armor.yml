@@ -140,6 +140,29 @@
   - type: GroupExamine
 
 - type: entity
+  parent: ClothingOuterBaseGinormous
+  id: ClothingOuterArmorSwat
+  name: SWAT Armor
+  description: NT's attempt to create universal and inexpensive protection. Provides excellent protection against many types of damage, but also slows down extremely strongly.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Heat: 0.4
+        Radiation: 0.4
+        Caustic: 0.4
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+  - type: GroupExamine
+
+- type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyGreen
   name: green heavy armor suit
