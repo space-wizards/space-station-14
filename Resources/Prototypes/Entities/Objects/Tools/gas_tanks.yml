@@ -39,7 +39,7 @@
         Blunt: 10
   - type: PhysicalComposition
     materialComposition:
-      Steel: 400
+      Steel: 185
   - type: StaticPrice
     price: 20
 
