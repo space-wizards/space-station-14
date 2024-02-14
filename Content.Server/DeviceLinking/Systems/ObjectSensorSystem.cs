@@ -7,6 +7,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
+using Content.Shared.Toggleable;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Systems;
@@ -18,7 +19,6 @@ public sealed class ObjectSensorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
@@ -131,7 +131,7 @@ public sealed class ObjectSensorSystem : EntitySystem
 
         component.Contacting = total;
 
-        Logger.Debug($"{oldTotal} from {component.Contacting}");
+        _appearance.SetData(uid, LightLayers.Light, total > 0);
 
         if (component.Contacting > oldTotal)
         {

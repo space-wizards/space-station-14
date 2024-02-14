@@ -5,11 +5,20 @@
   description: A sensor that detects how many objects are near it.
   components:
   - type: Sprite
-    sprite: Objects/Devices/gates.rsi
+    sprite: Structures/object_sensor.rsi
     layers:
-    - state: base
-    - state: or
-      map: [ "enum.LogicGateLayers.Gate" ]
+    - state: icon
+    - state: light
+      map: [ "enum.LightLayers.Light" ]
+      visible: false
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LightLayers.Unshaded:
+        enum.LightLayers.Light:
+          True: {visible: true}
+          False: {visible: false}
   - type: SubFloorHide
   - type: UseDelay
     delay: 0.5
