@@ -74,7 +74,7 @@
   id: CrateArmorySwatArmor
   parent: CrateWeaponSecure
   name: SWAT armor crate
-  description: Contains 2 SWAT Helmet, 2 SWAT Armor, 2 Combat Knife, 2 SWAT Mask, 2 Assault Belt. Have fun.
+  description: Contains 2 SWAT Helmets, 2 SWAT Armor suits, 2 Combat Knives, 2 SWAT Masks, and 2 Assault Belts. A good kit for high-intensity combat
   components:
   - type: StorageFill
     contents:
