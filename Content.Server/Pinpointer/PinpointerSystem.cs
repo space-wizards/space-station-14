@@ -30,7 +30,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         SubscribeLocalEvent<SpecialRespawnEvent>(OnSpecialRespawn);
     }
 
-    public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
+    public override bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return false;
@@ -195,8 +195,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
-    private void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent pinpointer)
+    protected override void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
     {
+        if (!Resolve(uid, ref pinpointer))
+            return;
+
         if (!pinpointer.IsActive)
             return;
 

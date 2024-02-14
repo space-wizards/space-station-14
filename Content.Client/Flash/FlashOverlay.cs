@@ -51,7 +51,7 @@ namespace Content.Client.Flash
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
+            if (!_entityManager.TryGetComponent(_playerManager.LocalEntity, out EyeComponent? eyeComp))
                 return;
 
             if (args.Viewport.Eye != eyeComp.Eye)

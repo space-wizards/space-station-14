@@ -38,13 +38,13 @@ public sealed class DrunkSystem : SharedDrunkSystem
 
     private void OnDrunkInit(EntityUid uid, DrunkComponent component, ComponentInit args)
     {
-        if (_player.LocalPlayer?.ControlledEntity == uid)
+        if (_player.LocalEntity == uid)
             _overlayMan.AddOverlay(_overlay);
     }
 
     private void OnDrunkShutdown(EntityUid uid, DrunkComponent component, ComponentShutdown args)
     {
-        if (_player.LocalPlayer?.ControlledEntity == uid)
+        if (_player.LocalEntity == uid)
         {
             _overlay.CurrentBoozePower = 0;
             _overlayMan.RemoveOverlay(_overlay);

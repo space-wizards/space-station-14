@@ -8,6 +8,15 @@
   priority: 4
 
 - type: ambientMusic
+  id: SpookyFog
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpookyFog
+  rules: NearSpookyFog
+  priority: 5
+
+- type: ambientMusic
   id: Holy
   sound:
     params:
@@ -196,6 +205,24 @@
     - /Audio/Ambience/ambiruin6.ogg
     - /Audio/Ambience/ambiruin7.ogg
 
+- type: soundCollection
+  id: AmbienceSpookyFog
+  files:
+    - /Audio/Ambience/spookyspace1.ogg
+    - /Audio/Ambience/spookyspace2.ogg
+    - /Audio/Ambience/ambimo2.ogg
+    - /Audio/Ambience/ambilava1.ogg
+    - /Audio/Ambience/ambilava2.ogg
+    - /Audio/Ambience/ambiruin2.ogg
+    - /Audio/Ambience/ambiruin3.ogg
+    - /Audio/Ambience/ambiruin4.ogg
+    - /Audio/Ambience/ambiruin5.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+    - /Audio/Ambience/ambiruin7.ogg
+    - /Audio/Ambience/ambidanger.ogg
+    - /Audio/Ambience/ambidanger2.ogg
+    - /Audio/Ambience/ambimine.ogg
+
 ## Background noise on station, separate to ambient music.
 - type: soundCollection
   id: AmbienceStation
@@ -263,6 +290,16 @@
       components:
         - type: Morgue
       range: 3
+      
+- type: rules
+  id: NearSpookyFog
+  rules:
+    - !type:NearbyEntitiesRule
+      count: 5
+      whitelist:
+        tags:
+          - SpookyFog
+      range: 4
 
 - type: rules
   id: OnMapGrid
