@@ -65,4 +65,22 @@ public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
         };
         Dirty(characterUid, record);
     }
+
+    /// <summary>
+    /// Checks if the new identity's name has a criminal record attached to it, and gives the entity the icon that
+    /// belongs to the status if it does.
+    /// </summary>
+    public void CheckNewIdentity(Entity<IdentityComponent> ent)
+    {
+        var query = EntityQueryEnumerator<CriminalRecordsConsoleComponent>();
+        var name = Identity.Name(ent, _entityManager);
+        while (query.MoveNext(out var uid, out var criminalRecordsConsole))
+        {
+            if (criminalRecordsConsole.Criminals.TryGetValue(name, out var criminal))
+                SetCriminalIcon(name, criminal,ent);
+            else
+                RemComp<CriminalRecordComponent>(ent);
+            break;
+        }
+    }
 }

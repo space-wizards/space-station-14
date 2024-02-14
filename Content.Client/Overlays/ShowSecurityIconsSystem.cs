@@ -13,7 +13,6 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
 
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string JobIconForNoId = "JobIconNoId";

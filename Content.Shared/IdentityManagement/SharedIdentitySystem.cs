@@ -1,9 +1,7 @@
 using Content.Shared.Clothing;
-using Content.Shared.CriminalRecords.Components;
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Security.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.IdentityManagement;
@@ -53,16 +51,7 @@ public abstract class SharedIdentitySystem : EntitySystem
     /// </summary>
     private void OnIdentityChanged(Entity<IdentityComponent> ent, ref IdentityChangedEvent args)
     {
-        var query = EntityQueryEnumerator<CriminalRecordsConsoleComponent>();
-        var name = Identity.Name(ent, _entityManager);
-        while (query.MoveNext(out var uid, out var criminalRecordsConsole))
-        {
-            if (criminalRecordsConsole.Criminals.TryGetValue(name, out var criminal))
-                _criminalRecordsConsole.SetCriminalIcon(name, criminal,ent);
-            else
-                RemComp<CriminalRecordComponent>(ent);
-            break;
-        }
+        _criminalRecordsConsole.CheckNewIdentity(ent);
     }
 }
 /// <summary>

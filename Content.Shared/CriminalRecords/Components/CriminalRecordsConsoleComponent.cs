@@ -1,5 +1,4 @@
 using Content.Shared.CriminalRecords.Systems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
@@ -12,7 +11,7 @@ namespace Content.Shared.CriminalRecords.Components;
 /// A component for Criminal Record Console storing an active station record key and a currently applied filter
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedCriminalRecordsConsoleSystem), typeof(SharedIdentitySystem))]
+[Access(typeof(SharedCriminalRecordsConsoleSystem))]
 public sealed partial class CriminalRecordsConsoleComponent : Component
 {
     /// <summary>
