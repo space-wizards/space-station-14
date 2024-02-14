@@ -12,7 +12,7 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
             || !AppearanceSystem.TryGetData<bool>(uid, LockVisuals.Locked, out _, args.Component))
             return;
 
-        // Lock state for the entity. TODO: It needs some organization, it doesn't look quite good
+        // Lock state for the entity.
         if (!AppearanceSystem.TryGetData<bool>(uid, LockVisuals.Locked, out var locked, args.Component))
             locked = true;
 
