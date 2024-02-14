@@ -60,6 +60,7 @@ public sealed class HandTeleporterSystem : EntitySystem
                 BreakOnDamage = true,
                 BreakOnUserMove = true,
                 MovementThreshold = 0.5f,
+                WeightlessMovementThreshold = 0.5f,
             };
 
             _doafter.TryStartDoAfter(doafterArgs);

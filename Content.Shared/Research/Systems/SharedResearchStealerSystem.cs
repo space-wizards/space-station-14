@@ -47,7 +47,8 @@ public abstract class SharedResearchStealerSystem : EntitySystem
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
-            MovementThreshold = 0.5f
+            MovementThreshold = 0.5f,
+            WeightlessMovementThreshold = 0.5f,
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);

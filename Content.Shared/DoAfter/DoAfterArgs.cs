@@ -252,6 +252,7 @@ public sealed partial class DoAfterArgs
         BreakOnUserMove = other.BreakOnUserMove;
         BreakOnTargetMove = other.BreakOnTargetMove;
         MovementThreshold = other.MovementThreshold;
+        WeightlessMovementThreshold = other.WeightlessMovementThreshold;
         DistanceThreshold = other.DistanceThreshold;
         BreakOnDamage = other.BreakOnDamage;
         DamageThreshold = other.DamageThreshold;

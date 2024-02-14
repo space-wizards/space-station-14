@@ -52,6 +52,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         {
             BreakOnUserMove = true,
             MovementThreshold = 0.5f,
+            WeightlessMovementThreshold = 0.5f,
             CancelDuplicate = false,
             AttemptFrequency = AttemptFrequency.StartAndEnd
         };

@@ -80,6 +80,7 @@ internal sealed class UdderSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnTargetMove = true,
             MovementThreshold = 1.0f,
+            WeightlessMovementThreshold = 1.0f,
         };
 
         _doAfterSystem.TryStartDoAfter(doargs);
