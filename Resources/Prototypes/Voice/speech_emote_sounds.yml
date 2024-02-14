@@ -157,10 +157,14 @@
 
 - type: emoteSounds
   id: UnisexVox
-  sound:
-    path: /Audio/Voice/Vox/shriek1.ogg
-    params:
-      variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Vox/shriek1.ogg
+    Laugh:
+      path: /Audio/Voice/Vox/vox_laugh.ogg
+  params:
+    variation: 0.125
+    # We need vox sounds for the other emotes
 
 - type: emoteSounds
   id: UnisexDiona
