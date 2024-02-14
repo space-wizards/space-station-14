@@ -1,12 +1,18 @@
 - type: species
   id: Vox
-  name: Vox
+  name: species-name-vox
   roundStart: false # sad...
   prototype: MobVox
   sprites: MobVoxSprites
   markingLimits: MobVoxMarkingLimits
   dollPrototype: MobVoxDummy
   skinColoration: Hues
+  maleFirstNames: names_vox
+  femaleFirstNames: names_vox
+  naming: First
+  sexes:
+    - Unsexed
+
 
 - type: speciesBaseSprites
   id: MobVoxSprites

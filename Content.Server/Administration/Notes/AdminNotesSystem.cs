@@ -3,7 +3,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.EUI;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -12,17 +11,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Notes;
 
-public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
+public sealed class AdminNotesSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IAdminNotesManager _notes = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly EuiManager _euis = default!;
-
-    public const string SawmillId = "admin.notes_system";
-    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
@@ -65,7 +60,7 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
 
         if (!_playerManager.TryGetPlayerData(e.Session.UserId, out var playerData))
         {
-            _sawmill.Error($"Could not get player data for ID {e.Session.UserId}");
+            Log.Error($"Could not get player data for ID {e.Session.UserId}");
         }
 
         var username = playerData?.UserName ?? e.Session.UserId.ToString();
@@ -83,15 +78,10 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
                 var ui = new AdminMessageEui();
                 _euis.OpenEui(ui, e.Session);
                 ui.SetMessage(message);
-				
+
 				// Only send the message if they haven't seen it yet
 				_chat.DispatchServerMessage(e.Session, messageString);
             }
         }
-    }
-
-    public void PostInject()
-    {
-        _sawmill = _logManager.GetSawmill(SawmillId);
     }
 }
