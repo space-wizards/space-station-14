@@ -44,7 +44,6 @@ public sealed class LockSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
     {
-        _appearanceSystem.SetData(uid, LockVisuals.CanLock, true);
         _appearanceSystem.SetData(uid, LockVisuals.Locked, lockComp.Locked);
     }
 

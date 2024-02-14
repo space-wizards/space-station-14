@@ -130,6 +130,5 @@ public sealed partial class UnlockDoAfter : DoAfterEvent
 [Serializable]
 public enum LockVisuals : byte
 {
-    CanLock,
     Locked
 }
