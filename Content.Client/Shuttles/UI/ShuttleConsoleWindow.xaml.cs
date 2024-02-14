@@ -124,11 +124,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         Dock,
     }
 
-    public void UpdateState(ShuttleBoundUserInterfaceState cState)
+    public void UpdateState(EntityUid owner, ShuttleBoundUserInterfaceState cState)
     {
         var coordinates = _entManager.GetCoordinates(cState.NavState.Coordinates);
         NavContainer.SetShuttle(coordinates?.EntityId);
         MapContainer.SetShuttle(coordinates?.EntityId);
+        MapContainer.SetConsole(owner);
 
         NavContainer.UpdateState(cState.NavState);
         MapContainer.UpdateState(cState.MapState);

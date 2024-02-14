@@ -7,9 +7,11 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Shuttles.UI;
@@ -24,6 +26,7 @@ public sealed partial class MapScreen : BoxContainer
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSystem;
 
+    private EntityUid? _console;
     private EntityUid? _shuttleEntity;
 
     private FTLState _state;
@@ -33,6 +36,9 @@ public sealed partial class MapScreen : BoxContainer
     /// When the next FTL state change happens.
     /// </summary>
     private TimeSpan _nextFtlTime;
+
+    private TimeSpan _nextPing;
+    private TimeSpan _pingCooldown = TimeSpan.FromSeconds(3);
 
     private StyleBoxFlat _ftlStyle;
 
@@ -122,6 +128,11 @@ public sealed partial class MapScreen : BoxContainer
         MapRadar.FtlMode = obj.Pressed;
     }
 
+    public void SetConsole(EntityUid? console)
+    {
+        _console = console;
+    }
+
     public void SetShuttle(EntityUid? shuttle)
     {
         _shuttleEntity = shuttle;
@@ -130,16 +141,14 @@ public sealed partial class MapScreen : BoxContainer
 
     private void OnVisChange(Control obj)
     {
-        if (obj.Visible)
-        {
-            // Centre map screen to the shuttle.
-            if (_shuttleEntity != null)
-            {
-                var mapPos = _xformSystem.GetMapCoordinates(_shuttleEntity.Value);
-                MapRadar.SetMap(mapPos.MapId, mapPos.Position);
-            }
+        if (!obj.Visible)
+            return;
 
-            BuildMapObjects();
+        // Centre map screen to the shuttle.
+        if (_shuttleEntity != null)
+        {
+            var mapPos = _xformSystem.GetMapCoordinates(_shuttleEntity.Value);
+            MapRadar.SetMap(mapPos.MapId, mapPos.Position);
         }
     }
 
@@ -148,12 +157,25 @@ public sealed partial class MapScreen : BoxContainer
     /// </summary>
     public void PingMap()
     {
-        _audio.PlayEntity()
+        if (_console != null)
+        {
+            _audio.PlayEntity(new SoundPathSpecifier("/Audio/Effects/Shuttle/radar_ping.ogg"), Filter.Local(), _console.Value, true);
+        }
+
+        // TODO: Get beacons / whatever objects are relevant
+        // Sort it by distance (also across maps)
+        // Then work through this list in frameupdate
+
+        // TODO: Always add our own shuttle every time.
+        BuildMapObjects();
+
+        _nextPing = _timing.CurTime + _pingCooldown;
+        MapRebuildButton.Disabled = true;
     }
 
     private void MapRebuildPressed(BaseButton.ButtonEventArgs obj)
     {
-        BuildMapObjects();
+        PingMap();
     }
 
     private void BuildMapObjects()
@@ -303,6 +325,13 @@ public sealed partial class MapScreen : BoxContainer
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+
+        var curTime = _timing.CurTime;
+
+        if (_nextPing < curTime)
+        {
+            MapRebuildButton.Disabled = false;
+        }
 
         var ftlDiff = (float) (_nextFtlTime - _timing.CurTime).TotalSeconds;
 
