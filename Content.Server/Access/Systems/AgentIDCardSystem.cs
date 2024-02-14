@@ -48,7 +48,7 @@ namespace Content.Server.Access.Systems
                 return;
             }
 
-            Dirty(access);
+            Dirty(uid, access);
 
             if (addedLength == 1)
             {

@@ -18,11 +18,6 @@ namespace Content.Benchmarks
 
         public static void Main(string[] args)
         {
-            MainAsync(args).GetAwaiter().GetResult();
-        }
-
-        public static async Task MainAsync(string[] args)
-        {
 #if DEBUG
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\nWARNING: YOU ARE RUNNING A DEBUG BUILD, USE A RELEASE BUILD FOR AN ACCURATE BENCHMARK");

@@ -1,163 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: The fireaxe can now fight fires (melee hits reduce fire stacks).
-    type: Tweak
-  id: 5419
-  time: '2023-12-19T02:41:33.0000000+00:00'
-  url: null
-- author: SapphicOverload
-  changes:
-  - message: EVA and hardsuit helmets now allow breathing from gas tanks without a
-      mask.
-    type: Tweak
-  id: 5420
-  time: '2023-12-19T02:50:06.0000000+00:00'
-  url: null
-- author: RiceMar
-  changes:
-  - message: Station department exteriors now feature janitorial service lights for
-      directing janitors to the big messes they cant see!
-    type: Add
-  id: 5421
-  time: '2023-12-19T04:21:12.0000000+00:00'
-  url: null
-- author: SlamBamActionman
-  changes:
-  - message: Fixed compatability with old changelog format.
-    type: Fix
-  id: 5422
-  time: '2023-12-19T05:22:24.0000000+00:00'
-  url: null
-- author: notafet
-  changes:
-  - message: Security sunglasses, researchable from arsenal technology, now display
-      the security HUD.
-    type: Tweak
-  id: 5423
-  time: '2023-12-19T08:29:07.0000000+00:00'
-  url: null
-- author: Emisse
-  changes:
-  - message: Captain clothing items have been resprited
-    type: Tweak
-  id: 5424
-  time: '2023-12-19T20:36:36.0000000+00:00'
-  url: null
-- author: Stanislav4ix
-  changes:
-  - message: Added ore bag of holding!
-    type: Add
-  id: 5425
-  time: '2023-12-19T22:28:56.0000000+00:00'
-  url: null
-- author: TGODiamond
-  changes:
-  - message: Item size cannot be misinterpreted now.
-    type: Fix
-  id: 5426
-  time: '2023-12-20T00:31:39.0000000+00:00'
-  url: null
-- author: Veritius
-  changes:
-  - message: Ethylredoxrazine is more effective at treating drunkness.
-    type: Tweak
-  id: 5427
-  time: '2023-12-20T02:20:04.0000000+00:00'
-  url: null
-- author: Errant
-  changes:
-  - message: HUD elements no longer violate the Geneva Conventions.
-    type: Fix
-  id: 5428
-  time: '2023-12-20T04:28:03.0000000+00:00'
-  url: null
-- author: ERORR404V1
-  changes:
-  - message: NanoTrasen botanists have bred a new blinking plant
-    type: Add
-  id: 5429
-  time: '2023-12-20T04:57:02.0000000+00:00'
-  url: null
-- author: qwerltaz
-  changes:
-  - message: Improve the gas analyzer interface.
-    type: Tweak
-  id: 5430
-  time: '2023-12-20T17:56:57.0000000+00:00'
-  url: null
-- author: JoeHammad
-  changes:
-  - message: Fland now has its own shuttle, ported from ss13
-    type: Add
-  id: 5431
-  time: '2023-12-20T23:26:07.0000000+00:00'
-  url: null
-- author: joshepvodka
-  changes:
-  - message: CentCom bureaucrats are now twice as powerful with their new custom-made
-      clipboards and folders.
-    type: Add
-  id: 5432
-  time: '2023-12-20T23:29:35.0000000+00:00'
-  url: null
-- author: PJB3005
-  changes:
-  - message: Fix starting to follow a moving player as a ghost causing your camera
-      to keep jumping around anymore.
-    type: Fix
-  id: 5433
-  time: '2023-12-20T23:33:00.0000000+00:00'
-  url: null
-- author: Velcroboy
-  changes:
-  - message: Fixed coal not generating!
-    type: Fix
-  id: 5434
-  time: '2023-12-20T23:46:20.0000000+00:00'
-  url: null
-- author: whateverusername0
-  changes:
-  - message: "Miasma now reacts with oxygen at 50\xB0C to produce nitrous oxide and\
-      \ water vapor."
-    type: Add
-  id: 5435
-  time: '2023-12-21T00:14:59.0000000+00:00'
-  url: null
-- author: whateverusername0
-  changes:
-  - message: Nitrous oxide now decomposes at high temperatures.
-    type: Add
-  id: 5436
-  time: '2023-12-21T01:33:08.0000000+00:00'
-  url: null
-- author: Emisse
-  changes:
-  - message: Crates and lockers are slightly easier to bust open but still harder
-      than before.
-    type: Tweak
-  - message: Solid walls are easier to break but reinforced are the same.
-    type: Tweak
-  id: 5437
-  time: '2023-12-21T03:03:06.0000000+00:00'
-  url: null
-- author: mirrorcult
-  changes:
-  - message: Miasma has been renamed to Ammonia
-    type: Add
-  - message: Miasmic subsumation reaction has been removed
-    type: Remove
-  id: 5438
-  time: '2023-12-21T04:19:50.0000000+00:00'
-  url: null
-- author: joshepvodka
-  changes:
-  - message: NanoTrasen updated the designs for their emergency medipens. Space medipens
-      are now magenta colored and epi pens have a green band on them.
-    type: Tweak
-  id: 5439
-  time: '2023-12-21T05:30:58.0000000+00:00'
-  url: null
 - author: Hqlle
   changes:
   - message: Resprited carpet sprites.
@@ -3874,3 +3715,169 @@
   id: 5918
   time: '2024-02-11T20:47:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25119
+- author: Plykiya
+  changes:
+  - message: Door remotes no longer have their 5G signals absorbed by mobs, machines,
+      or Ian's cute butt.
+    type: Fix
+  id: 5919
+  time: '2024-02-12T02:34:13.532550+00:00'
+  url: null
+- author: FungiFellow
+  changes:
+  - message: Lowered Reoccurence Delay for Ion Storm
+    type: Tweak
+  id: 5920
+  time: '2024-02-12T02:35:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25135
+- author: PoorMansDreams
+  changes:
+  - message: Ammo is now tipped!
+    type: Tweak
+  id: 5921
+  time: '2024-02-12T03:02:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25103
+- author: PoorMansDreams
+  changes:
+  - message: Buyable Janitorial Trolley!
+    type: Add
+  id: 5922
+  time: '2024-02-12T06:35:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25139
+- author: Plykiya
+  changes:
+  - message: Stun batons and stun prods now display their hits remaining.
+    type: Tweak
+  id: 5923
+  time: '2024-02-12T06:36:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25141
+- author: Ilya246
+  changes:
+  - message: Autolathes may now make empty air tanks.
+    type: Add
+  id: 5924
+  time: '2024-02-12T06:37:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25130
+- author: Ubaser
+  changes:
+  - message: Resprited the CE's jetpack.
+    type: Tweak
+  id: 5925
+  time: '2024-02-12T20:44:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25150
+- author: EdenTheLiznerd
+  changes:
+  - message: Deathnettles are no longer able to bypass armor and don't do as much
+      damage
+    type: Tweak
+  id: 5926
+  time: '2024-02-13T01:20:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25068
+- author: Vasilis
+  changes:
+  - message: You can now inspect peoples id's and health though glass if you are within
+      details range.
+    type: Tweak
+  id: 5927
+  time: '2024-02-13T06:41:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25163
+- author: metalgearsloth
+  changes:
+  - message: Fix decal error spam in console due to a missing overlay.
+    type: Fix
+  id: 5928
+  time: '2024-02-13T07:10:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25170
+- author: jamessimo
+  changes:
+  - message: Can now "wink" with the text emote ;) or ;]
+    type: Add
+  - message: Can now "tearfully smile" with the text emote :') and similar variants
+    type: Add
+  - message: Added more ways to "cry" with the emote :'( and similar variants
+    type: Tweak
+  id: 5929
+  time: '2024-02-13T15:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25129
+- author: icekot8
+  changes:
+  - message: Medical berets added to MediDrobe
+    type: Add
+  id: 5930
+  time: '2024-02-13T21:37:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25176
+- author: PoorMansDreams
+  changes:
+  - message: Alternate ammo now has the proper appearance when spent.
+    type: Fix
+  id: 5931
+  time: '2024-02-13T21:40:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25167
+- author: Agoichi
+  changes:
+  - message: All hoods have tag "Hides Hair"
+    type: Tweak
+  - message: Plague Doctor's hat and Witch hat (with red hair) have tag "Hides Hair"
+    type: Tweak
+  id: 5932
+  time: '2024-02-13T21:43:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25142
+- author: Blackern5000
+  changes:
+  - message: Advanced topical meds now cost significantly less chemicals
+    type: Tweak
+  id: 5933
+  time: '2024-02-13T22:03:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24948
+- author: Tayrtahn
+  changes:
+  - message: Drink bottles can now be opened and closed from the verbs menu, and some
+      have been given tamper-evident seals.
+    type: Add
+  id: 5934
+  time: '2024-02-13T22:08:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24780
+- author: TheShuEd
+  changes:
+  - message: Darkness is coming. A new shadow anomaly added.
+    type: Add
+  id: 5935
+  time: '2024-02-13T22:12:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24629
+- author: jamessimo
+  changes:
+  - message: Microwave UI enhancements
+    type: Tweak
+  - message: Microwaves now tell you how much time is left when cooking
+    type: Tweak
+  - message: Microwaves UI now uses prediction for user inputs.
+    type: Fix
+  id: 5936
+  time: '2024-02-13T22:16:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24547
+- author: TheShuEd
+  changes:
+  - message: Remote signallers are now limited to a 15-tile radius
+    type: Tweak
+  - message: Added an advanced remote signaler, with a range of 30 tiles.
+    type: Add
+  - message: the anomaly synchronizer consumes much less power, and no longer causes
+      the anomaly pulses when powering down.
+    type: Tweak
+  id: 5937
+  time: '2024-02-13T22:19:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24461
+- author: joshepvodka
+  changes:
+  - message: Fax machines can now print text files from your computer.
+    type: Add
+  id: 5938
+  time: '2024-02-14T01:14:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/23262
+- author: Plykiya
+  changes:
+  - message: Holosigns can now be placed at range. No more being eaten by forcefields!
+    type: Tweak
+  id: 5939
+  time: '2024-02-14T05:25:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25120

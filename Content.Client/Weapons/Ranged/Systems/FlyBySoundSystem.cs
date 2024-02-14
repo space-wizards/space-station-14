@@ -24,7 +24,7 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
 
     private void OnCollide(EntityUid uid, FlyBySoundComponent component, ref StartCollideEvent args)
     {
-        var attachedEnt = _player.LocalPlayer?.ControlledEntity;
+        var attachedEnt = _player.LocalEntity;
 
         // If it's not our ent or we shot it.
         if (attachedEnt == null ||
