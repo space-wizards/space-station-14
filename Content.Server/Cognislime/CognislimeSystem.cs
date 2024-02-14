@@ -9,6 +9,9 @@ using Content.Shared.Speech;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Cognislime;
 using Content.Shared.Whitelist;
+using Content.Shared.Interaction.Components;
+using Robust.Shared.Physics;
+using Content.Server.Resist;
 
 namespace Content.Server.Cognislime;
 
@@ -70,13 +73,13 @@ public sealed partial class CognislimeSystem : SharedCognislimeSystem
         var target = args.Target.Value;
 
         EntityManager.EnsureComponent<MindContainerComponent>(target);
+        EntityManager.EnsureComponent<ExaminerComponent>(target);
 
-        if (!EntityManager.HasComponent<GhostRoleComponent>(uid))
+        if (!EntityManager.HasComponent<GhostRoleComponent>(target))
         {
             var ghostRole = EntityManager.AddComponent<GhostRoleComponent>(target);
-            ghostRole.RoleName = "cognislimzed";
-            ghostRole.RoleDescription = "something";
-            ghostRole.RoleRules = "thou shalt not kill";
+            ghostRole.RoleName = EntityManager.GetComponent<MetaDataComponent>(target).EntityName;
+            ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognislime-description");
             EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target);
         }
 
@@ -85,6 +88,10 @@ public sealed partial class CognislimeSystem : SharedCognislimeSystem
             EntityManager.EnsureComponent<InputMoverComponent>(target);
             EntityManager.EnsureComponent<MobMoverComponent>(target);
             EntityManager.EnsureComponent<MovementSpeedModifierComponent>(target);
+            EntityManager.EnsureComponent<CanEscapeInventoryComponent>(target);
+            EntityManager.RemoveComponent<BlockMovementComponent>(target);
+
+            // Todo: change fixtures so affected entities can't do stuff like push tanks by walking into them
         }
 
         if (component.CanSpeak)
@@ -92,8 +99,6 @@ public sealed partial class CognislimeSystem : SharedCognislimeSystem
             EntityManager.EnsureComponent<SpeechComponent>(target);
             EntityManager.EnsureComponent<EmotingComponent>(target);
         }
-        _audio.PlayPredicted(component.CognislimeSound, target, args.User);
-        EntityManager.EnsureComponent<ExaminerComponent>(target);
 
         QueueDel(uid);
     }

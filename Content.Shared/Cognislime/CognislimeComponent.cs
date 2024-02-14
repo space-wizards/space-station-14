@@ -21,7 +21,7 @@ public sealed partial class CognislimeComponent : Component
     public bool CanSpeak = true;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("canMove"), AutoNetworkedField]
-    public bool CanMove = true;
+    public bool CanMove = false;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist"), AutoNetworkedField]
     public EntityWhitelist? Whitelist = new()
@@ -38,15 +38,8 @@ public sealed partial class CognislimeComponent : Component
     public EntityWhitelist? Blacklist = new()
     {
         Components = new[]
-    {
+        {
             "NukeDisk",
         }
     };
-
-    /// <summary>
-    /// Sound that gets played when slime is applied.
-    /// </summary>
-    /// <returns></returns>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundCognislime"), AutoNetworkedField]
-    public SoundSpecifier? CognislimeSound = new SoundPathSpecifier("/Audio/Items/Mining/fultext_deploy.ogg");
 }
