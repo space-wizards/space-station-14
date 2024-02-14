@@ -101,7 +101,7 @@ public sealed partial class ShuttleConsoleSystem
                 continue;
 
             exclusions ??= new List<ShuttleExclusionObject>();
-            exclusions.Add(new ShuttleExclusionObject(GetNetCoordinates(xform.Coordinates), comp.Range));
+            exclusions.Add(new ShuttleExclusionObject(GetNetCoordinates(xform.Coordinates), comp.Range, Loc.GetString("shuttle-console-exclusion")));
         }
     }
 

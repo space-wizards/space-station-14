@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Shuttles.Systems;
 using Content.Shared.Shuttles.BUIStates;
@@ -51,8 +52,8 @@ public sealed partial class MapScreen : BoxContainer
     private TimeSpan _pingCooldown = TimeSpan.FromSeconds(3);
     private TimeSpan _nextMapDequeue;
 
-    private float _minMapDequeue = 0.2f;
-    private float _maxMapDequeue = 0.5f;
+    private float _minMapDequeue = 0.05f;
+    private float _maxMapDequeue = 0.25f;
 
     private StyleBoxFlat _ftlStyle;
 
@@ -62,6 +63,13 @@ public sealed partial class MapScreen : BoxContainer
     private readonly Dictionary<MapId, BoxContainer> _mapHeadings = new();
     private readonly Dictionary<MapId, List<IMapObject>> _mapObjects = new();
     private readonly List<(MapId mapId, IMapObject mapobj)> _pendingMapObjects = new();
+
+    /// <summary>
+    /// Store the names of map object controls for re-sorting later.
+    /// </summary>
+    private Dictionary<Control, string> _mapObjectControls = new();
+
+    private List<Control> _sortChildren = new();
 
     public MapScreen()
     {
@@ -114,19 +122,24 @@ public sealed partial class MapScreen : BoxContainer
         switch (_state)
         {
             case FTLState.Available:
+                SetFTLAllowed(true);
                 _ftlStyle.BackgroundColor = Color.FromHex("#80C71F");
                 MapRadar.InFtl = false;
                 break;
             case FTLState.Starting:
+                SetFTLAllowed(false);
                 _ftlStyle.BackgroundColor = Color.FromHex("#169C9C");
                 break;
             case FTLState.Travelling:
+                SetFTLAllowed(false);
                 _ftlStyle.BackgroundColor = Color.FromHex("#8932B8");
                 break;
             case FTLState.Arriving:
+                SetFTLAllowed(false);
                 _ftlStyle.BackgroundColor = Color.FromHex("#F9801D");
                 break;
             case FTLState.Cooldown:
+                SetFTLAllowed(false);
                 // Scroll to the FTL spot
                 if (_entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform))
                 {
@@ -139,6 +152,27 @@ public sealed partial class MapScreen : BoxContainer
                 break;
             default:
                 throw new NotImplementedException();
+        }
+
+        if (IsFTLBlocked())
+        {
+            MapRebuildButton.Disabled = true;
+            ClearMapObjects();
+        }
+    }
+
+    private void SetFTLAllowed(bool value)
+    {
+        if (value)
+        {
+            MapFTLButton.Disabled = false;
+        }
+        else
+        {
+            // Unselect FTL
+            MapFTLButton.Pressed = false;
+            MapRadar.FtlMode = false;
+            MapFTLButton.Disabled = true;
         }
     }
 
@@ -198,12 +232,24 @@ public sealed partial class MapScreen : BoxContainer
         PingMap();
     }
 
-    private void RebuildMapObjects()
+    /// <summary>
+    /// Clears all sector objects across all maps (e.g. if we start FTLing or need to re-ping).
+    /// </summary>
+    private void ClearMapObjects()
     {
+        _mapObjectControls.Clear();
         HyperspaceDestinations.DisposeAllChildren();
         _pendingMapObjects.Clear();
         _mapObjects.Clear();
         _mapHeadings.Clear();
+    }
+
+    /// <summary>
+    /// Gets all map objects at time of ping and adds them to pending to be added over time.
+    /// </summary>
+    private void RebuildMapObjects()
+    {
+        ClearMapObjects();
 
         if (_shuttleEntity == null)
             return;
@@ -220,9 +266,11 @@ public sealed partial class MapScreen : BoxContainer
         while (mapComps.MoveNext(out var mapUid, out var mapComp, out var mapXform, out var mapMetadata))
         {
             // If it's our map OR a valid FTL destination then show it
+            // Also exclude FTL (this also inadervtantly fixes ordering conditions upon coming out of FTL).
             if (ourMap != mapXform.MapID &&
                 (!destQuery.TryGetComponent(mapUid, out var mapDest) ||
-                 mapDest.Whitelist?.IsValid(_shuttleEntity.Value, _entManager) == false))
+                 mapDest.Whitelist?.IsValid(_shuttleEntity.Value, _entManager) == false) ||
+                _entManager.HasComponent<FTLMapComponent>(mapUid))
             {
                 continue;
             }
@@ -270,6 +318,8 @@ public sealed partial class MapScreen : BoxContainer
                 }
             };
 
+            _mapHeadings.Add(mapComp.MapId, gridContents);
+
             foreach (var grid in _mapManager.GetAllMapGrids(mapComp.MapId))
             {
                 var gridObj = new GridMapObject()
@@ -299,7 +349,6 @@ public sealed partial class MapScreen : BoxContainer
                 _pendingMapObjects.Add((mapComp.MapId, beacon));
             }
 
-            _mapHeadings.Add(mapComp.MapId, gridContents);
             HyperspaceDestinations.AddChild(mapButton);
 
             // Zoom in to our map
@@ -315,19 +364,22 @@ public sealed partial class MapScreen : BoxContainer
 
         _pendingMapObjects.Sort((x, y) =>
         {
-            if (x.mapId == ourMap)
+            if (x.mapId == ourMap && y.mapId != ourMap)
                 return 1;
 
-            if (y.mapId == ourMap)
+            if (y.mapId == ourMap && x.mapId != ourMap)
                 return -1;
 
             var yMapPos = _shuttles.GetMapCoordinates(y.mapobj);
             var xMapPos = _shuttles.GetMapCoordinates(x.mapobj);
 
-            return (xMapPos.Position - shuttlePos).Length().CompareTo((yMapPos.Position - shuttlePos).Length());
+            return (yMapPos.Position - shuttlePos).Length().CompareTo((xMapPos.Position - shuttlePos).Length());
         });
     }
 
+    /// <summary>
+    /// Hides other maps upon the specified collapsible being selected (AKA hacky collapsible groups).
+    /// </summary>
     private void HideOtherCollapsibles(Collapsible collapsible)
     {
         foreach (var child in HyperspaceDestinations.Children)
@@ -339,17 +391,24 @@ public sealed partial class MapScreen : BoxContainer
         }
     }
 
-    private void OnMapObjectPress(IMapObject mapObject)
+    /// <summary>
+    /// Returns true if we shouldn't be able to select the FTL button.
+    /// </summary>
+    private bool IsFTLBlocked()
     {
         switch (_state)
         {
             case FTLState.Available:
-                break;
-            case FTLState.Cooldown:
-                break;
+                return false;
             default:
-                return;
+                return true;
         }
+    }
+
+    private void OnMapObjectPress(IMapObject mapObject)
+    {
+        if (IsFTLBlocked())
+            return;
 
         var coordinates = _shuttles.GetMapCoordinates(mapObject);
 
@@ -391,12 +450,35 @@ public sealed partial class MapScreen : BoxContainer
             }
         };
 
+        _mapObjectControls.Add(gridContainer, mapObj.Name);
         gridContents.AddChild(gridContainer);
 
         gridButton.OnPressed += args =>
         {
             OnMapObjectPress(mapObj);
         };
+
+        if (gridContents.ChildCount > 1)
+        {
+            // Re-sort the children
+            _sortChildren.Clear();
+
+            foreach (var child in gridContents.Children)
+            {
+                DebugTools.Assert(_mapObjectControls.ContainsKey(child));
+                _sortChildren.Add(child);
+            }
+
+            foreach (var child in _sortChildren)
+            {
+                child.Orphan();
+            }
+
+            foreach (var control in _mapObjectControls.OrderBy(x => x.Value))
+            {
+                gridContents.AddChild(control.Key);
+            }
+        }
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -413,7 +495,7 @@ public sealed partial class MapScreen : BoxContainer
             BumpMapDequeue();
         }
 
-        if (_nextPing < curTime)
+        if (!IsFTLBlocked() && _nextPing < curTime)
         {
             MapRebuildButton.Disabled = false;
         }
@@ -436,8 +518,8 @@ public sealed partial class MapScreen : BoxContainer
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        MapRadar.SetMapObjects(_mapObjects);
         base.Draw(handle);
-        MapRadar.DrawMapObjects(handle, _mapObjects);
     }
 
     public void Startup()

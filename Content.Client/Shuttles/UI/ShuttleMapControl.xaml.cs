@@ -64,9 +64,11 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private List<IMapObject> _beacons = new();
 
     // Per frame data to avoid re-allocating
-    private Dictionary<Color, List<Vector2>> _verts = new();
-    private Dictionary<Color, List<Vector2>> _edges = new();
-    private Dictionary<Color, List<(Vector2, string)>> _strings = new();
+    private readonly List<IMapObject> _mapObjects = new();
+    private readonly Dictionary<Color, List<Vector2>> _verts = new();
+    private readonly Dictionary<Color, List<Vector2>> _edges = new();
+    private readonly Dictionary<Color, List<(Vector2, string)>> _strings = new();
+    private readonly List<ShuttleExclusionObject> _viewportExclusions = new();
 
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
@@ -222,21 +224,23 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         return results;
     }
 
-    public void DrawMapObjects(DrawingHandleScreen handle, Dictionary<MapId, List<IMapObject>> allMapObjects)
+    protected override void Draw(DrawingHandleScreen handle)
     {
-        Draw(handle);
+        base.Draw(handle);
 
         if (ViewingMap == MapId.Nullspace)
             return;
 
+        var mapObjects = _mapObjects;
         DrawRecenter();
 
-        if (InFtl || !allMapObjects.TryGetValue(ViewingMap, out var mapObjects))
+        if (InFtl || mapObjects.Count == 0)
         {
             DrawBacking(handle);
             DrawNoSignal(handle);
             return;
         }
+
         DrawParallax(handle);
 
         var viewedMapUid = _mapManager.GetMapEntityId(ViewingMap);
@@ -244,7 +248,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var realTime = _timing.RealTime;
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
         var viewportObjects = GetViewportMapObjects(matty, mapObjects);
-        var viewportExclusions = new List<ShuttleExclusionObject>();
+        _viewportExclusions.Clear();
 
         // Draw our FTL range + no FTL zones
         // Do it up here because we want this layered below most things.
@@ -265,33 +269,33 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 range *= MinimapScale;
                 handle.DrawCircle(gridUiPos, range, Color.Gold, filled: false);
             }
+        }
 
-            var exclusionColor = Color.Red;
+        var exclusionColor = Color.Red;
 
-            // Exclusions need a bumped range so we check all the ones on the map.
-            foreach (var mapObj in mapObjects)
+        // Exclusions need a bumped range so we check all the ones on the map.
+        foreach (var mapObj in mapObjects)
+        {
+            if (mapObj is not ShuttleExclusionObject exclusion)
+                continue;
+
+            // Check if it even intersects the viewport.
+            var coords = EntManager.GetCoordinates(exclusion.Coordinates);
+            var mapCoords = _xformSystem.ToMapCoordinates(coords);
+            var enlargedBounds = viewBox.Enlarged(exclusion.Range);
+
+            if (mapCoords.MapId != ViewingMap ||
+                !enlargedBounds.Contains(mapCoords.Position))
             {
-                if (mapObj is not ShuttleExclusionObject exclusion)
-                    continue;
-
-                // Check if it even intersects the viewport.
-                var coords = EntManager.GetCoordinates(exclusion.Coordinates);
-                var mapCoords = _xformSystem.ToMapCoordinates(coords);
-                var enlargedBounds = viewBox.Enlarged(exclusion.Range);
-
-                if (mapCoords.MapId != ViewingMap ||
-                    !enlargedBounds.Contains(mapCoords.Position))
-                {
-                    continue;
-                }
-
-                var adjustedPos = matty.Transform(mapCoords.Position);
-                var localPos = ScalePosition(adjustedPos with { Y = -adjustedPos.Y});
-                handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor.WithAlpha(0.05f));
-                handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor, filled: false);
-
-                viewportExclusions.Add(exclusion);
+                continue;
             }
+
+            var adjustedPos = matty.Transform(mapCoords.Position);
+            var localPos = ScalePosition(adjustedPos with { Y = -adjustedPos.Y});
+            handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor.WithAlpha(0.05f));
+            handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor, filled: false);
+
+            _viewportExclusions.Add(exclusion);
         }
 
         _verts.Clear();
@@ -358,7 +362,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             AddMapObject(existingEdges, existingVerts, mapObject);
 
             // Text
-            var iffText = _shuttles.GetIFFLabel(grid, component: iffComp);
+            // Force drawing it at this point.
+            var iffText = _shuttles.GetIFFLabel(grid, self: true, component: iffComp);
 
             if (string.IsNullOrEmpty(iffText))
                 continue;
@@ -421,7 +426,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     var mouseMapPos = InverseMapPosition(mouseLocalPos);
 
                     var ftlFree = (!beaconsOnly || foundBeacon != default) &&
-                                  _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(viewedMapUid, mouseMapPos), _ftlAngle, viewportExclusions);
+                                  _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(viewedMapUid, mouseMapPos), _ftlAngle, _viewportExclusions);
 
                     var color = ftlFree ? Color.LimeGreen : Color.Magenta;
 
@@ -592,5 +597,18 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         }
 
         return foundBeacon != default;
+    }
+
+    /// <summary>
+    /// Sets the map objects for the next draw.
+    /// </summary>
+    public void SetMapObjects(Dictionary<MapId, List<IMapObject>> mapObjects)
+    {
+        _mapObjects.Clear();
+
+        if (mapObjects.TryGetValue(ViewingMap, out var obbies))
+        {
+            _mapObjects.AddRange(obbies);
+        }
     }
 }

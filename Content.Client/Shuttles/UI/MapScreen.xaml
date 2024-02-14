@@ -38,6 +38,11 @@
                     <controls:Label Name="SettingsLabel" Text="{controls:Loc 'shuttle-console-map-settings'}"
                            HorizontalAlignment="Center"/>
                 </controls1:StripeBack>
+                <controls:Button Name="MapBeaconsButton"
+                                 Text="{controls:Loc 'shuttle-console-map-beacons'}"
+                                 TextAlign="Center"
+                                 ToggleMode="True"
+                                 Pressed="True"/>
                 <controls:Button Name="MapFTLButton"
                                  ToggleMode="True"
                                  Text="{controls:Loc 'shuttle-console-ftl-button'}"
@@ -45,11 +50,6 @@
                 <controls:Button Name="MapRebuildButton"
                         Text="{controls:Loc 'shuttle-console-map-rebuild'}"
                         TextAlign="Center"/>
-                <controls:Button Name="MapBeaconsButton"
-                                 Text="{controls:Loc 'shuttle-console-map-beacons'}"
-                                 TextAlign="Center"
-                                 ToggleMode="True"
-                                 Pressed="True"/>
                 <!-- Map objects -->
                 <controls1:StripeBack MinSize="48 48">
                     <controls:Label Name="HyperspaceLabel" Text="{controls:Loc 'shuttle-console-map-objects'}"

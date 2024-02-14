@@ -14,6 +14,7 @@ shuttle-console-angular-velocity = Angular velocity:
 
 shuttle-console-unknown = Unknown
 shuttle-console-iff-label = {$name} ({$distance}m)
+shuttle-console-exclusion = Exclusion area
 
 shuttle-console-nav-settings = Settings
 shuttle-console-iff-toggle = Show IFF
