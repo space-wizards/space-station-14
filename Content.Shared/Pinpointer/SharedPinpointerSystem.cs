@@ -41,7 +41,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
+    public virtual void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return;
@@ -84,7 +84,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.DistanceToTarget = distance;
-        Dirty(pinpointer);
+        Dirty(uid, pinpointer);
     }
 
     /// <summary>
@@ -101,7 +101,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return false;
 
         pinpointer.ArrowAngle = arrowAngle;
-        Dirty(pinpointer);
+        Dirty(uid, pinpointer);
 
         return true;
     }
@@ -117,7 +117,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.IsActive = isActive;
-        Dirty(pinpointer);
+        Dirty(uid, pinpointer);
     }
 
 
@@ -125,7 +125,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     Toggle Pinpointer screen. If it has target it will start tracking it.
     /// </summary>
     /// <returns>True if pinpointer was activated, false otherwise</returns>
-    public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
+    public virtual bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return false;

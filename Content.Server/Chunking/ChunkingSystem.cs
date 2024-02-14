@@ -29,13 +29,7 @@ public sealed class ChunkingSystem : EntitySystem
     {
         base.Initialize();
         _xformQuery = GetEntityQuery<TransformComponent>();
-        _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _configurationManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
+        Subs.CVar(_configurationManager, CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
     }
 
     private void OnPvsRangeChanged(float value)
