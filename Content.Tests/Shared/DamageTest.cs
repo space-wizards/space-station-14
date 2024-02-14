@@ -121,9 +121,9 @@ namespace Content.Tests.Shared
             damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 4);
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
-            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.34))); // doesn't divide evenly, so the 0.01 goes to the last one
 
             damageSpec = new(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 4);
@@ -161,7 +161,7 @@ namespace Content.Tests.Shared
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(30)));
             Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // resistances don't apply to healing
             Assert.That(!damageSpec.DamageDict.ContainsKey("Slash"));  // Reduction reduced to 0, and removed from specifier
-            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.63)));
+            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.62)));
         }
 
         // Default damage Yaml

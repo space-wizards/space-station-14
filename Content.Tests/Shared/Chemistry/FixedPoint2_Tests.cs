@@ -22,6 +22,7 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(1.005f, "1")]
         [TestCase(1.015f, "1.01")]
         [TestCase(1.05f, "1.05")]
+        [TestCase(-1.05f, "-1.05")]
         public void FixedPoint2FloatTests(float value, string expected)
         {
             var result = FixedPoint2.New(value);

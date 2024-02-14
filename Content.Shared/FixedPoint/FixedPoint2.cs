@@ -50,7 +50,17 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 New(float value)
         {
-            return new((int) (value * ShiftConstant + FloatEpsilon));
+            return new((int) ApplyFloatEpsilon(value * ShiftConstant));
+        }
+
+        private static float ApplyFloatEpsilon(float value)
+        {
+            return value + FloatEpsilon * Math.Sign(value);
+        }
+
+        private static double ApplyFloatEpsilon(double value)
+        {
+            return value + FloatEpsilon * Math.Sign(value);
         }
 
         /// <summary>
@@ -63,7 +73,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 New(double value)
         {
-            return new((int) (value * ShiftConstant + FloatEpsilon));
+            return new((int) ApplyFloatEpsilon(value * ShiftConstant));
         }
 
         public static FixedPoint2 New(string value)
@@ -88,12 +98,12 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, float b)
         {
-            return new((int) (a.Value * b + FloatEpsilon));
+            return new((int) ApplyFloatEpsilon(a.Value * b));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, double b)
         {
-            return new((int) (a.Value * b + FloatEpsilon));
+            return new((int) ApplyFloatEpsilon(a.Value * b));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, int b)
@@ -108,7 +118,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator /(FixedPoint2 a, float b)
         {
-            return new((int) (a.Value / b + FloatEpsilon));
+            return new((int) ApplyFloatEpsilon(a.Value / b));
         }
 
         public static bool operator <=(FixedPoint2 a, int b)
