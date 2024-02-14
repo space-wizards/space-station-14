@@ -1,4 +1,48 @@
 - type: construction
+  name: glass shiv
+  id: Shiv
+  graph: Shiv
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: A glass shard with a piece of cloth wrapped around it.
+  icon: { sprite: Objects/Weapons/Melee/shiv.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: reinforced shiv
+  id: ReinforcedShiv
+  graph: ReinforcedShiv
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: A reinforced glass shard with a piece of cloth wrapped around it.
+  icon: { sprite: Objects/Weapons/Melee/reinforced_shiv.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: plasma shiv
+  id: PlasmaShiv
+  graph: PlasmaShiv
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: A plasma shard with a piece of cloth wrapped around it.
+  icon: { sprite: Objects/Weapons/Melee/plasma_shiv.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: uranium shiv
+  id: UraniumShiv
+  graph: UraniumShiv
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: A uranium shard with a piece of cloth wrapped around it.
+  icon: { sprite: Objects/Weapons/Melee/uranium_shiv.rsi, state: icon }
+  objectType: Item
+
+- type: construction
   name: crude spear
   id: Spear
   graph: Spear
@@ -39,7 +83,7 @@
   targetNode: spear
   category: construction-category-weapons
   description: A crude uranium spear for when you need to put holes in somebody.
-  icon: { sprite: Objects/Weapons/Melee/plasma_spear.rsi, state: spear }
+  icon: { sprite: Objects/Weapons/Melee/uranium_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction

@@ -93,7 +93,7 @@ namespace Content.Server.GameTicking
             {
                 if (job == null)
                 {
-                    var playerSession = _playerManager.GetSessionByUserId(netUser);
+                    var playerSession = _playerManager.GetSessionById(netUser);
                     _chatManager.DispatchServerMessage(playerSession, Loc.GetString("job-not-available-wait-in-lobby"));
                 }
                 else
@@ -110,13 +110,13 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
-                SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
+                SpawnPlayer(_playerManager.GetSessionById(player), profiles[player], station, job, false);
             }
 
             RefreshLateJoinAllowed();
 
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
-            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.Select(x => _playerManager.GetSessionByUserId(x)).ToArray(), profiles, force));
+            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.Select(x => _playerManager.GetSessionById(x)).ToArray(), profiles, force));
         }
 
         private void SpawnPlayer(ICommonSession player, EntityUid station, string? jobId = null, bool lateJoin = true, bool silent = false)

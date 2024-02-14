@@ -64,19 +64,39 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
+    public virtual void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return;
 
-        if (pinpointer.Target == target)
+        if (pinpointer.Target == target || target == null)
             return;
 
         pinpointer.Target = target;
-        if (pinpointer.UpdateTargetName)
-            pinpointer.TargetName = target == null ? null : Identity.Name(target.Value, EntityManager);
-        if (pinpointer.IsActive)
-            UpdateDirectionToTarget(uid, pinpointer);
+
+        //Searches for the name of the tracked entity
+        if (pinpointer.Target != null)
+        {
+            pinpointer.TargetName = Identity.Name(pinpointer.Target.Value, EntityManager);
+        }
+
+        if (user != null && pinpointer.Target != null)
+        {
+            if (pinpointer.TargetName != null)
+            {
+                _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded",
+                    ("target", pinpointer.TargetName)), user.Value, user.Value);
+            }
+
+        }
+
+        //Turns on the pinpointer if the target is changed through the verb menu.
+        if (!pinpointer.IsActive && user != null)
+        {
+            TogglePinpointer(uid, pinpointer);
+        }
+
+        UpdateDirectionToTarget(uid, pinpointer);
     }
 
     /// <summary>
@@ -178,7 +198,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     Toggle Pinpointer screen. If it has target it will start tracking it.
     /// </summary>
     /// <returns>True if pinpointer was activated, false otherwise</returns>
-    public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
+    public virtual bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return false;

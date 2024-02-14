@@ -36,10 +36,10 @@ public sealed class TipsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
-        _cfg.OnValueChanged(CCVars.TipFrequencyOutOfRound, SetOutOfRound, true);
-        _cfg.OnValueChanged(CCVars.TipFrequencyInRound, SetInRound, true);
-        _cfg.OnValueChanged(CCVars.TipsEnabled, SetEnabled, true);
-        _cfg.OnValueChanged(CCVars.TipsDataset, SetDataset, true);
+        Subs.CVar(_cfg, CCVars.TipFrequencyOutOfRound, SetOutOfRound, true);
+        Subs.CVar(_cfg, CCVars.TipFrequencyInRound, SetInRound, true);
+        Subs.CVar(_cfg, CCVars.TipsEnabled, SetEnabled, true);
+        Subs.CVar(_cfg, CCVars.TipsDataset, SetDataset, true);
 
         RecalculateNextTipTime();
     }

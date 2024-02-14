@@ -23,7 +23,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (!_timing.IsFirstTimePredicted || !_input.MouseScreenPosition.IsValid)
             return;
 
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null || !TryComp<MouseRotatorComponent>(player, out var rotator))
             return;

@@ -7,6 +7,9 @@
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
     state: "normal"
+  - type: Tag
+    tags:
+      - Payload
   - type: InteractionPopup
     successChance: 1
     interactSuccessSound:

@@ -22,6 +22,16 @@
                    FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>
             <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
+            <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'ui-options-screen-shake-intensity'}" Margin="8 0" />
+                <Slider Name="ScreenShakeIntensitySlider"
+                        MinValue="0"
+                        MaxValue="100"
+                        Rounded="True"
+                        MinWidth="200" />
+                <Label Name="ScreenShakeIntensityLabel" Margin="8 0" />
+            </BoxContainer>
             <Label Text="{Loc 'ui-options-general-discord'}"
                    FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>
