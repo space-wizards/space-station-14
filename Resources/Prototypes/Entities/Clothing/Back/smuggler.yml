@@ -264,7 +264,7 @@
         prob: 0.10
         maxAmount: 4
         orGroup: Alchohol
-      - id: DrinkGoldschlagerBottleFull
+      - id: DrinkGildlagerBottleFull
         prob: 0.10
         maxAmount: 4
         orGroup: Alchohol
