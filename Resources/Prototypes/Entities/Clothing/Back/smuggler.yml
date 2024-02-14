@@ -2,7 +2,7 @@
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelSmuggler
   name: Smuggler's Satchel
-  suffix: No Map, Use Spawner
+  noSpawn: true
   description: A dingy, suspicious looking satchel.
   placement:
     mode: SnapgridCenter
