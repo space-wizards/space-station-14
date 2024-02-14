@@ -21,12 +21,6 @@ public sealed partial class RadiationSystem : EntitySystem
         InitRadBlocking();
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        UnsubscribeCvars();
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

@@ -44,12 +44,14 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - Signaller
+  - Signaller  
+  - SignallerAdvanced
   - SignalTrigger
   - VoiceTrigger
   - TimerTrigger
   - FlashPayload
   - ExplosivePayload
+  - ChemicalPayload
   - Igniter
 
 - type: technology

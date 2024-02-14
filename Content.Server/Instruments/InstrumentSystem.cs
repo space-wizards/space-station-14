@@ -191,13 +191,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         Dirty(uid, instrument);
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        ShutdownCVars();
-    }
-
     private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
     {
         if (HasComp<ActiveInstrumentComponent>(uid)

@@ -2,11 +2,14 @@ using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Emp;
 using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Damage;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
@@ -44,6 +47,8 @@ public sealed class SuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, GetVerbsEvent<Verb>>(OnVerb);
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
+        SubscribeLocalEvent<SuitSensorComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<SuitSensorComponent, EmpDisabledRemoved>(OnEmpFinished);
     }
 
     private void OnUnpaused(EntityUid uid, SuitSensorComponent component, ref EntityUnpausedEvent args)
@@ -237,6 +242,24 @@ public sealed class SuitSensorSystem : EntitySystem
             return;
 
         component.User = null;
+    }
+
+    private void OnEmpPulse(EntityUid uid, SuitSensorComponent component, ref EmpPulseEvent args)
+    {
+        args.Affected = true;
+        args.Disabled = true;
+
+        component.PreviousMode = component.Mode;
+        SetSensor(uid, SuitSensorMode.SensorOff, null, component);
+
+        component.PreviousControlsLocked = component.ControlsLocked;
+        component.ControlsLocked = true;
+    }
+
+    private void OnEmpFinished(EntityUid uid, SuitSensorComponent component, ref EmpDisabledRemoved args)
+    {
+        SetSensor(uid, component.PreviousMode, null, component);
+        component.ControlsLocked = component.PreviousControlsLocked;
     }
 
     private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, EntityUid userUid, SuitSensorMode mode)
