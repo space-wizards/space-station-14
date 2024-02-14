@@ -213,7 +213,7 @@ entities:
       pos: 0.5,0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -2131.2598
+      secondsUntilStateChange: -4755.514
       state: Opening
   - uid: 51
     components:
@@ -222,7 +222,7 @@ entities:
       pos: 0.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -2130.293
+      secondsUntilStateChange: -4754.5474
       state: Opening
   - uid: 52
     components:
@@ -231,7 +231,7 @@ entities:
       pos: 6.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -2129.3596
+      secondsUntilStateChange: -4753.614
       state: Opening
   - uid: 53
     components:
@@ -240,7 +240,7 @@ entities:
       pos: 6.5,0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -2144.3596
+      secondsUntilStateChange: -4768.614
       state: Opening
 - proto: APCBasic
   entities:
@@ -249,6 +249,28 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-3.5
+      parent: 1
+- proto: AtmosDeviceFanTiny
+  entities:
+  - uid: 158
+    components:
+    - type: Transform
+      pos: 0.5,0.5
+      parent: 1
+  - uid: 159
+    components:
+    - type: Transform
+      pos: 0.5,2.5
+      parent: 1
+  - uid: 160
+    components:
+    - type: Transform
+      pos: 6.5,2.5
+      parent: 1
+  - uid: 161
+    components:
+    - type: Transform
+      pos: 6.5,0.5
       parent: 1
 - proto: BlastDoor
   entities:
@@ -708,11 +730,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-5.5
       parent: 1
-  - uid: 117
+  - uid: 169
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 3.5,-2.5
+      pos: 3.5,4.5
       parent: 1
 - proto: GasPipeStraight
   entities:
@@ -725,6 +747,44 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-3.5
+      parent: 1
+  - uid: 162
+    components:
+    - type: Transform
+      pos: 3.5,-1.5
+      parent: 1
+  - uid: 163
+    components:
+    - type: Transform
+      pos: 3.5,-0.5
+      parent: 1
+  - uid: 164
+    components:
+    - type: Transform
+      pos: 3.5,0.5
+      parent: 1
+  - uid: 165
+    components:
+    - type: Transform
+      pos: 3.5,1.5
+      parent: 1
+  - uid: 166
+    components:
+    - type: Transform
+      pos: 3.5,2.5
+      parent: 1
+  - uid: 167
+    components:
+    - type: Transform
+      pos: 3.5,3.5
+      parent: 1
+- proto: GasPipeTJunction
+  entities:
+  - uid: 117
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,-2.5
       parent: 1
 - proto: GasPort
   entities:
@@ -743,6 +803,14 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-2.5
+      parent: 1
+    - type: AtmosDevice
+      joinedGrid: 1
+  - uid: 168
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,4.5
       parent: 1
     - type: AtmosDevice
       joinedGrid: 1
@@ -1044,9 +1112,9 @@ entities:
         - Right: Reverse
         - Middle: Off
         96:
-        - Left: Forward
-        - Right: Reverse
         - Middle: Off
+        - Left: Reverse
+        - Right: Forward
   - uid: 88
     components:
     - type: Transform
@@ -1055,9 +1123,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         91:
-        - Left: Forward
-        - Right: Reverse
+        - Left: Reverse
         - Middle: Off
+        - Right: Forward
         97:
         - Left: Forward
         - Right: Reverse

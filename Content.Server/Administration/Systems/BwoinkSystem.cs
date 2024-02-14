@@ -67,11 +67,11 @@ namespace Content.Server.Administration.Systems
             base.Initialize();
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
 
-            _config.OnValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
-            _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
-            _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
-            _config.OnValueChanged(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
-            _config.OnValueChanged(CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged, true);
+            Subs.CVar(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
+            Subs.CVar(CVars.GameHostName, OnServerNameChanged, true);
+            Subs.CVar(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
+            Subs.CVar(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
+            Subs.CVar(CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged, true);
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _discord.OnMessageReceived += OnDiscordMessageReceived;
             _discord.OnCommandReceived += OnReceiveNewRelay;
@@ -332,12 +332,6 @@ namespace Content.Server.Administration.Systems
             {
                 message.Value.channel.SendMessageAsync("**Warning**: Server is shutting down. Any messages sent to will not be received.", false, null,null, AllowedMentions.None);
             }
-
-            _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
-            _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
-            _config.UnsubValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged);
-            _config.UnsubValueChanged(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged);
-            _config.UnsubValueChanged(CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged);
 
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _discord.OnMessageReceived -= OnDiscordMessageReceived;
