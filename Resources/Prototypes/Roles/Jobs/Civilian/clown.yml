@@ -6,7 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security #Just so you understand what you're doing when you slip an officer chasing someone.
-      time: 36000 # 10 hrs
+      time: 36000 #10 hrs
+    - !type:OverallPlaytimeRequirement  #Clown is an art form and Saul Doogman with 2 hours playtime has insufficient experience to be funny.
+      time: 108000 #30 hrs
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop
