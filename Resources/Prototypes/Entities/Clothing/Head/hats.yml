@@ -40,7 +40,6 @@
   - type: Tag
     tags:
     - ClothMade
-    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
