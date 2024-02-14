@@ -474,6 +474,7 @@
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
   - type: Storage
+    maxItemSize: Normal
     grid:
     - 0,0,3,3
   - type: Tag
