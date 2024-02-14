@@ -192,6 +192,9 @@
     pierceArmor: true # We do a little trolling
   - type: Extractable
     grindableSolutionName: food
+  - type: Thorny
+    sound: /Audio/Effects/lightburn.ogg
+
 
 - type: entity
   name: banana
