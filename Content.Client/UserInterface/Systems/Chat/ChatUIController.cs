@@ -232,7 +232,7 @@ public sealed class ChatUIController : UIController
             _chatNameColors[i] = nameColors[i].ToHex();
         }
 
-        _config.OnValueChanged(CCVars.ChatWindowTransparency, OnChatWindowTransparencyChanged);
+        _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
     }
 
@@ -243,7 +243,7 @@ public sealed class ChatUIController : UIController
         var viewportContainer = UIManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
         SetSpeechBubbleRoot(viewportContainer);
 
-        SetChatWindowTransparency(_config.GetCVar(CCVars.ChatWindowTransparency));
+        SetChatWindowOpacity(_config.GetCVar(CCVars.ChatWindowOpacity));
     }
 
     public void OnScreenUnload()
@@ -251,12 +251,12 @@ public sealed class ChatUIController : UIController
         SetMainChat(false);
     }
 
-    private void OnChatWindowTransparencyChanged(float transparency)
+    private void OnChatWindowOpacityChanged(float opacity)
     {
-        SetChatWindowTransparency(transparency);
+        SetChatWindowOpacity(opacity);
     }
 
-    private void SetChatWindowTransparency(float transparency)
+    private void SetChatWindowOpacity(float opacity)
     {
         var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
 
@@ -265,7 +265,8 @@ public sealed class ChatUIController : UIController
 
         chatBox.ChatWindowPanel.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.FromHex("#25252A").WithAlpha(1 - transparency)
+
+            BackgroundColor = Color.FromHex("#25252A").WithAlpha(opacity)
         };
     }
 
