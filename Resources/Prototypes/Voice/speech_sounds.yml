@@ -114,3 +114,12 @@
     path: /Audio/Animals/dog_bark3.ogg
   exclaimSound:
     path: /Audio/Animals/dog_bark2.ogg
+    
+- type: speechSounds
+  id: IPC
+  saySound:
+    path: /Audio/Voice/Talk/pai.ogg
+  askSound:
+    path: /Audio/Voice/Talk/pai_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/pai_exclaim.ogg

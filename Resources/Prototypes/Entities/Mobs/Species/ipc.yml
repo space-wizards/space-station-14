@@ -1,0 +1,87 @@
+- type: entity
+  save: false
+  name: Urist McIPC
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobIPC
+  abstract: true
+  components:
+    # The important nessessities
+    - type: MovementSpeedModifier
+    - type: Body
+      prototype: IPC
+      requiredLegs: 2
+    - type: HumanoidAppearance
+      species: IPC
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: Metallic
+    - type: Icon
+      sprite: Mobs/Species/IPCs/parts.rsi
+      state: full
+    # Damage and speed
+    - type: Bloodstream
+      bloodReagent: Oil
+      bloodlossDamage:
+        types:
+          Heat: 0.25
+    - type: Temperature
+      heatDamageThreshold: 452.875 # melting point of iron 1/4th, cause fuck physics you know
+      coldDamageThreshold: 283.15 # 10c aka "cold" causes condensation/freezing and as such shorting 
+      currentTemperature: 313.15
+      specificHeat: 46
+      coldDamage:
+        types:
+          Cold: 1
+          Heat: -2
+      heatDamage:
+        types:
+          Heat: 2
+          Cold: -1
+    - type: Respirator
+      damage:
+        types:
+          Heat: 0.25 # no air to cool
+      damageRecovery:
+        types:
+          Heat: -0.25
+    - type: Repairable
+      fuelcost: 5 # cause most of the fuel is used how long its turned on for
+      doAfterDelay: 7
+      damage:
+        types:
+          Blunt: -75
+          Cold: -15 # you're warming them up...
+          Heat: 30 # another 2 minutes of downtime due to slight overheating
+    - type: Barotrauma
+      damage:
+        types:
+          Heat: 0.25 # IPCs can't radiate well, they rely on air cooling
+    - type: SlowOnDamage
+      speedModifierThresholds:
+        70: 0.6
+        90: 0.4
+    # Misc
+    - type: Speech
+      speechSounds: IPC
+    - type: Vocal
+      sounds:
+        Male: MaleIPC
+        Female: FemaleIPC
+        Unsexed: UnisexIPC
+#      wilhelm:
+#        path: /Audio/_FTL/Voice/IPC/
+      wilhelmProbability: 0.001
+    - type: Inventory
+      templateId: ipc
+
+- type: entity
+  name: Urist McIPC
+  parent: MobHumanDummy
+  id: MobIPCDummy
+  noSpawn: true
+  save: false
+  components:
+    - type: Inventory
+      templateId: ipc
+    - type: HumanoidAppearance
+      species: IPC

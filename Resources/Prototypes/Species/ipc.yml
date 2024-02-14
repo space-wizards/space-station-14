@@ -1,0 +1,141 @@
+- type: species
+  id: IPC
+  name: species-name-ipc
+  roundStart: true
+  prototype: MobIPC
+  sprites: MobIPCSprites
+  defaultSkinTone: "#ffffff"
+  markingLimits: MobIPCMarkingLimits
+  dollPrototype: MobIPCDummy
+  skinColoration: Hues
+  maleFirstNames: names_ai
+  femaleFirstNames: names_ai
+  lastNames: names_ai
+  sexes:
+    - Unsexed
+    - Male
+    - Female
+
+- type: speciesBaseSprites
+  id: MobIPCSprites
+  sprites:
+    Head: MobIPCHead
+    Snout: MobHumanoidAnyMarking
+    Chest: MobIPCTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    LArm: MobIPCLArm
+    RArm: MobIPCRArm
+    LHand: MobIPCLHand
+    RHand: MobIPCRHand
+    LLeg: MobIPCLLeg
+    RLeg: MobIPCRLeg
+    LFoot: MobIPCLFoot
+    RFoot: MobIPCRFoot
+
+- type: markingPoints
+  id: MobIPCMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 0
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    HeadTop:
+      points: 1
+      required: false
+    HeadSide:
+      points: 1
+      required: false
+    Head:
+      points: 1
+      required: false
+    Chest:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobIPCHead
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobIPCHeadMale
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobIPCHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobIPCTorso
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: chest
+
+- type: humanoidBaseSprite
+  id: MobIPCTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: chest
+
+- type: humanoidBaseSprite
+  id: MobIPCTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: chest
+
+- type: humanoidBaseSprite
+  id: MobIPCLLeg
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobIPCLHand
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobIPCLArm
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobIPCLFoot
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobIPCRLeg
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobIPCRHand
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobIPCRArm
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobIPCRFoot
+  baseSprite:
+    sprite: Mobs/Species/IPCs/parts.rsi
+    state: r_foot

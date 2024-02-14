@@ -1,0 +1,68 @@
+- type: entity
+  id: BaseIPCOrgan
+  parent: BaseItem
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Mobs/Species/IPCs/organs.rsi
+    - type: Organ
+    - type: Extractable
+      grindableSolutionName: organ
+    - type: SolutionContainerManager
+      solutions:
+        organ:
+          maxVol: 10
+          reagents:
+            - ReagentId: Oil
+              Quantity: 10
+
+- type: entity
+  id: OrganIPCCPU
+  parent: BaseIPCOrgan
+  name: integrated posibrain
+  description: It seems to be a machine of sorts?
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: posibrain
+    - type: Organ
+    - type: Metabolizer
+      updateFrequency: 1.5
+      maxReagents: 2
+      metabolizerTypes: [IPC]
+      removeEmpty: true
+
+- type: entity
+  id: OrganIPCGPU
+  parent: BaseIPCOrgan
+  name: ipc gpu
+  description: A low-tech GPU. Albeit, it looks super expensive. It is used to render images to the posibrain.
+  components:
+    - type: Sprite
+      state: posibrain
+    - type: Organ
+
+- type: entity
+  id: OrganIPCFan
+  parent: BaseIPCOrgan
+  name: ipc fan
+  description: A low-tech fan that circulates air to cool down the IPC.
+  components:
+    - type: Sprite
+      state: posibrain
+    - type: Organ
+    - type: Lung
+    - type: Metabolizer
+      removeEmpty: true
+      solutionOnBody: false
+      solution: "Lung"
+      metabolizerTypes: [ Animal ]
+      groups:
+        - id: Gas
+          rateModifier: 100.0
+    - type: SolutionContainerManager
+      solutions:
+        Lung:
+          maxVol: 100.0
+          canReact: false

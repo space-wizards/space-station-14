@@ -44,3 +44,7 @@
 - type: metabolizerType
   id: Arachnid
   name: arachnid
+
+- type: metabolizerType
+  id: IPC
+  name: ipc
