@@ -22,7 +22,8 @@
     initialBeepDelay: 0
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-      volume: 1
+      params:
+        volume: 1
   - type: RandomTimerTrigger
     min: 0
     max: 60

@@ -34,7 +34,7 @@ public sealed partial class AccessReaderComponent : Component
     public List<HashSet<string>> AccessLists = new();
 
     /// <summary>
-    /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required tp gaim
+    /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required to gain
     /// access.
     /// </summary>
     [DataField]

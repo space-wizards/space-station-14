@@ -85,7 +85,7 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var transform = _sEntityManager.GetComponent<TransformComponent>(serverEntity);
-                if (_sMapManager.TryGetGrid(transform.GridUid, out var grid))
+                if (_sEntityManager.TryGetComponent(transform.GridUid, out MapGridComponent? grid))
                 {
                     var position = transform.LocalPosition;
 

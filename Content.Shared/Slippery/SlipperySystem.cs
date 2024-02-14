@@ -5,11 +5,11 @@ using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
@@ -60,7 +60,7 @@ public sealed class SlipperySystem : EntitySystem
 
     private void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other)
     {
-        if (HasComp<KnockedDownComponent>(other))
+        if (HasComp<KnockedDownComponent>(other) && !component.SuperSlippery)
             return;
 
         var attemptEv = new SlipAttemptEvent();
@@ -71,8 +71,17 @@ public sealed class SlipperySystem : EntitySystem
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
 
-        if (TryComp(other, out PhysicsComponent? physics))
+        if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
+        {
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
+
+            if (component.SuperSlippery)
+            {
+                var sliding = EnsureComp<SlidingComponent>(other);
+                sliding.CollidingEntities.Add(uid);
+                DebugTools.Assert(_physics.GetContactingEntities(other, physics).Contains(uid));
+            }
+        }
 
         var playSound = !_statusEffects.HasStatusEffect(other, "KnockedDown");
 

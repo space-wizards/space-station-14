@@ -2,7 +2,7 @@ reagent-name-cryptobiolin = cryptobiolin
 reagent-desc-cryptobiolin = Causes confusion and dizziness.
 
 reagent-name-dylovene = dylovene
-reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
+reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in organisms. Overdosing will cause vomiting, dizzyness and pain.
 
 reagent-name-diphenhydramine = diphenhydramine
 reagent-desc-diphenhydramine = Rapidly purges the body of histamine, reduces jitteriness, and treats poison damage.
@@ -14,7 +14,7 @@ reagent-name-bicaridine = bicaridine
 reagent-desc-bicaridine = An analgesic which is highly effective at treating brute damage. It's useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries.
 
 reagent-name-cryoxadone = cryoxadone
-reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage, but only works in temperatures under 213K.
+reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage, but only works in temperatures under 213K. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-doxarubixadone = doxarubixadone
 reagent-desc-doxarubixadone = A cryogenics chemical. Heals certain types of cellular damage done by Slimes and improper use of other chemicals.
@@ -50,7 +50,7 @@ reagent-name-barozine = barozine
 reagent-desc-barozine = A potent chemical that prevents pressure damage. Causes extreme stress on the body.
 
 reagent-name-phalanximine = phalanximine
-reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning and vomiting.
+reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning on organics and vomiting. Can potentially remove the death gene on plants.
 
 reagent-name-ambuzol = ambuzol
 reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
@@ -125,7 +125,7 @@ reagent-name-insuzine = insuzine
 reagent-desc-insuzine = Rapidly repairs dead tissue caused by electrocution, but cools you slightly. Completely freezes the patient when overdosed.
 
 reagent-name-necrosol = necrosol
-reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses.
+reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-aloxadone = aloxadone
 reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.

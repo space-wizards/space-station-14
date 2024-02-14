@@ -34,7 +34,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
           params:
             volume: -8
       - !type:DoActsBehavior
@@ -744,6 +744,38 @@
       - FloorShuttleRed
   - type: Stack
     stackType: FloorTileStackShuttleRed
+
+- type: entity
+  name: grey shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleGrey
+  components:
+  - type: Sprite
+    state: shuttlegrey
+  - type: Item
+    heldPrefix: shuttlegrey
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleGrey
+  - type: Stack
+    stackType: FloorTileStackShuttleGrey
+
+- type: entity
+  name: black shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlack
+  components:
+  - type: Sprite
+    state: shuttleblack
+  - type: Item
+    heldPrefix: shuttleblack
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleBlack
+  - type: Stack
+    stackType: FloorTileStackShuttleBlack
 
 # Materials
 - type: entity

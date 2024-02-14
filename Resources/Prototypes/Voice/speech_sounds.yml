@@ -89,6 +89,15 @@
     path: /Audio/Voice/Talk/slime_exclaim.ogg
 
 - type: speechSounds
+  id: Vox
+  saySound:
+    path: /Audio/Voice/Talk/vox.ogg
+  askSound:
+    path: /Audio/Voice/Talk/vox_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/vox_exclaim.ogg
+
+- type: speechSounds
   id: Arachnid
   saySound:
     path: /Audio/Voice/Talk/arachnid.ogg
@@ -105,7 +114,7 @@
     path: /Audio/Animals/cat_meow.ogg
   exclaimSound:
     path: /Audio/Animals/cat_meow.ogg
-    
+
 - type: speechSounds
   id: Dog
   saySound:

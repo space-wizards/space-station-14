@@ -3,6 +3,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Robust.Shared.Prototypes;
 
@@ -39,7 +40,8 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
 
         component.TimeUntilNextGifts += 30f;
 
-        if (!TryGetRandomStation(out var station, HasComp<StationCargoOrderDatabaseComponent>))
+        if (!TryGetRandomStation(out var station, HasComp<StationCargoOrderDatabaseComponent>) ||
+                !TryComp<StationDataComponent>(station, out var stationData))
             return;
 
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoDb))
@@ -60,12 +62,13 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
             if (!_cargoSystem.AddAndApproveOrder(
                     station!.Value,
                     product.Product,
-                    product.PointCost,
+                    product.Cost,
                     qty,
                     Loc.GetString(component.Sender),
                     Loc.GetString(component.Description),
                     Loc.GetString(component.Dest),
-                    cargoDb
+                    cargoDb,
+                    stationData!
             ))
             {
                 break;
