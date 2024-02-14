@@ -15,7 +15,6 @@ public sealed class GibbingSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;

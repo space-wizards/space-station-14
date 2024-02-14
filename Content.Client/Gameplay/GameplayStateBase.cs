@@ -203,7 +203,7 @@ namespace Content.Client.Gameplay
             }; // TODO make entityUid nullable
 
             // client side command handlers will always be sent the local player session.
-            var session = _playerManager.LocalPlayer?.Session;
+            var session = _playerManager.LocalSession;
             if (inputSys.HandleInputCommand(session, func, message))
             {
                 kArgs.Handle();
