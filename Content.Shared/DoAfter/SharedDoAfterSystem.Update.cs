@@ -163,11 +163,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return true;
 
         // TODO: Re-use existing xform query for these calculations.
-        // when there is no gravity you will be drifting 99% of the time making many doafters impossible
-        // so this just ignores your movement if you are weightless (unless the doafter sets BreakOnWeightlessMove then moving will still break it)
-        if (args.BreakOnUserMove
-            && !userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold)
-            && (args.BreakOnWeightlessMove || !_gravity.IsWeightless(args.User, xform: userXform)))
+        // When there is no gravity you will be drifting 99% of the time making many doafters impossible.
+        // For this reason we make the break threshold much more lenient when someone is weightless.
+        var threshold = _gravity.IsWeightless(args.User, xform: userXform)
+            ? args.WeightlessMovementThreshold
+            : args.MovementThreshold;
+
+        if (args.BreakOnUserMove &&
+            !userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, threshold))
             return true;
 
         if (args.BreakOnTargetMove)

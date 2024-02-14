@@ -98,13 +98,6 @@ public sealed partial class DoAfterArgs
     public bool BreakOnUserMove;
 
     /// <summary>
-    ///     If this is true then any movement, even when weightless, will break the doafter.
-    ///     When there is no gravity, BreakOnUserMove is ignored. If it is false to begin with nothing will change.
-    /// </summary>
-    [DataField("breakOnWeightlessMove")]
-    public bool BreakOnWeightlessMove;
-
-    /// <summary>
     ///     If do_after stops when the target moves (if there is a target)
     /// </summary>
     [DataField("breakOnTargetMove")]
@@ -115,6 +108,12 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [DataField("movementThreshold")]
     public float MovementThreshold = 0.1f;
+
+    /// <summary>
+    /// Threshold for movement without gravity.
+    /// </summary>
+    [DataField]
+    public float WeightlessMovementThreshold = 0.2f;
 
     /// <summary>
     ///     Threshold for distance user from the used OR target entities.
@@ -251,7 +250,6 @@ public sealed partial class DoAfterArgs
         NeedHand = other.NeedHand;
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnUserMove = other.BreakOnUserMove;
-        BreakOnWeightlessMove = other.BreakOnWeightlessMove;
         BreakOnTargetMove = other.BreakOnTargetMove;
         MovementThreshold = other.MovementThreshold;
         DistanceThreshold = other.DistanceThreshold;

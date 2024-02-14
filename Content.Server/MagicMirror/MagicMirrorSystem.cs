@@ -99,7 +99,6 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnHandChange = false,
             BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 
@@ -155,7 +154,6 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnHandChange = false,
             BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 
@@ -210,7 +208,6 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnHandChange = false,
             BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 
@@ -267,7 +264,6 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnHandChange = false,
             BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 
