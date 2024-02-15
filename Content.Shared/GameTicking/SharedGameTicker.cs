@@ -176,7 +176,6 @@ namespace Content.Shared.GameTicking
             [DataField]
             public bool Observer;
 
-            [DataField]
             public bool Connected;
         }
 
