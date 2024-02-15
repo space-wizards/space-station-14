@@ -209,7 +209,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         float maturation = plant.Maturation;
         float growthStages = plant.GrowthStages;
         float potency = plant.Potency;
-
         return new List<string> { name, endurance.ToString(), yield.ToString(), lifespan.ToString(), maturation.ToString(), growthStages.ToString(), potency.ToString() };
     }
 
@@ -226,7 +225,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         if (plant.Ligneous) plantMutations += "\n   " + $"{Loc.GetString("plant-analyzer-mutation-ligneous")}";
         if (plant.Bioluminescent) plantMutations += "\n   " + $"{Loc.GetString("plant-analyzer-mutation-bioluminescent")}";
         if (plant.CanScream) plantMutations += "\n   " + $"{Loc.GetString("plant-analyzer-mutation-canscream")}";
-
         return new List<string> { plantMutations, plantSpeciation };
     }
 
@@ -243,7 +241,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var highPressureTolerance = plant.HighPressureTolerance;
         var pestTolerance = plant.PestTolerance;
         var weedTolerance = plant.WeedTolerance;
-
         return new List<string> { nutrientConsumption.ToString(), waterConsumption.ToString(), idealHeat.ToString(), heatTolerance.ToString(), idealLight.ToString(),
             lightTolerance.ToString(), toxinsTolerance.ToString(),lowPresssureTolerance.ToString(),highPressureTolerance.ToString(),pestTolerance.ToString(), weedTolerance.ToString() };
     }
