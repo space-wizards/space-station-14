@@ -15,10 +15,10 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -60,7 +60,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly PullingSystem _pullSystem = default!;
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -185,10 +185,10 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
                 return false;
 
-            if (!TryComp(uid, out PullableComponent? pull))
+            if (!TryComp(uid, out SharedPullableComponent? pull))
                 return false;
 
-            _pullSystem.TogglePull(uid, userEntity.Value, pull);
+            _pullSystem.TogglePull(userEntity.Value, pull);
             return false;
         }
 

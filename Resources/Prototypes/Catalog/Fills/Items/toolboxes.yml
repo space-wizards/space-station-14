@@ -8,16 +8,25 @@
     contents:
       - id: CrowbarRed
       - id: ClothingMaskBreath
-        amount: 2
-      - id: FoodSnackChocolate
+      - id: ClothingMaskBreath
+        prob: 0.5
+      - id: EmergencyOxygenTankFilled
+      - id: EmergencyOxygenTankFilled
+        prob: 0.5
+      - id: EmergencyNitrogenTankFilled
+      - id: EmergencyNitrogenTankFilled
+        prob: 0.5
+      - id: FoodTinMRE
+      - id: FoodTinMRE
+        prob: 0.5
+      - id: DrinkWaterBottleFull
+      - id: DrinkWaterBottleFull
+        prob: 0.5
       - id: FlashlightLantern
       - id: FlashlightLantern
         prob: 0.5
       - id: HarmonicaInstrument
         prob: 0.15
-        orGroup: HarmonicaOrChocolate
-      - id: FoodSnackChocolate
-        orGroup: HarmonicaOrChocolate
 
 - type: entity
   id: ToolboxElectricalFilled
