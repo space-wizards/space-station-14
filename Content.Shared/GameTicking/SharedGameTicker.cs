@@ -163,10 +163,10 @@ namespace Content.Shared.GameTicking
             public string Role;
 
             [DataField, NonSerialized]
-            public Array JobPrototypes;
+            public string[] JobPrototypes;
 
             [DataField, NonSerialized]
-            public Array AntagPrototypes;
+            public string[] AntagPrototypes;
 
             public NetEntity? PlayerNetEntity;
 
