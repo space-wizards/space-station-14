@@ -60,7 +60,6 @@ public sealed partial class StationAISystem : SharedStationAISystem
         SubscribeLocalEvent<AIChassisComponent, AfterInteractUsingEvent>(OnChassisInteractUsing);
         SubscribeLocalEvent<AIChassisComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<AIChassisComponent, MindRemovedMessage>(OnMindRemoved);
-        SubscribeLocalEvent<AIChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
 
         //SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
 
@@ -137,10 +136,6 @@ public sealed partial class StationAISystem : SharedStationAISystem
     }
 
 
-    private void OnGetDeadIC(EntityUid uid, AIChassisComponent component, ref GetCharactedDeadIcEvent args)
-    {
-        args.Dead = true;
-    }
 
     private void OnBrainMindAdded(EntityUid uid, BorgBrainComponent component, MindAddedMessage args)
     {
