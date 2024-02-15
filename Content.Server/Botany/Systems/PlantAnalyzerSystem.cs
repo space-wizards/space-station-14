@@ -252,7 +252,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     {
         SetMode(component, args.AdvancedScan);
     }
-    //Entity<PlantAnalyzerComponent> plantAnalyzer
+
     public void SetMode(Entity<PlantAnalyzerComponent> component, bool isAdvMode)
     {
         // Prevents switching to advanced mode if doAfter is already running but not vice versa.
