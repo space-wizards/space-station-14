@@ -15,7 +15,7 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: Paper
-    sound: !type:SoundCollectionSpecifier
+    sound:
       collection: PaperScribbles
       params:
         variation: 0.1
