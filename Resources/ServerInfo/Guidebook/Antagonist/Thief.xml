@@ -39,6 +39,10 @@
   - Steal the [color=#a4885c]detective's lighter[/color].
   <GuideEntityEmbed Entity="FlippoEngravedLighter" State="icon" Caption="Lighter"/>
 
+  - Notes: Objectives like stealing a pet and the detective's lighter may have some quirks.
+    The objective for the former will only count as complete if you are A. dragging the pet or B. have put it in an animal carrier. Upon FTL to Central Command, if you are not sitting, it will cause you to drop the pet, counting the objective as incomplete.
+    The detective's lighter may sometimes be unavailable on certain maps that lack a detective's room. If you have a player Detective spawn in, however, the lighter will spawn on them.
+
   ## Double Trouble
 
   The thief can spawn alongside other antagonists. This means that they can spawn in a nuclear operatives round, a zombies round, and more, allowing for more interesting scenarios to occur with interactions between thieves and other antagonists.
