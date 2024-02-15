@@ -73,12 +73,6 @@ namespace Content.Server.Salvage
             InitializeRunner();
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            ShutdownExpeditions();
-        }
-
         private void Report(EntityUid source, string channelName, string messageKey, params (string, object)[] args)
         {
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);

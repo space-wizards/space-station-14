@@ -1,98 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Improve the gas analyzer interface.
-    type: Tweak
-  id: 5430
-  time: '2023-12-20T17:56:57.0000000+00:00'
-  url: null
-- author: JoeHammad
-  changes:
-  - message: Fland now has its own shuttle, ported from ss13
-    type: Add
-  id: 5431
-  time: '2023-12-20T23:26:07.0000000+00:00'
-  url: null
-- author: joshepvodka
-  changes:
-  - message: CentCom bureaucrats are now twice as powerful with their new custom-made
-      clipboards and folders.
-    type: Add
-  id: 5432
-  time: '2023-12-20T23:29:35.0000000+00:00'
-  url: null
-- author: PJB3005
-  changes:
-  - message: Fix starting to follow a moving player as a ghost causing your camera
-      to keep jumping around anymore.
-    type: Fix
-  id: 5433
-  time: '2023-12-20T23:33:00.0000000+00:00'
-  url: null
-- author: Velcroboy
-  changes:
-  - message: Fixed coal not generating!
-    type: Fix
-  id: 5434
-  time: '2023-12-20T23:46:20.0000000+00:00'
-  url: null
-- author: whateverusername0
-  changes:
-  - message: "Miasma now reacts with oxygen at 50\xB0C to produce nitrous oxide and\
-      \ water vapor."
-    type: Add
-  id: 5435
-  time: '2023-12-21T00:14:59.0000000+00:00'
-  url: null
-- author: whateverusername0
-  changes:
-  - message: Nitrous oxide now decomposes at high temperatures.
-    type: Add
-  id: 5436
-  time: '2023-12-21T01:33:08.0000000+00:00'
-  url: null
-- author: Emisse
-  changes:
-  - message: Crates and lockers are slightly easier to bust open but still harder
-      than before.
-    type: Tweak
-  - message: Solid walls are easier to break but reinforced are the same.
-    type: Tweak
-  id: 5437
-  time: '2023-12-21T03:03:06.0000000+00:00'
-  url: null
-- author: mirrorcult
-  changes:
-  - message: Miasma has been renamed to Ammonia
-    type: Add
-  - message: Miasmic subsumation reaction has been removed
-    type: Remove
-  id: 5438
-  time: '2023-12-21T04:19:50.0000000+00:00'
-  url: null
-- author: joshepvodka
-  changes:
-  - message: NanoTrasen updated the designs for their emergency medipens. Space medipens
-      are now magenta colored and epi pens have a green band on them.
-    type: Tweak
-  id: 5439
-  time: '2023-12-21T05:30:58.0000000+00:00'
-  url: null
-- author: Hqlle
-  changes:
-  - message: Resprited carpet sprites.
-    type: Add
-  id: 5440
-  time: '2023-12-21T05:32:38.0000000+00:00'
-  url: null
-- author: CrigCrag
-  changes:
-  - message: Added Fresium, a military grade coolant that you SHOULD NOT INGEST OR
-      SPLASH ON YOUR FRIENDS!
-    type: Add
-  id: 5441
-  time: '2023-12-21T05:35:22.0000000+00:00'
-  url: null
 - author: RiceMar
   changes:
   - message: Energy swords and double energy swords now look as long as they seem
@@ -3878,3 +3784,99 @@
   id: 5929
   time: '2024-02-13T15:43:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25129
+- author: icekot8
+  changes:
+  - message: Medical berets added to MediDrobe
+    type: Add
+  id: 5930
+  time: '2024-02-13T21:37:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25176
+- author: PoorMansDreams
+  changes:
+  - message: Alternate ammo now has the proper appearance when spent.
+    type: Fix
+  id: 5931
+  time: '2024-02-13T21:40:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25167
+- author: Agoichi
+  changes:
+  - message: All hoods have tag "Hides Hair"
+    type: Tweak
+  - message: Plague Doctor's hat and Witch hat (with red hair) have tag "Hides Hair"
+    type: Tweak
+  id: 5932
+  time: '2024-02-13T21:43:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25142
+- author: Blackern5000
+  changes:
+  - message: Advanced topical meds now cost significantly less chemicals
+    type: Tweak
+  id: 5933
+  time: '2024-02-13T22:03:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24948
+- author: Tayrtahn
+  changes:
+  - message: Drink bottles can now be opened and closed from the verbs menu, and some
+      have been given tamper-evident seals.
+    type: Add
+  id: 5934
+  time: '2024-02-13T22:08:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24780
+- author: TheShuEd
+  changes:
+  - message: Darkness is coming. A new shadow anomaly added.
+    type: Add
+  id: 5935
+  time: '2024-02-13T22:12:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24629
+- author: jamessimo
+  changes:
+  - message: Microwave UI enhancements
+    type: Tweak
+  - message: Microwaves now tell you how much time is left when cooking
+    type: Tweak
+  - message: Microwaves UI now uses prediction for user inputs.
+    type: Fix
+  id: 5936
+  time: '2024-02-13T22:16:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24547
+- author: TheShuEd
+  changes:
+  - message: Remote signallers are now limited to a 15-tile radius
+    type: Tweak
+  - message: Added an advanced remote signaler, with a range of 30 tiles.
+    type: Add
+  - message: the anomaly synchronizer consumes much less power, and no longer causes
+      the anomaly pulses when powering down.
+    type: Tweak
+  id: 5937
+  time: '2024-02-13T22:19:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24461
+- author: joshepvodka
+  changes:
+  - message: Fax machines can now print text files from your computer.
+    type: Add
+  id: 5938
+  time: '2024-02-14T01:14:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/23262
+- author: Plykiya
+  changes:
+  - message: Holosigns can now be placed at range. No more being eaten by forcefields!
+    type: Tweak
+  id: 5939
+  time: '2024-02-14T05:25:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25120
+- author: Zadeon
+  changes:
+  - message: Disablers now fit inside the suit storage slot.
+    type: Fix
+  id: 5940
+  time: '2024-02-14T23:07:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25238
+- author: Jezithyr
+  changes:
+  - message: Death Acidifier implants not deleting items when activated
+    type: Fix
+  id: 5941
+  time: '2024-02-15T01:37:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25251
