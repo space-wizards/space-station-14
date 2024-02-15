@@ -5,7 +5,6 @@ using Content.Shared.Interaction;
 using Content.Shared.PlantAnalyzer;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using System.Linq;
@@ -30,6 +29,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerSetMode>(OnModeSelected);
     }
+
     private void OnAfterInteract(Entity<PlantAnalyzerComponent> plantAnalyzer, ref AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach || !HasComp<SeedComponent>(args.Target) && !HasComp<PlantHolderComponent>(args.Target) || !_cell.HasActivatableCharge(plantAnalyzer, user: args.User))
@@ -64,21 +64,23 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         }
     }
 
-    private void OnDoAfter(EntityUid uid, PlantAnalyzerComponent component, DoAfterEvent args)
+    private void OnDoAfter(Entity<PlantAnalyzerComponent> component, ref PlantAnalyzerDoAfterEvent args)
     {
-        if (component.AdvancedScan) //double charge use for advanced scan
+        if (component.Comp.AdvancedScan) // Double charge use for advanced scan.
         {
-            if (!_cell.TryUseActivatableCharge(uid, user: args.User))
+            if (!_cell.TryUseActivatableCharge(component, user: args.User))
                 return;
         }
-        if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.TryUseActivatableCharge(uid, user: args.User))
+        if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.TryUseActivatableCharge(component.Owner, user: args.User))
             return;
 
-        _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
+        _audio.PlayPvs(component.Comp.ScanningEndSound, args.Args.User);
 
-        UpdateScannedUser(uid, args.Args.User, args.Args.Target.Value, component);
+        OpenUserInterface(args.User, component);
+        UpdateScannedUser(component, args.Args.User, args.Args.Target.Value, component);
+
         args.Handled = true;
-        _cancellationTokenSources.Remove(uid);
+        _cancellationTokenSources.Remove(component);
     }
 
     private void OpenUserInterface(EntityUid user, EntityUid analyzer)
@@ -89,11 +91,9 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         _uiSystem.OpenUi(ui, actor.PlayerSession);
     }
 
-    public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid target, PlantAnalyzerComponent? plantAnalyzer)
+    public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid target, Entity<PlantAnalyzerComponent> component)
     {
-        if (!Resolve(uid, ref plantAnalyzer))
-            return;
-        if (target == null || !_uiSystem.TryGetUi(uid, PlantAnalyzerUiKey.Key, out var ui))
+        if (!_uiSystem.TryGetUi(uid, PlantAnalyzerUiKey.Key, out var ui))
             return;
 
         TryComp<PlantHolderComponent>(target, out var plantcomp);
@@ -108,12 +108,12 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             if (seedcomponent.Seed != null) // If unique seed.
             {
                 seedData = seedcomponent.Seed;
-                state = ObtainingGeneDataSeed(seedData, target, false, plantAnalyzer.AdvancedScan);
+                state = ObtainingGeneDataSeed(seedData, target, false, component.Comp.AdvancedScan);
             }
-            else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed)) // get the protoype seed
+            else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed)) // Get the seed protoype.
             {
                 seedProtoId = protoSeed;
-                state = ObtainingGeneDataSeedProt(protoSeed, target, plantAnalyzer.AdvancedScan);
+                state = ObtainingGeneDataSeedProt(protoSeed, target, component.Comp.AdvancedScan);
             }
         }
         else if (plantcomp != null) // If we poke the plantholder, it checks the plantholder seed.
@@ -121,14 +121,13 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             seedData = plantcomp.Seed;
             if (seedData != null)
             {
-                state = ObtainingGeneDataSeed(seedData, target, true, plantAnalyzer.AdvancedScan);  // SeedData is a unique seed in a tray.
+                state = ObtainingGeneDataSeed(seedData, target, true, component.Comp.AdvancedScan);  // SeedData is a unique seed in a tray.
             }
         }
 
         if (state == null)
             return;
 
-        OpenUserInterface(user, uid);
         _uiSystem.SendUiMessage(ui, state);
     }
 
@@ -185,6 +184,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
         List<string> tolerancesList = new List<string>();
         List<string> mutationsList = new List<string>();
+
         if (scanMode)
         {
             tolerancesList = CheckAllTolerances(comp);
@@ -248,20 +248,17 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             lightTolerance.ToString(), toxinsTolerance.ToString(),lowPresssureTolerance.ToString(),highPressureTolerance.ToString(),pestTolerance.ToString(), weedTolerance.ToString() };
     }
 
-    private void OnModeSelected(EntityUid uid, PlantAnalyzerComponent component, PlantAnalyzerSetMode args)
+    private void OnModeSelected(Entity<PlantAnalyzerComponent> component, ref PlantAnalyzerSetMode args)
     {
-        SetMode(uid, component, args.AdvancedScan);
+        SetMode(component, args.AdvancedScan);
     }
-
-    public void SetMode(EntityUid uid, PlantAnalyzerComponent? component, bool isAdvMode)
+    //Entity<PlantAnalyzerComponent> plantAnalyzer
+    public void SetMode(Entity<PlantAnalyzerComponent> component, bool isAdvMode)
     {
-        if (!Resolve(uid, ref component))
+        // Prevents switching to advanced mode if doAfter is already running but not vice versa.
+        if (_cancellationTokenSources.ContainsKey(component) && isAdvMode)
             return;
 
-        //prevents switching to advmode if doAfter is running but not vice versa
-        if (_cancellationTokenSources.ContainsKey(uid) && isAdvMode)
-            return;
-
-        component.AdvancedScan = isAdvMode;
+        component.Comp.AdvancedScan = isAdvMode;
     }
 }

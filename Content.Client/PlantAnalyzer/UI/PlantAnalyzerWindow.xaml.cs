@@ -47,7 +47,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         }
         NoData.Visible = false;
 
-        if (msg.ScanMode) // switch display to the settings of the received msg
+        if (msg.ScanMode) // Switch display to the settings of the received msg.
         {
             OnButton.ToggleMode = true;
             OnButton.Pressed = true;
