@@ -23,6 +23,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.UndockPressed += OnUndockPressed;
         _window.StartAutodockPressed += OnAutodockPressed;
         _window.StopAutodockPressed += OnStopAutodockPressed;
+        _window.ThrustLimited += OnThrustLimited;
         _window.DestinationPressed += OnDestinationPressed;
         _window.OpenCentered();
         _window.OnClose += OnClose;
@@ -64,6 +65,11 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
     private void OnUndockPressed(NetEntity obj)
     {
         SendMessage(new UndockRequestMessage() { DockEntity = obj });
+    }
+
+    private void OnThrustLimited(float val)
+    {
+        SendMessage(new ThrustLimitedMessage() { ThrustLimit = val });
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

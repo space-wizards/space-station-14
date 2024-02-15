@@ -28,6 +28,8 @@ shuttle-console-dock-label = Docking ports
 shuttle-console-docked = {$index} (Docked)
 shuttle-console-dock-button = Dock {$suffix}
 
+shuttle-console-thrust-limit-label = Thrust limiter: { TOSTRING($limit, "P0") }
+
 shuttle-console-hyperspace-label = FTL destinations
 shuttle-console-hyperspace-none = No destinations found
 

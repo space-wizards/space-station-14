@@ -20,11 +20,14 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
 
     public List<(NetEntity Entity, string Destination, bool Enabled)> Destinations;
 
+    public float ThrustLimit;
+
     public ShuttleConsoleBoundInterfaceState(
         FTLState ftlState,
         TimeSpan ftlTime,
         List<(NetEntity Entity, string Destination, bool Enabled)> destinations,
         float maxRange,
+        float thrustLimit,
         NetCoordinates? coordinates,
         Angle? angle,
         List<DockingInterfaceState> docks) : base(maxRange, coordinates, angle, docks)
@@ -32,5 +35,6 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
         FTLState = ftlState;
         FTLTime = ftlTime;
         Destinations = destinations;
+        ThrustLimit = thrustLimit;
     }
 }

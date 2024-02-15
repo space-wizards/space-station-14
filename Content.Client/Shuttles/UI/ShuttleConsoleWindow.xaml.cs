@@ -1,3 +1,4 @@
+using System;
 using Content.Client.Computer;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
@@ -12,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Shuttles.UI;
 
@@ -45,6 +47,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public Action<NetEntity>? StartAutodockPressed;
     public Action<NetEntity>? StopAutodockPressed;
     public Action<NetEntity>? DestinationPressed;
+    public Action<float>? ThrustLimited;
 
     public ShuttleConsoleWindow()
     {
@@ -62,6 +65,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockToggle.Pressed = RadarScreen.ShowDocks;
 
         UndockButton.OnPressed += OnUndockPressed;
+
+        ThrustLimiter.OnValueChanged += OnThrustLimiterSliderChanged;
     }
 
     private void WorldRangeChange(float value)
@@ -87,6 +92,22 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         UndockPressed?.Invoke(DockingScreen.ViewedDock.Value);
     }
 
+    private void OnThrustLimiterSliderChanged(Range range)
+    {
+        SetThrustLimit(range.Value);
+        ThrustLimited?.Invoke(range.Value);
+    }
+
+    public void SetThrustLimit(float limit)
+    {
+        if (MathHelper.CloseTo(limit, ThrustLimiter.Value))
+            return;
+
+        ThrustLimiterLabel.Text = Loc.GetString("shuttle-console-thrust-limit-label", ("limit", limit));
+        if(!ThrustLimiter.Grabbed)
+            ThrustLimiter.SetValueWithoutEvent(limit);
+    }
+
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
     {
         _shuttleEntity = coordinates?.EntityId;
@@ -96,6 +117,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         UpdateDocks(scc.Docks);
+        SetThrustLimit(scc.ThrustLimit);
         UpdateFTL(scc.Destinations, scc.FTLState, scc.FTLTime);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";

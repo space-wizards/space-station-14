@@ -14,5 +14,8 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [DataField("zoom")]
         public Vector2 Zoom = new(1.5f, 1.5f);
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ThrustLimit = 1f;
     }
 }

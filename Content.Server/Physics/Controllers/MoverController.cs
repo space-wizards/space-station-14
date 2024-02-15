@@ -177,12 +177,17 @@ namespace Content.Server.Physics.Controllers
             pilot.HeldButtons = buttons;
         }
 
-        private static void ApplyTick(PilotComponent component, float fraction)
+        private void ApplyTick(PilotComponent component, float fraction)
         {
             var x = 0;
             var y = 0;
             var rot = 0;
             int brake;
+
+            if (TryComp<ShuttleConsoleComponent>(component.Console, out var console))
+            {
+                fraction *= console.ThrustLimit;
+            }
 
             if ((component.HeldButtons & ShuttleButtons.StrafeLeft) != 0x0)
             {
@@ -313,8 +318,11 @@ namespace Content.Server.Physics.Controllers
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
+                var linearCount = 0;
                 var brakeInput = 0f;
+                var brakeCount = 0;
                 var angularInput = 0f;
+                var angularCount = 0;
 
                 foreach (var (pilotUid, pilot, _, consoleXform) in pilots)
                 {
@@ -323,24 +331,27 @@ namespace Content.Server.Physics.Controllers
                     if (brakes > 0f)
                     {
                         brakeInput += brakes;
+                        brakeCount += 1;
                     }
 
                     if (strafe.Length() > 0f)
                     {
                         var offsetRotation = consoleXform.LocalRotation;
                         linearInput += offsetRotation.RotateVec(strafe);
+                        linearCount += 1;
                     }
 
                     if (rotation != 0f)
                     {
                         angularInput += rotation;
+                        angularCount += 1;
                     }
                 }
 
-                var count = pilots.Count;
-                linearInput /= count;
-                angularInput /= count;
-                brakeInput /= count;
+                // Don't slow down the shuttle if there's someone just looking at the console
+                linearInput /= Math.Max(1, linearCount);
+                angularInput /= Math.Max(1, angularCount);
+                brakeInput /= Math.Max(1, brakeCount);
 
                 // Handle shuttle movement
                 if (brakeInput > 0f)

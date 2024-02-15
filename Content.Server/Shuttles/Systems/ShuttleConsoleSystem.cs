@@ -44,6 +44,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
         SubscribeLocalEvent<ShuttleConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChange);
         SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
+        SubscribeLocalEvent<ShuttleConsoleComponent, ThrustLimitedMessage>(OnThrustLimited);
         Subs.BuiEvents<ShuttleConsoleComponent>(ShuttleConsoleUiKey.Key, subs =>
         {
             subs.Event<ShuttleConsoleFTLRequestMessage>(OnDestinationMessage);
@@ -204,6 +205,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         UpdateState(uid);
     }
 
+    private void OnThrustLimited(EntityUid uid, ShuttleConsoleComponent component, ref ThrustLimitedMessage args)
+    {
+        component.ThrustLimit = Math.Clamp(args.ThrustLimit, 0f, 1f);
+        UpdateState(uid);
+    }
+
     private bool TryPilot(EntityUid user, EntityUid uid)
     {
         if (!_tags.HasTag(user, "CanPilot") ||
@@ -279,9 +286,13 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         TryComp<TransformComponent>(entity, out var consoleXform);
         TryComp<RadarConsoleComponent>(entity, out var radar);
+        TryComp<ShuttleConsoleComponent>(entity, out var shuttleConsole);
+
         var range = radar?.MaxRange ?? SharedRadarConsoleSystem.DefaultMaxRange;
 
         var shuttleGridUid = consoleXform?.GridUid;
+
+        var thrustLimit = shuttleConsole?.ThrustLimit ?? 1f;
 
         var destinations = new List<(NetEntity, string, bool)>();
         var ftlState = FTLState.Available;
@@ -345,6 +356,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                 ftlTime,
                 destinations,
                 range,
+                thrustLimit,
                 GetNetCoordinates(consoleXform?.Coordinates),
                 consoleXform?.LocalRotation,
                 docks

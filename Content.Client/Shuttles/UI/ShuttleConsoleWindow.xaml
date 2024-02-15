@@ -22,6 +22,13 @@
                               Orientation="Vertical"/>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Vertical">
+                    <Label Name="ThrustLimiterLabel"/>
+                    <Control MinSize="8 0"/>
+                    <Slider Name="ThrustLimiter" MinValue="0" MaxValue="1" HorizontalExpand="True"/>
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical">
                 <controls:StripeBack>
                     <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}" HorizontalAlignment="Center"/>
                 </controls:StripeBack>
