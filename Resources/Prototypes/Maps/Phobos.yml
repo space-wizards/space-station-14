@@ -1,16 +1,16 @@
 - type: gameMap
-  id: phobos
-  mapName: 'phobos'
-  mapPath: /Maps/phobos.yml
+  id: Phobos
+  mapName: 'Phobos'
+  mapPath: /Maps/Phobos.yml
   minPlayers: 0
-  maxPlayers: 50
+  maxPlayers: 60
   fallback: true
   stations:
-    phobos:
+    Phobos:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} phobos {1}'
+          mapNameTemplate: '{0} Phobos {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
