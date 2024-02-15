@@ -1,0 +1,110 @@
+- type: entity
+  id: StationIA
+  parent: BaseStructureDynamic
+  name: StationAI
+  description: A Station Slot for positronic brain
+  components:
+    - type: Transform
+      noRot: true
+    #- type: AccessReader
+    #  access: [["Command"]]
+    #- type: Lock
+    #- type: ResistLocker
+    - type: Sprite
+      drawdepth: Objects
+      sprite: Structures/Storage/Crates/artifact.rsi
+      layers:
+      - state: artifact_container
+        map: ["enum.StorageVisualLayers.Base"]
+      - state: artifact_container_door
+        map: ["enum.StorageVisualLayers.Door"]
+      - state: locked
+        map: ["enum.StorageVisualLayers.Lock"]
+        shader: unshaded
+    - type: InteractionOutline
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 50
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+    - type: Icon
+      sprite: Structures/Storage/Crates/artifact.rsi
+      state: artifact_container_icon
+    - type: PlaceableSurface
+      isPlaceable: false
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:EmptyContainersBehaviour
+              containers:
+              - borg_brain
+    - type: Appearance
+    - type: EntityStorageVisuals
+      stateDoorOpen: artifact_container_open
+      stateDoorClosed: artifact_container_door
+    - type: BlockMovement
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        borg_brain: !type:ContainerSlot { }
+    - type: StaticPrice
+      price: 25000
+    - type: SiliconLawBound
+    - type: SiliconLawProvider
+      laws: Crewsimov
+    - type: IonStormTarget
+    - type: IntrinsicRadioReceiver
+    - type: IntrinsicRadioTransmitter
+      channels:
+      - Binary
+      - Common
+      - Science
+    - type: ActiveRadio
+      channels:
+      - Binary
+      - Common
+      - Science
+    - type: TypingIndicator
+      proto: robot
+    - type: Speech
+      speechVerb: Robotic
+      speechSounds: Pai
+    - type: UnblockableSpeech
+    - type: NameIdentifier
+      group: Silicon
+    - type: UserInterface
+      interfaces:
+      - key: enum.SiliconLawsUiKey.Key
+        type: SiliconLawBoundUserInterface
+    - type: WiresPanel
+    #- type: ActivatableUI
+    #  key: enum.BorgUiKey.Key
+
+    #- type: ActivatableUIRequiresPanel
+    #- type: Wires
+    #  layoutId: Borg
+    - type: AIChassis
+
+
+
+
+
+
