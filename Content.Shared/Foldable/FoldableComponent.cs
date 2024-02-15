@@ -3,10 +3,10 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Foldable;
 
 /// <summary>
-/// Used to create "foldable structures" that you can pickup like an item when folded.
+/// Used to create "foldable structures" that you can pickup like an item when folded. Used for rollerbeds and wheelchairs.
 /// </summary>
 /// <remarks>
-/// Will prevent any insertions into containers while this item is unfolded.
+/// Wiill prevent any insertions into containers while this item is unfolded.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(FoldableSystem))]
