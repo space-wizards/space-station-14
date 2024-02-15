@@ -9,49 +9,40 @@ namespace Content.Shared.Medical.Pain.Systems;
 
 public sealed class PainSystem : EntitySystem
 {
-
-    [Dependency] private readonly ConsciousnessSystem _consciousnessSystem = default!;
     [Dependency] private readonly HealthConditionSystem _healthConditionSystem = default!;
-
 
     public void CheckPainThresholds(Entity<NervousSystemComponent?> nervousSystem)
     {
         if (!Resolve(nervousSystem, ref nervousSystem.Comp))
             return;
         var pain = nervousSystem.Comp.Pain;
-        if (pain > nervousSystem.Comp.UnConsciousThresholdPain
-            && !nervousSystem.Comp.UnConsciousnessApplied)
-        {
-            nervousSystem.Comp.UnConsciousnessApplied = true;
-            //TODO: cause unconsious
-        }
 
-
-        var changedThresholds = new List<(FixedPoint2, bool)>();
+        var changedThresholds = new List<(FixedPoint2, NervousSystemComponent.MedicalConditionThreshold)>();
         var conditionManager = new Entity<HealthConditionManagerComponent?>(nervousSystem, null);
         foreach (var (painPercent, conditionData) in nervousSystem.Comp.ConditionThresholds)
         {
             var requiredPain = painPercent / 100 * nervousSystem.Comp.NominalMaxPain;
-            if (requiredPain < nervousSystem.Comp.Pain)
+            if (requiredPain < pain)
             {
                 if (conditionData.Applied)
                 {
                     _healthConditionSystem.TryRemoveCondition(conditionManager, conditionData.ConditionId);
-                    changedThresholds.Add((painPercent, false));
+                    changedThresholds.Add((painPercent, conditionData with {Applied = false}));
                 }
                 continue; //move next
             }
-
-            if (conditionData.Applied)
-            {
-                _healthConditionSystem.TryAddCondition(conditionManager, conditionData.ConditionId, out var condition, 100);
-                changedThresholds.Add((painPercent, false));
+            if (!conditionData.Applied)
                 continue;
-            }
 
+            _healthConditionSystem.TryAddCondition(conditionManager, conditionData.ConditionId,
+                out _, 100);
+            changedThresholds.Add((painPercent, conditionData with {Applied = true}));
         }
 
-
+        foreach (var (painThreshold, newThresholdData) in changedThresholds)
+        {
+            nervousSystem.Comp.ConditionThresholds[painThreshold] = newThresholdData;
+        }
         Dirty(nervousSystem, nervousSystem.Comp);
     }
 

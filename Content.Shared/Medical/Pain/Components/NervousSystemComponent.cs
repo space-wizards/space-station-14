@@ -16,13 +16,6 @@ public sealed partial class NervousSystemComponent : Component
     public FixedPoint2 Multiplier = 1f;
 
     [DataField, AutoNetworkedField]
-    public FixedPoint2 UnConsciousThreshold = 60;
-    public FixedPoint2 UnConsciousThresholdPain => NominalMaxPain * UnConsciousThreshold / 100;
-
-    [DataField, AutoNetworkedField]
-    public bool UnConsciousnessApplied;
-
-    [DataField, AutoNetworkedField]
     public SortedDictionary<FixedPoint2, MedicalConditionThreshold> ConditionThresholds= new();
 
     [DataField, AutoNetworkedField]
