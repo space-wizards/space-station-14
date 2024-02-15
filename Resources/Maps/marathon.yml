@@ -51792,18 +51792,6 @@ entities:
     - type: Transform
       pos: 6.4995365,21.072325
       parent: 30
-- proto: ClothingEyesGlassesSecurity
-  entities:
-  - uid: 1461
-    components:
-    - type: Transform
-      pos: -43.337395,31.456226
-      parent: 30
-  - uid: 2032
-    components:
-    - type: Transform
-      pos: -44.436646,46.5757
-      parent: 30
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 683
@@ -52606,48 +52594,6 @@ entities:
     components:
     - type: Transform
       pos: -75.60953,-47.39969
-      parent: 30
-- proto: ClothingOuterSanta
-  entities:
-  - uid: 18695
-    components:
-    - type: Transform
-      pos: -27.60547,58.54977
-      parent: 30
-  - uid: 18696
-    components:
-    - type: Transform
-      pos: -27.60547,58.54977
-      parent: 30
-  - uid: 18819
-    components:
-    - type: Transform
-      pos: -27.60547,58.54977
-      parent: 30
-  - uid: 18820
-    components:
-    - type: Transform
-      pos: -27.60547,58.54977
-      parent: 30
-  - uid: 18827
-    components:
-    - type: Transform
-      pos: -27.402346,58.377895
-      parent: 30
-  - uid: 18831
-    components:
-    - type: Transform
-      pos: -27.402346,58.377895
-      parent: 30
-  - uid: 18833
-    components:
-    - type: Transform
-      pos: -27.402346,58.377895
-      parent: 30
-  - uid: 18835
-    components:
-    - type: Transform
-      pos: -27.402346,58.377895
       parent: 30
 - proto: ClothingOuterSuitChicken
   entities:
@@ -102383,6 +102329,21 @@ entities:
     - type: Transform
       pos: -10.326736,-38.446224
       parent: 30
+  - uid: 10012
+    components:
+    - type: Transform
+      pos: -1.4952288,-44.42826
+      parent: 30
+  - uid: 11333
+    components:
+    - type: Transform
+      pos: -1.4344845,-44.759243
+      parent: 30
+  - uid: 19791
+    components:
+    - type: Transform
+      pos: -60.268562,45.564415
+      parent: 30
   - uid: 19792
     components:
     - type: Transform
@@ -141778,22 +141739,5 @@ entities:
     components:
     - type: Transform
       pos: -6.388359,64.59328
-      parent: 30
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 10012
-    components:
-    - type: Transform
-      pos: -1.4952288,-44.42826
-      parent: 30
-  - uid: 11333
-    components:
-    - type: Transform
-      pos: -1.4344845,-44.759243
-      parent: 30
-  - uid: 19791
-    components:
-    - type: Transform
-      pos: -60.268562,45.564415
       parent: 30
 ...

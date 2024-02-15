@@ -201,3 +201,16 @@
     sprite: Objects/Materials/materials.rsi
     state: cloth_3
   objectType: Item
+
+- type: construction
+  name: straw hat
+  id: strawHat
+  graph: StrawHat
+  startNode: start
+  targetNode: strawhat
+  category: construction-category-clothing
+  description: A fancy hat for hot days! Not recommended to wear near fires.
+  icon:
+    sprite: Clothing/Head/Hats/straw_hat.rsi
+    state: icon
+  objectType: Item

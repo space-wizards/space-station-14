@@ -106,7 +106,7 @@
         - ReagentId: Silicon
           Quantity: 5 #Half of the value of regular glass. TECHNICALLY, welding a single shard of glass gives you the full thing back with just 1 sheet, but that is stupid so I am making it half.
   - type: Construction
-    graph: Shiv
+    graph: ShivConstruct
     node: start
 
 - type: entity
@@ -138,7 +138,7 @@
         - ReagentId: Silicon
           Quantity: 5 #I don't care enough to divide all of the reinforced glass materials by 2 because reinforced glass shards are due for removal anyways.
   - type: Construction
-    graph: ReinforcedShiv
+    graph: ReinforcedShivConstruct
     node: start
 
 - type: entity
@@ -172,7 +172,7 @@
         - ReagentId: Plasma
           Quantity: 5
   - type: Construction
-    graph: PlasmaShiv
+    graph: PlasmaShivConstruct
     node: start
 
 - type: entity
@@ -207,5 +207,5 @@
         - ReagentId: Uranium
           Quantity: 5
   - type: Construction
-    graph: UraniumShiv
+    graph: UraniumShivConstruct
     node: start

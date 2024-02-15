@@ -1,6 +1,7 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -8,6 +9,7 @@ public sealed class FoldableClothingSystem : EntitySystem
 {
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedItemSystem _itemSystem = default!;
 
     public override void Initialize()
     {
@@ -31,12 +33,32 @@ public sealed class FoldableClothingSystem : EntitySystem
 
     private void OnFolded(Entity<FoldableClothingComponent> ent, ref FoldedEvent args)
     {
-        if (TryComp<ClothingComponent>(ent.Owner, out var clothingComp))
+        if (TryComp<ClothingComponent>(ent.Owner, out var clothingComp) &&
+            TryComp<ItemComponent>(ent.Owner, out var itemComp))
         {
-            if (args.IsFolded && ent.Comp.FoldedSlots.HasValue)
-                _clothingSystem.SetSlots(ent.Owner, ent.Comp.FoldedSlots.Value, clothingComp);
-            else if (!args.IsFolded && ent.Comp.UnfoldedSlots.HasValue)
-                _clothingSystem.SetSlots(ent.Owner, ent.Comp.UnfoldedSlots.Value, clothingComp);
+            if (args.IsFolded)
+            {
+                if (ent.Comp.FoldedSlots.HasValue)
+                    _clothingSystem.SetSlots(ent.Owner, ent.Comp.FoldedSlots.Value, clothingComp);
+
+                if (ent.Comp.FoldedEquippedPrefix != null)
+                    _clothingSystem.SetEquippedPrefix(ent.Owner, ent.Comp.FoldedEquippedPrefix, clothingComp);
+
+                if (ent.Comp.FoldedHeldPrefix != null)
+                    _itemSystem.SetHeldPrefix(ent.Owner, ent.Comp.FoldedHeldPrefix, false, itemComp);
+            }
+            else
+            {
+                if (ent.Comp.UnfoldedSlots.HasValue)
+                    _clothingSystem.SetSlots(ent.Owner, ent.Comp.UnfoldedSlots.Value, clothingComp);
+
+                if (ent.Comp.FoldedEquippedPrefix != null)
+                    _clothingSystem.SetEquippedPrefix(ent.Owner, null, clothingComp);
+
+                if (ent.Comp.FoldedHeldPrefix != null)
+                    _itemSystem.SetHeldPrefix(ent.Owner, null, false, itemComp);
+
+            }
         }
     }
 }

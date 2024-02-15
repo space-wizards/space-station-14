@@ -36,22 +36,6 @@
   - VimHarness
 
 - type: technology
-  id: FoodService
-  name: research-technology-food-service
-  icon:
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer1
-  discipline: CivilianServices
-  tier: 1
-  cost: 7500
-  recipeUnlocks: #remove all of these once we have more kitchen equipment
-  - MicrowaveMachineCircuitboard
-  - ReagentGrinderMachineCircuitboard
-  - ElectricGrillMachineCircuitboard
-  - BoozeDispenserMachineCircuitboard
-  - SodaDispenserMachineCircuitboard
-
-- type: technology
   id: AudioVisualCommunication
   name: research-technology-audio-visual-communication
   icon:

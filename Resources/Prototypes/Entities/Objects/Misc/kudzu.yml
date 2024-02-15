@@ -1,11 +1,26 @@
 - type: entity
-  id: Kudzu
-  name: kudzu
-  description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  id: BaseKudzu
+  abstract: true
   placement:
     mode: SnapgridCenter
     snap:
       - Wall
+  components:
+    - type: Appearance
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Kudzu
+    - type: GrowingKudzu
+    - type: ActiveEdgeSpreader
+    - type: EdgeSpreader
+      id: Kudzu
+
+- type: entity
+  id: Kudzu
+  name: kudzu
+  parent: BaseKudzu
+  description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
   components:
     - type: MeleeSound
       soundGroups:
@@ -16,12 +31,8 @@
       sprite: Objects/Misc/kudzu.rsi
       state: kudzu_11
       drawdepth: Overdoors
-    - type: Appearance
     - type: KudzuVisuals
     - type: Clickable
-    - type: Transform
-      anchored: true
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
@@ -69,19 +80,14 @@
             types:
               Heat: 10
     - type: AtmosExposed
-    - type: Kudzu
       growthTickChance: 0.3
       spreadChance: 0.4
-    - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
       ignoreWhitelist:
         components:
         - IgnoreKudzu
-    - type: ActiveEdgeSpreader
-    - type: EdgeSpreader
-      id: Kudzu
     - type: Food
       requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
       delay: 0.5
@@ -159,6 +165,7 @@
 - type: entity
   id: FleshKudzu
   name: tendons
+  parent: BaseKudzu
   description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
   placement:
     mode: SnapgridCenter
@@ -174,12 +181,8 @@
       sprite: Objects/Misc/fleshkudzu.rsi
       state: kudzu_11
       drawdepth: Overdoors
-    - type: Appearance
     - type: KudzuVisuals
     - type: Clickable
-    - type: Transform
-      anchored: true
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
@@ -233,12 +236,8 @@
       damage:
        types:
          Heat: 3
-    - type: GrowingKudzu
       growthTickChance: 0.3
     - type: AtmosExposed
-    - type: ActiveEdgeSpreader
-    - type: EdgeSpreader
-      id: Kudzu
     - type: SlowContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
@@ -261,3 +260,41 @@
         types:
           Asphyxiation: -0.25
 
+- type: entity
+  name: dark haze
+  id: ShadowKudzu
+  parent: [ BaseKudzu, BaseShadow ]
+  components:
+    - type: Physics
+      canCollide: false
+    - type: Occluder
+    - type: Sprite
+      drawdepth: Effects
+      sprite: Effects/spookysmoke.rsi
+      state: spookysmoke
+      color: "#793a80dd"
+    - type: Kudzu
+      growthTickChance: 0.2
+      spreadChance: 0.99
+    - type: RandomSpawner
+      deleteSpawnerAfterSpawn: false
+      rareChance: 0.05
+      offset: 0.2
+      chance: 0.45
+      prototypes:
+      - ShadowBasaltRandom
+      rarePrototypes:
+      - ShadowPortal
+      - ShadowKudzuLootSpawner
+    - type: Tag
+      tags:
+        - HideContextMenu
+        - SpookyFog
+
+- type: entity
+  name: Haze
+  id: ShadowKudzuWeak
+  parent: ShadowKudzu
+  components:
+    - type: Kudzu
+      spreadChance: 0 #appears during pulsation. It shouldnt spreading.

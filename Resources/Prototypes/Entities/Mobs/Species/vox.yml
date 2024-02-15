@@ -8,105 +8,45 @@
   - type: Icon
     sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m
-  - type: Sprite
-    layers:
-      - map: [ "enum.HumanoidVisualLayers.Chest" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: torso_m
-      - map: [ "enum.HumanoidVisualLayers.Head" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: head_m
-      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-        color: "#008800"
-        sprite: Mobs/Customization/eyes.rsi
-        state: vox_eyes_s
-      - map: [ "enum.HumanoidVisualLayers.RArm" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_arm
-      - map: [ "enum.HumanoidVisualLayers.LArm" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_arm
-      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_leg
-      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_leg
-      # Vox don't have female clothing masks.
-      #- shader: StencilClear
-      #  sprite: Mobs/Species/Vox/parts.rsi
-      #  state: l_leg
-      #- shader: StencilMask
-      #  map: [ "enum.HumanoidVisualLayers.FemaleStencilMask" ]
-      #  sprite: Mobs/Customization/masking_helpers.rsi
-      #  state: female_full
-      #  visible: false
-      #- map: [ "jumpsuit" ]
-      #  shader: StencilDraw
-      - map: [ "enum.HumanoidVisualLayers.LHand" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_hand
-      - map: [ "enum.HumanoidVisualLayers.RHand" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_hand
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_foot
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_foot
-      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-        color: "#ffffff"
-        sprite: Objects/Misc/handcuffs.rsi
-        state: body-overlay-2
-        visible: false
-      - map: [ "gloves" ]
-      - map: [ "shoes" ]
-      - map: [ "ears" ]
-      - map: [ "outerClothing" ]
-      - map: [ "eyes" ]
-      - map: [ "belt" ]
-      - map: [ "id" ]
-      - map: [ "neck" ]
-      - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-        state: shaved
-        sprite: Mobs/Customization/human_facial_hair.rsi
-      - map: [ "enum.HumanoidVisualLayers.Hair" ]
-        state: bald
-        sprite: Mobs/Customization/human_hair.rsi
-      - map: [ "mask" ]
-      - map: [ "head" ]
-      - map: [ "pocket1" ]
-      - map: [ "pocket2" ]
   - type: Body
     prototype: Vox
     requiredLegs: 2
-  # Vox nitrogen stuff is handled in their metabolism
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
   - type:  HumanoidAppearance
     species: Vox
-    # canColorHair: false
-    # canColorFacialHair: false
-  - type: Inventory
-    speciesId: vox
-  - type: InventorySlots
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-    - id: FoodMeatChicken
-      amount: 5
+    #- type: VoxAccent # Not yet coded
+  - type: Speech
+    speechVerb: Vox
+    speechSounds: Vox
+  - type: TypingIndicator
+    proto: vox
   - type: Vocal
     sounds:
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Vox
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#7a8bf2"
+  - type: Bloodstream
+    bloodReagent: AmmoniaBlood
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5 # Reduce?
 
 - type: entity
   parent: BaseSpeciesDummy

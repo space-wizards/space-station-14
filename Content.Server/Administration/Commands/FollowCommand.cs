@@ -11,8 +11,8 @@ public sealed class FollowCommand : IConsoleCommand
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     public string Command => "follow";
-    public string Description => Loc.GetString("add-uplink-command-description");
-    public string Help => Loc.GetString("add-uplink-command-help");
+    public string Description => Loc.GetString("follow-command-description");
+    public string Help => Loc.GetString("follow-command-help");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
