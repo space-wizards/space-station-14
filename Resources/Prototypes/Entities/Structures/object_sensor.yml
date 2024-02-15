@@ -20,20 +20,25 @@
           True: {visible: true}
           False: {visible: false}
   - type: SubFloorHide
+  - type: CollideOnAnchor
   - type: UseDelay
     delay: 0.5
-  - type: CollisionWake
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        mask:
+        - ItemMask
+      collider:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
-        layer:
-        - MachineLayer
         mask:
         - MachineMask
-        density: 100
+        layer:
+        - MachineLayer
         hard: false
   - type: ObjectSensor
   - type: DeviceLinkSource

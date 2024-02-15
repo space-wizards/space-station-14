@@ -1,5 +1,4 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -83,6 +82,8 @@ public sealed class ObjectSensorSystem : EntitySystem
 
         switch (port)
         {
+            case 0:
+                break;
             case 1:
                 _deviceLink.SendSignal(uid, component.OutputPort1, signal);
                 break;
@@ -103,6 +104,12 @@ public sealed class ObjectSensorSystem : EntitySystem
         var component = uid.Comp;
 
         var oldTotal = component.Contacting;
+
+        if (!Transform(uid).Anchored)
+            return;
+
+        if (TryComp(uid, out CollideOnAnchorComponent? collideOnAnchor))
+            RemComp(uid, collideOnAnchor);
 
         var contacting = _physics.GetContactingEntities(uid);
         var total = 0;
@@ -131,7 +138,7 @@ public sealed class ObjectSensorSystem : EntitySystem
 
         component.Contacting = total;
 
-        _appearance.SetData(uid, LightLayers.Light, total > 0);
+        _appearance.SetData(uid, LightLayers.Light, total % 2 == 0);
 
         if (component.Contacting > oldTotal)
         {
