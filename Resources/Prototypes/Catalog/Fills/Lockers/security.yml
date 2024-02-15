@@ -126,6 +126,7 @@
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
       - id: HoloprojectorSecurity
+      - id: BoxEvidenceMarkers
 
 - type: entity
   id: ClosetBombFilled
