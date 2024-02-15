@@ -17,6 +17,8 @@
   - type: Paper
     sound: !type:SoundCollectionSpecifier
       collection: PaperScribbles
+      params:
+        variation: 0.1
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     closeOnHandDeselect: false

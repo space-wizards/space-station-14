@@ -1,7 +1,5 @@
 - type: soundCollection
   id: PaperScribbles
-  params:
-    variation: 0.1
   files:
   - /Audio/Items/Paper/paper_scribble1.ogg
   - /Audio/Items/Paper/paper_scribble2.ogg
