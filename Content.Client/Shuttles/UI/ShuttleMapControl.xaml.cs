@@ -376,12 +376,12 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         // really only affects forks with lots of grids.
         foreach (var (color, sendVerts) in _verts)
         {
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, sendVerts.ToArray(), color.WithAlpha(0.05f));
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, sendVerts, color.WithAlpha(0.05f));
         }
 
         foreach (var (color, sendEdges) in _edges)
         {
-            handle.DrawPrimitives(DrawPrimitiveTopology.LineList, sendEdges.ToArray(), color);
+            handle.DrawPrimitives(DrawPrimitiveTopology.LineList, sendEdges, color);
         }
 
         foreach (var (color, sendStrings) in _strings)

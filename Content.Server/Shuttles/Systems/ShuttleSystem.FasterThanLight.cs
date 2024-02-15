@@ -646,8 +646,8 @@ public sealed partial class ShuttleSystem
     public void FTLDock(Entity<TransformComponent> shuttle, DockingConfig config)
     {
         // Set position
-        _transform.SetCoordinates(shuttle, config.Coordinates);
-        _transform.SetWorldRotation(shuttle.Comp, config.Angle);
+        var mapCoordinates = _transform.ToMapCoordinates(config.Coordinates);
+        _transform.SetWorldPositionRotation(shuttle.Owner, mapCoordinates.Position, config.Angle, shuttle.Comp);
 
         // Connect everything
         foreach (var (dockAUid, dockBUid, dockA, dockB) in config.Docks)
