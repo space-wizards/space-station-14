@@ -1,0 +1,14 @@
+<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <ItemList Name="EntrySelector" HorizontalExpand="True" VerticalExpand="True" MinSize="300 200" />
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="AddButton" StyleClasses="OpenRight" Text="{Loc 'humanoid-profile-editor-cd-records-add-entry'}" />
+            <Button Name="EditButton" StyleClasses="OpenBoth" Text="{Loc 'humanoid-profile-editor-cd-records-edit-entry'}" />
+            <Button Name="ViewButton" StyleClasses="OpenBoth" Text="{Loc 'humanoid-profile-editor-cd-records-view-entry'}" />
+            <Button Name="RemoveButton" StyleClasses="OpenLeft" Text="{Loc 'humanoid-profile-editor-cd-records-remove-entry'}" />
+            <Control HorizontalExpand="True" />
+            <Button Name="UpButton" HorizontalAlignment="Right" StyleClasses="OpenRight" Text="{Loc 'humanoid-profile-editor-cd-records-up'}" />
+            <Button Name="DownButton" HorizontalAlignment="Right" StyleClasses="OpenLeft" Text="{Loc 'humanoid-profile-editor-cd-records-down'}" />
+        </BoxContainer>
+    </BoxContainer>
+</Control>

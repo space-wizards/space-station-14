@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Humanoid;
@@ -33,6 +34,10 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Direction = Robust.Shared.Maths.Direction;
+
+// CD: Records editor imports
+using Content.Client._CD.Records.UI;
+using Content.Shared._CD.Records;
 
 namespace Content.Client.Preferences.UI
 {
@@ -76,6 +81,7 @@ namespace Content.Client.Preferences.UI
         private SingleMarkingPicker _hairPicker => CHairStylePicker;
         private SingleMarkingPicker _facialHairPicker => CFacialHairPicker;
         private EyeColorPicker _eyesPicker => CEyeColorPicker;
+        private LineEdit _heightPicker => CHeight;
 
         private TabContainer _tabContainer => CTabContainer;
         private BoxContainer _jobList => CJobList;
@@ -105,6 +111,11 @@ namespace Content.Client.Preferences.UI
         private MarkingSet _markingSet = new(); // storing this here feels iffy but a few things need it this high up
 
         public event Action<HumanoidCharacterProfile, int>? OnProfileChanged;
+
+        private float _defaultHeight = 1f;
+
+        // CD: Record editor
+        private readonly RecordEditorGui _recordsTab;
 
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager,
             IEntityManager entityManager, IConfigurationManager configurationManager)
@@ -191,6 +202,35 @@ namespace Content.Client.Preferences.UI
             };
 
             #endregion Species
+
+            #region Height
+
+
+            _heightPicker.OnTextChanged += args =>
+            {
+                if (Profile is null || !float.TryParse(args.Text, out var newHeight))
+                    return;
+
+                var prototype = _prototypeManager.Index<SpeciesPrototype>(Profile.Species);
+
+                if (newHeight < prototype.MinHeight)
+                    newHeight = prototype.MinHeight;
+
+                if (newHeight > prototype.MaxHeight)
+                    newHeight = prototype.MaxHeight;
+
+                CHeightLabel.Text = MathF.Round(newHeight, 2).ToString("G");
+                SetProfileHeight(MathF.Round(newHeight, 2));
+            };
+
+            CHeightReset.OnPressed += _ =>
+            {
+                _heightPicker.Text = _defaultHeight.ToString(CultureInfo.InvariantCulture);
+                CHeightLabel.Text = _defaultHeight.ToString(CultureInfo.InvariantCulture);
+                SetProfileHeight(_defaultHeight);
+            };
+
+            #endregion Height
 
             #region Skin
 
@@ -477,6 +517,14 @@ namespace Content.Client.Preferences.UI
 
             #endregion Markings
 
+            #region CosmaticRecords
+
+            _recordsTab = new RecordEditorGui(UpdateProfileRecords);
+            _tabContainer.AddChild(_recordsTab);
+            _tabContainer.SetTabTitle(_tabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-cd-records-tab"));
+
+            #endregion CosmaticRecords
+
             #region FlavorText
 
             if (_configurationManager.GetCVar(CCVars.FlavorText))
@@ -634,6 +682,15 @@ namespace Content.Client.Preferences.UI
             {
                 UpdateJobPriorities();
             }
+        }
+
+        // CD: Records editor
+        private void UpdateProfileRecords(CharacterRecords records)
+        {
+            if (Profile is null)
+                return;
+            Profile = Profile.WithCDCharacterRecords(records);
+            IsDirty = true;
         }
 
         private void OnFlavorTextChange(string content)
@@ -812,6 +869,12 @@ namespace Content.Client.Preferences.UI
         private void SetBackpack(BackpackPreference newBackpack)
         {
             Profile = Profile?.WithBackpackPreference(newBackpack);
+            IsDirty = true;
+        }
+
+        private void SetProfileHeight(float height)
+        {
+            Profile = Profile?.WithHeight(height);
             IsDirty = true;
         }
 
@@ -996,6 +1059,21 @@ namespace Content.Client.Preferences.UI
             _backpackButton.SelectId((int) Profile.Backpack);
         }
 
+        private void UpdateHeightControls()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            var species = _speciesList.Find(x => x.ID == Profile.Species);
+            if (species != null)
+                _defaultHeight = species.DefaultHeight;
+
+            _heightPicker.Text = Profile.Height.ToString();
+            CHeightLabel.Text = Profile.Height.ToString();
+        }
+        
         private void UpdateSpawnPriorityControls()
         {
             if (Profile == null)
@@ -1157,6 +1235,10 @@ namespace Content.Client.Preferences.UI
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
+            UpdateHeightControls();
+
+            // CD: Update record editor
+            _recordsTab.Update(Profile);
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }

@@ -102,6 +102,13 @@
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="CSpawnPriorityButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
+								<!-- Height -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-height-label'}" />
+                                    <Label Name="CHeightLabel" Text="1" />
+                                    <Button Name="CHeightReset" Text="{Loc 'humanoid-profile-editor-reset-height-button'}"/>
+                                    <LineEdit HorizontalAlignment="Right" HorizontalExpand="True" Name="CHeight" MinSize="40 0" Text="1.0" />
+                                </BoxContainer>
                             </BoxContainer>
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">

@@ -280,20 +280,24 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
+  - type: CharacterRecordConsole
+    consoleType: Medical
+  - type: UserInterface
+    interfaces:
+      - key: enum.CharacterRecordConsoleKey.Key
+        type: CharacterRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CharacterRecordConsoleKey.Key
 
 - type: entity
   parent: BaseComputer
   id: ComputerCriminalRecords
-  name: criminal records computer
-  description: This can be used to check criminal records. Only security can modify them.
+  name: security records computer
+  description: This can be used to access security records.
   components:
+    # We need to have both a CriminalRecordsConsole and CharacterRecordConsole
+    # component to be able to set wanted status.
   - type: CriminalRecordsConsole
-  - type: UserInterface
-    interfaces:
-    - key: enum.CriminalRecordsConsoleKey.Key
-      type: CriminalRecordsConsoleBoundUserInterface
-  - type: ActivatableUI
-    key: enum.CriminalRecordsConsoleKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -312,23 +316,21 @@
     board: CriminalRecordsComputerCircuitboard
   - type: AccessReader
     access: [["Security"]]
-  - type: GuideHelp
-    guides:
-    - CriminalRecords
+  - type: CharacterRecordConsole
+    consoleType: Security
+  - type: UserInterface
+    interfaces:
+      - key: enum.CharacterRecordConsoleKey.Key
+        type: CharacterRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CharacterRecordConsoleKey.Key
 
 - type: entity
   parent: BaseComputer
   id: ComputerStationRecords
-  name: station records computer
-  description: This can be used to check station records.
+  name: employment records computer
+  description: This can be used to check employment records.
   components:
-  - type: GeneralStationRecordConsole
-  - type: UserInterface
-    interfaces:
-      - key: enum.GeneralStationRecordConsoleKey.Key
-        type: GeneralStationRecordConsoleBoundUserInterface
-  - type: ActivatableUI
-    key: enum.GeneralStationRecordConsoleKey.Key
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -338,6 +340,14 @@
   - type: GuideHelp
     guides:
     - Forensics
+  - type: CharacterRecordConsole
+    consoleType: Employment
+  - type: UserInterface
+    interfaces:
+      - key: enum.CharacterRecordConsoleKey.Key
+        type: CharacterRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CharacterRecordConsoleKey.Key
 
 - type: entity
   parent: BaseComputer

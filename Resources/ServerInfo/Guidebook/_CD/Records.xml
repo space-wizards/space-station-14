@@ -1,0 +1,40 @@
+<Document>
+
+## Character Records
+
+You can create records for you characters in the records tab of the character
+creator. Just simply fill in the values and save. Entries should typically be
+written from the perspective of a CentCom official.
+
+## Employment Entries
+
+Employment Entries should include your characters education, previous jobs, and
+anything that you think NanoTrasen would log about your characters past that is
+not security related.
+
+## Medical Entries
+
+Medical Entries should include anything a doctor should know before treating
+your character, major surgeries, prescriptions, and any psychological evaluations.
+
+## Security Entries
+
+Security Entries should include any major arrests/incidents your character has
+had in their past or while working with NanoTrasen. Do not log minor incidents.
+
+## Accessing Records
+You can access the records of your crewmates in game from their respective consoles.
+
+<Box>
+<GuideEntityEmbed Entity="ComputerMedicalRecords" Caption="Medical"/>
+<GuideEntityEmbed Entity="ComputerCriminalRecords" Caption="Security"/>
+<GuideEntityEmbed Entity="ComputerStationRecords" Caption="Employment"/>
+</Box>
+
+It is currently not possible to create new records in game. This is something
+that will be added in the future. If there is something that occurs in the round
+that you think is relevant for a record entry, it is on you to write it at the
+moment. Keep in mind that records should typically be written from the
+perspective of some CentCom official.
+
+</Document>

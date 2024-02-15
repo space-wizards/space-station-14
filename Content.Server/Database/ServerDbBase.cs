@@ -17,6 +17,10 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
+// CD: imports
+using Content.Server._CD.Records;
+using Content.Shared._CD.Records;
+
 namespace Content.Server.Database
 {
     public abstract class ServerDbBase
@@ -208,10 +212,16 @@ namespace Content.Server.Database
                 }
             }
 
+            // CD: get character records or create default records
+            var cdRecords = profile.CDCharacterRecords != null
+                ? RecordsSerialization.DeserializeJson(profile.CDCharacterRecords)
+                : CharacterRecords.DefaultRecords();
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
                 profile.Species,
+                profile.Height,
                 profile.Age,
                 sex,
                 gender,
@@ -231,7 +241,8 @@ namespace Content.Server.Database
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList(),
-                traits.ToList()
+                traits.ToList(),
+                cdRecords
             );
         }
 
@@ -252,6 +263,7 @@ namespace Content.Server.Database
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
+            profile.Height = humanoid.Height;
             profile.HairName = appearance.HairStyleId;
             profile.HairColor = appearance.HairColor.ToHex();
             profile.FacialHairName = appearance.FacialHairStyleId;
@@ -283,6 +295,9 @@ namespace Content.Server.Database
                 humanoid.TraitPreferences
                         .Select(t => new Trait {TraitName = t})
             );
+
+            // CD: Store records
+            profile.CDCharacterRecords = JsonSerializer.SerializeToDocument(humanoid.CDCharacterRecords ?? CharacterRecords.DefaultRecords());
 
             return profile;
         }
