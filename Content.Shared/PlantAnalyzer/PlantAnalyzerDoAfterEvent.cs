@@ -1,6 +1,5 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
-using System.Threading;
 
 namespace Content.Shared.PlantAnalyzer;
 
