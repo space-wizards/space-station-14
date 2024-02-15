@@ -42,6 +42,6 @@ public sealed partial class RadioDevicesSystem
         var nameEv = new TransformSpeakerNameEvent(speaker, Name(speaker));
         RaiseLocalEvent(speaker, nameEv);
 
-        _chat.TrySendLocalChatMessage(uid, args.Message, $"{Name(uid)} ({nameEv.Name})", true);
+        _chat.SendBackgroundChatMessage(uid, args.Message, $"{Name(uid)} ({nameEv.Name})");
     }
 }

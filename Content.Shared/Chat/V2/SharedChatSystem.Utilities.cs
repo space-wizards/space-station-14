@@ -16,16 +16,6 @@ public partial class SharedChatSystem
 
     private string[] _chatNameColors = default!;
 
-    public void InitializeUtilities()
-    {
-        var nameColors = _prototype.Index<ColorPalettePrototype>(ChatNamePalette).Colors.Values.ToArray();
-        _chatNameColors = new string[nameColors.Length];
-        for (var i = 0; i < nameColors.Length; i++)
-        {
-            _chatNameColors[i] = nameColors[i].ToHex();
-        }
-    }
-
     public string GetNameColor(string name)
     {
         var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Length);

@@ -220,11 +220,11 @@ public sealed class DefibrillatorSystem : EntitySystem
         var dead = true;
         if (_rotting.IsRotten(target))
         {
-            _chat.TrySendLocalChatMessage(uid, Loc.GetString("defibrillator-rotten"),  hideInChatLog: true);
+            _chat.SendBackgroundChatMessage(uid, Loc.GetString("defibrillator-rotten"));
         }
         else if (HasComp<UnrevivableComponent>(target))
         {
-            _chat.TrySendLocalChatMessage(uid, Loc.GetString("defibrillator-unrevivable"),  hideInChatLog: true);
+            _chat.SendBackgroundChatMessage(uid, Loc.GetString("defibrillator-unrevivable"));
         }
         else
         {
@@ -251,7 +251,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             }
             else
             {
-                _chat.TrySendLocalChatMessage(uid, Loc.GetString("defibrillator-no-mind"),  hideInChatLog: true);
+                _chat.SendBackgroundChatMessage(uid, Loc.GetString("defibrillator-no-mind"));
             }
         }
 

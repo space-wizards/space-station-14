@@ -1660,7 +1660,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="ChatRateLimitPeriod"/>
         /// <seealso cref="ChatRateLimitAnnounceAdmins"/>
         public static readonly CVarDef<int> ChatRateLimitCount =
-            CVarDef.Create("chat.rate_limit_count", 5, CVar.SERVERONLY);
+            CVarDef.Create("chat.rate_limit_count", 5, CVar.REPLICATED);
 
         /// <summary>
         /// If true, announce when a player breached chat rate limit to game administrators.

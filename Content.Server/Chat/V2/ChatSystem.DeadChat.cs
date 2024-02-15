@@ -40,12 +40,12 @@ public sealed partial class ChatSystem
             return;
         }
 
-        if (message.Length > _maxChatMessageLength)
+        if (message.Length > MaxChatMessageLength)
         {
             RaiseNetworkEvent(
                 new DeadChatAttemptFailedEvent(
                     entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", _maxChatMessageLength))
+                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))
                 ),
                 player);
 

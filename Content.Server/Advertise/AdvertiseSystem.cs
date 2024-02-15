@@ -75,7 +75,7 @@ namespace Content.Server.Advertise
             if (!_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
                 return;
 
-            _chat.TrySendLocalChatMessage(uid, Loc.GetString(_random.Pick(advertisements.Advertisements)), hideInChatLog: true);
+            _chat.SendBackgroundChatMessage(uid, Loc.GetString(_random.Pick(advertisements.Advertisements)));
         }
 
         public void SayThankYou(EntityUid uid, AdvertiseComponent? advertise = null)

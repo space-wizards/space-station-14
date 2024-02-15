@@ -54,10 +54,10 @@ public sealed partial class ChatSystem
             return;
         }
 
-        var maxMessageLen = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
+        var maxMessageLen = Configuration.GetCVar(CCVars.ChatMaxMessageLength);
 
         // Is the message too long?
-        if (message.Length > _configuration.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > Configuration.GetCVar(CCVars.ChatMaxMessageLength))
         {
             RaiseNetworkEvent(
                 new EmoteAttemptFailedEvent(

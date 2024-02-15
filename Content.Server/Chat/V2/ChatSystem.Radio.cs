@@ -86,12 +86,12 @@ public sealed partial class ChatSystem
         }
 
         // Is the message too long?
-        if (message.Length > _maxChatMessageLength)
+        if (message.Length > MaxChatMessageLength)
         {
             RaiseNetworkEvent(
-                new LocalChatAttemptFailedEvent(
+                new RadioAttemptFailedEvent(
                     entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", _maxChatMessageLength))
+                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))
                     ),
                 player);
 
@@ -132,7 +132,7 @@ public sealed partial class ChatSystem
         }
 
         // If you don't have intrinsic radio, you need to whisper to send a message using your voice box.
-        if (! TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
+        if (!TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
         {
             if (whisper)
             {
@@ -239,7 +239,7 @@ public sealed partial class ChatSystem
         while (headsets.MoveNext(out var receiver, out var headset, out var transform))
         {
             // Headsets are (currently) always short-range.
-            if (IsValidRecipient(source, sourceMapId, channel, hasActiveServer, true, receiver,  headset.ChannelNames, transform, false))
+            if (IsValidRecipient(source, sourceMapId, channel, hasActiveServer, true, receiver, headset.ChannelNames, transform, false))
                 recipients.Add(receiver);
         }
 
@@ -247,7 +247,7 @@ public sealed partial class ChatSystem
         while (internals.MoveNext(out var receiver, out var radio, out var transform))
         {
             // Internal radios get their abilities through a myriad of means, from the mechanical to magical,
-            if (IsValidRecipient(source, sourceMapId, channel, hasActiveServer, !radio.IsInfiniteRange, receiver,  radio.ReceiveChannels, transform, radio.CanListenOnAllChannels))
+            if (IsValidRecipient(source, sourceMapId, channel, hasActiveServer, !radio.IsInfiniteRange, receiver, radio.ReceiveChannels, transform, radio.CanListenOnAllChannels))
                 recipients.Add(receiver);
         }
 

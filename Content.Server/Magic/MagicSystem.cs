@@ -403,6 +403,6 @@ public sealed class MagicSystem : EntitySystem
         if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
             return;
 
-        _chat.TrySendLocalChatMessage(args.Performer, Loc.GetString(speak.Speech),  hideInChatLog: true);
+        _chat.SendBackgroundChatMessage(args.Performer, Loc.GetString(speak.Speech));
     }
 }

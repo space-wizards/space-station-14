@@ -31,9 +31,9 @@ public sealed partial class ChatSystem
         // A client attempts to chat using a given entity
         SubscribeNetworkEvent<LoocAttemptedEvent>((msg, args) => { HandleAttemptChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
 
-        _configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
-        _configuration.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
-        _configuration.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
+        Configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
+        Configuration.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
+        Configuration.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
     }
 
     private void HandleAttemptChatMessage(ICommonSession player, NetEntity entity, string message)
@@ -52,12 +52,12 @@ public sealed partial class ChatSystem
             return;
         }
 
-        if (message.Length > _maxChatMessageLength)
+        if (message.Length > MaxChatMessageLength)
         {
             RaiseNetworkEvent(
                 new LoocAttemptFailedEvent(
                     entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", _maxChatMessageLength))
+                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))
                 ),
                 player);
 
@@ -85,7 +85,7 @@ public sealed partial class ChatSystem
         if (!_admin.IsAdmin(source) && !LoocEnabled)
             return;
 
-        var range = _configuration.GetCVar(CCVars.LoocRange);
+        var range = Configuration.GetCVar(CCVars.LoocRange);
 
         var msgOut = new EntityLoocedEvent(
             GetNetEntity(source),

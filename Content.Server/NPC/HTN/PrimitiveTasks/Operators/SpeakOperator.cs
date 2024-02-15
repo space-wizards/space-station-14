@@ -26,7 +26,7 @@ public sealed partial class SpeakOperator : HTNOperator
     {
         var speaker = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        _chat.TrySendLocalChatMessage(speaker, Loc.GetString(Speech),  hideInChatLog: true);
+        _chat.SendBackgroundChatMessage(speaker, Loc.GetString(Speech));
 
         return base.Update(blackboard, frameTime);
     }

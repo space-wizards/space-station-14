@@ -54,6 +54,6 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
         var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
             ("originalName", nameEv.Name));
 
-        _chat.TrySendLocalChatMessage(uid, args.Message, name,  hideInChatLog: true);
+        _chat.SendBackgroundChatMessage(uid, args.Message, name);
     }
 }

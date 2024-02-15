@@ -124,9 +124,8 @@ namespace Content.Server.RatKing
             if (!component.OrderCallouts.TryGetValue(component.CurrentOrder, out var datasetId) ||
                 !PrototypeManager.TryIndex<DatasetPrototype>(datasetId, out var datasetPrototype))
                 return;
-
-            var msg = Random.Pick(datasetPrototype.Values);
-            _chat.TrySendLocalChatMessage(uid, msg,  hideInChatLog: true);
+            
+            _chat.SendBackgroundChatMessage(uid, Random.Pick(datasetPrototype.Values));
         }
     }
 }

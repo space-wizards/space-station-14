@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration.Managers;
+﻿using System.Globalization;
+using Content.Shared.Administration.Managers;
+using Content.Shared.CCVar;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -17,12 +19,22 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] protected readonly IConfigurationManager Configuration = default!;
 
+    protected bool ShouldCapitalizeTheWordI;
+    protected bool ShouldPunctuate;
+    protected int MaxChatMessageLength;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        InitializeUtilities();
+        ShouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
+                                    || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
+        ShouldPunctuate = Configuration.GetCVar(CCVars.ChatPunctuation);
+        MaxChatMessageLength = Configuration.GetCVar(CCVars.ChatMaxMessageLength);
+
+        Configuration.OnValueChanged(CCVars.ChatPunctuation, shouldPunctuate => ShouldPunctuate = shouldPunctuate);
+        Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxChatMessageLength = maxLen);
     }
 }

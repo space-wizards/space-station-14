@@ -83,7 +83,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         _solutionContainer.TryAddReagent(injectable.Value, treatment.Reagent, treatment.Quantity, out _);
         _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
         _audio.PlayPvs(botComp.InjectSound, target);
-        _chat.TrySendLocalChatMessage(owner, Loc.GetString("medibot-finish-inject"),  hideInChatLog: true);
+        _chat.SendBackgroundChatMessage(owner, Loc.GetString("medibot-finish-inject"));
 
         return HTNOperatorStatus.Finished;
     }

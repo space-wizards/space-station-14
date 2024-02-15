@@ -25,6 +25,7 @@ using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
+using Content.Shared.Speech;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -39,6 +40,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -63,6 +65,7 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
@@ -76,6 +79,9 @@ public sealed class ChatUIController : UIController
     private string[] _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
     // CHAT V2
+    [ValidatePrototypeId<SpeechVerbPrototype>]
+    public const string DefaultSpeechVerb = "Default";
+
     [UISystemDependency] private readonly ChatSystem _chat = default!;
     [UISystemDependency] private readonly PopupSystem _popup = default!;
 
@@ -196,19 +202,27 @@ public sealed class ChatUIController : UIController
         _chatNameColorsEnabled = _cfg.GetCVar(CCVars.ChatEnableColorName);
 
         // Chat V2 system
-        SubscribeNetworkEvent<EntityLocalChattedEvent>(OnLocallyChattedMessage);
-        SubscribeNetworkEvent<EntitySubtleLocalChattedEvent>(OnSubtleLocalChattedMessage);
+        SubscribeNetworkEvent<LocalChatNetworkEvent>(OnLocalChatMessage);
+        SubscribeNetworkEvent<SubtleChatNetworkEvent>(OnSubtleLocalChattedMessage);
+        SubscribeNetworkEvent<BackgroundChatNetworkEvent>(OnBackgroundChatMessage);
+
         SubscribeNetworkEvent<EntityWhisperedEvent>(OnWhisperedMessage);
         SubscribeNetworkEvent<EntityWhisperedObfuscatedlyEvent>(OnWhisperedMessage);
         SubscribeNetworkEvent<EntityWhisperedTotallyObfuscatedlyEvent>(OnWhisperedMessage);
+
         SubscribeNetworkEvent<EntityEmotedEvent>(OnEmotedMessage);
+
         SubscribeNetworkEvent<EntityRadioedEvent>(OnRadioedMessage);
+
         SubscribeNetworkEvent<EntityLoocedEvent>(OnLoocMessage);
+
         SubscribeNetworkEvent<EntityDeadChattedEvent>(OnDeadChatMessage);
 
-        SubscribeNetworkEvent<LocalChatAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<LocalChatFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<WhisperAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<EmoteAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Emoter), ev.Reason));
+        SubscribeNetworkEvent<LoocAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<RadioAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -890,57 +904,50 @@ public sealed class ChatUIController : UIController
     }
 
     // Chat V2
-    // TODO: don't pass in the events directly; getting events unpacked means data transport is decoupled from UI
-    // functionality.
-    private void OnLocallyChattedMessage(EntityLocalChattedEvent ev, EntitySessionEventArgs args)
+    private void OnLocalChatMessage(LocalChatNetworkEvent ev, EntitySessionEventArgs args)
     {
-        var asName = ev.AsName;
+        var verb = GetSpeechVerb(_ent.GetEntity(ev.Speaker), ev.Message);
 
-        if (ev.AsColor.Length > 0)
-        {
-            asName = $"[color={ev.AsColor}]{ev.AsName}[/color]";
-        }
-
-        string wrappedMessage = Loc.GetString(ev.IsBold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
-            ("entityName", asName),
-            ("verb", Loc.GetString(ev.Verb)),
-            ("fontType", ev.FontId),
-            ("fontSize", ev.FontSize),
+        var wrappedMessage = Loc.GetString(verb.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
+            ("entityName", $"[color={GetNameColor(ev.AsName)}]{ev.AsName}[/color]"),
+            ("verb", Loc.GetString(_random.Pick(verb.SpeechVerbStrings))),
+            ("fontType", verb.FontId),
+            ("fontSize", verb.FontSize),
             ("message", FormattedMessage.EscapeText(ev.Message)));
 
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
         var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, wrappedMessage, ev.Speaker, null);
 
-        if (!ev.HideInLog)
-        {
-            History.Add((_timing.CurTick, fakeChatMessage));
-            MessageAdded?.Invoke(fakeChatMessage);
-        }
-        else
-        {
-            _sawmill.Log(LogLevel.Debug, $"Skipping message {wrappedMessage}");
-        }
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
 
         AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Say);
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnSubtleLocalChattedMessage(EntitySubtleLocalChattedEvent ev, EntitySessionEventArgs args)
+    private void OnSubtleLocalChattedMessage(SubtleChatNetworkEvent ev, EntitySessionEventArgs args)
     {
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
         var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, ev.Message, ev.Speaker, null);
 
-        if (!ev.HideInLog)
-        {
-            History.Add((_timing.CurTick, fakeChatMessage));
-            MessageAdded?.Invoke(fakeChatMessage);
-        }
-        else
-        {
-            _sawmill.Log(LogLevel.Debug, $"Skipping message {ev.Message}");
-        }
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
+
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnBackgroundChatMessage(BackgroundChatNetworkEvent ev, EntitySessionEventArgs args)
+    {
+        var verb = GetSpeechVerb(_ent.GetEntity(ev.Speaker), ev.Message);
+
+        var wrappedMessage = Loc.GetString(verb.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
+            ("entityName", $"[color={GetNameColor(ev.AsName)}]{ev.AsName}[/color]"),
+            ("verb", Loc.GetString(_random.Pick(verb.SpeechVerbStrings))),
+            ("fontType", verb.FontId),
+            ("fontSize", verb.FontSize),
+            ("message", FormattedMessage.EscapeText(ev.Message)));
+
+        var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, wrappedMessage, ev.Speaker, null);
+
+        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Say);
 
         _replayRecording.RecordClientMessage(ev);
     }
@@ -1231,5 +1238,25 @@ public sealed class ChatUIController : UIController
         public float TimeLeft { get; set; }
 
         public Queue<SpeechBubbleData> MessageQueue { get; } = new();
+    }
+
+    public SpeechVerbPrototype GetSpeechVerb(EntityUid source, string message)
+    {
+        if (!_ent.TryGetComponent<SpeechComponent>(source, out var speech))
+            return _prototypeManager.Index<SpeechVerbPrototype>(DefaultSpeechVerb);
+
+        // check for a suffix-applicable speech verb
+        SpeechVerbPrototype? current = null;
+        foreach (var (str, id) in speech.SuffixSpeechVerbs)
+        {
+            var proto = _prototypeManager.Index(id);
+            if (message.EndsWith(Loc.GetString(str)) && proto.Priority >= (current?.Priority ?? 0))
+            {
+                current = proto;
+            }
+        }
+
+        // if no applicable suffix verb return the normal one used by the entity
+        return current ?? _prototypeManager.Index(speech.SpeechVerb);
     }
 }

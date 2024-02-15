@@ -246,7 +246,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (comp.Battlecry != null)
         {
-            _chat.TrySendLocalChatMessage(args.User, comp.Battlecry,  hideInChatLog: true);
+            _chat.SendBackgroundChatMessage(args.User, comp.Battlecry);
         }
     }
 

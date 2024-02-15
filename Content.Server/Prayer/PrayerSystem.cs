@@ -83,7 +83,7 @@ public sealed class PrayerSystem : EntitySystem
         var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
-        _chat.SendSubtleLocalChatMessage(source, target, message);
+        _chat.SendSubtleChatMessage(source, target, message);
     }
 
     /// <summary>

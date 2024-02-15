@@ -9,26 +9,21 @@ public partial class SharedChatSystem
 {
     public bool SendLocalChatMessage(EntityUid speaker, string message, [NotNullWhen(false)] out string? reason)
     {
-        // Sanity check: if you can't chat you shouldn't be chatting.
-        if (!TryComp<LocalChattableComponent>(speaker, out var chattable))
+        if (!TryComp<LocalChattableComponent>(speaker, out _))
         {
-            // TODO: Add locstring
-            reason = "You can't talk in local chat";
+            reason = Loc.GetString("chat-system-local-chat-failed");
 
             return false;
         }
 
-        var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
-
-        if (message.Length > messageMaxLen)
+        if (message.Length > MaxChatMessageLength)
         {
-            reason = Loc.GetString("chat-manager-max-message-length",
-                ("maxMessageLength", messageMaxLen));
+            reason = Loc.GetString("chat-manager-max-message-length", ("maxMessageLength", MaxChatMessageLength));
 
             return false;
         }
 
-        RaiseNetworkEvent(new LocalChatAttemptedEvent(GetNetEntity(speaker), message));
+        RaiseNetworkEvent(new AttemptLocalChatEvent(GetNetEntity(speaker), message));
 
         reason = null;
 
@@ -40,12 +35,12 @@ public partial class SharedChatSystem
 /// Raised when a mob tries to speak in local chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LocalChatAttemptedEvent : EntityEventArgs
+public sealed class AttemptLocalChatEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Message;
 
-    public LocalChatAttemptedEvent(NetEntity speaker, string message)
+    public AttemptLocalChatEvent(NetEntity speaker, string message)
     {
         Speaker = speaker;
         Message = message;
@@ -53,34 +48,56 @@ public sealed class LocalChatAttemptedEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Raised when a character speaks in local chat.
+/// Raised when a character has failed to speak in local chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EntityLocalChattedEvent : EntityEventArgs
+public sealed class LocalChatFailedEvent : EntityEventArgs
+{
+    public NetEntity Speaker;
+    public readonly string Reason;
+
+    public LocalChatFailedEvent(NetEntity speaker, string reason)
+    {
+        Speaker = speaker;
+        Reason = reason;
+    }
+}
+
+/// <summary>
+/// A server-only event that is fired when an entity chats in local chat.
+/// </summary>
+[Serializable]
+public sealed class LocalChatSuccessEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
-    public bool IsBold;
-    public string Verb;
-    public string FontId;
-    public int FontSize;
     public readonly string Message;
-    public string AsColor;
     public float Range;
-    public bool HideInLog;
 
-    public EntityLocalChattedEvent(NetEntity speaker, string asName, string withVerb, string fontId, int fontSize, bool isBold, string asColor, string message, float range, bool hideInLog)
+    public LocalChatSuccessEvent(NetEntity speaker, string asName, string message, float range)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
-        Verb = withVerb;
-        FontId = fontId;
-        FontSize = fontSize;
-        IsBold = isBold;
-        AsColor = asColor;
         Range = range;
-        HideInLog = hideInLog;
+    }
+}
+
+/// <summary>
+/// Raised to inform clients that an entity has spoken in local chat.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class LocalChatNetworkEvent : EntityEventArgs
+{
+    public NetEntity Speaker;
+    public string AsName;
+    public readonly string Message;
+
+    public LocalChatNetworkEvent(NetEntity speaker, string asName, string message)
+    {
+        Speaker = speaker;
+        AsName = asName;
+        Message = message;
     }
 }
 
@@ -88,39 +105,32 @@ public sealed class EntityLocalChattedEvent : EntityEventArgs
 /// Raised when a character is given a subtle message in local chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EntitySubtleLocalChattedEvent : EntityEventArgs
+public sealed class SubtleChatNetworkEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Message;
-    public string FontId;
-    public int FontSize;
-    public bool IsBold;
-    public bool HideInLog;
 
-    public EntitySubtleLocalChattedEvent(NetEntity speaker, string fontId, int fontSize, bool isBold, string message, bool hideInLog)
+    public SubtleChatNetworkEvent(NetEntity speaker, string message)
     {
         Speaker = speaker;
         Message = message;
-        FontId = fontId;
-        FontSize = fontSize;
-        IsBold = isBold;
-        HideInLog = hideInLog;
     }
 }
 
-
 /// <summary>
-/// Raised when a character has failed to speak in local chat.
+/// Raised when an entity (such as a vending machine) uses local chat. The chat should not appear in the chat log.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LocalChatAttemptFailedEvent : EntityEventArgs
+public sealed class BackgroundChatNetworkEvent : EntityEventArgs
 {
     public NetEntity Speaker;
-    public readonly string Reason;
+    public string AsName;
+    public readonly string Message;
 
-    public LocalChatAttemptFailedEvent(NetEntity speaker, string reason)
+    public BackgroundChatNetworkEvent(NetEntity speaker, string message, string name)
     {
         Speaker = speaker;
-        Reason = reason;
+        AsName = name;
+        Message = message;
     }
 }

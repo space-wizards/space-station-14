@@ -25,7 +25,6 @@ namespace Content.Server.Chat.V2;
 public sealed partial class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -41,33 +40,24 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-    private bool _shouldCapitalizeTheWordI;
-    private bool _shouldPunctuate;
-    private int _maxChatMessageLength;
-    private int _chatRateLimitCount;
     private int _periodLength;
     private bool _chatRateLimitAnnounceAdmins;
     private int _chatRateLimitAnnounceAdminDelay;
+    private int _chatRateLimitCount;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
-                                   || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
+        _periodLength = Configuration.GetCVar(CCVars.ChatRateLimitPeriod);
+        _chatRateLimitAnnounceAdmins = Configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdmins);
+        _chatRateLimitAnnounceAdminDelay = Configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdminsDelay);
+        _chatRateLimitCount = Configuration.GetCVar(CCVars.ChatRateLimitCount);
 
-        _shouldPunctuate = _configuration.GetCVar(CCVars.ChatPunctuation);
-        _maxChatMessageLength = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
-        _chatRateLimitCount = _configuration.GetCVar(CCVars.ChatRateLimitCount);
-        _periodLength = _configuration.GetCVar(CCVars.ChatRateLimitPeriod);
-        _chatRateLimitAnnounceAdmins = _configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdmins);
-        _chatRateLimitAnnounceAdminDelay = _configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdminsDelay);
-
-        _configuration.OnValueChanged(CCVars.ChatPunctuation, shouldPunctuate => _shouldPunctuate = shouldPunctuate);
-        _configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => _maxChatMessageLength = maxLen);
-        _configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount);
-        _configuration.OnValueChanged(CCVars.ChatRateLimitPeriod, periodLength => _periodLength = periodLength);
-        _configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdmins, announce => _chatRateLimitAnnounceAdmins = announce);
+        Configuration.OnValueChanged(CCVars.ChatRateLimitPeriod, periodLength => _periodLength = periodLength);
+        Configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdmins, announce => _chatRateLimitAnnounceAdmins = announce);
+        Configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdminsDelay, announce => _chatRateLimitAnnounceAdminDelay = announce);
+        Configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount);
 
         InitializeDeadChat();
         InitializeEmoting();
@@ -84,10 +74,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         message = _repAccent.ApplyReplacements(message, "chatsanitize");
         message = CapitalizeFirstLetter(message);
 
-        if (_shouldCapitalizeTheWordI)
+        if (ShouldCapitalizeTheWordI)
             message = CapitalizeIPronoun(message);
 
-        if (_shouldPunctuate)
+        if (ShouldPunctuate)
             message = AddAPeriod(message);
 
         _sanitizer.TrySanitizeOutSmilies(message, source, out message, out emoteStr);
@@ -101,7 +91,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         ChatCensor.Censor(message, out message);
         message = CapitalizeFirstLetter(message);
 
-        if (_shouldCapitalizeTheWordI)
+        if (ShouldCapitalizeTheWordI)
             message = CapitalizeIPronoun(message);
 
         if (punctuate)

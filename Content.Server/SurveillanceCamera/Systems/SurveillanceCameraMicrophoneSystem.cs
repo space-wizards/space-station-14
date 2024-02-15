@@ -20,11 +20,11 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenEvent>(RelayEntityMessage);
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenAttemptEvent>(CanListen);
 
-        SubscribeLocalEvent<EntityLocalChattedEvent>(DuplicateLocalChatEventsIfInRange);
+        SubscribeLocalEvent<LocalChatSuccessEvent>(DuplicateLocalChatEventsIfInRange);
         SubscribeLocalEvent<EntityWhisperedLocalEvent>(DuplicateWhisperEventsIfInRange);
     }
 
-    private void DuplicateLocalChatEventsIfInRange(EntityLocalChattedEvent ev)
+    private void DuplicateLocalChatEventsIfInRange(LocalChatSuccessEvent ev)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourceXform = Transform(GetEntity(ev.Speaker));
