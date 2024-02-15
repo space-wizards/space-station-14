@@ -364,6 +364,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
         /// <summary>
+        /// Respawn time, how long the player has to wait in seconds after death.
+        /// </summary>
+        public static readonly CVarDef<float> RespawnTime =
+            CVarDef.Create("game.respawn_time", 300.0f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         /// The prototype to use for secret weights.
         /// </summary>
         public static readonly CVarDef<string> SecretWeightPrototype =
