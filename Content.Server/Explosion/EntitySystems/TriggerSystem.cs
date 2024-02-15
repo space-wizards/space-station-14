@@ -12,6 +12,7 @@ using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Payload.Components;
@@ -68,6 +69,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         public override void Initialize()
         {
@@ -154,9 +156,15 @@ namespace Content.Server.Explosion.EntitySystems
         {
             if (!TryComp<TransformComponent>(uid, out var xform))
                 return;
-
-            _body.GibBody(xform.ParentUid, true, deleteItems: component.DeleteItems);
-
+            if (component.DeleteItems)
+            {
+                var items = _inventory.GetHandOrInventoryEntities(xform.ParentUid);
+                foreach (var item in items)
+                {
+                    Del(item);
+                }
+            }
+            _body.GibBody(xform.ParentUid, true);
             args.Handled = true;
         }
 
