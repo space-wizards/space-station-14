@@ -116,7 +116,7 @@ namespace Content.Server.Physics.Controllers
                     var baseRotation = pulledData.WorldRotation - pulledXform.LocalRotation;
                     var localRotation = newAngle - baseRotation;
                     var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
-                    TransformSystem.SetLocalRotation(pulledXform, localRotationSnapped);
+                    TransformSystem.SetLocalRotation(pulled, localRotationSnapped, pulledXform);
                 }
             }
         }

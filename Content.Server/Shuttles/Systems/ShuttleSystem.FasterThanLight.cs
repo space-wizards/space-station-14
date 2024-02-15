@@ -706,11 +706,11 @@ public sealed partial class ShuttleSystem
 
         if (!HasComp<MapComponent>(targetXform.GridUid))
         {
-            _transform.SetLocalRotation(xform, _random.NextAngle());
+            _transform.SetLocalRotation(shuttleUid, _random.NextAngle(), xform);
         }
         else
         {
-            _transform.SetLocalRotation(xform, Angle.Zero);
+            _transform.SetLocalRotation(shuttleUid, Angle.Zero, xform);
         }
 
         return true;
