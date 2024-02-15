@@ -92,34 +92,22 @@ public sealed partial class DoAfterArgs
     public bool BreakOnHandChange = true;
 
     /// <summary>
-    ///     If do_after stops when the user moves
+    ///     If do_after stops when the user or target moves
     /// </summary>
     [DataField("breakOnUserMove")]
-    public bool BreakOnUserMove;
-
-    /// <summary>
-    ///     If do_after stops when the target moves (if there is a target)
-    /// </summary>
-    [DataField("breakOnTargetMove")]
-    public bool BreakOnTargetMove;
+    public bool BreakOnMove;
 
     /// <summary>
     ///     Threshold for user and target movement
     /// </summary>
     [DataField("movementThreshold")]
-    public float MovementThreshold = 0.1f;
-
-    /// <summary>
-    /// Threshold for movement without gravity.
-    /// </summary>
-    [DataField]
-    public float WeightlessMovementThreshold = 0.2f;
+    public float MovementThreshold = 0.3f;
 
     /// <summary>
     ///     Threshold for distance user from the used OR target entities.
     /// </summary>
     [DataField("distanceThreshold")]
-    public float? DistanceThreshold;
+    public float DistanceThreshold = 2.0f;
 
     /// <summary>
     ///     Whether damage will cancel the DoAfter. See also <see cref="DamageThreshold"/>.
@@ -249,10 +237,8 @@ public sealed partial class DoAfterArgs
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
         BreakOnHandChange = other.BreakOnHandChange;
-        BreakOnUserMove = other.BreakOnUserMove;
-        BreakOnTargetMove = other.BreakOnTargetMove;
+        BreakOnMove = other.BreakOnMove;
         MovementThreshold = other.MovementThreshold;
-        WeightlessMovementThreshold = other.WeightlessMovementThreshold;
         DistanceThreshold = other.DistanceThreshold;
         BreakOnDamage = other.BreakOnDamage;
         DamageThreshold = other.DamageThreshold;

@@ -46,9 +46,8 @@ public abstract class SharedResearchStealerSystem : EntitySystem
         var doAfterArgs = new DoAfterArgs(EntityManager, uid, comp.Delay, new ResearchStealDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
             BreakOnDamage = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             MovementThreshold = 0.5f,
-            WeightlessMovementThreshold = 0.5f,
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);

@@ -163,26 +163,34 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return true;
 
         // TODO: Re-use existing xform query for these calculations.
-        // When there is no gravity you will be drifting 99% of the time making many doafters impossible.
-        // For this reason we make the break threshold much more lenient when someone is weightless.
-        var threshold = _gravity.IsWeightless(args.User, xform: userXform)
-            ? args.WeightlessMovementThreshold
-            : args.MovementThreshold;
-
-        if (args.BreakOnUserMove &&
-            !userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, threshold))
-            return true;
-
-        if (args.BreakOnTargetMove)
+        if (args.BreakOnMove)
         {
-            DebugTools.Assert(targetXform != null, "Break on move is true, but no target specified?");
-            if (targetXform != null && targetXform.Coordinates.TryDistance(EntityManager, userXform.Coordinates, out var distance))
+            // Whether the target has moved too much from their original position.
+            if (!userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold))
+                return true;
+
+            // Whether the distance between the user and target(if any) has changed too much.
+            if (targetXform != null &&
+                targetXform.Coordinates.TryDistance(EntityManager, userXform.Coordinates, out var distance))
             {
-                // once the target moves too far from you the do after breaks
                 if (Math.Abs(distance - doAfter.TargetDistance) > args.MovementThreshold)
                     return true;
             }
         }
+
+        // Whether the distance between the user and the target is too large.
+        if (targetXform != null
+            && !args.User.Equals(args.Target)
+            && !userXform.Coordinates.InRange(EntityManager, _transform, targetXform.Coordinates,
+                args.DistanceThreshold))
+            return true;
+
+        // Whether the distance between the tool and the user has grown too much.
+        // No I am not sure why this is here, I am keeping it because it was here before.
+        if (usedXform != null
+            && !userXform.Coordinates.InRange(EntityManager, _transform, usedXform.Coordinates,
+                args.DistanceThreshold))
+            return true;
 
         if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))
             return true;
@@ -202,23 +210,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
             return true;
 
-        if (args.DistanceThreshold != null)
-        {
-            if (targetXform != null
-                && !args.User.Equals(args.Target)
-                && !userXform.Coordinates.InRange(EntityManager, _transform, targetXform.Coordinates,
-                    args.DistanceThreshold.Value))
-            {
-                return true;
-            }
-
-            if (usedXform != null
-                && !userXform.Coordinates.InRange(EntityManager, _transform, usedXform.Coordinates,
-                    args.DistanceThreshold.Value))
-            {
-                return true;
-            }
-        }
 
         return false;
     }

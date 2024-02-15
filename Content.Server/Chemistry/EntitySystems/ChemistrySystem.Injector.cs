@@ -279,10 +279,8 @@ public sealed partial class ChemistrySystem
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, actualDelay, new InjectorDoAfterEvent(), injector.Owner, target: target, used: injector.Owner)
         {
-            BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
-            MovementThreshold = 0.1f,
+            BreakOnMove = true
         });
     }
 

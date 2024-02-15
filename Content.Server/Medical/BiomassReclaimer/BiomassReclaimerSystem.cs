@@ -153,9 +153,8 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, 7f, new ReclaimerDoAfterEvent(), reclaimer, target: args.Target, used: args.Used)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                NeedHand = true
+                NeedHand = true,
+                BreakOnMove = true
             });
         }
 

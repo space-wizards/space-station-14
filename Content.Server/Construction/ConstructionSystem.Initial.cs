@@ -250,8 +250,7 @@ namespace Content.Server.Construction
             var doAfterArgs = new DoAfterArgs(EntityManager, user, doAfterTime, new AwaitedDoAfterEvent(), null)
             {
                 BreakOnDamage = true,
-                BreakOnTargetMove = false,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = false,
                 // allow simultaneously starting several construction jobs using the same stack of materials.
                 CancelDuplicate = false,
