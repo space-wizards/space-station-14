@@ -1176,6 +1176,7 @@
     whitelist:
     - Zookeeper
     - Scientist
+    - SeniorResearcher
     - ResearchDirector
     - Chef
 
