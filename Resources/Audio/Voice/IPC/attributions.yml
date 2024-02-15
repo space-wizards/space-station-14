@@ -1,0 +1,9 @@
+- files: ["beep_500.ogg", "beep_2000.ogg"]
+  license: "CC0-1.0"
+  copyright: "Synthesized in Audacity by BasedUser."
+  source: "https://github.com/ekrixi-14/ekrixi"
+
+- files: ["whirr1.ogg", "whirr2.ogg", "whirr3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from source, spectrally modified and clipped"
+  source: "https://freesound.org/people/sad3d/sounds/500168/"

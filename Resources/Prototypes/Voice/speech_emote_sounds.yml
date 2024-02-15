@@ -293,54 +293,8 @@
         variation: 0.125
     Beep:
       collection: IPCBeeps
-    Whirr:
-      collection: IPCWhirrs
-    Honk:
-      collection: BikeHorn
-      params:
-        variation: 0.125
-
-- type: emoteSounds
-  id: MaleIPC
-  sounds:
-    Scream:
-      path: /Audio/Effects/beep1.ogg
-      params:
-        variation: 0.125
-    Laugh:
-      path: /Audio/Effects/sparks1.ogg
-      params:
-        variation: 0.125
-    Ping:
-      path: /Audio/Effects/beep1.ogg
-      params:
-        variation: 0.125
-    Beep:
-      path: /Audio/_FTL/Voice/IPC/beep_500.ogg
-    Whirr:
-      collection: IPCWhirrs
-    Honk:
-      collection: BikeHorn
-      params:
-        variation: 0.125
-
-- type: emoteSounds
-  id: FemaleIPC
-  sounds:
-    Scream:
-      path: /Audio/Effects/beep1.ogg
-      params:
-        variation: 0.125
-    Laugh:
-      path: /Audio/Effects/sparks1.ogg
-      params:
-        variation: 0.125
-    Ping:
-      path: /Audio/Effects/beep1.ogg
-      params:
-        variation: 0.125
-    Beep:
-      path: /Audio/_FTL/Voice/IPC/beep_2000.ogg
+    Boop:
+      collection: IPCBoops
     Whirr:
       collection: IPCWhirrs
     Honk:

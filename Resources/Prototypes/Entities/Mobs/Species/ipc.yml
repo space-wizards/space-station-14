@@ -1,10 +1,60 @@
 - type: entity
   save: false
   name: Urist McIPC
-  parent: BaseMobSpeciesOrganic
+  parent: # we technically require multiple parents due to reimplementing BaseMobSpeciesOrganic but without the organics
+  - MobBloodstream
+  - MobRespirator
+  - MobAtmosStandard
+  - MobFlammable
+  - BaseMobSpecies
   id: BaseMobIPC
   abstract: true
   components:
+    # beginregion Organic
+    - type: Flashable
+    - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.
+      allowedStates:
+      - Alive
+      damageCap: 20
+      damage:
+        types:
+          Heat: -0.07
+        groups:
+          Brute: -0.07
+    - type: StatusEffects
+      allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - SeeingRainbows
+      - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
+      - Drunk
+      - SlurredSpeech
+      - RatvarianLanguage
+      - PressureImmunity
+      - Muted
+      - Pacified
+      - StaminaModifier
+    - type: NightVision
+    - type: ThermalRegulator
+      metabolismHeat: 0
+      radiatedHeat: 100
+      implicitHeatRegulation: 500
+      sweatHeatRegulation: 2000
+      shiveringHeatRegulation: 2000
+      normalBodyTemperature: 313.15
+      thermalRegulationTemperatureThreshold: 25
+    - type: FireVisuals
+      alternateState: Standing
+    - type: DamageVisuals
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#a76b1c"
+    # endregion Organic
     # The important nessessities
     - type: MovementSpeedModifier
     - type: Body
@@ -16,7 +66,7 @@
       damageContainer: Biological
       damageModifierSet: Metallic
     - type: Icon
-      sprite: Mobs/Species/IPCs/parts.rsi
+      sprite: Mobs/Species/IPC/parts.rsi
       state: full
     # Damage and speed
     - type: Bloodstream
@@ -41,17 +91,22 @@
       damage:
         types:
           Heat: 0.25 # no air to cool
+          Asphyxiation: -1 # TODO FIX DEATHGASPS
       damageRecovery:
         types:
           Heat: -0.25
+          Asphyxiation: -1
     - type: Repairable
       fuelcost: 5 # cause most of the fuel is used how long its turned on for
       doAfterDelay: 7
       damage:
         types:
-          Blunt: -75
-          Cold: -15 # you're warming them up...
+          Blunt: -25 # you can't heal group damage. it doesn't work. wh y.
+          Slash: -25
+          Piercing: -25
+          Cold: -60 # you're warming them up...
           Heat: 30 # another 2 minutes of downtime due to slight overheating
+          Asphyxiation: -200 # TODO FIX DEATHGASPS
     - type: Barotrauma
       damage:
         types:
@@ -65,14 +120,15 @@
       speechSounds: IPC
     - type: Vocal
       sounds:
-        Male: MaleIPC
-        Female: FemaleIPC
+        Male: UnisexIPC
+        Female: UnisexIPC
         Unsexed: UnisexIPC
-#      wilhelm:
-#        path: /Audio/_FTL/Voice/IPC/
+      wilhelm:
+        path: /Audio/Voice/IPC/wilhelm.ogg
       wilhelmProbability: 0.001
     - type: Inventory
       templateId: ipc
+    - type: ZombieImmune
 
 - type: entity
   name: Urist McIPC

@@ -263,6 +263,16 @@
     - beeps
     - beeps.
     - beeps!
+    
+- type: emote
+  id: Boop
+  category: Vocal
+  chatMessages: [boops]
+  chatTriggers:
+    - boop
+    - boops
+    - boops.
+    - boops!
 
 - type: emote
   id: Ping

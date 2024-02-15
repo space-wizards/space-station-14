@@ -13,8 +13,6 @@
   lastNames: names_ai
   sexes:
     - Unsexed
-    - Male
-    - Female
 
 - type: speciesBaseSprites
   id: MobIPCSprites
