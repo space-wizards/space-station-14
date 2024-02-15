@@ -51,6 +51,6 @@ namespace Content.Shared.SubFloor
         /// e.g. when a t-ray revealed cable is drawn above a carpet.
         /// </summary>
         [DataField]
-        public int OriginalDrawDepth;
+        public int? OriginalDrawDepth;
     }
 }
