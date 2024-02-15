@@ -70,7 +70,10 @@
   color: "#C33F00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/glass_green.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Grenadine
@@ -82,7 +85,10 @@
   color: "#EA1D26"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   footstepSound:
     collection: FootstepSticky
     params:
@@ -98,7 +104,10 @@
   color: "#102838"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: IcedGreenTea
@@ -110,7 +119,10 @@
   color: "#CE4200"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/glass_green.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: IcedTea
@@ -122,7 +134,10 @@
   color: "#104038"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icedteaglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -163,7 +178,10 @@
   color: "#FFFF00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -404,9 +422,6 @@
   physicalDesc: reagent-physical-desc-sour
   flavor: bitter
   color: "#B3B599"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
-    state: icon
 
 - type: reagent
   id: KiraSpecial
@@ -418,7 +433,10 @@
   color: "#CCCC99"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Rewriter
