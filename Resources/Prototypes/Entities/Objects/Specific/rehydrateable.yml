@@ -206,6 +206,26 @@
       path: /Audio/Effects/bite.ogg
 
 - type: entity
+  parent: DehydratedSpaceCarp
+  id: DehydratedSpaceDragon
+  name: dehydrated space dragon
+  description: Not guaranteed to not not bite not your face off after rehydrating. #If you pet it, it acts friendly until ghost controlled. After this it's up to the player controlling it.
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobDragonRehydrated
+  - type: Sprite
+    sprite: Objects/Misc/dehydrateddragon.rsi
+    state: space-dragon
+  - type: SolutionContainerManager
+    solutions:
+      plushie:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Ichor #I mean, I guess it could be a way to get ichor if you use a material reclaimer?
+          Quantity: 10
+
+- type: entity
   parent: BaseItem
   id: SyndicateSponge
   name: monkey cube

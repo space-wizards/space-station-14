@@ -238,6 +238,9 @@ uplink-power-sink-desc = Drains immense amounts of electricity from the grid. Us
 uplink-carp-dehydrated-name = Dehydrated Space Carp
 uplink-carp-dehydrated-desc = Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
 
+uplink-dragon-dehydrated-name = Dehydrated Space Dragon
+uplink-dragon-dehydrated-desc = A space dragon dehydrated to fit in your bag. Petting it may buy you some time, but it's very likely to get angry at you soon after hydrating. Also able to summon carp rifts.
+
 # Job Specific
 uplink-gatfruit-seeds-name = Packet Of Gatfruit Seeds
 uplink-gatfruit-seeds-desc = And who says guns don't grow on trees?

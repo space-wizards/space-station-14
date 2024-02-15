@@ -977,6 +977,26 @@
       tags:
       - NukeOpsUplink
 
+- type: listing
+  id: UplinkDragonDehydrated
+  name: uplink-dragon-dehydrated-name
+  description: uplink-dragon-dehydrated-desc
+  productEntity: DehydratedSpaceDragon
+  cost:
+    Telecrystal: 25
+  categories:
+  - UplinkTools
+  restockTime: 30
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
 # Job Specific
 
 - type: listing

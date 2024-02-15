@@ -140,6 +140,27 @@
 
 - type: entity
   parent: BaseMobDragon
+  id: MobDragonRehydrated
+  suffix: "Rehydrated"
+  components:
+  - type: Dragon
+    spawnsLeft: 2
+    spawnsProto: MobCarpDragon
+    spawnRiftAction: ActionSpawnRift
+  - type: GenericAntag
+    rule: Dragon
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-space-dragon-rehydrated-name
+    description: ghost-role-information-space-dragon-rehydrated-description
+
+- type: entity
+  parent: BaseMobDragon
   id: MobDragonDungeon
   suffix: Dungeon
   components:
