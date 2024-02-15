@@ -27,7 +27,7 @@
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: RCDDeconstructable
-    cost: 8
+    cost: 6
     delay: 8
     fx: EffectRCDDeconstruct8
   - type: Destructible
