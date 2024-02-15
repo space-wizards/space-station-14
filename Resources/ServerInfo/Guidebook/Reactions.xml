@@ -35,8 +35,12 @@ Both of those should scale with reagent amounts.
 
 - Mixing 1:1:1 Aluminium, Uranium and Iron creates an EMP blast with a max range of 6 tiles at 30 units total.
 
-- [color=#ff0000]Making Phlogiston (1:1:1 Phosphorus, Sulfuric Acid and Plasma) creates plasma gas as a byproduct.[/color]
+- [color=#ff0000]Making Phlogiston (1:1:1 Phosphorus, Sulfuric Acid and Plasma) creates Plasma gas as a byproduct.[/color]
 
 - Mixing 5:3:2 Oil, Ash and Sulfuric Acid at at least 374K makes a sheet of plastic.
+
+- [color=#ff0000]Making Fresium creates Nitrogen gas as a byproduct.[/color]
+
+- [color=#ff0000]Mixing Fresium with Water creates Frezon gas as a byproduct. (as well as creating Ice)[/color]
 
 </Document>
