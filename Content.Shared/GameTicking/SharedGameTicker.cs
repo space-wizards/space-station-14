@@ -157,14 +157,16 @@ namespace Content.Shared.GameTicking
             [DataField]
             public string? PlayerICName;
 
-            [DataField]
+            [DataField, NonSerialized]
             public NetUserId? PlayerGuid;
 
-            [DataField]
             public string Role;
 
-            [DataField]
-            public string RolePrototypes;
+            [DataField, NonSerialized]
+            public Array JobPrototypes;
+
+            [DataField, NonSerialized]
+            public Array AntagPrototypes;
 
             public NetEntity? PlayerNetEntity;
 
