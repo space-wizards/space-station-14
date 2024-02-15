@@ -39,7 +39,6 @@
   - type: Tag
     tags:
     - Book
-    - Biblelike
   - type: GuideHelp
     openOnActivation: true
     guides:
