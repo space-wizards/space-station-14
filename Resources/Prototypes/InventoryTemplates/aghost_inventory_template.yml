@@ -9,6 +9,14 @@
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
       displayName: ID
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,2
+      strippingWindowPos: 2,3
+      displayName: ID
 
     # For drip reasons.
     - name: head
