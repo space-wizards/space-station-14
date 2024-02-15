@@ -1,0 +1,46 @@
+<Document>
+  # Thief
+
+ - The Thief is an independent antagonist mainly centered around stealing items of interest.
+ - Anyone but command and security can become a thief. 
+ - Uniquely, thieves are forcibly given a pacifism implant. This means you cant hurt other living beings, even hostile entities!
+
+  # Equipment
+
+  A thief begins with a [color=#a4885c]thief toolbox[/color] and [color=#a4885c]chameleon thieving gloves[/color] in their inventory. These gloves may be changed to look less inconspicious with whatever job you may have. If you are a doctor, for example, you can change them to latex gloves to appear less suspicious!
+
+  Your toolbox, upon opening it, will give you a list of starting gear bundles to choose from to better aid you in completing your objectives. You can only choose two kits. This can range from stuff like a voice mask and nocturine to an EMAG and C4, among many other things.
+
+  <GuideEntityEmbed Entity="ThievingGloves" Caption="Thief Gloves"/>
+  <GuideEntityEmbed Entity="ToolboxThief" Caption="Thief Toolbox"/>
+
+  # Toolbox Gear
+
+  <Box>
+    <GuideEntityEmbed Entity="InvisibleCrate" Caption="Storage"/>
+    <GuideEntityEmbed Entity="ClothingUniformJumpsuitCentcomOfficial" Caption="Chameleon Gear"/>
+    <GuideEntityEmbed Entity="JawsOfLife" State="icon" Caption="Breaching Tools"/>
+  </Box>
+
+  # Objectives
+
+  Like the traitor or space ninja, you will have a set of objectives to complete. Of course, these are mainly geared towards thievery. Your pacifism will require you to get crafty to obtain some of them, so be creative! (Or you can just blast your way into an area with C4.)
+
+  ##Possible Tasks
+
+  - Steal the [color=#a4885c]cloaks[/color] of command members.
+  <GuideEntityEmbed Entity="ClothingNeckCloakCap" Caption="Cloaks"/>
+  - Steal a [color=#a4885c]station pet[/color].
+  <GuideEntityEmbed Entity="MobMcGriff" State="icon" Caption="Pets"/>
+  - Steal the [color=#a4885c]bedsheets[/color] from command member's bedrooms.
+  <GuideEntityEmbed Entity="BedsheetBlue" State="icon" Caption="Bedsheets"/>
+  - Steal [color=#a4885c]stamps[/color].
+  <GuideEntityEmbed Entity="RubberStampCE" State="icon" Caption="Stamps"/>
+  - Steal the [color=#a4885c]detective's lighter[/color].
+  <GuideEntityEmbed Entity="FlippoEngravedLighter" State="icon" Caption="Lighter"/>
+
+  ## Double Trouble
+
+  The thief can spawn alongside other antagonists. This means that they can spawn in a nuclear operatives round, a zombies round, and more, allowing for more interesting scenarios to occur with interactions between thieves and other antagonists.
+
+</Document>
