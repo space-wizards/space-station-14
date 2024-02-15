@@ -295,4 +295,8 @@
     - id: AdminPDA
     - id: GasAnalyzer
     - id: trayScanner
+    - id: ForensicScanner
+    - id: Omnitool
+    - id: WelderExperimental
+    - id: FoodPieBananaCream
   - type: Unremoveable
