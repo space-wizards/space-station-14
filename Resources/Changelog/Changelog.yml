@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: CrigCrag
-  changes:
-  - message: Added Fresium, a military grade coolant that you SHOULD NOT INGEST OR
-      SPLASH ON YOUR FRIENDS!
-    type: Add
-  id: 5441
-  time: '2023-12-21T05:35:22.0000000+00:00'
-  url: null
 - author: RiceMar
   changes:
   - message: Energy swords and double energy swords now look as long as they seem
@@ -3881,3 +3873,10 @@
   id: 5940
   time: '2024-02-14T23:07:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25238
+- author: Jezithyr
+  changes:
+  - message: Death Acidifier implants not deleting items when activated
+    type: Fix
+  id: 5941
+  time: '2024-02-15T01:37:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25251
