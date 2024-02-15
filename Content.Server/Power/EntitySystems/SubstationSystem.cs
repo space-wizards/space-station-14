@@ -124,10 +124,10 @@ public sealed class SubstationSystem : EntitySystem
 
         var molesConsumed = (subs.InitialNitrogenBoosterMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
 
-        var minimumReaction = (initialN2);
+        var minimumReaction = Math.Abs(initialN2) * molesConsumed / 2;
 
         mixture.AdjustMoles(Gas.Nitrogen, -minimumReaction);
-        mixture.AdjustMoles(Gas.NitrousOxide, minimumReaction/2);
+        mixture.AdjustMoles(Gas.NitrousOxide, minimumReaction);
     }
 
     private float CheckNitrogenBoosterIntegrity(SubstationComponent subs, GasMixture mixture)
