@@ -64,7 +64,8 @@ namespace Content.Client.Tabletop
                 return;
 
             // If there is no player entity, return
-            if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity }) return;
+            if (_playerManager.LocalEntity is not { } playerEntity)
+                return;
 
             if (!CanSeeTable(playerEntity, _table))
             {
@@ -85,7 +86,7 @@ namespace Content.Client.Tabletop
             // If the dragged entity has another dragging player, drop the item
             // This should happen if the local player is dragging an item, and another player grabs it out of their hand
             if (draggableComponent.DraggingPlayer != null &&
-                draggableComponent.DraggingPlayer != _playerManager.LocalPlayer?.Session.UserId)
+                draggableComponent.DraggingPlayer != _playerManager.LocalSession!.UserId)
             {
                 StopDragging(false);
                 return;
@@ -186,7 +187,7 @@ namespace Content.Client.Tabletop
         private bool OnMouseDown(in PointerInputCmdArgs args)
         {
             // Return if no player entity
-            if (_playerManager.LocalPlayer is not {ControlledEntity: { } playerEntity})
+            if (_playerManager.LocalEntity is not { } playerEntity)
                 return false;
 
             var entity = args.EntityUid;

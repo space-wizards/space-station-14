@@ -2,7 +2,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyAtmospherics
-  name: airlock assembly
   suffix: Atmospherics
   components:
   - type: Sprite
@@ -12,7 +11,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyAtmosphericsGlass
-  name: airlock assembly
   suffix: Atmospherics, Glass
   components:
   - type: Sprite
@@ -23,7 +21,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCargo
-  name: airlock assembly
   suffix: Cargo
   components:
   - type: Sprite
@@ -33,7 +30,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCargoGlass
-  name: airlock assembly
   suffix: Cargo, Glass
   components:
   - type: Sprite
@@ -44,7 +40,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCommand
-  name: airlock assembly
   suffix: Command
   components:
   - type: Sprite
@@ -54,7 +49,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCommandGlass
-  name: airlock assembly
   suffix: Command, Glass
   components:
   - type: Sprite
@@ -65,7 +59,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyEngineering
-  name: airlock assembly
   suffix: Engineering
   components:
   - type: Sprite
@@ -75,7 +68,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyEngineeringGlass
-  name: airlock assembly
   suffix: Engineering, Glass
   components:
   - type: Sprite
@@ -86,7 +78,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyExternal
-  name: airlock assembly
   suffix: External
   components:
   - type: Sprite
@@ -96,7 +87,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyExternalGlass
-  name: airlock assembly
   suffix: External, Glass
   components:
   - type: Sprite
@@ -107,7 +97,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyGlass
-  name: airlock assembly
   suffix: Glass
   components:
   - type: Sprite
@@ -118,7 +107,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyFreezer
-  name: airlock assembly
   suffix: Freezer
   components:
   - type: Sprite
@@ -129,7 +117,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMaintenance
-  name: airlock assembly
   suffix: Maintenance
   components:
   - type: Sprite
@@ -139,7 +126,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMaintenanceGlass
-  name: airlock assembly
   suffix: Maintenance, Glass
   components:
   - type: Sprite
@@ -150,7 +136,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMedical
-  name: airlock assembly
   suffix: Medical
   components:
   - type: Sprite
@@ -160,7 +145,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMedicalGlass
-  name: airlock assembly
   suffix: Medical, Glass
   components:
   - type: Sprite
@@ -171,7 +155,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyScience
-  name: airlock assembly
   suffix: Science
   components:
   - type: Sprite
@@ -181,7 +164,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyScienceGlass
-  name: airlock assembly
   suffix: Science, Glass
   components:
   - type: Sprite
@@ -192,7 +174,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySecurity
-  name: airlock assembly
   suffix: Security
   components:
   - type: Sprite
@@ -202,7 +183,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySecurityGlass
-  name: airlock assembly
   suffix: Security, Glass
   components:
   - type: Sprite
@@ -213,7 +193,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyShuttle
-  name: airlock assembly
   suffix: Shuttle
   components:
   - type: Sprite
@@ -223,7 +202,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyShuttleGlass
-  name: airlock assembly
   suffix: Shuttle, Glass
   components:
   - type: Sprite
@@ -234,7 +212,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyVirology
-  name: airlock assembly
   suffix: Virology
   components:
   - type: Sprite
@@ -244,7 +221,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyVirologyGlass
-  name: airlock assembly
   suffix: Virology, Glass
   components:
   - type: Sprite
@@ -255,7 +231,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCentralCommand
-  name: airlock assembly
   suffix: CentralCommand
   components:
   - type: Sprite
@@ -265,7 +240,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCentralCommandGlass
-  name: airlock assembly
   suffix: CentralCommand, Glass
   components:
   - type: Sprite
@@ -276,7 +250,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMining
-  name: airlock assembly
   suffix: Mining
   components:
   - type: Sprite
@@ -286,7 +259,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMiningGlass
-  name: airlock assembly
   suffix: Mining, Glass
   components:
   - type: Sprite
@@ -297,7 +269,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySyndicate
-  name: airlock assembly
   suffix: Syndicate
   components:
   - type: Sprite
@@ -307,7 +278,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySyndicateGlass
-  name: airlock assembly
   suffix: Syndicate, Glass
   components:
   - type: Sprite
@@ -318,7 +288,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyShuttleSyndicate
-  name: airlock assembly
   suffix: ShuttleSyndicate
   components:
   - type: Sprite
@@ -328,7 +297,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyShuttleSyndicateGlass
-  name: airlock assembly
   suffix: ShuttleSyndicate, Glass
   components:
   - type: Sprite
@@ -339,7 +307,6 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyHighSec
-  name: airlock assembly
   suffix: HighSec
   components:
   - type: Sprite

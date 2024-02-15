@@ -33,7 +33,7 @@ public sealed class GunSpreadOverlay : Overlay
     {
         var worldHandle = args.WorldHandle;
 
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null ||
             !_entManager.TryGetComponent<TransformComponent>(player, out var xform))
