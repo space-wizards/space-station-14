@@ -5,9 +5,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Pulling;
 using Content.Shared.Standing;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -91,5 +89,10 @@ public abstract partial class SharedBuckleSystem : EntitySystem
                 _standing.Down(buckleUid, false, false);
                 break;
         }
+        var ev = new TryRevertCollisionChangeEvent();
+        RaiseLocalEvent(buckleUid, ref ev);
+
+        if(!ev.Cancelled)
+            _standing.RevertCollisionChange(buckleUid);
     }
 }

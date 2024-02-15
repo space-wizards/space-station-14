@@ -44,6 +44,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
         SubscribeLocalEvent<MobStateComponent, OnHitScanHitEvent>(OnHitScanHit);
+        SubscribeLocalEvent<MobStateComponent, TryRevertCollisionChangeEvent>(OnTryRevertCollisionChange);
     }
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
@@ -57,10 +58,9 @@ public partial class MobStateSystem
                 //unused
                 break;
             case MobState.Dead:
-                // Makes someone buckled to a chair able to be hit again while not aimed at.
+                // Makes someone buckled able to be hit again while not aimed at.
                 if(_buckle.IsBuckled(target))
                     _standing.RevertCollisionChange(target);
-
                 break;
             case MobState.Invalid:
                 //unused
@@ -90,7 +90,7 @@ public partial class MobStateSystem
                 break;
             case MobState.Dead:
                 _standing.Down(target);
-                // Makes someone that dies while on a chair unable to be hit unless aimed at.
+                // Makes someone that dies while buckled unable to be hit unless aimed at.
                 if(_buckle.IsBuckled(target))
                     _standing.ChangeCollision(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
@@ -101,6 +101,11 @@ public partial class MobStateSystem
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    private bool CheckDead(MobStateComponent component)
+    {
+        return component.CurrentState == MobState.Dead;
     }
 
     #region Event Subscribers
@@ -169,19 +174,28 @@ public partial class MobStateSystem
         args.Cancelled = true;
     }
 
-    private void OnHitScanHit(EntityUid uid, MobStateComponent component, ref OnHitScanHitEvent args)
+    /// <summary>
+    ///     Checks if the hitscan is able to hit the target it's colliding with.
+    /// </summary>
+    private void OnHitScanHit(Entity<MobStateComponent> ent, ref OnHitScanHitEvent args)
     {
         //Always hit the target if it was aimed at by the player.
         if (args.GunTarget == args.HitEntity)
             return;
 
         //Only hit targets that are standing and not dead.
-        if(component.CurrentState != MobState.Dead &&
-           !_standing.IsDown(uid))
+        if(ent.Comp.CurrentState != MobState.Dead &&
+           !_standing.IsDown(ent))
             return;
 
         args.Cancelled = true;
     }
+
+    private void OnTryRevertCollisionChange(Entity<MobStateComponent> ent, ref TryRevertCollisionChangeEvent args)
+    {
+        args.Cancelled = CheckDead(ent);
+    }
+
 
     #endregion
 }

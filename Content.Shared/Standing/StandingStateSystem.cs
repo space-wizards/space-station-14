@@ -1,9 +1,6 @@
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Physics;
-using Content.Shared.Popups;
 using Content.Shared.Rotation;
-using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -15,17 +12,9 @@ namespace Content.Shared.Standing
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
         private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<StandingStateComponent, AttackAttemptEvent>(OnAttackAttempt);
-            SubscribeLocalEvent<StandingStateComponent, ShotAttemptedEvent>(OnShootAttempt);
-        }
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -46,9 +35,6 @@ namespace Content.Shared.Standing
 
             // Optional component.
             Resolve(uid, ref appearance, ref hands, false);
-
-            if (!standingState.Standing)
-                return true;
 
             // This is just to avoid most callers doing this manually saving boilerplate
             // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
@@ -139,7 +125,7 @@ namespace Content.Shared.Standing
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    if ((fixture.CollisionLayer & (int)standingState.StandingLayer) != 0)
+                    if ((fixture.CollisionLayer & (int)standingState.StandingLayer) != 0 && dropHeldItems)
                     {
                         standingState.LayerChangedFixtures.Add(key);
 
@@ -186,31 +172,6 @@ namespace Content.Shared.Standing
             standingState.MaskChangedFixtures.Clear();
             standingState.LayerChangedFixtures.Clear();
         }
-
-        /// <summary>
-        /// Prevents shooting a gun while laying down.
-        /// </summary>
-        private void OnShootAttempt(Entity<StandingStateComponent> ent, ref ShotAttemptedEvent args)
-        {
-            if(ent.Comp.Standing)
-                return;
-
-            args.Cancel();
-        }
-
-        /// <summary>
-        /// Prevents attacking with a weapon while laying down.
-        /// </summary>
-        private void OnAttackAttempt(EntityUid uid, StandingStateComponent component, AttackAttemptEvent args)
-        {
-            if(component.Standing)
-                return;
-
-            if(args.Weapon != null)
-                return;
-
-            args.Cancel();
-        }
     }
 
     public sealed class DropHandItemsEvent : EventArgs
@@ -244,4 +205,10 @@ namespace Content.Shared.Standing
     public sealed class DownedEvent : EntityEventArgs
     {
     }
+
+    /// <summary>
+    /// Raised when the collision of an entity is attempted to be reverted.
+    /// </summary>
+    [ByRefEvent]
+    public record struct TryRevertCollisionChangeEvent(bool Cancelled = false);
 }
