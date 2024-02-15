@@ -1,5 +1,6 @@
 
 using Robust.Shared.Containers;
+using Content.Shared.Damage;
 
 namespace Content.Server.Botany.Components
 {
@@ -11,5 +12,8 @@ namespace Content.Server.Botany.Components
 
         [DataField]
         public int ThrowStrength = 3;
+
+        [DataField("damage")]
+        public DamageSpecifier Damage = new();
     }
 }

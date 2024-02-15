@@ -207,25 +207,29 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 8.5
-        Caustic: 8.5
+        Heat: 7.5
+        Caustic: 7.5
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: SulfuricAcid
-          Quantity: 3
+          Quantity: 15
         - ReagentId: FluorosulfuricAcid
-          Quantity: 3
+          Quantity: 15
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 2
+    transferAmount: 6
     solution: food
+    pierceArmor: true
   - type: Extractable
     grindableSolutionName: food
   - type: Thorny
     sound: /Audio/Effects/lightburn.ogg
+    damage:
+      types:
+        Heat: 5 # You cannot handle my strongest nettle, traveler.
 
 
 - type: entity
