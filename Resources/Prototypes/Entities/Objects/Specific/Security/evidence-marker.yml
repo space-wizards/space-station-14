@@ -98,6 +98,9 @@
   id: BoxEvidenceMarkers
   description: A pack of numbered yellow markers, useful for labelling evidence on a crime scene.
   components:
+    - type: Item
+      shape:
+      - 0,0,1,1
     - type: StorageFill
       contents:
         - id: EvidenceMarkerOne
@@ -111,6 +114,6 @@
         - id: EvidenceMarkerNine
     - type: Sprite
       layers:
-        - state: box
+        - state: box_security
         - state: evidence_markers
     
