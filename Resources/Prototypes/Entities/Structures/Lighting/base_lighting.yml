@@ -370,6 +370,17 @@
         Heat: 5
 
 - type: entity
+  id: AlwaysPoweredlightCyan
+  suffix: Always Powered, Cyan
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 8
+    energy: 3
+    softness: 0.5
+    color: "#47f8ff"
+
+- type: entity
   id: PoweredlightBlue
   suffix: Blue
   parent: Poweredlight
@@ -379,6 +390,17 @@
     damage:
       types:
         Heat: 5
+
+- type: entity
+  id: AlwaysPoweredlightBlue
+  suffix: Always Powered, Blue
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 8
+    energy: 3
+    softness: 0.5
+    color: "#39a1ff"
 
 - type: entity
   id: PoweredlightPink
@@ -392,6 +414,17 @@
         Heat: 5
 
 - type: entity
+  id: AlwaysPoweredlightPink
+  suffix: Always Powered, Pink
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 8
+    energy: 3
+    softness: 0.5
+    color: "#ff66cc"
+
+- type: entity
   id: PoweredlightOrange
   suffix: Orange
   parent: Poweredlight
@@ -401,6 +434,17 @@
     damage:
       types:
         Heat: 5
+
+- type: entity
+  id: AlwaysPoweredlightOrange
+  suffix: Always Powered, Orange
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 8
+    energy: 3
+    softness: 0.5
+    color: "#ff8227"
 
 - type: entity
   id: PoweredlightRed
@@ -414,6 +458,17 @@
         Heat: 5
 
 - type: entity
+  id: AlwaysPoweredlightRed
+  suffix: Always Powered, Red
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 8
+    energy: 3
+    softness: 0.5
+    color: "#fb4747"
+
+- type: entity
   id: PoweredlightGreen
   suffix: Green
   parent: Poweredlight
@@ -424,3 +479,13 @@
       types:
         Heat: 5
 
+- type: entity
+  id: AlwaysPoweredlightGreen
+  suffix: Always Powered, Green
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 8
+    energy: 3
+    softness: 0.5
+    color: "#52ff39"
