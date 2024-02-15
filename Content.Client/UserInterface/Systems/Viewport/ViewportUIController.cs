@@ -89,8 +89,7 @@ public sealed class ViewportUIController : UIController
         _entMan.TryGetComponent(ent, out EyeComponent? eye);
 
         if (eye?.Eye == _eyeManager.CurrentEye
-            && _xformSystem is not null
-            && _xformSystem.GetWorldPosition(ent.Value) == default)
+            && (_xformSystem is null || _xformSystem.GetWorldPosition(ent.Value) == default))
             return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
 
         // Currently, this shouldn't happen. This likely happened because the main eye was set to null. When this
