@@ -153,7 +153,12 @@ public partial class MapGridControl : BoxContainer
     /// </summary>
     protected Vector2 ScalePosition(Vector2 value)
     {
-        return value * MinimapScale + MidPointVector;
+        return ScalePosition(value, MinimapScale, MidPointVector);
+    }
+
+    protected Vector2 ScalePosition(Vector2 value, float minimapScale, Vector2 midpointVector)
+    {
+        return value * minimapScale + midpointVector;
     }
 
     /// <summary>

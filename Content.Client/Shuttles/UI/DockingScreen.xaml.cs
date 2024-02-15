@@ -12,7 +12,7 @@ namespace Content.Client.Shuttles.UI;
 public sealed partial class DockingScreen : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private readonly SharedShuttleSystem _shuttles = default!;
+    private readonly SharedShuttleSystem _shuttles;
 
     /// <summary>
     /// Stored by GridID then by docks

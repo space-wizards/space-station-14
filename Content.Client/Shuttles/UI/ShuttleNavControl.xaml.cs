@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Shuttles.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class RadarControl : BaseShuttleControl
+public sealed partial class ShuttleNavControl : BaseShuttleControl
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     private readonly SharedShuttleSystem _shuttles;
@@ -43,7 +43,7 @@ public sealed partial class RadarControl : BaseShuttleControl
 
     private List<Entity<MapGridComponent>> _grids = new();
 
-    public RadarControl() : base(64f, 256f, 256f)
+    public ShuttleNavControl() : base(64f, 256f, 256f)
     {
         RobustXamlLoader.Load(this);
         _shuttles = EntManager.System<SharedShuttleSystem>();

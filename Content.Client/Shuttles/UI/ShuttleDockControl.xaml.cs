@@ -11,7 +11,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Client.Shuttles.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class DockingControl : BaseShuttleControl
+public sealed partial class ShuttleDockControl : BaseShuttleControl
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     private readonly SharedShuttleSystem _shuttles;
@@ -29,7 +29,7 @@ public sealed partial class DockingControl : BaseShuttleControl
 
     private List<Entity<MapGridComponent>> _grids = new();
 
-    public DockingControl() : base(8f, 32f, 8f)
+    public ShuttleDockControl() : base(8f, 32f, 8f)
     {
         RobustXamlLoader.Load(this);
         _shuttles = EntManager.System<SharedShuttleSystem>();
