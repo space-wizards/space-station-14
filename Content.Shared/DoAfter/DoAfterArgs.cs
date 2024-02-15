@@ -107,7 +107,7 @@ public sealed partial class DoAfterArgs
     ///     Threshold for distance user from the used OR target entities.
     /// </summary>
     [DataField("distanceThreshold")]
-    public float DistanceThreshold = 2.0f;
+    public float? DistanceThreshold;
 
     /// <summary>
     ///     Whether damage will cancel the DoAfter. See also <see cref="DamageThreshold"/>.

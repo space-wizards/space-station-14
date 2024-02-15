@@ -1,5 +1,7 @@
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
@@ -8,6 +10,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 {
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
 
@@ -178,19 +181,38 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             }
         }
 
-        // Whether the distance between the user and the target is too large.
-        if (targetXform != null
-            && !args.User.Equals(args.Target)
-            && !userXform.Coordinates.InRange(EntityManager, _transform, targetXform.Coordinates,
-                args.DistanceThreshold))
-            return true;
+        // Whether the user and the target are too far apart.
+        if (args.Target != null)
+        {
+            if (args.DistanceThreshold != null)
+            {
+                if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value, args.DistanceThreshold.Value))
+                    return true;
+            }
+            else
+            {
+                if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+                    return true;
+            }
+        }
 
         // Whether the distance between the tool and the user has grown too much.
         // No I am not sure why this is here, I am keeping it because it was here before.
-        if (usedXform != null
-            && !userXform.Coordinates.InRange(EntityManager, _transform, usedXform.Coordinates,
-                args.DistanceThreshold))
-            return true;
+        if (args.Used != null)
+        {
+            if (args.DistanceThreshold != null)
+            {
+                if (!_interaction.InRangeUnobstructed(args.User,
+                        args.Used.Value,
+                        args.DistanceThreshold.Value))
+                    return true;
+            }
+            else
+            {
+                if (!_interaction.InRangeUnobstructed(args.User,args.Used.Value))
+                    return true;
+            }
+        }
 
         if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))
             return true;
