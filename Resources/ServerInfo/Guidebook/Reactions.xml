@@ -1,0 +1,42 @@
+<Document>
+# Reactions
+
+Reactions are the bread and butter of anyone working with reagents.
+
+Most reactions simply combine or break down different reagents to create something new, but a few have other effects as well.
+
+This short guide is meant to serve as a reference of those more "interesting" reactions.
+
+[color=#ff0000]Reactions outlined in red are also crafting recipies for certain reagents. Best read those before you blow yourself up making CLF3[/color]
+
+## Explosions
+
+Explosives have many good uses (and many more evil uses), so it's good for any chemist to know how to cause them.
+
+Even if it's just to avoid blowing up your dispenser.
+
+- 1:1 Water and Potassium - Explosion of max intensity 100, achieved at 200 units total
+
+- [color=#ff0000] Making CLF3 (1:3 Chlorine and Fluoride) creates an explosion of max intensity 200, achieved at 40 total units.[/color]
+
+## Spreading the solution
+
+There's two means of spreading the solution in an area. Useful mostly for grenades that want to achieve more than simple explosions.
+
+Both of those should scale with reagent amounts.
+
+- Mixing 1:1:1 Phosphorus, Potassium and Sugar creates Smoke, which covers field of view and makes anyone without a breathing mask inhale some of the solution.
+
+- Mixing 1:1 Fluorosurfactant and Water creates Foam. It's slippery, can apply the solution to floors and can get into unprotected animals in the radious. (If you mix the right quantities, the foam should not contain any more Fluorosurfactant)
+
+## Misc Effects
+
+- Mixing 3:1:1 Iron/Aluminium, Foaming Agent and Fluorosulfuric Acid creates the respective metal foam.
+
+- Mixing 1:1:1 Aluminium, Uranium and Iron creates an EMP blast with a max range of 6 tiles at 30 units total.
+
+- [color=#ff0000]Making Phlogiston (1:1:1 Phosphorus, Sulfuric Acid and Plasma) creates plasma gas as a byproduct.[/color]
+
+- Mixing 5:3:2 Oil, Ash and Sulfuric Acid at at least 374K makes a sheet of plastic.
+
+</Document>

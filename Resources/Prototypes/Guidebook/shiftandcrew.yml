@@ -24,6 +24,13 @@
   name: guide-entry-chemicals
   text: "/ServerInfo/Guidebook/Chemicals.xml"
   filterEnabled: True
+  children:
+  - Reactions
+
+- type: guideEntry
+  id: Reactions
+  name: guide-entry-reactions
+  text: "/ServerInfo/Guidebook/Reactions.xml"
 
 - type: guideEntry
   id: Janitorial
