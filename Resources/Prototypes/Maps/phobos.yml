@@ -1,9 +1,9 @@
 - type: gameMap
   id: phobos
-  mapName: 'phobos'
+  mapName: 'Phobos'
   mapPath: /Maps/phobos.yml
   minPlayers: 0
-  maxPlayers: 50
+  maxPlayers: 65
   fallback: true
   stations:
     phobos:
