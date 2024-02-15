@@ -1,0 +1,33 @@
+- type: entity
+  id: MachineCryoSleepPod
+  parent: BaseMachine
+  name: cryo sleep chamber
+  description: Perfect for a 10,000 year nap.
+  components:
+  - type: Sprite
+    sprite: _CD/Structures/cryopod.rsi
+    drawdepth: Mobs
+    layers:
+    - state: closed
+  - type: InteractionOutline
+  - type: Anchorable
+    delay: 999999
+  - type: Physics
+    bodyType: Static
+  - type: MaterialStorage
+  - type: Appearance
+  - type: CryoSleep
+  - type: Climbable
+  - type: Transform
+    noRot: false
+  - type: ContainerContainer
+    containers:
+      body_container: 
+        !type:ContainerSlot
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 0
+  - type: GuideHelp
+    guides: [Cryosleep]

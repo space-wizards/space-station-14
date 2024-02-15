@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github)",
+  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), lost and found resprited by PursuitInAshes",
   "license": "CC-BY-SA-3.0",
   "states": [
     {
@@ -361,6 +361,15 @@
     },
     {
       "name": "locked"
+    },
+	{
+      "name": "lostandfound"
+    },
+    {
+      "name": "lostandfound_door"
+    },
+    {
+      "name": "lostandfound_open"
     },
     {
       "name": "med"

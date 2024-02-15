@@ -25,6 +25,8 @@
     - gcf
     - gc
     - gc_mode
+    - resetent
+    - resetallents
     - cvar
     - fuckrules
     - midipanic
@@ -38,7 +40,6 @@
     - replay_set_time
     - replay_stop
     - replay_load
-    - saveconfig
 
 - Flags: DEBUG
   Commands:
@@ -52,9 +53,7 @@
     - hidemechanisms
     - showmechanisms
     - menuvis
-    - resetent
-    - resetallents
-    - showhealthbars
+    - togglehealthoverlay
     - toggledecals
     - nodevis
     - nodevisfilter

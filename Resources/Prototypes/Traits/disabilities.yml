@@ -55,6 +55,18 @@
     - type: Muted
 
 - type: trait
+  id: WheelchairBound
+  name: trait-wheelchair-bound-name
+  description: trait-wheelchair-bound-desc
+  blacklist:
+    components:
+      - BorgChassis
+  components:
+    - type: BuckleOnMapInit
+      prototype: VehicleWheelchair
+    - type: LegsParalyzed
+
+- type: trait
   id: FrontalLisp
   name: trait-frontal-lisp-name
   description: trait-frontal-lisp-desc
