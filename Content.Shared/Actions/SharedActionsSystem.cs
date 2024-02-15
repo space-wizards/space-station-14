@@ -8,7 +8,6 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -16,6 +15,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Rejuvenate;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Actions;
 
@@ -23,6 +23,7 @@ public abstract class SharedActionsSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -36,9 +37,13 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+
+        SubscribeLocalEvent<InstantActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<EntityTargetActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<WorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
 
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
@@ -46,6 +51,7 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
         SubscribeLocalEvent<ActionsComponent, RejuvenateEvent>(OnRejuventate);
 
+        SubscribeLocalEvent<ActionsComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnActionsGetState);
@@ -61,10 +67,37 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
 
-    private void OnInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
+    private void OnActionMapInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
     {
-        if (component.Charges != null)
-            component.MaxCharges = component.Charges.Value;
+        if (component.Charges == null)
+            return;
+
+        component.MaxCharges ??= component.Charges.Value;
+        Dirty(uid, component);
+    }
+
+    private void OnActionShutdown(EntityUid uid, BaseActionComponent component, ComponentShutdown args)
+    {
+        if (component.AttachedEntity != null && !TerminatingOrDeleted(component.AttachedEntity.Value))
+            RemoveAction(component.AttachedEntity.Value, uid, action: component);
+    }
+
+    private void OnStartup(EntityUid uid, ActionsComponent component, ComponentStartup args)
+    {
+        foreach (var act in component.Actions)
+        {
+            if (!TryGetActionData(act, out var baseAction))
+                continue;
+
+            DebugTools.Assert(_netMan.IsClient);
+
+            if (baseAction.AttachedEntity == uid)
+                continue;
+
+            DebugTools.Assert(baseAction.AttachedEntity == null);
+            baseAction.AttachedEntity = uid;
+            Dirty(act, baseAction);
+        }
     }
 
     private void OnShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)

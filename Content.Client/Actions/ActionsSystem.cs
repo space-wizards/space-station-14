@@ -78,10 +78,12 @@ namespace Content.Client.Actions
 
         private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
         {
+            // TODO ACTIONS use auto comp states
             component.Icon = state.Icon;
             component.IconOn = state.IconOn;
             component.IconColor = state.IconColor;
-            component.Keywords = new HashSet<string>(state.Keywords);
+            component.Keywords.Clear();
+            component.Keywords.UnionWith(state.Keywords);
             component.Enabled = state.Enabled;
             component.Toggled = state.Toggled;
             component.Cooldown = state.Cooldown;
@@ -101,8 +103,7 @@ namespace Content.Client.Actions
             component.ItemIconStyle = state.ItemIconStyle;
             component.Sound = state.Sound;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity == component.AttachedEntity)
-                ActionsUpdated?.Invoke();
+            UpdateAction(uid, component);
         }
 
         protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
@@ -111,7 +112,7 @@ namespace Content.Client.Actions
                 return;
 
             base.UpdateAction(actionId, action);
-            if (_playerManager.LocalPlayer?.ControlledEntity != action.AttachedEntity)
+            if (_playerManager.LocalEntity != action.AttachedEntity)
                 return;
 
             ActionsUpdated?.Invoke();
@@ -144,7 +145,7 @@ namespace Content.Client.Actions
                 _added.Add((actionId, action));
             }
 
-            if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+            if (_playerManager.LocalEntity != uid)
                 return;
 
             foreach (var action in _removed)
