@@ -89,6 +89,9 @@ public abstract partial class SharedBuckleSystem : EntitySystem
                 _standing.Down(buckleUid, false, false);
                 break;
         }
+
+        //Reverts the collision of the entity to it's original one if it's not dead, this is so alive and crit entities
+        //can be hit while buckled to a bed.
         var ev = new TryRevertCollisionChangeEvent();
         RaiseLocalEvent(buckleUid, ref ev);
 
