@@ -106,7 +106,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [IPC]
-  forcedColoring: true
   sprites:
     - sprite: Mobs/Customization/IPC/ipc_screens.rsi
       state: goggles
@@ -116,7 +115,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [IPC]
-  forcedColoring: true
   sprites:
     - sprite: Mobs/Customization/IPC/ipc_screens.rsi
       state: goggles_hesp_alt
@@ -173,7 +171,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [IPC]
-  forcedColoring: true
   sprites:
     - sprite: Mobs/Customization/IPC/ipc_screens.rsi
       state: monoeye
@@ -202,7 +199,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [IPC]
-  forcedColoring: true
   sprites:
     - sprite: Mobs/Customization/IPC/ipc_screens.rsi
       state: off_hesp_alt
@@ -405,7 +401,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [IPC]
-  forcedColoring: true
   sprites:
     - sprite: Mobs/Customization/IPC/ipc_screens.rsi
       state: static
@@ -510,7 +505,7 @@
   id: IPCHeadCrowned
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [IPC
+  speciesRestriction: [IPC]
   forcedColoring: true
   sprites:
     - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
@@ -538,8 +533,8 @@
       
 - type: marking
   id: IPCHeadLight
-  bodyPart: HeadSide
-  markingCategory: HeadSide
+  bodyPart: HeadTop
+  markingCategory: HeadTop
   speciesRestriction: [IPC]
   forcedColoring: true
   sprites:
