@@ -116,5 +116,7 @@ public sealed class SolutionRoundingTest
                     Is.EqualTo((FixedPoint2) 30));
             });
         });
+
+        await pair.CleanReturnAsync();
     }
 }
