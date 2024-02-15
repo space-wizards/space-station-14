@@ -189,7 +189,7 @@ public sealed partial class TestPair : IAsyncDisposable
         var sPlayer = Server.ResolveDependency<IPlayerManager>();
         Assert.That(sPlayer.Sessions.Count(), Is.EqualTo(1));
         var session = sPlayer.Sessions.Single();
-        Assert.That(cPlayer.LocalPlayer?.Session.UserId, Is.EqualTo(session.UserId));
+        Assert.That(cPlayer.LocalSession?.UserId, Is.EqualTo(session.UserId));
 
         if (ticker.DummyTicker)
             return;

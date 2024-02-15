@@ -35,7 +35,7 @@ public sealed class MeleeArcOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        var player = _playerManager.LocalEntity;
 
         if (!_entManager.TryGetComponent<TransformComponent>(player, out var xform) ||
             !_combatMode.IsInCombatMode(player))

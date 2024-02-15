@@ -92,6 +92,18 @@
   slippery: false
 
 - type: reagent
+  parent: Blood
+  id: AmmoniaBlood
+  name: reagent-name-ammonia-blood
+  group: Biological
+  desc: reagent-desc-ammonia-blood
+  flavor: bitter
+  color: "#7a8bf2"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-pungent
+  slippery: false
+
+- type: reagent
   id: ZombieBlood
   name: reagent-name-zombie-blood
   group: Biological

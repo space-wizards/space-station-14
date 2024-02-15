@@ -6,6 +6,10 @@
   - type: Openable
     sound:
       collection: bottleOpenSounds #Could use a new sound someday ¯\_(ツ)_/¯
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Sealable
   - type: SolutionContainerManager
     solutions:
       drink:
