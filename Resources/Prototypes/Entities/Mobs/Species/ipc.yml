@@ -38,7 +38,7 @@
       - Muted
       - Pacified
       - StaminaModifier
-    - type: NightVision
+#    - type: NightVision
     - type: ThermalRegulator
       metabolismHeat: 0
       radiatedHeat: 100
