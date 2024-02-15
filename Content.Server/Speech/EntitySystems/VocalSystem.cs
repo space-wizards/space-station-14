@@ -1,12 +1,9 @@
 using Content.Server.Actions;
-using Content.Server.Chat.Systems;
 using Content.Server.Chat.V2;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Chat.V2;
 using Content.Shared.Humanoid;
 using Content.Shared.Speech;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -28,7 +25,7 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
-        SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
+        SubscribeLocalEvent<VocalComponent, EmoteSuccessEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
     }
 
@@ -53,7 +50,7 @@ public sealed class VocalSystem : EntitySystem
         LoadSounds(uid, component);
     }
 
-    private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)
+    private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteSuccessEvent args)
     {
         if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
             return;

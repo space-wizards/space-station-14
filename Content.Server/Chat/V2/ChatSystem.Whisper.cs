@@ -90,7 +90,7 @@ public sealed partial class ChatSystem
 
         if (emoteStr?.Length > 0)
         {
-            TrySendEmoteMessage(entityUid, emoteStr, asName, true);
+            TrySendEmoteMessageWithoutRecursion(entityUid, emoteStr, asName);
         }
 
         if (string.IsNullOrEmpty(message))

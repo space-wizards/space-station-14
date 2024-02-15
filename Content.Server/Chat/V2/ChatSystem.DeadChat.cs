@@ -14,13 +14,12 @@ public sealed partial class ChatSystem
 {
     public void InitializeDeadChat()
     {
-        SubscribeNetworkEvent<DeadChatAttemptedEvent>((msg, args) => { HandleAttemptDeadChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
+        SubscribeNetworkEvent<AttemptDeadChatEvent>((msg, args) => { HandleAttemptDeadChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
     }
 
     private void HandleAttemptDeadChatMessage(ICommonSession player, NetEntity entity, string message)
     {
         var entityUid = GetEntity(entity);
-
         if (player.AttachedEntity != entityUid)
         {
             return;
@@ -28,26 +27,21 @@ public sealed partial class ChatSystem
 
         if (IsRateLimited(entityUid, out var reason))
         {
-            RaiseNetworkEvent(new DeadChatAttemptFailedEvent(GetNetEntity(entityUid),reason), entityUid);
+            RaiseNetworkEvent(new DeadChatFailEvent(entity, reason), player);
 
             return;
         }
 
-        if (_admin.IsAdmin(entityUid) && !HasComp<GhostComponent>(entityUid) || !_mobState.IsDead(entityUid))
+        if (!_admin.IsAdmin(entityUid) || !HasComp<GhostComponent>(entityUid) && !_mobState.IsDead(entityUid))
         {
-            RaiseNetworkEvent(new DeadChatAttemptFailedEvent(entity, "If you'd like to talk to the dead, consider dying first."));
+            RaiseNetworkEvent(new DeadChatFailEvent(entity, Loc.GetString("chat-system-dead-chat-failed")), player);
 
             return;
         }
 
         if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(
-                new DeadChatAttemptFailedEvent(
-                    entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))
-                ),
-                player);
+            RaiseNetworkEvent(new DeadChatFailEvent(entity, Loc.GetString("chat-system-max-message-length-exceeded-message")), player);
 
             return;
         }
@@ -67,14 +61,14 @@ public sealed partial class ChatSystem
         var isAdmin = _admin.IsAdmin(source);
         var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
 
-        var msgOut = new EntityDeadChattedEvent(
+        var msgOut = new DeadChatNetworkEvent(
             GetNetEntity(source),
             FormattedMessage.EscapeText(Identity.Name(source, EntityManager)),
             message,
             _admin.IsAdmin(source),
             isAdmin ? player.Channel.UserName : name
         );
-        
+
         foreach (var session in GetDeadChatRecipients())
         {
             RaiseNetworkEvent(msgOut, session);

@@ -216,9 +216,9 @@ public sealed class ChatUIController : UIController
 
         SubscribeNetworkEvent<EntityLoocedEvent>(OnLoocMessage);
 
-        SubscribeNetworkEvent<EntityDeadChattedEvent>(OnDeadChatMessage);
+        SubscribeNetworkEvent<DeadChatNetworkEvent>(OnDeadChatMessage);
 
-        SubscribeNetworkEvent<LocalChatFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<LocalChatFailEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<WhisperAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<EmoteAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Emoter), ev.Reason));
         SubscribeNetworkEvent<LoocAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
@@ -1090,7 +1090,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnDeadChatMessage(EntityDeadChattedEvent ev, EntitySessionEventArgs args)
+    private void OnDeadChatMessage(DeadChatNetworkEvent ev, EntitySessionEventArgs args)
     {
         string wrappedMessage;
 

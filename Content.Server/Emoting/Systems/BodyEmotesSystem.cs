@@ -1,8 +1,6 @@
-using Content.Server.Chat.Systems;
 using Content.Server.Chat.V2;
 using Content.Server.Emoting.Components;
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Chat.V2;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Prototypes;
 
@@ -17,7 +15,7 @@ public sealed class BodyEmotesSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<BodyEmotesComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<BodyEmotesComponent, EmoteEvent>(OnEmote);
+        SubscribeLocalEvent<BodyEmotesComponent, EmoteSuccessEvent>(OnEmote);
     }
 
     private void OnStartup(EntityUid uid, BodyEmotesComponent component, ComponentStartup args)
@@ -27,7 +25,7 @@ public sealed class BodyEmotesSystem : EntitySystem
         _proto.TryIndex(component.SoundsId, out component.Sounds);
     }
 
-    private void OnEmote(EntityUid uid, BodyEmotesComponent component, ref EmoteEvent args)
+    private void OnEmote(EntityUid uid, BodyEmotesComponent component, ref EmoteSuccessEvent args)
     {
         if (args.Handled)
             return;

@@ -39,21 +39,21 @@ public sealed partial class ChatSystem
 
         if (IsRateLimited(entityUid, out var reason))
         {
-            RaiseNetworkEvent(new LocalChatFailedEvent(entity, reason), player);
+            RaiseNetworkEvent(new LocalChatFailEvent(entity, reason), player);
 
             return;
         }
 
         if (!TryComp<LocalChattableComponent>(entityUid, out var comp))
         {
-            RaiseNetworkEvent(new LocalChatFailedEvent(entity, Loc.GetString("chat-system-local-chat-failed")), player);
+            RaiseNetworkEvent(new LocalChatFailEvent(entity, Loc.GetString("chat-system-local-chat-failed")), player);
 
             return;
         }
 
         if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(new LocalChatFailedEvent(entity, Loc.GetString("chat-system-max-message-length-exceeded-message")), player);
+            RaiseNetworkEvent(new LocalChatFailEvent(entity, Loc.GetString("chat-system-max-message-length-exceeded-message")), player);
 
             return;
         }
@@ -90,7 +90,7 @@ public sealed partial class ChatSystem
 
         if (emoteStr?.Length > 0)
         {
-            TrySendEmoteMessage(entityUid, emoteStr, asName, true);
+            TrySendEmoteMessageWithoutRecursion(entityUid, emoteStr, asName);
         }
 
         if (string.IsNullOrEmpty(message))

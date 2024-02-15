@@ -1,7 +1,6 @@
 using Content.Server.Abilities.Mime;
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Popups;
-using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Puppet;
@@ -16,11 +15,11 @@ namespace Content.Server.Speech.Muting
         {
             base.Initialize();
             SubscribeLocalEvent<MutedComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<MutedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MutedComponent, EmoteSuccessEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
             SubscribeLocalEvent<MutedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
 
-        private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteEvent args)
+        private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteSuccessEvent args)
         {
             if (args.Handled)
                 return;

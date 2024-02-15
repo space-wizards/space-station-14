@@ -88,12 +88,7 @@ public sealed partial class ChatSystem
         // Is the message too long?
         if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(
-                new RadioAttemptFailedEvent(
-                    entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))
-                    ),
-                player);
+            RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))),player);
 
             return;
         }
@@ -123,7 +118,7 @@ public sealed partial class ChatSystem
         // If you lol on the radio, you should lol in the emote chat.
         if (emoteStr?.Length > 0)
         {
-            TrySendEmoteMessage(entityUid, emoteStr, asName, true);
+            TrySendEmoteMessageWithoutRecursion(entityUid, emoteStr, asName);
         }
 
         if (string.IsNullOrEmpty(message))

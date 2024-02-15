@@ -12,22 +12,19 @@ public partial class SharedChatSystem
         // GhostComponent covers "can talk on dead chat" nicely.
         if (_admin.IsAdmin(speaker) && !HasComp<GhostComponent>(speaker) || !_mobState.IsDead(speaker))
         {
-            reason = "If you'd like to talk to the dead, consider dying first.";
+            reason = Loc.GetString("chat-system-dead-chat-failed");
 
             return false;
         }
 
-        var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
-
-        if (message.Length > messageMaxLen)
+        if (message.Length > MaxChatMessageLength)
         {
-            reason = Loc.GetString("chat-manager-max-message-length",
-                ("maxMessageLength", messageMaxLen));
+            reason = Loc.GetString("chat-system-max-message-length");
 
             return false;
         }
 
-        RaiseNetworkEvent(new DeadChatAttemptedEvent(GetNetEntity(speaker), message));
+        RaiseNetworkEvent(new AttemptDeadChatEvent(GetNetEntity(speaker), message));
 
         reason = null;
 
@@ -36,15 +33,15 @@ public partial class SharedChatSystem
 }
 
 /// <summary>
-/// Raised when a mob tries to speak in Dead Chat.
+/// Raised when a mob tries to speak in dead chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DeadChatAttemptedEvent : EntityEventArgs
+public sealed class AttemptDeadChatEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Message;
 
-    public DeadChatAttemptedEvent(NetEntity speaker, string message)
+    public AttemptDeadChatEvent(NetEntity speaker, string message)
     {
         Speaker = speaker;
         Message = message;
@@ -52,10 +49,27 @@ public sealed class DeadChatAttemptedEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Raised when a character speaks in Dead Chat.
+/// Raised when a character has failed to speak in Dead Chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EntityDeadChattedEvent : EntityEventArgs
+public sealed class DeadChatFailEvent : EntityEventArgs
+{
+    public NetEntity Speaker;
+    public readonly string Reason;
+
+    public DeadChatFailEvent(NetEntity speaker, string reason)
+    {
+        Speaker = speaker;
+        Reason = reason;
+    }
+}
+
+
+/// <summary>
+/// Raised locally when a character speaks in Dead Chat.
+/// </summary>
+[Serializable]
+public sealed class DeadChatSuccessEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
@@ -63,7 +77,7 @@ public sealed class EntityDeadChattedEvent : EntityEventArgs
     public bool IsAdmin;
     public string Name;
 
-    public EntityDeadChattedEvent(NetEntity speaker, string asName, string message, bool isAdmin, string name)
+    public DeadChatSuccessEvent(NetEntity speaker, string asName, string message, bool isAdmin, string name)
     {
         Speaker = speaker;
         AsName = asName;
@@ -74,18 +88,23 @@ public sealed class EntityDeadChattedEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Raised when a character has failed to speak in Dead Chat.
+/// Raised on the network when a character speaks in dead chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DeadChatAttemptFailedEvent : EntityEventArgs
+public sealed class DeadChatNetworkEvent : EntityEventArgs
 {
     public NetEntity Speaker;
-    public readonly string Reason;
+    public string AsName;
+    public readonly string Message;
+    public bool IsAdmin;
+    public string Name;
 
-    public DeadChatAttemptFailedEvent(NetEntity speaker, string reason)
+    public DeadChatNetworkEvent(NetEntity speaker, string asName, string message, bool isAdmin, string name)
     {
         Speaker = speaker;
-        Reason = reason;
+        AsName = asName;
+        Message = message;
+        IsAdmin = isAdmin;
+        Name = name;
     }
 }
-

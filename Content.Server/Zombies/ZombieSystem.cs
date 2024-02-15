@@ -56,7 +56,7 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
+            SubscribeLocalEvent<ZombieComponent, EmoteSuccessEvent>(OnEmote, before:
                 new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
@@ -143,11 +143,12 @@ namespace Content.Server.Zombies
             _protoManager.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
         }
 
-        private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteEvent args)
+        private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteSuccessEvent args)
         {
             // always play zombie emote sounds and ignore others
             if (args.Handled)
                 return;
+
             args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
         }
 

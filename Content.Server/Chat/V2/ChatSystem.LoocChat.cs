@@ -28,7 +28,6 @@ public sealed partial class ChatSystem
     {
         base.Initialize();
 
-        // A client attempts to chat using a given entity
         SubscribeNetworkEvent<LoocAttemptedEvent>((msg, args) => { HandleAttemptChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
 
         Configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);

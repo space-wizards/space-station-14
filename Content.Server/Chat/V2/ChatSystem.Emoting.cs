@@ -24,7 +24,6 @@ public sealed partial class ChatSystem
     {
         base.Initialize();
 
-        // A client attempts to chat using a given entity
         SubscribeNetworkEvent<EmoteAttemptedEvent>((msg, args) => { HandleAttemptEmoteMessage(args.SenderSession, msg.Emoter, msg.Message); });
     }
 
@@ -34,11 +33,9 @@ public sealed partial class ChatSystem
 
         if (player.AttachedEntity != entityUid)
         {
-            // Nice try bozo.
             return;
         }
 
-        // Are they rate-limited
         if (IsRateLimited(entityUid, out var reason))
         {
             RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, reason), player);
@@ -46,39 +43,55 @@ public sealed partial class ChatSystem
             return;
         }
 
-        // Sanity check: if you can't chat you shouldn't be chatting.
         if (!TryComp<EmoteableComponent>(entityUid, out var emoteable))
         {
-            RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, "You can't emote"), player);
+            RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, Loc.GetString("chat-system-emote-failed")), player);
 
             return;
         }
 
-        var maxMessageLen = Configuration.GetCVar(CCVars.ChatMaxMessageLength);
-
-        // Is the message too long?
-        if (message.Length > Configuration.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(
-                new EmoteAttemptFailedEvent(
-                    entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", maxMessageLen))
-                    ),
-                player);
+            RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, Loc.GetString("chat-system-max-message-length")), player);
 
             return;
         }
 
-        // All good; let's actually send a chat message.
         SendEmoteMessage(entityUid, message, emoteable.Range);
     }
 
-    public bool TrySendEmoteMessage(EntityUid entityUid, string message, string asName = "", bool isRecursive = false)
+    /// <summary>
+    /// Try and send an emote. If the emote contains some specific emote strings, they will also be emoted, to a max of 2 at a time.
+    /// </summary>
+    /// <param name="entityUid">The emoting entity. It needs an EmoteableComponent.</param>
+    /// <param name="message">The emote message to send.</param>
+    /// <param name="asName">The name to send.</param>
+    /// <remarks>For example, "dances in circles lol" produces "dances in circles" and "laughs"</remarks>
+    /// <returns></returns>
+    public bool TrySendEmoteMessage(EntityUid entityUid, string message, string asName = "")
     {
         if (!TryComp<EmoteableComponent>(entityUid, out var emote))
             return false;
 
-        SendEmoteMessage(entityUid, message, emote.Range, asName, isRecursive);
+        SendEmoteMessage(entityUid, message, emote.Range, asName, false);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Try and send an emote without causing any other messages to be sent afterward. Used to prevent recursion.
+    /// </summary>
+    /// <remarks>For example, Urist McShitter shouldn't be able to send "dances in circles lol lol lol lol" and emit five emotes.</remarks>
+    /// <param name="entityUid"></param>
+    /// <param name="message"></param>
+    /// <param name="asName"></param>
+    /// <returns></returns>
+    public bool TrySendEmoteMessageWithoutRecursion(EntityUid entityUid, string message, string asName = "")
+    {
+        if (!TryComp<EmoteableComponent>(entityUid, out var emote))
+            return false;
+
+        SendEmoteMessage(entityUid, message, emote.Range, asName, true);
 
         return true;
     }
@@ -100,8 +113,6 @@ public sealed partial class ChatSystem
 
         if (!string.IsNullOrEmpty(emoteStr) && !isRecursive)
         {
-            // If they wrote something like '@dances really badly lol` then this converts to `Urist dances really badly` and `Urist laughs`.
-            // We trim this to only allowing one recursion; this prevents an abusive message like `lol lol lol lol lol lol lol lol lol lol`
             SendEmoteMessage(entityUid, emoteStr, range, asName, true);
         }
 
@@ -137,13 +148,14 @@ public sealed partial class ChatSystem
         var name = FormattedMessage.EscapeText(asName);
 
         var emote = GetEmote(message);
-        if (emote != null)
+
+        if (emote == null)
         {
-            // EmoteEvent is used by a number of other systems to do things. We can't easily migrate and encapsulate that work here.
-            // Specifically, some systems for Cluwnes, Zombies etc rely on it to allow sounds to be emitted for emotes.
-            var ev = new EmoteEvent(emote);
-            RaiseLocalEvent(entityUid, ref ev);
+            return;
         }
+
+        var ev = new EmoteSuccessEvent(emote);
+        RaiseLocalEvent(entityUid, ref ev);
 
         var msgOut = new EntityEmotedEvent(
             GetNetEntity(entityUid),
@@ -152,19 +164,15 @@ public sealed partial class ChatSystem
             range
         );
 
-        // Make sure anything server-side hears about the message
-        // TODO: what does broadcasting even do
         RaiseLocalEvent(entityUid, msgOut, true);
 
-        // Now fire it off to legal recipients
         foreach (var session in GetEmoteRecipients(entityUid, range))
         {
             RaiseNetworkEvent(msgOut, session);
         }
 
-        // And finally, stash it in the replay and log.
         _replay.RecordServerMessage(msgOut);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(entityUid):user} as {asName}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(entityUid):user} as {asName}: {message}");
     }
 
     private List<ICommonSession> GetEmoteRecipients(EntityUid source, float range)
@@ -225,9 +233,24 @@ public sealed partial class ChatSystem
         if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
             return;
 
-        // EmoteEvent is used by a number of other systems to do things. We can't easily migrate and encapsulate that work here.
-        // Specifically, some systems for Cluwnes, Zombies etc rely on it to allow sounds to be emitted for emotes.
-        var ev = new EmoteEvent(emote);
+        var ev = new EmoteSuccessEvent(emote);
         RaiseLocalEvent(source, ref ev);
+    }
+}
+
+/// <summary>
+/// Raised by chat system when entity made some emote.
+/// Use it to play sound, change sprite or something else.
+/// </summary>
+[ByRefEvent]
+public struct EmoteSuccessEvent
+{
+    public bool Handled;
+    public readonly EmotePrototype Emote;
+
+    public EmoteSuccessEvent(EmotePrototype emote)
+    {
+        Emote = emote;
+        Handled = false;
     }
 }

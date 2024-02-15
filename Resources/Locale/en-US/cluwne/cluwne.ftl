@@ -1,2 +1,4 @@
 cluwne-transform = {CAPITALIZE(THE($target))} turned into a cluwne!
 cluwne-name-prefix = Cluwnified {$target}
+cluwne-spasms = spasms horribly!
+cluwne-honks = honks horribly!

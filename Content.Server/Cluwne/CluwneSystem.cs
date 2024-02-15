@@ -39,7 +39,7 @@ public sealed class CluwneSystem : EntitySystem
 
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
-        SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before:
+        SubscribeLocalEvent<CluwneComponent, EmoteSuccessEvent>(OnEmote, before:
         new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
     }
 
@@ -87,7 +87,7 @@ public sealed class CluwneSystem : EntitySystem
     /// <summary>
     /// Handles the timing on autoemote as well as falling over and honking.
     /// </summary>
-    private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteEvent args)
+    private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteSuccessEvent args)
     {
         if (args.Handled)
             return;
@@ -97,21 +97,16 @@ public sealed class CluwneSystem : EntitySystem
         {
             _audio.PlayPvs(component.SpawnSound, uid);
 
-            if (TryComp<EmoteableComponent>(uid, out var comp))
-            {
-                _chat.SendEmoteMessage(uid, "honks", comp.Range);
-            }
+            _chat.TrySendEmoteMessage(uid, Loc.GetString("cluwn-honks"));
         }
 
         else if (_robustRandom.Prob(component.KnockChance))
         {
             _audio.PlayPvs(component.KnockSound, uid);
+
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
 
-            if (TryComp<EmoteableComponent>(uid, out var comp))
-            {
-                _chat.SendEmoteMessage(uid, "spasms", comp.Range);
-            }
+            _chat.TrySendEmoteMessage(uid, Loc.GetString("cluwn-spasms"));
         }
     }
 }
