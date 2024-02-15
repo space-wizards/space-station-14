@@ -87,6 +87,12 @@
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 2.0
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.8
   metabolisms:
     Poison:
       effects:
