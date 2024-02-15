@@ -2,8 +2,8 @@
   id: phobos
   mapName: 'Phobos'
   mapPath: /Maps/phobos.yml
-  minPlayers: 0
-  maxPlayers: 60
+  minPlayers: 40
+  maxPlayers: 70
   fallback: true
   stations:
     phobos:
@@ -57,4 +57,5 @@
             Clown: [ 2, 2 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Reporter: [ 1, 1 ]
 
