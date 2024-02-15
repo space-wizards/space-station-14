@@ -57,7 +57,6 @@ guide-entry-zombies = Zombies
 guide-entry-revolutionaries = Revolutionaries
 guide-entry-minor-antagonists = Minor Antagonists
 guide-entry-space-ninja = Space Ninja
-guide-entry-thief = Thief
 
 guide-entry-writing = Writing
 guide-entry-glossary = Glossary
