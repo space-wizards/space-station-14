@@ -120,7 +120,7 @@
 - type: crimeAssistPage
   id: "questionWasCrimeSexualInNature"
   locKey: "crime-assist-question-wascrimesexualinnature"
-  onYes: "resultSexualHarrassment"
+  onYes: "resultSexualHarassment"
   onNo: "questionWasSuspectANuisance"
 
 - type: crimeAssistPage
@@ -279,11 +279,18 @@
   locKeyPunishment: "crime-assist-crimepunishment-contemptofcourt"
 
 - type: crimeAssistPage
-  id: "resultPerjuryOrFalseReport"
-  locKeyTitle: "crime-assist-crime-perjuryorfalsereport"
-  locKeyDescription: "crime-assist-crimedetail-perjuryorfalsereport"
+  id: "resultBlackMarketeering"
+  locKeyTitle: "crime-assist-crime-blackmarketeering"
+  locKeyDescription: "crime-assist-crimedetail-blackmarketeering"
   locKeySeverity: "crime-assist-crimetype-felony"
-  locKeyPunishment: "crime-assist-crimepunishment-perjuryorfalsereport"
+  locKeyPunishment: "crime-assist-crimepunishment-blackmarketeering"
+
+- type: crimeAssistPage
+  id: "resultPerjuryOrFalseReport"
+  locKeyTitle: "crime-assist-crime-perjuryfalsereport"
+  locKeyDescription: "crime-assist-crimedetail-perjuryfalsereport"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-perjuryfalsereport"
 
 - type: crimeAssistPage
   id: "resultObstructionOfJustice"
@@ -335,8 +342,8 @@
   locKeyPunishment: "crime-assist-crimepunishment-sedition"
 
 - type: crimeAssistPage
-  id: "resultSexualHarrassment"
-  locKeyTitle: "crime-assist-crime-sexualharrassment"
-  locKeyDescription: "crime-assist-crimedetail-sexualharrassment"
+  id: "resultSexualHarassment"
+  locKeyTitle: "crime-assist-crime-sexualharassment"
+  locKeyDescription: "crime-assist-crimedetail-sexualharassment"
   locKeySeverity: "crime-assist-crimetype-capital"
-  locKeyPunishment: "crime-assist-crimepunishment-sexualharrassment"
+  locKeyPunishment: "crime-assist-crimepunishment-sexualharassment"
