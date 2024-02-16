@@ -274,6 +274,33 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
+      
+# IPC
+- type: emoteSounds
+  id: UnisexIPC
+  sounds:
+    Scream:
+      path: /Audio/Effects/beep1.ogg
+      params:
+        variation: 0.125
+    Laugh:
+      path: /Audio/Effects/sparks1.ogg
+      params:
+        variation: 0.125
+    Ping:
+      path: /Audio/Effects/beep1.ogg
+      params:
+        variation: 0.125
+    Beep:
+      collection: IPCBeeps
+    Boop:
+      collection: IPCBoops
+    Whirr:
+      collection: IPCWhirrs
+    Honk:
+      collection: BikeHorn
+      params:
+        variation: 0.125
 
 # body emotes
 - type: emoteSounds

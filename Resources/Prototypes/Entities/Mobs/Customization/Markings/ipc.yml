@@ -1,0 +1,618 @@
+# template
+#- type: marking
+#  id: IPCScreen{}
+#  bodyPart: Head
+#  markingCategory: Head
+#  speciesRestriction: [IPC]
+#  sprites:
+#    - sprite: /Mobs/Customization/IPC/ipc_screens.rsi
+#      state: {}
+
+# Screens
+- type: marking
+  id: IPCScreenBlank
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: blank
+
+- type: marking
+  id: IPCScreenBlue
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: blue
+
+- type: marking
+  id: IPCScreenBreakout
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: breakout
+      
+- type: marking
+  id: IPCScreenConsole
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: console
+
+- type: marking
+  id: IPCScreenEcgwave
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: ecgwave
+
+- type: marking
+  id: IPCScreenEight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: eight
+      
+- type: marking
+  id: IPCScreenExclamation
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: excla
+      
+- type: marking
+  id: IPCScreenEyes
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: eyes
+
+- type: marking
+  id: IPCScreenEyesstall
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: eyesstall
+
+- type: marking
+  id: IPCScreenEyesangry
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: eyesangry
+      
+- type: marking
+  id: IPCScreenGoggles
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: goggles
+      
+- type: marking
+  id: IPCScreenGogglesAlt
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: goggles_hesp_alt
+      
+- type: marking
+  id: IPCScreenGlider
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: gol_glider
+
+- type: marking
+  id: IPCScreenGreen
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: green
+
+- type: marking
+  id: IPCScreenHeart
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: heart
+
+- type: marking
+  id: IPCScreenL
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: l
+
+- type: marking
+  id: IPCScreenLoading
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: loading
+
+- type: marking
+  id: IPCScreenMonoeye
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: monoeye
+      
+- type: marking
+  id: IPCScreenMusic
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: music
+
+- type: marking
+  id: IPCScreenNature
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: nature
+      
+- type: marking
+  id: IPCScreenOff
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: off_hesp_alt
+
+- type: marking
+  id: IPCScreenOrange
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: orange
+      
+- type: marking
+  id: IPCScreenOrangeAlt
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: orange_hesp_alt
+
+- type: marking
+  id: IPCScreenPink
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: pink
+      
+- type: marking
+  id: IPCScreenPinkAlt
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: pink_hesp_alt
+      
+- type: marking
+  id: IPCScreenPurple
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: purple
+      
+- type: marking
+  id: IPCScreenQuestion
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: question
+      
+- type: marking
+  id: IPCScreenRainbow
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: rainbow
+      
+- type: marking
+  id: IPCScreenRainbowAlt
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: rainbow_hesp_alt
+      
+- type: marking
+  id: IPCScreenRedExlaimation
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: red
+      
+- type: marking
+  id: IPCScreenRedtext
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: redtext
+      
+- type: marking
+  id: IPCScreenRgb
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: rgb
+      
+- type: marking
+  id: IPCScreenRgbAlt
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: rgb_hesp_alt
+      
+- type: marking
+  id: IPCScreenRing
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: ring
+      
+- type: marking
+  id: IPCScreenRainbowdiag
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: rainbowdiag
+
+- type: marking
+  id: IPCScreenSmile
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: smile
+
+- type: marking
+  id: IPCScreenSad
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: sad
+
+- type: marking
+  id: IPCScreenScroll
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: scroll
+      
+- type: marking
+  id: IPCScreenScrollAlt
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: scroll_hesp_alt
+
+- type: marking
+  id: IPCScreenShower
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: shower
+      
+- type: marking
+  id: IPCScreenSmoking
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: smoking
+      
+- type: marking
+  id: IPCScreenStatic
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: static
+      
+- type: marking
+  id: IPCScreenStars
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: stars
+
+- type: marking
+  id: IPCScreenSinewave
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: sinewave
+
+- type: marking
+  id: IPCScreenScreenwave
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: screenwave
+      
+- type: marking
+  id: IPCScreenTetris
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: tetris
+
+- type: marking
+  id: IPCScreenTv
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: tv
+
+- type: marking
+  id: IPCScreenTextdrop
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: textdrop
+
+- type: marking
+  id: IPCScreenWindowsxp
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: windowsxp
+
+- type: marking
+  id: IPCScreenYellow
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_screens.rsi
+      state: yellow
+
+# Antennae
+- type: marking
+  id: IPCHeadAntennae
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: antennae
+
+- type: marking
+  id: IPCHeadAntlers
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: antlers
+      
+- type: marking
+  id: IPCHeadCrowned
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: crowned
+      
+- type: marking
+  id: IPCHeadCyberhead
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: cyberhead
+      
+- type: marking
+  id: IPCHeadDrone
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: droneeyes
+      
+- type: marking
+  id: IPCHeadLight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: light
+      
+- type: marking
+  id: IPCHeadSidelights
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: sidelights
+
+- type: marking
+  id: IPCHeadTesla
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: tesla
+      
+- type: marking
+  id: IPCHeadTvAntennae
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [IPC]
+  forcedColoring: true
+  sprites:
+    - sprite: Mobs/Customization/IPC/ipc_head_accessories.rsi
+      state: tvantennae
+
+# Optics
+- type: marking
+  id: IPCHeadOpticsBishop
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [IPC]
+  sprites:
+  - sprite:  Mobs/Customization/IPC/ipc_optics.rsi
+    state: bishop_alt_optics
+    
+- type: marking
+  id: IPCHeadOpticsMorpheus
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [IPC]
+  sprites:
+  - sprite:  Mobs/Customization/IPC/ipc_optics.rsi
+    state: morpheus_alt_optics
+    
+- type: marking
+  id: IPCHeadOpticsOptics
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [IPC]
+  sprites:
+  - sprite:  Mobs/Customization/IPC/ipc_optics.rsi
+    state: optics
+    
+- type: marking
+  id: IPCHeadOpticsWardtakahashi
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [IPC]
+  sprites:
+  - sprite:  Mobs/Customization/IPC/ipc_optics.rsi
+    state: wardtakahashi_alt_optics
+    
+- type: marking
+  id: IPCHeadOpticsXion
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [IPC]
+  sprites:
+  - sprite:  Mobs/Customization/IPC/ipc_optics.rsi
+    state: xion_alt_optics

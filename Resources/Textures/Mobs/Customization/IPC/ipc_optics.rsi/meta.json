@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/58a1401ac7b8c1e29139ea73ba4892b1548f9487/icons/mob/sprite_accessories/ipc/ipc_optics.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "optics",
+      "directions": 4
+    },
+    {
+      "name": "bishop_alt_optics",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "wardtakahashi_alt_optics",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "xion_alt_optics",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "morpheus_alt_optics",
+      "directions": 4,
+      "delays": [
+        [
+          4,
+          0.1
+        ],
+        [
+          4,
+          0.1
+        ],
+        [
+          4,
+          0.1
+        ],
+        [
+          4,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

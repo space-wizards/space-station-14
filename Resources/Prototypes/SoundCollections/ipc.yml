@@ -1,0 +1,16 @@
+- type: soundCollection
+  id: IPCWhirrs
+  files:
+    - /Audio/Voice/IPC/whirr1.ogg
+    - /Audio/Voice/IPC/whirr2.ogg
+    - /Audio/Voice/IPC/whirr3.ogg
+
+- type: soundCollection
+  id: IPCBeeps
+  files:
+  - /Audio/Voice/IPC/beep_2000.ogg
+
+- type: soundCollection
+  id: IPCBoops
+  files:
+  - /Audio/Voice/IPC/beep_500.ogg

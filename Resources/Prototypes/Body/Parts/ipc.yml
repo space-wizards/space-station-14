@@ -1,0 +1,177 @@
+- type: entity
+  id: PartIPC
+  parent: BaseItem
+  name: ipc body part
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Damageable
+      damageContainer: Biological
+    - type: BodyPart
+    - type: ContainerContainer
+      containers:
+        bodypart: !type:Container
+          ents: []
+
+- type: entity
+  id: HeadIPC
+  name: ipc head
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "head"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "head"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Head
+      vital: true
+    - type: Input
+      context: "ghost"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 0
+      baseSprintSpeed: 0
+    - type: InputMover
+    - type: GhostOnMove
+    - type: Tag
+      tags:
+        - Head
+
+- type: entity
+  id: TorsoIPC
+  name: ipc torso
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "chest"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "chest"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Torso
+
+- type: entity
+  id: LeftArmIPC
+  name: left ipc arm
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "l_arm"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "l_arm"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Arm
+      symmetry: Left
+
+- type: entity
+  id: RightArmIPC
+  name: right ipc arm
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "r_arm"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "r_arm"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Arm
+      symmetry: Right
+
+- type: entity
+  id: LeftHandIPC
+  name: left ipc hand
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "l_hand"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "l_hand"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Hand
+      symmetry: Left
+
+- type: entity
+  id: RightHandIPC
+  name: right ipc hand
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "r_hand"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "r_hand"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Hand
+      symmetry: Right
+
+- type: entity
+  id: LeftLegIPC
+  name: left ipc leg
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "l_leg"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "l_leg"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Leg
+      symmetry: Left
+    - type: MovementBodyPart
+
+- type: entity
+  id: RightLegIPC
+  name: right ipc leg
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "r_leg"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "r_leg"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Leg
+      symmetry: Right
+    - type: MovementBodyPart
+
+- type: entity
+  id: LeftFootIPC
+  name: left ipc foot
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "l_foot"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "l_foot"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Foot
+      symmetry: Left
+
+- type: entity
+  id: RightFootIPC
+  name: right ipc foot
+  parent: PartIPC
+  components:
+    - type: Sprite
+      state: "r_foot"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: Icon
+      state: "r_foot"
+      sprite: Mobs/Species/IPCs/parts.rsi
+    - type: BodyPart
+      partType: Foot
+      symmetry: Right
