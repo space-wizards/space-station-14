@@ -1086,3 +1086,31 @@
     staticRecipes:
     - MaterialSheetMeat
     - SheetPaper
+
+- type: entity
+  id: AdvancedUniformPrinter
+  parent: UniformPrinter
+  name: advanced uniform printer
+  description: Advanced uniform printer if you want to start your own clothing factory
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/uniform_printer_advanced.rsi
+  - type: Lathe
+    materialUseMultiplier: 0.8
+    timeMultiplier: 1.2
+  - type: LatheHeatProducing
+  - type: Machine
+    board: AdvancedUniformPrinterMachineCircuitboard
+    staticRecipes:
+      - ClothingUniformJumpsuitPyjamaSec
+      - ClothingUniformJumpsuitPyjamaCargo
+      - ClothingUniformJumpsuitPyjamaMedbay
+      - ClothingUniformJumpsuitPyjamaClown
+      - ClothingUniformJumpsuitPyjamaEngi
+      - ClothingUniformJumpsuitPyjamaSci
+      - ClothingHeadPyjamaSec
+      - ClothingHeadPyjamaCargo
+      - ClothingHeadPyjamaMedbay
+      - ClothingHeadPyjamaClown
+      - ClothingHeadPyjamaEngi
+      - ClothingHeadPyjamaSci

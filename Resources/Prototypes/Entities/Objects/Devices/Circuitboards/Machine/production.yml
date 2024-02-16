@@ -198,6 +198,19 @@
       Manipulator: 2
 
 - type: entity
+  id: AdvancedUniformPrinterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: uniform printer machine board
+  components:
+  - type: MachineBoard
+    prototype: AdvancedUniformPrinter
+    requirements:
+      MatterBin: 1
+      Manipulator: 2
+    materialRequirements:
+      Glass: 5
+
+- type: entity
   id: VaccinatorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: vaccinator machine board

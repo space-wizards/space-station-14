@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Undead Resomi for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "building",
+            "delays": [
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ]
+            ]
+        }
+    ]
+}

@@ -1057,3 +1057,99 @@
   completetime: 2
   materials:
     Cloth: 50
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitPyjamaSec
+  result: ClothingUniformJumpsuitPyjamaSec
+  completetime: 3.2
+  materials:
+    Cloth: 400
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitPyjamaCargo
+  result: ClothingUniformJumpsuitPyjamaCargo
+  completetime: 3.2
+  materials:
+    Cloth: 400
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitPyjamaMedbay
+  result: ClothingUniformJumpsuitPyjamaMedbay
+  completetime: 3.2
+  materials:
+    Cloth: 400
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitPyjamaClown
+  result: ClothingUniformJumpsuitPyjamaClown
+  completetime: 3.2
+  materials:
+    Cloth: 400
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitPyjamaEngi
+  result: ClothingUniformJumpsuitPyjamaEngi
+  completetime: 3.2
+  materials:
+    Cloth: 400
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitPyjamaSci
+  result: ClothingUniformJumpsuitPyjamaSci
+  completetime: 3.2
+  materials:
+    Cloth: 400
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaSec
+  result: ClothingHeadPyjamaSec
+  completetime: 1.5
+  materials:
+    Cloth: 200
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaCargo
+  result: ClothingHeadPyjamaCargo
+  completetime: 1.5
+  materials:
+    Cloth: 200
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaMedbay
+  result: ClothingHeadPyjamaMedbay
+  completetime: 1.5
+  materials:
+    Cloth: 200
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaClown
+  result: ClothingHeadPyjamaClown
+  completetime: 1.5
+  materials:
+    Cloth: 200
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaEngi
+  result: ClothingHeadPyjamaEngi
+  completetime: 1.5
+  materials:
+    Cloth: 200
+    Durathread: 50
+
+ type: latheRecipe
+  id: ClothingHeadPyjamaSci
+  result: ClothingHeadPyjamaSci
+  completetime: 1.5
+  materials:
+    Cloth: 200
+    Durathread: 50

@@ -547,6 +547,72 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadPyjamaSec
+  name: Security officer's pajamas hat
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamasec.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamasec.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaCargo
+  name: Cargo pajamas hat
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamacargo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamacargo.rsi
+
+- type: entity
+  parent: CClothingHeadBase
+  id: ClothingHeadPyjamaMedbay
+  name: Medbay pajamas hat
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamamedbay.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamamedbay.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaClown
+  name: Clown pajamas hat
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamaclown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamaclown.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaEngi
+  name: Engineer pajamas hat
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamaengi.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamaengi.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaSci
+  name: Scientist pajamas hat
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamasci.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamas_nt/pyjamasci.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadPyjamaSyndicatePink
   name: syndicate pink pyjama hat
   description: For keeping that traitor head of yours warm.

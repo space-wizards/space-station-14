@@ -881,6 +881,72 @@
     sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
 
 - type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSec
+  name: Security officer's pajamas
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamasec.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamasec.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaCargo
+  name: Cargo pajamas
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamacargo.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamacargo.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaMedbay
+  name: Medbay pajamas
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamamedbay.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamamedbay.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaClown
+  name: Clown pajamas
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamaclown.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamaclown.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaEngi
+  name: Engineer pajamas
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamaengi.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamaengi.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSci
+  name: Scientist pajamas
+  description: On the back there is a label "please do not forget what we pay you for".
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamasci.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamas_nt/pyjamasci.rsi
+  
+- type: entity
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitPyjamaSyndicateRed
   name: red syndicate pyjamas
