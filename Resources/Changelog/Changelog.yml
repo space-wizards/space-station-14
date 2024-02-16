@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Nukies don't start with agent ID anymore
-    type: Tweak
-  id: 5446
-  time: '2023-12-21T09:59:06.0000000+00:00'
-  url: null
 - author: Repo
   changes:
   - message: Mice can no longer spill containers.
@@ -3877,3 +3870,11 @@
   id: 5945
   time: '2024-02-16T04:03:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25304
+- author: Golinth
+  changes:
+  - message: Mindshields are no longer separate and appear as a border around job
+      icons on the SecHUD
+    type: Tweak
+  id: 5946
+  time: '2024-02-16T15:58:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25303
