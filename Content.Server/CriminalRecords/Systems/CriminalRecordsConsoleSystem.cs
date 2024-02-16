@@ -31,7 +31,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -253,21 +252,19 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     /// </summary>
     public void CheckNewIdentity(Entity<IdentityComponent> ent)
     {
-        var name = Identity.Name(ent, _entityManager);
-        var stations = _station.GetStations();
+        var name = Identity.Name(ent, EntityManager);
+        var xform = Transform(ent);
+        var station = _station.GetStationInMap(xform.MapID);
 
-        foreach (var station in stations)
+        if (station != null && _stationRecords.GetRecordByName(station.Value, name) is { } id)
         {
-            if (_stationRecords.GetRecordByName(station, name) is { } id)
+            if (_stationRecords.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station.Value),
+                    out var record))
             {
-                if (_stationRecords.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station),
-                        out var record))
+                if (record.Status != SecurityStatus.None)
                 {
-                    if (record.Status != SecurityStatus.None)
-                    {
-                        SetCriminalIcon(name, record.Status, ent);
-                        return;
-                    }
+                    SetCriminalIcon(name, record.Status, ent);
+                    return;
                 }
             }
         }

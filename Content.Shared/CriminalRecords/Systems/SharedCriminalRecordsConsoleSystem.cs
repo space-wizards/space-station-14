@@ -7,8 +7,6 @@ namespace Content.Shared.CriminalRecords.Systems;
 
 public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly EntityManager _entityManager = default!;
-
     /// <summary>
     /// Edits the criminal status of a specific identity if the entities true name is equal
     /// to the name of the edited criminal record.
@@ -19,7 +17,7 @@ public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var identity))
         {
-            if (!Identity.Name(uid, _entityManager).Equals(name))
+            if (!Identity.Name(uid, EntityManager).Equals(name))
                 continue;
 
             if (status == SecurityStatus.None)
