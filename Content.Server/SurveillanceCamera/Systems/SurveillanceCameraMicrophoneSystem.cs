@@ -20,7 +20,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenAttemptEvent>(CanListen);
 
         SubscribeLocalEvent<LocalChatSuccessEvent>(DuplicateLocalChatEventsIfInRange);
-        SubscribeLocalEvent<EntityWhisperedLocalEvent>(DuplicateWhisperEventsIfInRange);
+        SubscribeLocalEvent<WhisperSuccessfulEvent>(DuplicateWhisperEventsIfInRange);
     }
 
     private void DuplicateLocalChatEventsIfInRange(LocalChatSuccessEvent ev)
@@ -51,10 +51,10 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         }
     }
 
-    private void DuplicateWhisperEventsIfInRange(EntityWhisperedLocalEvent ev)
+    private void DuplicateWhisperEventsIfInRange(WhisperSuccessfulEvent ev)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var sourceXform = Transform(GetEntity(ev.Speaker));
+        var sourceXform = Transform(ev.Speaker);
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
         foreach (var (_, __, camera, xform) in EntityQuery<SurveillanceCameraMicrophoneComponent, ActiveListenerComponent, SurveillanceCameraComponent, TransformComponent>())
@@ -69,24 +69,13 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             EntityEventArgs outMsg;
 
             if (range < 0 || range > ev.MaxRange)
-                // Not in range
                 continue;
-
             if (range < ev.MinRange)
-            {
-                outMsg = new EntityWhisperedEvent(ev.Speaker, ev.AsName, ev.FontId, ev.FontSize, ev.IsBold, ev.AsColor,
-                    ev.MinRange, ev.Message);
-            }
-            else if (_interactionSystem.InRangeUnobstructed(_xforms.GetMapCoordinates(xform), GetEntity(ev.Speaker), ev.MaxRange, Shared.Physics.CollisionGroup.Opaque))
-            {
-                outMsg = new EntityWhisperedObfuscatedlyEvent(ev.Speaker, ev.AsName, ev.FontId, ev.FontSize, ev.IsBold, ev.AsColor,
-                    ev.MaxRange, ev.ObfuscatedMessage);
-            }
+               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), ev.AsName, ev.Message);
+            else if (_interactionSystem.InRangeUnobstructed(_xforms.GetMapCoordinates(xform), ev.Speaker, ev.MaxRange, Shared.Physics.CollisionGroup.Opaque))
+               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), ev.AsName, ev.ObfuscatedMessage);
             else
-            {
-                outMsg = new EntityWhisperedTotallyObfuscatedlyEvent(ev.Speaker, ev.FontId, ev.FontSize, ev.IsBold,
-                    ev.MaxRange, ev.ObfuscatedMessage);
-            }
+               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), "", ev.ObfuscatedMessage);
 
             foreach (var viewer in camera.ActiveViewers)
             {

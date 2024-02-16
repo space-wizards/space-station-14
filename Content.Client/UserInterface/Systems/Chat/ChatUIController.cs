@@ -205,24 +205,18 @@ public sealed class ChatUIController : UIController
         SubscribeNetworkEvent<LocalChatEvent>(OnLocalChatMessage);
         SubscribeNetworkEvent<SubtleChatEvent>(OnSubtleLocalChattedMessage);
         SubscribeNetworkEvent<BackgroundChatEvent>(OnBackgroundChatMessage);
-
-        SubscribeNetworkEvent<EntityWhisperedEvent>(OnWhisperedMessage);
-        SubscribeNetworkEvent<EntityWhisperedObfuscatedlyEvent>(OnWhisperedMessage);
-        SubscribeNetworkEvent<EntityWhisperedTotallyObfuscatedlyEvent>(OnWhisperedMessage);
-
-        SubscribeNetworkEvent<EmoteNetworkEvent>(OnEmotedMessage);
-
+        SubscribeNetworkEvent<WhisperEvent>(OnWhisperedMessage);
+        SubscribeNetworkEvent<EmoteEvent>(OnEmotedMessage);
         SubscribeNetworkEvent<RadioEvent>(OnRadioedMessage);
-
         SubscribeNetworkEvent<LoocEvent>(OnLoocMessage);
-
         SubscribeNetworkEvent<DeadChatEvent>(OnDeadChatMessage);
 
-        SubscribeNetworkEvent<LocalChatFailEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
-        SubscribeNetworkEvent<WhisperAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<LocalChatFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<WhisperFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<EmoteFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Emoter), ev.Reason));
         SubscribeNetworkEvent<LoocAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<RadioFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<DeadChatFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -952,17 +946,10 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnWhisperedMessage(EntityWhisperedEvent ev, EntitySessionEventArgs args)
+    private void OnWhisperedMessage(WhisperEvent ev, EntitySessionEventArgs args)
     {
-        var asName = ev.AsName;
-
-        if (ev.AsColor.Length > 0)
-        {
-            asName = $"[color={ev.AsColor}]{ev.AsName}[/color]";
-        }
-
         // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
-        var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", asName), ("message", $"[italic]{ev.Message}[/italic]"));
+        var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", GetNameColor(ev.AsName)), ("message", $"[italic]{ev.Message}[/italic]"));
 
         // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
         // WrappedMessage also should be shot.
@@ -975,49 +962,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnWhisperedMessage(EntityWhisperedObfuscatedlyEvent ev, EntitySessionEventArgs args)
-    {
-        var asName = ev.AsName;
-
-        if (ev.AsColor.Length > 0)
-        {
-            asName = $"[color={ev.AsColor}]{ev.AsName}[/color]";
-        }
-
-        // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
-        var message = FormattedMessage.EscapeText(ev.ObfuscatedMessage);
-
-        var wrappedObfuscatedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", asName), ("message", $"[italic]{message}[/italic]"));
-
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
-        var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.ObfuscatedMessage, wrappedObfuscatedMessage, ev.Speaker, null);
-
-        History.Add((_timing.CurTick, fakeChatMessage));
-        MessageAdded?.Invoke(fakeChatMessage);
-
-        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Whisper);
-        _replayRecording.RecordClientMessage(ev);
-    }
-
-    private void OnWhisperedMessage(EntityWhisperedTotallyObfuscatedlyEvent ev, EntitySessionEventArgs args)
-    {
-        // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
-        var message = FormattedMessage.EscapeText(ev.ObfuscatedMessage);
-        var wrappedUnknownMessage = Loc.GetString("chat-manager-entity-whisper-unknown-wrap-message", ("message", $"[italic]{message}[/italic]"));
-
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
-        var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.ObfuscatedMessage, wrappedUnknownMessage, ev.Speaker, null);
-
-        History.Add((_timing.CurTick, fakeChatMessage));
-        MessageAdded?.Invoke(fakeChatMessage);
-
-        AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Whisper);
-        _replayRecording.RecordClientMessage(ev);
-    }
-
-    private void OnEmotedMessage(EmoteNetworkEvent ev, EntitySessionEventArgs args)
+    private void OnEmotedMessage(EmoteEvent ev, EntitySessionEventArgs args)
     {
         // Wrapped message tech debt woo.
         var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",

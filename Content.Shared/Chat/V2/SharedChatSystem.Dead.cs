@@ -52,12 +52,12 @@ public sealed class AttemptDeadChatEvent : EntityEventArgs
 /// Raised when a character has failed to speak in Dead Chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DeadChatFailEvent : EntityEventArgs
+public sealed class DeadChatFailedEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Reason;
 
-    public DeadChatFailEvent(NetEntity speaker, string reason)
+    public DeadChatFailedEvent(NetEntity speaker, string reason)
     {
         Speaker = speaker;
         Reason = reason;

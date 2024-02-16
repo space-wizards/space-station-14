@@ -157,7 +157,7 @@ public sealed partial class ChatSystem
         var ev = new EmoteSuccessEvent(emote);
         RaiseLocalEvent(entityUid, ref ev);
 
-        var msgOut = new EmoteNetworkEvent(GetNetEntity(entityUid), name, message);
+        var msgOut = new EmoteEvent(GetNetEntity(entityUid), name, message);
 
         RaiseLocalEvent(entityUid, msgOut, true);
 

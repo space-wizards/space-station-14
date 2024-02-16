@@ -5,3 +5,4 @@ chat-system-emote-failed = You can't emote!
 chat-system-radio-failed = You can't use any radio channel!
 chat-system-radio-channel-failed = You can't talk on the {$channel} radio channel!
 chat-system-radio-channel-nonexistent = The {$channel} radio channel doesn't exist!
+chat-system-whisper-failed = You can't whisper!

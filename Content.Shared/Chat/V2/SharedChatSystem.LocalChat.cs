@@ -51,12 +51,12 @@ public sealed class AttemptLocalChatEvent : EntityEventArgs
 /// Raised when a character has failed to speak in local chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LocalChatFailEvent : EntityEventArgs
+public sealed class LocalChatFailedEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Reason;
 
-    public LocalChatFailEvent(NetEntity speaker, string reason)
+    public LocalChatFailedEvent(NetEntity speaker, string reason)
     {
         Speaker = speaker;
         Reason = reason;

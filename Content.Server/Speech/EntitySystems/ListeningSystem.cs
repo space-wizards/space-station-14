@@ -1,4 +1,4 @@
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.V2;
 
@@ -15,7 +15,7 @@ public sealed class ListeningSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<LocalChatEvent>(OnSpeak);
-        SubscribeLocalEvent<EntityWhisperedLocalEvent>(OnWhisper);
+        SubscribeLocalEvent<WhisperSuccessfulEvent>(OnWhisper);
     }
 
     private void OnSpeak(LocalChatEvent ev)
@@ -23,7 +23,7 @@ public sealed class ListeningSystem : EntitySystem
         PingListeners(GetEntity(ev.Speaker), ev.Message, "");
     }
 
-    private void OnWhisper(EntityWhisperedLocalEvent ev)
+    private void OnWhisper(WhisperSuccessfulEvent ev)
     {
         PingListeners(GetEntity(ev.Speaker), ev.Message, ev.ObfuscatedMessage, ev.MinRange);
     }

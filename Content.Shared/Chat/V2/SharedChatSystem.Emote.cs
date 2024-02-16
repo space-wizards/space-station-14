@@ -121,13 +121,13 @@ public sealed class AttemptEmoteEvent : EntityEventArgs
 /// Raised when a mob emotes.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EmoteNetworkEvent : EntityEventArgs
+public sealed class EmoteEvent : EntityEventArgs
 {
     public NetEntity Emoter;
     public string AsName;
     public readonly string Message;
 
-    public EmoteNetworkEvent(NetEntity emoter, string asName,string message)
+    public EmoteEvent(NetEntity emoter, string asName,string message)
     {
         Emoter = emoter;
         AsName = asName;

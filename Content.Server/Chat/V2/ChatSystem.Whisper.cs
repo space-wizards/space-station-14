@@ -22,7 +22,7 @@ public sealed partial class ChatSystem
 {
     public void InitializeWhisper()
     {
-        SubscribeNetworkEvent<WhisperAttemptedEvent>((msg, args) => { HandleAttemptWhisperEvent(args.SenderSession, msg.Speaker, msg.Message); });
+        SubscribeNetworkEvent<AttemptWhisperEvent>((msg, args) => { HandleAttemptWhisperEvent(args.SenderSession, msg.Speaker, msg.Message); });
     }
 
     private void HandleAttemptWhisperEvent(ICommonSession player, NetEntity entity, string message)
@@ -36,34 +36,26 @@ public sealed partial class ChatSystem
 
         if (IsRateLimited(entityUid, out var reason))
         {
-            RaiseNetworkEvent(new WhisperAttemptFailedEvent(entity, reason), player);
+            RaiseNetworkEvent(new WhisperFailedEvent(entity, reason), player);
 
             return;
         }
 
-        // Sanity check: if you can't chat you shouldn't be chatting.
-        if (!TryComp<WhisperableComponent>(entityUid, out var whisperable))
+        if (!TryComp<WhisperableComponent>(entityUid, out var comp))
         {
-            RaiseNetworkEvent(new WhisperAttemptFailedEvent(entity, "You can't whisper"), player);
+            RaiseNetworkEvent(new WhisperFailedEvent(entity, Loc.GetString("chat-system-whisper-failed")), player);
 
             return;
         }
 
-        var maxMessageLen = Configuration.GetCVar(CCVars.ChatMaxMessageLength);
-
-        if (message.Length > Configuration.GetCVar(CCVars.ChatMaxMessageLength))
+        if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(
-                new WhisperAttemptFailedEvent(
-                    entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", maxMessageLen))
-                    ),
-                player);
+            RaiseNetworkEvent(new WhisperFailedEvent( entity, Loc.GetString("chat-system-max-message-length") ), player);
 
             return;
         }
 
-        SendWhisperMessage(entityUid, message, whisperable.MinRange, whisperable.MaxRange);
+        SendWhisperMessage(entityUid, message, comp.MinRange, comp.MaxRange);
     }
 
     public bool TrySendWhisperMessage(EntityUid entityUid, string message, string asName = "")
@@ -77,7 +69,7 @@ public sealed partial class ChatSystem
     }
 
     /// <summary>
-    /// Send a chat in Local.
+    /// Send a whisper.
     /// </summary>
     /// <param name="entityUid">The entity who is chatting</param>
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
@@ -119,49 +111,27 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
 
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
-        var verb = GetSpeechVerb(entityUid, message);
         var name = FormattedMessage.EscapeText(asName);
-        var nameColor = "";
 
-        // color the name unless it's something like "the old man"
-        if (!TryComp<GrammarComponent>(entityUid, out var grammar) || grammar.ProperNoun == true)
-            nameColor = GetNameColor(name);
+        RaiseLocalEvent(new WhisperSuccessfulEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
 
-        var msgOut = new EntityWhisperedEvent(
+        var msgOut = new WhisperEvent(
             GetNetEntity(entityUid),
             name,
-            verb.FontId,
-            verb.FontSize,
-            verb.Bold,
-            nameColor,
-            minRange,
             message
         );
 
-        var obfuscatedMsgOut = new EntityWhisperedObfuscatedlyEvent(
+        var obfuscatedMsgOut = new WhisperEvent(
             GetNetEntity(entityUid),
             name,
-            verb.FontId,
-            verb.FontSize,
-            verb.Bold,
-            nameColor,
-            maxRange,
             obfuscatedMessage
         );
 
-        var totallyObfuscatedlyMsgOut = new EntityWhisperedTotallyObfuscatedlyEvent(
+        var totallyObfuscatedlyMsgOut = new WhisperEvent(
             GetNetEntity(entityUid),
-            verb.FontId,
-            verb.FontSize,
-            verb.Bold,
-            maxRange,
+            "",
             obfuscatedMessage
         );
-
-        // Make sure anything server-side hears about the message
-        RaiseLocalEvent(entityUid, msgOut);
-        RaiseLocalEvent(entityUid, obfuscatedMsgOut);
-        RaiseLocalEvent(entityUid, totallyObfuscatedlyMsgOut);
 
         var recipients = GetWhisperRecipients(entityUid, minRange, maxRange);
 
@@ -233,5 +203,29 @@ public sealed partial class ChatSystem
         }
 
         return (minRecipients, maxRecipients, maxRecipientsNoSight);
+    }
+}
+
+/// <summary>
+/// Raised when a character whispers.
+/// </summary>
+[Serializable]
+public sealed class WhisperSuccessfulEvent : EntityEventArgs
+{
+    public EntityUid Speaker;
+    public string AsName;
+    public readonly string Message;
+    public readonly string ObfuscatedMessage;
+    public float MinRange;
+    public float MaxRange;
+
+    public WhisperSuccessfulEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
+    {
+        Speaker = speaker;
+        AsName = asName;
+        Message = message;
+        ObfuscatedMessage = obfuscatedMessage;
+        MinRange = minRange;
+        MaxRange = maxRange;
     }
 }

@@ -27,21 +27,21 @@ public sealed partial class ChatSystem
 
         if (IsRateLimited(entityUid, out var reason))
         {
-            RaiseNetworkEvent(new DeadChatFailEvent(entity, reason), player);
+            RaiseNetworkEvent(new DeadChatFailedEvent(entity, reason), player);
 
             return;
         }
 
         if (!_admin.IsAdmin(entityUid) || !HasComp<GhostComponent>(entityUid) && !_mobState.IsDead(entityUid))
         {
-            RaiseNetworkEvent(new DeadChatFailEvent(entity, Loc.GetString("chat-system-dead-chat-failed")), player);
+            RaiseNetworkEvent(new DeadChatFailedEvent(entity, Loc.GetString("chat-system-dead-chat-failed")), player);
 
             return;
         }
 
         if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(new DeadChatFailEvent(entity, Loc.GetString("chat-system-max-message-length-exceeded-message")), player);
+            RaiseNetworkEvent(new DeadChatFailedEvent(entity, Loc.GetString("chat-system-max-message-length-exceeded-message")), player);
 
             return;
         }
