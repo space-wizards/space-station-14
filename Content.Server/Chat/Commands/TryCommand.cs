@@ -37,7 +37,7 @@ namespace Content.Server.Chat.Commands
                 return;
 
             var tryRandom = new Random().Next(0, 2) == 0; 
-            var trueFalse = tryRandom ? $"[color=#3d8c40](True)[/color]" : "[color=#a91409](False)[/color]";
+            var trueFalse = tryRandom ? $"[color=#3d8c40](Success!)[/color]" : "[color=#a91409](Unsuccess...)[/color]";
             var fullMessage = $"{message} {trueFalse}";
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>()
