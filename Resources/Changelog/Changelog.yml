@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrMelon
-  changes:
-  - message: Mice and other small creatures can no longer hurt Pun Pun or the Clown
-      by smashing them into tables.
-    type: Fix
-  id: 5450
-  time: '2023-12-21T15:18:26.0000000+00:00'
-  url: null
 - author: Boaz1111
   changes:
   - message: Added uranium munitions, a new T1 arsenal research.
@@ -3876,3 +3868,10 @@
   id: 5949
   time: '2024-02-16T23:37:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25276
+- author: Krunk
+  changes:
+  - message: Sound effects have been added for writing on paper.
+    type: Add
+  id: 5950
+  time: '2024-02-16T23:48:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25257
