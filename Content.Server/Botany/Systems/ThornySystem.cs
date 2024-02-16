@@ -8,13 +8,10 @@ using Content.Shared.Damage;
 using Content.Shared.Popups;
 using Content.Server.Administration.Logs;
 
-
 namespace Content.Server.Botany.Systems
-{
-    
+{ 
     public sealed class ThornySystem : EntitySystem
     {
-
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
@@ -23,15 +20,12 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
-
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<ThornyComponent, ContainerGettingInsertedAttemptEvent>(OnHandPickUp);
         }
-        private void OnHandPickUp(EntityUid uid, ThornyComponent component, ContainerGettingInsertedAttemptEvent args)
+        private void OnHandPickUp(Entity<ThornyComponent> entity, ref ContainerGettingInsertedAttemptEvent args)
         {
 
             bool hasImmunity = false;
@@ -49,15 +43,15 @@ namespace Content.Server.Botany.Systems
             }
 
             args.Cancel();
-            _audio.PlayPvs(component.Sound, uid);
-            _transform.SetCoordinates(uid, Transform(user).Coordinates);
-            _transform.AttachToGridOrMap(uid);
-            _throwing.TryThrow(uid, _random.NextVector2(), strength: component.ThrowStrength);
-            var tookDamage = _damageableSystem.TryChangeDamage(user, component.Damage, origin: user);
+            _audio.PlayPvs(entity.Comp.Sound, entity);
+            _transform.SetCoordinates(entity, Transform(user).Coordinates);
+            _transform.AttachToGridOrMap(entity);
+            _throwing.TryThrow(entity, _random.NextVector2(), strength: entity.Comp.ThrowStrength);
+            var tookDamage = _damageableSystem.TryChangeDamage(user, entity.Comp.Damage, origin: user);
 
             if (tookDamage != null)
             {
-                _popupSystem.PopupEntity("You burn your hand touching the nettle.", uid, user);
+                _popupSystem.PopupEntity("You burn your hand touching the nettle.", entity, user);
             }
         }
     }
