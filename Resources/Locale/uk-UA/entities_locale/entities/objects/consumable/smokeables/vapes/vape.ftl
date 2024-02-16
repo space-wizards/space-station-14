@@ -1,0 +1,3 @@
+ent-Vape = vape
+    .desc = []
+

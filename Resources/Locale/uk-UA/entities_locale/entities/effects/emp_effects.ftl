@@ -1,0 +1,4 @@
+ent-EffectEmpPulse = 
+
+ent-EffectEmpDisabled = 
+
