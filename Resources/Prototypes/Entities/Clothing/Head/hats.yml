@@ -568,7 +568,7 @@
     sprite: Clothing/Head/Hats/pyjamas_nt/pyjamacargo.rsi
 
 - type: entity
-  parent: CClothingHeadBase
+  parent: ClothingHeadBase
   id: ClothingHeadPyjamaMedbay
   name: Medbay pajamas hat
   description: On the back there is a label "please do not forget what we pay you for".

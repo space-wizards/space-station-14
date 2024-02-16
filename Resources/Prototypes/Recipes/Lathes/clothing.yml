@@ -1146,7 +1146,7 @@
     Cloth: 200
     Durathread: 50
 
- type: latheRecipe
+- type: latheRecipe
   id: ClothingHeadPyjamaSci
   result: ClothingHeadPyjamaSci
   completetime: 1.5

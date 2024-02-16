@@ -200,7 +200,7 @@
 - type: entity
   id: AdvancedUniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: uniform printer machine board
+  name: advanced uniform printer machine board
   components:
   - type: MachineBoard
     prototype: AdvancedUniformPrinter

@@ -141,9 +141,9 @@
 
 - type: technology
   id: AdvancedTailoring
-  name: research-technology-advanced-cleaning
+  name: research-technology-advanced-tailoring
   icon:
-    sprite: Structures/Machines/uniform_printer_advanced.rs
+    sprite: Structures/Machines/uniform_printer_advanced.rsi
     state: icon
   discipline: CivilianServices
   tier: 2
