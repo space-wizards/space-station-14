@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Damp rags can mop puddles again
-    type: Fix
-  - message: Syndie soap cleans evidence a little faster than other soap
-    type: Tweak
-  id: 5445
-  time: '2023-12-21T08:54:52.0000000+00:00'
-  url: null
 - author: Emisse
   changes:
   - message: Nukies don't start with agent ID anymore
@@ -3879,3 +3870,10 @@
   id: 5944
   time: '2024-02-16T00:26:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25297
+- author: MACMAN2003
+  changes:
+  - message: Thindows no longer duplicate glass when broken.
+    type: Fix
+  id: 5945
+  time: '2024-02-16T04:03:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25304
