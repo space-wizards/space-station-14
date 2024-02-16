@@ -441,6 +441,7 @@
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
+      - AdvancedUniformPrinterMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
