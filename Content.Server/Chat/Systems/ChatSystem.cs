@@ -580,7 +580,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
             ("entityName", name),
             ("entity", ent),
-            ("message", FormattedMessage.RemoveMarkup(action)));
+            ("message", action));
 
         if (checkEmote)
             TryEmoteChatInput(source, action);
