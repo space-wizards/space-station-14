@@ -14,9 +14,9 @@
 
 
 - type: entity
-  id: ActionAIViewer
-  name: See the station
-  description: View all the station.
+  id: ActionAICameraViewer
+  name: Camera interface
+  description: View camera of the station.
   noSpawn: true
   components:
   - type: InstantAction
@@ -24,4 +24,4 @@
     icon:
       sprite: Interface/Actions/actions_borg.rsi
       state: state-laws
-    event: !type:ToggleAiViewEvent
+    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }

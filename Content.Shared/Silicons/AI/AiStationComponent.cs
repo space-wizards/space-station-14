@@ -30,15 +30,15 @@ public sealed partial class ActionStationAIComponent : Component
     /// The sidebar action that toggles the IA view.
     /// </summary>
     [DataField]
-    public EntProtoId ViewAIAction = "ActionAIViewer";
+    public EntProtoId CameraMonitorAIAction = "ActionAICameraViewer";
     /// <summary>
     /// The action for toggling view.
     /// </summary>
     [DataField]
-    public EntityUid? ViewAIActionEntity;
+    public EntityUid? CameraMonitorAIActionEntity;
 }
 
-public sealed partial class ToggleAiViewEvent : InstantActionEvent
+public sealed partial class ToggleAICameraMonitorEvent : InstantActionEvent
 {
 
 }

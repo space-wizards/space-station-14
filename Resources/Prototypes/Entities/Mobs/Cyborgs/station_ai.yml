@@ -3,6 +3,8 @@
   parent: BaseMob
   name: StationAI
   description: A Station Slot for positronic brain
+  noSpawn: true
+  abstract: true
   components:
     - type: Appearance
     #- type: ItemSlots
@@ -37,11 +39,17 @@
       - Binary
       - Common
       - Science
-    #AI Part
+    #For UI
+    - type: IntrinsicUI
+      uis:
+        - key: enum.PowerMonitoringConsoleUiKey.Key
+          toggleAction: ActionAICameraViewer
     - type: UserInterface
       interfaces:
       - key: enum.SiliconLawsUiKey.Key
         type: SiliconLawBoundUserInterface
+      - key: enum.PowerMonitoringConsoleUiKey.Key
+        type: PowerMonitoringConsoleBoundUserInterface
     - type: SiliconLawBound
     - type: SiliconLawProvider
       laws: Crewsimov
@@ -60,6 +68,12 @@
       state: artifact_container_icon
     - type: PlaceableSurface
       isPlaceable: false
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        hv:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic

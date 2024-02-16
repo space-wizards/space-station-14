@@ -23,6 +23,7 @@ using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Wires;
+using Content.Shared.SurveillanceCamera;
 using Robust.Shared.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -51,6 +52,7 @@ public sealed partial class StationAISystem : SharedStationAISystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string ObserverPrototypeName = "AIObserver";
@@ -66,7 +68,7 @@ public sealed partial class StationAISystem : SharedStationAISystem
         SubscribeLocalEvent<ActionStationAIComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StationAIComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<StationAIComponent, MindRemovedMessage>(OnMindRemoved);
-        SubscribeLocalEvent<ActionStationAIComponent, ToggleAiViewEvent>(OnToggleAiView);
+        SubscribeLocalEvent<ActionStationAIComponent, ToggleAICameraMonitorEvent>(OnToggleAICameraMonitor);
 
 
 
@@ -74,13 +76,14 @@ public sealed partial class StationAISystem : SharedStationAISystem
 
     private void OnComponentShutdown(EntityUid uid, ActionStationAIComponent component, ComponentShutdown args)
     {
-        if (component.ViewAIActionEntity != null)
-            _actions.RemoveAction(uid, component.ViewAIActionEntity);
+        if (component.CameraMonitorAIActionEntity != null)
+            _actions.RemoveAction(uid, component.CameraMonitorAIActionEntity);
     }
 
     private void OnMapInit(EntityUid uid, ActionStationAIComponent component, MapInitEvent args)
     {
-        _actions.AddAction(uid, ref component.ViewAIActionEntity, component.ViewAIAction);
+        _actions.AddAction(uid, ref component.CameraMonitorAIActionEntity, component.CameraMonitorAIAction);
+
     }
 
     private void OnMindAdded(EntityUid uid, StationAIComponent component, MindAddedMessage args)
@@ -94,11 +97,6 @@ public sealed partial class StationAISystem : SharedStationAISystem
     }
 
 
-
-
-
-
-
     /// <summary>
     /// Activates the AI when a player occupies it
     /// </summary>
@@ -108,15 +106,24 @@ public sealed partial class StationAISystem : SharedStationAISystem
         //_access.SetAccessEnabled(uid, true);
         ///_appearance.SetData(uid, BorgVisuals.HasPlayer, true);
         Dirty(uid, component);
-    }
-
-    private void OnToggleAiView(EntityUid uid, ActionStationAIComponent component, ToggleAiViewEvent args)
-    {
-        //Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid); //Replace by other
         var position = Transform(uid).Coordinates;
         var observeruid = Spawn(ObserverPrototypeName, position);
-        _mind.TryGetMind(uid, out var mindId, out var mind);
-        _mind.TransferTo(mindId, observeruid, mind: mind);
+
+        _eye.SetTarget(uid, observeruid);
+    }
+
+    private void OnToggleAICameraMonitor(EntityUid uid, ActionStationAIComponent component, ToggleAICameraMonitorEvent args)
+    {
+        //Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid); //Replace by other
+        //var position = Transform(uid).Coordinates;
+        //var observeruid = Spawn(ObserverPrototypeName, position);
+        //_mind.TryGetMind(uid, out var mindId, out var mind);
+        //_mind.TransferTo(mindId, observeruid, mind: mind);
+        if (args.Handled || !TryComp<ActorComponent>(uid, out var actor))
+            return;
+        args.Handled = true;
+
+        _ui.TryToggleUi(uid, SurveillanceCameraMonitorUiKey.Key, actor.PlayerSession);
 
     }
 
