@@ -1,5 +1,6 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
+using Content.Server.CriminalRecords.Systems;
 using Content.Server.Humanoid;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
@@ -25,6 +26,7 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -37,6 +39,7 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, IdentityChangedEvent>(OnIdentityChanged);
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -62,6 +65,16 @@ public class IdentitySystem : SharedIdentitySystem
 
         QueueIdentityUpdate(uid);
         _container.Insert(ident, component.IdentityEntitySlot);
+    }
+
+    /// <summary>
+    ///     When the identity of a person is changed, searches for a criminal records console and compares the name of
+    ///     the new identity with a dictionary stored on the console. If the new name has a criminal status attached to it,
+    ///     the person will get the same criminal status until they change identity again.
+    /// </summary>
+    private void OnIdentityChanged(Entity<IdentityComponent> ent, ref IdentityChangedEvent args)
+    {
+        _criminalRecordsConsole.CheckNewIdentity(ent);
     }
 
     /// <summary>

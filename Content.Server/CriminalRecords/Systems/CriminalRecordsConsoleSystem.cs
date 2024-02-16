@@ -12,6 +12,9 @@ using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.IdentityManagement;
+using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Security.Components;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -28,6 +31,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -71,7 +75,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
-        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) && msg.Status == SecurityStatus.Suspected != (msg.Reason != null))
+        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) &&
+            msg.Status == SecurityStatus.Suspected != (msg.Reason != null))
             return;
 
         if (!CheckSelected(ent, msg.Session, out var mob, out var key))
@@ -105,7 +110,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         var name = RecordName(key.Value);
         var officer = Loc.GetString("criminal-records-console-unknown-officer");
-        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is {} fullName)
+        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
             officer = fullName;
 
         (string, object)[] args;
@@ -138,10 +143,10 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             // this is impossible
             _ => "not-wanted"
         };
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), ent.Comp.SecurityChannel, ent);
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
+            ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
-        UpdateCriminalNames(name,msg.Status);
         UpdateCriminalIdentity(name, msg.Status);
     }
 
@@ -189,7 +194,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
-        if (console.ActiveKey is {} id)
+        if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected
             var key = new StationRecordKey(id, owningStation.Value);
@@ -210,7 +215,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     {
         key = null;
         mob = null;
-        if (session.AttachedEntity is not {} user)
+        if (session.AttachedEntity is not { } user)
             return false;
 
         if (!_access.IsAllowed(user, ent))
@@ -219,11 +224,11 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return false;
         }
 
-        if (ent.Comp.ActiveKey is not {} id)
+        if (ent.Comp.ActiveKey is not { } id)
             return false;
 
         // checking the console's station since the user might be off-grid using on-grid console
-        if (_station.GetOwningStation(ent) is not {} station)
+        if (_station.GetOwningStation(ent) is not { } station)
             return false;
 
         key = new StationRecordKey(id, station);
@@ -240,5 +245,32 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return "";
 
         return record.Name;
+    }
+
+    /// <summary>
+    /// Checks if the new identity's name has a criminal record attached to it, and gives the entity the icon that
+    /// belongs to the status if it does.
+    /// </summary>
+    public void CheckNewIdentity(Entity<IdentityComponent> ent)
+    {
+        var name = Identity.Name(ent, _entityManager);
+        var stations = _station.GetStations();
+
+        foreach (var station in stations)
+        {
+            if (_stationRecords.GetRecordByName(station, name) is { } id)
+            {
+                if (_stationRecords.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station),
+                        out var record))
+                {
+                    if (record.Status != SecurityStatus.None)
+                    {
+                        SetCriminalIcon(name, record.Status, ent);
+                        return;
+                    }
+                }
+            }
+        }
+        RemComp<CriminalRecordComponent>(ent);
     }
 }

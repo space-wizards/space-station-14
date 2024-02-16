@@ -1,4 +1,3 @@
-using Content.Shared.CriminalRecords.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Security;
@@ -31,24 +30,6 @@ public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Updates the name list stored on every criminal records computer.
-    /// </summary>
-    public void UpdateCriminalNames(string name, SecurityStatus status)
-    {
-        var query = EntityQueryEnumerator<CriminalRecordsConsoleComponent>();
-
-        while (query.MoveNext(out var uid, out var recordsConsole))
-        {
-            if (status == SecurityStatus.None)
-                recordsConsole.Criminals.Remove(name);
-            else if (!recordsConsole.Criminals.TryAdd(name, status))
-                recordsConsole.Criminals[name] = status;
-            Dirty(uid, recordsConsole);
-        }
-    }
-
-
-    /// <summary>
     /// Decides the icon that should be displayed on the entity based on the security status
     /// </summary>
     public void SetCriminalIcon(string name, SecurityStatus status, EntityUid characterUid)
@@ -64,23 +45,5 @@ public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
             _ => record.StatusIcon
         };
         Dirty(characterUid, record);
-    }
-
-    /// <summary>
-    /// Checks if the new identity's name has a criminal record attached to it, and gives the entity the icon that
-    /// belongs to the status if it does.
-    /// </summary>
-    public void CheckNewIdentity(Entity<IdentityComponent> ent)
-    {
-        var query = EntityQueryEnumerator<CriminalRecordsConsoleComponent>();
-        var name = Identity.Name(ent, _entityManager);
-        while (query.MoveNext(out var uid, out var criminalRecordsConsole))
-        {
-            if (criminalRecordsConsole.Criminals.TryGetValue(name, out var criminal))
-                SetCriminalIcon(name, criminal,ent);
-            else
-                RemComp<CriminalRecordComponent>(ent);
-            break;
-        }
     }
 }
