@@ -382,18 +382,6 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealStructureObjective
-  id: VehicleSecwayStealObjective
-  components:
-  - type: NotJobRequirement
-    job: SecurityOfficer
-  - type: StealCondition
-    stealGroup: VehicleSecway
-  - type: Objective
-    difficulty: 1
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealStructureObjective
   id: ChemDispenserStealObjective
   components:
   - type: NotJobRequirement

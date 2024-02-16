@@ -69,3 +69,4 @@ salvage-map-proto-AsteroidBase = Asteroid Base
 salvage-map-proto-RuinCargoBase = Ruined Cargo Storage
 salvage-map-proto-SecurityChunk = Security Department Chunk
 salvage-map-proto-EngineeringChunk = Engineering Department Chunk
+salvage-map-proto-OutpostArm = Overrun Outpost Arm

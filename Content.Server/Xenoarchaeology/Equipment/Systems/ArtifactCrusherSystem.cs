@@ -106,7 +106,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
             if (!TryComp<BodyComponent>(contained, out var body))
                 Del(contained);
 
-            var gibs = _body.GibBody(contained, body: body, gibOrgans: true, deleteBrain: true);
+            var gibs = _body.GibBody(contained, body: body, gibOrgans: true);
             foreach (var gib in gibs)
             {
                 ContainerSystem.Insert((gib, null, null, null), crusher.OutputContainer);

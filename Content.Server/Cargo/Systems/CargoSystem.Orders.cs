@@ -170,6 +170,33 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
+            var tradeDestination = TryFulfillOrder(stationData, order, orderDatabase);
+
+            if (tradeDestination == null)
+            {
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-unfulfilled"));
+                PlayDenySound(uid, component);
+                return;
+            }
+
+            _idCardSystem.TryFindIdCard(player, out var idCard);
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            order.SetApproverData(idCard.Comp?.FullName, idCard.Comp?.JobTitle);
+            _audio.PlayPvs(component.ConfirmSound, uid);
+
+            ConsolePopup(args.Session, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(tradeDestination.Value).EntityName)));
+
+            // Log order approval
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
+
+            orderDatabase.Orders.Remove(order);
+            DeductFunds(bank, cost);
+            UpdateOrders(station.Value, orderDatabase);
+        }
+
+        private EntityUid? TryFulfillOrder(StationDataComponent stationData, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
+        {
             // No slots at the trade station
             _listEnts.Clear();
             GetTradeStations(stationData, ref _listEnts);
@@ -198,27 +225,7 @@ namespace Content.Server.Cargo.Systems
                     break;
             }
 
-            if (tradeDestination == null)
-            {
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-unfulfilled"));
-                PlayDenySound(uid, component);
-                return;
-            }
-
-            _idCardSystem.TryFindIdCard(player, out var idCard);
-            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
-            order.SetApproverData(idCard.Comp?.FullName, idCard.Comp?.JobTitle);
-            _audio.PlayPvs(component.ConfirmSound, uid);
-
-            ConsolePopup(args.Session, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(tradeDestination.Value).EntityName)));
-
-            // Log order approval
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
-
-            orderDatabase.Orders.Remove(order);
-            DeductFunds(bank, cost);
-            UpdateOrders(station.Value, orderDatabase);
+            return tradeDestination;
         }
 
         private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
@@ -370,7 +377,8 @@ namespace Content.Server.Cargo.Systems
             string sender,
             string description,
             string dest,
-            StationCargoOrderDatabaseComponent component
+            StationCargoOrderDatabaseComponent component,
+            StationDataComponent stationData
         )
         {
             DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(spawnId));
@@ -386,7 +394,7 @@ namespace Content.Server.Cargo.Systems
                 $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
 
             // Add it to the list
-            return TryAddOrder(dbUid, order, component);
+            return TryAddOrder(dbUid, order, component) && TryFulfillOrder(stationData, order, component).HasValue;
         }
 
         private bool TryAddOrder(EntityUid dbUid, CargoOrderData data, StationCargoOrderDatabaseComponent component)

@@ -27,11 +27,18 @@ namespace Content.Server.Labels
             base.Initialize();
 
             SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnLabelCompMapInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
+        }
+
+        private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
+        {
+            if (!string.IsNullOrEmpty(component.CurrentLabel))
+                component.CurrentLabel = Loc.GetString(component.CurrentLabel);
         }
 
         /// <summary>

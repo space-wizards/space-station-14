@@ -262,13 +262,20 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
+            component.Health -= (_random.Next(3, 5) * 10);
+
+            if (!component.Harvest)
+            {
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-early-sample"), args.User);
+                return;
+            }
+
             component.Seed.Unique = false;
             var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-            component.Health -= (_random.Next(3, 5) * 10);
 
             if (component.Seed != null && component.Seed.CanScream)
             {

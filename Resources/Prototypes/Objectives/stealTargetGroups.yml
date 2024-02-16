@@ -287,13 +287,6 @@
     state: icon
 
 - type: stealTargetGroup
-  id: VehicleSecway
-  name: secway
-  sprite:
-    sprite: Objects/Vehicles/secway.rsi
-    state: icon
-
-- type: stealTargetGroup
   id: ChemDispenser
   name: chemical dispenser
   sprite:

@@ -224,7 +224,32 @@
   components:
   - type: Stack
     lingering: true
-
+- type: entity
+  parent: BaseHealingItem
+  id: Tourniquet
+  name: tourniquet
+  description: Stops bleeding! Hopefully.
+  components:
+    - type: Tag
+      tags:
+        - SecBeltEquip
+    - type: Sprite
+      state: tourniquet
+    - type: Healing
+      damageContainers:
+        - Biological
+      damage:
+        groups:
+          Brute: 5 # Tourniquets HURT!
+        types:
+          Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
+      bloodlossModifier: -10 # Tourniquets stop bleeding
+      delay: 0.5
+      healingBeginSound:
+        path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      healingEndSound:
+        path: "/Audio/Items/Medical/brutepack_end.ogg"
+        
 - type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.

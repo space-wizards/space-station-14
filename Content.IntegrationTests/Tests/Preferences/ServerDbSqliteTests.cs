@@ -56,6 +56,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,
+                SpawnPriorityPreference.None,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
