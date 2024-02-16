@@ -1,6 +1,5 @@
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Radio;
-using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -44,11 +43,4 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// </summary>
     [DataField]
     public uint MaxStringLength = 256;
-
-    /// <summary>
-    /// Dictionary of names and their associated wanted status.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Dictionary<string, SecurityStatus> Criminals = new ();
-
 }
