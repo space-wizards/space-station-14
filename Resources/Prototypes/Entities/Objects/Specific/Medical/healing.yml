@@ -348,7 +348,6 @@
   - type: Pill
     pillType: 15
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill16
   - type: Label
     currentLabel: dexalin 10u
@@ -381,7 +380,6 @@
   - type: Pill
     pillType: 9
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill10
   - type: Label
     currentLabel: dylovene 10u
@@ -414,7 +412,6 @@
   - type: Pill
     pillType: 16
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill17
   - type: Label
     currentLabel: hyronalin 10u
@@ -447,7 +444,6 @@
   - type: Pill
     pillType: 13
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill14
   - type: Label
     currentLabel: iron 10u
@@ -467,7 +463,6 @@
   - type: Pill
     pillType: 12
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill13
   - type: Label
     currentLabel: copper 10u
@@ -513,7 +508,6 @@
   - type: Pill
     pillType: 3
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill4
   - type: Label
     currentLabel: kelotane 10u
@@ -546,7 +540,6 @@
   - type: Pill
     pillType: 7
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill8
   - type: Label
     currentLabel: dermaline 10u
@@ -592,7 +585,6 @@
   - type: Pill
     pillType: 2
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill3
   - type: Label
     currentLabel: tricordrazine 10u
@@ -625,7 +617,6 @@
   - type: Pill
     pillType: 4
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill5
   - type: Label
     currentLabel: bicaridine 10u
@@ -658,7 +649,6 @@
   - type: Pill
     pillType: 20
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill21
   - type: Label
     currentLabel: charcoal 10u
