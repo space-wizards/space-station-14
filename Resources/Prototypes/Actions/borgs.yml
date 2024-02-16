@@ -11,3 +11,17 @@
       state: state-laws
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
+
+
+- type: entity
+  id: ActionAIViewer
+  name: See the station
+  description: View all the station.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-laws
+    event: !type:ToggleAiViewEvent

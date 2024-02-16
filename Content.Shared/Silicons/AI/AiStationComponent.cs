@@ -2,8 +2,10 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Content.Shared.Actions;
+using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Silicons.Borgs.Components;
+namespace Content.Shared.Silicons.AI;
 
 /// <summary>
 /// This is used for the core body of a borg. This manages a borg's
@@ -11,31 +13,33 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// for borg logic.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedStationAISystem)), AutoGenerateComponentState]
-public sealed partial class AIChassisComponent : Component
+public sealed partial class StationAIComponent : Component
 {
     /// <summary>
     /// Whether or not the AI is activated
     /// </summary>
     [DataField("activated"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Activated;
-
-    #region Brain
-    /// <summary>
-    /// A whitelist for which entities count as valid brains
-    /// </summary>
-    [DataField("brainWhitelist")]
-    public EntityWhitelist? BrainWhitelist;
-
-    /// <summary>
-    /// The container ID for the brain
-    /// </summary>
-    [DataField("brainContainerId")]
-    public string BrainContainerId = "borg_brain";
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public ContainerSlot BrainContainer = default!;
-
-
-    public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
-    #endregion
 }
+
+
+[RegisterComponent, Access(typeof(SharedStationAISystem))]
+public sealed partial class ActionStationAIComponent : Component
+{
+    /// <summary>
+    /// The sidebar action that toggles the IA view.
+    /// </summary>
+    [DataField]
+    public EntProtoId ViewAIAction = "ActionAIViewer";
+    /// <summary>
+    /// The action for toggling view.
+    /// </summary>
+    [DataField]
+    public EntityUid? ViewAIActionEntity;
+}
+
+public sealed partial class ToggleAiViewEvent : InstantActionEvent
+{
+
+}
+

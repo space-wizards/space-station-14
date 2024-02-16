@@ -1,64 +1,11 @@
 - type: entity
   id: StationIA
-  parent: [BaseStructureDynamic, BaseMachinePowered]
+  parent: BaseMob
   name: StationAI
   description: A Station Slot for positronic brain
   components:
-    - type: Transform
-      noRot: true
-    - type: Sprite
-      drawdepth: Objects
-      sprite: Structures/Storage/Crates/artifact.rsi
-      layers:
-      - state: artifact_container
-        map: ["enum.StorageVisualLayers.Base"]
-      - state: artifact_container_door
-        map: ["enum.StorageVisualLayers.Door"]
-      - state: locked
-        map: ["enum.StorageVisualLayers.Lock"]
-        shader: unshaded
-    - type: InteractionOutline
-    - type: Physics
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.45
-          density: 50
-          mask:
-          - MachineMask
-          layer:
-          - MachineLayer
-    - type: Icon
-      sprite: Structures/Storage/Crates/artifact.rsi
-      state: artifact_container_icon
-    - type: PlaceableSurface
-      isPlaceable: false
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-            - !type:EmptyContainersBehaviour
-              containers:
-              - borg_brain
     - type: Appearance
-    - type: EntityStorageVisuals
-      stateDoorOpen: artifact_container_open
-      stateDoorClosed: artifact_container_door
     #- type: ItemSlots
-    - type: StaticPrice
-      price: 25000
 
     - type: NameIdentifier
       group: Silicon
@@ -71,15 +18,9 @@
     #  access: [["Command"]]
     #- type: Lock
     #- type: ResistLocker
-    #Machine
-    - type: WiresPanel
-    - type: ContainerContainer
-      containers:
-        borg_brain: !type:ContainerSlot { }
     #Player Component
     - type: Examiner
     - type: UnblockableSpeech
-    - type: BlockMovement
     - type: Speech
       speechVerb: Robotic
       speechSounds: Pai
@@ -106,9 +47,59 @@
       laws: Crewsimov
     - type: EmagSiliconLaw
     - type: IonStormTarget
-    - type: AIChassis
+    - type: ActionStationAI
 
-
+- type: entity
+  parent: [StationIA, BaseStructureDynamic, BaseMachinePowered]
+  id: AICore
+  name: AI-Procesor
+  description: A huge inteligence
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/artifact.rsi
+      state: artifact_container_icon
+    - type: PlaceableSurface
+      isPlaceable: false
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: StaticPrice
+      price: 25000
+    - type: Transform
+      noRot: true
+    - type: Sprite
+      drawdepth: Objects
+      sprite: Structures/Storage/Crates/artifact.rsi
+      layers:
+      - state: artifact_container
+        map: ["enum.StorageVisualLayers.Base"]
+    - type: InteractionOutline
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 50
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+    - type: WiresPanel
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: StationAI
+    #Need to stop movement
 
 - type: entity
   parent: BaseMob

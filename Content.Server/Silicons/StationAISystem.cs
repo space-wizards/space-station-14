@@ -18,10 +18,12 @@ using Content.Shared.Pointing;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
+using Content.Shared.Silicons.AI;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Wires;
+using Robust.Shared.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -48,126 +50,59 @@ public sealed partial class StationAISystem : SharedStationAISystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    [ValidatePrototypeId<JobPrototype>]
-    public const string BorgJobId = "Borg";
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string ObserverPrototypeName = "AIObserver";
+
+
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AIChassisComponent, AfterInteractUsingEvent>(OnChassisInteractUsing);
-        SubscribeLocalEvent<AIChassisComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<AIChassisComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ActionStationAIComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<ActionStationAIComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<StationAIComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<StationAIComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ActionStationAIComponent, ToggleAiViewEvent>(OnToggleAiView);
 
-        //SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
+
 
     }
 
-
-    private void OnChassisInteractUsing(EntityUid uid, AIChassisComponent component, AfterInteractUsingEvent args)
+    private void OnComponentShutdown(EntityUid uid, ActionStationAIComponent component, ComponentShutdown args)
     {
-        if (!args.CanReach || args.Handled || uid == args.User)
-            return;
-
-        var used = args.Used;
-        TryComp<BorgBrainComponent>(used, out var brain);
-
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
-        {
-            if (brain != null)
-            {
-                Popup.PopupEntity(Loc.GetString("borg-panel-not-open"), uid, args.User);
-            }
-            return;
-        }
-
-        if (component.BrainEntity == null &&
-            brain != null &&
-            component.BrainWhitelist?.IsValid(used) != false)
-        {
-            if (_mind.TryGetMind(used, out _, out var mind) && mind.Session != null)
-            {
-                if (!CanPlayerBeBorged(mind.Session))
-                {
-                    Popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), used, args.User);
-                    return;
-                }
-            }
-
-            _container.Insert(used, component.BrainContainer);
-            _adminLog.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(args.User):player} installed brain {ToPrettyString(used)} into StationAI {ToPrettyString(uid)}");
-            args.Handled = true;
-        }
+        if (component.ViewAIActionEntity != null)
+            _actions.RemoveAction(uid, component.ViewAIActionEntity);
     }
 
-    // todo: consider transferring over the ghost role? managing that might suck.
-    protected override void OnInserted(EntityUid uid, AIChassisComponent component, EntInsertedIntoContainerMessage args)
+    private void OnMapInit(EntityUid uid, ActionStationAIComponent component, MapInitEvent args)
     {
-        base.OnInserted(uid, component, args);
-
-        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind))
-        {
-            _mind.TransferTo(mindId, uid, mind: mind);
-        }
+        _actions.AddAction(uid, ref component.ViewAIActionEntity, component.ViewAIAction);
     }
 
-    protected override void OnRemoved(EntityUid uid, AIChassisComponent component, EntRemovedFromContainerMessage args)
-    {
-        base.OnRemoved(uid, component, args);
-
-        if (HasComp<BorgBrainComponent>(args.Entity) &
-            _mind.TryGetMind(uid, out var mindId, out var mind))
-        {
-            _mind.TransferTo(mindId, args.Entity, mind: mind);
-        }
-    }
-
-    private void OnMindAdded(EntityUid uid, AIChassisComponent component, MindAddedMessage args)
+    private void OnMindAdded(EntityUid uid, StationAIComponent component, MindAddedMessage args)
     {
         BorgActivate(uid, component);
     }
 
-    private void OnMindRemoved(EntityUid uid, AIChassisComponent component, MindRemovedMessage args)
+    private void OnMindRemoved(EntityUid uid, StationAIComponent component, MindRemovedMessage args)
     {
         BorgDeactivate(uid, component);
     }
 
 
 
-    private void OnBrainMindAdded(EntityUid uid, BorgBrainComponent component, MindAddedMessage args)
-    {
-        if (!Container.TryGetOuterContainer(uid, Transform(uid), out var container))
-            return;
 
-        var containerEnt = container.Owner;
-
-        if (!TryComp<AIChassisComponent>(containerEnt, out var chassisComponent) ||
-            container.ID != chassisComponent.BrainContainerId)
-            return;
-
-        if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.Session == null)
-            return;
-
-        if (!CanPlayerBeBorged(mind.Session))
-        {
-            Popup.PopupEntity(Loc.GetString("borg-player-not-allowed-eject"), uid);
-            Container.RemoveEntity(containerEnt, uid);
-            _throwing.TryThrow(uid, _random.NextVector2() * 5, 5f);
-            return;
-        }
-
-        _mind.TransferTo(mindId, containerEnt, mind: mind);
-    }
 
 
 
     /// <summary>
-    /// Activates a borg when a player occupies it
+    /// Activates the AI when a player occupies it
     /// </summary>
-    public void BorgActivate(EntityUid uid, AIChassisComponent component)
+    public void BorgActivate(EntityUid uid, StationAIComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
         //_access.SetAccessEnabled(uid, true);
@@ -175,10 +110,20 @@ public sealed partial class StationAISystem : SharedStationAISystem
         Dirty(uid, component);
     }
 
+    private void OnToggleAiView(EntityUid uid, ActionStationAIComponent component, ToggleAiViewEvent args)
+    {
+        //Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid); //Replace by other
+        var position = Transform(uid).Coordinates;
+        var observeruid = Spawn(ObserverPrototypeName, position);
+        _mind.TryGetMind(uid, out var mindId, out var mind);
+        _mind.TransferTo(mindId, observeruid, mind: mind);
+
+    }
+
     /// <summary>
-    /// Deactivates a borg when a player leaves it.
+    /// Deactivates the AI when a player leaves it.
     /// </summary>
-    public void BorgDeactivate(EntityUid uid, AIChassisComponent component)
+    public void BorgDeactivate(EntityUid uid, StationAIComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid);
         ///_access.SetAccessEnabled(uid, false);
@@ -186,15 +131,4 @@ public sealed partial class StationAISystem : SharedStationAISystem
         Dirty(uid, component);
     }
 
-    /// <summary>
-    /// Checks that a player has fulfilled the requirements for the borg job.
-    /// If they don't have enough hours, they cannot be placed into a chassis.
-    /// </summary>
-    public bool CanPlayerBeBorged(ICommonSession session)
-    {
-        if (_banManager.GetJobBans(session.UserId)?.Contains(BorgJobId) == true)
-            return false;
-
-        return true;
-    }
 }
