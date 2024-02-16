@@ -37,9 +37,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 executions = stack.Count;
             }
 
-            for (var execution = 0; execution < executions; execution++)
+            foreach (var (entityId, minMax) in Spawn)
             {
-                foreach (var (entityId, minMax) in Spawn)
+                for (var execution = 0; execution < executions; execution++)
                 {
                     var count = minMax.Min >= minMax.Max
                         ? minMax.Min
