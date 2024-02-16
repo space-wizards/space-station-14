@@ -175,18 +175,24 @@ namespace Content.Server.Explosion.EntitySystems
             var x = (int) pos.X;
             var y = (int) pos.Y;
             var posText = $"({x}, {y})";
-
-            var critMessage = Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
-            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
-
+            
             if (!TryComp<MobStateComponent>(implanted.ImplantedEntity, out var mobstate))
                 return;
 
-            // Sends a message to the radio channel specified by the implant
-            if (mobstate.CurrentState == MobState.Critical)
-                _chat.SendRadioMessage(uid, critMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel));
-            if (mobstate.CurrentState == MobState.Dead)
-                _chat.SendRadioMessage(uid, deathMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel));
+            switch (mobstate.CurrentState)
+            {
+                // Sends a message to the radio channel specified by the implant
+                case MobState.Critical:
+                    _chat.SendRadioMessage(uid, Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText)), _prototypeManager.Index(component.RadioChannel));
+                    break;
+                case MobState.Dead:
+                    _chat.SendRadioMessage(uid, Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText)), _prototypeManager.Index(component.RadioChannel));
+                    break;
+                case MobState.Invalid:
+                case MobState.Alive:
+                default:
+                    break;
+            }
 
             args.Handled = true;
         }

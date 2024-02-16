@@ -73,8 +73,8 @@ public sealed partial class SalvageSystem
 
         // We'll assume they probably want it on Engineering.
         // So uh
-        // Don't go on a expedition if you don't have the right channel access :nods:
-        _chat.SendRadioMessage(_mapManager.GetMapEntityId(mapId), text, _prototypeManager.Index<RadioChannelPrototype>("Engineering"), allowList: Filter.BroadcastMap(mapId));
+        // Don't go on a expedition if you don't have an Engineering radio :godo:
+        _chat.SendRadioMessageToTargets(_mapManager.GetMapEntityId(mapId), text, _prototypeManager.Index<RadioChannelPrototype>("Engineering"), Filter.BroadcastMap(mapId));
     }
 
     private void OnFTLRequest(ref FTLRequestEvent ev)

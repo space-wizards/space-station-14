@@ -82,7 +82,7 @@ public sealed partial class RadioDevicesSystem
             return; // no feedback loops please.
 
         if (_recentlySent.Add((args.Message, args.Source)))
-            _chat.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), device: uid);
+            _chat.SendRadioMessageViaDevice(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), uid);
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)

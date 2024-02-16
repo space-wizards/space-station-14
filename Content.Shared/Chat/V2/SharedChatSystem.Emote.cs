@@ -12,7 +12,7 @@ public partial class SharedChatSystem
 {
     private FrozenDictionary<string, EmotePrototype> _wordEmoteDict = FrozenDictionary<string, EmotePrototype>.Empty;
 
-    public void InitializeEmote()
+    private void InitializeEmote()
     {
         _prototype.PrototypesReloaded += OnPrototypesReloaded;
         CacheEmotes();
@@ -20,8 +20,8 @@ public partial class SharedChatSystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        if (args.WasModified<EmotePrototype>()) {}
-        CacheEmotes();
+        if (args.WasModified<EmotePrototype>())
+            CacheEmotes();
     }
 
     private void CacheEmotes()
@@ -33,7 +33,7 @@ public partial class SharedChatSystem
             foreach (var word in emote.ChatTriggers)
             {
                 var lowerWord = word.ToLower();
-                if (dict.TryGetValue(lowerWord, out var value))
+                if (dict.TryGetValue(lowerWord, out _))
                 {
                     continue;
                 }
@@ -45,33 +45,28 @@ public partial class SharedChatSystem
         _wordEmoteDict = dict.ToFrozenDictionary();
     }
 
-    public EmotePrototype? GetEmote(string name)
+    protected EmotePrototype? GetEmote(string name)
     {
         return !_wordEmoteDict.TryGetValue(name.ToLower(), out var emote) ? null : emote;
     }
 
     public bool SendEmoteMessage(EntityUid emoter, string message, [NotNullWhen(false)] out string? reason)
     {
-        // Sanity check: you might not be able to emote (although this would be unlikely?)
         if (!TryComp<EmoteableComponent>(emoter, out _))
         {
-            // TODO: Add locstring
-            reason = "You can't emote";
+            reason = Loc.GetString("chat-system-emote-failed");
 
             return false;
         }
 
-        var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
-
-        if (message.Length > messageMaxLen)
+        if (message.Length > MaxChatMessageLength)
         {
-            reason = Loc.GetString("chat-manager-max-message-length",
-                ("maxMessageLength", messageMaxLen));
+            reason = Loc.GetString("chat-system-max-message-length");
 
             return false;
         }
 
-        RaiseNetworkEvent(new EmoteAttemptedEvent(GetNetEntity(emoter), message));
+        RaiseNetworkEvent(new AttemptEmoteEvent(GetNetEntity(emoter), message));
 
         reason = null;
 
@@ -110,12 +105,12 @@ public partial class SharedChatSystem
 /// Raised when a mob tries to emote.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EmoteAttemptedEvent : EntityEventArgs
+public sealed class AttemptEmoteEvent : EntityEventArgs
 {
     public NetEntity Emoter;
     public readonly string Message;
 
-    public EmoteAttemptedEvent(NetEntity emoter, string message)
+    public AttemptEmoteEvent(NetEntity emoter, string message)
     {
         Emoter = emoter;
         Message = message;
@@ -126,19 +121,17 @@ public sealed class EmoteAttemptedEvent : EntityEventArgs
 /// Raised when a mob emotes.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EntityEmotedEvent : EntityEventArgs
+public sealed class EmoteNetworkEvent : EntityEventArgs
 {
     public NetEntity Emoter;
     public string AsName;
     public readonly string Message;
-    public float Range;
 
-    public EntityEmotedEvent(NetEntity emoter, string asName,string message, float range)
+    public EmoteNetworkEvent(NetEntity emoter, string asName,string message)
     {
         Emoter = emoter;
         AsName = asName;
         Message = message;
-        Range = range;
     }
 }
 
@@ -146,12 +139,12 @@ public sealed class EntityEmotedEvent : EntityEventArgs
 /// Raised when a mob has failed to emote.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EmoteAttemptFailedEvent : EntityEventArgs
+public sealed class EmoteFailedEvent : EntityEventArgs
 {
     public NetEntity Emoter;
     public readonly string Reason;
 
-    public EmoteAttemptFailedEvent(NetEntity emoter, string reason)
+    public EmoteFailedEvent(NetEntity emoter, string reason)
     {
         Emoter = emoter;
         Reason = reason;

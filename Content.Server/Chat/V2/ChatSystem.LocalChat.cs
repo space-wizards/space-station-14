@@ -130,7 +130,7 @@ public sealed partial class ChatSystem
             range
         ), true);
 
-        var msgOut = new LocalChatNetworkEvent(
+        var msgOut = new LocalChatEvent(
             GetNetEntity(entityUid),
             name,
             message
@@ -142,12 +142,12 @@ public sealed partial class ChatSystem
         }
 
         _replay.RecordServerMessage(msgOut);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(entityUid):user} as {asName}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Local chat from {ToPrettyString(entityUid):user} as {asName}: {message}");
     }
 
     public void SendSubtleChatMessage(ICommonSession source, ICommonSession target, string message)
     {
-        var msgOut = new SubtleChatNetworkEvent(GetNetEntity(EntityUid.Invalid),message);
+        var msgOut = new SubtleChatEvent(GetNetEntity(EntityUid.Invalid),message);
 
         RaiseNetworkEvent(msgOut, target);
 
@@ -156,7 +156,7 @@ public sealed partial class ChatSystem
 
     public void SendBackgroundChatMessage(EntityUid source, string message, string asName = "")
     {
-        RaiseNetworkEvent(new BackgroundChatNetworkEvent(GetNetEntity(EntityUid.Invalid), message, asName));
+        RaiseNetworkEvent(new BackgroundChatEvent(GetNetEntity(EntityUid.Invalid), message, asName));
     }
 
     private List<ICommonSession> GetLocalChatRecipients(EntityUid source, float range)
@@ -186,5 +186,25 @@ public sealed partial class ChatSystem
         }
 
         return recipients;
+    }
+}
+
+/// <summary>
+/// A server-only event that is fired when an entity chats in local chat.
+/// </summary>
+[Serializable]
+public sealed class LocalChatSuccessEvent : EntityEventArgs
+{
+    public NetEntity Speaker;
+    public string AsName;
+    public readonly string Message;
+    public float Range;
+
+    public LocalChatSuccessEvent(NetEntity speaker, string asName, string message, float range)
+    {
+        Speaker = speaker;
+        AsName = asName;
+        Message = message;
+        Range = range;
     }
 }

@@ -14,11 +14,11 @@ public sealed class ListeningSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<LocalChatNetworkEvent>(OnSpeak);
+        SubscribeLocalEvent<LocalChatEvent>(OnSpeak);
         SubscribeLocalEvent<EntityWhisperedLocalEvent>(OnWhisper);
     }
 
-    private void OnSpeak(LocalChatNetworkEvent ev)
+    private void OnSpeak(LocalChatEvent ev)
     {
         PingListeners(GetEntity(ev.Speaker), ev.Message, "");
     }

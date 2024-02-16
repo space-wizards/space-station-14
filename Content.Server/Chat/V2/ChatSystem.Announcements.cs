@@ -27,7 +27,7 @@ public sealed partial class ChatSystem
         Color? colorOverride = null
         )
     {
-        var msgOut = new EntityRadioedEvent(
+        var msgOut = new RadioEvent(
             default,
             sender,
             message,
@@ -77,7 +77,7 @@ public sealed partial class ChatSystem
 
         var filter = _stationSystem.GetInStation(stationDataComp);
 
-        var msgOut = new EntityRadioedEvent(
+        var msgOut = new RadioEvent(
             default,
             sender,
             message,

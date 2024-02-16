@@ -202,27 +202,27 @@ public sealed class ChatUIController : UIController
         _chatNameColorsEnabled = _cfg.GetCVar(CCVars.ChatEnableColorName);
 
         // Chat V2 system
-        SubscribeNetworkEvent<LocalChatNetworkEvent>(OnLocalChatMessage);
-        SubscribeNetworkEvent<SubtleChatNetworkEvent>(OnSubtleLocalChattedMessage);
-        SubscribeNetworkEvent<BackgroundChatNetworkEvent>(OnBackgroundChatMessage);
+        SubscribeNetworkEvent<LocalChatEvent>(OnLocalChatMessage);
+        SubscribeNetworkEvent<SubtleChatEvent>(OnSubtleLocalChattedMessage);
+        SubscribeNetworkEvent<BackgroundChatEvent>(OnBackgroundChatMessage);
 
         SubscribeNetworkEvent<EntityWhisperedEvent>(OnWhisperedMessage);
         SubscribeNetworkEvent<EntityWhisperedObfuscatedlyEvent>(OnWhisperedMessage);
         SubscribeNetworkEvent<EntityWhisperedTotallyObfuscatedlyEvent>(OnWhisperedMessage);
 
-        SubscribeNetworkEvent<EntityEmotedEvent>(OnEmotedMessage);
+        SubscribeNetworkEvent<EmoteNetworkEvent>(OnEmotedMessage);
 
-        SubscribeNetworkEvent<EntityRadioedEvent>(OnRadioedMessage);
+        SubscribeNetworkEvent<RadioEvent>(OnRadioedMessage);
 
-        SubscribeNetworkEvent<EntityLoocedEvent>(OnLoocMessage);
+        SubscribeNetworkEvent<LoocEvent>(OnLoocMessage);
 
-        SubscribeNetworkEvent<DeadChatNetworkEvent>(OnDeadChatMessage);
+        SubscribeNetworkEvent<DeadChatEvent>(OnDeadChatMessage);
 
         SubscribeNetworkEvent<LocalChatFailEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<WhisperAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
-        SubscribeNetworkEvent<EmoteAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Emoter), ev.Reason));
+        SubscribeNetworkEvent<EmoteFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Emoter), ev.Reason));
         SubscribeNetworkEvent<LoocAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
-        SubscribeNetworkEvent<RadioAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<RadioFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -904,7 +904,7 @@ public sealed class ChatUIController : UIController
     }
 
     // Chat V2
-    private void OnLocalChatMessage(LocalChatNetworkEvent ev, EntitySessionEventArgs args)
+    private void OnLocalChatMessage(LocalChatEvent ev, EntitySessionEventArgs args)
     {
         var verb = GetSpeechVerb(_ent.GetEntity(ev.Speaker), ev.Message);
 
@@ -924,7 +924,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnSubtleLocalChattedMessage(SubtleChatNetworkEvent ev, EntitySessionEventArgs args)
+    private void OnSubtleLocalChattedMessage(SubtleChatEvent ev, EntitySessionEventArgs args)
     {
         var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, ev.Message, ev.Speaker, null);
 
@@ -934,7 +934,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnBackgroundChatMessage(BackgroundChatNetworkEvent ev, EntitySessionEventArgs args)
+    private void OnBackgroundChatMessage(BackgroundChatEvent ev, EntitySessionEventArgs args)
     {
         var verb = GetSpeechVerb(_ent.GetEntity(ev.Speaker), ev.Message);
 
@@ -1017,7 +1017,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnEmotedMessage(EntityEmotedEvent ev, EntitySessionEventArgs args)
+    private void OnEmotedMessage(EmoteNetworkEvent ev, EntitySessionEventArgs args)
     {
         // Wrapped message tech debt woo.
         var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
@@ -1036,7 +1036,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnRadioedMessage(EntityRadioedEvent ev, EntitySessionEventArgs args)
+    private void OnRadioedMessage(RadioEvent ev, EntitySessionEventArgs args)
     {
         var channel = _prototype.Index<RadioChannelPrototype>(ev.Channel);
         string wrappedMessage;
@@ -1073,7 +1073,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnLoocMessage(EntityLoocedEvent ev, EntitySessionEventArgs args)
+    private void OnLoocMessage(LoocEvent ev, EntitySessionEventArgs args)
     {
         var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
             ("entityName", ev.AsName),
@@ -1090,7 +1090,7 @@ public sealed class ChatUIController : UIController
         _replayRecording.RecordClientMessage(ev);
     }
 
-    private void OnDeadChatMessage(DeadChatNetworkEvent ev, EntitySessionEventArgs args)
+    private void OnDeadChatMessage(DeadChatEvent ev, EntitySessionEventArgs args)
     {
         string wrappedMessage;
 
@@ -1098,14 +1098,14 @@ public sealed class ChatUIController : UIController
         {
             wrappedMessage = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
-                ("userName", ev.Name),
+                ("userName", ev.AsName),
                 ("message", FormattedMessage.EscapeText(ev.Message)));
         }
         else
         {
             wrappedMessage = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
-                ("playerName", ev.Name),
+                ("playerName", ev.AsName),
                 ("message", FormattedMessage.EscapeText(ev.Message)));
         }
 

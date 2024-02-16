@@ -64,47 +64,22 @@ public sealed class DeadChatFailEvent : EntityEventArgs
     }
 }
 
-
-/// <summary>
-/// Raised locally when a character speaks in Dead Chat.
-/// </summary>
-[Serializable]
-public sealed class DeadChatSuccessEvent : EntityEventArgs
-{
-    public NetEntity Speaker;
-    public string AsName;
-    public readonly string Message;
-    public bool IsAdmin;
-    public string Name;
-
-    public DeadChatSuccessEvent(NetEntity speaker, string asName, string message, bool isAdmin, string name)
-    {
-        Speaker = speaker;
-        AsName = asName;
-        Message = message;
-        IsAdmin = isAdmin;
-        Name = name;
-    }
-}
-
 /// <summary>
 /// Raised on the network when a character speaks in dead chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DeadChatNetworkEvent : EntityEventArgs
+public sealed class DeadChatEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
     public readonly string Message;
     public bool IsAdmin;
-    public string Name;
 
-    public DeadChatNetworkEvent(NetEntity speaker, string asName, string message, bool isAdmin, string name)
+    public DeadChatEvent(NetEntity speaker, string asName, string message, bool isAdmin)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
         IsAdmin = isAdmin;
-        Name = name;
     }
 }

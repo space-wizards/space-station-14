@@ -22,7 +22,7 @@ namespace Content.Server.Speech
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpeechComponent, LocalChatNetworkEvent>(OnEntitySpoke);
+            SubscribeLocalEvent<SpeechComponent, LocalChatEvent>(OnEntitySpoke);
         }
 
         public SoundSpecifier? GetSpeechSound(Entity<SpeechComponent> ent, string message)
@@ -59,7 +59,7 @@ namespace Content.Server.Speech
             return contextSound;
         }
 
-        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, LocalChatNetworkEvent args)
+        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, LocalChatEvent args)
         {
             if (component.SpeechSounds == null)
                 return;

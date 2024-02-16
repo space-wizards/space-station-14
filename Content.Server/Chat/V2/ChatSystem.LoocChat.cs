@@ -53,12 +53,7 @@ public sealed partial class ChatSystem
 
         if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(
-                new LoocAttemptFailedEvent(
-                    entity,
-                    Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))
-                ),
-                player);
+            RaiseNetworkEvent(new LoocAttemptFailedEvent(entity, Loc.GetString("chat-system-max-message-length")), player);
 
             return;
         }
@@ -70,12 +65,10 @@ public sealed partial class ChatSystem
     {
         message = SanitizeMessage(message);
 
-        // If dead player LOOC is disabled, unless you are an aghost, send dead messages to dead chat
         if (!_admin.IsAdmin(source) && !DeadLoocEnabled &&
             (HasComp<GhostComponent>(source) || _mobState.IsDead(source)))
             SendDeadChatMessage(source, message);
 
-        // If crit player LOOC is disabled, don't send the message at all.
         if (!CritLoocEnabled && _mobState.IsCritical(source))
             return;
 
@@ -84,14 +77,11 @@ public sealed partial class ChatSystem
         if (!_admin.IsAdmin(source) && !LoocEnabled)
             return;
 
+        RaiseLocalEvent(new LoocSuccessEvent(source, name, message));
+
         var range = Configuration.GetCVar(CCVars.LoocRange);
 
-        var msgOut = new EntityLoocedEvent(
-            GetNetEntity(source),
-            name,
-            message,
-            range
-        );
+        var msgOut = new LoocEvent(GetNetEntity(source), name, message);
 
         foreach (var session in GetLoocRecipients(source, range))
             RaiseNetworkEvent(msgOut, session);
@@ -158,5 +148,23 @@ public sealed partial class ChatSystem
         CritLoocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
             Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
+    }
+}
+
+/// <summary>
+/// Raised when a character speaks in LOOC.
+/// </summary>
+[Serializable]
+public class LoocSuccessEvent : EntityEventArgs
+{
+    public EntityUid Speaker;
+    public string AsName;
+    public readonly string Message;
+
+    public LoocSuccessEvent(EntityUid speaker, string asName, string message)
+    {
+        Speaker = speaker;
+        AsName = asName;
+        Message = message;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Content.Server.Chat.Systems;
+using Content.Server.Chat.V2;
 using Content.Server.Radio.Components;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
@@ -12,7 +13,7 @@ public sealed partial class RadioDevicesSystem
     public  void InitializeSpeaker()
     {
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
-        SubscribeLocalEvent<RadioSpeakerComponent, EntityRadioLocalEvent>(OnReceiveRadio);
+        SubscribeLocalEvent<RadioSpeakerComponent, RadioSuccessEvent>(OnReceiveRadio);
     }
 
     private void OnActivateSpeaker(EntityUid uid, RadioSpeakerComponent component, ActivateInWorldEvent args)
@@ -25,7 +26,7 @@ public sealed partial class RadioDevicesSystem
         args.Handled = true;
     }
 
-    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref EntityRadioLocalEvent args)
+    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioSuccessEvent args)
     {
         if (!component.Enabled)
         {

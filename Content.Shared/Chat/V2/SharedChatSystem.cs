@@ -36,5 +36,7 @@ public abstract partial class SharedChatSystem : EntitySystem
 
         Configuration.OnValueChanged(CCVars.ChatPunctuation, shouldPunctuate => ShouldPunctuate = shouldPunctuate);
         Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxChatMessageLength = maxLen);
+
+        InitializeEmote();
     }
 }

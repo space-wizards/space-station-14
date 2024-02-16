@@ -18,7 +18,7 @@ public partial class SharedChatSystem
 
         if (message.Length > MaxChatMessageLength)
         {
-            reason = Loc.GetString("chat-manager-max-message-length", ("maxMessageLength", MaxChatMessageLength));
+            reason = Loc.GetString("chat-system-max-message-length");
 
             return false;
         }
@@ -64,36 +64,16 @@ public sealed class LocalChatFailEvent : EntityEventArgs
 }
 
 /// <summary>
-/// A server-only event that is fired when an entity chats in local chat.
-/// </summary>
-[Serializable]
-public sealed class LocalChatSuccessEvent : EntityEventArgs
-{
-    public NetEntity Speaker;
-    public string AsName;
-    public readonly string Message;
-    public float Range;
-
-    public LocalChatSuccessEvent(NetEntity speaker, string asName, string message, float range)
-    {
-        Speaker = speaker;
-        AsName = asName;
-        Message = message;
-        Range = range;
-    }
-}
-
-/// <summary>
 /// Raised to inform clients that an entity has spoken in local chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LocalChatNetworkEvent : EntityEventArgs
+public sealed class LocalChatEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
     public readonly string Message;
 
-    public LocalChatNetworkEvent(NetEntity speaker, string asName, string message)
+    public LocalChatEvent(NetEntity speaker, string asName, string message)
     {
         Speaker = speaker;
         AsName = asName;
@@ -105,12 +85,12 @@ public sealed class LocalChatNetworkEvent : EntityEventArgs
 /// Raised when a character is given a subtle message in local chat.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SubtleChatNetworkEvent : EntityEventArgs
+public sealed class SubtleChatEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Message;
 
-    public SubtleChatNetworkEvent(NetEntity speaker, string message)
+    public SubtleChatEvent(NetEntity speaker, string message)
     {
         Speaker = speaker;
         Message = message;
@@ -121,13 +101,13 @@ public sealed class SubtleChatNetworkEvent : EntityEventArgs
 /// Raised when an entity (such as a vending machine) uses local chat. The chat should not appear in the chat log.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BackgroundChatNetworkEvent : EntityEventArgs
+public sealed class BackgroundChatEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
     public readonly string Message;
 
-    public BackgroundChatNetworkEvent(NetEntity speaker, string message, string name)
+    public BackgroundChatEvent(NetEntity speaker, string message, string name)
     {
         Speaker = speaker;
         AsName = name;

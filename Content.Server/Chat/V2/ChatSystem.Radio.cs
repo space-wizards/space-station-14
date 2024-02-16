@@ -1,4 +1,5 @@
-﻿using Content.Server.Power.Components;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.Power.Components;
 using Content.Server.Radio;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
@@ -20,8 +21,8 @@ public sealed partial class ChatSystem
 {
     public void InitializeRadio()
     {
-        SubscribeNetworkEvent<HeadsetRadioAttemptedEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, false); });
-        SubscribeNetworkEvent<InternalRadioAttemptedEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, true); });
+        SubscribeNetworkEvent<AttemptHeadsetRadioEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, false); });
+        SubscribeNetworkEvent<AttemptInternalRadioEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, true); });
     }
 
     private void HandleAttemptRadioMessage(ICommonSession player, NetEntity entity, string message, string channel, bool isInnate)
@@ -30,26 +31,23 @@ public sealed partial class ChatSystem
 
         if (player.AttachedEntity != entityUid)
         {
-            // Nice try bozo.
             return;
         }
 
-        // Are they rate-limited
         if (IsRateLimited(entityUid, out var reason))
         {
-            RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, reason), player);
+            RaiseNetworkEvent(new RadioFailedEvent(entity, reason), player);
 
             return;
         }
 
         HashSet<string> channels;
 
-        // Sanity check: if you can't chat you shouldn't be chatting.
         if (isInnate)
         {
             if (!TryComp<InternalRadioComponent>(entityUid, out var comp))
             {
-                RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, "You can't talk on any radio channel."), player);
+                RaiseNetworkEvent(new RadioFailedEvent(entity, "You can't talk on any radio channel."), player);
 
                 return;
             }
@@ -60,7 +58,7 @@ public sealed partial class ChatSystem
         {
             if (!TryComp<HeadsetRadioableComponent>(entityUid, out var comp))
             {
-                RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, "You can't talk on any radio channel."), player);
+                RaiseNetworkEvent(new RadioFailedEvent(entity, "You can't talk on any radio channel."), player);
 
                 return;
             }
@@ -68,46 +66,108 @@ public sealed partial class ChatSystem
             channels = comp.Channels;
         }
 
-        // Using LINQ here, pls don't murder me PJB 🙏
         if (!channels.Contains(channel))
         {
-            // TODO: Add locstring
-            RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, $"You can't talk on the {channel} radio channel."), player);
+            RaiseNetworkEvent(new RadioFailedEvent(entity, Loc.GetString("chat-system-radio-channel-failed", ("channel", channel))), player);
 
             return;
         }
 
         if (!_proto.TryIndex(channel, out RadioChannelPrototype? radioChannelProto))
         {
-            // TODO: Add locstring
-            RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, $"The {channel} radio channel doesn't exist!"), player);
+            RaiseNetworkEvent(new RadioFailedEvent(entity, Loc.GetString("chat-system-radio-channel-nonexistent", ("channel", channel))), player);
 
             return;
         }
 
-        // Is the message too long?
         if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(new RadioAttemptFailedEvent(entity, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxChatMessageLength))),player);
+            RaiseNetworkEvent(new RadioFailedEvent(entity, Loc.GetString("chat-system-max-message-length")),player);
 
             return;
         }
 
-        // All good; let's actually send a chat message.
-        SendRadioMessage(entityUid, message, radioChannelProto, whisper: true);
+        SendRadioMessageWithWhisper(entityUid, message, radioChannelProto);
+    }
+
+    public void SendRadioMessageViaDevice(EntityUid entityUid, string message, RadioChannelPrototype channel, EntityUid device, string asName = "")
+    {
+        if (!TryBuildSuccessEvent(entityUid, ref message, channel, ref asName, out var msgOut, device))
+            return;
+
+        TransmitToReceivers(entityUid, message, channel, asName, msgOut);
     }
 
     /// <summary>
-    /// Send a chat in Local.
+    /// Send a radio message via a channel, whispering if needed.
     /// </summary>
     /// <param name="entityUid">The entity who is chatting</param>
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="channel">The channel the message can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    /// <param name="allowList">Override the normal selection of listeners with a specific filter. Useful for off-map activities like salvaging.</param>
-    /// <param name="whisper">If this radio message should be whispered out.</param>
-    /// <param name="device">The entity of the RadioMicrophone that sent this message, if applicable.</param>
-    public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "", Filter? allowList = null, bool whisper = false, EntityUid? device = null)
+    public void SendRadioMessageWithWhisper(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "")
+    {
+        // If you don't have intrinsic radio, you need to whisper to send a message using your voice box.
+        if (!TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
+        {
+            TrySendWhisperMessage(entityUid, message, asName);
+        }
+
+        SendRadioMessage(entityUid, message, channel, asName);
+    }
+
+    /// <summary>
+    /// Send a radio message via a channel to specific targets.
+    /// </summary>
+    /// <param name="entityUid">The entity who is chatting</param>
+    /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
+    /// <param name="channel">The channel the message can be heard in</param>
+    /// <param name="asName">Override the name this entity will appear as.</param>
+    public void SendRadioMessageToTargets(EntityUid entityUid, string message, RadioChannelPrototype channel, Filter allowList, string asName = "")
+    {
+        if (!TryBuildSuccessEvent(entityUid, ref message, channel, ref asName, out var msgOut))
+            return;
+
+        RaiseNetworkEvent(msgOut, allowList);
+
+        StashRadioMessage(entityUid, message, channel, asName, msgOut);
+    }
+
+    /// <summary>
+    /// Send a radio message to a channel.
+    /// </summary>
+    /// <param name="entityUid">The entity who is chatting</param>
+    /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
+    /// <param name="channel">The channel the message can be heard in</param>
+    /// <param name="asName">Override the name this entity will appear as.</param>
+    public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "")
+    {
+        if (!TryBuildSuccessEvent(entityUid, ref message, channel, ref asName, out var msgOut))
+            return;
+
+        TransmitToReceivers(entityUid, message, channel, asName, msgOut);
+    }
+
+    private void TransmitToReceivers(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName,
+        RadioSuccessEvent msgOut)
+    {
+        foreach (var receiver in GetRadioReceivers(entityUid, channel))
+        {
+            RaiseLocalEvent(receiver, msgOut);
+        }
+
+        StashRadioMessage(entityUid, message, channel, asName, msgOut);
+    }
+
+    private void StashRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName,
+        RadioSuccessEvent msgOut)
+    {
+        _replay.RecordServerMessage(msgOut);
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"Radio from {ToPrettyString(entityUid):user} on {channel} as {asName}: {message}");
+    }
+
+    private bool TryBuildSuccessEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioSuccessEvent? msgOut, EntityUid? device = null)
     {
         message = SanitizeInCharacterMessage(
             entityUid,
@@ -123,16 +183,9 @@ public sealed partial class ChatSystem
 
         if (string.IsNullOrEmpty(message))
         {
-            return;
-        }
+            msgOut = null;
 
-        // If you don't have intrinsic radio, you need to whisper to send a message using your voice box.
-        if (!TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
-        {
-            if (whisper)
-            {
-                TrySendWhisperMessage(entityUid, message, asName);
-            }
+            return false;
         }
 
         // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
@@ -142,16 +195,22 @@ public sealed partial class ChatSystem
         }
         catch (Exception e)
         {
-            _logger.GetSawmill("chat").Error($"UID {entityUid} attempted to send {message} {(asName.Length > 0 ? "as name, " : "")} but threw a parsing error: {e}");
+            _logger.GetSawmill("chat")
+                .Error(
+                    $"UID {entityUid} attempted to send {message} {(asName.Length > 0 ? "as name, " : "")} but threw a parsing error: {e}");
 
-            return;
+            msgOut = null;
+
+            return false;
         }
 
         message = TransformSpeech(entityUid, FormattedMessage.RemoveMarkup(message));
 
         if (string.IsNullOrEmpty(message))
         {
-            return;
+            msgOut = null;
+
+            return false;
         }
 
         if (string.IsNullOrEmpty(asName))
@@ -173,7 +232,7 @@ public sealed partial class ChatSystem
 
         var name = FormattedMessage.EscapeText(asName);
 
-        var msgOut = new EntityRadioLocalEvent(
+        msgOut = new RadioSuccessEvent(
             entityUid,
             name,
             message,
@@ -185,22 +244,7 @@ public sealed partial class ChatSystem
             device: device
         );
 
-        if (allowList != null)
-        {
-            RaiseNetworkEvent(msgOut, allowList);
-        }
-        else
-        {
-            // Now fire it off to receivers locally. They'll handle shipping it back to their owning client if needed.
-            foreach (var receiver in GetRadioReceivers(entityUid, channel))
-            {
-                RaiseLocalEvent(receiver, msgOut);
-            }
-        }
-
-        // And finally, stash it in the replay and log.
-        _replay.RecordServerMessage(msgOut);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio from {ToPrettyString(entityUid):user} on {channel} as {asName}: {message}");
+        return false;
     }
 
     /// <summary>
@@ -314,5 +358,51 @@ public sealed partial class ChatSystem
             }
         }
         return false;
+    }
+}
+
+/// <summary>
+/// Raised when a character speaks on the radio.
+/// </summary>
+[Serializable]
+public sealed class RadioSuccessEvent : EntityEventArgs
+{
+    public EntityUid Speaker;
+    public EntityUid? Device;
+    public string AsName;
+    public readonly string Message;
+    public readonly string Channel;
+    public bool IsBold;
+    public string Verb;
+    public string FontId;
+    public int FontSize;
+    public bool IsAnnouncement;
+    public Color? MessageColorOverride;
+
+    public RadioSuccessEvent(
+        EntityUid speaker,
+        string asName,
+        string message,
+        string channel,
+        string withVerb = "",
+        string fontId = "",
+        int fontSize = 0,
+        bool isBold = false,
+        bool isAnnouncement = false,
+        Color? messageColorOverride = null,
+        EntityUid? device = null
+    )
+    {
+        Speaker = speaker;
+        Device = device;
+        AsName = asName;
+        Message = message;
+        Channel = channel;
+        Verb = withVerb;
+        FontId = fontId;
+        FontSize = fontSize;
+        IsBold = isBold;
+        IsAnnouncement = isAnnouncement;
+        MessageColorOverride = messageColorOverride;
     }
 }

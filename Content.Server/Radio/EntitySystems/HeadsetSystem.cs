@@ -1,3 +1,4 @@
+using Content.Server.Chat.V2;
 using Content.Server.Emp;
 using Content.Server.Radio.Components;
 using Content.Shared.Chat.V2;
@@ -20,7 +21,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
         base.Initialize();
         SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
-        SubscribeLocalEvent<HeadsetComponent, EntityRadioLocalEvent>(OnHeadsetReceive);
+        SubscribeLocalEvent<HeadsetComponent, RadioSuccessEvent>(OnHeadsetReceive);
     }
 
     private static void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
@@ -32,12 +33,12 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
         args.Disabled = true;
     }
 
-    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent headset, EntityRadioLocalEvent ev)
+    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent headset, RadioSuccessEvent ev)
     {
         if (!TryComp<ActorComponent>(headset.CurrentlyWornBy, out var actor))
             return;
 
-        var translated = new EntityRadioedEvent(
+        var translated = new RadioEvent(
             GetNetEntity(ev.Speaker),
             ev.AsName,
             ev.Message,

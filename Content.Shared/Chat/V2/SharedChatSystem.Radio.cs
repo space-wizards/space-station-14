@@ -10,12 +10,9 @@ public partial class SharedChatSystem
 {
     public bool SendRadioMessage(EntityUid speaker, string message, RadioChannelPrototype radioChannel, [NotNullWhen(false)] out string? reason)
     {
-        var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
-
-        if (message.Length > messageMaxLen)
+        if (message.Length > MaxChatMessageLength)
         {
-            reason = Loc.GetString("chat-manager-max-message-length",
-                ("maxMessageLength", messageMaxLen));
+            reason = Loc.GetString("chat-system-max-message-length");
 
             return false;
         }
@@ -27,31 +24,27 @@ public partial class SharedChatSystem
             return true;
         }
 
-        // Sanity check: if you can't chat you shouldn't be chatting.
         if (!TryComp<HeadsetRadioableComponent>(speaker, out var comp))
         {
-            // TODO: Add locstring
-            reason = "You can't talk on any radio channel.";
+            reason = Loc.GetString("chat-system-radio-failed");
 
             return false;
         }
 
         if (!comp.Channels.Contains(radioChannel.ID))
         {
-            // TODO: Add locstring
-            reason = $"You can't talk on the {radioChannel.ID} radio channel.";
+            reason = Loc.GetString("chat-system-radio-channel-failed", ("channel", radioChannel.ID));
 
             return false;
         }
 
-        RaiseNetworkEvent(new HeadsetRadioAttemptedEvent(GetNetEntity(speaker), message, radioChannel.ID));
+        RaiseNetworkEvent(new AttemptHeadsetRadioEvent(GetNetEntity(speaker), message, radioChannel.ID));
 
         reason = null;
 
         return true;
     }
 
-    // Try and send a message via innate powers.
     private bool TrySendInnateRadioMessage(EntityUid speaker, string message, RadioChannelPrototype radioChannel)
     {
         if (!TryComp<InternalRadioComponent>(speaker, out var comp))
@@ -64,7 +57,7 @@ public partial class SharedChatSystem
             return false;
         }
 
-        RaiseNetworkEvent(new InternalRadioAttemptedEvent(GetNetEntity(speaker), message, radioChannel.ID));
+        RaiseNetworkEvent(new AttemptInternalRadioEvent(GetNetEntity(speaker), message, radioChannel.ID));
 
         return true;
     }
@@ -74,13 +67,13 @@ public partial class SharedChatSystem
 /// Raised when a mob tries to use the radio via a headset or similar device.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HeadsetRadioAttemptedEvent : EntityEventArgs
+public sealed class AttemptHeadsetRadioEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Message;
     public readonly string Channel;
 
-    public HeadsetRadioAttemptedEvent(NetEntity speaker, string message, string channel)
+    public AttemptHeadsetRadioEvent(NetEntity speaker, string message, string channel)
     {
         Speaker = speaker;
         Message = message;
@@ -92,63 +85,17 @@ public sealed class HeadsetRadioAttemptedEvent : EntityEventArgs
 /// Raised when a mob tries to use the radio via their innate abilities.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class InternalRadioAttemptedEvent : EntityEventArgs
+public sealed class AttemptInternalRadioEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Message;
     public readonly string Channel;
 
-    public InternalRadioAttemptedEvent(NetEntity speaker, string message, string channel)
+    public AttemptInternalRadioEvent(NetEntity speaker, string message, string channel)
     {
         Speaker = speaker;
         Message = message;
         Channel = channel;
-    }
-}
-
-/// <summary>
-/// Raised when a character speaks on the radio.
-/// </summary>
-[Serializable]
-public sealed class EntityRadioLocalEvent : EntityEventArgs
-{
-    public EntityUid Speaker;
-    public EntityUid? Device;
-    public string AsName;
-    public readonly string Message;
-    public readonly string Channel;
-    public bool IsBold;
-    public string Verb;
-    public string FontId;
-    public int FontSize;
-    public bool IsAnnouncement;
-    public Color? MessageColorOverride;
-
-    public EntityRadioLocalEvent(
-        EntityUid speaker,
-        string asName,
-        string message,
-        string channel,
-        string withVerb = "",
-        string fontId = "",
-        int fontSize = 0,
-        bool isBold = false,
-        bool isAnnouncement = false,
-        Color? messageColorOverride = null,
-        EntityUid? device = null
-    )
-    {
-        Speaker = speaker;
-        Device = device;
-        AsName = asName;
-        Message = message;
-        Channel = channel;
-        Verb = withVerb;
-        FontId = fontId;
-        FontSize = fontSize;
-        IsBold = isBold;
-        IsAnnouncement = isAnnouncement;
-        MessageColorOverride = messageColorOverride;
     }
 }
 
@@ -156,7 +103,7 @@ public sealed class EntityRadioLocalEvent : EntityEventArgs
 /// Raised when a character speaks on the radio.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EntityRadioedEvent : EntityEventArgs
+public sealed class RadioEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
@@ -169,7 +116,7 @@ public sealed class EntityRadioedEvent : EntityEventArgs
     public bool IsAnnouncement;
     public Color? MessageColorOverride;
 
-    public EntityRadioedEvent(
+    public RadioEvent(
         NetEntity speaker,
         string asName,
         string message,
@@ -199,12 +146,12 @@ public sealed class EntityRadioedEvent : EntityEventArgs
 /// Raised when a character has failed to speak on the radio.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RadioAttemptFailedEvent : EntityEventArgs
+public sealed class RadioFailedEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Reason;
 
-    public RadioAttemptFailedEvent(NetEntity speaker, string reason)
+    public RadioFailedEvent(NetEntity speaker, string reason)
     {
         Speaker = speaker;
         Reason = reason;

@@ -24,7 +24,7 @@ public sealed partial class ChatSystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<EmoteAttemptedEvent>((msg, args) => { HandleAttemptEmoteMessage(args.SenderSession, msg.Emoter, msg.Message); });
+        SubscribeNetworkEvent<AttemptEmoteEvent>((msg, args) => { HandleAttemptEmoteMessage(args.SenderSession, msg.Emoter, msg.Message); });
     }
 
     private void HandleAttemptEmoteMessage(ICommonSession player, NetEntity entity, string message)
@@ -38,21 +38,21 @@ public sealed partial class ChatSystem
 
         if (IsRateLimited(entityUid, out var reason))
         {
-            RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, reason), player);
+            RaiseNetworkEvent(new EmoteFailedEvent(entity, reason), player);
 
             return;
         }
 
         if (!TryComp<EmoteableComponent>(entityUid, out var emoteable))
         {
-            RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, Loc.GetString("chat-system-emote-failed")), player);
+            RaiseNetworkEvent(new EmoteFailedEvent(entity, Loc.GetString("chat-system-emote-failed")), player);
 
             return;
         }
 
         if (message.Length > MaxChatMessageLength)
         {
-            RaiseNetworkEvent(new EmoteAttemptFailedEvent(entity, Loc.GetString("chat-system-max-message-length")), player);
+            RaiseNetworkEvent(new EmoteFailedEvent(entity, Loc.GetString("chat-system-max-message-length")), player);
 
             return;
         }
@@ -157,12 +157,7 @@ public sealed partial class ChatSystem
         var ev = new EmoteSuccessEvent(emote);
         RaiseLocalEvent(entityUid, ref ev);
 
-        var msgOut = new EntityEmotedEvent(
-            GetNetEntity(entityUid),
-            name,
-            message,
-            range
-        );
+        var msgOut = new EmoteNetworkEvent(GetNetEntity(entityUid), name, message);
 
         RaiseLocalEvent(entityUid, msgOut, true);
 
