@@ -1,9 +1,9 @@
 using System.Numerics;
 using Content.Shared.DoAfter;
+using Content.Client.UserInterface.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -148,12 +148,6 @@ public sealed class DoAfterOverlay : Overlay
 
     public static Color GetProgressColor(float progress, float alpha = 1f)
     {
-        if (progress >= 1.0f)
-        {
-            return new Color(0f, 1f, 0f, alpha);
-        }
-        // lerp
-        var hue = (5f / 18f) * progress;
-        return Color.FromHsv((hue, 1f, 0.75f, alpha));
+        return ProgressColorSystem.GetProgressColor(progress).WithAlpha(alpha);
     }
 }
