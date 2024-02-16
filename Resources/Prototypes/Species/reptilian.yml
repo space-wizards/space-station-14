@@ -16,6 +16,7 @@
   id: MobReptilianSprites
   sprites:
     Head: MobReptilianHead
+    Hair: MobHumanoidAnyMarking
     Snout: MobHumanoidAnyMarking
     Chest: MobReptilianTorso
     HeadTop: MobHumanoidAnyMarking
@@ -36,7 +37,7 @@
   onlyWhitelisted: true
   points:
     Hair:
-      points: 0
+      points: 1
       required: false
     FacialHair:
       points: 0
