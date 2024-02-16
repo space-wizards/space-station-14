@@ -9,7 +9,7 @@
     layers:
     - state: icon
     - state: light
-      map: [ "enum.LightLayers.Light" ]
+      #map: [ "enum.LightLayers.Light" ]
       visible: false
       shader: unshaded
   - type: Appearance

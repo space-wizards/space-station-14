@@ -138,8 +138,6 @@ public sealed class ObjectSensorSystem : EntitySystem
 
         component.Contacting = total;
 
-        _appearance.SetData(uid, LightLayers.Light, total % 2 == 0);
-
         if (component.Contacting > oldTotal)
         {
             for (var i = oldTotal; i <= (component.Contacting > 4 ? 4 : component.Contacting); i++)
