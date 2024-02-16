@@ -103,11 +103,9 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
         {
-            if (!TryComp<TransformComponent>(uid, out var xform))
-                return;
-
             if (component.RemoveOnTrigger) // if the component gets removed when it's triggered
             {
+                var xform = Transform(uid);
                 _audio.PlayPvs(component.Sound, xform.Coordinates); // play the sound at its last known coordinates
             }
             else // if the component doesn't get removed when triggered
