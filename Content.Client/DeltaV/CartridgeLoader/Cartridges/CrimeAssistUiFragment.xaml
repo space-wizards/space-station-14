@@ -1,0 +1,16 @@
+<cartridges:CrimeAssistUiFragment xmlns:cartridges="clr-namespace:Content.Client.DeltaV.CartridgeLoader.Cartridges"
+                                 xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer Name="ExplanationBox" Orientation="Vertical" MaxWidth="400"  VerticalExpand="True" Margin="5">
+        <RichTextLabel Name ="Title" />
+        <RichTextLabel Name ="Subtitle"/>
+        <RichTextLabel Name ="Explanation"/>
+        <RichTextLabel Name ="Punishment" Margin="0,20"/>
+    </BoxContainer>
+    <BoxContainer Name="QuestionBox" Orientation="Horizontal" HorizontalAlignment="Center"  HorizontalExpand="True" VerticalExpand="False">
+        <Button Name="StartButton" Access="Public" Text="Start"/>
+        <Button Name="HomeButton" Access="Public" Text="Home" Visible="False"/>
+        <Button Name="YesButton" Access="Public" Text="Yes" Visible="False"/>
+        <Button Name="NoButton" Access="Public" Text="No" Visible="False"/>
+    </BoxContainer>
+</cartridges:CrimeAssistUiFragment>

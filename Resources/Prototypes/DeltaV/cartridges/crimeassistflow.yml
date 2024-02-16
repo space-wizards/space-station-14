@@ -1,0 +1,342 @@
+- type: crimeAssistPage
+  id: "mainmenu"
+  locKey: "crime-assist-mainmenu"
+  onStart: "questionIsItTerrorism"
+
+- type: crimeAssistPage
+  id: "questionIsItTerrorism"
+  locKey: "crime-assist-question-isitterrorism"
+  onYes: "resultTerrorism"
+  onNo: "questionWasSomeoneAttacked"
+
+- type: crimeAssistPage
+  id: "questionWasSomeoneAttacked"
+  locKey: "crime-assist-question-wassomeoneattacked"
+  onYes: "questionWasItSophont"
+  onNo: "questionForcedMindbreakerToxin"
+
+- type: crimeAssistPage
+  id: "questionWasItSophont"
+  locKey: "crime-assist-question-wasitsophont"
+  onYes: "questionDidVictimDie"
+  onNo: "resultAnimalCruelty"
+
+- type: crimeAssistPage
+  id: "questionDidVictimDie"
+  locKey: "crime-assist-question-didvictimdie"
+  onYes: "questionIsVictimRemovedFromBody"
+  onNo: "resultAssault"
+
+- type: crimeAssistPage
+  id: "questionIsVictimRemovedFromBody"
+  locKey: "crime-assist-question-victimremovedfrombody"
+  onYes: "resultDecorporealisation"
+  onNo: "questionWasDeathIntentional"
+
+- type: crimeAssistPage
+  id: "questionWasDeathIntentional"
+  locKey: "crime-assist-question-wasdeathintentional"
+  onYes: "resultMurder"
+  onNo: "resultManslaughter"
+
+- type: crimeAssistPage
+  id: "questionForcedMindbreakerToxin"
+  locKey: "crime-assist-question-forcedmindbreakertoxin"
+  onYes: "resultMindbreaking"
+  onNo: "questionHadRestrictedItem"
+
+- type: crimeAssistPage
+  id: "questionHadRestrictedItem"
+  locKey: "crime-assist-question-hadillicititem"
+  onYes: "questionWasItAPerson"
+  onNo: "questionWasSuspectInARestrictedLocation"
+
+- type: crimeAssistPage
+  id: "questionWasItAPerson"
+  locKey: "crime-assist-question-wasitaperson"
+  onYes: "resultKidnapping"
+  onNo: "questionWasSuspectSelling"
+
+- type: crimeAssistPage
+  id: "questionWasSuspectSelling"
+  locKey: "crime-assist-question-wassuspectselling"
+  onYes: "resultBlackMarketeering"
+  onNo: "questionWasSuspectSeenTaking"
+
+- type: crimeAssistPage
+  id: "questionWasSuspectSeenTaking"
+  locKey: "crime-assist-question-wassuspectseentaking"
+  onYes: "questionIsItemExtremelyDangerous"
+  onNo: "resultPossession"
+
+- type: crimeAssistPage
+  id: "questionIsItemExtremelyDangerous"
+  locKey: "crime-assist-question-isitemextremelydangerous"
+  onYes: "resultGrandTheft"
+  onNo: "resultTheft"
+
+- type: crimeAssistPage
+  id: "questionWasSuspectInARestrictedLocation"
+  locKey: "crime-assist-question-wassuspectinarestrictedlocation"
+  onYes: "questionWasEntranceLocked"
+  onNo: "questionDidSuspectBreakSomething"
+
+- type: crimeAssistPage
+  id: "questionWasEntranceLocked"
+  locKey: "crime-assist-question-wasentrancelocked"
+  onYes: "resultBreakingAndEntering"
+  onNo: "resultTrespass"
+
+- type: crimeAssistPage
+  id: "questionDidSuspectBreakSomething"
+  locKey: "crime-assist-question-didsuspectbreaksomething"
+  onYes: "questionWereThereManySuspects"
+  onNo: "questionWasCrimeSexualInNature"
+
+- type: crimeAssistPage
+  id: "questionWereThereManySuspects"
+  locKey: "crime-assist-question-weretheremanysuspects"
+  onYes: "resultRioting"
+  onNo: "questionWasDamageSmall"
+
+- type: crimeAssistPage
+  id: "questionWasDamageSmall"
+  locKey: "crime-assist-question-wasdamagesmall"
+  onYes: "resultVandalism"
+  onNo: "questionWasDestroyedItemImportantToStation"
+
+- type: crimeAssistPage
+  id: "questionWasDestroyedItemImportantToStation"
+  locKey: "crime-assist-question-wasdestroyeditemimportanttostation"
+  onYes: "questionIsLargePartOfStationDestroyed"
+  onNo: "resultEndangerment"
+
+- type: crimeAssistPage
+  id: "questionIsLargePartOfStationDestroyed"
+  locKey: "crime-assist-question-islargepartofstationdestroyed"
+  onYes: "resultGrandSabotage"
+  onNo: "resultSabotage"
+
+- type: crimeAssistPage
+  id: "questionWasCrimeSexualInNature"
+  locKey: "crime-assist-question-wascrimesexualinnature"
+  onYes: "resultSexualHarrassment"
+  onNo: "questionWasSuspectANuisance"
+
+- type: crimeAssistPage
+  id: "questionWasSuspectANuisance"
+  locKey: "crime-assist-question-wassuspectanuisance"
+  onYes: "questionFalselyReportingToSecurity"
+  onNo: "resultInnocent"
+
+- type: crimeAssistPage
+  id: "questionFalselyReportingToSecurity"
+  locKey: "crime-assist-question-falselyreportingtosecurity"
+  onYes: "resultPerjuryOrFalseReport"
+  onNo: "questionHappenInCourt"
+
+- type: crimeAssistPage
+  id: "questionHappenInCourt"
+  locKey: "crime-assist-question-happenincourt"
+  onYes: "resultContemptOfCourt"
+  onNo: "questionDuringActiveInvestigation"
+
+- type: crimeAssistPage
+  id: "questionDuringActiveInvestigation"
+  locKey: "crime-assist-question-duringactiveinvestigation"
+  onYes: "resultObstructionOfJustice"
+  onNo: "questionToCommandStaff"
+
+- type: crimeAssistPage
+  id: "questionToCommandStaff"
+  locKey: "crime-assist-question-tocommandstaff"
+  onYes: "resultSedition"
+  onNo: "questionWasItCommandItself"
+
+- type: crimeAssistPage
+  id: "questionWasItCommandItself"
+  locKey: "crime-assist-question-wasitcommanditself"
+  onYes: "resultAbuseOfPower"
+  onNo: "resultHooliganism"
+
+- type: crimeAssistPage
+  id: "resultInnocent"
+  locKeyTitle: "crime-assist-crime-innocent"
+  locKeyDescription: "crime-assist-crimedetail-innocent"
+  locKeySeverity: "crime-assist-crimetype-innocent"
+  locKeyPunishment: "crime-assist-crimepunishment-innocent"
+
+- type: crimeAssistPage
+  id: "resultAnimalCruelty"
+  locKeyTitle: "crime-assist-crime-animalcruelty"
+  locKeyDescription: "crime-assist-crimedetail-animalcruelty"
+  locKeySeverity: "crime-assist-crimetype-misdemeanour"
+  locKeyPunishment: "crime-assist-crimepunishment-animalcruelty"
+
+- type: crimeAssistPage
+  id: "resultTheft"
+  locKeyTitle: "crime-assist-crime-theft"
+  locKeyDescription: "crime-assist-crimedetail-theft"
+  locKeySeverity: "crime-assist-crimetype-misdemeanour"
+  locKeyPunishment: "crime-assist-crimepunishment-theft"
+
+- type: crimeAssistPage
+  id: "resultTrespass"
+  locKeyTitle: "crime-assist-crime-trespass"
+  locKeyDescription: "crime-assist-crimedetail-trespass"
+  locKeySeverity: "crime-assist-crimetype-misdemeanour"
+  locKeyPunishment: "crime-assist-crimepunishment-trespass"
+
+- type: crimeAssistPage
+  id: "resultVandalism"
+  locKeyTitle: "crime-assist-crime-vandalism"
+  locKeyDescription: "crime-assist-crimedetail-vandalism"
+  locKeySeverity: "crime-assist-crimetype-misdemeanour"
+  locKeyPunishment: "crime-assist-crimepunishment-vandalism"
+
+- type: crimeAssistPage
+  id: "resultHooliganism"
+  locKeyTitle: "crime-assist-crime-hooliganism"
+  locKeyDescription: "crime-assist-crimedetail-hooliganism"
+  locKeySeverity: "crime-assist-crimetype-misdemeanour"
+  locKeyPunishment: "crime-assist-crimepunishment-hooliganism"
+
+- type: crimeAssistPage
+  id: "resultManslaughter"
+  locKeyTitle: "crime-assist-crime-manslaughter"
+  locKeyDescription: "crime-assist-crimedetail-manslaughter"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-manslaughter"
+
+- type: crimeAssistPage
+  id: "resultGrandTheft"
+  locKeyTitle: "crime-assist-crime-grandtheft"
+  locKeyDescription: "crime-assist-crimedetail-grandtheft"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-grandtheft"
+
+- type: crimeAssistPage
+  id: "resultSabotage"
+  locKeyTitle: "crime-assist-crime-sabotage"
+  locKeyDescription: "crime-assist-crimedetail-sabotage"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-sabotage"
+
+- type: crimeAssistPage
+  id: "resultMindbreaking"
+  locKeyTitle: "crime-assist-crime-mindbreaking"
+  locKeyDescription: "crime-assist-crimedetail-mindbreaking"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-mindbreaking"
+
+- type: crimeAssistPage
+  id: "resultAssault"
+  locKeyTitle: "crime-assist-crime-assault"
+  locKeyDescription: "crime-assist-crimedetail-assault"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-assault"
+
+- type: crimeAssistPage
+  id: "resultAbuseOfPower"
+  locKeyTitle: "crime-assist-crime-abuseofpower"
+  locKeyDescription: "crime-assist-crimedetail-abuseofpower"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-abuseofpower"
+
+- type: crimeAssistPage
+  id: "resultPossession"
+  locKeyTitle: "crime-assist-crime-possession"
+  locKeyDescription: "crime-assist-crimedetail-possession"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-possession"
+
+- type: crimeAssistPage
+  id: "resultEndangerment"
+  locKeyTitle: "crime-assist-crime-endangerment"
+  locKeyDescription: "crime-assist-crimedetail-endangerment"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-endangerment"
+
+- type: crimeAssistPage
+  id: "resultBreakingAndEntering"
+  locKeyTitle: "crime-assist-crime-breakingandentering"
+  locKeyDescription: "crime-assist-crimedetail-breakingandentering"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-breakingandentering"
+
+- type: crimeAssistPage
+  id: "resultRioting"
+  locKeyTitle: "crime-assist-crime-rioting"
+  locKeyDescription: "crime-assist-crimedetail-rioting"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-rioting"
+
+- type: crimeAssistPage
+  id: "resultContemptOfCourt"
+  locKeyTitle: "crime-assist-crime-contemptofcourt"
+  locKeyDescription: "crime-assist-crimedetail-contemptofcourt"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-contemptofcourt"
+
+- type: crimeAssistPage
+  id: "resultPerjuryOrFalseReport"
+  locKeyTitle: "crime-assist-crime-perjuryorfalsereport"
+  locKeyDescription: "crime-assist-crimedetail-perjuryorfalsereport"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-perjuryorfalsereport"
+
+- type: crimeAssistPage
+  id: "resultObstructionOfJustice"
+  locKeyTitle: "crime-assist-crime-obstructionofjustice"
+  locKeyDescription: "crime-assist-crimedetail-obstructionofjustice"
+  locKeySeverity: "crime-assist-crimetype-felony"
+  locKeyPunishment: "crime-assist-crimepunishment-obstructionofjustice"
+
+- type: crimeAssistPage
+  id: "resultMurder"
+  locKeyTitle: "crime-assist-crime-murder"
+  locKeyDescription: "crime-assist-crimedetail-murder"
+  locKeySeverity: "crime-assist-crimetype-capital"
+  locKeyPunishment: "crime-assist-crimepunishment-murder"
+
+- type: crimeAssistPage
+  id: "resultTerrorism"
+  locKeyTitle: "crime-assist-crime-terrorism"
+  locKeyDescription: "crime-assist-crimedetail-terrorism"
+  locKeySeverity: "crime-assist-crimetype-capital"
+  locKeyPunishment: "crime-assist-crimepunishment-terrorism"
+
+- type: crimeAssistPage
+  id: "resultGrandSabotage"
+  locKeyTitle: "crime-assist-crime-grandsabotage"
+  locKeyDescription: "crime-assist-crimedetail-grandsabotage"
+  locKeySeverity: "crime-assist-crimetype-capital"
+  locKeyPunishment: "crime-assist-crimepunishment-grandsabotage"
+
+- type: crimeAssistPage
+  id: "resultDecorporealisation"
+  locKeyTitle: "crime-assist-crime-decorporealisation"
+  locKeyDescription: "crime-assist-crimedetail-decorporealisation"
+  locKeySeverity: "crime-assist-crimetype-capital"
+  locKeyPunishment: "crime-assist-crimepunishment-decorporealisation"
+
+- type: crimeAssistPage
+  id: "resultKidnapping"
+  locKeyTitle: "crime-assist-crime-kidnapping"
+  locKeyDescription: "crime-assist-crimedetail-kidnapping"
+  locKeySeverity: "crime-assist-crimetype-capital"
+  locKeyPunishment: "crime-assist-crimepunishment-kidnapping"
+
+- type: crimeAssistPage
+  id: "resultSedition"
+  locKeyTitle: "crime-assist-crime-sedition"
+  locKeyDescription: "crime-assist-crimedetail-sedition"
+  locKeySeverity: "crime-assist-crimetype-capital"
+  locKeyPunishment: "crime-assist-crimepunishment-sedition"
+
+- type: crimeAssistPage
+  id: "resultSexualHarrassment"
+  locKeyTitle: "crime-assist-crime-sexualharrassment"
+  locKeyDescription: "crime-assist-crimedetail-sexualharrassment"
+  locKeySeverity: "crime-assist-crimetype-capital"
+  locKeyPunishment: "crime-assist-crimepunishment-sexualharrassment"

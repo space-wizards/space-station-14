@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseItem
+  id: CrimeAssistCartridge
+  name: crime assist cartridge
+  description: A cartridge that helps identify crimes and see appropriate punishment.
+  components:
+  - type: Sprite
+    sprite: DeltaV/Objects/Devices/cartridge.rsi
+    state: cart-cri
+  - type: Icon
+    sprite: DeltaV/Objects/Devices/cartridge.rsi
+    state: cart-cri
+  - type: UIFragment
+    ui: !type:CrimeAssistUi
+  - type: Cartridge
+    programName: crime-assist-program-name
+    icon:
+      sprite: DeltaV/Icons/cri.rsi
+      state: cri
+  - type: CrimeAssistCartridge
