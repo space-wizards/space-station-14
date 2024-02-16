@@ -229,7 +229,8 @@
     sound: /Audio/Effects/lightburn.ogg
     damage:
       types:
-        Heat: 5 # You cannot handle my strongest nettle, traveler.
+        Heat: 4
+        Caustic: 4
 
 
 - type: entity
