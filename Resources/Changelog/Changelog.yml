@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lukasz825700516
-  changes:
-  - message: Gas tanks no longer predict insertion of random items.
-    type: Fix
-  id: 5448
-  time: '2023-12-21T10:37:35.0000000+00:00'
-  url: null
 - author: mirrorcult
   changes:
   - message: Smart equipping now works with item slots
@@ -3878,3 +3871,10 @@
   id: 5947
   time: '2024-02-16T18:42:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25308
+- author: Plykiya
+  changes:
+  - message: The firefighting door remote now has access to atmos doors.
+    type: Tweak
+  id: 5948
+  time: '2024-02-16T18:50:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25097
