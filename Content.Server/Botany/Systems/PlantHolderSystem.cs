@@ -147,7 +147,7 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
-
+                float? seedHealth=seeds.Health;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
@@ -157,7 +157,14 @@ public sealed class PlantHolderSystem : EntitySystem
                 component.Seed = seed;
                 component.Dead = false;
                 component.Age = 1;
-                component.Health = component.Seed.Endurance;
+                if (seedHealth is float realSeedHealth)
+                {
+                    component.Health = realSeedHealth;
+                }
+                else
+                {
+                    component.Health = component.Seed.Endurance;
+                }
                 component.LastCycle = _gameTiming.CurTime;
 
                 QueueDel(args.Used);
@@ -262,13 +269,13 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
+            component.Health -= (_random.Next(3, 5) * 10);
             component.Seed.Unique = false;
-            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
+            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, component.Health);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-            component.Health -= (_random.Next(3, 5) * 10);
 
             if (component.Seed != null && component.Seed.CanScream)
             {

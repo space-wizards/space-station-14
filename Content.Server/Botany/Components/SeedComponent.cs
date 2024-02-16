@@ -16,6 +16,12 @@ namespace Content.Server.Botany.Components
         public SeedData? Seed;
 
         /// <summary>
+        ///     The health value of a plant resulting from this seed. If null defaults to the plant's Endurance.
+        /// </summary>
+        [DataField("health")]
+        public float? Health = null;
+
+        /// <summary>
         ///     Name of a base seed prototype that is used if <see cref="Seed"/> is null.
         /// </summary>
         [DataField("seedId", customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
