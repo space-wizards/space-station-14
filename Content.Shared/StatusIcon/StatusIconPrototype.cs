@@ -38,7 +38,7 @@ public partial class StatusIconData : IComparable<StatusIconData>
     /// <summary>
     /// The layer the icon is displayed on. Mod is drawn above Base. Base | Mod
     /// </summary>
-    [DataField("layer")]
+    [DataField]
     public StatusIconLayer Layer = StatusIconLayer.Base;
 }
 
