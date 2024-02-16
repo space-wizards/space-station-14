@@ -1,0 +1,104 @@
+
+# Operative Balloons, looks just like the real thing!
+
+- type: entity
+  parent: [BaseItem, BaseFoldable]
+  id: BalloonOperative
+  name: operative balloon
+  description: Upon closer inspection, this Syndicate operative is actually a balloon.
+  components:
+  - type: Rotatable
+  - type: Sprite
+    sprite: Objects/Tools/Decoys/operative_decoy.rsi
+    layers:
+    - state: oballoon
+      map: ["unfoldedLayer"]
+    - state: folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Appearance
+  - type: Item
+    size: Normal
+  - type: RandomMetadata # No metagaming these, jimbo.
+    nameSegments:
+    - SyndicateNamesPrefix
+    - SyndicateNamesNormal
+  - type: PointLight # Just like the real thing...
+    radius: 1.5
+    energy: 2.3
+    offset: 0, -1
+    color: green
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Foldable
+    folded: true
+  - type: Tag
+    tags:
+    - Balloon
+
+- type: entity
+  parent: BalloonOperative
+  id: BalloonAgent
+  name: agent balloon
+  description: Upon closer inspection, this Syndicate agent is actually a balloon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Decoys/agent_decoy.rsi
+    layers:
+    - state: aballoon
+      map: ["unfoldedLayer"]
+    - state: folded
+      map: ["foldedLayer"]
+      visible: false
+
+- type: entity
+  parent: BalloonOperative
+  id: BalloonElite
+  name: elite operative balloon
+  description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Decoys/elite_decoy.rsi
+    layers:
+    - state: eballoon
+      map: ["unfoldedLayer"]
+    - state: folded
+      map: ["foldedLayer"]
+      visible: false
+    - type: PointLight .
+      radius: 1.5
+      energy: 2.3
+      offset: 0, -1
+      color: red
+
+- type: entity
+  parent: BalloonOperative
+  id: BalloonJuggernaut
+  name: juggernaut balloon
+  description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Decoys/juggernaut_decoy.rsi
+    layers:
+    - state: jballoon
+      map: ["unfoldedLayer"]
+    - state: folded
+      map: ["foldedLayer"]
+      visible: false
+    - type: PointLight
+      enabled: false
+
+- type: entity
+  parent: BalloonOperative
+  id: BalloonAgent
+  name: agent balloon
+  description: Upon closer inspection, this Syndicate agent is actually a balloon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Decoys/commander_decoy.rsi
+    layers:
+    - state: cballoon
+      map: ["unfoldedLayer"]
+    - state: folded
+      map: ["foldedLayer"]
+      visible: false
