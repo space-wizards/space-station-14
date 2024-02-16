@@ -15,10 +15,6 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: Paper
-    sound:
-      collection: PaperScribbles
-      params:
-        variation: 0.1
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     closeOnHandDeselect: false

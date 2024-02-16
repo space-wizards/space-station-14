@@ -9,7 +9,7 @@ public abstract partial class SharedPaperComponent : Component
     /// Sound played after writing to the paper.
     /// </summary>
     [DataField("sound")]
-    public SoundSpecifier? Sound { get; private set; } = null;
+    public SoundSpecifier? Sound { get; private set; } = new SoundCollectionSpecifier("PaperScribbles", AudioParams.Default.WithVariation(0.1f));
 
     [Serializable, NetSerializable]
     public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState
