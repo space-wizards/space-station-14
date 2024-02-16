@@ -63,7 +63,10 @@
   recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icecreamglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: LemonLime
@@ -73,9 +76,6 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: lemonlimesoda
   color: "#878F00"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/lemonlime.rsi
-    state: icon
 
 - type: reagent
   id: PwrGame
@@ -96,7 +96,10 @@
   color: "#381c07"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: RootBeerFloat
@@ -108,7 +111,10 @@
   color: "#4f361f"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 7
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: SpaceMountainWind

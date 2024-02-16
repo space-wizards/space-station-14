@@ -576,7 +576,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/b52glass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 5
+  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
@@ -1389,7 +1389,10 @@
   color: "#3b0c0c"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/singulo.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: SnowWhite
@@ -1510,7 +1513,10 @@
   color: "#665c00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: VodkaMartini
@@ -1544,8 +1550,11 @@
   flavor: alcohol
   color: "#0064C8"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
-    state: icon
+    sprite: Objects/Consumable/Drinks/gintonicglass.rsi # they look the same
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:

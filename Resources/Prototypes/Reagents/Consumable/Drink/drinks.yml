@@ -58,7 +58,10 @@
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: GreenTea
@@ -258,9 +261,6 @@
   desc: reagent-desc-nothing
   group: Drinks
   physicalDesc: reagent-physical-desc-nothing
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/nothing.rsi
-    state: icon
   metabolisms:
     Drink:
       effects:
@@ -279,7 +279,10 @@
   color: "#100800"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -311,7 +314,10 @@
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/soy_latte.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Tea
