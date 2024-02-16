@@ -40538,13 +40538,6 @@ entities:
     - type: Transform
       pos: 107.3062,-11.344688
       parent: 2
-- proto: FoodBoxDonkpocketGondola
-  entities:
-  - uid: 8861
-    components:
-    - type: Transform
-      pos: 107.35307,-10.954063
-      parent: 2
 - proto: FoodBoxDonut
   entities:
   - uid: 4982
