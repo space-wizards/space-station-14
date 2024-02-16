@@ -64,7 +64,7 @@
   itemSize: 2
 
 - type: stack
-  id: Salt
+  id: SaltOre
   name: salt
   icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: salt }
   spawn: Salt1
