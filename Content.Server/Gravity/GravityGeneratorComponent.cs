@@ -1,10 +1,12 @@
-﻿using Content.Shared.Gravity;
+using Content.Shared.Gravity;
+using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Gravity
 {
     [RegisterComponent]
     [Access(typeof(GravityGeneratorSystem))]
-    public sealed class GravityGeneratorComponent : SharedGravityGeneratorComponent
+    public sealed partial class GravityGeneratorComponent : SharedGravityGeneratorComponent
     {
         // 1% charge per second.
         [ViewVariables(VVAccess.ReadWrite)] [DataField("chargeRate")] public float ChargeRate { get; set; } = 0.01f;
@@ -28,6 +30,9 @@ namespace Content.Server.Gravity
         /// </summary>
         [DataField("intact")]
         public bool Intact { get; set; } = true;
+
+        [DataField("maxCharge")]
+        public float MaxCharge { get; set; } = 1;
 
         // 0 -> 1
         [ViewVariables(VVAccess.ReadWrite)] [DataField("charge")] public float Charge { get; set; } = 1;

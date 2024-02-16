@@ -1,11 +1,12 @@
-using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed class AddToSolutionReaction : ReagentEffect
+    public sealed partial class AddToSolutionReaction : ReagentEffect
     {
         [DataField("solution")]
         private string _solution = "reagents";
@@ -16,13 +17,15 @@ namespace Content.Server.Chemistry.ReagentEffects
                 return;
 
             // TODO see if this is correct
-            if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer))
+            var solutionContainerSystem = args.EntityManager.System<SolutionContainerSystem>();
+            if (!solutionContainerSystem.TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer))
                 return;
 
-            if (EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(args.SolutionEntity, solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
+            if (solutionContainerSystem.TryAddReagent(solutionContainer.Value, args.Reagent.ID, args.Quantity, out var accepted))
                 args.Source?.RemoveReagent(args.Reagent.ID, accepted);
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+            Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
     }
 }

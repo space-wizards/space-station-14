@@ -12,7 +12,6 @@ namespace Content.Server.Administration
     /// </remarks>
     /// <seealso cref="AnyCommandAttribute"/>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
-    [BaseTypeRequired(typeof(IConsoleCommand))]
     [MeansImplicitUse]
     public sealed class AdminCommandAttribute : Attribute
     {

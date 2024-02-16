@@ -1,15 +1,19 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
+using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Tag;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
@@ -24,11 +28,14 @@ public sealed partial class DungeonJob : Job<Dungeon>
     private readonly DecalSystem _decals;
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;
+    private readonly TileSystem _tile;
+    private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _transform;
+    private EntityQuery<TagComponent> _tagQuery;
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
-    private readonly Vector2 _position;
+    private readonly Vector2i _position;
 
     private readonly MapGridComponent _grid;
     private readonly EntityUid _gridUid;
@@ -46,12 +53,13 @@ public sealed partial class DungeonJob : Job<Dungeon>
         DecalSystem decals,
         DungeonSystem dungeon,
         EntityLookupSystem lookup,
+        TileSystem tile,
         SharedTransformSystem transform,
         DungeonConfigPrototype gen,
         MapGridComponent grid,
         EntityUid gridUid,
         int seed,
-        Vector2 position,
+        Vector2i position,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _sawmill = sawmill;
@@ -64,7 +72,10 @@ public sealed partial class DungeonJob : Job<Dungeon>
         _decals = decals;
         _dungeon = dungeon;
         _lookup = lookup;
+        _tile = tile;
+        _maps = _entManager.System<SharedMapSystem>();
         _transform = transform;
+        _tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         _gen = gen;
         _grid = grid;
@@ -81,17 +92,18 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
         switch (_gen.Generator)
         {
+            case NoiseDunGen noise:
+                dungeon = await GenerateNoiseDungeon(noise, _gridUid, _grid, _seed);
+                break;
             case PrefabDunGen prefab:
                 dungeon = await GeneratePrefabDungeon(prefab, _gridUid, _grid, _seed);
+                DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
                 break;
             default:
                 throw new NotImplementedException();
         }
 
-        foreach (var room in dungeon.Rooms)
-        {
-            dungeon.RoomTiles.UnionWith(room.Tiles);
-        }
+        DebugTools.Assert(dungeon.RoomTiles.Count > 0);
 
         // To make it slightly more deterministic treat this RNG as separate ig.
         var random = new Random(_seed);
@@ -102,10 +114,34 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
             switch (post)
             {
+                case AutoCablingPostGen cabling:
+                    await PostGen(cabling, dungeon, _gridUid, _grid, random);
+                    break;
+                case BiomePostGen biome:
+                    await PostGen(biome, dungeon, _gridUid, _grid, random);
+                    break;
+                case BoundaryWallPostGen boundary:
+                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
+                    break;
+                case CornerClutterPostGen clutter:
+                    await PostGen(clutter, dungeon, _gridUid, _grid, random);
+                    break;
+                case CorridorPostGen cordor:
+                    await PostGen(cordor, dungeon, _gridUid, _grid, random);
+                    break;
+                case CorridorDecalSkirtingPostGen decks:
+                    await PostGen(decks, dungeon, _gridUid, _grid, random);
+                    break;
+                case EntranceFlankPostGen flank:
+                    await PostGen(flank, dungeon, _gridUid, _grid, random);
+                    break;
+                case JunctionPostGen junc:
+                    await PostGen(junc, dungeon, _gridUid, _grid, random);
+                    break;
                 case MiddleConnectionPostGen dordor:
                     await PostGen(dordor, dungeon, _gridUid, _grid, random);
                     break;
-                case EntrancePostGen entrance:
+                case DungeonEntrancePostGen entrance:
                     await PostGen(entrance, dungeon, _gridUid, _grid, random);
                     break;
                 case ExternalWindowPostGen externalWindow:
@@ -114,8 +150,11 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case InternalWindowPostGen internalWindow:
                     await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
                     break;
-                case BoundaryWallPostGen boundary:
-                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
+                case BiomeMarkerLayerPostGen markerPost:
+                    await PostGen(markerPost, dungeon, _gridUid, _grid, random);
+                    break;
+                case RoomEntrancePostGen rEntrance:
+                    await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
                     break;
                 case WallMountPostGen wall:
                     await PostGen(wall, dungeon, _gridUid, _grid, random);
@@ -125,9 +164,12 @@ public sealed partial class DungeonJob : Job<Dungeon>
             }
 
             await SuspendIfOutOfTime();
-            ValidateResume();
+
+            if (!ValidateResume())
+                break;
         }
 
+        // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
         _grid.CanSplit = true;
         _entManager.System<GridFixtureSystem>().CheckSplits(_gridUid);
         return dungeon;

@@ -27,7 +27,7 @@ namespace Content.Shared.Humanoid.Markings;
 /// </remarks>
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed class MarkingSet
+public sealed partial class MarkingSet
 {
     /// <summary>
     ///     Every single marking in this set.
@@ -196,6 +196,40 @@ public sealed class MarkingSet
                     }
                 }
             }
+        }
+    }
+
+    /// <summary>
+    ///     Filters markings based on sex and it's restrictions in the marking's prototype from this marking set.
+    /// </summary>
+    /// <param name="sex">The species to filter.</param>
+    /// <param name="markingManager">Marking manager.</param>
+    public void EnsureSexes(Sex sex, MarkingManager? markingManager = null)
+    {
+        IoCManager.Resolve(ref markingManager);
+
+        var toRemove = new List<(MarkingCategories category, string id)>();
+
+        foreach (var (category, list) in Markings)
+        {
+            foreach (var marking in list)
+            {
+                if (!markingManager.TryGetMarking(marking, out var prototype))
+                {
+                    toRemove.Add((category, marking.MarkingId));
+                    continue;
+                }
+
+                if (prototype.SexRestriction != null && prototype.SexRestriction != sex)
+                {
+                    toRemove.Add((category, marking.MarkingId));
+                }
+            }
+        }
+
+        foreach (var remove in toRemove)
+        {
+            Remove(remove.category, remove.id);
         }
     }
 

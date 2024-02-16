@@ -1,8 +1,8 @@
 ﻿using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -12,11 +12,13 @@ namespace Content.Client.Atmos.UI
     [UsedImplicitly]
     public sealed class GasVolumePumpBoundUserInterface : BoundUserInterface
     {
-
-        private GasVolumePumpWindow? _window;
+        [ViewVariables]
         private const float MaxTransferRate = Atmospherics.MaxTransferRate;
 
-        public GasVolumePumpBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private GasVolumePumpWindow? _window;
+
+        public GasVolumePumpBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -26,7 +28,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasVolumePumpWindow();
 
-            if(State != null)
+            if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();
@@ -45,8 +47,9 @@ namespace Content.Client.Atmos.UI
 
         private void OnPumpTransferRatePressed(string value)
         {
-            float rate = float.TryParse(value, out var parsed) ? parsed : 0f;
-            if (rate > MaxTransferRate) rate = MaxTransferRate;
+            var rate = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
+            if (rate > MaxTransferRate)
+                rate = MaxTransferRate;
 
             SendMessage(new GasVolumePumpChangeTransferRateMessage(rate));
         }

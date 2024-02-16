@@ -8,7 +8,7 @@ namespace Content.Shared.Access.Systems
     }
 
     /// <summary>
-    /// Key representing which <see cref="BoundUserInterface"/> is currently open.
+    /// Key representing which <see cref="PlayerBoundUserInterface"/> is currently open.
     /// Useful when there are multiple UI for an object. Here it's future-proofing only.
     /// </summary>
     [Serializable, NetSerializable]
@@ -23,11 +23,13 @@ namespace Content.Shared.Access.Systems
     [Serializable, NetSerializable]
     public sealed class AgentIDCardBoundUserInterfaceState : BoundUserInterfaceState
     {
+        public readonly HashSet<string> Icons;
         public string CurrentName { get; }
         public string CurrentJob { get; }
 
-        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob)
+        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, HashSet<string> icons)
         {
+            Icons = icons;
             CurrentName = currentName;
             CurrentJob = currentJob;
         }
@@ -48,9 +50,21 @@ namespace Content.Shared.Access.Systems
     public sealed class AgentIDCardJobChangedMessage : BoundUserInterfaceMessage
     {
         public string Job { get; }
+
         public AgentIDCardJobChangedMessage(string job)
         {
             Job = job;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class AgentIDCardJobIconChangedMessage : BoundUserInterfaceMessage
+    {
+        public string JobIcon { get; }
+
+        public AgentIDCardJobIconChangedMessage(string jobIcon)
+        {
+            JobIcon = jobIcon;
         }
     }
 }

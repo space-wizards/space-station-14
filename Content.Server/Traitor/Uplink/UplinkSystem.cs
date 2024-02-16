@@ -4,6 +4,7 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Store;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -13,6 +14,7 @@ namespace Content.Server.Traitor.Uplink
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
 
+        [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
 
         /// <summary>
@@ -61,7 +63,11 @@ namespace Content.Server.Traitor.Uplink
             return true;
         }
 
-        private EntityUid? FindUplinkTarget(EntityUid user)
+        /// <summary>
+        /// Finds the entity that can hold an uplink for a user.
+        /// Usually this is a pda in their pda slot, but can also be in their hands. (but not pockets or inside bag, etc.)
+        /// </summary>
+        public EntityUid? FindUplinkTarget(EntityUid user)
         {
             // Try to find PDA in inventory
             if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
@@ -70,7 +76,7 @@ namespace Content.Server.Traitor.Uplink
                 {
                     if (!pdaUid.ContainedEntity.HasValue) continue;
 
-                    if (HasComp<PDAComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
+                    if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
                         return pdaUid.ContainedEntity.Value;
                 }
             }
@@ -78,7 +84,7 @@ namespace Content.Server.Traitor.Uplink
             // Also check hands
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                if (HasComp<PDAComponent>(item) || HasComp<StoreComponent>(item))
+                if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
                     return item;
             }
 

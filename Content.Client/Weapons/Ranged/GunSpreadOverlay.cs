@@ -33,7 +33,7 @@ public sealed class GunSpreadOverlay : Overlay
     {
         var worldHandle = args.WorldHandle;
 
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null ||
             !_entManager.TryGetComponent<TransformComponent>(player, out var xform))
@@ -50,17 +50,17 @@ public sealed class GunSpreadOverlay : Overlay
             return;
 
         var mouseScreenPos = _input.MouseScreenPosition;
-        var mousePos = _eye.ScreenToMap(mouseScreenPos);
+        var mousePos = _eye.PixelToMap(mouseScreenPos);
 
         if (mapPos.MapId != mousePos.MapId)
             return;
 
         // (☞ﾟヮﾟ)☞
-        var maxSpread = gun.MaxAngle;
-        var minSpread = gun.MinAngle;
+        var maxSpread = gun.MaxAngleModified;
+        var minSpread = gun.MinAngleModified;
         var timeSinceLastFire = (_timing.CurTime - gun.NextFire).TotalSeconds;
-        var currentAngle = new Angle(MathHelper.Clamp(gun.CurrentAngle.Theta - gun.AngleDecay.Theta * timeSinceLastFire,
-            gun.MinAngle.Theta, gun.MaxAngle.Theta));
+        var currentAngle = new Angle(MathHelper.Clamp(gun.CurrentAngle.Theta - gun.AngleDecayModified.Theta * timeSinceLastFire,
+            gun.MinAngleModified.Theta, gun.MaxAngleModified.Theta));
         var direction = (mousePos.Position - mapPos.Position);
 
         worldHandle.DrawLine(mapPos.Position, mousePos.Position + direction, Color.Orange);

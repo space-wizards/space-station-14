@@ -6,33 +6,36 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 public sealed partial class ArtifactSystem : EntitySystem
 {
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
 
         InitializeCommands();
         InitializeActions();
-    }
-
-    private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
-    {
-        RandomizeArtifact(uid, component);
     }
 
     /// <summary>
@@ -47,33 +50,11 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </remarks>
     private void GetPrice(EntityUid uid, ArtifactComponent component, ref PriceCalculationEvent args)
     {
-        var price = component.NodeTree.Sum(x => GetNodePrice(x, component));
-
-        // 25% bonus for fully exploring every node.
-        var fullyExploredBonus = component.NodeTree.Any(x => !x.Triggered) ? 1 : 1.25f;
-
-        args.Price =+ price * fullyExploredBonus;
-    }
-
-    private float GetNodePrice(ArtifactNode node, ArtifactComponent component)
-    {
-        if (!node.Discovered) //no money for undiscovered nodes.
-            return 0;
-
-        var triggerProto = _prototype.Index<ArtifactTriggerPrototype>(node.Trigger);
-        var effectProto = _prototype.Index<ArtifactEffectPrototype>(node.Effect);
-
-        //quarter price if not triggered
-        var priceMultiplier = node.Triggered ? 1f : 0.25f;
-        //the danger is the average of node depth, effect danger, and trigger danger.
-        var nodeDanger = (node.Depth + effectProto.TargetDepth + triggerProto.TargetDepth) / 3;
-
-        var price = MathF.Pow(2f, nodeDanger) * component.PricePerNode * priceMultiplier;
-        return price;
+        args.Price += (GetResearchPointValue(uid, component) + component.ConsumedPoints) * component.PriceMultiplier;
     }
 
     /// <summary>
-    /// Calculates how many research points the artifact is worht
+    /// Calculates how many research points the artifact is worth
     /// </summary>
     /// <remarks>
     /// General balancing (for fully unlocked artifacts):
@@ -93,8 +74,30 @@ public sealed partial class ArtifactSystem : EntitySystem
         var sumValue = component.NodeTree.Sum(n => GetNodePointValue(n, component, getMaxPrice));
         var fullyExploredBonus = component.NodeTree.All(x => x.Triggered) || getMaxPrice ? 1.25f : 1;
 
-        var pointValue = (int) (sumValue * fullyExploredBonus);
-        return pointValue;
+        return (int) (sumValue * fullyExploredBonus) - component.ConsumedPoints;
+    }
+
+    /// <summary>
+    /// Adjusts how many points on the artifact have been consumed
+    /// </summary>
+    public void AdjustConsumedPoints(EntityUid uid, int amount, ArtifactComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.ConsumedPoints += amount;
+    }
+
+    /// <summary>
+    /// Sets whether or not the artifact is suppressed,
+    /// preventing it from activating
+    /// </summary>
+    public void SetIsSuppressed(EntityUid uid, bool suppressed, ArtifactComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.IsSuppressed = suppressed;
     }
 
     /// <summary>
@@ -169,6 +172,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (component.CurrentNodeId == null)
             return;
 
+        _audio.PlayPvs(component.ActivationSound, uid);
         component.LastActivationTime = _gameTiming.CurTime;
 
         var ev = new ArtifactActivatedEvent
@@ -197,16 +201,11 @@ public sealed partial class ArtifactSystem : EntitySystem
         var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
         var allNodes = currentNode.Edges;
-        Logger.Debug($"our node: {currentNode.Id}");
-        Logger.Debug("other nodes:");
-        foreach (var other in allNodes)
-        {
-            Logger.Debug($"{other}");
-        }
+        Log.Debug($"our node: {currentNode.Id}");
+        Log.Debug($"other nodes: {string.Join(", ", allNodes)}");
 
         if (TryComp<BiasedArtifactComponent>(uid, out var bias) &&
             TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
-            _random.Prob(trav.BiasChance) &&
             this.IsPowered(bias.Provider, EntityManager))
         {
             switch (trav.BiasDirection)
@@ -224,13 +223,15 @@ public sealed partial class ArtifactSystem : EntitySystem
             }
         }
 
-        var undiscoveredNodes = allNodes.Where(x => GetNodeFromId(x, component).Discovered).ToList();
+        var undiscoveredNodes = allNodes.Where(x => !GetNodeFromId(x, component).Discovered).ToList();
+        Log.Debug($"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
         var newNode = _random.Pick(allNodes);
         if (undiscoveredNodes.Any() && _random.Prob(0.75f))
         {
             newNode = _random.Pick(undiscoveredNodes);
         }
 
+        Log.Debug($"Going to node {newNode}");
         return GetNodeFromId(newNode, component);
     }
 
@@ -290,19 +291,5 @@ public sealed partial class ArtifactSystem : EntitySystem
     public ArtifactNode GetRootNode(List<ArtifactNode> allNodes)
     {
         return allNodes.First(n => n.Depth == 0);
-    }
-
-    /// <summary>
-    /// Make shit go ape on round-end
-    /// </summary>
-    private void OnRoundEnd(RoundEndTextAppendEvent ev)
-    {
-        var query = EntityQueryEnumerator<ArtifactComponent>();
-        while (query.MoveNext(out var ent, out var artifactComp))
-        {
-            artifactComp.CooldownTime = TimeSpan.Zero;
-            var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
-            timerTrigger.ActivationRate = TimeSpan.FromSeconds(0.5); //HAHAHAHAHAHAHAHAHAH -emo
-        }
     }
 }

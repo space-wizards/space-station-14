@@ -5,7 +5,7 @@ using Robust.Shared.Maths;
 using static ImGuiNET.ImGui;
 using Color = System.Drawing.Color;
 using Vector2 = System.Numerics.Vector2;
-using RobustVec2 = Robust.Shared.Maths.Vector2;
+using RobustVec2 = System.Numerics.Vector2;
 using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Pow3r
@@ -237,6 +237,8 @@ namespace Pow3r
                 Begin($"Battery {battery.Id}##Bat{battery.Id}");
 
                 Checkbox("Enabled", ref battery.Enabled);
+                Checkbox("CanDischarge", ref battery.CanDischarge);
+                Checkbox("CanCharge", ref battery.CanCharge);
                 SliderFloat("Capacity", ref battery.Capacity, 0, 100000, "%.0f J");
                 SliderFloat("Max charge rate", ref battery.MaxChargeRate, 0, 1000, "%.0f W");
                 SliderFloat("Max supply", ref battery.MaxSupply, 0, 1000, "%.0f W");

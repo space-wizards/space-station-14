@@ -5,7 +5,7 @@ namespace Content.Shared.Nutrition.Components
 {
     [Access(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
-    public sealed class CreamPiedComponent : Component
+    public sealed partial class CreamPiedComponent : Component
     {
         [ViewVariables]
         public bool CreamPied { get; set; } = false;

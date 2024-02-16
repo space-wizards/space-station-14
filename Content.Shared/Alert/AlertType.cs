@@ -9,6 +9,7 @@ namespace Content.Shared.Alert
     {
         Error,
         LowOxygen,
+        LowNitrogen,
         LowPressure,
         HighPressure,
         Fire,
@@ -22,6 +23,8 @@ namespace Content.Shared.Alert
         HumanCrit,
         HumanDead,
         HumanHealth,
+        BorgBattery,
+        BorgBatteryNone,
         PilotingShuttle,
         Peckish,
         Starving,
@@ -38,12 +41,18 @@ namespace Content.Shared.Alert
         VowBroken,
         Essence,
         Corporeal,
+        Bleed,
+        Pacified,
         Debug1,
         Debug2,
         Debug3,
         Debug4,
         Debug5,
-        Debug6
+        Debug6,
+        SuitPower,
+        BorgHealth,
+        BorgCrit,
+        BorgDead
     }
 
 }

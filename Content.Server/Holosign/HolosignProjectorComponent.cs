@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Holosign
 {
     [RegisterComponent]
-    public sealed class HolosignProjectorComponent : Component
+    public sealed partial class HolosignProjectorComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("signProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]

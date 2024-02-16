@@ -1,0 +1,26 @@
+﻿- type: constructionGraph
+  id: StationBeaconPart
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: complete
+          steps:
+          - tool: Pulsing
+          completed:
+          - !type:PlaySound
+            sound: /Audio/Effects/unwrap.ogg
+
+    - node: complete
+      entity: DefaultStationBeaconUnanchored
+      edges:
+        - to: start
+          steps:
+          - tool: Welding
+            doAfter: 1
+          completed:
+          - !type:SpawnPrototype
+            prototype: SheetSteel1
+            amount: 1
+          - !type:DeleteEntity
+

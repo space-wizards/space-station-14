@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Morgue.Components;
 
 [RegisterComponent]
-public sealed class CrematoriumComponent : Component
+public sealed partial class CrematoriumComponent : Component
 {
     /// <summary>
     ///     The time it takes to cook in second
@@ -12,7 +12,7 @@ public sealed class CrematoriumComponent : Component
     public int CookTime = 5;
 
     [DataField("cremateStartSound")]
-    public SoundSpecifier CremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");
+    public SoundSpecifier CremateStartSound = new SoundPathSpecifier("/Audio/Items/Lighters/lighter1.ogg");
 
     [DataField("crematingSound")]
     public SoundSpecifier CrematingSound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");

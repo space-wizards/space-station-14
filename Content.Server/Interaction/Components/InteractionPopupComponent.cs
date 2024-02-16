@@ -1,9 +1,10 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Interaction.Components;
 
 [RegisterComponent, Access(typeof(InteractionPopupSystem))]
-public sealed class InteractionPopupComponent : Component
+public sealed partial class InteractionPopupComponent : Component
 {
     /// <summary>
     /// Time delay between interactions to avoid spam.
@@ -41,6 +42,18 @@ public sealed class InteractionPopupComponent : Component
     public SoundSpecifier? InteractFailureSound;
 
     /// <summary>
+    /// a prototype that will spawn upon successful interaction (as planned only for special effects)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? InteractSuccessSpawn;
+
+    /// <summary>
+    /// a prototype that will spawn upon failure interaction (as planned only for special effects)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? InteractFailureSpawn;
+
+    /// <summary>
     /// Chance that an interaction attempt will succeed.
     /// 1   = always play "success" popup and sound.
     /// 0.5 = 50% chance to play either success or failure popup and sound.
@@ -63,4 +76,10 @@ public sealed class InteractionPopupComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastInteractTime;
+
+    /// <summary>
+    /// If set to true, activate interactions will also trigger the component.
+    /// </summary>
+    [DataField]
+    public bool OnActivate;
 }

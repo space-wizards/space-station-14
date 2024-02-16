@@ -10,7 +10,7 @@ namespace Content.Shared.Decals
     [RegisterComponent]
     [Access(typeof(SharedDecalSystem))]
     [NetworkedComponent]
-    public sealed class DecalGridComponent : Component
+    public sealed partial class DecalGridComponent : Component
     {
         [DataField("chunkCollection", serverOnly: true)]
         public DecalGridChunkCollection ChunkCollection = new(new ());
@@ -31,7 +31,7 @@ namespace Content.Shared.Decals
 
         [DataDefinition]
         [Serializable, NetSerializable]
-        public sealed class DecalChunk
+        public sealed partial class DecalChunk
         {
             [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<uint, Decal>))]
             public Dictionary<uint, Decal> Decals;
@@ -78,7 +78,7 @@ namespace Content.Shared.Decals
             Chunks = chunks;
         }
 
-        public void ApplyToFullState(ComponentState fullState)
+        public void ApplyToFullState(IComponentState fullState)
         {
             DebugTools.Assert(!FullState);
             var state = (DecalGridState) fullState;
@@ -96,7 +96,7 @@ namespace Content.Shared.Decals
             }
         }
 
-        public ComponentState CreateNewFullState(ComponentState fullState)
+        public IComponentState CreateNewFullState(IComponentState fullState)
         {
             DebugTools.Assert(!FullState);
             var state = (DecalGridState) fullState;

@@ -4,7 +4,7 @@ namespace Content.Server.Resist;
 
 [RegisterComponent]
 [Access(typeof(ResistLockerSystem))]
-public sealed class ResistLockerComponent : Component
+public sealed partial class ResistLockerComponent : Component
 {
     /// <summary>
     /// How long will this locker take to kick open, defaults to 2 minutes
@@ -17,6 +17,4 @@ public sealed class ResistLockerComponent : Component
     /// </summary>
     [ViewVariables]
     public bool IsResisting = false;
-
-    public CancellationTokenSource? CancelToken;
 }

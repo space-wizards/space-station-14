@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Construction
 {
     [RegisterComponent]
-    public sealed class SharedCanBuildWindowOnTopComponent : Component
+    public sealed partial class SharedCanBuildWindowOnTopComponent : Component
     {
     }
 }

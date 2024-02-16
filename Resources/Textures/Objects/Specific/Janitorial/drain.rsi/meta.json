@@ -5,11 +5,15 @@
       "y":32
    },
    "license":"CC-BY-SA-3.0",
-   "copyright":"Created by EmoGarbage",
+   "copyright":"Created by EmoGarbage, fill-1 created by Topy for SS14",
    "states":[
       {
          "name":"icon",
          "directions": 4
-      }
+      },
+	  {
+		  "name": "fill-1",
+		  "directions": 4
+	  }
    ]
 }

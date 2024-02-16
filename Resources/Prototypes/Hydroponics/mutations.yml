@@ -1,0 +1,114 @@
+- type: weightedRandomFillSolution
+  id: RandomPickBotanyReagent
+  fills:
+  - quantity: 5
+    weight: 0.5
+    reagents:
+    - Omnizine
+    - Nocturine
+    - Barozine
+    - Lexorin
+    - Honk
+    - BuzzochloricBees
+    - Stimulants
+  - quantity: 5
+    weight: 1
+    reagents:
+    - Cognizine
+    - Toxin
+    - Leporazine
+    - Epinephrine
+    - CarpoToxin
+    - SulfuricAcid
+    - Licoxide
+    - Napalm
+    - ChlorineTrifluoride
+    - Radium
+    - Gold
+    - Uranium
+    - Phosphorus
+    - AtomicBomb
+    - Neurotoxin
+    - ChangelingSting
+    - CogChamp
+  - quantity: 5
+    weight: 2
+    reagents:
+    - Desoxyephedrine
+    - ChloralHydrate
+    - Ipecac
+    - Hyronalin
+    - Pax
+    - Cryoxadone
+    - Ethylredoxrazine
+    - Dylovene
+    - Histamine
+    - Blood
+    - WeldingFuel
+    - Mercury
+    - Silver
+    - Phenol
+    - Ultravasculine
+    - Carbon
+    - THC
+    - Nicotine
+    - DoctorsDelight
+    - IceCream
+    - Cola
+    - Diphenhydramine
+    - Iron
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Bicaridine
+    - Dermaline
+    - Ephedrine
+    - NorepinephricAcid
+    - Tricordrazine
+    - Saline
+    - PulpedBananaPeel
+    - Cryptobiolin
+    - EZNutrient
+    - Ammonia
+    - RobustHarvest
+    - SpaceLube
+    - Theobromine
+    - Allicin
+    - Acetone
+    - Ash
+    - SodiumCarbonate
+    - SpaceDrugs
+    - MuteToxin
+    - JuiceBerryPoison
+    - Pilk
+    - Posca
+    - Ethanol
+    - FourteenLoko
+    - LemonLime
+    - Enzyme
+    - Vinegar
+    - Potassium
+    - Fluorine
+    - Aluminium
+  - quantity: 10
+    weight: 3.5
+    reagents:
+    - Vitamin
+    - Kelotane
+    - Inaprovaline
+    - Oil
+    - Slime
+    - Fiber
+    - Water
+    - Sugar
+    - Cream
+    - SodaWater
+    - Ice
+    - JuiceCarrot
+    - JuicePotato
+    - Protein
+    - Flour
+    - Soysauce
+    - TableSalt
+    - Chlorine
+    - Mercury

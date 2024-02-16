@@ -1,11 +1,12 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Emp;
 using Content.Server.Radio.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -21,6 +22,8 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
 
         SubscribeLocalEvent<WearingHeadsetComponent, EntitySpokeEvent>(OnSpeak);
+
+        SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private void OnKeysChanged(EntityUid uid, HeadsetComponent component, EncryptionChannelsChangedEvent args)
@@ -30,7 +33,8 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void UpdateRadioChannels(EntityUid uid, HeadsetComponent headset, EncryptionKeyHolderComponent? keyHolder = null)
     {
-        if (!headset.Enabled)
+        // make sure to not add ActiveRadioComponent when headset is being deleted
+        if (!headset.Enabled || MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         if (!Resolve(uid, ref keyHolder))
@@ -96,6 +100,15 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
         if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
+            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
+    }
+
+    private void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
+    {
+        if (component.Enabled)
+        {
+            args.Affected = true;
+            args.Disabled = true;
+        }
     }
 }

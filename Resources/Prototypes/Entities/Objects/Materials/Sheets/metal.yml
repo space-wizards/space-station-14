@@ -5,13 +5,12 @@
   description: A sheet of metal, used often on the station in various applications.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/Sheets/metal.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/metal.rsi
+    size: Normal
   - type: StaticPrice
     price: 0
-  - type: ItemStatus
   - type: Tag
     tags:
     - Sheet
@@ -28,6 +27,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        canReact: false
 
 - type: entity
   parent: SheetMetalBase
@@ -36,24 +39,49 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Steel: 100
   - type: Stack
     stackType: Steel
+    baseLayer: base
+    layerStates:
+    - steel
+    - steel_2
+    - steel_3
   - type: Sprite
     state: steel_3
+    layers:
+    - state: steel_3
+      map: ["base"]
   - type: Item
     heldPrefix: steel
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - steel
-      - steel_2
-      - steel_3
   - type: FloorTile
     outputs:
     - Plating
+  - type: Extractable
+    grindableSolutionName: steel
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 9
+        - ReagentId: Carbon
+          Quantity: 1
+
+- type: entity
+  parent: SheetSteel
+  id: SheetSteel10
+  name: steel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: steel
+  - type: Stack
+    stackType: Steel
+    count: 10
 
 - type: entity
   parent: SheetSteel
@@ -68,27 +96,64 @@
     count: 1
 
 - type: entity
+  parent: SheetSteel
+  id: SheetSteelLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   parent: SheetMetalBase
   id: SheetPlasteel
   name: plasteel
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plasteel: 100
   - type: Stack
     stackType: Plasteel
+    baseLayer: base
+    layerStates:
+    - plasteel
+    - plasteel_2
+    - plasteel_3
   - type: Sprite
     state: plasteel_3
+    layers:
+    - state: plasteel_3
+      map: ["base"]
   - type: Item
     heldPrefix: plasteel
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plasteel
-      - plasteel_2
-      - plasteel_3
+  - type: Extractable
+    grindableSolutionName: plasteel
+  - type: SolutionContainerManager
+    solutions:
+      plasteel:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 9
+        - ReagentId: Carbon
+          Quantity: 1
+        canReact: false
+
+- type: entity
+  parent: SheetPlasteel
+  id: SheetPlasteel10
+  name: plasteel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plasteel
+  - type: Stack
+    stackType: Plasteel
+    count: 10
 
 - type: entity
   parent: SheetPlasteel

@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
 [RegisterComponent]
-public sealed class NodeScannerComponent : Component
+public sealed partial class NodeScannerComponent : Component
 {
 
 }

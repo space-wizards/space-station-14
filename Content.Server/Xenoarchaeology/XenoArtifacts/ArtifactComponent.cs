@@ -1,11 +1,12 @@
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-[RegisterComponent]
-public sealed class ArtifactComponent : Component
+[RegisterComponent, Access(typeof(ArtifactSystem))]
+public sealed partial class ArtifactComponent : Component
 {
     /// <summary>
     /// Every node contained in the tree
@@ -53,30 +54,52 @@ public sealed class ArtifactComponent : Component
     public TimeSpan LastActivationTime;
 
     /// <summary>
-    /// The base price of each node for an artifact
+    /// A multiplier applied to the calculated point value
+    /// to determine the monetary value of the artifact
     /// </summary>
-    [DataField("pricePerNode")]
-    public int PricePerNode = 500;
+    [DataField("priceMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    public float PriceMultiplier = 0.05f;
 
     /// <summary>
     /// The base amount of research points for each artifact node.
     /// </summary>
-    [DataField("pointsPerNode")]
-    public int PointsPerNode = 5000;
+    [DataField("pointsPerNode"), ViewVariables(VVAccess.ReadWrite)]
+    public int PointsPerNode = 6500;
+
+    /// <summary>
+    /// Research points which have been "consumed" from the theoretical max value of the artifact.
+    /// </summary>
+    [DataField("consumedPoints"), ViewVariables(VVAccess.ReadWrite)]
+    public int ConsumedPoints;
 
     /// <summary>
     /// A multiplier that is raised to the power of the average depth of a node.
     /// Used for calculating the research point value of an artifact node.
     /// </summary>
-    [DataField("pointDangerMultiplier")]
+    [DataField("pointDangerMultiplier"), ViewVariables(VVAccess.ReadWrite)]
     public float PointDangerMultiplier = 1.35f;
+
+    /// <summary>
+    /// The sound that plays when an artifact is activated
+    /// </summary>
+    [DataField("activationSound")]
+    public SoundSpecifier ActivationSound = new SoundCollectionSpecifier("ArtifactActivation")
+    {
+        Params = new()
+        {
+            Variation = 0.1f,
+            Volume = 3f
+        }
+    };
+
+    [DataField("activateActionEntity")] public EntityUid? ActivateActionEntity;
 }
 
 /// <summary>
 /// A single "node" of an artifact that contains various data about it.
 /// </summary>
 [DataDefinition]
-public sealed class ArtifactNode : ICloneable
+public sealed partial class ArtifactNode : ICloneable
 {
     /// <summary>
     /// A numeric id corresponding to each node.

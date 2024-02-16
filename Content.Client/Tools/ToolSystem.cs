@@ -1,10 +1,11 @@
 using Content.Client.Items;
 using Content.Client.Tools.Components;
 using Content.Client.Tools.UI;
-using Content.Shared.Tools;
+using Content.Shared.Item;
 using Content.Shared.Tools.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Client.Tools
 {
@@ -15,8 +16,8 @@ namespace Content.Client.Tools
             base.Initialize();
 
             SubscribeLocalEvent<WelderComponent, ComponentHandleState>(OnWelderHandleState);
-            SubscribeLocalEvent<WelderComponent, ItemStatusCollectMessage>(OnWelderGetStatusMessage);
-            SubscribeLocalEvent<MultipleToolComponent, ItemStatusCollectMessage>(OnGetStatusMessage);
+            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent));
+            Subs.ItemStatus<MultipleToolComponent>(ent => new MultipleToolStatusControl(ent));
         }
 
         public override void SetMultipleTool(EntityUid uid,
@@ -42,16 +43,6 @@ namespace Content.Client.Tools
             }
         }
 
-        private void OnGetStatusMessage(EntityUid uid, MultipleToolComponent welder, ItemStatusCollectMessage args)
-        {
-            args.Controls.Add(new MultipleToolStatusControl(welder));
-        }
-
-        private void OnWelderGetStatusMessage(EntityUid uid, WelderComponent component, ItemStatusCollectMessage args)
-        {
-            args.Controls.Add(new WelderStatusControl(component));
-        }
-
         private void OnWelderHandleState(EntityUid uid, WelderComponent welder, ref ComponentHandleState args)
         {
             if (args.Current is not WelderComponentState state)
@@ -59,8 +50,12 @@ namespace Content.Client.Tools
 
             welder.FuelCapacity = state.FuelCapacity;
             welder.Fuel = state.Fuel;
-            welder.Lit = state.Lit;
             welder.UiUpdateNeeded = true;
+        }
+
+        protected override bool IsWelder(EntityUid uid)
+        {
+            return HasComp<WelderComponent>(uid);
         }
     }
 }

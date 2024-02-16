@@ -1,0 +1,233 @@
+# Markers
+- type: entity
+  id: SalvageShuttleMarker
+  parent: FTLPoint
+
+# Biome mods -> at least 1 required
+- type: salvageBiomeMod
+  id: Caves
+  biome: Caves
+
+- type: salvageBiomeMod
+  id: Grasslands
+  biome: Grasslands
+
+- type: salvageBiomeMod
+  id: Snow
+  cost: 1
+  biome: Snow
+
+- type: salvageBiomeMod
+  id: Lava
+  cost: 2
+  biome: Lava
+
+#- type: salvageBiomeMod
+#  id: Space
+#  cost: 1
+#  weather: false
+#  biome: null
+
+# Light mods -> required
+- type: salvageLightMod
+  id: Daylight
+  desc: Daylight
+  color: "#D8B059"
+  biomes:
+    - Grasslands
+
+- type: salvageLightMod
+  id: Lavalight
+  desc: Daylight
+  color: "#A34931"
+  biomes:
+    - Lava
+
+- type: salvageLightMod
+  id: Evening
+  desc: Evening
+  color: "#2b3143"
+
+- type: salvageLightMod
+  id: Night
+  desc: Night time
+  cost: 1
+  color: null
+
+# Temperatures
+- type: salvageTemperatureMod
+  id: RoomTemp
+  cost: 0
+
+- type: salvageTemperatureMod
+  id: Hot
+  cost: 1
+  temperature: 323.15 # 50C
+  biomes:
+    - Caves
+    #- LowDesert
+    - Grasslands
+    - Lava
+
+- type: salvageTemperatureMod
+  id: Burning
+  desc: High temperature
+  cost: 2
+  temperature: 423.15 # 200C
+  biomes:
+    - Caves
+    #- LowDesert
+    - Lava
+
+- type: salvageTemperatureMod
+  id: Melting
+  desc: Extreme heat
+  cost: 4
+  temperature: 1273.15 # 1000C hot hot hot
+  biomes:
+    - Lava
+
+- type: salvageTemperatureMod
+  id: Cold
+  cost: 1
+  temperature: 275.15 # 2C
+  biomes:
+    - Caves
+    #- LowDesert
+    - Grasslands
+    - Snow
+
+- type: salvageTemperatureMod
+  id: Tundra
+  desc: Low temperature
+  cost: 2
+  temperature: 263.15 # -40C
+  biomes:
+    - Caves
+    - Snow
+
+- type: salvageTemperatureMod
+  id: Frozen
+  desc: Extreme cold
+  cost: 4
+  temperature: 123.15 # -150C
+  biomes:
+    - Snow
+
+# Air mixtures
+- type: salvageAirMod
+  id: Space
+  desc: No atmosphere
+  space: true
+  cost: 2
+  biomes:
+    - Caves
+    - Lava
+
+- type: salvageAirMod
+  id: Breathable
+  cost: 0
+  gases:
+    - 21.824779 # oxygen
+    - 82.10312 # nitrogen
+
+- type: salvageAirMod
+  id: Sleepy
+  cost: 1
+  desc: Dangerous atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 72.10312 # nitrogen
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 10 # nitrous oxide
+  biomes:
+    - Caves
+    #- LowDesert
+    - Snow
+    - Grasslands
+    - Lava
+
+- type: salvageAirMod
+  id: Poisoned
+  cost: 2
+  desc: Dangerous atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 77.10312 # nitrogen
+    - 10 # carbon dioxide
+  biomes:
+    - Caves
+    #- LowDesert
+    - Snow
+    - Grasslands
+    - Lava
+
+- type: salvageAirMod
+  id: Poison
+  cost: 3
+  desc: Toxic atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 0
+    - 82.10312 # carbon dioxide
+  biomes:
+    - Caves
+    - Snow
+    - Lava
+
+- type: salvageAirMod
+  id: Plasma
+  cost: 4
+  desc: Toxic atmosphere
+  gases:
+    - 0
+    - 0
+    - 0
+    - 103.927899 # plasma
+  biomes:
+    - Caves
+    - Lava
+
+- type: salvageAirMod
+  id: Burnable
+  cost: 5
+  desc: Volatile atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 0
+    - 0
+    - 82.10312 # plasma
+  biomes:
+    - Caves
+    - Lava
+
+# Weather mods -> not required
+#- type: salvageWeatherMod
+#  id: SnowfallHeavy
+#  weather: SnowfallHeavy
+#  cost: 1
+#
+#- type: salvageWeatherMod
+#  id: Rain
+#  weather: Rain
+
+# Dungeons
+#  For now just simple 1-dungeon setups
+- type: salvageDungeonMod
+  id: Experiment
+  proto: Experiment
+  biomes:
+    - Caves
+    #- LowDesert
+    - Snow
+    - Grasslands
+
+- type: salvageDungeonMod
+  id: LavaBrig
+  proto: LavaBrig
+  biomes:
+    - Lava

@@ -9,7 +9,13 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
-      netsync: false
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 50
+      chemicalComposition:
+        Silicon: 20
+    - type: StaticPrice
+      price: 34
 
 # Wallmount Substation
 - type: entity
@@ -21,7 +27,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
-      netsync: false
+    - type: StaticPrice
+      price: 40
     - type: Tag
       tags:
         - DroneUsable
@@ -29,19 +36,23 @@
 
 # Wallmount Generator
 - type: entity
-  id: WallmountGeneratorElectronics
   parent: BaseElectronics
+  id: WallmountGeneratorElectronics
   name: wallmount generator electronics
   description: Circuit used to construct a wallmount generator.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: charger_APC
-      netsync: false
-    - type: Tag
-      tags:
-        - DroneUsable
-        - WallmountGeneratorElectronics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC
+  - type: StaticPrice
+    price: 20
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 90
+  - type: Tag
+    tags:
+      - DroneUsable
+      - WallmountGeneratorElectronics
 
 # APU
 - type: entity
@@ -53,7 +64,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
-      netsync: false
+    - type: StaticPrice
+      price: 40
     - type: Tag
       tags:
         - DroneUsable
@@ -69,7 +81,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
-      netsync: false
+    - type: StaticPrice
+      price: 85
     - type: Tag
       tags:
         - DroneUsable

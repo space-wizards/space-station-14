@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -12,12 +11,11 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class ChemMasterBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [ViewVariables]
         private ChemMasterWindow? _window;
 
-        public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public ChemMasterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-
         }
 
         /// <summary>
@@ -31,7 +29,7 @@ namespace Content.Client.Chemistry.UI
             // Setup window layout/elements
             _window = new ChemMasterWindow
             {
-                Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
+                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
             };
 
             _window.OpenCentered();
@@ -48,9 +46,10 @@ namespace Content.Client.Chemistry.UI
                 new ChemMasterSetModeMessage(ChemMasterMode.Discard));
             _window.CreatePillButton.OnPressed += _ => SendMessage(
                 new ChemMasterCreatePillsMessage(
-                    (uint)_window.PillDosage.Value, (uint)_window.PillNumber.Value, _window.LabelLine));
+                    (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
             _window.CreateBottleButton.OnPressed += _ => SendMessage(
-                new ChemMasterOutputToBottleMessage((uint)_window.BottleDosage.Value, _window.LabelLine));
+                new ChemMasterOutputToBottleMessage(
+                    (uint) _window.BottleDosage.Value, _window.LabelLine));
 
             for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {

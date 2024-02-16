@@ -6,5 +6,5 @@ namespace Content.Shared.Strip.Components
     ///     Give to an entity to say they can strip another entity.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed class StrippingComponent : Component {}
+    public sealed partial class StrippingComponent : Component {}
 }

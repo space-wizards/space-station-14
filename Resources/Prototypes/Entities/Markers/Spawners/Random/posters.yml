@@ -85,6 +85,12 @@
       - PosterContrabandNuclearDeviceInformational
       - PosterContrabandRevolt
       - PosterContrabandRise
+      - PosterContrabandMoth
+      - PosterContrabandCybersun600
+      - PosterContrabandDonk
+      - PosterContrabandEnlistGorlex
+      - PosterContrabandInterdyne
+      - PosterContrabandWaffleCorp
     chance: 1
 
 - type: entity
@@ -139,4 +145,8 @@
       - PosterLegitThereIsNoGasGiant
       - PosterLegitJustAWeekAway
       - PosterLegitSecWatch
+      - PosterLegitVacation
+      - PosterLegitPeriodicTable
+      - PosterLegitRenault
+      - PosterLegitNTTGC
     chance: 1

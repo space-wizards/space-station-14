@@ -5,15 +5,15 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ConditionalAction : IGraphAction
+    public sealed partial class ConditionalAction : IGraphAction
     {
-        [DataField("passUser")] public bool PassUser { get; }
+        [DataField("passUser")] public bool PassUser { get; private set; }
 
-        [DataField("condition", required:true)] public IGraphCondition? Condition { get; }
+        [DataField("condition", required:true)] public IGraphCondition? Condition { get; private set; }
 
-        [DataField("action", required:true)] public IGraphAction? Action { get; }
+        [DataField("action", required:true)] public IGraphAction? Action { get; private set; }
 
-        [DataField("else")] public IGraphAction? Else { get; }
+        [DataField("else")] public IGraphAction? Else { get; private set; }
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

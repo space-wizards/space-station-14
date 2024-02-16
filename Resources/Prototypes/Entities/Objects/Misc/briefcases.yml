@@ -5,14 +5,40 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: 60
+    size: Ginormous
   - type: Storage
-    capacity: 60
+    grid:
+    - 0,0,5,3
+  - type: Tag
+    tags:
+    - Briefcase
 
 - type: entity
   name: brown briefcase
   parent: BriefcaseBase
   id: BriefcaseBrown
+  description: A handy briefcase.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+
+- type: entity
+  parent: BriefcaseBase
+  abstract: true
+  id: BriefcaseSyndieBase
+  suffix: Syndicate, Empty
+  description: Useful for carrying items in your hands.
+  components:
+  - type: Item
+    size: Huge
+
+- type: entity
+  name: brown briefcase
+  parent: BriefcaseSyndieBase
+  id: BriefcaseSyndie
   description: A handy briefcase.
   components:
   - type: Sprite

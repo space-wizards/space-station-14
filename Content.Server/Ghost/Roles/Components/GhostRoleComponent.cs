@@ -1,22 +1,26 @@
 ﻿using Content.Server.Mind.Commands;
-using Robust.Server.Player;
+using Content.Shared.Roles;
 
 namespace Content.Server.Ghost.Roles.Components
 {
+    [RegisterComponent]
     [Access(typeof(GhostRoleSystem))]
-    public abstract class GhostRoleComponent : Component
+    public sealed partial class GhostRoleComponent : Component
     {
-        [DataField("name")] public string _roleName = "Unknown";
+        [DataField("name")] private string _roleName = "Unknown";
 
         [DataField("description")] private string _roleDescription = "Unknown";
 
         [DataField("rules")] private string _roleRules = "";
 
+        [DataField("requirements")]
+        public HashSet<JobRequirement>? Requirements;
+
         /// <summary>
         /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
-        protected bool MakeSentient = true;
+        public bool MakeSentient = true;
 
         /// <summary>
         ///     The probability that this ghost role will be available after init.
@@ -55,7 +59,7 @@ namespace Content.Server.Ghost.Roles.Components
         [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleRules
         {
-            get => _roleRules;
+            get => Loc.GetString(_roleRules);
             set
             {
                 _roleRules = value;
@@ -83,7 +87,5 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reregister")]
         public bool ReregisterOnGhost { get; set; } = true;
-
-        public abstract bool Take(IPlayerSession session);
     }
 }

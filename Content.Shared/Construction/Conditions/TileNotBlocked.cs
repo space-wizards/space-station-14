@@ -2,31 +2,43 @@ using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Construction.Conditions
+namespace Content.Shared.Construction.Conditions;
+
+[UsedImplicitly]
+[DataDefinition]
+public sealed partial class TileNotBlocked : IConstructionCondition
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public sealed class TileNotBlocked : IConstructionCondition
+    [DataField("filterMobs")] private bool _filterMobs = false;
+    [DataField("failIfSpace")] private bool _failIfSpace = true;
+    [DataField("failIfNotSturdy")] private bool _failIfNotSturdy = true;
+
+    public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
     {
-        [DataField("filterMobs")] private bool _filterMobs = false;
-        [DataField("failIfSpace")] private bool _failIfSpace = true;
+        var tileRef = location.GetTileRef();
 
-        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
+        if (tileRef == null)
         {
-            var tileRef = location.GetTileRef();
-
-            if (tileRef == null || tileRef.Value.IsSpace())
-                return !_failIfSpace;
-
-            return !tileRef.Value.IsBlockedTurf(_filterMobs);
+            return false;
         }
 
-        public ConstructionGuideEntry GenerateGuideEntry()
+        if (tileRef.Value.IsSpace() && _failIfSpace)
         {
-            return new ConstructionGuideEntry
-            {
-                Localization = "construction-step-condition-tile-not-blocked",
-            };
+            return false;
         }
+
+        if (!tileRef.Value.GetContentTileDefinition().Sturdy && _failIfNotSturdy)
+        {
+            return false;
+        }
+
+        return !tileRef.Value.IsBlockedTurf(_filterMobs);
+    }
+
+    public ConstructionGuideEntry GenerateGuideEntry()
+    {
+        return new ConstructionGuideEntry
+        {
+            Localization = "construction-step-condition-tile-not-blocked",
+        };
     }
 }

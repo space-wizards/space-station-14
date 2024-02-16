@@ -51,8 +51,8 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         EscapeButton.OnPressed += EscapeButtonOnOnPressed;
     }
 
-    private void ActivateButton() => EscapeButton!.Pressed = true;
-    private void DeactivateButton() => EscapeButton!.Pressed = false;
+    private void ActivateButton() => EscapeButton!.SetClickPressed(true);
+    private void DeactivateButton() => EscapeButton!.SetClickPressed(false);
 
     public void OnStateEntered(GameplayState state)
     {
@@ -133,7 +133,10 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow?.Close();
     }
 
-    private void ToggleWindow()
+    /// <summary>
+    /// Toggles the game menu.
+    /// </summary>
+    public void ToggleWindow()
     {
         if (_escapeWindow == null)
             return;

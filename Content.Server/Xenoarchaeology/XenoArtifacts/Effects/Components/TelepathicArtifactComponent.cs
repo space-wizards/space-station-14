@@ -5,7 +5,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Thoughts are shown as popups and unique for each player.
 /// </summary>
 [RegisterComponent]
-public sealed class TelepathicArtifactComponent : Component
+public sealed partial class TelepathicArtifactComponent : Component
 {
     /// <summary>
     ///     Loc string ids of telepathic messages.

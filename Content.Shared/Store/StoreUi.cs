@@ -16,10 +16,16 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
 
     public readonly Dictionary<string, FixedPoint2> Balance;
 
-    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<string, FixedPoint2> balance)
+    public readonly bool ShowFooter;
+
+    public readonly bool AllowRefund;
+
+    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<string, FixedPoint2> balance, bool showFooter, bool allowRefund)
     {
         Listings = listings;
         Balance = balance;
+        ShowFooter = showFooter;
+        AllowRefund = allowRefund;
     }
 }
 
@@ -68,4 +74,13 @@ public sealed class StoreRequestWithdrawMessage : BoundUserInterfaceMessage
         Currency = currency;
         Amount = amount;
     }
+}
+
+/// <summary>
+///     Used when the refund button is pressed
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class StoreRequestRefundMessage : BoundUserInterfaceMessage
+{
+
 }

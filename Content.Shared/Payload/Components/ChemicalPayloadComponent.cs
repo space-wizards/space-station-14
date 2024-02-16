@@ -7,7 +7,7 @@ namespace Content.Shared.Payload.Components;
 ///     Chemical payload that mixes the solutions of two drain-able solution containers when triggered.
 /// </summary>
 [RegisterComponent]
-public sealed class ChemicalPayloadComponent : Component
+public sealed partial class ChemicalPayloadComponent : Component
 {
     [DataField("beakerSlotA", required: true)]
     public ItemSlot BeakerSlotA = new();

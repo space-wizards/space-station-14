@@ -1,6 +1,7 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Blocking;
@@ -12,8 +13,8 @@ public sealed partial class BlockingSystem
 
     private void InitializeUser()
     {
-        SubscribeLocalEvent<BlockingUserComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
+        SubscribeLocalEvent<BlockingComponent, DamageModifyEvent>(OnDamageModified);
 
         SubscribeLocalEvent<BlockingUserComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
@@ -39,25 +40,35 @@ public sealed partial class BlockingSystem
         UserStopBlocking(uid, component);
     }
 
-    private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
-    {
-        if (args.DamageDelta != null && args.DamageIncreased)
-            _damageable.TryChangeDamage(component.BlockingItem, args.DamageDelta, origin: args.Origin);
-    }
-
     private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
     {
-        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockingComponent))
+        if (TryComp<BlockingComponent>(component.BlockingItem, out var blocking))
         {
-            if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
+            if (args.Damage.GetTotal() <= 0)
+                return;
 
-            if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
+            var blockFraction = blocking.IsBlocking ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
+            blockFraction = Math.Clamp(blockFraction, 0, 1);
+            _damageable.TryChangeDamage(component.BlockingItem, blockFraction * args.OriginalDamage);
+
+            args.Damage *= (1 - blockFraction);
+
+            if (blocking.IsBlocking)
             {
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-                _audio.PlayPvs(blockingComponent.BlockSound, component.Owner, AudioParams.Default.WithVariation(0.2f));
+                _audio.PlayPvs(blocking.BlockSound, uid);
             }
         }
+    }
+
+    private void OnDamageModified(EntityUid uid, BlockingComponent component, DamageModifyEvent args)
+    {
+        var modifier = component.IsBlocking ? component.ActiveBlockDamageModifier : component.PassiveBlockDamageModifer;
+        if (modifier == null)
+        {
+            return;
+        }
+
+        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifier);
     }
 
     private void OnEntityTerminating(EntityUid uid, BlockingUserComponent component, ref EntityTerminatingEvent args)

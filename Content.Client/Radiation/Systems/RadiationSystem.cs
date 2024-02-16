@@ -10,7 +10,7 @@ public sealed class RadiationSystem : EntitySystem
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
     public List<RadiationRay>? Rays;
-    public Dictionary<EntityUid, Dictionary<Vector2i, float>>? ResistanceGrids;
+    public Dictionary<NetEntity, Dictionary<Vector2i, float>>? ResistanceGrids;
 
     public override void Initialize()
     {
@@ -40,15 +40,13 @@ public sealed class RadiationSystem : EntitySystem
 
         var str = $"Radiation update: {ev.ElapsedTimeMs}ms with. Receivers: {ev.ReceiversCount}, " +
                   $"Sources: {ev.SourcesCount}, Rays: {ev.Rays.Count}";
-        Logger.Info(str);
+        Log.Info(str);
 
         Rays = ev.Rays;
     }
 
     private void OnResistanceUpdate(OnRadiationOverlayResistanceUpdateEvent ev)
     {
-        if (!_overlayMan.TryGetOverlay(out RadiationDebugOverlay? overlay))
-            return;
         ResistanceGrids = ev.Grids;
     }
 }

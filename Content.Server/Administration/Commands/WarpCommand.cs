@@ -1,13 +1,12 @@
 using System.Linq;
-using Content.Server.Ghost.Components;
+using System.Numerics;
 using Content.Server.Warps;
 using Content.Shared.Administration;
 using Content.Shared.Follower;
-using Robust.Server.Player;
+using Content.Shared.Ghost;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -27,7 +26,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player == null)
             {
                 shell.WriteLine("Only players can use this command");
@@ -58,9 +57,7 @@ namespace Content.Server.Administration.Commands
                 var currentMap = _entManager.GetComponent<TransformComponent>(playerEntity).MapID;
                 var currentGrid = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
-                var found = _entManager.EntityQuery<WarpPointComponent>(true)
-                    .Where(p => p.Location == location)
-                    .Select(p => (_entManager.GetComponent<TransformComponent>(p.Owner).Coordinates, p.Follow))
+                var found = GetWarpPointByName(location)
                     .OrderBy(p => p.Item1, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
@@ -132,11 +129,28 @@ namespace Content.Server.Administration.Commands
 
         private IEnumerable<string> GetWarpPointNames()
         {
-            return _entManager.EntityQuery<WarpPointComponent>(true)
-                .Select(p => p.Location)
-                .Where(p => p != null)
-                .OrderBy(p => p)
-                .Distinct()!;
+            List<string> points = new(_entManager.Count<WarpPointComponent>());
+            var query = _entManager.AllEntityQueryEnumerator<WarpPointComponent, MetaDataComponent>();
+            while (query.MoveNext(out _, out var warp, out var meta))
+            {
+                points.Add(warp.Location ?? meta.EntityName);
+            }
+
+            points.Sort();
+            return points;
+        }
+
+        private List<(EntityCoordinates, bool)> GetWarpPointByName(string name)
+        {
+            List<(EntityCoordinates, bool)> points = new();
+            var query = _entManager.AllEntityQueryEnumerator<WarpPointComponent, MetaDataComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var warp, out var meta, out var xform))
+            {
+                if (name == (warp.Location ?? meta.EntityName))
+                    points.Add((xform.Coordinates, warp.Follow));
+            }
+
+            return points;
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

@@ -23,6 +23,7 @@
       - FoodBurgerBacon
       - FoodBurgerEmpowered
       - FoodBurgerCrab
+      - FoodBurgerHuman
       - FoodBurgerSoy
       - FoodBurgerMcrib
       - FoodBurgerMcguffin
@@ -45,13 +46,23 @@
       - FoodPizzaSassysageSlice
       - FoodPizzaPineappleSlice
       - FoodPizzaMoldySlice
+      - FoodBakedDumplings
+      - FoodBakedChevreChaud
+      - FoodBakedNugget
+      - FoodTacoBeef
+      - FoodTacoChicken
+      - FoodTacoFish
+      - FoodTacoBeefSupreme
+      - FoodTacoChickenSupreme
     chance: 0.8
     offset: 0.0
     #rare
     rarePrototypes:
       - FoodBurgerAppendix
       - FoodBurgerRobot
+      - FoodBurgerBaseball
       - FoodBurgerBear
+      - FoodBurgerCat
       - FoodBurgerClown
       - FoodBurgerMime
       - FoodBurgerBrain
@@ -63,5 +74,7 @@
       - FoodMeatLizardtailKebab
       - FoodMeatRatKebab
       - FoodMeatRatdoubleKebab
+      - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
+      - FoodTacoRat
     rareChance: 0.05

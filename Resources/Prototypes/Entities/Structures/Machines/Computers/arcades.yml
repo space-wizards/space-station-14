@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: ArcadeBase
   description: An arcade cabinet.
@@ -35,9 +35,64 @@
   components:
   - type: SpaceVillainArcade
     rewardAmount: 0
+    possibleRewards:
+    - ToyMouse
+    - ToyAi
+    - ToyNuke
+    - ToyGriffin
+    - ToyHonk
+    - ToyIan
+    - ToyMarauder
+    - ToyMauler
+    - ToyGygax
+    - ToyOdysseus
+    - ToyOwlman
+    - ToyDeathRipley
+    - ToyPhazon
+    - ToyFireRipley
+    - ToyReticence
+    - ToyRipley
+    - ToySeraph
+    - ToyDurand
+    - ToySkeleton
+    - FoamCrossbow
+    - RevolverCapGun
+    - PlushieHampter
+    - PlushieLizard
+    - PlushieAtmosian
+    - PlushieSpaceLizard
+    - PlushieNuke
+    - PlushieCarp
+    - PlushieRatvar
+    - PlushieNar
+    - PlushieSnake
+    - PlushieArachind
+    - Basketball
+    - Football
+    - PlushieRouny
+    - PlushieBee
+    - PlushieSlime
+    - BalloonCorgi
+    - ToySword
+    - CrayonBox
+    - BoxDonkSoftBox
+    - BoxCartridgeCap
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - RecorderInstrument
+    - GunpetInstrument
+    - BirdToyInstrument
+    - PlushieXeno
+    - BeachBall
+    - PlushieMoth
+    - PlushieHampter
+    - PlushiePenguin
+    - PlushieHuman
+    - ClothingHeadHatCowboyRed
+  - type: WiresPanel
   - type: Wires
-    LayoutId: Arcade
-    BoardName: "Arcade"
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -58,7 +113,7 @@
   - type: SpaceVillainArcade
     rewardMinAmount: 5
     rewardMaxAmount: 8
-    
+
 - type: entity
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.
@@ -76,9 +131,10 @@
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: WiresPanel
   - type: Wires
-    LayoutId: Arcade
-    BoardName: "Arcade"
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
   - type: UserInterface
     interfaces:
       - key: enum.BlockGameUiKey.Key

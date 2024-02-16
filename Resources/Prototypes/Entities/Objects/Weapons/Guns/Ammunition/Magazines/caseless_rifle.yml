@@ -15,12 +15,11 @@
     proto: CartridgeCaselessRifle
     capacity: 30
   - type: Item
-    size: 5
+    size: Small
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag.rsi
     layers:
     - state: base
@@ -43,7 +42,7 @@
     proto: CartridgeCaselessRifle
     capacity: 10
   - type: Item
-    size: 3
+    size: Tiny
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_short.rsi
     layers:
@@ -68,7 +67,7 @@
     proto: CartridgeCaselessRifle
     capacity: 10
   - type: Item
-    size: 5
+    size: Small
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
     layers:
@@ -104,26 +103,6 @@
   - type: Sprite
     slayers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 6
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  id: MagazinePistolCaselessRifleHighVelocity
-  name: "pistol magazine (.25 caseless high-velocity)"
-  parent: BaseMagazinePistolCaselessRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleHighVelocity
-    capacity: 10
-  - type: Sprite
-    layers:
-    - state: high_velocity
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -188,20 +167,6 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineCaselessRifleHighVelocity
-  name: "magazine (.25 caseless high-velocity)"
-  parent: BaseMagazineCaselessRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleHighVelocity
-  - type: Sprite
-    layers:
-    - state: high_velocity
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazineCaselessRiflePractice
   name: "magazine (.25 caseless practice)"
   parent: BaseMagazineCaselessRifle
@@ -240,21 +205,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineCaselessRifleShortHighVelocity
-  name: "short magazine (.25 caseless high-velocity)"
-  parent: BaseMagazineCaselessRifleShort
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleHighVelocity
-    capacity: 20
-  - type: Sprite
-    layers:
-    - state: high_velocity
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

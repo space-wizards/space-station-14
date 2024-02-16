@@ -10,7 +10,7 @@ namespace Content.Shared.Radio.Components;
 ///     This component is by entities that can contain encryption keys
 /// </summary>
 [RegisterComponent]
-public sealed class EncryptionKeyHolderComponent : Component
+public sealed partial class EncryptionKeyHolderComponent : Component
 {
     /// <summary>
     ///     Whether or not encryption keys can be removed from the headset.
@@ -41,12 +41,6 @@ public sealed class EncryptionKeyHolderComponent : Component
     [ViewVariables]
     public Container KeyContainer = default!;
     public const string KeyContainerName = "key_slots";
-
-    /// <summary>
-    /// Blocks multiple attempts to remove the key
-    /// </summary>
-    [DataField("removing")]
-    public bool Removing;
 
     /// <summary>
     ///     Combined set of radio channels provided by all contained keys.

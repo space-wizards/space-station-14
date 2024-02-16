@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Chat;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -8,17 +9,21 @@ using Content.Shared.Radio.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Shared.Radio.EntitySystems;
 
 /// <summary>
 ///     This system manages encryption keys & key holders for use with radio channels.
 /// </summary>
-public sealed class EncryptionKeySystem : EntitySystem
+public sealed partial class EncryptionKeySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -40,16 +45,13 @@ public sealed class EncryptionKeySystem : EntitySystem
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EntRemovedFromContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EncryptionRemovalFinishedEvent>(OnKeyRemoval);
-        SubscribeLocalEvent<EncryptionKeyHolderComponent, EncryptionRemovalCancelledEvent>(OnKeyCancelled);
-    }
-
-    private void OnKeyCancelled(EntityUid uid, EncryptionKeyHolderComponent component, EncryptionRemovalCancelledEvent args)
-    {
-        component.Removing = false;
     }
 
     private void OnKeyRemoval(EntityUid uid, EncryptionKeyHolderComponent component, EncryptionRemovalFinishedEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         var contained = component.KeyContainer.ContainedEntities.ToArray();
         _container.EmptyContainer(component.KeyContainer, reparent: false);
         foreach (var ent in contained)
@@ -57,10 +59,14 @@ public sealed class EncryptionKeySystem : EntitySystem
             _hands.PickupOrDrop(args.User, ent);
         }
 
-        // if tool use ever gets predicted this needs changing.
-        _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
-        _audio.PlayPvs(component.KeyExtractionSound, uid);
-        component.Removing = false;
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        // TODO add predicted pop-up overrides.
+        if (_net.IsServer)
+            _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
+
+        _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User);
     }
 
     public void UpdateChannels(EntityUid uid, EncryptionKeyHolderComponent component)
@@ -91,77 +97,74 @@ public sealed class EncryptionKeySystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
     {
-        if (!TryComp<ContainerManagerComponent>(uid, out var _) || args.Handled || component.Removing)
+        if (args.Handled)
             return;
-        if (!component.KeysUnlocked)
+
+        if (HasComp<EncryptionKeyComponent>(args.Used))
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
-            return;
-        }
-        if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
-        {
+            args.Handled = true;
             TryInsertKey(uid, component, args);
         }
-        else
+        else if (TryComp<ToolComponent>(args.Used, out var tool)
+                 && tool.Qualities.Contains(component.KeysExtractionMethod)
+                 && component.KeyContainer.ContainedEntities.Count > 0) // dont block deconstruction
         {
-            TryRemoveKey(uid, component, args);
+            args.Handled = true;
+            TryRemoveKey(uid, component, args, tool);
         }
     }
 
     private void TryInsertKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
     {
+        if (!component.KeysUnlocked)
+        {
+            _popup.PopupClient(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
+            return;
+        }
+
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
             return;
         }
 
         if (component.KeySlots <= component.KeyContainer.ContainedEntities.Count)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-key-slots-already-full"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-key-slots-already-full"), uid, args.User);
             return;
         }
 
-        if (component.KeyContainer.Insert(args.Used))
+        if (_container.Insert(args.Used, component.KeyContainer))
         {
-            if (_net.IsClient&& _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
             _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);
             args.Handled = true;
             return;
         }
     }
 
-    private void TryRemoveKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
+    private void TryRemoveKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args,
+        ToolComponent? tool)
     {
-        if (!TryComp<ToolComponent>(args.Used, out var tool) || !tool.Qualities.Contains(component.KeysExtractionMethod))
+        if (!component.KeysUnlocked)
+        {
+            _popup.PopupClient(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
             return;
+        }
 
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
             return;
         }
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-no-keys"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-no-keys"), uid, args.User);
             return;
         }
 
-        if (_net.IsServer)
-        {
-            //This is honestly the poor mans fix because the InteractUsingEvent fires off 12 times
-            component.Removing = true;
-            var toolEvData = new ToolEventData(new EncryptionRemovalFinishedEvent(args.User), cancelledEv: new EncryptionRemovalCancelledEvent(), targetEntity: uid);
-            if (_tool.UseTool(args.Used, args.User, uid, 1f, new[] { component.KeysExtractionMethod }, toolEvData, toolComponent: tool))
-                args.Handled = true;
-        }
+        _tool.UseTool(args.Used, args.User, uid, 1f, component.KeysExtractionMethod, new EncryptionRemovalFinishedEvent(), toolComponent: tool);
     }
 
     private void OnStartup(EntityUid uid, EncryptionKeyHolderComponent component, ComponentStartup args)
@@ -244,18 +247,8 @@ public sealed class EncryptionKeySystem : EntitySystem
         }
     }
 
-    public sealed class EncryptionRemovalFinishedEvent : EntityEventArgs
+    [Serializable, NetSerializable]
+    public sealed partial class EncryptionRemovalFinishedEvent : SimpleDoAfterEvent
     {
-        public EntityUid User;
-
-        public EncryptionRemovalFinishedEvent(EntityUid user)
-        {
-            User = user;
-        }
-    }
-
-    public sealed class EncryptionRemovalCancelledEvent : EntityEventArgs
-    {
-
     }
 }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

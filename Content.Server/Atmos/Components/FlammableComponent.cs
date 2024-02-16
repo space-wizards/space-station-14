@@ -4,18 +4,17 @@ using Robust.Shared.Physics.Collision.Shapes;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed class FlammableComponent : Component
+    public sealed partial class FlammableComponent : Component
     {
-        [ViewVariables]
-        public bool Resisting = false;
-
-        [ViewVariables]
-        public readonly List<EntityUid> Collided = new();
+        [DataField]
+        public bool Resisting;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool OnFire { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float FireStacks { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -35,5 +34,32 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("flammableCollisionShape")]
         public IPhysShape FlammableCollisionShape = new PhysShapeCircle(0.35f);
+
+        /// <summary>
+        ///     Should the component be set on fire by interactions with isHot entities
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("alwaysCombustible")]
+        public bool AlwaysCombustible = false;
+
+        /// <summary>
+        ///     Can the component anyhow lose its FireStacks?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canExtinguish")]
+        public bool CanExtinguish = true;
+
+        /// <summary>
+        ///     How many firestacks should be applied to component when being set on fire?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("firestacksOnIgnite")]
+        public float FirestacksOnIgnite = 2.0f;
+
+        /// <summary>
+        /// Determines how quickly the object will fade out. With positive values, the object will flare up instead of going out.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public float FirestackFade = -0.1f;
     }
 }

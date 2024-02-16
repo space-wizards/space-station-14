@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 /// Causes an entity to automatically emote when taking damage.
 /// </summary>
 [RegisterComponent, Access(typeof(EmoteOnDamageSystem))]
-public sealed class EmoteOnDamageComponent : Component
+public sealed partial class EmoteOnDamageComponent : Component
 {
     /// <summary>
     /// Chance of preforming an emote when taking damage and not on cooldown.

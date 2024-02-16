@@ -1,10 +1,12 @@
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Voting;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.Vote;
 
+[UsedImplicitly]
 public sealed class VoteUIController : UIController
 {
     [Dependency] private readonly IVoteManager _votes = default!;

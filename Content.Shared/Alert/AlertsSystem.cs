@@ -1,5 +1,6 @@
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
@@ -7,7 +8,8 @@ namespace Content.Shared.Alert;
 public abstract class AlertsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    private readonly Dictionary<AlertType, AlertPrototype> _typeToAlert = new();
+
+    private FrozenDictionary<AlertType, AlertPrototype> _typeToAlert = default!;
 
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
     {
@@ -42,7 +44,7 @@ public abstract class AlertsSystem : EntitySystem
             return alertsComponent.Alerts.ContainsKey(alert.AlertKey);
         }
 
-        Logger.DebugS("alert", "unknown alert type {0}", alertType);
+        Log.Debug("Unknown alert type {0}", alertType);
         return false;
     }
 
@@ -74,7 +76,7 @@ public abstract class AlertsSystem : EntitySystem
     ///     be erased if there is currently a cooldown for the alert)</param>
     public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
     {
-        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if (!TryComp(euid, out AlertsComponent? alertsComponent))
             return;
 
         if (TryGet(alertType, out var alert))
@@ -95,13 +97,13 @@ public abstract class AlertsSystem : EntitySystem
             alertsComponent.Alerts[alert.AlertKey] = new AlertState
                 { Cooldown = cooldown, Severity = severity, Type = alertType };
 
-            AfterShowAlert(alertsComponent);
+            AfterShowAlert((euid, alertsComponent));
 
-            Dirty(alertsComponent);
+            Dirty(euid, alertsComponent);
         }
         else
         {
-            Logger.ErrorS("alert", "Unable to show alert {0}, please ensure this alertType has" +
+            Log.Error("Unable to show alert {0}, please ensure this alertType has" +
                                    " a corresponding YML alert prototype",
                 alertType);
         }
@@ -112,7 +114,7 @@ public abstract class AlertsSystem : EntitySystem
     /// </summary>
     public void ClearAlertCategory(EntityUid euid, AlertCategory category)
     {
-        if(!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if(!TryComp(euid, out AlertsComponent? alertsComponent))
             return;
 
         var key = AlertKey.ForCategory(category);
@@ -121,9 +123,9 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
-        AfterClearAlert(alertsComponent);
+        AfterClearAlert((euid, alertsComponent));
 
-        Dirty(alertsComponent);
+        Dirty(euid, alertsComponent);
     }
 
     /// <summary>
@@ -141,27 +143,25 @@ public abstract class AlertsSystem : EntitySystem
                 return;
             }
 
-            AfterClearAlert(alertsComponent);
+            AfterClearAlert((euid, alertsComponent));
 
-            Dirty(alertsComponent);
+            Dirty(euid, alertsComponent);
         }
         else
         {
-            Logger.ErrorS("alert", "unable to clear alert, unknown alertType {0}", alertType);
+            Log.Error("Unable to clear alert, unknown alertType {0}", alertType);
         }
     }
 
     /// <summary>
     /// Invoked after showing an alert prior to dirtying the component
     /// </summary>
-    /// <param name="alertsComponent"></param>
-    protected virtual void AfterShowAlert(AlertsComponent alertsComponent) { }
+    protected virtual void AfterShowAlert(Entity<AlertsComponent> alerts) { }
 
     /// <summary>
     /// Invoked after clearing an alert prior to dirtying the component
     /// </summary>
-    /// <param name="alertsComponent"></param>
-    protected virtual void AfterClearAlert(AlertsComponent alertsComponent) { }
+    protected virtual void AfterClearAlert(Entity<AlertsComponent> alerts) { }
 
     public override void Initialize()
     {
@@ -169,12 +169,11 @@ public abstract class AlertsSystem : EntitySystem
 
         SubscribeLocalEvent<AlertsComponent, ComponentStartup>(HandleComponentStartup);
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
+        SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>(OnPlayerAttached);
 
-        SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
-
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(HandlePrototypesReloaded);
         LoadPrototypes();
-        _prototypeManager.PrototypesReloaded += HandlePrototypesReloaded;
     }
 
     protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
@@ -187,30 +186,25 @@ public abstract class AlertsSystem : EntitySystem
         RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
     }
 
-    public override void Shutdown()
-    {
-        _prototypeManager.PrototypesReloaded -= HandlePrototypesReloaded;
-
-        base.Shutdown();
-    }
-
     private void HandlePrototypesReloaded(PrototypesReloadedEventArgs obj)
     {
-        LoadPrototypes();
+        if (obj.WasModified<AlertPrototype>())
+            LoadPrototypes();
     }
 
     protected virtual void LoadPrototypes()
     {
-        _typeToAlert.Clear();
+        var dict = new Dictionary<AlertType, AlertPrototype>();
         foreach (var alert in _prototypeManager.EnumeratePrototypes<AlertPrototype>())
         {
-            if (!_typeToAlert.TryAdd(alert.AlertType, alert))
+            if (!dict.TryAdd(alert.AlertType, alert))
             {
-                Logger.ErrorS("alert",
-                    "Found alert with duplicate alertType {0} - all alerts must have" +
-                    " a unique alerttype, this one will be skipped", alert.AlertType);
+                Log.Error("Found alert with duplicate alertType {0} - all alerts must have" +
+                          " a unique alerttype, this one will be skipped", alert.AlertType);
             }
         }
+
+        _typeToAlert = dict.ToFrozenDictionary();
     }
 
     /// <summary>
@@ -230,7 +224,7 @@ public abstract class AlertsSystem : EntitySystem
 
         if (!IsShowingAlert(player.Value, msg.Type))
         {
-            Logger.DebugS("alert", "user {0} attempted to" +
+            Log.Debug("User {0} attempted to" +
                                    " click alert {1} which is not currently showing for them",
                 EntityManager.GetComponent<MetaDataComponent>(player.Value).EntityName, msg.Type);
             return;
@@ -238,15 +232,15 @@ public abstract class AlertsSystem : EntitySystem
 
         if (!TryGet(msg.Type, out var alert))
         {
-            Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.Type);
+            Log.Warning("Unrecognized encoded alert {0}", msg.Type);
             return;
         }
 
         alert.OnClick?.AlertClicked(player.Value);
     }
 
-    private static void ClientAlertsGetState(EntityUid uid, AlertsComponent component, ref ComponentGetState args)
+    private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)
     {
-        args.State = new AlertsComponentState(component.Alerts);
+        Dirty(uid, component);
     }
 }

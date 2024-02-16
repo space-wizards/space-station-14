@@ -3,7 +3,6 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Clothing.Systems;
@@ -27,29 +26,20 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChameleonClothingComponent, ComponentHandleState>(HandleState);
+        SubscribeLocalEvent<ChameleonClothingComponent, AfterAutoHandleStateEvent>(HandleState);
 
         PrepareAllVariants();
-        _proto.PrototypesReloaded += OnProtoReloaded;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReloaded);
     }
 
-    public override void Shutdown()
+    private void OnProtoReloaded(PrototypesReloadedEventArgs args)
     {
-        base.Shutdown();
-        _proto.PrototypesReloaded -= OnProtoReloaded;
+        if (args.WasModified<EntityPrototype>())
+            PrepareAllVariants();
     }
 
-    private void OnProtoReloaded(PrototypesReloadedEventArgs _)
+    private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref AfterAutoHandleStateEvent args)
     {
-        PrepareAllVariants();
-    }
-
-    private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ChameleonClothingComponentState state)
-            return;
-        component.SelectedId = state.SelectedId;
-
         UpdateVisuals(uid, component);
     }
 

@@ -45,14 +45,7 @@ public sealed class MappingSystem : EntitySystem
             ToggleAutosaveCommand);
 
         _sawmill = Logger.GetSawmill("autosave");
-        _cfg.OnValueChanged(CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _cfg.UnsubValueChanged(CCVars.AutosaveEnabled, SetAutosaveEnabled);
+        Subs.CVar(_cfg, CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
     }
 
     private void SetAutosaveEnabled(bool b)
@@ -82,7 +75,7 @@ public sealed class MappingSystem : EntitySystem
             }
 
             var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name);
-            _resMan.UserData.CreateDir(new ResourcePath(saveDir).ToRootedPath());
+            _resMan.UserData.CreateDir(new ResPath(saveDir).ToRootedPath());
 
             var path = Path.Combine(saveDir, $"{DateTime.Now.ToString("yyyy-M-dd_HH.mm.ss")}-AUTO.yml");
             _currentlyAutosaving[map] = (CalculateNextTime(), name);

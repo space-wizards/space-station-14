@@ -6,7 +6,7 @@ namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
     [Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
-    public sealed class DeviceNetworkComponent : Component
+    public sealed partial class DeviceNetworkComponent : Component
     {
         public enum DeviceNetIdDefaults
         {
@@ -101,5 +101,19 @@ namespace Content.Server.DeviceNetwork.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sendBroadcastAttemptEvent")]
         public bool SendBroadcastAttemptEvent = false;
+
+        /// <summary>
+        ///     A list of device-lists that this device is on.
+        /// </summary>
+        [DataField]
+        [Access(typeof(DeviceListSystem))]
+        public HashSet<EntityUid> DeviceLists = new();
+
+        /// <summary>
+        ///     A list of configurators that this device is on.
+        /// </summary>
+        [DataField]
+        [Access(typeof(NetworkConfiguratorSystem))]
+        public HashSet<EntityUid> Configurators = new();
     }
 }

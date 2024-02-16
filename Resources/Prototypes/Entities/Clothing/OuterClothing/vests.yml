@@ -1,23 +1,4 @@
-- type: entity
-  parent: ClothingOuterStorageBase #web vest so it should have some pockets for ammo
-  id: ClothingOuterVestWebMerc
-  name: merc web vest
-  description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.7 #slightly better overall protection but slightly worse than kevlar against bullets seems sensible
-        Slash: 0.7
-        Piercing: 0.5
-        Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
-    
+#Web vest
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterVestWeb
@@ -38,28 +19,30 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+#Mercenary web vest
 - type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterVestKevlar
-  name: kevlar vest
-  description: An armor vest made of synthetic fibers.
+  parent: ClothingOuterStorageBase #web vest so it should have some pockets for ammo
+  id: ClothingOuterVestWebMerc
+  name: merc web vest
+  description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.4
+        Blunt: 0.7 #slightly better overall protection but slightly worse than bulletproof armor against bullets seems sensible
+        Slash: 0.7
+        Piercing: 0.5
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+#Detective's vest
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterArmorBasic
   id: ClothingOuterVestDetective
   name: detective's vest
   description: A hard-boiled private investigator's armored vest.
@@ -68,18 +51,10 @@
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.75
-        Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
+#Hazard vest
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterVestHazard
   name: hi-viz vest
   description: A high-visibility vest used in work zones.
@@ -89,6 +64,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
 
+#(Bartender) vest
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVest

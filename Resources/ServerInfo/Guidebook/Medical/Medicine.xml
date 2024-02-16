@@ -1,0 +1,36 @@
+<Document>
+
+# Core Medications
+
+These medications are almost always useful to medbay in one way or another.
+
+<GuideReagentEmbed Reagent="Bicaridine"/>
+<GuideReagentEmbed Reagent="Kelotane"/>
+<GuideReagentEmbed Reagent="Dermaline"/>
+<GuideReagentEmbed Reagent="Dylovene"/>
+<GuideReagentEmbed Reagent="Inaprovaline"/>
+<GuideReagentEmbed Reagent="Dexalin"/>
+<GuideReagentEmbed Reagent="DexalinPlus"/>
+<GuideReagentEmbed Reagent="Iron"/>
+
+# Specialty Medications
+
+These medications tend to have specific use cases.
+
+<GuideReagentEmbed Reagent="Cryoxadone"/>
+<GuideReagentEmbed Reagent="Epinephrine"/>
+<GuideReagentEmbed Reagent="Hyronalin"/>
+<GuideReagentEmbed Reagent="Arithrazine"/>
+<GuideReagentEmbed Reagent="Phalanximine"/>
+<GuideReagentEmbed Reagent="Tricordrazine"/>
+<GuideReagentEmbed Reagent="TranexamicAcid"/>
+<GuideReagentEmbed Reagent="Ambuzol"/>
+<GuideReagentEmbed Reagent="Oculine"/>
+
+# All Medications
+
+This is a list of -all- medications available, including ones previously listed.
+
+<GuideReagentGroupEmbed Group="Medicine"/>
+
+</Document>

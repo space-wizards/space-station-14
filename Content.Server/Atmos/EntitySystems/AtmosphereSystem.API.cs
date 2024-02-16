@@ -127,9 +127,18 @@ public partial class AtmosphereSystem
         return ev.Mixtures;
     }
 
-    public GasMixture? GetTileMixture(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, bool excite = false)
+    public GasMixture? GetTileMixture (Entity<TransformComponent?> entity, MapGridComponent? grid = null, bool excite = false)
     {
-        var ev = new GetTileMixtureMethodEvent(gridUid, mapUid, tile, excite);
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return null;
+
+        var indices = _transformSystem.GetGridTilePositionOrDefault(entity);
+        return GetTileMixture(entity.Comp.GridUid, entity.Comp.MapUid, indices, excite);
+    }
+
+    public GasMixture? GetTileMixture(EntityUid? gridUid, EntityUid? mapUid, Vector2i gridTile, bool excite = false)
+    {
+        var ev = new GetTileMixtureMethodEvent(gridUid, mapUid, gridTile, excite);
 
         // If we've been passed a grid, try to let it handle it.
         if(gridUid.HasValue)

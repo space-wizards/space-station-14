@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.IoC;
 using Content.Client.Items;
 using Content.Client.Resources;
@@ -7,6 +8,7 @@ using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -56,13 +58,15 @@ public sealed partial class GunSystem
         RaiseLocalEvent(uid, ev, false);
     }
 
-    protected override void UpdateAmmoCount(EntityUid uid)
+    protected override void UpdateAmmoCount(EntityUid uid, bool prediction = true)
     {
         // Don't use resolves because the method is shared and there's no compref and I'm trying to
         // share as much code as possible
-        if (!Timing.IsFirstTimePredicted ||
+        if (prediction && !Timing.IsFirstTimePredicted ||
             !TryComp<AmmoCounterComponent>(uid, out var clientComp))
+        {
             return;
+        }
 
         UpdateAmmoCount(uid, clientComp);
     }
@@ -94,7 +98,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
             AddChild(new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -209,7 +213,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
 
             AddChild(new BoxContainer
             {
@@ -230,7 +234,7 @@ public sealed partial class GunSystem
                             }),
                         }
                     },
-                    new Control() { MinSize = (5, 0) },
+                    new Control() { MinSize = new Vector2(5, 0) },
                     (_ammoCount = new Label
                     {
                         StyleClasses = { StyleNano.StyleClassItemStatus },
@@ -265,7 +269,7 @@ public sealed partial class GunSystem
                     {
                         BackgroundColor = colorGone,
                     },
-                    MinSize = (10, 15),
+                    MinSize = new Vector2(10, 15),
                 });
             }
 
@@ -279,7 +283,7 @@ public sealed partial class GunSystem
                     {
                         BackgroundColor = color,
                     },
-                    MinSize = (10, 15),
+                    MinSize = new Vector2(10, 15),
                 });
             }
         }
@@ -296,7 +300,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
 
             AddChild(new BoxContainer
             {
@@ -310,7 +314,7 @@ public sealed partial class GunSystem
                         VerticalAlignment = VAlignment.Center,
                         HorizontalAlignment = HAlignment.Right,
                     }),
-                    new Control() { MinSize = (5,0) },
+                    new Control() { MinSize = new Vector2(5,0) },
                     new Control
                     {
                         HorizontalExpand = true,
@@ -329,7 +333,7 @@ public sealed partial class GunSystem
                             })
                         }
                     },
-                    new Control() { MinSize = (5,0) },
+                    new Control() { MinSize = new Vector2(5,0) },
                     (_ammoCount = new Label
                     {
                         StyleClasses = {StyleNano.StyleClassItemStatus},
@@ -415,7 +419,7 @@ public sealed partial class GunSystem
         {
             MinHeight = 15;
             HorizontalExpand = true;
-            VerticalAlignment = VAlignment.Center;
+            VerticalAlignment = Control.VAlignment.Center;
             AddChild((_bulletsList = new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -476,7 +480,7 @@ public sealed partial class GunSystem
                     box.AddChild(new TextureRect
                     {
                         Texture = texture,
-                        TextureScale = (scale, scale),
+                        TextureScale = new Vector2(scale, scale),
                         ModulateSelfOverride = Color.LimeGreen,
                     });
                 }

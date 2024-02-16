@@ -6,18 +6,19 @@ namespace Content.Client.SurveillanceCamera.UI;
 
 public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly EyeLerpingSystem _eyeLerpingSystem;
     private readonly SurveillanceCameraMonitorSystem _surveillanceCameraMonitorSystem;
 
+    [ViewVariables]
     private SurveillanceCameraMonitorWindow? _window;
+
+    [ViewVariables]
     private EntityUid? _currentCamera;
 
-    public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public SurveillanceCameraMonitorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        IoCManager.InjectDependencies(this);
-        _eyeLerpingSystem = _entityManager.EntitySysManager.GetEntitySystem<EyeLerpingSystem>();
-        _surveillanceCameraMonitorSystem = _entityManager.EntitySysManager.GetEntitySystem<SurveillanceCameraMonitorSystem>();
+        _eyeLerpingSystem = EntMan.System<EyeLerpingSystem>();
+        _surveillanceCameraMonitorSystem = EntMan.System<SurveillanceCameraMonitorSystem>();
     }
 
     protected override void Open()
@@ -54,7 +55,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
     private void OnCameraSwitchTimer()
     {
-        _surveillanceCameraMonitorSystem.AddTimer(Owner.Owner, _window!.OnSwitchTimerComplete);
+        _surveillanceCameraMonitorSystem.AddTimer(Owner, _window!.OnSwitchTimerComplete);
     }
 
     private void OnCameraRefresh()
@@ -79,13 +80,15 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             return;
         }
 
-        if (cast.ActiveCamera == null)
+        var active = EntMan.GetEntity(cast.ActiveCamera);
+
+        if (active == null)
         {
             _window.UpdateState(null, cast.Subnets, cast.ActiveAddress, cast.ActiveSubnet, cast.Cameras);
 
             if (_currentCamera != null)
             {
-                _surveillanceCameraMonitorSystem.RemoveTimer(Owner.Owner);
+                _surveillanceCameraMonitorSystem.RemoveTimer(Owner);
                 _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
                 _currentCamera = null;
             }
@@ -94,17 +97,17 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         {
             if (_currentCamera == null)
             {
-                _eyeLerpingSystem.AddEye(cast.ActiveCamera.Value);
-                _currentCamera = cast.ActiveCamera;
+                _eyeLerpingSystem.AddEye(active.Value);
+                _currentCamera = active;
             }
-            else if (_currentCamera != cast.ActiveCamera)
+            else if (_currentCamera != active)
             {
                 _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
-                _eyeLerpingSystem.AddEye(cast.ActiveCamera.Value);
-                _currentCamera = cast.ActiveCamera;
+                _eyeLerpingSystem.AddEye(active.Value);
+                _currentCamera = active;
             }
 
-            if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent? eye))
+            if (EntMan.TryGetComponent<EyeComponent>(active, out var eye))
             {
                 _window.UpdateState(eye.Eye, cast.Subnets, cast.ActiveAddress, cast.ActiveSubnet, cast.Cameras);
             }

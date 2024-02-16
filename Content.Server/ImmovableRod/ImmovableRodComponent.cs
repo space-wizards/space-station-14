@@ -3,12 +3,12 @@ using Robust.Shared.Audio;
 namespace Content.Server.ImmovableRod;
 
 [RegisterComponent]
-public sealed class ImmovableRodComponent : Component
+public sealed partial class ImmovableRodComponent : Component
 {
     public int MobCount = 0;
 
     [DataField("hitSound")]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("MetalSlam");
 
     [DataField("hitSoundProbability")]
     public float HitSoundProbability = 0.1f;

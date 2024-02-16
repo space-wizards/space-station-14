@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at fb1012102257b7b0a08d861fd2b8ba963c416e93, cut into layers by mirrorcult",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "orebox"
+    },
+    {
+      "name": "orebox-top"
+    }
+  ]
+}

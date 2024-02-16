@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Radio;
 
 [Prototype("radioChannel")]
-public sealed class RadioChannelPrototype : IPrototype
+public sealed partial class RadioChannelPrototype : IPrototype
 {
     /// <summary>
     /// Human-readable name for the channel.
@@ -30,7 +30,7 @@ public sealed class RadioChannelPrototype : IPrototype
     public string ID { get; } = default!;
 
     /// <summary>
-    /// If channel is long range it doesn't require telecommunication server 
+    /// If channel is long range it doesn't require telecommunication server
     /// and messages can be sent across different stations
     /// </summary>
     [DataField("longRange"), ViewVariables]

@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components
 {
-    public sealed class SharedDisposalRouterComponent : Component
+    public sealed partial class SharedDisposalRouterComponent : Component
     {
         public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 

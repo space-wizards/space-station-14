@@ -6,6 +6,25 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: coffee
   color: "#664300"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
+  id: HotCocoa
+  name: reagent-name-hot-cocoa
+  parent: BaseDrink
+  desc: reagent-desc-hot-cocoa
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: chocolate
+  color: "#664300"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -64,6 +83,10 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
     state: icon
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 6
 
 - type: reagent
   id: IcedCoffee
@@ -110,7 +133,28 @@
         amount: 0.05
 
 - type: reagent
+  id: JuiceBerryPoison
+  parent: BaseJuice
+  name: reagent-name-juice-berry-poison
+  group: Drinks
+  desc: reagent-desc-juice-berry-poison
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: bitter
+  color: "#6600CC"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
   id: Lemonade
+  parent: BaseJuice
   name: reagent-name-lemonade
   group: Drinks
   desc: reagent-desc-lemonade
@@ -134,6 +178,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: milk
   color: "#DFDFDF"
+  recognizable: true
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.1
@@ -159,6 +204,7 @@
   physicalDesc: reagent-physical-desc-refreshing
   flavor: oats
   color: "#DEDACD"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -206,6 +252,7 @@
 
 - type: reagent
   id: NuclearCola
+  parent: BaseSoda
   name: reagent-name-nuclear-cola
   group: Drinks
   desc: reagent-desc-nuclear-cola
@@ -256,6 +303,7 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: tea
   color: "#8a5a3a"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -271,7 +319,7 @@
   parent: BaseDrink
   desc: reagent-desc-tonic-water
   physicalDesc: reagent-physical-desc-fizzy
-  flavor: water
+  flavor: tonicwater
   color: "#0064C8"
 
 - type: reagent
@@ -279,9 +327,11 @@
   name: reagent-name-water
   parent: BaseDrink
   desc: reagent-desc-water
+  slippery: true
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
   color: "#75b1f0"
+  recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0
   metabolisms:
@@ -297,6 +347,7 @@
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
   color: "#bed8e6"
+  recognizable: true
   meltingPoint: 0.0
   boilingPoint: 100.0
   plantMetabolism:
@@ -362,7 +413,7 @@
   name: reagent-name-kira-special
   parent: BaseDrink
   desc: reagent-desc-kira-special
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#CCCC99"
   metamorphicSprite:
@@ -374,7 +425,7 @@
   name: reagent-name-rewriter
   parent: BaseDrink
   desc: reagent-desc-rewriter
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#485000"
   metamorphicSprite:
@@ -382,13 +433,15 @@
     state: icon
 
 - type: reagent
-  id: Kvass
-  name: reagent-name-kvass
+  id: Mopwata
+  name: reagent-name-mopwata
   parent: BaseDrink
-  desc: reagent-desc-kvass
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: bread
-  color: "#381600"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/kvass.rsi
-    state: icon
+  desc: reagent-desc-mopwata
+  physicalDesc: reagent-physical-desc-murky
+  flavor: mopwata
+  color: "#59502b"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.6

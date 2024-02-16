@@ -7,22 +7,23 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Numerics;
 
 namespace Content.Server.Chemistry.TileReactions;
 
 [DataDefinition]
-public sealed class CreateEntityTileReaction : ITileReaction
+public sealed partial class CreateEntityTileReaction : ITileReaction
 {
-    [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
 
-    [DataField("usage")]
+    [DataField]
     public FixedPoint2 Usage = FixedPoint2.New(1);
 
     /// <summary>
     ///     How many of the whitelisted entity can fit on one tile?
     /// </summary>
-    [DataField("maxOnTile")]
+    [DataField]
     public int MaxOnTile = 1;
 
     /// <summary>
@@ -31,7 +32,7 @@ public sealed class CreateEntityTileReaction : ITileReaction
     [DataField("maxOnTileWhitelist")]
     public EntityWhitelist? Whitelist;
 
-    [DataField("randomOffsetMax")]
+    [DataField]
     public float RandomOffsetMax = 0.0f;
 
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
@@ -58,7 +59,8 @@ public sealed class CreateEntityTileReaction : ITileReaction
             var xoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
             var yoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
 
-            var pos = tile.GridPosition().Offset(new Vector2(0.5f + xoffs, 0.5f + yoffs));
+            var center = entMan.System<TurfSystem>().GetTileCenter(tile);
+            var pos = center.Offset(new Vector2(xoffs, yoffs));
             entMan.SpawnEntity(Entity, pos);
 
             return Usage;

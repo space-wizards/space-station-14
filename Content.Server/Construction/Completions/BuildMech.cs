@@ -1,7 +1,7 @@
-using Content.Server.Mech.Components;
 using Content.Server.Mech.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Construction;
+using Content.Shared.Mech.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Completions;
 /// for right now, the cell that was used in construction.
 /// </summary>
 [UsedImplicitly, DataDefinition]
-public sealed class BuildMech : IGraphAction
+public sealed partial class BuildMech : IGraphAction
 {
     [DataField("mechPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string MechPrototype = string.Empty;
@@ -23,6 +23,7 @@ public sealed class BuildMech : IGraphAction
     [DataField("container")]
     public string Container = "battery-container";
 
+    // TODO use or generalize ConstructionSystem.ChangeEntity();
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
         if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
@@ -53,7 +54,7 @@ public sealed class BuildMech : IGraphAction
             return;
         }
 
-        container.Remove(cell);
+        containerSystem.Remove(cell, container);
 
         var transform = entityManager.GetComponent<TransformComponent>(uid);
         var mech = entityManager.SpawnEntity(MechPrototype, transform.Coordinates);
@@ -61,11 +62,13 @@ public sealed class BuildMech : IGraphAction
         if (entityManager.TryGetComponent<MechComponent>(mech, out var mechComp) && mechComp.BatterySlot.ContainedEntity == null)
         {
             mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
-            mechComp.BatterySlot.Insert(cell);
+            containerSystem.Insert(cell, mechComp.BatterySlot);
         }
 
-        // Delete the original entity.
-        entityManager.DeleteEntity(uid);
+        var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);
+        entityManager.EventBus.RaiseLocalEvent(uid, entChangeEv);
+        entityManager.EventBus.RaiseLocalEvent(mech, entChangeEv, broadcast: true);
+        entityManager.QueueDeleteEntity(uid);
     }
 }
 

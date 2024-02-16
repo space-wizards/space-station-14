@@ -6,10 +6,12 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/gps.rsi
-    netsync: false
     layers:
     - state: icon
     - state: active
   - type: Item
     sprite: Objects/Devices/gps.rsi
   - type: HandheldGPS
+  - type: Tag
+    tags:
+    - GPS

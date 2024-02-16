@@ -11,7 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "base_dead",
+      "name": "dead",
       "delays": [
         [
           0.1,
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "name": "base",
+      "name": "alive",
       "directions": 4,
       "delays": [
         [

@@ -6,7 +6,7 @@
   molarMass: 32
   color: 2887E8
   reagent: Oxygen
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 1
@@ -16,7 +16,7 @@
   molarMass: 28
   color: DA1010
   reagent: Nitrogen
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 2
@@ -26,7 +26,7 @@
   molarMass: 44
   color: 4e4e4e
   reagent: CarbonDioxide
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 3
@@ -38,7 +38,7 @@
   gasOverlayState: plasma
   color: FF3300
   reagent: Plasma
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 4
@@ -62,11 +62,11 @@
   gasOverlayState: water_vapor
   color: bffffd
   reagent: Water
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 6
-  name: gases-miasma
+  name: gases-ammonia
   specificHeat: 20
   heatCapacityRatio: 1.4
   molarMass: 44
@@ -75,7 +75,7 @@
   gasMolesVisible: 2
   gasVisbilityFactor: 3.5
   color: 56941E
-  reagent: Miasma
+  reagent: Ammonia
   pricePerMole: 0.15
 
 - type: gas
@@ -99,4 +99,4 @@
   gasMolesVisible: 0.6
   color: 3a758c
   reagent: Frezon
-  pricePerMole: 7.5
+  pricePerMole: 0.3

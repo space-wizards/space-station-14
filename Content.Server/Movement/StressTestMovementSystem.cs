@@ -1,31 +1,45 @@
+using System.Numerics;
 using Content.Server.Movement.Components;
-using JetBrains.Annotations;
 
-namespace Content.Server.Movement
+namespace Content.Server.Movement;
+
+public sealed class StressTestMovementSystem : EntitySystem
 {
-    [UsedImplicitly]
-    internal sealed class StressTestMovementSystem : EntitySystem
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+    public override void Initialize()
     {
-        public override void Update(float frameTime)
+        base.Initialize();
+        SubscribeLocalEvent<StressTestMovementComponent, ComponentStartup>(OnStressStartup);
+    }
+
+    private void OnStressStartup(EntityUid uid, StressTestMovementComponent component, ComponentStartup args)
+    {
+        component.Origin = _transform.GetWorldPosition(uid);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<StressTestMovementComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var stressTest, out var transform))
         {
-            base.Update(frameTime);
+            if (!transform.ParentUid.IsValid())
+                continue;
 
-            foreach (var stressTest in EntityManager.EntityQuery<StressTestMovementComponent>(true))
+            stressTest.Progress += frameTime;
+
+            if (stressTest.Progress > 1)
             {
-                var transform = EntityManager.GetComponent<TransformComponent>(stressTest.Owner);
-
-                stressTest.Progress += frameTime;
-
-                if (stressTest.Progress > 1)
-                {
-                    stressTest.Progress -= 1;
-                }
-
-                var x = MathF.Sin(stressTest.Progress * MathHelper.TwoPi);
-                var y = MathF.Cos(stressTest.Progress * MathHelper.TwoPi);
-
-                transform.WorldPosition = stressTest.Origin + (new Vector2(x, y) * 5);
+                stressTest.Progress -= 1;
             }
+
+            var x = MathF.Sin(stressTest.Progress * MathHelper.TwoPi);
+            var y = MathF.Cos(stressTest.Progress * MathHelper.TwoPi);
+
+            _transform.SetWorldPosition(transform, stressTest.Origin + new Vector2(x, y) * 5);
         }
     }
 }

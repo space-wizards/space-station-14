@@ -14,7 +14,6 @@
         - CartridgeMagnum
     capacity: 6
   - type: Sprite
-    netsync: false
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -36,26 +35,6 @@
         map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: base
-    steps: 7
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  id: SpeedLoaderMagnumHighVelocity
-  name: "speed loader (.45 magnum high-velocity)"
-  parent: BaseSpeedLoaderMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHighVelocity
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
-    layers:
-      - state: base
-        map: [ "enum.GunVisualLayers.Base" ]
-      - state: high-velocity-6
-        map: [ "enum.GunVisualLayers.Mag" ]
-  - type: MagazineVisuals
-    magState: high-velocity
     steps: 7
     zeroVisible: false
   - type: Appearance
@@ -96,6 +75,46 @@
         map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
     magState: rubber
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: SpeedLoaderMagnumAP
+  name: "speed loader (.45 magnum armor-piercing)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumAP
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: piercing-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: piercing
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: SpeedLoaderMagnumUranium
+  name: "speed loader (.45 magnum uranium)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumUranium
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: uranium-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: uranium
     steps: 7
     zeroVisible: false
   - type: Appearance

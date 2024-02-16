@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_snack.yml
 # Base
 
 - type: entity
@@ -8,7 +9,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -104,6 +104,9 @@
       color: red
   - type: Food
     trash: FoodFrozenPopsicleTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: jumbo ice-cream
@@ -185,6 +188,9 @@
     - state: berry
   - type: Food
     trash: FoodFrozenSnowconeTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: fruit salad snowcone
@@ -198,6 +204,9 @@
     - state: fruitsalad
   - type: Food
     trash: FoodFrozenSnowconeTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: clowncone
@@ -249,7 +258,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
     state: cone-trash
-    netsync: false
   - type: Tag
     tags:
     - Trash
@@ -262,7 +270,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
-    netsync: false
     layers:
       - state: stick
         map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -270,10 +277,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           stick: ""
-      - enum.DamageStateVisualLayers.Base:
           stick2: ""
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage

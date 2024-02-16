@@ -1,14 +1,13 @@
+using Content.Server.Atmos.Components;
+using Content.Server.Singularity.Components;
+using Content.Shared.Ghost;
+using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
-
-using Content.Shared.Singularity.EntitySystems;
-
-using Content.Server.Ghost.Components;
-using Content.Server.Singularity.Components;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -24,6 +23,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     [Dependency] private readonly IViewVariablesManager _vvManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -58,11 +58,12 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
         if(!_timing.IsFirstTimePredicted)
             return;
 
-        foreach(var (gravWell, xform) in EntityManager.EntityQuery<GravityWellComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<GravityWellComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var gravWell, out var xform))
         {
             var curTime = _timing.CurTime;
             if (gravWell.NextPulseTime <= curTime)
-                Update(gravWell.Owner, curTime - gravWell.LastPulseTime, gravWell, xform);
+                Update(uid, curTime - gravWell.LastPulseTime, gravWell, xform);
         }
     }
 
@@ -181,19 +182,25 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
 
         var epicenter = mapPos.Position;
         var minRange2 = MathF.Max(minRange * minRange, MinGravPulseRange); // Cache square value for speed. Also apply a sane minimum value to the minimum value so that div/0s don't happen.
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
         foreach(var entity in _lookup.GetEntitiesInRange(mapPos.MapId, epicenter, maxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
         {
-            if (!TryComp<PhysicsComponent>(entity, out var physics)
+            if (!bodyQuery.TryGetComponent(entity, out var physics)
                 || physics.BodyType == BodyType.Static)
             {
                 continue;
             }
 
+            if (TryComp<MovedByPressureComponent>(entity, out var movedPressure) && !movedPressure.Enabled) //Ignore magboots users
+                continue;
+
             if(!CanGravPulseAffect(entity))
                 continue;
 
-            var displacement = epicenter - Transform(entity).WorldPosition;
-            var distance2 = displacement.LengthSquared;
+            var displacement = epicenter - _transform.GetWorldPosition(entity, xformQuery);
+            var distance2 = displacement.LengthSquared();
             if (distance2 < minRange2)
                 continue;
 

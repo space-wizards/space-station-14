@@ -20,6 +20,14 @@
             "directions": 4
         },
         {
+            "name": "cart_advmop",
+            "directions": 4
+        },
+        {
+            "name": "cart_bucket",
+            "directions": 4
+        },
+        {
             "name": "cart_replacer",
             "directions": 4
         },
@@ -42,6 +50,13 @@
         {
             "name": "cart_spray",
             "directions": 4
+        },
+		{
+            "name": "cart_plunger",
+            "directions": 4
+        },
+        {
+            "name": "icon-cart"
         },
         {
             "name": "cart_water-1",

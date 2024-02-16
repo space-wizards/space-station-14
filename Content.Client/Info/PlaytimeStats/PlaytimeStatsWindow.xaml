@@ -1,0 +1,25 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:pt="clr-namespace:Content.Client.Info.PlaytimeStats"
+                xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                VerticalExpand="True" HorizontalExpand="True"
+                Title="{Loc ui-playtime-stats-title}"
+                SetSize="600 400">
+    <Control>
+        <BoxContainer Name="statsBox" Orientation="Vertical" Margin="10,10,10,10">
+
+            <!-- Overall Playtime -->
+            <Label Name="OverallPlaytimeLabel" HorizontalExpand="True" Text="{Loc ui-playtime-overall-base}" />
+            <Control MinSize="0 5" />
+
+            <!-- Table for roles -->
+            <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Name="RolesPlaytimeList">
+                    <!-- Table Header -->
+                    <pt:PlaytimeStatsHeader Name="ListHeader" />
+                    <customControls:HSeparator />
+                </BoxContainer>
+            </ScrollContainer>
+        </BoxContainer>
+    </Control>
+</ui:FancyWindow>

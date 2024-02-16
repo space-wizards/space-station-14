@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Robust.Client.Graphics;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.Parallax.Data
 {
     [ImplicitDataDefinitionForInheritors]
-    public interface IParallaxTextureSource
+    public partial interface IParallaxTextureSource
     {
         /// <summary>
         /// Generates or loads the texture.

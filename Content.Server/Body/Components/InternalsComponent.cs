@@ -5,7 +5,7 @@ namespace Content.Server.Body.Components
     /// Handles hooking up a mask (breathing tool) / gas tank together and allowing the Owner to breathe through it.
     /// </summary>
     [RegisterComponent]
-    public sealed class InternalsComponent : Component
+    public sealed partial class InternalsComponent : Component
     {
         [ViewVariables] public EntityUid? GasTankEntity { get; set; }
         [ViewVariables] public EntityUid? BreathToolEntity { get; set; }

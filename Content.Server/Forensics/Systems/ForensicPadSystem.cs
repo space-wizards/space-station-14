@@ -1,11 +1,10 @@
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Forensics
 {
@@ -14,16 +13,17 @@ namespace Content.Server.Forensics
     /// </summary>
     public sealed class ForensicPadSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<ForensicPadComponent, DoAfterEvent<ForensicPadData>>(OnDoAfter);
+            SubscribeLocalEvent<ForensicPadComponent, ForensicPadDoAfterEvent>(OnDoAfter);
         }
 
         private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
@@ -79,51 +79,37 @@ namespace Content.Server.Forensics
 
         private void StartScan(EntityUid used, EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
         {
-            var padData = new ForensicPadData(sample);
+            var ev = new ForensicPadDoAfterEvent(sample);
 
-            var doAfterEventArgs = new DoAfterEventArgs(user, pad.ScanDelay, target: target, used: used)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, pad.ScanDelay, ev, used, target: target, used: used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
-                NeedHand = true,
-                RaiseOnUser = false
+                NeedHand = true
             };
 
-            _doAfterSystem.DoAfter(doAfterEventArgs, padData);
+            _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
         }
 
-        private void OnDoAfter(EntityUid uid, ForensicPadComponent component, DoAfterEvent<ForensicPadData> args)
+        private void OnDoAfter(EntityUid uid, ForensicPadComponent padComponent, ForensicPadDoAfterEvent args)
         {
-            if (args.Handled
-                || args.Cancelled
-                || !EntityManager.TryGetComponent(args.Args.Used, out ForensicPadComponent? padComponent))
+            if (args.Handled || args.Cancelled)
             {
                 return;
             }
 
             if (args.Args.Target != null)
             {
-                if (HasComp<FingerprintComponent>(args.Args.Target))
-                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", args.Args.Target));
-                else
-                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", args.Args.Target));
+                var name = HasComp<FingerprintComponent>(args.Args.Target)
+                    ? "forensic-pad-fingerprint-name"
+                    : "forensic-pad-gloves-name";
+                _metaData.SetEntityName(uid, Loc.GetString(name, ("entity", args.Args.Target)));
             }
 
-            padComponent.Sample = args.AdditionalData.Sample;
+            padComponent.Sample = args.Sample;
             padComponent.Used = true;
 
             args.Handled = true;
-        }
-
-        private sealed class ForensicPadData
-        {
-            public string Sample;
-
-            public ForensicPadData(string sample)
-            {
-                Sample = sample;
-            }
         }
     }
 }

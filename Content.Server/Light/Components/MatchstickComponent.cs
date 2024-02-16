@@ -6,7 +6,7 @@ namespace Content.Server.Light.Components
 {
     [RegisterComponent]
     [Access(typeof(MatchstickSystem))]
-    public sealed class MatchstickComponent : Component
+    public sealed partial class MatchstickComponent : Component
     {
         /// <summary>
         /// Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.

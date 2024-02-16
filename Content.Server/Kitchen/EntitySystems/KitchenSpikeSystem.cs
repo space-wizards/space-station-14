@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
+using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Database;
@@ -7,25 +7,27 @@ using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Nutrition.Components;
-using Robust.Shared.Player;
-using Content.Shared.Storage;
-using Robust.Shared.Random;
-using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Storage;
 using Robust.Server.GameObjects;
-using Content.Server.Body.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using static Content.Shared.Kitchen.Components.KitchenSpikeComponent;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
     public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfter = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -33,6 +35,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {
@@ -43,7 +46,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<KitchenSpikeComponent, DragDropTargetEvent>(OnDragDrop);
 
             //DoAfter
-            SubscribeLocalEvent<KitchenSpikeComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<KitchenSpikeComponent, SpikeDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<KitchenSpikeComponent, SuicideEvent>(OnSuicide);
 
@@ -109,7 +112,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (args.Handled)
                 return;
 
-            if (component.PrototypesToSpawn?.Count > 0) {
+            if (component.PrototypesToSpawn?.Count > 0)
+            {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, args.User);
                 args.Handled = true;
             }
@@ -152,7 +156,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 QueueDel(gib);
             }
 
-            _audio.Play(component.SpikeSound, Filter.Pvs(uid), uid, true);
+            _audio.PlayEntity(component.SpikeSound, Filter.Pvs(uid), uid, true);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
@@ -170,8 +174,8 @@ namespace Content.Server.Kitchen.EntitySystems
             var item = _random.PickAndTake(component.PrototypesToSpawn);
 
             var ent = Spawn(item, Transform(uid).Coordinates);
-            MetaData(ent).EntityName =
-                Loc.GetString("comp-kitchen-spike-meat-name", ("name", Name(ent)), ("victim", component.Victim));
+            _metaData.SetEntityName(ent,
+                Loc.GetString("comp-kitchen-spike-meat-name", ("name", Name(ent)), ("victim", component.Victim)));
 
             if (component.PrototypesToSpawn.Count != 0)
                 _popupSystem.PopupEntity(component.MeatSource1p, uid, user, PopupType.MediumCaution);
@@ -251,16 +255,15 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, target:victimUid, used:uid)
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, component.SpikeDelay + butcherable.ButcherDelay, new SpikeDoAfterEvent(), uid, target: victimUid, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true
             };
 
-            _doAfter.DoAfter(doAfterArgs);
+            _doAfter.TryStartDoAfter(doAfterArgs);
 
             return true;
         }

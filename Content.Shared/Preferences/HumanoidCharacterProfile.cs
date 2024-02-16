@@ -22,7 +22,7 @@ namespace Content.Shared.Preferences
     /// </summary>
     [DataDefinition]
     [Serializable, NetSerializable]
-    public sealed class HumanoidCharacterProfile : ICharacterProfile
+    public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
@@ -41,6 +41,7 @@ namespace Content.Shared.Preferences
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
             BackpackPreference backpack,
+            SpawnPriorityPreference spawnPriority,
             Dictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             List<string> antagPreferences,
@@ -55,6 +56,7 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             Clothing = clothing;
             Backpack = backpack;
+            SpawnPriority = spawnPriority;
             _jobPriorities = jobPriorities;
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
@@ -67,7 +69,7 @@ namespace Content.Shared.Preferences
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences,
             List<string> traitPreferences)
-            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
+            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack, other.SpawnPriority,
                 jobPriorities, other.PreferenceUnavailable, antagPreferences, traitPreferences)
         {
         }
@@ -88,11 +90,12 @@ namespace Content.Shared.Preferences
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
             BackpackPreference backpack,
+            SpawnPriorityPreference spawnPriority,
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences,
             IReadOnlyList<string> traitPreferences)
-            : this(name, flavortext, species, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, flavortext, species, age, sex, gender, appearance, clothing, backpack, spawnPriority, new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences), new List<string>(traitPreferences))
         {
         }
@@ -112,6 +115,7 @@ namespace Content.Shared.Preferences
             new HumanoidCharacterAppearance(),
             ClothingPreference.Jumpsuit,
             BackpackPreference.Backpack,
+            SpawnPriorityPreference.None,
             new Dictionary<string, JobPriority>
             {
                 {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
@@ -139,6 +143,7 @@ namespace Content.Shared.Preferences
                 HumanoidCharacterAppearance.DefaultWithSpecies(species),
                 ClothingPreference.Jumpsuit,
                 BackpackPreference.Backpack,
+                SpawnPriorityPreference.None,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
@@ -180,7 +185,7 @@ namespace Content.Shared.Preferences
 
             var name = GetName(species, gender);
 
-            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
+            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack, SpawnPriorityPreference.None,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High},
@@ -206,6 +211,7 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterAppearance Appearance { get; private set; }
         public ClothingPreference Clothing { get; private set; }
         public BackpackPreference Backpack { get; private set; }
+        public SpawnPriorityPreference SpawnPriority { get; private set; }
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
         public IReadOnlyList<string> AntagPreferences => _antagPreferences;
         public IReadOnlyList<string> TraitPreferences => _traitPreferences;
@@ -254,6 +260,10 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithBackpackPreference(BackpackPreference backpack)
         {
             return new(this) { Backpack = backpack };
+        }
+        public HumanoidCharacterProfile WithSpawnPriorityPreference(SpawnPriorityPreference spawnPriority)
+        {
+            return new(this) { SpawnPriority = spawnPriority };
         }
         public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<string, JobPriority>> jobPriorities)
         {
@@ -344,6 +354,7 @@ namespace Content.Shared.Preferences
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (Clothing != other.Clothing) return false;
             if (Backpack != other.Backpack) return false;
+            if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
@@ -433,7 +444,7 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkup(FlavorText);
             }
 
-            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
+            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
             {
@@ -455,6 +466,14 @@ namespace Content.Shared.Preferences
                 BackpackPreference.Satchel => BackpackPreference.Satchel,
                 BackpackPreference.Duffelbag => BackpackPreference.Duffelbag,
                 _ => BackpackPreference.Backpack // Invalid enum values.
+            };
+
+            var spawnPriority = SpawnPriority switch
+            {
+                SpawnPriorityPreference.None => SpawnPriorityPreference.None,
+                SpawnPriorityPreference.Arrivals => SpawnPriorityPreference.Arrivals,
+                SpawnPriorityPreference.Cryosleep => SpawnPriorityPreference.Cryosleep,
+                _ => SpawnPriorityPreference.None // Invalid enum values.
             };
 
             var priorities = new Dictionary<string, JobPriority>(JobPriorities
@@ -483,6 +502,7 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             Clothing = clothing;
             Backpack = backpack;
+            SpawnPriority = spawnPriority;
 
             _jobPriorities.Clear();
 
@@ -526,6 +546,7 @@ namespace Content.Shared.Preferences
                     Clothing,
                     Backpack
                 ),
+                SpawnPriority,
                 PreferenceUnavailable,
                 _jobPriorities,
                 _antagPreferences,

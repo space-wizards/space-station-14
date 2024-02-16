@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 1800
+      time: 14400 #4 hrs
   startingGear: ChemistGear
-  icon: "Chemist"
+  icon: "JobIconChemist"
   supervisors: job-supervisors-cmo
   access:
   - Medical
@@ -27,6 +27,6 @@
     belt: ChemBag
     pocket1: HandLabeler
     # the purple glasses?
-  innerclothingskirt: ClothingUniformJumpskirtChemistry
+  innerClothingSkirt: ClothingUniformJumpskirtChemistry
   satchel: ClothingBackpackSatchelChemistryFilled
   duffelbag: ClothingBackpackDuffelChemistryFilled

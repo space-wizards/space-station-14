@@ -1,0 +1,36 @@
+#The entire game mysteriously shits itself and dies if you uncomment the item size. I have no idea why.
+#TODO: Assimilate these into the same RSI.
+- type: entity
+  parent: BaseItem
+  id: ModularReceiver
+  name: modular receiver
+  description: A vital part used in the creation of firearms. #Could use a better description, but I'm not a gun nut so I can't really do that.
+  components:
+#    - type: Item
+#      size: Normal
+    - type: Sprite
+      sprite: Objects/Misc/modular_receiver.rsi
+      state: icon
+    - type: Tag
+      tags:
+      - ModularReceiver
+      - Metal
+
+- type: entity
+  parent: BaseItem
+  id: RifleStock
+  name: rifle stock
+  description: A robust wooden stock, used in the creation of firearms. #Same as above
+  components:
+#    - type: Item
+#      size: Normal
+    - type: Sprite
+      sprite: Objects/Misc/rifle_stock.rsi
+      state: icon
+    - type: Construction
+      graph: RifleStockGraph
+      node: riflestock
+    - type: Tag
+      tags:
+      - RifleStock
+      - Wooden

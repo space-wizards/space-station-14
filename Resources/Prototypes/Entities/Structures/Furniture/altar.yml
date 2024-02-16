@@ -7,7 +7,6 @@
   components:
   - type: Anchorable
   - type: Transform
-    noRot: true
   - type: Prayable
   - type: Damageable
     damageContainer: Inorganic
@@ -15,16 +14,16 @@
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 55
-      mask: #mouse can pass under, but I think this is can understandable by logic
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask: #mouse can pass under, but I think this is can understandable by logic
+        - TableMask
+        layer:
+        - TableLayer
   - type: Sprite
-    netsync: false
     snapCardinals: true
   - type: Climbable
   - type: Clickable
@@ -44,7 +43,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 125
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -54,7 +53,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -65,6 +64,8 @@
             max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StealTarget
+    stealGroup: AltarNanotrasen
 
 - type: entity
   id: AltarChaos
@@ -186,7 +187,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroyHeavy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -371,11 +372,17 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 125
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -397,3 +404,17 @@
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
   - type: Icon
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
+
+
+- type: entity
+  id: AltarBananium
+  parent: AltarBase
+  name: honkmother altar
+  description: A bananium altar dedicated to the honkmother.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Cults/bananium.rsi
+    state: full
+  - type: Construction
+    graph: BananiumAltarGraph
+    node: bananiumAltar

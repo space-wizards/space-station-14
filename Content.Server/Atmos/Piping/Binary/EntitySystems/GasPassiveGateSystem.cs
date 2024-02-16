@@ -2,6 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Examine;
@@ -13,6 +14,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasPassiveGateSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -22,13 +24,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasPassiveGateComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, AtmosDeviceUpdateEvent args)
+        private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, ref AtmosDeviceUpdateEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(gate.InletName, out PipeNode? inlet)
-                || !nodeContainer.TryGetNode(gate.OutletName, out PipeNode? outlet))
+            if (!_nodeContainer.TryGetNode(nodeContainer, gate.InletName, out PipeNode? inlet)
+                || !_nodeContainer.TryGetNode(nodeContainer, gate.OutletName, out PipeNode? outlet))
                 return;
 
             var n1 = inlet.Air.TotalMoles;
@@ -77,12 +79,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             gate.FlowRate = a*dV/tau + (1-a)*gate.FlowRate; // in L/sec
         }
 
-        private void OnExamined(EntityUid uid, GasPassiveGateComponent gate, ExaminedEvent args)
+        private void OnExamined(Entity<GasPassiveGateComponent> gate, ref ExaminedEvent args)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(gate.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!Comp<TransformComponent>(gate).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
-            var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.FlowRate:0.#}"));
+            var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.Comp.FlowRate:0.#}"));
             args.PushMarkup(str);
         }
     }

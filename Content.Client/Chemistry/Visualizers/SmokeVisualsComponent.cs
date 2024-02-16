@@ -7,4 +7,4 @@ namespace Content.Client.Chemistry.Visualizers;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(SmokeVisualizerSystem))]
-public sealed class SmokeVisualsComponent : Component {}
+public sealed partial class SmokeVisualsComponent : Component {}

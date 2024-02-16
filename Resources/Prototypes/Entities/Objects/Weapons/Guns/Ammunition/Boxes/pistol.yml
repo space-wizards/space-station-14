@@ -12,13 +12,12 @@
     proto: CartridgePistol
     capacity: 60
   - type: Item
-    size: 5
+    size: Small
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
-    netsync: false
   - type: MagazineVisuals
     magState: mag
     steps: 2
@@ -39,21 +38,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  parent: BaseMagazineBoxPistol
-  id: MagazineBoxPistolHighVelocity
-  name: ammunition box (.35 auto high-velocity)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolHighVelocity
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: hv
 
 - type: entity
   parent: BaseMagazineBoxPistol
@@ -84,3 +68,33 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: rubber
+
+- type: entity
+  id: MagazineBoxPistolIncendiary
+  parent: BaseMagazineBoxPistol
+  name: ammunition box (.35 auto incendiary)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+
+- type: entity
+  id: MagazineBoxPistolUranium
+  parent: BaseMagazineBoxPistol
+  name: ammunition box (.35 auto uranium)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium

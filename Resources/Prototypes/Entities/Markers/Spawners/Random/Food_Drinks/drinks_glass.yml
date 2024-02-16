@@ -25,7 +25,6 @@
       - DrinkBarefootGlass
       - DrinkBeerglass
       - DrinkBerryJuice
-      - DrinkBilkGlass
       - DrinkBlackRussianGlass
       - DrinkBlueCuracaoGlass
       - DrinkBloodyMaryGlass
@@ -33,7 +32,6 @@
       - DrinkBraveBullGlass
       - DrinkCarrotJuice
       - DrinkChocolateGlass
-      - DrinkCafeLatte
       - DrinkCognacGlass
       - DrinkCubaLibreGlass
       - DrinkDeadRumGlass
@@ -46,7 +44,7 @@
       - DrinkGinFizzGlass
       - DrinkGinGlass
       - DrinkGinTonicglass
-      - DrinkGoldschlagerGlass
+      - DrinkGildlagerGlass
       - DrinkGrapeJuice
       - DrinkGreenTeaGlass
       - DrinkGrogGlass
@@ -93,6 +91,8 @@
       - DrinkWineGlass
       - DrinkShakeBlue
       - DrinkShakeWhite
+      - DrinkTheMartinez
+      - DrinkMoonshineGlass
     chance: 0.8
     offset: 0.0
     #rare

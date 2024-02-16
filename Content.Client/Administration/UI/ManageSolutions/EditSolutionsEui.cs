@@ -16,7 +16,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
         public EditSolutionsEui()
         {
             _window = new EditSolutionsWindow();
-            _window.OnClose += () => SendMessage(new EditSolutionsEuiMsg.Close());
+            _window.OnClose += () => SendMessage(new CloseEuiMessage());
         }
 
         public override void Opened()
@@ -28,16 +28,13 @@ namespace Content.Client.Administration.UI.ManageSolutions
         public override void Closed()
         {
             base.Closed();
-            _window.OnClose -= () => SendMessage(new EditSolutionsEuiMsg.Close());
             _window.Close();
         }
 
         public override void HandleState(EuiStateBase baseState)
         {
             var state = (EditSolutionsEuiState) baseState;
-            _window.SetTargetEntity(state.Target);
-            _window.UpdateSolutions(state.Solutions);
-            _window.UpdateReagents();
+            _window.SetState(state);
         }
     }
 }

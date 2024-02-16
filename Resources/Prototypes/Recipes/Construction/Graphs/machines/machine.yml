@@ -33,9 +33,6 @@
           steps:
             - material: Cable
         - to: start
-          conditions:
-            - !type:EntityAnchored
-              anchored: false
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
@@ -48,6 +45,10 @@
     - node: machineFrame
       entity: MachineFrame
       actions:
+        - !type:AddContainer
+          container: machine_parts
+        - !type:AddContainer
+          container: machine_board
         - !type:MachineFrameRegenerateProgress
       edges:
         - to: machine
@@ -60,9 +61,6 @@
               guideIconParts:
                 sprite: Objects/Misc/stock_parts.rsi
                 state: scan_module
-          completed:
-            # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
-            - !type:BuildMachine
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -93,11 +91,7 @@
               doAfter: 0.25
 
     - node: machine
-      actions:
-        - !type:AddContainer
-          container: machine_parts
-        - !type:AddContainer
-          container: machine_board
+      entity: !type:BoardNodeEntity { container: machine_board }
       edges:
         - to: machineFrame
           completed:

@@ -1,7 +1,6 @@
-﻿using Content.Shared.Eui;
-using Robust.Server.Player;
+using Content.Shared.Eui;
 using Robust.Shared.Network;
-
+using Robust.Shared.Player;
 
 namespace Content.Server.EUI
 {
@@ -23,7 +22,7 @@ namespace Content.Server.EUI
         /// <summary>
         ///     The player that this EUI is open for.
         /// </summary>
-        public IPlayerSession Player { get; private set; } = default!;
+        public ICommonSession Player { get; private set; } = default!;
         public bool IsShutDown { get; private set; }
         public EuiManager Manager { get; private set; } = default!;
         public uint Id { get; private set; }
@@ -49,6 +48,8 @@ namespace Content.Server.EUI
         /// </summary>
         public virtual void HandleMessage(EuiMessageBase msg)
         {
+            if (msg is CloseEuiMessage)
+                Close();
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Content.Server.EUI
             msg.Id = Id;
             msg.Message = message;
 
-            netMgr.ServerSendMessage(msg, Player.ConnectedClient);
+            netMgr.ServerSendMessage(msg, Player.Channel);
         }
 
         /// <summary>
@@ -113,10 +114,10 @@ namespace Content.Server.EUI
             msg.Id = Id;
             msg.State = state;
 
-            netMgr.ServerSendMessage(msg, Player.ConnectedClient);
+            netMgr.ServerSendMessage(msg, Player.Channel);
         }
 
-        internal void Initialize(EuiManager manager, IPlayerSession player, uint id)
+        internal void Initialize(EuiManager manager, ICommonSession player, uint id)
         {
             Manager = manager;
             Player = player;

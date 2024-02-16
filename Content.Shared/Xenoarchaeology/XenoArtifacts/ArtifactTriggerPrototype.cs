@@ -10,14 +10,14 @@ namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 /// </summary>
 [Prototype("artifactTrigger")]
 [DataDefinition]
-public sealed class ArtifactTriggerPrototype : IPrototype
+public sealed partial class ArtifactTriggerPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("components", serverOnly: true)]
-    public EntityPrototype.ComponentRegistry Components = new();
+    public ComponentRegistry Components = new();
 
     [DataField("targetDepth")]
     public int TargetDepth = 0;

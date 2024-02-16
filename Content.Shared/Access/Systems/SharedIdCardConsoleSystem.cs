@@ -1,8 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
@@ -10,51 +8,30 @@ namespace Content.Shared.Access.Systems
     public abstract class SharedIdCardConsoleSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly ILogManager _log = default!;
 
         public const string Sawmill = "idconsole";
+        protected ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = _log.GetSawmill(Sawmill);
 
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentRemove>(OnComponentRemove);
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentHandleState>(OnHandleState);
+            SubscribeLocalEvent<IdCardConsoleComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<IdCardConsoleComponent, ComponentRemove>(OnComponentRemove);
         }
 
-        private void OnHandleState(EntityUid uid, SharedIdCardConsoleComponent component, ref ComponentHandleState args)
+        private void OnComponentInit(EntityUid uid, IdCardConsoleComponent component, ComponentInit args)
         {
-            if (args.Current is not IdCardConsoleComponentState state) return;
-            component.AccessLevels = state.AccessLevels;
+            _itemSlotsSystem.AddItemSlot(uid, IdCardConsoleComponent.PrivilegedIdCardSlotId, component.PrivilegedIdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, IdCardConsoleComponent.TargetIdCardSlotId, component.TargetIdSlot);
         }
 
-        private void OnGetState(EntityUid uid, SharedIdCardConsoleComponent component, ref ComponentGetState args)
-        {
-            args.State = new IdCardConsoleComponentState(component.AccessLevels);
-        }
-
-        private void OnComponentInit(EntityUid uid, SharedIdCardConsoleComponent component, ComponentInit args)
-        {
-            _itemSlotsSystem.AddItemSlot(uid, SharedIdCardConsoleComponent.PrivilegedIdCardSlotId, component.PrivilegedIdSlot);
-            _itemSlotsSystem.AddItemSlot(uid, SharedIdCardConsoleComponent.TargetIdCardSlotId, component.TargetIdSlot);
-        }
-
-        private void OnComponentRemove(EntityUid uid, SharedIdCardConsoleComponent component, ComponentRemove args)
+        private void OnComponentRemove(EntityUid uid, IdCardConsoleComponent component, ComponentRemove args)
         {
             _itemSlotsSystem.RemoveItemSlot(uid, component.PrivilegedIdSlot);
             _itemSlotsSystem.RemoveItemSlot(uid, component.TargetIdSlot);
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class IdCardConsoleComponentState : ComponentState
-        {
-            public List<string> AccessLevels;
-
-            public IdCardConsoleComponentState(List<string> accessLevels)
-            {
-                AccessLevels = accessLevels;
-            }
         }
     }
 }

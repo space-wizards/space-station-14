@@ -17,6 +17,7 @@
     GrapeSeeds: 5
     LemonSeeds: 5
     LimeSeeds: 5
+    PineappleSeeds: 4
     LingzhiSeeds: 3
     OatSeeds: 5
     OnionSeeds: 5
@@ -24,6 +25,7 @@
     OrangeSeeds: 5
     PoppySeeds: 3
     PotatoSeeds: 5
+    PumpkinSeeds: 5
     RiceSeeds: 5
     SoybeanSeeds: 5
     SugarcaneSeeds: 5
@@ -31,3 +33,9 @@
     TowercapSeeds: 5
     WheatSeeds: 5
     WatermelonSeeds: 5
+    CocoaSeeds: 3
+    BerrySeeds: 5
+    PeaSeeds: 5
+    CottonSeeds: 5
+  emaggedInventory:
+    FlyAmanitaSeeds: 1

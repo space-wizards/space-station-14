@@ -18,14 +18,14 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
     /// </summary>
     public readonly TimeSpan FTLTime;
 
-    public List<(EntityUid Entity, string Destination, bool Enabled)> Destinations;
+    public List<(NetEntity Entity, string Destination, bool Enabled)> Destinations;
 
     public ShuttleConsoleBoundInterfaceState(
         FTLState ftlState,
         TimeSpan ftlTime,
-        List<(EntityUid Entity, string Destination, bool Enabled)> destinations,
+        List<(NetEntity Entity, string Destination, bool Enabled)> destinations,
         float maxRange,
-        EntityCoordinates? coordinates,
+        NetCoordinates? coordinates,
         Angle? angle,
         List<DockingInterfaceState> docks) : base(maxRange, coordinates, angle, docks)
     {

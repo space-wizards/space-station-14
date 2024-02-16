@@ -1,4 +1,5 @@
 using Content.Shared.PowerCell;
+using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -13,6 +14,29 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     {
         base.Initialize();
         SubscribeLocalEvent<PowerCellVisualsComponent, AppearanceChangeEvent>(OnPowerCellVisualsChange);
+    }
+
+    /// <inheritdoc/>
+    public override bool HasActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null,
+        EntityUid? user = null)
+    {
+        if (!Resolve(uid, ref battery, ref cell, false))
+            return true;
+
+        return battery.CanUse;
+    }
+
+    /// <inheritdoc/>
+    public override bool HasDrawCharge(
+        EntityUid uid,
+        PowerCellDrawComponent? battery = null,
+        PowerCellSlotComponent? cell = null,
+        EntityUid? user = null)
+    {
+        if (!Resolve(uid, ref battery, ref cell, false))
+            return true;
+
+        return battery.CanDraw;
     }
 
     private void OnPowerCellVisualsChange(EntityUid uid, PowerCellVisualsComponent component, ref AppearanceChangeEvent args)

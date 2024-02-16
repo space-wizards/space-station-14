@@ -1,5 +1,23 @@
-﻿<BoxContainer xmlns="https://spacestation14.io"
+<BoxContainer xmlns="https://spacestation14.io"
               xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
               Orientation="Vertical">
-    <cc:HSeparator Name="Separator"/>
+    <BoxContainer Name ="MetadataContainer" Orientation="Horizontal">
+        <TextureRect Name="SeverityRect" Margin="2"/>
+        <Label Name="TimeLabel" Margin="4 0" />
+        <cc:HSeparator Margin="4 0" />
+        <Label Name="ServerLabel" />
+        <cc:HSeparator Margin="4 0" />
+        <Label Name="RoundLabel" />
+        <cc:HSeparator Margin="4 0" />
+        <Label Name="AdminLabel" />
+        <cc:HSeparator Margin="4 0" />
+        <Label Name="PlaytimeLabel" />
+        <cc:HSeparator Name="SecretSeparator" Visible="False" Margin="4 0" />
+        <Label Name="SecretLabel" Text="{Loc admin-notes-secret} " Visible="False" />
+    </BoxContainer>
+    <RichTextLabel Name="NoteLabel" />
+    <Label Name="ExpiresLabel" Text="{Loc admin-note-editor-expiry-label}" Visible="False" />
+    <Label Name="ExtraLabel" Visible="False" Modulate="#1AA7EC" />
+    <Label Name="EditedLabel" Visible="False" />
+    <cc:HSeparator Name="Separator" />
 </BoxContainer>

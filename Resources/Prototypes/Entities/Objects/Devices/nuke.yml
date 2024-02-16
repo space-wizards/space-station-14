@@ -8,21 +8,64 @@
     anchored: true
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    netsync: false
     noRot: true
-    state: nuclearbomb_base
+    layers:
+    - state: nuclearbomb_base
+      map: ["enum.NukeVisualLayers.Base"]
+    - state: nuclearbomb_deployed_unlit
+      map: ["enum.NukeVisualLayers.Unlit"]
+      shader: unshaded
+      visible: false
+    - state: nukefestive
+      map: ["christmas"]
+      visible: false
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
+      enum.NukeVisuals.Deployed:
+        enum.NukeVisualLayers.Base:
+          False: { state: nuclearbomb_base }
+          True:  { state: nuclearbomb_deployed }
+        enum.NukeVisualLayers.Unlit:
+          True:  { visible: true }
+          False: { visible: false }
+      enum.NukeVisuals.State:
+        enum.NukeVisualLayers.Unlit:
+          Idle:        { state: nuclearbomb_deployed_unlit }
+          Armed:       { state: nuclearbomb_timing }
+          YoureFucked: { state: nuclearbomb_exploding }
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 80 #It has wheels and bluespace tech to make it lighter.
-      mask:
-      - MachineMask
-      layer:
-      - HalfWallLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 80 #It has wheels and bluespace tech to make it lighter.
+        mask:
+        - MachineMask
+        layer:
+        - HalfWallLayer
+  - type: PointLight
+    enabled: false
+    radius: 4
+    energy: 2.0
+    color: "#FF4020"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 120
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: nuclear fission explosive
+    enabled: false
   - type: NukeLabel
   - type: Nuke
     explosionType: Default
@@ -30,7 +73,7 @@
     intensitySlope: 5
     totalIntensity: 5000000
     diskSlot:
-      name: Disk
+      name: nuke-slot-component-slot-name-disk
       insertSound:
         path: /Audio/Machines/terminal_insert_disc.ogg
       ejectSound:
@@ -55,14 +98,21 @@
   - type: ContainerContainer
     containers:
       Nuke: !type:ContainerSlot
+  - type: StealTarget
+    stealGroup: NuclearBomb
+  - type: WarpPoint
+    follow: true
+    location: nuclear bomb
 
 - type: entity
   parent: NuclearBomb
   id: NuclearBombUnanchored
   suffix: unanchored
   components:
-    - type: Transform
-      anchored: false
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
 
 - type: entity
   parent: StorageTank
@@ -74,20 +124,34 @@
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    netsync: false
-    state: nuclearbomb_base
+    layers:
+    - state: nuclearbomb_base
+    - state: nukefestive
+      map: ["christmas"]
+      visible: false
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 80
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 80
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: SolutionContainerManager
     solutions:
       tank:

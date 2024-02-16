@@ -1,6 +1,5 @@
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.CCVar
 {
@@ -33,10 +32,6 @@ namespace Content.Shared.CCVar
         /*
          * Ambience
          */
-        //TODO: This is so that this compiles, yell at me if this is still in
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambiance.basic_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
-
 
         /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
@@ -72,25 +67,25 @@ namespace Content.Shared.CCVar
         /// Ambience volume.
         /// </summary>
         public static readonly CVarDef<float> AmbienceVolume =
-            CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.volume", 1.5f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
+        /// Ambience music volume.
+        /// </summary>
+        public static readonly CVarDef<float> AmbientMusicVolume =
+            CVarDef.Create("ambience.music_volume", 1.5f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
         /// Lobby / round end music volume.
         /// </summary>
         public static readonly CVarDef<float> LobbyMusicVolume =
-            CVarDef.Create("ambience.lobby_music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.lobby_music_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
-        /// Whether to play the station ambience (humming) sound
+        /// UI volume.
         /// </summary>
-        public static readonly CVarDef<bool> StationAmbienceEnabled =
-            CVarDef.Create("ambience.station_ambience", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// Whether to play the space ambience
-        /// </summary>
-        public static readonly CVarDef<bool> SpaceAmbienceEnabled =
-            CVarDef.Create("ambience.space_ambience", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+        public static readonly CVarDef<float> InterfaceVolume =
+            CVarDef.Create("audio.interface_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Status
@@ -170,7 +165,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "extended", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Traitor,Extended", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -189,6 +184,19 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string>
             GameMap = CVarDef.Create("game.map", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Controls whether to use world persistence or not.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            UsePersistence = CVarDef.Create("game.usepersistence", false, CVar.ARCHIVE);
+
+        /// <summary>
+        ///     If world persistence is used, what map prototype should be initially loaded.
+        ///     If the save file exists, it replaces MapPath but everything else stays the same (station name and such).
+        /// </summary>
+        public static readonly CVarDef<string>
+            PersistenceMap = CVarDef.Create("game.persistencemap", "Empty", CVar.ARCHIVE);
 
         /// <summary>
         ///     Prototype to use for map pool.
@@ -214,6 +222,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Whether or not disconnecting inside of a cryopod should remove the character or just store them until they reconnect.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameCryoSleepRejoining = CVarDef.Create("game.cryo_sleep_rejoining", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
@@ -250,7 +264,27 @@ namespace Content.Shared.CCVar
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
-            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED);
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Whether or not the panic bunker will disable when an admin comes online.
+        /// </summary>
+        public static readonly CVarDef<bool> PanicBunkerDisableWithAdmins =
+            CVarDef.Create("game.panic_bunker.disable_with_admins", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not the panic bunker will enable when no admins are online.
+        /// </summary>
+        public static readonly CVarDef<bool> PanicBunkerEnableWithoutAdmins =
+            CVarDef.Create("game.panic_bunker.enable_without_admins", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not the panic bunker will count deadminned admins for
+        /// <see cref="PanicBunkerDisableWithAdmins"/> and
+        /// <see cref="PanicBunkerEnableWithoutAdmins"/>
+        /// </summary>
+        public static readonly CVarDef<bool> PanicBunkerCountDeadminnedAdmins =
+            CVarDef.Create("game.panic_bunker.count_deadminned_admins", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Show reason of disconnect for user or not.
@@ -271,10 +305,41 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.panic_bunker.min_overall_hours", 10, CVar.SERVERONLY);
 
         /// <summary>
+        /// A custom message that will be used for connections denied to the panic bunker
+        /// If not empty, then will overwrite <see cref="PanicBunkerShowReason"/>
+        /// </summary>
+        public static readonly CVarDef<string> PanicBunkerCustomReason =
+            CVarDef.Create("game.panic_bunker.custom_reason", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Allow bypassing the panic bunker if the user is whitelisted.
+        /// </summary>
+        public static readonly CVarDef<bool> BypassBunkerWhitelist =
+            CVarDef.Create("game.panic_bunker.whitelisted_can_bypass", true, CVar.SERVERONLY);
+
+        /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.
         /// </summary>
         public static readonly CVarDef<bool> GameTableBonk =
-            CVarDef.Create("game.table_bonk", false, CVar.SERVERONLY);
+            CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
+
+        /// <summary>
+        /// Whether or not status icons are rendered for everyone.
+        /// </summary>
+        public static readonly CVarDef<bool> GlobalStatusIconsEnabled =
+            CVarDef.Create("game.global_status_icons_enabled", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Whether or not status icons are rendered on this specific client.
+        /// </summary>
+        public static readonly CVarDef<bool> LocalStatusIconsEnabled =
+            CVarDef.Create("game.local_status_icons_enabled", true, CVar.CLIENTONLY);
+
+        /// <summary>
+        /// Whether or not coordinates on the Debug overlay should only be available to admins.
+        /// </summary>
+        public static readonly CVarDef<bool> DebugCoordinatesAdminOnly =
+            CVarDef.Create("game.debug_coordinates_admin_only", true, CVar.SERVER | CVar.REPLICATED);
 
 #if EXCEPTION_TOLERANCE
         /// <summary>
@@ -285,6 +350,25 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.round_start_fail_shutdown_count", 5, CVar.SERVERONLY | CVar.SERVER);
 #endif
 
+        /// <summary>
+        /// Delay between station alert level changes.
+        /// </summary>
+        public static readonly CVarDef<int> GameAlertLevelChangeDelay =
+            CVarDef.Create("game.alert_level_change_delay", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The time in seconds that the server should wait before restarting the round.
+        /// Defaults to 2 minutes.
+        /// </summary>
+        public static readonly CVarDef<float> RoundRestartTime =
+            CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The prototype to use for secret weights.
+        /// </summary>
+        public static readonly CVarDef<string> SecretWeightPrototype =
+            CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -293,7 +377,7 @@ namespace Content.Shared.CCVar
         /// URL of the Discord webhook which will relay all ahelp messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordAHelpWebhook =
-            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         /// <summary>
         /// The server icon to use in the Discord ahelp embed footer.
@@ -307,6 +391,24 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> DiscordAHelpAvatar =
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordVoteWebhook =
+            CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
+
+        /// URL of the Discord webhook which will relay round restart messages.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordRoundUpdateWebhook =
+            CVarDef.Create("discord.round_update_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+        /// <summary>
+        /// Role id for the Discord webhook to ping when the round ends.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
+            CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
+
 
         /*
          * Suspicion
@@ -372,12 +474,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> ZombieMinPlayers =
             CVarDef.Create("zombie.min_players", 20);
 
-        public static readonly CVarDef<int> ZombieMaxInitialInfected =
-            CVarDef.Create("zombie.max_initial_infected", 6);
-
-        public static readonly CVarDef<int> ZombiePlayersPerInfected =
-            CVarDef.Create("zombie.players_per_infected", 10);
-
         /*
          * Pirates
          */
@@ -420,12 +516,21 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> TipFrequencyInRound =
             CVarDef.Create("tips.in_game_frequency", 60f * 60);
 
+        public static readonly CVarDef<string> LoginTipsDataset =
+            CVarDef.Create("tips.login_dataset", "Tips");
+
         /*
          * Console
          */
 
         public static readonly CVarDef<bool>
             ConsoleLoginLocal = CVarDef.Create("console.loginlocal", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Automatically log in the given user as host, equivalent to the <c>promotehost</c> command.
+        /// </summary>
+        public static readonly CVarDef<string> ConsoleLoginHostUser =
+            CVarDef.Create("console.login_host_user", "", CVar.ARCHIVE | CVar.SERVERONLY);
 
 
         /*
@@ -449,6 +554,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> DatabaseSqliteDelay =
             CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Amount of concurrent SQLite database operations.
+        /// </summary>
+        /// <remarks>
+        /// Note that SQLite is not a properly asynchronous database and also has limited read/write concurrency.
+        /// Increasing this number may allow more concurrent reads, but it probably won't matter much.
+        /// SQLite operations are normally ran on the thread pool, which may cause thread pool starvation if the concurrency is too high.
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteConcurrency =
+            CVarDef.Create("database.sqlite_concurrency", 3, CVar.SERVERONLY);
+
 #if DEBUG
         private const int DefaultSqliteDelay = 1;
 #else
@@ -471,10 +587,35 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
+        /// <summary>
+        /// Max amount of concurrent Postgres database operations.
+        /// </summary>
+        public static readonly CVarDef<int> DatabasePgConcurrency =
+            CVarDef.Create("database.pg_concurrency", 8, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Milliseconds to asynchronously delay all PostgreSQL database operations with.
+        /// </summary>
+        /// <remarks>
+        /// This is intended for performance testing. It works different from <see cref="DatabaseSqliteDelay"/>,
+        /// as the lag is applied after acquiring the database lock.
+        /// </remarks>
+        public static readonly CVarDef<int> DatabasePgFakeLag =
+            CVarDef.Create("database.pg_fake_lag", 0, CVar.SERVERONLY);
+
         // Basically only exists for integration tests to avoid race conditions.
         public static readonly CVarDef<bool> DatabaseSynchronous =
             CVarDef.Create("database.sync", false, CVar.SERVERONLY);
 
+        /*
+         * Interface
+         */
+
+        public static readonly CVarDef<string> UIClickSound =
+            CVarDef.Create("interface.click_sound", "/Audio/UserInterface/click.ogg", CVar.REPLICATED);
+
+        public static readonly CVarDef<string> UIHoverSound =
+            CVarDef.Create("interface.hover_sound", "/Audio/UserInterface/hover.ogg", CVar.REPLICATED);
 
         /*
          * Outline
@@ -550,6 +691,8 @@ namespace Content.Shared.CCVar
             CVarDef.Create("audio.admin_chat_sound_path", "/Audio/Items/pop.ogg", CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
         public static readonly CVarDef<float> AdminChatSoundVolume =
             CVarDef.Create("audio.admin_chat_sound_volume", -5f, CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
+        public static readonly CVarDef<string> AHelpSound =
+            CVarDef.Create("audio.ahelp_sound", "/Audio/Effects/adminhelp.ogg", CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD
@@ -560,6 +703,12 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> HudHeldItemShow =
             CVarDef.Create("hud.held_item_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> CombatModeIndicatorsPointShow =
+            CVarDef.Create("hud.combat_mode_indicators_point_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> LoocAboveHeadShow =
+            CVarDef.Create("hud.show_looc_above_head", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         public static readonly CVarDef<float> HudHeldItemOffset =
             CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
@@ -595,7 +744,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("net.gasoverlaythresholds", 20);
 
         /*
-         * Admin stuff
+         * Admin
          */
 
         public static readonly CVarDef<bool> AdminAnnounceLogin =
@@ -603,6 +752,92 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should users be able to see their own notes? Admins will be able to see and set notes regardless
+        /// </summary>
+        public static readonly CVarDef<bool> SeeOwnNotes =
+            CVarDef.Create("admin.see_own_notes", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// The amount of days before the note starts fading. It will slowly lose opacity until it reaches stale. Set to 0 to disable.
+        /// </summary>
+        public static readonly CVarDef<double> NoteFreshDays =
+            CVarDef.Create("admin.note_fresh_days", 91.31055, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// The amount of days before the note completely fades, and can only be seen by admins if they press "see more notes". Set to 0
+        /// if you want the note to immediately disappear without fading.
+        /// </summary>
+        public static readonly CVarDef<double> NoteStaleDays =
+            CVarDef.Create("admin.note_stale_days", 365.2422, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// How much time does the user have to wait in seconds before confirming that they saw an admin message?
+        /// </summary>
+        public static readonly CVarDef<float> MessageWaitTime =
+            CVarDef.Create("admin.message_wait_time", 3f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for role bans
+        /// </summary>
+        public static readonly CVarDef<string> RoleBanDefaultSeverity =
+            CVarDef.Create("admin.role_ban_default_severity", "medium", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for department bans
+        /// </summary>
+        public static readonly CVarDef<string> DepartmentBanDefaultSeverity =
+            CVarDef.Create("admin.department_ban_default_severity", "medium", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for server bans
+        /// </summary>
+        public static readonly CVarDef<string> ServerBanDefaultSeverity =
+            CVarDef.Create("admin.server_ban_default_severity", "high", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
+        ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
+        /// </summary>
+        public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
+            CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Minimum particle accelerator strength to create an admin alert message.
+        /// </summary>
+        public static readonly CVarDef<int> AdminAlertParticleAcceleratorMinPowerState =
+            CVarDef.Create("admin.alert.particle_accelerator_min_power_state", 3, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
+        public static readonly CVarDef<bool> AdminShowPIIOnBan =
+            CVarDef.Create("admin.show_pii_onban", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If an admin joins a round by reading up or using the late join button, automatically
+        /// de-admin them.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminDeadminOnJoin =
+            CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Overrides the name the client sees in ahelps. Set empty to disable.
+        /// </summary>
+        public static readonly CVarDef<string> AdminAhelpOverrideClientName =
+            CVarDef.Create("admin.override_adminname_in_client_ahelp", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The threshold of minutes to appear as a "new player" in the ahelp menu
+        ///     If 0, appearing as a new player is disabled.
+        /// </summary>
+        public static readonly CVarDef<int> NewPlayerThreshold =
+            CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// How long an admin client can go without any input before being considered AFK.
+        /// </summary>
+        public static readonly CVarDef<float> AdminAfkTime =
+            CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -687,7 +922,7 @@ namespace Content.Shared.CCVar
         ///     This determines for how many seconds an explosion should stay visible once it has finished expanding.
         /// </summary>
         public static readonly CVarDef<float> ExplosionPersistence =
-            CVarDef.Create("explosion.persistence", 0.3f, CVar.SERVERONLY);
+            CVarDef.Create("explosion.persistence", 1.0f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If an explosion covers a larger area than this number, the damaging/processing will always start during
@@ -746,11 +981,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AdminLogsQueueSendDelay =
             CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
 
+        // When to skip the waiting time to save in-round admin logs, if no admin logs are currently being saved
         public static readonly CVarDef<int> AdminLogsQueueMax =
             CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
 
+        // When to skip the waiting time to save pre-round admin logs, if no admin logs are currently being saved
         public static readonly CVarDef<int> AdminLogsPreRoundQueueMax =
             CVarDef.Create("adminlogs.pre_round_queue_max", 5000, CVar.SERVERONLY);
+
+        // When to start dropping logs
+        public static readonly CVarDef<int> AdminLogsDropThreshold =
+            CVarDef.Create("adminlogs.drop_threshold", 20000, CVar.SERVERONLY);
 
         // How many logs to send to the client at once
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
@@ -811,9 +1052,12 @@ namespace Content.Shared.CCVar
         /// <summary>
         ///     Whether monstermos explosive depressurization will rip tiles..
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
+		///     WARNING: This cvar causes MAJOR contrast issues, and usually tends to make any spaced scene look very cluttered.
+		///     This not only usually looks strange, but can also reduce playability for people with impaired vision. Please think twice before enabling this on your server.
+		///     Also looks weird on slow spacing for unrelated reasons. If you do want to enable this, you should probably turn on instaspacing.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
-            CVarDef.Create("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether explosive depressurization will cause the grid to gain an impulse.
@@ -823,11 +1067,39 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.grid_impulse", false, CVar.SERVERONLY);
 
         /// <summary>
+        ///     What fraction of air from a spaced tile escapes every tick.
+        ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
+        /// </summary>
+        public static readonly CVarDef<float> AtmosSpacingEscapeRatio =
+            CVarDef.Create("atmos.mmos_spacing_speed", 0.05f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
+        ///     Since the decay due to SpacingEscapeRatio follows a curve, it would never reach 0.0 exactly
+        ///     unless we truncate it somewhere.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosSpacingMinGas =
+            CVarDef.Create("atmos.mmos_min_gas", 2.0f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     How much wind can go through a single tile before that tile doesn't depressurize itself
+        ///     (I.e spacing is limited in large rooms heading into smaller spaces)
+        /// </summary>
+        public static readonly CVarDef<float> AtmosSpacingMaxWind =
+            CVarDef.Create("atmos.mmos_max_wind", 500f, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether atmos superconduction is enabled.
         /// </summary>
         /// <remarks> Disabled by default, superconduction is awful. </remarks>
         public static readonly CVarDef<bool> Superconduction =
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Heat loss per tile due to radiation at 20 degC, in W.
+        /// </summary>
+        public static readonly CVarDef<float> SuperconductionTileLoss =
+            CVarDef.Create("atmos.superconduction_tile_loss", 30f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether excited groups will be processed and created.
@@ -855,6 +1127,22 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
             CVarDef.Create("atmos.tickrate", 15f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Scale factor for how fast things happen in our atmosphere
+        ///     simulation compared to real life. 1x means pumps run at 1x
+        ///     speed. Players typically expect things to happen faster
+        ///     in-game.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosSpeedup =
+            CVarDef.Create("atmos.speedup", 8f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Like atmos.speedup, but only for gas and reaction heat values. 64x means
+        ///     gases heat up and cool down 64x faster than real life.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosHeatScale =
+            CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -902,7 +1190,7 @@ namespace Content.Shared.CCVar
         /// Whether or not OOC chat should be enabled during a round.
         /// </summary>
         public static readonly CVarDef<bool> OocEnableDuringRound =
-            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED |CVar.SERVER);
+            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         /*
          * LOOC
@@ -918,6 +1206,12 @@ namespace Content.Shared.CCVar
         /// False: Dead player LOOC gets redirected to dead chat
         /// </summary>
         public static readonly CVarDef<bool> DeadLoocEnabled = CVarDef.Create("looc.enabled_dead", false, CVar.NOTIFY | CVar.REPLICATED);
+
+        /// <summary>
+        /// True: Crit players can use LOOC
+        /// False: Crit player LOOC gets redirected to dead chat
+        /// </summary>
+        public static readonly CVarDef<bool> CritLoocEnabled = CVarDef.Create("looc.enabled_crit", false, CVar.NOTIFY | CVar.REPLICATED);
 
         /*
          * Entity Menu Grouping Types
@@ -969,6 +1263,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Config for when the restart vote should be allowed to be called regardless with less than this amount of players.
+        /// </summary>
+        public static readonly CVarDef<int> VoteRestartMaxPlayers =
+            CVarDef.Create("vote.restart_max_players", 20, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Config for when the restart vote should be allowed to be called based on percentage of ghosts.
+        ///
+        public static readonly CVarDef<int> VoteRestartGhostPercentage =
+            CVarDef.Create("vote.restart_ghost_percentage", 75, CVar.SERVERONLY);
+
+        /// <summary>
         ///     See vote.enabled, but specific to preset votes
         /// </summary>
         public static readonly CVarDef<bool> VotePresetEnabled =
@@ -987,7 +1293,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.restart_required_ratio", 0.85f, CVar.SERVERONLY);
 
         /// <summary>
-        /// Whether or not to restrict the restart vote when there's online admins.
+        /// Whether or not to prevent the restart vote from having any effect when there is an online admin
         /// </summary>
         public static readonly CVarDef<bool> VoteRestartNotAllowedWhenAdminOnline =
             CVarDef.Create("vote.restart_not_allowed_when_admin_online", true, CVar.SERVERONLY);
@@ -1056,6 +1362,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.camera_rotation_locked", false, CVar.REPLICATED);
 
         /// <summary>
+        /// Whether the arrivals terminal should be on a planet map.
+        /// </summary>
+        public static readonly CVarDef<bool> ArrivalsPlanet =
+            CVarDef.Create("shuttle.arrivals_planet", true, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether the arrivals shuttle is enabled.
         /// </summary>
         public static readonly CVarDef<bool> ArrivalsShuttles =
@@ -1064,14 +1376,14 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// The map to use for the arrivals station.
         /// </summary>
-        public static readonly CVarDef<ResourcePath> ArrivalsMap =
-            CVarDef.Create("shuttle.arrivals_map", new ResourcePath("/Maps/Misc/terminal.yml"), CVar.SERVERONLY);
+        public static readonly CVarDef<string> ArrivalsMap =
+            CVarDef.Create("shuttle.arrivals_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
 
         /// <summary>
         /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.
         /// </summary>
         public static readonly CVarDef<float> ArrivalsCooldown =
-            CVarDef.Create("shuttle.arrivals_cooldown", 90f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.arrivals_cooldown", 50f, CVar.SERVERONLY);
 
         /// <summary>
         /// Are players allowed to return on the arrivals shuttle.
@@ -1080,10 +1392,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
 
         /// <summary>
-        /// Whether cargo shuttles are enabled.
+        /// Whether to automatically spawn escape shuttles.
         /// </summary>
-        public static readonly CVarDef<bool> CargoShuttles =
-            CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
+        public static readonly CVarDef<bool> GridFill =
+            CVarDef.Create("shuttle.grid_fill", true, CVar.SERVERONLY);
 
         /*
          * Emergency
@@ -1108,16 +1420,22 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY);
 
         /// <summary>
-        /// How long after the console is authorized for the shuttle to early launch.
+        /// The minimum time for the emergency shuttle to arrive at centcomm.
         /// </summary>
-        public static readonly CVarDef<float> EmergencyShuttleTransitTime =
-            CVarDef.Create("shuttle.emergency_transit_time", 60f, CVar.SERVERONLY);
+        public static readonly CVarDef<float> EmergencyShuttleMinTransitTime =
+            CVarDef.Create("shuttle.emergency_transit_time_min", 60f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The maximum time for the emergency shuttle to arrive at centcomm.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleMaxTransitTime =
+            CVarDef.Create("shuttle.emergency_transit_time_max", 180f, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether the emergency shuttle is enabled or should the round just end.
         /// </summary>
         public static readonly CVarDef<bool> EmergencyShuttleEnabled =
-            CVarDef.Create("shuttle.emergency_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.emergency", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     The percentage of time passed from the initial call to when the shuttle can no longer be recalled.
@@ -1138,12 +1456,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> EmergencyShuttleAutoCallExtensionTime =
             CVarDef.Create("shuttle.auto_call_extension_time", 45, CVar.SERVERONLY);
-
-        /// <summary>
-        /// The map to load for CentCom for the emergency shuttle to dock to.
-        /// </summary>
-        public static readonly CVarDef<string> CentcommMap =
-            CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);
 
         /*
          * Crew Manifests
@@ -1241,17 +1553,81 @@ namespace Content.Shared.CCVar
 
 
         /*
+        * Accessibility
+        */
+
+        /// <summary>
+        /// Toggle for visual effects that may potentially cause motion sickness.
+        /// Where reasonable, effects affected by this CVar should use an alternate effect.
+        /// Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.
+        /// </summary>
+        public static readonly CVarDef<bool> ReducedMotion =
+            CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        public static readonly CVarDef<bool> ChatEnableColorName =
+            CVarDef.Create("accessibility.enable_color_name", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying names with individual colors.");
+
+        /// <summary>
+        /// Screen shake intensity slider, controlling the intensity of the CameraRecoilSystem.
+        /// Goes from 0 (no recoil at all) to 1 (regular amounts of recoil)
+        /// </summary>
+        public static readonly CVarDef<float> ScreenShakeIntensity =
+            CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
          * CHAT
          */
 
+        /// <summary>
+        /// Chat rate limit values are accounted in periods of this size (seconds).
+        /// After the period has passed, the count resets.
+        /// </summary>
+        /// <seealso cref="ChatRateLimitCount"/>
+        public static readonly CVarDef<int> ChatRateLimitPeriod =
+            CVarDef.Create("chat.rate_limit_period", 2, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How many chat messages are allowed in a single rate limit period.
+        /// </summary>
+        /// <remarks>
+        /// The total rate limit throughput per second is effectively
+        /// <see cref="ChatRateLimitCount"/> divided by <see cref="ChatRateLimitCount"/>.
+        /// </remarks>
+        /// <seealso cref="ChatRateLimitPeriod"/>
+        /// <seealso cref="ChatRateLimitAnnounceAdmins"/>
+        public static readonly CVarDef<int> ChatRateLimitCount =
+            CVarDef.Create("chat.rate_limit_count", 10, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, announce when a player breached chat rate limit to game administrators.
+        /// </summary>
+        /// <seealso cref="ChatRateLimitAnnounceAdminsDelay"/>
+        public static readonly CVarDef<bool> ChatRateLimitAnnounceAdmins =
+            CVarDef.Create("chat.rate_limit_announce_admins", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Minimum delay (in seconds) between announcements from <see cref="ChatRateLimitAnnounceAdmins"/>.
+        /// </summary>
+        public static readonly CVarDef<int> ChatRateLimitAnnounceAdminsDelay =
+            CVarDef.Create("chat.rate_limit_announce_admins_delay", 15, CVar.SERVERONLY);
+
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
+
+        public static readonly CVarDef<int> ChatMaxAnnouncementLength =
+            CVarDef.Create("chat.max_announcement_length", 256, CVar.SERVER | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
         public static readonly CVarDef<bool> ChatShowTypingIndicator =
             CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> ChatEnableFancyBubbles =
+            CVarDef.Create("chat.enable_fancy_bubbles", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying fancy speech bubbles, which display the speaking character's name.");
+
+        public static readonly CVarDef<bool> ChatFancyNameBackground =
+            CVarDef.Create("chat.fancy_name_background", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying a background under the speaking character's name.");
 
         /// <summary>
         /// A message broadcast to each player that joins the lobby.
@@ -1312,18 +1688,29 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> ICRandomSpeciesWeights =
             CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);
 
+        /// <summary>
+        /// Control displaying SSD indicators near players
+        /// </summary>
+        public static readonly CVarDef<bool> ICShowSSDIndicator =
+            CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
+
         /*
          * Salvage
          */
 
         /// <summary>
-        ///     Forced salvage map prototype name (if empty, randomly selected)
+        /// Duration for missions
         /// </summary>
-        public static readonly CVarDef<string>
-            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
+        public static readonly CVarDef<float>
+            SalvageExpeditionDuration = CVarDef.Create("salvage.expedition_duration", 660f, CVar.REPLICATED);
+
+        /// <summary>
+        /// Cooldown for missions.
+        /// </summary>
+        public static readonly CVarDef<float>
+            SalvageExpeditionCooldown = CVarDef.Create("salvage.expedition_cooldown", 780f, CVar.REPLICATED);
 
         /*
-
          * Flavor
          */
 
@@ -1386,20 +1773,6 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        /// Controls whether new resources can be uploaded by admins.
-        /// Does not prevent already uploaded resources from being sent.
-        /// </summary>
-        public static readonly CVarDef<bool> ResourceUploadingEnabled =
-            CVarDef.Create("netres.enabled", true, CVar.REPLICATED | CVar.SERVER);
-
-        /// <summary>
-        /// Controls the data size limit in megabytes for uploaded resources. If they're too big, they will be dropped.
-        /// Set to zero or a negative value to disable limit.
-        /// </summary>
-        public static readonly CVarDef<float> ResourceUploadingLimitMb =
-            CVarDef.Create("netres.limit", 3f, CVar.REPLICATED | CVar.SERVER);
-
-        /// <summary>
         /// Whether uploaded files will be stored in the server's database.
         /// This is useful to keep "logs" on what files admins have uploaded in the past.
         /// </summary>
@@ -1423,6 +1796,28 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> DragDropDeadZone =
             CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// Toggles whether the walking key is a toggle or a held key.
+        /// </summary>
+        public static readonly CVarDef<bool> ToggleWalk =
+            CVarDef.Create("control.toggle_walk", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * STORAGE
+         */
+
+        /// <summary>
+        /// Whether or not the storage UI is static and bound to the hotbar, or unbound and allowed to be dragged anywhere.
+        /// </summary>
+        public static readonly CVarDef<bool> StaticStorageUI =
+            CVarDef.Create("control.static_storage_ui", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Whether or not the storage window uses a transparent or opaque sprite.
+        /// </summary>
+        public static readonly CVarDef<bool> OpaqueStorageWindow =
+            CVarDef.Create("control.opaque_storage_background", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
         /*
          * UPDATE
          */
@@ -1441,7 +1836,7 @@ namespace Content.Shared.CCVar
         /// The time you must spend reading the rules, before the "Request" button is enabled
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
-            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Fire alarm
@@ -1550,7 +1945,74 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ConfigPresetDebug =
             CVarDef.Create("config.preset_debug", true, CVar.SERVERONLY);
 
-        // april fools
+        /*
+         * World Generation
+         */
+        /// <summary>
+        ///     Whether or not world generation is enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> WorldgenEnabled =
+            CVarDef.Create("worldgen.enabled", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The worldgen config to use.
+        /// </summary>
+        public static readonly CVarDef<string> WorldgenConfig =
+            CVarDef.Create("worldgen.worldgen_config", "Default", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The maximum amount of time the entity GC can process, in ms.
+        /// </summary>
+        public static readonly CVarDef<int> GCMaximumTimeMs =
+            CVarDef.Create("entgc.maximum_time_ms", 5, CVar.SERVERONLY);
+
+        /*
+         * Replays
+         */
+
+        /// <summary>
+        ///     Whether or not to record admin chat. If replays are being publicly distributes, this should probably be
+        ///     false.
+        /// </summary>
+        public static readonly CVarDef<bool> ReplayRecordAdminChat =
+            CVarDef.Create("replay.record_admin_chat", false, CVar.ARCHIVE);
+
+        /// <summary>
+        /// Automatically record full rounds as replays.
+        /// </summary>
+        public static readonly CVarDef<bool> ReplayAutoRecord =
+            CVarDef.Create("replay.auto_record", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The file name to record automatic replays to. The path is relative to <see cref="CVars.ReplayDirectory"/>.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// If the path includes slashes, directories will be automatically created if necessary.
+        /// </para>
+        /// <para>
+        /// A number of substitutions can be used to automatically fill in the file name: <c>{year}</c>, <c>{month}</c>, <c>{day}</c>, <c>{hour}</c>, <c>{minute}</c>, <c>{round}</c>.
+        /// </para>
+        /// </remarks>
+        public static readonly CVarDef<string> ReplayAutoRecordName =
+            CVarDef.Create("replay.auto_record_name", "{year}_{month}_{day}-{hour}_{minute}-round_{round}.zip", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Path that, if provided, automatic replays are initially recorded in.
+        /// When the recording is done, the file is moved into its final destination.
+        /// Unless this path is rooted, it will be relative to <see cref="CVars.ReplayDirectory"/>.
+        /// </summary>
+        public static readonly CVarDef<string> ReplayAutoRecordTempDir =
+            CVarDef.Create("replay.auto_record_temp_dir", "", CVar.SERVERONLY);
+
+        /*
+         * Miscellaneous
+         */
+
+        public static readonly CVarDef<bool> GatewayGeneratorEnabled =
+            CVarDef.Create("gateway.generator_enabled", true);
+
+        // Clippy!
         public static readonly CVarDef<string> ClippyEntity =
             CVarDef.Create("clippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
     }

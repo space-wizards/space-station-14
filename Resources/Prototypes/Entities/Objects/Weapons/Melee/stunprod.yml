@@ -1,0 +1,69 @@
+- type: entity
+  name: stun prod
+  parent: BaseItem
+  id: Stunprod
+  description: A stun prod for illegal incapacitation.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/stunprod.rsi
+    layers:
+    - state: stunprod_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: ItemToggle
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Blunt: 0
+  - type: Stunbaton
+    energyPerUse: 70
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 9
+    angle: 60
+    animation: WeaponArcThrust
+  - type: StaminaDamageOnHit
+    damage: 20
+    sound: /Audio/Weapons/egloves.ogg
+  - type: StaminaDamageOnCollide
+    damage: 20
+    sound: /Audio/Weapons/egloves.ogg
+  - type: Battery
+    maxCharge: 360
+    startingCharge: 360
+  - type: UseDelay
+  - type: Item
+    heldPrefix: off
+    size: Normal
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/stunprod.rsi
+    quickEquip: false
+    slots:
+    - back
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: stunprod_on}
+          False: {state: stunprod_off}
+  - type: StaticPrice
+    price: 100
+  - type: Construction
+    graph: makeshiftstunprod
+    node: msstunprod

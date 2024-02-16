@@ -4,7 +4,7 @@
     sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
-  cost: 2700
+  cost: 1100
   category: Atmospherics
   group: market
 
@@ -14,7 +14,17 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
-  cost: 2300
+  cost: 1100
+  category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsLiquidOxygen
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: blue
+  product: LiquidOxygenCanister
+  cost: 2500
   category: Atmospherics
   group: market
 
@@ -24,7 +34,17 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
-  cost: 3200
+  cost: 1100
+  category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsLiquidNitrogen
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: red
+  product: LiquidNitrogenCanister
+  cost: 2500
   category: Atmospherics
   group: market
 
@@ -34,7 +54,27 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
-  cost: 2600
+  cost: 2200 # Until someone fixes it co2 can be used to oneshot people so it's more expensive
+  category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsLiquidCarbonDioxide
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: black
+  product: LiquidCarbonDioxideCanister
+  cost: 4000
+  category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsStorage
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: yellow
+  product: StorageCanister
+  cost: 1010 # No gases in it so it's cheaper
   category: Atmospherics
   group: market
 
@@ -50,17 +90,15 @@
 #  category: Atmospherics
 #  group: market
 
-#- type: cargoProduct
-#  name: "plasma canister"
-#  id: AtmosphericsPlasma
-#  description: "Plasma canister"
-#  icon:
-#    sprite: Structures/Storage/canister.rsi
-#    state: orange
-#  product: PlasmaCanister
-#  cost: 8500
-#  category: Atmospherics
-#  group: market
+- type: cargoProduct
+  id: AtmosphericsPlasma
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: orange
+  product: PlasmaCanister
+  cost: 4000
+  category: Atmospherics
+  group: market
 
 #- type: cargoProduct
 #  name: "tritium canister"

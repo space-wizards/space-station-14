@@ -6,9 +6,10 @@ namespace Content.Client.MagicMirror;
 
 public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private MagicMirrorWindow? _window;
 
-    public MagicMirrorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public MagicMirrorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -20,15 +21,16 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 
         _window.OnHairSelected += tuple => SelectHair(MagicMirrorCategory.Hair, tuple.id, tuple.slot);
         _window.OnHairColorChanged += args => ChangeColor(MagicMirrorCategory.Hair, args.marking, args.slot);
-        _window.OnHairSlotAdded += delegate() { AddSlot(MagicMirrorCategory.Hair); };
+        _window.OnHairSlotAdded += delegate () { AddSlot(MagicMirrorCategory.Hair); };
         _window.OnHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.Hair, args);
 
         _window.OnFacialHairSelected += tuple => SelectHair(MagicMirrorCategory.FacialHair, tuple.id, tuple.slot);
         _window.OnFacialHairColorChanged +=
             args => ChangeColor(MagicMirrorCategory.FacialHair, args.marking, args.slot);
-        _window.OnFacialHairSlotAdded += delegate() { AddSlot(MagicMirrorCategory.FacialHair); };
+        _window.OnFacialHairSlotAdded += delegate () { AddSlot(MagicMirrorCategory.FacialHair); };
         _window.OnFacialHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.FacialHair, args);
 
+        _window.OnClose += Close;
         _window.OpenCentered();
     }
 
@@ -52,16 +54,28 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
         SendMessage(new MagicMirrorAddSlotMessage(category));
     }
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    protected override void UpdateState(BoundUserInterfaceState state)
     {
-        base.ReceiveMessage(message);
+        base.UpdateState(state);
 
-        if (message is not MagicMirrorUiData data || _window == null)
+        if (state is not MagicMirrorUiState data || _window == null)
         {
             return;
         }
 
         _window.UpdateState(data);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+
+        if (_window != null)
+            _window.OnClose -= Close;
+
+        _window?.Dispose();
     }
 }
 

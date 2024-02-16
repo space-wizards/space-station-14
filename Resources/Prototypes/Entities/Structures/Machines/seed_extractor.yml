@@ -12,19 +12,19 @@
     - state: seedextractor-unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-    netsync: false
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.4,0.25,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -35,6 +35,3 @@
   - type: SeedExtractor
   - type: Machine
     board: SeedExtractorMachineCircuitboard
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential

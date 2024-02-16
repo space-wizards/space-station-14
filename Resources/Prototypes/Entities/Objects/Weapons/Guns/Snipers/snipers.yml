@@ -6,12 +6,11 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 50
+    size: Huge
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
     quickEquip: false
@@ -19,14 +18,13 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 1
+    fireRate: 0.75
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    autoCycle: false
     capacity: 10
     proto: CartridgeLightRifle
     whitelist:
@@ -52,7 +50,7 @@
   name: Hristov
   parent: BaseWeaponSniper
   id: WeaponSniperHristov
-  description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-material ammo.
+  description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -61,44 +59,73 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeAntiMaterial
+      - CartridgeAntiMateriel
     capacity: 5
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
 
 - type: entity
   name: musket
   parent: BaseWeaponSniper
   id: Musket
-  description: This should've been in a museum long before you were born. Uses .60 anti-material ammo.
+  description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
+  - type: Sharp
+  - type: Item
+    size: Large
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    state: base
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 8 #it's a musket
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeAntiMaterial
+      - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 15 #you fucking stab em
+        Bloodloss: 2 #no way to apply bleed, triangular bayonet wounds are hard to fix(source:that one copypasta)
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
 
 - type: entity
   name: flintlock pistol
   parent: BaseWeaponSniper
   id: WeaponPistolFlintlock
-  description: A pirate's companion. Yarrr! Uses .60 anti-material ammo.
+  description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
+  - type: Gun
+    minAngle: 0
+    maxAngle: 30 #miss him entirely because the barrel is smoothbore
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 8 #it's a flintlock
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeAntiMaterial
+        - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
+  - type: StaticPrice
+    price: 0
+

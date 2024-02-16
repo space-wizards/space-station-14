@@ -9,7 +9,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
-    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
@@ -20,7 +19,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
 
 - type: entity
   id: CigarSpent
@@ -35,6 +34,11 @@
     solutions:
       smokable:
         maxVol: 20
+  - type: Tag
+    tags:
+      - Cigar
+      - Trash
+      - Burnt
 
 - type: entity
   id: CigarGold
@@ -44,14 +48,13 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
-    netsync: false
     state: unlit-icon
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
 
 - type: entity
   id: CigarGoldSpent

@@ -4,6 +4,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: paper }
   spawn: SheetPaper1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Plasma
@@ -11,6 +12,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: plasma }
   spawn: SheetPlasma1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Plastic
@@ -18,6 +20,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: plastic }
   spawn: SheetPlastic1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Uranium
@@ -25,3 +28,4 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: uranium }
   spawn: SheetUranium1
   maxCount: 30
+  itemSize: 1

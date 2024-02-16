@@ -11,17 +11,17 @@ using Robust.Shared.Physics;
 using Content.Shared.Throwing;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Maps;
 using Content.Server.Revenant.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -36,7 +36,6 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
@@ -46,8 +45,8 @@ public sealed partial class RevenantSystem
     private void InitializeAbilities()
     {
         SubscribeLocalEvent<RevenantComponent, InteractNoHandEvent>(OnInteract);
-        SubscribeLocalEvent<RevenantComponent, DoAfterEvent<SoulEvent>>(OnSoulSearch);
-        SubscribeLocalEvent<RevenantComponent, DoAfterEvent<HarvestEvent>>(OnHarvest);
+        SubscribeLocalEvent<RevenantComponent, SoulEvent>(OnSoulSearch);
+        SubscribeLocalEvent<RevenantComponent, HarvestEvent>(OnHarvest);
 
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
@@ -84,17 +83,20 @@ public sealed partial class RevenantSystem
 
     private void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant)
     {
-        _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, uid, PopupType.Medium);
-        var soulSearchEvent = new SoulEvent();
-        var searchDoAfter = new DoAfterEventArgs(uid, revenant.SoulSearchDuration, target:target)
+        var searchDoAfter = new DoAfterArgs(EntityManager, uid, revenant.SoulSearchDuration, new SoulEvent(), uid, target: target)
         {
             BreakOnUserMove = true,
+            BreakOnDamage = true,
             DistanceThreshold = 2
         };
-        _doAfter.DoAfter(searchDoAfter, soulSearchEvent);
+
+        if (!_doAfter.TryStartDoAfter(searchDoAfter))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, uid, PopupType.Medium);
     }
 
-    private void OnSoulSearch(EntityUid uid, RevenantComponent component, DoAfterEvent<SoulEvent> args)
+    private void OnSoulSearch(EntityUid uid, RevenantComponent component, SoulEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
@@ -135,14 +137,16 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        var harvestEvent = new HarvestEvent();
-
-        var doAfter = new DoAfterEventArgs(uid, revenant.HarvestDebuffs.X, target:target)
+        var doAfter = new DoAfterArgs(EntityManager, uid, revenant.HarvestDebuffs.X, new HarvestEvent(), uid, target: target)
         {
             DistanceThreshold = 2,
             BreakOnUserMove = true,
-            NeedHand = false
+            BreakOnDamage = true,
+            RequireCanInteract = false, // stuns itself
         };
+
+        if (!_doAfter.TryStartDoAfter(doAfter))
+            return;
 
         _appearance.SetData(uid, RevenantVisuals.Harvesting, true);
 
@@ -150,10 +154,9 @@ public sealed partial class RevenantSystem
             target, PopupType.Large);
 
         TryUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
-        _doAfter.DoAfter(doAfter, harvestEvent);
     }
 
-    private void OnHarvest(EntityUid uid, RevenantComponent component, DoAfterEvent<HarvestEvent> args)
+    private void OnHarvest(EntityUid uid, RevenantComponent component, HarvestEvent args)
     {
         if (args.Cancelled)
         {
@@ -191,7 +194,7 @@ public sealed partial class RevenantSystem
         if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
             return;
         DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Poison", damage.Value);
+        dspec.DamageDict.Add("Cold", damage.Value);
         _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
 
         args.Handled = true;
@@ -213,7 +216,7 @@ public sealed partial class RevenantSystem
         if (!_mapManager.TryGetGrid(xform.GridUid, out var map))
             return;
         var tiles = map.GetTilesIntersecting(Box2.CenteredAround(xform.WorldPosition,
-            (component.DefileRadius*2, component.DefileRadius))).ToArray();
+            new Vector2(component.DefileRadius * 2, component.DefileRadius))).ToArray();
 
         _random.Shuffle(tiles);
 
@@ -303,13 +306,7 @@ public sealed partial class RevenantSystem
             return;
 
         args.Handled = true;
-
-        var emo = GetEntityQuery<DiseaseCarrierComponent>();
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.BlightRadius))
-        {
-            if (emo.TryGetComponent(ent, out var comp))
-                _disease.TryAddDisease(ent, component.BlightDiseasePrototypeId, comp);
-        }
+        // TODO: When disease refactor is in.
     }
 
     private void OnMalfunctionAction(EntityUid uid, RevenantComponent component, RevenantMalfunctionActionEvent args)
@@ -324,17 +321,13 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
-            _emag.DoEmagEffect(ent, ent); //it emags itself. spooky.
+            if (component.MalfunctionWhitelist?.IsValid(ent, EntityManager) == false)
+                continue;
+
+            if (component.MalfunctionBlacklist?.IsValid(ent, EntityManager) == true)
+                continue;
+
+            _emag.DoEmagEffect(uid, ent); //it does not emag itself. adorable.
         }
-    }
-
-    private sealed class SoulEvent : EntityEventArgs
-    {
-
-    }
-
-    private sealed class HarvestEvent : EntityEventArgs
-    {
-
     }
 }

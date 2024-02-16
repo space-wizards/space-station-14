@@ -1,4 +1,5 @@
 # Empty drink containers; different from bottles in that these are intended to be spawned empty
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   parent: BaseItem
   id: DrinkBaseCup
@@ -26,12 +27,16 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Drink
-    isOpen: true
   - type: Sprite
     state: icon
   - type: Spillable
     solution: drink
-  - type: ItemCooldown
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   parent: DrinkBaseCup
@@ -60,6 +65,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: icon-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
 
 - type: entity
   parent: DrinkBaseMug
@@ -124,6 +132,9 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
 
 - type: entity
   parent: DrinkBaseMug
@@ -164,16 +175,32 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkHotCoco
-  name: Hot chocolate
+  name: hot chocolate
   description: A heated drink consisting melted chocolate and heated milk.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: HotCocoa
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBaseCup
   id: DrinkHotCoffee
-  name: Coffee
+  name: coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
   - type: SolutionContainerManager
@@ -192,13 +219,31 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkCafeLatte
+  name: cafe latte
+  description: A nice, strong and tasty beverage while you are reading.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CafeLatte
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+  - type: Appearance
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
   parent: DrinkBaseCup
   id: DrinkTeacup
-  name: Teacup
+  name: teacup
   description: A plain white porcelain teacup.
   components:
   - type: SolutionContainerManager
@@ -217,13 +262,38 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkGreenTea
+  name: green tea
+  description: A plain white porcelain teacup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: GreenTea
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
   parent: DrinkBaseCup
   id: DrinkLean
-  name: Grape Juice
+  name: grape Juice
   description: Damn, no fun allowed.
   components:
   - type: SolutionContainerManager
@@ -237,7 +307,7 @@
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
@@ -246,12 +316,6 @@
   name: water cup
   description: A paper water cup.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Water
-          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
@@ -263,5 +327,15 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: icon-
-  - type: TrashOnEmpty
+  - type: Tag
+    tags:
+    - Trash
+    - DroneUsable
+    - WhitelistChameleon
+  - type: TrashOnSolutionEmpty
     solution: drink
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+    sprite: Clothing/Head/Hats/party_water_cup.rsi

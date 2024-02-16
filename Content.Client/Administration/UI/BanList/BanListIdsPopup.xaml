@@ -1,9 +1,5 @@
-﻿<Popup xmlns="https://spacestation14.io"
-       xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <PanelContainer>
-        <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
-        </PanelContainer.PanelOverride>
+﻿<Popup xmlns="https://spacestation14.io">
+    <PanelContainer StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Vertical">
             <Label Name="ID" HorizontalExpand="True"/>
             <Label Name="IP" HorizontalExpand="True"/>

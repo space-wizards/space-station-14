@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "derelict1"
+    },
+    {
+      "name": "derelict2"
+    },
+    {
+      "name": "derelict3"
+    },
+    {
+      "name": "derelict4"
+    },
+    {
+      "name": "derelict5"
+    },
+    {
+      "name": "derelict6"
+    },
+    {
+      "name": "derelict7"
+    },
+    {
+      "name": "derelict8"
+    },
+    {
+      "name": "derelict9"
+    },
+    {
+      "name": "derelict10"
+    },
+    {
+      "name": "derelict11"
+    },
+    {
+      "name": "derelict12"
+    },
+    {
+      "name": "derelict13"
+    },
+    {
+      "name": "derelict14"
+    },
+    {
+      "name": "derelict15"
+    },
+    {
+      "name": "derelict16"
+    }
+  ]
+}

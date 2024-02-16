@@ -9,17 +9,17 @@ public abstract class SharedDestructibleSystem : EntitySystem
     {
         var eventArgs = new DestructionEventArgs();
 
-        RaiseLocalEvent(owner, eventArgs, false);
+        RaiseLocalEvent(owner, eventArgs);
         QueueDel(owner);
     }
 
     /// <summary>
-    ///     Force entity to broke.
+    ///     Force entity to break.
     /// </summary>
     public void BreakEntity(EntityUid owner)
     {
         var eventArgs = new BreakageEventArgs();
-        RaiseLocalEvent(owner, eventArgs, false);
+        RaiseLocalEvent(owner, eventArgs);
     }
 }
 

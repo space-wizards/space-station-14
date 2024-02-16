@@ -1,7 +1,8 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi | Brigmedic icon made by PuroSlavKing (Github) | Zombie icon made by RamZ | Zookeper by netwy (discort) | Rev and Head Rev icon taken from https://tgstation13.org/wiki/HUD and edited by coolmankid12345 (Discord) | Mindshield icon taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/huds/hud.dmi and edited by Golinth (Github)",
+
     "size": {
         "x": 8,
         "y": 8
@@ -15,6 +16,9 @@
         },
         {
             "name": "Botanist"
+        },
+        {
+            "name": "Borg"
         },
         {
             "name": "Boxer"
@@ -101,7 +105,13 @@
             "name": "HeadOfSecurity"
         },
         {
+            "name": "Brigmedic"
+        },
+        {
             "name": "MedicalDoctor"
+        },
+        {
+            "name": "Paramedic"
         },
         {
             "name": "Chef"
@@ -137,7 +147,37 @@
             "name": "SecurityCadet"
         },
         {
+            "name": "Zombie"
+        },
+        {
             "name": "Zookeeper"
+        },
+        {
+            "name": "SeniorEngineer"
+        },
+        {
+            "name": "SeniorResearcher"
+        },
+        {
+            "name": "SeniorPhysician"
+        },
+        {
+            "name": "SeniorOfficer"
+        },
+        {
+            "name": "Revolutionary"
+        },
+        {
+            "name": "HeadRevolutionary"
+        },
+        {
+            "name": "MindShield"
+        },
+        {
+            "name": "Syndicate"
+        },
+        {
+            "name": "Visitor"
         }
     ]
 }

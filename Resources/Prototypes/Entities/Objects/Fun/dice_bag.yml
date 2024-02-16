@@ -14,16 +14,16 @@
       - id: d20Dice
       - id: PercentileDie
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/dice.rsi
     state: dicebag
   - type: Item
+    size: Small
   - type: Storage
-    capacity: 18
-    size: 5
+    grid:
+    - 0,0,3,1
     whitelist:
       tags:
-        - Dice
+      - Dice
 
 - type: entity
   parent: DiceBag
@@ -31,8 +31,8 @@
   name: bag of dice
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/dice.rsi
     state: magicdicebag
   - type: Storage
-    capacity: 30
+    grid:
+    - 0,0,4,3

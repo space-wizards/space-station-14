@@ -1,7 +1,7 @@
 namespace Content.Server.Speech.Components
 {
     [RegisterComponent]
-    public sealed class ScrambledAccentComponent : Component
+    public sealed partial class ScrambledAccentComponent : Component
     {
     }
 }

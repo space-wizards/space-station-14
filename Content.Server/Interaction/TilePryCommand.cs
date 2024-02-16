@@ -1,16 +1,12 @@
+using System.Numerics;
 using Content.Server.Administration;
-using Content.Server.Tools.Components;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
 namespace Content.Server.Interaction
 {
-    /// <summary>
-    /// <see cref="TilePryingComponent.TryPryTile"/>
-    /// </summary>
     [AdminCommand(AdminFlags.Debug)]
     sealed class TilePryCommand : IConsoleCommand
     {
@@ -22,7 +18,7 @@ namespace Content.Server.Interaction
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player?.AttachedEntity is not {} attached)
             {
                 return;
@@ -60,14 +56,14 @@ namespace Content.Server.Interaction
             {
                 for (var j = -radius; j <= radius; j++)
                 {
-                    var tile = mapGrid.GetTileRef(playerPosition.Offset((i, j)));
+                    var tile = mapGrid.GetTileRef(playerPosition.Offset(new Vector2(i, j)));
                     var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
                     var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                     if (!tileDef.CanCrowbar) continue;
 
-                    var underplating = tileDefinitionManager["UnderPlating"];
-                    mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
+                    var plating = tileDefinitionManager["Plating"];
+                    mapGrid.SetTile(coordinates, new Tile(plating.TileId));
                 }
             }
         }

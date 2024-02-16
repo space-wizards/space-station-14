@@ -4,7 +4,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
@@ -52,15 +51,23 @@ namespace Content.Client.Stylesheets
             {
                 BackgroundColor = new Color(0.25f, 0.25f, 0.25f)
             };
-            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
 
             var progressBarForeground = new StyleBoxFlat
             {
                 BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
             };
-            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
+
+            var tabContainerPanel = new StyleBoxTexture();
+            tabContainerPanel.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var tabContainerBoxActive = new StyleBoxFlat {BackgroundColor = new Color(64, 64, 64)};
+            tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+            var tabContainerBoxInactive = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 32)};
+            tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {
@@ -179,6 +186,14 @@ namespace Content.Client.Stylesheets
                 Element<Label>().Class(OptionButton.StyleClassOptionButton)
                     .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
 
+                // TabContainer
+                new StyleRule(new SelectorElement(typeof(TabContainer), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(TabContainer.StylePropertyPanelStyleBox, tabContainerPanel),
+                        new StyleProperty(TabContainer.StylePropertyTabStyleBox, tabContainerBoxActive),
+                        new StyleProperty(TabContainer.StylePropertyTabStyleBoxInactive, tabContainerBoxInactive),
+                    }),
 
             }).ToList());
         }

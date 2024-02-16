@@ -10,10 +10,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 public sealed partial class ArtifactSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-
     private const int MaxEdgesPerNode = 4;
 
     private readonly HashSet<int> _usedNodeIds = new();
@@ -28,7 +24,7 @@ public sealed partial class ArtifactSystem
     {
         if (nodeAmount < 1)
         {
-            Logger.Error($"nodeAmount {nodeAmount} is less than 1. Aborting artifact tree generation.");
+            Log.Error($"nodeAmount {nodeAmount} is less than 1. Aborting artifact tree generation.");
             return;
         }
 
@@ -203,8 +199,8 @@ public sealed partial class ArtifactSystem
 
             var temp = (object) comp;
             _serialization.CopyTo(entry.Component, ref temp);
-
-            EntityManager.AddComponent(uid, (Component) temp!, true);
+            EntityManager.RemoveComponent(uid, temp!.GetType());
+            EntityManager.AddComponent(uid, (Component) temp!);
         }
 
         node.Discovered = true;
@@ -226,12 +222,25 @@ public sealed partial class ArtifactSystem
         var trigger = _prototype.Index<ArtifactTriggerPrototype>(currentNode.Trigger);
         var effect = _prototype.Index<ArtifactEffectPrototype>(currentNode.Effect);
 
-        foreach (var name in effect.Components.Keys.Concat(trigger.Components.Keys))
-        {
-            var comp = _componentFactory.GetRegistration(name);
-            EntityManager.RemoveComponentDeferred(uid, comp.Type);
-        }
+        var entityPrototype = MetaData(uid).EntityPrototype;
+        var toRemove = effect.Components.Keys.Concat(trigger.Components.Keys).ToList();
 
+        foreach (var name in toRemove)
+        {
+            // if the entity prototype contained the component originally
+            if (entityPrototype?.Components.TryGetComponent(name, out var entry) ?? false)
+            {
+                var comp = (Component) _componentFactory.GetComponent(name);
+                comp.Owner = uid;
+                var temp = (object) comp;
+                _serialization.CopyTo(entry, ref temp);
+                EntityManager.RemoveComponent(uid, temp!.GetType());
+                EntityManager.AddComponent(uid, (Component) temp);
+                continue;
+            }
+
+            EntityManager.RemoveComponentDeferred(uid, _componentFactory.GetRegistration(name).Type);
+        }
         component.CurrentNodeId = null;
     }
 

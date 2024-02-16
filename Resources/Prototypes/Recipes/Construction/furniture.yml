@@ -136,6 +136,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: meat chair
+  id: ChairMeat
+  graph: Seat
+  startNode: start
+  targetNode: chairMeat
+  category: construction-category-furniture
+  description: Uncomfortably sweaty.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: meat
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: ritual chair
   id: ChairRitual
   graph: RitualSeat
@@ -163,6 +180,40 @@
   icon:
     sprite: Structures/Furniture/folding_chair.rsi
     state: folding
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: steel bench
+  id: ChairSteelBench
+  graph: Seat
+  startNode: start
+  targetNode: chairSteelBench
+  category: construction-category-furniture
+  description: A long chair made for a metro. Really standard design.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: steel-bench
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: comfortable red bench
+  id: RedComfBench
+  graph: Seat
+  startNode: start
+  targetNode: redComfBench
+  category: construction-category-furniture
+  description: A bench with an extremely comfortable backrest.
+  icon:
+    sprite: Structures/Furniture/Bench/comf_bench.rsi
+    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -341,7 +392,7 @@
   conditions:
     - !type:TileNotBlocked
 
-#beds
+#bedroom
 - type: construction
   id: Bed
   name: bed
@@ -393,6 +444,23 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  id: Dresser
+  name: dresser
+  description: Wooden dresser, can store things inside itself.
+  graph: Dresser
+  startNode: start
+  targetNode: dresser
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Furniture/furniture.rsi
+    state: dresser
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #racks
 - type: construction
   id: Rack
@@ -411,6 +479,7 @@
   conditions:
     - !type:TileNotBlocked
 
+#misc
 - type: construction
   id: MeatSpike
   name: meat spike
@@ -422,6 +491,40 @@
   icon:
     sprite: Structures/meat_spike.rsi
     state: spike
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Curtains
+  name: curtains
+  description: Contains less than 1% mercury.
+  graph: Curtains
+  startNode: start
+  targetNode: Curtains
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/curtains.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Bookshelf
+  name: bookshelf
+  description: Mostly filled with books.
+  graph: Bookshelf
+  startNode: start
+  targetNode: bookshelf
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Furniture/bookshelf.rsi
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

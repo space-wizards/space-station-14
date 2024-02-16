@@ -12,7 +12,6 @@
     - Donut
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -22,7 +21,7 @@
           Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: 1
+    size: Tiny
 # Tastes like donut.
 
 # The sprinkles are now an overlay, so you can put them on any donut! If we really
@@ -107,6 +106,9 @@
       - meaty
   - type: Sprite
     state: meat
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like meat.
 
 - type: entity
@@ -304,6 +306,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like jelly-donut, green apples.
 
 - type: entity
@@ -363,6 +368,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like jelly-donut, blumpkin.
 
 - type: entity
@@ -382,6 +390,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit # Apparently this is a fruit. Huh.
 # Tastes like jelly-donut, tropical sweetness.
 
 - type: entity
@@ -445,6 +456,7 @@
 - type: entity
   parent: FoodDonutPink
   id: FoodDonutPoison
+  suffix: Poison
   components:
   - type: SolutionContainerManager
     solutions:

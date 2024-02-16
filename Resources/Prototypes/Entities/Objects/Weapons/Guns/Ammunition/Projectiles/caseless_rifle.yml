@@ -10,17 +10,6 @@
         Piercing: 19
 
 - type: entity
-  id: BulletCaselessRifleHighVelocity
-  name: bullet (.25 caseless high-velocity)
-  parent: BaseBulletHighVelocity
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 22
-
-- type: entity
   id: BulletCaselessRiflePractice
   name: bullet (.25 caseless practice)
   parent: BaseBulletPractice

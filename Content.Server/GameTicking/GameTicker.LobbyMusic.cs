@@ -6,6 +6,7 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [ValidatePrototypeId<SoundCollectionPrototype>]
         private const string LobbyMusicCollection = "LobbyMusic";
 
         [ViewVariables]

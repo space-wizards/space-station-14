@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: haycutters
   parent: BaseItem
   id: Haycutters
@@ -10,11 +10,11 @@
   - type: Sprite
     sprite: Objects/Tools/Cowtools/haycutters.rsi
     state: haycutters
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Pierce: 0
+    attackRate: 2
   - type: Tool
     qualities:
     - Cutting
@@ -35,11 +35,11 @@
     state: moodriver
   - type: Item
     sprite: Objects/Tools/Cowtools/moodriver.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Piercing: 10
+        Blunt: 0.1 #poke poke poke
   - type: Tool
     qualities:
     - Screwing
@@ -58,11 +58,11 @@
     state: wronch
   - type: Item
     sprite: Objects/Tools/Cowtools/wronch.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Blunt: 10
+        Blunt: 0.1
   - type: Tool
     qualities:
     - Anchoring
@@ -81,18 +81,20 @@
     state: cowbar
   - type: Item
     sprite: Objects/Tools/Cowtools/cowbar.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 1
+  - type: StaminaDamageOnHit
+    damage: 5 #have you ever been hit with a plastic bat? that shit hurts
   - type: Tool
     qualities:
     - Prying
     useSound:
       path: /Audio/Items/crowbar.ogg
     speed: 0.05
-  - type: TilePrying
+  - type: ToolTileCompatible
+  - type: Prying
 
 - type: entity
   name: mooltitool
@@ -108,7 +110,9 @@
   - type: Tool
     qualities:
     - Pulsing
-  - type: SignalLinker
+  - type: Tag
+    tags:
+      - Multitool
 
 - type: entity
   name: cowelding tool
@@ -119,7 +123,7 @@
   - type: Sprite
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Tool
     speed: 0.05
@@ -127,7 +131,7 @@
     litMeleeDamageBonus:
       types: # When lit, negate standard melee damage and replace with heat
         Heat: 0.5
-        Blunt: -10
+        Blunt: -5
 
 - type: entity
   name: milkalyzer
@@ -157,6 +161,10 @@
     state: cow_toolbox
   - type: Item
     sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 4
 
 - type: entity
   id: CowToolboxFilled
@@ -173,5 +181,3 @@
     - id: Mooltitool
     - id: Cowelder
     - id: Milkalyzer
-
-# I hate these fucking cowtools I hope the burn in hell -Swept

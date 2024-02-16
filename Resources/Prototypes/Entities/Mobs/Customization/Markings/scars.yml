@@ -1,0 +1,49 @@
+- type: marking
+  id: ScarEyeRight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_eye_right
+
+- type: marking
+  id: ScarEyeLeft
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_eye_left
+
+- type: marking
+  id: ScarTopSurgeryShort
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human]
+  sexRestriction: [Male]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_top_surgery_short
+
+- type: marking
+  id: ScarTopSurgeryLong
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human]
+  sexRestriction: [Male]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_top_surgery_long

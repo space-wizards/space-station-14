@@ -1,6 +1,6 @@
 - type: entity
   id: CigCartonGreen
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   name: Spessman's Smokes carton
   description: "A carton containing 6 packets of Spessman's Smokes."
   components:
@@ -8,29 +8,30 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     layers:
       - state: closed
-  - type: Storage
-    capacity: 36
+      - state: open
+        map: ["openLayer"]
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    size: 36
+    size: Normal
+  - type: Storage
+    grid:
+    - 0,0,4,1
   - type: StorageFill
     contents:
       - id: CigPackGreen
-        amount: 6
-  - type: Appearance
-    visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: open
+        amount: 5
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
   - type: SpaceGarbage
 
 - type: entity
   id: CigCartonRed
   parent: CigCartonGreen
-  name: Dromedaryco carton
+  name: DromedaryCo carton
   description: A carton containing 6 packets of Dromedarycos.
   components:
   - type: Sprite
@@ -42,7 +43,7 @@
   - type: StorageFill
     contents:
       - id: CigPackRed
-        amount: 6
+        amount: 5
 
 - type: entity
   id: CigCartonBlue
@@ -59,7 +60,7 @@
   - type: StorageFill
     contents:
       - id: CigPackBlue
-        amount: 6
+        amount: 5
 
 - type: entity
   id: CigCartonBlack
@@ -76,4 +77,22 @@
   - type: StorageFill
     contents:
       - id: CigPackBlack
-        amount: 6
+        amount: 5
+
+- type: entity
+  id: CigCartonMixed
+  parent: CigCartonGreen
+  name: Dan's soaked smokes
+  description: A carton containg 3 packets of Dan's soaked smokes.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
+    layers:
+      - state: closed
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
+  - type: StorageFill
+    contents:
+      - id: CigPackMixedMedical
+      - id: CigPackMixed
+      - id: CigPackMixedNasty

@@ -27,7 +27,7 @@ public sealed partial class ConstructionSystem
         }
     }
 
-    private void OnCompMapInit(EntityUid uid, ComputerComponent component, MapInitEvent args)
+    private void OnCompMapInit(Entity<ComputerComponent> component, ref MapInitEvent args)
     {
         CreateComputerBoard(component);
     }
@@ -42,25 +42,26 @@ public sealed partial class ConstructionSystem
     ///     This exists so when you deconstruct computers that were serialized with the map,
     ///     you can retrieve the computer board.
     /// </summary>
-    private void CreateComputerBoard(ComputerComponent component)
+    private void CreateComputerBoard(Entity<ComputerComponent> ent)
     {
+        var component = ent.Comp;
         // Ensure that the construction component is aware of the board container.
-        if (TryComp<ConstructionComponent>(component.Owner, out var construction))
-            AddContainer(component.Owner, "board", construction);
+        if (TryComp<ConstructionComponent>(ent, out var construction))
+            AddContainer(ent, "board", construction);
 
         // We don't do anything if this is null or empty.
         if (string.IsNullOrEmpty(component.BoardPrototype))
             return;
 
-        var container = _container.EnsureContainer<Container>(component.Owner, "board");
+        var container = _container.EnsureContainer<Container>(ent, "board");
 
         // We already contain a board. Note: We don't check if it's the right one!
         if (container.ContainedEntities.Count != 0)
             return;
 
-        var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(component.Owner).Coordinates);
+        var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(ent).Coordinates);
 
-        if(!container.Insert(board))
-            Logger.Warning($"Couldn't insert board {board} to computer {component.Owner}!");
+        if (!_container.Insert(board, container))
+            Log.Warning($"Couldn't insert board {board} to computer {ent}!");
     }
 }

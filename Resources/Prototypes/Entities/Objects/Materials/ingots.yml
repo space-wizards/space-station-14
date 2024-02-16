@@ -5,13 +5,12 @@
   description: A heavy metal ingot stamped with the Nanotrasen logo.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/ingots.rsi
   - type: Item
     sprite: Objects/Materials/ingots.rsi
+    size: Normal
   - type: StaticPrice
     price: 0
-  - type: ItemStatus
   - type: Tag
     tags:
     - Ingot
@@ -34,21 +33,32 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Gold: 100
   - type: Stack
     stackType: Gold
+    baseLayer: base
+    layerStates:
+    - gold
+    - gold_2
+    - gold_3
   - type: Sprite
     state: gold_3
+    layers:
+    - state: gold_3
+      map: ["base"]
   - type: Item
     heldPrefix: gold
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - gold
-      - gold_2
-      - gold_3
+  - type: Extractable
+    grindableSolutionName: gold
+  - type: SolutionContainerManager
+    solutions:
+      gold:
+        reagents:
+        - ReagentId: Gold
+          Quantity: 10
 
 - type: entity
   parent: IngotGold
@@ -68,21 +78,32 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Silver: 100
   - type: Stack
     stackType: Silver
+    baseLayer: base
+    layerStates:
+    - silver
+    - silver_2
+    - silver_3
   - type: Sprite
     state: silver_3
+    layers:
+    - state: silver_3
+      map: ["base"]
   - type: Item
     heldPrefix: silver
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - silver
-      - silver_2
-      - silver_3
+  - type: Extractable
+    grindableSolutionName: gold
+  - type: SolutionContainerManager
+    solutions:
+      gold:
+        reagents:
+        - ReagentId: Silver
+          Quantity: 10
 
 - type: entity
   parent: IngotSilver

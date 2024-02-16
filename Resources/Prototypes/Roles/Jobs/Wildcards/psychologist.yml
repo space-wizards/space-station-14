@@ -4,7 +4,7 @@
   description: job-description-psychologist
   playTimeTracker: JobPsychologist
   startingGear: PsychologistGear
-  icon: "Psychologist"
+  icon: "JobIconPsychologist"
   supervisors: job-supervisors-cmo
   access:
   - Medical
@@ -20,6 +20,6 @@
     shoes: ClothingShoesLeather
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
-  innerclothingskirt: ClothingUniformJumpsuitPsychologist
+  innerClothingSkirt: ClothingUniformJumpsuitPsychologist
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

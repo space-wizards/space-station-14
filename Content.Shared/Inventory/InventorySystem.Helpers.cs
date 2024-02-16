@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Hands.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
@@ -6,11 +8,37 @@ namespace Content.Shared.Inventory;
 public partial class InventorySystem
 {
     /// <summary>
+    /// Yields all entities in hands or inventory slots with the specific flags.
+    /// </summary>
+    public IEnumerable<EntityUid> GetHandOrInventoryEntities(Entity<HandsComponent?, InventoryComponent?> user, SlotFlags flags = SlotFlags.All)
+    {
+        if (Resolve(user.Owner, ref user.Comp1, false))
+        {
+            foreach (var hand in user.Comp1.Hands.Values)
+            {
+                if (hand.HeldEntity == null)
+                    continue;
+
+                yield return hand.HeldEntity.Value;
+            }
+        }
+
+        if (!Resolve(user.Owner, ref user.Comp2, false))
+            yield break;
+
+        var slotEnumerator = new InventorySlotEnumerator(user.Comp2, flags);
+        while (slotEnumerator.NextItem(out var item))
+        {
+            yield return item;
+        }
+    }
+
+    /// <summary>
     ///     Returns the definition of the inventory slot that the given entity is currently in..
     /// </summary>
-    public bool TryGetContainingSlot(EntityUid uid, [NotNullWhen(true)] out SlotDefinition? slot)
+    public bool TryGetContainingSlot(Entity<TransformComponent?, MetaDataComponent?> entity, [NotNullWhen(true)] out SlotDefinition? slot)
     {
-        if (!_containerSystem.TryGetContainingContainer(uid, out var container))
+        if (!_containerSystem.TryGetContainingContainer(entity.Owner, out var container, entity.Comp2, entity.Comp1))
         {
             slot = null;
             return false;
@@ -22,9 +50,10 @@ public partial class InventorySystem
     /// <summary>
     ///     Returns true if the given entity is equipped to an inventory slot with the given inventory slot flags.
     /// </summary>
-    public bool InSlotWithFlags(EntityUid uid, SlotFlags flags)
+    public bool InSlotWithFlags(Entity<TransformComponent?, MetaDataComponent?> entity, SlotFlags flags)
     {
-        return TryGetContainingSlot(uid, out var slot) && ((slot.SlotFlags & flags) == flags);
+        return TryGetContainingSlot(entity, out var slot)
+               && (slot.SlotFlags & flags) == flags;
     }
 
     public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, bool silent = false, bool force = false, InventoryComponent? inventory = null)

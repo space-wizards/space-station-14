@@ -13,7 +13,7 @@
           steps:
             - material: Steel
               amount: 15
-              doAfter: 10
+              doAfter: 2
     - node: MeatSpike
       entity: KitchenSpike
       edges:
@@ -22,9 +22,6 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 15
-          conditions:
-            - !type:EntityAnchored
-              anchored: false
           steps:
-            - tool: Welding
-              doAfter: 10
+            - tool: Screwing
+              doAfter: 1

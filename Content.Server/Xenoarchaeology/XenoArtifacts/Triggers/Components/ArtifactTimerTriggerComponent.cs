@@ -5,7 +5,7 @@
 ///     Doesn't used for random artifacts, can be spawned by admins.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactTimerTriggerComponent : Component
+public sealed partial class ArtifactTimerTriggerComponent : Component
 {
     /// <summary>
     ///     Time between artifact activation attempts.

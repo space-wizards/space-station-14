@@ -39,6 +39,7 @@
   - !type:AccessWireAction
   - !type:VendingMachineContrabandWireAction
   - !type:VendingMachineEjectItemWireAction
+  - !type:SpeechWireAction
 
 - type: wireLayout
   id: AirAlarm
@@ -47,6 +48,13 @@
   - !type:AccessWireAction
   - !type:AirAlarmPanicWire
   - !type:AtmosMonitorDeviceNetWire
+
+- type: wireLayout
+  id: Intercom
+  wires:
+  - !type:PowerWireAction
+  - !type:SpeechWireAction
+  - !type:ListenWireAction
 
 - type: wireLayout
   id: FireAlarm
@@ -75,3 +83,46 @@
   wires:
   - !type:PowerWireAction
   - !type:CryoPodEjectLockWireAction
+
+- type: wireLayout
+  id: ParticleAccelerator
+  dummyWires: 1
+  wires:
+  - !type:ParticleAcceleratorKeyboardWireAction
+  - !type:ParticleAcceleratorLimiterWireAction
+  - !type:ParticleAcceleratorPowerWireAction
+  - !type:ParticleAcceleratorStrengthWireAction
+
+- type: wireLayout
+  id: Docking
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
+  - !type:DoorBoltWireAction
+  - !type:DoorBoltLightWireAction
+  - !type:DoorTimingWireAction
+  - !type:DoorSafetyWireAction
+
+- type: wireLayout
+  id: Defusable
+  dummyWires: 3
+  wires:
+    - !type:ActivateWireAction
+    - !type:BoltWireAction
+    - !type:DelayWireAction
+    - !type:ProceedWireAction
+    - !type:BoomWireAction
+    - !type:BoomWireAction
+    - !type:BoomWireAction
+
+- type: wireLayout
+  id: TrainingDefusable
+  dummyWires: 0
+  wires:
+    - !type:ActivateWireAction
+    - !type:BoltWireAction
+    - !type:DelayWireAction
+    - !type:ProceedWireAction
+    - !type:BoomWireAction

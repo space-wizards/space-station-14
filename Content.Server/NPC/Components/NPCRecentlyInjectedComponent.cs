@@ -3,7 +3,7 @@ namespace Content.Server.NPC.Components
     /// Added when a medibot injects someone
     /// So they don't get injected again for at least a minute.
     [RegisterComponent]
-    public sealed class NPCRecentlyInjectedComponent : Component
+    public sealed partial class NPCRecentlyInjectedComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite), DataField("accumulator")]
         public float Accumulator = 0f;

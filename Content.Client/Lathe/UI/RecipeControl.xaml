@@ -2,11 +2,12 @@
     <Button
         Name="Button"
         HorizontalExpand="True"
-        TooltipDelay="0.5">
+        Margin="0"
+        StyleClasses="ButtonSquare">
         <BoxContainer Orientation="Horizontal">
             <TextureRect
                 Name="RecipeTexture"
-                Margin="0,0,4,0"
+                Margin="0 0 4 0"
                 MinSize="32 32"
                 Stretch="KeepAspectCentered" />
             <Label Name="RecipeName" HorizontalExpand="True" />

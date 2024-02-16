@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components
@@ -17,8 +17,8 @@ namespace Content.Shared.Kitchen.Components
     [Serializable, NetSerializable]
     public sealed class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
     {
-        public EntityUid EntityID;
-        public MicrowaveEjectSolidIndexedMessage(EntityUid entityId)
+        public NetEntity EntityID;
+        public MicrowaveEjectSolidIndexedMessage(NetEntity entityId)
         {
             EntityID = entityId;
         }
@@ -27,8 +27,8 @@ namespace Content.Shared.Kitchen.Components
     [Serializable, NetSerializable]
     public sealed class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
     {
-        public Solution.ReagentQuantity ReagentQuantity;
-        public MicrowaveVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
+        public ReagentQuantity ReagentQuantity;
+        public MicrowaveVaporizeReagentIndexedMessage(ReagentQuantity reagentQuantity)
         {
             ReagentQuantity = reagentQuantity;
         }
@@ -49,18 +49,21 @@ namespace Content.Shared.Kitchen.Components
     [NetSerializable, Serializable]
     public sealed class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
-        public EntityUid[] ContainedSolids;
+        public NetEntity[] ContainedSolids;
         public bool IsMicrowaveBusy;
         public int ActiveButtonIndex;
         public uint CurrentCookTime;
 
-        public MicrowaveUpdateUserInterfaceState(EntityUid[] containedSolids,
-            bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime)
+        public TimeSpan CurrentCookTimeEnd;
+
+        public MicrowaveUpdateUserInterfaceState(NetEntity[] containedSolids,
+            bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime, TimeSpan currentCookTimeEnd)
         {
             ContainedSolids = containedSolids;
             IsMicrowaveBusy = isMicrowaveBusy;
             ActiveButtonIndex = activeButtonIndex;
             CurrentCookTime = currentCookTime;
+            CurrentCookTimeEnd = currentCookTimeEnd;
         }
 
     }
@@ -70,7 +73,8 @@ namespace Content.Shared.Kitchen.Components
     {
         Idle,
         Cooking,
-        Broken
+        Broken,
+        Bloody
     }
 
     [NetSerializable, Serializable]

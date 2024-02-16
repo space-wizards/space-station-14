@@ -1,22 +1,26 @@
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
-using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
+using Content.Server.Mind.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Players;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -30,15 +34,18 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
-        private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
-        private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
-        private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
+        private readonly Dictionary<uint, Entity<GhostRoleComponent>> _ghostRoles = new();
+        private readonly Dictionary<ICommonSession, GhostRolesEui> _openUis = new();
+        private readonly Dictionary<ICommonSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
         [ViewVariables]
-        public IReadOnlyCollection<GhostRoleComponent> GhostRoles => _ghostRoles.Values;
+        public IReadOnlyCollection<Entity<GhostRoleComponent>> GhostRoles => _ghostRoles.Values;
 
         public override void Initialize()
         {
@@ -51,22 +58,29 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<GhostRoleComponent, EntityPausedEvent>(OnPaused);
+            SubscribeLocalEvent<GhostRoleComponent, EntityUnpausedEvent>(OnUnpaused);
+            SubscribeLocalEvent<GhostRoleMobSpawnerComponent, TakeGhostRoleEvent>(OnSpawnerTakeRole);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, TakeGhostRoleEvent>(OnTakeoverTakeRole);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
-        private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
+        private void OnMobStateChanged(Entity<GhostTakeoverAvailableComponent> component, ref MobStateChangedEvent args)
         {
+            if (!TryComp(component, out GhostRoleComponent? ghostRole))
+                return;
+
             switch (args.NewMobState)
             {
                 case MobState.Alive:
                 {
-                    if (!component.Taken)
-                        RegisterGhostRole(component);
+                    if (!ghostRole.Taken)
+                        RegisterGhostRole((component, ghostRole));
                     break;
                 }
                 case MobState.Critical:
                 case MobState.Dead:
-                    UnregisterGhostRole(component);
+                    UnregisterGhostRole((component, ghostRole));
                     break;
             }
         }
@@ -83,7 +97,7 @@ namespace Content.Server.Ghost.Roles
             return unchecked(_nextRoleIdentifier++);
         }
 
-        public void OpenEui(IPlayerSession session)
+        public void OpenEui(ICommonSession session)
         {
             if (session.AttachedEntity is not {Valid: true} attached ||
                 !EntityManager.HasComponent<GhostComponent>(attached))
@@ -97,7 +111,7 @@ namespace Content.Server.Ghost.Roles
             eui.StateDirty();
         }
 
-        public void OpenMakeGhostRoleEui(IPlayerSession session, EntityUid uid)
+        public void OpenMakeGhostRoleEui(ICommonSession session, EntityUid uid)
         {
             if (session.AttachedEntity == null)
                 return;
@@ -105,21 +119,22 @@ namespace Content.Server.Ghost.Roles
             if (_openMakeGhostRoleUis.ContainsKey(session))
                 CloseEui(session);
 
-            var eui = _openMakeGhostRoleUis[session] = new MakeGhostRoleEui(uid);
+            var eui = _openMakeGhostRoleUis[session] = new MakeGhostRoleEui(EntityManager, GetNetEntity(uid));
             _euiManager.OpenEui(eui, session);
             eui.StateDirty();
         }
 
-        public void CloseEui(IPlayerSession session)
+        public void CloseEui(ICommonSession session)
         {
-            if (!_openUis.ContainsKey(session)) return;
+            if (!_openUis.ContainsKey(session))
+                return;
 
             _openUis.Remove(session, out var eui);
 
             eui?.Close();
         }
 
-        public void CloseMakeGhostRoleEui(IPlayerSession session)
+        public void CloseMakeGhostRoleEui(ICommonSession session)
         {
             if (_openMakeGhostRoleUis.Remove(session, out var eui))
             {
@@ -145,10 +160,10 @@ namespace Content.Server.Ghost.Roles
             if (_needsUpdateGhostRoleCount)
             {
                 _needsUpdateGhostRoleCount = false;
-                var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
+                var response = new GhostUpdateGhostRoleCountEvent(GetGhostRolesInfo().Length);
                 foreach (var player in _playerManager.Sessions)
                 {
-                    RaiseNetworkEvent(response, player.ConnectedClient);
+                    RaiseNetworkEvent(response, player.Channel);
                 }
             }
         }
@@ -158,99 +173,120 @@ namespace Content.Server.Ghost.Roles
             if (args.NewStatus == SessionStatus.InGame)
             {
                 var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
-                RaiseNetworkEvent(response, args.Session.ConnectedClient);
+                RaiseNetworkEvent(response, args.Session.Channel);
             }
         }
 
-        public void RegisterGhostRole(GhostRoleComponent role)
+        public void RegisterGhostRole(Entity<GhostRoleComponent> role)
         {
-            if (_ghostRoles.ContainsValue(role)) return;
-            _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = role;
-            UpdateAllEui();
+            if (_ghostRoles.ContainsValue(role))
+                return;
 
-        }
-
-        public void UnregisterGhostRole(GhostRoleComponent role)
-        {
-            if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role) return;
-            _ghostRoles.Remove(role.Identifier);
+            _ghostRoles[role.Comp.Identifier = GetNextRoleIdentifier()] = role;
             UpdateAllEui();
         }
 
-        public void Takeover(IPlayerSession player, uint identifier)
+        public void UnregisterGhostRole(Entity<GhostRoleComponent> role)
         {
-            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
-            if (!role.Take(player)) return;
+            var comp = role.Comp;
+            if (!_ghostRoles.ContainsKey(comp.Identifier) || _ghostRoles[comp.Identifier] != role)
+                return;
+
+            _ghostRoles.Remove(comp.Identifier);
+            UpdateAllEui();
+        }
+
+        public void Takeover(ICommonSession player, uint identifier)
+        {
+            if (!_ghostRoles.TryGetValue(identifier, out var role))
+                return;
+
+            var ev = new TakeGhostRoleEvent(player);
+            RaiseLocalEvent(role, ref ev);
+
+            if (!ev.TookRole)
+                return;
 
             if (player.AttachedEntity != null)
-                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.Comp.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
             CloseEui(player);
         }
 
-        public void Follow(IPlayerSession player, uint identifier)
+        public void Follow(ICommonSession player, uint identifier)
         {
-            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
-            if (player.AttachedEntity == null) return;
+            if (!_ghostRoles.TryGetValue(identifier, out var role))
+                return;
 
-            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role.Owner);
+            if (player.AttachedEntity == null)
+                return;
+
+            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role);
         }
 
-        public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
+        public void GhostRoleInternalCreateMindAndTransfer(ICommonSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
         {
-            if (!Resolve(roleUid, ref role)) return;
+            if (!Resolve(roleUid, ref role))
+                return;
 
-            var contentData = player.ContentData();
+            DebugTools.AssertNotNull(player.ContentData());
 
-            DebugTools.AssertNotNull(contentData);
+            var newMind = _mindSystem.CreateMind(player.UserId,
+                EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
+            _roleSystem.MindAddRole(newMind, new GhostRoleMarkerRoleComponent { Name = role.RoleName });
 
-            var newMind = new Mind.Mind(player.UserId)
-            {
-                CharacterName = EntityManager.GetComponent<MetaDataComponent>(mob).EntityName
-            };
-            newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
-
-            newMind.ChangeOwningPlayer(player.UserId);
-            newMind.TransferTo(mob);
+            _mindSystem.SetUserId(newMind, player.UserId);
+            _mindSystem.TransferTo(newMind, mob);
         }
 
         public GhostRoleInfo[] GetGhostRolesInfo()
         {
-            var roles = new GhostRoleInfo[_ghostRoles.Count];
+            var roles = new List<GhostRoleInfo>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
 
-            var i = 0;
-
-            foreach (var (id, role) in _ghostRoles)
+            foreach (var (id, (uid, role)) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
-                i++;
+                if (metaQuery.GetComponent(uid).EntityPaused)
+                    continue;
+
+                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules, Requirements = role.Requirements});
             }
 
-            return roles;
+            return roles.ToArray();
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent message)
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
-            if (!_openUis.ContainsKey(message.Player)) return;
-            if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
+            if (!_openUis.ContainsKey(message.Player))
+                return;
+
+            if (HasComp<GhostComponent>(message.Entity))
+                return;
+
             CloseEui(message.Player);
         }
 
         private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
         {
-            component.Taken = true;
-            UnregisterGhostRole(component);
-        }
-
-        private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
-        {
-            // Avoid re-registering it for duplicate entries and potential exceptions.
-            if (!component.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole))
                 return;
 
-            component.Taken = false;
-            RegisterGhostRole(component);
+            ghostRole.Taken = true;
+            UnregisterGhostRole((uid, ghostRole));
+        }
+
+        private void OnMindRemoved(EntityUid uid, GhostTakeoverAvailableComponent component, MindRemovedMessage args)
+        {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole))
+                return;
+
+            // Avoid re-registering it for duplicate entries and potential exceptions.
+            if (!ghostRole.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+                return;
+
+            ghostRole.Taken = false;
+            RegisterGhostRole((uid, ghostRole));
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -265,22 +301,113 @@ namespace Content.Server.Ghost.Roles
             _nextRoleIdentifier = 0;
         }
 
-        private void OnInit(EntityUid uid, GhostRoleComponent role, ComponentInit args)
+        private void OnPaused(EntityUid uid, GhostRoleComponent component, ref EntityPausedEvent args)
         {
+            if (HasComp<ActorComponent>(uid))
+                return;
+
+            UpdateAllEui();
+        }
+
+        private void OnUnpaused(EntityUid uid, GhostRoleComponent component, ref EntityUnpausedEvent args)
+        {
+            if (HasComp<ActorComponent>(uid))
+                return;
+
+            UpdateAllEui();
+        }
+
+        private void OnInit(Entity<GhostRoleComponent> ent, ref ComponentInit args)
+        {
+            var role = ent.Comp;
             if (role.Probability < 1f && !_random.Prob(role.Probability))
             {
-                RemComp<GhostRoleComponent>(uid);
+                RemComp<GhostRoleComponent>(ent);
                 return;
             }
 
             if (role.RoleRules == "")
                 role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
-            RegisterGhostRole(role);
+            RegisterGhostRole(ent);
         }
 
-        private void OnShutdown(EntityUid uid, GhostRoleComponent role, ComponentShutdown args)
+        private void OnShutdown(Entity<GhostRoleComponent> role, ref ComponentShutdown args)
         {
             UnregisterGhostRole(role);
+        }
+
+        private void OnSpawnerTakeRole(EntityUid uid, GhostRoleMobSpawnerComponent component, ref TakeGhostRoleEvent args)
+        {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
+                !CanTakeGhost(uid, ghostRole))
+            {
+                args.TookRole = false;
+                return;
+            }
+
+            if (string.IsNullOrEmpty(component.Prototype))
+                throw new NullReferenceException("Prototype string cannot be null or empty!");
+
+            var mob = Spawn(component.Prototype, Transform(uid).Coordinates);
+            _transform.AttachToGridOrMap(mob);
+
+            var spawnedEvent = new GhostRoleSpawnerUsedEvent(uid, mob);
+            RaiseLocalEvent(mob, spawnedEvent);
+
+            if (ghostRole.MakeSentient)
+                MakeSentientCommand.MakeSentient(mob, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
+
+            EnsureComp<MindContainerComponent>(mob);
+
+            GhostRoleInternalCreateMindAndTransfer(args.Player, uid, mob, ghostRole);
+
+            if (++component.CurrentTakeovers < component.AvailableTakeovers)
+            {
+                args.TookRole = true;
+                return;
+            }
+
+            ghostRole.Taken = true;
+
+            if (component.DeleteOnSpawn)
+                QueueDel(uid);
+
+            args.TookRole = true;
+        }
+
+        private bool CanTakeGhost(EntityUid uid, GhostRoleComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) &&
+                   !component.Taken &&
+                   !MetaData(uid).EntityPaused;
+        }
+
+        private void OnTakeoverTakeRole(EntityUid uid, GhostTakeoverAvailableComponent component, ref TakeGhostRoleEvent args)
+        {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
+                !CanTakeGhost(uid, ghostRole))
+            {
+                args.TookRole = false;
+                return;
+            }
+
+            ghostRole.Taken = true;
+
+            var mind = EnsureComp<MindContainerComponent>(uid);
+
+            if (mind.HasMind)
+            {
+                args.TookRole = false;
+                return;
+            }
+
+            if (ghostRole.MakeSentient)
+                MakeSentientCommand.MakeSentient(uid, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
+
+            GhostRoleInternalCreateMindAndTransfer(args.Player, uid, uid, ghostRole);
+            UnregisterGhostRole((uid, ghostRole));
+
+            args.TookRole = true;
         }
     }
 
@@ -293,7 +420,7 @@ namespace Content.Server.Ghost.Roles
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if(shell.Player != null)
-                EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
+                EntitySystem.Get<GhostRoleSystem>().OpenEui(shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");
         }

@@ -9,6 +9,7 @@
   id: Gold
   stackEntity: IngotGold1
   name: materials-gold
+  unit: materials-unit-bar
   icon: { sprite: Objects/Materials/ingots.rsi, state: gold }
   color: "#FFD700"
   price: 0.2
@@ -17,6 +18,7 @@
   id: Silver
   stackEntity: IngotSilver1
   name: materials-silver
+  unit: materials-unit-bar
   icon: { sprite: Objects/Materials/ingots.rsi, state: silver }
   color: "#C0C0C0"
   price: 0.15

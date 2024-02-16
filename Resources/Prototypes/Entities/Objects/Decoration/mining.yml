@@ -1,0 +1,179 @@
+- type: entity
+  id: WoodenSign
+  name: wooden sign
+  description: He's pointing somewhere. 
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Objects/Decoration/mines.rsi
+    state: sign_left
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.4,0.35,0.4"
+        density: 100
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 1
+            max: 1
+
+- type: entity
+  parent: WoodenSign
+  id: WoodenSignRight
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/mines.rsi
+    state: sign_right
+
+- type: entity
+  id: WoodenSupport
+  parent: BaseStructure
+  name: wooden support
+  description: Increases your confidence that a rock won't fall on your head.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/mines.rsi
+    state: support
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.5,0.1,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 1000
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 1
+            max: 3
+
+- type: entity
+  id: WoodenSupportBeam
+  name: wooden support beam
+  parent: WoodenSupport
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/mines.rsi
+    state: support_beams
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 1000
+
+- type: entity
+  id: WoodenSupportWall
+  parent: BaseStructure
+  name: wooden support wall
+  description: An old, rotten wall.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/mines.rsi
+    state: support_wall
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 1000
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 2
+            max: 5
+
+- type: entity
+  id: WoodenSupportWallBroken
+  parent: WoodenSupportWall
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/mines.rsi
+    state: support_wall_broken
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 1
+            max: 3

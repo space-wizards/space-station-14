@@ -8,7 +8,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks;
 /// Concrete code that gets run for an NPC task.
 /// </summary>
 [ImplicitDataDefinitionForInheritors, MeansImplicitUse]
-public abstract class HTNOperator
+public abstract partial class HTNOperator
 {
     /// <summary>
     /// Called once whenever prototypes reload. Typically used to inject dependencies.
@@ -41,6 +41,14 @@ public abstract class HTNOperator
     }
 
     /// <summary>
+    /// Called when the plan has finished running.
+    /// </summary>
+    public virtual void PlanShutdown(NPCBlackboard blackboard)
+    {
+
+    }
+
+    /// <summary>
     /// Called the first time an operator runs.
     /// </summary>
     public virtual void Startup(NPCBlackboard blackboard) {}
@@ -48,5 +56,5 @@ public abstract class HTNOperator
     /// <summary>
     /// Called whenever the operator stops running.
     /// </summary>
-    public virtual void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status) {}
+    public virtual void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status) {}
 }

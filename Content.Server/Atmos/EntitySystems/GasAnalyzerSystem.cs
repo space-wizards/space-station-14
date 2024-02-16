@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
@@ -10,7 +11,7 @@ using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
+using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -21,6 +22,12 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmo = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
+
+        /// <summary>
+        /// Minimum moles of a gas to be sent to the client.
+        /// </summary>
+        private const float UIMinMoles = 0.01f;
 
         public override void Initialize()
         {
@@ -34,8 +41,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         public override void Update(float frameTime)
         {
-
-            foreach (var analyzer in EntityQuery<ActiveGasAnalyzerComponent>())
+            var query = EntityQueryEnumerator<ActiveGasAnalyzerComponent>();
+            while (query.MoveNext(out var uid, out var analyzer))
             {
                 // Don't update every tick
                 analyzer.AccumulatedFrametime += frameTime;
@@ -45,8 +52,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 analyzer.AccumulatedFrametime -= analyzer.UpdateInterval;
 
-                if (!UpdateAnalyzer(analyzer.Owner))
-                    RemCompDeferred<ActiveGasAnalyzerComponent>(analyzer.Owner);
+                if (!UpdateAnalyzer(uid))
+                    RemCompDeferred<ActiveGasAnalyzerComponent>(uid);
             }
         }
 
@@ -61,7 +68,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
             ActivateAnalyzer(uid, component, args.User, args.Target);
-            OpenUserInterface(args.User, component);
+            OpenUserInterface(uid, args.User, component);
             args.Handled = true;
         }
 
@@ -87,7 +94,7 @@ namespace Content.Server.Atmos.EntitySystems
                 component.LastPosition = null;
             component.Enabled = true;
             Dirty(component);
-            UpdateAppearance(component);
+            UpdateAppearance(uid, component);
             if(!HasComp<ActiveGasAnalyzerComponent>(uid))
                 AddComp<ActiveGasAnalyzerComponent>(uid);
             UpdateAnalyzer(uid, component);
@@ -98,7 +105,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnDropped(EntityUid uid, GasAnalyzerComponent component, DroppedEvent args)
         {
-            if(args.User is { } userId && component.Enabled)
+            if(args.User is var userId && component.Enabled)
                 _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
             DisableAnalyzer(uid, component, args.User);
         }
@@ -116,7 +123,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             component.Enabled = false;
             Dirty(component);
-            UpdateAppearance(component);
+            UpdateAppearance(uid, component);
             RemCompDeferred<ActiveGasAnalyzerComponent>(uid);
         }
 
@@ -130,12 +137,15 @@ namespace Content.Server.Atmos.EntitySystems
             DisableAnalyzer(uid, component);
         }
 
-        private void OpenUserInterface(EntityUid user, GasAnalyzerComponent component)
+        private void OpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
         {
+            if (!Resolve(uid, ref component, false))
+                return;
+
             if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
-            _userInterface.TryOpen(component.Owner, GasAnalyzerUiKey.Key, actor.PlayerSession);
+            _userInterface.TryOpen(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
         }
 
         /// <summary>
@@ -157,7 +167,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (component.LastPosition.HasValue)
             {
                 // Check if position is out of range => don't update and disable
-                if (!component.LastPosition.Value.InRange(EntityManager, userPos, SharedInteractionSystem.InteractionRange))
+                if (!component.LastPosition.Value.InRange(EntityManager, _transform, userPos, SharedInteractionSystem.InteractionRange))
                 {
                     if(component.User is { } userId && component.Enabled)
                         _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
@@ -169,7 +179,7 @@ namespace Content.Server.Atmos.EntitySystems
             var gasMixList = new List<GasMixEntry>();
 
             // Fetch the environmental atmosphere around the scanner. This must be the first entry
-            var tileMixture = _atmo.GetContainingMixture(component.Owner, true);
+            var tileMixture = _atmo.GetContainingMixture(uid, true);
             if (tileMixture != null)
             {
                 gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Pressure, tileMixture.Temperature,
@@ -193,7 +203,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // gas analyzed was used on an entity, try to request gas data via event for override
                 var ev = new GasAnalyzerScanEvent();
-                RaiseLocalEvent(component.Target.Value, ev, false);
+                RaiseLocalEvent(component.Target.Value, ev);
 
                 if (ev.GasMixtures != null)
                 {
@@ -223,10 +233,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (gasMixList.Count == 0)
                 return false;
 
-            _userInterface.TrySendUiMessage(component.Owner, GasAnalyzerUiKey.Key,
+            _userInterface.TrySendUiMessage(uid, GasAnalyzerUiKey.Key,
                 new GasAnalyzerUserMessage(gasMixList.ToArray(),
                     component.Target != null ? Name(component.Target.Value) : string.Empty,
-                    component.Target ?? EntityUid.Invalid,
+                    GetNetEntity(component.Target) ?? NetEntity.Invalid,
                     deviceFlipped));
             return true;
         }
@@ -234,9 +244,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Sets the appearance based on the analyzers Enabled state
         /// </summary>
-        private void UpdateAppearance(GasAnalyzerComponent analyzer)
+        private void UpdateAppearance(EntityUid uid, GasAnalyzerComponent analyzer)
         {
-            _appearance.SetData(analyzer.Owner, GasAnalyzerVisuals.Enabled, analyzer.Enabled);
+            _appearance.SetData(uid, GasAnalyzerVisuals.Enabled, analyzer.Enabled);
         }
 
         /// <summary>
@@ -250,7 +260,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var gas = _atmo.GetGas(i);
 
-                if (mixture?.Moles[i] <= Atmospherics.GasMinMoles)
+                if (mixture?.Moles[i] <= UIMinMoles)
                     continue;
 
                 if (mixture != null)
@@ -260,7 +270,9 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            return gases.ToArray();
+            var gasesOrdered = gases.OrderByDescending(gas => gas.Amount);
+
+            return gasesOrdered.ToArray();
         }
     }
 }

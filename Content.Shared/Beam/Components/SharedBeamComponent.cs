@@ -5,7 +5,7 @@ namespace Content.Shared.Beam.Components;
 /// <summary>
 /// Use this as a generic beam. Not for something like a laser gun, more for something continuous like lightning.
 /// </summary>
-public abstract class SharedBeamComponent : Component
+public abstract partial class SharedBeamComponent : Component
 {
     /// <summary>
     /// A unique list of targets that this beam collided with.
@@ -97,13 +97,13 @@ public sealed class BeamFiredEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class BeamVisualizerEvent : EntityEventArgs
 {
-    public readonly EntityUid Beam;
+    public readonly NetEntity Beam;
     public readonly float DistanceLength;
     public readonly Angle UserAngle;
     public readonly string? BodyState;
     public readonly string Shader = "unshaded";
 
-    public BeamVisualizerEvent(EntityUid beam, float distanceLength, Angle userAngle, string? bodyState = null, string shader = "unshaded")
+    public BeamVisualizerEvent(NetEntity beam, float distanceLength, Angle userAngle, string? bodyState = null, string shader = "unshaded")
     {
         Beam = beam;
         DistanceLength = distanceLength;

@@ -1,6 +1,5 @@
-using Content.Server.Mind.Components;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chat;
-using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -17,25 +16,38 @@ namespace Content.Server.Chat.Managers
         /// <param name="colorOverride">Override the color of the message being sent.</param>
         void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
-        void DispatchServerMessage(IPlayerSession player, string message, bool suppressLog = false);
+        void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
 
-        void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type);
+        void TrySendOOCMessage(ICommonSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
         void SendAdminAnnouncement(string message);
         void SendAdminAlert(string message);
-        void SendAdminAlert(EntityUid player, string message, MindComponent? mindComponent = null);
+        void SendAdminAlert(EntityUid player, string message);
 
         void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
-            INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0);
+            INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
 
         void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay,
-            IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0);
+            IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
 
         void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride, string? audioPath = null, float audioVolume = 0);
 
-        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0);
+        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
 
-        bool MessageCharacterLimit(IPlayerSession player, string message);
+        bool MessageCharacterLimit(ICommonSession player, string message);
+
+        void DeleteMessagesBy(ICommonSession player);
+
+        [return: NotNullIfNotNull(nameof(author))]
+        ChatUser? EnsurePlayer(NetUserId? author);
+
+        /// <summary>
+        /// Called when a player sends a chat message to handle rate limits.
+        /// Will update counts and do necessary actions if breached.
+        /// </summary>
+        /// <param name="player">The player sending a chat message.</param>
+        /// <returns>False if the player has violated rate limits and should be blocked from sending further messages.</returns>
+        bool HandleRateLimit(ICommonSession player);
     }
 }

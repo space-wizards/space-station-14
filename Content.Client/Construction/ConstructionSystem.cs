@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+using Content.Client.Popups;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -10,6 +13,7 @@ using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Construction
@@ -23,11 +27,10 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-        private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
+        private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
-
-        private int _nextId;
 
         public bool CraftingEnabled { get; private set; }
 
@@ -36,15 +39,18 @@ namespace Content.Client.Construction
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+            UpdatesOutsidePrediction = true;
+            SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
             SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
-                    new PointerInputCmdHandler(HandleOpenCraftingMenu))
+                    new PointerInputCmdHandler(HandleOpenCraftingMenu, outsidePrediction:true))
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUse))
+                    new PointerInputCmdHandler(HandleUse, outsidePrediction: true))
+                .Bind(ContentKeyFunctions.EditorFlipObject,
+                    new PointerInputCmdHandler(HandleFlip, outsidePrediction:true))
                 .Register<ConstructionSystem>();
 
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
@@ -75,38 +81,47 @@ namespace Content.Client.Construction
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
         {
-            if (component.Prototype == null) return;
-
-            args.PushMarkup(Loc.GetString(
-                "construction-ghost-examine-message",
-                ("name", component.Prototype.Name)));
-
-            if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+            if (component.Prototype == null)
                 return;
 
-            var startNode = graph.Nodes[component.Prototype.StartNode];
-
-            if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
-                !startNode.TryGetEdge(path[0].Name, out var edge))
+            using (args.PushGroup(nameof(ConstructionGhostComponent)))
             {
-                return;
-            }
+                args.PushMarkup(Loc.GetString(
+                    "construction-ghost-examine-message",
+                    ("name", component.Prototype.Name)));
 
-            edge.Steps[0].DoExamine(args);
+                if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+                    return;
+
+                var startNode = graph.Nodes[component.Prototype.StartNode];
+
+                if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
+                    !startNode.TryGetEdge(path[0].Name, out var edge))
+                {
+                    return;
+                }
+
+                foreach (var step in edge.Steps)
+                {
+                    step.DoExamine(args);
+                }
+            }
         }
 
         public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
         public event EventHandler<string>? ConstructionGuideAvailable;
         public event EventHandler? ToggleCraftingWindow;
+        public event EventHandler? FlipConstructionPrototype;
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
+            // We get sent a NetEntity but it actually corresponds to our local Entity.
             ClearGhost(msg.GhostId);
         }
 
-        private void HandlePlayerAttached(PlayerAttachSysMessage msg)
+        private void HandlePlayerAttached(LocalPlayerAttachedEvent msg)
         {
-            var available = IsCraftingAvailable(msg.AttachedEntity);
+            var available = IsCraftingAvailable(msg.Entity);
             UpdateCraftingAvailability(available);
         }
 
@@ -114,6 +129,13 @@ namespace Content.Client.Construction
         {
             if (args.State == BoundKeyState.Down)
                 ToggleCraftingWindow?.Invoke(this, EventArgs.Empty);
+            return true;
+        }
+
+        private bool HandleFlip(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            if (args.State == BoundKeyState.Down)
+                FlipConstructionPrototype?.Invoke(this, EventArgs.Empty);
             return true;
         }
 
@@ -137,13 +159,13 @@ namespace Content.Client.Construction
 
         private bool HandleUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
+            if (!args.EntityUid.IsValid() || !IsClientSide(args.EntityUid))
                 return false;
 
-            if (!EntityManager.TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))
+            if (!HasComp<ConstructionGhostComponent>(args.EntityUid))
                 return false;
 
-            TryStartConstruction(ghostComp.GhostId);
+            TryStartConstruction(args.EntityUid);
             return true;
         }
 
@@ -151,33 +173,41 @@ namespace Content.Client.Construction
         /// Creates a construction ghost at the given location.
         /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
+            => TrySpawnGhost(prototype, loc, dir, out _);
+
+        /// <summary>
+        /// Creates a construction ghost at the given location.
+        /// </summary>
+        public bool TrySpawnGhost(
+            ConstructionPrototype prototype,
+            EntityCoordinates loc,
+            Direction dir,
+            [NotNullWhen(true)] out EntityUid? ghost)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+            ghost = null;
+            if (_playerManager.LocalEntity is not { } user ||
                 !user.IsValid())
             {
-                return;
+                return false;
             }
 
-            if (GhostPresent(loc)) return;
+            if (GhostPresent(loc))
+                return false;
 
             // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
             var predicate = GetPredicate(prototype.CanBuildInImpassable, loc.ToMap(EntityManager));
             if (!_interactionSystem.InRangeUnobstructed(user, loc, 20f, predicate: predicate))
-                return;
+                return false;
 
-            foreach (var condition in prototype.Conditions)
-            {
-                if (!condition.Condition(user, loc, dir))
-                    return;
-            }
+            if (!CheckConstructionConditions(prototype, loc, dir, user, showPopup: true))
+                return false;
 
-            var ghost = EntityManager.SpawnEntity("constructionghost", loc);
-            var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost);
+            ghost = EntityManager.SpawnEntity("constructionghost", loc);
+            var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
-            comp.GhostId = _nextId++;
-            EntityManager.GetComponent<TransformComponent>(ghost).LocalRotation = dir.ToAngle();
-            _ghosts.Add(comp.GhostId, comp);
-            var sprite = EntityManager.GetComponent<SpriteComponent>(ghost);
+            EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
+            _ghosts.Add(ghost.GetHashCode(), ghost.Value);
+            var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
 
             for (int i = 0; i < prototype.Layers.Count; i++)
@@ -189,7 +219,33 @@ namespace Content.Client.Construction
             }
 
             if (prototype.CanBuildInImpassable)
-                EnsureComp<WallMountComponent>(ghost).Arc = new(Math.Tau);
+                EnsureComp<WallMountComponent>(ghost.Value).Arc = new(Math.Tau);
+
+            return true;
+        }
+
+        private bool CheckConstructionConditions(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir,
+            EntityUid user, bool showPopup = false)
+        {
+            foreach (var condition in prototype.Conditions)
+            {
+                if (!condition.Condition(user, loc, dir))
+                {
+                    if (showPopup)
+                    {
+                        var message = condition.GenerateGuideEntry()?.Localization;
+                        if (message != null)
+                        {
+                            // Show the reason to the user:
+                            _popupSystem.PopupCoordinates(Loc.GetString(message), loc);
+                        }
+                    }
+
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -199,23 +255,25 @@ namespace Content.Client.Construction
         {
             foreach (var ghost in _ghosts)
             {
-                if (EntityManager.GetComponent<TransformComponent>(ghost.Value.Owner).Coordinates.Equals(loc)) return true;
+                if (EntityManager.GetComponent<TransformComponent>(ghost.Value).Coordinates.Equals(loc))
+                    return true;
             }
 
             return false;
         }
 
-        private void TryStartConstruction(int ghostId)
+        public void TryStartConstruction(EntityUid ghostId, ConstructionGhostComponent? ghostComp = null)
         {
-            var ghost = _ghosts[ghostId];
+            if (!Resolve(ghostId, ref ghostComp))
+                return;
 
-            if (ghost.Prototype == null)
+            if (ghostComp.Prototype == null)
             {
                 throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
             }
 
-            var transform = EntityManager.GetComponent<TransformComponent>(ghost.Owner);
-            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var transform = EntityManager.GetComponent<TransformComponent>(ghostId);
+            var msg = new TryStartStructureConstructionMessage(GetNetCoordinates(transform.Coordinates), ghostComp.Prototype.ID, transform.LocalRotation, ghostId.GetHashCode());
             RaiseNetworkEvent(msg);
         }
 
@@ -232,11 +290,11 @@ namespace Content.Client.Construction
         /// </summary>
         public void ClearGhost(int ghostId)
         {
-            if (_ghosts.TryGetValue(ghostId, out var ghost))
-            {
-                EntityManager.QueueDeleteEntity(ghost.Owner);
-                _ghosts.Remove(ghostId);
-            }
+            if (!_ghosts.TryGetValue(ghostId, out var ghost))
+                return;
+
+            EntityManager.QueueDeleteEntity(ghost);
+            _ghosts.Remove(ghostId);
         }
 
         /// <summary>
@@ -244,9 +302,9 @@ namespace Content.Client.Construction
         /// </summary>
         public void ClearAllGhosts()
         {
-            foreach (var (_, ghost) in _ghosts)
+            foreach (var ghost in _ghosts.Values)
             {
-                EntityManager.QueueDeleteEntity(ghost.Owner);
+                EntityManager.QueueDeleteEntity(ghost);
             }
 
             _ghosts.Clear();

@@ -1,0 +1,225 @@
+﻿- type: entity
+  id: CyborgEndoskeleton
+  name: cyborg endoskeleton
+  description: A frame that cyborgs are built on. Significantly less spooky than expected.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    noRot: true
+    drawdepth: Items
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+    state: robo_suit
+  - type: Appearance
+  - type: ItemMapper
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+    mapLayers:
+      borg_l_arm+o:
+        whitelist:
+          tags:
+          - BorgGenericLArm
+      borg_r_arm+o:
+        whitelist:
+          tags:
+          - BorgGenericRArm
+      borg_l_leg+o:
+        whitelist:
+          tags:
+          - BorgGenericLLeg
+      borg_r_leg+o:
+        whitelist:
+          tags:
+          - BorgGenericRLeg
+      borg_head+o:
+        whitelist:
+          tags:
+          - BorgGenericHead
+      borg_chest+o:
+        whitelist:
+          tags:
+          - BorgGenericTorso
+      service_l_arm+o:
+        whitelist:
+          tags:
+          - BorgServiceLArm
+      service_r_arm+o:
+        whitelist:
+          tags:
+          - BorgServiceRArm
+      service_l_leg+o:
+        whitelist:
+          tags:
+          - BorgServiceLLeg
+      service_r_leg+o:
+        whitelist:
+          tags:
+          - BorgServiceRLeg
+      service_head+o:
+        whitelist:
+          tags:
+          - BorgServiceHead
+      service_chest+o:
+        whitelist:
+          tags:
+          - BorgServiceTorso
+      engineer_l_arm+o:
+        whitelist:
+          tags:
+          - BorgEngineerLArm
+      engineer_r_arm+o:
+        whitelist:
+          tags:
+          - BorgEngineerRArm
+      engineer_l_leg+o:
+        whitelist:
+          tags:
+          - BorgEngineerLLeg
+      engineer_r_leg+o:
+        whitelist:
+          tags:
+          - BorgEngineerRLeg
+      engineer_head+o:
+        whitelist:
+          tags:
+          - BorgEngineerHead
+      engineer_chest+o:
+        whitelist:
+          tags:
+          - BorgEngineerTorso
+      mining_l_arm+o:
+        whitelist:
+          tags:
+            - BorgMiningLArm
+      mining_r_arm+o:
+        whitelist:
+          tags:
+            - BorgMiningRArm
+      mining_l_leg+o:
+        whitelist:
+          tags:
+            - BorgMiningLLeg
+      mining_r_leg+o:
+        whitelist:
+          tags:
+            - BorgMiningRLeg
+      mining_head+o:
+        whitelist:
+          tags:
+            - BorgMiningHead
+      mining_chest+o:
+        whitelist:
+          tags:
+            - BorgMiningTorso
+      medical_l_arm+o:
+        whitelist:
+          tags:
+            - BorgMedicalLArm
+      medical_r_arm+o:
+        whitelist:
+          tags:
+            - BorgMedicalRArm
+      medical_l_leg+o:
+        whitelist:
+          tags:
+            - BorgMedicalLLeg
+      medical_r_leg+o:
+        whitelist:
+          tags:
+            - BorgMedicalRLeg
+      medical_head+o:
+        whitelist:
+          tags:
+            - BorgMedicalHead
+      medical_chest+o:
+        whitelist:
+          tags:
+            - BorgMedicalTorso
+      janitor_l_leg+o:
+        whitelist:
+          tags:
+            - BorgJanitorLLeg
+      janitor_r_leg+o:
+        whitelist:
+          tags:
+            - BorgJanitorRLeg
+      janitor_head+o:
+        whitelist:
+          tags:
+            - BorgJanitorHead
+      janitor_chest+o:
+        whitelist:
+          tags:
+            - BorgJanitorTorso
+  - type: ContainerContainer
+    containers:
+      part-container: !type:Container
+      cell_slot: !type:Container
+  - type: PartAssembly
+    parts:
+      generic:
+      - BorgGenericLArm
+      - BorgGenericRArm
+      - BorgGenericLLeg
+      - BorgGenericRLeg
+      - BorgGenericHead
+      - BorgGenericTorso
+      service:
+      - BorgServiceLArm
+      - BorgServiceRArm
+      - BorgServiceLLeg
+      - BorgServiceRLeg
+      - BorgServiceHead
+      - BorgServiceTorso
+      engineer:
+      - BorgEngineerLArm
+      - BorgEngineerRArm
+      - BorgEngineerLLeg
+      - BorgEngineerRLeg
+      - BorgEngineerHead
+      - BorgEngineerTorso
+      medical:
+      - BorgMedicalLArm
+      - BorgMedicalRArm
+      - BorgMedicalLLeg
+      - BorgMedicalRLeg
+      - BorgMedicalHead
+      - BorgMedicalTorso
+      janitor:
+      - BorgJanitorLLeg
+      - BorgJanitorRLeg
+      - BorgJanitorHead
+      - BorgJanitorTorso
+      mining:
+      - BorgMiningLArm
+      - BorgMiningRArm
+      - BorgMiningLLeg
+      - BorgMiningRLeg
+      - BorgMiningHead
+      - BorgMiningTorso
+  - type: Construction
+    graph: Cyborg
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot
+  - type: Pullable
+  - type: GuideHelp
+    guides:
+    - Cyborgs

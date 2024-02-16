@@ -96,16 +96,16 @@
 # Secure
 
 - type: entity
-  parent: WindoorSecurityLocked
-  id: WindoorArmoryLocked
+  parent: WindoorSecureSecurityLocked
+  id: WindoorSecureArmoryLocked
   suffix: Armory, Locked
   components:
   - type: AccessReader
     access: [["Armory"]]
 
 - type: entity
-  parent: WindoorSecurityLocked
-  id: WindoorBrigLocked
+  parent: WindoorSecureSecurityLocked
+  id: WindoorSecureBrigLocked
   suffix: Brig, Locked
   components:
   - type: AccessReader
@@ -129,7 +129,7 @@
 
 - type: entity
   parent: WindoorSecure
-  id: WindoorChemistryLocked
+  id: WindoorSecureChemistryLocked
   suffix: Chemistry, Locked
   components:
   - type: AccessReader
@@ -137,7 +137,15 @@
 
 - type: entity
   parent: WindoorSecure
-  id: WindoorCommandLocked
+  id: WindoorSecureCentralCommandLocked
+  suffix: Central Command, Locked
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureCommandLocked
   suffix: Command, Locked
   components:
   - type: AccessReader
@@ -145,7 +153,7 @@
 
 - type: entity
   parent: WindoorSecure
-  id: WindoorEngineeringLocked
+  id: WindoorSecureEngineeringLocked
   suffix: Engineering, Locked
   components:
   - type: AccessReader
@@ -153,7 +161,7 @@
 
 - type: entity
   parent: WindoorSecure
-  id: WindoorExternalLocked
+  id: WindoorSecureExternalLocked
   suffix: External, Locked
   components:
   - type: AccessReader
@@ -176,8 +184,16 @@
     access: [["Kitchen"]]
 
 - type: entity
+  parent: WindoorSecureSecurityLocked
+  id: WindoorSecureSecurityLawyerLocked
+  suffix: Security/Lawyer, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"], ["Lawyer"]]
+
+- type: entity
   parent: WindoorSecure
-  id: WindoorMedicalLocked
+  id: WindoorSecureMedicalLocked
   suffix: Medical, Locked
   components:
   - type: AccessReader
@@ -193,7 +209,7 @@
 
 - type: entity
   parent: WindoorSecure
-  id: WindoorSecurityLocked
+  id: WindoorSecureSecurityLocked
   suffix: Security, Locked
   components:
   - type: AccessReader
@@ -201,16 +217,24 @@
 
 - type: entity
   parent: WindoorSecure
-  id: WindoorScienceLocked
+  id: WindoorSecureScienceLocked
   suffix: Science, Locked
   components:
   - type: AccessReader
     access: [["Research"]]
-    
+
 - type: entity
   parent: WindoorSecure
-  id: WindoorHeadOfPersonnelLocked
+  id: WindoorSecureHeadOfPersonnelLocked
   suffix: HeadOfPersonnel, Locked
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureAtmosphericsLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]

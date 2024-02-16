@@ -1,19 +1,11 @@
-﻿namespace Content.Server.Chemistry.Components;
+namespace Content.Server.Chemistry.Components;
 
 [RegisterComponent]
-public sealed class SolutionHeaterComponent : Component
+public sealed partial class SolutionHeaterComponent : Component
 {
-    public readonly string BeakerSlotId = "beakerSlot";
-
-    [DataField("heatPerSecond")]
-    public float HeatPerSecond = 120;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float HeatMultiplier = 1;
-
-    [DataField("machinePartHeatPerSecond")]
-    public string MachinePartHeatPerSecond = "Laser";
-
-    [DataField("partRatingHeatMultiplier")]
-    public float PartRatingHeatMultiplier = 1.5f;
+    /// <summary>
+    /// How much heat is added per second to the solution, taking upgrades into account.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float HeatPerSecond;
 }

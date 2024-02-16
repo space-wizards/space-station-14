@@ -1,5 +1,6 @@
-using Content.Server.NodeContainer.Nodes;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 
@@ -27,12 +28,30 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
         }
 
+        public bool TryGetNode<T>(NodeContainerComponent component, string? identifier, [NotNullWhen(true)] out T? node) where T : Node
+        {
+            if (identifier == null)
+            {
+                node = null;
+                return false;
+            }
+
+            if (component.Nodes.TryGetValue(identifier, out var n) && n is T t)
+            {
+                node = t;
+                return true;
+            }
+
+            node = null;
+            return false;
+        }
+
         private void OnInitEvent(EntityUid uid, NodeContainerComponent component, ComponentInit args)
         {
             foreach (var (key, node) in component.Nodes)
             {
                 node.Name = key;
-                node.Initialize(component.Owner, EntityManager);
+                node.Initialize(uid, EntityManager);
             }
         }
 

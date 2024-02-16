@@ -4,7 +4,7 @@
   description: job-description-zookeeper
   playTimeTracker: JobZookeeper
   startingGear: ZookeeperGear
-  icon: "Zookeeper"
+  icon: "JobIconZookeeper"
   supervisors: job-supervisors-hop
   access:
   - Service
@@ -19,6 +19,6 @@
     shoes: ClothingShoesColorWhite
     id: ZookeeperPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpsuitSafari
+  innerClothingSkirt: ClothingUniformJumpsuitSafari
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

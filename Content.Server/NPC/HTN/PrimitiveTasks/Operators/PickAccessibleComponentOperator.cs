@@ -9,7 +9,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Picks a nearby component that is accessible.
 /// </summary>
-public sealed class PickAccessibleComponentOperator : HTNOperator
+public sealed partial class PickAccessibleComponentOperator : HTNOperator
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -21,6 +21,9 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
 
     [DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
+
+    [DataField("target")]
+    public string TargetEntity = "Target";
 
     [DataField("component", required: true)]
     public string Component = string.Empty;
@@ -58,7 +61,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
 
         var compType = registration.Type;
         var query = _entManager.GetEntityQuery(compType);
-        var targets = new List<Component>();
+        var targets = new List<EntityUid>();
 
         // TODO: Need to get ones that are accessible.
         // TODO: Look at unreal HTN to see repeatable ones maybe?
@@ -68,7 +71,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             if (entity == owner || !query.TryGetComponent(entity, out var comp))
                 continue;
 
-            targets.Add(comp);
+            targets.Add(entity);
         }
 
         if (targets.Count == 0)
@@ -76,16 +79,12 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             return (false, null);
         }
 
-        blackboard.TryGetValue<float>(RangeKey, out var maxRange, _entManager);
-
-        if (maxRange == 0f)
-            maxRange = 7f;
-
-        while (targets.Count > 0)
+        foreach (var target in targets)
         {
-            var path = await _pathfinding.GetRandomPath(
+            var path = await _pathfinding.GetPath(
                 owner,
-                maxRange,
+                target,
+                1f,
                 cancelToken,
                 flags: _pathfinding.GetFlags(blackboard));
 
@@ -94,12 +93,13 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
                 return (false, null);
             }
 
-            var target = path.Path.Last().Coordinates;
+            var xform = _entManager.GetComponent<TransformComponent>(target);
 
             return (true, new Dictionary<string, object>()
             {
-                { TargetKey, target },
-                { PathfindKey, path}
+                { TargetEntity, target },
+                { TargetKey, xform.Coordinates },
+                { PathfindKey, path }
             });
         }
 

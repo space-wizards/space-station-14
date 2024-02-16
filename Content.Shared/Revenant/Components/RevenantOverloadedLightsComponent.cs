@@ -9,7 +9,7 @@ namespace Content.Shared.Revenant.Components;
 /// and are about to zap a player.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class RevenantOverloadedLightsComponent : Component
+public sealed partial class RevenantOverloadedLightsComponent : Component
 {
     [ViewVariables]
     public EntityUid? Target;

@@ -3,19 +3,20 @@
   id: MoveToPathfindPointCompound
   branches:
     - tasks:
-        - id: PickPathfindPointPrimitive
-        - id: MoveToAccessiblePrimitive
+        - !type:HTNPrimitiveTask
+          operator: !type:PickPathfindPointOperator
 
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
 
-- type: htnPrimitive
-  id: PickPathfindPointPrimitive
-  operator: !type:PickPathfindPointOperator
 
 - type: entity
   id: MobPathfindDummy
-  name: Pathfind dummy
+  name: pathfind dummy
   suffix: NPC
   parent: MobXenoRouny
   components:
   - type: HTN
-    rootTask: MoveToPathfindPointCompound
+    rootTask:
+      task: MoveToPathfindPointCompound

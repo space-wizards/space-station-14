@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by aleksh (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "laser_raptor",
+      "directions": 4
+    },
+    {
+      "name": "laser_raptor_dead"
+    }
+  ]
+}

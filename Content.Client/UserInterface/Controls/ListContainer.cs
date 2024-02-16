@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -21,7 +22,8 @@ public sealed class ListContainer : Control
     }
     public bool Toggle { get; set; }
     public Action<ListData, ListContainerButton>? GenerateItem;
-    public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed;
+    public Action<BaseButton.ButtonEventArgs?, ListData?>? ItemPressed;
+    public Action<GUIBoundKeyEventArgs, ListData?>? ItemKeyBindDown;
     public IReadOnlyList<ListData> Data => _data;
 
     private const int DefaultSeparation = 3;
@@ -76,7 +78,7 @@ public sealed class ListContainer : Control
         {
             ListContainerButton control = new(data[0]);
             GenerateItem?.Invoke(data[0], control);
-            control.Measure(Vector2.Infinity);
+            control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
             control.Dispose();
         }
@@ -91,6 +93,12 @@ public sealed class ListContainer : Control
         _data = data.ToList();
         _updateChildren = true;
         InvalidateArrange();
+
+        if (_selected != null && !data.Contains(_selected))
+        {
+            _selected = null;
+            ItemPressed?.Invoke(null, null);
+        }
     }
 
     public void DirtyList()
@@ -126,6 +134,11 @@ public sealed class ListContainer : Control
             return;
         _selected = button.Data;
         ItemPressed?.Invoke(args, button.Data);
+    }
+
+    private void OnItemKeyBindDown(ListContainerButton button, GUIBoundKeyEventArgs args)
+    {
+        ItemKeyBindDown?.Invoke(args, button.Data);
     }
 
     [Pure]
@@ -249,6 +262,7 @@ public sealed class ListContainer : Control
                     {
                         button = new ListContainerButton(data);
                         button.OnPressed += OnItemPressed;
+                        button.OnKeyBindDown += args => OnItemKeyBindDown(button, args);
                         button.ToggleMode = Toggle;
                         button.Group = _buttonGroup;
 
@@ -312,7 +326,7 @@ public sealed class ListContainer : Control
             child.Measure(constraint);
             if (child == _vScrollBar)
                 continue;
-            childSize = Vector2.ComponentMax(childSize, child.DesiredSize);
+            childSize = Vector2.Max(childSize, child.DesiredSize);
         }
 
         if (_itemHeight == 0 && childSize.Y != 0)
@@ -343,7 +357,7 @@ public sealed class ListContainer : Control
     }
 }
 
-public sealed class ListContainerButton : ContainerButton
+public sealed class ListContainerButton : ContainerButton, IEntityControl
 {
     public readonly ListData Data;
     // public PanelContainer Background;
@@ -358,6 +372,8 @@ public sealed class ListContainerButton : ContainerButton
         //     PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)}
         // });
     }
+
+    public EntityUid? UiEntity => (Data as EntityListData)?.Uid;
 }
 
 #region Data

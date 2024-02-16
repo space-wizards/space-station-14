@@ -1,8 +1,10 @@
 using Content.Shared.Explosion;
-using Robust.Client.GameObjects;
+using Content.Shared.Explosion.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
+using Robust.Shared.Graphics.RSI;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Explosion;
@@ -16,11 +18,8 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
-
-    /// <summary>
-    ///     For how many seconds should an explosion stay on-screen once it has finished expanding?
-    /// </summary>
-    public float ExplosionPersistence = 0.3f;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
     public override void Initialize()
     {
@@ -39,7 +38,13 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         component.Epicenter = state.Epicenter;
         component.SpaceTiles = state.SpaceTiles;
-        component.Tiles = state.Tiles;
+        component.Tiles.Clear();
+
+        foreach (var (nent, data) in state.Tiles)
+        {
+            component.Tiles[GetEntity(nent)] = data;
+        }
+
         component.Intensity = state.Intensity;
         component.ExplosionType = state.ExplosionType;
         component.SpaceMatrix = state.SpaceMatrix;
@@ -48,28 +53,42 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
     private void OnCompRemove(EntityUid uid, ExplosionVisualsComponent component, ComponentRemove args)
     {
-        QueueDel(component.LightEntity);
+        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures) && !Deleted(textures.LightEntity))
+            QueueDel(textures.LightEntity);
     }
 
     private void OnExplosionInit(EntityUid uid, ExplosionVisualsComponent component, ComponentInit args)
     {
-        if (!_protoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type))
-            return;
+        EnsureComp<ExplosionVisualsTexturesComponent>(uid);
 
-        // spawn in a client-side light source at the epicenter
-        var lightEntity = Spawn("ExplosionLight", component.Epicenter);
-        var light = EnsureComp<PointLightComponent>(lightEntity);
-        light.Energy = light.Radius = component.Intensity.Count;
-        light.Color = type.LightColor;
-        component.LightEntity = lightEntity;
-        component.FireColor = type.FireColor;
-        component.IntensityPerState = type.IntensityPerState;
+        if (!_protoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type) ||
+            !TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
+        {
+            return;
+        }
+
+        // Map may have been deleted.
+        if (_mapMan.MapExists(component.Epicenter.MapId))
+        {
+            // spawn in a client-side light source at the epicenter
+            var lightEntity = Spawn("ExplosionLight", component.Epicenter);
+            var light = _lights.EnsureLight(lightEntity);
+
+            _lights.SetRadius(lightEntity, component.Intensity.Count, light);
+            _lights.SetEnergy(lightEntity, component.Intensity.Count, light);
+            _lights.SetColor(lightEntity, type.LightColor, light);
+            textures.LightEntity = lightEntity;
+        }
+
+
+        textures.FireColor = type.FireColor;
+        textures.IntensityPerState = type.IntensityPerState;
 
         var fireRsi = _resCache.GetResource<RSIResource>(type.TexturePath).RSI;
         foreach (var state in fireRsi)
         {
-            component.FireFrames.Add(state.GetFrames(RSI.State.Direction.South));
-            if (component.FireFrames.Count == type.FireStates)
+            textures.FireFrames.Add(state.GetFrames(RsiDirection.South));
+            if (textures.FireFrames.Count == type.FireStates)
                 break;
         }
     }

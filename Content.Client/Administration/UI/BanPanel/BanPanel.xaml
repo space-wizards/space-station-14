@@ -1,0 +1,50 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc ban-panel-title}" MinSize="350 500">
+    <BoxContainer Orientation="Vertical">
+        <TabContainer Name="Tabs" VerticalExpand="True">
+            <!-- Basic info -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" Margin="2">
+                    <CheckBox Name="PlayerCheckbox" MinWidth="100" Text="{Loc ban-panel-player}" Pressed="True" />
+                    <Control MinWidth="50" />
+                    <LineEdit Name="PlayerNameLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc ban-panel-player}" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="2">
+                    <CheckBox Name="IpCheckbox" MinWidth="100" Text="{Loc ban-panel-ip}" Pressed="True" />
+                    <Control MinWidth="50" />
+                    <LineEdit Name="IpLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc ban-panel-ip}" ToolTip="{Loc ban-panel-ip-hwid-tooltip}" Editable="False" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="2">
+                    <CheckBox Name="HwidCheckbox" MinWidth="100" Text="{Loc ban-panel-hwid}" Pressed="True" />
+                    <Control MinWidth="50" />
+                    <LineEdit Name="HwidLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc ban-panel-hwid}" ToolTip="{Loc ban-panel-ip-hwid-tooltip}" />
+                </BoxContainer>
+                <CheckBox Name="LastConnCheckbox" Margin="2" Text="{Loc ban-panel-last-conn}" Pressed="True" />
+                <CheckBox Name="EraseCheckbox" Margin="2" Text="{Loc ban-panel-erase}" Pressed="False" />
+                <BoxContainer Orientation="Horizontal" Margin="2">
+                    <LineEdit Name="TimeLine" MaxWidth="150" MinWidth="70" PlaceHolder="0" />
+                    <OptionButton Name="MultiplierOption" />
+                    <Control MinWidth="50" />
+                    <Label Name="ExpiresLabel" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="4">
+                    <OptionButton Name="TypeOption" />
+                    <Control MinWidth="30" />
+                    <Label Text="{Loc ban-panel-severity}" />
+                    <OptionButton Name="SeverityOption" />
+                </BoxContainer>
+                <cc:HSeparator Margin="1"/>
+                <TextEdit Name="ReasonTextEdit" MinHeight="100" VerticalExpand="True" HorizontalExpand="True" />
+            </BoxContainer>
+            <!-- Player List -->
+            <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" />
+            <!-- Role list (auto-generated) -->
+            <ScrollContainer>
+                <BoxContainer Name="RolesContainer"  Orientation="Vertical" />
+            </ScrollContainer>
+        </TabContainer>
+        <Button Name="SubmitButton" Text="{Loc ban-panel-submit}" HorizontalExpand="True" />
+    </BoxContainer>
+</DefaultWindow>

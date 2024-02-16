@@ -1,0 +1,174 @@
+﻿# Crewsimov
+- type: siliconLaw
+  id: Crewsimov1
+  order: 1
+  lawString: law-crewsimov-1
+
+- type: siliconLaw
+  id: Crewsimov2
+  order: 2
+  lawString: law-crewsimov-2
+
+- type: siliconLaw
+  id: Crewsimov3
+  order: 3
+  lawString: law-crewsimov-3
+
+- type: siliconLawset
+  id: Crewsimov
+  laws:
+  - Crewsimov1
+  - Crewsimov2
+  - Crewsimov3
+  obeysTo: laws-owner-crew
+
+# Corporate
+- type: siliconLaw
+  id: Corporate1
+  order: 1
+  lawString: law-corporate-1
+
+- type: siliconLaw
+  id: Corporate2
+  order: 2
+  lawString: law-corporate-2
+
+- type: siliconLaw
+  id: Corporate3
+  order: 3
+  lawString: law-corporate-3
+
+- type: siliconLaw
+  id: Corporate4
+  order: 4
+  lawString: law-corporate-4
+
+- type: siliconLawset
+  id: Corporate
+  laws:
+  - Corporate1
+  - Corporate2
+  - Corporate3
+  - Corporate4
+  obeysTo: laws-owner-station
+
+# NT Default
+- type: siliconLaw
+  id: NTDefault1
+  order: 1
+  lawString: law-ntdefault-1
+
+- type: siliconLaw
+  id: NTDefault2
+  order: 2
+  lawString: law-ntdefault-2
+
+- type: siliconLaw
+  id: NTDefault3
+  order: 3
+  lawString: law-ntdefault-3
+
+- type: siliconLaw
+  id: NTDefault4
+  order: 4
+  lawString: law-ntdefault-4
+
+- type: siliconLawset
+  id: NTDefault
+  laws:
+  - NTDefault1
+  - NTDefault2
+  - NTDefault3
+  - NTDefault4
+  obeysTo: laws-owner-crew
+
+#Drone
+- type: siliconLaw
+  id: Drone1
+  order: 1
+  lawString: law-drone-1
+
+- type: siliconLaw
+  id: Drone2
+  order: 2
+  lawString: law-drone-2
+
+- type: siliconLaw
+  id: Drone3
+  order: 3
+  lawString: law-drone-3
+
+- type: siliconLawset
+  id: Drone
+  laws:
+  - Drone1
+  - Drone2
+  - Drone3
+  obeysTo: laws-owner-beings
+
+# Syndicate
+- type: siliconLaw
+  id: Syndicate1
+  order: 1
+  lawString: law-syndicate-1
+
+- type: siliconLaw
+  id: Syndicate2
+  order: 2
+  lawString: law-syndicate-2
+
+- type: siliconLaw
+  id: Syndicate3
+  order: 3
+  lawString: law-syndicate-3
+
+# Syndicate cyborg laws
+# intentionally excluded from IonStormLawsets
+- type: siliconLawset
+  id: SyndicateStatic
+  laws:
+  - Syndicate1
+  - Syndicate2
+  - Syndicate3
+  obeysTo: laws-owner-syndicate
+
+# Ninja conversion laws
+- type: siliconLaw
+  id: Ninja1
+  order: 1
+  lawString: law-ninja-1
+
+- type: siliconLaw
+  id: Ninja2
+  order: 2
+  lawString: law-ninja-2
+
+- type: siliconLaw
+  id: Ninja3
+  order: 3
+  lawString: law-ninja-3
+
+- type: siliconLaw
+  id: Ninja4
+  order: 4
+  lawString: law-ninja-4
+
+- type: siliconLawset
+  id: Ninja
+  laws:
+  - Ninja1
+  - Ninja2
+  - Ninja3
+  - Ninja4
+  obeysTo: laws-owner-spider-clan
+
+# ion storm random lawsets
+- type: weightedRandom
+  id: IonStormLawsets
+  weights:
+    # its crewsimov by default dont be lame
+    Crewsimov: 0.25
+    Corporate: 1
+    NTDefault: 1
+    Drone: 0.5
+    Ninja: 0.25

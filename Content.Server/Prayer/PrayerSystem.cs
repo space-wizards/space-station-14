@@ -1,15 +1,15 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.Popups;
-using Robust.Server.Player;
-using Robust.Shared.Player;
 using Content.Shared.Chat;
+using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -35,7 +35,7 @@ public sealed class PrayerSystem : EntitySystem
     private void AddPrayVerb(EntityUid uid, PrayableComponent comp, GetVerbsEvent<ActivationVerb> args)
     {
         // if it doesn't have an actor and we can't reach it then don't add the verb
-        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
         // this is to prevent ghosts from using it
@@ -50,7 +50,7 @@ public sealed class PrayerSystem : EntitySystem
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, actor.PlayerSession, PopupType.Large);
+                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
                     return;
                 }
 
@@ -73,7 +73,7 @@ public sealed class PrayerSystem : EntitySystem
     /// <param name="source">The IPlayerSession that sent the message</param>
     /// <param name="messageString">The main message sent to the player via the chatbox</param>
     /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
-    public void SendSubtleMessage(IPlayerSession target, IPlayerSession source, string messageString, string popupMessage)
+    public void SendSubtleMessage(ICommonSession target, ICommonSession source, string messageString, string popupMessage)
     {
         if (target.AttachedEntity == null)
             return;
@@ -81,7 +81,7 @@ public sealed class PrayerSystem : EntitySystem
         var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
-        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.ConnectedClient);
+        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.Channel);
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity.Value):player} received subtle message from {source.Name}: {message}");
     }
 
@@ -95,15 +95,14 @@ public sealed class PrayerSystem : EntitySystem
     /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
     /// Exactly.
     ///  </remarks>
-    public void Pray(IPlayerSession sender, PrayableComponent comp, string message)
+    public void Pray(ICommonSession sender, PrayableComponent comp, string message)
     {
         if (sender.AttachedEntity == null)
             return;
 
-
         _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
-        _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotifiactionPrefix)} <{sender.Name}>: {message}");
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotifiactionPrefix)}): {message}");
+        _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
     }
 }

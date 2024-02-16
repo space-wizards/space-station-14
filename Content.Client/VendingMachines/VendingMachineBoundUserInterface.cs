@@ -1,6 +1,5 @@
 using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
 
@@ -11,9 +10,13 @@ namespace Content.Client.VendingMachines
         [ViewVariables]
         private VendingMachineMenu? _menu;
 
+        [ViewVariables]
         private List<VendingMachineInventoryEntry> _cachedInventory = new();
 
-        public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private List<int> _cachedFilteredIndex = new();
+
+        public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -21,19 +24,19 @@ namespace Content.Client.VendingMachines
         {
             base.Open();
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var vendingMachineSys = entMan.System<VendingMachineSystem>();
+            var vendingMachineSys = EntMan.System<VendingMachineSystem>();
 
-            _cachedInventory = vendingMachineSys.GetAllInventory(Owner.Owner);
+            _cachedInventory = vendingMachineSys.GetAllInventory(Owner);
 
-            _menu = new VendingMachineMenu {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+            _menu = new VendingMachineMenu { Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName };
 
             _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
+            _menu.OnSearchChanged += OnSearchChanged;
 
-            _menu.Populate(_cachedInventory);
+            _menu.Populate(_cachedInventory, out _cachedFilteredIndex);
 
-            _menu.OpenCentered();
+            _menu.OpenCenteredLeft();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -45,7 +48,7 @@ namespace Content.Client.VendingMachines
 
             _cachedInventory = newState.Inventory;
 
-            _menu?.Populate(_cachedInventory);
+            _menu?.Populate(_cachedInventory, out _cachedFilteredIndex, _menu.SearchBar.Text);
         }
 
         private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
@@ -53,7 +56,7 @@ namespace Content.Client.VendingMachines
             if (_cachedInventory.Count == 0)
                 return;
 
-            var selectedItem = _cachedInventory.ElementAtOrDefault(args.ItemIndex);
+            var selectedItem = _cachedInventory.ElementAtOrDefault(_cachedFilteredIndex.ElementAtOrDefault(args.ItemIndex));
 
             if (selectedItem == null)
                 return;
@@ -73,6 +76,11 @@ namespace Content.Client.VendingMachines
             _menu.OnItemSelected -= OnItemSelected;
             _menu.OnClose -= Close;
             _menu.Dispose();
+        }
+
+        private void OnSearchChanged(string? filter)
+        {
+            _menu?.Populate(_cachedInventory, out _cachedFilteredIndex, filter);
         }
     }
 }

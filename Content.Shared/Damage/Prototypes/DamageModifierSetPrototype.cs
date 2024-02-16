@@ -14,6 +14,6 @@ namespace Content.Shared.Damage.Prototypes
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
     }
 }

@@ -5,13 +5,13 @@ using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Atmos.EntitySystems;
 
 [UsedImplicitly]
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
-    [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -27,19 +27,12 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        if (!_resCache.TryGetResource(SharedSpriteComponent.TextureRoot / component.RsiPath, out RSIResource? rsi))
-        {
-            Logger.Error($"{nameof(AtmosPipeAppearanceSystem)} could not load to load RSI {component.RsiPath}.");
-            return;
-        }
-
         foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
         {
             sprite.LayerMapReserveBlank(layerKey);
             var layer = sprite.LayerMapGet(layerKey);
-            sprite.LayerSetRSI(layer, rsi.RSI);
-            var layerState = component.State;
-            sprite.LayerSetState(layer, layerState);
+            sprite.LayerSetRSI(layer, component.Sprite.RsiPath);
+            sprite.LayerSetState(layer, component.Sprite.RsiState);
             sprite.LayerSetDirOffset(layer, ToOffset(layerKey));
         }
     }

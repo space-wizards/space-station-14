@@ -1,10 +1,14 @@
 using Content.Server.Access.Components;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Interaction;
+using Content.Shared.StatusIcon;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
+using Content.Shared.Roles;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Access.Systems
 {
@@ -13,6 +17,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -21,7 +26,8 @@ namespace Content.Server.Access.Systems
             // BUI
             SubscribeLocalEvent<AgentIDCardComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
-            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage> (OnJobChanged);
+            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
+            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
         }
 
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
@@ -42,7 +48,7 @@ namespace Content.Server.Access.Systems
                 return;
             }
 
-            Dirty(access);
+            Dirty(uid, access);
 
             if (addedLength == 1)
             {
@@ -55,14 +61,14 @@ namespace Content.Server.Access.Systems
 
         private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)
         {
-            if (!_uiSystem.TryGetUi(component.Owner, AgentIDCardUiKey.Key, out var ui))
+            if (!_uiSystem.TryGetUi(uid, AgentIDCardUiKey.Key, out var ui))
                 return;
 
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "");
-            ui.SetState(state, args.Session);
+            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", component.Icons);
+            _uiSystem.SetUiState(ui, state, args.Session);
         }
 
         private void OnJobChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobChangedMessage args)
@@ -79,6 +85,39 @@ namespace Content.Server.Access.Systems
                 return;
 
             _cardSystem.TryChangeFullName(uid, args.Name, idCard);
+        }
+
+        private void OnJobIconChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobIconChangedMessage args)
+        {
+            if (!TryComp<IdCardComponent>(uid, out var idCard))
+            {
+                return;
+            }
+
+            if (!_prototypeManager.TryIndex<StatusIconPrototype>(args.JobIcon, out var jobIcon))
+            {
+                return;
+            }
+
+            _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
+
+            if (TryFindJobProtoFromIcon(jobIcon, out var job))
+                _cardSystem.TryChangeJobDepartment(uid, job, idCard);
+        }
+
+        private bool TryFindJobProtoFromIcon(StatusIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
+        {
+            foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            {
+                if(jobPrototype.Icon == jobIcon.ID)
+                {
+                    job = jobPrototype;
+                    return true;
+                }
+            }
+
+            job = null;
+            return false;
         }
     }
 }

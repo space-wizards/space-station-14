@@ -15,8 +15,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: THCOil
-          Quantity: 5
+        - ReagentId: THC
+          Quantity: 15
+  - type: StealTarget
+    stealGroup: Cannabis
 
 - type: entity
   name: dried cannabis leaves
@@ -32,10 +34,12 @@
       food:
         reagents:
         - ReagentId: THC
-          Quantity: 2
+          Quantity: 12
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
+  - type: StealTarget
+    stealGroup: Cannabis
 
 - type: entity
   name: ground cannabis
@@ -51,7 +55,7 @@
       food:
         reagents:
         - ReagentId: THC
-          Quantity: 10
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Misc/reagent_fillings.rsi
     state: powderpile
@@ -62,6 +66,10 @@
   - type: Tag
     tags:
       - Smokable
+  - type: Item
+    size: Tiny
+  - type: StealTarget
+    stealGroup: Cannabis
 
 - type: entity
   name: tobacco leaves
@@ -118,3 +126,5 @@
   - type: Tag
     tags:
       - Smokable
+  - type: Item
+    size: Tiny

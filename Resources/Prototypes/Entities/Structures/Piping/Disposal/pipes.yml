@@ -9,7 +9,6 @@
     - Disposal
   components:
   - type: Sprite
-    netsync: false
     visible: false
   - type: Appearance
   - type: SubFloorHide
@@ -20,11 +19,12 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -43,6 +43,9 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:DoActsBehavior
         acts: ["Breakage"]
       - !type:ChangeConstructionNodeBehavior
@@ -54,7 +57,7 @@
     containers:
       DisposalTube: !type:Container
   - type: StaticPrice
-    price: 100
+    price: 22
 
 - type: entity
   id: DisposalHolder
@@ -96,6 +99,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-s
+  - type: DisposalTube
+    containerId: DisposalTransit
   - type: DisposalTransit
   - type: ContainerContainer
     containers:
@@ -122,6 +127,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-tagger
+  - type: DisposalTube
+    containerId: DisposalTagger
   - type: DisposalTagger
   - type: ContainerContainer
     containers:
@@ -154,6 +161,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-t
+  - type: DisposalTube
+    containerId: DisposalEntry
   - type: DisposalEntry
   - type: ContainerContainer
     containers:
@@ -166,11 +175,12 @@
           Anchored: { state: pipe-t }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.4"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.4"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: trunk
@@ -187,6 +197,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j1s
+  - type: DisposalTube
+    containerId: DisposalRouter
   - type: DisposalRouter
     degrees:
     - 0
@@ -211,11 +223,12 @@
       type: DisposalRouterBoundUserInterface
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: router
@@ -232,6 +245,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j2s
+  - type: DisposalTube
+    containerId: DisposalRouter
   - type: DisposalRouter
     degrees:
     - 0
@@ -250,11 +265,12 @@
     mirrorEntity: DisposalRouter
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.5,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
 
 - type: entity
   id: DisposalJunction
@@ -269,6 +285,8 @@
     - map: [ "pipe" ]
       state: conpipe-j1
     visible: true
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -287,11 +305,12 @@
     mirrorEntity: DisposalJunctionFlipped
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: junction
@@ -308,6 +327,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j2
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -326,11 +347,12 @@
     mirrorEntity: DisposalJunction
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.5,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
 
 - type: entity
   id: DisposalYJunction
@@ -344,6 +366,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-y
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -360,11 +384,12 @@
           Anchored: { state: pipe-y }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.25"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.25"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: yJunction
@@ -381,6 +406,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-c
+  - type: DisposalTube
+    containerId: DisposalBend
   - type: DisposalBend
   - type: ContainerContainer
     containers:
@@ -393,11 +420,72 @@
           Anchored: { state: pipe-c }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.25"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.25"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: bend
+
+- type: entity
+  parent: DisposalJunction
+  id: DisposalSignalRouter
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  components:
+  - type: Sprite
+    drawdepth: ThickPipe
+    layers:
+    - map: [ "pipe" ]
+      state: signal-router-free
+  - type: DisposalTube
+    containerId: DisposalSignalRouter
+  - type: DisposalSignalRouter
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: ContainerContainer
+    containers:
+      DisposalSignalRouter: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: signal-router-free }
+          Anchored: { state: signal-router }
+  - type: Flippable
+    mirrorEntity: DisposalSignalRouterFlipped
+  - type: Construction
+    graph: DisposalPipe
+    node: signal_router
+
+- type: entity
+  parent: DisposalSignalRouter
+  id: DisposalSignalRouterFlipped
+  suffix: flipped
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "pipe" ]
+      state: signal-router-flipped-free
+  - type: DisposalJunction
+    degrees:
+    - 0
+    - 90
+    - 180
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: signal-router-flipped-free }
+          Anchored: { state: signal-router-flipped }

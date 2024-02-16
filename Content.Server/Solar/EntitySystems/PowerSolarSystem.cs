@@ -61,8 +61,7 @@ namespace Content.Server.Solar.EntitySystems
         /// <summary>
         /// Queue of panels to update each cycle.
         /// </summary>
-        private readonly Queue<SolarPanelComponent> _updateQueue = new();
-
+        private readonly Queue<Entity<SolarPanelComponent>> _updateQueue = new();
 
         public override void Initialize()
         {
@@ -102,24 +101,26 @@ namespace Content.Server.Solar.EntitySystems
             if (_updateQueue.Count > 0)
             {
                 var panel = _updateQueue.Dequeue();
-                if (panel.Running)
+                if (panel.Comp.Running)
                     UpdatePanelCoverage(panel);
             }
             else
             {
                 TotalPanelPower = 0;
-                foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
+
+                var query = EntityQueryEnumerator<SolarPanelComponent, TransformComponent>();
+                while (query.MoveNext(out var uid, out var panel, out var xform))
                 {
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
                     xform.WorldRotation = TargetPanelRotation;
-                    _updateQueue.Enqueue(panel);
+                    _updateQueue.Enqueue((uid, panel));
                 }
             }
         }
 
-        private void UpdatePanelCoverage(SolarPanelComponent panel)
+        private void UpdatePanelCoverage(Entity<SolarPanelComponent> panel)
         {
-            EntityUid entity = panel.Owner;
+            var entity = panel.Owner;
             var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
             // So apparently, and yes, I *did* only find this out later,
@@ -163,8 +164,8 @@ namespace Content.Server.Solar.EntitySystems
             }
 
             // Total coverage calculated; apply it to the panel.
-            panel.Coverage = coverage;
-            UpdateSupply((panel).Owner, panel);
+            panel.Comp.Coverage = coverage;
+            UpdateSupply(panel, panel);
         }
 
         public void UpdateSupply(
@@ -172,10 +173,8 @@ namespace Content.Server.Solar.EntitySystems
             SolarPanelComponent? solar = null,
             PowerSupplierComponent? supplier = null)
         {
-            if (!Resolve(uid, ref solar, ref supplier))
-            {
+            if (!Resolve(uid, ref solar, ref supplier, false))
                 return;
-            }
 
             supplier.MaxSupply = (int) (solar.MaxSupply * solar.Coverage);
         }

@@ -8,7 +8,7 @@
     tags:
       - MagazineHeavyRifle
   - type: Item
-    size: 10
+    size: Small
   - type: BallisticAmmoProvider
     mayTransfer: true
     capacity: 100
@@ -16,7 +16,6 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    netsync: false
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

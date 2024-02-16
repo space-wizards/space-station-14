@@ -9,7 +9,7 @@ namespace Content.Shared.Chat.TypingIndicator;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedTypingIndicatorSystem))]
-public sealed class TypingIndicatorComponent : Component
+public sealed partial class TypingIndicatorComponent : Component
 {
     /// <summary>
     ///     Prototype id that store all visual info about typing indicator.

@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Configurable;
@@ -43,7 +44,7 @@ public sealed class ConfigurationSystem : EntitySystem
     private void UpdateUi(EntityUid uid, ConfigurationComponent component)
     {
         if (_uiSystem.TryGetUi(uid, ConfigurationUiKey.Key, out var ui))
-            ui.SetState(new ConfigurationBoundUserInterfaceState(component.Config));
+            _uiSystem.SetUiState(ui, new ConfigurationBoundUserInterfaceState(component.Config));
     }
 
     private void OnUpdate(EntityUid uid, ConfigurationComponent component, ConfigurationUpdatedMessage args)

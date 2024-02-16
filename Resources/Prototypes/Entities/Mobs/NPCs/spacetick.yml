@@ -7,8 +7,9 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -24,14 +25,15 @@
     baseSprintSpeed : 6
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.20
-      density: 20
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.20
+        density: 20
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
     allowedStates:
       - Alive
@@ -41,9 +43,8 @@
       0: Alive
       15: Dead
   - type: Stamina
-    excess: 15
+    critThreshold: 15
   - type: MovementAlwaysTouching
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -57,12 +58,7 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Effects/bite.ogg
     angle: 0
@@ -78,23 +74,16 @@
           Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
-  - type: GhostTakeoverAvailable
-    prob: 0.33
-    makeSentient: true
-    name: space tick
-    description: |
-      Wreak havoc on the station!
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Speech
+    speechVerb: SmallMob
+  - type: NonSpreaderZombie
 
 - type: entity
   id: MobTickSalvage
   parent: MobTick
   suffix: "Salvage Ruleset"
   components:
-  - type: GhostTakeoverAvailable
-    name: space tick on salvage wreck
-    description: |
-      Defend the loot inside the salvage wreck!
   - type: SalvageMobRestrictions
 

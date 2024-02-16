@@ -4,7 +4,7 @@ using Robust.Shared.Physics.Dynamics.Joints;
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class DockingComponent : SharedDockingComponent
+    public sealed partial class DockingComponent : SharedDockingComponent
     {
         [DataField("dockedWith")]
         public EntityUid? DockedWith;

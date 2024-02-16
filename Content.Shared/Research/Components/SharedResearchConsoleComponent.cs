@@ -20,12 +20,6 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class ConsoleServerSyncMessage : BoundUserInterfaceMessage
-    {
-
-    }
-
-    [Serializable, NetSerializable]
     public sealed class ConsoleServerSelectionMessage : BoundUserInterfaceMessage
     {
 
@@ -35,11 +29,9 @@ namespace Content.Shared.Research.Components
     public sealed class ResearchConsoleBoundInterfaceState : BoundUserInterfaceState
     {
         public int Points;
-        public int PointsPerSecond;
-        public ResearchConsoleBoundInterfaceState(int points, int pointsPerSecond)
+        public ResearchConsoleBoundInterfaceState(int points)
         {
             Points = points;
-            PointsPerSecond = pointsPerSecond;
         }
     }
 }

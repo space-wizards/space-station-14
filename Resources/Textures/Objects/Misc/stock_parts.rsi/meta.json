@@ -5,15 +5,10 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, micro_mani by EmoGarbage404 (github)",
   "states": [
     {
-      "name": "adv_capacitor",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "adv_capacitor"
     },
     {
       "name": "adv_electrolite",
@@ -40,20 +35,10 @@
       "name": "adv_scan_module_static"
     },
     {
-      "name": "advanced_matter_bin",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "advanced_matter_bin"
     },
     {
-      "name": "ansible_crystal",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "ansible_crystal"
     },
     {
       "name": "bluespace_electrolite",
@@ -68,26 +53,18 @@
       "name": "bluespace_matter_bin",
       "delays": [
         [
+          0.3,
+          0.1,
           0.1,
           0.1
         ]
       ]
     },
     {
-      "name": "capacitor",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "capacitor"
     },
     {
-      "name": "card_reader",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "card_reader"
     },
     {
       "name": "datadisk0",
@@ -172,88 +149,45 @@
       "name": "femto_mani",
       "delays": [
         [
+          0.3,
+          0.1,
           0.1,
           0.1
         ]
       ]
     },
     {
-      "name": "hdd1",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "hdd1"
     },
     {
-      "name": "hdd2",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "hdd2"
     },
     {
-      "name": "high_micro_laser",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "high_micro_laser"
     },
     {
-      "name": "hyperwave_filter",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "hyperwave_filter"
     },
     {
-      "name": "matter_bin",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "matter_bin"
     },
     {
-      "name": "micro_laser",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "micro_laser"
     },
     {
-      "name": "micro_mani",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "micro_mani"
     },
     {
-      "name": "nano_mani",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "nano_mani"
     },
     {
-      "name": "pico_mani",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pico_mani"
     },
     {
       "name": "quadratic_capacitor",
       "delays": [
         [
-          0.1,
+          0.3,
           0.1,
           0.1,
           0.1
@@ -270,36 +204,16 @@
       ]
     },
     {
-      "name": "rom1",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "rom1"
     },
     {
-      "name": "rom2",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "rom2"
     },
     {
-      "name": "romos1",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "romos1"
     },
     {
-      "name": "romos2",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "romos2"
     },
     {
       "name": "scan_module",
@@ -325,28 +239,13 @@
       ]
     },
     {
-      "name": "subspace_ansible",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "subspace_ansible"
     },
     {
-      "name": "subspace_transmitter",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "subspace_transmitter"
     },
     {
-      "name": "super_capacitor",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "super_capacitor"
     },
     {
       "name": "super_electrolite",
@@ -358,32 +257,13 @@
       ]
     },
     {
-      "name": "super_matter_bin",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "super_matter_bin"
     },
     {
-      "name": "super_scan_module",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "super_scan_module"
     },
     {
-      "name": "treatment_disk",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "treatment_disk"
     },
     {
       "name": "triphasic_scan_module",
@@ -398,20 +278,10 @@
       ]
     },
     {
-      "name": "ultra_high_micro_laser",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "ultra_high_micro_laser"
     },
     {
-      "name": "wavelength_analyzer",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "wavelength_analyzer"
     },
     {
       "name": "scan_module_static"

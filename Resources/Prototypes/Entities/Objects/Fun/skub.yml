@@ -7,12 +7,16 @@
   - type: Sprite
     sprite: Objects/Misc/skub.rsi
     state: icon
-    netsync: false
+  - type: Tag
+    tags:
+      - Payload
   - type: Item
     sprite: Objects/Misc/skub.rsi
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Items/Toys/weh.ogg
+      collection: Skub
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: Skub
   - type: UseDelay
     delay: 2.0

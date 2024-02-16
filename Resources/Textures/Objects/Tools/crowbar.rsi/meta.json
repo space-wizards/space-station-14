@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/eea0599511b088fdab9d43e562210cdbd51c6a98",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/eea0599511b088fdab9d43e562210cdbd51c6a98, storage and red-storage by Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -36,6 +36,12 @@
     {
       "name": "red-equipped-BELT",
       "directions": 4
+    },
+    {
+      "name": "storage"
+    },
+    {
+      "name": "red-storage"
     }
   ]
 }

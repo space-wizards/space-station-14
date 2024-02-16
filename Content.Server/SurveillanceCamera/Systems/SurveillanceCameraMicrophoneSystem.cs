@@ -1,7 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.SurveillanceCamera;
@@ -34,7 +34,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             // get range to camera. This way wispers will still appear as obfuscated if they are too far from the camera's microphone
             var range = (xform.MapID != sourceXform.MapID)
                 ? -1
-                : (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length;
+                : (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length();
 
             if (range < 0 || range > ev.VoiceRange)
                 continue;

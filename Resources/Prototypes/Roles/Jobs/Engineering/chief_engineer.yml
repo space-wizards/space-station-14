@@ -6,15 +6,18 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 3600
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 18000
+      time: 36000 #10 hrs
     - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 144000 #40 hrs
   weight: 10
   startingGear: ChiefEngineerGear
-  icon: "ChiefEngineer"
+  icon: "JobIconChiefEngineer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
@@ -25,6 +28,13 @@
   - External
   - ChiefEngineer
   - Atmospherics
+  - Brig
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: ChiefEngineerGear
@@ -36,7 +46,7 @@
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetCE
-    belt: ClothingBeltChiefEngineerFilled
-  innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
+    belt: ClothingBeltUtilityEngineering
+  innerClothingSkirt: ClothingUniformJumpskirtChiefEngineer
   satchel: ClothingBackpackSatchelChiefEngineerFilled
   duffelbag: ClothingBackpackDuffelChiefEngineerFilled

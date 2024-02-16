@@ -10,19 +10,31 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
-  - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 0.7
+    wideAnimationRotation: -135
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+      params:
+        volume: -3
     damage:
+      groups:
+        Brute: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      groups:
+        Brute: 10
       types:
-        Piercing: 10
-        Blunt: 4
+        Structural: 30
   - type: Item
-    size: 24
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
     sprite: Objects/Weapons/Melee/pickaxe.rsi
+    storedRotation: -45
+  - type: UseDelay
 
 - type: entity
   name: mining drill
@@ -36,15 +48,15 @@
   - type: Sprite
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 75
-    gatheringTime: 0.50
-    MaxGatheringEntities: 2
-  - type: ItemCooldown
   - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+    attackRate: 3.5
     damage:
+      groups:
+        Brute: 3
       types:
-        Piercing: 10
-        Blunt: 4
+        Structural: 12

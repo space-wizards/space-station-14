@@ -12,7 +12,7 @@
 - type: entity
   parent: PaintingBase
   id: PaintingEmpty
-  name: Empty Frame
+  name: empty frame
   description: An empty frame, waiting to be filled with art.
   components:
   - type: Sprite
@@ -179,3 +179,12 @@
   components:
   - type: Sprite
     state: painting18
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingSadClown
+  name: Sad Clown
+  description: This painting is a sad clown! It sparks joy.
+  components:
+  - type: Sprite
+    state: painting19  

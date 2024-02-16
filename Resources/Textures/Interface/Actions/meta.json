@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8. Harm and disarm heavily modified. Web made by jackfrost (github) for SS14",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8. Harm and disarm heavily modified. Web made by jackfrost (github) for SS14. Eyeclose and Eyeopen by Bhijn and Myr (deathride58 on Github), under CC0.",
     "states": [
         {
             "name": "internal0"
@@ -20,22 +20,16 @@
             "name": "disarm"
         },
         {
+            "name": "firestarter"
+        },
+        {
             "name": "harm"
         },
         {
             "name": "manifest"
         },
         {
-            "name": "devour"
-        },
-        {
             "name": "carp_summon"
-        },
-        {
-            "name": "ratKingArmy"
-        },
-        {
-            "name": "ratKingDomain"
         },
         {
             "name": "zombie-turn"
@@ -57,6 +51,15 @@
         },
         {
             "name": "web"
+        },
+        {
+            "name": "ghostHearingToggled"
+        },
+        {
+            "name": "eyeopen"
+        },
+        {
+            "name": "eyeclose"
         }
     ]
 }

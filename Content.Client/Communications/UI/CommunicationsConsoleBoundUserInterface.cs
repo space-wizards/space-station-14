@@ -1,34 +1,43 @@
-﻿using System;
+﻿using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Communications;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Communications.UI
 {
     public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        [ViewVariables] private CommunicationsConsoleMenu? _menu;
+        [ViewVariables]
+        private CommunicationsConsoleMenu? _menu;
 
+        [ViewVariables]
         public bool CanAnnounce { get; private set; }
+        [ViewVariables]
+        public bool CanBroadcast { get; private set; }
+
+        [ViewVariables]
         public bool CanCall { get; private set; }
 
+        [ViewVariables]
         public bool CountdownStarted { get; private set; }
 
+        [ViewVariables]
         public bool AlertLevelSelectable { get; private set; }
 
+        [ViewVariables]
         public string CurrentLevel { get; private set; } = default!;
 
-        public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int)_expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
+        [ViewVariables]
         private TimeSpan? _expectedCountdownTime;
 
-        public CommunicationsConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
-        {
+        public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int) _expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
 
+        public CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        {
         }
 
         protected override void Open()
@@ -59,8 +68,14 @@ namespace Content.Client.Communications.UI
 
         public void AnnounceButtonPressed(string message)
         {
-            var msg = message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...";
+            var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+            var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
             SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
+        }
+
+        public void BroadcastButtonPressed(string message)
+        {
+            SendMessage(new CommunicationsConsoleBroadcastMessage(message));
         }
 
         public void CallShuttle()
@@ -81,6 +96,7 @@ namespace Content.Client.Communications.UI
                 return;
 
             CanAnnounce = commsState.CanAnnounce;
+            CanBroadcast = commsState.CanBroadcast;
             CanCall = commsState.CanCall;
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;
             CountdownStarted = commsState.CountdownStarted;
@@ -94,6 +110,7 @@ namespace Content.Client.Communications.UI
                 _menu.AlertLevelButton.Disabled = !AlertLevelSelectable;
                 _menu.EmergencyShuttleButton.Disabled = !CanCall;
                 _menu.AnnounceButton.Disabled = !CanAnnounce;
+                _menu.BroadcastButton.Disabled = !CanBroadcast;
             }
         }
 

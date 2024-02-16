@@ -7,11 +7,14 @@
     - type: Sprite
       sprite: Objects/Tools/hand_labeler.rsi
       state: hand_labeler
-      netsync: false
     - type: Item
       sprite: Objects/Tools/hand_labeler.rsi
+      storedRotation: -90
     - type: UseDelay
       delay: 2.0
+    - type: ActivatableUI
+      key: enum.HandLabelerUiKey.Key
+      inHandsOnly: true
     - type: UserInterface
       interfaces:
         - key: enum.HandLabelerUiKey.Key

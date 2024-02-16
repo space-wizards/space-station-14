@@ -41,7 +41,6 @@ public sealed class ExamineButton : ContainerButton
         }
 
         ToolTip = verb.Message ?? verb.Text;
-        TooltipDelay = 0.3f; // if you're hovering over these icons, you probably want to know what they do.
 
         Icon = new TextureRect
         {

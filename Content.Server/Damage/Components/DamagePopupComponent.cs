@@ -3,7 +3,7 @@
 namespace Content.Server.Damage.Components;
 
 [RegisterComponent, Access(typeof(DamagePopupSystem))]
-public sealed class DamagePopupComponent : Component
+public sealed partial class DamagePopupComponent : Component
 {
     /// <summary>
     /// Enum that will be used to determine the type of damage popup displayed.

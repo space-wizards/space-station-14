@@ -1,0 +1,11 @@
+<DefaultWindow Title="{Loc 'instruments-component-channels-menu'}" MinSize="250 350" xmlns="https://spacestation14.io"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="true" VerticalExpand="true" Align="Center">
+        <ItemList Name="ChannelList" SelectMode="Multiple" Margin="3 3 3 3" HorizontalExpand="true" VerticalExpand="true" SizeFlagsStretchRatio="8"/>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="true" VerticalExpand="true" Align="Center"
+                      SizeFlagsStretchRatio="1">
+            <Button Name="AllButton" Text="{Loc 'instruments-component-channels-all-button'}" HorizontalExpand="true" VerticalExpand="true" SizeFlagsStretchRatio="1"/>
+            <Button Name="ClearButton" Text="{Loc 'instruments-component-channels-clear-button'}" HorizontalExpand="true" VerticalExpand="true" SizeFlagsStretchRatio="1"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

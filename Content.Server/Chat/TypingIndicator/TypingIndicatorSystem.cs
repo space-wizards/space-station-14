@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat.TypingIndicator;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chat.TypingIndicator;
 
@@ -25,7 +25,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         // when player poses entity we want to make sure that there is typing indicator
         EnsureComp<TypingIndicatorComponent>(ev.Entity);
         // we also need appearance component to sync visual state
-        EnsureComp<ServerAppearanceComponent>(ev.Entity);
+        EnsureComp<AppearanceComponent>(ev.Entity);
     }
 
     private void OnPlayerDetached(EntityUid uid, TypingIndicatorComponent component, PlayerDetachedEvent args)

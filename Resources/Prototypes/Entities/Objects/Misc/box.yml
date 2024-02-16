@@ -4,14 +4,16 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Storage/boxes.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi
-    size: 30
+    size: Large
+    shape:
+    - 0,0,2,2
   - type: Storage
-    capacity: 30
-    size: 10
+    maxItemSize: Small
+    grid:
+    - 0,0,2,2
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -20,3 +22,8 @@
     node: boxcardboard
     containers:
       - entity_storage
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
+  - type: StaticPrice
+    price: 10

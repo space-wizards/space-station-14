@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -12,15 +12,12 @@ namespace Content.Shared.Chemistry.Dispenser
     /// machines define their inventory.
     /// </summary>
     [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
-    public sealed class ReagentDispenserInventoryPrototype : IPrototype
+    public sealed partial class ReagentDispenserInventoryPrototype : IPrototype
     {
-        [DataField("inventory", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
-        private List<string> _inventory = new();
+        [DataField("inventory", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        public List<string> Inventory = new();
 
-        [ViewVariables]
-        [IdDataField]
+        [ViewVariables, IdDataField]
         public string ID { get; } = default!;
-
-        public List<string> Inventory => _inventory;
     }
 }

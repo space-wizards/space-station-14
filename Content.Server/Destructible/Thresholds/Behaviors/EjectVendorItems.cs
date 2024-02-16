@@ -8,7 +8,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed class EjectVendorItems : IThresholdBehavior
+    public sealed partial class EjectVendorItems : IThresholdBehavior
     {
         /// <summary>
         ///     The percent amount of the total inventory that will be ejected.

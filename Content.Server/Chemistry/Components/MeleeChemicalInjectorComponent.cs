@@ -3,7 +3,7 @@
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class MeleeChemicalInjectorComponent : Component
+    public sealed partial class MeleeChemicalInjectorComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]
@@ -14,6 +14,12 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 1f;
+
+        /// <summary>
+        /// Whether this will inject through hardsuits or not.
+        /// </summary>
+        [DataField("pierceArmor"), ViewVariables(VVAccess.ReadWrite)]
+        public bool PierceArmor = true;
 
         /// <summary>
         ///     Solution to inject from.

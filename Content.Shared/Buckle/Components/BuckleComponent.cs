@@ -4,77 +4,84 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Buckle.Components;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class BuckleComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(SharedBuckleSystem))]
+public sealed partial class BuckleComponent : Component
 {
     /// <summary>
-    ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
+    /// The range from which this entity can buckle to a <see cref="StrapComponent"/>.
+    /// Separated from normal interaction range to fix the "someone buckled to a strap
+    /// across a table two tiles away" problem.
     /// </summary>
-    [DataField("range")]
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float Range = SharedInteractionSystem.InteractionRange / 1.4f;
 
     /// <summary>
-    ///     True if the entity is buckled, false otherwise.
+    /// True if the entity is buckled, false otherwise.
     /// </summary>
-    public bool Buckled { get; set; }
+    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public bool Buckled;
 
-    public EntityUid? LastEntityBuckledTo { get; set; }
-
-    public bool DontCollide { get; set; }
+    [ViewVariables]
+    [AutoNetworkedField]
+    public EntityUid? LastEntityBuckledTo;
 
     /// <summary>
-    ///     The amount of time that must pass for this entity to
-    ///     be able to unbuckle after recently buckling.
+    /// Whether or not collisions should be possible with the entity we are strapped to
     /// </summary>
-    [DataField("delay")]
-    public TimeSpan UnbuckleDelay = TimeSpan.FromSeconds(0.25f);
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
+    public bool DontCollide;
 
     /// <summary>
-    ///     The time that this entity buckled at.
+    /// Whether or not we should be allowed to pull the entity we are strapped to
     /// </summary>
-    [ViewVariables] public TimeSpan BuckleTime;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public bool PullStrap;
 
     /// <summary>
-    ///     The strap that this component is buckled to.
+    /// The amount of time that must pass for this entity to
+    /// be able to unbuckle after recently buckling.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan Delay = TimeSpan.FromSeconds(0.25f);
+
+    /// <summary>
+    /// The time that this entity buckled at.
     /// </summary>
     [ViewVariables]
-    public StrapComponent? BuckledTo { get; set; }
+    public TimeSpan BuckleTime;
 
     /// <summary>
-    ///     The amount of space that this entity occupies in a
-    ///     <see cref="StrapComponent"/>.
+    /// The strap that this component is buckled to.
     /// </summary>
-    [DataField("size")]
+    [ViewVariables]
+    [AutoNetworkedField]
+    public EntityUid? BuckledTo;
+
+    /// <summary>
+    /// The amount of space that this entity occupies in a
+    /// <see cref="StrapComponent"/>.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int Size = 100;
 
     /// <summary>
     /// Used for client rendering
     /// </summary>
-    public int? OriginalDrawDepth { get; set; }
+    [ViewVariables] public int? OriginalDrawDepth;
 }
 
-[Serializable, NetSerializable]
-public sealed class BuckleComponentState : ComponentState
-{
-    public BuckleComponentState(bool buckled, EntityUid? lastEntityBuckledTo, bool dontCollide)
-    {
-        Buckled = buckled;
-        LastEntityBuckledTo = lastEntityBuckledTo;
-        DontCollide = dontCollide;
-    }
+[ByRefEvent]
+public record struct BuckleAttemptEvent(EntityUid StrapEntity, EntityUid BuckledEntity, EntityUid UserEntity, bool Buckling, bool Cancelled = false);
 
-    public bool Buckled { get; }
-    public EntityUid? LastEntityBuckledTo { get; }
-    public bool DontCollide { get; }
-}
-
-public sealed class BuckleChangeEvent : EntityEventArgs
-{
-    public EntityUid Strap;
-
-    public EntityUid BuckledEntity;
-    public bool Buckling;
-}
+[ByRefEvent]
+public readonly record struct BuckleChangeEvent(EntityUid StrapEntity, EntityUid BuckledEntity, bool Buckling);
 
 [Serializable, NetSerializable]
 public enum BuckleVisuals

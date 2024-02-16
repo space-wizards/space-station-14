@@ -2,7 +2,7 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-public sealed class RotateToTargetOperator : HTNOperator
+public sealed partial class RotateToTargetOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private RotateToFaceSystem _rotate = default!;
@@ -23,9 +23,9 @@ public sealed class RotateToTargetOperator : HTNOperator
         _rotate = sysManager.GetEntitySystem<RotateToFaceSystem>();
     }
 
-    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
-        base.Shutdown(blackboard, status);
+        base.TaskShutdown(blackboard, status);
         blackboard.Remove<Angle>(TargetKey);
     }
 

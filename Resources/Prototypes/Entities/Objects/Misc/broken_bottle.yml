@@ -4,7 +4,7 @@
   id: BrokenBottle
   description: In Space Glasgow this is called a conversation starter.
   components:
-  - type: ItemCooldown
+  - type: Sharp
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -22,6 +22,10 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
   - type: SpaceGarbage
-
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1

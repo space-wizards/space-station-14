@@ -1,9 +1,9 @@
+using System.IO;
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System.IO;
 
 namespace Content.Shared.Chat
 {
@@ -13,7 +13,15 @@ namespace Content.Shared.Chat
         public ChatChannel Channel;
         public string Message;
         public string WrappedMessage;
-        public EntityUid SenderEntity;
+        public NetEntity SenderEntity;
+
+        /// <summary>
+        ///     Identifier sent when <see cref="SenderEntity"/> is <see cref="NetEntity.Invalid"/>
+        ///     if this was sent by a player to assign a key to the sender of this message.
+        ///     This is unique per sender.
+        /// </summary>
+        public int? SenderKey;
+
         public bool HideChat;
         public Color? MessageColorOverride;
         public string? AudioPath;
@@ -22,12 +30,13 @@ namespace Content.Shared.Chat
         [NonSerialized]
         public bool Read;
 
-        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, NetEntity source, int? senderKey, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
         {
             Channel = channel;
             Message = message;
             WrappedMessage = wrappedMessage;
             SenderEntity = source;
+            SenderKey = senderKey;
             HideChat = hideChat;
             MessageColorOverride = colorOverride;
             AudioPath = audioPath;
@@ -48,7 +57,8 @@ namespace Content.Shared.Chat
         public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
             var length = buffer.ReadVariableInt32();
-            using var stream = buffer.ReadAlignedMemory(length);
+            using var stream = new MemoryStream(length);
+            buffer.ReadAlignedMemory(stream, length);
             serializer.DeserializeDirect(stream, out Message);
         }
 

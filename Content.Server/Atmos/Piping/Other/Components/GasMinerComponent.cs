@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Other.Components
 {
     [RegisterComponent]
-    public sealed class GasMinerComponent : Component
+    public sealed partial class GasMinerComponent : Component
     {
         public bool Enabled { get; set; } = true;
 

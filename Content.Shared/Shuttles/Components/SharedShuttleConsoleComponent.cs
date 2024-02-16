@@ -7,7 +7,7 @@ namespace Content.Shared.Shuttles.Components
     /// Interact with to start piloting a shuttle.
     /// </summary>
     [NetworkedComponent]
-    public abstract class SharedShuttleConsoleComponent : Component
+    public abstract partial class SharedShuttleConsoleComponent : Component
     {
 
     }

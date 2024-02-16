@@ -1,7 +1,8 @@
-﻿- type: trait
+- type: trait
   id: Blindness
   name: trait-blindness-name
   description: trait-blindness-desc
+  traitGear: WhiteCane
   whitelist:
     components:
       - Blindable
@@ -11,7 +12,7 @@
 - type: trait
   id: Narcolepsy
   name: trait-narcolepsy-name
-  description: trait-narcolepsy-decs
+  description: trait-narcolepsy-desc
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -20,8 +21,9 @@
 - type: trait
   id: Pacifist
   name: trait-pacifist-name
+  description: trait-pacifist-desc
   components:
-    - type: Pacifist
+    - type: Pacified
 
 - type: trait
   id: Paracusia
@@ -36,8 +38,25 @@
         collection: Paracusia
 
 - type: trait
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  components:
+    - type: Unrevivable
+
+- type: trait
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
+  blacklist:
+    components:
+      - BorgChassis
   components:
     - type: Muted
+
+- type: trait
+  id: FrontalLisp
+  name: trait-frontal-lisp-name
+  description: trait-frontal-lisp-desc
+  components:
+    - type: FrontalLisp

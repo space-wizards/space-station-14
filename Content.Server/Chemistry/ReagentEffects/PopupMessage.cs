@@ -1,20 +1,25 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public sealed class PopupMessage : ReagentEffect
+    public sealed partial class PopupMessage : ReagentEffect
     {
-        [DataField("messages", required: true)]
+        [DataField(required: true)]
         public string[] Messages = default!;
 
-        [DataField("type")]
+        [DataField]
         public PopupRecipients Type = PopupRecipients.Local;
 
-        [DataField("visualType")]
+        [DataField]
         public PopupType VisualType = PopupType.Small;
+
+        // JUSTIFICATION: This is purely cosmetic.
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => null;
 
         public override void Effect(ReagentEffectArgs args)
         {

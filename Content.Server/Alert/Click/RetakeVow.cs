@@ -7,13 +7,13 @@ namespace Content.Server.Alert.Click
     /// Retake your mime vows
     ///</summary>
     [DataDefinition]
-    public sealed class RetakeVow : IAlertClick
+    public sealed partial class RetakeVow : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 
-           if (entManager.TryGetComponent<MimePowersComponent?>(player, out var mimePowers))
+           if (entManager.TryGetComponent(player, out MimePowersComponent? mimePowers))
            {
                 entManager.System<MimePowersSystem>().RetakeVow(player, mimePowers);
            }

@@ -5,22 +5,25 @@
   playTimeTracker: JobCentralCommandOfficial
   setPreference: false
   startingGear: CentcomGear
-  icon: "Nanotrasen"
+  icon: "JobIconNanotrasen"
   supervisors: job-supervisors-hos
   canBeAntag: false
   accessGroups:
   - AllAccess
+  access:
+  - CentralCommand
 
 - type: startingGear
   id: CentcomGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
-    shoes: ClothingShoesBootsJack
+    shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterArmorBasic
     id: CentcomPDA
-    ears: ClothingHeadsetAltCommand
-    pocket1: Paper
-    pocket2: Pen
+    ears: ClothingHeadsetAltCentCom
+    belt: WeaponPistolN1984
+    pocket1: BoxFolderBlack
+    pocket2: PenCentcom

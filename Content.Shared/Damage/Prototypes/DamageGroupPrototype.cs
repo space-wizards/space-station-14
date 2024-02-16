@@ -13,11 +13,11 @@ namespace Content.Shared.Damage.Prototypes
     /// </remarks>
     [Prototype("damageGroup", 2)]
     [Serializable, NetSerializable]
-    public sealed class DamageGroupPrototype : IPrototype
+    public sealed partial class DamageGroupPrototype : IPrototype
     {
         [IdDataField] public string ID { get; } = default!;
 
         [DataField("damageTypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> DamageTypes { get; } = default!;
+        public List<string> DamageTypes { get; private set; } = default!;
     }
 }

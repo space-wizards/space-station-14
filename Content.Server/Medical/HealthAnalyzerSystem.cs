@@ -1,110 +1,200 @@
-using Content.Server.DoAfter;
+using Content.Server.Body.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Medical.Components;
-using Content.Server.Disease;
-using Content.Server.Popups;
+using Content.Server.PowerCell;
+using Content.Server.Temperature.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
+using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
-using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Medical
+namespace Content.Server.Medical;
+
+public sealed class HealthAnalyzerSystem : EntitySystem
 {
-    public sealed class HealthAnalyzerSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        SubscribeLocalEvent<HealthAnalyzerComponent, EntityUnpausedEvent>(OnEntityUnpaused);
+        SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
+        SubscribeLocalEvent<HealthAnalyzerComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
+        SubscribeLocalEvent<HealthAnalyzerComponent, DroppedEvent>(OnDropped);
+    }
 
-        public override void Initialize()
+    public override void Update(float frameTime)
+    {
+        var analyzerQuery = EntityQueryEnumerator<HealthAnalyzerComponent, TransformComponent>();
+        while (analyzerQuery.MoveNext(out var uid, out var component, out var transform))
         {
-            base.Initialize();
-            SubscribeLocalEvent<HealthAnalyzerComponent, ActivateInWorldEvent>(HandleActivateInWorld);
-            SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<HealthAnalyzerComponent, DoAfterEvent>(OnDoAfter);
-        }
+            //Update rate limited to 1 second
+            if (component.NextUpdate > _timing.CurTime)
+                continue;
 
-        private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, ActivateInWorldEvent args)
-        {
-            OpenUserInterface(args.User, healthAnalyzer);
-        }
+            if (component.ScannedEntity is not {} patient)
+                continue;
 
-        private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
-        {
-            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target))
-                return;
+            component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
-            _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, healthAnalyzer.ScanDelay, target: args.Target, used:uid)
+            //Get distance between health analyzer and the scanned entity
+            var patientCoordinates = Transform(patient).Coordinates;
+            if (!patientCoordinates.InRange(EntityManager, _transformSystem, transform.Coordinates, component.MaxScanRange))
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnStun = true,
-                NeedHand = true
-            });
-        }
-
-        private void OnDoAfter(EntityUid uid, HealthAnalyzerComponent component, DoAfterEvent args)
-        {
-            if (args.Handled || args.Cancelled || args.Args.Target == null)
-                return;
-
-            _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
-
-            UpdateScannedUser(uid, args.Args.User, args.Args.Target.Value, component);
-            // Below is for the traitor item
-            // Piggybacking off another component's doafter is complete CBT so I gave up
-            // and put it on the same component
-            if (string.IsNullOrEmpty(component.Disease))
-            {
-                args.Handled = true;
-                return;
+                //Range too far, disable updates
+                StopAnalyzingEntity((uid, component), patient);
+                continue;
             }
 
-            _disease.TryAddDisease(args.Args.Target.Value, component.Disease);
-
-            if (args.Args.User == args.Args.Target)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-self", ("disease", component.Disease)),
-                    args.Args.User, args.Args.User);
-            }
-
-
-            else
-            {
-                _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-other", ("target", Identity.Entity(args.Args.Target.Value, EntityManager)),
-                    ("disease", component.Disease)), args.Args.User, args.Args.User);
-            }
-
-            args.Handled = true;
+            UpdateScannedUser(uid, patient, true);
         }
+    }
 
-        private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)
+    private void OnEntityUnpaused(Entity<HealthAnalyzerComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextUpdate += args.PausedTime;
+    }
+
+    /// <summary>
+    /// Trigger the doafter for scanning
+    /// </summary>
+    private void OnAfterInteract(Entity<HealthAnalyzerComponent> uid, ref AfterInteractEvent args)
+    {
+        if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
+            return;
+
+        _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid);
+
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
-            if (!TryComp<ActorComponent>(user, out var actor) || healthAnalyzer.UserInterface == null)
-                return;
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            NeedHand = true
+        });
+    }
 
-            _uiSystem.OpenUi(healthAnalyzer.UserInterface ,actor.PlayerSession);
-        }
+    private void OnDoAfter(Entity<HealthAnalyzerComponent> uid, ref HealthAnalyzerDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(uid, user: args.User))
+            return;
 
-        public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
-        {
-            if (!Resolve(uid, ref healthAnalyzer))
-                return;
+        _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
 
-            if (target == null || healthAnalyzer.UserInterface == null)
-                return;
+        OpenUserInterface(args.User, uid);
+        BeginAnalyzingEntity(uid, args.Target.Value);
+        args.Handled = true;
+    }
 
-            if (!HasComp<DamageableComponent>(target))
-                return;
+    /// <summary>
+    /// Turn off when placed into a storage item or moved between slots/hands
+    /// </summary>
+    private void OnInsertedIntoContainer(Entity<HealthAnalyzerComponent> uid, ref EntGotInsertedIntoContainerMessage args)
+    {
+        if (uid.Comp.ScannedEntity is { } patient)
+            StopAnalyzingEntity(uid, patient);
+    }
 
-            OpenUserInterface(user, healthAnalyzer);
-            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target));
-        }
+    /// <summary>
+    /// Disable continuous updates once battery is dead
+    /// </summary>
+    private void OnPowerCellSlotEmpty(Entity<HealthAnalyzerComponent> uid, ref PowerCellSlotEmptyEvent args)
+    {
+        if (uid.Comp.ScannedEntity is { } patient)
+            StopAnalyzingEntity(uid, patient);
+    }
+
+    /// <summary>
+    /// Turn off the analyser when dropped
+    /// </summary>
+    private void OnDropped(Entity<HealthAnalyzerComponent> uid, ref DroppedEvent args)
+    {
+        if (uid.Comp.ScannedEntity is { } patient)
+            StopAnalyzingEntity(uid, patient);
+    }
+
+    private void OpenUserInterface(EntityUid user, EntityUid analyzer)
+    {
+        if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
+            return;
+
+        _uiSystem.OpenUi(ui, actor.PlayerSession);
+    }
+
+    /// <summary>
+    /// Mark the entity as having its health analyzed, and link the analyzer to it
+    /// </summary>
+    /// <param name="healthAnalyzer">The health analyzer that should receive the updates</param>
+    /// <param name="target">The entity to start analyzing</param>
+    private void BeginAnalyzingEntity(Entity<HealthAnalyzerComponent> healthAnalyzer, EntityUid target)
+    {
+        //Link the health analyzer to the scanned entity
+        healthAnalyzer.Comp.ScannedEntity = target;
+
+        _cell.SetPowerCellDrawEnabled(healthAnalyzer, true);
+
+        UpdateScannedUser(healthAnalyzer, target, true);
+    }
+
+    /// <summary>
+    /// Remove the analyzer from the active list, and remove the component if it has no active analyzers
+    /// </summary>
+    /// <param name="healthAnalyzer">The health analyzer that's receiving the updates</param>
+    /// <param name="target">The entity to analyze</param>
+    private void StopAnalyzingEntity(Entity<HealthAnalyzerComponent> healthAnalyzer, EntityUid target)
+    {
+        //Unlink the analyzer
+        healthAnalyzer.Comp.ScannedEntity = null;
+
+        _cell.SetPowerCellDrawEnabled(target, false);
+
+        UpdateScannedUser(healthAnalyzer, target, false);
+    }
+
+    /// <summary>
+    /// Send an update for the target to the healthAnalyzer
+    /// </summary>
+    /// <param name="healthAnalyzer">The health analyzer</param>
+    /// <param name="target">The entity being scanned</param>
+    /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
+    public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
+    {
+        if (!_uiSystem.TryGetUi(healthAnalyzer, HealthAnalyzerUiKey.Key, out var ui))
+            return;
+
+        if (!HasComp<DamageableComponent>(target))
+            return;
+
+        var bodyTemperature = float.NaN;
+
+        if (TryComp<TemperatureComponent>(target, out var temp))
+            bodyTemperature = temp.CurrentTemperature;
+
+        var bloodAmount = float.NaN;
+
+        if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
+            _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
+            bloodAmount = bloodSolution.FillFraction;
+
+        _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
+            GetNetEntity(target),
+            bodyTemperature,
+            bloodAmount,
+            scanMode
+        ));
     }
 }

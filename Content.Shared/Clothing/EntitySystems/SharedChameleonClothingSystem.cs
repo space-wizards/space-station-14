@@ -1,4 +1,5 @@
-﻿using Content.Shared.Clothing.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -13,6 +14,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -37,17 +39,20 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     // This 100% makes sure that server and client have exactly same data.
     protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
-        if (string.IsNullOrEmpty(component.SelectedId) ||
-            !_proto.TryIndex(component.SelectedId, out EntityPrototype? proto))
+        if (string.IsNullOrEmpty(component.Default) ||
+            !_proto.TryIndex(component.Default, out EntityPrototype? proto))
             return;
 
         // world sprite icon
         UpdateSprite(uid, proto);
 
-        // copy name and description
-        var meta = MetaData(uid);
-        meta.EntityName = proto.Name;
-        meta.EntityDescription = proto.Description;
+        // copy name and description, unless its an ID card
+        if (!HasComp<IdCardComponent>(uid))
+        {
+            var meta = MetaData(uid);
+            _metaData.SetEntityName(uid, proto.Name, meta);
+            _metaData.SetEntityDescription(uid, proto.Description, meta);
+        }
 
         // item sprite logic
         if (TryComp(uid, out ItemComponent? item) &&

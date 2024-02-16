@@ -7,7 +7,7 @@ namespace Content.Server.NPC.Components;
 /// Added to an NPC doing ranged combat.
 /// </summary>
 [RegisterComponent]
-public sealed class NPCRangedCombatComponent : Component
+public sealed partial class NPCRangedCombatComponent : Component
 {
     [ViewVariables]
     public EntityUid Target;

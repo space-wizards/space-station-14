@@ -4,7 +4,7 @@
 /// Flickers all the lights within a certain radius.
 /// </summary>
 [RegisterComponent]
-public sealed class LightFlickerArtifactComponent : Component
+public sealed partial class LightFlickerArtifactComponent : Component
 {
     /// <summary>
     /// Lights within this radius will be flickered on activation

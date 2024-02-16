@@ -6,8 +6,8 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: Item
+    size: Ginormous
   - type: Gun
     fireRate: 20
     selectedMode: FullAuto

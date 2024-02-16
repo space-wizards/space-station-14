@@ -23,15 +23,12 @@ public sealed partial class MechMenu : FancyWindow
 
         _mech = mech;
 
-        if (!_ent.TryGetComponent<SpriteComponent>(mech, out var sprite))
-            return;
-
-        MechView.Sprite = sprite;
+        MechView.SetEntity(mech);
     }
 
     public void UpdateMechStats()
     {
-        if (!_ent.TryGetComponent<SharedMechComponent>(_mech, out var mechComp))
+        if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
             return;
 
         var integrityPercent = mechComp.Integrity / mechComp.MaxIntegrity;
@@ -54,14 +51,13 @@ public sealed partial class MechMenu : FancyWindow
         EquipmentControlContainer.Children.Clear();
         foreach (var ent in mechComp.EquipmentContainer.ContainedEntities)
         {
-            if (!_ent.TryGetComponent<SpriteComponent>(ent, out var sprite) ||
-                !_ent.TryGetComponent<MetaDataComponent>(ent, out var metaData))
+            if (!_ent.TryGetComponent<MetaDataComponent>(ent, out var metaData))
                 continue;
 
             var uicomp = _ent.GetComponentOrNull<UIFragmentComponent>(ent);
             var ui = uicomp?.Ui?.GetUIFragmentRoot();
 
-            var control = new MechEquipmentControl(metaData.EntityName, sprite, ui);
+            var control = new MechEquipmentControl(ent, metaData.EntityName, ui);
 
             control.OnRemoveButtonPressed += () => OnRemoveButtonPressed?.Invoke(ent);
 

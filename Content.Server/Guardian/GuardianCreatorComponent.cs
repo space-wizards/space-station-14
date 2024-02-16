@@ -7,7 +7,7 @@ namespace Content.Server.Guardian
     /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
     [RegisterComponent]
-    public sealed class GuardianCreatorComponent : Component
+    public sealed partial class GuardianCreatorComponent : Component
     {
         /// <summary>
         /// Counts as spent upon exhausting the injection
@@ -28,7 +28,5 @@ namespace Content.Server.Guardian
         /// </summary>
         [DataField("delay")]
         public float InjectionDelay = 5f;
-
-        public bool Injecting = false;
     }
 }

@@ -1,0 +1,117 @@
+- type: entity
+  id: PartGingerbread
+  parent: [BaseItem, BasePart]
+  name: "gingerbead body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 3
+      - ReagentId: Sugar
+        Quantity: 10
+
+- type: entity
+  id: TorsoGingerbread
+  name: "gingerbread torso"
+  parent: [PartGingerbread, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "torso_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Sugar
+        Quantity: 20
+
+- type: entity
+  id: HeadGingerbread
+  name: "gingerbread head"
+  parent: [PartGingerbread, BaseHead]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Sugar
+        Quantity: 10
+
+- type: entity
+  id: LeftArmGingerbread
+  name: "left gingerbread arm"
+  parent: [PartGingerbread, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmGingerbread
+  name: "right gingerbread arm"
+  parent: [PartGingerbread, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandGingerbread
+  name: "left gingerbread hand"
+  parent: [PartGingerbread, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandGingerbread
+  name: "right gingerbread hand"
+  parent: [PartGingerbread, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegGingerbread
+  name: "left gingerbread leg"
+  parent: [PartGingerbread, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegGingerbread
+  name: "right gingerbread leg"
+  parent: [PartGingerbread, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootGingerbread
+  name: "left gingerbread foot"
+  parent: [PartGingerbread, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootGingerbread
+  name: "right gingerbread foot"
+  parent: [PartGingerbread, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: "r_foot"

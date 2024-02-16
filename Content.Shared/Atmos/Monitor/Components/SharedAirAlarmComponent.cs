@@ -37,7 +37,7 @@ public interface IAtmosDeviceData
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
-    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosAlarmType alarmType)
+    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosAlarmType alarmType, bool autoMode)
     {
         Address = address;
         DeviceCount = deviceCount;
@@ -47,6 +47,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
         Mode = mode;
         Tab = tab;
         AlarmType = alarmType;
+        AutoMode = autoMode;
     }
 
     public string Address { get; }
@@ -63,6 +64,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
     public AirAlarmMode Mode { get; }
     public AirAlarmTab Tab { get; }
     public AtmosAlarmType AlarmType { get; }
+    public bool AutoMode { get; }
 }
 
 [Serializable, NetSerializable]
@@ -92,6 +94,17 @@ public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
+public sealed class AirAlarmUpdateAutoModeMessage : BoundUserInterfaceMessage
+{
+    public bool Enabled { get; }
+
+    public AirAlarmUpdateAutoModeMessage(bool enabled)
+    {
+        Enabled = enabled;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
@@ -100,6 +113,17 @@ public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
     public AirAlarmUpdateDeviceDataMessage(string addr, IAtmosDeviceData data)
     {
         Address = addr;
+        Data = data;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMessage
+{
+    public IAtmosDeviceData Data { get; }
+
+    public AirAlarmCopyDeviceDataMessage(IAtmosDeviceData data)
+    {
         Data = data;
     }
 }

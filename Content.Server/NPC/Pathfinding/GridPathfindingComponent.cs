@@ -6,7 +6,7 @@ namespace Content.Server.NPC.Pathfinding;
 /// Stores the relevant pathfinding data for grids.
 /// </summary>
 [RegisterComponent, Access(typeof(PathfindingSystem))]
-public sealed class GridPathfindingComponent : Component
+public sealed partial class GridPathfindingComponent : Component
 {
     [ViewVariables]
     public readonly HashSet<Vector2i> DirtyChunks = new();
@@ -14,7 +14,7 @@ public sealed class GridPathfindingComponent : Component
     /// <summary>
     /// Next time the graph is allowed to update.
     /// </summary>
-    [ViewVariables, DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    /// Removing this datafield is the lazy fix HOWEVER I want to purge this anyway and do pathfinding at runtime.
     public TimeSpan NextUpdate;
 
     [ViewVariables]

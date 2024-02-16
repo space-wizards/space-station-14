@@ -3,7 +3,7 @@
 namespace Content.Server.Administration.Components;
 
 [RegisterComponent, Access(typeof(BufferingSystem))]
-public sealed class BufferingComponent : Component
+public sealed partial class BufferingComponent : Component
 {
     [DataField("minBufferTime")]
     public float MinimumBufferTime = 0.5f;

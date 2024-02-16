@@ -17,7 +17,7 @@ namespace Content.Shared.Damage
     [RegisterComponent]
     [NetworkedComponent()]
     [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
-    public sealed class DamageableComponent : Component
+    public sealed partial class DamageableComponent : Component
     {
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.

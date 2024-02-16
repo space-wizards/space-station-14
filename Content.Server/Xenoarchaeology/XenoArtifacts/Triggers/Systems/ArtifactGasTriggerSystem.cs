@@ -30,17 +30,14 @@ public sealed class ArtifactGasTriggerSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        List<ArtifactComponent> toUpdate = new();
-        foreach (var (trigger, artifact, transform) in EntityQuery<ArtifactGasTriggerComponent, ArtifactComponent, TransformComponent>())
+        List<Entity<ArtifactComponent>> toUpdate = new();
+        var query = EntityQueryEnumerator<ArtifactGasTriggerComponent, ArtifactComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var trigger, out var artifact, out var transform))
         {
-            var uid = trigger.Owner;
-
             if (trigger.ActivationGas == null)
                 continue;
 
-            var environment = _atmosphereSystem.GetTileMixture(transform.GridUid, transform.MapUid,
-                _transformSystem.GetGridOrMapTilePosition(uid, transform));
-
+            var environment = _atmosphereSystem.GetTileMixture((uid, transform));
             if (environment == null)
                 continue;
 
@@ -49,12 +46,12 @@ public sealed class ArtifactGasTriggerSystem : EntitySystem
             if (moles < trigger.ActivationMoles)
                 continue;
 
-            toUpdate.Add(artifact);
+            toUpdate.Add((uid, artifact));
         }
 
         foreach (var a in toUpdate)
         {
-            _artifactSystem.TryActivateArtifact(a.Owner, null, a);
+            _artifactSystem.TryActivateArtifact(a, null, a);
         }
     }
 }

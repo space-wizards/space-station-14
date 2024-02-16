@@ -12,7 +12,7 @@ jobs:
     if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.6.0
     - name: Setup Submodule
       run: git submodule update --init
     - name: Pull engine updates

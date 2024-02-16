@@ -8,8 +8,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmash
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
@@ -18,26 +17,38 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.1,0.45,0.1"
-      density: 550
-      mask:
-      - MachineMask 
-      layer:
-      - MidImpassable, LowImpassable, BulletImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.1,0.45,0.1"
+        density: 550
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable, LowImpassable, BulletImpassable
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal
-    netsync: false
   - type: NodeContainer
     examinable: true
     nodes:
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: static
+    collectionName: SolarPanel
   - type: Anchorable
   - type: Pullable
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
 
 - type: entity
   id: SolarPanel
@@ -114,14 +125,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      density: 375
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 375
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
@@ -144,6 +156,7 @@
   - type: Construction
     graph: SolarPanel
     node: solarassembly
+    defaultTarget: solarpanel
 
 - type: entity
   id: SolarTracker
@@ -158,17 +171,17 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      density: 100
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
-    netsync: false
   - type: Transform
     anchored: true
     noRot: true

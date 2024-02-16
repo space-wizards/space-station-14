@@ -12,7 +12,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using SpaceWizards.Sodium.Interop;
 
 namespace Content.Server.Tips;
 
@@ -42,10 +41,10 @@ public sealed class TipsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
-        _cfg.OnValueChanged(CCVars.TipFrequencyOutOfRound, SetOutOfRound, true);
-        _cfg.OnValueChanged(CCVars.TipFrequencyInRound, SetInRound, true);
-        _cfg.OnValueChanged(CCVars.TipsEnabled, SetEnabled, true);
-        _cfg.OnValueChanged(CCVars.TipsDataset, SetDataset, true);
+        Subs.CVar(_cfg, CCVars.TipFrequencyOutOfRound, SetOutOfRound, true);
+        Subs.CVar(_cfg, CCVars.TipFrequencyInRound, SetInRound, true);
+        Subs.CVar(_cfg, CCVars.TipsEnabled, SetEnabled, true);
+        Subs.CVar(_cfg, CCVars.TipsDataset, SetDataset, true);
 
         RecalculateNextTipTime();
         _conHost.RegisterCommand("clippy", SendClippy);

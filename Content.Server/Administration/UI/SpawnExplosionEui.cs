@@ -12,13 +12,18 @@ namespace Content.Server.Administration.UI;
 [UsedImplicitly]
 public sealed class SpawnExplosionEui : BaseEui
 {
+    private readonly ExplosionSystem _explosionSystem;
+    private readonly ISawmill _sawmill;
+
+    public SpawnExplosionEui()
+    {
+        _explosionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ExplosionSystem>();
+        _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("explosion");
+    }
+
     public override void HandleMessage(EuiMessageBase msg)
     {
-        if (msg is SpawnExplosionEuiMsg.Close)
-        {
-            Close();
-            return;
-        }
+        base.HandleMessage(msg);
 
         if (msg is not SpawnExplosionEuiMsg.PreviewRequest request)
             return;
@@ -30,7 +35,7 @@ public sealed class SpawnExplosionEui : BaseEui
 
         if (explosion == null)
         {
-            Logger.Error("Failed to generate explosion preview.");
+            _sawmill.Error("Failed to generate explosion preview.");
             return;
         }
 

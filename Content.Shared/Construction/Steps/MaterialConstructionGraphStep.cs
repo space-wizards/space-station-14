@@ -7,20 +7,20 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed class MaterialConstructionGraphStep : EntityInsertConstructionGraphStep
+    public sealed partial class MaterialConstructionGraphStep : EntityInsertConstructionGraphStep
     {
         // TODO: Make this use the material system.
         // TODO TODO: Make the material system not shit.
         [DataField("material", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string MaterialPrototypeId { get; } = "Steel";
+        public string MaterialPrototypeId { get; private set; } = "Steel";
 
-        [DataField("amount")] public int Amount { get; } = 1;
+        [DataField("amount")] public int Amount { get; private set; } = 1;
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
             var material = IoCManager.Resolve<IPrototypeManager>().Index<StackPrototype>(MaterialPrototypeId);
 
-            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", material.Name)));
+            examinedEvent.PushMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", material.Name)));
         }
 
         public override bool EntityValid(EntityUid uid, IEntityManager entityManager, IComponentFactory compFactory)

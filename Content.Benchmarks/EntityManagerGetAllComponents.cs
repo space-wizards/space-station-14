@@ -11,7 +11,7 @@ using Robust.Shared.Reflection;
 namespace Content.Benchmarks
 {
     [Virtual]
-    public class EntityManagerGetAllComponents
+    public partial class EntityManagerGetAllComponents
     {
         private IEntityManager _entityManager;
 
@@ -48,7 +48,8 @@ namespace Content.Benchmarks
             var componentFactory = new Mock<IComponentFactory>();
             componentFactory.Setup(p => p.GetComponent<DummyComponent>()).Returns(new DummyComponent());
             componentFactory.Setup(p => p.GetRegistration(It.IsAny<DummyComponent>())).Returns(dummyReg);
-            componentFactory.Setup(p => p.GetAllRefTypes()).Returns(new[] {CompIdx.Index<DummyComponent>()});
+            componentFactory.Setup(p => p.GetAllRegistrations()).Returns(new[] { dummyReg });
+            componentFactory.Setup(p => p.GetAllRefTypes()).Returns(new[] { CompIdx.Index<DummyComponent>() });
 
             IoCManager.RegisterInstance<IComponentFactory>(componentFactory.Object);
 
@@ -87,7 +88,7 @@ namespace Content.Benchmarks
             return count;
         }
 
-        private sealed class DummyComponent : Component
+        private sealed partial class DummyComponent : Component
         {
         }
     }

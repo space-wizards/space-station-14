@@ -1,0 +1,121 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseLogicItem
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/gates.rsi
+  - type: Anchorable
+  - type: Rotatable
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+
+- type: entity
+  parent: BaseLogicItem
+  id: LogicGate
+  name: logic gate
+  description: A logic gate with two inputs and one output. Technicians can change its mode of operation using a screwdriver.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: or
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+  - type: UseDelay
+    delay: 0.5
+  - type: DeviceLinkSink
+    ports:
+    - InputA
+    - InputB
+  - type: DeviceLinkSource
+    ports:
+    - Output
+    lastSignals:
+      Output: false
+  - type: Construction
+    graph: LogicGate
+    node: logic_gate
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LogicGateVisuals.Gate:
+        enum.LogicGateLayers.Gate:
+          Or: { state: or }
+          And: { state: and }
+          Xor: { state: xor }
+          Nor: { state: nor }
+          Nand: { state: nand }
+          Xnor: { state: xnor }
+
+- type: entity
+  parent: BaseLogicItem
+  id: EdgeDetector
+  name: edge detector
+  description: Splits rising and falling edges into unique pulses and detects how edgy you are.
+  components:
+  - type: Sprite
+    state: edge_detector
+  - type: EdgeDetector
+  - type: DeviceLinkSink
+    ports:
+    - Input
+  - type: DeviceLinkSource
+    ports:
+    - OutputHigh
+    - OutputLow
+    lastSignals:
+      OutputHigh: false
+      OutputLow: false
+  - type: Construction
+    graph: LogicGate
+    node: edge_detector
+
+- type: entity
+  parent: BaseLogicItem
+  id: PowerSensor
+  name: power sensor
+  description: Generates signals in response to powernet changes. Can be cycled between cable voltages.
+  components:
+  - type: Sprite
+    state: power_sensor
+  - type: PowerSensor
+  - type: PowerSwitchable
+    examineText: power-sensor-voltage-examine
+    switchText: power-sensor-voltage-switch
+    cables:
+    - voltage: HV
+      node: hv
+    - voltage: MV
+      node: mv
+    - voltage: LV
+      node: lv
+  - type: UseDelay
+    delay: 1
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      mv:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+        enabled: false
+      lv:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+        enabled: false
+  - type: DeviceLinkSource
+    ports:
+    - PowerCharging
+    - PowerDischarging
+    lastSignals:
+      PowerCharging: false
+      PowerDischarging: false
+  - type: Construction
+    graph: LogicGate
+    node: power_sensor

@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Procedural;
 
 [Prototype("dungeonRoom")]
-public sealed class DungeonRoomPrototype : IPrototype
+public sealed partial class DungeonRoomPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 
@@ -18,7 +18,7 @@ public sealed class DungeonRoomPrototype : IPrototype
     /// <summary>
     /// Path to the file to use for the room.
     /// </summary>
-    [DataField("atlas", required: true)] public ResourcePath AtlasPath = default!;
+    [DataField("atlas", required: true)] public ResPath AtlasPath;
 
     /// <summary>
     /// Tile offset into the atlas to use for the room.

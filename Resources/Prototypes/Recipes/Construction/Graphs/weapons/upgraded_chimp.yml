@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: UpgradeWeaponPistolCHIMP
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: upgraded
+          steps:
+            - tag: WeaponPistolCHIMPUpgradeKit
+              doAfter: 2
+
+    - node: upgraded
+      entity: WeaponPistolCHIMPUpgraded

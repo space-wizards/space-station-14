@@ -6,7 +6,7 @@ namespace Content.Shared.Movement.Components;
 /// Added to an enabled jetpack. Tracks gas usage on server / effect spawning on client.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class ActiveJetpackComponent : Component
+public sealed partial class ActiveJetpackComponent : Component
 {
     public float EffectCooldown = 0.3f;
     public TimeSpan TargetTime = TimeSpan.Zero;

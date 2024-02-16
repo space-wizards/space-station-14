@@ -1,22 +1,39 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
+using Content.Server.IP;
+using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
     public sealed class ServerDbPostgres : ServerDbBase
     {
         private readonly DbContextOptions<PostgresServerDbContext> _options;
+        private readonly SemaphoreSlim _prefsSemaphore;
         private readonly Task _dbReadyTask;
 
-        public ServerDbPostgres(DbContextOptions<PostgresServerDbContext> options)
+        private int _msLag;
+
+        public ServerDbPostgres(
+            DbContextOptions<PostgresServerDbContext> options,
+            IConfigurationManager cfg,
+            ISawmill opsLog)
+            : base(opsLog)
         {
+            var concurrency = cfg.GetCVar(CCVars.DatabasePgConcurrency);
+
             _options = options;
+            _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
 
             _dbReadyTask = Task.Run(async () =>
             {
@@ -30,6 +47,8 @@ namespace Content.Server.Database
                     await ctx.DisposeAsync();
                 }
             });
+
+            cfg.OnValueChanged(CCVars.DatabasePgFakeLag, v => _msLag = v, true);
         }
 
         #region Ban
@@ -58,7 +77,8 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false)
+            var exempt = await GetBanExemptionCore(db, userId);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -77,7 +97,8 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned);
+            var exempt = await GetBanExemptionCore(db, userId);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt);
 
             var queryBans = await query.ToArrayAsync();
             var bans = new List<ServerBanDef>(queryBans.Length);
@@ -100,20 +121,23 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
             DbGuardImpl db,
-            bool includeUnbanned)
+            bool includeUnbanned,
+            ServerBanExemptFlags? exemptFlags)
         {
+            DebugTools.Assert(!(address == null && userId == null && hwId == null));
+
             IQueryable<ServerBan>? query = null;
 
             if (userId is { } uid)
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
+                    .Where(b => b.PlayerUserId == uid.UserId);
 
                 query = query == null ? newQ : query.Union(newQ);
             }
 
-            if (address != null)
+            if (address != null && !exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP))
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
@@ -131,14 +155,22 @@ namespace Content.Server.Database
                 query = query == null ? newQ : query.Union(newQ);
             }
 
+            DebugTools.Assert(
+                query != null,
+                "At least one filter item (IP/UserID/HWID) must have been given to make query not null.");
+
             if (!includeUnbanned)
             {
-                query = query?.Where(p =>
+                query = query.Where(p =>
                     p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
             }
 
-            query = query!.Distinct();
-            return query;
+            if (exemptFlags is { } exempt)
+            {
+                query = query.Where(b => (b.ExemptFlags & exempt) == 0);
+            }
+
+            return query.Distinct();
         }
 
         private static ServerBanDef? ConvertBan(ServerBan? ban)
@@ -149,7 +181,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -165,11 +197,14 @@ namespace Content.Server.Database
             return new ServerBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
+                ban.Address.ToTuple(),
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
                 unbanDef);
         }
@@ -199,13 +234,16 @@ namespace Content.Server.Database
 
             db.PgDbContext.Ban.Add(new ServerBan
             {
-                Address = serverBan.Address,
+                Address = serverBan.Address.ToNpgsqlInet(),
                 HWId = serverBan.HWId?.ToArray(),
                 Reason = serverBan.Reason,
+                Severity = serverBan.Severity,
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
-                UserId = serverBan.UserId?.UserId
+                RoundId = serverBan.RoundId,
+                PlaytimeAtNote = serverBan.PlaytimeAtNote,
+                PlayerUserId = serverBan.UserId?.UserId
             });
 
             await db.PgDbContext.SaveChangesAsync();
@@ -290,7 +328,7 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.RoleBan
                     .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
+                    .Where(b => b.PlayerUserId == uid.UserId);
 
                 query = query == null ? newQ : query.Union(newQ);
             }
@@ -323,6 +361,7 @@ namespace Content.Server.Database
             return query;
         }
 
+        [return: NotNullIfNotNull(nameof(ban))]
         private static ServerRoleBanDef? ConvertRoleBan(ServerRoleBan? ban)
         {
             if (ban == null)
@@ -331,7 +370,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -347,11 +386,14 @@ namespace Content.Server.Database
             return new ServerRoleBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
+                ban.Address.ToTuple(),
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
                 unbanDef,
                 ban.RoleId);
@@ -376,23 +418,28 @@ namespace Content.Server.Database
                 unban.UnbanTime);
         }
 
-        public override async Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
+        public override async Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.RoleBan.Add(new ServerRoleBan
+            var ban = new ServerRoleBan
             {
-                Address = serverRoleBan.Address,
+                Address = serverRoleBan.Address.ToNpgsqlInet(),
                 HWId = serverRoleBan.HWId?.ToArray(),
                 Reason = serverRoleBan.Reason,
+                Severity = serverRoleBan.Severity,
                 BanningAdmin = serverRoleBan.BanningAdmin?.UserId,
                 BanTime = serverRoleBan.BanTime.UtcDateTime,
                 ExpirationTime = serverRoleBan.ExpirationTime?.UtcDateTime,
-                UserId = serverRoleBan.UserId?.UserId,
+                RoundId = serverRoleBan.RoundId,
+                PlaytimeAtNote = serverRoleBan.PlaytimeAtNote,
+                PlayerUserId = serverRoleBan.UserId?.UserId,
                 RoleId = serverRoleBan.Role,
-            });
+            };
+            db.PgDbContext.RoleBan.Add(ban);
 
             await db.PgDbContext.SaveChangesAsync();
+            return ConvertRoleBan(ban);
         }
 
         public override async Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban)
@@ -426,7 +473,8 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied)
+            ConnectionDenyReason? denied,
+            int serverId)
         {
             await using var db = await GetDbImpl();
 
@@ -438,6 +486,7 @@ namespace Content.Server.Database
                 UserName = userName,
                 HWId = hwId.ToArray(),
                 Denied = denied,
+                ServerId = serverId
             };
 
             db.PgDbContext.ConnectionLog.Add(connectionLog);
@@ -468,31 +517,56 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        private async Task<DbGuardImpl> GetDbImpl()
+        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
-            await _dbReadyTask;
+            // https://learn.microsoft.com/en-us/ef/core/querying/sql-queries#passing-parameters
+            // Read the link above for parameterization before changing this method or you get the bullet
+            if (!string.IsNullOrWhiteSpace(filter?.Search))
+            {
+                return db.AdminLog.FromSql($"""
+SELECT a.admin_log_id, a.round_id, a.date, a.impact, a.json, a.message, a.type FROM admin_log AS a
+WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('english'::regconfig, {filter.Search})
+""");
+            }
 
-            return new DbGuardImpl(new PostgresServerDbContext(_options));
+            return db.AdminLog;
         }
 
-        protected override async Task<DbGuard> GetDb()
+        private async Task<DbGuardImpl> GetDbImpl([CallerMemberName] string? name = null)
         {
-            return await GetDbImpl();
+            LogDbOp(name);
+
+            await _dbReadyTask;
+            await _prefsSemaphore.WaitAsync();
+
+            if (_msLag > 0)
+                await Task.Delay(_msLag);
+
+            return new DbGuardImpl(this, new PostgresServerDbContext(_options));
+        }
+
+        protected override async Task<DbGuard> GetDb([CallerMemberName] string? name = null)
+        {
+            return await GetDbImpl(name);
         }
 
         private sealed class DbGuardImpl : DbGuard
         {
-            public DbGuardImpl(PostgresServerDbContext dbC)
+            private readonly ServerDbPostgres _db;
+
+            public DbGuardImpl(ServerDbPostgres db, PostgresServerDbContext dbC)
             {
+                _db = db;
                 PgDbContext = dbC;
             }
 
             public PostgresServerDbContext PgDbContext { get; }
             public override ServerDbContext DbContext => PgDbContext;
 
-            public override ValueTask DisposeAsync()
+            public override async ValueTask DisposeAsync()
             {
-                return DbContext.DisposeAsync();
+                await DbContext.DisposeAsync();
+                _db._prefsSemaphore.Release();
             }
         }
     }

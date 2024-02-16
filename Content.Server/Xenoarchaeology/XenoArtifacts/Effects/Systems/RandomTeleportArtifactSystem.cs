@@ -23,6 +23,6 @@ public sealed class RandomTeleportArtifactSystem : EntitySystem
         var xform = Transform(uid);
         _popup.PopupCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, PopupType.Medium);
 
-        _xform.SetCoordinates(uid, xform, xform.Coordinates.Offset(_random.NextVector2(component.Range)));
+        _xform.SetCoordinates(uid, xform, xform.Coordinates.Offset(_random.NextVector2(component.MinRange, component.MaxRange)));
     }
 }

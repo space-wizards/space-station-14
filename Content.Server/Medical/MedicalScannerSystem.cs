@@ -1,30 +1,27 @@
-using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Medical.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Destructible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Events;
 using Content.Server.Cloning.Components;
-using Content.Server.Construction;
+using Content.Server.DeviceLinking.Systems;
+using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Body.Components;
+using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; // Hmm...
 
 namespace Content.Server.Medical
 {
     public sealed class MedicalScannerSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly ClimbSystem _climbSystem = default!;
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
@@ -47,8 +44,6 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, DragDropTargetEvent>(OnDragDropOn);
             SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-            SubscribeLocalEvent<MedicalScannerComponent, RefreshPartsEvent>(OnRefreshParts);
-            SubscribeLocalEvent<MedicalScannerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<MedicalScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
 
@@ -70,7 +65,7 @@ namespace Content.Server.Medical
         {
             base.Initialize();
             scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"scanner-bodyContainer");
-            _signalSystem.EnsureReceiverPorts(uid, MedicalScannerComponent.ScannerPort);
+            _signalSystem.EnsureSinkPorts(uid, MedicalScannerComponent.ScannerPort);
         }
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, ref ContainerRelayMovementEntityEvent args)
@@ -90,7 +85,7 @@ namespace Content.Server.Medical
                 !CanScannerInsert(uid, args.Using.Value, component))
                 return;
 
-            string name = "Unknown";
+            var name = "Unknown";
             if (TryComp<MetaDataComponent>(args.Using.Value, out var metadata))
                 name = metadata.EntityName;
 
@@ -111,11 +106,13 @@ namespace Content.Server.Medical
             // Eject verb
             if (IsOccupied(component))
             {
-                AlternativeVerb verb = new();
-                verb.Act = () => EjectBody(uid, component);
-                verb.Category = VerbCategory.Eject;
-                verb.Text = Loc.GetString("medical-scanner-verb-noun-occupant");
-                verb.Priority = 1; // Promote to top to make ejecting the ALT-click action
+                AlternativeVerb verb = new()
+                {
+                    Act = () => EjectBody(uid, component),
+                    Category = VerbCategory.Eject,
+                    Text = Loc.GetString("medical-scanner-verb-noun-occupant"),
+                    Priority = 1 // Promote to top to make ejecting the ALT-click action
+                };
                 args.Verbs.Add(verb);
             }
 
@@ -124,9 +121,11 @@ namespace Content.Server.Medical
                 CanScannerInsert(uid, args.User, component) &&
                 _blocker.CanMove(args.User))
             {
-                AlternativeVerb verb = new();
-                verb.Act = () => InsertBody(uid, args.User, component);
-                verb.Text = Loc.GetString("medical-scanner-verb-enter");
+                AlternativeVerb verb = new()
+                {
+                    Act = () => InsertBody(uid, args.User, component),
+                    Text = Loc.GetString("medical-scanner-verb-enter")
+                };
                 args.Verbs.Add(verb);
             }
         }
@@ -156,7 +155,7 @@ namespace Content.Server.Medical
                 _cloningConsoleSystem.RecheckConnections(component.ConnectedConsole.Value, console.CloningPod, uid, console);
                 return;
             }
-            _cloningConsoleSystem.UpdateUserInterface(console);
+            _cloningConsoleSystem.UpdateUserInterface(component.ConnectedConsole.Value, console);
         }
         private MedicalScannerStatus GetStatus(EntityUid uid, MedicalScannerComponent scannerComponent)
         {
@@ -176,7 +175,7 @@ namespace Content.Server.Medical
             return MedicalScannerStatus.Off;
         }
 
-        public bool IsOccupied(MedicalScannerComponent scannerComponent)
+        public static bool IsOccupied(MedicalScannerComponent scannerComponent)
         {
             return scannerComponent.BodyContainer.ContainedEntity != null;
         }
@@ -214,7 +213,7 @@ namespace Content.Server.Medical
             _updateDif -= UpdateRate;
 
             var query = EntityQueryEnumerator<MedicalScannerComponent>();
-            while(query.MoveNext(out var uid, out var scanner))
+            while (query.MoveNext(out var uid, out var scanner))
             {
                 UpdateAppearance(uid, scanner);
             }
@@ -231,7 +230,7 @@ namespace Content.Server.Medical
             if (!HasComp<BodyComponent>(to_insert))
                 return;
 
-            scannerComponent.BodyContainer.Insert(to_insert);
+            _containerSystem.Insert(to_insert, scannerComponent.BodyContainer);
             UpdateAppearance(uid, scannerComponent);
         }
 
@@ -240,24 +239,12 @@ namespace Content.Server.Medical
             if (!Resolve(uid, ref scannerComponent))
                 return;
 
-            if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
+            if (scannerComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
                 return;
 
-            scannerComponent.BodyContainer.Remove(contained);
+            _containerSystem.Remove(contained, scannerComponent.BodyContainer);
             _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateAppearance(uid, scannerComponent);
-        }
-
-        private void OnRefreshParts(EntityUid uid, MedicalScannerComponent component, RefreshPartsEvent args)
-        {
-            var ratingFail = args.PartRatings[component.MachinePartCloningFailChance];
-
-            component.CloningFailChanceMultiplier = MathF.Pow(component.PartRatingFailMultiplier, ratingFail - 1);
-        }
-
-        private void OnUpgradeExamine(EntityUid uid, MedicalScannerComponent component, UpgradeExamineEvent args)
-        {
-            args.AddPercentageUpgrade("medical-scanner-upgrade-cloning", component.CloningFailChanceMultiplier);
         }
     }
 }

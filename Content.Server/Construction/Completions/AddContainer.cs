@@ -5,7 +5,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class AddContainer : IGraphAction
+    public sealed partial class AddContainer : IGraphAction
     {
         [DataField("container")] public string? Container { get; private set; }
 

@@ -1,4 +1,4 @@
-using Content.Server.Construction.Components;
+using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -11,6 +11,8 @@ namespace Content.Server.Containers
     [UsedImplicitly]
     public sealed class EmptyOnMachineDeconstructSystem : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,21 +26,21 @@ namespace Content.Server.Containers
         {
             foreach (var slot in component.Slots.Values)
             {
-                if (slot.EjectOnDeconstruct && slot.Item != null)
-                    slot.ContainerSlot?.Remove(slot.Item.Value);
+                if (slot.EjectOnDeconstruct && slot.Item != null && slot.ContainerSlot != null)
+                    _container.Remove(slot.Item.Value, slot.ContainerSlot);
             }
         }
 
         private void OnDeconstruct(EntityUid uid, EmptyOnMachineDeconstructComponent component, MachineDeconstructedEvent ev)
         {
-            if (!EntityManager.TryGetComponent<IContainerManager>(uid, out var mComp))
+            if (!EntityManager.TryGetComponent<ContainerManagerComponent>(uid, out var mComp))
                 return;
-            var baseCoords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
+            var baseCoords = EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
             foreach (var v in component.Containers)
             {
                 if (mComp.TryGetContainer(v, out var container))
                 {
-                    container.EmptyContainer(true, baseCoords);
+                    _container.EmptyContainer(container, true, baseCoords);
                 }
             }
         }

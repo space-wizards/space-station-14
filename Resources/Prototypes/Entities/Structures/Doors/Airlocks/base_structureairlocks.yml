@@ -11,7 +11,6 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     snapCardinals: true
     layers:
@@ -30,17 +29,19 @@
       shader: unshaded
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      density: 100
-      mask:
-      - FullTileMask
-      layer:
-      - AirlockLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
   - type: LayerChangeOnWeld
     unWeldedLayer: AirlockLayer
     weldedLayer: WallLayer
@@ -61,12 +62,11 @@
     containers:
       board: !type:Container
   - type: Weldable
-    fuel: 3
     time: 3
   - type: Airlock
+  - type: NavMapDoor
+  - type: DoorBolt
   - type: Appearance
-    visuals:
-    - type: AirlockVisualizer
   - type: WiresVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
@@ -74,15 +74,31 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
+  - type: WiresPanelSecurity
   - type: Wires
-    BoardName: "Airlock Control"
-    LayoutId: Airlock
+    boardName: wires-board-name-airlock
+    layoutId: Airlock
   - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
+      - AutoClose
+      - DoorBolt
+  - type: DeviceLinkSource
+    ports:
+      - DoorStatus
+    lastSignals:
+      DoorStatus: false
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -94,8 +110,8 @@
     resistance: 3
   - type: Occluder
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -104,17 +120,34 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      # TODO this should go to the broken node first
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
   - type: Construction
     graph: Airlock
     node: airlock
     containers:
     - board
+  - type: PlacementReplacement
+    key: walls
   - type: IconSmooth
     key: walls
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+    department: Civilian
+  - type: AccessReader
   - type: StaticPrice
     price: 150
+  - type: LightningTarget
+    priority: 1
+  - type: Tag
+    tags:
+      - Airlock
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+  - type: PryUnpowered
   placement:
     mode: SnapgridCenter
+
+

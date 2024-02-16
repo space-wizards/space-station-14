@@ -8,7 +8,7 @@
       department: Civilian
       time: 1800
   startingGear: ChefGear
-  icon: "Chef"
+  icon: "JobIconChef"
   supervisors: job-supervisors-hop
   access:
   - Service
@@ -24,10 +24,12 @@
     jumpsuit: ClothingUniformJumpsuitChef
     head: ClothingHeadHatChef
     back: ClothingBackpackFilled
+    mask: ClothingMaskItalianMoustache
     shoes: ClothingShoesColorBlack
     id: ChefPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronChef
-  innerclothingskirt: ClothingUniformJumpskirtChef
+    belt: ClothingBeltChefFilled
+  innerClothingSkirt: ClothingUniformJumpskirtChef
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

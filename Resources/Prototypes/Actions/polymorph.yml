@@ -1,0 +1,16 @@
+﻿- type: entity
+  id: ActionRevertPolymorph
+  name: Revert
+  description: Revert back into your original form.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:RevertPolymorphActionEvent
+
+- type: entity
+  id: ActionPolymorph
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:PolymorphActionEvent
+    itemIconStyle: NoItem

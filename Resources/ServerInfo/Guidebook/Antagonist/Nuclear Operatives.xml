@@ -1,0 +1,88 @@
+<Document>
+  # Nuclear Operatives
+
+  AUTOTELL ON STANDBY. YOUR OBJECTIVES ARE SIMPLE. DELIVER THE PAYLOAD AND GET OUT BEFORE THE PAYLOAD DETONATES. BEGIN MISSION.
+
+  If you hear this message then congratulations! You have just been chosen to be a nuclear operative for the syndicate. You have one goal, to blow up the space station with a nuclear fission explosive.
+
+  ## Operatives
+
+  Your team may contain varying amounts of three different roles:
+  - The [color=#a4885c]Nukie Commander[/color] wears the unique commander’s hardsuit, and will create or approve of the battle plan.
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="Commander Hardsuit"/>
+  </Box>
+
+  - The [color=#a4885c]Nukie Agent[/color] wears the blood-red medic hardsuit, and can act as a combat medic for the mission.
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieMedic" Caption="Blood-Red Medic Hardsuit"/>
+  </Box>
+
+  - Regular [color=#a4885c]Nuclear Operatives[/color], who have the normal blood red hardsuit.
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption="Blood Red Hardsuit"/>
+  </Box>
+
+  If you have been selected for either of these special roles but don't feel ready, one of your teammates can take responsibility.
+
+  ## Preparation
+
+  Taking on a whole station in a fight is a difficult job, luckily you are well prepared for the job. Every operative has an [color=#a4885c]Uplink[/color]. It comes with 40 [color=#a4885c]Telecrystals[/color], which you can use to purchase gear. What you get depends on the strategy picked by your commander or voted for by the team. Only your commander and agent will have passenger access, but no external airlock access. This means you will need something to hack or blast your way onto the station.  In general you should need some weapons, something to breach doors, and utility/healing.
+
+  <Box>
+    <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="The Uplink"/>
+  </Box>
+
+  ## Getting to the Station
+
+  After gearing up and creating a plan, grab a jetpack from your armory and go with your other operatives to the [color=#a4885c]Nukie Shuttle[/color]. Here you will find some extra explosives and tools, as well as your nuke and nuke codes.
+  You will find an [color=#a4885c]IFF Console[/color] on the shuttle, it allows you to hide from other ships and mass scanners. Make sure that [color=#a4885c]Show IFF[/color] and [color=#a4885c]Show Vessel[/color] are toggled off to hide your shuttle from the crew. When everyone is ready, FTL to the station and fly to it with a jetpack. Don't forget the nuclear fission explosive on your ship if you are going to use it, and definitely don't forget the nuke codes or pinpointer.
+
+  ## The Disk
+
+  You will notice that each operative starts with a [color=#a4885c]Pinpointer[/color]. This device is one of the most important items to the mission, and you should keep it with you at all times. Turn on the pinpointer when you arrive at the station and it will always point to the [color=#a4885c]Nuke Disk[/color], your next objective.
+  The nuke disk belongs to the captain, who will almost always have it on them. Follow the direction of the arrow on the pinpointer to the disk, and do whatever it takes to get it.
+
+
+  <Box>
+    <GuideEntityEmbed Entity="PinpointerNuclear" Caption="The Pinpointer"/>
+    <GuideEntityEmbed Entity="NukeDisk" Caption="The Nuke Disk"/>
+  </Box>
+
+  ## The Nuke
+
+  On your shuttle you will find one of two [color=#a4885c]Nuclear Fission Explosives[/color] and a paper with the nuke codes. The paper will tell you which explosive it corresponds to. If the ID is the same as the one on your nuke, the codes will only work for it. If it is not, then they will only work for the explosive in the station's vault.
+
+  Once you acquire the nuke disk, put it into the nuke and use the code to arm it. It takes 30 seconds for a crewmember to disarm it, and it will count down from 300. Be prepared to defend the nuke for as long as possible, remember that escaping alive isn't necessary, but recommended.
+
+  <Box>
+    <GuideEntityEmbed Entity="NuclearBomb" Caption="The Nuclear Fission Explosive"/>
+  </Box>
+
+  ## Victories
+
+  The “victor” of the round is announced on the round end screen, as well as how much they won by. The scale of the victory depends on circumstances at the end of the round.
+
+  [color=#a4885c]Syndicate Major Victory[/color]
+  - The nuke detonates on station
+  - The crew escapes on the evac shuttle, but the nuke was armed
+  - The nuke was armed and delivered to central command on the evac shuttle
+
+  [color=#a4885c]Syndicate Minor Victory[/color]
+  - The crew escapes on evac, but every nukie survives
+  - The crew escapes and some nukies die, but the crew loses the disk
+
+  [color=#a4885c]Neutral Victory[/color]
+  - The nuke detonates off station
+
+  [color=#a4885c]Crew Minor Victory[/color]
+  - The crew escapes on evac and some nukies die, but the crew keeps the disk
+
+  [color=#a4885c]Crew Major Victory[/color]
+  - All nuclear operatives die
+  - The crew blow up the nukie outpost with the nuke
+
+  If you feel that you won't be able to completely win as crew or nukie, consider these options for a compromise.
+</Document>
+
+

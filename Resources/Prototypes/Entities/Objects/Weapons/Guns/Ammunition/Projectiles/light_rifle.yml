@@ -10,17 +10,6 @@
         Piercing: 19
 
 - type: entity
-  id: BulletLightRifleHighVelocity
-  name: bullet (.20 rifle high-velocity)
-  parent: BaseBulletHighVelocity
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 21
-
-- type: entity
   id: BulletLightRiflePractice
   name: bullet (.20 rifle practice)
   parent: BaseBulletPractice
@@ -41,3 +30,27 @@
     damage:
       types:
         Blunt: 3
+
+- type: entity
+  id: BulletLightRifleIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.20 rifle incendiary)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 3
+        Heat: 16
+
+- type: entity
+  id: BulletLightRifleUranium
+  parent: BaseBulletUranium
+  name: bullet (.20 rifle uranium)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 9
+        Piercing: 10

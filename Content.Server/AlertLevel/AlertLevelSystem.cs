@@ -1,17 +1,20 @@
 using System.Linq;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
+using Content.Shared.CCVar;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.AlertLevel;
 
 public sealed class AlertLevelSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
@@ -20,26 +23,15 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
-
-        _prototypeManager.PrototypesReloaded += OnPrototypeReload;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
     }
 
     public override void Update(float time)
     {
-        foreach (var station in _stationSystem.Stations)
-        {
-            if (!TryComp(station, out AlertLevelComponent? alert))
-            {
-                continue;
-            }
+        var query = EntityQueryEnumerator<AlertLevelComponent>();
 
+        while (query.MoveNext(out var station, out var alert))
+        {
             if (alert.CurrentDelay <= 0)
             {
                 if (alert.ActiveDelay)
@@ -56,9 +48,10 @@ public sealed class AlertLevelSystem : EntitySystem
 
     private void OnStationInitialize(StationInitializedEvent args)
     {
-        var alertLevelComponent = AddComp<AlertLevelComponent>(args.Station);
+        if (!TryComp<AlertLevelComponent>(args.Station, out var alertLevelComponent))
+            return;
 
-        if (!_prototypeManager.TryIndex(DefaultAlertLevelSet, out AlertLevelPrototype? alerts))
+        if (!_prototypeManager.TryIndex(alertLevelComponent.AlertLevelPrototype, out AlertLevelPrototype? alerts))
         {
             return;
         }
@@ -83,7 +76,8 @@ public sealed class AlertLevelSystem : EntitySystem
             return;
         }
 
-        foreach (var comp in EntityQuery<AlertLevelComponent>())
+        var query = EntityQueryEnumerator<AlertLevelComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             comp.AlertLevels = alerts;
 
@@ -95,7 +89,7 @@ public sealed class AlertLevelSystem : EntitySystem
                     defaultLevel = comp.AlertLevels.Levels.Keys.First();
                 }
 
-                SetLevel(comp.Owner, defaultLevel, true, true, true);
+                SetLevel(uid, defaultLevel, true, true, true);
             }
         }
 
@@ -141,7 +135,7 @@ public sealed class AlertLevelSystem : EntitySystem
                 return;
             }
 
-            component.CurrentDelay = AlertLevelComponent.Delay;
+            component.CurrentDelay = _cfg.GetCVar(CCVars.GameAlertLevelChangeDelay);
             component.ActiveDelay = true;
         }
 
@@ -174,7 +168,7 @@ public sealed class AlertLevelSystem : EntitySystem
             if (detail.Sound != null)
             {
                 var filter = _stationSystem.GetInOwningStation(station);
-                SoundSystem.Play(detail.Sound.GetSound(), filter, detail.Sound.Params);
+                _audio.PlayGlobal(detail.Sound, filter, true, detail.Sound.Params);
             }
             else
             {

@@ -8,7 +8,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 [MeansImplicitUse]
-public abstract class ListingCondition
+public abstract partial class ListingCondition
 {
     /// <summary>
     /// Determines whether or not a certain entity can purchase a listing.

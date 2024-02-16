@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/fed8ed6d62de3003260303d021f6138bb90a60ce/icons/obj/assemblies/assemblies.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base-bomb"
+        },
+        {
+            "name": "base-bomb-wires"
+        },
+        {
+            "name": "base-bomb-active",
+            "delays": [
+                [
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "syndicate-bomb"
+        },
+        {
+            "name": "syndicate-bomb-wires"
+        },
+        {
+            "name": "syndicate-bomb-active",
+            "delays": [
+                [
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "training-bomb"
+        },
+        {
+            "name": "training-bomb-wires"
+        },
+        {
+            "name": "training-bomb-active",
+            "delays": [
+                [
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            ]
+        }
+    ]
+}

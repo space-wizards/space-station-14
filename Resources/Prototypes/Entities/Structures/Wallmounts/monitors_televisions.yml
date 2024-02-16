@@ -5,6 +5,7 @@
   description: Finally, some decent reception around here...
   components:
   - type: Sprite
+    drawdepth: SmallObjects
     layers:
     - map: ["computerLayerBody"]
       state: television
@@ -18,7 +19,8 @@
     color: "#b89f25"
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 200
@@ -38,7 +40,6 @@
     node: TelescreenFrame
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Machines/computers.rsi
     layers:
       - map: ["computerLayerBody"]
@@ -47,7 +48,8 @@
         state: telescreen
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.20,-0.10,0.25,0.35"
         density: 250
@@ -120,7 +122,8 @@
   components:
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.75,-0.10,0.75,0.35"
         density: 75
@@ -133,7 +136,6 @@
     node: TelevisionFrame
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Wallmounts/flatscreentv.rsi
     layers:
       - map: ["computerLayerBody"]

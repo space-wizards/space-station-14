@@ -39,6 +39,7 @@
   - addview
   - removeview
   - hwid
+  - showaudio
   - showpos
   - showray
   - showchunkbb
@@ -64,6 +65,9 @@
   - tilelookup
   - net_entityreport
   - scene
+  - replay_recording_stats
+  - print_pvs_ack
+  - merge_grids
 
 
 - Flags: MAPPING
@@ -109,7 +113,6 @@
   Commands:
   - gc_mode
   - gc
-  - loglevel
   - saveconfig
   - testlog
   - sudo
@@ -120,10 +123,18 @@
   - gcf
   - getcomponentregistration
   - fuck
+  - replay_recording_start
+  - replay_recording_stop
 
 - Flags: QUERY
   Commands:
-  - forall
+  - uploadfile
+  - loadprototype
+  - uploadfolder
+
+- Commands:
+  - "|"
+  - oldhelp
 
 - Flags: FUN
   Commands:

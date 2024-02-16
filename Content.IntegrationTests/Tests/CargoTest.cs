@@ -1,13 +1,12 @@
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Stacks;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
@@ -15,18 +14,58 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class CargoTest
 {
+    public static HashSet<ProtoId<CargoProductPrototype>> Ignored = new ()
+    {
+        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
+        new("FunCrateGambling")
+    };
+
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
+
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                {
+                    if (Ignored.Contains(proto.ID))
+                        continue;
+
+                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
+                    var price = pricing.GetPrice(ent);
+
+                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
+                    entManager.DeleteEntity(ent);
+                }
+            });
+        });
+
+        await pair.CleanReturnAsync();
+    }
+    [Test]
+    public async Task NoCargoBountyArbitrageTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
-        var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+        var cargo = entManager.System<CargoSystem>();
+
+        var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
 
         await server.WaitAssertion(() =>
         {
@@ -37,9 +76,13 @@ public sealed class CargoTest
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
-                    var price = pricing.GetPrice(ent);
 
-                    Assert.That(price, Is.AtMost(proto.PointCost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.PointCost} but sell is {price}!");
+                    foreach (var bounty in bounties)
+                    {
+                        if (cargo.IsBountyComplete(ent, bounty))
+                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                    }
+
                     entManager.DeleteEntity(ent);
                 }
             });
@@ -47,16 +90,16 @@ public sealed class CargoTest
             mapManager.DeleteMap(mapId);
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task NoStaticPriceAndStackPrice()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -65,11 +108,13 @@ public sealed class CargoTest
         await server.WaitAssertion(() =>
         {
             var mapId = testMap.MapId;
-            var grid = mapManager.CreateGrid(mapId);
+            var grid = mapManager.CreateGridEntity(mapId);
             var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
-                .Where(p=>!p.Abstract)
+                .Where(p => !p.Abstract)
+                .Where(p => !pair.IsTestPrototype(p))
+                .Where(p => !p.Components.ContainsKey("MapGrid")) // Grids are not for sale.
                 .Select(p => p.ID)
                 .ToList();
 
@@ -100,13 +145,13 @@ public sealed class CargoTest
             }
             mapManager.DeleteMap(mapId);
         });
-        await pairTracker.CleanReturnAsync();
+
+        await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task StackPrice()
-    {
-        const string StackProto = @"
+
+    [TestPrototypes]
+    private const string StackProto = @"
 - type: entity
   id: A
 
@@ -124,8 +169,11 @@ public sealed class CargoTest
     count: 5
 ";
 
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = StackProto});
-        var server = pairTracker.Pair.Server;
+    [Test]
+    public async Task StackPrice()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var priceSystem = entManager.System<PricingSystem>();
@@ -134,6 +182,6 @@ public sealed class CargoTest
         var price = priceSystem.GetPrice(ent);
         Assert.That(price, Is.EqualTo(100.0));
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

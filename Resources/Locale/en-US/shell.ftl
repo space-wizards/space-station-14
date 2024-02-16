@@ -18,6 +18,8 @@ shell-argument-must-be-number = Argument must be a number.
 shell-argument-must-be-boolean = Argument must be a boolean.
 shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
+shell-need-minimum-arguments = Need at least {$minimum} arguments!
+shell-need-minimum-one-argument = Need at least one argument!
 
 shell-argument-uid = EntityUid
 
@@ -37,8 +39,11 @@ shell-invalid-color-hex = Invalid color hex!
 shell-target-player-does-not-exist = Target player does not exist!
 shell-target-entity-does-not-have-message = Target entity does not have {INDEFINITE($missing)} {$missing}!
 shell-timespan-minutes-must-be-correct = {$span} is not a valid minutes timespan.
-shell-argument-must-be-prototype = Argument {$index} must be a ${prototypeName}!
+shell-argument-must-be-prototype = Argument {$index} must be a {LOC($prototypeName)}!
 shell-argument-number-must-be-between = Argument {$index} must be a number between {$lower} and {$upper}!
 shell-argument-station-id-invalid = Argument {$index} must be a valid station id!
 shell-argument-map-id-invalid = Argument {$index} must be a valid map id!
 shell-argument-number-invalid = Argument {$index} must be a valid number!
+
+# Hints
+shell-argument-username-hint = <username>

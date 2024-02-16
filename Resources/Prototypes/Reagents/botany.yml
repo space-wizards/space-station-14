@@ -8,7 +8,7 @@
   physicalDesc: reagent-physical-desc-thick
   plantMetabolism:
     - !type:PlantAdjustNutrition
-      amount: 1
+      amount: 2
   metabolisms:
     Food:
       effects:
@@ -32,7 +32,7 @@
       amount: -0.5
     - !type:PlantAdjustMutationMod
       prob: 0.3
-      amount: 0.2
+      amount: 0.4
   metabolisms:
     Medicine:
       effects:
@@ -134,6 +134,27 @@
         conditions:
         - !type:OrganType
           type: Plant
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Burn: 2
+            Poison: 1
+    Medicine:
+      effects:
+      - !type:Polymorph
+        prototype: TreeMorph
+        conditions:
+          - !type:OrganType
+            type: Plant
+          - !type:ReagentThreshold
+            min: 80
+
 
 - type: reagent
   id: WeedKiller
@@ -181,6 +202,52 @@
         damage:
           types:
             Caustic: 1
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 1
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.25
+      - !type:ChemVomit
+        probability: 0.12
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 0.8
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "ammonia-smell" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 0.25
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 1
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          groups:
+            Brute: -5
+            Burn: -5
+
 
 - type: reagent
   id: Diethylamine

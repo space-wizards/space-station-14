@@ -1,4 +1,4 @@
-﻿using Content.Server.Storage.Components;
+﻿using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
@@ -11,16 +11,16 @@ namespace Content.Server.Storage.EntitySystems
     {
         protected override int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter)
         {
-            if (!EntityManager.TryGetComponent(msg.Container.Owner, out ServerStorageComponent? component)
-                || component.StoredEntities == null)
+            if (!EntityManager.TryGetComponent(msg.Container.Owner, out StorageComponent? component))
             {
                 return null;
             }
 
             var count = 0;
-            foreach (var entity in component.StoredEntities)
+            foreach (var entity in component.Container.ContainedEntities)
             {
-                if (itemCounter.Count.IsValid(entity)) count++;
+                if (itemCounter.Count.IsValid(entity))
+                    count++;
             }
 
             return count;

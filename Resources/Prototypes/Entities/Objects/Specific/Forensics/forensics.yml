@@ -5,14 +5,16 @@
   description: A forensic pad for collecting fingerprints or fibers.
   components:
   - type: Item
-    size: 3
+    size: Tiny
   - type: ForensicPad
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper
       color: yellow
   - type: Tag
     tags:
     - Document
+  - type: GuideHelp
+    guides:
+    - Forensics

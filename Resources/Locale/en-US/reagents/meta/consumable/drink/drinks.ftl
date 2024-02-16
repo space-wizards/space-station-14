@@ -46,6 +46,9 @@ reagent-desc-nothing = Absolutely nothing.
 reagent-name-nuclear-cola = nuclear cola
 reagent-desc-nuclear-cola = Cola, cola never changes.
 
+reagent-name-hot-cocoa = hot cocoa
+reagent-desc-hot-cocoa = Smells like the holidays!
+
 reagent-name-soda-water = soda water
 reagent-desc-soda-water = A container of club soda. Why not make a scotch and soda?
 
@@ -76,5 +79,11 @@ reagent-desc-pilk = A sickening mixture of milk and cola.
 reagent-name-posca = posca
 reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
-reagent-name-kvass = kvass
-reagent-desc-kvass = A cool refreshing drink with a taste of socialism.
+reagent-name-the-martinez = The Martinez
+reagent-desc-the-martinez = The edgerunner legend. Remembered by a drink, forgotten by a drunk.
+
+reagent-name-white-gilgamesh = white gilgamesh
+reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you feel like you're made of wood.
+
+reagent-name-mopwata = mopwata
+reagent-desc-mopwata = Dirty, stagnant mop water.

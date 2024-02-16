@@ -1,6 +1,6 @@
-﻿using Content.Server.Magic.Events;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
+﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Magic.Events;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 

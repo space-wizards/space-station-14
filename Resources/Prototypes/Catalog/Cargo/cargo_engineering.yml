@@ -4,7 +4,7 @@
     sprite: Objects/Tools/cable-coils.rsi
     state: coillv-30
   product: CrateEngineeringCableLV
-  cost: 600
+  cost: 300
   category: Engineering
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Tools/cable-coils.rsi
     state: coilmv-30
   product: CrateEngineeringCableMV
-  cost: 600
+  cost: 300
   category: Engineering
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Tools/cable-coils.rsi
     state: coilhv-30
   product: CrateEngineeringCableHV
-  cost: 600
+  cost: 300
   category: Engineering
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Tools/cable-coils.rsi
     state: coilall-30
   product: CrateEngineeringCableBulk
-  cost: 1200
+  cost: 750
   category: Engineering
   group: market
 
@@ -45,6 +45,16 @@
     state: icon
   product: CrateEngineeringElectricalSupplies
   cost: 4500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: StationBeaconBundle
+  icon:
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  product: CrateEngineeringStationBeaconBundle
+  cost: 500
   category: Engineering
   group: market
 
@@ -77,3 +87,44 @@
   cost: 1100
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: EvaKit
+  icon:
+    sprite: Clothing/Head/Helmets/eva.rsi
+    state: icon
+  product: CrateEvaKit
+  cost: 5000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringRCDAmmo
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  product: CrateRCDAmmo
+  cost: 2500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringRCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  product: CrateRCD
+  cost: 800
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringParticleDecelerators
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
+  product: CrateParticleDecelerators
+  cost: 15000
+  category: Engineering
+  group: market
+  

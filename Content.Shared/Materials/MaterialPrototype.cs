@@ -1,7 +1,6 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Materials
 {
@@ -10,44 +9,52 @@ namespace Content.Shared.Materials
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
     [Prototype("material")]
-    public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
+    public sealed partial class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
         public string[]? Parents { get; }
 
         [ViewVariables]
-        [AbstractDataFieldAttribute]
+        [AbstractDataField]
         public bool Abstract { get; } = false;
 
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     For material storage to be able to convert back and forth
         ///     between the material and physical entities you can carry,
         ///     include which stack we should spawn by default.
         /// </summary>
-        [DataField("stackEntity", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string StackEntity { get; } = "";
+        [DataField]
+        public ProtoId<EntityPrototype>? StackEntity;
 
-        [DataField("name")]
-        public string Name = "";
+        [DataField]
+        public string Name = string.Empty;
 
-        [DataField("color")]
-        public Color Color { get; } = Color.Gray;
+        /// <summary>
+        /// Locale id for the unit of this material.
+        /// Lathe recipe tooltips and material storage display use this to let you change a material to sound nicer.
+        /// For example, 5 bars of gold is better than 5 sheets of gold.
+        /// </summary>
+        [DataField]
+        public LocId Unit = "materials-unit-sheet";
+
+        [DataField]
+        public Color Color { get; private set; } = Color.Gray;
 
         /// <summary>
         ///     An icon used to represent the material in graphic interfaces.
         /// </summary>
-        [DataField("icon")]
-        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+        [DataField]
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// The price per cm3.
         /// </summary>
-        [DataField("price", required: true)]
+        [DataField(required: true)]
         public double Price = 0;
     }
 }

@@ -1,5 +1,5 @@
 - type: entity
-  parent: ComputerFrame
+  parent: BaseStructureComputer
   id: BaseComputer
   name: computer
   placement:
@@ -8,11 +8,12 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmash
   - type: Construction
     graph: Computer
     node: computer
+    containers:
+      - board
   - type: Computer
   - type: ApcPowerReceiver
     powerLoad: 200
@@ -20,7 +21,6 @@
   - type: ActivatableUIRequiresPower
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
-    netsync: false
     layers:
     - map: ["computerLayerBody"]
       state: computer
@@ -52,9 +52,11 @@
   - type: EmitSoundOnUIOpen
     sound:
       collection: Keyboard
+      params:
+        volume: -1
   - type: ContainerContainer
     containers:
       board: !type:Container
         ents: []
-  - type: StaticPrice
-    price: 400
+  - type: LightningTarget
+    priority: 1

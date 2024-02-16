@@ -1,42 +1,64 @@
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Content.Server.Salvage;
-using NUnit.Framework;
+using Content.Shared.CCVar;
+using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests;
+
+[TestFixture]
+public sealed class SalvageTest
 {
-    [TestFixture]
-    public sealed class SalvageTest
+    /// <summary>
+    /// Asserts that all salvage maps have been saved as grids and are loadable.
+    /// </summary>
+    [Test]
+    public async Task AllSalvageMapsLoadableTest()
     {
-        [Test]
-        public async Task SalvageGridBoundsTest()
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var mapLoader = entManager.System<MapLoaderSystem>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var cfg = server.ResolveDependency<IConfigurationManager>();
+        Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
+
+        await server.WaitPost(() =>
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
-            await server.WaitIdleAsync();
-
-            var mapMan = server.ResolveDependency<IMapManager>();
-            var protoManager = server.ResolveDependency<IPrototypeManager>();
-            var entManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
-
-            await server.WaitAssertion(() =>
+            foreach (var salvage in prototypeManager.EnumeratePrototypes<SalvageMapPrototype>())
             {
-                foreach (var salvage in protoManager.EnumeratePrototypes<SalvageMapPrototype>())
+                var mapFile = salvage.MapPath;
+
+                var mapId = mapManager.CreateMap();
+                try
                 {
-                    var mapId = mapMan.CreateMap();
-                    mapLoader.TryLoad(mapId, salvage.MapPath.ToString(), out var rootUids);
-                    Assert.That(rootUids is { Count: 1 }, $"Salvage map {salvage.ID} does not have a single grid");
-                    var grid = rootUids[0];
-                    Assert.That(entManager.TryGetComponent<MapGridComponent>(grid, out var gridComp), $"Salvage {salvage.ID}'s grid does not have GridComponent.");
-                    Assert.That(gridComp.LocalAABB, Is.EqualTo(salvage.Bounds), $"Salvage {salvage.ID}'s bounds {gridComp.LocalAABB} are not equal to the bounds on the prototype {salvage.Bounds}");
+                    Assert.That(mapLoader.TryLoad(mapId, mapFile.ToString(), out var roots));
+                    Assert.That(roots.Where(uid => entManager.HasComponent<MapGridComponent>(uid)), Is.Not.Empty);
                 }
-            });
-            await pairTracker.CleanReturnAsync();
-        }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to load salvage map {salvage.ID}, was it saved as a map instead of a grid?", ex);
+                }
+
+                try
+                {
+                    mapManager.DeleteMap(mapId);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to delete salvage map {salvage.ID}", ex);
+                }
+            }
+        });
+        await server.WaitRunTicks(1);
+
+        await pair.CleanReturnAsync();
     }
 }

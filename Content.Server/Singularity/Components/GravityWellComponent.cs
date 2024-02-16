@@ -8,7 +8,7 @@ namespace Content.Server.Singularity.Components;
 /// Primarily managed by <see cref="GravityWellSystem"/>.
 /// </summary>
 [RegisterComponent]
-public sealed class GravityWellComponent : Component
+public sealed partial class GravityWellComponent : Component
 {
     /// <summary>
     /// The maximum range at which the gravity well can push/pull entities.

@@ -4,7 +4,7 @@
   description: job-description-reporter
   playTimeTracker: JobReporter
   startingGear: ReporterGear
-  icon: "Reporter"
+  icon: "JobIconReporter"
   supervisors: job-supervisors-hop
   access:
   - Service
@@ -18,6 +18,6 @@
     shoes: ClothingShoesColorWhite
     id: ReporterPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpsuitJournalist
+  innerClothingSkirt: ClothingUniformJumpsuitJournalist
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

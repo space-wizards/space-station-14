@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Mining;
@@ -7,11 +7,11 @@ namespace Content.Shared.Mining;
 /// This is a prototype for defining ores that generate in rock
 /// </summary>
 [Prototype("ore")]
-public sealed class OrePrototype : IPrototype
+public sealed partial class OrePrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("oreEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? OreEntity;

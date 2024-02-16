@@ -1,5 +1,5 @@
-using System.Linq;
 using Content.Shared.Decals;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Sprite;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -27,17 +27,40 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
         if (component.Available.Count == 0)
             return;
 
-        var group = _random.Pick(component.Available);
-        component.Selected.EnsureCapacity(group.Count);
-
-        foreach (var layer in group)
+        var groups = new List<Dictionary<string, Dictionary<string, string?>>>();
+        if (component.GetAllGroups)
         {
-            Color? color = null;
+            groups = component.Available;
+        }
+        else
+        {
+            groups.Add(_random.Pick(component.Available));
+        }
 
-            if (!string.IsNullOrEmpty(layer.Value.Color))
-                color = _random.Pick(_prototype.Index<ColorPalettePrototype>(layer.Value.Color).Colors.Values);
+        component.Selected.EnsureCapacity(groups.Count);
 
-            component.Selected.Add(layer.Key, (layer.Value.State, color));
+        Color? previousColor = null;
+
+        foreach (var group in groups)
+        {
+            foreach (var layer in group)
+            {
+                Color? color = null;
+
+                var selectedState = _random.Pick(layer.Value);
+                if (!string.IsNullOrEmpty(selectedState.Value))
+                {
+                    if (selectedState.Value == $"Inherit")
+                        color = previousColor;
+                    else
+                    {
+                        color = _random.Pick(_prototype.Index<ColorPalettePrototype>(selectedState.Value).Colors.Values);
+                        previousColor = color;
+                    }
+                }
+
+                component.Selected.Add(layer.Key, (selectedState.Key, color));
+            }
         }
 
         Dirty(component);

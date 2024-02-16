@@ -1,11 +1,12 @@
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Electrocution
 {
     [DataDefinition]
-    public sealed class ElectrocutionNode : Node
+    public sealed partial class ElectrocutionNode : Node
     {
         [DataField("cable")]
         public EntityUid CableEntity;
@@ -18,10 +19,12 @@ namespace Content.Server.Electrocution
             MapGridComponent? grid,
             IEntityManager entMan)
         {
+            var _nodeContainer = entMan.System<NodeContainerSystem>();
+
             if (!nodeQuery.TryGetComponent(CableEntity, out var nodeContainer))
                 yield break;
 
-            if (nodeContainer.TryGetNode(NodeName, out Node? node))
+            if (_nodeContainer.TryGetNode(nodeContainer, NodeName, out Node? node))
                 yield return node;
         }
     }

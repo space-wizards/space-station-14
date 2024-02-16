@@ -18,6 +18,7 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public const string ContainerName = "paper_label";
 
@@ -26,11 +27,18 @@ namespace Content.Server.Labels
             base.Initialize();
 
             SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnLabelCompMapInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
+        }
+
+        private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
+        {
+            if (!string.IsNullOrEmpty(component.CurrentLabel))
+                component.CurrentLabel = Loc.GetString(component.CurrentLabel);
         }
 
         /// <summary>
@@ -53,7 +61,7 @@ namespace Content.Server.Labels
                     return;
 
                 // Remove label
-                metadata.EntityName = label.OriginalName;
+                _metaData.SetEntityName(uid, label.OriginalName, metadata);
                 label.CurrentLabel = null;
                 label.OriginalName = null;
 
@@ -63,7 +71,7 @@ namespace Content.Server.Labels
             // Update label
             label.OriginalName ??= metadata.EntityName;
             label.CurrentLabel = text;
-            metadata.EntityName = $"{label.OriginalName} ({text})";
+            _metaData.SetEntityName(uid, $"{label.OriginalName} ({text})", metadata);
         }
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
@@ -99,25 +107,28 @@ namespace Content.Server.Labels
             if (comp.LabelSlot.Item is not {Valid: true} item)
                 return;
 
-            if (!args.IsInDetailsRange)
+            using (args.PushGroup(nameof(PaperLabelComponent)))
             {
-                args.PushMarkup(Loc.GetString("comp-paper-label-has-label-cant-read"));
-                return;
+                if (!args.IsInDetailsRange)
+                {
+                    args.PushMarkup(Loc.GetString("comp-paper-label-has-label-cant-read"));
+                    return;
+                }
+
+                if (!EntityManager.TryGetComponent(item, out PaperComponent? paper))
+                    // Assuming yaml has the correct entity whitelist, this should not happen.
+                    return;
+
+                if (string.IsNullOrWhiteSpace(paper.Content))
+                {
+                    args.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
+                    return;
+                }
+
+                args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
+                var text = paper.Content;
+                args.PushMarkup(text.TrimEnd());
             }
-
-            if (!EntityManager.TryGetComponent(item, out PaperComponent? paper))
-                // Assuming yaml has the correct entity whitelist, this should not happen.
-                return;
-
-            if (string.IsNullOrWhiteSpace(paper.Content))
-            {
-                args.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
-                return;
-            }
-
-            args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
-            var text = paper.Content;
-            args.PushMarkup(text.TrimEnd());
         }
 
         private void OnContainerModified(EntityUid uid, PaperLabelComponent label, ContainerModifiedMessage args)

@@ -9,7 +9,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Allows the entity to be fired from a gun.
 /// </summary>
 [RegisterComponent, Virtual]
-public class AmmoComponent : Component, IShootable
+public partial class AmmoComponent : Component, IShootable
 {
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
@@ -20,13 +20,14 @@ public class AmmoComponent : Component, IShootable
 /// <summary>
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
-[RegisterComponent, NetworkedComponent, ComponentReference(typeof(AmmoComponent))]
-public sealed class CartridgeAmmoComponent : AmmoComponent
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class CartridgeAmmoComponent : AmmoComponent
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("spent")]
+    [AutoNetworkedField]
     public bool Spent = false;
 
     /// <summary>

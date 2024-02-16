@@ -8,7 +8,7 @@ namespace Content.Client.Audio;
 /// Samples nearby <see cref="AmbientSoundComponent"/> and plays audio.
 /// </summary>
 [RegisterComponent]
-public sealed class AmbientSoundTreeComponent : Component, IComponentTreeComponent<AmbientSoundComponent>
+public sealed partial class AmbientSoundTreeComponent : Component, IComponentTreeComponent<AmbientSoundComponent>
 {
     public DynamicTree<ComponentTreeEntry<AmbientSoundComponent>> Tree { get; set; } = default!;
 }

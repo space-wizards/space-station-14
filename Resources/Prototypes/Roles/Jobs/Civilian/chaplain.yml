@@ -4,7 +4,7 @@
   description: job-description-chaplain
   playTimeTracker: JobChaplain
   startingGear: ChaplainGear
-  icon: "Chaplain"
+  icon: "JobIconChaplain"
   supervisors: job-supervisors-hop
   access:
   - Chapel
@@ -22,6 +22,6 @@
     shoes: ClothingShoesColorBlack
     id: ChaplainPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtChaplain
+  innerClothingSkirt: ClothingUniformJumpskirtChaplain
   satchel: ClothingBackpackSatchelChaplainFilled
   duffelbag: ClothingBackpackDuffelChaplainFilled

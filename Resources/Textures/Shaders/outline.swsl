@@ -27,12 +27,12 @@
 //
 //************************************************************************
 
-light_mode unshaded;
-//shader_type canvas_item;
 uniform highp float outline_width; // = 2.0;
-// TODO: implement that hint_color thingy.
-//uniform vec4 outline_color: hint_color;
 uniform highp vec4 outline_color; // =vec4(1.0,0.0,0.0,0.33);
+uniform bool outline_fullbright; // =false;
+uniform highp float light_boost; // = 4.0;
+uniform highp float light_gamma; // = 1.0;
+uniform highp float light_whitepoint; // = 1.0;
 
 void fragment() {
 	highp vec4 col = zTexture(UV);
@@ -74,5 +74,7 @@ void fragment() {
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	COLOR = mix(col, outline_color, maxa-col.a);
+	lowp float sampledLight = outline_fullbright ? 1.0 : clamp( (pow( zGrayscale_BT601(lightSample.rgb) * light_whitepoint, light_gamma) / light_whitepoint ) * light_boost, 0.0, 1.0);
+	COLOR = mix(col, outline_color * vec4(vec3(1.0), sampledLight), maxa - col.a);
+	lightSample = vec3(1.0);
 }

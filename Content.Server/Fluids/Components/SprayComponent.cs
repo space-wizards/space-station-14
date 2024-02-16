@@ -2,36 +2,40 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
 [Access(typeof(SpraySystem))]
-public sealed class SprayComponent : Component
+public sealed partial class SprayComponent : Component
 {
     public const string SolutionName = "spray";
 
-    [DataField("sprayDistance")] public float SprayDistance = 3f;
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public FixedPoint2 TransferAmount = 10;
 
-    [DataField("transferAmount")] public FixedPoint2 TransferAmount = FixedPoint2.New(10);
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float SprayDistance = 3.5f;
 
-    [DataField("sprayVelocity")] public float SprayVelocity = 1.5f;
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float SprayVelocity = 3.5f;
 
-    [DataField("sprayAliveTime")] public float SprayAliveTime = 0.75f;
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public EntProtoId SprayedPrototype = "Vapor";
 
-    [DataField("cooldownTime")] public float CooldownTime = 0.5f;
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public int VaporAmount = 1;
 
-    [DataField("sprayedPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SprayedPrototype = "Vapor";
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float VaporSpread = 90f;
 
-    [DataField("vaporAmount")] public int VaporAmount = 1;
+    /// <summary>
+    /// How much the player is pushed back for each spray.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float PushbackAmount = 2f;
 
-    [DataField("vaporSpread")] public float VaporSpread = 90f;
-
-    [DataField("impulse")] public float Impulse;
-
-    [DataField("spraySound", required: true)]
+    [ViewVariables(VVAccess.ReadWrite), DataField(required: true)]
     [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-    public SoundSpecifier SpraySound { get; } = default!;
+    public SoundSpecifier SpraySound { get; private set; } = default!;
 }

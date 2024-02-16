@@ -14,7 +14,6 @@
     soundEject:
       collection: ShellEject
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
       - state: base
@@ -48,8 +47,8 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
-    count: 4
-    spread: 5
+    count: 1
+    spread: 0
   - type: SpentAmmoVisuals
     state: "slug"
 
@@ -131,3 +130,38 @@
     maxTransferAmount: 7
   - type: SpentAmmoVisuals
     state: "practice"
+
+#Not yet craftable due to balance concerns. Should take a good bit of setup to create like the /tg/station recipe.
+#Either the improvised shotgun or its recipe (as of July 2023) will also probably have to be nerfed if you decide to make this craftable.
+- type: entity
+  id: ShellShotgunImprovised
+  name: improvised shotgun shell
+  description: A homemade shotgun shell that shoots painful metal shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
+  parent: BaseShellShotgun
+  components:
+  - type: Sprite
+    layers:
+      - state: improvised
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    count: 10
+    spread: 45 #deadly if you can get up close... otherwise, good luck doing any kind of real damage
+    proto: PelletShotgunImprovised
+  - type: SpentAmmoVisuals
+    state: "improvised"
+
+- type: entity
+  id: ShellShotgunUranium
+  name: uranium shotgun shell
+  parent: BaseShellShotgun
+  components:
+    - type: Sprite
+      layers:
+        - state: depleted-uranium
+          map: [ "enum.AmmoVisualLayers.Base" ]
+    - type: CartridgeAmmo
+      count: 5
+      spread: 6
+      proto: PelletShotgunUranium
+    - type: SpentAmmoVisuals
+      state: "depleted-uranium"

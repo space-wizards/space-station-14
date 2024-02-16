@@ -1,24 +1,18 @@
-using System.Threading;
-using Content.Server.DoAfter;
-using Content.Server.Guardian;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Implants;
 
 public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
@@ -26,12 +20,10 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         base.Initialize();
         InitializeImplanted();
 
-        SubscribeLocalEvent<ImplanterComponent, HandDeselectedEvent>(OnHandDeselect);
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
-        SubscribeLocalEvent<ImplanterComponent, ComponentGetState>(OnImplanterGetState);
 
-        SubscribeLocalEvent<ImplanterComponent, DoAfterEvent<ImplantEvent>>(OnImplant);
-        SubscribeLocalEvent<ImplanterComponent, DoAfterEvent<DrawEvent>>(OnDraw);
+        SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
+        SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
     }
 
     private void OnImplanterAfterInteract(EntityUid uid, ImplanterComponent component, AfterInteractEvent args)
@@ -39,33 +31,40 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         if (args.Target == null || !args.CanReach || args.Handled)
             return;
 
-        //Simplemobs and regular mobs should be injectable, but only regular mobs have mind.
-        //So just don't implant/draw anything that isn't living or is a guardian
-        //TODO: Rework a bit when surgery is in to work with implant cases
-        if (!HasComp<MobStateComponent>(args.Target.Value) || HasComp<GuardianComponent>(args.Target.Value))
+        var target = args.Target.Value;
+        if (!CheckTarget(target, component.Whitelist, component.Blacklist))
             return;
 
         //TODO: Rework when surgery is in for implant cases
         if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
         {
-            TryDraw(component, args.User, args.Target.Value, uid);
+            TryDraw(component, args.User, target, uid);
         }
         else
         {
+            if (!CanImplant(args.User, target, uid, component, out var implant, out _))
+            {
+                // no popup if implant doesn't exist
+                if (implant == null)
+                    return;
+
+                // show popup to the user saying implant failed
+                var name = Identity.Name(target, EntityManager, args.User);
+                var msg = Loc.GetString("implanter-component-implant-failed", ("implant", implant), ("target", name));
+                _popup.PopupEntity(msg, target, args.User);
+                // prevent further interaction since popup was shown
+                args.Handled = true;
+                return;
+            }
+
             //Implant self instantly, otherwise try to inject the target.
-            if (args.User == args.Target)
-                Implant(uid, args.Target.Value, component);
-
+            if (args.User == target)
+                Implant(target, target, uid, component);
             else
-                TryImplant(component, args.User, args.Target.Value, uid);
+                TryImplant(component, args.User, target, uid);
         }
-        args.Handled = true;
-    }
 
-    private void OnHandDeselect(EntityUid uid, ImplanterComponent component, HandDeselectedEvent args)
-    {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
+        args.Handled = true;
     }
 
     /// <summary>
@@ -77,27 +76,21 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        if (component.CancelToken != null)
+        var args = new DoAfterArgs(EntityManager, user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
+        {
+            BreakOnUserMove = true,
+            BreakOnTargetMove = true,
+            BreakOnDamage = true,
+            NeedHand = true,
+        };
+
+        if (!_doAfter.TryStartDoAfter(args))
             return;
 
         _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
         var userName = Identity.Entity(user, EntityManager);
         _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target, PopupType.LargeCaution);
-
-        component.CancelToken?.Cancel();
-        component.CancelToken = new CancellationTokenSource();
-
-        var implantEvent = new ImplantEvent();
-
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.ImplantTime, component.CancelToken.Token,target:target, used:implanter)
-        {
-            BreakOnUserMove = true,
-            BreakOnTargetMove = true,
-            BreakOnDamage = true,
-            BreakOnStun = true,
-            NeedHand = true
-        }, implantEvent);
     }
 
     /// <summary>
@@ -110,69 +103,36 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
-
-        component.CancelToken?.Cancel();
-        component.CancelToken = new CancellationTokenSource();
-
-        var drawEvent = new DrawEvent();
-
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.DrawTime, target:target,used:implanter)
+        var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
-            NeedHand = true
-        }, drawEvent);
+            NeedHand = true,
+        };
+
+        if (_doAfter.TryStartDoAfter(args))
+            _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+
     }
 
-    private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
+    private void OnImplant(EntityUid uid, ImplanterComponent component, ImplantEvent args)
     {
-        args.State = new ImplanterComponentState(component.CurrentMode, component.ImplantOnly);
-    }
-
-    private void OnImplant(EntityUid uid, ImplanterComponent component, DoAfterEvent<ImplantEvent> args)
-    {
-        if (args.Cancelled)
-        {
-            component.CancelToken = null;
-            return;
-        }
-
-        if (args.Handled || args.Args.Target == null || args.Args.Used == null)
+        if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
             return;
 
-        Implant(args.Args.Used.Value, args.Args.Target.Value, component);
+        Implant(args.User, args.Target.Value, args.Used.Value, component);
 
         args.Handled = true;
-        component.CancelToken = null;
     }
 
-    private void OnDraw(EntityUid uid, ImplanterComponent component, DoAfterEvent<DrawEvent> args)
+    private void OnDraw(EntityUid uid, ImplanterComponent component, DrawEvent args)
     {
-        if (args.Cancelled)
-        {
-            component.CancelToken = null;
-            return;
-        }
-
-        if (args.Handled || args.Args.Used == null || args.Args.Target == null)
+        if (args.Cancelled || args.Handled || args.Used == null || args.Target == null)
             return;
 
-        Draw(args.Args.Used.Value, args.Args.User, args.Args.Target.Value, component);
+        Draw(args.Used.Value, args.User, args.Target.Value, component);
 
         args.Handled = true;
-        component.CancelToken = null;
-    }
-
-    private sealed class ImplantEvent : EntityEventArgs
-    {
-
-    }
-
-    private sealed class DrawEvent : EntityEventArgs
-    {
-
     }
 }

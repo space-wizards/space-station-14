@@ -1,6 +1,6 @@
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EmptyContainer : IGraphAction
+    public sealed partial class EmptyContainer : IGraphAction
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 

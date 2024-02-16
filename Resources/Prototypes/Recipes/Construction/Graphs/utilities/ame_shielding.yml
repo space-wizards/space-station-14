@@ -1,16 +1,18 @@
 - type: constructionGraph
-  id: AMEShielding
+  id: AmeShielding
   start: start
   graph:
     - node: start
 
     - node: ameShielding
-      entity: AMEShielding
+      entity: AmeShielding
       edges:
         - to: start
           completed:
+            - !type:AdminLog  # I don't like logging it like this. The log should include the user, AMEShielding EntityID, and AMEPart EntityID, and there should also be a start of attempt log.
+              message: "An AME shielding was deconstructed"
             - !type:SpawnPrototype
-              prototype: AMEPart
+              prototype: AmePart
               amount: 1
             - !type:DeleteEntity
           steps:

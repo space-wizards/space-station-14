@@ -1,10 +1,11 @@
-﻿using Robust.Shared.GameStates;
+﻿using System.Numerics;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Medical.Cryogenics;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class InsideCryoPodComponent: Component
+public sealed partial class InsideCryoPodComponent: Component
 {
     [ViewVariables]
     [DataField("previousOffset")]

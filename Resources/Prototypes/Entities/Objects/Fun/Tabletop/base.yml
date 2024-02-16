@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseItem
+  id: BaseBoardEntity # Board item
+  name: board
+  abstract: true
+  description: A blank board.
+  components:
+    - type: TabletopGame
+      size: 256, 256
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: Crowbar
+
+- type: entity
+  id: BaseTabletopPiece # Board piece
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: TabletopDraggable
+  - type: Sprite
+    noRot: true
+  - type: Appearance
+  - type: Tag
+    tags:
+      - TabletopPiece
+
+- type: entity
+  id: BaseBoardTabletop
+  name: baseboard
+  abstract: true
+  noSpawn: true
+  components:
+  - type: Tag
+    tags:
+      - TabletopBoard
+  - type: Sprite
+    noRot: false
+    drawdepth: FloorTiles

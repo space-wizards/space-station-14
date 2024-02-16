@@ -1,0 +1,35 @@
+- type: entity
+  parent: BaseHeaterMachine
+  id: KitchenElectricGrill
+  name: electric grill
+  description: A microwave? No, a real man cooks steaks on a grill!
+  components:
+  - type: Sprite
+    # TODO: draw a sprite
+    sprite: Structures/Machines/electric_grill.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: icon
+    - map: ["enum.EntityHeaterVisuals.Setting"]
+      shader: unshaded
+      visible: false
+  - type: ApcPowerReceiver
+    powerLoad: 0 # off by default
+  - type: EntityHeater
+  - type: ItemPlacer
+    maxEntities: 4 # big grill, many steaks
+    whitelist:
+      components:
+      - Temperature
+  - type: PlaceableSurface
+  - type: Machine
+    board: ElectricGrillMachineCircuitboard
+  - type: GenericVisualizer
+    visuals:
+      enum.EntityHeaterVisuals.Setting:
+        enum.EntityHeaterVisuals.Setting:
+          Off: { visible: false }
+          Low: { visible: true, state: low }
+          Medium: { visible: true, state: medium }
+          High: { visible: true, state: high }

@@ -1,4 +1,4 @@
-﻿using Content.Server.Mining.Components;
+using Content.Server.Mining.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Mining;
 using Content.Shared.Random;
@@ -47,6 +47,6 @@ public sealed class MiningSystem : EntitySystem
         if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
             return;
 
-        component.CurrentOre = _proto.Index<WeightedRandomPrototype>(component.OreRarityPrototypeId).Pick(_random);
+        component.CurrentOre = _proto.Index<WeightedRandomOrePrototype>(component.OreRarityPrototypeId).Pick(_random);
     }
 }

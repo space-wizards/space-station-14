@@ -42,8 +42,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: FireAlarm
-  - type: AccessReader
-    access: [ [ "Atmospherics" ] ]
+  - type: ContainerFill
+    containers:
+      board: [ FireAlarmElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Appearance
   - type: WiresVisuals
   - type: AlertLevelDisplay
@@ -58,9 +62,10 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: WiresPanel
   - type: Wires
-    BoardName: "Fire Alarm"
-    LayoutId: FireAlarm
+    boardName: wires-board-name-firealarm
+    layoutId: FireAlarm
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
@@ -82,13 +87,21 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 160
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 80
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalGlassBreak
+              params:
+                volume: -4
   placement:
     mode: SnapgridCenter
     snap:
@@ -104,7 +117,16 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
-    state: fire_b1
+    layers:
+    - state: fire_b1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: fire_b1 }
+          electronics: { state: fire_b2 }
   - type: Construction
     graph: FireAlarm
     node: assembly

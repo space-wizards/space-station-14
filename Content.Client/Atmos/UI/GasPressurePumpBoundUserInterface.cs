@@ -1,11 +1,8 @@
-﻿using System;
-using Content.Client.Atmos.EntitySystems;
-using Content.Shared.Atmos;
+﻿using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
-using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -15,11 +12,13 @@ namespace Content.Client.Atmos.UI
     [UsedImplicitly]
     public sealed class GasPressurePumpBoundUserInterface : BoundUserInterface
     {
-
-        private GasPressurePumpWindow? _window;
+        [ViewVariables]
         private const float MaxPressure = Atmospherics.MaxOutputPressure;
 
-        public GasPressurePumpBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private GasPressurePumpWindow? _window;
+
+        public GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -29,7 +28,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasPressurePumpWindow();
 
-            if(State != null)
+            if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();
@@ -48,7 +47,7 @@ namespace Content.Client.Atmos.UI
 
         private void OnPumpOutputPressurePressed(string value)
         {
-            float pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
+            var pressure = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
             if (pressure > MaxPressure) pressure = MaxPressure;
 
             SendMessage(new GasPressurePumpChangeOutputPressureMessage(pressure));

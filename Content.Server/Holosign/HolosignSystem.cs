@@ -1,68 +1,77 @@
-using Content.Shared.Interaction.Events;
 using Content.Shared.Examine;
-using Content.Server.Coordinates.Helpers;
+using Content.Shared.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Shared.PowerCell.Components;
-using Robust.Shared.Timing;
+using Content.Shared.Interaction;
+using Content.Shared.Storage;
 
-namespace Content.Server.Holosign
+namespace Content.Server.Holosign;
+
+public sealed class HolosignSystem : EntitySystem
 {
-    public sealed class HolosignSystem : EntitySystem
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+
+    public override void Initialize()
     {
-        [Dependency] private readonly PowerCellSystem _cellSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<HolosignProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
+        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
+    }
 
-        public override void Initialize()
+    private void OnExamine(EntityUid uid, HolosignProjectorComponent component, ExaminedEvent args)
+    {
+        // TODO: This should probably be using an itemstatus
+        // TODO: I'm too lazy to do this rn but it's literally copy-paste from emag.
+        _powerCell.TryGetBatteryFromSlot(uid, out var battery);
+        var charges = UsesRemaining(component, battery);
+        var maxCharges = MaxUses(component, battery);
+
+        using (args.PushGroup(nameof(HolosignProjectorComponent)))
         {
-            base.Initialize();
-            SubscribeLocalEvent<HolosignProjectorComponent, UseInHandEvent>(OnUse);
-            SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
-        }
-
-        private void OnExamine(EntityUid uid, HolosignProjectorComponent component, ExaminedEvent args)
-        {
-            // TODO: This should probably be using an itemstatus
-            // TODO: I'm too lazy to do this rn but it's literally copy-paste from emag.
-            _cellSystem.TryGetBatteryFromSlot(uid, out var battery);
-            var charges = UsesRemaining(component, battery);
-            var maxCharges = MaxUses(component, battery);
-
-            args.PushMarkup(Loc.GetString("emag-charges-remaining", ("charges", charges)));
+            args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", charges)));
 
             if (charges > 0 && charges == maxCharges)
             {
-                args.PushMarkup(Loc.GetString("emag-max-charges"));
+                args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
             }
         }
+    }
 
-        private void OnUse(EntityUid uid, HolosignProjectorComponent component, UseInHandEvent args)
-        {
-            if (args.Handled ||
-                !_cellSystem.TryGetBatteryFromSlot(uid, out var battery) ||
-                !battery.TryUseCharge(component.ChargeUse))
-                return;
+    private void OnBeforeInteract(EntityUid uid, HolosignProjectorComponent component, BeforeRangedInteractEvent args)
+    {
 
-            // TODO: Too tired to deal
-            var holo = EntityManager.SpawnEntity(component.SignProto, Transform(args.User).Coordinates.SnapToGrid(EntityManager));
-            Transform(holo).Anchored = true;
+        if (args.Handled
+            || !args.CanReach // prevent placing out of range
+            || HasComp<StorageComponent>(args.Target) // if it's a storage component like a bag, we ignore usage so it can be stored
+            || !_powerCell.TryUseCharge(uid, component.ChargeUse) // if no battery or no charge, doesn't work
+            )
+            return;
 
-            args.Handled = true;
-        }
+        // places the holographic sign at the click location, snapped to grid.
+        // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
+        var holoUid = EntityManager.SpawnEntity(component.SignProto, args.ClickLocation.SnapToGrid(EntityManager));
+        var xform = Transform(holoUid);
+        if (!xform.Anchored)
+            _transform.AnchorEntity(holoUid, xform); // anchor to prevent any tempering with (don't know what could even interact with it)
 
-        private int UsesRemaining(HolosignProjectorComponent component, BatteryComponent? battery = null)
-        {
-            if (battery == null ||
-                component.ChargeUse == 0f) return 0;
+        args.Handled = true;
+    }
 
-            return (int) (battery.CurrentCharge / component.ChargeUse);
-        }
+    private int UsesRemaining(HolosignProjectorComponent component, BatteryComponent? battery = null)
+    {
+        if (battery == null ||
+            component.ChargeUse == 0f) return 0;
 
-        private int MaxUses(HolosignProjectorComponent component, BatteryComponent? battery = null)
-        {
-            if (battery == null ||
-                component.ChargeUse == 0f) return 0;
+        return (int) (battery.CurrentCharge / component.ChargeUse);
+    }
 
-            return (int) (battery.MaxCharge / component.ChargeUse);
-        }
+    private int MaxUses(HolosignProjectorComponent component, BatteryComponent? battery = null)
+    {
+        if (battery == null ||
+            component.ChargeUse == 0f) return 0;
+
+        return (int) (battery.MaxCharge / component.ChargeUse);
     }
 }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -10,7 +11,7 @@ namespace Content.Client.Info
 {
     public sealed class RulesAndInfoWindow : DefaultWindow
     {
-        [Dependency] private readonly IResourceCache _resourceManager = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
         [Dependency] private readonly RulesManager _rules = default!;
 
         public RulesAndInfoWindow()
@@ -35,7 +36,7 @@ namespace Content.Client.Info
 
             Contents.AddChild(rootContainer);
 
-            SetSize = (650, 650);
+            SetSize = new Vector2(650, 650);
         }
 
         private void PopulateTutorial(Info tutorialList)
@@ -61,7 +62,7 @@ namespace Content.Client.Info
 
         private static Control MakeSection(string title, string path, bool markup, IResourceManager res)
         {
-            return new InfoSection(title, res.ContentFileReadAllText($"/Server Info/{path}"), markup);
+            return new InfoSection(title, res.ContentFileReadAllText($"/ServerInfo/{path}"), markup);
         }
 
     }

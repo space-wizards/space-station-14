@@ -1,0 +1,90 @@
+- type: weightedRandomFillSolution
+  id: RandomFillStrangePill
+  fills:
+  - quantity: 20
+    weight: 1
+    reagents:
+    - Aluminium
+    - Carbon
+    - Chlorine
+    - Copper
+    - Fluorine
+    - Hydrogen
+    - Iodine
+    - Lithium
+    - Mercury
+    - Potassium
+    - Phosphorus
+    - Radium
+    - Silicon
+    - Sulfur
+    - Sodium
+  - quantity: 20
+    weight: 2
+    reagents:
+    - Omnizine
+  - quantity: 20
+    weight: 3
+    reagents:
+    - ChloralHydrate
+    - Desoxyephedrine
+    - Ephedrine
+    - Ipecac
+    - Mold
+    - MuteToxin
+    - Nocturine
+    - NorepinephricAcid
+    - Pax
+    - Tricordrazine
+    - SodiumPolyacrylate
+    - Fresium
+  - quantity: 20
+    weight: 5
+    reagents:
+    - SpaceDrugs
+  - quantity: 10
+    weight: 5
+    reagents:
+    - Amatoxin
+
+- type: entity
+  name: strange pill
+  parent: Pill
+  id: StrangePill
+  description: This unusual pill bears no markings. There's no telling what it contains.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+  - type: RandomFillSolution
+    solution: food
+    weightedRandomId: RandomFillStrangePill
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    layers:
+    - state: pill1
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          pill1: ""
+          pill2: ""
+          pill3: ""
+          pill4: ""
+          pill5: ""
+          pill6: ""
+          pill7: ""
+          pill8: ""
+          pill9: ""
+          pill10: ""
+          pill11: ""
+          pill12: ""
+          pill13: ""
+          pill14: ""
+          pill15: ""
+          pill16: ""
+          pill17: ""
+          pill18: ""
+          pill19: ""
+          pill20: ""

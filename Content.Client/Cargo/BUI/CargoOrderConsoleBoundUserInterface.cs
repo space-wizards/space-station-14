@@ -38,9 +38,10 @@ namespace Content.Client.Cargo.BUI
         /// <summary>
         /// Currently selected product
         /// </summary>
+        [ViewVariables]
         private CargoProductPrototype? _product;
 
-        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -48,17 +49,16 @@ namespace Content.Client.Cargo.BUI
         {
             base.Open();
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var sysManager = entityManager.EntitySysManager;
-            var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
-            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
-            var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
+            var spriteSystem = EntMan.System<SpriteSystem>();
+            var dependencies = IoCManager.Instance!;
+            _menu = new CargoConsoleMenu(Owner, EntMan, dependencies.Resolve<IPrototypeManager>(), spriteSystem);
+            var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
             var description = new FormattedMessage();
 
             string orderRequester;
 
-            if (entityManager.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
-                orderRequester = Identity.Name(localPlayer.Value, entityManager);
+            if (EntMan.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
+                orderRequester = Identity.Name(localPlayer.Value, EntMan);
             else
                 orderRequester = string.Empty;
 
@@ -138,7 +138,7 @@ namespace Content.Client.Cargo.BUI
 
         private bool AddOrder()
         {
-            int orderAmt = _orderMenu?.Amount.Value ?? 0;
+            var orderAmt = _orderMenu?.Amount.Value ?? 0;
             if (orderAmt < 1 || orderAmt > OrderCapacity)
             {
                 return false;

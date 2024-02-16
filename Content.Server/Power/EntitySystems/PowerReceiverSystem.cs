@@ -1,14 +1,15 @@
-using Content.Server.Power.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
+using Content.Server.Power.Components;
+using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
-using Content.Shared.Database;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Content.Server.Administration.Managers;
-using Content.Shared.Administration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
@@ -46,7 +47,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 Text = Loc.GetString("verb-debug-toggle-need-power"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
                 Act = () => component.NeedsPower = !component.NeedsPower
             });
         }
@@ -73,35 +74,35 @@ namespace Content.Server.Power.EntitySystems
             component.LinkedReceivers.Clear();
         }
 
-        private void OnProviderConnected(EntityUid uid, ApcPowerReceiverComponent receiver, ExtensionCableSystem.ProviderConnectedEvent args)
+        private void OnProviderConnected(Entity<ApcPowerReceiverComponent> receiver, ref ExtensionCableSystem.ProviderConnectedEvent args)
         {
             var providerUid = args.Provider.Owner;
             if (!EntityManager.TryGetComponent<ApcPowerProviderComponent>(providerUid, out var provider))
                 return;
 
-            receiver.Provider = provider;
+            receiver.Comp.Provider = provider;
 
             ProviderChanged(receiver);
         }
 
-        private void OnProviderDisconnected(EntityUid uid, ApcPowerReceiverComponent receiver, ExtensionCableSystem.ProviderDisconnectedEvent args)
+        private void OnProviderDisconnected(Entity<ApcPowerReceiverComponent> receiver, ref ExtensionCableSystem.ProviderDisconnectedEvent args)
         {
-            receiver.Provider = null;
+            receiver.Comp.Provider = null;
 
             ProviderChanged(receiver);
         }
 
-        private void OnReceiverConnected(EntityUid uid, ApcPowerProviderComponent provider, ExtensionCableSystem.ReceiverConnectedEvent args)
+        private void OnReceiverConnected(Entity<ApcPowerProviderComponent> provider, ref ExtensionCableSystem.ReceiverConnectedEvent args)
         {
-            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent? receiver))
+            if (EntityManager.TryGetComponent(args.Receiver, out ApcPowerReceiverComponent? receiver))
             {
-                provider.AddReceiver(receiver);
+                provider.Comp.AddReceiver(receiver);
             }
         }
 
         private void OnReceiverDisconnected(EntityUid uid, ApcPowerProviderComponent provider, ExtensionCableSystem.ReceiverDisconnectedEvent args)
         {
-            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent? receiver))
+            if (EntityManager.TryGetComponent(args.Receiver, out ApcPowerReceiverComponent? receiver))
             {
                 provider.RemoveReceiver(receiver);
             }
@@ -127,20 +128,21 @@ namespace Content.Server.Power.EntitySystems
                 {
                     TogglePower(uid, user: args.User);
                 },
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
                 Text = Loc.GetString("power-switch-component-toggle-verb"),
                 Priority = -3
             };
             args.Verbs.Add(verb);
         }
 
-        private void ProviderChanged(ApcPowerReceiverComponent receiver)
+        private void ProviderChanged(Entity<ApcPowerReceiverComponent> receiver)
         {
-            receiver.NetworkLoad.LinkedNetwork = default;
-            var ev = new PowerChangedEvent(receiver.Powered, receiver.NetworkLoad.ReceivingPower);
+            var comp = receiver.Comp;
+            comp.NetworkLoad.LinkedNetwork = default;
+            var ev = new PowerChangedEvent(comp.Powered, comp.NetworkLoad.ReceivingPower);
 
-            RaiseLocalEvent(receiver.Owner, ref ev);
-            _appearance.SetData(receiver.Owner, PowerDeviceVisuals.Powered, receiver.Powered);
+            RaiseLocalEvent(receiver, ref ev);
+            _appearance.SetData(receiver, PowerDeviceVisuals.Powered, comp.Powered);
         }
 
         /// <summary>

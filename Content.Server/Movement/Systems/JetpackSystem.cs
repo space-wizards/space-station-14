@@ -12,38 +12,46 @@ public sealed class JetpackSystem : SharedJetpackSystem
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private const float UpdateCooldown = 0.5f;
-
-    protected override bool CanEnable(JetpackComponent component)
+    protected override bool CanEnable(EntityUid uid, JetpackComponent component)
     {
-        return base.CanEnable(component) &&  TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.TotalMoles < component.MoleUsage);
+        return base.CanEnable(uid, component) &&
+               TryComp<GasTankComponent>(uid, out var gasTank) &&
+               !(gasTank.Air.TotalMoles < component.MoleUsage);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var toDisable = new ValueList<JetpackComponent>();
+        var toDisable = new ValueList<(EntityUid Uid, JetpackComponent Component)>();
+        var query = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, GasTankComponent>();
 
-        foreach (var (active, comp, gasTank) in EntityQuery<ActiveJetpackComponent, JetpackComponent, GasTankComponent>())
+        while (query.MoveNext(out var uid, out var active, out var comp, out var gasTankComp))
         {
-            if (_timing.CurTime < active.TargetTime) continue;
-
-            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
-            var air = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
-
-            if (air == null || !MathHelper.CloseTo(air.TotalMoles, comp.MoleUsage, 0.001f))
-            {
-                toDisable.Add(comp);
+            if (_timing.CurTime < active.TargetTime)
                 continue;
+
+            var gasTank = (uid, gasTankComp);
+            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
+            var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
+
+            if (usedAir == null)
+                continue;
+
+            var usedEnoughAir =
+                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage/100);
+
+            if (!usedEnoughAir)
+            {
+                toDisable.Add((uid, comp));
             }
 
             _gasTank.UpdateUserInterface(gasTank);
         }
 
-        foreach (var comp in toDisable)
+        foreach (var (uid, comp) in toDisable)
         {
-            SetEnabled(comp, false);
+            SetEnabled(uid, comp, false);
         }
     }
 }

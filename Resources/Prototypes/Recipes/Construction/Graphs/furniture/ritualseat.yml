@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:DeleteEntity {}
+        - !type:DestroyEntity {}
       edges:
         - to: chairRitual
           completed:

@@ -3,11 +3,14 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public sealed class GasVolumePumpComponent : Component
+    public sealed partial class GasVolumePumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
+
+        [DataField("blocked")]
+        public bool Blocked { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Overclocked { get; set; } = false;
@@ -40,5 +43,8 @@ namespace Content.Server.Atmos.Piping.Binary.Components
 
         [DataField("overclockThreshold")]
         public float OverclockThreshold { get; set; } = 1000;
+
+        [DataField("lastMolesTransferred")]
+        public float LastMolesTransferred;
     }
 }

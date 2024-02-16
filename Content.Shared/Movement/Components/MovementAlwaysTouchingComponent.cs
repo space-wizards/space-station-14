@@ -7,7 +7,7 @@ namespace Content.Shared.Movement.Components;
 /// i.e. when weightless they're floaty but still have free movement.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class MovementAlwaysTouchingComponent : Component
+public sealed partial class MovementAlwaysTouchingComponent : Component
 {
 
 }

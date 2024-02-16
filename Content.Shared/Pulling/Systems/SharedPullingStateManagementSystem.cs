@@ -1,8 +1,6 @@
-using System.Linq;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -27,41 +25,6 @@ namespace Content.Shared.Pulling
             base.Initialize();
 
             SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
-            SubscribeLocalEvent<SharedPullableComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<SharedPullableComponent, ComponentHandleState>(OnHandleState);
-        }
-
-        private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
-        {
-            args.State = new PullableComponentState(component.Puller);
-        }
-
-        private void OnHandleState(EntityUid uid, SharedPullableComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not PullableComponentState state)
-                return;
-
-            if (!state.Puller.HasValue)
-            {
-                ForceDisconnectPullable(component);
-                return;
-            }
-
-            if (component.Puller == state.Puller)
-            {
-                // don't disconnect and reconnect a puller for no reason
-                return;
-            }
-
-            if (!TryComp<SharedPullerComponent?>(state.Puller.Value, out var comp))
-            {
-                Logger.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
-                // ensure it disconnects from any different puller, still
-                ForceDisconnectPullable(component);
-                return;
-            }
-
-            ForceRelationship(comp, component);
         }
 
         private void OnShutdown(EntityUid uid, SharedPullableComponent component, ComponentShutdown args)
@@ -110,6 +73,9 @@ namespace Content.Shared.Pulling
 
         public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
         {
+            if (_timing.ApplyingState)
+                return;
+            ;
             if (pullable != null && puller != null && (puller.Pulling == pullable.Owner))
             {
                 // Already done
@@ -186,6 +152,9 @@ namespace Content.Shared.Pulling
 
         public void ForceSetMovingTo(SharedPullableComponent pullable, EntityCoordinates? movingTo)
         {
+            if (_timing.ApplyingState)
+                return;
+
             if (pullable.MovingTo == movingTo)
             {
                 return;
@@ -193,12 +162,13 @@ namespace Content.Shared.Pulling
 
             // Don't allow setting a MovingTo if there's no puller.
             // The other half of this guarantee (shutting down a MovingTo if the puller goes away) is enforced in ForceRelationship.
-            if ((pullable.Puller == null) && (movingTo != null))
+            if (pullable.Puller == null && movingTo != null)
             {
                 return;
             }
 
             pullable.MovingTo = movingTo;
+            Dirty(pullable);
 
             if (movingTo == null)
             {
@@ -208,6 +178,19 @@ namespace Content.Shared.Pulling
             {
                 RaiseLocalEvent(pullable.Owner, new PullableMoveMessage(), true);
             }
+        }
+
+        /// <summary>
+        /// Changes if the entity needs a hand in order to be able to pull objects.
+        /// </summary>
+        public void ChangeHandRequirement(EntityUid uid, bool needsHands, SharedPullerComponent? comp)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            comp.NeedsHands = needsHands;
+
+            Dirty(uid, comp);
         }
     }
 }

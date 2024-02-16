@@ -11,9 +11,6 @@
             "name": "base"
         },
         {
-            "name": "high_velocity"
-        },
-        {
             "name": "practice"
         },
         {
@@ -24,6 +21,12 @@
         },
         {
             "name": "rubber"
+        },
+        {
+            "name": "uranium"
+        },
+        {
+            "name": "piercing"
         },
         {
             "name": "mag-1"

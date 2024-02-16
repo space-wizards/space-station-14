@@ -1,5 +1,5 @@
 ﻿using Content.Server.Voting.Managers;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Voting
 {
@@ -75,7 +75,7 @@ namespace Content.Server.Voting
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="optionId"/> is not a valid option ID.
         /// </exception>
-        void CastVote(IPlayerSession session, int? optionId);
+        void CastVote(ICommonSession session, int? optionId);
 
         /// <summary>
         /// Cancel this vote.

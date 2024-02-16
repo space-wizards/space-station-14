@@ -1,0 +1,16 @@
+- type: gameMap
+  id: MeteorArena
+  mapName: Meteor Arena
+  mapPath: /Maps/Nonstations/meteor-arena.yml
+  minPlayers: 0
+  stations:
+    Arena:
+      stationProto: StandardStationArena
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Meteor Arena"
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            Passenger: [ -1, -1 ]

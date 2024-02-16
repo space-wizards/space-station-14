@@ -7,7 +7,7 @@ namespace Content.Server.Tiles;
 /// Applies flammable and damage while vaulting.
 /// </summary>
 [RegisterComponent, Access(typeof(LavaSystem))]
-public sealed class LavaComponent : Component
+public sealed partial class LavaComponent : Component
 {
     /// <summary>
     /// Sound played if something disintegrates in lava.
@@ -19,5 +19,5 @@ public sealed class LavaComponent : Component
     /// How many fire stacks are applied per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fireStacks")]
-    public float FireStacks = 2f;
+    public float FireStacks = 1.25f;
 }

@@ -1,0 +1,323 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/b30e2934e7585bad901dd12a35d0635f1fc292c1 and https://github.com/tgstation/tgstation/commit/6b0af0febe578f47ae280781682ea7a3d77f508a, modified by https://github.com/MilenVolf",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "royal_head",
+      "directions": 4
+    },
+    {
+      "name": "royal_chest",
+      "directions": 4
+    },
+    {
+      "name": "royal_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "royal_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "royal_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "royal_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "gothic_head",
+      "directions": 4
+    },
+    {
+      "name": "gothic_chest",
+      "directions": 4
+    },
+    {
+      "name": "gothic_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "gothic_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "gothic_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "gothic_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_head",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_chest",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "charred_head",
+      "directions": 4
+    },
+    {
+      "name": "charred_chest",
+      "directions": 4
+    },
+    {
+      "name": "charred_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "charred_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "charred_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "charred_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_head",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_chest",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_head",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_chest",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "fan_head",
+      "directions": 4
+    },
+    {
+      "name": "fan_chest",
+      "directions": 4
+    },
+    {
+      "name": "fan_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "fan_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "fan_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "fan_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "ragged_head",
+      "directions": 4
+    },
+    {
+      "name": "ragged_chest",
+      "directions": 4
+    },
+    {
+      "name": "ragged_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "ragged_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "ragged_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "ragged_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_head",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_chest",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_head",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_chest",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "jungle_head",
+      "directions": 4
+    },
+    {
+      "name": "jungle_chest",
+      "directions": 4
+    },
+    {
+      "name": "jungle_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "jungle_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "jungle_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "jungle_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_head",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_chest",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "pointy_head",
+      "directions": 4
+    },
+    {
+      "name": "pointy_chest",
+      "directions": 4
+    },
+    {
+      "name": "pointy_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "pointy_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "pointy_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "pointy_l_leg",
+      "directions": 4
+    }
+  ]
+}

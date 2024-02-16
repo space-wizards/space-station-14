@@ -65,6 +65,17 @@
   files:
   - /Audio/Effects/Footsteps/clownstep1.ogg
   - /Audio/Effects/Footsteps/clownstep2.ogg
+  
+- type: soundCollection
+  id: FootstepJester
+  files:
+  - /Audio/Effects/Footsteps/jesterstep1.ogg
+  - /Audio/Effects/Footsteps/jesterstep2.ogg
+
+- type: soundCollection
+  id: FootstepSkates
+  files:
+  - /Audio/Items/Toys/skates.ogg
 
 - type: soundCollection
   id: FootstepDuck
@@ -136,3 +147,57 @@
   - /Audio/Effects/Footsteps/woodbarefoot3.ogg
   - /Audio/Effects/Footsteps/woodbarefoot4.ogg
   - /Audio/Effects/Footsteps/woodbarefoot5.ogg
+
+- type: soundCollection
+  id: FootstepBounce
+  files:
+  - /Audio/Effects/Footsteps/bounce.ogg
+
+- type: soundCollection
+  id: FootstepClownFast
+  files:
+  - /Audio/Effects/Footsteps/clownspiderstep1.ogg
+  - /Audio/Effects/Footsteps/clownspiderstep2.ogg
+
+- type: soundCollection
+  id: FootstepThud
+  files:
+  - /Audio/Effects/Footsteps/largethud.ogg
+
+- type: soundCollection
+  id: FootstepSnake
+  files:
+  - /Audio/Effects/Footsteps/snake1.ogg
+  - /Audio/Effects/Footsteps/snake2.ogg
+  - /Audio/Effects/Footsteps/snake3.ogg
+
+- type: soundCollection
+  id: FootstepBells
+  files:
+  - /Audio/Effects/Footsteps/bells1.ogg
+  - /Audio/Effects/Footsteps/bells2.ogg
+  - /Audio/Effects/Footsteps/bells3.ogg
+  - /Audio/Effects/Footsteps/bells4.ogg
+  - /Audio/Effects/Footsteps/bells5.ogg
+
+- type: soundCollection
+  id: FootstepSlip
+  files:
+  - /Audio/Effects/slip.ogg
+
+- type: soundCollection
+  id: FootstepBlood
+  files:
+  - /Audio/Effects/Footsteps/gib_step.ogg
+  
+- type: soundCollection
+  id: FootstepSticky
+  files:
+  - /Audio/Effects/Footsteps/meatslap.ogg
+
+- type: soundCollection
+  id: FootstepSpurs
+  files:
+  - /Audio/Effects/Footsteps/spurs1.ogg
+  - /Audio/Effects/Footsteps/spurs2.ogg
+  - /Audio/Effects/Footsteps/spurs3.ogg

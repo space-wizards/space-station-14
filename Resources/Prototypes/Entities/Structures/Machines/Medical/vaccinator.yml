@@ -1,7 +1,7 @@
 - type: entity
   id: Vaccinator
   parent: BaseMachinePowered
-  name: Vaccinator
+  name: vaccinator
   description: A machine that creates vaccines.
   placement:
     mode: SnapgridCenter
@@ -14,10 +14,6 @@
     - state: unlit
       shader: unshaded
       map: ["enum.DiseaseMachineVisualLayers.IsOn"]
-    netsync: false
-  - type: DiseaseVaccineCreator
-  - type: DiseaseMachine
-    machineOutput: Vaccine
   - type: Appearance
   - type: DiseaseMachineVisuals
     idleState: icon

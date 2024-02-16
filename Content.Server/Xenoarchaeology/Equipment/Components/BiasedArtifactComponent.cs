@@ -5,7 +5,7 @@
 /// in a particular direction via the <see cref="TraversalDistorterComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed class BiasedArtifactComponent : Component
+public sealed partial class BiasedArtifactComponent : Component
 {
     [ViewVariables]
     public EntityUid Provider;

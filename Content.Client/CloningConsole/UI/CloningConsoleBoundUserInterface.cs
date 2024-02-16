@@ -7,9 +7,10 @@ namespace Content.Client.CloningConsole.UI
     [UsedImplicitly]
     public sealed class CloningConsoleBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private CloningConsoleWindow? _window;
 
-        public CloningConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public CloningConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

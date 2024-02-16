@@ -6,7 +6,7 @@ namespace Content.Shared.Tiles;
 /// Deletes the entity if the tile changes from under it. Used for visual effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class RequiresTileComponent : Component
+public sealed partial class RequiresTileComponent : Component
 {
 
 }

@@ -7,26 +7,32 @@
     sprite: Objects/Specific/Security/target.rsi
     state: target_stake
     noRot: true
-    netsync: false
   - type: Repairable
   - type: DamagePopup
     damagePopupType: Combined
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 200
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 200
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: InteractionOutline
   - type: Physics
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 500
@@ -38,7 +44,7 @@
             max: 5
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -86,6 +92,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 4000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 2000
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -95,6 +107,6 @@
             max: 10
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]

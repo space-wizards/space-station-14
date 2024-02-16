@@ -5,7 +5,7 @@ namespace Content.Server.Kitchen.Components;
 ///     are otherwise sharp for some purpose.
 /// </summary>
 [RegisterComponent]
-public sealed class SharpComponent : Component
+public sealed partial class SharpComponent : Component
 {
     // TODO just make this a tool type.
     public HashSet<EntityUid> Butchering = new();

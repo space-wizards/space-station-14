@@ -8,15 +8,14 @@ namespace Content.Client.Clothing.UI;
 [UsedImplicitly]
 public sealed class ChameleonBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly ChameleonClothingSystem _chameleon;
 
+    [ViewVariables]
     private ChameleonMenu? _menu;
 
-    public ChameleonBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public ChameleonBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        IoCManager.InjectDependencies(this);
-        _chameleon = _entityManager.System<ChameleonClothingSystem>();
+        _chameleon = EntMan.System<ChameleonClothingSystem>();
     }
 
     protected override void Open()

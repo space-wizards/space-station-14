@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Jittering;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 {
@@ -8,21 +9,21 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     ///     This doesn't use generic status effects because it needs to
     ///     take in some parameters that JitterSystem needs.
     /// </summary>
-    public sealed class Jitter : ReagentEffect
+    public sealed partial class Jitter : ReagentEffect
     {
-        [DataField("amplitude")]
+        [DataField]
         public float Amplitude = 10.0f;
 
-        [DataField("frequency")]
+        [DataField]
         public float Frequency = 4.0f;
 
-        [DataField("time")]
+        [DataField]
         public float Time = 2.0f;
 
         /// <remarks>
         ///     true - refresh jitter time,  false - accumulate jitter time
         /// </remarks>
-        [DataField("refresh")]
+        [DataField]
         public bool Refresh = true;
 
         public override void Effect(ReagentEffectArgs args)
@@ -33,5 +34,8 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
             args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
                 .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(time), Refresh, Amplitude, Frequency);
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+            Loc.GetString("reagent-effect-guidebook-jittering", ("chance", Probability));
     }
 }

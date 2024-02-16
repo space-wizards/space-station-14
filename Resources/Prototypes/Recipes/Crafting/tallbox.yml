@@ -1,0 +1,10 @@
+- type: construction
+  id: ClosetSteel
+  name: closet
+  graph: ClosetSteel
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A tall steel box that cannot be locked.
+  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon }
+  objectType: Structure

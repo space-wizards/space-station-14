@@ -1,0 +1,13 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                VerticalExpand="True" HorizontalExpand="True"
+                Title="{Loc admin-remarks-title}"
+                SetSize="600 400">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <BoxContainer Orientation="Vertical" Margin="4">
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                <BoxContainer Orientation="Vertical" Name="NotesContainer" Access="Public" VerticalExpand="True" />
+            </ScrollContainer>
+        </BoxContainer>
+    </PanelContainer>
+</ui:FancyWindow>

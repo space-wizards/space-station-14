@@ -2,19 +2,18 @@
 using Content.Shared.Crayon;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Crayon.UI
 {
     public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
-        public CrayonBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private CrayonWindow? _menu;
+
+        public CrayonBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
-
-        private CrayonWindow? _menu;
 
         protected override void Open()
         {
@@ -25,7 +24,7 @@ namespace Content.Client.Crayon.UI
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var crayonDecals = prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon"));
             _menu.Populate(crayonDecals);
-            _menu.OpenCentered();
+            _menu.OpenCenteredLeft();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
@@ -6,6 +7,7 @@ using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -90,11 +92,14 @@ namespace Content.Client.ContextMenu.UI
 
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(_entityManager.GetComponent<MetaDataComponent>(x.First()).EntityPrototype?.Name, _entityManager.GetComponent<MetaDataComponent>(y.First()).EntityPrototype?.Name));
+            orderedStates.Sort((x, y) => string.Compare(
+                Identity.Name(x.First(), _entityManager),
+                Identity.Name(y.First(), _entityManager),
+                StringComparison.CurrentCulture));
             Elements.Clear();
             AddToUI(orderedStates);
 
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
             _context.RootMenu.Open(box);
         }
 
@@ -132,10 +137,18 @@ namespace Content.Client.ContextMenu.UI
                 var func = args.Function;
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                    BoundKeyState.Down, _entityManager.GetComponent<TransformComponent>(entity.Value).Coordinates, args.PointerLocation, entity.Value);
+                var message = new ClientFullInputCmdMessage(
+                    _gameTiming.CurTick,
+                    _gameTiming.TickFraction,
+                    funcId)
+                {
+                    State = BoundKeyState.Down,
+                    Coordinates = _entityManager.GetComponent<TransformComponent>(entity.Value).Coordinates,
+                    ScreenCoordinates = args.PointerLocation,
+                    Uid = entity.Value,
+                };
 
-                var session = _playerManager.LocalPlayer?.Session;
+                var session = _playerManager.LocalSession;
                 if (session != null)
                 {
                     inputSys.HandleInputCommand(session, func, message);
@@ -176,7 +189,7 @@ namespace Content.Client.ContextMenu.UI
             if (!_context.RootMenu.Visible)
                 return;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } player ||
+            if (_playerManager.LocalEntity is not { } player ||
                 !player.IsValid())
                 return;
 

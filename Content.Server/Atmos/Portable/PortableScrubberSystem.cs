@@ -7,13 +7,12 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.NodeContainer;
-using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Audio;
 using Content.Server.Administration.Logs;
-using Content.Server.Construction;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Database;
 
 namespace Content.Server.Atmos.Portable
@@ -24,11 +23,11 @@ namespace Content.Server.Atmos.Portable
         [Dependency] private readonly GasCanisterSystem _canisterSystem = default!;
         [Dependency] private readonly GasPortableSystem _gasPortableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -39,8 +38,6 @@ namespace Content.Server.Atmos.Portable
             SubscribeLocalEvent<PortableScrubberComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PortableScrubberComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<PortableScrubberComponent, GasAnalyzerScanEvent>(OnScrubberAnalyzed);
-            SubscribeLocalEvent<PortableScrubberComponent, RefreshPartsEvent>(OnRefreshParts);
-            SubscribeLocalEvent<PortableScrubberComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         private bool IsFull(PortableScrubberComponent component)
@@ -48,19 +45,19 @@ namespace Content.Server.Atmos.Portable
             return component.Air.Pressure >= component.MaxPressure;
         }
 
-        private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, AtmosDeviceUpdateEvent args)
+        private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, ref AtmosDeviceUpdateEvent args)
         {
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
 
-            var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var timeDelta = args.dt;
 
             if (!component.Enabled)
                 return;
 
             // If we are on top of a connector port, empty into it.
             if (TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-                && nodeContainer.TryGetNode(component.PortName, out PortablePipeNode? portableNode)
+                && _nodeContainer.TryGetNode(nodeContainer, component.PortName, out PortablePipeNode? portableNode)
                 && portableNode.ConnectionsEnabled)
             {
                 _atmosphereSystem.React(component.Air, portableNode);
@@ -79,8 +76,7 @@ namespace Content.Server.Atmos.Portable
             if (xform.GridUid == null)
                 return;
 
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
-
+            var position = _transformSystem.GetGridTilePositionOrDefault((uid,xform));
             var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
             var running = Scrub(timeDelta, component, environment);
@@ -104,7 +100,7 @@ namespace Content.Server.Atmos.Portable
             if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(component.PortName, out PipeNode? portableNode))
+            if (!_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? portableNode))
                 return;
 
             portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
@@ -146,7 +142,7 @@ namespace Content.Server.Atmos.Portable
 
         private bool Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
         {
-            return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
+            return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate * _atmosphereSystem.PumpSpeedup(), ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
         }
 
         private void UpdateAppearance(EntityUid uid, bool isFull, bool isRunning)
@@ -166,25 +162,10 @@ namespace Content.Server.Atmos.Portable
             // If it's connected to a port, include the port side
             if (TryComp(uid, out NodeContainerComponent? nodeContainer))
             {
-                if(nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
+                if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
                     gasMixDict.Add(component.PortName, port.Air);
             }
             args.GasMixtures = gasMixDict;
-        }
-
-        private void OnRefreshParts(EntityUid uid, PortableScrubberComponent component, RefreshPartsEvent args)
-        {
-            var pressureRating = args.PartRatings[component.MachinePartMaxPressure];
-            var transferRating = args.PartRatings[component.MachinePartTransferRate];
-
-            component.MaxPressure = component.BaseMaxPressure * MathF.Pow(component.PartRatingMaxPressureModifier, pressureRating - 1);
-            component.TransferRate = component.BaseTransferRate * MathF.Pow(component.PartRatingTransferRateModifier, transferRating - 1);
-        }
-
-        private void OnUpgradeExamine(EntityUid uid, PortableScrubberComponent component, UpgradeExamineEvent args)
-        {
-            args.AddPercentageUpgrade("portable-scrubber-component-upgrade-max-pressure", component.MaxPressure / component.BaseMaxPressure);
-            args.AddPercentageUpgrade("portable-scrubber-component-upgrade-transfer-rate", component.TransferRate / component.BaseTransferRate);
         }
     }
 }

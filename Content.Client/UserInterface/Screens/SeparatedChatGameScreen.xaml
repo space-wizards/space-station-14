@@ -9,6 +9,7 @@
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
     Name="SeparatedChatHud"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
@@ -16,10 +17,13 @@
     <controls:RecordedSplitContainer Name="ScreenContainer" HorizontalExpand="True" VerticalExpand="True" SplitWidth="0" StretchDirection="TopLeft">
         <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
             <controls:MainViewport Name="MainViewport"/>
-            <BoxContainer Name="VoteMenu" Access="Public" Orientation="Vertical"/>
             <widgets:GhostGui Name="Ghost" Access="Protected" />
-            <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
-            <actions:ActionsBar Name="Actions" Access="Protected" />
+            <inventory:InventoryGui Name="Inventory" Access="Protected"/>
+            <hotbar:HotbarGui Name="Hotbar" Access="Protected"/>
+            <BoxContainer Name="TopLeftContainer" Orientation="Vertical">
+                <actions:ActionsBar Name="Actions" Access="Protected" />
+                <BoxContainer Name="VoteMenu" Access="Public" Orientation="Vertical"/>
+            </BoxContainer>
             <alerts:AlertsUI Name="Alerts" Access="Protected" />
         </LayoutContainer>
         <PanelContainer HorizontalExpand="True" MinWidth="300">
@@ -29,7 +33,7 @@
 
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10" Margin="10">
                 <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Protected" />
-                <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" />
+                <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" MinSize="0 0"/>
             </BoxContainer>
         </PanelContainer>
     </controls:RecordedSplitContainer>

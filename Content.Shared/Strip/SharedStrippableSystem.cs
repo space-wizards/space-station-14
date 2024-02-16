@@ -29,11 +29,11 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (args.Handled || args.Target != args.User)
             return;
 
-        StartOpeningStripper(args.User, component);
+        StartOpeningStripper(args.User, (uid, component));
         args.Handled = true;
     }
 
-    public virtual void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
+    public virtual void StartOpeningStripper(EntityUid user, Entity<StrippableComponent> component, bool openInCombat = false)
     {
 
     }
@@ -43,14 +43,14 @@ public abstract class SharedStrippableSystem : EntitySystem
         args.Handled = true;
         args.CanDrop |= uid == args.User &&
                         HasComp<StrippableComponent>(args.Dragged) &&
-                        HasComp<SharedHandsComponent>(args.User);
+                        HasComp<HandsComponent>(args.User);
     }
 
     private void OnCanDrop(EntityUid uid, StrippableComponent component, ref CanDropDraggedEvent args)
     {
         args.CanDrop |= args.Target == args.User &&
                         HasComp<StrippingComponent>(args.User) &&
-                        HasComp<SharedHandsComponent>(args.User);
+                        HasComp<HandsComponent>(args.User);
 
         if (args.CanDrop)
             args.Handled = true;

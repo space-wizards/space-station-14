@@ -3,10 +3,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Procedural;
 
 [Prototype("dungeonRoomPack")]
-public sealed class DungeonRoomPackPrototype : IPrototype
+public sealed partial class DungeonRoomPackPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// Used to associate the room pack with other room packs with the same dimensions.

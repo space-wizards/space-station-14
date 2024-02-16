@@ -1,10 +1,9 @@
-﻿using System.Threading;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Construction.Components;
 
 [RegisterComponent]
-public sealed class PartExchangerComponent : Component
+public sealed partial class PartExchangerComponent : Component
 {
     /// <summary>
     /// How long it takes to exchange the parts
@@ -26,5 +25,5 @@ public sealed class PartExchangerComponent : Component
     [DataField("exchangeSound")]
     public SoundSpecifier ExchangeSound = new SoundPathSpecifier("/Audio/Items/rped.ogg");
 
-    public IPlayingAudioStream? AudioStream;
+    public EntityUid? AudioStream;
 }

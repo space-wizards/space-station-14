@@ -1,22 +1,20 @@
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Sticky;
 using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Sticky.Systems;
 
 public sealed class StickySystem : EntitySystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -28,7 +26,7 @@ public sealed class StickySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StickyComponent, DoAfterEvent>(OnStickSuccessful);
+        SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
     }
@@ -58,7 +56,7 @@ public sealed class StickySystem : EntitySystem
         {
             DoContactInteraction = true,
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
             Act = () => StartUnsticking(uid, args.User, component)
         });
     }
@@ -72,6 +70,11 @@ public sealed class StickySystem : EntitySystem
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
             return false;
         if (component.Blacklist != null && component.Blacklist.IsValid(target))
+            return false;
+
+        var attemptEv = new AttemptEntityStickEvent(target, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
             return false;
 
         // check if delay is not zero to start do after
@@ -88,9 +91,8 @@ public sealed class StickySystem : EntitySystem
             component.Stick = true;
 
             // start sticking object to target
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new StickyDoAfterEvent(), uid, target: target, used: uid)
             {
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true
@@ -105,14 +107,13 @@ public sealed class StickySystem : EntitySystem
         return true;
     }
 
-    private void OnStickSuccessful(EntityUid uid, StickyComponent component, DoAfterEvent args)
+    private void OnStickFinished(EntityUid uid, StickyComponent component, DoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
         if (component.Stick)
             StickToEntity(uid, args.Args.Target.Value, args.Args.User, component);
-
         else
             UnstickFromEntity(uid, args.Args.User, component);
 
@@ -122,6 +123,14 @@ public sealed class StickySystem : EntitySystem
     private void StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
+            return;
+
+        if (component.StuckTo is not { } stuckTo)
+            return;
+
+        var attemptEv = new AttemptEntityUnstickEvent(stuckTo, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
             return;
 
         var delay = (float) component.UnstickDelay.TotalSeconds;
@@ -137,9 +146,8 @@ public sealed class StickySystem : EntitySystem
             component.Stick = false;
 
             // start unsticking object
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new StickyDoAfterEvent(), uid, target: uid)
             {
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true
@@ -157,10 +165,15 @@ public sealed class StickySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        var attemptEv = new AttemptEntityStickEvent(target, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         // add container to entity and insert sticker into it
         var container = _containerSystem.EnsureContainer<Container>(target, StickerSlotId);
         container.ShowContents = true;
-        if (!container.Insert(uid))
+        if (!_containerSystem.Insert(uid, container))
             return;
 
         // show message to user
@@ -184,16 +197,21 @@ public sealed class StickySystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-        if (component.StuckTo == null)
+
+        if (component.StuckTo is not { } stuckTo)
+            return;
+
+        var attemptEv = new AttemptEntityUnstickEvent(stuckTo, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
             return;
 
         // try to remove sticky item from target container
-        var target = component.StuckTo.Value;
-        if (!_containerSystem.TryGetContainer(target, StickerSlotId, out var container) || !container.Remove(uid))
+        if (!_containerSystem.TryGetContainer(stuckTo, StickerSlotId, out var container) || !_containerSystem.Remove(uid, container))
             return;
         // delete container if it's now empty
         if (container.ContainedEntities.Count == 0)
-            container.Shutdown();
+            _containerSystem.ShutdownContainer(container);
 
         // try place dropped entity into user hands
         _handsSystem.PickupOrDrop(user, uid);
@@ -212,6 +230,6 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = null;
-        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
+        RaiseLocalEvent(uid, new EntityUnstuckEvent(stuckTo, user), true);
     }
 }

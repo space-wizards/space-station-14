@@ -175,5 +175,15 @@ namespace Content.Tests.Shared.Chemistry
             Assert.That(parameter.Equals(comparison), Is.EqualTo(comparison.Equals(parameter)));
             Assert.That(comparison.Equals(parameter), Is.EqualTo(expected));
         }
+
+        [Test]
+        [TestCase(1.001f, "1.01")]
+        [TestCase(2f,     "2")]
+        [TestCase(2.5f,   "2.5")]
+        public void NewCeilingTest(float value, string expected)
+        {
+            var result = FixedPoint2.NewCeiling(value);
+            Assert.That($"{result}", Is.EqualTo(expected));
+        }
     }
 }

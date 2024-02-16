@@ -1,4 +1,0 @@
-The sounds are taken from skyrag/tgdownstream
-https://github.com/Skyrat-SS13/Skyrat-tg/pull/892
-
-reptilian_scream.ogg

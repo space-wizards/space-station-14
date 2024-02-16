@@ -17,6 +17,7 @@ public sealed partial class PumpControl : BoxContainer
     private string _address;
 
     public event Action<string, IAtmosDeviceData>? PumpDataChanged;
+	public event Action<IAtmosDeviceData>? PumpDataCopied;
 
     private CheckBox _enabled => CEnableDevice;
     private CollapsibleHeading _addressLabel => CAddress;
@@ -24,6 +25,7 @@ public sealed partial class PumpControl : BoxContainer
     private OptionButton _pressureCheck => CPressureCheck;
     private FloatSpinBox _externalBound => CExternalBound;
     private FloatSpinBox _internalBound => CInternalBound;
+	private Button _copySettings => CCopySettings;
 
     public PumpControl(GasVentPumpData data, string address)
     {
@@ -84,6 +86,11 @@ public sealed partial class PumpControl : BoxContainer
             _data.PressureChecks = (VentPressureBound) args.Id;
             PumpDataChanged?.Invoke(_address, _data);
         };
+		
+		_copySettings.OnPressed += _ =>
+		{
+			PumpDataCopied?.Invoke(_data);
+		};
     }
 
     public void ChangeData(GasVentPumpData data)

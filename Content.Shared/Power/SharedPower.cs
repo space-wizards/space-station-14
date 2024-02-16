@@ -1,13 +1,13 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power
 {
     [Serializable, NetSerializable]
-    public enum ChargeState
+    public enum ChargeState : byte
     {
-        Still,
-        Charging,
-        Discharging,
+        Still = 0,
+        Charging = 1,
+        Discharging = 2,
     }
 
     [Serializable, NetSerializable]
@@ -22,5 +22,13 @@ namespace Content.Shared.Power
         MainWire,
         WireCount,
         CutWires
+    }
+
+    [Serializable, NetSerializable]
+    public enum CableType
+    {
+        HighVoltage,
+        MediumVoltage,
+        Apc,
     }
 }

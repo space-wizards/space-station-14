@@ -4,7 +4,7 @@
 /// Triggers when the salvage magnet is activated
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactMagnetTriggerComponent : Component
+public sealed partial class ArtifactMagnetTriggerComponent : Component
 {
     /// <summary>
     /// how close to the magnet do you have to be?

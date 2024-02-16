@@ -1,26 +1,19 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Clothing;
 
-[RegisterComponent, NetworkedComponent()]
-public sealed class MagbootsComponent : Component
+[RegisterComponent, NetworkedComponent(), AutoGenerateComponentState]
+[Access(typeof(SharedMagbootsSystem))]
+public sealed partial class MagbootsComponent : Component
 {
-    [DataField("toggleAction", required: true)]
-    public InstantAction ToggleAction = new();
+    [DataField]
+    public EntProtoId ToggleAction = "ActionToggleMagboots";
 
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
+    public EntityUid? ToggleActionEntity;
+
+    [DataField("on"), AutoNetworkedField]
     public bool On;
-
-    [Serializable, NetSerializable]
-    public sealed class MagbootsComponentState : ComponentState
-    {
-        public bool On { get; }
-
-        public MagbootsComponentState(bool @on)
-        {
-            On = on;
-        }
-    }
 }

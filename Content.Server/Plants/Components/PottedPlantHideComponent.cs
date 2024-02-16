@@ -10,7 +10,7 @@ namespace Content.Server.Plants.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(PottedPlantHideSystem))]
-    public sealed class PottedPlantHideComponent : Component
+    public sealed partial class PottedPlantHideComponent : Component
     {
         [DataField("rustleSound")]
         public SoundSpecifier RustleSound = new SoundPathSpecifier("/Audio/Effects/plant_rustle.ogg");

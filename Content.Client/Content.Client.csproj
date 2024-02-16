@@ -13,8 +13,8 @@
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Nett" Version="0.15.0" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" PrivateAssets="All" />
+    <PackageReference Include="Nett" />
+    <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
@@ -24,17 +24,8 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="UserInterface\Systems\MenuBar\Widgets\GameTopMenuBar.xaml.cs">
-      <DependentUpon>GameTopMenuBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="UserInterface\Systems\HotBar\Widgets\HotbarGui.xaml.cs">
-      <DependentUpon>HotbarGui.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="UserInterface\Systems\Inventory\Windows\StrippingWindow.xaml.cs">
-      <DependentUpon>StrippingWindow.xaml</DependentUpon>
-    </Compile>
+    <Folder Include="Spawners\" />
   </ItemGroup>
-
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>

@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Damage.Components;
 
 [NetworkedComponent, RegisterComponent]
-public sealed class DamageContactsComponent : Component
+public sealed partial class DamageContactsComponent : Component
 {
     /// <summary>
     /// The damage done each second to those touching this entity

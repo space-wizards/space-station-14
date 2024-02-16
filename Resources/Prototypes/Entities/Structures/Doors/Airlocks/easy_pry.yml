@@ -1,0 +1,63 @@
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalEasyPry
+  suffix: External, EasyPry
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassEasyPry
+  suffix: External, Glass, EasyPry
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockGlassShuttleEasyPry
+  suffix: EasyPry, Docking
+  description: Necessary for connecting two space craft together. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockShuttleEasyPry
+  suffix: EasyPry, Docking
+  description: Necessary for connecting two space craft together. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalLocked
+  id: AirlockExternalEasyPryLocked
+  suffix: External, EasyPry, Locked
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalGlassLocked
+  id: AirlockExternalGlassEasyPryLocked
+  suffix: External, Glass, EasyPry, Locked
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalGlassShuttleLocked
+  id: AirlockGlassShuttleEasyPryLocked
+  suffix: EasyPry, Docking, Locked
+  description: Necessary for connecting two space craft together. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalShuttleLocked
+  id: AirlockShuttleEasyPryLocked
+  suffix: EasyPry, Docking, Locked
+  description: Necessary for connecting two space craft together. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered

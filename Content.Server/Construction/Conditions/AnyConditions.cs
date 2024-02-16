@@ -6,10 +6,10 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class AnyConditions : IGraphCondition
+    public sealed partial class AnyConditions : IGraphCondition
     {
         [DataField("conditions")]
-        public IGraphCondition[] Conditions { get; } = Array.Empty<IGraphCondition>();
+        public IGraphCondition[] Conditions { get; private set; } = Array.Empty<IGraphCondition>();
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {

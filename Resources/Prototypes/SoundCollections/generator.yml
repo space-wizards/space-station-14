@@ -1,0 +1,15 @@
+﻿- type: soundCollection
+  # Plays when you try to start a generator.
+  # You know, lawnmower cord pull sound.
+  id: GeneratorTug
+  files:
+    - /Audio/Machines/generator-tug-1.ogg
+    - /Audio/Machines/generator-tug-2.ogg
+    - /Audio/Machines/generator-tug-3.ogg
+
+- type: soundCollection
+  id: GeneratorTugEmpty
+  files:
+    - /Audio/Machines/generator-tug-1-empty.ogg
+    - /Audio/Machines/generator-tug-2-empty.ogg
+    - /Audio/Machines/generator-tug-3-empty.ogg

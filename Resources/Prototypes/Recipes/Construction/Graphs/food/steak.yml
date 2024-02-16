@@ -7,6 +7,9 @@
   - node: start
     edges:
     - to: meat steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 335
 
@@ -22,6 +25,9 @@
   - node: start
     edges:
     - to: cooked penguin
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345
 
@@ -37,6 +43,9 @@
   - node: start
     edges:
     - to: cooked chicken
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345
 
@@ -52,6 +61,9 @@
   - node: start
     edges:
     - to: cooked duck
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 335 #duck is actually culinarily red meat IRL and has a lower min temp than other poultry
 
@@ -67,6 +79,9 @@
   - node: start
     edges:
     - to: lizard steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345
 
@@ -82,11 +97,14 @@
   - node: start
     edges:
     - to: filet migrawr
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345 #apparently trichinellosis is a concern
 
   - node: filet migrawr
-    entity: FoodMealBearsteak
+    entity: FoodMeatBearCooked
 
 # crab steak
 - type: constructionGraph
@@ -97,6 +115,9 @@
   - node: start
     edges:
     - to: cooked crab
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 335
 
@@ -112,8 +133,43 @@
   - node: start
     edges:
     - to: goliath steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345 #I dunno what this is but I don't want whatever parasites are inside
 
   - node: goliath steak
     entity: FoodMeatGoliathCooked
+
+# rouny steak
+- type: constructionGraph
+  id: RounySteak
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: rouny steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 445 #rouny
+  - node: rouny steak
+    entity: FoodMeatRounyCooked
+
+# bacon "steak"
+- type: constructionGraph
+  id: Bacon
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bacon
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 345
+  - node: bacon
+    entity: FoodMeatBaconCooked

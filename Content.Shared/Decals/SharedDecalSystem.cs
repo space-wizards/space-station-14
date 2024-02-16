@@ -1,4 +1,7 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,6 +14,8 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
+        protected bool PvsEnabled;
+
         // Note that this constant is effectively baked into all map files, because of how they save the grid decal component.
         // So if this ever needs changing, the maps need converting.
         public const int ChunkSize = 32;
@@ -22,13 +27,36 @@ namespace Content.Shared.Decals
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<DecalGridComponent, ComponentStartup>(OnCompStartup);
+            SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
+        }
+
+        private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
+        {
+            if (PvsEnabled && !args.ReplayState)
+                return;
+
+            // Should this be a full component state or a delta-state?
+            if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
+            {
+                args.State = new DecalGridState(component.ChunkCollection.ChunkCollection);
+                return;
+            }
+
+            var data = new Dictionary<Vector2i, DecalChunk>();
+            foreach (var (index, chunk) in component.ChunkCollection.ChunkCollection)
+            {
+                if (chunk.LastModified >= args.FromTick)
+                    data[index] = chunk;
+            }
+
+            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
             EnsureComp<DecalGridComponent>(msg.EntityUid);
         }
-        
+
         private void OnCompStartup(EntityUid uid, DecalGridComponent component, ComponentStartup args)
         {
             foreach (var (indices, decals) in component.ChunkCollection.ChunkCollection)
@@ -80,6 +108,18 @@ namespace Content.Shared.Decals
         {
             // used by client-side overlay code
         }
+
+        public virtual HashSet<(uint Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
+        {
+            // NOOP on client atm.
+            return new HashSet<(uint Index, Decal Decal)>();
+        }
+
+        public virtual bool RemoveDecal(EntityUid gridId, uint decalId, DecalGridComponent? component = null)
+        {
+            // NOOP on client atm.
+            return true;
+        }
     }
 
     // TODO: Pretty sure paul was moving this somewhere but just so people know
@@ -122,9 +162,9 @@ namespace Content.Shared.Decals
     public sealed class RequestDecalPlacementEvent : EntityEventArgs
     {
         public Decal Decal;
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
-        public RequestDecalPlacementEvent(Decal decal, EntityCoordinates coordinates)
+        public RequestDecalPlacementEvent(Decal decal, NetCoordinates coordinates)
         {
             Decal = decal;
             Coordinates = coordinates;
@@ -134,9 +174,9 @@ namespace Content.Shared.Decals
     [Serializable, NetSerializable]
     public sealed class RequestDecalRemovalEvent : EntityEventArgs
     {
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
-        public RequestDecalRemovalEvent(EntityCoordinates coordinates)
+        public RequestDecalRemovalEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }

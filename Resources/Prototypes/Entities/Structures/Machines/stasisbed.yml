@@ -2,13 +2,13 @@
   id: StasisBed
   name: stasis bed
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  description: A bed that massively slows down the patient's metabolism, allowing more time to administer a proper treatment for stabilization.
+  description: A bed that massively slows down the patient's metabolism and prevents bodily decay, allowing more time to administer a proper treatment for stabilization.
   components:
   - type: StasisBed
     baseMultiplier: 10
+  - type: AntiRotOnBuckle
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
-    netsync: false
     noRot: true
     layers:
     - state: icon
@@ -19,9 +19,6 @@
   - type: Appearance
   - type: ApcPowerReceiver
     powerLoad: 1000
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic
@@ -48,10 +45,13 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.05"
-      density: 190
-      mask:
-      - LowImpassable
-
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - LowImpassable
+  - type: GuideHelp
+    guides:
+    - Medical Doctor

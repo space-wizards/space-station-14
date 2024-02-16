@@ -9,6 +9,7 @@ fibers-latex = latex
 fibers-nitrile = nitrile
 fibers-nanomachines = insulative nanomachine
 fibers-chameleon = holographic chameleon
+fibers-rubber = rubber
 
 fibers-purple = purple
 fibers-red = red
@@ -21,3 +22,4 @@ fibers-orange = orange
 fibers-white = white
 fibers-yellow = yellow
 fibers-regal-blue = regal blue
+fibers-olive = olive

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration.BanList;
 
 [Serializable, NetSerializable]
-public sealed record SharedServerBan(
+public record SharedServerBan(
     int? Id,
     NetUserId? UserId,
     (string address, int cidrMask)? Address,

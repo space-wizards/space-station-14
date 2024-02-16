@@ -3,7 +3,7 @@ using Content.Client.Weapons.Ranged.Systems;
 namespace Content.Client.Weapons.Ranged.Components;
 
 [RegisterComponent, Access(typeof(GunSystem))]
-public sealed class SpentAmmoVisualsComponent : Component
+public sealed partial class SpentAmmoVisualsComponent : Component
 {
     /// <summary>
     /// Should we do "{_state}-spent" or just "spent"
@@ -17,4 +17,5 @@ public sealed class SpentAmmoVisualsComponent : Component
 public enum AmmoVisualLayers : byte
 {
     Base,
+    Tip,
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by brainfood# 7460",
+  "copyright": "Created by brainfood# 7460, hamster-0 resprite by RamZ (discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,14 +12,16 @@
     },
     {
       "name": "hamster-0",
+      "directions": 4
+    },
+    {
+      "name": "hamster-moving-0",
       "directions": 4,
       "delays": [
         [
           0.2,
           0.2,
-          0.2
-        ],
-        [
+          0.2,
           0.2,
           0.2,
           0.2
@@ -27,9 +29,23 @@
         [
           0.2,
           0.2,
+          0.2,
+          0.2,
+          0.2,
           0.2
         ],
         [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
           0.2,
           0.2,
           0.2

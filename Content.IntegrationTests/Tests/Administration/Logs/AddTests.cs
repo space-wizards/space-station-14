@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Commands;
 using Content.Shared.Administration.Logs;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
-using NUnit.Framework;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
@@ -21,20 +14,25 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 [TestOf(typeof(AdminLogSystem))]
 public sealed class AddTests
 {
+    public static PoolSettings LogTestSettings = new()
+    {
+        AdminLogsEnabled = true,
+        DummyTicker = false,
+        Connected = true
+    };
+
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-        var server = pairTracker.Pair.Server;
-
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -65,18 +63,17 @@ public sealed class AddTests
             return false;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
@@ -84,7 +81,7 @@ public sealed class AddTests
 
         var guid = Guid.NewGuid();
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -115,35 +112,36 @@ public sealed class AddTests
         {
             Round = sGamerTicker.RoundId,
             Search = log.Message,
-            Types = new HashSet<LogType> {log.Type},
+            Types = new HashSet<LogType> { log.Type },
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
         {
             var root = json.RootElement;
 
-            Assert.That(root.TryGetProperty("entity", out _), Is.True);
-            Assert.That(root.TryGetProperty("guid", out _), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("entity", out _), Is.True);
+                Assert.That(root.TryGetProperty("guid", out _), Is.True);
+            });
 
             json.Dispose();
         }
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
-
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -161,24 +159,23 @@ public sealed class AddTests
             return messages.Count >= amount;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddPlayerSessionLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         Guid playerGuid = default;
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.First();
+            var player = sPlayers.Sessions.First();
             playerGuid = player.UserId;
 
             Assert.DoesNotThrow(() =>
@@ -198,22 +195,21 @@ public sealed class AddTests
             Assert.That(logs.First().Players, Does.Contain(playerGuid));
             return true;
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Dirty = true});
-        var server = pairTracker.Pair.Server;
-
-        var configManager = server.ResolveDependency<IConfigurationManager>();
-        await server.WaitPost(() =>
+        var setting = new PoolSettings
         {
-            configManager.SetCVar(CCVars.GameLobbyEnabled, true);
-            var command = new RestartRoundNowCommand();
-            command.Execute(null, string.Empty, Array.Empty<string>());
-        });
+            Dirty = true,
+            InLobby = true,
+            AdminLogsEnabled = true
+        };
+
+        await using var pair = await PoolManager.GetServerClient(setting);
+        var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
@@ -255,7 +251,7 @@ public sealed class AddTests
         {
             Round = sGamerTicker.RoundId,
             Search = log.Message,
-            Types = new HashSet<LogType> {log.Type},
+            Types = new HashSet<LogType> { log.Type },
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
@@ -266,25 +262,23 @@ public sealed class AddTests
 
             json.Dispose();
         }
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task DuplicatePlayerDoesNotThrowTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
-
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.Single();
+            var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
         });
@@ -304,15 +298,15 @@ public sealed class AddTests
             return true;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
         Assert.Pass();
     }
 
     [Test]
     public async Task DuplicatePlayerIdDoesNotThrowTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
@@ -322,7 +316,7 @@ public sealed class AddTests
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.Single();
+            var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
         });
@@ -342,7 +336,7 @@ public sealed class AddTests
             return true;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
         Assert.Pass();
     }
 }

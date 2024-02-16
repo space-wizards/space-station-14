@@ -11,14 +11,11 @@ namespace Content.Server.Radio.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadioDeviceSystem))]
-public sealed class RadioMicrophoneComponent : Component
+public sealed partial class RadioMicrophoneComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
     public string BroadcastChannel = SharedChatSystem.CommonChannel;
-
-    [ViewVariables, DataField("supportedChannels", customTypeSerializer: typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
-    public List<string>? SupportedChannels;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("listenRange")]
@@ -29,6 +26,13 @@ public sealed class RadioMicrophoneComponent : Component
 
     [DataField("powerRequired")]
     public bool PowerRequired = false;
+
+    /// <summary>
+    /// Whether or not interacting with this entity
+    /// toggles it on or off.
+    /// </summary>
+    [DataField("toggleOnInteract")]
+    public bool ToggleOnInteract = true;
 
     /// <summary>
     /// Whether or not the speaker must have an

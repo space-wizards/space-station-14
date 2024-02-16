@@ -1,0 +1,87 @@
+<Document>
+  # Traitors
+
+  - A Traitor is an antagonist employed by the Syndicate. They have access to various Syndicate tools and weapons through their [color=#a4885c]Uplink[/color].
+  - Traitors can use codewords to identify themselves to one another in order to cooperate.
+  - In a Traitor round, any player can be a Traitor aside from department heads, the captain, or any security officers.
+  - Traitors should focus primarily on completing their objectives successfully by the end of the round.
+
+  ## Uplink
+  <Box>
+    <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="Uplink"/>
+  </Box>
+  - The [color=#a4885c]Uplink[/color] is the most important tool as a Traitor, as it can purchase tools and weapons with [color=#a4885c]telecrystals[/color](TC).
+  <Box>
+    <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
+  </Box>
+  - [color=#a4885c]Telecrystals[/color] are given at the start to give traitors an edge on the station. Other traitors can trade their [color=#a4885c]telecrystals[/color] to each other exceeding the normal given amount.
+  - Using your [color=#a4885c]PDA[/color] and setting the ringtone as your uplink code gives you a variety of options to use at your disposal against the station and its crew.
+  <Box>
+  <GuideEntityEmbed Entity="PassengerPDA" Caption="PDA"/>
+  </Box>
+  Make sure to relock your [color=#a4885c]PDA[/color] to prevent anyone else from seeing it!
+  - Various gear include:
+  <Box>
+    <GuideEntityEmbed Entity="WeaponPistolViper" Caption="Guns"/>
+    <GuideEntityEmbed Entity="FireAxe" State="icon" Caption="Melee"/>
+    <GuideEntityEmbed Entity="C4" Caption=" Explosives"/>
+    <GuideEntityEmbed Entity="Syringe" Caption="Implants"/>
+    <GuideEntityEmbed Entity="ClothingBackpackDuffelSyndicate" Caption="Bundles"/>
+  </Box>
+
+  ## Objectives
+
+  - When becoming a Traitor, you will have a list of objectives, ranging from escape alive, stealing something, and killing someone. Using the [color=#a4885c]Uplink[/color] will help you with most of these tasks.
+
+  ## List of Possible Tasks
+
+  - Kill or maroon a randomly selected non-traitor.
+  - Kill or maroon a randomly selected traitor.
+  - Kill or maroon a randomly selected department head.
+  - Keep a randomly selected traitor alive.
+  - Escape on the evacuation shuttle alive and uncuffed.
+  - Help a randomly selected traitor finish 2/3 of their objectives.
+  - Die a glorious death.
+  - Steal the Captain's [color=#a4885c]ID Card[/color].
+  <Box>
+    <GuideEntityEmbed Entity="CaptainIDCard" Caption="Captain's ID Card"/>
+  </Box>
+  - Steal the Captain's [color=#a4885c]Antique Laser Pistol[/color].
+  <Box>
+    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption="Captain's Antique Laser Pistol"/>
+  </Box>
+  - Steal the Captain's [color=#a4885c]Jetpack[/color].
+  <Box>
+    <GuideEntityEmbed Entity="JetpackCaptainFilled" Caption="Captain's Jetpack"/>
+  </Box>
+  - Steal the Chief Medical Officer's [color=#a4885c]Hypospray[/color].
+  <Box>
+    <GuideEntityEmbed Entity="Hypospray" Caption="CMO's Hypospray"/>
+  </Box>
+  - Steal the Research Director's [color=#a4885c]Hardsuit[/color].
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption="RD's Hardsuit"/>
+  </Box>
+  - Steal the Research Director's [color=#a4885c]Hand Teleporter[/color].
+  <Box>
+    <GuideEntityEmbed Entity="HandTeleporter" Caption="Hand Teleporter"/>
+  </Box>
+  - Steal the Head of Security's [color=#a4885c]Secret Documents[/color].
+  <Box>
+    <GuideEntityEmbed Entity="BookSecretDocuments" Caption="Secret Documents"/>
+  </Box>
+  - Steal the Chief Engineer's [color=#a4885c]Advanced Magboots[/color].
+  <Box>
+    <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption="Advanced Magboots"/>
+  </Box>
+  - Steal the [color=#a4885c]Nuke Disk[/color].
+  <Box>
+    <GuideEntityEmbed Entity="NukeDisk" Caption="Nuke Disk"/>
+  </Box>
+  - Steal [color=#a4885c]Corgi Meat[/color].
+  <Box>
+  <GuideEntityEmbed Entity="MobCorgiIan" Caption="Corgi"/>
+  <GuideEntityEmbed Entity="FoodMeatCorgi" Caption="Corgi Meat"/>
+  </Box>
+
+</Document>

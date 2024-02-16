@@ -1,6 +1,5 @@
 using Content.Shared.Drugs;
 using Content.Shared.StatusEffect;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -35,7 +34,7 @@ public sealed class RainbowOverlay : Overlay
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
-        var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
+        var playerEntity = _playerManager.LocalEntity;
 
         if (playerEntity == null)
             return;
@@ -54,7 +53,7 @@ public sealed class RainbowOverlay : Overlay
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
+        if (!_entityManager.TryGetComponent(_playerManager.LocalEntity, out EyeComponent? eyeComp))
             return false;
 
         if (args.Viewport.Eye != eyeComp.Eye)

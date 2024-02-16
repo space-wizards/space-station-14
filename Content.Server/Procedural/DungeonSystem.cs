@@ -1,10 +1,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
+using Content.Shared.Construction.EntitySystems;
+using Content.Shared.GameTicking;
+using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -12,35 +16,53 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural;
 
-public sealed partial class DungeonSystem : EntitySystem
+public sealed partial class DungeonSystem : SharedDungeonSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly AnchorableSystem _anchorable = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private ISawmill _sawmill = default!;
+    private readonly List<(Vector2i, Tile)> _tiles = new();
+
+    private EntityQuery<MetaDataComponent> _metaQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
 
     private const double DungeonJobTime = 0.005;
+
+    public const int CollisionMask = (int) CollisionGroup.Impassable;
+    public const int CollisionLayer = (int) CollisionGroup.Impassable;
 
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
     private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
+    [ValidatePrototypeId<ContentTileDefinition>]
+    public const string FallbackTileId = "FloorSteel";
+
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("dungen");
+
+        _metaQuery = GetEntityQuery<MetaDataComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
-        _prototype.PrototypesReloaded += PrototypeReload;
+        _console.RegisterCommand("dungen_preset_vis", Loc.GetString("cmd-dungen_preset_vis-desc"), Loc.GetString("cmd-dungen_preset_vis-help"), DungeonPresetVis, PresetCallback);
+        _console.RegisterCommand("dungen_pack_vis", Loc.GetString("cmd-dungen_pack_vis-desc"), Loc.GetString("cmd-dungen_pack_vis-help"), DungeonPackVis, PackCallback);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(PrototypeReload);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
@@ -50,7 +72,7 @@ public sealed partial class DungeonSystem : EntitySystem
         _dungeonJobQueue.Process();
     }
 
-    private void OnRoundStart(RoundStartingEvent ev)
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
     {
         foreach (var token in _dungeonJobs.Values)
         {
@@ -58,6 +80,10 @@ public sealed partial class DungeonSystem : EntitySystem
         }
 
         _dungeonJobs.Clear();
+    }
+
+    private void OnRoundStart(RoundStartingEvent ev)
+    {
         var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
 
         while (query.MoveNext(out var uid, out _))
@@ -78,8 +104,6 @@ public sealed partial class DungeonSystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-        _prototype.PrototypesReloaded -= PrototypeReload;
-
         foreach (var token in _dungeonJobs.Values)
         {
             token.Cancel();
@@ -143,11 +167,12 @@ public sealed partial class DungeonSystem : EntitySystem
         while (query.MoveNext(out var uid, out comp))
         {
             // Exists
-            if (comp.Path?.Equals(proto.AtlasPath) == true)
+            if (comp.Path.Equals(proto.AtlasPath))
                 return Transform(uid).MapID;
         }
 
         var mapId = _mapManager.CreateMap();
+        _mapManager.AddUninitializedMap(mapId);
         _loader.Load(mapId, proto.AtlasPath.ToString());
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.SetMapPaused(mapId, true);
@@ -159,12 +184,12 @@ public sealed partial class DungeonSystem : EntitySystem
     public void GenerateDungeon(DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
-        Vector2 position,
+        Vector2i position,
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(
-            _sawmill,
+            Log,
             DungeonJobTime,
             EntityManager,
             _mapManager,
@@ -174,6 +199,7 @@ public sealed partial class DungeonSystem : EntitySystem
             _decals,
             this,
             _lookup,
+            _tile,
             _transform,
             gen,
             grid,
@@ -184,19 +210,18 @@ public sealed partial class DungeonSystem : EntitySystem
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
-        job.Run();
     }
 
     public async Task<Dungeon> GenerateDungeonAsync(
         DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
-        Vector2 position,
+        Vector2i position,
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(
-            _sawmill,
+            Log,
             DungeonJobTime,
             EntityManager,
             _mapManager,
@@ -206,6 +231,7 @@ public sealed partial class DungeonSystem : EntitySystem
             _decals,
             this,
             _lookup,
+            _tile,
             _transform,
             gen,
             grid,
@@ -216,7 +242,6 @@ public sealed partial class DungeonSystem : EntitySystem
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
-        job.Run();
         await job.AsTask;
 
         if (job.Exception != null)
