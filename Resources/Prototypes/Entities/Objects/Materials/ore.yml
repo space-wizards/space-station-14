@@ -312,3 +312,38 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: OreBase
+  id: Salt
+  name: salt
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Salt
+  - type: Sprite
+    state: salt
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RawQuartz: 500
+  - type: Extractable
+    grindableSolutionName: salt
+  - type: SolutionContainerManager
+    solutions:
+      quartzaore:
+        reagents:
+        - ReagentId: Sodium
+          Quantity: 5
+        - ReagentId: Chloride
+          Quantity: 5
+        - ReagentId: Iodine
+          Quantity: 5
+
+- type: entity
+  parent: Salt
+  id: Salt1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
