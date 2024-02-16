@@ -28,6 +28,8 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Player;
+using Content.Shared.Coordinates;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -101,9 +103,17 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
         {
-            _audio.PlayPvs(component.Sound, uid);
-            if (component.RemoveOnTrigger)
-                RemCompDeferred<SoundOnTriggerComponent>(uid);
+            if (!TryComp<TransformComponent>(uid, out var xform))
+                return;
+
+            if (component.RemoveOnTrigger) // if the component gets removed when it's triggered
+            {
+                _audio.PlayPvs(component.Sound, xform.Coordinates); // play the sound at its last known coordinates
+            }
+            else // if the component doesn't get removed when triggered
+            {
+                _audio.PlayPvs(component.Sound, uid); // have the sound follow the entity itself
+            }
         }
 
         private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
