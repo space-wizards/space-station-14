@@ -335,6 +335,8 @@
         reagents:
         - ReagentId: Sodium
           Quantity: 5
+        - ReagentId: Chlorine
+          Quantity: 5
         - ReagentId: Iodine
           Quantity: 5
 
