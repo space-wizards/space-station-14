@@ -85,23 +85,18 @@ namespace Content.Server.DeviceLinking.Systems
 
         private void OnStateChanged(EntityUid uid, DoorSignalControlComponent door, DoorStateChangedEvent args)
         {
-            var data = new NetworkPayload()
-            {
-                { DeviceNetworkConstants.LogicState, SignalState.Momentary }
-            };
-
             if (args.State == DoorState.Closed)
             {
-                data[DeviceNetworkConstants.LogicState] = SignalState.Low;
-                _signalSystem.InvokePort(uid, door.OutOpen, data);
+                // only ever say the door is closed when it is completely airtight
+                _signalSystem.SendSignal(uid, door.OutOpen, false);
             }
             else if (args.State == DoorState.Open
                   || args.State == DoorState.Opening
                   || args.State == DoorState.Closing
                   || args.State == DoorState.Emagging)
             {
-                data[DeviceNetworkConstants.LogicState] = SignalState.High;
-                _signalSystem.InvokePort(uid, door.OutOpen, data);
+                // say the door is open whenever it would be letting air pass
+                _signalSystem.SendSignal(uid, door.OutOpen, true);
             }
         }
     }

@@ -95,6 +95,8 @@
   - type: DeviceLinkSource
     ports:
       - DoorStatus
+    lastSignals:
+      DoorStatus: false
   - type: SoundOnOverload
   - type: SpawnOnOverload
   - type: UserInterface

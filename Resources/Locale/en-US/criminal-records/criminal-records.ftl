@@ -39,6 +39,7 @@ criminal-records-console-released = {$name} has been released by {$officer}.
 criminal-records-console-not-wanted = {$name} is no longer wanted.
 criminal-records-console-paroled = {$name} has been released on parole by {$officer}.
 criminal-records-console-not-parole = {$name} is no longer on parole.
+criminal-records-console-unknown-officer = <unknown officer>
 
 ## Filters
 

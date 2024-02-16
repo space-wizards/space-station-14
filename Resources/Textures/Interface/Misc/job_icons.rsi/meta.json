@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi | Brigmedic icon made by PuroSlavKing (Github) | Zombie icon made by RamZ | Zookeper by netwy (discort) | Rev and Head Rev icon taken from https://tgstation13.org/wiki/HUD and edited by coolmankid12345 (Discord) | Mindshield icon made by Psychpsyo (Github)",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi | Brigmedic icon made by PuroSlavKing (Github) | Zombie icon made by RamZ | Zookeper by netwy (discort) | Rev and Head Rev icon taken from https://tgstation13.org/wiki/HUD and edited by coolmankid12345 (Discord) | Mindshield icon taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/huds/hud.dmi and edited by Golinth (Github)",
 
     "size": {
         "x": 8,

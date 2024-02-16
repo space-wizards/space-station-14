@@ -27,6 +27,23 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretFrench
+  name: French beret
+  description: A French beret, "vive la France".
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_french.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_french.rsi
+  - type: AddAccentClothing
+    accent: FrenchAccent
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretSecurity
   name: security beret
   description: A stylish clothing option for security officers.
@@ -141,7 +158,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretBrigmedic
-  name: medical beret
+  name: brigmedical beret
   description: White beret, looks like a cream pie on the head.
   components:
   - type: Sprite
@@ -363,6 +380,11 @@
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+    - WhitelistChameleon
+    - ClothMade
 
 - type: entity
   parent: ClothingHeadBase
@@ -500,6 +522,11 @@
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/witch.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+    - WhitelistChameleon
+    - ClothMade
 
 - type: entity
   parent: ClothingHeadBase
@@ -1025,3 +1052,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretMedic
+  name: medical beret
+  description: White beret that encourages you to be clean.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_medic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_medic.rsi
