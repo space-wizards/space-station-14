@@ -32,6 +32,8 @@
       path: /Audio/Effects/spray2.ogg
   - type: TrashOnSolutionEmpty
     solution: spray
+  - type: ExaminableSolution
+    solution: spray
 
 - type: entity
   name: mega spray bottle

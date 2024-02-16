@@ -21,6 +21,14 @@ public abstract class SharedSiliconLawSystem : EntitySystem
 
     protected virtual void OnAttemptEmag(EntityUid uid, EmagSiliconLawComponent component, ref OnAttemptEmagEvent args)
     {
+        //prevent self emagging
+        if (uid == args.UserUid)
+        {
+            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), uid, args.UserUid);
+            args.Handled = true;
+            return;
+        }
+
         if (component.RequireOpenPanel &&
             TryComp<WiresPanelComponent>(uid, out var panel) &&
             !panel.Open)

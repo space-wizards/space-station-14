@@ -137,6 +137,39 @@
       PotencyDivisor: 25
 
 - type: seed
+  id: laughinPea
+  name: seeds-laughin-pea-name
+  noun: seeds-noun-seeds
+  displayName: seeds-laughin-pea-display-name
+  plantRsi: Objects/Specific/Hydroponics/laughin_pea.rsi
+  packetPrototype: LaughinPeaSeeds
+  productPrototypes:
+    - FoodLaughinPeaPod
+  lifespan: 25
+  growthStages: 3
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 25
+  idealLight: 8
+  harvestRepeat: Repeat
+  nutrientConsumption: 0.6
+  waterConsumption: 0.6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 33
+    Sugar:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 50
+    Laughter:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 50
+
+- type: seed
   id: lemon
   name: seeds-lemon-name
   noun: seeds-noun-seeds
@@ -1344,6 +1377,8 @@
   packetPrototype: PeaSeeds
   productPrototypes:
     - FoodPeaPod
+  mutationPrototypes:
+    - laughinPea
   lifespan: 25
   growthStages: 3
   maturation: 8

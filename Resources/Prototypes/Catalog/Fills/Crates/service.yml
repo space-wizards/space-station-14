@@ -168,6 +168,54 @@
       - id: BookChemicalCompendium
 
 - type: entity
+  id: CrateServiceSodaDispenser
+  parent: CrateGenericSteel
+  name: soda dispenser refill crate
+  description: Contains refills for soda dispensers.
+  components:
+    - type: StorageFill
+      contents:
+      - id: DrinkCoffeeJug
+      - id: DrinkColaBottleFull
+      - id: DrinkCreamCartonXL
+      - id: DrinkDrGibbJug
+      - id: DrinkEnergyDrinkJug
+      - id: DrinkGreenTeaJug
+      - id: DrinkIceJug
+      - id: DrinkJuiceLimeCartonXL
+      - id: DrinkJuiceOrangeCartonXL
+      - id: DrinkLemonLimeJug
+      - id: DrinkRootBeerJug
+      - id: DrinkSodaWaterBottleFull
+      - id: DrinkSpaceMountainWindBottleFull
+      - id: DrinkSpaceUpBottleFull
+      - id: DrinkSugarJug
+      - id: DrinkTeaJug
+      - id: DrinkTonicWaterBottleFull
+      - id: DrinkWaterMelonJuiceJug
+
+- type: entity
+  id: CrateServiceBoozeDispenser
+  parent: CrateGenericSteel
+  name: booze dispenser refill crate
+  description: Contains refills for booze dispensers.
+  components:
+    - type: StorageFill
+      contents:
+      - id: DrinkAleBottleFullGrowler
+      - id: DrinkBeerGrowler
+      - id: DrinkCoffeeLiqueurBottleFull
+      - id: DrinkCognacBottleFull
+      - id: DrinkGinBottleFull
+      - id: DrinkMeadJug
+      - id: DrinkRumBottleFull
+      - id: DrinkTequilaBottleFull
+      - id: DrinkVermouthBottleFull
+      - id: DrinkVodkaBottleFull
+      - id: DrinkWhiskeyBottleFull
+      - id: DrinkWineBottleFull
+
+- type: entity
   id: CrateServiceBox
   parent: CratePlastic
   name: boxes crate

@@ -201,14 +201,6 @@
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        probability: 0.02
-        damage:
-          types:
-            Cellular: 2 #smoking gives you cancer.
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent

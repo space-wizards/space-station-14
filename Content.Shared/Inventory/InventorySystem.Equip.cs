@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Clothing.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -24,6 +25,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -90,7 +92,7 @@ public abstract partial class InventorySystem
         // unequip the item.
         if (itemUid != null)
         {
-            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory))
+            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory, checkDoafter: true))
                 return;
 
             _handsSystem.PickupOrDrop(actor, item.Value);
@@ -114,15 +116,15 @@ public abstract partial class InventorySystem
 
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
 
-        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
+        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter:true);
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing);
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false) =>
+        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing, checkDoafter);
 
     public bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null)
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false)
     {
         if (!Resolve(target, ref inventory, false))
         {
@@ -149,6 +151,34 @@ public abstract partial class InventorySystem
             return false;
         }
 
+        if (checkDoafter &&
+            clothing != null &&
+            clothing.EquipDelay > TimeSpan.Zero &&
+            (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
+            _containerSystem.CanInsert(itemUid, slotContainer))
+        {
+            var args = new DoAfterArgs(
+                EntityManager,
+                actor,
+                clothing.EquipDelay,
+                new ClothingEquipDoAfterEvent(slot),
+                itemUid,
+                target,
+                itemUid)
+            {
+                BlockDuplicate = true,
+                BreakOnHandChange = true,
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                CancelDuplicate = true,
+                RequireCanInteract = true,
+                NeedHand = true
+            };
+
+            _doAfter.TryStartDoAfter(args);
+            return false;
+        }
+
         if (!_containerSystem.Insert(itemUid, slotContainer))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
@@ -156,7 +186,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!silent && clothing != null && clothing.EquipSound != null)
+        if (!silent && clothing != null)
         {
             _audio.PlayPredicted(clothing.EquipSound, target, actor);
         }
@@ -284,9 +314,10 @@ public abstract partial class InventorySystem
         bool predicted = false,
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
-        bool reparent = true)
+        bool reparent = true,
+        bool checkDoafter = false)
     {
-        return TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing, reparent);
+        return TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing, reparent, checkDoafter);
     }
 
     public bool TryUnequip(
@@ -298,9 +329,10 @@ public abstract partial class InventorySystem
         bool predicted = false,
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
-        bool reparent = true)
+        bool reparent = true,
+        bool checkDoafter = false)
     {
-        return TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent);
+        return TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent, checkDoafter);
     }
 
     public bool TryUnequip(
@@ -312,9 +344,10 @@ public abstract partial class InventorySystem
         bool predicted = false,
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
-        bool reparent = true)
+        bool reparent = true,
+        bool checkDoafter = false)
     {
-        return TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent);
+        return TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent, checkDoafter);
     }
 
     public bool TryUnequip(
@@ -327,7 +360,8 @@ public abstract partial class InventorySystem
         bool predicted = false,
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
-        bool reparent = true)
+        bool reparent = true,
+        bool checkDoafter = false)
     {
         removedItem = null;
 
@@ -363,6 +397,33 @@ public abstract partial class InventorySystem
         //we need to do this to make sure we are 100% removing this entity, since we are now dropping dependant slots
         if (!force && !_containerSystem.CanRemove(removedItem.Value, slotContainer))
             return false;
+
+        if (checkDoafter &&
+            Resolve(removedItem.Value, ref clothing, false) &&
+            (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
+            clothing.UnequipDelay > TimeSpan.Zero)
+        {
+            var args = new DoAfterArgs(
+                EntityManager,
+                actor,
+                clothing.UnequipDelay,
+                new ClothingUnequipDoAfterEvent(slot),
+                removedItem.Value,
+                target,
+                removedItem.Value)
+            {
+                BlockDuplicate = true,
+                BreakOnHandChange = true,
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                CancelDuplicate = true,
+                RequireCanInteract = true,
+                NeedHand = true
+            };
+
+            _doAfter.TryStartDoAfter(args);
+            return false;
+        }
 
         foreach (var slotDef in inventory.Slots)
         {

@@ -213,7 +213,7 @@
       amount: 1
     Ammonia:
       amount: 1
-    Blood:
+    ZombieBlood:
       amount: 2
   products:
     Ambuzol: 4
@@ -223,11 +223,10 @@
   reactants:
     Ambuzol:
       amount: 5
-    ZombieBlood:
-      amount: 15
+    Omnizine:
+      amount: 5
   products:
-    Blood: 15
-    AmbuzolPlus: 5
+    AmbuzolPlus: 10
 
 - type: reaction
   id: Synaptizine

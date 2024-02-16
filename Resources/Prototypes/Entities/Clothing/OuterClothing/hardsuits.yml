@@ -916,6 +916,23 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitClown
 
+#Mime Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitClown
+  id: ClothingOuterHardsuitMime
+  name: mime hardsuit
+  description: A custom-made mime hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
+  - type: Construction
+    graph: MimeHardsuit
+    node: mimeHardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMime
+
 #Santa's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
