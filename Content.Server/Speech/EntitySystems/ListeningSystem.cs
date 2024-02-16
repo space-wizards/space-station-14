@@ -25,7 +25,7 @@ public sealed class ListeningSystem : EntitySystem
 
     private void OnWhisper(WhisperSuccessfulEvent ev)
     {
-        PingListeners(GetEntity(ev.Speaker), ev.Message, ev.ObfuscatedMessage, ev.MinRange);
+        PingListeners(ev.Speaker, ev.Message, ev.ObfuscatedMessage, ev.MinRange);
     }
 
     public void PingListeners(EntityUid source, string message, string? obfuscatedMessage = null, float whisperRange = 0.0f)
