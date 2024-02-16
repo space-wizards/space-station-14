@@ -8,19 +8,22 @@
     },
     "states": [
 		{
-			"name": "stairs_white"
+			"name": "stairs_white",
+            "directions": 4
 		},
         {
             "name": "stairs_stage_white"
         },
         {
-            "name": "stairs_steel"
+            "name": "stairs_steel",
+            "directions": 4
         },
         {
             "name": "stairs_stage_steel"
         },
         {
-            "name": "stairs_dark"
+            "name": "stairs_dark",
+            "directions": 4
         },
         {
             "name": "stairs_stage_dark"
