@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KittenColony
-  changes:
-  - message: Rotated fireaxe 'icon' 45 degrees
-    type: Tweak
-  id: 5444
-  time: '2023-12-21T08:03:52.0000000+00:00'
-  url: null
 - author: themias
   changes:
   - message: Damp rags can mop puddles again
@@ -3879,3 +3872,10 @@
   id: 5943
   time: '2024-02-15T20:54:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25258
+- author: PJB3005
+  changes:
+  - message: Nuke has some more blinkenlights now.
+    type: Tweak
+  id: 5944
+  time: '2024-02-16T00:26:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25297
