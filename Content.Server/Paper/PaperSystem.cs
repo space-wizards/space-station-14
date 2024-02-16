@@ -161,8 +161,7 @@ namespace Content.Server.Paper
                     _adminLogger.Add(LogType.Chat, LogImpact.Low,
                         $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
-                if (paperComp.Sound != null)
-                    _audio.PlayPvs(paperComp.Sound, uid);
+                _audio.PlayPvs(paperComp.Sound, uid);
             }
 
             paperComp.Mode = PaperAction.Read;
