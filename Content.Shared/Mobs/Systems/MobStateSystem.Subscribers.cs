@@ -183,7 +183,12 @@ public partial class MobStateSystem
         if (args.GunTarget == args.HitEntity)
             return;
 
-        //Only hit targets that are standing and not dead.
+        //Always hit targets that are buckled and not dead.
+        if(ent.Comp.CurrentState != MobState.Dead &&
+           _buckle.IsBuckled(ent))
+            return;
+
+        //Always hit targets that are standing and not dead.
         if(ent.Comp.CurrentState != MobState.Dead &&
            !_standing.IsDown(ent))
             return;
