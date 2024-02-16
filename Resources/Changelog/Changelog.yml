@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Smart equipping now works with item slots
-    type: Add
-  - message: Smart equipping is now predicted
-    type: Tweak
-  id: 5449
-  time: '2023-12-21T14:17:09.0000000+00:00'
-  url: null
 - author: DrMelon
   changes:
   - message: Mice and other small creatures can no longer hurt Pun Pun or the Clown
@@ -3878,3 +3869,10 @@
   id: 5948
   time: '2024-02-16T18:50:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25097
+- author: themias
+  changes:
+  - message: t-ray scanners can now penetrate carpets and puddles
+    type: Tweak
+  id: 5949
+  time: '2024-02-16T23:37:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25276
