@@ -27,7 +27,7 @@ public partial class BaseShuttleControl : MapGridControl
     protected Font Font;
 
     // Cache grid drawing data as it can be expensive to build
-    private readonly Dictionary<EntityUid, GridDrawData> _gridData = new();
+    public readonly Dictionary<EntityUid, GridDrawData> GridData = new();
 
     // Per-draw caching
     private readonly List<Vector2i> _gridTileList = new();
@@ -35,7 +35,6 @@ public partial class BaseShuttleControl : MapGridControl
     private readonly HashSet<Vector2i> _gridNeighborSet = new();
 
     private readonly List<(Vector2 Start, Vector2 End)> _edges = new();
-    private readonly List<Vector2> _tileTris = new();
 
     // TODO: Engine PR.
     private (DirectionFlag, Vector2i)[] _neighborDirections;
@@ -112,7 +111,7 @@ public partial class BaseShuttleControl : MapGridControl
 
         // Check if we even have data
         // TODO: Need to prune old grid-data if we don't draw it.
-        var gridData = _gridData.GetOrNew(grid.Owner);
+        var gridData = GridData.GetOrNew(grid.Owner);
 
         if (gridData.LastBuild < grid.Comp.LastTileModifiedTick)
         {
@@ -267,6 +266,7 @@ public partial class BaseShuttleControl : MapGridControl
             gridData.LastBuild = grid.Comp.LastTileModifiedTick;
         }
 
+        // TODO:
         var verts = new ValueList<Vector2>();
 
         if (DrawInterior)
@@ -334,35 +334,38 @@ public partial class BaseShuttleControl : MapGridControl
 
     private void RecurseLines(List<Vector2> lineStrip, List<(Vector2 Start, Vector2 End)> edges, Vector2 lastVertex)
     {
-        while (true)
+        var found = true;
+
+        while (found)
         {
+            found = false;
+
             for (var i = 0; i < edges.Count; i++)
             {
-                var (start, end) = _edges[i];
+                var (start, end) = edges[i];
 
-                if (!end.Equals(neighborStart))
+                if (!lastVertex.Equals(start))
                     continue;
 
-                neighborFound = true;
-                neighborIndex = j;
-                b
-            }
+                var nextVertex = end;
+                edges.RemoveAt(i);
 
-            lineStrip.Add(nextVertex);
+                lineStrip.Add(nextVertex);
                 lastVertex = nextVertex;
-
+                found = true;
+            }
         }
     }
+}
 
-    private sealed class GridDrawData
-    {
-        /*
-         * List of lists because we use LineStrip and TriangleStrip respectively (less data to pass to the GPU).
-         */
+public sealed class GridDrawData
+{
+    /*
+     * List of lists because we use LineStrip and TriangleStrip respectively (less data to pass to the GPU).
+     */
 
-        public List<List<Vector2>> Edges = new();
-        public List<List<Vector2>> Tris = new();
+    public List<List<Vector2>> Edges = new();
+    public List<List<Vector2>> Tris = new();
 
-        public GameTick LastBuild;
-    }
+    public GameTick LastBuild;
 }
