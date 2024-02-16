@@ -542,13 +542,13 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of bloompkin seeds
-  id: BloompkinSeeds
+  name: packet of glumpkin seeds
+  id: GlumpkinSeeds
   components:
     - type: Seed
-      seedId: bloompkin
+      seedId: glumpkin
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/bloompkin.rsi
+      sprite: Objects/Specific/Hydroponics/glumpkin.rsi
 
 - type: entity
   parent: SeedBase

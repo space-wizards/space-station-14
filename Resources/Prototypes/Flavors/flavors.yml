@@ -1010,6 +1010,6 @@
   description: flavor-complex-fishops
 
 - type: flavor
-  id: bloompkin
+  id: glumpkin
   flavorType: Complex
-  description: flavor-complex-bloompkin
+  description: flavor-complex-glumpkin
