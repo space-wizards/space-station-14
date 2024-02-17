@@ -11,6 +11,19 @@
   - type: PresetIdCard
     job: Prisoner
 
+- type: entity
+  parent: IDCardStandard
+  id: PrivateInvestigatorIDCard
+  name: private investigator ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: _CD/Objects/Misc/id_cards.rsi
+      state: privateinvestigator
+  - type: PresetIdCard
+    job: PrivateInvestigator
+
 # Senior Roles
 - type: entity
   parent: IDCardStandard

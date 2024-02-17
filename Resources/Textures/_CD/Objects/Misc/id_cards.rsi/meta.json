@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "prisoner"
+    },
+    {
+      "name": "privateinvestigator"
     }
   ]
 }

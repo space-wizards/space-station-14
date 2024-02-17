@@ -10,6 +10,18 @@
   - type: Icon
     state: pda-clear
 
+- type: entity
+  parent: BasePDA
+  id: PrivateInvestigatorPDA
+  name: private investigator PDA
+  description: Smells like smoke and alchohol.
+  components:
+  - type: Pda
+    id: PrivateInvestigatorIDCard
+    state: pda-privateinvestigator
+  - type: Icon
+    state: pda-privateinvestigator
+
 # Senior Roles
 - type: entity
   parent: BasePDA

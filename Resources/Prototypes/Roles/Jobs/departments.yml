@@ -32,6 +32,7 @@
   - Zookeeper
   - ServiceWorker
   - Prisoner # Custom role
+  - PrivateInvestigator # Custom role
 
 - type: department
   id: Command

@@ -1,6 +1,6 @@
-
 job-description-prisoner = Sit in prison. Negogiate with the Warden. Serve parole. You are not an antagonist, and are bound to the same crime rules as any normal crew member.
 job-prisoner-sec-notify-text = Prisoner has been transferred to the arrivals terminal and requires transportation.
+job-description-private-investigator = Investigate crimes for the civillian part of the crew. Get drunk in the bar and rant about the one that got away. 
 
 # Senior Roles
 job-description-senior-engineer = Teach new engineers the basics of the station's engine, repairing, atmospherics and power.

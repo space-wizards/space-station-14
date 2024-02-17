@@ -1,0 +1,35 @@
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackPrivateInvestigatorFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: ForensicScanner
+      - id: ForensicPad
+        amount: 3
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelPrivateInvestigatorFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: ForensicScanner
+      - id: ForensicPad
+        amount: 3
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelPrivateInvestigatorFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: ForensicScanner
+      - id: ForensicPad
+        amount: 3

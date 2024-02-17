@@ -11,6 +11,18 @@
       - state: green
       - state: prisoner
 
+- type: entity
+  id: SpawnPointPrivateInvestigator
+  parent: SpawnPointJobBase
+  name: privateinvestigator
+  components:
+  - type: SpawnPoint
+    job_id: Prisoner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: prisoner
+
 # Standard Spawnpoints for Senior Roles
 - type: entity
   id: SpawnPointSeniorEngineer
@@ -125,6 +137,19 @@
 # Civilian
 
 # TODO: Put stuff here. Probably not as important.
+
+- type: entity
+  id: ArrivalsSpawnPrivateInvestigator
+  parent: ArrivalsSpawnPointJobBase
+  suffix: private investigator
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - PrivateInvestigator
+  - type: Sprite
+    layers:
+      - state: green
+      - state: detective
 
 # Command
 

@@ -1,6 +1,9 @@
 - type: playTimeTracker
   id: JobPrisoner
 
+- type: playTimeTracker
+  id: JobPrivateInvestigator
+
 # Senior Roles
 - type: playTimeTracker
   id: JobSeniorEngineer
