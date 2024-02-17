@@ -260,6 +260,7 @@ namespace Content.Server.Database
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.Clothing = humanoid.Clothing.ToString();
             profile.Backpack = humanoid.Backpack.ToString();
+            profile.SpawnPriority = (int) humanoid.SpawnPriority;
             profile.Markings = markings;
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;

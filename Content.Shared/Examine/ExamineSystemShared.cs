@@ -17,6 +17,7 @@ namespace Content.Shared.Examine
 {
     public abstract partial class ExamineSystemShared : EntitySystem
     {
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
@@ -77,7 +78,7 @@ namespace Content.Shared.Examine
             if (IsClientSide(examined))
                 return true;
 
-            return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
+            return !Deleted(examined) && CanExamine(examiner, _transform.GetMapCoordinates(examined),
                 entity => entity == examiner || entity == examined, examined);
         }
 
@@ -109,7 +110,7 @@ namespace Content.Shared.Examine
                 return false;
 
             return InRangeUnOccluded(
-                EntityManager.GetComponent<TransformComponent>(examiner).MapPosition,
+                _transform.GetMapCoordinates(examiner),
                 target,
                 GetExaminerRange(examiner),
                 predicate: predicate,

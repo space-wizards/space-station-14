@@ -66,11 +66,11 @@ namespace Content.Server.Administration.Systems
         public override void Initialize()
         {
             base.Initialize();
-            _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
-            _config.OnValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
-            _config.OnValueChanged(CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
-            _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
-            _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
+            Subs.CVar(_config, CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
+            Subs.CVar(_config, CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
+            Subs.CVar(_config, CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
+            Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
+            Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
             _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel).Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
@@ -145,15 +145,6 @@ namespace Content.Server.Administration.Systems
         private void OnServerNameChanged(string obj)
         {
             _serverName = obj;
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _config.UnsubValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged);
-            _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
-            _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
-            _config.UnsubValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged);
         }
 
         private async void OnWebhookChanged(string url)
