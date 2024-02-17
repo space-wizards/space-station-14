@@ -1,15 +1,15 @@
+using Content.Server.Mind;
 using Content.Shared.Species.Components;
 using Content.Shared.Body.Events;
-using Content.Shared.Mind;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Species.Systems;
+namespace Content.Server.Species.Systems;
 
 public sealed partial class NymphSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager= default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -36,6 +36,6 @@ public sealed partial class NymphSystem : EntitySystem
         if (comp.TransferMind == true && _mindSystem.TryGetMind(args.OldBody, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, nymph, mind: mind);
 
-        EntityManager.QueueDeleteEntity(uid);
+        QueueDel(uid);
     }
 }
