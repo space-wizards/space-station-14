@@ -19,19 +19,6 @@ public sealed class InternalRadioSystem : EntitySystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        var translated = new RadioEvent(
-            GetNetEntity(ev.Speaker),
-            ev.AsName,
-            ev.Message,
-            ev.Channel,
-            ev.Verb,
-            ev.FontId,
-            ev.FontSize,
-            ev.IsBold,
-            ev.IsAnnouncement,
-            ev.MessageColorOverride
-        );
-
-        RaiseNetworkEvent(translated, actor.PlayerSession);
+        RaiseNetworkEvent(new RadioEvent(GetNetEntity(ev.Speaker),ev.AsName,ev.Message,ev.Channel), actor.PlayerSession);
     }
 }
