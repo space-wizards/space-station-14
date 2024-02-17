@@ -3,8 +3,9 @@
 
 - type: entity
   parent: [BaseItem, BaseFoldable]
-  id: BalloonOperative
-  name: operative balloon
+  id: BaseDecoy
+  name: BaseDecoy
+  abscract: true
   description: Upon closer inspection, this Syndicate operative is actually a balloon.
   components:
   - type: Rotatable
@@ -23,25 +24,57 @@
     nameSegments:
     - SyndicateNamesPrefix
     - SyndicateNamesNormal
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: ToggleableLightVisuals
+  - type: Foldable
+    folded: true
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: Tag
+    tags:
+    - Balloon
+    - Flashlight
+
+- type: entity
+  parent: BaseDecoy
+  id: BalloonOperative
+  name: operative balloon
+  description: Upon closer inspection, this Syndicate operative is actually a balloon.
+  components:
+  - type: HandheldLight
+    addPrefix: true
+  - type: Sprite
+    sprite: Objects/Tools/Decoys/operative_decoy.rsi
+    layers:
+    - state: oballoon
+      map: ["unfoldedLayer"]
+    - state: folded
+      map: ["foldedLayer"]
+      visible: false
   - type: PointLight # Just like the real thing...
+    autoRot: true
     radius: 1.5
     energy: 2.3
     offset: 0, -1
     color: green
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Foldable
-    folded: true
-  - type: Tag
-    tags:
-    - Balloon
 
 - type: entity
-  parent: BalloonOperative
+  parent: BaseDecoy
   id: BalloonAgent
   name: agent balloon
   description: Upon closer inspection, this Syndicate agent is actually a balloon.
   components:
+  - type: HandheldLight
+    addPrefix: true
   - type: Sprite
     sprite: Objects/Tools/Decoys/agent_decoy.rsi
     layers:
@@ -50,13 +83,20 @@
     - state: folded
       map: ["foldedLayer"]
       visible: false
+  - type: PointLight
+    radius: 1.5
+    energy: 2.3
+    offset: 0, -1
+    color: green
 
 - type: entity
-  parent: BalloonOperative
+  parent: BaseDecoy
   id: BalloonElite
   name: elite operative balloon
   description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
   components:
+  - type: HandheldLight
+    addPrefix: true
   - type: Sprite
     sprite: Objects/Tools/Decoys/elite_decoy.rsi
     layers:
@@ -65,18 +105,20 @@
     - state: folded
       map: ["foldedLayer"]
       visible: false
-    - type: PointLight .
-      radius: 1.5
-      energy: 2.3
-      offset: 0, -1
-      color: red
+  - type: PointLight
+    radius: 1.5
+    energy: 2.3
+    offset: 0, -1
+    color: red
 
 - type: entity
-  parent: BalloonOperative
+  parent: BaseDecoy
   id: BalloonJuggernaut
   name: juggernaut balloon
-  description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
+  description: Upon closer inspection, this Syndicate juggernaut is actually a balloon.
   components:
+  - type: HandheldLight
+    addPrefix: true
   - type: Sprite
     sprite: Objects/Tools/Decoys/juggernaut_decoy.rsi
     layers:
@@ -85,15 +127,19 @@
     - state: folded
       map: ["foldedLayer"]
       visible: false
-    - type: PointLight
-      enabled: false
+  - type: PointLight # Inbuilt flashlight, I guess?
+    radius: 1.5
+    energy: 2.3
+    offset: 0, -1
 
 - type: entity
-  parent: BalloonOperative
-  id: BalloonAgent
-  name: agent balloon
-  description: Upon closer inspection, this Syndicate agent is actually a balloon.
+  parent: BaseDecoy
+  id: BalloonCommander
+  name: commander balloon
+  description: Upon closer inspection, this Syndicate commander is actually a balloon.
   components:
+  - type: HandheldLight
+    addPrefix: true
   - type: Sprite
     sprite: Objects/Tools/Decoys/commander_decoy.rsi
     layers:
@@ -102,3 +148,8 @@
     - state: folded
       map: ["foldedLayer"]
       visible: false
+  - type: PointLight
+    radius: 1.5
+    energy: 2.3
+    offset: 0, -1
+    color: green

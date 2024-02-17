@@ -37,8 +37,10 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/whistles.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Neck/Misc/whistles.rsi
+    state: equipped-NECK
     quickEquip: False
     size: Small
     slots:
