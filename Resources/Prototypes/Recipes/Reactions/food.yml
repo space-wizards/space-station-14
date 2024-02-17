@@ -334,3 +334,85 @@
 #    Oxygen: 1
 #    Hydrogen: 2
 
+- type: reaction
+  id: AllicinBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Allicin:
+      amount: 5
+  products:
+    Sulfur: 2
+    Carbon: 1
+    Hydrogen: 2
+
+- type: reaction
+  id: NutrimentBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Nutriment:
+      amount: 5
+  products:
+    Water: 2
+    Carbon: 2
+    Sugar: 1
+
+# Arguably, this should be a hydrocarbon.
+# This reaction is chemically bones because meat has nutriment and protein.
+# Making bones would be a large change. I'm not doing that.
+- type: reaction
+  id: FatBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Fat:
+      amount: 10
+  products:
+    Calcium: 6
+    Phosphorus: 3
+    Blood: 1
+
+# Proteins are hydrocarbons
+- type: reaction
+  id: UncookedAnimalProteinBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    UncookedAnimalProteins:
+      amount: 15
+  products:
+    Carbon: 5
+    Hydrogen: 10
+    Oxygen: 1
+
+- type: reaction
+  id: ProteinBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Protein:
+      amount: 15
+  products:
+    Carbon: 5
+    Hydrogen: 10
+    Oxygen: 1
+
+# Vitamin = Healthy = Green = Nitrogenous
+- type: reaction
+  id: VitaminBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Vitamin:
+      amount: 1
+  products:
+    Carbon: 1
+    Water: 1
+    Nitrogen: 2
