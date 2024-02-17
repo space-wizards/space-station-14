@@ -8,8 +8,6 @@
     sprite: Objects/Fun/toys.rsi
     state: snappop
   - type: Item
-    sprite: Objects/Fun/toys.rsi
-    state: snappop
     size: Tiny
   - type: Damageable
     damageContainer: Inorganic

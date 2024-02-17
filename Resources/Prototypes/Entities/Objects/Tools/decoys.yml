@@ -4,7 +4,6 @@
 - type: entity
   parent: [BaseItem, BaseFoldable]
   id: BaseDecoy
-  abscract: true
   components:
   - type: Rotatable
   - type: Sprite

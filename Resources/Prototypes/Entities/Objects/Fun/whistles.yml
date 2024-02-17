@@ -40,9 +40,7 @@
     state: icon
   - type: Clothing
     sprite: Clothing/Neck/Misc/whistles.rsi
-    state: equipped-NECK
     quickEquip: False
-    size: Small
     slots:
     - neck
   - type: EmitSoundOnUse
