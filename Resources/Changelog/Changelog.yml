@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Pacifists can now attack in general, but are still forbidden from hurting
-      living creatures or dangerous things.
-    type: Tweak
-  - message: Pacifists can now disarm people. They are pacifist, after all.
-    type: Tweak
-  - message: Pacifists can now use flashes (and zero-damaging melee weapons, in general)
-    type: Tweak
-  id: 5453
-  time: '2023-12-27T09:55:48.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23037
 - author: snebl
   changes:
   - message: Fixed emergency and extended nitrogen tanks having the same volume.
@@ -3873,3 +3861,10 @@
   id: 5952
   time: '2024-02-16T23:54:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25199
+- author: data_redacted
+  changes:
+  - message: New lobby art (of an Air Alarm blueprint).
+    type: Add
+  id: 5953
+  time: '2024-02-17T02:52:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25179
