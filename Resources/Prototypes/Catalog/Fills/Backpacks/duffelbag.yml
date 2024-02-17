@@ -351,8 +351,7 @@
       - id: BalloonJuggernaut
       - id: BalloonCommander
       - id: SnapPopBox
-        amount: 3
       - id: GrenadeDummy
-        amount: 3
+        amount: 2
       - id: SyndieTrickyBomb
         amount: 2

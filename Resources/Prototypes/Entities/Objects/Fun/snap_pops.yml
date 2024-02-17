@@ -43,7 +43,7 @@
   parent: BaseStorageItem
   id: SnapPopBox
   name: snap pop box
-  description: Contains twenty-five snap pops for a few minutes of popping fun!
+  description: Contains twenty snap pops for a few minutes of popping fun!
   components:
   - type: Item
     size: Normal
