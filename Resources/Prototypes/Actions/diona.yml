@@ -18,4 +18,4 @@
   - type: InstantAction
     icon: Mobs/Species/Diona/parts.rsi/full.png
     event: !type:ReformEvent {}
-    useDelay: 300 # Once every 10 minutes. Keep them dead for a fair bit before reforming
+    useDelay: 600 # Once every 10 minutes. Keep them dead for a fair bit before reforming
