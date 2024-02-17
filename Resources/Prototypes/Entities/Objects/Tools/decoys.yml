@@ -85,6 +85,7 @@
     energy: 2.3
     offset: 0, -1
     color: green
+    netsync: false
 
 - type: entity
   parent: BaseDecoy
@@ -107,6 +108,7 @@
     energy: 2.3
     offset: 0, -1
     color: red
+    netsync: false
 
 - type: entity
   parent: BaseDecoy
@@ -128,6 +130,7 @@
     radius: 1.5
     energy: 2.3
     offset: 0, -1
+    netsync: false
 
 - type: entity
   parent: BaseDecoy
@@ -150,3 +153,4 @@
     energy: 2.3
     offset: 0, -1
     color: green
+    netsync: false
