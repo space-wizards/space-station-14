@@ -48,7 +48,7 @@
   description: Upon closer inspection, this Syndicate operative is actually a balloon.
   components:
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
   - type: Sprite
     sprite: Objects/Tools/Decoys/operative_decoy.rsi
     layers:
@@ -72,7 +72,7 @@
   description: Upon closer inspection, this Syndicate agent is actually a balloon.
   components:
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
   - type: Sprite
     sprite: Objects/Tools/Decoys/agent_decoy.rsi
     layers:
@@ -95,7 +95,7 @@
   description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
   components:
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
   - type: Sprite
     sprite: Objects/Tools/Decoys/elite_decoy.rsi
     layers:
@@ -118,7 +118,7 @@
   description: Upon closer inspection, this Syndicate juggernaut is actually a balloon.
   components:
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
   - type: Sprite
     sprite: Objects/Tools/Decoys/juggernaut_decoy.rsi
     layers:
@@ -140,7 +140,7 @@
   description: Upon closer inspection, this Syndicate commander is actually a balloon.
   components:
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
   - type: Sprite
     sprite: Objects/Tools/Decoys/commander_decoy.rsi
     layers:
