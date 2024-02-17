@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blazeror
-  changes:
-  - message: You can now pry open windoors by hand when they are unpowered.
-    type: Fix
-  id: 5455
-  time: '2023-12-27T12:28:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23047
 - author: Emisse
   changes:
   - message: The Grand Lottery now has much more prizes in store!
@@ -3874,3 +3867,13 @@
   id: 5954
   time: '2024-02-17T02:54:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24630
+- author: PolterTzi
+  changes:
+  - message: Seeds from sampled plants now inherit the sampled plant's health to discourage
+      excessive sampling.
+    type: Tweak
+  - message: Plants need to grow a bit before being sampled.
+    type: Tweak
+  id: 5955
+  time: '2024-02-17T05:02:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25326
