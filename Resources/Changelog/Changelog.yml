@@ -1,27 +1,6 @@
 ﻿Entries:
 - author: Alekshhh
   changes:
-  - message: Changed brown fedora and inspector's coat palette and minor adjustments
-    type: Tweak
-  id: 5458
-  time: '2023-12-27T22:53:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23065
-- author: Velcroboy
-  changes:
-  - message: Added melee dmg to salami logs!
-    type: Add
-  id: 5459
-  time: '2023-12-28T02:59:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23041
-- author: Emisse
-  changes:
-  - message: Ion Storm is silent now
-    type: Tweak
-  id: 5460
-  time: '2023-12-28T03:03:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23045
-- author: Alekshhh
-  changes:
   - message: Changed wall lockers visually to match regular lockers and sit on walls
       better
     type: Tweak
@@ -3868,3 +3847,25 @@
   id: 5957
   time: '2024-02-17T20:32:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25327
+- author: Moomoobeef
+  changes:
+  - message: Detectives are now supplied with a box of evidence markers, useful for
+      marking evidence at a crime scene.
+    type: Add
+  id: 5958
+  time: '2024-02-17T20:49:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25255
+- author: Ubaser
+  changes:
+  - message: New "tailed" hair.
+    type: Add
+  id: 5959
+  time: '2024-02-17T20:49:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25216
+- author: Ubaser
+  changes:
+  - message: A new chest scar marking is now available to humans and dwarves.
+    type: Add
+  id: 5960
+  time: '2024-02-17T20:50:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25215
