@@ -326,7 +326,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawQuartz: 500
+      RawSalt: 500
   - type: Extractable
     grindableSolutionName: saltore
   - type: SolutionContainerManager
