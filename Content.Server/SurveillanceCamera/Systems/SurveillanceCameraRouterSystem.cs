@@ -258,6 +258,8 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
+        payload[SurveillanceCameraSystem.CameraSubnetData] = router.SubnetFrequencyId;
+
         foreach (var address in router.MonitorRoutes)
         {
             _deviceNetworkSystem.QueuePacket(uid, address, payload);

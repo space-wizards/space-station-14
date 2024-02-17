@@ -1,3 +1,6 @@
+using Content.Shared.SurveillanceCamera;
+using Robust.Shared.Map;
+
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
@@ -29,14 +32,10 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     // Set of viewers currently looking at this monitor.
     public HashSet<EntityUid> Viewers { get; } = new();
 
-    // Current active subnet.
-    [ViewVariables]
-    public string ActiveSubnet { get; set; } = default!;
-
     // Known cameras in this subnet by address with name values.
     // This is cleared when the subnet is changed.
     [ViewVariables]
-    public Dictionary<string, string> KnownCameras { get; } = new();
+    public Dictionary<NetEntity, CameraData> KnownCameras { get; } = new();
 
     [ViewVariables]
     // The subnets known by this camera monitor.

@@ -1,3 +1,4 @@
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
@@ -17,30 +18,38 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 
     public string ActiveAddress;
 
-    // Currently active subnet.
-    public string ActiveSubnet { get; }
-
     // Known cameras, by address and name.
-    public Dictionary<string, string> Cameras { get; }
+    public Dictionary<NetEntity, CameraData> Cameras { get; }
 
-    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, Dictionary<NetEntity, CameraData> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;
         ActiveAddress = activeAddress;
-        ActiveSubnet = activeSubnet;
         Cameras = cameras;
     }
 }
 
 [Serializable, NetSerializable]
+[DataDefinition]
+public partial class CameraData
+{
+    public string CameraAddress { get; set; }
+    public string SubnetAddress { get; set; }
+    public string Name { get; set; }
+    public NetCoordinates Coordinates { get; set; }
+}
+
+[Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceMessage
 {
-    public string Address { get; }
+    public string CameraAddress { get; }
+    public string SubnetAddress { get; }
 
-    public SurveillanceCameraMonitorSwitchMessage(string address)
+    public SurveillanceCameraMonitorSwitchMessage(string cameraAddress, string subnetAddress)
     {
-        Address = address;
+        CameraAddress = cameraAddress;
+        SubnetAddress = subnetAddress;
     }
 }
 
