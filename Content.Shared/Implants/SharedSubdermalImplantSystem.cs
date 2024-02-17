@@ -16,7 +16,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] protected readonly TagSystem Tag = default!;
 
     public const string BaseStorageId = "storagebase";
 
@@ -42,11 +42,11 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         }
 
         //replace micro bomb with macro bomb
-        if (_container.TryGetContainer(component.ImplantedEntity.Value, ImplanterComponent.ImplantSlotId, out var implantContainer) && _tag.HasTag(uid, "MacroBomb"))
+        if (_container.TryGetContainer(component.ImplantedEntity.Value, ImplanterComponent.ImplantSlotId, out var implantContainer) && Tag.HasTag(uid, "MacroBomb"))
         {
             foreach (var implant in implantContainer.ContainedEntities)
             {
-                if (_tag.HasTag(implant, "MicroBomb"))
+                if (Tag.HasTag(implant, "MicroBomb"))
                 {
                     _container.Remove(implant, implantContainer);
                     QueueDel(implant);

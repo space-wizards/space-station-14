@@ -100,3 +100,14 @@ public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
         Index = index;
     }
 }
+
+/// <summary>
+/// Used to activate a criminal's chemical implant.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class ActivateChemicalImplant : BoundUserInterfaceMessage
+{
+    public ActivateChemicalImplant()
+    {
+    }
+}

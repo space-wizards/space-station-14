@@ -156,6 +156,22 @@
     - type: Implanter
       implant: TrackingImplant
 
+- type: entity
+  id: LethalChemicalImplanter
+  name: lethal chemical implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: LethalChemicalImplant
+
+- type: entity
+  id: NonLethalChemicalImplanter
+  name: nonlethal chemical implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: NonLethalChemicalImplant
+
 #Traitor implanters
 
 - type: entity
@@ -205,6 +221,14 @@
   components:
     - type: Implanter
       implant: DnaScramblerImplant
+
+- type: entity
+  id: EmergencyChemicalImplanter
+  name: emergency chemical implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: EmergencyChemicalImplant
 
 #Nuclear Operative/Special implanters
 

@@ -14,11 +14,11 @@ using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
-using System.Numerics;
+using Content.Server.Mindshield;
+using Content.Shared.Mindshield.Components;
 
 namespace Content.Server.Implants;
 
@@ -34,6 +34,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+    [Dependency] private readonly MindShieldSystem _mindShieldSystem = default!;
+    [Dependency] private readonly ChemicalImplantSystem _chemicalImplantSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -48,6 +50,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
         SubscribeLocalEvent<SubdermalImplantComponent, UseScramImplantEvent>(OnScramImplant);
         SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
 
     }
 
@@ -160,5 +163,22 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         args.Handled = true;
         QueueDel(uid);
+    }
+
+    /// <summary>
+    /// Activates the implants injection effect if it has one.
+    /// </summary>
+    private void OnImplantImplanted(EntityUid uid, SubdermalImplantComponent comp, ref ImplantImplantedEvent ev)
+    {
+        if (Tag.HasTag(ev.Implant, MindShieldSystem.MindShieldTag) && ev.Implanted != null)
+        {
+            EnsureComp<MindShieldComponent>(ev.Implanted.Value);
+            _mindShieldSystem.MindShieldRemovalCheck(ev.Implanted.Value, ev.Implant);
+        }
+
+        if (Tag.HasTag(ev.Implant, ChemicalImplantSystem.ChemicalImplantTag) && ev.Implanted != null)
+        {
+            _chemicalImplantSystem.LinkImplant(uid, ev.Implanted.Value, comp);
+        }
     }
 }

@@ -10,6 +10,19 @@
     - SubdermalImplant
     - HideContextMenu
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: BaseChemicalImplant
+  components:
+  - type: SubdermalImplant
+    whitelist:
+      components:
+      - Bloodstream # the target needs a bloodstream to inject the chemicals into
+  - type: InjectOnTrigger
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Items/hypospray.ogg"
+
 #Fun implants
 
 - type: entity
@@ -103,6 +116,48 @@
     - type: Rattle
       radioChannel: "Security"
 
+- type: entity
+  parent: BaseChemicalImplant
+  id: LethalChemicalImplant
+  name: lethal chemical implant
+  description: This implant can be remotely triggered to inject the target with a lethal dose of poison.
+  noSpawn: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      implant:
+        maxVol: 50
+        reagents:
+        - ReagentId: Lexorin
+          Quantity: 25
+        - ReagentId: Nocturine
+          Quantity: 25
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - ChemicalImplant
+
+- type: entity
+  parent: BaseChemicalImplant
+  id: NonLethalChemicalImplant
+  name: nonlethal chemical implant
+  description: This implant can be remotely triggered to inject the target with a sleeping agent.
+  noSpawn: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      implant:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 50 #170 seconds of forced sleep
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - ChemicalImplant
+
 #Traitor implants
 
 - type: entity
@@ -177,7 +232,7 @@
       range: 1.75
       energyConsumption: 50000
       disableDuration: 10
-      
+
 - type: entity
   parent: BaseSubdermalImplant
   id: ScramImplant
@@ -203,6 +258,26 @@
       whitelist:
         components:
         - HumanoidAppearance # syndies cant turn hamlet into a human
+
+- type: entity
+  parent: BaseChemicalImplant
+  id: EmergencyChemicalImplant
+  name: emergency chemical implant
+  description: This implant automatically injects a dose of healing chemicals when the user goes into a critical state.
+  noSpawn: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      implant:
+        maxVol: 50
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30
+        - ReagentId: DexalinPlus
+          Quantity: 20
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
 
 #Nuclear Operative/Special Exclusive implants
 

@@ -31,6 +31,7 @@
                 </BoxContainer>
                 <RichTextLabel Name="WantedReason" Visible="False"/>
                 <Button Name="HistoryButton" Text="{Loc 'criminal-records-console-crime-history'}"/>
+                <Button Name="ActivateImplantButton" Text="{Loc 'criminal-records-console-activate-implant'}"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
@@ -34,6 +35,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public Action<CriminalRecord, bool, bool>? OnHistoryUpdated;
     public Action? OnHistoryClosed;
     public Action<SecurityStatus, string>? OnDialogConfirmed;
+    public Action? OnChemicalInjectorActivate;
 
     private uint _maxLength;
     private bool _isPopulating;
@@ -112,6 +114,11 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             if (_selectedRecord is {} record)
                 OnHistoryUpdated?.Invoke(record, _access, true);
         };
+
+        ActivateImplantButton.OnPressed += _ =>
+        {
+            OnChemicalInjectorActivate?.Invoke();
+        };
     }
 
     public void UpdateState(CriminalRecordsConsoleState state)
@@ -159,6 +166,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             PopulateRecordContainer(state.StationRecord, state.CriminalRecord);
             OnHistoryUpdated?.Invoke(state.CriminalRecord, _access, false);
             _selectedRecord = state.CriminalRecord;
+
+            state.CriminalRecord.Implants.TryGetValue(state.StationRecord.Name, out var implant);
+
+            ActivateImplantButton.Disabled = implant == null || !_access;
+
+            ActivateImplantButton.StyleClasses.Add(StyleBase.ButtonCaution);
         }
         else
         {
@@ -190,6 +203,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         PersonDna.Text = Loc.GetString("general-station-record-console-record-dna", ("dna", stationRecord.DNA ?? na));
 
         StatusOptionButton.SelectId((int) criminalRecord.Status);
+
         if (criminalRecord.Reason is {} reason)
         {
             var message = FormattedMessage.FromMarkup(Loc.GetString("criminal-records-console-wanted-reason"));

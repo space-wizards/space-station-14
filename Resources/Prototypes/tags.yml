@@ -312,6 +312,9 @@
   id: ChemDispensable # container that can go into the chem dispenser
 
 - type: Tag
+  id: ChemicalImplant
+
+- type: Tag
   id: Cigarette
 
 - type: Tag

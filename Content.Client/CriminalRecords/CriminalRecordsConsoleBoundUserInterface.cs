@@ -40,6 +40,8 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         _window.OnDialogConfirmed += (_, reason) =>
             SendMessage(new CriminalRecordChangeStatus(SecurityStatus.Wanted, reason));
         _window.OnHistoryUpdated += UpdateHistory;
+        _window.OnChemicalInjectorActivate += () =>
+            SendMessage(new ActivateChemicalImplant());
         _window.OnHistoryClosed += () => _historyWindow?.Close();
         _window.OnClose += Close;
 

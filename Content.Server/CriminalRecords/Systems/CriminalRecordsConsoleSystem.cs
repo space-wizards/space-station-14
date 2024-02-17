@@ -12,6 +12,7 @@ using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Explosion.EntitySystems;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -28,6 +29,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly TriggerSystem _trigger= default!;
 
     public override void Initialize()
     {
@@ -42,6 +44,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             subs.Event<CriminalRecordChangeStatus>(OnChangeStatus);
             subs.Event<CriminalRecordAddHistory>(OnAddHistory);
             subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
+            subs.Event<ActivateChemicalImplant>(OnActivateChemicalImplant);
         });
     }
 
@@ -163,7 +166,35 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         UpdateUserInterface(ent);
     }
 
-    private void UpdateUserInterface(Entity<CriminalRecordsConsoleComponent> ent)
+    private void OnActivateChemicalImplant(Entity<CriminalRecordsConsoleComponent> ent, ref ActivateChemicalImplant msg)
+    {
+        if (!CheckSelected(ent, msg.Session, out var user, out var key))
+            return;
+
+        if (!_stationRecords.TryGetRecord<CriminalRecord>(key.Value, out var record))
+            return;
+
+        //Triggers all implants in the target.
+        foreach (var implant in record.Implants[RecordName(key.Value)])
+        {
+            _trigger.Trigger(GetEntity(implant));
+        }
+
+        var name = RecordName(key.Value);
+        var officer = Loc.GetString("criminal-records-console-unknown-officer");
+        if (_idCard.TryFindIdCard(user.Value, out var id) && id.Comp.FullName is {} fullName)
+            officer = fullName;
+        var args = new (string, object)[] { ("name", name), ("officer", officer) };
+
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-implants-activated", args), ent.Comp.SecurityChannel, ent);
+
+        //Removes all implants from the record.
+        record.Implants.Clear();
+        UpdateUserInterface(ent);
+
+    }
+
+    public void UpdateUserInterface(Entity<CriminalRecordsConsoleComponent> ent)
     {
         var (uid, console) = ent;
         var owningStation = _station.GetOwningStation(uid);

@@ -29,6 +29,12 @@ public sealed record CriminalRecord
     /// </summary>
     [DataField]
     public List<CrimeHistory> History = new();
+
+    /// <summary>
+    /// A dictionary that keeps track of the implants people with a criminal record have.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, HashSet<NetEntity>> Implants = new();
 }
 
 /// <summary>

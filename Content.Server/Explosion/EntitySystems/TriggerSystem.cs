@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
@@ -70,6 +71,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
         public override void Initialize()
         {
@@ -95,6 +97,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
+            SubscribeLocalEvent<InjectOnTriggerComponent, TriggerEvent>(HandleInjectOnTrigger);
 
             SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(OnAnchorTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
@@ -196,6 +199,22 @@ namespace Content.Server.Explosion.EntitySystems
                 _radioSystem.SendRadioMessage(uid, deathMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
 
             args.Handled = true;
+        }
+
+        private void HandleInjectOnTrigger(EntityUid uid, InjectOnTriggerComponent component, TriggerEvent args)
+        {
+            if (!TryComp<SubdermalImplantComponent>(uid, out var implant))
+                return;
+
+            if (implant.ImplantedEntity == null || !TryComp<SolutionContainerManagerComponent>(uid, out var solutions))
+                return;
+
+            _solutionContainerSystem.TryGetSolution(uid, solutions.Containers.First(), out var solution);
+
+            if (solution != null)
+                _bloodstream.TryAddToChemicals(implant.ImplantedEntity.Value, solution.Value.Comp.Solution);
+
+            Del(uid);
         }
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)

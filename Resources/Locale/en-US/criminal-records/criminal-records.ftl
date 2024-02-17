@@ -32,6 +32,7 @@ criminal-records-console-detained = {$name} has been detained by {$officer}.
 criminal-records-console-released = {$name} has been released by {$officer}.
 criminal-records-console-not-wanted = {$name} is no longer wanted.
 criminal-records-console-unknown-officer = <unknown officer>
+criminal-records-console-implants-activated = {$name}'s implants have been activated by {$officer}.
 
 ## Filters
 
@@ -43,3 +44,6 @@ criminal-records-dna-filter = DNA
 ## Arrest auto history lines
 criminal-records-console-auto-history = ARRESTED: {$reason}
 criminal-records-console-unspecified-reason = <unspecified reason>
+
+## Implants
+criminal-records-console-activate-implant = Activate Implants
