@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: The thief will temporarily not steal structures for the time being, as
-      this task seems too difficult.
-    type: Tweak
-  - message: Added Emag into thief's syndie kit
-    type: Add
-  - message: Added 3 smoke grenades into thief's smuggler kit
-    type: Add
-  - message: Replaced radio jammer to cyber pen into thief's communicator kit
-    type: Tweak
-  - message: Replaced omnizine bottle to omega soap into thief's chemistry kit
-    type: Tweak
-  id: 5457
-  time: '2023-12-27T20:42:16.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22976
 - author: Alekshhh
   changes:
   - message: Changed brown fedora and inspector's coat palette and minor adjustments
@@ -3877,3 +3861,10 @@
   id: 5956
   time: '2024-02-17T16:38:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25344
+- author: Geekyhobo
+  changes:
+  - message: Massban Flag has been added to admin ranks
+    type: Add
+  id: 5957
+  time: '2024-02-17T20:32:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25327
