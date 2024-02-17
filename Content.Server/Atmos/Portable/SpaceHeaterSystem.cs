@@ -1,7 +1,5 @@
-using System.Globalization;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Visuals;
-using Content.Shared.Examine;
 using Content.Shared.UserInterface;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
@@ -22,6 +20,8 @@ namespace Content.Server.Atmos.Portable
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<SpaceHeaterComponent, MapInitEvent>(OnInit);
             SubscribeLocalEvent<SpaceHeaterComponent, BeforeActivatableUIOpenEvent>(OnBeforeOpened);
             SubscribeLocalEvent<SpaceHeaterComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
             SubscribeLocalEvent<SpaceHeaterComponent, PowerChangedEvent>(OnPowerChanged);
@@ -29,6 +29,13 @@ namespace Content.Server.Atmos.Portable
             SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterToggleMessage>(OnToggle);
             SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeTemperatureMessage>(OnTemperatureChanged);
             SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeModeMessage>(OnModeChanged);
+        }
+
+        private void OnInit(EntityUid uid, SpaceHeaterComponent spaceHeater, MapInitEvent args)
+        {
+            if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
+                return;
+            thermoMachine.Cp = spaceHeater.HeatingCp;
         }
 
         private void OnBeforeOpened(EntityUid uid, SpaceHeaterComponent spaceHeater, BeforeActivatableUIOpenEvent args)
@@ -45,14 +52,19 @@ namespace Content.Server.Atmos.Portable
             }
 
             //First get the heat direction of the thermomachine (if any) and update appeareance accordingly
-            if (thermoMachine.HysteresisState == false)
+            if(thermoMachine.LastEnergyDelta > 0)
             {
-                spaceHeater.State = SpaceHeaterState.StandBy;
+                spaceHeater.State = SpaceHeaterState.Heating;
+            }
+            else if(thermoMachine.LastEnergyDelta < 0)
+            {
+                spaceHeater.State = SpaceHeaterState.Cooling;
             }
             else
             {
-                spaceHeater.State = thermoMachine.Cp > 0 ? SpaceHeaterState.Heating : SpaceHeaterState.Cooling;
+                spaceHeater.State = SpaceHeaterState.StandBy;
             }
+
             UpdateAppearance(uid, spaceHeater.State);
 
             //Then, if in automatic temperature mode, check if we need to adjust the heat exchange direction
@@ -62,11 +74,11 @@ namespace Content.Server.Atmos.Portable
                 if (environment == null)
                     return;
 
-                if (environment.Temperature < thermoMachine.TargetTemperature - thermoMachine.TemperatureTolerance)
+                if (environment.Temperature <= thermoMachine.TargetTemperature - (thermoMachine.TemperatureTolerance + spaceHeater.AutoModeSwitchThreshold))
                 {
                     thermoMachine.Cp = spaceHeater.HeatingCp;
                 }
-                else if (environment.Temperature > thermoMachine.TargetTemperature + thermoMachine.TemperatureTolerance)
+                else if (environment.Temperature >= thermoMachine.TargetTemperature + (thermoMachine.TemperatureTolerance + spaceHeater.AutoModeSwitchThreshold))
                 {
                     thermoMachine.Cp = spaceHeater.CoolingCp;
                 }
@@ -101,6 +113,8 @@ namespace Content.Server.Atmos.Portable
                 return;
 
             thermoMachine.TargetTemperature = args.Temperature;
+
+            UpdateAppearance(uid, spaceHeater.State);
             DirtyUI(uid, spaceHeater);
         }
 

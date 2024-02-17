@@ -37,10 +37,18 @@ namespace Content.Server.Atmos.Portable
         /// </summary>
         [DataField("heatingCoefficientOfPerformance")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float HeatingCp = 2f; // output power / input power
+        public float HeatingCp = 4f; // output power / input power
 
         [DataField("coolingCoefficientOfPerformance")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CoolingCp = -1.2f; // output power / input power
+        public float CoolingCp = -3f; // output power / input power
+
+        /// <summary>
+        ///     Coefficient of performance. Output power / input power.
+        ///     Positive for heaters, negative for freezers.
+        /// </summary>
+        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float AutoModeSwitchThreshold = 0.8f;
     }
 }
