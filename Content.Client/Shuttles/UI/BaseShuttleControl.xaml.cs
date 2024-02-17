@@ -26,6 +26,8 @@ public partial class BaseShuttleControl : MapGridControl
 
     protected Font Font;
 
+    private GridDrawJob _drawJob;
+
     // Cache grid drawing data as it can be expensive to build
     public readonly Dictionary<EntityUid, GridDrawData> GridData = new();
 
@@ -33,6 +35,7 @@ public partial class BaseShuttleControl : MapGridControl
     private readonly List<Vector2i> _gridTileList = new();
     private readonly HashSet<Vector2i> _gridTileSet = new();
     private readonly HashSet<Vector2i> _gridNeighborSet = new();
+    private List<List<Vector2>> _allVertices = new();
 
     private readonly List<(Vector2 Start, Vector2 End)> _edges = new();
 
@@ -48,6 +51,11 @@ public partial class BaseShuttleControl : MapGridControl
         RobustXamlLoader.Load(this);
         Maps = EntManager.System<SharedMapSystem>();
         Font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
+
+        _drawJob = new GridDrawJob()
+        {
+            Control = this,
+        };
 
         // TODO: Engine pr
         _neighborDirections = new (DirectionFlag, Vector2i)[4];
@@ -104,7 +112,6 @@ public partial class BaseShuttleControl : MapGridControl
     protected void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, Entity<MapGridComponent> grid, Color color, float alpha = 0.01f)
     {
         var rator = Maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
-        const bool DrawInterior = true;
         var minimapScale = MinimapScale;
         var midpoint = new Vector2(MidPoint, MidPoint);
         var tileSize = grid.Comp.TileSize;
@@ -266,45 +273,67 @@ public partial class BaseShuttleControl : MapGridControl
             gridData.LastBuild = grid.Comp.LastTileModifiedTick;
         }
 
-        // TODO:
-        var verts = new ValueList<Vector2>();
-
-        if (DrawInterior)
+        var totalData = 0;
+        for (var i = 0; i < gridData.Tris.Count; i++)
         {
-            foreach (var triStrip in gridData.Tris)
+            if (_allVertices.Count <= i)
             {
-                verts.EnsureCapacity(triStrip.Count);
-
-                foreach (var vert in triStrip)
-                {
-                    var adjustedVert = matrix.Transform(vert);
-                    adjustedVert = adjustedVert with { Y = -adjustedVert.Y };
-
-                    var scaledVert = ScalePosition(adjustedVert, minimapScale, midpoint);
-                    verts.Add(scaledVert);
-                }
-
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, verts.Span, color.WithAlpha(alpha));
-
-                verts.Clear();
+                _allVertices.Add(new List<Vector2>());
             }
+
+            var li = _allVertices[i];
+            li.Clear();
+
+            for (var j = 0; j < gridData.Tris[i].Count; j++)
+            {
+                li.Add(Vector2.Zero);
+            }
+
+            totalData += gridData.Tris[i].Count;
         }
 
-        foreach (var lineStrip in gridData.Edges)
+        // Add tri data first then edges
+        _drawJob.MidPoint = midpoint;
+        _drawJob.Matrix = matrix;
+        _drawJob.MinimapScale = minimapScale;
+        _drawJob.Vertices = gridData.Tris;
+        _drawJob.ScaledVertices = _allVertices;
+
+        _parallel.ProcessNow(_drawJob, totalData);
+
+        for (var i = 0; i < gridData.Tris.Count; i++)
         {
-            verts.EnsureCapacity(lineStrip.Count);
+            var strip = _allVertices[i];
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, strip, color.WithAlpha(alpha));
+        }
 
-            foreach (var vert in lineStrip)
+        totalData = 0;
+        for (var i = 0; i < gridData.Edges.Count; i++)
+        {
+            if (_allVertices.Count <= i)
             {
-                var adjustedVert = matrix.Transform(vert);
-                adjustedVert = adjustedVert with { Y = -adjustedVert.Y };
-
-                var scaledVert = ScalePosition(adjustedVert, minimapScale, midpoint);
-                verts.Add(scaledVert);
+                _allVertices.Add(new List<Vector2>());
             }
 
-            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts.Span, color);
-            verts.Clear();
+            var li = _allVertices[i];
+            li.Clear();
+
+            for (var j = 0; j < gridData.Edges[i].Count; j++)
+            {
+                li.Add(Vector2.Zero);
+            }
+
+            totalData += gridData.Edges[i].Count;
+        }
+
+        _drawJob.Vertices = gridData.Edges;
+
+        _parallel.ProcessNow(_drawJob, totalData);
+
+        for (var i = 0; i < gridData.Edges.Count; i++)
+        {
+            var strip = _allVertices[i];
+            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, strip, color);
         }
     }
 
@@ -353,6 +382,41 @@ public partial class BaseShuttleControl : MapGridControl
                 lineStrip.Add(nextVertex);
                 lastVertex = nextVertex;
                 found = true;
+            }
+        }
+    }
+
+    private record struct GridDrawJob : IParallelRobustJob
+    {
+        public int BatchSize => 16;
+
+        public BaseShuttleControl Control;
+        public float MinimapScale;
+        public Vector2 MidPoint;
+        public Matrix3 Matrix;
+
+        public List<List<Vector2>> Vertices;
+        public List<List<Vector2>> ScaledVertices;
+
+        public void Execute(int index)
+        {
+            for (var i = 0; i < Vertices.Count; i++)
+            {
+                var list = Vertices[i];
+
+                // Found our list
+                if (index < list.Count)
+                {
+                    var vert = list[index];
+                    var adjustedVert = Matrix.Transform(vert);
+                    adjustedVert = adjustedVert with { Y = -adjustedVert.Y };
+
+                    var scaledVert = Control.ScalePosition(adjustedVert, MinimapScale, MidPoint);
+                    ScaledVertices[i][index] = scaledVert;
+                    return;
+                }
+
+                index -= list.Count;
             }
         }
     }
