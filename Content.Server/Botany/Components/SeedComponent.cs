@@ -16,7 +16,7 @@ namespace Content.Server.Botany.Components
         public SeedData? Seed;
 
         /// <summary>
-        ///     The health value of a plant resulting from this seed. If null defaults to the plant's Endurance.
+        ///     If not null, overrides the plant's initial health. Otherwise, the plant's initial health is set to the Endurance value.
         /// </summary>
         [DataField("healthOverride")]
         public float? HealthOverride = null;
