@@ -1041,6 +1041,9 @@
   id: SmallMech
 
 - type: Tag
+  id: SnapPop
+
+- type: Tag
   id: Smokable
 
 - type: Tag

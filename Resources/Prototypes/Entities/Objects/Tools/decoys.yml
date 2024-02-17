@@ -4,9 +4,7 @@
 - type: entity
   parent: [BaseItem, BaseFoldable]
   id: BaseDecoy
-  name: BaseDecoy
   abscract: true
-  description: Upon closer inspection, this Syndicate operative is actually a balloon.
   components:
   - type: Rotatable
   - type: Sprite
