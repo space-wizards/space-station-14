@@ -269,6 +269,12 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
+            if ((int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation)<=1)
+            {
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-early-sample-message"), args.User);
+                return;
+            }
+
             component.Health -= (_random.Next(3, 5) * 10);
             component.Seed.Unique = false;
             var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, component.Health);
