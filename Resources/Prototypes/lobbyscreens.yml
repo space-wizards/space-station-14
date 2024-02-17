@@ -1,4 +1,4 @@
-﻿- type: lobbyBackground
+- type: lobbyBackground
   id: Lobbyscreen1
   background: /Textures/LobbyScreens/lobbyscreen1.png
 
@@ -12,4 +12,8 @@
 
 - type: lobbyBackground
   id: Doomed
-  background: /Textures/LobbyScreens/doomed.png
+  background: /Textures/LobbyScreens/doomed.webp
+
+- type: lobbyBackground
+  id: Blueprint
+  background: /Textures/LobbyScreens/blueprint.webp
