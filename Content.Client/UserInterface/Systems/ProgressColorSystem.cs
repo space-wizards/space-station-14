@@ -13,13 +13,13 @@ public sealed class ProgressColorSystem : EntitySystem
 
     private static bool _colorBlindFriendly;
 
-    private static IReadOnlyList<Color> _viridis = new[]
+    private static IReadOnlyList<Color> _plasma = new[]
     {
-        new Color(253, 221, 37),
-        new Color(94, 201, 98),
-        new Color(33, 145, 140),
-        new Color(59, 82, 139),
-        new Color(68, 1, 84)
+        new Color(240, 249, 33),
+        new Color(248, 149, 64),
+        new Color(204, 71, 120),
+        new Color(126, 3, 168),
+        new Color(13, 8, 135)
     };
 
     /// <inheritdoc/>
@@ -47,7 +47,7 @@ public sealed class ProgressColorSystem : EntitySystem
             return Color.FromHsv((hue, 1f, 0.75f, 1f));
         }
 
-        return InterpolateColorGaussian(_viridis.ToArray(), progress);
+        return InterpolateColorGaussian(_plasma.ToArray(), progress);
     }
 
     /// <summary>
