@@ -381,6 +381,7 @@ namespace Content.Server.GameTicking
                     Role = antag
                         ? roles.First(role => role.Antagonist).Name
                         : roles.FirstOrDefault().Name ?? Loc.GetString("game-ticker-unknown-role"),
+                    Antag = antag,
                     JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
                     AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
                     Observer = observer,
