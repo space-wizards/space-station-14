@@ -1,77 +1,4 @@
 ﻿Entries:
-- author: Repo
-  changes:
-  - message: Mice can no longer spill containers.
-    type: Tweak
-  id: 5447
-  time: '2023-12-21T10:23:01.0000000+00:00'
-  url: null
-- author: Lukasz825700516
-  changes:
-  - message: Gas tanks no longer predict insertion of random items.
-    type: Fix
-  id: 5448
-  time: '2023-12-21T10:37:35.0000000+00:00'
-  url: null
-- author: mirrorcult
-  changes:
-  - message: Smart equipping now works with item slots
-    type: Add
-  - message: Smart equipping is now predicted
-    type: Tweak
-  id: 5449
-  time: '2023-12-21T14:17:09.0000000+00:00'
-  url: null
-- author: DrMelon
-  changes:
-  - message: Mice and other small creatures can no longer hurt Pun Pun or the Clown
-      by smashing them into tables.
-    type: Fix
-  id: 5450
-  time: '2023-12-21T15:18:26.0000000+00:00'
-  url: null
-- author: Boaz1111
-  changes:
-  - message: Added uranium munitions, a new T1 arsenal research.
-    type: Add
-  - message: Made practice munitions and weapons roundstart
-    type: Tweak
-  id: 5451
-  time: '2023-12-21T17:19:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22824
-- author: Admiral-Obvious-001
-  changes:
-  - message: Reduced per pellet damage of shotguns slightly.
-    type: Tweak
-  id: 5452
-  time: '2023-12-27T09:26:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23042
-- author: mirrorcult
-  changes:
-  - message: Pacifists can now attack in general, but are still forbidden from hurting
-      living creatures or dangerous things.
-    type: Tweak
-  - message: Pacifists can now disarm people. They are pacifist, after all.
-    type: Tweak
-  - message: Pacifists can now use flashes (and zero-damaging melee weapons, in general)
-    type: Tweak
-  id: 5453
-  time: '2023-12-27T09:55:48.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23037
-- author: snebl
-  changes:
-  - message: Fixed emergency and extended nitrogen tanks having the same volume.
-    type: Fix
-  id: 5454
-  time: '2023-12-27T09:56:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23040
-- author: Blazeror
-  changes:
-  - message: You can now pry open windoors by hand when they are unpowered.
-    type: Fix
-  id: 5455
-  time: '2023-12-27T12:28:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23047
 - author: Emisse
   changes:
   - message: The Grand Lottery now has much more prizes in store!
@@ -3878,3 +3805,75 @@
   id: 5946
   time: '2024-02-16T15:58:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25303
+- author: Lukasz825700516
+  changes:
+  - message: Damaging stacked glass sheets now gives appropriate amount of glass shards
+    type: Fix
+  id: 5947
+  time: '2024-02-16T18:42:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25308
+- author: Plykiya
+  changes:
+  - message: The firefighting door remote now has access to atmos doors.
+    type: Tweak
+  id: 5948
+  time: '2024-02-16T18:50:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25097
+- author: themias
+  changes:
+  - message: t-ray scanners can now penetrate carpets and puddles
+    type: Tweak
+  id: 5949
+  time: '2024-02-16T23:37:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25276
+- author: Krunk
+  changes:
+  - message: Sound effects have been added for writing on paper.
+    type: Add
+  id: 5950
+  time: '2024-02-16T23:48:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25257
+- author: PotentiallyTom
+  changes:
+  - message: Added new covers for the medical, security, and science guidebooks
+    type: Add
+  id: 5951
+  time: '2024-02-16T23:50:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25232
+- author: PJB3005
+  changes:
+  - message: Fix some rounding issues with complex chemical reactions.
+    type: Fix
+  id: 5952
+  time: '2024-02-16T23:54:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25199
+- author: data_redacted
+  changes:
+  - message: New lobby art (of an Air Alarm blueprint).
+    type: Add
+  id: 5953
+  time: '2024-02-17T02:52:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25179
+- author: Lank
+  changes:
+  - message: Diona nymphs, small cat-like creatures, several of which make up a Diona.
+    type: Add
+  - message: Diona are now able to split into three nymphs on death, and will control
+      one of them. The controlled nymph is able to reform into a new diona after some
+      time.
+    type: Add
+  - message: Diona now combust into flames upon being hit with significant heat damage.
+    type: Tweak
+  id: 5954
+  time: '2024-02-17T02:54:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24630
+- author: PolterTzi
+  changes:
+  - message: Seeds from sampled plants now inherit the sampled plant's health to discourage
+      excessive sampling.
+    type: Tweak
+  - message: Plants need to grow a bit before being sampled.
+    type: Tweak
+  id: 5955
+  time: '2024-02-17T05:02:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25326
