@@ -529,10 +529,10 @@
       path: /Audio/Items/Toys/quack.ogg
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/Voice/Vox/quack.ogg
+      path: /Audio/Voice/Toys/quack.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/Voice/Vox/quack.ogg
+      path: /Audio/Voice/Toys/quack.ogg
 
 - type: entity
   parent: BasePlushie
