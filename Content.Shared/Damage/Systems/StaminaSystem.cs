@@ -131,6 +131,23 @@ public sealed partial class StaminaSystem : EntitySystem
         var damage = args.PushProbability * component.CritThreshold;
         TakeStaminaDamage(uid, damage, component, source: args.Source);
 
+        if (!TryComp<CombatModeComponent>(args.Source, out var combatMode))
+            return;
+
+        var filterOther = Filter.PvsExcept(args.Source, entityManager: EntityManager);
+
+        var msgOther = Loc.GetString(
+                "disarm-action-shove-popup-message-other-clients",
+                ("performerName", Identity.Entity(args.Source, EntityManager)),
+                ("targetName", Identity.Entity(args.Target, EntityManager)));
+
+        var msgUser = Loc.GetString("disarm-action-shove-popup-message-cursor", ("targetName", Identity.Entity(args.Target, EntityManager)));
+
+        _popup.PopupEntity(msgOther, args.Source, filterOther, true);
+        _popup.PopupEntity(msgUser, args.Target, args.Source);
+
+        _audio.PlayPvs(combatMode.DisarmSuccessSound, args.Source, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+
         // We need a better method of getting if the entity is going to resist stam damage, both this and the lines in the foreach at the end of OnHit() are awful
         if (!component.Critical)
             return;

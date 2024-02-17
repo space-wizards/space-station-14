@@ -9,12 +9,16 @@ using Content.Shared.CombatMode;
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Physics.Pull;
+using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Throwing;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -33,6 +37,8 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -94,6 +100,25 @@ namespace Content.Server.Hands.Systems
 
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
+
+            if (!TryComp<CombatModeComponent>(args.Target, out var combatMode))
+            {
+                return;
+            }
+
+            var filterOther = Filter.PvsExcept(args.Source, entityManager: EntityManager);
+
+            var msgOther = Loc.GetString(
+                    "disarm-action-popup-message-other-clients",
+                    ("performerName", Identity.Entity(args.Source, EntityManager)),
+                    ("targetName", Identity.Entity(args.Target, EntityManager)));
+
+            var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(args.Target, EntityManager)));
+
+            _popupSystem.PopupEntity(msgOther, args.Source, filterOther, true);
+            _popupSystem.PopupEntity(msgUser, args.Target, args.Source);
+
+            _audio.PlayPvs(combatMode.DisarmSuccessSound, args.Source, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
 
             args.Handled = true; // no shove/stun.
         }
