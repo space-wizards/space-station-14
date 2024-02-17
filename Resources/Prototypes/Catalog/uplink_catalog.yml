@@ -793,11 +793,6 @@
     Telecrystal: 6
   categories:
   - UplinkBundles
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
 
 - type: listing
   id: UplinkMedsBundle
