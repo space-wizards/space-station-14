@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed wall lockers visually to match regular lockers and sit on walls
-      better
-    type: Tweak
-  id: 5461
-  time: '2023-12-28T03:05:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23060
 - author: EmoGarbage404
   changes:
   - message: Added the clerical error station event, which causes a small amount of
@@ -3869,3 +3861,10 @@
   id: 5960
   time: '2024-02-17T20:50:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25215
+- author: ArchPigeon
+  changes:
+  - message: Tails now stop wagging on crit
+    type: Fix
+  id: 5961
+  time: '2024-02-17T21:33:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25323
