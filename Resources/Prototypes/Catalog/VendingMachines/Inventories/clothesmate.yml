@@ -39,11 +39,17 @@
     ClothingUniformJumpskirtColorDarkGreen: 2
     ClothingUniformJumpsuitColorTeal: 2
     ClothingUniformJumpskirtColorTeal: 2
+    ClothingUniformJumpsuitLostTourist: 2 # GreyStation
     ClothingUniformJumpsuitHawaiBlack: 2
     ClothingUniformJumpsuitHawaiBlue: 2
     ClothingUniformJumpsuitHawaiRed: 2
     ClothingUniformJumpsuitHawaiYellow: 2
     ClothingUniformJumpsuitFlannel: 2
+    ClothingUniformJumpsuitSober: 2 # GreyStation
+    ClothingOuterDenimJacket: 2 # GreyStation
+    ClothingOuterCoatLetterman: 2 # GreyStation
+    ClothingOuterCoatLettermanBlue: 2 # GreyStation
+    ClothingOuterCoatLettermanRed: 2 # GreyStation
     ClothingUniformJumpsuitBlackShirtJeans: 2 # GreyStation
     ClothingUniformJumpsuitWhiteShirtJeans: 2 # GreyStation
     ClothingUniformJumpsuitBrownShirtPants: 2 # GreyStation
