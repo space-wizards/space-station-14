@@ -34,6 +34,8 @@ public partial class BaseShuttleControl : MapGridControl
     // Per-draw caching
     private readonly List<Vector2i> _gridTileList = new();
     private readonly HashSet<Vector2i> _gridNeighborSet = new();
+    private readonly List<(Vector2 Start, Vector2 End)> _edges = new();
+
     private readonly List<Vector2> _allVertices = new();
 
     // TODO: Engine PR.
@@ -49,7 +51,10 @@ public partial class BaseShuttleControl : MapGridControl
         Maps = EntManager.System<SharedMapSystem>();
         Font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
 
-        _drawJob = new GridDrawJob();
+        _drawJob = new GridDrawJob()
+        {
+            ScaledVertices = _allVertices,
+        };
 
         // TODO: Engine pr
         _neighborDirections = new (DirectionFlag, Vector2i)[4];
@@ -144,6 +149,7 @@ public partial class BaseShuttleControl : MapGridControl
             }
 
             gridData.EdgeIndex = gridData.Vertices.Count;
+            _edges.Clear();
 
             foreach (var index in _gridTileList)
             {
@@ -187,27 +193,86 @@ public partial class BaseShuttleControl : MapGridControl
                             throw new NotImplementedException();
                     }
 
-                    gridData.Vertices.Add(actualStart);
-                    gridData.Vertices.Add(actualEnd);
+                    _edges.Add((actualStart, actualEnd));
                 }
+            }
+
+            // Decompose the edges into longer lines to save data.
+            // Now we decompose the lines into longer lines (less data to send to the GPU)
+            var decomposed = true;
+
+            while (decomposed)
+            {
+                decomposed = false;
+
+                for (var i = 0; i < _edges.Count; i++)
+                {
+                    var (start, end) = _edges[i];
+                    var neighborFound = false;
+                    var neighborIndex = 0;
+                    Vector2 neighborStart;
+                    Vector2 neighborEnd = Vector2.Zero;
+
+                    // Does our end correspond with another start?
+                    for (var j = i + 1; j < _edges.Count; j++)
+                    {
+                        (neighborStart, neighborEnd) = _edges[j];
+
+                        if (!end.Equals(neighborStart))
+                            continue;
+
+                        neighborFound = true;
+                        neighborIndex = j;
+                        break;
+                    }
+
+                    if (!neighborFound)
+                        continue;
+
+                    // Check if our start and the neighbor's end are collinear
+                    if (!CollinearSimplifier.IsCollinear(start, end, neighborEnd, 10f * float.Epsilon))
+                        continue;
+
+                    decomposed = true;
+                    _edges[i] = (start, neighborEnd);
+                    _edges.RemoveAt(neighborIndex);
+                }
+            }
+
+            gridData.Vertices.EnsureCapacity(_edges.Count * 2);
+
+            foreach (var edge in _edges)
+            {
+                gridData.Vertices.Add(edge.Start);
+                gridData.Vertices.Add(edge.End);
             }
 
             gridData.LastBuild = grid.Comp.LastTileModifiedTick;
         }
 
         var totalData = gridData.Vertices.Count;
+        var triCount = gridData.EdgeIndex;
+        var edgeCount = totalData - gridData.EdgeIndex;
         _allVertices.EnsureLength(totalData, Vector2.Zero);
 
         _drawJob.MidPoint = midpoint;
         _drawJob.Matrix = matrix;
         _drawJob.MinimapScale = minimapScale;
         _drawJob.Vertices = gridData.Vertices;
-        _drawJob.ScaledVertices = _allVertices;
 
         _parallel.ProcessNow(_drawJob, totalData);
 
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _allVertices, 0, gridData.EdgeIndex, color.WithAlpha(alpha));
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, _allVertices, gridData.EdgeIndex, totalData - gridData.EdgeIndex, color);
+        const float BatchSize = 3f * 4096;
+
+        for (var i = 0; i < Math.Ceiling(triCount / BatchSize); i++)
+        {
+            var start = (int) (i * BatchSize);
+            var end = (int) Math.Min(triCount, start + BatchSize);
+            var count = end - start;
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _allVertices, start, count, color.WithAlpha(alpha));
+        }
+
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, _allVertices, gridData.EdgeIndex, edgeCount, color);
     }
 
     private record struct GridDrawJob : IParallelRobustJob
