@@ -7,6 +7,8 @@ surveillance-camera-monitor-ui-status-connecting = Connecting:
 surveillance-camera-monitor-ui-status-connected = Connected:
 surveillance-camera-monitor-ui-status-disconnected = Disconnected
 surveillance-camera-monitor-ui-no-subnets = No Subnets
+surveillance-camera-monitor-ui-flavor-left = Dont check captain bathroom
+surveillance-camera-monitor-ui-flavor-right = v1.2
 
 surveillance-camera-setup = Setup
 surveillance-camera-setup-ui-set = Set
