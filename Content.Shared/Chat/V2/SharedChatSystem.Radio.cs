@@ -109,35 +109,30 @@ public sealed class RadioEvent : EntityEventArgs
     public string AsName;
     public readonly string Message;
     public readonly string Channel;
-    public bool IsBold;
-    public string Verb;
-    public string FontId;
-    public int FontSize;
-    public bool IsAnnouncement;
-    public Color? MessageColorOverride;
 
-    public RadioEvent(
-        NetEntity speaker,
-        string asName,
-        string message,
-        string channel,
-        string withVerb = "",
-        string fontId = "",
-        int fontSize = 0,
-        bool isBold = false,
-        bool isAnnouncement = false,
-        Color? messageColorOverride = null
-    )
+    public RadioEvent(NetEntity speaker, string asName, string message, string channel)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
         Channel = channel;
-        Verb = withVerb;
-        FontId = fontId;
-        FontSize = fontSize;
-        IsBold = isBold;
-        IsAnnouncement = isAnnouncement;
+    }
+}
+
+/// <summary>
+/// Raised when an announcement is made.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class AnnouncementEvent : EntityEventArgs
+{
+    public string AsName;
+    public readonly string Message;
+    public Color? MessageColorOverride;
+
+    public AnnouncementEvent( string asName, string message, Color? messageColorOverride = null)
+    {
+        AsName = asName;
+        Message = message;
         MessageColorOverride = messageColorOverride;
     }
 }

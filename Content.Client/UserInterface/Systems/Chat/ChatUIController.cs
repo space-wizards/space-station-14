@@ -208,6 +208,7 @@ public sealed class ChatUIController : UIController
         SubscribeNetworkEvent<WhisperEvent>(OnWhisperedMessage);
         SubscribeNetworkEvent<EmoteEvent>(OnEmotedMessage);
         SubscribeNetworkEvent<RadioEvent>(OnRadioedMessage);
+        SubscribeNetworkEvent<AnnouncementEvent>(OnAnnouncementMessage);
         SubscribeNetworkEvent<LoocEvent>(OnLoocMessage);
         SubscribeNetworkEvent<DeadChatEvent>(OnDeadChatMessage);
 
@@ -983,37 +984,32 @@ public sealed class ChatUIController : UIController
 
     private void OnRadioedMessage(RadioEvent ev, EntitySessionEventArgs args)
     {
+        var verb = GetSpeechVerb(_ent.GetEntity(ev.Speaker), ev.Message);
         var channel = _prototype.Index<RadioChannelPrototype>(ev.Channel);
-        string wrappedMessage;
-        Color? overrideColor = null;
+        var wrappedMessage = Loc.GetString(verb.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
+            ("color", channel.Color),
+            ("fontType", verb.FontId),
+            ("fontSize", verb.FontSize),
+            ("verb", Loc.GetString(_random.Pick(verb.SpeechVerbStrings))),
+            ("channel", $@"\[{channel.LocalizedName}\]"),
+            ("name", ev.AsName),
+            ("message", ev.Message));
 
-        if (ev.IsAnnouncement)
-        {
-            wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", ev.AsName), ("message", FormattedMessage.EscapeText(ev.Message)));
-            overrideColor = ev.MessageColorOverride;
-        }
-        else
-        {
-            wrappedMessage = Loc.GetString(ev.IsBold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
-                ("color", channel.Color),
-                ("fontType", ev.FontId),
-                ("fontSize", ev.FontSize),
-                ("verb", Loc.GetString(ev.Verb)),
-                ("channel", $@"\[{channel.LocalizedName}\]"),
-                ("name", ev.AsName),
-                ("message", ev.Message));
-        }
-
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
-        var fakeChatMessage = new ChatMessage(ChatChannel.Radio, ev.Message, wrappedMessage, ev.Speaker, null, colorOverride: overrideColor);
+        var fakeChatMessage = new ChatMessage(ChatChannel.Radio, ev.Message, wrappedMessage, ev.Speaker, null);
 
         History.Add((_timing.CurTick, fakeChatMessage));
         MessageAdded?.Invoke(fakeChatMessage);
 
-        // TODO: Talk with the UI people about if chat messages should appear above people's heads. I really like the idea, it would make things more readable.
-        // Getting things out of the log would be nice. AddRadioBubble(...)?
-        // AddSpeechBubble(fakeChatMessage, SpeechBubble.SpeechType.Emote);
+        _replayRecording.RecordClientMessage(ev);
+    }
+
+    private void OnAnnouncementMessage(AnnouncementEvent ev, EntitySessionEventArgs args)
+    {
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", ev.AsName), ("message", FormattedMessage.EscapeText(ev.Message)));
+        var fakeChatMessage = new ChatMessage(ChatChannel.Radio, ev.Message, wrappedMessage, default, null, colorOverride: ev.MessageColorOverride);
+
+        History.Add((_timing.CurTick, fakeChatMessage));
+        MessageAdded?.Invoke(fakeChatMessage);
 
         _replayRecording.RecordClientMessage(ev);
     }

@@ -9,7 +9,6 @@ namespace Content.Server.Chat.V2;
 public sealed partial class ChatSystem
 {
     private const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
-    private const string DefaultAnnouncementChannel = "Common";
 
     /// <summary>
     /// Dispatches an announcement to all.
@@ -27,17 +26,9 @@ public sealed partial class ChatSystem
         Color? colorOverride = null
         )
     {
-        var msgOut = new RadioEvent(
-            default,
-            sender,
-            message,
-            DefaultAnnouncementChannel,
-            isAnnouncement: true,
-            messageColorOverride: colorOverride
-        );
+        var msgOut = new AnnouncementEvent(sender,message,messageColorOverride: colorOverride);
 
         RaiseNetworkEvent(msgOut);
-        _replay.RecordServerMessage(msgOut);
 
         if (playSound)
         {
@@ -47,6 +38,7 @@ public sealed partial class ChatSystem
             );
         }
 
+        _replay.RecordServerMessage(msgOut);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
 
@@ -68,7 +60,6 @@ public sealed partial class ChatSystem
         Color? colorOverride = null)
     {
         var station = _stationSystem.GetOwningStation(source);
-
         if (station == null)
             return;
 
@@ -76,27 +67,14 @@ public sealed partial class ChatSystem
             return;
 
         var filter = _stationSystem.GetInStation(stationDataComp);
-
-        var msgOut = new RadioEvent(
-            default,
-            sender,
-            message,
-            DefaultAnnouncementChannel,
-            isAnnouncement: true,
-            messageColorOverride: colorOverride
-        );
+        var msgOut = new AnnouncementEvent(sender, message, messageColorOverride: colorOverride);
 
         RaiseNetworkEvent(msgOut, filter);
 
         _replay.RecordServerMessage(msgOut);
 
         if (playSound)
-        {
-            _audio.PlayGlobal(announcementSound?.GetSound() ?? DefaultAnnouncementSound,
-                Filter.Broadcast(),
-                true, AudioParams.Default.WithVolume(-2f)
-            );
-        }
+            _audio.PlayGlobal(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
     }
