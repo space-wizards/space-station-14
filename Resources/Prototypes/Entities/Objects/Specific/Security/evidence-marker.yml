@@ -14,83 +14,74 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerOne
-  name: first evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: one
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerTwo
-  name: second evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: two
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerThree
-  name: third evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: three
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerFour
-  name: fourth evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: four
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerFive
-  name: fifth evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: five
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerSix
-  name: sixth evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: six
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerSeven
-  name: seventh evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: seven
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerEight
-  name: eighth evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: eight
-  - type: Item
 
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerNine
-  name: ninth evidence marker
+  name: evidence marker
   components:
   - type: Sprite
     state: nine
-  - type: Item
 
 - type: entity
   name: evidence marker box
