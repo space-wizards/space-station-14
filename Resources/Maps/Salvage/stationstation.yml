@@ -4360,6 +4360,13 @@ entities:
     - type: Transform
       pos: 2.5,1.5
       parent: 179
+- proto: YellowOxygenTankFilled
+  entities:
+  - uid: 549
+    components:
+    - type: Transform
+      pos: -3.4638138,4.3173227
+      parent: 179
 - proto: ZiptiesBroken
   entities:
   - uid: 686

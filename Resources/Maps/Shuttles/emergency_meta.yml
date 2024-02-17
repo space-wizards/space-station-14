@@ -8235,4 +8235,13 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
+- proto: YellowOxygenTankFilled
+  entities:
+  - uid: 9
+    components:
+    - type: Transform
+      parent: 2
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 ...
