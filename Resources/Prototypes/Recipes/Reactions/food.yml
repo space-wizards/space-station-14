@@ -360,9 +360,6 @@
     Carbon: 2
     Sugar: 1
 
-# Arguably, this should be a hydrocarbon.
-# This reaction is chemically bones because meat has nutriment and protein.
-# Making bones would be a large change. I'm not doing that.
 - type: reaction
   id: FatBreakdown
   source: true
@@ -370,11 +367,11 @@
   - Centrifuge
   reactants:
     Fat:
-      amount: 10
+      amount: 15
   products:
-    Calcium: 6
-    Phosphorus: 3
-    Blood: 1
+    Carbon: 5
+    Hydrogen: 10
+    Oxygen: 1
 
 # Proteins are hydrocarbons
 - type: reaction
@@ -384,10 +381,11 @@
   - Electrolysis
   reactants:
     UncookedAnimalProteins:
-      amount: 15
+      amount: 10
   products:
-    Carbon: 5
-    Hydrogen: 10
+    Carbon: 2
+    Hydrogen: 4
+    Phosphorus: 3
     Oxygen: 1
 
 - type: reaction
@@ -397,10 +395,11 @@
   - Electrolysis
   reactants:
     Protein:
-      amount: 15
+      amount: 10
   products:
-    Carbon: 5
-    Hydrogen: 10
+    Carbon: 2
+    Hydrogen: 4
+    Phosphorus: 3
     Oxygen: 1
 
 # Vitamin = Healthy = Green = Nitrogenous
