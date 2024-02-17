@@ -71,6 +71,13 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
+    private int GetCurrentGrowthStage(Entity<PlantHolderComponent> entity)
+    {
+        var (uid, component) = entity;
+
+        return Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));;
+    }
+
     private void OnExamine(Entity<PlantHolderComponent> entity, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -147,6 +154,7 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
+
                 float? seedHealth=seeds.Health;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
@@ -269,7 +277,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            if ((int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation)<=1)
+            if (GetCurrentGrowthStage(entity)<=1)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-early-sample-message"), args.User);
                 return;
@@ -910,7 +918,7 @@ public sealed class PlantHolderSystem : EntitySystem
             }
             else if (component.Age < component.Seed.Maturation)
             {
-                var growthStage = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+                var growthStage = GetCurrentGrowthStage(entity);
 
                 _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
                 _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{growthStage}", app);

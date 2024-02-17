@@ -18,8 +18,8 @@ namespace Content.Server.Botany.Components
         /// <summary>
         ///     The health value of a plant resulting from this seed. If null defaults to the plant's Endurance.
         /// </summary>
-        [DataField("health")]
-        public float? Health = null;
+        [DataField("healthOverride")]
+        public float? HealthOverride = null;
 
         /// <summary>
         ///     Name of a base seed prototype that is used if <see cref="Seed"/> is null.
