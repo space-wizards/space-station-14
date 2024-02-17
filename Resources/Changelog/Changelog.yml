@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the GORILLA gauntlet. When powered with an anomaly core, a single
-      blow from this is able to send anomalies flying through the air. Just try not
-      to let it out on the clown.
-    type: Add
-  - message: Added Anomaly Core Harnessing technology to the Experimental discipline,
-      which contains the GORILLA gauntlet.
-    type: Add
-  id: 5463
-  time: '2023-12-28T03:11:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23012
 - author: Ubaser
   changes:
   - message: You can now purchase kobolds from cargo as an alternative to monkeys!
@@ -3867,3 +3855,11 @@
   id: 5962
   time: '2024-02-17T22:34:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25349
+- author: musicmanvr
+  changes:
+  - message: Toned down the newton cradle and added it to the bureaucracy crate for
+      bored accountants.
+    type: Fix
+  id: 5963
+  time: '2024-02-17T23:55:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25357
