@@ -5,6 +5,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
+
 
 
 namespace Content.Shared.Species;
@@ -15,6 +17,7 @@ public sealed partial class GibActionSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -36,7 +39,7 @@ public sealed partial class GibActionSystem : EntitySystem
 
         foreach (var allowedState in comp.AllowedStates)
         {
-            if(allowedState == mobState.CurrentState)
+            if (allowedState == mobState.CurrentState)
             {
                 // The mob should never have more than 1 state so I don't see this being an issue
                 _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.ActionPrototype);
@@ -47,15 +50,16 @@ public sealed partial class GibActionSystem : EntitySystem
         // If they aren't given the action, remove it.
         _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }
-    
+
     private void OnGibAction(EntityUid uid, GibActionComponent comp, GibActionEvent args)
     {
         // When they use the action, gib them.
         _popupSystem.PopupClient(Loc.GetString(comp.PopupText, ("name", uid)), uid, uid);
-        _bodySystem.GibBody(uid, true);
+        if (_net.IsServer)
+            _bodySystem.GibBody(uid, true);
     }
-       
 
 
-    public sealed partial class GibActionEvent : InstantActionEvent { } 
+
+    public sealed partial class GibActionEvent : InstantActionEvent { }
 }

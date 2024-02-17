@@ -187,7 +187,7 @@ public sealed class GibbingSystem : EntitySystem
             _audioSystem.PlayPredicted(gibbable.Comp.GibSound, parentXform.Coordinates, null);
         }
 
-        if (gibType == GibType.Gib)
+        if (gibType == GibType.Gib && IsClientSide(gibbable))
             QueueDel(gibbable);
         return true;
     }
