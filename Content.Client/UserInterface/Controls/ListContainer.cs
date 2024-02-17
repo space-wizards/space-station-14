@@ -18,7 +18,7 @@ public sealed class ListContainer : Control
     public bool Group
     {
         get => _buttonGroup != null;
-        set => _buttonGroup = value ? new ButtonGroup(isNoneSetAllowed: true) : null;
+        set => _buttonGroup = value ? new ButtonGroup() : null;
     }
     public bool Toggle { get; set; }
     public Action<ListData, ListContainerButton>? GenerateItem;
