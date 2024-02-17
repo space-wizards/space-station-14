@@ -291,9 +291,9 @@ public sealed class PlantHolderSystem : EntitySystem
             component.Health -= (_random.Next(3, 5) * 10);
             component.Seed.Unique = false;
 
-            float preSampleWeight = 1.0;
-            float postSampleWeight = 1.0;
-            float enduranceWeight = 1.0;
+            float preSampleWeight = 1.0F;
+            float postSampleWeight = 1.0F;
+            float enduranceWeight = 1.0F;
             float newSeedHealth = (preSampleHealth * preSampleWeight + postSampleWeight * component.Health + enduranceWeight * component.Seed.Endurance) / (enduranceWeight + postSampleWeight + preSampleWeight); ///calculate the new seed's health override value as a weighted average of the plant's health before clipping, it's health after clipping and the plant's base health (endurance)
 
             var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, newSeedHealth);
