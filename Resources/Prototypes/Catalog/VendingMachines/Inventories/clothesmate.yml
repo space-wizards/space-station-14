@@ -44,12 +44,19 @@
     ClothingUniformJumpsuitHawaiRed: 2
     ClothingUniformJumpsuitHawaiYellow: 2
     ClothingUniformJumpsuitFlannel: 2
-    ClothingUniformJumpsuitCasualBlue: 2
-    ClothingUniformJumpskirtCasualBlue: 2
-    ClothingUniformJumpsuitCasualPurple: 2
-    ClothingUniformJumpskirtCasualPurple: 2
-    ClothingUniformJumpsuitCasualRed: 2
-    ClothingUniformJumpskirtCasualRed: 2
+    ClothingUniformJumpsuitBlackShirtJeans: 2 # GreyStation
+    ClothingUniformJumpsuitWhiteShirtJeans: 2 # GreyStation
+    ClothingUniformJumpsuitBrownShirtPants: 2 # GreyStation
+    ClothingShoesBootsLaceup: 2 # GreyStation
+    ClothingShoesMiscWhite: 2 # GreyStation
+    ClothingShoesLeather: 2 # GreyStation
+    ClothingShoesBootsSalvage: 2 # GreyStation
+    #ClothingUniformJumpsuitCasualBlue: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpskirtCasualBlue: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpsuitCasualPurple: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpskirtCasualPurple: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpsuitCasualRed: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpskirtCasualRed: 2 # GreyStation - Replaced clothes
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3
