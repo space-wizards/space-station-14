@@ -120,7 +120,7 @@
   parent: BaseChemicalImplant
   id: LethalChemicalImplant
   name: lethal chemical implant
-  description: This implant can be remotely triggered to inject the target with a lethal dose of poison.
+  description: This implant can be remotely triggered from a criminal record console to inject the target with a lethal dose of poison.
   noSpawn: true
   components:
   - type: SolutionContainerManager
@@ -142,7 +142,7 @@
   parent: BaseChemicalImplant
   id: NonLethalChemicalImplant
   name: nonlethal chemical implant
-  description: This implant can be remotely triggered to inject the target with a sleeping agent.
+  description: This implant can be remotely triggered from a criminal record console to inject the target with a sleeping agent.
   noSpawn: true
   components:
   - type: SolutionContainerManager

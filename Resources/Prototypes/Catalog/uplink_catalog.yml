@@ -525,7 +525,7 @@
   description: uplink-binary-translator-key-desc
   icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
   productEntity: EncryptionKeyBinary
-  cost: 
+  cost:
     Telecrystal: 1
 
   categories:
@@ -729,6 +729,21 @@
       blacklist:
         components:
           - SurplusBundle
+
+- type: listing
+  id: UplinkEmergencyChemicalImplanter
+  name: uplink-emergency-implanter-name
+  description: uplink-emergency-implanter-desc
+  productEntity: EmergencyChemicalImplanter
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 # Bundles
 

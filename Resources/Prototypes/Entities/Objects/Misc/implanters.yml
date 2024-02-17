@@ -159,7 +159,7 @@
 - type: entity
   id: LethalChemicalImplanter
   name: lethal chemical implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
     implant: LethalChemicalImplant
@@ -167,7 +167,7 @@
 - type: entity
   id: NonLethalChemicalImplanter
   name: nonlethal chemical implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
     implant: NonLethalChemicalImplant

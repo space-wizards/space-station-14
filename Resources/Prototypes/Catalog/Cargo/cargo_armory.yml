@@ -57,3 +57,13 @@
   cost: 5200
   category: Armory
   group: market
+
+- type: cargoProduct
+  id: ChemicalImplants
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  product: CrateChemicalImplants
+  cost: 2000
+  category: Armory
+  group: market

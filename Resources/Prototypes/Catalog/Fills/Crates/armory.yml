@@ -36,6 +36,19 @@
         amount: 5
 
 - type: entity
+  id: CrateChemicalImplants
+  parent: CrateWeaponSecure
+  name: chemical implants
+  description: Contains 2 lethal and 2 nonlethal chemical implants. These can be activated from any criminal record console to remotely disable previously released prisoners.
+  components:
+  - type: StorageFill
+    contents:
+    - id: LethalChemicalImplanter
+      amount: 2
+    - id: NonLethalChemicalImplanter
+      amount: 2
+
+- type: entity
   parent: CrateWeaponSecure
   id: CrateTrainingBombs
   name: training bombs
