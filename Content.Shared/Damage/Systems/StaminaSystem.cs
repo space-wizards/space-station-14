@@ -122,7 +122,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
     {
-        if (args.Handled || !_random.Prob(args.PushProbability))
+        if (args.Handled)
             return;
 
         if (component.Critical)
