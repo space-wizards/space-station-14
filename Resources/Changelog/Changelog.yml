@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: snebl
-  changes:
-  - message: Fixed emergency and extended nitrogen tanks having the same volume.
-    type: Fix
-  id: 5454
-  time: '2023-12-27T09:56:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23040
 - author: Blazeror
   changes:
   - message: You can now pry open windoors by hand when they are unpowered.
@@ -3868,3 +3861,16 @@
   id: 5953
   time: '2024-02-17T02:52:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25179
+- author: Lank
+  changes:
+  - message: Diona nymphs, small cat-like creatures, several of which make up a Diona.
+    type: Add
+  - message: Diona are now able to split into three nymphs on death, and will control
+      one of them. The controlled nymph is able to reform into a new diona after some
+      time.
+    type: Add
+  - message: Diona now combust into flames upon being hit with significant heat damage.
+    type: Tweak
+  id: 5954
+  time: '2024-02-17T02:54:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24630
