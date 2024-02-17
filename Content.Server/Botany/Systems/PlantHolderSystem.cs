@@ -75,14 +75,10 @@ public sealed class PlantHolderSystem : EntitySystem
     {
         var (uid, component) = entity;
 
-        var age = component.Age;
-
         if (component.Seed == null)
             return 0;
 
-        var maturation = component.Seed.Maturation;
-        var stages = component.Seed.GrowthStages;
-        var result = Math.Max(1, (int) (age * stages / maturation));
+        var result = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
         return result;
     }
 
@@ -163,7 +159,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
-                float? seedHealth=seeds.HealthOverride;
+                float? seedHealth = seeds.HealthOverride;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
@@ -285,7 +281,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            if (GetCurrentGrowthStage(entity)<=1)
+            if (GetCurrentGrowthStage(entity) <= 1)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-early-sample-message"), args.User);
                 return;
