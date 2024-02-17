@@ -33,11 +33,8 @@ public partial class BaseShuttleControl : MapGridControl
 
     // Per-draw caching
     private readonly List<Vector2i> _gridTileList = new();
-    private readonly HashSet<Vector2i> _gridTileSet = new();
     private readonly HashSet<Vector2i> _gridNeighborSet = new();
-    private readonly List<List<Vector2>> _allVertices = new();
-
-    private readonly List<(Vector2 Start, Vector2 End)> _edges = new();
+    private readonly List<Vector2> _allVertices = new();
 
     // TODO: Engine PR.
     private (DirectionFlag, Vector2i)[] _neighborDirections;
@@ -119,10 +116,8 @@ public partial class BaseShuttleControl : MapGridControl
 
         if (gridData.LastBuild < grid.Comp.LastTileModifiedTick)
         {
-            gridData.Edges.Clear();
-            gridData.Tris.Clear();
+            gridData.Vertices.Clear();
             _gridTileList.Clear();
-            _gridTileSet.Clear();
             _gridNeighborSet.Clear();
 
             // Okay so there's 2 steps to this
@@ -131,53 +126,44 @@ public partial class BaseShuttleControl : MapGridControl
             while (rator.MoveNext(out var tileRef))
             {
                 var index = tileRef.Value.GridIndices;
-                _gridTileSet.Add(index);
                 _gridNeighborSet.Add(index);
                 _gridTileList.Add(index);
+
+                var bl = Maps.TileToVector(grid, index);
+                var br = bl + new Vector2(tileSize, 0f);
+                var tr = bl + new Vector2(tileSize, tileSize);
+                var tl = bl + new Vector2(0f, tileSize);
+
+                gridData.Vertices.Add(bl);
+                gridData.Vertices.Add(br);
+                gridData.Vertices.Add(tl);
+
+                gridData.Vertices.Add(br);
+                gridData.Vertices.Add(tl);
+                gridData.Vertices.Add(tr);
             }
 
-            while (_gridTileSet.Count > 0)
-            {
-                var seed = _gridTileSet.First();
-                _gridTileSet.Remove(seed);
-                var triList = new List<Vector2>();
+            gridData.EdgeIndex = gridData.Vertices.Count;
 
-                // Essentially what we do is make a triangle-strip horizontally similar to how fixtures are made for chunks
-                // Using a strip means less verts to be processed compared to a list.
-                // Add verts and shit in here, no transform
-                var tileVec = Maps.TileToVector(grid, seed);
-                var br = tileVec + new Vector2(tileSize, 0f);
-                var tr = tileVec + new Vector2(tileSize, tileSize);
-                var tl = tileVec + new Vector2(0f, tileSize);
-
-                triList.Add(tileVec);
-                triList.Add(tl);
-                triList.Add(br);
-                triList.Add(tr);
-
-                RecurseTris(grid, _gridTileSet, seed, triList);
-                gridData.Tris.Add(triList);
-            }
-
-            foreach (var tile in _gridTileList)
+            foreach (var index in _gridTileList)
             {
                 // We get all of the raw lines up front
                 // then we decompose them into longer lines in a separate step.
                 foreach (var (dir, dirVec) in _neighborDirections)
                 {
-                    var neighbor = tile + dirVec;
+                    var neighbor = index + dirVec;
 
                     if (_gridNeighborSet.Contains(neighbor))
                         continue;
 
-                    // Could probably rotate this but this might be faster?
-                    Vector2 actualStart;
-                    Vector2 actualEnd;
-
-                    var bl = Maps.TileToVector(grid, tile);
+                    var bl = Maps.TileToVector(grid, index);
                     var br = bl + new Vector2(tileSize, 0f);
                     var tr = bl + new Vector2(tileSize, tileSize);
                     var tl = bl + new Vector2(0f, tileSize);
+
+                    // Could probably rotate this but this might be faster?
+                    Vector2 actualStart;
+                    Vector2 actualEnd;
 
                     switch (dir)
                     {
@@ -201,175 +187,27 @@ public partial class BaseShuttleControl : MapGridControl
                             throw new NotImplementedException();
                     }
 
-                    // Okay originally I had this as a dictionary but if you have 2 corners
-                    // (e.g. BL and TR) then they may both have the same starting vector
-
-                    // If this actually becomes a problem then just add a dictionary that contains the indices
-                    // of all entries.
-                    _edges.Add((actualStart, actualEnd));
+                    gridData.Vertices.Add(actualStart);
+                    gridData.Vertices.Add(actualEnd);
                 }
-            }
-
-            // Now we decompose the lines into longer lines (less data to send to the GPU)
-            var decomposed = true;
-
-            while (decomposed)
-            {
-                decomposed = false;
-
-                for (var i = 0; i < _edges.Count; i++)
-                {
-                    var (start, end) = _edges[i];
-                    var neighborFound = false;
-                    var neighborIndex = 0;
-                    Vector2 neighborStart;
-                    Vector2 neighborEnd = Vector2.Zero;
-
-                    // Does our end correspond with another start?
-                    for (var j = i + 1; j < _edges.Count; j++)
-                    {
-                        (neighborStart, neighborEnd) = _edges[j];
-
-                        if (!end.Equals(neighborStart))
-                            continue;
-
-                        neighborFound = true;
-                        neighborIndex = j;
-                        break;
-                    }
-
-                    if (!neighborFound)
-                        continue;
-
-                    // Check if our start and the neighbor's end are collinear
-                    if (!CollinearSimplifier.IsCollinear(start, end, neighborEnd, 10f * float.Epsilon))
-                        continue;
-
-                    decomposed = true;
-                    _edges[i] = (start, neighborEnd);
-                    _edges.RemoveAt(neighborIndex);
-                }
-            }
-
-            // As a final step we'll create linestrips to send even LESS data.
-            while (_edges.Count > 0)
-            {
-                var seed = _edges[^1];
-                _edges.RemoveAt(_edges.Count - 1);
-                var lineStrip = new List<Vector2>
-                {
-                    seed.Start,
-                    seed.End,
-                };
-
-                RecurseLines(lineStrip, _edges, seed.End);
-
-                gridData.Edges.Add(lineStrip);
             }
 
             gridData.LastBuild = grid.Comp.LastTileModifiedTick;
         }
 
-        var totalData = 0;
-        for (var i = 0; i < gridData.Tris.Count; i++)
-        {
-            if (_allVertices.Count <= i)
-            {
-                _allVertices.Add(new List<Vector2>());
-            }
+        var totalData = gridData.Vertices.Count;
+        _allVertices.EnsureLength(totalData, Vector2.Zero);
 
-            var li = _allVertices[i];
-            var count = gridData.Tris[i].Count;
-            li.EnsureLength(count, Vector2.Zero);
-            totalData += count;
-        }
-
-        // Add tri data first then edges
         _drawJob.MidPoint = midpoint;
         _drawJob.Matrix = matrix;
         _drawJob.MinimapScale = minimapScale;
-        _drawJob.Vertices = gridData.Tris;
+        _drawJob.Vertices = gridData.Vertices;
         _drawJob.ScaledVertices = _allVertices;
 
         _parallel.ProcessNow(_drawJob, totalData);
 
-        for (var i = 0; i < gridData.Tris.Count; i++)
-        {
-            var strip = _allVertices[i];
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, strip, gridData.Tris[i].Count, color.WithAlpha(alpha));
-        }
-
-        totalData = 0;
-        for (var i = 0; i < gridData.Edges.Count; i++)
-        {
-            if (_allVertices.Count <= i)
-            {
-                _allVertices.Add(new List<Vector2>());
-            }
-
-            var li = _allVertices[i];
-            var count = gridData.Edges[i].Count;
-            li.EnsureLength(count, Vector2.Zero);
-            totalData += count;
-        }
-
-        _drawJob.Vertices = gridData.Edges;
-        _parallel.ProcessNow(_drawJob, totalData);
-
-        for (var i = 0; i < gridData.Edges.Count; i++)
-        {
-            var strip = _allVertices[i];
-            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, strip, gridData.Edges[i].Count, color);
-        }
-    }
-
-    private void RecurseTris(Entity<MapGridComponent> grid, HashSet<Vector2i> tiles, Vector2i tile, List<Vector2> triStrip)
-    {
-        var tileSize = grid.Comp.TileSize;
-
-        while (true)
-        {
-            // Check neighbor to see if we can keep going
-            var neighbor = tile + Vector2i.Right;
-
-            if (!tiles.Remove(neighbor))
-                return;
-
-            var neighborTileVec = Maps.TileToVector(grid, neighbor);
-
-            var neighborBR = neighborTileVec + new Vector2(tileSize, 0f);
-            var neighborTR = neighborTileVec + new Vector2(tileSize, tileSize);
-
-            triStrip.Add(neighborBR);
-            triStrip.Add(neighborTR);
-
-            tile = neighbor;
-        }
-    }
-
-    private void RecurseLines(List<Vector2> lineStrip, List<(Vector2 Start, Vector2 End)> edges, Vector2 lastVertex)
-    {
-        var found = true;
-
-        while (found)
-        {
-            found = false;
-
-            for (var i = 0; i < edges.Count; i++)
-            {
-                var (start, end) = edges[i];
-
-                if (!lastVertex.Equals(start))
-                    continue;
-
-                var nextVertex = end;
-                edges.RemoveAt(i);
-
-                lineStrip.Add(nextVertex);
-                lastVertex = nextVertex;
-                found = true;
-            }
-        }
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _allVertices, 0, gridData.EdgeIndex, color.WithAlpha(alpha));
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, _allVertices, gridData.EdgeIndex, totalData - gridData.EdgeIndex, color);
     }
 
     private record struct GridDrawJob : IParallelRobustJob
@@ -380,29 +218,17 @@ public partial class BaseShuttleControl : MapGridControl
         public Vector2 MidPoint;
         public Matrix3 Matrix;
 
-        public List<List<Vector2>> Vertices;
-        public List<List<Vector2>> ScaledVertices;
+        public List<Vector2> Vertices;
+        public List<Vector2> ScaledVertices;
 
         public void Execute(int index)
         {
-            for (var i = 0; i < Vertices.Count; i++)
-            {
-                var list = Vertices[i];
+            var vert = Vertices[index];
+            var adjustedVert = Matrix.Transform(vert);
+            adjustedVert = adjustedVert with { Y = -adjustedVert.Y };
 
-                // Found our list
-                if (index < list.Count)
-                {
-                    var vert = list[index];
-                    var adjustedVert = Matrix.Transform(vert);
-                    adjustedVert = adjustedVert with { Y = -adjustedVert.Y };
-
-                    var scaledVert = ScalePosition(adjustedVert, MinimapScale, MidPoint);
-                    ScaledVertices[i][index] = scaledVert;
-                    return;
-                }
-
-                index -= list.Count;
-            }
+            var scaledVert = ScalePosition(adjustedVert, MinimapScale, MidPoint);
+            ScaledVertices[index] = scaledVert;
         }
     }
 }
@@ -413,8 +239,12 @@ public sealed class GridDrawData
      * List of lists because we use LineStrip and TriangleStrip respectively (less data to pass to the GPU).
      */
 
-    public List<List<Vector2>> Edges = new();
-    public List<List<Vector2>> Tris = new();
+    public List<Vector2> Vertices = new();
+
+    /// <summary>
+    /// Vertices index from when edges start.
+    /// </summary>
+    public int EdgeIndex;
 
     public GameTick LastBuild;
 }
