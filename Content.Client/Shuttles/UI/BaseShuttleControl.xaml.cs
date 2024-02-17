@@ -22,9 +22,9 @@ namespace Content.Client.Shuttles.UI;
 public partial class BaseShuttleControl : MapGridControl
 {
     [Dependency] private readonly IParallelManager _parallel = default!;
-    protected SharedMapSystem Maps;
+    protected readonly SharedMapSystem Maps;
 
-    protected Font Font;
+    protected readonly Font Font;
 
     private GridDrawJob _drawJob;
 
@@ -35,7 +35,7 @@ public partial class BaseShuttleControl : MapGridControl
     private readonly List<Vector2i> _gridTileList = new();
     private readonly HashSet<Vector2i> _gridTileSet = new();
     private readonly HashSet<Vector2i> _gridNeighborSet = new();
-    private List<List<Vector2>> _allVertices = new();
+    private readonly List<List<Vector2>> _allVertices = new();
 
     private readonly List<(Vector2 Start, Vector2 End)> _edges = new();
 
@@ -52,10 +52,7 @@ public partial class BaseShuttleControl : MapGridControl
         Maps = EntManager.System<SharedMapSystem>();
         Font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
 
-        _drawJob = new GridDrawJob()
-        {
-            Control = this,
-        };
+        _drawJob = new GridDrawJob();
 
         // TODO: Engine pr
         _neighborDirections = new (DirectionFlag, Vector2i)[4];
@@ -282,14 +279,9 @@ public partial class BaseShuttleControl : MapGridControl
             }
 
             var li = _allVertices[i];
-            li.Clear();
-
-            for (var j = 0; j < gridData.Tris[i].Count; j++)
-            {
-                li.Add(Vector2.Zero);
-            }
-
-            totalData += gridData.Tris[i].Count;
+            var count = gridData.Tris[i].Count;
+            li.EnsureLength(count, Vector2.Zero);
+            totalData += count;
         }
 
         // Add tri data first then edges
@@ -304,7 +296,7 @@ public partial class BaseShuttleControl : MapGridControl
         for (var i = 0; i < gridData.Tris.Count; i++)
         {
             var strip = _allVertices[i];
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, strip, color.WithAlpha(alpha));
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, strip, gridData.Tris[i].Count, color.WithAlpha(alpha));
         }
 
         totalData = 0;
@@ -316,24 +308,18 @@ public partial class BaseShuttleControl : MapGridControl
             }
 
             var li = _allVertices[i];
-            li.Clear();
-
-            for (var j = 0; j < gridData.Edges[i].Count; j++)
-            {
-                li.Add(Vector2.Zero);
-            }
-
-            totalData += gridData.Edges[i].Count;
+            var count = gridData.Edges[i].Count;
+            li.EnsureLength(count, Vector2.Zero);
+            totalData += count;
         }
 
         _drawJob.Vertices = gridData.Edges;
-
         _parallel.ProcessNow(_drawJob, totalData);
 
         for (var i = 0; i < gridData.Edges.Count; i++)
         {
             var strip = _allVertices[i];
-            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, strip, color);
+            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, strip, gridData.Edges[i].Count, color);
         }
     }
 
@@ -390,7 +376,6 @@ public partial class BaseShuttleControl : MapGridControl
     {
         public int BatchSize => 16;
 
-        public BaseShuttleControl Control;
         public float MinimapScale;
         public Vector2 MidPoint;
         public Matrix3 Matrix;
@@ -411,7 +396,7 @@ public partial class BaseShuttleControl : MapGridControl
                     var adjustedVert = Matrix.Transform(vert);
                     adjustedVert = adjustedVert with { Y = -adjustedVert.Y };
 
-                    var scaledVert = Control.ScalePosition(adjustedVert, MinimapScale, MidPoint);
+                    var scaledVert = ScalePosition(adjustedVert, MinimapScale, MidPoint);
                     ScaledVertices[i][index] = scaledVert;
                     return;
                 }

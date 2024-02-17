@@ -156,7 +156,7 @@ public partial class MapGridControl : BoxContainer
         return ScalePosition(value, MinimapScale, MidPointVector);
     }
 
-    protected Vector2 ScalePosition(Vector2 value, float minimapScale, Vector2 midpointVector)
+    protected static Vector2 ScalePosition(Vector2 value, float minimapScale, Vector2 midpointVector)
     {
         return value * minimapScale + midpointVector;
     }
