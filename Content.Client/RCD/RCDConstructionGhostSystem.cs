@@ -22,7 +22,6 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
-
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly RCDSystem _rcdSystem = default!;
@@ -57,7 +56,9 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             RotateRCDConstructionGhost(uid!.Value, rcd!);
 
         // Delete the construction ghost if its no longer needed
-        if (!hasRCD)
+        if (!hasRCD ||
+            !EntityManager.TryGetComponent<InputComponent>(player, out var input) ||
+            _inputManager.Contexts.ActiveContext.Name != input.ContextName)
         {
             DeleteConstructionGhost();
             return;
