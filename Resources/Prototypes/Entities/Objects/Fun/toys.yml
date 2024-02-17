@@ -463,6 +463,12 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -480,6 +486,12 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
@@ -515,6 +527,12 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Vox/quack.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Vox/quack.ogg
 
 - type: entity
   parent: BasePlushie
@@ -528,6 +546,9 @@
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnActivate
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnTrigger
@@ -546,6 +567,22 @@
   components:
   - type: Sprite
     state: plushie_atmosian
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/muffled_ian.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/muffled_ian.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/muffled_ian.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/muffled_ian.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/muffled_ian.ogg
 
 - type: entity
   parent: BasePlushie
@@ -573,6 +610,58 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: ToyIan
+  name: ian toy
+  description: Unable to eat, but just as fluffy as the real guy!
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    state: ian
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/ian.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieCreature
+  name: creature plushie
+  description: You have the uncontrollable urge to YIPPEE!
+  components:
+  - type: Sprite
+    state: plushie_tbh
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/yippee.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/yippee.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/yippee.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/yippee.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/yippee.ogg
 
 ## Cheapo Figurines
 
@@ -635,25 +724,7 @@
         volume: -5
         maxDistance: 10
 
-- type: entity
-  parent: BasePlushie
-  id: ToyIan
-  name: ian toy
-  description: Unable to eat, but just as fluffy as the real guy!
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    state: ian
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/ian.ogg
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Items/Toys/ian.ogg
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Items/Toys/ian.ogg
+
 
 ## Toyweapons
 

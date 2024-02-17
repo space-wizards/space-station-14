@@ -34,6 +34,7 @@
         - ToyMouse
         - PlushieDiona
         - PlushieArachind
+        - PlushieCreature
       chance: 0.5
       offset: 0.2
 
