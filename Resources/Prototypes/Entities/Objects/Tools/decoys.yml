@@ -63,6 +63,7 @@
     energy: 2.3
     offset: 0, -1
     color: green
+    netsync: false
 
 - type: entity
   parent: BaseDecoy
