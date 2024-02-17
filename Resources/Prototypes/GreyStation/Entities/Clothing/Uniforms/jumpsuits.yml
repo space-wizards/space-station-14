@@ -30,3 +30,14 @@
       sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualwhite.rsi
     - type: Clothing
       sprite: GreyStation/Clothing/Uniforms/Jumpsuit/casualwhite.rsi
+
+- type: entity
+  parent: ClothingUniformOveralls
+  id: ClothingUniformRedOveralls
+  name: red overalls
+  description: Good pair of brown overalls with a red shirt. Kneepads for when you're on your knees for hours on end.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/redoveralls.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/redoveralls.rsi
