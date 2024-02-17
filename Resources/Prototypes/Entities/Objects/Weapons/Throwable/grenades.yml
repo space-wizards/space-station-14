@@ -380,7 +380,7 @@
       - ReagentId: TearGas
         Quantity: 50
 
-# Non-functional "dummy" grenades to use as a distraction.
+# Non-explosive "dummy" grenades to use as a distraction.
 
 - type: entity
   name: trick grenade
