@@ -622,7 +622,7 @@
 - type: flavor
   id: gingersoda
   flavorType: Complex
-  description: flavor-complex-giner-soda
+  description: flavor-complex-ginger-soda
 
 - type: flavor
   id: lemonlimesoda

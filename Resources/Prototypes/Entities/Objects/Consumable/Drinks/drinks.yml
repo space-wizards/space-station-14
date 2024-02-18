@@ -532,7 +532,7 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkCoconutRumGlass
+  id: DrinkCoconutRum
   suffix: coconut rum
   components:
   - type: SolutionContainerManager
@@ -543,7 +543,7 @@
         - ReagentId: CoconutRum
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/coconutrumglass.rsi
+    sprite: Objects/Consumable/Drinks/coconutrum.rsi
     state: icon
 
 - type: entity

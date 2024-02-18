@@ -14,8 +14,8 @@
   parent: BaseSoda
   desc: reagent-desc-roy-rogers
   physicalDesc: reagent-physical-desc-sweet
-  flavor: arnoldpalmer
-  color: "#d8cc5d"
+  flavor: cola
+  color: "#262019"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/royrogers.rsi
     state: icon
@@ -131,10 +131,13 @@
   id: SolDry
   name: reagent-name-sol-dry
   parent: BaseSoda
-  desc: reagent-name-sol-dry
+  desc: reagent-desc-sol-dry
   physicalDesc: reagent-physical-desc-fizzy
   flavor: gingersoda
   color: "#ccb87e"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sol_dry_glass.rsi
+    state: icon
 
 - type: reagent
   id: ShirleyTemple
