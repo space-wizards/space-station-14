@@ -45,6 +45,8 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
     /// </summary>
     private readonly Dictionary<DockingPortState, PanelContainer> _dockContainers = new();
 
+    public event Action<NetEntity>? OnViewDock;
+
     public ShuttleDockControl() : base(8f, 32f, 8f)
     {
         RobustXamlLoader.Load(this);
@@ -62,6 +64,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         {
             _coordinates = EntManager.GetCoordinates(dockState.Coordinates);
             _angle = dockState.Angle;
+            OnViewDock?.Invoke(dockState.Entity);
         }
         else
         {
@@ -290,14 +293,20 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         if (DockState == null)
             return;
 
+        var gridNent = EntManager.GetNetEntity(GridEntity);
+
         foreach (var (otherShuttle, docks) in DockState.Docks)
         {
             // If it's our shuttle we add a view button
 
             foreach (var dock in docks)
             {
-                // TODO: Use a
-                var container = new PanelContainer()
+                var container = new BoxContainer()
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                };
+
+                var panel = new PanelContainer()
                 {
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
@@ -306,21 +315,68 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                         BorderColor = Color.Orange,
                         BorderThickness = new Thickness(1),
                         BackgroundColor = Color.Orange.WithAlpha(0.05f),
+                    },
+                    Children =
+                    {
+                        container,
                     }
                 };
-                var dockButton = new Button()
+
+                Button button;
+
+                if (otherShuttle == gridNent)
                 {
-                    Text = Loc.GetString("shuttle-console-dock"),
-                    Margin = new Thickness(2),
-                };
+                    button = new Button()
+                    {
+                        Text = Loc.GetString("shuttle-console-view"),
+                        Margin = new Thickness(2),
+                    };
 
-                // TODO: Add a plain button to engine or smth.
-                dockButton.RemoveStyleClass("button");
-                dockButton.AddStyleClass("LabelBig");
-                container.AddChild(dockButton);
+                    button.OnPressed += args =>
+                    {
+                        SetViewedDock(dock);
+                    };
+                }
+                else
+                {
+                    if (dock.Connected)
+                    {
+                        button = new Button()
+                        {
+                            Text = Loc.GetString("shuttle-console-undock-button"),
+                            Margin = new Thickness(2),
+                        };
 
-                AddChild(container);
-                _dockContainers[dock] = container;
+                        button.OnPressed += args =>
+                        {
+
+                        };
+                    }
+                    else
+                    {
+                        button = new Button()
+                        {
+                            Text = Loc.GetString("shuttle-console-dock-button"),
+                            Margin = new Thickness(2),
+                        };
+
+                        button.OnPressed += args =>
+                        {
+
+                        };
+                    }
+                }
+
+                container.AddChild(new Label()
+                {
+                    Text = dock.Name,
+                    HorizontalAlignment = HAlignment.Center,
+                });
+
+                button.HorizontalAlignment = HAlignment.Center;
+                container.AddChild(button);
+                AddChild(panel);
+                _dockContainers[dock] = panel;
             }
         }
     }

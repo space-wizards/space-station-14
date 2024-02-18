@@ -9,6 +9,8 @@ namespace Content.Shared.Shuttles.BUIStates;
 [Serializable, NetSerializable]
 public sealed class DockingPortState
 {
+    public string Name = string.Empty;
+
     public NetCoordinates Coordinates;
     public Angle Angle;
     public NetEntity Entity;

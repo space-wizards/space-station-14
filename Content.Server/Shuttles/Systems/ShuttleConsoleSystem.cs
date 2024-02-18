@@ -209,9 +209,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         // TODO: NEED TO MAKE SURE THIS UPDATES ON ANCHORING CHANGES!
         var result = new Dictionary<NetEntity, List<DockingPortState>>();
-        var query = AllEntityQuery<DockingComponent, TransformComponent>();
+        var query = AllEntityQuery<DockingComponent, TransformComponent, MetaDataComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var xform))
+        while (query.MoveNext(out var uid, out var comp, out var xform, out var metadata))
         {
             if (xform.ParentUid != xform.GridUid)
                 continue;
@@ -220,6 +220,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
             var state = new DockingPortState()
             {
+                Name = metadata.EntityName,
                 Coordinates = GetNetCoordinates(xform.Coordinates),
                 Angle = xform.LocalRotation,
                 Entity = GetNetEntity(uid),

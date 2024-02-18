@@ -31,6 +31,16 @@ public sealed partial class DockingScreen : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _shuttles = _entManager.System<SharedShuttleSystem>();
+
+        DockingControl.OnViewDock += OnView;
+    }
+
+    private void OnView(NetEntity obj)
+    {
+        if (_ourDockButtons.TryGetValue(obj, out var viewed))
+        {
+            viewed.Pressed = true;
+        }
     }
 
     public void UpdateState(EntityUid? shuttle, DockingInterfaceState state)
@@ -70,7 +80,7 @@ public sealed partial class DockingScreen : BoxContainer
         {
             idx++;
             dockText.Clear();
-            dockText.Append(Loc.GetString("shuttle-console-dock") + $" {idx}");
+            dockText.Append(dock.Name);
 
             var button = new Button()
             {
