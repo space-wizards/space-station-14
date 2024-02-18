@@ -1,4 +1,9 @@
 - type: damageModifierSet
+  id: MobOreCrab
+  coefficients:
+    Structural: 0.75
+
+- type: damageModifierSet
   id: Metallic
   coefficients:
     Blunt: 0.7
