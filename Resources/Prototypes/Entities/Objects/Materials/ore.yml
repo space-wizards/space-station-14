@@ -333,10 +333,8 @@
     solutions:
       saltore:
         reagents:
-        - ReagentId: Sodium
-          Quantity: 5
-        - ReagentId: Chlorine
-          Quantity: 5
+        - ReagentId: TableSalt
+          Quantity: 10
         - ReagentId: Iodine
           Quantity: 5
 
