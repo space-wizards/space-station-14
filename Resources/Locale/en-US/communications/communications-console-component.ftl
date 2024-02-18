@@ -7,8 +7,12 @@ comms-console-menu-call-shuttle = Call emergency shuttle
 comms-console-menu-recall-shuttle = Recall emergency shuttle
 
 # Popup
-comms-console-permission-denied = Permission denied
-comms-console-shuttle-unavailable = Shuttle is currently unavailable
+comms-console-permission-denied = Permission denied.
+comms-console-too-far-from-console = You're too far from the console.
+comms-console-shuttle-unavailable = The shuttle is currently unavailable.
+comms-console-max-message-length = Your announcement is too long.
+comms-console-cooldown-remaining = You need to wait a bit more before sending another announcement.
+comms-console-announcement-failed = You can't send an announcement from this object.
 
 # Placeholder values
 comms-console-announcement-sent-by = Sent by

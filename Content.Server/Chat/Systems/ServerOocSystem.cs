@@ -8,7 +8,7 @@ namespace Content.Server.Chat.Systems;
 /// <summary>
 ///     ServerOocSystem is responsible for handling enabling and disabling OOC when the round changes state.
 /// </summary>
-public sealed partial class ServerOocSystem : SharedChatSystem
+public sealed partial class ServerOocSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 

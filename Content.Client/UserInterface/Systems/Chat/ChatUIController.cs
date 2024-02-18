@@ -2,11 +2,9 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Managers;
-using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.TypingIndicator;
 using Content.Client.Chat.UI;
-using Content.Client.Chat.V2;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
@@ -20,13 +18,10 @@ using Content.Shared.Chat;
 using Content.Shared.Decals;
 using Content.Shared.Chat.V2;
 using Content.Shared.Damage.ForceSay;
-using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Input;
-using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -44,8 +39,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using ChatSystem = Content.Client.Chat.V2.ChatSystem;
-using SharedChatSystem = Content.Shared.Chat.SharedChatSystem;
+using SharedChatSystem = Content.Shared.Chat.V2.SharedChatSystem;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
@@ -71,9 +65,6 @@ public sealed class ChatUIController : UIController
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
 
-    // LEGACY CHAT SYSTEM
-    [UISystemDependency] private readonly Client.Chat.ChatSystem? _chatSys = default;
-
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
@@ -82,7 +73,7 @@ public sealed class ChatUIController : UIController
     [ValidatePrototypeId<SpeechVerbPrototype>]
     public const string DefaultSpeechVerb = "Default";
 
-    [UISystemDependency] private readonly ChatSystem _chat = default!;
+    [UISystemDependency] private readonly SharedChatSystem _chat = default!;
     [UISystemDependency] private readonly PopupSystem _popup = default!;
 
     private ISawmill _sawmill = default!;
@@ -92,7 +83,7 @@ public sealed class ChatUIController : UIController
         {SharedChatSystem.LocalPrefix, ChatSelectChannel.Local},
         {SharedChatSystem.WhisperPrefix, ChatSelectChannel.Whisper},
         {SharedChatSystem.ConsolePrefix, ChatSelectChannel.Console},
-        {SharedChatSystem.LOOCPrefix, ChatSelectChannel.LOOC},
+        {SharedChatSystem.LoocPrefix, ChatSelectChannel.LOOC},
         {SharedChatSystem.OOCPrefix, ChatSelectChannel.OOC},
         {SharedChatSystem.EmotesPrefix, ChatSelectChannel.Emotes},
         {SharedChatSystem.EmotesAltPrefix, ChatSelectChannel.Emotes},
@@ -106,7 +97,7 @@ public sealed class ChatUIController : UIController
         {ChatSelectChannel.Local, SharedChatSystem.LocalPrefix},
         {ChatSelectChannel.Whisper, SharedChatSystem.WhisperPrefix},
         {ChatSelectChannel.Console, SharedChatSystem.ConsolePrefix},
-        {ChatSelectChannel.LOOC, SharedChatSystem.LOOCPrefix},
+        {ChatSelectChannel.LOOC, SharedChatSystem.LoocPrefix},
         {ChatSelectChannel.OOC, SharedChatSystem.OOCPrefix},
         {ChatSelectChannel.Emotes, SharedChatSystem.EmotesPrefix},
         {ChatSelectChannel.Admin, SharedChatSystem.AdminPrefix},
@@ -443,7 +434,7 @@ public sealed class ChatUIController : UIController
     private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
         var bubble =
-            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity);
+            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message.WrappedMessage, entity);
 
         bubble.OnDied += SpeechBubbleDied;
 
@@ -683,9 +674,7 @@ public sealed class ChatUIController : UIController
         radioChannel = null;
         message = "";
 
-        return _player.LocalEntity is EntityUid { Valid: true } uid
-           && _chatSys != null
-           && _chatSys.TryProccessRadioMessage(uid, text, out message, out radioChannel, quiet: true);
+        return _player.LocalEntity is { Valid: true } uid && _chat.TryProcessRadioMessage(uid, text, out message, out radioChannel, quiet: true);
     }
 
     public void UpdateSelectedChannel(ChatBox box)
@@ -1067,7 +1056,7 @@ public sealed class ChatUIController : UIController
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
             if (grammar != null && grammar.ProperNoun == true)
-                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
+                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg.WrappedMessage, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg.WrappedMessage, "Name")));
         }
 
         // Log all incoming chat to repopulate when filter is un-toggled

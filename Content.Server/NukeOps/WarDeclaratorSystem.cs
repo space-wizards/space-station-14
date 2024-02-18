@@ -3,7 +3,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
+using Content.Shared.Chat.V2;
 using Content.Shared.Database;
 using Content.Shared.NukeOps;
 using Content.Shared.UserInterface;

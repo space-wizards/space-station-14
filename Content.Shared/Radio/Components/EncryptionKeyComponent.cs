@@ -1,4 +1,4 @@
-using Content.Shared.Chat;
+using Content.Shared.Chat.V2;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 

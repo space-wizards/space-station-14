@@ -44,17 +44,6 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public sealed class CommunicationsConsoleAnnounceMessage : BoundUserInterfaceMessage
-    {
-        public readonly string Message;
-
-        public CommunicationsConsoleAnnounceMessage(string message)
-        {
-            Message = message;
-        }
-    }
-
-    [Serializable, NetSerializable]
     public sealed class CommunicationsConsoleBroadcastMessage : BoundUserInterfaceMessage
     {
         public readonly string Message;
@@ -79,4 +68,23 @@ namespace Content.Shared.Communications
     {
         Key
     }
+
+    /// <summary>
+    /// Raised when an announcement is attempted by a communications console.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class AttemptCommunicationConsoleAnnouncementMessage : EntityEventArgs
+    {
+        public NetEntity Console;
+        public NetEntity Sender;
+        public readonly string Message;
+
+        public AttemptCommunicationConsoleAnnouncementMessage(NetEntity console, NetEntity sender, string message)
+        {
+            Console = console;
+            Sender = sender;
+            Message = message;
+        }
+    }
+
 }

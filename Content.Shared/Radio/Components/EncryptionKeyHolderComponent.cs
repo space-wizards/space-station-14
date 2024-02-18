@@ -1,4 +1,4 @@
-using Content.Shared.Chat;
+using Content.Shared.Chat.V2;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

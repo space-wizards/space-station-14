@@ -1,6 +1,6 @@
 ﻿using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
-using Content.Shared.Chat;
+using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;

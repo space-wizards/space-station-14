@@ -79,3 +79,21 @@ public sealed partial class ChatSystem
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
     }
 }
+
+/// <summary>
+/// Raised when a comms console makes an announcement.
+/// </summary>
+[ByRefEvent]
+public sealed class CommunicationConsoleAnnouncementEvent : EntityEventArgs
+{
+    public EntityUid Console;
+    public EntityUid Sender;
+    public string Message;
+
+    public CommunicationConsoleAnnouncementEvent(EntityUid sender, EntityUid console, string message)
+    {
+        Sender = sender;
+        Console = console;
+        Message = message;
+    }
+}

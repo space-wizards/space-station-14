@@ -1,6 +1,6 @@
-using Content.Client.Chat.Managers;
 using Content.Client.Message;
-using Content.Shared.Chat;
+using Content.Client.Popups;
+using Content.Shared.Chat.V2;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Speech;
@@ -16,8 +16,9 @@ namespace Content.Client.Silicons.Laws.Ui;
 public sealed partial class LawDisplay : Control
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
     {
@@ -46,7 +47,8 @@ public sealed partial class LawDisplay : Control
 
         localButton.OnPressed += _ =>
         {
-            _chatManager.SendMessage($"{lawIdentifier}: {lawDescription}", ChatSelectChannel.Local);
+            if (!_chat.SendLocalChatMessage(uid, $"{lawIdentifier}: {lawDescription}", out var reason))
+                _popup.PopupEntity(reason, uid);
         };
 
         LawAnnouncementButtons.AddChild(localButton);
@@ -70,13 +72,8 @@ public sealed partial class LawDisplay : Control
 
             radioChannelButton.OnPressed += _ =>
             {
-                switch (radioChannel)
-                {
-                    case SharedChatSystem.CommonChannel:
-                        _chatManager.SendMessage($"{SharedChatSystem.RadioCommonPrefix} {lawIdentifier}: {lawDescription}", ChatSelectChannel.Radio); break;
-                    default:
-                        _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifier}: {lawDescription}", ChatSelectChannel.Radio); break;
-                }
+                if (!_chat.SendRadioMessage(uid, $"{lawIdentifier}: {lawDescription}", radioChannelProto, out var reason))
+                    _popup.PopupEntity(reason, uid);
             };
 
             LawAnnouncementButtons.AddChild(radioChannelButton);

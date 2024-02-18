@@ -1,6 +1,6 @@
-﻿using Content.Shared.CCVar;
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat.V2;
 using Content.Shared.Communications;
+using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
@@ -9,7 +9,8 @@ namespace Content.Client.Communications.UI
     public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly SharedChatSystem _chat = default!;
+        [Dependency] private readonly IPlayerManager _player = default!;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
@@ -68,9 +69,15 @@ namespace Content.Client.Communications.UI
 
         public void AnnounceButtonPressed(string message)
         {
-            var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
-            var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
-            SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
+            if (_player.LocalEntity == null)
+            {
+                return;
+            }
+
+            // TODO: hey, snazzy UI programmer, make this pop up in the UI the reason for failure THANK YOUUUUU <3
+
+            // TODO: Make sure that "Owner" is actually the comms console and not the player entity.
+            _chat.SendCommunicationsConsoleAnnouncement(Owner, _player.LocalEntity.Value, message, out _);
         }
 
         public void BroadcastButtonPressed(string message)

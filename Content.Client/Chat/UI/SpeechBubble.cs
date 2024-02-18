@@ -1,7 +1,6 @@
 using System.Numerics;
-using Content.Client.Chat.Managers;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
+using Content.Shared.Chat.V2;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -58,7 +57,7 @@ namespace Content.Client.Chat.UI
         // man down
         public event Action<EntityUid, SpeechBubble>? OnDied;
 
-        public static SpeechBubble CreateSpeechBubble(SpeechType type, ChatMessage message, EntityUid senderEntity)
+        public static SpeechBubble CreateSpeechBubble(SpeechType type, string message, EntityUid senderEntity)
         {
             switch (type)
             {
@@ -79,7 +78,7 @@ namespace Content.Client.Chat.UI
             }
         }
 
-        public SpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
+        public SpeechBubble(string message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
         {
             IoCManager.InjectDependencies(this);
             _senderEntity = senderEntity;
@@ -98,7 +97,7 @@ namespace Content.Client.Chat.UI
             _verticalOffsetAchieved = -ContentSize.Y;
         }
 
-        protected abstract Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null);
+        protected abstract Control BuildBubble(string message, string speechStyleClass, Color? fontColor = null);
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -182,7 +181,7 @@ namespace Content.Client.Chat.UI
             return msg;
         }
 
-        protected FormattedMessage ExtractAndFormatSpeechSubstring(ChatMessage message, string tag, Color? fontColor = null)
+        protected FormattedMessage ExtractAndFormatSpeechSubstring(string message, string tag, Color? fontColor = null)
         {
             return FormatSpeech(SharedChatSystem.GetStringInsideTag(message, tag), fontColor);
         }
@@ -191,19 +190,19 @@ namespace Content.Client.Chat.UI
 
     public sealed class TextSpeechBubble : SpeechBubble
     {
-        public TextSpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
+        public TextSpeechBubble(string message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
             : base(message, senderEntity, speechStyleClass, fontColor)
         {
         }
 
-        protected override Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null)
+        protected override Control BuildBubble(string message, string speechStyleClass, Color? fontColor = null)
         {
             var label = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
             };
 
-            label.SetMessage(FormatSpeech(message.WrappedMessage, fontColor));
+            label.SetMessage(FormatSpeech(message, fontColor));
 
             var panel = new PanelContainer
             {
@@ -219,12 +218,12 @@ namespace Content.Client.Chat.UI
     public sealed class FancyTextSpeechBubble : SpeechBubble
     {
 
-        public FancyTextSpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
+        public FancyTextSpeechBubble(string message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
             : base(message, senderEntity, speechStyleClass, fontColor)
         {
         }
 
-        protected override Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null)
+        protected override Control BuildBubble(string message, string speechStyleClass, Color? fontColor = null)
         {
             if (!ConfigManager.GetCVar(CCVars.ChatEnableFancyBubbles))
             {

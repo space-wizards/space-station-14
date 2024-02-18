@@ -1,5 +1,5 @@
 ﻿using Content.Shared.CCVar;
-using Content.Shared.Chat;
+using Content.Shared.Chat.V2;
 using Content.Shared.NukeOps;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
@@ -48,7 +48,6 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
     private void OnWarDeclaratorActivated(string message)
     {
         var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
-        var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
-        SendMessage(new WarDeclaratorActivateMessage(msg));
+        SendMessage(new WarDeclaratorActivateMessage(SharedChatSystem.SanitizeAnnouncement(message, maxLength)));
     }
 }

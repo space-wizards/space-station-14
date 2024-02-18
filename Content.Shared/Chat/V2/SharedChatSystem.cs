@@ -24,6 +24,17 @@ public abstract partial class SharedChatSystem : EntitySystem
     protected bool ShouldCapitalizeTheWordI;
     protected bool ShouldPunctuate;
     protected int MaxChatMessageLength;
+    protected int MaxAnnouncementMessageLength;
+
+    public static string GetStringInsideTag(string message, string tag)
+    {
+        var tagStart = message.IndexOf($"[{tag}]", StringComparison.Ordinal);
+        var tagEnd = message.IndexOf($"[/{tag}]", StringComparison.Ordinal);
+        if (tagStart < 0 || tagEnd < 0)
+            return "";
+        tagStart += tag.Length + 2;
+        return message.Substring(tagStart, tagEnd - tagStart);
+    }
 
     public override void Initialize()
     {
@@ -33,10 +44,13 @@ public abstract partial class SharedChatSystem : EntitySystem
                                     || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
         ShouldPunctuate = Configuration.GetCVar(CCVars.ChatPunctuation);
         MaxChatMessageLength = Configuration.GetCVar(CCVars.ChatMaxMessageLength);
+        MaxAnnouncementMessageLength = Configuration.GetCVar(CCVars.ChatMaxAnnouncementLength);
 
         Configuration.OnValueChanged(CCVars.ChatPunctuation, shouldPunctuate => ShouldPunctuate = shouldPunctuate);
-        Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxChatMessageLength = maxLen);
+        Configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => MaxChatMessageLength = maxLen);
+        Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxAnnouncementMessageLength = maxLen);
 
         InitializeEmote();
+        InitializeRadio();
     }
 }
