@@ -1,8 +1,4 @@
-{ pkgs ? import (builtins.fetchTarball {
-  url =
-    "https://github.com/NixOS/nixpkgs/archive/69405156cffbdf2be50153f13cbdf9a0bea38e49.tar.gz";
-  sha256 = "sha256-Q8L9XwrBK53fbuuIFMbjKvoV7ixfLFKLw4yV+SD28Y8=";
-}) { } }:
+{pkgs ? abort "This project is heavily dependent on flakes. Use `nix develop` instead."}:
 
 let
   dependencies = with pkgs; [
