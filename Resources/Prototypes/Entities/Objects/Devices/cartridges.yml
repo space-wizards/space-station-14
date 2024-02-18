@@ -36,6 +36,24 @@
 
 - type: entity
   parent: BaseItem
+  id: MessagesCartridge
+  name: messages cartridge
+  description: A program for messageing other crew
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: UIFragment
+    ui: !type:MessagesUi
+  - type: Cartridge
+    programName: messages-program-name
+    icon:
+      sprite:  Objects/Misc/books.rsi
+      state: book6
+  - type: MessagesCartridge
+
+- type: entity
+  parent: BaseItem
   id: CrewManifestCartridge
   name: crew manifest cartridge
   description: A program for listing your fellow crewmembers

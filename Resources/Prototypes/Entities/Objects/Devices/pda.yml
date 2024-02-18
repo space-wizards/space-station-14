@@ -74,6 +74,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - MessagesCartridge
       - NewsReadCartridge
     cartridgeSlot:
       priority: -1
@@ -669,6 +670,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - MessagesCartridge
       - NewsReadCartridge
       - LogProbeCartridge
 
