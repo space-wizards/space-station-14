@@ -144,7 +144,7 @@
                 <BoxContainer Name="CLoadoutsTab" Orientation="Vertical" Margin="10">
                     <!-- Loadouts -->
                     <Label Name="LoadoutPointsLabel" HorizontalAlignment="Stretch" Align="Center" />
-                    <ProgressBar Name="LoadoutPointsBar" MaxValue="1" Value="1" MaxHeight="8" Margin="0 5 0 5" />
+                    <ProgressBar Name="LoadoutPointsBar" MaxValue="1" Value="1" MaxHeight="8" Margin="0 5" />
 
                     <Button Name="CHideShowUnusableButton" Text="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button'}" ToolTip="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button-tooltip'}" ToggleMode="True" Margin="0 0 0 5" />
 
