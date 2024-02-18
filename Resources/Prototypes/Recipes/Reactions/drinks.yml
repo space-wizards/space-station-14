@@ -115,6 +115,24 @@
     path: /Audio/Magic/Cults/ClockCult/steam_whoosh.ogg
 
 - type: reaction
+  id: BahamaMama
+  reactants:
+    Ice:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    JuicePineapple:
+      amount: 1
+    Rum:
+      amount: 1
+    CoconutRum:
+      amount: 1
+    Grenadine:
+      amount: 1
+  products:
+    BahamaMama: 6
+
+- type: reaction
   id: Barefoot
   reactants:
     Cream:
