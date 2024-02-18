@@ -6,6 +6,7 @@ using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Shuttles.Events;
+using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -17,7 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
 {
-    public sealed partial class DockingSystem : EntitySystem
+    public sealed partial class DockingSystem : SharedDockingSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DoorBoltSystem _bolts = default!;
