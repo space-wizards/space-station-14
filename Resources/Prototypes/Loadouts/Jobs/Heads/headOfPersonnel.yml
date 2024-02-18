@@ -3,8 +3,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfPersonnel
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfPersonnel
   items:
     - ClothingNeckMantleHOP
 
@@ -13,8 +15,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfPersonnel
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfPersonnel
   items:
     - ClothingNeckCloakHop
 
@@ -22,8 +26,10 @@
   id: LoadoutCommandHOPBackIan
   category: Jobs
   cost: 4
-  jobWhitelist:
-    - HeadOfPersonnel
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfPersonnel
   items:
     - ClothingBackpackIan
 
@@ -31,7 +37,9 @@
   id: LoadoutCommandHOPHatCap
   category: Jobs
   cost: 1
-  jobWhitelist:
-    - HeadOfPersonnel
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfPersonnel
   items:
     - ClothingHeadHatHopcap

@@ -3,8 +3,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - ResearchDirector
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ResearchDirector
   items:
     - ClothingNeckMantleRD
 
@@ -13,8 +15,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - ResearchDirector
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ResearchDirector
   items:
     - ClothingNeckCloakRd
 
@@ -22,7 +26,9 @@
   id: LoadoutCommandRDOuterWinter
   category: Jobs
   cost: 2
-  jobWhitelist:
-    - ResearchDirector
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ResearchDirector
   items:
     - ClothingOuterWinterRD

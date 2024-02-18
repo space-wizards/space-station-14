@@ -3,10 +3,12 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-    - SecurityCadet
-    - Warden
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - SecurityOfficer
+        - SecurityCadet
+        - Warden
   items:
     - ClothingUniformJumpsuitSecGrey
 
@@ -15,21 +17,22 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobWarden
-      time: 21600 #6 hrs
-    - !type:RoleTimeRequirement
-      role: JobDetective
-      time: 7200 #2 hrs
-    - !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 21600 #6 hrs
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - SecurityOfficer
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobWarden
+      min: 21600 # 6 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobDetective
+      min: 7200 # 2 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobSecurityOfficer
+      min: 21600 # 6 hours
+    - !type:LoadoutDepartmentTimeRequirement
       department: Security
-      time: 216000 # 60 hrs
+      min: 216000 # 60 hours
   items:
     - ClothingUniformJumpskirtSeniorOfficer
 
@@ -38,21 +41,22 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobWarden
-      time: 21600 #6 hrs
-    - !type:RoleTimeRequirement
-      role: JobDetective
-      time: 7200 #2 hrs
-    - !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 21600 #6 hrs
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - SecurityOfficer
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobWarden
+      min: 21600 # 6 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobDetective
+      min: 7200 # 2 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobSecurityOfficer
+      min: 21600 # 6 hours
+    - !type:LoadoutDepartmentTimeRequirement
       department: Security
-      time: 216000 # 60 hrs
+      min: 216000 # 60 hours
   items:
     - ClothingUniformJumpsuitSeniorOfficer
 
@@ -61,9 +65,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Warden
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Warden
+        - HeadOfSecurity
   items:
     - ClothingMaskGasSwat
 
@@ -71,11 +77,13 @@
   id: LoadoutSecurityShoesJackboots
   category: Jobs
   cost: 1
-  jobWhitelist:
-    - Detective
-    - SecurityOfficer
-    - SecurityCadet
-    - Warden
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Detective
+        - SecurityOfficer
+        - SecurityCadet
+        - Warden
+        - HeadOfSecurity
   items:
     - ClothingShoesBootsJack

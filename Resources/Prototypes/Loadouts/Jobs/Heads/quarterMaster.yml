@@ -4,8 +4,10 @@
 #   category: Jobs
 #   cost: 2
 #   exclusive: true
-#   jobWhitelist:
-#     - Quartermaster
+#   requirements:
+#     - !type:LoadoutJobRequirement
+#       jobs:
+#         - Quartermaster
 #   items:
 #     - ClothingNeckMantleQM
 
@@ -14,8 +16,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Quartermaster
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Quartermaster
   items:
     - ClothingNeckCloakQm
 
@@ -24,8 +28,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Quartermaster
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Quartermaster
   items:
     - ClothingUniformJumpsuitQMTurtleneck
 
@@ -34,8 +40,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Quartermaster
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Quartermaster
   items:
     - ClothingUniformJumpskirtQMTurtleneck
 
@@ -43,7 +51,9 @@
   id: LoadoutCommandQMHeadSoft
   category: Jobs
   cost: 1
-  jobWhitelist:
-    - Quartermaster
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Quartermaster
   items:
     - ClothingHeadHatQMsoft

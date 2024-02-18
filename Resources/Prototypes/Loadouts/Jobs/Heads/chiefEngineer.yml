@@ -3,8 +3,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - ChiefEngineer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefEngineer
   items:
     - ClothingNeckMantleCE
 
@@ -13,8 +15,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - ChiefEngineer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefEngineer
   items:
     - ClothingNeckCloakCe
 
@@ -22,7 +26,9 @@
   id: LoadoutCommandCEOuterWinter
   category: Jobs
   cost: 2
-  jobWhitelist:
-    - ChiefEngineer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefEngineer
   items:
     - ClothingOuterWinterCE

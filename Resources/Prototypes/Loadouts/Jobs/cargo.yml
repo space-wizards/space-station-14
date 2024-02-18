@@ -3,11 +3,12 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - SalvageSpecialist
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobSalvageSpecialist
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - SalvageSpecialist
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobSalvageSpecialist
       time: 36000 # 10 hours
   items:
     - ClothingNeckCloakGoliathCloak

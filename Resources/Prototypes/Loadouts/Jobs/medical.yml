@@ -3,10 +3,12 @@
   category: Jobs
   cost: 1
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-    - Paramedic
-    - ChiefMedicalOfficer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
+        - Paramedic
+        - ChiefMedicalOfficer
   items:
     - ClothingHandsGlovesNitrile
 
@@ -15,9 +17,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-    - Chemist
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
+        - Chemist
   items:
     - ClothingOuterCoatLab
 
@@ -26,9 +30,11 @@
   category: Jobs
   cost: 1
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-    - ChiefMedicalOfficer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
+        - ChiefMedicalOfficer
   items:
     - ClothingNeckStethoscope
 
@@ -37,8 +43,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
   items:
     - UniformScrubsColorBlue
 
@@ -47,8 +55,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
   items:
     - UniformScrubsColorGreen
 
@@ -57,8 +67,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
   items:
     - UniformScrubsColorPurple
 
@@ -67,8 +79,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Chemist
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Chemist
   items:
     - ClothingOuterCoatLabChem
 
@@ -76,8 +90,10 @@
   id: LoadoutMedicalItemHandLabeler
   category: Jobs
   exclusive: true
-  jobWhitelist:
-    - Chemist
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Chemist
   items:
     - HandLabeler
 
@@ -86,8 +102,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Paramedic
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Paramedic
   items:
     - ClothingUniformJumpsuitParamedic
 
@@ -96,8 +114,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Paramedic
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Paramedic
   items:
     - ClothingUniformJumpskirtParamedic
 
@@ -106,18 +126,19 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobChemist
-      time: 21600 # 6 hours
-    - !type:RoleTimeRequirement
-      role: JobMedicalDoctor
-      time: 21600 # 6 hours
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobChemist
+      min: 21600 # 6 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobMedicalDoctor
+      min: 21600 # 6 hours
+    - !type:LoadoutDepartmentTimeRequirement
       department: Medical
-      time: 216000 # 60 hours
+      min: 216000 # 60 hours
   items:
     - ClothingUniformJumpskirtSeniorPhysician
 
@@ -126,18 +147,19 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobChemist
-      time: 21600 # 6 hours
-    - !type:RoleTimeRequirement
-      role: JobMedicalDoctor
-      time: 21600 # 6 hours
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobChemist
+      min: 21600 # 6 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobMedicalDoctor
+      min: 21600 # 6 hours
+    - !type:LoadoutDepartmentTimeRequirement
       department: Medical
-      time: 216000 # 60 hours
+      min: 216000 # 60 hours
   items:
     - ClothingUniformJumpsuitSeniorPhysician
 
@@ -146,8 +168,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
   items:
     - ClothingHeadNurseHat
 
@@ -156,17 +180,18 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobChemist
-      time: 21600 # 6 hours
-    - !type:RoleTimeRequirement
-      role: JobMedicalDoctor
-      time: 21600 # 6 hours
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - MedicalDoctor
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobChemist
+      min: 21600 # 6 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobMedicalDoctor
+      min: 21600 # 6 hours
+    - !type:LoadoutDepartmentTimeRequirement
       department: Medical
-      time: 216000 # 60 hours
+      min: 216000 # 60 hours
   items:
     - ClothingHeadHatBeretSeniorPhysician

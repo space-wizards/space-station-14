@@ -4,7 +4,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Loadouts;
 
@@ -43,45 +42,6 @@ public sealed class LoadoutPrototype : IPrototype
     public bool Exclusive;
 
 
-    /// <summary>
-    ///     Don't apply this loadout to entities this whitelist IS NOT valid for
-    /// </summary>
     [DataField]
-    public EntityWhitelist? EntityWhitelist;
-
-    /// <summary>
-    ///     Don't apply this loadout to entities this whitelist IS valid for (hence, a blacklist)
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? EntityBlacklist;
-
-    /// <summary>
-    ///     Need one of these jobs to give loadout
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
-    public List<string>? JobWhitelist;
-
-    /// <summary>
-    ///     Need none of these jobs to give loadout
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
-    public List<string>? JobBlacklist;
-
-    /// <summary>
-    ///     Don't apply this loadout to entities this whitelist IS NOT valid for
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SpeciesPrototype>))]
-    public List<string>? SpeciesWhitelist;
-
-    /// <summary>
-    ///     Don't apply this loadout to entities this whitelist IS valid for
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SpeciesPrototype>))]
-    public List<string>? SpeciesBlacklist;
-
-    /// <summary>
-    ///     Don't apply this loadout to entities this whitelist IS NOT valid for
-    /// </summary>
-    [DataField]
-    public HashSet<JobRequirement>? PlaytimeRequirements;
+    public List<LoadoutRequirement> Requirements = new();
 }

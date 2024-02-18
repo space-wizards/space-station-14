@@ -3,8 +3,10 @@
   category: Uniform
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Passenger
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Passenger
   items:
     - ClothingUniformJumpsuitAncient
 

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
@@ -5,8 +6,10 @@ using Content.Shared.Loadouts;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Station;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing;
 
@@ -17,6 +20,7 @@ public sealed class LoadoutSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     public override void Initialize()
     {
@@ -37,7 +41,8 @@ public sealed class LoadoutSystem : EntitySystem
 
 
     /// <inheritdoc cref="ApplyCharacterLoadout(Robust.Shared.GameObjects.EntityUid,string,Content.Shared.Preferences.HumanoidCharacterProfile,System.Collections.Generic.Dictionary{string,System.TimeSpan}?)"/>
-    public List<EntityUid> ApplyCharacterLoadout(EntityUid uid, string job, HumanoidCharacterProfile profile, Dictionary<string, TimeSpan>? playTimes = null)
+    public List<EntityUid> ApplyCharacterLoadout(EntityUid uid, string job, HumanoidCharacterProfile profile,
+        Dictionary<string, TimeSpan>? playTimes = null)
     {
         var jobPrototype = _prototype.Index<JobPrototype>(job);
         return ApplyCharacterLoadout(uid, jobPrototype, profile, playTimes);
@@ -51,7 +56,8 @@ public sealed class LoadoutSystem : EntitySystem
     /// <param name="profile">The profile to get loadout items from (should be the entity's, or at least have the same species as the entity)</param>
     /// <param name="playTimes">Playtime for the player for use with playtime requirements</param>
     /// <returns>A list of loadout items that couldn't be equipped but passed checks</returns>
-    public List<EntityUid> ApplyCharacterLoadout(EntityUid uid, JobPrototype job, HumanoidCharacterProfile profile, Dictionary<string, TimeSpan>? playTimes = null)
+    public List<EntityUid> ApplyCharacterLoadout(EntityUid uid, JobPrototype job, HumanoidCharacterProfile profile,
+        Dictionary<string, TimeSpan>? playTimes = null)
     {
         var failedLoadouts = new List<EntityUid>();
 
@@ -64,22 +70,16 @@ public sealed class LoadoutSystem : EntitySystem
                 continue;
 
 
-            // Check whitelists and blacklists for this loadout
-            if (!CheckWhitelistValid(loadoutProto, uid, job, profile) ||
-                !CheckBlacklistValid(loadoutProto, uid, job, profile))
+            if (!CheckRequirementsValid(loadoutProto.Requirements, job, profile,
+                playTimes ?? new Dictionary<string, TimeSpan>(), EntityManager, _prototype, _configurationManager,
+                out _))
                 continue;
-
-            // Check playtime requirements for this loadout
-            if (playTimes != null && loadoutProto.PlaytimeRequirements != null)
-            {
-                // Use a function because I can't use continue on an outer foreach from inside another foreach
-                if (!CheckPlaytime(loadoutProto.PlaytimeRequirements, playTimes))
-                    continue;
-            }
 
 
             // Spawn the loadout items
-            var spawned = EntityManager.SpawnEntities(EntityManager.GetComponent<TransformComponent>(uid).Coordinates.ToMap(EntityManager), loadoutProto.Items!);
+            var spawned = EntityManager.SpawnEntities(
+                EntityManager.GetComponent<TransformComponent>(uid).Coordinates.ToMap(EntityManager),
+                loadoutProto.Items!);
 
             foreach (var item in spawned)
             {
@@ -120,197 +120,34 @@ public sealed class LoadoutSystem : EntitySystem
         return failedLoadouts;
     }
 
-    public bool CheckPlaytime(HashSet<JobRequirement> requirements, Dictionary<string, TimeSpan> playTimes)
+
+    public bool CheckRequirementsValid(List<LoadoutRequirement> requirements, JobPrototype job,
+        HumanoidCharacterProfile profile, Dictionary<string, TimeSpan> playTimes, IEntityManager entityManager,
+        IPrototypeManager prototypeManager, IConfigurationManager configManager, out List<FormattedMessage> reasons)
     {
+        reasons = new List<FormattedMessage>();
+        var valid = true;
+
         foreach (var requirement in requirements)
         {
-            if (!JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototype))
-                return false;
-        }
-
-        return true;
-    }
-
-
-    /// <summary>
-    ///     Returns whether or not a loadout prototype has any whitelist requirements
-    /// </summary>
-    /// <param name="loadout">The loadout prototype to get information from</param>
-    public bool LoadoutWhitelistExists(LoadoutPrototype loadout)
-    {
-        return loadout.EntityWhitelist?.Components != null ||
-               loadout.EntityWhitelist?.Tags != null ||
-               loadout.JobWhitelist != null ||
-               loadout.SpeciesWhitelist != null;
-    }
-
-    /// <summary>
-    ///     Returns whether or not a loadout prototype has any blacklist requirements
-    /// </summary>
-    /// <param name="loadout">The loadout prototype to get information from</param>
-    public bool LoadoutBlacklistExists(LoadoutPrototype loadout)
-    {
-        return loadout.EntityBlacklist?.Components != null ||
-               loadout.EntityBlacklist?.Tags != null ||
-               loadout.JobBlacklist != null ||
-               loadout.SpeciesBlacklist != null;
-    }
-
-
-    /// <summary>
-    ///     Gets a string describing the whitelist requirements of a loadout prototype OR an empty string if there are no whitelist requirements
-    /// </summary>
-    /// <param name="loadout">The loadout prototype to get information from</param>
-    public string GetLoadoutWhitelistString(LoadoutPrototype loadout)
-    {
-        if (!LoadoutWhitelistExists(loadout))
-            return "";
-
-        var whitelist = new List<string> { Loc.GetString("humanoid-profile-editor-loadouts-whitelist") };
-
-
-        if (loadout.EntityWhitelist?.Components != null)
-        {
-            foreach (var component in loadout.EntityWhitelist.Components)
+            // set valid to false if the requirement is invalid and not inverted, if it's inverted set it to true when it's valid
+            if (!requirement.IsValid(job, profile, playTimes, entityManager, prototypeManager, configManager, out var reason))
             {
-                // TODO Component localization sounds a bit absurd but uhh..
-                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-component", ("component", component)));
+                if (valid)
+                    valid = requirement.Inverted;
+            }
+            else
+            {
+                if (valid)
+                    valid = !requirement.Inverted;
+            }
+
+            if (reason != null)
+            {
+                reasons.Add(reason);
             }
         }
 
-        if (loadout.EntityWhitelist?.Tags != null)
-        {
-            foreach (var tag in loadout.EntityWhitelist.Tags)
-            {
-                // TODO Tag localization?
-                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-tag", ("tag", tag)));
-            }
-        }
-
-        if (loadout.JobWhitelist != null)
-        {
-            foreach (var job in loadout.JobWhitelist)
-            {
-                var jobPrototype = _prototype.Index<JobPrototype>(job);
-                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(jobPrototype.Name))));
-            }
-        }
-
-        if (loadout.SpeciesWhitelist != null)
-        {
-            foreach (var species in loadout.SpeciesWhitelist)
-            {
-                var speciesPrototype = _prototype.Index<SpeciesPrototype>(species);
-                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", Loc.GetString(speciesPrototype.Name))));
-            }
-        }
-
-
-        return string.Join("\n ", whitelist);
-    }
-
-    /// <summary>
-    ///     Gets a string describing the blacklist requirements of a loadout prototype OR an empty string if there are no blacklist requirements
-    /// </summary>
-    /// <param name="loadout">The loadout prototype to get information from</param>
-    public string GetLoadoutBlacklistString(LoadoutPrototype loadout)
-    {
-        if (!LoadoutBlacklistExists(loadout))
-            return "";
-
-        var blacklist = new List<string> { Loc.GetString("humanoid-profile-editor-loadouts-blacklist") };
-
-
-        if (loadout.EntityBlacklist?.Components != null)
-        {
-            foreach (var component in loadout.EntityBlacklist.Components)
-            {
-                // TODO Component localization sounds a bit absurd but uhh..
-                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-component", ("component", component)));
-            }
-        }
-
-        if (loadout.EntityBlacklist?.Tags != null)
-        {
-            foreach (var tag in loadout.EntityBlacklist.Tags)
-            {
-                // TODO Tag localization?
-                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-tag", ("tag", tag)));
-            }
-        }
-
-        if (loadout.JobBlacklist != null)
-        {
-            foreach (var job in loadout.JobBlacklist)
-            {
-                var jobPrototype = _prototype.Index<JobPrototype>(job);
-                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(jobPrototype.Name))));
-            }
-        }
-
-        if (loadout.SpeciesBlacklist != null)
-        {
-            foreach (var species in loadout.SpeciesBlacklist)
-            {
-                var speciesPrototype = _prototype.Index<SpeciesPrototype>(species);
-                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", Loc.GetString(speciesPrototype.Name))));
-            }
-        }
-
-
-        return string.Join("\n ", blacklist);
-    }
-
-
-    /// <summary>
-    ///     Checks if a given entity is valid for a given loadout prototype's whitelist
-    /// </summary>
-    /// <param name="loadout">Where to get whitelists from</param>
-    /// <param name="uid">The entity to check components and tags on</param>
-    /// <param name="job">The job to check for</param>
-    /// <param name="profile">The character profile of the entity to check species</param>
-    /// <returns>true if all whitelists pass, false if any whitelist fails</returns>
-    public bool CheckWhitelistValid(LoadoutPrototype loadout, EntityUid uid, JobPrototype job,
-        HumanoidCharacterProfile profile)
-    {
-        if (loadout.EntityWhitelist != null && !loadout.EntityWhitelist.IsValid(uid) ||
-            loadout.JobWhitelist != null && !loadout.JobWhitelist.Contains(job.ID) ||
-            loadout.SpeciesWhitelist != null && !loadout.SpeciesWhitelist.Contains(profile.Species))
-            return false;
-
-        return true;
-    }
-
-    /// <summary>
-    ///     Checks if a given entity is valid for a given loadout prototype's blacklist
-    /// </summary>
-    /// <param name="loadout">Where to get whitelists from</param>
-    /// <param name="uid">The entity to check components and tags on</param>
-    /// <param name="job">The job to check for</param>
-    /// <param name="profile">The character profile of the entity to check species</param>
-    /// <returns>true if all whitelists fail, false if any whitelist is valid</returns>
-    public bool CheckBlacklistValid(LoadoutPrototype loadout, EntityUid uid, JobPrototype job,
-        HumanoidCharacterProfile profile)
-    {
-        if (loadout.EntityBlacklist != null && loadout.EntityBlacklist.IsValid(uid) ||
-            loadout.JobBlacklist != null && loadout.JobBlacklist.Contains(job.ID) ||
-            loadout.SpeciesBlacklist != null && loadout.SpeciesBlacklist.Contains(profile.Species))
-            return false;
-
-        return true;
-    }
-
-    /// <summary>
-    ///     Checks if a given entity is valid for a given loadout prototype's whitelist and blacklist
-    /// </summary>
-    /// <param name="loadout">Where to get whitelists from</param>
-    /// <param name="uid">The entity to check components and tags on</param>
-    /// <param name="job">The job to check for</param>
-    /// <param name="profile">The character profile of the entity to check species</param>
-    /// <returns>true if all whitelists pass and all blacklists fail, false if any whitelist fails or any blacklist succeeds</returns>
-    public bool CheckWhitelistBlacklistValid(LoadoutPrototype loadout, EntityUid uid, JobPrototype job,
-        HumanoidCharacterProfile profile)
-    {
-        return CheckWhitelistValid(loadout, uid, job, profile) && CheckBlacklistValid(loadout, uid, job, profile);
+        return valid;
     }
 }

@@ -1385,14 +1385,16 @@ namespace Content.Client.Preferences.UI
             // TODO Make unusable loadouts red or something // TODO Make the selectors a toggleable button instead of a checkbox
             var loadouts = _prototypeManager.EnumeratePrototypes<LoadoutPrototype>().Where(loadout =>
                 showUnusable || // Ignore everything if this is true
-                _loadoutSystem.CheckWhitelistBlacklistValid( // Check the various Whitelist and Blacklists
-                    loadout,
-                    _previewDummy ?? EntityUid.Invalid,
-                    highJob == null ? new JobPrototype() : highJob.Proto,
-                    Profile ?? HumanoidCharacterProfile.DefaultWithSpecies()
-                ) &&
-                (_configurationManager.GetCVar(CCVars.GameRoleTimers) == false || // If game.role_timers is enabled..
-                 _loadoutSystem.CheckPlaytime(loadout.PlaytimeRequirements ?? new HashSet<JobRequirement>(), _requirements.PlayTimes)) // Check playtime
+                _loadoutSystem.CheckRequirementsValid(
+                    loadout.Requirements,
+                    highJob?.Proto ?? new JobPrototype(),
+                    Profile ?? HumanoidCharacterProfile.DefaultWithSpecies(),
+                    new Dictionary<string, TimeSpan>(),
+                    _entMan,
+                    _prototypeManager,
+                    _configurationManager,
+                    out _
+                )
             ).ToList();
 
             // Every loadout except the ones in the previous list
@@ -1469,7 +1471,9 @@ namespace Content.Client.Preferences.UI
             // Fill categories
             foreach (var loadout in loadouts.OrderBy(l => l.ID))
             {
-                var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem, _requirements);
+                var selector = new LoadoutPreferenceSelector(loadout, highJob?.Proto ?? new JobPrototype(),
+                    Profile ?? HumanoidCharacterProfile.DefaultWithSpecies(), _entMan, _prototypeManager,
+                    _configurationManager, _loadoutSystem);
 
                 // Look for an existing loadout category
                 BoxContainer? match = null;
@@ -1500,13 +1504,15 @@ namespace Content.Client.Preferences.UI
                             preference = false;
                         else
                         {
-                            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", temp), ("max", _loadoutPointsBar.MaxValue));
+                            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label",
+                                ("points", temp), ("max", _loadoutPointsBar.MaxValue));
                             _loadoutPointsBar.Value = temp;
                         }
                     }
                     else
                     {
-                        _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", _loadoutPointsBar.Value), ("max", _loadoutPointsBar.MaxValue));
+                        _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label",
+                            ("points", _loadoutPointsBar.Value), ("max", _loadoutPointsBar.MaxValue));
                         _loadoutPointsBar.Value += loadout.Cost;
                     }
 
@@ -1521,7 +1527,9 @@ namespace Content.Client.Preferences.UI
             // Add the selected unusable loadouts to the point counter
             foreach (var loadout in otherLoadouts.OrderBy(l => l.ID))
             {
-                var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem, _requirements);
+                var selector = new LoadoutPreferenceSelector(loadout, highJob?.Proto ?? new JobPrototype(),
+                    Profile ?? HumanoidCharacterProfile.DefaultWithSpecies(), _entMan, _prototypeManager,
+                    _configurationManager, _loadoutSystem);
 
                 _loadoutPreferences.Add(selector);
                 selector.PreferenceChanged += preference =>
@@ -1535,13 +1543,15 @@ namespace Content.Client.Preferences.UI
                             preference = false;
                         else
                         {
-                            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", temp), ("max", _loadoutPointsBar.MaxValue));
+                            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label",
+                                ("points", temp), ("max", _loadoutPointsBar.MaxValue));
                             _loadoutPointsBar.Value = temp;
                         }
                     }
                     else
                     {
-                        _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", _loadoutPointsBar.Value), ("max", _loadoutPointsBar.MaxValue));
+                        _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label",
+                            ("points", _loadoutPointsBar.Value), ("max", _loadoutPointsBar.MaxValue));
                         _loadoutPointsBar.Value += loadout.Cost;
                     }
 
@@ -1647,7 +1657,9 @@ namespace Content.Client.Preferences.UI
 
             public event Action<bool>? PreferenceChanged;
 
-            public LoadoutPreferenceSelector(LoadoutPrototype loadout, IEntityManager entityManager, LoadoutSystem loadoutSystem, JobRequirementsManager requirementsManager)
+            public LoadoutPreferenceSelector(LoadoutPrototype loadout, JobPrototype highJob,
+                HumanoidCharacterProfile profile, IEntityManager entityManager, IPrototypeManager prototypeManager,
+                IConfigurationManager configManager, LoadoutSystem loadoutSystem)
             {
                 Loadout = loadout;
 
@@ -1669,32 +1681,36 @@ namespace Content.Client.Preferences.UI
                 // Create a checkbox to get the loadout
                 _checkBox = new CheckBox
                 {
-                    Text = $"[{loadout.Cost}] {(Loc.GetString($"loadout-name-{loadout.ID}") == $"loadout-name-{loadout.ID}" ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityName : Loc.GetString($"loadout-name-{loadout.ID}"))}",
+                    Text = $"[{loadout.Cost}] {(Loc.GetString($"loadout-name-{loadout.ID}") == $"loadout-name-{loadout.ID}"
+                        ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityName
+                        : Loc.GetString($"loadout-name-{loadout.ID}"))}",
                     VerticalAlignment = VAlignment.Center
                 };
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
                 var tooltip = new StringBuilder();
                 // Add the loadout description to the tooltip if there is one
-                var desc = Loc.GetString($"loadout-description-{loadout.ID}") == $"loadout-description-{loadout.ID}" ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityDescription : Loc.GetString($"loadout-description-{loadout.ID}");
+                var desc = Loc.GetString($"loadout-description-{loadout.ID}") == $"loadout-description-{loadout.ID}"
+                    ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityDescription
+                    : Loc.GetString($"loadout-description-{loadout.ID}");
                 if (!string.IsNullOrEmpty(desc))
-                {
                     tooltip.Append($"{Loc.GetString(desc)}");
-                    if (loadoutSystem.LoadoutWhitelistExists(loadout) || loadoutSystem.LoadoutBlacklistExists(loadout))
-                        tooltip.AppendLine();
-                }
 
-                // Add the loadout whitelist and blacklist descriptions to the tooltip if there are any
-                tooltip.Append(loadoutSystem.GetLoadoutWhitelistString(loadout));
-                tooltip.Append(loadoutSystem.GetLoadoutBlacklistString(loadout));
-                requirementsManager.CheckRoleTime(loadout.PlaytimeRequirements, out var reason, "loadout-timer-");
-                if (reason != null) tooltip.Append($"\n{reason.ToMarkup()}");
 
-                // If the tooltip has any content, add it to the checkbox
-                if (!string.IsNullOrEmpty(tooltip.ToString()))
+                // Get requirement reasons
+                loadoutSystem.CheckRequirementsValid(loadout.Requirements, highJob, profile,
+                    new Dictionary<string, TimeSpan>(), entityManager, prototypeManager, configManager,
+                    out var reasons);
+
+                // Add requirement reasons to the tooltip
+                foreach (var reason in reasons)
+                    tooltip.Append($"\n{reason.ToMarkup()}");
+
+                // Combine the tooltip and format it in the checkbox supplier
+                if (tooltip.Length > 0)
                 {
                     var formattedTooltip = new Tooltip();
-                    formattedTooltip.SetMessage(FormattedMessage.FromMarkupPermissive(tooltip.ToString())); // I hate this but want the colors from playtime requirements
+                    formattedTooltip.SetMessage(FormattedMessage.FromMarkupPermissive(tooltip.ToString()));
                     _checkBox.TooltipSupplier = _ => formattedTooltip;
                 }
 

@@ -45,7 +45,7 @@ humanoid-profile-editor-naming-rules-warning = Warning: Offensive or LRP IC name
 humanoid-profile-editor-loadouts-tab = Loadout
 humanoid-profile-editor-loadouts-uncategorized-tab = Uncategorized
 humanoid-profile-editor-loadouts-no-loadouts = No loadouts found
-humanoid-profile-editor-loadouts-points-label = Using {$points}/{$max} points
+humanoid-profile-editor-loadouts-points-label = You have {$points}/{$max} points
 humanoid-profile-editor-loadouts-show-unusable-button = Show Unusable
 humanoid-profile-editor-loadouts-show-unusable-button-tooltip =
     When enabled, loadouts that your current character setup cannot use will be shown.

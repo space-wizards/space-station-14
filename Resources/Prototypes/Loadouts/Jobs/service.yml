@@ -3,8 +3,10 @@
   category: Jobs
   cost: 3
   exclusive: true
-  jobWhitelist:
-    - Clown
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Clown
   items:
     - ClothingUniformJumpsuitJester
     - ClothingHeadHatJester
@@ -15,8 +17,10 @@
   category: Jobs
   cost: 3
   exclusive: true
-  jobWhitelist:
-    - Clown
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Clown
   items:
     - ClothingUniformJumpsuitJesterAlt
     - ClothingHeadHatJesterAlt
@@ -27,8 +31,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Bartender
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Bartender
   items:
     - ClothingUniformJumpsuitBartenderPurple
 
@@ -37,8 +43,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Botanist
+  requirements:
+    - !type:LoadoutJobRequirement
+     jobs:
+        - Botanist
   items:
     - ClothingUniformOveralls
 
@@ -47,8 +55,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+     jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpsuitLawyerBlue
 
@@ -57,8 +67,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpskirtLawyerBlue
 
@@ -67,8 +79,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpsuitLawyerRed
 
@@ -77,8 +91,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpskirtLawyerRed
 
@@ -87,8 +103,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpsuitLawyerPurple
 
@@ -97,8 +115,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpskirtLawyerPurple
 
@@ -107,8 +127,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpsuitLawyerGood
 
@@ -117,8 +139,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Lawyer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Lawyer
   items:
     - ClothingUniformJumpskirtLawyerGood
 
@@ -127,8 +151,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Reporter
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Reporter
   items:
     - ClothingUniformJumpsuitJournalist
 
@@ -137,8 +163,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Reporter
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Reporter
   items:
     - ClothingUniformJumpsuitDetective
 
@@ -147,7 +175,9 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Reporter
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Reporter
   items:
     - ClothingUniformJumpskirtDetective

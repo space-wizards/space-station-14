@@ -3,8 +3,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
   items:
     - ClothingUniformJumpsuitEngineeringHazard
 
@@ -13,8 +15,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
   items:
     - ClothingOuterVestHazard
 
@@ -23,18 +27,19 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobAtmosphericTechnician
-      time: 21600 # 6 hours
-    - !type:RoleTimeRequirement
-      role: JobStationEngineer
-      time: 21600 # 6 hours
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobAtmosphericTechnician
+      min: 21600 # 6 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobStationEngineer
+      min: 21600 # 6 hours
+    - !type:LoadoutDepartmentTimeRequirement
       department: Engineering
-      time: 216000 # 60 hours
+      min: 216000 # 60 hours
   items:
     - ClothingUniformJumpskirtSeniorEngineer
 
@@ -43,18 +48,19 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-  playtimeRequirements:
-    - !type:RoleTimeRequirement
-      role: JobAtmosphericTechnician
-      time: 21600 # 6 hours
-    - !type:RoleTimeRequirement
-      role: JobStationEngineer
-      time: 21600 # 6 hours
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobAtmosphericTechnician
+      min: 21600 # 6 hours
+    - !type:LoadoutPlaytimeRequirement
+      tracker: JobStationEngineer
+      min: 21600 # 6 hours
+    - !type:LoadoutDepartmentTimeRequirement
       department: Engineering
-      time: 216000 # 60 hours
+      min: 216000 # 60 hours
   items:
     - ClothingUniformJumpsuitSeniorEngineer
 
@@ -63,8 +69,10 @@
   category: Jobs
   cost: 3
   exclusive: true
-  jobWhitelist:
-    - AtmosphericTechnician
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - AtmosphericTechnician
   items:
     - ClothingOuterSuitChicken
     - ClothingHeadHatChickenhead
@@ -74,9 +82,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+        - AtmosphericTechnician
   items:
     - ClothingEyesGlassesMeson
 
@@ -85,10 +95,12 @@
   category: Jobs
   cost: 1
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
-    - ChiefEngineer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+        - AtmosphericTechnician
+        - ChiefEngineer
   items:
     - ClothingHeadHatBeretEngineering
 
@@ -97,9 +109,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+        - AtmosphericTechnician
   items:
     - ClothingHeadHatHardhatBlue
 
@@ -108,9 +122,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+        - AtmosphericTechnician
   items:
     - ClothingHeadHatHardhatOrange
 
@@ -119,9 +135,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+        - AtmosphericTechnician
   items:
     - ClothingHeadHatHardhatYellow
 
@@ -130,9 +148,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+        - AtmosphericTechnician
   items:
     - ClothingHeadHatHardhatWhite
 
@@ -141,8 +161,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - StationEngineer
+        - AtmosphericTechnician
   items:
     - ClothingHeadHatHardhatRed

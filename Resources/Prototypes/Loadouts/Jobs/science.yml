@@ -3,10 +3,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Scientist
-  playtimeRequirements:
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Scientist
+    - !type:LoadoutDepartmentTimeRequirement
       department: Science
       time: 216000 # 60 hours
   items:
@@ -17,10 +18,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Scientist
-  playtimeRequirements:
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Scientist
+    - !type:LoadoutDepartmentTimeRequirement
       department: Science
       time: 216000 # 60 hours
   items:
@@ -31,10 +33,12 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Scientist
-    - ResearchAssistant
-    - ResearchDirector
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Scientist
+        - ResearchAssistant
+        - ResearchDirector
   items:
     - ClothingOuterCoatRnd
 
@@ -43,9 +47,12 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Scientist
-    - ResearchAssistant
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Scientist
+        - ResearchAssistant
+        - ResearchDirector
   items:
     - ClothingOuterCoatLab
 
@@ -54,10 +61,11 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - Scientist
-  playtimeRequirements:
-    - !type:DepartmentTimeRequirement
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Scientist
+    - !type:LoadoutDepartmentTimeRequirement
       department: Science
       time: 216000 # 60 hours
   items:
@@ -68,8 +76,11 @@
   category: Jobs
   cost: 1
   exclusive: true
-  jobWhitelist:
-    - Scientist
-    - ResearchAssistant
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - Scientist
+        - ResearchAssistant
+        - ResearchDirector
   items:
     - ClothingHeadHatBeretRND

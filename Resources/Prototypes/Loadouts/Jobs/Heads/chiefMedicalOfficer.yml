@@ -3,8 +3,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - ChiefMedicalOfficer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefMedicalOfficer
   items:
     - ClothingNeckMantleCMO
 
@@ -13,8 +15,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - ChiefMedicalOfficer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefMedicalOfficer
   items:
     - ClothingCloakCmo
 
@@ -22,8 +26,10 @@
   id: LoadoutCommandCMOOuterWinter
   category: Jobs
   cost: 2
-  jobWhitelist:
-    - ChiefMedicalOfficer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefMedicalOfficer
   items:
     - ClothingOuterWinterCMO
 
@@ -31,8 +37,10 @@
   id: LoadoutCommandCMOOuterLab
   category: Jobs
   cost: 1
-  jobWhitelist:
-    - ChiefMedicalOfficer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefMedicalOfficer
   items:
     - ClothingOuterCoatLabCmo
 
@@ -40,7 +48,9 @@
   id: LoadoutCommandCMOHatBeret
   category: Jobs
   cost: 1
-  jobWhitelist:
-    - ChiefMedicalOfficer
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - ChiefMedicalOfficer
   items:
     - ClothingHeadHatBeretCmo

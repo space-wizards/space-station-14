@@ -3,8 +3,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingNeckMantleHOS
 
@@ -13,8 +15,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingNeckCloakHos
 
@@ -23,8 +27,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpsuitHoSAlt
 
@@ -33,8 +39,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpsuitHoSBlue
 
@@ -43,8 +51,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpsuitHoSGrey
 
@@ -53,8 +63,10 @@
   category: Jobs
   cost: 3
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpsuitHoSParadeMale
 
@@ -63,8 +75,10 @@
   category: Jobs
   cost: 3
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpsuitHosFormal
 
@@ -73,8 +87,10 @@
   category: Jobs
   cost: 2
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpskirtHoSAlt
 
@@ -83,8 +99,10 @@
   category: Jobs
   cost: 3
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpskirtHoSParadeMale
 
@@ -93,8 +111,10 @@
   category: Jobs
   cost: 3
   exclusive: true
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingUniformJumpskirtHosFormal
 
@@ -102,8 +122,10 @@
   id: LoadoutCommandHOSOuterWinter
   category: Jobs
   cost: 2
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingOuterWinterHoS
 
@@ -111,8 +133,10 @@
   id: LoadoutCommandHOSOuterTrench
   category: Jobs
   cost: 2
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingOuterCoatHoSTrench
 
@@ -120,8 +144,10 @@
   id: LoadoutCommandHOSHatBeret
   category: Jobs
   cost: 1
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingHeadHatBeretHoS
 
@@ -129,7 +155,9 @@
   id: LoadoutCommandHOSHatHoshat
   category: Jobs
   cost: 1
-  jobWhitelist:
-    - HeadOfSecurity
+  requirements:
+    - !type:LoadoutJobRequirement
+      jobs:
+        - HeadOfSecurity
   items:
     - ClothingHeadHatHoshat
