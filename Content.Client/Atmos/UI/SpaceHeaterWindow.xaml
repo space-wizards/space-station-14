@@ -1,6 +1,6 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               MinSize="360 120" Title="Temperature Control Unit">
+               MinSize="280 120" Title="Temperature Control Unit">
 
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
 
@@ -15,8 +15,17 @@
             </BoxContainer>
         </BoxContainer>
 
-        <BoxContainer Name="SpinboxHBox" Orientation="Horizontal" SeparationOverride="5">
-            <Label Text="{Loc comp-space-heater-ui-temperature}"/>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Text="{Loc comp-space-heater-ui-thermostat}"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" HorizontalExpand="True">
+                <Label Name="TargetTemperature"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right" SeparationOverride="-2">
+                <Button Text="{Loc comp-space-heater-ui-decrease-temperature-range}" Access="Public" Name="DecreaseTempRange" StyleClasses="OpenRight"/>
+                <Button Text="{Loc comp-space-heater-ui-increase-temperature-range}" Access="Public" Name="IncreaseTempRange" StyleClasses="OpenLeft"/>
+            </BoxContainer>
         </BoxContainer>
 
     </BoxContainer>

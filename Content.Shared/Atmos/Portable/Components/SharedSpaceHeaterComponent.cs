@@ -45,7 +45,7 @@ namespace Content.Shared.Atmos.Piping.Portable.Components
     {
         public float MinTemperature { get; }
         public float MaxTemperature { get; }
-        public float Temperature { get; }
+        public float TargetTemperature { get; }
         public bool Enabled { get; }
         public SpaceHeaterMode Mode { get; }
 
@@ -53,7 +53,7 @@ namespace Content.Shared.Atmos.Piping.Portable.Components
         {
             MinTemperature = minTemperature;
             MaxTemperature = maxTemperature;
-            Temperature = temperature;
+            TargetTemperature = temperature;
             Enabled = enabled;
             Mode = mode;
         }

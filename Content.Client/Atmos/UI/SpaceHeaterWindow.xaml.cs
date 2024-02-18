@@ -3,6 +3,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Shared.Atmos;
 
 namespace Content.Client.Atmos.UI
 {
@@ -12,19 +13,20 @@ namespace Content.Client.Atmos.UI
     [GenerateTypedNameReferences]
     public sealed partial class SpaceHeaterWindow : DefaultWindow
     {
+        //To account for a minimum delta temperature for atmos equalization to trigger we use a fixed step for target temperature increment/decrement
+        public int TemperatureChangeDelta = 5;
         public bool Active = false;
-
-        public FloatSpinBox TemperatureSpinbox;
+        public float MinTemp = 0.0f;
+        public float MaxTemp = 0.0f;
 
         public OptionButton ModeSelector => Mode;
+        public Button IncreaseTempRangeButton => IncreaseTempRange;
+        public Button DecreaseTempRangeButton => DecreaseTempRange;
+        public Label TargetTemperatureLabel => TargetTemperature;
 
         public SpaceHeaterWindow()
         {
             RobustXamlLoader.Load(this);
-
-            SpinboxHBox.AddChild(
-            TemperatureSpinbox = new FloatSpinBox(1f, 2) { MinWidth = 150, HorizontalExpand = true }
-            );
 
             foreach (var value in Enum.GetValues<SpaceHeaterMode>())
             {
@@ -45,9 +47,13 @@ namespace Content.Client.Atmos.UI
                 ToggleStatusButton.Pressed = false;
             }
         }
-        public void SetTemperature(float temperature)
+
+        public void SetTemperatureRange(float targetTemperature)
         {
-            TemperatureSpinbox.Value = temperature;
+            TargetTemperatureLabel.Text = targetTemperature - Atmospherics.T0C + "°C";
+
+            IncreaseTempRange.Disabled = targetTemperature + TemperatureChangeDelta > MaxTemp ? true : false;
+            DecreaseTempRange.Disabled = targetTemperature - TemperatureChangeDelta < MinTemp ? true : false;
         }
     }
 }

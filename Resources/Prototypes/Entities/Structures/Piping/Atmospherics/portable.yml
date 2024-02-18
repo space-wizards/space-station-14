@@ -1,7 +1,8 @@
 - type: entity
-  id: PortableAtmosMachine
+  id: PortableScrubber
   parent: [BaseMachinePowered, ConstructibleMachine]
-  abstract: true
+  name: portable scrubber
+  description: It scrubs, portably!
   components:
   - type: Transform
     anchored: false
@@ -9,13 +10,6 @@
     bodyType: Dynamic
   - type: AtmosDevice
     joinSystem: true
-
-- type: entity
-  id: PortableScrubber
-  parent: PortableAtmosMachine
-  name: portable scrubber
-  description: It scrubs, portably!
-  components:
   - type: Fixtures
     fixtures:
       fix1:
@@ -103,10 +97,16 @@
 
 - type: entity
   id: SpaceHeater
-  parent: PortableAtmosMachine
+  parent: [BaseMachinePowered, ConstructibleMachine]
   name: space heater
   description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
   components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: AtmosDevice
+    joinSystem: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -179,3 +179,14 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
 
+- type: entity
+  parent: SpaceHeater
+  id: SpaceHeaterEnabled
+  suffix: Enabled
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: ApcPowerReceiver
+    powerDisabled: false

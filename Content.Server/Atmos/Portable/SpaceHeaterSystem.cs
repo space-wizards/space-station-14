@@ -1,11 +1,12 @@
-using Content.Shared.Atmos.Piping.Portable.Components;
-using Content.Shared.Atmos.Visuals;
-using Content.Shared.UserInterface;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Power.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Shared.Atmos.Visuals;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Portable
@@ -13,6 +14,7 @@ namespace Content.Server.Atmos.Portable
     public sealed class SpaceHeaterSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -21,9 +23,11 @@ namespace Content.Server.Atmos.Portable
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpaceHeaterComponent, MapInitEvent>(OnInit);
+            SubscribeLocalEvent<SpaceHeaterComponent, ActivatableUIOpenAttemptEvent>(OnUIActivationAttempt);
             SubscribeLocalEvent<SpaceHeaterComponent, BeforeActivatableUIOpenEvent>(OnBeforeOpened);
+
             SubscribeLocalEvent<SpaceHeaterComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
+            SubscribeLocalEvent<SpaceHeaterComponent, MapInitEvent>(OnInit);
             SubscribeLocalEvent<SpaceHeaterComponent, PowerChangedEvent>(OnPowerChanged);
 
             SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterToggleMessage>(OnToggle);
@@ -41,6 +45,15 @@ namespace Content.Server.Atmos.Portable
         private void OnBeforeOpened(EntityUid uid, SpaceHeaterComponent spaceHeater, BeforeActivatableUIOpenEvent args)
         {
             DirtyUI(uid, spaceHeater);
+        }
+
+        private void OnUIActivationAttempt(EntityUid uid, SpaceHeaterComponent spaceHeater, ActivatableUIOpenAttemptEvent args)
+        {
+            if (!Comp<TransformComponent>(uid).Anchored)
+            {
+                _popup.PopupEntity(Loc.GetString("comp-space-heater-unanchored"), uid, args.User);
+                args.Cancel();
+            }
         }
 
         private void OnDeviceUpdated(EntityUid uid, SpaceHeaterComponent spaceHeater, ref AtmosDeviceUpdateEvent args)
@@ -112,7 +125,7 @@ namespace Content.Server.Atmos.Portable
             if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
                 return;
 
-            thermoMachine.TargetTemperature = args.Temperature;
+            thermoMachine.TargetTemperature += args.Temperature;
 
             UpdateAppearance(uid, spaceHeater.State);
             DirtyUI(uid, spaceHeater);
@@ -141,7 +154,6 @@ namespace Content.Server.Atmos.Portable
             {
                 return;
             }
-
             _userInterfaceSystem.TrySetUiState(uid, SpaceHeaterUiKey.Key,
                 new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode));
         }

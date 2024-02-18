@@ -14,12 +14,6 @@ namespace Content.Client.Atmos.UI
         [ViewVariables]
         private SpaceHeaterWindow? _window;
 
-        [ViewVariables]
-        private float _minTemp = 0.0f;
-
-        [ViewVariables]
-        private float _maxTemp = 0.0f;
-
         public SpaceHeaterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -38,7 +32,8 @@ namespace Content.Client.Atmos.UI
             _window.OnClose += Close;
 
             _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
-            _window.TemperatureSpinbox.OnValueChanged += OnTemperatureChanged;
+            _window.IncreaseTempRangeButton.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
+            _window.DecreaseTempRangeButton.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
             _window.Mode.OnItemSelected += OnModeChanged;
         }
 
@@ -48,13 +43,11 @@ namespace Content.Client.Atmos.UI
             SendMessage(new SpaceHeaterToggleMessage());
         }
 
-        private void OnTemperatureChanged(FloatSpinBox.FloatSpinBoxEventArgs args)
+        private void OnTemperatureRangeChanged(float changeAmount)
         {
-            var actualTemp = Math.Clamp(args.Value, _minTemp, _maxTemp);
-            actualTemp = Math.Max(actualTemp, Atmospherics.TCMB);
-            _window?.SetTemperature(actualTemp);
-            SendMessage(new SpaceHeaterChangeTemperatureMessage(actualTemp));
+            SendMessage(new SpaceHeaterChangeTemperatureMessage(changeAmount));
         }
+
         private void OnModeChanged(OptionButton.ItemSelectedEventArgs args)
         {
             _window?.Mode.SelectId(args.Id);
@@ -74,9 +67,9 @@ namespace Content.Client.Atmos.UI
             _window.SetActive(cast.Enabled);
             _window.Mode.SelectId((int) cast.Mode);
 
-            _minTemp = cast.MinTemperature;
-            _maxTemp = cast.MaxTemperature;
-            _window.SetTemperature(cast.Temperature);
+            _window.MinTemp = cast.MinTemperature;
+            _window.MaxTemp = cast.MaxTemperature;
+            _window.SetTemperatureRange(cast.TargetTemperature);
         }
 
         protected override void Dispose(bool disposing)
