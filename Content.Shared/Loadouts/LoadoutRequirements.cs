@@ -163,14 +163,12 @@ public sealed partial class LoadoutJobRequirement : LoadoutRequirement
         Dictionary<string, TimeSpan> playTimes, IEntityManager entityManager, IPrototypeManager prototypeManager,
         IConfigurationManager configManager, out FormattedMessage? reason)
     {
-        var strain = "";
-        foreach (var jobe in Jobs)
-        {
-            var jobepoyterterp = prototypeManager.Index(jobe);
-            strain += Loc.GetString(jobepoyterterp.Name) + ", ";
-        }
-        var raisin = Loc.GetString("loadout-job-requirement", ("job", strain.Remove(strain.Length - 2)));
-        reason = FormattedMessage.FromMarkup(raisin);
+        // Join localized job names with a comma
+        var jobsString = string.Join(", ", Jobs.Select(j => Loc.GetString(prototypeManager.Index(j).Name)));
+        // Form the reason message
+        jobsString = Loc.GetString("loadout-job-requirement", ("job", jobsString));
+
+        reason = FormattedMessage.FromMarkup(jobsString);
         return Jobs.Contains(job.ID);
     }
 }
