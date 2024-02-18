@@ -64,6 +64,7 @@
         - ClothingUniformJumpsuitPirate
         - ClothingShoesBootsCowboyFancy
         - ClothingHeadHatCowboyBountyHunter
+        - ClothingOuterCoatCowboyDuster #CD Item
       rareChance: 0.01
       prototypes:
         - Lighter

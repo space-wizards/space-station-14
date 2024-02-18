@@ -1,0 +1,35 @@
+#Quickthreads
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineQuickThreads
+  name: QuickThreads
+  description: A vending machine for clothing.
+  components:
+  - type: VendingMachine
+    pack: QuickThreadsInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 5
+    soundVend: /Audio/Machines/circuitprinter.ogg
+  - type: Advertise
+    pack: QuickThreadsAds
+  - type: Speech
+  - type: Sprite
+    sprite: _CD/Structures/Machines/VendingMachines/quickthreads.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.3
+    color: "#ad7c4b"

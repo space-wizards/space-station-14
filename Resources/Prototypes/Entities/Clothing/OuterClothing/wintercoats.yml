@@ -226,7 +226,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHoS
-  name: head of security's winter coat
+  name: head of security's  winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi

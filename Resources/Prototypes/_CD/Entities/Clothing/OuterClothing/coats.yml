@@ -1,0 +1,11 @@
+# CowboyDuster
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatCowboyDuster
+  name: brown duster
+  description: A brown duster, covered in sand.
+  components:
+  - type: Sprite
+    sprite: _CD/Clothing/OuterClothing/Coats/cowboyduster.rsi
+  - type: Clothing
+    sprite: _CD/Clothing/OuterClothing/Coats/cowboyduster.rsi

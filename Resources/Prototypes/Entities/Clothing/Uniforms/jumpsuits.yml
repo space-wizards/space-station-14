@@ -1448,7 +1448,7 @@
       - state: equipped-INNERCLOTHING-jumpsuit
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
-
+  
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitFamilyGuy

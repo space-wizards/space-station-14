@@ -1,0 +1,8 @@
+- type: advertisementsPack
+  id: QuickThreadsAds
+  advertisements:
+  - advertisement-threads-1
+  - advertisement-threads-2
+  - advertisement-threads-3
+  - advertisement-threads-4
+  - advertisement-threads-5
