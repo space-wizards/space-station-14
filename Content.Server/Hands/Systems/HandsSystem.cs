@@ -6,6 +6,7 @@ using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -44,7 +45,7 @@ namespace Content.Server.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem)});
+            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem), typeof(StaminaSystem)});
 
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
@@ -101,24 +102,7 @@ namespace Content.Server.Hands.Systems
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
 
-            if (!TryComp<CombatModeComponent>(args.Target, out var combatMode))
-            {
-                return;
-            }
-
-            var filterOther = Filter.PvsExcept(args.Source, entityManager: EntityManager);
-
-            var msgOther = Loc.GetString(
-                    "disarm-action-popup-message-other-clients",
-                    ("performerName", Identity.Entity(args.Source, EntityManager)),
-                    ("targetName", Identity.Entity(args.Target, EntityManager)));
-
-            var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(args.Target, EntityManager)));
-
-            _popupSystem.PopupEntity(msgOther, args.Source, filterOther, true);
-            _popupSystem.PopupEntity(msgUser, args.Target, args.Source);
-
-            _audio.PlayPvs(combatMode.DisarmSuccessSound, args.Source, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+            args.IsDisarmed = true;
 
             args.Handled = true; // no shove/stun.
         }
