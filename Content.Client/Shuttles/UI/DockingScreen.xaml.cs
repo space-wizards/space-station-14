@@ -22,11 +22,6 @@ public sealed partial class DockingScreen : BoxContainer
     public Dictionary<NetEntity, List<DockingPortState>> Docks = new();
 
     /// <summary>
-    /// Store buttons for every other dock
-    /// </summary>
-    private readonly Dictionary<DockingPortState, PanelContainer> _dockContainers = new();
-
-    /// <summary>
     /// Store the dock buttons for the side buttons.
     /// </summary>
     private readonly Dictionary<NetEntity, Button> _ourDockButtons = new();
@@ -48,6 +43,7 @@ public sealed partial class DockingScreen : BoxContainer
 
     private void BuildDocks(EntityUid? shuttle)
     {
+        DockingControl.BuildDocks(shuttle);
         var currentDock = DockingControl.ViewedDock;
 
         DockedWith.DisposeAllChildren();
@@ -56,7 +52,7 @@ public sealed partial class DockingScreen : BoxContainer
 
         if (shuttle == null)
         {
-            DockingControl.ViewedDock = null;
+            DockingControl.SetViewedDock(null);
             return;
         }
 
@@ -99,7 +95,7 @@ public sealed partial class DockingScreen : BoxContainer
 
             button.OnPressed += args =>
             {
-                OnDockPress(dock.Entity, dock.Coordinates, dock.Angle);
+                OnDockPress(dock);
             };
 
             _ourDockButtons[dock.Entity] = button;
@@ -110,7 +106,7 @@ public sealed partial class DockingScreen : BoxContainer
         if (!selected)
         {
             var buttonOne = shuttleDocks[0];
-            OnDockPress(buttonOne.Entity, buttonOne.Coordinates, buttonOne.Angle);
+            OnDockPress(buttonOne);
         }
 
         foreach (var dock in shuttleDocks.OrderBy(x => x.GridDockedWith))
@@ -148,10 +144,8 @@ public sealed partial class DockingScreen : BoxContainer
         }
     }
 
-    private void OnDockPress(NetEntity entity, NetCoordinates? coordinates, Angle angle)
+    private void OnDockPress(DockingPortState state)
     {
-        DockingControl.ViewedDock = entity;
-        DockingControl.Coordinates = _entManager.GetCoordinates(coordinates);
-        DockingControl.Angle = angle;
+        DockingControl.SetViewedDock(state);
     }
 }
