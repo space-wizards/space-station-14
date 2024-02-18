@@ -113,7 +113,7 @@
               doAfter: 2
           completed:
             - !type:SpawnPrototype
-              prototype: ReinforcedGlass
+              prototype: SheetRGlass1
               amount: 5
 
     - node: brokenGlassBox
@@ -130,3 +130,31 @@
 
     - node: glassBox
       entity: GlassBoxLaser
+      edges:
+        - to: boxMissingWires
+          steps:
+            - tool: Screwing
+              doAfter: 4
+            - tool: Pulsing
+              doAfter: 2
+            - tool: Cutting
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 2
+            - tool: Welding
+              doAfter: 10
+            - tool: Anchoring
+              doAfter: 2
+            - tool: Prying
+              doAfter: 2
+          completed:
+            - !type:EmptyAllContainers
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: SignalTrigger
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 5
