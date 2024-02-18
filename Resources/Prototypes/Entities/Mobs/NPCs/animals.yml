@@ -3164,10 +3164,17 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: ReplacementAccent # No talky
+    accent: nymph
   - type: Speech
+    speechVerb: Plant
   - type: Tag
     tags:
+    - DoorBumpOpener
     - VimPilot
+  - type: Emoting
+  - type: BodyEmotes
+    soundsId: Nymph
   - type: Reform
     actionPrototype: DionaReformAction
     reformTime: 10
