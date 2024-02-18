@@ -38,7 +38,8 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
     private List<Entity<MapGridComponent>> _grids = new();
 
-    private HashSet<DockingPortState> _drawnDocks = new();
+    private readonly HashSet<DockingPortState> _drawnDocks = new();
+    private readonly Dictionary<DockingPortState, Button> _dockButtons = new();
 
     /// <summary>
     /// Store buttons for every other dock
@@ -47,7 +48,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
     public event Action<NetEntity>? OnViewDock;
 
-    public ShuttleDockControl() : base(8f, 32f, 8f)
+    public ShuttleDockControl() : base(2f, 32f, 8f)
     {
         RobustXamlLoader.Load(this);
         _dockSystem = EntManager.System<DockingSystem>();
@@ -94,7 +95,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         var gridNent = EntManager.GetNetEntity(GridEntity);
         var mapPos = _xformSystem.ToMapCoordinates(_coordinates.Value);
         var ourGridMatrix = _xformSystem.GetWorldMatrix(gridXform.Owner);
-        var dockMatrix = Matrix3.CreateTransform(_coordinates.Value.Position, Robust.Shared.Maths.Angle.Zero);
+        var dockMatrix = Matrix3.CreateTransform(_coordinates.Value.Position, Angle.Zero);
         Matrix3.Multiply(dockMatrix, ourGridMatrix, out var offsetMatrix);
 
         offsetMatrix = offsetMatrix.Invert();
@@ -111,7 +112,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
         if (viewedDockPos != null)
         {
-            viewedDockPos = viewedDockPos.Value + _angle.Value.RotateVec(new Vector2(0f,0.6f) * MinimapScale);
+            viewedDockPos = viewedDockPos.Value + _angle.Value.RotateVec(new Vector2(0f,-0.6f) * MinimapScale);
         }
 
         var lineOffset = (float) _timing.RealTime.TotalSeconds * 30f;
@@ -222,13 +223,22 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                 {
                     collisionCenter /= 4;
                     var range = viewedDockPos.Value - collisionCenter;
+                    var dockButton = _dockButtons[dock];
 
                     if (range.Length() < SharedDockingSystem.DockingHiglightRange * MinimapScale)
                     {
-                        var canDock = _dockSystem.CanDock(ViewedDock!.Value, dock.Entity);
-                        var lineColor = canDock ? Color.Lime : Color.Red;
+                        var canDock = _dockSystem.CanDock(
+                            _viewedState!.Coordinates, _viewedState.Angle,
+                            dock.Coordinates, dock.Angle);
 
+                        dockButton.Disabled = !canDock;
+
+                        var lineColor = canDock ? Color.Lime : Color.Red;
                         handle.DrawDottedLine(viewedDockPos.Value, collisionCenter, lineColor, offset: lineOffset);
+                    }
+                    else
+                    {
+                        dockButton.Disabled = true;
                     }
                 }
 
@@ -288,6 +298,17 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
     public void BuildDocks(EntityUid? shuttle)
     {
+        foreach (var btn in _dockButtons.Values)
+        {
+            btn.Dispose();
+        }
+
+        foreach (var container in _dockContainers.Values)
+        {
+            container.Dispose();
+        }
+
+        _dockButtons.Clear();
         _dockContainers.Clear();
 
         if (DockState == null)
@@ -358,12 +379,15 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                         {
                             Text = Loc.GetString("shuttle-console-dock-button"),
                             Margin = new Thickness(2),
+                            Disabled = true,
                         };
 
                         button.OnPressed += args =>
                         {
 
                         };
+
+                        _dockButtons.Add(dock, button);
                     }
                 }
 
