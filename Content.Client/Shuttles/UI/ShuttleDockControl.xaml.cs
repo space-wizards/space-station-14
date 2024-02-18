@@ -101,9 +101,9 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         offsetMatrix = offsetMatrix.Invert();
 
         // Draw nearby grids
-        var boundsEnlargement = (Vector2.One / MinimapScale).Floored();
+        var boundsEnlargement = (Vector2.One * MinimapScale).Floored();
 
-        var controlBounds = UIBox2i.FromDimensions(PixelPosition - boundsEnlargement, PixelSize + boundsEnlargement);
+        var controlBounds = UIBox2i.FromDimensions(PixelPosition - boundsEnlargement, PixelSize + boundsEnlargement * 2);
         _grids.Clear();
         _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(mapPos.Position - WorldRangeVector, mapPos.Position + WorldRangeVector), ref _grids);
 
@@ -381,6 +381,15 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                             Margin = new Thickness(2),
                             Disabled = true,
                         };
+
+                        /*
+                         *  - On dock deletion need to refresh
+                            - Add dock button functionality
+                            - Maybe make the leading line green if the angle is good and speed based on distance
+                             - Make the line segments longer too I think
+                             - Once all that done just need to nuke docking fixtures and shiit, also autodock
+                             - Also need to make sure panel works, then we do TODO cleanup and make the other UIs diegetic again
+                         */
 
                         button.OnPressed += args =>
                         {

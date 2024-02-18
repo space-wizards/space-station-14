@@ -95,6 +95,11 @@ public sealed partial class DockingScreen : BoxContainer
                 DockingControl.HighlightedDock = dock.Entity;
             };
 
+            button.OnMouseExited += args =>
+            {
+                DockingControl.HighlightedDock = null;
+            };
+
             button.Label.Margin = new Thickness(3f);
 
             if (currentDock == dock.Entity)
