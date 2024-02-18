@@ -364,7 +364,7 @@
   id: FatBreakdown
   source: true
   requiredMixerCategories:
-  - Centrifuge
+  - Electrolysis
   reactants:
     Fat:
       amount: 15
@@ -407,7 +407,7 @@
   id: VitaminBreakdown
   source: true
   requiredMixerCategories:
-  - Electrolysis
+  - Centrifuge
   reactants:
     Vitamin:
       amount: 1
