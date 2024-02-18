@@ -45,13 +45,14 @@ namespace Content.Client.Chat.Managers
                     if (_adminMgr.HasFlag(AdminFlags.Admin))
                         _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(text)}\"");
                     else
-                        _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
+                        _sawmill.Warning("Tried to speak on dead chat without being ghost or admin.");
                     break;
                 case ChatSelectChannel.None:
                 case ChatSelectChannel.Local:
                 case ChatSelectChannel.Whisper:
                 case ChatSelectChannel.Radio:
                 case ChatSelectChannel.Emotes:
+                case ChatSelectChannel.LOOC:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
             }
