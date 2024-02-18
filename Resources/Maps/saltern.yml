@@ -27919,14 +27919,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 37.5,0.5
       parent: 31
-- proto: ComputerMedicalRecords
-  entities:
-  - uid: 5653
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 16.5,-5.5
-      parent: 31
 - proto: ComputerPowerMonitoring
   entities:
   - uid: 4306
@@ -28669,6 +28661,32 @@ entities:
     components:
     - type: Transform
       pos: -10.463156,-6.5336485
+      parent: 31
+- proto: CryogenicSleepUnit
+  entities:
+  - uid: 9172
+    components:
+    - type: Transform
+      pos: -42.5,-3.5
+      parent: 31
+  - uid: 9184
+    components:
+    - type: Transform
+      pos: -40.5,-3.5
+      parent: 31
+- proto: CryogenicSleepUnitSpawner
+  entities:
+  - uid: 9206
+    components:
+    - type: Transform
+      pos: -42.5,-5.5
+      parent: 31
+- proto: CryogenicSleepUnitSpawnerLateJoin
+  entities:
+  - uid: 9197
+    components:
+    - type: Transform
+      pos: -40.5,-5.5
       parent: 31
 - proto: CryoPod
   entities:
@@ -31706,6 +31724,13 @@ entities:
     - type: Transform
       pos: 29.614664,-1.306627
       parent: 31
+- proto: Dresser
+  entities:
+  - uid: 9049
+    components:
+    - type: Transform
+      pos: 7.5,16.5
+      parent: 31
 - proto: DresserCaptainFilled
   entities:
   - uid: 11383
@@ -32984,7 +33009,7 @@ entities:
       pos: 38.5,-5.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -7330.969
+      secondsUntilStateChange: -7212.9697
       state: Closing
   - uid: 4019
     components:
@@ -49199,13 +49224,6 @@ entities:
     - type: Transform
       pos: -9.5,22.5
       parent: 31
-- proto: LockerLostAndFound
-  entities:
-  - uid: 3875
-    components:
-    - type: Transform
-      pos: 7.5,16.5
-      parent: 31
 - proto: LockerMedicalFilled
   entities:
   - uid: 802
@@ -49401,28 +49419,6 @@ entities:
     components:
     - type: Transform
       pos: 14.5,1.5
-      parent: 31
-- proto: MachineCryoSleepPod
-  entities:
-  - uid: 9172
-    components:
-    - type: Transform
-      pos: -42.5,-3.5
-      parent: 31
-  - uid: 9184
-    components:
-    - type: Transform
-      pos: -40.5,-3.5
-      parent: 31
-  - uid: 9197
-    components:
-    - type: Transform
-      pos: -40.5,-5.5
-      parent: 31
-  - uid: 9206
-    components:
-    - type: Transform
-      pos: -42.5,-5.5
       parent: 31
 - proto: MachineElectrolysisUnit
   entities:

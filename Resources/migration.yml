@@ -164,3 +164,18 @@ DefaultStationBeaconTeslaEngine: null
 CryogenicSleepUnit: MachineCryoSleepPod
 CryogenicSleepUnitSpawner: MachineCryoSleepPod
 CryogenicSleepUnitSpawnerLateJoin: MachineCryoSleepPod
+
+# 2024-01-28
+FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
+
+# 2024-01-31
+HandheldCrewMonitorEmpty: null
+HandheldCrewMonitor: null
+SpyCrewMonitor: null
+SpyCrewMonitorEmpty: null
+SyndiCrewMonitor: null
+SyndiCrewMonitorEmpty: null
+
+# 2024-02-01
+YellowOxygenTank: OxygenTank
+YellowOxygenTankFilled: OxygenTankFilled

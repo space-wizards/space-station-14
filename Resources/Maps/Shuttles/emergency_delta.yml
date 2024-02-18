@@ -4881,4 +4881,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,2.5
       parent: 1
+- proto: YellowOxygenTankFilled
+  entities:
+  - uid: 799
+    components:
+    - type: Transform
+      pos: -10.44437,-3.5553346
+      parent: 1
 ...

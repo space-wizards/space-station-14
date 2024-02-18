@@ -2379,4 +2379,11 @@ entities:
           occludes: True
           ents:
           - 346
+- proto: YellowOxygenTankFilled
+  entities:
+  - uid: 167
+    components:
+    - type: Transform
+      pos: 1.60798,-0.3062118
+      parent: 325
 ...
