@@ -11,10 +11,6 @@
   - type: HumanoidAppearance
     species: Arachnid
   - type: Hunger
-    starvationDamage:
-      types:
-        Cold: 0.5
-        Bloodloss: 0.5
   - type: Thirst
   - type: Sericulture
     action: ActionSericulture

@@ -647,7 +647,7 @@
 - type: flavor
   id: spaceup
   flavorType: Complex
-  description: flavor-complex-root-space-up
+  description: flavor-complex-space-up-soda
 
 - type: flavor
   id: grapesoda
@@ -998,3 +998,13 @@
   id: light
   flavorType: Complex
   description: flavor-complex-light
+
+- type: flavor
+  id: profits
+  flavorType: Complex
+  description: flavor-complex-profits
+
+- type: flavor
+  id: fishops
+  flavorType: Complex
+  description: flavor-complex-fishops

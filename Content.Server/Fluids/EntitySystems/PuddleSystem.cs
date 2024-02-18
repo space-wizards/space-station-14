@@ -293,7 +293,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     {
         // Reactive entities have a chance to get a touch reaction from slipping on a puddle
         // (i.e. it is implied they fell face first onto it or something)
-        if (!HasComp<ReactiveComponent>(args.Slipped))
+        if (!HasComp<ReactiveComponent>(args.Slipped) || HasComp<SlidingComponent>(args.Slipped))
             return;
 
         // Eventually probably have some system of 'body coverage' to tweak the probability but for now just 0.5

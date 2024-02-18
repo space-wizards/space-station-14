@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Client.Antag;
+using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
@@ -7,15 +7,14 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Zombies;
 
-public sealed class ZombieSystem : AntagStatusIconSystem<ZombieComponent>
+public sealed class ZombieSystem : EntitySystem
 {
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ZombieComponent, GetStatusIconsEvent>(OnGetStatusIcon);
+        SubscribeLocalEvent<ZombieComponent, CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
     }
 
     private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
@@ -32,8 +31,17 @@ public sealed class ZombieSystem : AntagStatusIconSystem<ZombieComponent>
         }
     }
 
-    private void OnGetStatusIcon(EntityUid uid, ZombieComponent component, ref GetStatusIconsEvent args)
+    /// <summary>
+    /// Determines whether a player should be able to see the StatusIcon for zombies.
+    /// </summary>
+    private void OnCanDisplayStatusIcons(EntityUid uid, ZombieComponent component, ref CanDisplayStatusIconsEvent args)
     {
-        GetStatusIcon(component.ZombieStatusIcon, ref args);
+        if (HasComp<ZombieComponent>(args.User) || HasComp<ShowZombieIconsComponent>(args.User))
+            return;
+
+        if (component.IconVisibleToGhost && HasComp<GhostComponent>(args.User))
+            return;
+
+        args.Cancelled = true;
     }
 }

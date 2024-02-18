@@ -36,7 +36,7 @@
         - !type:ReagentThreshold
           min: 20
         damage:
-          types:
+          groups:
             Brute: 2
       - !type:Jitter
         conditions:

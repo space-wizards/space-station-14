@@ -98,6 +98,7 @@
       - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
+      - AirTank
       - GasAnalyzer
       - UtilityBelt
       - Fulton
@@ -134,7 +135,6 @@
       - TrashBag
       - PowerCellSmall
       - PowerCellMedium
-      - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -253,6 +253,10 @@
   - type: Lathe
     idleState: icon
     runningState: building
+    staticRecipes:
+    - LargeBeaker
+    - Dropper
+    - ClothingEyesGlassesChemical
     dynamicRecipes:
       - PowerDrill
       - MiningDrill
@@ -267,11 +271,8 @@
       - HoloprojectorField
       - Saw
       - Hemostat
-      - Beaker
-      - LargeBeaker
       - CryostasisBeaker
       - SyringeCryostasis
-      - Dropper
       - Syringe
       - Implanter
       - PillCanister
@@ -285,6 +286,7 @@
       - ChemicalPayload
       - FlashPayload
       - Signaller
+      - SignallerAdvanced
       - SignalTrigger
       - VoiceTrigger
       - Igniter
@@ -310,7 +312,6 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
-      - ClothingEyesGlassesChemical
       - FauxTileAstroGrass
       - FauxTileAstroIce
       - OreBagOfHolding
@@ -369,10 +370,18 @@
     - MaterialReclaimerMachineCircuitboard
     - ElectrolysisUnitMachineCircuitboard
     - CentrifugeMachineCircuitboard
+    - ChemDispenserMachineCircuitboard
+    - ChemMasterMachineCircuitboard
     - CondenserMachineCircuitBoard
+    - HotplateMachineCircuitboard
     - UniformPrinterMachineCircuitboard
     - FloorGreenCircuit
     - FloorBlueCircuit
+    - MicrowaveMachineCircuitboard
+    - ReagentGrinderMachineCircuitboard
+    - ElectricGrillMachineCircuitboard
+    - BoozeDispenserMachineCircuitboard
+    - SodaDispenserMachineCircuitboard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -382,8 +391,6 @@
       - CryoPodMachineCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
       - BiomassReclaimerMachineCircuitboard
       - BiofabricatorMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
@@ -400,10 +407,6 @@
       - PowerComputerCircuitboard
       - AutolatheHyperConvectionMachineCircuitboard
       - ProtolatheHyperConvectionMachineCircuitboard
-      - ReagentGrinderMachineCircuitboard
-      - HotplateMachineCircuitboard
-      - MicrowaveMachineCircuitboard
-      - ElectricGrillMachineCircuitboard
       - FatExtractorMachineCircuitboard
       - FlatpackerMachineCircuitboard
       - SheetifierMachineCircuitboard
@@ -445,8 +448,6 @@
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
       - ArtifactCrusherMachineCircuitboard
-      - BoozeDispenserMachineCircuitboard
-      - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
   - type: MaterialStorage
@@ -531,7 +532,6 @@
     - BorgModuleAdvancedCleaning
     - BorgModuleMining
     - BorgModuleGrapplingGun
-    - BorgModuleGasAnalyzer
     - BorgModuleAdvancedTool
     - BorgModuleRCD
     - BorgModuleArtifact
@@ -804,15 +804,18 @@
       - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
+      - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
       - Beaker
+      - LargeBeaker
+      - Dropper
+      - Jug
       - Syringe
       - Implanter
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
-      - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -824,20 +827,18 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
-    dynamicRecipes:
-      - ClothingHandsGlovesNitrile
-      - CryostasisBeaker
-      - LargeBeaker
-      - Dropper
       - Scalpel
       - Retractor
       - Cautery
       - Drill
       - Saw
       - Hemostat
+      - ClothingEyesGlassesChemical
+    dynamicRecipes:
+      - ChemicalPayload
+      - CryostasisBeaker
       - BluespaceBeaker
       - SyringeBluespace
-      - Jug
       - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
@@ -930,10 +931,12 @@
       - ClothingUniformJumpsuitPrisoner
       - ClothingUniformJumpskirtPrisoner
       - ClothingHeadHatQMsoft
+      - ClothingHeadHatBeretQM
       - ClothingUniformJumpsuitQM
       - ClothingUniformJumpskirtQM
       - ClothingUniformJumpsuitQMTurtleneck
       - ClothingUniformJumpskirtQMTurtleneck
+      - ClothingUniformJumpsuitQMFormal
       - ClothingHeadHatBeretRND
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
@@ -988,6 +991,15 @@
       - ClothingNeckTieRed
       - ClothingNeckTieDet
       - ClothingNeckTieSci
+      # Scarfs - All scarfs avaible in winterdrobe
+      - ClothingNeckScarfStripedGreen
+      - ClothingNeckScarfStripedBlue
+      - ClothingNeckScarfStripedRed
+      - ClothingNeckScarfStripedBrown
+      - ClothingNeckScarfStripedLightBlue
+      - ClothingNeckScarfStripedOrange
+      - ClothingNeckScarfStripedBlack
+      - ClothingNeckScarfStripedPurple
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingHeadHatCentcomcap
