@@ -260,7 +260,7 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkArnoldPalmerGlass
+  id: DrinkArnoldPalmer
   suffix: arnold palmer
   components:
   - type: SolutionContainerManager
@@ -593,7 +593,7 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkCosmopolitanGlass
+  id: DrinkCosmopolitan
   suffix: cosmopolitan
   components:
   - type: SolutionContainerManager
