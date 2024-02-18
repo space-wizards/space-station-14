@@ -9,6 +9,23 @@
   recognizable: true
 
 - type: reagent
+  id: RoyRogers
+  name: reagent-name-roy-rogers
+  parent: BaseSoda
+  desc: reagent-desc-roy-rogers
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: arnoldpalmer
+  color: "#d8cc5d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/arnoldpalmer.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
   id: ChangelingSting
   name: reagent-name-changeling-sting
   parent: BaseSoda
@@ -109,6 +126,24 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
     state: icon
+
+- type: reagent
+  id: SolDry
+  name: reagent-name-sol-dry
+  parent: BaseSoda
+  desc: reagent-name-sol-dry
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: gingersoda
+  color: "#ccb87e"
+
+- type: reagent
+  id: ShirleyTemple
+  name: reagent-name-shirley-temple
+  parent: BaseSoda
+  desc: reagent-name-shirley-temple
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: sweet
+  color: "#af2221"
 
 - type: reagent
   id: SpaceMountainWind

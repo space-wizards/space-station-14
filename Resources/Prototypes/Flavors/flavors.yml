@@ -620,6 +620,11 @@
   description: flavor-complex-dr-gibb
 
 - type: flavor
+  id: gingersoda
+  flavorType: Complex
+  description: flavor-complex-giner-soda
+
+- type: flavor
   id: lemonlimesoda
   flavorType: Complex
   description: flavor-complex-lemon-lime-soda
@@ -690,6 +695,11 @@
   description: flavor-complex-rum
 
 - type: flavor
+  id: coconutrum
+  flavorType: Complex
+  description: flavor-complex-coconut-rum
+
+- type: flavor
   id: coffeeliquor
   flavorType: Complex
   description: flavor-complex-coffee-liquor
@@ -733,6 +743,31 @@
   id: ice
   flavorType: Complex
   description: flavor-complex-ice
+
+- type: flavor
+  id: arnoldpalmer
+  flavorType: Complex
+  description: flavor-complex-arnold-palmer
+
+- type: flavor
+  id: bluehawaiian
+  flavorType: Complex
+  description: flavor-complex-blue-hawaiian
+
+- type: flavor
+  id: cosmopolitan
+  flavorType: Complex
+  description: flavor-complex-cosmopolitan
+
+- type: flavor
+  id: painkiller
+  flavorType: Complex
+  description: flavor-complex-painkiller
+
+- type: flavor
+  id: pinacolada
+  flavorType: Complex
+  description: flavor-complex-pina-colada
 
 - type: flavor
   id: longisland
