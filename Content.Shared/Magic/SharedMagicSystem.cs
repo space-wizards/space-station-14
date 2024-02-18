@@ -7,7 +7,6 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
@@ -16,6 +15,7 @@ using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
@@ -35,10 +35,8 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _seriMan = default!;
     [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -47,15 +45,15 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         // TODO: Make Magic Comp/Magic Caster Comp
         SubscribeLocalEvent<MagicComponent, MapInitEvent>(OnInit, after: new []{typeof(SharedSpellbookSystem)});
-        // TODO: Upgradeable spells
 
+        // TODO: Magic comp on spells?
+        //  If magic comp is on spells it doesn't raise
         // TODO: More spells
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -68,9 +66,6 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)
     {
-        // TODO: Reconsider just setting on protos
-        // _actions.SetUseDelay(uid, component.Cooldown);
-        // _actions.SetUsesBeforeDelay(uid, component.Uses);
     }
 
     #region Spells
@@ -103,7 +98,6 @@ public abstract class SharedMagicSystem : EntitySystem
         args.Handled = true;
     }
 
-    // TODO: Deduplicate copied gun code
     private void OnProjectileSpell(ProjectileSpellEvent ev)
     {
         if (ev.Handled)
@@ -118,7 +112,6 @@ public abstract class SharedMagicSystem : EntitySystem
         var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-        var toMap = toCoords.ToMap(EntityManager, _transform);
         var fromMap = fromCoords.ToMap(EntityManager, _transform);
         var spawnCoords = _mapManager.TryFindGridAt(fromMap, out var gridUid, out _)
             ? fromCoords.WithEntityId(gridUid, EntityManager)
@@ -160,7 +153,8 @@ public abstract class SharedMagicSystem : EntitySystem
         }
     }
 
-    // TODO: Rework this somehow & COMMENT
+    // TODO: Should specify it's not for projectiles?
+    //  Or try to get it to work with projectiles?
     private List<EntityCoordinates> GetSpawnPositions(TransformComponent casterXform, MagicSpawnData data)
     {
         switch (data)
@@ -173,13 +167,13 @@ public abstract class SharedMagicSystem : EntitySystem
             {
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
-                if (!_mapManager.TryGetGrid(casterXform.GridUid, out var mapGrid))
+                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
                 if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
                     return new List<EntityCoordinates>();
 
                 var tileIndex = tileReference.Value.GridIndices;
-                return new List<EntityCoordinates>(1) { mapGrid.GridTileToLocal(tileIndex) };
+                return new List<EntityCoordinates>(1) { _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex) };
             }
             // TODO: Rename to TargetLineInFront
             case TargetInFront:
@@ -187,14 +181,14 @@ public abstract class SharedMagicSystem : EntitySystem
                 // This is shit but you get the idea.
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
-                if (!_mapManager.TryGetGrid(casterXform.GridUid, out var mapGrid))
+                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
 
                 if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
                     return new List<EntityCoordinates>();
 
                 var tileIndex = tileReference.Value.GridIndices;
-                var coords = mapGrid.GridTileToLocal(tileIndex);
+                var coords = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex);
                 EntityCoordinates coordsPlus;
                 EntityCoordinates coordsMinus;
 
@@ -204,8 +198,8 @@ public abstract class SharedMagicSystem : EntitySystem
                     case Direction.North:
                     case Direction.South:
                     {
-                        coordsPlus = mapGrid.GridTileToLocal(tileIndex + (1, 0));
-                        coordsMinus = mapGrid.GridTileToLocal(tileIndex + (-1, 0));
+                        coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (1, 0));
+                        coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (-1, 0));
                         return new List<EntityCoordinates>(3)
                         {
                             coords,
@@ -216,8 +210,8 @@ public abstract class SharedMagicSystem : EntitySystem
                     case Direction.East:
                     case Direction.West:
                     {
-                        coordsPlus = mapGrid.GridTileToLocal(tileIndex + (0, 1));
-                        coordsMinus = mapGrid.GridTileToLocal(tileIndex + (0, -1));
+                        coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, 1));
+                        coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, -1));
                         return new List<EntityCoordinates>(3)
                         {
                             coords,

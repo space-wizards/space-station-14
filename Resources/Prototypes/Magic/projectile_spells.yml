@@ -22,7 +22,7 @@
   - type: ActionUpgrade
     effectedLevels:
       2: ActionFireballII
-      4: ActionFireballIII  #Can't upgrade a 2nd time at all with master spellbook
+      4: ActionFireballIII
 
 - type: entity
   id: ActionFireballII
