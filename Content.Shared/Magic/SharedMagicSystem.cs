@@ -82,16 +82,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
         foreach (var position in GetSpawnPositions(transform, args.Pos))
         {
-            if (_net.IsServer)
-            {
-                var ent = Spawn(args.Prototype, position.SnapToGrid(EntityManager, _mapManager));
-
-                if (args.PreventCollideWithCaster)
-                {
-                    var comp = EnsureComp<PreventCollideComponent>(ent);
-                    comp.Uid = args.Performer;
-                }
-            }
+            SpawnSpellHelper(args.Prototype, position, args.Performer, preventCollide: args.PreventCollideWithCaster);
         }
 
         Speak(args);
@@ -265,12 +256,11 @@ public abstract class SharedMagicSystem : EntitySystem
 
         var targetMapCoords = args.Target;
 
-        SpawnSpellHelper(args.Contents, targetMapCoords, args.Lifetime, args.Offset);
+        WorldSpawnSpellHelper(args.Contents, targetMapCoords, args.Performer, args.Lifetime, args.Offset);
         Speak(args);
         args.Handled = true;
     }
 
-    // TODO: Try to get off of Prototypes?
     /// <summary>
     /// Loops through a supplied list of entity prototypes and spawns them
     /// </summary>
@@ -283,24 +273,34 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <param name="entityCoords"> Map Coordinates where the entities will spawn</param>
     /// <param name="lifetime"> Check to see if the entities should self delete</param>
     /// <param name="offsetVector2"> A Vector2 offset that the entities will spawn in</param>
-    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, EntityCoordinates entityCoords, float? lifetime, Vector2 offsetVector2)
+    private void WorldSpawnSpellHelper(List<EntitySpawnEntry> entityEntries, EntityCoordinates entityCoords, EntityUid performer, float? lifetime, Vector2 offsetVector2)
     {
         var getProtos = EntitySpawnCollection.GetSpawns(entityEntries, _random);
 
         var offsetCoords = entityCoords;
         foreach (var proto in getProtos)
         {
-            // TODO: Share this code with instant because they're both doing similar things for positioning.
-            if (_net.IsServer)
-            {
-                var entity = Spawn(proto, offsetCoords);
-                offsetCoords = offsetCoords.Offset(offsetVector2);
+            SpawnSpellHelper(proto, offsetCoords, performer, lifetime);
+            offsetCoords = offsetCoords.Offset(offsetVector2);
+        }
+    }
 
-                if (lifetime != null)
-                {
-                    var comp = EnsureComp<TimedDespawnComponent>(entity);
-                    comp.Lifetime = lifetime.Value;
-                }
+    private void SpawnSpellHelper(string? proto, EntityCoordinates position, EntityUid performer, float? lifetime = null, bool preventCollide = false)
+    {
+        if (_net.IsServer)
+        {
+            var ent = Spawn(proto, position.SnapToGrid(EntityManager, _mapManager));
+
+            if (lifetime != null)
+            {
+                var comp = EnsureComp<TimedDespawnComponent>(ent);
+                comp.Lifetime = lifetime.Value;
+            }
+
+            if (preventCollide)
+            {
+                var comp = EnsureComp<PreventCollideComponent>(ent);
+                comp.Uid = performer;
             }
         }
     }
