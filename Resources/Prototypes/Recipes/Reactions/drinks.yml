@@ -821,6 +821,8 @@
       amount: 2
     Grenadine:
       amount: 1
+  products:
+    ShirleyTemple: 3
 
 - type: reaction
   id: Silencer

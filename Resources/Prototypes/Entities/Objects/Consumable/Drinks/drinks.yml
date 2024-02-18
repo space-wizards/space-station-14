@@ -543,7 +543,7 @@
         - ReagentId: CoconutRum
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/coconutrum.rsi
+    sprite: Objects/Consumable/Drinks/coconutrumglass.rsi
     state: icon
 
 - type: entity
@@ -558,9 +558,6 @@
         reagents:
         - ReagentId: CoconutWater
           Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/coconutwater.rsi
-    state: icon
 
 - type: entity
   parent: DrinkGlass

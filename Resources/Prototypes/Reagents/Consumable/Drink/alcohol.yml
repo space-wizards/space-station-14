@@ -1147,7 +1147,7 @@
   flavor: painkiller
   color: "#e6cb47"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/patronglass.rsi
+    sprite: Objects/Consumable/Drinks/painkiller.rsi
     state: icon
   metabolisms:
     Drink:
@@ -1199,7 +1199,7 @@
   flavor: alcohol
   color: "#e8dba4"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/red_meadglass.rsi
+    sprite: Objects/Consumable/Drinks/pinacolada.rsi
     state: icon
 
 - type: reagent
