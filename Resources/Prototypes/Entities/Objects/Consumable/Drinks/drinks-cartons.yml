@@ -104,13 +104,13 @@
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkCoconutWaterCarton
   name: coconut water
-  description: It's on the inside of the coconut that counts.
+  description: It's the inside of the coconut that counts.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
-        - ReagentID: CoconutWater
+        - ReagentId: CoconutWater
           Quantity: 50
   - type: Drink
   - type: Label

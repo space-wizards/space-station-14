@@ -788,7 +788,7 @@
       drink:
         maxVol: 300
         reagents:
-        - ReagentID: CoconutWater
+        - ReagentId: CoconutWater
           Quantity: 300
   - type: Drink
   - type: Label

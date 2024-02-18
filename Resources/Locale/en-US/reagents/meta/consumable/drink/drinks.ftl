@@ -23,7 +23,7 @@ reagent-name-iced-coffee = iced coffee
 reagent-desc-iced-coffee = Coffee and ice, refreshing and cool.
 
 reagent-name-iced-green-tea = iced green tea
-reagent-desc-iced-green-tea = cold green tea.
+reagent-desc-iced-green-tea = Cold green tea.
 
 reagent-name-iced-tea = iced tea
 reagent-desc-iced-tea = No relation to a certain rap artist/actor.

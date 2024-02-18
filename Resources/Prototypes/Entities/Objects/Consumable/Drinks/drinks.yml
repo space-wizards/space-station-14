@@ -268,7 +268,7 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentID: ArnoldPalmer
+        - ReagentId: ArnoldPalmer
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/arnoldpalmer.rsi

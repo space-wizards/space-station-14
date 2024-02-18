@@ -244,7 +244,7 @@
     JuiceLime:
       amount: 1
   products:
-    Cosmopolitan: 4
+    Cosmopolitan: 3
 
 - type: reaction
   id: CreamOfCoconut
