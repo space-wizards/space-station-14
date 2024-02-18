@@ -576,6 +576,7 @@
   - type: Appearance
   - type: Tag
     tags:
+    - AntiqueLaser
     - HighRiskItem
     - Sidearm
   - type: StaticPrice

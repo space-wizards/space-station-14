@@ -14,6 +14,9 @@
   id: Ambrosia
 
 - type: Tag
+  id: AntiqueLaser
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -1027,6 +1030,9 @@
 
 - type: Tag
   id: Sidearm
+
+- type: Tag
+  id: SignalTrigger
 
 - type: Tag
   id: SkeletonMotorcycleKeys

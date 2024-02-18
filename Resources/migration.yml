@@ -214,3 +214,6 @@ VehicleJanicartDestroyed: null
 # 2024-02-01
 YellowOxygenTank: OxygenTank
 YellowOxygenTankFilled: OxygenTankFilled
+
+# 2024-02-18
+GlassBoxLaserBroken: GlassBoxBroken
