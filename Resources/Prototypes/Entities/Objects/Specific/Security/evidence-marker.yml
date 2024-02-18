@@ -1,0 +1,110 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: EvidenceMarker
+  name: evidence marker
+  description: A numbered yellow marker, useful for labeling evidence on a crime scene.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Detective/evidence_marker.rsi
+  - type: Item
+    sprite: Objects/Specific/Detective/evidence_marker.rsi
+    size: Tiny
+    
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerOne
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: one
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerTwo
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: two
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerThree
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: three
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerFour
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: four
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerFive
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: five
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerSix
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: six
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerSeven
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: seven
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerEight
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: eight
+
+- type: entity
+  parent: EvidenceMarker
+  id: EvidenceMarkerNine
+  name: evidence marker
+  components:
+  - type: Sprite
+    state: nine
+
+- type: entity
+  name: evidence marker box
+  parent: BoxCardboard
+  id: BoxEvidenceMarkers
+  description: A pack of numbered yellow markers, useful for labeling evidence on a crime scene.
+  components:
+    - type: Item
+      shape:
+      - 0,0,1,1
+    - type: StorageFill
+      contents:
+        - id: EvidenceMarkerOne
+        - id: EvidenceMarkerTwo
+        - id: EvidenceMarkerThree
+        - id: EvidenceMarkerFour
+        - id: EvidenceMarkerFive
+        - id: EvidenceMarkerSix
+        - id: EvidenceMarkerSeven
+        - id: EvidenceMarkerEight
+        - id: EvidenceMarkerNine
+    - type: Sprite
+      layers:
+        - state: box_security
+        - state: evidence_markers
+    

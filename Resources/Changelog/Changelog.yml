@@ -1,156 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Nukies don't start with agent ID anymore
-    type: Tweak
-  id: 5446
-  time: '2023-12-21T09:59:06.0000000+00:00'
-  url: null
-- author: Repo
-  changes:
-  - message: Mice can no longer spill containers.
-    type: Tweak
-  id: 5447
-  time: '2023-12-21T10:23:01.0000000+00:00'
-  url: null
-- author: Lukasz825700516
-  changes:
-  - message: Gas tanks no longer predict insertion of random items.
-    type: Fix
-  id: 5448
-  time: '2023-12-21T10:37:35.0000000+00:00'
-  url: null
-- author: mirrorcult
-  changes:
-  - message: Smart equipping now works with item slots
-    type: Add
-  - message: Smart equipping is now predicted
-    type: Tweak
-  id: 5449
-  time: '2023-12-21T14:17:09.0000000+00:00'
-  url: null
-- author: DrMelon
-  changes:
-  - message: Mice and other small creatures can no longer hurt Pun Pun or the Clown
-      by smashing them into tables.
-    type: Fix
-  id: 5450
-  time: '2023-12-21T15:18:26.0000000+00:00'
-  url: null
-- author: Boaz1111
-  changes:
-  - message: Added uranium munitions, a new T1 arsenal research.
-    type: Add
-  - message: Made practice munitions and weapons roundstart
-    type: Tweak
-  id: 5451
-  time: '2023-12-21T17:19:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22824
-- author: Admiral-Obvious-001
-  changes:
-  - message: Reduced per pellet damage of shotguns slightly.
-    type: Tweak
-  id: 5452
-  time: '2023-12-27T09:26:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23042
-- author: mirrorcult
-  changes:
-  - message: Pacifists can now attack in general, but are still forbidden from hurting
-      living creatures or dangerous things.
-    type: Tweak
-  - message: Pacifists can now disarm people. They are pacifist, after all.
-    type: Tweak
-  - message: Pacifists can now use flashes (and zero-damaging melee weapons, in general)
-    type: Tweak
-  id: 5453
-  time: '2023-12-27T09:55:48.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23037
-- author: snebl
-  changes:
-  - message: Fixed emergency and extended nitrogen tanks having the same volume.
-    type: Fix
-  id: 5454
-  time: '2023-12-27T09:56:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23040
-- author: Blazeror
-  changes:
-  - message: You can now pry open windoors by hand when they are unpowered.
-    type: Fix
-  id: 5455
-  time: '2023-12-27T12:28:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23047
-- author: Emisse
-  changes:
-  - message: The Grand Lottery now has much more prizes in store!
-    type: Tweak
-  id: 5456
-  time: '2023-12-27T12:31:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23048
-- author: TheShuEd
-  changes:
-  - message: The thief will temporarily not steal structures for the time being, as
-      this task seems too difficult.
-    type: Tweak
-  - message: Added Emag into thief's syndie kit
-    type: Add
-  - message: Added 3 smoke grenades into thief's smuggler kit
-    type: Add
-  - message: Replaced radio jammer to cyber pen into thief's communicator kit
-    type: Tweak
-  - message: Replaced omnizine bottle to omega soap into thief's chemistry kit
-    type: Tweak
-  id: 5457
-  time: '2023-12-27T20:42:16.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22976
-- author: Alekshhh
-  changes:
-  - message: Changed brown fedora and inspector's coat palette and minor adjustments
-    type: Tweak
-  id: 5458
-  time: '2023-12-27T22:53:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23065
-- author: Velcroboy
-  changes:
-  - message: Added melee dmg to salami logs!
-    type: Add
-  id: 5459
-  time: '2023-12-28T02:59:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23041
-- author: Emisse
-  changes:
-  - message: Ion Storm is silent now
-    type: Tweak
-  id: 5460
-  time: '2023-12-28T03:03:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23045
-- author: Alekshhh
-  changes:
-  - message: Changed wall lockers visually to match regular lockers and sit on walls
-      better
-    type: Tweak
-  id: 5461
-  time: '2023-12-28T03:05:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23060
-- author: EmoGarbage404
-  changes:
-  - message: Added the clerical error station event, which causes a small amount of
-      station records to be destroyed.
-    type: Add
-  id: 5462
-  time: '2023-12-28T03:09:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23091
-- author: EmoGarbage404
-  changes:
-  - message: Added the GORILLA gauntlet. When powered with an anomaly core, a single
-      blow from this is able to send anomalies flying through the air. Just try not
-      to let it out on the clown.
-    type: Add
-  - message: Added Anomaly Core Harnessing technology to the Experimental discipline,
-      which contains the GORILLA gauntlet.
-    type: Add
-  id: 5463
-  time: '2023-12-28T03:11:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23012
 - author: Ubaser
   changes:
   - message: You can now purchase kobolds from cargo as an alternative to monkeys!
@@ -3877,3 +3725,141 @@
   id: 5945
   time: '2024-02-16T04:03:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25304
+- author: Golinth
+  changes:
+  - message: Mindshields are no longer separate and appear as a border around job
+      icons on the SecHUD
+    type: Tweak
+  id: 5946
+  time: '2024-02-16T15:58:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25303
+- author: Lukasz825700516
+  changes:
+  - message: Damaging stacked glass sheets now gives appropriate amount of glass shards
+    type: Fix
+  id: 5947
+  time: '2024-02-16T18:42:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25308
+- author: Plykiya
+  changes:
+  - message: The firefighting door remote now has access to atmos doors.
+    type: Tweak
+  id: 5948
+  time: '2024-02-16T18:50:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25097
+- author: themias
+  changes:
+  - message: t-ray scanners can now penetrate carpets and puddles
+    type: Tweak
+  id: 5949
+  time: '2024-02-16T23:37:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25276
+- author: Krunk
+  changes:
+  - message: Sound effects have been added for writing on paper.
+    type: Add
+  id: 5950
+  time: '2024-02-16T23:48:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25257
+- author: PotentiallyTom
+  changes:
+  - message: Added new covers for the medical, security, and science guidebooks
+    type: Add
+  id: 5951
+  time: '2024-02-16T23:50:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25232
+- author: PJB3005
+  changes:
+  - message: Fix some rounding issues with complex chemical reactions.
+    type: Fix
+  id: 5952
+  time: '2024-02-16T23:54:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25199
+- author: data_redacted
+  changes:
+  - message: New lobby art (of an Air Alarm blueprint).
+    type: Add
+  id: 5953
+  time: '2024-02-17T02:52:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25179
+- author: Lank
+  changes:
+  - message: Diona nymphs, small cat-like creatures, several of which make up a Diona.
+    type: Add
+  - message: Diona are now able to split into three nymphs on death, and will control
+      one of them. The controlled nymph is able to reform into a new diona after some
+      time.
+    type: Add
+  - message: Diona now combust into flames upon being hit with significant heat damage.
+    type: Tweak
+  id: 5954
+  time: '2024-02-17T02:54:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24630
+- author: PolterTzi
+  changes:
+  - message: Seeds from sampled plants now inherit the sampled plant's health to discourage
+      excessive sampling.
+    type: Tweak
+  - message: Plants need to grow a bit before being sampled.
+    type: Tweak
+  id: 5955
+  time: '2024-02-17T05:02:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25326
+- author: Dygon
+  changes:
+  - message: Diona nymphs aren't deleted immediately after spawning anymore.
+    type: Fix
+  id: 5956
+  time: '2024-02-17T16:38:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25344
+- author: Geekyhobo
+  changes:
+  - message: Massban Flag has been added to admin ranks
+    type: Add
+  id: 5957
+  time: '2024-02-17T20:32:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25327
+- author: Moomoobeef
+  changes:
+  - message: Detectives are now supplied with a box of evidence markers, useful for
+      marking evidence at a crime scene.
+    type: Add
+  id: 5958
+  time: '2024-02-17T20:49:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25255
+- author: Ubaser
+  changes:
+  - message: New "tailed" hair.
+    type: Add
+  id: 5959
+  time: '2024-02-17T20:49:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25216
+- author: Ubaser
+  changes:
+  - message: A new chest scar marking is now available to humans and dwarves.
+    type: Add
+  id: 5960
+  time: '2024-02-17T20:50:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25215
+- author: ArchPigeon
+  changes:
+  - message: Tails now stop wagging on crit
+    type: Fix
+  id: 5961
+  time: '2024-02-17T21:33:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25323
+- author: Killerqu00
+  changes:
+  - message: EVA and paramedic suits now play sound when putting helmet on.
+    type: Fix
+  id: 5962
+  time: '2024-02-17T22:34:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25349
+- author: musicmanvr
+  changes:
+  - message: Toned down the newton cradle and added it to the bureaucracy crate for
+      bored accountants.
+    type: Fix
+  id: 5963
+  time: '2024-02-17T23:55:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25357

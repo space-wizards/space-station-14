@@ -3099,3 +3099,77 @@
     factions:
     - Passive
 
+- type: entity
+  name: diona nymph
+  parent: SimpleMobBase
+  id: MobDionaNymph
+  description: It's like a cat, only.... branch-ier.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: nymph
+      sprite: Mobs/Animals/nymph.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 100 # High, because wood is heavy.
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: Bloodstream
+    bloodReagent: Water
+    bloodMaxVolume: 60
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: nymph
+      Critical:
+        Base: nymph_sleep
+      Dead:
+        Base: nymph_dead
+  - type: Butcherable
+    spawned:
+    - id: MaterialWoodPlank1
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-nymph
+    interactFailureString: petting-failure-nymph
+    interactSuccessSound:
+      path: /Audio/Animals/nymph_chirp.ogg
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Critical
+      60: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Speech
+  - type: Tag
+    tags:
+    - VimPilot
+  - type: Reform
+    actionPrototype: DionaReformAction
+    reformTime: 10
+    popupText: diona-reform-attempt
+    reformPrototype: MobDionaReformed

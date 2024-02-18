@@ -5,6 +5,7 @@
   components:
   - type: AccessReader
   - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/closet.rsi
     noRot: true
@@ -14,7 +15,7 @@
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false

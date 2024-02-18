@@ -1314,9 +1314,11 @@
           True: { state: icon }
           False: { state: icon-off }
   - type: ItemToggle
+  - type: UseDelay
+    delay: 1
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Items/newton_cradle.ogg
       params:
-        volume: -7
-        maxDistance: 5
+        volume: -9
+        maxDistance: 3
