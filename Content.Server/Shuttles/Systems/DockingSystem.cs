@@ -5,6 +5,8 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
+using Content.Shared.Popups;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
@@ -28,10 +30,9 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly PathfindingSystem _pathfinding = default!;
         [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-        private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.20f;
 
@@ -58,15 +59,8 @@ namespace Content.Server.Shuttles.Systems
 
             // Yes this isn't in shuttle console; it may be used by other systems technically.
             // in which case I would also add their subs here.
-            SubscribeLocalEvent<ShuttleConsoleComponent, AutodockRequestMessage>(OnRequestAutodock);
-            SubscribeLocalEvent<ShuttleConsoleComponent, StopAutodockRequestMessage>(OnRequestStopAutodock);
+            SubscribeLocalEvent<ShuttleConsoleComponent, DockRequestMessage>(OnRequestDock);
             SubscribeLocalEvent<ShuttleConsoleComponent, UndockRequestMessage>(OnRequestUndock);
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            UpdateAutodock();
         }
 
         /// <summary>
@@ -103,85 +97,19 @@ namespace Content.Server.Shuttles.Systems
                 args.Cancel();
         }
 
-        private Entity<DockingComponent>? GetDockable(EntityUid uid, TransformComponent dockingXform)
-        {
-            // Did you know Saltern is the most dockable station?
-
-            // Assume the docking port itself (and its body) is valid
-
-            if (!HasComp<ShuttleComponent>(dockingXform.GridUid))
-            {
-                return null;
-            }
-
-            var transform = _physics.GetPhysicsTransform(uid, dockingXform);
-            var dockingFixture = _fixtureSystem.GetFixtureOrNull(uid, DockingFixture);
-
-            if (dockingFixture == null)
-                return null;
-
-            Box2? aabb = null;
-
-            for (var i = 0; i < dockingFixture.Shape.ChildCount; i++)
-            {
-                aabb = aabb?.Union(dockingFixture.Shape.ComputeAABB(transform, i)) ?? dockingFixture.Shape.ComputeAABB(transform, i);
-            }
-
-            if (aabb == null)
-                return null;
-
-            var enlargedAABB = aabb.Value.Enlarged(DockingRadius * 1.5f);
-
-            // Get any docking ports in range on other grids.
-            var grids = new List<Entity<MapGridComponent>>();
-            _mapManager.FindGridsIntersecting(dockingXform.MapID, enlargedAABB, ref grids);
-            foreach (var otherGrid in grids)
-            {
-                if (otherGrid.Owner == dockingXform.GridUid)
-                    continue;
-
-                foreach (var ent in otherGrid.Comp.GetAnchoredEntities(enlargedAABB))
-                {
-                    if (!TryComp(ent, out DockingComponent? otherDocking) ||
-                        !otherDocking.Enabled ||
-                        !TryComp(ent, out FixturesComponent? otherBody))
-                    {
-                        continue;
-                    }
-
-                    var otherTransform = _physics.GetPhysicsTransform(ent);
-                    var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(ent, DockingFixture, manager: otherBody);
-
-                    if (otherDockingFixture == null)
-                    {
-                        DebugTools.Assert(false);
-                        Log.Error($"Found null docking fixture on {ent}");
-                        continue;
-                    }
-
-                    for (var i = 0; i < otherDockingFixture.Shape.ChildCount; i++)
-                    {
-                        var otherAABB = otherDockingFixture.Shape.ComputeAABB(otherTransform, i);
-
-                        if (!aabb.Value.Intersects(otherAABB))
-                            continue;
-
-                        // TODO: Need CollisionManager's GJK for accurate bounds
-                        // Realistically I want 2 fixtures anyway but I'll deal with that later.
-                        return (ent, otherDocking);
-                    }
-                }
-            }
-
-            return null;
-        }
-
         private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
         {
             if (component.DockedWith == null ||
                 EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized)
             {
                 return;
+            }
+
+            var gridUid = Transform(uid).GridUid;
+
+            if (gridUid != null && !Terminating(gridUid.Value))
+            {
+                _console.RefreshShuttleConsoles();
             }
 
             Cleanup(uid, component);
@@ -246,7 +174,7 @@ namespace Content.Server.Shuttles.Systems
             if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored)
                 return;
 
-            EnableDocking((uid, component));
+            SetDockingEnabled((uid, component), true);
 
             // This little gem is for docking deserialization
             if (component.DockedWith != null)
@@ -267,11 +195,11 @@ namespace Content.Server.Shuttles.Systems
         {
             if (args.Anchored)
             {
-                EnableDocking(entity);
+                SetDockingEnabled(entity, true);
             }
             else
             {
-                DisableDocking(entity);
+                SetDockingEnabled(entity, false);
             }
 
             _console.RefreshShuttleConsoles();
@@ -293,41 +221,17 @@ namespace Content.Server.Shuttles.Systems
             _console.RefreshShuttleConsoles();
         }
 
-        private void DisableDocking(Entity<DockingComponent> entity)
+        public void SetDockingEnabled(Entity<DockingComponent> entity, bool value)
         {
-            var component = entity.Comp;
-
-            if (!component.Enabled)
+            if (entity.Comp.Enabled == value)
                 return;
 
-            component.Enabled = false;
+            entity.Comp.Enabled = value;
 
-            if (component.DockedWith != null)
+            if (!entity.Comp.Enabled && entity.Comp.DockedWith != null)
             {
                 Undock(entity);
             }
-        }
-
-        private void EnableDocking(Entity<DockingComponent> entity)
-        {
-            var uid = entity.Owner;
-            var component = entity.Comp;
-
-            if (component.Enabled)
-                return;
-
-            if (!TryComp(uid, out PhysicsComponent? physicsComponent))
-                return;
-
-            component.Enabled = true;
-
-            var shape = new PhysShapeCircle(DockingRadius, new Vector2(0f, -0.5f));
-
-            // Listen it makes intersection tests easier; you can probably dump this but it requires a bunch more boilerplate
-            // TODO: I want this to ideally be 2 fixtures to force them to have some level of alignment buuuttt
-            // I also need collisionmanager for that yet again so they get dis.
-            // TODO: CollisionManager is fine so get to work sloth chop chop.
-            _fixtureSystem.TryCreateFixture(uid, shape, DockingFixture, hard: false, body: physicsComponent);
         }
 
         /// <summary>
@@ -457,38 +361,7 @@ namespace Content.Server.Shuttles.Systems
                 return false;
             }
 
-            var fixtureA = _fixtureSystem.GetFixtureOrNull(dockAUid, DockingFixture);
-            var fixtureB = _fixtureSystem.GetFixtureOrNull(dockBUid, DockingFixture);
-
-            if (fixtureA == null || fixtureB == null)
-            {
-                return false;
-            }
-
-            var transformA = _physics.GetPhysicsTransform(dockAUid);
-            var transformB = _physics.GetPhysicsTransform(dockBUid);
-            var intersect = false;
-
-            for (var i = 0; i < fixtureA.Shape.ChildCount; i++)
-            {
-                var aabb = fixtureA.Shape.ComputeAABB(transformA, i);
-
-                for (var j = 0; j < fixtureB.Shape.ChildCount; j++)
-                {
-                    var otherAABB = fixtureB.Shape.ComputeAABB(transformB, j);
-                    if (!aabb.Intersects(otherAABB))
-                        continue;
-
-                    // TODO: Need collisionmanager's GJK for accurate checks don't @ me son
-                    intersect = true;
-                    break;
-                }
-
-                if (intersect)
-                    break;
-            }
-
-            return intersect;
+            return true;
         }
 
         /// <summary>
@@ -507,12 +380,12 @@ namespace Content.Server.Shuttles.Systems
             if (dock.Comp.DockedWith == null)
                 return;
 
-            OnUndock(dock.Owner, dock.Comp.DockedWith.Value);
-            OnUndock(dock.Comp.DockedWith.Value, dock.Owner);
+            OnUndock(dock.Owner);
+            OnUndock(dock.Comp.DockedWith.Value);
             Cleanup(dock.Owner, dock);
         }
 
-        private void OnUndock(EntityUid dockUid, EntityUid other)
+        private void OnUndock(EntityUid dockUid)
         {
             if (TerminatingOrDeleted(dockUid))
                 return;
@@ -523,8 +396,51 @@ namespace Content.Server.Shuttles.Systems
             if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
                 door.ChangeAirtight = true;
 
-            var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dockUid);
-            recentlyDocked.LastDocked = other;
+            _console.RefreshShuttleConsoles();
+        }
+
+        private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
+        {
+            var dork = GetEntity(args.DockEntity);
+
+            // TODO: Validation
+            if (!TryComp<DockingComponent>(dork, out var dock) ||
+                !dock.Docked ||
+                HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+            {
+                return;
+            }
+
+            Undock((dork, dock));
+        }
+
+        private void OnRequestDock(EntityUid uid, ShuttleConsoleComponent component, DockRequestMessage args)
+        {
+            if (HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+            {
+                return;
+            }
+
+            if (!TryGetEntity(args.DockEntity, out var ourDock) ||
+                !TryGetEntity(args.TargetDockEntity, out var targetDock) ||
+                !TryComp(ourDock, out DockingComponent? ourDockComp) ||
+                !TryComp(targetDock, out DockingComponent? targetDockComp))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            // TODO: Move the CanDock stuff to the port state and also validate that stuff
+            if (!CanDock())
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            // TODO: Make the API less ass
+            // TODO: Add PreventPilot to CanDock
+            // TODO: Validate it's our grid.
+            Dock(ourDock.Value, ourDockComp, targetDock.Value, targetDockComp);
         }
     }
 }

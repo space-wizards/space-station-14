@@ -383,12 +383,12 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                         };
 
                         /*
-                         *  - On dock deletion need to refresh
-                            - Add dock button functionality
-                            - Maybe make the leading line green if the angle is good and speed based on distance
+                         *   - Add dock button functionality
+                             - Maybe make the leading line green if the angle is good and speed based on distance
                              - Make the line segments longer too I think
                              - Once all that done just need to nuke docking fixtures and shiit, also autodock
                              - Also need to make sure panel works, then we do TODO cleanup and make the other UIs diegetic again
+                             - Add dock settings back in for drawing panels
                          */
 
                         button.OnPressed += args =>
@@ -408,7 +408,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
                 button.HorizontalAlignment = HAlignment.Center;
                 container.AddChild(button);
-                AddChild(panel);
+                UserInterfaceManager.RootControl.AddChild(panel);
                 _dockContainers[dock] = panel;
             }
         }

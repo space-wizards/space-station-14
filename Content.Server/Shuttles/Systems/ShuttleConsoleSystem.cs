@@ -141,12 +141,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        // In case they D/C should still clean them up.
-        foreach (var comp in EntityQuery<AutoDockComponent>(true))
-        {
-            comp.Requesters.Remove(user);
-        }
-
         RemovePilot(user);
     }
 
