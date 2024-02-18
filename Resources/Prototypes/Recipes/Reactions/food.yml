@@ -338,14 +338,14 @@
   id: AllicinBreakdown
   source: true
   requiredMixerCategories:
-  - Electrolysis
+  - Centrifuge
   reactants:
     Allicin:
-      amount: 5
+      amount: 4
   products:
     Sulfur: 2
     Carbon: 1
-    Hydrogen: 2
+    Water: 1
 
 - type: reaction
   id: NutrimentBreakdown
@@ -410,7 +410,7 @@
   - Centrifuge
   reactants:
     Vitamin:
-      amount: 1
+      amount: 4
   products:
     Carbon: 1
     Water: 1
