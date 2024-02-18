@@ -17,9 +17,11 @@
                            Align="Center"
                            Margin="5 0 5 5"
                            Orientation="Vertical">
+        <!-- Future work at this point
         <controls1:StripeBack MinSize="48 48">
             <controls:Label Name="DockingSettingsLabel" Text="{controls:Loc 'shuttle-console-dock-settings'}" HorizontalAlignment="Center"/>
         </controls1:StripeBack>
+        -->
         <!--
         <controls:GridContainer Columns="2"
                                 HorizontalAlignment="Stretch"
@@ -37,7 +39,10 @@
         <controls1:StripeBack MinSize="48 48">
             <controls:Label Name="DockedLabel" Text="{controls:Loc 'shuttle-console-docked'}" HorizontalAlignment="Center"/>
         </controls1:StripeBack>
-        <controls:BoxContainer Name="DockedWith" Orientation="Vertical"/>
+        <controls:ScrollContainer VerticalExpand="True" HScrollEnabled="False"
+                                  ReturnMeasure="True">
+            <controls:BoxContainer Name="DockedWith" Orientation="Vertical"/>
+        </controls:ScrollContainer>
         <controls1:StripeBack MinSize="48 48">
             <controls:Label Name="DockingPortsLabel" Text="{controls:Loc 'shuttle-console-docks-label'}" HorizontalAlignment="Center"/>
         </controls1:StripeBack>

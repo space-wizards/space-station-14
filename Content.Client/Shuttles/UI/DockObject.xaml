@@ -1,0 +1,6 @@
+<controls:PanelContainer HorizontalExpand="True"
+                         xmlns:controls="https://spacestation14.io">
+    <controls:Label Name="DockedLabel"/>
+    <controls:Button Name="UndockButton" HorizontalExpand="True"/>
+    <controls:Button Name="ViewDockButton" HorizontalExpand="True"/>
+</controls:PanelContainer>
