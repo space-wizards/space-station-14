@@ -621,6 +621,28 @@
     - Trash
 
 - type: entity
+  name: perfectly generic cube
+  parent: FoodBase
+  id: greencubefood
+  description: A team at Nanotrasen R&D tasked multiple state-of-the-art AIs with determining the most "generic" organization of physical matter in the known universe. This was the sole, concerning result.
+  components:
+  - type: Item
+    size: Tiny
+  - type: FlavorProfile
+    flavors:
+      - average
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Ingredients.rsi
+    state: greencubefood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 0.01
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.01
+
+- type: entity
   name: cocoa beans
   parent: FoodProduceBase
   id: FoodCocoaBeans
