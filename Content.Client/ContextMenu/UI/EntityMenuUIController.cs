@@ -7,6 +7,7 @@ using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -91,7 +92,10 @@ namespace Content.Client.ContextMenu.UI
 
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(_entityManager.GetComponent<MetaDataComponent>(x.First()).EntityPrototype?.Name, _entityManager.GetComponent<MetaDataComponent>(y.First()).EntityPrototype?.Name));
+            orderedStates.Sort((x, y) => string.Compare(
+                Identity.Name(x.First(), _entityManager),
+                Identity.Name(y.First(), _entityManager),
+                StringComparison.CurrentCulture));
             Elements.Clear();
             AddToUI(orderedStates);
 
@@ -144,7 +148,7 @@ namespace Content.Client.ContextMenu.UI
                     Uid = entity.Value,
                 };
 
-                var session = _playerManager.LocalPlayer?.Session;
+                var session = _playerManager.LocalSession;
                 if (session != null)
                 {
                     inputSys.HandleInputCommand(session, func, message);
@@ -185,7 +189,7 @@ namespace Content.Client.ContextMenu.UI
             if (!_context.RootMenu.Visible)
                 return;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } player ||
+            if (_playerManager.LocalEntity is not { } player ||
                 !player.IsValid())
                 return;
 

@@ -14,4 +14,7 @@ public sealed partial class RestrictedRangeComponent : Component
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Vector2 Origin;
+
+    [DataField]
+    public EntityUid BoundaryEntity;
 }

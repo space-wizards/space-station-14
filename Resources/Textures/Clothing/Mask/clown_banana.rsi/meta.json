@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by KREKS (ss14 discord) for ss14.",
+  "copyright": "Made by KREKS (ss14 discord) for ss14. Reptilian edit by Nairod(Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -24,6 +24,10 @@
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-reptilian",
       "directions": 4
     }
   ]

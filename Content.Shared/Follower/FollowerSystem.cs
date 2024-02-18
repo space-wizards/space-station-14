@@ -4,6 +4,7 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
@@ -96,7 +97,8 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnFollowerMove(EntityUid uid, FollowerComponent component, ref MoveInputEvent args)
     {
-        StopFollowingEntity(uid, component.Following);
+        if (args.HasDirectionalMovement)
+            StopFollowingEntity(uid, component.Following);
     }
 
     private void OnPullStarted(EntityUid uid, FollowerComponent component, PullStartedMessage args)
@@ -162,8 +164,6 @@ public sealed class FollowerSystem : EntitySystem
         if (TryComp<JointComponent>(follower, out var joints))
             _jointSystem.ClearJoints(follower, joints);
 
-        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
-
         var xform = Transform(follower);
         _containerSystem.AttachParentToContainerOrGrid((follower, xform));
 
@@ -172,6 +172,8 @@ public sealed class FollowerSystem : EntitySystem
         {
             _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), rotation: Angle.Zero);
         }
+
+        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         EnsureComp<OrbitVisualsComponent>(follower);
 

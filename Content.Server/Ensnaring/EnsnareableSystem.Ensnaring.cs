@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Body.Part;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -26,6 +27,12 @@ public sealed partial class EnsnareableSystem
         SubscribeLocalEvent<EnsnaringComponent, StepTriggerAttemptEvent>(AttemptStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggeredEvent>(OnStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, ThrowDoHitEvent>(OnThrowHit);
+        SubscribeLocalEvent<EnsnaringComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
+    }
+
+    private void OnAttemptPacifiedThrow(Entity<EnsnaringComponent> ent, ref AttemptPacifiedThrowEvent args)
+    {
+        args.Cancel("pacified-cannot-throw-snare");
     }
 
     private void OnComponentRemove(EntityUid uid, EnsnaringComponent component, ComponentRemove args)
@@ -84,7 +91,7 @@ public sealed partial class EnsnareableSystem
         }
 
         component.Ensnared = target;
-        ensnareable.Container.Insert(ensnare);
+        _container.Insert(ensnare, ensnareable.Container);
         ensnareable.IsEnsnared = true;
         Dirty(ensnareable);
 
@@ -140,7 +147,7 @@ public sealed partial class EnsnareableSystem
 
         var target = component.Ensnared.Value;
 
-        ensnareable.Container.Remove(ensnare, force: true);
+        _container.Remove(ensnare, ensnareable.Container, force: true);
         ensnareable.IsEnsnared = ensnareable.Container.ContainedEntities.Count > 0;
         Dirty(ensnareable);
         component.Ensnared = null;

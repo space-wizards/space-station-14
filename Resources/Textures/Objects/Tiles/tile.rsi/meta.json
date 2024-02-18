@@ -196,6 +196,12 @@
       "name": "shuttlered"
     },
     {
+      "name": "shuttlegrey"
+    },
+    {
+      "name": "shuttleblack"
+    },
+    {
       "name": "carpetclown"
     },
     {
@@ -218,6 +224,12 @@
     },
     {
       "name": "woodpatternfloor"
+    },
+    {
+      "name": "astrograss"
+    },
+    {
+      "name": "astroice"
     },
     {
       "name": "bcircuit-inhand-left",

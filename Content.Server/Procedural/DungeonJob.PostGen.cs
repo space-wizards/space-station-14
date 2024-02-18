@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
 using Content.Shared.Doors.Components;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
@@ -191,7 +192,7 @@ public sealed partial class DungeonJob
             if (!_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
-            tiles.Add((neighbor, _tileDefManager.GetVariantTile(tileDef, random)));
+            tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
         }
 
         foreach (var index in dungeon.CorridorExteriorTiles)
@@ -202,7 +203,7 @@ public sealed partial class DungeonJob
             if (!_anchorable.TileFree(grid, index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
-            tiles.Add((index, _tileDefManager.GetVariantTile(tileDef, random)));
+            tiles.Add((index, _tile.GetVariantTile((ContentTileDefinition)tileDef, random)));
         }
 
         grid.SetTiles(tiles);
@@ -478,7 +479,7 @@ public sealed partial class DungeonJob
                     isValid = true;
 
                     // Entrance wew
-                    grid.SetTile(tile, _tileDefManager.GetVariantTile(tileDef, random));
+                    grid.SetTile(tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
                     ClearDoor(dungeon, grid, tile);
                     var gridCoords = grid.GridTileToLocal(tile);
                     // Need to offset the spawn to avoid spawning in the room.
@@ -496,7 +497,7 @@ public sealed partial class DungeonJob
                             continue;
                         }
 
-                        grid.SetTile(nearTile.GridIndices, _tileDefManager.GetVariantTile(tileDef, random));
+                        grid.SetTile(nearTile.GridIndices, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));;
                     }
 
                     break;
@@ -589,7 +590,7 @@ public sealed partial class DungeonJob
                 {
                     var neighbor = tile + dirVec * j;
 
-                    tiles.Add((neighbor, _tileDefManager.GetVariantTile(tileDef, random)));
+                    tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
                     index++;
                     takenTiles.Add(neighbor);
                 }
@@ -690,7 +691,7 @@ public sealed partial class DungeonJob
                 {
                     var tile = validTiles[j];
                     var gridPos = grid.GridTileToLocal(tile);
-                    grid.SetTile(tile, _tileDefManager.GetVariantTile(tileDef, random));
+                    grid.SetTile(tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
                     _entManager.SpawnEntities(gridPos, gen.Entities);
                 }
@@ -721,7 +722,7 @@ public sealed partial class DungeonJob
         {
             foreach (var entrance in room.Entrances)
             {
-                setTiles.Add((entrance, _tileDefManager.GetVariantTile(tileDef, random)));
+                setTiles.Add((entrance, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
             }
         }
 
@@ -790,7 +791,7 @@ public sealed partial class DungeonJob
             foreach (var entrance in room.Entrances)
             {
                 // Just so we can still actually get in to the entrance we won't deter from a tile away from it.
-                var normal = ((Vector2) entrance + grid.TileSizeHalfVector - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
+                var normal = (entrance + grid.TileSizeHalfVector - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
                 deterredTiles.Remove(entrance + normal);
             }
         }
@@ -857,7 +858,7 @@ public sealed partial class DungeonJob
 
         foreach (var tile in corridorTiles)
         {
-            setTiles.Add((tile, _tileDefManager.GetVariantTile(tileDef, random)));
+            setTiles.Add((tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
         }
 
         grid.SetTiles(setTiles);
@@ -902,7 +903,7 @@ public sealed partial class DungeonJob
                     if (!dungeon.RoomExteriorTiles.Contains(neighbor))
                         continue;
 
-                    tiles.Add((neighbor, _tileDefManager.GetVariantTile(tileDef, random)));
+                    tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
                     spawnPositions.Add(neighbor);
                 }
             }
@@ -1013,7 +1014,7 @@ public sealed partial class DungeonJob
                     for (var x = -width + 1; x < width; x++)
                     {
                         var weh = tile + neighborDir.ToIntVec() * x;
-                        grid.SetTile(weh, _tileDefManager.GetVariantTile(tileDef, random));
+                        grid.SetTile(weh, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
                         var coords = grid.GridTileToLocal(weh);
                         _entManager.SpawnEntities(coords, gen.Entities);
@@ -1131,7 +1132,7 @@ public sealed partial class DungeonJob
                         continue;
 
                     width--;
-                    grid.SetTile(node, _tileDefManager.GetVariantTile(tileDef, random));
+                    grid.SetTile(node, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
                     if (gen.EdgeEntities != null && nodeDistances.Count - i <= 2)
                     {
@@ -1217,7 +1218,7 @@ public sealed partial class DungeonJob
             if (!random.Prob(gen.Prob) || !checkedTiles.Add(neighbor))
                 continue;
 
-            grid.SetTile(neighbor, _tileDefManager.GetVariantTile(tileDef, random));
+            grid.SetTile(neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
             var gridPos = grid.GridTileToLocal(neighbor);
             var protoNames = EntitySpawnCollection.GetSpawns(gen.Spawns, random);
 

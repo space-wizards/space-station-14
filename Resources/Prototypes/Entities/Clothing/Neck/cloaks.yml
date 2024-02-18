@@ -1,11 +1,24 @@
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcom
+  name: central commander's cloak
+  description: A pompous and elite green cloak with a nice gold trim, tailored specifically to the Central Commander. It's so heavy, the gold trim might be real.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/centcomcloakformal.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak # leaving this here because I suppose it might be interesting?
+    
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakCap
   name: captain's cloak
   description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other possessions, it sure is fancy.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cap.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -15,6 +28,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hos.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -24,6 +39,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -33,6 +50,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cmo.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -42,6 +61,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -51,6 +72,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/qm.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -60,6 +83,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -87,6 +112,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -96,6 +123,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admin.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -170,3 +199,76 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
   - type: TypingIndicatorClothing
     proto: alien
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAce
+  name: pilot's cloak
+  description: Cloak awarded to Nanotrasen's finest space aces.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/ace.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAro
+  name: werewolf cloak
+  description: This cloak lets others know you're a lone wolf.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/aro.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakBi
+  name: poison cloak
+  description: The purple color is a clear indicator you are poisonous.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/bi.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakIntersex
+  name: cyclops cloak
+  description: The circle on this cloak represents a cyclops' eye.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/intersex.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakLesbian
+  name: poet cloak
+  description: This cloak belonged to an ancient poet, you forgot which one.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/les.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakGay
+  name: multi-level marketing cloak
+  description: This cloak is highly sought after in the Nanotrasen Marketing Offices.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/gay.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakEnby
+  name: treasure hunter cloak
+  description: This cloak belonged to a greedy treasure hunter.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/enby.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakPan
+  name: chef's cloak
+  description: Meant to be worn alongside a frying pan.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/pan.rsi
+

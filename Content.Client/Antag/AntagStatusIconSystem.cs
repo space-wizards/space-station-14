@@ -1,6 +1,8 @@
-using Content.Shared.Ghost;
+using Content.Shared.Antag;
+using Content.Shared.Revolutionary.Components;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
+using Content.Shared.Zombies;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
@@ -9,24 +11,44 @@ namespace Content.Client.Antag;
 /// <summary>
 /// Used for assigning specified icons for antags.
 /// </summary>
-public abstract class AntagStatusIconSystem<T> : SharedStatusIconSystem
-    where T : IComponent
+public sealed class AntagStatusIconSystem : SharedStatusIconSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(GetRevIcon);
+        SubscribeLocalEvent<ZombieComponent, GetStatusIconsEvent>(GetIcon);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, GetStatusIconsEvent>(GetIcon);
+    }
 
     /// <summary>
-    /// Will check if the local player has the same component as the one who called it and give the status icon.
+    /// Adds a Status Icon on an entity if the player is supposed to see it.
     /// </summary>
-    /// <param name="antagStatusIcon">The status icon that your antag uses</param>
-    /// <param name="args">The GetStatusIcon event.</param>
-    protected virtual void GetStatusIcon(string antagStatusIcon, ref GetStatusIconsEvent args)
+    private void GetIcon<T>(EntityUid uid, T comp, ref GetStatusIconsEvent ev) where T: IAntagStatusIconComponent
     {
-        var ent = _player.LocalPlayer?.ControlledEntity;
+        var ent = _player.LocalSession?.AttachedEntity;
 
-        if (!HasComp<T>(ent) && !HasComp<GhostComponent>(ent))
+        var canEv = new CanDisplayStatusIconsEvent(ent);
+        RaiseLocalEvent(uid, ref canEv);
+
+        if (!canEv.Cancelled)
+            ev.StatusIcons.Add(_prototype.Index(comp.StatusIcon));
+    }
+
+
+    /// <summary>
+    /// Adds the Rev Icon on an entity if the player is supposed to see it. This additional function is needed to deal
+    /// with a special case where if someone is a head rev we only want to display the headrev icon.
+    /// </summary>
+    private void GetRevIcon(EntityUid uid, RevolutionaryComponent comp, ref GetStatusIconsEvent ev)
+    {
+        if (HasComp<HeadRevolutionaryComponent>(uid))
             return;
 
-        args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(antagStatusIcon));
+        GetIcon(uid, comp, ref ev);
+
     }
 }

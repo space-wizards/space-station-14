@@ -1,7 +1,7 @@
 # gloves that cover the fingertips and have synthetic fibers
 - type: entity
   abstract: true
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesSyntheticBase
   components:
   - type: Fiber
@@ -145,11 +145,12 @@
     fiberColor: fibers-white
 
 - type: entity
-  parent: ClothingHandsGlovesSyntheticBase
+  parent: ClothingHandsBase
   id: ClothingHandsGlovesColorYellow
   name: insulated gloves
   description: These gloves will protect the wearer from electric shocks.
   components:
+  - type: FingerprintMask
   - type: Sprite
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: Clothing

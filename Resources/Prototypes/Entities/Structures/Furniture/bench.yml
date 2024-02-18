@@ -1,0 +1,51 @@
+- type: entity
+  name: comfortable bench
+  id: BenchComfy
+  parent: SeatBase
+  description: A bench with an extremely comfortable backrest.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/Furniture/Bench/comf_bench.rsi
+    layers:
+    - state: bench_solo_base
+      color: "#767e82"
+    - state: bench_solo_cover
+  - type: Physics
+    bodyType: Static
+  - type: StaticPrice
+    price: 15
+
+- type: entity
+  id: BenchColorfulComfy
+  suffix: Solo. Colorful
+  parent: BenchComfy
+  description: A bench with an extremely comfortable backrest.
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_solo_base
+      color: "#767e82"
+    - state: bench_solo_cover
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          bench_solo_cover: Rainbow
+
+- type: entity
+  id: BenchRedComfy
+  suffix: Solo. Red
+  parent: BenchComfy
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_solo_base
+      color: "#767e82"
+    - state: bench_solo_cover
+      color: "#8c4141"
+  - type: Construction
+    graph: Seat
+    node: redComfBench

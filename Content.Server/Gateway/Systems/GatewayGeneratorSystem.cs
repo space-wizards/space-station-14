@@ -3,8 +3,10 @@ using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
+using Content.Server.Salvage;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
@@ -36,11 +38,11 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly DungeonSystem _dungeon = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly GatewaySystem _gateway = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly RestrictedRangeSystem _restricted = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     [ValidatePrototypeId<DatasetPrototype>]
     private const string PlanetNames = "names_borer";
@@ -99,8 +101,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         {
             GenerateDestination(uid, generator);
         }
-
-        Dirty(uid, generator);
     }
 
     private void GenerateDestination(EntityUid uid, GatewayGeneratorComponent? generator = null)
@@ -120,8 +120,12 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         _metadata.SetEntityName(mapUid, gatewayName);
 
         var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
-        var restriction = AddComp<RestrictedRangeComponent>(mapUid);
-        restriction.Origin = origin;
+        var restricted = new RestrictedRangeComponent
+        {
+            Origin = origin
+        };
+        AddComp(mapUid, restricted);
+
         _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Continental"), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
@@ -130,7 +134,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         {
             for (var y = -2; y <= 2; y++)
             {
-                tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: random.NextByte(tileDef.Variants))));
+                tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: _tile.PickVariant((ContentTileDefinition) tileDef, random))));
             }
         }
 
@@ -144,21 +148,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         genDest.Origin = origin;
         genDest.Seed = seed;
         genDest.Generator = uid;
-
-        // Enclose the area
-        var boundaryUid = Spawn(null, originCoords);
-        var boundaryPhysics = AddComp<PhysicsComponent>(boundaryUid);
-        var cShape = new ChainShape();
-        // Don't need it to be a perfect circle, just need it to be loosely accurate.
-        cShape.CreateLoop(Vector2.Zero, restriction.Range + 1f, false, count: 4);
-        _fixtures.TryCreateFixture(
-            boundaryUid,
-            cShape,
-            "boundary",
-            collisionLayer: (int) (CollisionGroup.HighImpassable | CollisionGroup.Impassable | CollisionGroup.LowImpassable),
-            body: boundaryPhysics);
-        _physics.WakeBody(boundaryUid, body: boundaryPhysics);
-        AddComp<BoundaryComponent>(boundaryUid);
 
         // Create the gateway.
         var gatewayUid = SpawnAtPosition(generator.Proto, originCoords);
@@ -225,7 +214,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = lootLayers[layerIdx];
                 lootLayers.RemoveSwap(layerIdx);
 
-                _biome.AddMarkerLayer(biomeComp, layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
 
             // - Mobs
@@ -237,7 +226,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = mobLayers[layerIdx];
                 mobLayers.RemoveSwap(layerIdx);
 
-                _biome.AddMarkerLayer(biomeComp, layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
         }
     }

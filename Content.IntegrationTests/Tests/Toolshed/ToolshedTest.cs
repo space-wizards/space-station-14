@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.IntegrationTests.Pair;
 using Content.Server.Administration.Managers;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
@@ -37,7 +38,7 @@ public abstract class ToolshedTest : IInvocationContext
 
     protected virtual async Task TearDown()
     {
-        Assert.IsEmpty(_expectedErrors);
+        Assert.That(_expectedErrors, Is.Empty);
         ClearErrors();
     }
 
@@ -95,6 +96,7 @@ public abstract class ToolshedTest : IInvocationContext
     }
 
     protected ICommonSession? InvocationSession { get; set; }
+    public NetUserId? User => Session?.UserId;
 
     public ICommonSession? Session
     {

@@ -45,6 +45,13 @@ public sealed partial class HandcuffComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? BrokenPrototype;
 
+    /// <summary>
+    /// Whether or not these cuffs are in the process of being removed.
+    /// Used simply to prevent spawning multiple <see cref="BrokenPrototype"/>.
+    /// </summary>
+    [DataField]
+    public bool Removing;
+
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier DamageOnResist = new()
     {

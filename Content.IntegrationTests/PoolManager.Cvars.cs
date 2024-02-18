@@ -35,7 +35,7 @@ public static partial class PoolManager
         (CVars.NetBufferSize.Name, "0")
     };
 
-    public static async Task  SetupCVars(RobustIntegrationTest.IntegrationInstance instance, PoolSettings settings)
+    public static async Task SetupCVars(RobustIntegrationTest.IntegrationInstance instance, PoolSettings settings)
     {
         var cfg = instance.ResolveDependency<IConfigurationManager>();
         await instance.WaitPost(() =>

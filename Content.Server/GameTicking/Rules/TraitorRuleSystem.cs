@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Antag;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -30,6 +31,7 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 {
+    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -117,8 +119,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
 
         var numTraitors = MathHelper.Clamp(component.StartCandidates.Count / PlayersPerTraitor, 1, MaxTraitors);
-        var traitorPool = FindPotentialTraitors(component.StartCandidates, component);
-        var selectedTraitors = PickTraitors(numTraitors, traitorPool);
+        var traitorPool = _antagSelection.FindPotentialAntags(component.StartCandidates, component.TraitorPrototypeId);
+        var selectedTraitors = _antagSelection.PickAntag(numTraitors, traitorPool);
 
         foreach (var traitor in selectedTraitors)
         {
@@ -151,61 +153,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
             traitor.SelectionStatus = TraitorRuleComponent.SelectionState.ReadyToSelect;
         }
-    }
-
-    private List<ICommonSession> FindPotentialTraitors(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, TraitorRuleComponent component)
-    {
-        var list = new List<ICommonSession>();
-        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
-
-        foreach (var player in candidates.Keys)
-        {
-            // Role prevents antag.
-            if (!_jobs.CanBeAntag(player))
-            {
-                continue;
-            }
-
-            // Latejoin
-            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
-                continue;
-
-            list.Add(player);
-        }
-
-        var prefList = new List<ICommonSession>();
-
-        foreach (var player in list)
-        {
-            var profile = candidates[player];
-            if (profile.AntagPreferences.Contains(component.TraitorPrototypeId))
-            {
-                prefList.Add(player);
-            }
-        }
-        if (prefList.Count == 0)
-        {
-            Log.Info("Insufficient preferred traitors, picking at random.");
-            prefList = list;
-        }
-        return prefList;
-    }
-
-    private List<ICommonSession> PickTraitors(int traitorCount, List<ICommonSession> prefList)
-    {
-        var results = new List<ICommonSession>(traitorCount);
-        if (prefList.Count == 0)
-        {
-            Log.Info("Insufficient ready players to fill up with traitors, stopping the selection.");
-            return results;
-        }
-
-        for (var i = 0; i < traitorCount; i++)
-        {
-            results.Add(_random.PickAndTake(prefList));
-            Log.Info("Selected a preferred traitor.");
-        }
-        return results;
     }
 
     public bool MakeTraitor(ICommonSession traitor, bool giveUplink = true, bool giveObjectives = true)
@@ -291,6 +238,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
             var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
             var difficulty = 0f;
+            Log.Debug($"Attempting {maxPicks} objective picks with {maxDifficulty} difficulty");
             for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
             {
                 var objective = _objectives.GetRandomObjective(mindId, mind, "TraitorObjectiveGroups");
@@ -298,7 +246,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
                     continue;
 
                 _mindSystem.AddObjective(mindId, mind, objective.Value);
-                difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
+                var adding = Comp<ObjectiveComponent>(objective.Value).Difficulty;
+                difficulty += adding;
+                Log.Debug($"Added objective {ToPrettyString(objective):objective} with {adding} difficulty");
             }
         }
 

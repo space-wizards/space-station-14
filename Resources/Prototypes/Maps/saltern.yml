@@ -31,26 +31,22 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 2, 2 ]
-            SeniorEngineer: [1, 1 ]
-            StationEngineer: [ 3, 3 ]
+            StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 4, 4 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            SeniorPhysician: [ 1, 1 ]
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 2, 2 ]
+            MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 4, 4 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            SeniorResearcher: [1, 1 ]
-            Scientist: [ 3, 3 ]
+            Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
             Borg: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SeniorOfficer: [ 1, 1 ]
-            SecurityOfficer: [ 3, 3 ]
+            SecurityOfficer: [ 4, 4 ]
             SecurityCadet: [ 4, 4 ]
             #supply
             Quartermaster: [ 1, 1 ]
@@ -61,4 +57,4 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            
+

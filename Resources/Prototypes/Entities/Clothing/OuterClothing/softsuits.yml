@@ -42,8 +42,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.5
-    sprintModifier: 0.5
+    walkModifier: 0.7
+    sprintModifier: 0.7
   - type: HeldSpeedModifier
   - type: TemperatureProtection
     coefficient: 0.5
@@ -87,11 +87,11 @@
   - type: HeldSpeedModifier
 
 #Paramedic Voidsuit
-#Despite having resistances and looking like one, this is two-piece and parents off the EVA suit so it goes here.
+#Despite having resistances and looking like a hardsuit, this parents off the EVA suit so it goes here.
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitVoidParamed
-  name: Paramedic Void Suit
+  name: paramedic void suit
   description: A void suit made for paramedics.
   components:
   - type: Sprite
@@ -110,8 +110,15 @@
   - type: Armor
     modifiers:
       coefficients:
-        Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
         Caustic: 0.5
   - type: GroupExamine
+  - type: StealTarget
+    stealGroup: ClothingOuterHardsuitVoidParamed
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetVoidParamed
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

@@ -27,7 +27,7 @@ public sealed partial class GasArtifactComponent : Component
         Gas.Nitrogen,
         Gas.CarbonDioxide,
         Gas.Tritium,
-        Gas.Miasma,
+        Gas.Ammonia,
         Gas.NitrousOxide,
         Gas.Frezon
     };

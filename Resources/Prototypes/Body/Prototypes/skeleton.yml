@@ -10,10 +10,10 @@
     torso:
       part: TorsoSkeleton
       connections:
-      - left arm
       - right arm
-      - left leg
+      - left arm
       - right leg
+      - left leg
     right arm:
       part: RightArmSkeleton
       connections:

@@ -127,6 +127,15 @@
     state: tail_smooth
 
 - type: marking
+  id: LizardTailLarge
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_large
+
+- type: marking
   id: LizardTailSpikes
   bodyPart: Tail
   markingCategory: Tail
@@ -271,7 +280,7 @@
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_kobold_ears
-    
+
 - type: marking
   id: LizardHornsFloppyKoboldEars
   bodyPart: HeadSide
@@ -289,3 +298,49 @@
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: body_underbelly
+
+- type: marking
+  id: LizardChestBackspikes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: body_backspikes
+
+# Animated
+- type: marking
+  id: LizardTailSmoothAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_smooth_wagging
+
+- type: marking
+  id: LizardTailSpikesAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_spikes_wagging
+
+- type: marking
+  id: LizardTailLTigerAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_ltiger_wagging
+
+- type: marking
+  id: LizardTailDTigerAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_dtiger_wagging

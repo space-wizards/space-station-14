@@ -10,7 +10,6 @@ using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using Content.Shared.Wires;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
 
@@ -43,7 +42,7 @@ public sealed class PartExchangerSystem : EntitySystem
         if (args.Handled || args.Args.Target == null)
             return;
 
-        if (!TryComp<StorageComponent>(uid, out var storage) || storage.Container == null)
+        if (!TryComp<StorageComponent>(uid, out var storage))
             return; //the parts are stored in here
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();
@@ -91,7 +90,7 @@ public sealed class PartExchangerSystem : EntitySystem
         }
         foreach (var part in updatedParts)
         {
-            machine.PartContainer.Insert(part.part, EntityManager);
+            _container.Insert(part.part, machine.PartContainer);
             machineParts.Remove(part);
         }
 
@@ -140,7 +139,7 @@ public sealed class PartExchangerSystem : EntitySystem
             if (!machine.Requirements.ContainsKey(part.PartType))
                 continue;
 
-            machine.PartContainer.Insert(partEnt, EntityManager);
+            _container.Insert(partEnt, machine.PartContainer);
             machine.Progress[part.PartType]++;
             machineParts.Remove(pair);
         }

@@ -1,149 +1,166 @@
 - type: polymorph
   id: Mouse
-  entity: MobMouse
-  forced: true
-  duration: 30
+  configuration:
+    entity: MobMouse
+    forced: true
+    duration: 30
 
 - type: polymorph
   id: Chicken
-  entity: MobChicken
-  forced: true
-  inventory: Drop
+  configuration:
+    entity: MobChicken
+    forced: true
+    inventory: Drop
 
 - type: polymorph
   id: Monkey
-  entity: MobMonkey
-  forced: true
-  inventory: Drop
-  revertOnCrit: true
-  revertOnDeath: true
+  configuration:
+    entity: MobMonkey
+    forced: true
+    inventory: Drop
+    revertOnCrit: true
+    revertOnDeath: true
 
 - type: polymorph
   id: WizardForcedCarp
-  entity: MobCarpMagic
-  forced: true
-  inventory: None
-  transferName: true
-  transferDamage: true
-  revertOnCrit: false
-  revertOnDeath: true
+  configuration:
+    entity: MobCarpMagic
+    forced: true
+    inventory: None
+    transferName: true
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: true
 
 - type: polymorph
   id: WizardForcedSkeleton
-  entity: MobSkeletonPerson
-  forced: true
-  inventory: Drop
-  transferName: true
-  transferDamage: true
-  revertOnCrit: false
-  revertOnDeath: false
+  configuration:
+    entity: MobSkeletonPerson
+    forced: true
+    inventory: Drop
+    transferName: true
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: false
 
 - type: polymorph
   id: WizardForcedMonkey
-  entity: MobMonkey
-  forced: true
-  inventory: None
-  transferName: true
-  transferDamage: true
-  revertOnCrit: false
-  revertOnDeath: true
+  configuration:
+    entity: MobMonkey
+    forced: true
+    inventory: None
+    transferName: true
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: true
 
 - type: polymorph
   id: WizardWallDoor
-  entity: WoodDoor
-  forced: true
-  inventory: None
-  transferName: false
-  transferDamage: false
-  revertOnCrit: false
-  revertOnDeath: false
+  configuration:
+    entity: WoodDoor
+    forced: true
+    inventory: None
+    transferName: false
+    transferDamage: false
+    revertOnCrit: false
+    revertOnDeath: false
 
 - type: polymorph
   id: WizardForcedCluwne
-  entity: MobCluwne
-  forced: true
-  transferName: true
-  transferHumanoidAppearance: true
-  inventory: Transfer
-  revertOnDeath: true
+  configuration:
+    entity: MobCluwne
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: Transfer
+    revertOnDeath: true
 
 # this is a test for transferring some visual appearance stuff
 - type: polymorph
   id: TestHumanMorph
-  entity: MobHuman
-  transferName: true
-  transferHumanoidAppearance: true
-  inventory: Transfer
+  configuration:
+    entity: MobHuman
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: Transfer
 
 - type: polymorph
   id: AMIVMorph
-  entity: MobMonkey
-  forced: true
-  inventory: Transfer
-  transferName: true
-  revertOnCrit: false
-  revertOnDeath: false
+  configuration:
+    entity: MobMonkey
+    forced: true
+    inventory: Transfer
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
 
 - type: polymorph
   id: BreadMorph
-  entity: FoodBreadPlain
-  forced: true
-  inventory: None
-  transferName: false
-  transferDamage: true
-  revertOnCrit: false
-  revertOnDeath: true
-  revertOnEat: true
+  configuration:
+    entity: FoodBreadPlain
+    forced: true
+    inventory: None
+    transferName: false
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: true
+    revertOnEat: true
 
 - type: polymorph
   id: TreeMorph
-  entity: FloraTree01
-  forced: true
-  transferName: true
-  revertOnDeath: true
-
+  configuration:
+    entity: FloraTree01
+    forced: true
+    transferName: true
+    revertOnDeath: true
+    inventory: Drop
+    cooldown: 160
 
 # this is the monkey polymorph for artifact.
 - type: polymorph
   id: ArtifactMonkey
-  entity: MobMonkey
-  forced: true
-  transferName: true
-  allowRepeatedMorphs: true
-  inventory: Transfer
-  revertOnCrit: true
-  revertOnDeath: true
-  duration: 20
+  configuration:
+    entity: MobMonkey
+    forced: true
+    transferName: true
+    allowRepeatedMorphs: true
+    inventory: Transfer
+    revertOnCrit: true
+    revertOnDeath: true
+    duration: 20
 
 - type: polymorph
   id: ArtifactCluwne
-  entity: MobCluwne
-  forced: true
-  transferName: true
-  transferHumanoidAppearance: true
-  inventory: None
-  revertOnDeath: true
-  revertOnCrit: true
-  duration: 30
+  configuration:
+    entity: MobCluwne
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+    duration: 30
 
 - type: polymorph
   id: ArtifactLizard
-  entity: MobLizard
-  forced: true
-  transferName: true
-  transferHumanoidAppearance: true
-  inventory: None
-  revertOnDeath: true
-  revertOnCrit: true
-  duration: 20
+  configuration:
+    entity: MobLizard
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+    duration: 20
 
 - type: polymorph
   id: ArtifactLuminous
-  entity: MobLuminousPerson
-  forced: true
-  transferName: true
-  transferHumanoidAppearance: true
-  inventory: None
-  revertOnDeath: true
-  revertOnCrit: true
-  duration: 20
+  configuration:
+    entity: MobLuminousPerson
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+    duration: 20

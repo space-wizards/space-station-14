@@ -33,10 +33,10 @@ public partial class ChatBox : UIWidget
         _entManager = IoCManager.Resolve<IEntityManager>();
 
         ChatInput.Input.OnTextEntered += OnTextEntered;
-        ChatInput.Input.OnKeyBindDown += OnKeyBindDown;
+        ChatInput.Input.OnKeyBindDown += OnInputKeyBindDown;
         ChatInput.Input.OnTextChanged += OnTextChanged;
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
-        ChatInput.FilterButton.ChatFilterPopup.OnChannelFilter += OnChannelFilter;
+        ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
 
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
@@ -51,7 +51,7 @@ public partial class ChatBox : UIWidget
     private void OnMessageAdded(ChatMessage msg)
     {
         Logger.DebugS("chat", $"{msg.Channel}: {msg.Message}");
-        if (!ChatInput.FilterButton.ChatFilterPopup.IsActive(msg.Channel))
+        if (!ChatInput.FilterButton.Popup.IsActive(msg.Channel))
         {
             return;
         }
@@ -142,7 +142,7 @@ public partial class ChatBox : UIWidget
         ChatInput.ChannelSelector.Select(toSelect);
     }
 
-    private void OnKeyBindDown(GUIBoundKeyEventArgs args)
+    private void OnInputKeyBindDown(GUIBoundKeyEventArgs args)
     {
         if (args.Function == EngineKeyFunctions.TextReleaseFocus)
         {
@@ -182,7 +182,7 @@ public partial class ChatBox : UIWidget
         if (!disposing) return;
         _controller.UnregisterChat(this);
         ChatInput.Input.OnTextEntered -= OnTextEntered;
-        ChatInput.Input.OnKeyBindDown -= OnKeyBindDown;
+        ChatInput.Input.OnKeyBindDown -= OnInputKeyBindDown;
         ChatInput.Input.OnTextChanged -= OnTextChanged;
         ChatInput.ChannelSelector.OnChannelSelect -= OnChannelSelect;
     }

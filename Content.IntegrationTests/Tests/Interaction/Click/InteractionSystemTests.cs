@@ -373,7 +373,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
 #pragma warning disable NUnit2045 // Interdependent assertions.
-                Assert.That(container.Insert(user));
+                Assert.That(conSystem.Insert(user, container));
                 Assert.That(sEntities.GetComponent<TransformComponent>(user).ParentUid, Is.EqualTo(containerEntity));
 #pragma warning restore NUnit2045
 

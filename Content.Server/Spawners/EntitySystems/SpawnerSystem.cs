@@ -33,7 +33,7 @@ public sealed class SpawnerSystem : EntitySystem
         for (var i = 0; i < number; i++)
         {
             var entity = _random.Pick(component.Prototypes);
-            Spawn(entity, coordinates);
+            SpawnAtPosition(entity, coordinates);
         }
     }
 

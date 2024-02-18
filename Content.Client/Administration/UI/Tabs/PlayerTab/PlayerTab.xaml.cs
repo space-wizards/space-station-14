@@ -28,7 +28,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
         private bool _ascending = true;
         private bool _showDisconnected;
 
-        public event Action<ButtonEventArgs>? OnEntryPressed;
+        public event Action<PlayerTabEntry, GUIBoundKeyEventArgs>? OnEntryKeyBindDown;
 
         public PlayerTab()
         {
@@ -123,7 +123,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                     player.Connected,
                     player.PlaytimeString);
                 entry.PlayerEntity = player.NetEntity;
-                entry.OnPressed += args => OnEntryPressed?.Invoke(args);
+                entry.OnKeyBindDown += args => OnEntryKeyBindDown?.Invoke(entry, args);
                 entry.ToolTip = Loc.GetString("player-tab-entry-tooltip");
                 PlayerList.AddChild(entry);
 

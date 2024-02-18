@@ -60,3 +60,9 @@ signal-port-description-pulse = This port is invoked when a bound anomaly is pul
 
 signal-port-name-supercrit = Supercritical
 signal-port-description-supercrit = This port is invoked when a bound anomaly explode after supercrit state.
+
+signal-port-name-power-charging = Charging
+signal-port-description-power-charging = This port is invoked with HIGH when the battery is gaining charge and LOW when not.
+
+signal-port-name-power-discharging = Discharging
+signal-port-description-power-discharging = This port is invoked with HIGH when the battery is losing charge and LOW when not.

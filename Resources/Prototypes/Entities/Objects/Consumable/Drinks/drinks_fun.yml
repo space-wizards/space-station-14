@@ -11,7 +11,7 @@
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
     layers:
       - state: icon
-        map: [ "enum.SolutionContainerLayers.Base" ]
+        map: ["enum.OpenableVisuals.Layer"]
       - state: fill1
         map: [ "enum.SolutionContainerLayers.Fill" ]
         visible: false
@@ -29,6 +29,12 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
   - type: Tag
     tags:
       - DrinkSpaceGlue
@@ -48,7 +54,7 @@
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
     layers:
       - state: icon
-        map: [ "enum.SolutionContainerLayers.Base" ]
+        map: ["enum.OpenableVisuals.Layer"]
       - state: fill1
         map: [ "enum.SolutionContainerLayers.Fill" ]
         visible: false
@@ -65,6 +71,96 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
   - type: Lube
   - type: TrashOnSolutionEmpty
     solution: drink
+
+
+# Mopwata
+- type: weightedRandomFillSolution
+  id: RandomFillMopwata
+  fills:
+  - quantity: 10
+    weight: 5
+    reagents:
+    - Blood
+    - CopperBlood
+    - Slime
+    - Vomit
+  - quantity: 10
+    weight: 4
+    reagents:
+    - Coffee
+    - Tea
+    - Cola
+    - RootBeer
+    - DrGibb
+    - GrapeSoda
+    - Starkist
+    - SpaceUp
+    - SpaceMountainWind
+    - LemonLime
+    - PwrGame
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Whiskey
+    - Vodka
+    - Beer
+    - Ale
+    - Rum
+    - Tequila
+    - Absinthe
+  - quantity: 10
+    weight: 1
+    reagents:
+    - SpaceDrugs
+    - Mold
+    - SpaceLube
+    - SpaceGlue
+    - SpaceCleaner
+    - MilkSpoiled
+    - FourteenLoko
+
+- type: entity
+  parent: DrinkBottleGlassBaseFull
+  id: DrinkMopwataBottleRandom
+  name: delicious mopwata
+  description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
+  components:
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Mopwata
+          Quantity: 40
+  - type: RandomFillSolution
+    solution: drink
+    weightedRandomId: RandomFillMopwata
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon_empty"}
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mopwata.rsi
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-

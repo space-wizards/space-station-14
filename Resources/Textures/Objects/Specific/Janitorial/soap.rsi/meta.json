@@ -80,6 +80,9 @@
       "name": "syndie-4"
     },
     {
+      "name": "syndie-soaplet"
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },

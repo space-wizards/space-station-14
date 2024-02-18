@@ -3,6 +3,7 @@
   parent: BaseStructureDynamic
   name: closet
   description: A standard-issue Nanotrasen storage unit.
+  abstract: true
   components:
   - type: ResistLocker
   - type: Transform
@@ -32,7 +33,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -56,8 +57,8 @@
     placeCentered: true
     isPlaceable: false
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -74,7 +75,9 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -85,6 +88,19 @@
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+  - type: StaticPrice
+    price: 50
+
+# steel closet base (that can be constructed/deconstructed)
+- type: entity
+  id: ClosetSteelBase
+  parent: ClosetBase
+  components:
+  - type: Construction
+    graph: ClosetSteel
+    node: done
+    containers:
+    - entity_storage
 
 #Wall Closet
 - type: entity
@@ -147,7 +163,9 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -162,6 +180,7 @@
   components:
   - type: AccessReader
   - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/wall_locker.rsi
     layers:
@@ -170,7 +189,7 @@
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false
@@ -204,7 +223,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
@@ -212,7 +231,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/bang.ogg
+      collection: MetalThud
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -253,7 +272,9 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -262,7 +283,6 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBase: base
-    stateLocked: locked
-    stateUnlocked: unlocked
     stateDoorOpen: base
     stateDoorClosed: door
+  - type: LockVisuals

@@ -6,8 +6,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmash
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     layers:
@@ -39,6 +38,62 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -8
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -8
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
+  - type: SpaceGarbage
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+
+- type: entity
+  parent: BaseLightbulb
+  id: BaseLightTube
+  abstract: true
+  components:
+  - type: Sprite
+    sprite:  Objects/Power/light_tube.rsi
+  - type: LightBulb
+    bulb: Tube
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
     - trigger:
@@ -55,24 +110,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-  - type: Tag
-    tags:
-    - Trash
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 25
-  - type: SpaceGarbage
-
-- type: entity
-  parent: BaseLightbulb
-  id: BaseLightTube
-  abstract: true
-  components:
-  - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-  - type: LightBulb
-    bulb: Tube
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -91,6 +128,19 @@
     lightSoftness: 1.1
 
 - type: entity
+  parent: LightBulb
+  name: old incandescent light bulb
+  id: LightBulbOld
+  description: An aging light bulb.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#FFD1A3" # 4000K color temp
+    lightEnergy: 0.3 # old incandescents just arent as bright
+    lightRadius: 6
+    lightSoftness: 1.1
+
+- type: entity
   suffix: Broken
   parent: BaseLightbulb
   name: incandescent light bulb
@@ -100,6 +150,19 @@
   - type: LightBulb
     startingState: Broken
     bulb: Bulb
+
+- type: entity
+  parent: BaseLightbulb
+  name: service light bulb
+  id: ServiceLightBulb
+  description: A low-brightness green lightbulb used in janitorial service lights.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#CCFF60"
+    lightEnergy: 0.45
+    lightRadius: 1.5
+    lightSoftness: 3
 
 - type: entity
   parent: BaseLightTube
@@ -113,6 +176,19 @@
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
+
+- type: entity
+  parent: LightTube
+  name: old fluorescent light tube
+  id: LightTubeOld
+  description: An aging light fixture.
+  components:
+  - type: LightBulb
+    color: "#FFDABB" # old fluorescents are yellower-4500K temp
+    lightEnergy: 0.5
+    lightRadius: 10
+    lightSoftness: 1
+    PowerUse: 10
 
 - type: entity
   suffix: Broken
@@ -165,3 +241,124 @@
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
+
+- type: entity
+  parent: BaseLightTube
+  name: cyan crystal light tube
+  description: A high power high energy bulb which has a small colored crystal inside.
+  id: LightTubeCrystalCyan
+  components:
+  - type: LightBulb
+    color: "#47f8ff"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: CyanLight
+    node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalCyan
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: blue crystal light tube
+  id: LightTubeCrystalBlue
+  components:
+  - type: LightBulb
+    color: "#39a1ff"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: BlueLight
+    node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalBlue
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: pink crystal light tube
+  id: LightTubeCrystalPink
+  components:
+  - type: LightBulb
+    color: "#ff66cc"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: PinkLight
+    node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalPink
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: orange crystal light tube
+  id: LightTubeCrystalOrange
+  components:
+  - type: LightBulb
+    color: "#ff8227"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: OrangeLight
+    node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalOrange
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: red crystal light tube
+  id: LightTubeCrystalRed
+  components:
+  - type: LightBulb
+    color: "#fb4747"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: RedLight
+    node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalRed
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: green crystal light tube
+  id: LightTubeCrystalGreen
+  components:
+  - type: LightBulb
+    color: "#52ff39"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: GreenLight
+    node: icon
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - ShardCrystalGreen

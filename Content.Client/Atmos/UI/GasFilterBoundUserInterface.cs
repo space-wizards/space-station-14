@@ -1,8 +1,8 @@
 ﻿using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -50,7 +50,7 @@ namespace Content.Client.Atmos.UI
 
         private void OnFilterTransferRatePressed(string value)
         {
-            float rate = float.TryParse(value, out var parsed) ? parsed : 0f;
+            var rate = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
 
             SendMessage(new GasFilterChangeRateMessage(rate));
         }

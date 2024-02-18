@@ -25,14 +25,14 @@ If two containment field generators are active, in range and in the same cardina
 The containment field will repell the singularity, keeping it from escaping, and yield a little bit of power every time anything bounces off of them. 
 Emitter lasers and containment field can cause damage, avoid touching them when active.
 
-## Radition collectors
+## Radiation collectors
 <Box>
 <GuideEntityEmbed Entity="RadiationCollector"/>
 <GuideEntityEmbed Entity="PlasmaTank"/>
 </Box>
 They connect to HV cables and generate power from nearby radiation sources when turned on. 
 Radiation collectors require a tank full of gaseous plasma in order to operate.
-Continous radiation exposure will gradually convert the stored plasma into tritium, so replace depleted plasma tanks with fresh ones to maintain a high power output.
+Continous radiation exposure will gradually consume the stored plasma, so replace depleted tanks with fresh ones to maintain a high power output.
 
 ## Particle accelerator
 

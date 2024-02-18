@@ -6,7 +6,7 @@
                       HorizontalExpand="True"
                       VerticalExpand="True"
                       Margin="5 5 5 5">
-            <Label Name="LawNumberLabel" StyleClasses="StatusFieldTitle"/>
+            <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText"/>
             <customControls:HSeparator Margin="0 5 0 5"/>
             <RichTextLabel Name="LawLabel"/>
             <BoxContainer Name="LawAnnouncementButtons" Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">

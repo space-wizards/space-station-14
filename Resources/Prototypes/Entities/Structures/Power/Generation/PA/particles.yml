@@ -13,15 +13,17 @@
         map: [ "unshaded" ]
     - type: Projectile
       deleteOnCollide: false
+      impactEffect: null
       soundHit:
         path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
       damage:
         types:
-          Radiation: 10
+          Radiation: 25
+    - type: CanPenetrate
     - type: Physics
     - type: Fixtures
       fixtures:
-        fix1:
+        projectile:
           shape:
             !type:PhysShapeAabb
             bounds: "-0.48,-0.48,0.48,0.48"
@@ -47,3 +49,33 @@
             Level3: {state: particle3}
     - type: GuideHelp
       guides: [ Singularity, Power ]
+
+- type: entity
+  name: anti particles
+  description: Accelerated negative particles.
+  id: AntiParticlesProjectile
+  parent: ParticlesProjectile
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Structures/Power/Generation/PA/particle.rsi
+      color: red
+      state: particle0
+      shader: unshaded
+      map: [ "unshaded" ]
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: Projectile
+    deleteOnCollide: false
+    impactEffect: null
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    damage:
+      types:
+        Radiation: 10
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: SinguloFood
+    energy: -10

@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -389,7 +390,13 @@ public sealed partial class ExplosionSystem
     private void GetEntitiesToDamage(EntityUid uid, DamageSpecifier originalDamage, string prototype)
     {
         _toDamage.Clear();
-        _toDamage.Add((uid, GetDamage(uid, prototype, originalDamage)));
+
+        // don't raise BeforeExplodeEvent if the entity is completely immune to explosions
+        var thisDamage = GetDamage(uid, prototype, originalDamage);
+        if (!thisDamage.Any())
+            return;
+
+        _toDamage.Add((uid, thisDamage));
 
         for (var i = 0; i < _toDamage.Count; i++)
         {

@@ -17,3 +17,28 @@
     tags:
     - HideContextMenu
   - type: AnimationPlayer
+
+- type: entity
+  id: EffectTeslaSparks
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.5
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/atmospherics.rsi
+      state: frezon_old
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: AnimationPlayer
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Effects/tesla_consume.ogg
+      params:
+        variation: 0.3

@@ -4,62 +4,71 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PowerCell;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensor;
+using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 
-namespace Content.Server.Medical.CrewMonitoring
+namespace Content.Server.Medical.CrewMonitoring;
+
+public sealed class CrewMonitoringConsoleSystem : EntitySystem
 {
-    public sealed class CrewMonitoringConsoleSystem : EntitySystem
+    [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly PowerCellSystem _cell = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<CrewMonitoringConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<CrewMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
+    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<CrewMonitoringConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-            SubscribeLocalEvent<CrewMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
-        }
+    private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
+    {
+        component.ConnectedSensors.Clear();
+    }
 
-        private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
-        {
-            component.ConnectedSensors.Clear();
-        }
+    private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, DeviceNetworkPacketEvent args)
+    {
+        var payload = args.Data;
 
-        private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, DeviceNetworkPacketEvent args)
-        {
-            var payload = args.Data;
-            // check command
-            if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-                return;
-            if (command != DeviceNetworkConstants.CmdUpdatedState)
-                return;
-            if (!payload.TryGetValue(SuitSensorConstants.NET_STATUS_COLLECTION, out Dictionary<string, SuitSensorStatus>? sensorStatus))
-                return;
+        // Check command
+        if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
+            return;
 
-            component.ConnectedSensors = sensorStatus;
-            UpdateUserInterface(uid, component);
-        }
+        if (command != DeviceNetworkConstants.CmdUpdatedState)
+            return;
 
-        private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
-        {
-            if (!_cell.TryUseActivatableCharge(uid))
-                return;
+        if (!payload.TryGetValue(SuitSensorConstants.NET_STATUS_COLLECTION, out Dictionary<string, SuitSensorStatus>? sensorStatus))
+            return;
 
-            UpdateUserInterface(uid, component);
-        }
+        component.ConnectedSensors = sensorStatus;
+        UpdateUserInterface(uid, component);
+    }
 
-        private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
+    private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
+    {
+        if (!_cell.TryUseActivatableCharge(uid))
+            return;
 
-            if (!_uiSystem.TryGetUi(uid, CrewMonitoringUIKey.Key, out var bui))
-                return;
+        UpdateUserInterface(uid, component);
+    }
 
-            // update all sensors info
-            var allSensors = component.ConnectedSensors.Values.ToList();
-            _uiSystem.SetUiState(bui, new CrewMonitoringState(allSensors, component.Snap, component.Precision));
-        }
+    private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (!_uiSystem.TryGetUi(uid, CrewMonitoringUIKey.Key, out var bui))
+            return;
+
+        // The grid must have a NavMapComponent to visualize the map in the UI
+        var xform = Transform(uid);
+
+        if (xform.GridUid != null)
+            EnsureComp<NavMapComponent>(xform.GridUid.Value);
+
+        // Update all sensors info
+        var allSensors = component.ConnectedSensors.Values.ToList();
+        _uiSystem.SetUiState(bui, new CrewMonitoringState(allSensors));
     }
 }

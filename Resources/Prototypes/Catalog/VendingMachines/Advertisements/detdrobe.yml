@@ -2,3 +2,7 @@
   id: DetDrobeAds
   advertisements:
     - advertisement-detdrobe-1
+    - advertisement-detdrobe-2
+    - advertisement-detdrobe-3
+  thankyous:
+    - vending-machine-thanks

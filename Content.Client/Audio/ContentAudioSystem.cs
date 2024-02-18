@@ -1,6 +1,5 @@
 using Content.Shared.Audio;
-using Robust.Client.GameObjects;
-using Robust.Shared.Audio;
+using Content.Shared.GameTicking;
 using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Audio;
@@ -18,11 +17,51 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     private const float MinVolume = -32f;
     private const float DefaultDuration = 2f;
 
+    /*
+     * Gain multipliers for specific audio sliders.
+     * The float value will get multiplied by this when setting
+     * i.e. a gain of 0.5f x 3 will equal 1.5f which is supported in OpenAL.
+     */
+
+    public const float MasterVolumeMultiplier = 3f;
+    public const float MidiVolumeMultiplier = 0.25f;
+    public const float AmbienceMultiplier = 3f;
+    public const float AmbientMusicMultiplier = 3f;
+    public const float LobbyMultiplier = 3f;
+    public const float InterfaceMultiplier = 2f;
+
     public override void Initialize()
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
         InitializeAmbientMusic();
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
+    }
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+    {
+        _fadingOut.Clear();
+
+        // Preserve lobby music but everything else should get dumped.
+        var lobbyMusic = EntityManager.System<BackgroundAudioSystem>().LobbyMusicStream;
+        TryComp(lobbyMusic, out AudioComponent? lobbyMusicComp);
+        var oldMusicGain = lobbyMusicComp?.Gain;
+
+        var restartAudio = EntityManager.System<BackgroundAudioSystem>().LobbyRoundRestartAudioStream;
+        TryComp(restartAudio, out AudioComponent? restartComp);
+        var oldAudioGain = restartComp?.Gain;
+
+        SilenceAudio();
+
+        if (oldMusicGain != null)
+        {
+            Audio.SetGain(lobbyMusic, oldMusicGain.Value, lobbyMusicComp);
+        }
+
+        if (oldAudioGain != null)
+        {
+            Audio.SetGain(restartAudio, oldAudioGain.Value, restartComp);
+        }
     }
 
     public override void Shutdown()
@@ -81,7 +120,8 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
             }
 
             var volume = component.Volume - change * frameTime;
-            component.Volume = MathF.Max(MinVolume, volume);
+            volume = MathF.Max(MinVolume, volume);
+            _audio.SetVolume(stream, volume, component);
 
             if (component.Volume.Equals(MinVolume))
             {
@@ -107,7 +147,8 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
             }
 
             var volume = component.Volume + change * frameTime;
-            component.Volume = MathF.Min(target, volume);
+            volume = MathF.Max(target, volume);
+            _audio.SetVolume(stream, volume, component);
 
             if (component.Volume.Equals(target))
             {

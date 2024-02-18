@@ -4,7 +4,6 @@
   sprite: /Textures/Tiles/plating.png
   baseTurf: Lattice
   isSubfloor: true
-  canAxe: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.3
@@ -21,7 +20,6 @@
   - 1.0
   baseTurf: Lattice
   isSubfloor: true
-  canAxe: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.3
@@ -33,7 +31,6 @@
   sprite: /Textures/Tiles/plating_burnt.png
   baseTurf: Lattice
   isSubfloor: true
-  canAxe: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.3
@@ -45,7 +42,6 @@
   sprite: /Textures/Tiles/Asteroid/asteroid_plating.png
   baseTurf: Lattice
   isSubfloor: true
-  canAxe: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.3
@@ -57,7 +53,6 @@
   sprite: /Textures/Tiles/snow_plating.png #Not in the snow planet RSI because it doesn't have any metadata. Should probably be moved to its own folder later.
   baseTurf: Lattice
   isSubfloor: true
-  canAxe: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.15 #a little less then actual snow
@@ -69,7 +64,7 @@
   sprite: /Textures/Tiles/lattice.png
   baseTurf: Space
   isSubfloor: true
-  canWirecutter: true
+  deconstructTools: [ Cutting ]
   weather: true
   footstepSounds:
     collection: FootstepPlating

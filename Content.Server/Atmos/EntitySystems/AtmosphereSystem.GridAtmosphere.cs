@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -13,6 +14,7 @@ public sealed partial class AtmosphereSystem
     private void InitializeGridAtmosphere()
     {
         SubscribeLocalEvent<GridAtmosphereComponent, ComponentInit>(OnGridAtmosphereInit);
+        SubscribeLocalEvent<GridAtmosphereComponent, ComponentRemove>(OnAtmosphereRemove);
         SubscribeLocalEvent<GridAtmosphereComponent, GridSplitEvent>(OnGridSplit);
 
         #region Atmos API Subscriptions
@@ -39,6 +41,19 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, RemoveAtmosDeviceMethodEvent>(GridRemoveAtmosDevice);
 
         #endregion
+    }
+
+    private void OnAtmosphereRemove(EntityUid uid, GridAtmosphereComponent component, ComponentRemove args)
+    {
+        for (var i = 0; i < _currentRunAtmosphere.Count; i++)
+        {
+            if (_currentRunAtmosphere[i].Owner != uid)
+                continue;
+
+            _currentRunAtmosphere.RemoveAt(i);
+            if (_currentRunAtmosphereIndex > i)
+                _currentRunAtmosphereIndex--;
+        }
     }
 
     private void OnGridAtmosphereInit(EntityUid uid, GridAtmosphereComponent gridAtmosphere, ComponentInit args)
@@ -557,5 +572,13 @@ public sealed partial class AtmosphereSystem
             GridUpdateAdjacent(uid, gridAtmosphere, ref ev);
             InvalidateVisuals(uid, position, overlay);
         }
+    }
+
+    public TileRef GetTileRef(TileAtmosphere tile)
+    {
+        if (!TryComp(tile.GridIndex, out MapGridComponent? grid))
+            return default;
+        _map.TryGetTileRef(tile.GridIndex, grid, tile.GridIndices, out var tileRef);
+        return tileRef;
     }
 }

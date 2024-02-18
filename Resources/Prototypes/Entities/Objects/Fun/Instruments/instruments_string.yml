@@ -236,7 +236,9 @@
     sprite: Objects/Fun/Instruments/cello.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,1,3
     sprite: Objects/Fun/Instruments/cello.rsi
   - type: Tag
     tags:

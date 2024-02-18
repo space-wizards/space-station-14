@@ -1,4 +1,5 @@
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -66,6 +67,12 @@ public sealed partial class ClothingComponent : Component
     public ClothingMask UnisexMask = ClothingMask.UniformFull;
 
     public string? InSlot;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan EquipDelay = TimeSpan.Zero;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan UnequipDelay = TimeSpan.Zero;
 }
 
 [Serializable, NetSerializable]
@@ -85,3 +92,30 @@ public enum ClothingMask : byte
     UniformFull,
     UniformTop
 }
+
+[Serializable, NetSerializable]
+public sealed partial class ClothingEquipDoAfterEvent : DoAfterEvent
+{
+    public string Slot;
+
+    public ClothingEquipDoAfterEvent(string slot)
+    {
+        Slot = slot;
+    }
+
+    public override DoAfterEvent Clone() => this;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class ClothingUnequipDoAfterEvent : DoAfterEvent
+{
+    public string Slot;
+
+    public ClothingUnequipDoAfterEvent(string slot)
+    {
+        Slot = slot;
+    }
+
+    public override DoAfterEvent Clone() => this;
+}
+

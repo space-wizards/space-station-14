@@ -24,7 +24,7 @@
   - type: Instrument
     program: 122
   - type: Item
-    size: Small
+    size: Normal
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -38,7 +38,8 @@
   - type: Instrument
     program: 123
   - type: Item
-    size: Tiny
+    size: Small
+    storedRotation: 90
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -61,6 +62,19 @@
     notifiactionPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
+
+- type: entity
+  parent: PhoneInstrument
+  id: PhoneInstrumentSyndicate
+  name: blood-red phone
+  description: For evil people to call their friends.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/blood_red_phone.rsi
+    state: icon
+  - type: Prayable
+    sentMessage: prayer-popup-notify-syndicate-sent
+    notifiactionPrefix: prayer-chat-notify-syndicate
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -102,10 +116,11 @@
     sprite: Objects/Fun/Instruments/gunpet.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Small
     sprite: Objects/Fun/Instruments/gunpet.rsi
   - type: Tag
     tags:
+    - Sidearm
     - BrassInstrument
 
 - type: entity

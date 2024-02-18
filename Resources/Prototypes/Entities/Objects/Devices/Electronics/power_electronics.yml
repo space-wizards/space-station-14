@@ -27,6 +27,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+    - type: StaticPrice
+      price: 40
     - type: Tag
       tags:
         - DroneUsable
@@ -42,6 +44,8 @@
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: charger_APC
+  - type: StaticPrice
+    price: 20
   - type: PhysicalComposition
     materialComposition:
       Glass: 90
@@ -60,6 +64,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+    - type: StaticPrice
+      price: 40
     - type: Tag
       tags:
         - DroneUsable
@@ -75,6 +81,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
+    - type: StaticPrice
+      price: 85
     - type: Tag
       tags:
         - DroneUsable

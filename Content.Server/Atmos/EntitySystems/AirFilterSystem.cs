@@ -25,7 +25,7 @@ public sealed class AirFilterSystem : EntitySystem
         SubscribeLocalEvent<AirFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdate);
     }
 
-    private void OnIntakeUpdate(EntityUid uid, AirIntakeComponent intake, AtmosDeviceUpdateEvent args)
+    private void OnIntakeUpdate(EntityUid uid, AirIntakeComponent intake, ref AtmosDeviceUpdateEvent args)
     {
         if (!GetAir(uid, out var air))
             return;
@@ -51,12 +51,12 @@ public sealed class AirFilterSystem : EntitySystem
         _atmosphere.Merge(air, environment.Remove(transferMoles));
     }
 
-    private void OnFilterUpdate(EntityUid uid, AirFilterComponent filter, AtmosDeviceUpdateEvent args)
+    private void OnFilterUpdate(EntityUid uid, AirFilterComponent filter, ref AtmosDeviceUpdateEvent args)
     {
         if (!GetAir(uid, out var air))
             return;
 
-        var ratio = MathF.Min(1f, args.dt * filter.TransferRate);
+        var ratio = MathF.Min(1f, args.dt * filter.TransferRate * _atmosphere.PumpSpeedup());
         var removed = air.RemoveRatio(ratio);
         // nothing left to remove from the volume
         if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))

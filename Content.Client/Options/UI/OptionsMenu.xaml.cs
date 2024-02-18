@@ -15,10 +15,11 @@ namespace Content.Client.Options.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            Tabs.SetTabTitle(0, Loc.GetString("ui-options-tab-graphics"));
-            Tabs.SetTabTitle(1, Loc.GetString("ui-options-tab-controls"));
-            Tabs.SetTabTitle(2, Loc.GetString("ui-options-tab-audio"));
-            Tabs.SetTabTitle(3, Loc.GetString("ui-options-tab-network"));
+            Tabs.SetTabTitle(0, Loc.GetString("ui-options-tab-misc"));
+            Tabs.SetTabTitle(1, Loc.GetString("ui-options-tab-graphics"));
+            Tabs.SetTabTitle(2, Loc.GetString("ui-options-tab-controls"));
+            Tabs.SetTabTitle(3, Loc.GetString("ui-options-tab-audio"));
+            Tabs.SetTabTitle(4, Loc.GetString("ui-options-tab-network"));
 
             UpdateTabs();
         }
