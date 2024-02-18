@@ -15,15 +15,13 @@
             </BoxContainer>
         </BoxContainer>
 
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="5">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <Label Text="{Loc comp-space-heater-ui-thermostat}"/>
             </BoxContainer>
-            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" HorizontalExpand="True">
-                <Label Name="TargetTemperature"/>
-            </BoxContainer>
-            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right" SeparationOverride="-2">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right">
                 <Button Text="{Loc comp-space-heater-ui-decrease-temperature-range}" Access="Public" Name="DecreaseTempRange" StyleClasses="OpenRight"/>
+                <LineEdit Name ="Thermostat" MinSize="55 0"></LineEdit>
                 <Button Text="{Loc comp-space-heater-ui-increase-temperature-range}" Access="Public" Name="IncreaseTempRange" StyleClasses="OpenLeft"/>
             </BoxContainer>
         </BoxContainer>

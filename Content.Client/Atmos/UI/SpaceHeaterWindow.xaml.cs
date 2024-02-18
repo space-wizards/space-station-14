@@ -19,20 +19,19 @@ namespace Content.Client.Atmos.UI
         public float MinTemp = 0.0f;
         public float MaxTemp = 0.0f;
 
-        public OptionButton ModeSelector => Mode;
-        public Button IncreaseTempRangeButton => IncreaseTempRange;
-        public Button DecreaseTempRangeButton => DecreaseTempRange;
-        public Label TargetTemperatureLabel => TargetTemperature;
-
         public SpaceHeaterWindow()
         {
             RobustXamlLoader.Load(this);
 
             foreach (var value in Enum.GetValues<SpaceHeaterMode>())
             {
-                ModeSelector.AddItem(Loc.GetString($"comp-space-heater-mode-{value}"), (int) value);
+                Mode.AddItem(Loc.GetString($"comp-space-heater-mode-{value}"), (int) value);
             }
+
+            //Only allow temperature increment/decrement of TemperatureChangeDelta
+            Thermostat.Editable = false;
         }
+
         public void SetActive(bool active)
         {
             Active = active;
@@ -48,9 +47,9 @@ namespace Content.Client.Atmos.UI
             }
         }
 
-        public void SetTemperatureRange(float targetTemperature)
+        public void SetTemperature(float targetTemperature)
         {
-            TargetTemperatureLabel.Text = targetTemperature - Atmospherics.T0C + "°C";
+            Thermostat.SetText((targetTemperature - Atmospherics.T0C).ToString() + "°C");
 
             IncreaseTempRange.Disabled = targetTemperature + TemperatureChangeDelta > MaxTemp ? true : false;
             DecreaseTempRange.Disabled = targetTemperature - TemperatureChangeDelta < MinTemp ? true : false;

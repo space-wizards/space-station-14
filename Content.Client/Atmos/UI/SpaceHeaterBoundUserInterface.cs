@@ -32,8 +32,8 @@ namespace Content.Client.Atmos.UI
             _window.OnClose += Close;
 
             _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
-            _window.IncreaseTempRangeButton.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
-            _window.DecreaseTempRangeButton.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
+            _window.IncreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
+            _window.DecreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
             _window.Mode.OnItemSelected += OnModeChanged;
         }
 
@@ -69,7 +69,7 @@ namespace Content.Client.Atmos.UI
 
             _window.MinTemp = cast.MinTemperature;
             _window.MaxTemp = cast.MaxTemperature;
-            _window.SetTemperatureRange(cast.TargetTemperature);
+            _window.SetTemperature(cast.TargetTemperature);
         }
 
         protected override void Dispose(bool disposing)
