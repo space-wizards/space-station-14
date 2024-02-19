@@ -82,6 +82,8 @@
       collection: Whistles
     Crying:
       collection: MaleCry
+    Weh:
+      path: /Audio/Items/Toys/weh.ogg
 
 - type: emoteSounds
   id: MaleSlime
