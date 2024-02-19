@@ -22,7 +22,8 @@ public sealed partial class RevolutionaryComponent : Component, IAntagStatusIcon
 
     [DataField]
     public bool IconVisibleToGhost { get; set; } = true;
-	/// <summary>
+
+    /// <summary>
     /// Sound that plays when you are chosen as Rev. (Placeholder until I find something cool I guess)
     /// </summary>
     [DataField]
