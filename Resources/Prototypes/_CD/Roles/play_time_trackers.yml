@@ -1,2 +1,18 @@
 - type: playTimeTracker
   id: JobPrisoner
+
+- type: playTimeTracker
+  id: JobPrivateInvestigator
+
+# Senior Roles
+- type: playTimeTracker
+  id: JobSeniorEngineer
+
+- type: playTimeTracker
+  id: JobSeniorOfficer
+
+- type: playTimeTracker
+  id: JobSeniorPhysician
+
+- type: playTimeTracker
+  id: JobSeniorResearcher

@@ -30,9 +30,9 @@
   - Reporter
   - Visitor
   - Zookeeper
-  - Detective
   - ServiceWorker
   - Prisoner # Custom role
+  - PrivateInvestigator # Custom role
 
 - type: department
   id: Command
@@ -57,7 +57,7 @@
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
-  - SeniorEngineer
+  - SeniorEngineer #CD Role
   - StationEngineer
   - TechnicalAssistant
 
@@ -72,7 +72,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
-  - SeniorPhysician
+  - SeniorPhysician #CD Role
 
 - type: department
   id: Security
@@ -83,7 +83,8 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
-  - SeniorOfficer
+  - SeniorOfficer #CD Role
+  - Detective
   - Warden
 
 - type: department
@@ -92,7 +93,7 @@
   color: "#D381C9"
   roles:
   - ResearchDirector
-  - SeniorResearcher
+  - SeniorResearcher #CD Role
   - Scientist
   - ResearchAssistant
 

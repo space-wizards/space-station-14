@@ -1,0 +1,6 @@
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconPrivateInvestigator
+  icon:
+    sprite: _CD/Interface/Misc/job_icons.rsi
+    state: PrivateInvestigator

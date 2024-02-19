@@ -1,3 +1,78 @@
+# Regular Spawn Points (for CD exclusive jobs)
+- type: entity
+  id: SpawnPointPrisoner # Likely unused, but good to have
+  parent: SpawnPointJobBase
+  name: prisoner
+  components:
+  - type: SpawnPoint
+    job_id: Prisoner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: prisoner
+
+- type: entity
+  id: SpawnPointPrivateInvestigator
+  parent: SpawnPointJobBase
+  name: privateinvestigator
+  components:
+  - type: SpawnPoint
+    job_id: Prisoner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: prisoner
+
+# Standard Spawnpoints for Senior Roles
+- type: entity
+  id: SpawnPointSeniorEngineer
+  parent: SpawnPointJobBase
+  name: seniorengineer
+  components:
+  - type: SpawnPoint
+    job_id: SeniorEngineer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorengineer
+
+- type: entity
+  id: SpawnPointSeniorPhysician
+  parent: SpawnPointJobBase
+  name: seniorphysician
+  components:
+  - type: SpawnPoint
+    job_id: SeniorPhysician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorphysician
+
+- type: entity
+  id: SpawnPointSeniorResearcher
+  parent: SpawnPointJobBase
+  name: seniorresearcher
+  components:
+  - type: SpawnPoint
+    job_id: SeniorResearcher
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorresearcher
+
+- type: entity
+  id: SpawnPointSeniorOfficer
+  parent: SpawnPointJobBase
+  name: seniorofficer
+  components:
+  - type: SpawnPoint
+    job_id: SeniorOfficer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorofficer
+
+# Arrivals Spawn Points
 # Base
 
 - type: entity
@@ -62,6 +137,19 @@
 # Civilian
 
 # TODO: Put stuff here. Probably not as important.
+
+- type: entity
+  id: ArrivalsSpawnPrivateInvestigator
+  parent: ArrivalsSpawnPointJobBase
+  suffix: private investigator
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - PrivateInvestigator
+  - type: Sprite
+    layers:
+      - state: green
+      - state: detective
 
 # Command
 
