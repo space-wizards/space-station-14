@@ -12,10 +12,10 @@ namespace Content.Client.Shuttles.UI;
 [GenerateTypedNameReferences]
 public sealed partial class DockObject : PanelContainer
 {
-    public NetEntity Entity;
-
     public event Action? UndockPressed;
     public event Action? ViewPressed;
+
+    public BoxContainer ContentsContainer => Contents;
 
     public DockObject()
     {
@@ -23,16 +23,35 @@ public sealed partial class DockObject : PanelContainer
         IoCManager.InjectDependencies(this);
 
         PanelOverride = new StyleBoxFlat(new Color(30, 30, 34));
+    }
 
-        UndockButton.OnPressed += args =>
+    public void AddDock(DockingPortState state, ShuttleDockControl dockControl)
+    {
+        var viewButton = new Button()
         {
-            UndockPressed?.Invoke();
+            Text = Loc.GetString("shuttle-console-view"),
         };
 
-        ViewDockButton.OnPressed += args =>
+        viewButton.OnPressed += args =>
         {
-            ViewPressed?.Invoke();
+            dockControl.SetViewedDock(state);
         };
+
+        var container = new BoxContainer()
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Children =
+            {
+                new Label()
+                {
+                    Text = state.Name,
+                    HorizontalAlignment = HAlignment.Center,
+                },
+                viewButton
+            }
+        };
+
+        DockContainer.AddChild(container);
     }
 
     public void SetName(string value)

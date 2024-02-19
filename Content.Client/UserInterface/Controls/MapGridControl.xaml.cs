@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface.Controls;
 /// </summary>
 [GenerateTypedNameReferences]
 [Virtual]
-public partial class MapGridControl : BoxContainer
+public partial class MapGridControl : Control
 {
     [Dependency] protected readonly IEntityManager EntManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;

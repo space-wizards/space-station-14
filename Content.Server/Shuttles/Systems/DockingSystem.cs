@@ -131,12 +131,6 @@ namespace Content.Server.Shuttles.Systems
                 Log.Error($"Tried to cleanup {dockAUid} but not docked?");
 
                 dockA.DockedWith = null;
-                if (dockA.DockJoint != null)
-                {
-                    // We'll still cleanup the dock joint on release at least
-                    _jointSystem.RemoveJoint(dockA.DockJoint);
-                }
-
                 return;
             }
 
@@ -186,7 +180,7 @@ namespace Content.Server.Shuttles.Systems
                 var otherDock = EntityManager.GetComponent<DockingComponent>(component.DockedWith.Value);
                 DebugTools.Assert(otherDock.DockedWith != null);
 
-                Dock(uid, component, component.DockedWith.Value, otherDock);
+                Dock((uid, component), (component.DockedWith.Value, otherDock));
                 DebugTools.Assert(component.Docked && otherDock.Docked);
             }
         }
@@ -217,7 +211,7 @@ namespace Content.Server.Shuttles.Systems
             var other = Comp<DockingComponent>(otherDock!.Value);
 
             Undock(entity);
-            Dock(uid, component, otherDock.Value, other);
+            Dock((uid, component), (otherDock.Value, other));
             _console.RefreshShuttleConsoles();
         }
 
@@ -237,8 +231,11 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// Docks 2 ports together and assumes it is valid.
         /// </summary>
-        public void Dock(EntityUid dockAUid, DockingComponent dockA, EntityUid dockBUid, DockingComponent dockB)
+        public void Dock(Entity<DockingComponent> dockA, Entity<DockingComponent> dockB)
         {
+            var dockAUid = dockA.Owner;
+            var dockBUid = dockB.Owner;
+
             if (dockBUid.GetHashCode() < dockAUid.GetHashCode())
             {
                 (dockA, dockB) = (dockB, dockA);
@@ -275,10 +272,10 @@ namespace Content.Server.Shuttles.Systems
                 WeldJoint joint;
 
                 // Pre-existing joint so use that.
-                if (dockA.DockJointId != null)
+                if (dockA.Comp.DockJointId != null)
                 {
-                    DebugTools.Assert(dockB.DockJointId == dockA.DockJointId);
-                    joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, dockA.DockJointId);
+                    DebugTools.Assert(dockB.Comp.DockJointId == dockA.Comp.DockJointId);
+                    joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, dockA.Comp.DockJointId);
                 }
                 else
                 {
@@ -298,15 +295,15 @@ namespace Content.Server.Shuttles.Systems
                 joint.Stiffness = stiffness;
                 joint.Damping = damping;
 
-                dockA.DockJoint = joint;
-                dockA.DockJointId = joint.ID;
+                dockA.Comp.DockJoint = joint;
+                dockA.Comp.DockJointId = joint.ID;
 
-                dockB.DockJoint = joint;
-                dockB.DockJointId = joint.ID;
+                dockB.Comp.DockJoint = joint;
+                dockB.Comp.DockJointId = joint.ID;
             }
 
-            dockA.DockedWith = dockBUid;
-            dockB.DockedWith = dockAUid;
+            dockA.Comp.DockedWith = dockBUid;
+            dockB.Comp.DockedWith = dockAUid;
 
             if (TryComp(dockAUid, out DoorComponent? doorA))
             {
@@ -334,8 +331,8 @@ namespace Content.Server.Shuttles.Systems
 
             if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))
             {
-                dockA.PathfindHandle = handle;
-                dockB.PathfindHandle = handle;
+                dockA.Comp.PathfindHandle = handle;
+                dockB.Comp.PathfindHandle = handle;
             }
 
             var msg = new DockEvent
@@ -346,33 +343,21 @@ namespace Content.Server.Shuttles.Systems
                 GridBUid = gridB,
             };
 
+            _console.RefreshShuttleConsoles();
             RaiseLocalEvent(dockAUid, msg);
             RaiseLocalEvent(dockBUid, msg);
             RaiseLocalEvent(msg);
         }
 
-        private bool CanDock(EntityUid dockAUid, EntityUid dockBUid, DockingComponent dockA, DockingComponent dockB)
-        {
-            if (!dockA.Enabled ||
-                !dockB.Enabled ||
-                dockA.DockedWith != null ||
-                dockB.DockedWith != null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         /// <summary>
         /// Attempts to dock 2 ports together and will return early if it's not possible.
         /// </summary>
-        private void TryDock(EntityUid dockAUid, DockingComponent dockA, Entity<DockingComponent> dockB)
+        private void TryDock(Entity<DockingComponent> dockA, Entity<DockingComponent> dockB)
         {
-            if (!CanDock(dockAUid, dockB, dockA, dockB))
+            if (!CanDock(dockA, dockB))
                 return;
 
-            Dock(dockAUid, dockA, dockB, dockB);
+            Dock(dockA, dockB);
         }
 
         public void Undock(Entity<DockingComponent> dock)
@@ -383,6 +368,7 @@ namespace Content.Server.Shuttles.Systems
             OnUndock(dock.Owner);
             OnUndock(dock.Comp.DockedWith.Value);
             Cleanup(dock.Owner, dock);
+            _console.RefreshShuttleConsoles();
         }
 
         private void OnUndock(EntityUid dockUid)
@@ -395,29 +381,35 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
                 door.ChangeAirtight = true;
-
-            _console.RefreshShuttleConsoles();
         }
 
         private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
         {
-            var dork = GetEntity(args.DockEntity);
-
-            // TODO: Validation
-            if (!TryComp<DockingComponent>(dork, out var dock) ||
-                !dock.Docked ||
-                HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+            if (!TryGetEntity(args.DockEntity, out var dockEnt) ||
+                !TryComp(dockEnt, out DockingComponent? dockComp))
             {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"));
                 return;
             }
 
-            Undock((dork, dock));
+            var dock = (dockEnt.Value, dockComp);
+
+            if (!CanUndock(dock))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"));
+                return;
+            }
+
+            Undock(dock);
         }
 
         private void OnRequestDock(EntityUid uid, ShuttleConsoleComponent component, DockRequestMessage args)
         {
-            if (HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+            var shuttleUid = Transform(uid).GridUid;
+
+            if (!CanShuttleDock(shuttleUid))
             {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
                 return;
             }
 
@@ -430,17 +422,56 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            // TODO: Move the CanDock stuff to the port state and also validate that stuff
-            if (!CanDock())
+            // Cheating?
+            if (!TryComp(ourDock, out TransformComponent? xformA) ||
+                xformA.GridUid != shuttleUid)
             {
                 _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
                 return;
             }
 
-            // TODO: Make the API less ass
-            // TODO: Add PreventPilot to CanDock
-            // TODO: Validate it's our grid.
-            Dock(ourDock.Value, ourDockComp, targetDock.Value, targetDockComp);
+            // TODO: Move the CanDock stuff to the port state and also validate that stuff
+            // Also need to check preventpilot + enabled / dockedwith
+            if (!CanDock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp)))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            Dock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp));
+        }
+
+        public bool CanUndock(Entity<DockingComponent?> dock)
+        {
+            if (!Resolve(dock, ref dock.Comp) ||
+                !dock.Comp.Docked)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns true if both docks can connect. Does not consider whether the shuttle allows it.
+        /// </summary>
+        public bool CanDock(Entity<DockingComponent> dockA, Entity<DockingComponent> dockB)
+        {
+            if (!dockA.Comp.Enabled ||
+                !dockB.Comp.Enabled ||
+                dockA.Comp.DockedWith != null ||
+                dockB.Comp.DockedWith != null)
+            {
+                return false;
+            }
+
+            var xformA = Transform(dockA);
+            var xformB = Transform(dockB);
+            var (worldPosA, worldRotA) = XformSystem.GetWorldPositionRotation(xformA);
+            var (worldPosB, worldRotB) = XformSystem.GetWorldPositionRotation(xformB);
+
+            return CanDock(new MapCoordinates(worldPosA, xformA.MapID), worldRotA,
+                new MapCoordinates(worldPosB, xformB.MapID), worldRotB);
         }
     }
 }

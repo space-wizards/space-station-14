@@ -188,6 +188,12 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
+        if (TryComp(shuttleUid, out PhysicsComponent? shuttlePhysics) && shuttlePhysics.Mass > 300f)
+        {
+            reason = Loc.GetString("shuttle-console-mass");
+            return false;
+        }
+
         if (HasComp<PreventPilotComponent>(shuttleUid))
         {
             reason = Loc.GetString("shuttle-console-prevent");
@@ -652,7 +658,7 @@ public sealed partial class ShuttleSystem
         // Connect everything
         foreach (var (dockAUid, dockBUid, dockA, dockB) in config.Docks)
         {
-            _dockSystem.Dock(dockAUid, dockA, dockBUid, dockB);
+            _dockSystem.Dock((dockAUid, dockA), (dockBUid, dockB));
         }
     }
 

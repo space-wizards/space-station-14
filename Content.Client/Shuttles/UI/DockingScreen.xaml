@@ -40,8 +40,9 @@
             <controls:Label Name="DockedLabel" Text="{controls:Loc 'shuttle-console-docked'}" HorizontalAlignment="Center"/>
         </controls1:StripeBack>
         <controls:ScrollContainer VerticalExpand="True" HScrollEnabled="False"
-                                  ReturnMeasure="True">
-            <controls:BoxContainer Name="DockedWith" Orientation="Vertical"/>
+                                  ReturnMeasure="True"
+                                  Name="DockedWithScroll">
+            <controls:BoxContainer Name="DockedWith" Orientation="Vertical" VerticalExpand="True"/>
         </controls:ScrollContainer>
         <controls1:StripeBack MinSize="48 48">
             <controls:Label Name="DockingPortsLabel" Text="{controls:Loc 'shuttle-console-docks-label'}" HorizontalAlignment="Center"/>

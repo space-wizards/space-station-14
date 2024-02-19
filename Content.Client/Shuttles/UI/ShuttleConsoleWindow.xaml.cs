@@ -20,6 +20,9 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public event Action<MapCoordinates, Angle>? RequestFTL;
     public event Action<NetEntity, Angle>? RequestBeaconFTL;
 
+    public event Action<NetEntity, NetEntity>? DockRequest;
+    public event Action<NetEntity>? UndockRequest;
+
     public ShuttleConsoleWindow()
     {
         RobustXamlLoader.Load(this);
@@ -49,26 +52,33 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             RequestBeaconFTL?.Invoke(ent, angle);
         };
+
+        DockContainer.DockRequest += (entity, netEntity) =>
+        {
+            DockRequest?.Invoke(entity, netEntity);
+        };
+
+        DockContainer.UndockRequest += entity =>
+        {
+            UndockRequest?.Invoke(entity);
+        };
     }
 
     private void ClearModes(ShuttleConsoleMode mode)
     {
         if (mode != ShuttleConsoleMode.Nav)
         {
-            NavModeButton.Pressed = false;
             NavContainer.Visible = false;
         }
 
         if (mode != ShuttleConsoleMode.Map)
         {
-            MapModeButton.Pressed = false;
             MapContainer.Visible = false;
             MapContainer.SetMap(MapId.Nullspace, Vector2.Zero);
         }
 
         if (mode != ShuttleConsoleMode.Dock)
         {
-            DockModeButton.Pressed = false;
             DockContainer.Visible = false;
         }
     }

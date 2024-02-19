@@ -1,7 +1,9 @@
 shuttle-pilot-start = Piloting ship
 shuttle-pilot-end = Stopped piloting
 
-shuttle-console-prevent = You are unable to pilot this ship.
+shuttle-console-in-ftl = Currently in FTL
+shuttle-console-mass = Too large to FTL
+shuttle-console-prevent = You are unable to pilot this ship
 
 # NAV
 
@@ -39,4 +41,12 @@ shuttle-console-no-signal = No signal
 shuttle-console-map-objects = Sector objects
 
 # DOCK
+shuttle-console-docked = Docked objects
 
+shuttle-console-view = View
+shuttle-console-undock = Undock
+shuttle-console-dock = Dock
+shuttle-console-docks-label = Docks
+
+shuttle-console-undock-fail = Undocking failed
+shuttle-console-dock-fail = Docking failed
