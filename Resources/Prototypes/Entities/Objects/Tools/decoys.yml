@@ -15,6 +15,17 @@
     - state: folded
       map: ["foldedLayer"]
       visible: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/pop_high.ogg
   - type: Appearance
   - type: Item
     size: Normal
