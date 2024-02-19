@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: TheShuEd
   changes:
-  - message: Tesla has been added to the game! Engineers can build a tesla power generator
-      using a tesla generator, tesla coils, and grounding wands that can be purchased
-      from the cargo.
-    type: Add
-  id: 5465
-  time: '2023-12-28T13:11:50.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21124
-- author: TheShuEd
-  changes:
   - message: thieves can now appear in rounds with nuclear operatives
     type: Add
   id: 5466
@@ -3864,3 +3855,10 @@
   id: 5964
   time: '2024-02-19T06:05:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25366
+- author: azurerosegarden
+  changes:
+  - message: Drinks in the Solar's Best Hot Drinks menu now show their contents
+    type: Fix
+  id: 5965
+  time: '2024-02-19T15:40:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25301
