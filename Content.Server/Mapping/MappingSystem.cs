@@ -45,14 +45,7 @@ public sealed class MappingSystem : EntitySystem
             ToggleAutosaveCommand);
 
         _sawmill = Logger.GetSawmill("autosave");
-        _cfg.OnValueChanged(CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _cfg.UnsubValueChanged(CCVars.AutosaveEnabled, SetAutosaveEnabled);
+        Subs.CVar(_cfg, CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
     }
 
     private void SetAutosaveEnabled(bool b)

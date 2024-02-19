@@ -52,6 +52,15 @@
     - giggles!
     - giggling
     - giggled
+    - chortle
+    - chortle.
+    - chortle!
+    - chortles
+    - chortles.
+    - chortles!
+    - chortling
+    - chortling.
+    - chortling!
 
 - type: emote
   id: Honk
@@ -99,6 +108,14 @@
     - cries
     - cries.
     - cries!
+    - sob
+    - sob.
+    - sobs
+    - sobs.
+    - sobs!
+    - sobbing
+    - sobbing.
+    - sobbing!
 
 - type: emote
   id: Squish
@@ -206,3 +223,21 @@
   chatMessages: ["emote-deathgasp"]
   chatTriggers:
   - deathgasp
+
+- type: emote
+  id: Buzz
+  category: Vocal
+  chatMessages: [buzz!]
+  chatTriggers:
+    - buzzing
+    - buzzing!
+    - buzzing.
+    - buzz
+    - buzz.
+    - buzz!
+    - buzzed
+    - buzzed.
+    - buzzed!
+    - buzzes
+    - buzzes.
+    - buzzes!

@@ -6,7 +6,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;

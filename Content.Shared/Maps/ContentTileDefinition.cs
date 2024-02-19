@@ -67,7 +67,7 @@ namespace Content.Shared.Maps
         /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
-        [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = new [] { 1f };
+        [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = { 1f };
 
         [DataField("thermalConductivity")] public float ThermalConductivity = 0.04f;
 

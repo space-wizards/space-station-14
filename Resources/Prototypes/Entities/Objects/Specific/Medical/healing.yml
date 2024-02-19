@@ -69,6 +69,7 @@
   description: Used to treat even the nastiest burns. Also effective against caustic burns.
   parent: BaseHealingItem
   id: RegenerativeMesh
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -99,6 +100,7 @@
 - type: entity
   id: OintmentAdvanced1
   parent: RegenerativeMesh
+  suffix: Single
   components:
   - type: Stack
     stackType: RegenerativeMesh
@@ -155,6 +157,7 @@
   description: A suture soaked in medicine, treats blunt-force trauma effectively and closes wounds.
   parent: BaseHealingItem
   id: MedicatedSuture
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -183,6 +186,7 @@
 - type: entity
   id: BrutepackAdvanced1
   parent: MedicatedSuture
+  suffix: Single
   components:
   - type: Stack
     stackType: MedicatedSuture
@@ -224,6 +228,31 @@
   components:
   - type: Stack
     lingering: true
+- type: entity
+  parent: BaseHealingItem
+  id: Tourniquet
+  name: tourniquet
+  description: Stops bleeding! Hopefully.
+  components:
+    - type: Tag
+      tags:
+        - SecBeltEquip
+    - type: Sprite
+      state: tourniquet
+    - type: Healing
+      damageContainers:
+        - Biological
+      damage:
+        groups:
+          Brute: 5 # Tourniquets HURT!
+        types:
+          Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
+      bloodlossModifier: -10 # Tourniquets stop bleeding
+      delay: 0.5
+      healingBeginSound:
+        path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      healingEndSound:
+        path: "/Audio/Items/Medical/brutepack_end.ogg"
 
 - type: entity
   name: roll of gauze

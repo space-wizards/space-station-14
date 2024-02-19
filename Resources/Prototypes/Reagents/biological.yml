@@ -88,7 +88,19 @@
   flavor: metallic
   color: "#162581"
   recognizable: true
-  physicalDesc: reagent-physical-desc-ferrous
+  physicalDesc: reagent-physical-desc-metallic
+  slippery: false
+
+- type: reagent
+  parent: Blood
+  id: AmmoniaBlood
+  name: reagent-name-ammonia-blood
+  group: Biological
+  desc: reagent-desc-ammonia-blood
+  flavor: bitter
+  color: "#7a8bf2"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-pungent
   slippery: false
 
 - type: reagent

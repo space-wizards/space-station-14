@@ -17,6 +17,9 @@
       "name": "bottle-empty"
     },
     {
+      "name": "bottle-open"
+    },
+    {
       "name": "bottle-enzyme"
     },
     {
@@ -119,7 +122,13 @@
       "name": "packet-layer"
     },
     {
+      "name": "packet-layer-open"
+    },
+    {
       "name": "packet-label"
+    },
+    {
+      "name": "packet-label-a"
     },
     {
       "name": "packet-trans-1"

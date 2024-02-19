@@ -118,7 +118,7 @@ public sealed class SmartEquipSystem : EntitySystem
             }
 
             _hands.TryDrop(uid, hands.ActiveHand, handsComp: hands);
-            _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true);
+            _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter:true);
             return;
         }
 
@@ -209,7 +209,7 @@ public sealed class SmartEquipSystem : EntitySystem
             return;
         }
 
-        _inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true);
+        _inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true);
         _hands.TryPickup(uid, slotItem, handsComp: hands);
     }
 }

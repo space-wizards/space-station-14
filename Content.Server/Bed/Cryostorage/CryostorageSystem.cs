@@ -6,7 +6,7 @@ using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
