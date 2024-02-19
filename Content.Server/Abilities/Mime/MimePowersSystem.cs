@@ -10,7 +10,7 @@ using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
-using MutedComponent = Content.Shared.Speech.Muting.MutedComponent;
+using Content.Shared.Speech.Muting;
 
 namespace Content.Server.Abilities.Mime
 {

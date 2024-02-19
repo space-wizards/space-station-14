@@ -1,8 +1,8 @@
 ﻿using Content.Server.Chat.Systems;
 using Content.Server.Speech.Muting;
 using Content.Shared.Mobs;
+using Content.Shared.Speech.Muting;
 using Robust.Shared.Prototypes;
-using MutedComponent = Content.Shared.Speech.Muting.MutedComponent;
 
 namespace Content.Server.Mobs;
 

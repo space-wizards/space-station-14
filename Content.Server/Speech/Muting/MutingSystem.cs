@@ -6,6 +6,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Puppet;
 using Content.Shared.Speech;
+using Content.Shared.Speech.Muting;
 
 namespace Content.Server.Speech.Muting
 {
@@ -15,12 +16,12 @@ namespace Content.Server.Speech.Muting
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<Shared.Speech.Muting.MutedComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<Shared.Speech.Muting.MutedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
-            SubscribeLocalEvent<Shared.Speech.Muting.MutedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MutedComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<MutedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MutedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
 
-        private void OnEmote(EntityUid uid, Shared.Speech.Muting.MutedComponent component, ref EmoteEvent args)
+        private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteEvent args)
         {
             if (args.Handled)
                 return;
@@ -30,7 +31,7 @@ namespace Content.Server.Speech.Muting
                 args.Handled = true;
         }
 
-        private void OnScreamAction(EntityUid uid, Shared.Speech.Muting.MutedComponent component, ScreamActionEvent args)
+        private void OnScreamAction(EntityUid uid, MutedComponent component, ScreamActionEvent args)
         {
             if (args.Handled)
                 return;
@@ -44,7 +45,7 @@ namespace Content.Server.Speech.Muting
         }
 
 
-        private void OnSpeakAttempt(EntityUid uid, Shared.Speech.Muting.MutedComponent component, SpeakAttemptEvent args)
+        private void OnSpeakAttempt(EntityUid uid, MutedComponent component, SpeakAttemptEvent args)
         {
             // TODO something better than this.
 
