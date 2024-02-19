@@ -274,6 +274,7 @@
   - type: Tag
     tags:
     - InnateDontDelete
+    - DroneUsable
 
 - type: entity
   noSpawn: true
