@@ -124,6 +124,7 @@ public sealed partial class GameTicker
         metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
         metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
         metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
+        metadata["roundId"] = new ValueDataNode(RoundId.ToString());
         // These should be set to null to prepare them for the next round.
         _replayRoundPlayerInfo = null;
         _replayRoundText = null;
