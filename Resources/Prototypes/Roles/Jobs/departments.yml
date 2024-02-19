@@ -30,7 +30,6 @@
   - Reporter
   - Visitor
   - Zookeeper
-  - Detective
   - ServiceWorker
   - Prisoner # Custom role
 
@@ -84,6 +83,7 @@
   - SecurityCadet
   - SecurityOfficer
   - SeniorOfficer
+  - Detective
   - Warden
 
 - type: department
