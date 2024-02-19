@@ -262,11 +262,3 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureVirologyLocked
-  suffix: Virology, Locked
-  components:
-  - type: AccessReader
-    access: [["Medical"]]
