@@ -10,6 +10,7 @@
   - type: Tag
     tags:
       - Payload
+      - ClothMade
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -38,7 +39,16 @@
       Cloth: 100
   - type: StaticPrice
     price: 5
-
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+    
 - type: entity
   parent: BasePlushie
   id: PlushieGhost
@@ -116,6 +126,13 @@
         reagents:
           - ReagentId: GroundBee
             Quantity: 10
+      food:
+        maxVol: 10
+        reagents:
+          - ReagentId: GroundBee
+            Quantity: 5
+          - ReagentId: Fiber
+            Quantity: 5
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/toys.rsi
@@ -308,6 +325,12 @@
       solutions:
         plushie:
           maxVol: 1
+        food:
+          maxVol: 10
+          reagents:
+          - ReagentId: Fiber
+            Quantity: 10
+
     - type: RefillableSolution
       solution: plushie
     - type: SolutionContainerVisuals
