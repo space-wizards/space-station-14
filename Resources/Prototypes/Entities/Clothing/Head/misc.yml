@@ -175,7 +175,7 @@
   suffix: DO NOT MAP
   components:
   - type: Tag
-    tags: # ignore "WhitelistChameleon" tag
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
