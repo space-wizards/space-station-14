@@ -193,7 +193,8 @@ namespace Content.Shared.Preferences
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
-                height = random.NextFloat(speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
+                // CD: We only permit 2 decimals of precision for height in the editor, so we should enforce that here
+                height = MathF.Round(random.NextFloat(speciesPrototype.MinHeight, speciesPrototype.MaxHeight), 2);
             }
 
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;

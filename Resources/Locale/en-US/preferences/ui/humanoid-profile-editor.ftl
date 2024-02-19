@@ -1,5 +1,5 @@
 humanoid-profile-editor-randomize-everything-button = Randomize everything
-humanoid-profile-editor-reset-height-button = Reset Height
+humanoid-profile-editor-reset-height-button = Reset
 humanoid-profile-editor-name-label = Name:
 humanoid-profile-editor-name-random-button = Randomize
 humanoid-profile-editor-appearance-tab = Appearance

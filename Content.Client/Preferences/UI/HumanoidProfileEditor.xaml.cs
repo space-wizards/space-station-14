@@ -203,8 +203,7 @@ namespace Content.Client.Preferences.UI
 
             #endregion Species
 
-            #region Height
-
+            #region CDHeight
 
             _heightPicker.OnTextChanged += args =>
             {
@@ -212,25 +211,32 @@ namespace Content.Client.Preferences.UI
                     return;
 
                 var prototype = _prototypeManager.Index<SpeciesPrototype>(Profile.Species);
+                newHeight = MathF.Round(Math.Clamp(newHeight, prototype.MinHeight, prototype.MaxHeight), 2);
 
-                if (newHeight < prototype.MinHeight)
-                    newHeight = prototype.MinHeight;
+                // The percentage between the start and end numbers, aka "inverse lerp"
+                var sliderPercent = (newHeight - prototype.MinHeight) /
+                                    (prototype.MaxHeight - prototype.MinHeight);
+                CDHeightSlider.Value = sliderPercent;
 
-                if (newHeight > prototype.MaxHeight)
-                    newHeight = prototype.MaxHeight;
-
-                CHeightLabel.Text = MathF.Round(newHeight, 2).ToString("G");
-                SetProfileHeight(MathF.Round(newHeight, 2));
+                SetProfileHeight(newHeight);
             };
 
             CHeightReset.OnPressed += _ =>
             {
-                _heightPicker.Text = _defaultHeight.ToString(CultureInfo.InvariantCulture);
-                CHeightLabel.Text = _defaultHeight.ToString(CultureInfo.InvariantCulture);
-                SetProfileHeight(_defaultHeight);
+                _heightPicker.SetText(_defaultHeight.ToString(CultureInfo.InvariantCulture), true);
             };
 
-            #endregion Height
+            CDHeightSlider.OnValueChanged += _ =>
+            {
+                if (Profile is null)
+                    return;
+                var prototype = _prototypeManager.Index<SpeciesPrototype>(Profile.Species);
+                var newHeight = MathF.Round(MathHelper.Lerp(prototype.MinHeight, prototype.MaxHeight, CDHeightSlider.Value), 2);
+                _heightPicker.Text = newHeight.ToString(CultureInfo.InvariantCulture);
+                SetProfileHeight(newHeight);
+            };
+
+            #endregion CDHeight
 
             #region Skin
 
@@ -1070,8 +1076,11 @@ namespace Content.Client.Preferences.UI
             if (species != null)
                 _defaultHeight = species.DefaultHeight;
 
-            _heightPicker.Text = Profile.Height.ToString();
-            CHeightLabel.Text = Profile.Height.ToString();
+            var prototype = _prototypeManager.Index<SpeciesPrototype>(Profile.Species);
+            var sliderPercent = (Profile.Height - prototype.MinHeight) /
+                                (prototype.MaxHeight - prototype.MinHeight);
+            CDHeightSlider.Value = sliderPercent;
+            _heightPicker.Text = Profile.Height.ToString(CultureInfo.InvariantCulture);
         }
         
         private void UpdateSpawnPriorityControls()
