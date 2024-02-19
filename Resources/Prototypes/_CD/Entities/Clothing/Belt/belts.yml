@@ -9,7 +9,4 @@
     state: icon
   - type: Clothing
     sprite: _CD/Clothing/Belt/halfapron.rsi
-  - type: Item
-    size: 30
-  - type: Storage
-    capacity: 20
+    
