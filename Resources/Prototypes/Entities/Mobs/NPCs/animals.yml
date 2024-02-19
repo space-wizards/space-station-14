@@ -3164,8 +3164,6 @@
   - type: Grammar
     attributes:
       gender: epicene
-  - type: ReplacementAccent # No talky
-    accent: nymph
   - type: Speech
     speechVerb: Plant
   - type: Tag
@@ -3180,3 +3178,12 @@
     reformTime: 10
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
+
+- type: entity
+  parent: MobDionaNymph
+  id: MobDionaNymphAccent # No talky. For non-brain & wild nymphs
+  suffix: Accent
+  components:
+  - type: ReplacementAccent
+    accent: nymph
+    
