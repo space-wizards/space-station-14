@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: thieves can now appear in rounds with nuclear operatives
-    type: Add
-  id: 5466
-  time: '2023-12-28T23:50:25.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23102
 - author: EmoGarbage404
   changes:
   - message: Added station beacons. These devices create custom labels on the station
@@ -3862,3 +3855,10 @@
   id: 5965
   time: '2024-02-19T15:40:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25301
+- author: Lank
+  changes:
+  - message: Nymphs can now open doors and chirp.
+    type: Tweak
+  id: 5966
+  time: '2024-02-19T17:11:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25363
