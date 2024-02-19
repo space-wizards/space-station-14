@@ -1,38 +1,19 @@
-﻿using Robust.Shared.Prototypes;
-
+﻿
 namespace Content.Shared.Magic.Components;
 // TODO: Networked?
-// TODO: Attribute for datafields
 [RegisterComponent, Access(typeof(SharedMagicSystem))]
 public sealed partial class MagicComponent : Component
 {
-    // Spawning ent?
-    // Might be better off on specific events?
-    // public ProtoId<EntityPrototype> Prototype = default!;
-
-    // TODO: Use in ISpeakSpellEvent or something
-    /// <summary>
-    /// To say something when a spell is cast
-    /// </summary>
-    public string? Speech { get; private set; }
-
-    // TODO: Is this needed if you can just set everything on the proto?
-    // Vars set here will override action settings
-    /// <summary>
-    /// How long until the spell can be cast again?
-    /// </summary>
-    [DataField("cooldown")]
-    public TimeSpan? Cooldown;
-
-    // TODO: Is this needed if you can just set everything on the proto?
-    /// <summary>
-    /// How many times can the spell be used before <see cref="Cooldown"/>?
-    /// </summary>
-    [DataField("uses")]
-    public int Uses = 1;
+    // TODO: Split into different components?
+    // This could be the MagicRequirementsComp - which just is requirements for the spell
+    // Magic comp could be on the actual entities itself
+    //  Could handle lifetime, ignore caster, etc?
+    // Magic caster comp would be on the caster, used for what I'm not sure
 
     // TODO: Doafter required (ie chanting spell)
     //  Move while casting allowed
+    //  Maybe add doafters to events?
+    //    So if doafter != null, then do the spell after?
 
     // TODO: Spell requirements
     //  A list of requirements to cast the spell
@@ -41,4 +22,19 @@ public sealed partial class MagicComponent : Component
     //    Hands
     //    Wand in hand (or any item in hand
     //    Spell takes up an inhand slot
+    //      May be an action toggle or something
+
+    /// <summary>
+    ///     Does this spell require Wizard robes?
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Robes;
+
+    /// <summary>
+    ///     Does this spell require the user to speak?
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Voice;
+
+    // TODO: FreeHand - should check if toggleable action
 }

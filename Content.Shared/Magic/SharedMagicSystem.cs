@@ -45,12 +45,14 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         // TODO: Make Magic Comp/Magic Caster Comp
-        SubscribeLocalEvent<MagicComponent, MapInitEvent>(OnInit, after: new []{typeof(SharedSpellbookSystem)});
+        SubscribeLocalEvent<MagicComponent, MapInitEvent>(OnInit, after: new []{typeof(SharedActionsSystem)});
+        SubscribeLocalEvent<MagicComponent, BeforeCastSpellEvent>(OnBeforeCastSpell);
 
         // TODO: Magic comp on spells?
         //  If magic comp is on spells it doesn't raise
@@ -64,8 +66,21 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
     }
 
+    private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
+    {
+        // TODO: Check component for requirements
+    }
+
     private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)
     {
+
+    }
+
+    private bool PassesSpellPrerequisites(EntityUid spell, EntityUid performer)
+    {
+        var ev = new BeforeCastSpellEvent(performer);
+        RaiseLocalEvent(spell, ref ev);
+        return !ev.Cancelled;
     }
 
     #region Spells
@@ -80,7 +95,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        foreach (var position in GetSpawnPositions(transform, args.Pos))
+        foreach (var position in GetInstantSpawnPositions(transform, args.Pos))
         {
             SpawnSpellHelper(args.Prototype, position, args.Performer, preventCollide: args.PreventCollideWithCaster);
         }
@@ -91,7 +106,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnProjectileSpell(ProjectileSpellEvent ev)
     {
-        if (ev.Handled)
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
@@ -144,9 +159,7 @@ public abstract class SharedMagicSystem : EntitySystem
         }
     }
 
-    // TODO: Should specify it's not for projectiles?
-    //  Or try to get it to work with projectiles?
-    private List<EntityCoordinates> GetSpawnPositions(TransformComponent casterXform, MagicSpawnData data)
+    private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicSpawnData data)
     {
         switch (data)
         {

@@ -417,7 +417,10 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         if (performEvent != null)
+        {
             performEvent.Performer = user;
+            performEvent.Action = actionEnt;
+        }
 
         // All checks passed. Perform the action!
         PerformAction(user, component, actionEnt, action, performEvent, curTime);
@@ -510,13 +513,12 @@ public abstract class SharedActionsSystem : EntitySystem
             handled = actionEvent.Handled;
         }
 
-        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
-        handled |= action.Sound != null;
-
         if (!handled)
             return; // no interaction occurred.
 
-        // reduce charges, start cooldown, and mark as dirty (if required).
+        // play sound, reduce charges, start cooldown, and mark as dirty (if required).
+
+        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
 
         var dirty = toggledBefore == action.Toggled;
 
