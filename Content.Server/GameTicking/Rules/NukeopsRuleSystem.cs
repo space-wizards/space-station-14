@@ -800,7 +800,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// <summary>
     ///     Adds missing nuke operative components, equips starting gear and renames the entity.
     /// </summary>
-    private void SetupOperativeEntity(EntityUid mob, string name, NukeopSpawnDetails spawnDetails, HumanoidCharacterProfile? profile, NukeopsRuleComponent component)
+    private void SetupOperativeEntity(EntityUid mob, string name, NukeopSpawnPreset spawnDetails, HumanoidCharacterProfile? profile, NukeopsRuleComponent component)
     {
         _metaData.SetEntityName(mob, name);
         EnsureComp<NukeOperativeComponent>(mob);
@@ -1060,9 +1060,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private sealed class NukieSpawn
     {
         public ICommonSession? Session { get; private set; }
-        public NukeopSpawnDetails Type { get; private set; }
+        public NukeopSpawnPreset Type { get; private set; }
 
-        public NukieSpawn(ICommonSession? session, NukeopSpawnDetails type)
+        public NukieSpawn(ICommonSession? session, NukeopSpawnPreset type)
         {
             Session = session;
             Type = type;

@@ -15,5 +15,5 @@ public sealed partial class NukeOperativeSpawnerComponent : Component
     public string OperativeName = default!;
 
     [DataField]
-    public NukeopSpawnDetails SpawnDetails = default!;
+    public NukeopSpawnPreset SpawnDetails = default!;
 }

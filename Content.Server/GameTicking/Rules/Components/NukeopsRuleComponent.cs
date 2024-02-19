@@ -161,27 +161,41 @@ public sealed partial class NukeopsRuleComponent : Component
     public ProtoId<NpcFactionPrototype> Faction = default!;
 
     [DataField]
-    public NukeopSpawnDetails CommanderSpawnDetails = new() { AntagRoleProto = "NukeopsCommander", GearProto = "SyndicateCommanderGearFull", NamePrefix = "nukeops-role-commander", NameList = "SyndicateNamesElite" };
+    public NukeopSpawnPreset CommanderSpawnDetails = new() { AntagRoleProto = "NukeopsCommander", GearProto = "SyndicateCommanderGearFull", NamePrefix = "nukeops-role-commander", NameList = "SyndicateNamesElite" };
 
     [DataField]
-    public NukeopSpawnDetails AgentSpawnDetails = new() { AntagRoleProto = "NukeopsMedic", GearProto = "SyndicateOperativeMedicFull", NamePrefix = "nukeops-role-agent", NameList = "SyndicateNamesNormal" };
+    public NukeopSpawnPreset AgentSpawnDetails = new() { AntagRoleProto = "NukeopsMedic", GearProto = "SyndicateOperativeMedicFull", NamePrefix = "nukeops-role-agent", NameList = "SyndicateNamesNormal" };
 
     [DataField]
-    public NukeopSpawnDetails OperativeSpawnDetails = new() { AntagRoleProto = "Nukeops", GearProto = "SyndicateOperativeGearFull", NamePrefix = "nukeops-role-operator", NameList = "SyndicateNamesNormal" };
+    public NukeopSpawnPreset OperativeSpawnDetails = new() { AntagRoleProto = "Nukeops", GearProto = "SyndicateOperativeGearFull", NamePrefix = "nukeops-role-operator", NameList = "SyndicateNamesNormal" };
 }
 
-[Serializable]
-public struct NukeopSpawnDetails
+/// <summary>
+/// Stores the presets for each operative type
+/// Ie Commander, Agent and Operative
+/// </summary>
+[DataDefinition, Serializable]
+public sealed partial class NukeopSpawnPreset
 {
+
     [DataField]
     public ProtoId<AntagPrototype> AntagRoleProto;
 
+    /// <summary>
+    /// The equipment set this operative will be given when spawned
+    /// </summary>
     [DataField]
     public ProtoId<StartingGearPrototype> GearProto;
 
+    /// <summary>
+    /// The name prefix, ie "Agent"
+    /// </summary>
     [DataField]
     public LocId NamePrefix;
 
+    /// <summary>
+    /// The entity name suffix will be chosen from this list randomly
+    /// </summary>
     [DataField]
     public ProtoId<DatasetPrototype> NameList;
 }
