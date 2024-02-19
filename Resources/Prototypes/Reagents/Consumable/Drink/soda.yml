@@ -150,6 +150,11 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/shirleytemple.rsi
     state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
 
 - type: reagent
   id: SpaceMountainWind
