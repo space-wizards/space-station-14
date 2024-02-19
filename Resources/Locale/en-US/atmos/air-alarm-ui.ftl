@@ -57,6 +57,7 @@ air-alarm-ui-vent-internal-bound-label = Internal bound
 air-alarm-ui-scrubber-pump-direction-label = Direction
 air-alarm-ui-scrubber-volume-rate-label = Rate (L)
 air-alarm-ui-scrubber-wide-net-label = WideNet
+air-alarm-ui-scrubber-wide-net-tooltip = Scrubs in a 3x3 area centered on itself. If disabled, scrubbing rate is redirected to own tile.
 
 ### Thresholds
 

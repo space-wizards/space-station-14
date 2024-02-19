@@ -20,7 +20,7 @@
                     </BoxContainer>
                 </BoxContainer>
                 <BoxContainer>
-                    <CheckBox Name="CWideNet" Text="{Loc 'air-alarm-ui-scrubber-wide-net-label'}" />
+                    <CheckBox Name="CWideNet" Text="{Loc 'air-alarm-ui-scrubber-wide-net-label'}" ToolTip="{Loc 'air-alarm-ui-scrubber-wide-net-tooltip'}" />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
                     <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />

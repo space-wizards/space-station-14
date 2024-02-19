@@ -71,10 +71,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var position = _transformSystem.GetGridTilePositionOrDefault((uid,xform));
             var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
-            Scrub(timeDelta, scrubber, environment, outlet);
-
             if (!scrubber.WideNet)
+            {
+                Scrub(timeDelta * 9, scrubber, environment, outlet); // We're scrubbing 1 tile instead of 9 so scrub 9 times faster
                 return;
+            }
+
+            Scrub(timeDelta, scrubber, environment, outlet);
 
             // Scrub adjacent tiles too.
             foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
