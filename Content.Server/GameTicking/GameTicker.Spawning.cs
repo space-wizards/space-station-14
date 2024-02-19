@@ -21,7 +21,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker

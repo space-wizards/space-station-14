@@ -61,9 +61,9 @@ namespace Content.IntegrationTests.Tests.Preferences
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.StayInLobby,
-                new List<string> (),
-                new List<string> (),
-                new List<string>()
+                antagPreferences: new List<string>(),
+                traitPreferences: new List<string>(),
+                loadoutPreferences: new List<string>()
             );
         }
 
