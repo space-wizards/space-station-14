@@ -28,7 +28,9 @@
   components:
   - type: Sprite
     state: hop
-    
+  - type: StaticPrice
+    price: 2000
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurinePassenger
@@ -37,7 +39,9 @@
   components:
   - type: Sprite
     state: passenger
-    
+  - type: StaticPrice
+    price: 100
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineGreytider
@@ -46,6 +50,8 @@
   components:
   - type: Sprite
     state: passenger_greytide
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -55,6 +61,8 @@
   components:
   - type: Sprite
     state: clown
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -64,7 +72,8 @@
   components:
   - type: Sprite
     state: holoclown
-
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -74,6 +83,8 @@
   components:
   - type: Sprite
     state: mime
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -83,6 +94,8 @@
   components:
   - type: Sprite
     state: musician
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -92,6 +105,8 @@
   components:
   - type: Sprite
     state: boxer
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -101,6 +116,8 @@
   components:
   - type: Sprite
     state: captain
+  - type: StaticPrice
+    price: 3000
 
 - type: entity
   parent: BaseFigurine
@@ -110,6 +127,8 @@
   components:
   - type: Sprite
     state: hos
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -119,6 +138,8 @@
   components:
   - type: Sprite
     state: warden
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -128,6 +149,8 @@
   components:
   - type: Sprite
     state: detective
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   parent: BaseFigurine
@@ -137,6 +160,8 @@
   components:
   - type: Sprite
     state: security
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -146,6 +171,8 @@
   components:
   - type: Sprite
     state: lawyer
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -155,6 +182,8 @@
   components:
   - type: Sprite
     state: cargotech
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -164,6 +193,8 @@
   components:
   - type: Sprite
     state: salvage
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -173,6 +204,8 @@
   components:
   - type: Sprite
     state: qm
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -182,6 +215,8 @@
   components:
   - type: Sprite
     state: ce
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -191,6 +226,8 @@
   components:
   - type: Sprite
     state: engineer
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -200,6 +237,8 @@
   components:
   - type: Sprite
     state: atmos
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -209,6 +248,8 @@
   components:
   - type: Sprite
     state: rd
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -218,6 +259,8 @@
   components:
   - type: Sprite
     state: scientist
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -227,6 +270,8 @@
   components:
   - type: Sprite
     state: cmo
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -236,6 +281,8 @@
   components:
   - type: Sprite
     state: chemist
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -245,6 +292,8 @@
   components:
   - type: Sprite
     state: paramedic
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -254,6 +303,8 @@
   components:
   - type: Sprite
     state: medical
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -263,6 +314,8 @@
   components:
   - type: Sprite
     state: librarian
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -272,6 +325,8 @@
   components:
   - type: Sprite
     state: chaplain
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -281,6 +336,8 @@
   components:
   - type: Sprite
     state: chef
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -290,6 +347,8 @@
   components:
   - type: Sprite
     state: bartender
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -299,6 +358,8 @@
   components:
   - type: Sprite
     state: botanist
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseFigurine
@@ -308,6 +369,8 @@
   components:
   - type: Sprite
     state: janitor
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   parent: BaseFigurine
@@ -317,7 +380,9 @@
   components:
   - type: Sprite
     state: nukie
- 
+  - type: StaticPrice
+    price: 750
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineNukieElite
@@ -326,6 +391,8 @@
   components:
   - type: Sprite
     state: nukie_elite
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   parent: BaseFigurine
@@ -335,7 +402,9 @@
   components:
   - type: Sprite
     state: nukie_commander
- 
+  - type: StaticPrice
+    price: 3000
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineFootsoldier
@@ -344,7 +413,10 @@
   components:
   - type: Sprite
     state: footsoldier
- 
+  - type: StaticPrice
+    price: 750
+
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineWizard
@@ -353,7 +425,9 @@
   components:
   - type: Sprite
     state: wizard
- 
+  - type: StaticPrice
+    price: 2000
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineWizardFake
@@ -362,6 +436,8 @@
   components:
   - type: Sprite
     state: wizard_fake
+  - type: StaticPrice
+    price: 100
 
 #Nonhuman Figurines
 
@@ -373,7 +449,9 @@
   components:
   - type: Sprite
     state: spacedragon
- 
+  - type: StaticPrice
+    price: 3000
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineQueen
@@ -382,6 +460,8 @@
   components:
   - type: Sprite
     state: queen
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   parent: BaseFigurine
@@ -391,6 +471,8 @@
   components:
   - type: Sprite
     state: ratking
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -400,6 +482,8 @@
   components:
   - type: Sprite
     state: ratservant
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -409,7 +493,9 @@
   components:
   - type: Sprite
     state: mouse
-    
+  - type: StaticPrice
+    price: 100
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineSlime
@@ -418,6 +504,8 @@
   components:
   - type: Sprite
     state: slime
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -427,7 +515,8 @@
   components:
   - type: Sprite
     state: hamlet
- 
+  - type: StaticPrice
+    price: 10000
 #TODO: Convert these to the new figurine sprite template and rename their sprite name.
 #Yes, these are humanoids, but they need to be updated first.
 
@@ -439,6 +528,8 @@
   components:
   - type: Sprite
     state: griffinprize
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -448,6 +539,8 @@
   components:
   - type: Sprite
     state: owlprize
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -457,6 +550,8 @@
   components:
   - type: Sprite
     state: skeletonprize
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   parent: BaseFigurine
@@ -466,3 +561,5 @@
   components:
   - type: Sprite
     state: thiefcharacter
+  - type: StaticPrice
+    price: 250

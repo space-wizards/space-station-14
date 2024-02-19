@@ -29,107 +29,143 @@
     items:
       - id: MysteryFigureBoxTrash
       - id: ToyFigurinePassenger
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineClown
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineMime
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineMusician
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineBoxer
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineCaptain
+        prob: 0.01
         orGroup: SpacemenFig
       - id: ToyFigurineHeadOfSecurity
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineWarden
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineDetective
+        prob: 0.15
         orGroup: SpacemenFig
       - id: ToyFigurineSecurity
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineLawyer
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineCargoTech
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineSalvage
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineQuartermaster
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineChiefEngineer
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineAtmosTech
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineEngineer
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineResearchDirector
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineScientist
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineChiefMedicalOfficer
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineChemist
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineParamedic
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineMedicalDoctor
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineHeadOfPersonnel
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineLibrarian
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineChaplain
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineChef
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineBartender
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineBotanist
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineJanitor
+        prob: 0.15
         orGroup: SpacemenFig
       - id: ToyFigurineNukie
+        prob: 0.15
         orGroup: SpacemenFig
       - id: ToyFigurineNukieElite
+        prob: 0.15
         orGroup: SpacemenFig
       - id: ToyFigurineFootsoldier
+        prob: 0.15
         orGroup: SpacemenFig
       - id: ToyFigurineWizardFake
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineSlime
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineGreytider
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineWizard
-        prob: 0.50
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineNukieCommander
-        prob: 0.50
+        prob: 0.01
         orGroup: SpacemenFig
       - id: ToyGriffin
-        prob: 0.50
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyOwlman
-        prob: 0.50
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToySkeleton
-        prob: 0.50
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineRatKing
-        prob: 0.30
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineRatServant
-        prob: 0.40
+        prob: 0.24
         orGroup: SpacemenFig
       - id: ToyFigurineMouse
-        prob: 0.50
+        prob: 0.66
         orGroup: SpacemenFig
       - id: ToyFigurineQueen
-        prob: 0.25
+        prob: 0.05
         orGroup: SpacemenFig
       - id: ToyFigurineSpaceDragon
-        prob: 0.10
+        prob: 0.01
         orGroup: SpacemenFig
       - id: ToyFigurineHamlet
-        prob: 0.20
+        prob: 0.001
         orGroup: SpacemenFig
