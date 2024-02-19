@@ -1,7 +1,7 @@
 - type: entity
   save: false
   abstract: true
-  parent: [BaseMob, MobDamageable, MobBloodstream]
+  parent: [BaseMob, MobDamageable]
   id: PlayerSiliconBase #for player controlled silicons
   components:
     - type: Reactive
