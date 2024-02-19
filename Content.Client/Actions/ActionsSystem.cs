@@ -178,7 +178,7 @@ namespace Content.Client.Actions
         protected override void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp,
             BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity != performer)
+            if (_playerManager.LocalEntity != performer)
                 return;
 
             OnActionAdded?.Invoke(actionId);
@@ -186,7 +186,7 @@ namespace Content.Client.Actions
 
         protected override void ActionRemoved(EntityUid performer, EntityUid actionId, ActionsComponent comp, BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity != performer)
+            if (_playerManager.LocalEntity != performer)
                 return;
 
             OnActionRemoved?.Invoke(actionId);
@@ -194,7 +194,7 @@ namespace Content.Client.Actions
 
         public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetClientActions()
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
+            if (_playerManager.LocalEntity is not { } user)
                 return Enumerable.Empty<(EntityUid, BaseActionComponent)>();
 
             return GetActions(user);
@@ -217,7 +217,7 @@ namespace Content.Client.Actions
 
         public void LinkAllActions(ActionsComponent? actions = null)
         {
-             if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+             if (_playerManager.LocalEntity is not { } user ||
                  !Resolve(user, ref actions, false))
              {
                  return;
@@ -234,7 +234,7 @@ namespace Content.Client.Actions
 
         public void TriggerAction(EntityUid actionId, BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+            if (_playerManager.LocalEntity is not { } user ||
                 !TryComp(user, out ActionsComponent? actions))
             {
                 return;
@@ -262,7 +262,7 @@ namespace Content.Client.Actions
         /// </summary>
         public void LoadActionAssignments(string path, bool userData)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
+            if (_playerManager.LocalEntity is not { } user)
                 return;
 
             var file = new ResPath(path).ToRootedPath();

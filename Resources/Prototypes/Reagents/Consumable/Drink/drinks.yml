@@ -67,7 +67,7 @@
   desc: reagent-desc-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: tea
-  color: "#C33F00"
+  color: "#7EB626"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/glass_green.rsi
     state: icon
@@ -107,7 +107,7 @@
   desc: reagent-desc-iced-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
-  color: "#CE4200"
+  color: "#5B821B"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/glass_green.rsi
     state: icon
@@ -119,7 +119,7 @@
   desc: reagent-desc-iced-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
-  color: "#104038"
+  color: "#6C3916"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icedteaglass.rsi
     state: icon
