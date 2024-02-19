@@ -42,6 +42,7 @@ let
     dbus
     at-spi2-core
     cups
+    python3
   ];
 in pkgs.mkShell {
   name = "space-station-14-devshell";
