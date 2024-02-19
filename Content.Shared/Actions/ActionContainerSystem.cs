@@ -300,12 +300,10 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!_actions.TryGetActionData(args.Entity, out var data))
             return;
 
-        DebugTools.Assert(data.Container is null || data.Container == uid);
-
         if (data.Container != uid)
         {
             data.Container = uid;
-            Dirty(uid, data);
+            Dirty(args.Entity, data);
         }
 
         var ev = new ActionAddedEvent(args.Entity, data);
@@ -320,8 +318,6 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!_actions.TryGetActionData(args.Entity, out var data, false))
             return;
 
-        DebugTools.Assert(data.Container is null || data.Container == uid);
-
         var ev = new ActionRemovedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
 
@@ -329,7 +325,7 @@ public sealed class ActionContainerSystem : EntitySystem
             return;
 
         data.Container = null;
-        Dirty(uid, data);
+        Dirty(args.Entity, data);
     }
 
     private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)

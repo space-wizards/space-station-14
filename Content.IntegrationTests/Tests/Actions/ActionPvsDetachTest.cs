@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Eye;
-using NUnit.Framework.Legacy;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
@@ -40,9 +39,9 @@ public sealed class ActionPvsDetachTest
         }
         await pair.RunTicksSync(5);
 
-        // Client's actions have left been detached / are out of view
+        // Client's actions have left been detached / are out of view, but action comp state has not changed
         Assert.That(sys.GetActions(ent).Count(), Is.EqualTo(initActions));
-        Assert.That(cSys.GetActions(cEnt).Count(), Is.EqualTo(0));
+        Assert.That(cSys.GetActions(cEnt).Count(), Is.EqualTo(initActions));
 
         // Re-enter PVS view
         enumerator = server.Transform(ent).ChildEnumerator;
