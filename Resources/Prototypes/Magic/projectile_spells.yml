@@ -5,6 +5,7 @@
   noSpawn: true
   components:
   - type: Magic
+    robes: true
   - type: WorldTargetAction
     useDelay: 15
     itemIconStyle: BigAction

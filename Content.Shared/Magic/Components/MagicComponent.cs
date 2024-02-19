@@ -34,7 +34,7 @@ public sealed partial class MagicComponent : Component
     ///     Does this spell require the user to speak?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Voice;
+    public bool Speech;
 
     // TODO: FreeHand - should check if toggleable action
 }

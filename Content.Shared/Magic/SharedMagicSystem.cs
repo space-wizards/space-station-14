@@ -7,6 +7,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Inventory;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
@@ -45,7 +46,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
@@ -68,7 +69,22 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
     {
-        // TODO: Check component for requirements
+        var comp = ent.Comp;
+
+        if (comp.Robes)
+        {
+            var enumerator = _inventorySystem.GetSlotEnumerator(args.Performer, SlotFlags.INNERCLOTHING);
+            while (enumerator.NextItem(out var item, out _))
+            {
+                // TODO: Add WizRobe comp to wizard robes
+                // If they don't have wizardrobes comp, then cancelled = true
+            }
+        }
+
+        if (comp.Speech)
+        {
+            // TODO: Move Muted to shared and check for muted comp
+        }
     }
 
     private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)
@@ -90,7 +106,7 @@ public abstract class SharedMagicSystem : EntitySystem
     /// </summary>
     private void OnInstantSpawn(InstantSpawnSpellEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         var transform = Transform(args.Performer);
@@ -135,8 +151,9 @@ public abstract class SharedMagicSystem : EntitySystem
     // TODO: See what this is used for and try to swap out component.Owner
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
-        if (ev.Handled)
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
+
         ev.Handled = true;
         Speak(ev);
 
@@ -239,7 +256,7 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <param name="args"></param>
     private void OnTeleportSpell(TeleportSpellEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         var transform = Transform(args.Performer);
@@ -264,7 +281,7 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <param name="args"> The Spawn Spell Event args.</param>
     private void OnWorldSpawn(WorldSpawnSpellEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         var targetMapCoords = args.Target;
@@ -320,7 +337,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
-        if (ev.Handled)
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
@@ -343,7 +360,7 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <param name="args"></param>
     private void OnKnockSpell(KnockSpellEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         args.Handled = true;
