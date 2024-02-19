@@ -43,7 +43,7 @@
   copyright: "Created by Breviceps, shortened and converted to OGG and mono"
   source: "https://freesound.org/people/Breviceps/sounds/445118/"
 
-- files: ["Toys/toyfall1.ogg, Toys/toyfall2.ogg"]
+- files: ["Toys/toyfall1.ogg", "Toys/toyfall2.ogg"]
   license: "CC0-1.0"
   copyright: "Created by HighTechPuddle"
   source: "https://github.com/HighTechPuddle/space-station-14"
