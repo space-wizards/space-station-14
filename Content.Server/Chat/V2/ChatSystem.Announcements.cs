@@ -1,4 +1,5 @@
-﻿using Content.Server.Station.Components;
+﻿using Content.Server.Chat.V2.Censorship;
+using Content.Server.Station.Components;
 using Content.Shared.Chat.V2;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
@@ -26,7 +27,9 @@ public sealed partial class ChatSystem
         Color? colorOverride = null
         )
     {
-        var msgOut = new AnnouncementEvent(SanitizeName(sender, UseEnglishGrammar),message,messageColorOverride: colorOverride);
+        ChatCensor.Censor(message, out message);
+
+        var msgOut = new AnnouncementEvent(SanitizeName(sender, UseEnglishGrammar), message,messageColorOverride: colorOverride);
 
         RaiseNetworkEvent(msgOut);
 
@@ -59,6 +62,8 @@ public sealed partial class ChatSystem
         SoundSpecifier? announcementSound = null,
         Color? colorOverride = null)
     {
+        ChatCensor.Censor(message, out message);
+
         var station = _stationSystem.GetOwningStation(source);
         if (station == null)
             return;
