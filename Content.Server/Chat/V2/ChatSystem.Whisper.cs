@@ -114,7 +114,7 @@ public sealed partial class ChatSystem
 
         var name = SanitizeName(asName, UseEnglishGrammar);
 
-        RaiseLocalEvent(new WhisperSuccessEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
+        RaiseLocalEvent(new WhisperCreatedEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
 
         var msgOut = new WhisperEvent(
             GetNetEntity(entityUid),
@@ -204,29 +204,5 @@ public sealed partial class ChatSystem
         }
 
         return (minRecipients, maxRecipients, maxRecipientsNoSight);
-    }
-}
-
-/// <summary>
-/// Raised when a character whispers.
-/// </summary>
-[Serializable]
-public sealed class WhisperSuccessEvent : EntityEventArgs
-{
-    public EntityUid Speaker;
-    public string AsName;
-    public readonly string Message;
-    public readonly string ObfuscatedMessage;
-    public float MinRange;
-    public float MaxRange;
-
-    public WhisperSuccessEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
-    {
-        Speaker = speaker;
-        AsName = asName;
-        Message = message;
-        ObfuscatedMessage = obfuscatedMessage;
-        MinRange = minRange;
-        MaxRange = maxRange;
     }
 }

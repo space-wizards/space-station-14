@@ -15,11 +15,11 @@ namespace Content.Server.Speech.Muting
         {
             base.Initialize();
             SubscribeLocalEvent<MutedComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<MutedComponent, EmoteSuccessEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MutedComponent, EmoteCreatedEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
             SubscribeLocalEvent<MutedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
 
-        private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteSuccessEvent args)
+        private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteCreatedEvent args)
         {
             if (args.Handled)
                 return;

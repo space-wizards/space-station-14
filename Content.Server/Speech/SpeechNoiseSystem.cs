@@ -20,7 +20,7 @@ namespace Content.Server.Speech
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpeechComponent, LocalChatSuccessEvent>(OnEntitySpoke);
+            SubscribeLocalEvent<SpeechComponent, LocalChatCreatedEvent>(OnEntitySpoke);
         }
 
         public SoundSpecifier? GetSpeechSound(Entity<SpeechComponent> ent, string message)
@@ -50,7 +50,7 @@ namespace Content.Server.Speech
             return contextSound;
         }
 
-        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, LocalChatSuccessEvent args)
+        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, LocalChatCreatedEvent args)
         {
             if (component.SpeechSounds == null)
                 return;

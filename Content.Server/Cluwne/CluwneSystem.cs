@@ -39,7 +39,7 @@ public sealed class CluwneSystem : EntitySystem
 
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
-        SubscribeLocalEvent<CluwneComponent, EmoteSuccessEvent>(OnEmote, before:
+        SubscribeLocalEvent<CluwneComponent, EmoteCreatedEvent>(OnEmote, before:
         new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
     }
 
@@ -87,7 +87,7 @@ public sealed class CluwneSystem : EntitySystem
     /// <summary>
     /// Handles the timing on autoemote as well as falling over and honking.
     /// </summary>
-    private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteSuccessEvent args)
+    private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteCreatedEvent args)
     {
         if (args.Handled)
             return;

@@ -61,7 +61,7 @@ public sealed partial class ChatSystem
         var isAdmin = _admin.IsAdmin(source);
         var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
 
-        RaiseLocalEvent(new DeadChatSuccessEvent(source, name, message, isAdmin));
+        RaiseLocalEvent(new DeadChatCreatedEvent(source, name, message, isAdmin));
 
         var msgOut = new DeadChatEvent(
             GetNetEntity(source),
@@ -94,25 +94,5 @@ public sealed partial class ChatSystem
             .Recipients
             .Union(_admin.ActiveAdmins)
             .Select(p => p.Channel);
-    }
-}
-
-/// <summary>
-/// Raised locally when a character speaks in Dead Chat.
-/// </summary>
-[Serializable]
-public sealed class DeadChatSuccessEvent : EntityEventArgs
-{
-    public EntityUid Speaker;
-    public string AsName;
-    public readonly string Message;
-    public bool IsAdmin;
-
-    public DeadChatSuccessEvent(EntityUid speaker, string asName, string message, bool isAdmin)
-    {
-        Speaker = speaker;
-        AsName = asName;
-        Message = message;
-        IsAdmin = isAdmin;
     }
 }

@@ -149,7 +149,7 @@ public sealed partial class ChatSystem
     }
 
     private void TransmitToReceivers(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName,
-        RadioSuccessEvent msgOut)
+        RadioCreatedEvent msgOut)
     {
         foreach (var receiver in GetRadioReceivers(entityUid, channel))
         {
@@ -160,14 +160,14 @@ public sealed partial class ChatSystem
     }
 
     private void StashRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName,
-        RadioSuccessEvent msgOut)
+        RadioCreatedEvent msgOut)
     {
         _replay.RecordServerMessage(msgOut);
         _adminLogger.Add(LogType.Chat, LogImpact.Low,
             $"Radio from {ToPrettyString(entityUid):user} on {channel} as {asName}: {message}");
     }
 
-    private bool TryBuildSuccessEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioSuccessEvent? msgOut, EntityUid? device = null)
+    private bool TryBuildSuccessEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioCreatedEvent? msgOut, EntityUid? device = null)
     {
         message = SanitizeSpeechMessage(
             entityUid,
@@ -232,7 +232,7 @@ public sealed partial class ChatSystem
 
         var name = SanitizeName(asName, UseEnglishGrammar);
 
-        msgOut = new RadioSuccessEvent(
+        msgOut = new RadioCreatedEvent(
             entityUid,
             name,
             message,
@@ -358,51 +358,5 @@ public sealed partial class ChatSystem
             }
         }
         return false;
-    }
-}
-
-/// <summary>
-/// Raised when a character speaks on the radio.
-/// </summary>
-[Serializable]
-public sealed class RadioSuccessEvent : EntityEventArgs
-{
-    public EntityUid Speaker;
-    public EntityUid? Device;
-    public string AsName;
-    public readonly string Message;
-    public readonly string Channel;
-    public bool IsBold;
-    public string Verb;
-    public string FontId;
-    public int FontSize;
-    public bool IsAnnouncement;
-    public Color? MessageColorOverride;
-
-    public RadioSuccessEvent(
-        EntityUid speaker,
-        string asName,
-        string message,
-        string channel,
-        string withVerb = "",
-        string fontId = "",
-        int fontSize = 0,
-        bool isBold = false,
-        bool isAnnouncement = false,
-        Color? messageColorOverride = null,
-        EntityUid? device = null
-    )
-    {
-        Speaker = speaker;
-        Device = device;
-        AsName = asName;
-        Message = message;
-        Channel = channel;
-        Verb = withVerb;
-        FontId = fontId;
-        FontSize = fontSize;
-        IsBold = isBold;
-        IsAnnouncement = isAnnouncement;
-        MessageColorOverride = messageColorOverride;
     }
 }

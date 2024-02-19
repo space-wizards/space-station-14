@@ -139,7 +139,7 @@ public sealed partial class ChatSystem
         var emote = GetEmote(message);
         if (emote != null)
         {
-            var ev = new EmoteSuccessEvent(emote);
+            var ev = new EmoteCreatedEvent(emote);
             RaiseLocalEvent(entityUid, ref ev);
         }
 
@@ -213,29 +213,12 @@ public sealed partial class ChatSystem
         if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
             return;
 
-        var ev = new EmoteSuccessEvent(emote);
+        var ev = new EmoteCreatedEvent(emote);
         RaiseLocalEvent(source, ref ev);
     }
 
     private string SanitizeEmoteMessage(EntityUid source, string message, out string? emoteStr)
     {
         return SanitizeMessage(source, message, false, out emoteStr);
-    }
-}
-
-/// <summary>
-/// Raised by chat system when entity made some emote.
-/// Use it to play sound, change sprite or something else.
-/// </summary>
-[ByRefEvent]
-public struct EmoteSuccessEvent
-{
-    public bool Handled;
-    public readonly EmotePrototype Emote;
-
-    public EmoteSuccessEvent(EmotePrototype emote)
-    {
-        Emote = emote;
-        Handled = false;
     }
 }

@@ -11,10 +11,10 @@ public sealed class InternalRadioSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InternalRadioComponent, RadioSuccessEvent>(OnInternalRadioReceive);
+        SubscribeLocalEvent<InternalRadioComponent, RadioCreatedEvent>(OnInternalRadioReceive);
     }
 
-    private void OnInternalRadioReceive(EntityUid uid, InternalRadioComponent _, ref RadioSuccessEvent ev)
+    private void OnInternalRadioReceive(EntityUid uid, InternalRadioComponent _, ref RadioCreatedEvent ev)
     {
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;

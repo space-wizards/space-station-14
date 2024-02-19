@@ -121,8 +121,8 @@ public sealed partial class ChatSystem
         }
 
         var name = SanitizeName(asName, UseEnglishGrammar);
-        RaiseLocalEvent(entityUid, new LocalChatSuccessEvent(
-            GetNetEntity(entityUid),
+        RaiseLocalEvent(entityUid, new LocalChatCreatedEvent(
+            entityUid,
             name,
             message,
             range
@@ -187,22 +187,3 @@ public sealed partial class ChatSystem
     }
 }
 
-/// <summary>
-/// A server-only event that is fired when an entity chats in local chat.
-/// </summary>
-[Serializable]
-public sealed class LocalChatSuccessEvent : EntityEventArgs
-{
-    public NetEntity Speaker;
-    public string AsName;
-    public readonly string Message;
-    public float Range;
-
-    public LocalChatSuccessEvent(NetEntity speaker, string asName, string message, float range)
-    {
-        Speaker = speaker;
-        AsName = asName;
-        Message = message;
-        Range = range;
-    }
-}

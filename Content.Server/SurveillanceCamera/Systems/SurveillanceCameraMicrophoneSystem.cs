@@ -19,14 +19,14 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenEvent>(RelayEntityMessage);
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenAttemptEvent>(CanListen);
 
-        SubscribeLocalEvent<LocalChatSuccessEvent>(DuplicateLocalChatEventsIfInRange);
-        SubscribeLocalEvent<WhisperSuccessEvent>(DuplicateWhisperEventsIfInRange);
+        SubscribeLocalEvent<LocalChatCreatedEvent>(DuplicateLocalChatEventsIfInRange);
+        SubscribeLocalEvent<WhisperCreatedEvent>(DuplicateWhisperEventsIfInRange);
     }
 
-    private void DuplicateLocalChatEventsIfInRange(LocalChatSuccessEvent ev)
+    private void DuplicateLocalChatEventsIfInRange(LocalChatCreatedEvent ev)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var sourceXform = Transform(GetEntity(ev.Speaker));
+        var sourceXform = Transform(ev.Speaker);
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
         foreach (var (_, __, camera, xform) in EntityQuery<SurveillanceCameraMicrophoneComponent, ActiveListenerComponent, SurveillanceCameraComponent, TransformComponent>())
@@ -51,7 +51,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         }
     }
 
-    private void DuplicateWhisperEventsIfInRange(WhisperSuccessEvent ev)
+    private void DuplicateWhisperEventsIfInRange(WhisperCreatedEvent ev)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourceXform = Transform(ev.Speaker);

@@ -15,7 +15,7 @@ public sealed class BodyEmotesSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<BodyEmotesComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<BodyEmotesComponent, EmoteSuccessEvent>(OnEmote);
+        SubscribeLocalEvent<BodyEmotesComponent, EmoteCreatedEvent>(OnEmote);
     }
 
     private void OnStartup(EntityUid uid, BodyEmotesComponent component, ComponentStartup args)
@@ -25,7 +25,7 @@ public sealed class BodyEmotesSystem : EntitySystem
         _proto.TryIndex(component.SoundsId, out component.Sounds);
     }
 
-    private void OnEmote(EntityUid uid, BodyEmotesComponent component, ref EmoteSuccessEvent args)
+    private void OnEmote(EntityUid uid, BodyEmotesComponent component, ref EmoteCreatedEvent args)
     {
         if (args.Handled)
             return;

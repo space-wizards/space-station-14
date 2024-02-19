@@ -25,7 +25,7 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
-        SubscribeLocalEvent<VocalComponent, EmoteSuccessEvent>(OnEmote);
+        SubscribeLocalEvent<VocalComponent, EmoteCreatedEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
     }
 
@@ -50,7 +50,7 @@ public sealed class VocalSystem : EntitySystem
         LoadSounds(uid, component);
     }
 
-    private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteSuccessEvent args)
+    private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteCreatedEvent args)
     {
         if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
             return;
