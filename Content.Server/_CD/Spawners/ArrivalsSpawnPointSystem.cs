@@ -52,6 +52,9 @@ public sealed class ArrivalsSpawnPointSystem : EntitySystem
             }
         }
 
+        if(generalSpawns.Count == 0)
+            return;
+            
         _random.Shuffle(generalSpawns);
         var spawn = generalSpawns.First();
 
