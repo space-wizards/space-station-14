@@ -10,11 +10,10 @@
   - type: Item
     sprite: Objects/Specific/Detective/evidence_marker.rsi
     size: Tiny
-    
+
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerOne
-  name: evidence marker
   components:
   - type: Sprite
     state: one
@@ -22,7 +21,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerTwo
-  name: evidence marker
   components:
   - type: Sprite
     state: two
@@ -30,7 +28,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerThree
-  name: evidence marker
   components:
   - type: Sprite
     state: three
@@ -38,7 +35,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerFour
-  name: evidence marker
   components:
   - type: Sprite
     state: four
@@ -46,7 +42,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerFive
-  name: evidence marker
   components:
   - type: Sprite
     state: five
@@ -54,7 +49,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerSix
-  name: evidence marker
   components:
   - type: Sprite
     state: six
@@ -62,7 +56,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerSeven
-  name: evidence marker
   components:
   - type: Sprite
     state: seven
@@ -70,7 +63,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerEight
-  name: evidence marker
   components:
   - type: Sprite
     state: eight
@@ -78,7 +70,6 @@
 - type: entity
   parent: EvidenceMarker
   id: EvidenceMarkerNine
-  name: evidence marker
   components:
   - type: Sprite
     state: nine
@@ -107,4 +98,3 @@
       layers:
         - state: box_security
         - state: evidence_markers
-    
