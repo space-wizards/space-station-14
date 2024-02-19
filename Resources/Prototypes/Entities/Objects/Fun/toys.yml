@@ -41,6 +41,8 @@
     price: 5
   - type: Food
     requiresSpecialDigestion: true
+    useSound:
+      collection: ToySqueak
   - type: SolutionContainerManager
     solutions:
       food:
