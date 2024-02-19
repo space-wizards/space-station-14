@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0, encryptokey was taken from Baystation12 at https://github.com/infinitystation/Baystation12/blob/073f678cdce92edb8fcd55f9ffc9f0523bf31506/icons/obj/radio.dmi and modified by lapatison. boxwidetoy, shelltoy, swab, flare, inflatable, trashbag, magazine, holo and forensic created by potato1234x (github) for ss14 based on toys.rsi, mouth_swab.rsi, flare.rsi, inflatable_wall.rsi, trashbag.rsi, caseless_pistol_mag.rsi, guardians.rsi and bureaucracy.rsi respectively, candle and darts created by TheShuEd for ss14, vials was drawn by Ubaser.",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0, encryptokey was taken from Baystation12 at https://github.com/infinitystation/Baystation12/blob/073f678cdce92edb8fcd55f9ffc9f0523bf31506/icons/obj/radio.dmi and modified by lapatison. boxwidetoy, shelltoy, swab, flare, inflatable, trashbag, magazine, holo and forensic created by potato1234x (github) for ss14 based on toys.rsi, mouth_swab.rsi, flare.rsi, inflatable_wall.rsi, trashbag.rsi, caseless_pistol_mag.rsi, guardians.rsi and bureaucracy.rsi respectively, candle and darts created by TheShuEd for ss14, vials was drawn by Ubaser, evidence_markers by moomoobeef.",
   "size": {
     "x": 32,
     "y": 32
@@ -72,6 +72,9 @@
         },
         {
             "name": "disk"
+        },
+        {
+            "name": "evidence_markers"
         },
         {
             "name": "flashbang"
