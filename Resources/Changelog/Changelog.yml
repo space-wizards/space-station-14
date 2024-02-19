@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: You can now purchase kobolds from cargo as an alternative to monkeys!
-    type: Add
-  id: 5464
-  time: '2023-12-28T05:32:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22108
 - author: TheShuEd
   changes:
   - message: Tesla has been added to the game! Engineers can build a tesla power generator
@@ -3863,3 +3856,11 @@
   id: 5963
   time: '2024-02-17T23:55:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25357
+- author: genderGeometries
+  changes:
+  - message: Allicin, nutriment, and vitamin can now be centrifuged. Protein and fat
+      can now be electrolyzed.
+    type: Add
+  id: 5964
+  time: '2024-02-19T06:05:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25366
