@@ -11,7 +11,6 @@ using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Utility;
-using static Content.Server.Audio.ServerGlobalSoundSystem;
 
 namespace Content.Server.Administration.Commands;
 
@@ -21,7 +20,6 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IResourceManager _res = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     public string Command => "playglobalsound";
     public string Description => Loc.GetString("play-global-sound-command-description");
