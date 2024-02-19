@@ -131,7 +131,7 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     What entity, if any, currently has this action in the actions component?
     /// </summary>
-    [ViewVariables] public EntityUid? AttachedEntity;
+    [DataField] public EntityUid? AttachedEntity;
 
     /// <summary>
     ///     If true, this will cause the the action event to always be raised directed at the action performer/user instead of the action's container/provider.
