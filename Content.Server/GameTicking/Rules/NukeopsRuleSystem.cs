@@ -624,10 +624,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (ev.PlayerPool.Count == 0)
                 continue;
 
-            var commanderEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.CommanderRoleProto);
-            var agentEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.MedicRoleProto);
-            var operativeEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.OperativeRoleProto);
+            //Get eligable sessions for each role
+            var commanderEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.CommanderSpawnDetails.AntagRoleProto);
+            var agentEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.AgentSpawnDetails.AntagRoleProto);
+            var operativeEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.OperativeSpawnDetails.AntagRoleProto);
 
+            //Calculate how large the nukeops team needs to be
             var nukiesToSelect = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
 
             //Select Nukies
@@ -640,25 +642,25 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             //Create the team!
             //If the session is null, they will be spawned as ghost roles (provided the cvar is set)
-            var operatives = new List<NukieSpawn>();
-            operatives.Add(new NukieSpawn(selectedCommander, NukieType.Commander));
-            if (nukiesToSelect > 1) operatives.Add(new NukieSpawn(selectedAgent, NukieType.Agent));
+            var operatives = new List<NukieSpawn>() { new NukieSpawn(selectedCommander, nukeops.CommanderSpawnDetails) };
+            if (nukiesToSelect > 1) operatives.Add(new NukieSpawn(selectedAgent, nukeops.AgentSpawnDetails));
 
             for (var i = 0; i < nukiesToSelect - 2; i++)
             {
                 //Use up all available sessions first, then spawn the rest as ghost roles (if enabled)
                 if (selectedOperatives.Count > i)
                 {
-                    operatives.Add(new NukieSpawn(selectedOperatives[i], NukieType.Operative));
+                    operatives.Add(new NukieSpawn(selectedOperatives[i], nukeops.OperativeSpawnDetails));
                 }
                 else
                 {
-                    operatives.Add(new NukieSpawn(null, NukieType.Operative));
+                    operatives.Add(new NukieSpawn(null, nukeops.OperativeSpawnDetails));
                 }
             }
 
             SpawnOperatives(operatives, _cfg.GetCVar(CCVars.NukeopsSpawnGhostRoles), nukeops);
 
+            //Continue the joining process, and add names to a list for the end screen
             foreach (var nukieSpawn in operatives)
             {
                 if (nukieSpawn.Session == null)
@@ -691,18 +693,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // todo: this is kinda awful for multi-nukies
         foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())
         {
-            if (nukeOpSpawner.OperativeName == null
-                || nukeOpSpawner.OperativeStartingGear == null
-                || nukeOpSpawner.OperativeRolePrototype == null)
+            if (nukeOpSpawner.OperativeName == null)
             {
                 // I have no idea what is going on with nuke ops code, but I'm pretty sure this shouldn't be possible.
                 Log.Error($"Invalid nuke op spawner: {ToPrettyString(spawner)}");
                 continue;
             }
 
-            SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear, profile, nukeops);
+            SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.SpawnDetails, profile, nukeops);
 
-            nukeops.OperativeMindPendingData.Add(uid, nukeOpSpawner.OperativeRolePrototype);
+            nukeops.OperativeMindPendingData.Add(uid, nukeOpSpawner.SpawnDetails.AntagRoleProto);
         }
     }
 
@@ -715,7 +715,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         {
             if (nukeops.OperativeMindPendingData.TryGetValue(uid, out var role) || !nukeops.SpawnOutpost || nukeops.RoundEndBehavior == RoundEndBehavior.Nothing)
             {
-                role ??= nukeops.OperativeRoleProto;
+                role ??= nukeops.OperativeSpawnDetails.AntagRoleProto;
                 _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = role });
                 nukeops.OperativeMindPendingData.Remove(uid);
             }
@@ -797,38 +797,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         return true;
     }
 
-    private (string Name, string Role, string Gear) GetOperativeSpawnDetails(NukieType type, NukeopsRuleComponent component )
-    {
-        string name;
-        string role;
-        string gear;
-
-        switch (type)
-        {
-            case NukieType.Commander:
-                name = Loc.GetString("nukeops-role-commander") + " " + _random.PickAndTake(component.OperativeNames[component.EliteNames]);
-                role = component.CommanderRoleProto;
-                gear = component.CommanderStartGearProto;
-                break;
-            case NukieType.Agent:
-                name = Loc.GetString("nukeops-role-agent") + " " + _random.PickAndTake(component.OperativeNames[component.NormalNames]);
-                role = component.MedicRoleProto;
-                gear = component.MedicStartGearProto;
-                break;
-            default:
-                name = Loc.GetString("nukeops-role-operator") + " " + _random.PickAndTake(component.OperativeNames[component.NormalNames]);
-                role = component.OperativeRoleProto;
-                gear = component.OperativeStartGearProto;
-                break;
-        }
-
-        return (name, role, gear);
-    }
-
     /// <summary>
     ///     Adds missing nuke operative components, equips starting gear and renames the entity.
     /// </summary>
-    private void SetupOperativeEntity(EntityUid mob, string name, string gear, HumanoidCharacterProfile? profile, NukeopsRuleComponent component)
+    private void SetupOperativeEntity(EntityUid mob, string name, NukeopSpawnDetails spawnDetails, HumanoidCharacterProfile? profile, NukeopsRuleComponent component)
     {
         _metaData.SetEntityName(mob, name);
         EnsureComp<NukeOperativeComponent>(mob);
@@ -838,8 +810,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             _humanoid.LoadProfile(mob, profile);
         }
 
-        if (component.StartingGearPrototypes.TryGetValue(gear, out var gearPrototype))
-            _stationSpawning.EquipStartingGear(mob, gearPrototype, profile);
+        var gear = _prototypeManager.Index(spawnDetails.GearProto);
+        _stationSpawning.EquipStartingGear(mob, gear, profile);
 
         _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
         _npcFaction.AddFaction(mob, "Syndicate");
@@ -847,9 +819,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void SpawnOperatives(List<NukieSpawn> sessions, bool spawnGhostRoles, NukeopsRuleComponent component)
     {
+        //Dont spawn operatives if this rule was launched for loneops
         if (component.NukieOutpost == null)
             return;
 
+        //Find all the nukie spawn points on the outpost map
         var outpostUid = component.NukieOutpost.Value;
         var spawns = new List<EntityCoordinates>();
 
@@ -866,18 +840,27 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             break;
         }
 
+        //Fallback, spawn at the centre of the map
         if (spawns.Count == 0)
         {
             spawns.Add(Transform(outpostUid).Coordinates);
             _sawmill.Warning($"Fell back to default spawn for nukies!");
         }
 
+        //Spawn the team
         foreach (var nukieSession in sessions)
         {
-            var spawnDetails = GetOperativeSpawnDetails(nukieSession.Type, component);
-            var nukeOpsAntag = _prototypeManager.Index<AntagPrototype>(spawnDetails.Role);
 
-            //If a session is available, spawn mob and transfer mind
+            //Generate the cache here, used to prevent duplicate names
+            if (!component.OperativeNames.ContainsKey(nukieSession.Type.NameList))
+            {
+                component.OperativeNames.Add(nukieSession.Type.NameList, _prototypeManager.Index(nukieSession.Type.NameList).Values.ToList());
+            }
+            var name = $"{Loc.GetString(nukieSession.Type.NamePrefix)} {_random.PickAndTake(component.OperativeNames[nukieSession.Type.NameList])}";
+
+            var nukeOpsAntag = _prototypeManager.Index(nukieSession.Type.AntagRoleProto);
+
+            //If a session is available, spawn mob and transfer mind into it
             if (nukieSession.Session != null)
             {
                 var profile = _prefs.GetPreferences(nukieSession.Session.UserId).SelectedCharacter as HumanoidCharacterProfile;
@@ -887,11 +870,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 }
 
                 var mob = Spawn(species.Prototype, _random.Pick(spawns));
-                SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile, component);
+                SetupOperativeEntity(mob, name, nukieSession.Type, profile, component);
 
-                var newMind = _mind.CreateMind(nukieSession.Session.UserId, spawnDetails.Name);
+                var newMind = _mind.CreateMind(nukieSession.Session.UserId, name);
                 _mind.SetUserId(newMind, nukieSession.Session.UserId);
-                _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
+                _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = nukieSession.Type.AntagRoleProto });
 
                 // Automatically de-admin players who are being made nukeops
                 if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(nukieSession.Session))
@@ -909,9 +892,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 ghostRole.RoleDescription = Loc.GetString(nukeOpsAntag.Objective);
 
                 var nukeOpSpawner = EnsureComp<NukeOperativeSpawnerComponent>(spawnPoint);
-                nukeOpSpawner.OperativeName = spawnDetails.Name;
-                nukeOpSpawner.OperativeRolePrototype = spawnDetails.Role;
-                nukeOpSpawner.OperativeStartingGear = spawnDetails.Gear;
+                nukeOpSpawner.OperativeName = name;
+                nukeOpSpawner.SpawnDetails = nukieSession.Type;
             }
         }
     }
@@ -927,7 +909,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         _antagSelection.SendBriefing(session, Loc.GetString("nukeops-welcome", ("station", station), ("name", nukeopsRule.OperationName)), Color.Red, nukeop.GreetSoundNotification);
     }
 
-
+    /// <summary>
+    /// Spawn nukie ghost roles if this gamerule was started mid round
+    /// </summary>
     private void SpawnOperativesForGhostRoles(EntityUid uid, NukeopsRuleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -948,11 +932,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         //Fill the ranks, commander first, then agent, then operatives
         //TODO: Possible alternative team compositions? Like multiple commanders or agents
         var operatives = new List<NukieSpawn>();
-        if (numNukies >= 1) operatives.Add(new NukieSpawn(null, NukieType.Commander));
-        if (numNukies >= 2) operatives.Add(new NukieSpawn(null, NukieType.Agent));
+        if (numNukies >= 1) operatives.Add(new NukieSpawn(null, component.CommanderSpawnDetails));
+        if (numNukies >= 2) operatives.Add(new NukieSpawn(null, component.AgentSpawnDetails));
         if (numNukies >= 3)
             for (var i = 2; i < numNukies; i++)
-                operatives.Add(new NukieSpawn(null, NukieType.Operative));
+                operatives.Add(new NukieSpawn(null, component.OperativeSpawnDetails));
 
         SpawnOperatives(operatives, true, component);
     }
@@ -971,6 +955,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             nukeops.OperativePlayers.Add(mindComponent.CharacterName!, mindId);
         }
 
+        //There might be no nukeops rule active, so we cannot get the gear proto from it
         SetOutfitCommand.SetOutfit(entity, "SyndicateOperativeGearFull", EntityManager);
     }
 
@@ -1057,21 +1042,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     protected override void Started(EntityUid uid, NukeopsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        // TODO: Loot table or something
-        foreach (var proto in new[]
-                 {
-                     component.CommanderStartGearProto,
-                     component.MedicStartGearProto,
-                     component.OperativeStartGearProto
-                 })
-        {
-            component.StartingGearPrototypes.Add(proto, _prototypeManager.Index<StartingGearPrototype>(proto));
-        }
-
-        foreach (var proto in new[] { component.EliteNames, component.NormalNames })
-        {
-            component.OperativeNames.Add(proto, new List<string>(_prototypeManager.Index<DatasetPrototype>(proto).Values));
-        }
 
         // Add pre-existing nuke operatives to the credit list.
         var query = EntityQuery<NukeOperativeComponent, MindContainerComponent, MetaDataComponent>(true);
@@ -1090,9 +1060,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private sealed class NukieSpawn
     {
         public ICommonSession? Session { get; private set; }
-        public NukieType Type { get; private set; }
+        public NukeopSpawnDetails Type { get; private set; }
 
-        public NukieSpawn(ICommonSession? session, NukieType type)
+        public NukieSpawn(ICommonSession? session, NukeopSpawnDetails type)
         {
             Session = session;
             Type = type;

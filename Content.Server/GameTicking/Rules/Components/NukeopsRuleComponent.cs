@@ -7,7 +7,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 
@@ -95,7 +94,7 @@ public sealed partial class NukeopsRuleComponent : Component
     /// <summary>
     ///     Time allowed for declaration of war
     /// </summary>
-    [DataField("warDeclarationDelay")]
+    [DataField]
     public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
 
     /// <summary>
@@ -117,31 +116,7 @@ public sealed partial class NukeopsRuleComponent : Component
     public EntProtoId GhostSpawnPointProto = "SpawnPointGhostNukeOperative";
 
     [DataField]
-    public ProtoId<AntagPrototype> CommanderRoleProto = "NukeopsCommander";
-
-    [DataField]
-    public ProtoId<AntagPrototype> OperativeRoleProto = "Nukeops";
-
-    [DataField]
-    public ProtoId<AntagPrototype> MedicRoleProto = "NukeopsMedic";
-
-    [DataField]
-    public ProtoId<StartingGearPrototype> CommanderStartGearProto = "SyndicateCommanderGearFull";
-
-    [DataField]
-    public ProtoId<StartingGearPrototype> MedicStartGearProto = "SyndicateOperativeMedicFull";
-
-    [DataField]
-    public ProtoId<StartingGearPrototype> OperativeStartGearProto = "SyndicateOperativeGearFull";
-
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
-    public string EliteNames = "SyndicateNamesElite";
-
-    [DataField]
     public string OperationName = "Test Operation";
-
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
-    public string NormalNames = "SyndicateNamesNormal";
 
     [DataField(customTypeSerializer: typeof(ResPathSerializer))]
     public ResPath OutpostMap = new("/Maps/nukieplanet.yml");
@@ -153,7 +128,7 @@ public sealed partial class NukeopsRuleComponent : Component
     public WinType WinType = WinType.Neutral;
 
     [DataField]
-    public List<WinCondition> WinConditions = new ();
+    public List<WinCondition> WinConditions = new();
 
     public MapId? NukiePlanet;
 
@@ -162,12 +137,6 @@ public sealed partial class NukeopsRuleComponent : Component
     public EntityUid? NukieOutpost;
     public EntityUid? NukieShuttle;
     public EntityUid? TargetStation;
-
-    /// <summary>
-    ///     Cached starting gear prototypes.
-    /// </summary>
-    [DataField]
-    public Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
 
     /// <summary>
     ///     Cached operator name prototypes.
@@ -190,6 +159,31 @@ public sealed partial class NukeopsRuleComponent : Component
 
     [DataField(required: true)]
     public ProtoId<NpcFactionPrototype> Faction = default!;
+
+    [DataField]
+    public NukeopSpawnDetails CommanderSpawnDetails = new() { AntagRoleProto = "NukeopsCommander", GearProto = "SyndicateCommanderGearFull", NamePrefix = "nukeops-role-commander", NameList = "SyndicateNamesElite" };
+
+    [DataField]
+    public NukeopSpawnDetails AgentSpawnDetails = new() { AntagRoleProto = "NukeopsMedic", GearProto = "SyndicateOperativeMedicFull", NamePrefix = "nukeops-role-agent", NameList = "SyndicateNamesNormal" };
+
+    [DataField]
+    public NukeopSpawnDetails OperativeSpawnDetails = new() { AntagRoleProto = "Nukeops", GearProto = "SyndicateOperativeGearFull", NamePrefix = "nukeops-role-operator", NameList = "SyndicateNamesNormal" };
+}
+
+[Serializable]
+public struct NukeopSpawnDetails
+{
+    [DataField]
+    public ProtoId<AntagPrototype> AntagRoleProto;
+
+    [DataField]
+    public ProtoId<StartingGearPrototype> GearProto;
+
+    [DataField]
+    public LocId NamePrefix;
+
+    [DataField]
+    public ProtoId<DatasetPrototype> NameList;
 }
 
 public enum WinType : byte
@@ -232,11 +226,4 @@ public enum WinCondition : byte
     AllNukiesDead,
     SomeNukiesAlive,
     AllNukiesAlive
-}
-
-public enum NukieType
-{
-    Commander,
-    Agent,
-    Operative
 }
