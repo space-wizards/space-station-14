@@ -2,6 +2,7 @@
 using Content.Server.Speech.Muting;
 using Content.Shared.Mobs;
 using Robust.Shared.Prototypes;
+using MutedComponent = Content.Shared.Speech.Muting.MutedComponent;
 
 namespace Content.Server.Mobs;
 

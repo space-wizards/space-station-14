@@ -5,6 +5,7 @@ using Content.Shared.Puppet;
 using Content.Server.Speech.Muting;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
+using MutedComponent = Content.Shared.Speech.Muting.MutedComponent;
 
 namespace Content.Server.Puppet
 {
