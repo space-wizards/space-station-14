@@ -124,15 +124,15 @@
     solutions:
       bee:
         reagents:
-          - ReagentId: GroundBee
-            Quantity: 10
+        - ReagentId: GroundBee
+          Quantity: 10
       food:
         maxVol: 10
         reagents:
-          - ReagentId: GroundBee
-            Quantity: 5
-          - ReagentId: Fiber
-            Quantity: 5
+        - ReagentId: GroundBee
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 5
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/toys.rsi
