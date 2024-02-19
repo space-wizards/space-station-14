@@ -105,6 +105,15 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
             try
             {
                 var path = new ResPath(args[0]);
+                /**
+                 * Finds any attribution.yml in current directory and tries to get 
+                 * "files" field out of it, populates options2 list only with files path
+                 * 
+                 * Any invalid-used field will result this code to not give a single damn
+                 * Example:
+                 * - files: ["honk.ogg", "something.ogg"] = good, will display autocompletion 1 by 1
+                 * - files: ["honk.ogg, something.ogg"]   = valid field, but will simply display "/Dir/honk.ogg, something.ogg"
+                 */
                 foreach (var file in _res.ContentFindFiles(path))
                 {
                     if (file.Extension != "yml")
