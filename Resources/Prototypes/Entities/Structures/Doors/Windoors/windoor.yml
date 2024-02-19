@@ -169,6 +169,14 @@
 
 - type: entity
   parent: WindoorSecure
+  id: WindoorSecureDetectiveLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+
+- type: entity
+  parent: WindoorSecure
   id: WindoorSecureEngineeringLocked
   suffix: Engineering, Locked
   components:
@@ -261,4 +269,4 @@
   suffix: Virology, Locked
   components:
   - type: AccessReader
-    access: [["Virology"]]
+    access: [["Medical"]]
