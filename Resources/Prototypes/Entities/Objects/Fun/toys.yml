@@ -43,6 +43,7 @@
     requiresSpecialDigestion: true
     useSound:
       collection: ToySqueak
+    delay: 2
   - type: SolutionContainerManager
     solutions:
       food:
