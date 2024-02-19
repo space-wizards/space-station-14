@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chat.V2;
+﻿using Content.Client.Chat.V2;
+using Content.Shared.Chat.V2;
 using Content.Shared.Communications;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -9,8 +10,9 @@ namespace Content.Client.Communications.UI
     public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedChatSystem _chat = default!;
         [Dependency] private readonly IPlayerManager _player = default!;
+
+        private readonly ChatSystem _chat;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
@@ -39,6 +41,7 @@ namespace Content.Client.Communications.UI
 
         public CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _chat = EntMan.System<ChatSystem>();
         }
 
         protected override void Open()
@@ -52,11 +55,11 @@ namespace Content.Client.Communications.UI
 
         public void AlertLevelSelected(string level)
         {
-            if (AlertLevelSelectable)
-            {
-                CurrentLevel = level;
-                SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
-            }
+            if (!AlertLevelSelectable)
+                return;
+
+            CurrentLevel = level;
+            SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
         }
 
         public void EmergencyShuttleButtonPressed()
@@ -75,7 +78,6 @@ namespace Content.Client.Communications.UI
             }
 
             // TODO: hey, snazzy UI programmer, make this pop up in the UI the reason for failure THANK YOUUUUU <3
-
             // TODO: Make sure that "Owner" is actually the comms console and not the player entity.
             _chat.SendCommunicationsConsoleAnnouncement(Owner, _player.LocalEntity.Value, message, out _);
         }
@@ -110,21 +112,23 @@ namespace Content.Client.Communications.UI
             AlertLevelSelectable = commsState.AlertLevels != null && !float.IsNaN(commsState.CurrentAlertDelay) && commsState.CurrentAlertDelay <= 0;
             CurrentLevel = commsState.CurrentAlert;
 
-            if (_menu != null)
-            {
-                _menu.UpdateCountdown();
-                _menu.UpdateAlertLevels(commsState.AlertLevels, CurrentLevel);
-                _menu.AlertLevelButton.Disabled = !AlertLevelSelectable;
-                _menu.EmergencyShuttleButton.Disabled = !CanCall;
-                _menu.AnnounceButton.Disabled = !CanAnnounce;
-                _menu.BroadcastButton.Disabled = !CanBroadcast;
-            }
+            if (_menu == null)
+                return;
+
+            _menu.UpdateCountdown();
+            _menu.UpdateAlertLevels(commsState.AlertLevels, CurrentLevel);
+            _menu.AlertLevelButton.Disabled = !AlertLevelSelectable;
+            _menu.EmergencyShuttleButton.Disabled = !CanCall;
+            _menu.AnnounceButton.Disabled = !CanAnnounce;
+            _menu.BroadcastButton.Disabled = !CanBroadcast;
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+
+            if (!disposing)
+                return;
 
             _menu?.Dispose();
         }

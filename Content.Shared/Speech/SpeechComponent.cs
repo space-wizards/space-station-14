@@ -5,7 +5,6 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Speech
 {
     /// <summary>
-    ///     Component required for entities to be able to speak. (TODO: Entities can speak fine without this, this only forbids them speak if they have it and enabled is false.)
     ///     Contains the option to let entities make noise when speaking, change speech verbs, datafields for the sounds in question, and relevant AudioParams.
     /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

@@ -20,7 +20,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMicrophoneComponent, ListenAttemptEvent>(CanListen);
 
         SubscribeLocalEvent<LocalChatSuccessEvent>(DuplicateLocalChatEventsIfInRange);
-        SubscribeLocalEvent<WhisperSuccessfulEvent>(DuplicateWhisperEventsIfInRange);
+        SubscribeLocalEvent<WhisperSuccessEvent>(DuplicateWhisperEventsIfInRange);
     }
 
     private void DuplicateLocalChatEventsIfInRange(LocalChatSuccessEvent ev)
@@ -51,7 +51,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         }
     }
 
-    private void DuplicateWhisperEventsIfInRange(WhisperSuccessfulEvent ev)
+    private void DuplicateWhisperEventsIfInRange(WhisperSuccessEvent ev)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourceXform = Transform(ev.Speaker);

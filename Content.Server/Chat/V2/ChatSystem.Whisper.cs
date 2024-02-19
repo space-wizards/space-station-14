@@ -20,7 +20,7 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeWhisper()
+    public void InitializeServerWhisper()
     {
         SubscribeNetworkEvent<AttemptWhisperEvent>((msg, args) => { HandleAttemptWhisperEvent(args.SenderSession, msg.Speaker, msg.Message); });
     }
@@ -78,7 +78,7 @@ public sealed partial class ChatSystem
     /// <param name="asName">Override the name this entity will appear as.</param>
     public void SendWhisperMessage(EntityUid entityUid, string message, float minRange, float maxRange, string asName = "")
     {
-        message = SanitizeInCharacterMessage(entityUid, message, out var emoteStr);
+        message = SanitizeSpeechMessage(entityUid, message, out var emoteStr);
 
         if (emoteStr?.Length > 0)
         {
@@ -111,9 +111,10 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
 
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
-        var name = FormattedMessage.EscapeText(asName);
 
-        RaiseLocalEvent(new WhisperSuccessfulEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
+        var name = SanitizeName(asName, UseEnglishGrammar);
+
+        RaiseLocalEvent(new WhisperSuccessEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
 
         var msgOut = new WhisperEvent(
             GetNetEntity(entityUid),
@@ -210,7 +211,7 @@ public sealed partial class ChatSystem
 /// Raised when a character whispers.
 /// </summary>
 [Serializable]
-public sealed class WhisperSuccessfulEvent : EntityEventArgs
+public sealed class WhisperSuccessEvent : EntityEventArgs
 {
     public EntityUid Speaker;
     public string AsName;
@@ -219,7 +220,7 @@ public sealed class WhisperSuccessfulEvent : EntityEventArgs
     public float MinRange;
     public float MaxRange;
 
-    public WhisperSuccessfulEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
+    public WhisperSuccessEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
     {
         Speaker = speaker;
         AsName = asName;

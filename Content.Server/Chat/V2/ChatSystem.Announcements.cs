@@ -26,7 +26,7 @@ public sealed partial class ChatSystem
         Color? colorOverride = null
         )
     {
-        var msgOut = new AnnouncementEvent(sender,message,messageColorOverride: colorOverride);
+        var msgOut = new AnnouncementEvent(SanitizeName(sender, UseEnglishGrammar),message,messageColorOverride: colorOverride);
 
         RaiseNetworkEvent(msgOut);
 

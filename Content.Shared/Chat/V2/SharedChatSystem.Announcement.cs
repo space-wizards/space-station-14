@@ -35,13 +35,6 @@ public partial class SharedChatSystem
 
     public bool SendCommunicationsConsoleAnnouncement(EntityUid console, EntityUid sender, string message, [NotNullWhen(true)] out string? reason)
     {
-        if (!HasComp<SharedCommunicationsConsoleComponent>(console))
-        {
-            reason = Loc.GetString("chat-system-communication-console-announcement-failed");
-
-            return false;
-        }
-
         if (message.Length > MaxAnnouncementMessageLength)
         {
             reason = Loc.GetString("chat-system-max-message-length");

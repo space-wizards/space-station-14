@@ -23,9 +23,8 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeLocalChat()
+    public void InitializeServerLocalChat()
     {
-        // A client attempts to chat using a given entity
         SubscribeNetworkEvent<AttemptLocalChatEvent>((msg, args) => { HandleAttemptLocalChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
     }
 
@@ -86,7 +85,7 @@ public sealed partial class ChatSystem
     /// <param name="asName">Override the name this entity will appear as.</param>
     public void SendLocalChatMessage(EntityUid entityUid, string message, float range, string asName = "")
     {
-        message = SanitizeInCharacterMessage(entityUid,message,out var emoteStr);
+        message = SanitizeSpeechMessage(entityUid,message,out var emoteStr);
 
         if (emoteStr?.Length > 0)
         {
@@ -98,7 +97,6 @@ public sealed partial class ChatSystem
             return;
         }
 
-        // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
         try
         {
             message = FormattedMessage.RemoveMarkup(message);
@@ -122,7 +120,7 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
         }
 
-        var name = FormattedMessage.EscapeText(asName);
+        var name = SanitizeName(asName, UseEnglishGrammar);
         RaiseLocalEvent(entityUid, new LocalChatSuccessEvent(
             GetNetEntity(entityUid),
             name,
@@ -156,7 +154,7 @@ public sealed partial class ChatSystem
 
     public void SendBackgroundChatMessage(EntityUid source, string message, string asName = "")
     {
-        RaiseNetworkEvent(new BackgroundChatEvent(GetNetEntity(EntityUid.Invalid), message, asName));
+        RaiseNetworkEvent(new BackgroundChatEvent(GetNetEntity(EntityUid.Invalid), message, SanitizeName(asName, UseEnglishGrammar)));
     }
 
     private List<ICommonSession> GetLocalChatRecipients(EntityUid source, float range)

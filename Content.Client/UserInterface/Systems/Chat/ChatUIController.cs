@@ -5,6 +5,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.TypingIndicator;
 using Content.Client.Chat.UI;
+using Content.Client.Chat.V2;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
@@ -30,7 +31,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -73,7 +73,7 @@ public sealed class ChatUIController : UIController
     [ValidatePrototypeId<SpeechVerbPrototype>]
     public const string DefaultSpeechVerb = "Default";
 
-    [UISystemDependency] private readonly SharedChatSystem _chat = default!;
+    [UISystemDependency] private readonly ChatSystem _chat = default!;
     [UISystemDependency] private readonly PopupSystem _popup = default!;
 
     private ISawmill _sawmill = default!;
@@ -433,8 +433,7 @@ public sealed class ChatUIController : UIController
 
     private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
-        var bubble =
-            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message.WrappedMessage, entity);
+        var bubble = SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message.WrappedMessage, entity);
 
         bubble.OnDied += SpeechBubbleDied;
 
@@ -455,12 +454,12 @@ public sealed class ChatUIController : UIController
         existing.Add(bubble);
         _speechBubbleRoot.AddChild(bubble);
 
-        if (existing.Count > SpeechBubbleCap)
-        {
-            // Get the oldest to start fading fast.
-            var last = existing[0];
-            last.FadeNow();
-        }
+        if (existing.Count <= SpeechBubbleCap)
+            return;
+
+        // Get the oldest to start fading fast.
+        var last = existing[0];
+        last.FadeNow();
     }
 
     private void SpeechBubbleDied(EntityUid entity, SpeechBubble bubble)
@@ -939,10 +938,8 @@ public sealed class ChatUIController : UIController
     private void OnWhisperedMessage(WhisperEvent ev, EntitySessionEventArgs args)
     {
         // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
-        var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", GetNameColor(ev.AsName)), ("message", $"[italic]{ev.Message}[/italic]"));
+        var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", $"[color={GetNameColor(ev.AsName)}]{ev.AsName}[/color]"), ("message", $"[italic]{ev.Message}[/italic]"));
 
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
         var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.Message, wrappedMessage, ev.Speaker, null);
 
         History.Add((_timing.CurTick, fakeChatMessage));
@@ -960,8 +957,6 @@ public sealed class ChatUIController : UIController
             ("entity", EntityManager.GetEntity(ev.Emoter)),
             ("message", ev.Message));
 
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
         var fakeChatMessage = new ChatMessage(ChatChannel.Emotes, ev.Message, wrappedMessage, ev.Emoter, null);
 
         History.Add((_timing.CurTick, fakeChatMessage));
@@ -1009,8 +1004,6 @@ public sealed class ChatUIController : UIController
             ("entityName", ev.AsName),
             ("message", FormattedMessage.EscapeText(ev.Message)));
 
-        // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
-        // WrappedMessage also should be shot.
         var fakeChatMessage = new ChatMessage(ChatChannel.LOOC, ev.Message, wrappedMessage, ev.Speaker, null);
 
         History.Add((_timing.CurTick, fakeChatMessage));
@@ -1051,14 +1044,6 @@ public sealed class ChatUIController : UIController
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
-        // color the name unless it's something like "the old man"
-        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
-        {
-            var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
-            if (grammar != null && grammar.ProperNoun == true)
-                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg.WrappedMessage, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg.WrappedMessage, "Name")));
-        }
-
         // Log all incoming chat to repopulate when filter is un-toggled
         if (!msg.HideChat)
         {
@@ -1105,6 +1090,20 @@ public sealed class ChatUIController : UIController
             case ChatChannel.LOOC:
                 if (_cfg.GetCVar(CCVars.LoocAboveHeadShow))
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc);
+                break;
+            case ChatChannel.None:
+            case ChatChannel.Server:
+            case ChatChannel.Damage:
+            case ChatChannel.Radio:
+            case ChatChannel.OOC:
+            case ChatChannel.Visual:
+            case ChatChannel.Admin:
+            case ChatChannel.AdminAlert:
+            case ChatChannel.AdminChat:
+            case ChatChannel.Unspecified:
+            case ChatChannel.IC:
+            case ChatChannel.AdminRelated:
+            default:
                 break;
         }
     }
@@ -1154,6 +1153,11 @@ public sealed class ChatUIController : UIController
     /// <returns>Hex value of the color</returns>
     public string GetNameColor(string name)
     {
+        if (!_chatNameColorsEnabled)
+        {
+            return "#FFFFFF";
+        }
+
         var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Length);
         return _chatNameColors[colorIdx];
     }

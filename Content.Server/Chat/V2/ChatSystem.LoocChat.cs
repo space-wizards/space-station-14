@@ -24,10 +24,8 @@ public sealed partial class ChatSystem
     public bool DeadLoocEnabled { get; private set; }
     public bool CritLoocEnabled { get; private set; }
 
-    public void InitializeLoocChat()
+    public void InitializeServerLoocChat()
     {
-        base.Initialize();
-
         SubscribeNetworkEvent<LoocAttemptedEvent>((msg, args) => { HandleAttemptChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
 
         Configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
@@ -72,7 +70,7 @@ public sealed partial class ChatSystem
         if (!CritLoocEnabled && _mobState.IsCritical(source))
             return;
 
-        var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
+        var name = SanitizeName(Identity.Name(source, EntityManager), UseEnglishGrammar);
 
         if (!_admin.IsAdmin(source) && !LoocEnabled)
             return;

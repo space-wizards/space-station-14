@@ -1,29 +1,18 @@
-﻿using System.Globalization;
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
-using Content.Shared.CCVar;
-using Content.Shared.Chat.Prototypes;
+﻿using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeEmoting()
+    public void InitializeServerEmoting()
     {
-        base.Initialize();
-
         SubscribeNetworkEvent<AttemptEmoteEvent>((msg, args) => { HandleAttemptEmoteMessage(args.SenderSession, msg.Emoter, msg.Message); });
     }
 
@@ -106,10 +95,7 @@ public sealed partial class ChatSystem
     /// <param name="isRecursive">If this emote is being sent because of another message. Prevents multiple emotes being sent for the same input.</param>
     public void SendEmoteMessage(EntityUid entityUid, string message, float range, string asName = "", bool isRecursive = false)
     {
-        // Capitalizing I still happens for emotes in English for correctness of grammar, even though emotes are
-        // written in the third person in English.
-
-        message = SanitizeInCharacterMessage(entityUid, message, out var emoteStr);
+        message = SanitizeEmoteMessage(entityUid, message, out var emoteStr);
 
         if (!string.IsNullOrEmpty(emoteStr) && !isRecursive)
         {
@@ -145,17 +131,17 @@ public sealed partial class ChatSystem
             asName = Name(entityUid);
         }
 
-        var name = FormattedMessage.EscapeText(asName);
+        // Specifically don't capitalize if not already, because there's some arcane BS in the frontend that adds
+        // "the" to the front of some emotes.
+        var name = SanitizeName(asName, false);
 
+        // This is a temporary workaround for weirdness with emotes where we ship around the prototype as a "success".
         var emote = GetEmote(message);
-
-        if (emote == null)
+        if (emote != null)
         {
-            return;
+            var ev = new EmoteSuccessEvent(emote);
+            RaiseLocalEvent(entityUid, ref ev);
         }
-
-        var ev = new EmoteSuccessEvent(emote);
-        RaiseLocalEvent(entityUid, ref ev);
 
         var msgOut = new EmoteEvent(GetNetEntity(entityUid), name, message);
 
@@ -210,8 +196,7 @@ public sealed partial class ChatSystem
         // check if proto has valid message for chat
         if (emote.ChatMessages.Count != 0)
         {
-            var action = Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source));
-            SendEmoteMessage(source, action, comp.Range, nameOverride);
+            SendEmoteMessage(source, Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source)), comp.Range, nameOverride);
         }
         else
         {
@@ -230,6 +215,11 @@ public sealed partial class ChatSystem
 
         var ev = new EmoteSuccessEvent(emote);
         RaiseLocalEvent(source, ref ev);
+    }
+
+    private string SanitizeEmoteMessage(EntityUid source, string message, out string? emoteStr)
+    {
+        return SanitizeMessage(source, message, false, out emoteStr);
     }
 }
 

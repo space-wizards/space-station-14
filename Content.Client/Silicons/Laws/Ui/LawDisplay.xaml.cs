@@ -1,6 +1,7 @@
 using Content.Client.Message;
 using Content.Client.Popups;
 using Content.Shared.Chat.V2;
+using Content.Shared.Chat.V2.Components;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Speech;
@@ -17,7 +18,6 @@ public sealed partial class LawDisplay : Control
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedChatSystem _chat = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
@@ -31,10 +31,6 @@ public sealed partial class LawDisplay : Control
 
         LawNumberLabel.SetMarkup(lawIdentifier);
         LawLabel.SetMessage(lawDescription);
-
-        // If you can't talk, you can't state your laws...
-        if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
-            return;
 
         var localButton = new Button
         {

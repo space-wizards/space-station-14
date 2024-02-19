@@ -186,7 +186,7 @@ namespace Content.Server.Communications
 
         private static bool CanBroadcast(CommunicationsConsoleComponent comp)
         {
-            return comp.AnnouncementCooldownRemaining <= 0f;
+            return comp.BroadcastCooldownRemaining <= 0f;
         }
 
         private bool CanUse(EntityUid user, EntityUid console)

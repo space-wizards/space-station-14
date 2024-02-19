@@ -105,7 +105,7 @@ public partial class SharedChatSystem
         return message;
     }
 
-    public string CapitalizeFirstLetter(string message)
+    public static string CapitalizeFirstLetter(string message)
     {
         if (string.IsNullOrEmpty(message))
             return message;

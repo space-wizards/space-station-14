@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
@@ -57,28 +58,35 @@ public sealed partial class ChatSystem : SharedChatSystem
         Configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdminsDelay, announce => _chatRateLimitAnnounceAdminDelay = announce);
         Configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount);
 
-        InitializeDeadChat();
-        InitializeEmoting();
-        InitializeLocalChat();
-        InitializeLoocChat();
-        InitializeRadio();
-        InitializeWhisper();
+        InitializeServerDeadChat();
+        InitializeServerEmoting();
+        InitializeServerLocalChat();
+        InitializeServerLoocChat();
+        InitializeServerRadio();
+        InitializeServerWhisper();
     }
 
-    private string SanitizeInCharacterMessage(EntityUid source, string message, out string? emoteStr)
+    private string SanitizeSpeechMessage(EntityUid source, string message, out string? emoteStr)
     {
-        message = message.Trim();
-        ChatCensor.Censor(message, out message);
-        message = _repAccent.ApplyReplacements(message, "chatsanitize");
-        message = CapitalizeFirstLetter(message);
+        return SanitizeMessage(source, message, true, out emoteStr);
+    }
 
-        if (ShouldCapitalizeTheWordI)
+    private string SanitizeMessage(EntityUid source, string message, bool capitalizeFirstLetter, out string? emoteStr)
+    {
+        ChatCensor.Censor(message, out message);
+
+        message = message.Trim();
+        message = _repAccent.ApplyReplacements(message, "chatsanitize");
+        _sanitizer.TrySanitizeOutSmilies(message, source, out message, out emoteStr);
+
+        if (capitalizeFirstLetter)
+            message = CapitalizeFirstLetter(message);
+
+        if (UseEnglishGrammar)
             message = CapitalizeIPronoun(message);
 
         if (ShouldPunctuate)
             message = AddAPeriod(message);
-
-        _sanitizer.TrySanitizeOutSmilies(message, source, out message, out emoteStr);
 
         return message;
     }
@@ -87,10 +95,12 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         message = message.Trim();
         ChatCensor.Censor(message, out message);
-        message = CapitalizeFirstLetter(message);
 
-        if (ShouldCapitalizeTheWordI)
+        if (UseEnglishGrammar)
+        {
+            message = CapitalizeFirstLetter(message);
             message = CapitalizeIPronoun(message);
+        }
 
         if (punctuate)
             message = AddAPeriod(message);
@@ -112,6 +122,20 @@ public sealed partial class ChatSystem : SharedChatSystem
         RaiseLocalEvent(entityToBeNamed, nameEv);
 
         return nameEv.Name;
+    }
+
+    private string SanitizeName(string name, bool capitalizeFirstLetter)
+    {
+        var i = name.IndexOf('(') - 1;
+        name = i > -2 ? name[..i] : name;
+
+        name = name.Trim();
+        ChatCensor.Censor(name, out name);
+
+        if (capitalizeFirstLetter)
+            name = CapitalizeFirstLetter(name);
+
+        return FormattedMessage.EscapeText(name);
     }
 
     public bool IsRateLimited(EntityUid entityUid, out string reason)

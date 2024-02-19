@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Radio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -21,7 +23,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] protected readonly IConfigurationManager Configuration = default!;
 
-    protected bool ShouldCapitalizeTheWordI;
+    protected bool UseEnglishGrammar;
     protected bool ShouldPunctuate;
     protected int MaxChatMessageLength;
     protected int MaxAnnouncementMessageLength;
@@ -40,7 +42,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     {
         base.Initialize();
 
-        ShouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
+        UseEnglishGrammar = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
                                     || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
         ShouldPunctuate = Configuration.GetCVar(CCVars.ChatPunctuation);
         MaxChatMessageLength = Configuration.GetCVar(CCVars.ChatMaxMessageLength);
@@ -50,7 +52,19 @@ public abstract partial class SharedChatSystem : EntitySystem
         Configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => MaxChatMessageLength = maxLen);
         Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxAnnouncementMessageLength = maxLen);
 
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
+
         InitializeEmote();
         InitializeRadio();
     }
+
+    protected void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+    {
+        if (obj.WasModified<RadioChannelPrototype>())
+            CacheRadios();
+
+        if (obj.WasModified<EmotePrototype>())
+            CacheEmotes();
+    }
+
 }

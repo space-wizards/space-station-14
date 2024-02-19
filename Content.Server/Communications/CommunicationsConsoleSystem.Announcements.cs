@@ -45,7 +45,7 @@ public sealed partial class CommunicationsConsoleSystem
             return;
         }
 
-        if (comp.AnnouncementCooldownRemaining <= 0f)
+        if (comp.AnnouncementCooldownRemaining >= 0f)
         {
             _popupSystem.PopupEntity(Loc.GetString("comms-console-cooldown-remaining"), console, sender);
 
@@ -73,7 +73,7 @@ public sealed partial class CommunicationsConsoleSystem
     {
         var author = Loc.GetString("comms-console-announcement-unknown-sender");
 
-        if (!_idCardSystem.TryFindIdCard(sender, out var id))
+        if (_idCardSystem.TryFindIdCard(sender, out var id))
         {
             author =
                 $"{id.Comp.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.Comp.JobTitle ?? string.Empty)})"

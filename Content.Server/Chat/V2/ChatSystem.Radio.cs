@@ -19,7 +19,7 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeRadio()
+    public void InitializeServerRadio()
     {
         SubscribeNetworkEvent<AttemptHeadsetRadioEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, false); });
         SubscribeNetworkEvent<AttemptInternalRadioEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, true); });
@@ -169,7 +169,7 @@ public sealed partial class ChatSystem
 
     private bool TryBuildSuccessEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioSuccessEvent? msgOut, EntityUid? device = null)
     {
-        message = SanitizeInCharacterMessage(
+        message = SanitizeSpeechMessage(
             entityUid,
             message,
             out var emoteStr
@@ -230,7 +230,7 @@ public sealed partial class ChatSystem
             }
         }
 
-        var name = FormattedMessage.EscapeText(asName);
+        var name = SanitizeName(asName, UseEnglishGrammar);
 
         msgOut = new RadioSuccessEvent(
             entityUid,
@@ -244,7 +244,7 @@ public sealed partial class ChatSystem
             device: device
         );
 
-        return false;
+        return true;
     }
 
     /// <summary>

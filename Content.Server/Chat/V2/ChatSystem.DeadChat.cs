@@ -12,7 +12,7 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeDeadChat()
+    public void InitializeServerDeadChat()
     {
         SubscribeNetworkEvent<AttemptDeadChatEvent>((msg, args) => { HandleAttemptDeadChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
     }
@@ -61,14 +61,14 @@ public sealed partial class ChatSystem
         var isAdmin = _admin.IsAdmin(source);
         var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
 
+        RaiseLocalEvent(new DeadChatSuccessEvent(source, name, message, isAdmin));
+
         var msgOut = new DeadChatEvent(
             GetNetEntity(source),
-            isAdmin ? player.Channel.UserName : FormattedMessage.EscapeText(Identity.Name(source, EntityManager)),
+            isAdmin ? player.Channel.UserName : SanitizeName(Identity.Name(source, EntityManager), UseEnglishGrammar),
             message,
             _admin.IsAdmin(source)
         );
-
-        RaiseLocalEvent(new DeadChatSuccessEvent(source, name, message, isAdmin));
 
         foreach (var session in GetDeadChatRecipients())
         {

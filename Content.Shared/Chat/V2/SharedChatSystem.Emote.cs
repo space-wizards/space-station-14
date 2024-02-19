@@ -14,14 +14,7 @@ public partial class SharedChatSystem
 
     private void InitializeEmote()
     {
-        _prototype.PrototypesReloaded += OnPrototypesReloaded;
         CacheEmotes();
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
-    {
-        if (args.WasModified<EmotePrototype>())
-            CacheEmotes();
     }
 
     private void CacheEmotes()
@@ -127,7 +120,7 @@ public sealed class EmoteEvent : EntityEventArgs
     public string AsName;
     public readonly string Message;
 
-    public EmoteEvent(NetEntity emoter, string asName,string message)
+    public EmoteEvent(NetEntity emoter, string asName, string message)
     {
         Emoter = emoter;
         AsName = asName;

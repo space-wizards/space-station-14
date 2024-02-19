@@ -13,10 +13,12 @@ public sealed partial class SpeechWireAction : ComponentWireAction<SpeechCompone
     public override Color Color { get; set; } = Color.Green;
     public override string Name { get; set; } = "wire-name-speech";
 
-    public override object? StatusKey { get; } = SpeechWireActionKey.StatusKey;
+    public override object? StatusKey => SpeechWireActionKey.StatusKey;
 
     public override StatusLightState? GetLightState(Wire wire, SpeechComponent component)
-        => component.Enabled ? StatusLightState.On : StatusLightState.Off;
+    {
+        return component.Enabled ? StatusLightState.On : StatusLightState.Off;
+    }
 
     public override void Initialize()
     {

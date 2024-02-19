@@ -1,10 +1,8 @@
+using System.Linq;
 using Robust.Shared.Audio;
-using Content.Server.Chat;
-using Content.Server.Chat.Systems;
-using Content.Shared.Chat.V2;
+using Content.Server.Chat.V2;
 using Content.Shared.Speech;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
@@ -22,7 +20,7 @@ namespace Content.Server.Speech
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpeechComponent, LocalChatEvent>(OnEntitySpoke);
+            SubscribeLocalEvent<SpeechComponent, LocalChatSuccessEvent>(OnEntitySpoke);
         }
 
         public SoundSpecifier? GetSpeechSound(Entity<SpeechComponent> ent, string message)
@@ -31,11 +29,10 @@ namespace Content.Server.Speech
                 return null;
 
             // Play speech sound
-            SoundSpecifier? contextSound;
             var prototype = _protoManager.Index<SpeechSoundsPrototype>(ent.Comp.SpeechSounds);
 
             // Different sounds for ask/exclaim based on last character
-            contextSound = message[^1] switch
+            var contextSound = message[^1] switch
             {
                 '?' => prototype.AskSound,
                 '!' => prototype.ExclaimSound,
@@ -43,23 +40,17 @@ namespace Content.Server.Speech
             };
 
             // Use exclaim sound if most characters are uppercase.
-            int uppercaseCount = 0;
-            for (int i = 0; i < message.Length; i++)
-            {
-                if (char.IsUpper(message[i]))
-                    uppercaseCount++;
-            }
-            if (uppercaseCount > (message.Length / 2))
+            if (message.Count(char.IsUpper) > (message.Length / 2))
             {
                 contextSound = prototype.ExclaimSound;
             }
 
-            var scale = (float) _random.NextGaussian(1, prototype.Variation);
-            contextSound.Params = ent.Comp.AudioParams.WithPitchScale(scale);
+            contextSound.Params = ent.Comp.AudioParams.WithPitchScale((float) _random.NextGaussian(1, prototype.Variation));
+
             return contextSound;
         }
 
-        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, LocalChatEvent args)
+        private void OnEntitySpoke(EntityUid uid, SpeechComponent component, LocalChatSuccessEvent args)
         {
             if (component.SpeechSounds == null)
                 return;

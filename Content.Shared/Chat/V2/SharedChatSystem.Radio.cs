@@ -100,14 +100,7 @@ public partial class SharedChatSystem
     public void InitializeRadio()
     {
         DebugTools.Assert(_prototypeManager.HasIndex<RadioChannelPrototype>(CommonChannel));
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
         CacheRadios();
-    }
-
-    protected virtual void OnPrototypeReload(PrototypesReloadedEventArgs obj)
-    {
-        if (obj.WasModified<RadioChannelPrototype>())
-            CacheRadios();
     }
 
     private void CacheRadios()
