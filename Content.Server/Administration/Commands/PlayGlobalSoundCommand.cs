@@ -112,7 +112,7 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
                  * Any invalid-used field will result this code to not give a single damn
                  * Example:
                  * - files: ["honk.ogg", "something.ogg"] = good, will display autocompletion 1 by 1
-                 * - files: ["honk.ogg, something.ogg"]   = valid field, but will simply display "/Dir/honk.ogg, something.ogg"
+                 * - files: ["honk.ogg, something.ogg"]   = valid but incorrect field, but will simply display "/Dir/honk.ogg, something.ogg"
                  */
                 foreach (var file in _res.ContentFindFiles(path))
                 {
