@@ -52,6 +52,9 @@ namespace Content.Client.Administration.UI.CustomControls
             if (args == null || data is not PlayerListData {Info: var selectedPlayer})
                 return;
 
+            if (selectedPlayer == _selectedPlayer)
+                return;
+
             if (args.Event.Function != EngineKeyFunctions.UIClick)
                 return;
 
