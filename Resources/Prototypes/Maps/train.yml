@@ -9,7 +9,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Train "Sentipod" {0}-{1}'
+          mapNameTemplate: 'Train "Sentipode" {0}-{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'ED'
