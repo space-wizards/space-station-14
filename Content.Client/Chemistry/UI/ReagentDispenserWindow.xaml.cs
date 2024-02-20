@@ -85,10 +85,7 @@ namespace Content.Client.Chemistry.UI
             UpdateContainerInfo(castState);
             UpdateReagentsList(castState.Inventory);
 
-            if (castState.OutputContainerEntity is { } containerEntity)
-                View.SetEntity(containerEntity);
-            else
-                View.SetEntity(null);
+            View.SetEntity(castState.OutputContainerEntity);
 
             // Disable the Clear & Eject button if no beaker
             ClearButton.Disabled = castState.OutputContainer is null;
