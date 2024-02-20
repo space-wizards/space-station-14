@@ -9,12 +9,12 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Train {0}-{1}'
+          mapNameTemplate: 'Train "Sentipod" {0}-{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'ED'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml # To do - add railway station
         - type: StationJobs
           overflowJobs:
             - Passenger
