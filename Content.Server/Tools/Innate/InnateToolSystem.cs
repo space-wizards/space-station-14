@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Body.Part;
 using Content.Shared.Destructible;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
@@ -21,13 +22,11 @@ public sealed class InnateToolSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
-    private List<string> _toSpawn = new();
-
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<InnateToolComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<InnateToolComponent, BodyPartAddedEvent>(OnPartAdded);
+        SubscribeLocalEvent<InnateToolComponent, HandCountChangedEvent>(OnHandCountChanged);
         SubscribeLocalEvent<InnateToolComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<InnateToolComponent, DestructionEventArgs>(OnDestroyed);
     }
@@ -37,26 +36,26 @@ public sealed class InnateToolSystem : EntitySystem
         if (component.Tools.Count == 0)
             return;
 
-        _toSpawn = EntitySpawnCollection.GetSpawns(component.Tools, _robustRandom);
+        component.ToSpawn = EntitySpawnCollection.GetSpawns(component.Tools, _robustRandom);
     }
 
-    private void OnPartAdded(EntityUid uid, InnateToolComponent component, BodyPartAddedEvent args)
+    private void OnHandCountChanged(EntityUid uid, InnateToolComponent component, HandCountChangedEvent args)
     {
-        if (args.Part.PartType != BodyPartType.Hand || _toSpawn.Count == 0)
+        if (component.ToSpawn.Count == 0)
             return;
 
         var spawnCoord = Transform(uid).Coordinates;
 
-        var toSpawn = _toSpawn.First();
+        var toSpawn = component.ToSpawn.First();
 
         var item = Spawn(toSpawn, spawnCoord);
         AddComp<UnremoveableComponent>(item);
         if (!_sharedHandsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
         {
             QueueDel(item);
-            _toSpawn.Clear();
+            component.ToSpawn.Clear();
         }
-        _toSpawn.Remove(toSpawn);
+        component.ToSpawn.Remove(toSpawn);
         component.ToolUids.Add(item);
     }
 
