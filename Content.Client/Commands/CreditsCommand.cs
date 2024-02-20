@@ -1,21 +1,19 @@
 using Content.Client.Credits;
-using Content.Client.UserInterface;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 
-namespace Content.Client.Commands
-{
-    [UsedImplicitly, AnyCommand]
-    public sealed class CreditsCommand : IConsoleCommand
-    {
-        public string Command => "credits";
-        public string Description => "Opens the credits window";
-        public string Help => "credits";
+namespace Content.Client.Commands;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            new CreditsWindow().Open();
-        }
+[UsedImplicitly, AnyCommand]
+public sealed class CreditsCommand : LocalizedCommands
+{
+    public override string Command => "credits";
+
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        new CreditsWindow().Open();
     }
 }

@@ -28,7 +28,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
@@ -44,7 +44,7 @@
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
-    damageDivisor: 36
+    damageDivisor: 6
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
@@ -54,7 +54,6 @@
 - type: entity
   parent: ShuttleWindow
   id: MiningWindowDiagonal
-  name: diagonal mining window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

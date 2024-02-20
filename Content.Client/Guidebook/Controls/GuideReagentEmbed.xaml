@@ -17,9 +17,22 @@
                         <GridContainer Name="RecipesDescriptionContainer"
                                       Margin="10 0 10 0"
                                       Columns="1"
-                                      HSeparationOverride="5"
+                                      HSeparationOverride="0"
                                       HorizontalAlignment="Stretch"
                                       HorizontalExpand="True"/>
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
+            <BoxContainer Name="SourcesContainer" HorizontalExpand="True">
+                <Collapsible Orientation="Vertical" HorizontalExpand="True">
+                    <CollapsibleHeading Title="{Loc 'guidebook-reagent-sources-header'}"/>
+                    <CollapsibleBody>
+                        <GridContainer Name="SourcesDescriptionContainer"
+                                       Margin="10 0 10 0"
+                                       Columns="1"
+                                       HSeparationOverride="5"
+                                       HorizontalAlignment="Stretch"
+                                       HorizontalExpand="True"/>
                     </CollapsibleBody>
                 </Collapsible>
             </BoxContainer>

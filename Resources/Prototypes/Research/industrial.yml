@@ -12,49 +12,46 @@
   recipeUnlocks:
   - MiningDrill
   - BorgModuleMining
-  - OreProcessorMachineCircuitboard
+  - OreProcessorIndustrialMachineCircuitboard
   - OreBagOfHolding
 
 - type: technology
   id: AdvancedPowercells
   name: research-technology-advanced-powercells
   icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: medium
-  discipline: Industrial
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - PowerCellMedium
-
-- type: technology
-  id: CompactPower
-  name: research-technology-compact-power
-  icon:
-    sprite: Structures/Power/Generation/wallmount_generator.rsi
-    state: panel
+    sprite: Structures/Power/turbo_recharger.rsi
+    state: empty
   discipline: Industrial
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - WallmountSubstationElectronics
-  - WallmountGeneratorElectronics
-  - WallmountGeneratorAPUElectronics
+  - PowerCellHigh
+  - TurboItemRechargerCircuitboard
+
+- type: technology
+  id: MechanicalCompression
+  name: research-technology-mechanical-compression
+  icon:
+    sprite: Structures/Machines/flatpacker.rsi
+    state: base
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - FlatpackerMachineCircuitboard
 
 - type: technology
   id: IndustrialEngineering
   name: research-technology-industrial-engineering
   icon:
-    sprite: Structures/Machines/protolathe.rsi
-    state: icon
+    sprite: Structures/Machines/protolathe_hypercon.rsi
+    state: building
   discipline: Industrial
   tier: 1
-  cost: 7500
+  cost: 10000
   recipeUnlocks:
-  - ProtolatheMachineCircuitboard
-  - AutolatheMachineCircuitboard
-  - CircuitImprinterMachineCircuitboard
-  - MaterialReclaimerMachineCircuitboard
+  - AutolatheHyperConvectionMachineCircuitboard
+  - ProtolatheHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
 
 - type: technology
@@ -85,7 +82,6 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
 
@@ -147,24 +143,11 @@
     state: icon
   discipline: Industrial
   tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - HolofanProjector
-  - PortableScrubberMachineCircuitBoard
-
-- type: technology
-  id: SuperPowercells
-  name: research-technology-super-powercells
-  icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: high
-  discipline: Industrial
-  tier: 2
   cost: 7500
   recipeUnlocks:
-  - PowerCellHigh
-  technologyPrerequisites:
-  - AdvancedPowercells
+  - HellfireFreezerMachineCircuitBoard
+  - PortableScrubberMachineCircuitBoard
+  - HolofanProjector
 
 - type: technology
   id: AdvancedToolsTechnology
@@ -210,4 +193,4 @@
   recipeUnlocks:
   - PowerCellMicroreactor
   technologyPrerequisites:
-  - SuperPowercells
+  - AdvancedPowercells

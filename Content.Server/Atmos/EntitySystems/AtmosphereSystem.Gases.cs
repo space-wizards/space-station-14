@@ -122,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var receiverHeatCapacity = GetHeatCapacity(receiver);
                 var giverHeatCapacity = GetHeatCapacity(giver);
                 var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
-                if (combinedHeatCapacity > 0f)
+                if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
                     receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                 }
@@ -166,7 +166,7 @@ namespace Content.Server.Atmos.EntitySystems
                         sourceHeatCapacity ??= GetHeatCapacity(source);
                         var receiverHeatCapacity = GetHeatCapacity(receiver);
                         var combinedHeatCapacity = receiverHeatCapacity + sourceHeatCapacity.Value * fraction;
-                        if (combinedHeatCapacity > 0f)
+                        if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
                             receiver.Temperature = (GetThermalEnergy(source, sourceHeatCapacity.Value * fraction) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                     }
                 }

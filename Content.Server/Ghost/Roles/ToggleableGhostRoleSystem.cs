@@ -59,7 +59,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
     {
         if (!args.IsInDetailsRange)
             return;
-
+        
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
         {
             args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));

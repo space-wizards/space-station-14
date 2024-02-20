@@ -23,6 +23,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
+  - type: WiresVisuals
   - type: ContainerFill
     containers:
       board: [ IntercomElectronics ]
@@ -31,6 +32,7 @@
       board: !type:Container
   - type: Sprite
     noRot: false
+    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
     layers:
     - state: base
@@ -43,6 +45,10 @@
       visible: false
     - state: speaker
       map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
       shader: unshaded
       visible: false
   - type: Transform
@@ -59,6 +65,8 @@
     interfaces:
       - key: enum.IntercomUiKey.Key
         type: IntercomBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: Construction
     graph: Intercom
     node: intercom
@@ -81,11 +89,15 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalGlassBreak
               params:
                 volume: -4
   - type: GenericVisualizer
     visuals:
+      enum.WiresVisualLayers.MaintenancePanel:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
@@ -112,6 +124,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
     state: build
   - type: Construction

@@ -8,7 +8,7 @@
 
 - type: stack
   id: SteelOre
-  name: steel ore
+  name: iron ore
   icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: iron }
   spawn: SteelOre1
   maxCount: 30

@@ -8,6 +8,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: cpuboard
+    - type: Item
+      storedRotation: -90
     - type: Tag
       tags:
         - DroneUsable
@@ -124,6 +126,8 @@
       state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerSalvageExpedition
+    - type: StealTarget
+      stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -133,6 +137,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleCargo
+    - type: StealTarget
+      stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -142,6 +148,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSalvage
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard

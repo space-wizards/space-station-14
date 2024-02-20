@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Decals;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -6,6 +5,7 @@ using Content.Shared.Decals;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using System.Numerics;
 
 namespace Content.Server.Chemistry.TileReactions;
 
@@ -18,7 +18,7 @@ public sealed partial class CleanDecalsReaction : ITileReaction
     /// <summary>
     /// For every cleaned decal we lose this much reagent.
     /// </summary>
-    [DataField("cleanCost")]
+    [DataField]
     public FixedPoint2 CleanCost { get; private set; } = FixedPoint2.New(0.25f);
 
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)

@@ -26,6 +26,8 @@
   - type: Tag
     tags:
     - HighRiskItem
+  - type: StealTarget
+    stealGroup: Hypospray
 
 - type: entity
   name: gorlex hypospray

@@ -1,8 +1,8 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
 
@@ -44,11 +44,11 @@ public sealed class LungSystem : EntitySystem
         }
     }
 
-    private void OnComponentInit(EntityUid uid, LungComponent component, ComponentInit args)
+    private void OnComponentInit(Entity<LungComponent> entity, ref ComponentInit args)
     {
-        component.LungSolution = _solutionContainerSystem.EnsureSolution(uid, LungSolutionName);
-        component.LungSolution.MaxVolume = 100.0f;
-        component.LungSolution.CanReact = false; // No dexalin lungs
+        var solution = _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
+        solution.MaxVolume = 100.0f;
+        solution.CanReact = false; // No dexalin lungs
     }
 
     private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
@@ -71,6 +71,9 @@ public sealed class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
+        if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
+            return;
+
         foreach (var gas in Enum.GetValues<Gas>())
         {
             var i = (int) gas;
@@ -81,11 +84,13 @@ public sealed class LungSystem : EntitySystem
             if (reagent == null) continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
-            _solutionContainerSystem.TryAddReagent(uid, lung.LungSolution, reagent, amount, out _);
+            solution.AddReagent(reagent, amount);
 
             // We don't remove the gas from the lung mix,
             // that's the responsibility of whatever gas is being metabolized.
             // Most things will just want to exhale again.
         }
+
+        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
     }
 }

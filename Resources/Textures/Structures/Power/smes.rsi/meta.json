@@ -10,6 +10,9 @@
     {
       "name": "smes"
     },
+		{
+      "name": "static"
+    },
     {
       "name": "smes-open"
     },

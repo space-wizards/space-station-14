@@ -11,6 +11,7 @@
     - InstantDoAfters
     - CanPilot
     - BypassInteractionRangeChecks
+    - BypassDropChecks
   - type: Input
     context: "aghost"
   - type: Ghost
@@ -30,6 +31,7 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+    - CentralCommand
   - type: UserInterface
     interfaces:
       - key: enum.SolarControlConsoleUiKey.Key
@@ -81,6 +83,13 @@
   - type: Stripping
   - type: SolutionScanner
   - type: IgnoreUIRange
+  - type: ShowRevIcons
+  - type: ShowZombieIcons
+  - type: Inventory
+    templateId: aghost
+  - type: InventorySlots
+  - type: Loadout
+    prototypes: [ MobAghostGear ]
 
 - type: entity
   id: ActionAGhostShowSolar

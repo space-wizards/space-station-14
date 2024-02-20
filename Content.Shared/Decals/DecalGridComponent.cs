@@ -78,7 +78,7 @@ namespace Content.Shared.Decals
             Chunks = chunks;
         }
 
-        public void ApplyToFullState(ComponentState fullState)
+        public void ApplyToFullState(IComponentState fullState)
         {
             DebugTools.Assert(!FullState);
             var state = (DecalGridState) fullState;
@@ -96,7 +96,7 @@ namespace Content.Shared.Decals
             }
         }
 
-        public ComponentState CreateNewFullState(ComponentState fullState)
+        public IComponentState CreateNewFullState(IComponentState fullState)
         {
             DebugTools.Assert(!FullState);
             var state = (DecalGridState) fullState;

@@ -22,11 +22,11 @@
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassUranium:
@@ -42,7 +42,7 @@
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
-    damageDivisor: 12
+    damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
@@ -54,7 +54,6 @@
 - type: entity
   parent: UraniumWindow
   id: UraniumWindowDiagonal
-  name: diagonal uranium window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

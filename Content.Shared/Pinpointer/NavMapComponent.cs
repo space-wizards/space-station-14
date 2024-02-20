@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Pinpointer;
 
@@ -17,6 +16,8 @@ public sealed partial class NavMapComponent : Component
     public readonly Dictionary<Vector2i, NavMapChunk> Chunks = new();
 
     [ViewVariables] public readonly List<SharedNavMapSystem.NavMapBeacon> Beacons = new();
+
+    [ViewVariables] public readonly List<SharedNavMapSystem.NavMapAirlock> Airlocks = new();
 }
 
 public sealed class NavMapChunk

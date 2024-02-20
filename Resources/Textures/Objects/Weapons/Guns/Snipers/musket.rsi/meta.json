@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a/icons/obj/guns/projectile/boltgun.dmi",
+  "copyright": "Made by Pato Grone for SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -17,15 +17,6 @@
     },
     {
       "name": "base"
-    },
-    {
-      "name": "bolt-closed"
-    },
-    {
-      "name": "bolt-open"
-    },
-    {
-      "name": "icon"
     }
   ]
 }

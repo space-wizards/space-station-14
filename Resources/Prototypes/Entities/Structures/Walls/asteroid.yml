@@ -1,5 +1,7 @@
-#Asteroid rocks
-#These can probably be merged with the rock types below these now, but I'm not going to mess with it since I don't want to risk altering any behavior.
+#TODO: Someone should probably move the ore vein prototypes into their own file, or otherwise split this up in some way. This should not be 1.5k lines long.
+
+
+#Asteroid rock
 - type: entity
   id: AsteroidRock
   parent: BaseStructure
@@ -9,11 +11,6 @@
   components:
   - type: PlacementReplacement
     key: walls
-  - type: SoundOnGather
-  - type: Gatherable
-    whitelist:
-      tags:
-        - Pickaxe
   - type: IconSmooth
     key: walls
     mode: NoSprite
@@ -32,15 +29,20 @@
         state: rock_asteroid_west
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: Rock
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 120
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
   - type: Occluder
   - type: Airtight
   - type: Fixtures
@@ -54,11 +56,257 @@
         - FullTileMask
         layer:
         - WallLayer
-  - type: OreVein
-    oreChance: 0.2
-    oreRarityPrototypeId: RandomOreDistributionStandard
   - type: RadiationBlocker
     resistance: 2
+
+# Ore veins
+- type: entity
+  id: AsteroidRockCoal
+  parent: AsteroidRock
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_coal
+
+- type: entity
+  id: AsteroidRockGold
+  parent: AsteroidRock
+  description: An ore vein rich with gold.
+  suffix: Gold
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreGold
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_gold
+
+- type: entity
+  id: AsteroidRockPlasma
+  parent: AsteroidRock
+  description: An ore vein rich with plasma.
+  suffix: Plasma
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OrePlasma
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_phoron
+
+- type: entity
+  id: AsteroidRockQuartz
+  parent: AsteroidRock
+  description: An ore vein rich with quartz.
+  suffix: Quartz
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSpaceQuartz
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_quartz
+
+- type: entity
+  id: AsteroidRockQuartzCrab
+  parent: AsteroidRock
+  description: An ore vein rich with quartz.
+  suffix: Quartz Crab
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreQuartzCrab
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_quartz
+
+- type: entity
+  id: AsteroidRockSilver
+  parent: AsteroidRock
+  description: An ore vein rich with silver.
+  suffix: Silver
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSilver
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_silver
+        
+- type: entity
+  id: AsteroidRockSilverCrab
+  parent: AsteroidRockSilver
+  suffix: Silver Crab
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSilverCrab
+
+# Yes I know it drops steel but we may get smelting at some point
+- type: entity
+  id: AsteroidRockTin
+  parent: AsteroidRock
+  description: An ore vein rich with iron.
+  suffix: Iron
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSteel
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_tin
+        
+- type: entity
+  id: AsteroidRockTinCrab
+  parent: AsteroidRockTin
+  suffix: Iron
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreIronCrab
+
+- type: entity
+  id: AsteroidRockUranium
+  parent: AsteroidRock
+  description: An ore vein rich with uranium.
+  suffix: Uranium
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreUranium
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_uranium
+
+- type: entity
+  id: AsteroidRockUraniumCrab
+  parent: AsteroidRockUranium
+  suffix: Uranium Crab
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreUraniumCrab
+
+- type: entity
+  id: AsteroidRockBananium
+  parent: AsteroidRock
+  description: An ore vein rich with bananium.
+  suffix: Bananium
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreBananium
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_bananium
+
+- type: entity
+  id: AsteroidRockArtifactFragment
+  parent: AsteroidRock
+  description: A rock wall. What's that sticking out of it?
+  suffix: Artifact Fragment
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreArtifactFragment
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_artifact_fragment
 
 - type: entity
   id: AsteroidRockMining
@@ -70,46 +318,6 @@
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
-
-- type: entity
-  id: AsteroidRockCrab
-  parent: AsteroidRock
-  name: asteroid rock
-  suffix: orecrab
-  description: An asteroid.
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/rock.rsi
-    layers:
-      - state: rock_asteroid_ore
-      - map: [ "enum.EdgeLayer.South" ]
-        state: rock_asteroid_south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: rock_asteroid_east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: rock_asteroid_north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: rock_asteroid_west
-  - type: OreVein
-    oreChance: 0.33
-    oreRarityPrototypeId: OreCrab
-
-- type: entity
-  id: AsteroidRockCrab1
-  parent: AsteroidRockCrab
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/rock.rsi
-    layers:
-      - state: rock_asteroid_ore1
-      - map: [ "enum.EdgeLayer.South" ]
-        state: rock_asteroid_south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: rock_asteroid_east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: rock_asteroid_north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: rock_asteroid_west
 
 - type: entity
   id: IronRock
@@ -152,6 +360,7 @@
   id: WallRock
   parent: BaseStructure
   name: rock
+  suffix: planetmap
   components:
     - type: PlacementReplacement
       key: walls
@@ -318,8 +527,8 @@
 - type: entity
   id: WallRockTin
   parent: WallRock
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -536,8 +745,8 @@
 - type: entity
   id: WallRockBasaltTin
   parent: WallRockBasalt
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -754,8 +963,8 @@
 - type: entity
   id: WallRockSnowTin
   parent: WallRockSnow
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -973,8 +1182,8 @@
 - type: entity
   id: WallRockSandTin
   parent: WallRockSand
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -1191,8 +1400,8 @@
 - type: entity
   id: WallRockChromiteTin
   parent: WallRockChromite
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0
@@ -1409,8 +1618,8 @@
 - type: entity
   id: WallRockAndesiteTin
   parent: WallRockAndesite
-  description: An ore vein rich with steel.
-  suffix: Steel
+  description: An ore vein rich with iron.
+  suffix: Iron
   components:
     - type: OreVein
       oreChance: 1.0

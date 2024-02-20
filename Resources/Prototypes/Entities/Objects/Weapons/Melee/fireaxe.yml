@@ -12,7 +12,7 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 90
+    wideAnimationRotation: 135
     swingLeft: true
     attackRate: 0.75
     damage:
@@ -37,11 +37,12 @@
   - type: Tool
     qualities:
       - Prying
-  - type: TilePrying
-    advanced: true
+  - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
     delay: 1
+  - type: StealTarget
+    stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
 
@@ -51,6 +52,8 @@
   parent: FireAxe
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite

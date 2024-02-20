@@ -18,6 +18,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -53,7 +54,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly SharedHandsSystem _hands = default!;
-        [Dependency] private readonly SharedHandVirtualItemSystem _handVirtualItem = default!;
+        [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -149,7 +150,7 @@ namespace Content.Shared.Cuffs
             if (args.Container.ID != component.Container?.ID)
                 return;
 
-            _handVirtualItem.DeleteInHandsMatching(uid, args.Entity);
+            _virtualItem.DeleteInHandsMatching(uid, args.Entity);
             UpdateCuffState(uid, component);
         }
 
@@ -384,7 +385,7 @@ namespace Content.Shared.Cuffs
                 var container = cuffable.Container;
                 var entity = container.ContainedEntities[^1];
 
-                container.Remove(entity);
+                _container.Remove(entity, container);
                 _transform.SetWorldPosition(entity, _transform.GetWorldPosition(owner));
             }
 
@@ -427,10 +428,10 @@ namespace Content.Shared.Cuffs
                     break;
             }
 
-            if (_handVirtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem1))
+            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem1))
                 EnsureComp<UnremoveableComponent>(virtItem1.Value);
 
-            if (_handVirtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem2))
+            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem2))
                 EnsureComp<UnremoveableComponent>(virtItem2.Value);
         }
 
@@ -448,7 +449,7 @@ namespace Content.Shared.Cuffs
             // Success!
             _hands.TryDrop(user, handcuff);
 
-            component.Container.Insert(handcuff);
+            _container.Insert(handcuff, component.Container);
             UpdateHeldItems(target, handcuff, component);
             return true;
         }
@@ -621,7 +622,7 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref cuffable) || !Resolve(cuffsToRemove, ref cuff))
                 return;
 
-            if (TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
+            if (cuff.Removing || TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
                 return;
 
             if (user != null)
@@ -632,9 +633,10 @@ namespace Content.Shared.Cuffs
                     return;
             }
 
+            cuff.Removing = true;
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
-            cuffable.Container.Remove(cuffsToRemove);
+            _container.Remove(cuffsToRemove, cuffable.Container);
 
             if (_net.IsServer)
             {
@@ -688,6 +690,7 @@ namespace Content.Shared.Cuffs
                     }
                 }
             }
+            cuff.Removing = false;
         }
 
         #region ActionBlocker

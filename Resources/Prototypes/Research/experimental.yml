@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: BasicRobotics
@@ -62,29 +62,27 @@
   id: MagnetsTech
   name: research-technology-magnets-tech
   icon:
-    sprite: Clothing/Shoes/Boots/magboots.rsi
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
     state: icon
   discipline: Experimental
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - ClothingShoesBootsMag
-
-# Tier 2
+  - ClothingShoesBootsMagSci
 
 - type: technology
-  id: AdvancedParts
-  name: research-technology-advanced-parts
+  id: AnomalyCoreHarnessing
+  name: research-technology-anomaly-harnessing
   icon:
-    sprite: Objects/Misc/stock_parts.rsi
-    state: advanced_matter_bin
+    sprite: Objects/Weapons/Melee/gorilla.rsi
+    state: icon
   discipline: Experimental
-  tier: 2
+  tier: 1
   cost: 10000
   recipeUnlocks:
-  - AdvancedCapacitorStockPart
-  - AdvancedMatterBinStockPart
-  - NanoManipulatorStockPart
+  - WeaponGauntletGorilla
+
+# Tier 2
 
 - type: technology
   id: AbnormalArtifactManipulation
@@ -127,21 +125,20 @@
   recipeUnlocks:
   - RPED
 
-# Tier 3
-
 - type: technology
-  id: SuperParts
-  name: research-technology-super-parts
+  id: DeterrenceTechnologies
+  name: research-technology-deterrence
   icon:
-    sprite: Objects/Misc/stock_parts.rsi
-    state: super_matter_bin
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
   discipline: Experimental
-  tier: 3
-  cost: 15000
+  tier: 2
+  cost: 7500
   recipeUnlocks:
-  - SuperCapacitorStockPart
-  - SuperMatterBinStockPart
-  - PicoManipulatorStockPart
+  - WeaponParticleDecelerator
+  - HoloprojectorField
+
+# Tier 3
 
 - type: technology
   id: GravityManipulation
@@ -155,3 +152,15 @@
   recipeUnlocks:
     - WeaponForceGun
     - WeaponTetherGun
+
+- type: technology
+  id: QuantumLeaping
+  name: research-technology-quantum-leaping
+  icon:
+    sprite: Objects/Devices/swapper.rsi
+    state: icon
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - DeviceQuantumSpinInverter

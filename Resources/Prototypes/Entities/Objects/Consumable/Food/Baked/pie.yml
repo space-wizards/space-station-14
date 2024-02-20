@@ -20,6 +20,8 @@
           Quantity: 11
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
+    trash: FoodPlateTin
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -132,8 +134,6 @@
       - sweet
       - banana
       - creamy
-  - type: Food
-    trash: FoodPlateTin
   - type: Sprite
     layers:
     - state: tin
@@ -172,6 +172,10 @@
       - creamy
   - type: Sprite
     state: bananapie-slice
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
 # Tastes like pie, cream, banana.
 
 - type: entity

@@ -9,7 +9,7 @@
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
   - type: StaticPrice
-    price: 250
+    price: 100
   - type: Tag
     tags:
     - BorgModuleGeneric
@@ -81,6 +81,24 @@
   - type: Tag
     tags:
     - BorgModuleService
+
+- type: entity
+  id: BaseBorgModuleSyndicate
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSyndicate
+
+- type: entity
+  id: BaseBorgModuleSyndicateAssault
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSyndicateAssault
 
 # generic modules
 - type: entity
@@ -187,6 +205,7 @@
     - Shovel
     - OreBag
     - Crowbar
+    - RadioHandheld
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -201,6 +220,7 @@
     items:
     - WeaponGrapplingGun
     - WeaponCrusherDagger
+    - HandheldGPSBasic
 
 # engineering modules
 - type: entity
@@ -217,22 +237,9 @@
     - Omnitool
     - WelderExperimental
     - NetworkConfigurator
-
-- type: entity
-  id: BorgModuleGasAnalyzer
-  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
-  name: gas analyzer cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: engineering
-    - state: icon-gas-analyzer
-  - type: ItemBorgModule
-    items:
-    - GasAnalyzer
-    - trayScanner
-    - Crowbar
-    - Wrench
+    - RemoteSignaller
+    - GasAnalyzer   
+    - GeigerCounter
 
 - type: entity
   id: BorgModuleConstruction
@@ -248,6 +255,7 @@
     - SheetSteelLingering0
     - SheetGlassLingering0
     - PartRodMetalLingering0
+    - FloorTileItemSteelLingering0
 
 - type: entity
   id: BorgModuleRCD
@@ -305,8 +313,9 @@
   - type: ItemBorgModule
     items:
     - AdvMopItem
-    - Holoprojector
+    - HoloprojectorBorg
     - SprayBottleSpaceCleaner
+    - Dropper
 
 # medical modules
 - type: entity
@@ -398,6 +407,8 @@
     items:
     - AnomalyScanner
     - AnomalyLocatorUnpowered
+    - RemoteSignaller
+    - Multitool
 
 # service modules
 - type: entity
@@ -416,7 +427,7 @@
     - HandLabeler
     - Lighter
     - DrinkShaker
-    - Syringe
+    - BorgDropper
 
 - type: entity
   id: BorgModuleMusique
@@ -478,3 +489,64 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
+   
+#syndicate modules
+- type: entity
+  id: BorgModuleSyndicateWeapon
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: weapon cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    items:
+    - WeaponAdvancedLaser
+    - Machete
+
+- type: entity
+  id: BorgModuleOperative
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: operative cyborg module
+  description: A module that comes with a crowbar, an Emag and a syndicate pinpointer.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - Crowbar
+        - Emag
+        - PinpointerSyndicateNuclear
+
+- type: entity
+  id: BorgModuleEsword
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: energy sword cyborg module
+  description: A module that comes with a double energy sword.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - EnergySwordDouble
+        - PinpointerSyndicateNuclear
+
+- type: entity
+  id: BorgModuleL6C
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule ]
+  name: L6C ROW cyborg module
+  description: A module that comes with a L6C.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - WeaponLightMachineGunL6C
+        - PinpointerSyndicateNuclear

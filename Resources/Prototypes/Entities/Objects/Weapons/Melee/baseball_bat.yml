@@ -37,3 +37,16 @@
   - type: Tag
     tags:
     - BaseballBat
+
+- type: entity
+  name: knockback stick
+  parent: BaseBallBat
+  id: WeaponMeleeKnockbackStick
+  description: And then he spleefed all over.
+  suffix: Do not map
+  components:
+  - type: MeleeThrowOnHit
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 1

@@ -59,6 +59,8 @@
   - type: TechnologyDisk
   - type: StaticPrice
     price: 100
+  - type: StealTarget
+    stealGroup: TechnologyDisk
 
 - type: entity
   parent: TechnologyDisk

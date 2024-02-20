@@ -1,0 +1,61 @@
+- type: material
+  id: RawIron
+  stackEntity: SteelOre1
+  name: materials-raw-iron
+  unit: materials-unit-chunk
+  icon: { sprite: Objects/Materials/ore.rsi, state: iron }
+  price: 0.05
+
+- type: material
+  id: RawQuartz
+  stackEntity: SpaceQuartz1
+  name: materials-raw-quartz
+  unit: materials-unit-chunk
+  icon: { sprite: Objects/Materials/ore.rsi, state: spacequartz }
+  color: "#a8ccd7"
+  price: 0.075
+
+- type: material
+  id: RawGold
+  stackEntity: GoldOre1
+  name: materials-raw-gold
+  unit: materials-unit-chunk
+  icon: { sprite: Objects/Materials/ore.rsi, state: gold }
+  color: "#FFD700"
+  price: 0.2
+
+- type: material
+  id: RawSilver
+  stackEntity: SilverOre1
+  name: materials-raw-silver
+  unit: materials-unit-chunk
+  icon: { sprite: Objects/Materials/ore.rsi, state: silver }
+  color: "#C0C0C0"
+  price: 0.15
+
+- type: material
+  id: RawPlasma
+  stackEntity: PlasmaOre1
+  name: materials-raw-plasma
+  unit: materials-unit-chunk
+  icon: { sprite: Objects/Materials/ore.rsi, state: plasma }
+  color: "#7e009e"
+  price: 0.2
+
+- type: material
+  id: RawUranium
+  stackEntity: UraniumOre1
+  name: materials-raw-uranium
+  unit: materials-unit-chunk
+  icon: { sprite: Objects/Materials/ore.rsi, state: uranium }
+  color: "#32a852"
+  price: 0.2
+
+- type: material
+  id: RawBananium
+  stackEntity: BananiumOre1
+  name: materials-raw-bananium
+  unit: materials-unit-chunk
+  icon: { sprite: Objects/Materials/ore.rsi, state: bananium }
+  color: "#32a852"
+  price: 0.2

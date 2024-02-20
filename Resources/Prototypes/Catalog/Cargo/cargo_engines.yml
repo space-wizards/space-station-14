@@ -1,29 +1,9 @@
 - type: cargoProduct
-  id: EngineAmeShielding
-  icon:
-    sprite: Objects/Power/AME/ame_part.rsi
-    state: box
-  product: CrateEngineeringAMEShielding
-  cost: 6000
-  category: Engineering
-  group: market
-
-- type: cargoProduct
   id: EngineAmeJar
   icon:
     sprite: Objects/Power/AME/ame_jar.rsi
     state: jar
   product: CrateEngineeringAMEJar
-  cost: 2000
-  category: Engineering
-  group: market
-
-- type: cargoProduct
-  id: EngineAmeControl
-  icon:
-    sprite: Structures/Power/Generation/ame.rsi
-    state: control
-  product: CrateEngineeringAMEControl
   cost: 2000
   category: Engineering
   group: market
@@ -87,5 +67,35 @@
     state: solar_assembly_parts
   product: CrateEngineeringSolar
   cost: 500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineTeslaGenerator
+  icon:
+    sprite: Structures/Power/Generation/Tesla/generator.rsi
+    state: icon
+  product: CrateEngineeringTeslaGenerator
+  cost: 4000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineTeslaCoil
+  icon:
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: coil
+  product: CrateEngineeringTeslaCoil
+  cost: 1200
+  category: Engineering
+  group: market
+  
+- type: cargoProduct
+  id: EngineTeslaGroundingRod
+  icon:
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: grounding_rod
+  product: CrateEngineeringTeslaGroundingRod
+  cost: 400
   category: Engineering
   group: market

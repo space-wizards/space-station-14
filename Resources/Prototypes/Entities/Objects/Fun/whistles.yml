@@ -1,0 +1,30 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseWhistle
+  name: whistle
+  description: Someone forgot to turn off kettle?
+  components:
+  - type: Item
+    size: Tiny
+  - type: Clothing
+    quickEquip: false
+    slots: neck
+  - type: UseDelay
+    delay: 3
+  - type: EmitSoundOnUse
+    sound: 
+      collection: BaseWhistle
+  - type: Whistle
+    distance: 5
+
+- type: entity
+  parent: BaseWhistle
+  id: SecurityWhistle
+  description: Sound of it make you feel fear.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/whistle.rsi
+    state: securityWhistle
+  - type: Item
+    sprite: Objects/Fun/whistle.rsi

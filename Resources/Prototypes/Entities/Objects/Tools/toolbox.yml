@@ -4,6 +4,9 @@
   abstract: true
   components:
   - type: Sprite
+    layers:
+      - map: [ base ]
+        state: icon
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg
@@ -13,7 +16,6 @@
     - 0,0,6,3
   - type: Item
     size: Ginormous
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -24,6 +26,13 @@
     tags:
     - DroneUsable
     - Toolbox
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+  - type: Appearance
 
 - type: entity
   name: emergency toolbox
@@ -135,3 +144,30 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  id: ToolboxThief
+  name: thief undetermined toolbox
+  description: This is where your favorite thief's supplies lie. Try to remember which ones.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
+    state: icon
+  - type: ThiefUndeterminedBackpack
+    transformAfterSelect: AlwaysPoweredWallLight
+    possibleSets:
+    # - TO DO Thief pinpointer needed
+    - ChemistrySet
+    - ToolsSet
+    - ChameleonSet # - TO DO Chameleon stump PR needed
+    - SyndieSet
+    - SleeperSet
+    - CommunicatorSet
+    - SmugglerSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.ThiefBackpackUIKey.Key
+        type: ThiefBackpackBoundUserInterface

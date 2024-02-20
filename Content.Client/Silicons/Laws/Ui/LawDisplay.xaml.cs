@@ -1,4 +1,5 @@
 using Content.Client.Chat.Managers;
+using Content.Client.Message;
 using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Laws;
@@ -18,8 +19,6 @@ public sealed partial class LawDisplay : Control
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public event Action<BaseButton.ButtonEventArgs>? OnLawAnnouncementButtonPressed;
-
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
     {
         RobustXamlLoader.Load(this);
@@ -29,7 +28,7 @@ public sealed partial class LawDisplay : Control
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
         var lawDescription = Loc.GetString(law.LawString);
 
-        LawNumberLabel.Text = lawIdentifier;
+        LawNumberLabel.SetMarkup(lawIdentifier);
         LawLabel.SetMessage(lawDescription);
 
         // If you can't talk, you can't state your laws...

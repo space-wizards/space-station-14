@@ -4,6 +4,7 @@
     CableApcStack: 4
     SciFlash: 4
     ProximitySensor: 3
+    ClothingEyesHudDiagnostic: 2
     RemoteSignaller: 3
     Igniter: 3 # its more ordnance but yeah
     HandheldHealthAnalyzer: 3
@@ -12,5 +13,7 @@
     #Bonesetter: 2 add when robotics
     NitrousOxideTankFilled: 2
     ClothingMaskBreathMedical: 5
+    ClothingHeadHatWeldingMaskFlame: 1
+    Welder: 1
     Screwdriver: 2
     Crowbar: 2

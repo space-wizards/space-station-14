@@ -10,7 +10,6 @@
   - type: Utensil
     types:
       - Knife
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -36,6 +35,7 @@
   - type: Tag
     tags:
     - Knife
+    - KitchenKnife
   - type: Sprite
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
     state: icon
@@ -54,6 +54,7 @@
   - type: Tag
     tags:
     - Knife
+    - Cleaver
   - type: Sprite
     sprite: Objects/Weapons/Melee/cleaver.rsi
     state: butch

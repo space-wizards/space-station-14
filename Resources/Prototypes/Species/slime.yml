@@ -35,8 +35,11 @@
     FacialHair:
       points: 1
       required: false
+    Chest:
+      points: 1
+      required: false
     Legs:
-      points: 2
+      points: 4
       required: false
     Arms:
       points: 4

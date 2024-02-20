@@ -58,7 +58,7 @@ namespace Content.Tests.Shared.Alert
             entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
 
             var alertState = (AlertsComponent.AlertsComponent_AutoState) getty.State!;
-            Assert.NotNull(alertState);
+            Assert.That(alertState, Is.Not.Null);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 

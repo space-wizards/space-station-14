@@ -47,28 +47,31 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 
     private void OnEmergencyExamine(EntityUid uid, EmergencyLightComponent component, ExaminedEvent args)
     {
-        args.PushMarkup(
-            Loc.GetString("emergency-light-component-on-examine",
-                ("batteryStateText",
-                    Loc.GetString(component.BatteryStateText[component.State]))));
+        using (args.PushGroup(nameof(EmergencyLightComponent)))
+        {
+            args.PushMarkup(
+                Loc.GetString("emergency-light-component-on-examine",
+                    ("batteryStateText",
+                        Loc.GetString(component.BatteryStateText[component.State]))));
 
-        // Show alert level on the light itself.
-        if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(uid), out var alerts))
-            return;
+            // Show alert level on the light itself.
+            if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(uid), out var alerts))
+                return;
 
-        if (alerts.AlertLevels == null)
-            return;
+            if (alerts.AlertLevels == null)
+                return;
 
-        var name = alerts.CurrentLevel;
+            var name = alerts.CurrentLevel;
 
-        var color = Color.White;
-        if (alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
-            color = details.Color;
+            var color = Color.White;
+            if (alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
+                color = details.Color;
 
-        args.PushMarkup(
-            Loc.GetString("emergency-light-component-on-examine-alert",
-                ("color", color.ToHex()),
-                ("level", name)));
+            args.PushMarkup(
+                Loc.GetString("emergency-light-component-on-examine-alert",
+                    ("color", color.ToHex()),
+                    ("level", name)));
+        }
     }
 
     private void OnEmergencyLightEvent(EntityUid uid, EmergencyLightComponent component, EmergencyLightEvent args)

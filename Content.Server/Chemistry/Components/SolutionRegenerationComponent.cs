@@ -1,8 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components;
 
@@ -17,7 +15,13 @@ public sealed partial class SolutionRegenerationComponent : Component
     /// The name of the solution to add to.
     /// </summary>
     [DataField("solution", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public string Solution = string.Empty;
+    public string SolutionName = string.Empty;
+
+    /// <summary>
+    /// The solution to add reagents to.
+    /// </summary>
+    [DataField("solutionRef")]
+    public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
     /// The reagent(s) to be regenerated in the solution.

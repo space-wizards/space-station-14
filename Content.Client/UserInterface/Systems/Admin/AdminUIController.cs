@@ -23,7 +23,10 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Admin;
 
 [UsedImplicitly]
-public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>, IOnStateEntered<LobbyState>, IOnSystemChanged<AdminSystem>
+public sealed class AdminUIController : UIController,
+    IOnStateEntered<GameplayState>,
+    IOnStateEntered<LobbyState>,
+    IOnSystemChanged<AdminSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
@@ -127,14 +130,12 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
     private void OnWindowOpen()
     {
-        if (AdminButton != null)
-            AdminButton.Pressed = true;
+        AdminButton?.SetClickPressed(true);
     }
 
     private void OnWindowClosed()
     {
-        if (AdminButton != null)
-            AdminButton.Pressed = false;
+        AdminButton?.SetClickPressed(false);
     }
 
     private void OnWindowDisposed()

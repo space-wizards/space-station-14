@@ -8,10 +8,19 @@
   },
   "states": [
     {
+      "name": "bbqsauce"
+    },
+    {
       "name": "bottle"
     },
     {
       "name": "bottle_spray"
+    },
+    {
+      "name": "cleaver"
+    },
+    {
+      "name": "coldsauce"
     },
     {
       "name": "crowbar"
@@ -41,6 +50,9 @@
       "name": "drill"
     },
     {
+      "name": "enzyme"
+    },
+    {
       "name": "flashbang"
     },
     {
@@ -48,6 +60,9 @@
     },
     {
       "name": "hoe"
+    },
+    {
+      "name": "hotsauce"
     },
     {
       "name": "hydro"
@@ -59,13 +74,28 @@
       "name": "jaws"
     },
     {
+      "name": "ketchup"
+    },
+    {
+      "name": "kitchenknife"
+    },
+    {
       "name": "multitool"
+    },
+    {
+      "name": "peppershaker"
     },
     {
       "name": "pill"
     },
     {
       "name": "plantbgone"
+    },
+    {
+      "name": "rollingpin"
+    },
+    {
+      "name": "saltshaker"
     },
     {
       "name": "screwdriver"

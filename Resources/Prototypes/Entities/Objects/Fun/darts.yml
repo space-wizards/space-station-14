@@ -42,7 +42,6 @@
   - type: Item
     size: Tiny
     sprite: Objects/Fun/Darts/dart_red.rsi
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -56,6 +55,7 @@
   - type: SolutionInjectOnCollide
     transferAmount: 2
     blockSlots: OUTERCLOTHING
+    fixtureId: "throw-fixture"
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Damageable
@@ -126,6 +126,7 @@
   - type: SolutionInjectOnCollide
     transferAmount: 7
     blockSlots: NONE
+    fixtureId: "throw-fixture"
   - type: SolutionTransfer
     maxTransferAmount: 7
 

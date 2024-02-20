@@ -11,19 +11,19 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     /// </summary>
     public sealed partial class Jitter : ReagentEffect
     {
-        [DataField("amplitude")]
+        [DataField]
         public float Amplitude = 10.0f;
 
-        [DataField("frequency")]
+        [DataField]
         public float Frequency = 4.0f;
 
-        [DataField("time")]
+        [DataField]
         public float Time = 2.0f;
 
         /// <remarks>
         ///     true - refresh jitter time,  false - accumulate jitter time
         /// </remarks>
-        [DataField("refresh")]
+        [DataField]
         public bool Refresh = true;
 
         public override void Effect(ReagentEffectArgs args)

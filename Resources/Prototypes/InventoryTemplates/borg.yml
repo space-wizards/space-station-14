@@ -4,8 +4,7 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    slotGroup: MainHotbar
-    uiWindowPos: 0,0
+    uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0, -0.09375
@@ -16,8 +15,7 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    slotGroup: MainHotbar
-    uiWindowPos: 0,0
+    uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0, -0.1875
@@ -40,8 +38,7 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    slotGroup: MainHotbar
-    uiWindowPos: 0,0
+    uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0, 0.09375

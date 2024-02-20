@@ -21,8 +21,6 @@ namespace Content.Server.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.ReplaceService<IRelationalTypeMappingSource, CustomNpgsqlTypeMappingSource>();
-
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
 
             options.ConfigureWarnings(x =>
