@@ -147,6 +147,12 @@
   permanentComponents:
   - type: PowerSupplier
     supplyRate: 20000
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
 
 - type: artifactEffect
   id: EffectBigIron
