@@ -17,9 +17,8 @@
     visuals:
       enum.ToggleVisuals.Toggled:
         enum.ToggleVisuals.Layer:
-          True: {visible: true}
-          False: {visible: false}
-  - type: SubFloorHide
+          True: { visible: true }
+          False: { visible: false }
   - type: CollideOnAnchor
   - type: UseDelay
     delay: 0.5
@@ -36,9 +35,9 @@
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         mask:
-        - MachineMask
+        - TableMask
         layer:
-        - MachineLayer
+        - TableLayer
         hard: false
   - type: ObjectSensor
   - type: DeviceLinkSource

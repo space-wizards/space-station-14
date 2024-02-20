@@ -108,9 +108,6 @@ public sealed class ObjectSensorSystem : EntitySystem
         if (!Transform(uid).Anchored)
             return;
 
-        if (TryComp(uid, out CollideOnAnchorComponent? collideOnAnchor))
-            RemComp(uid, collideOnAnchor);
-
         var contacting = _physics.GetContactingEntities(uid);
         var total = 0;
 
@@ -136,7 +133,7 @@ public sealed class ObjectSensorSystem : EntitySystem
         if (total == oldTotal)
             return;
 
-        Logger.Debug($"{ToPrettyString(uid)} {uid} {total}");
+        Logger.Debug($"{ToPrettyString(uid)} {total}");
 
         component.Contacting = total;
 
@@ -146,6 +143,7 @@ public sealed class ObjectSensorSystem : EntitySystem
         {
             for (var i = oldTotal; i <= (component.Contacting > 4 ? 4 : component.Contacting); i++)
             {
+
                 SetOut(uid, i, true);
             }
         }
