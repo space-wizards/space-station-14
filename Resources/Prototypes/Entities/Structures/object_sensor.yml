@@ -9,14 +9,14 @@
     layers:
     - state: icon
     - state: light
-      #map: [ "enum.LightLayers.Light" ]
+      map: [ "enum.ToggleVisuals.Layer" ]
       visible: false
       shader: unshaded
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.LightLayers.Unshaded:
-        enum.LightLayers.Light:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: {visible: true}
           False: {visible: false}
   - type: SubFloorHide
