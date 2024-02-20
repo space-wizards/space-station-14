@@ -459,7 +459,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             _doors.TryClose(doorUid);
-            _bolts.SetBoltsWithAudio(doorUid, door, enabled);
+            _doors.SetBoltsDown((doorUid, door), enabled);
         }
     }
 

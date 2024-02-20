@@ -190,7 +190,7 @@ public sealed partial class DoorComponent : Component
     /// The sprite state used for the door when it's being emagged.
     /// </summary>
     [DataField]
-    public string EmaggingSpriteState = "emagging";
+    public string EmaggingSpriteState = "sparks";
 
     /// <summary>
     /// The sprite state used for the door when it's open.
@@ -302,6 +302,9 @@ public sealed partial class DoorComponent : Component
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int ClosedDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+
+    [DataField, AutoNetworkedField]
+    public bool Powered;
 }
 
 [Serializable, NetSerializable]
