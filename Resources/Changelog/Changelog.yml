@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Surveillance cameras now cycle their animation forwards and backwards.
-    type: Add
-  id: 5476
-  time: '2023-12-30T16:14:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22950
 - author: EmoGarbage404
   changes:
   - message: Added the Hyper convection protolathe and autolathe to Industrial Engineering
@@ -3859,3 +3852,10 @@
   id: 5975
   time: '2024-02-20T22:26:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25409
+- author: landwhale
+  changes:
+  - message: Resprited Nettles & Death Nettles.
+    type: Tweak
+  id: 5976
+  time: '2024-02-20T23:58:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25421
