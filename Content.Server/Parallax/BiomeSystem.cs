@@ -83,15 +83,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<ShuttleFlattenEvent>(OnShuttleFlatten);
-        _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
+        Subs.CVar(_configManager, CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializeCommands();
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(ProtoReload);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _configManager.UnsubValueChanged(CVars.NetMaxUpdateRange, SetLoadRange);
     }
 
     private void ProtoReload(PrototypesReloadedEventArgs obj)

@@ -184,7 +184,7 @@ uplink-micro-bomb-implanter-desc = Explode on death or manual activation with th
 
 # Bundles
 uplink-observation-kit-name = Observation Kit
-uplink-observation-kit-desc = Includes syndicate crew monitor, high power cell and security hud disguised as sunglasses.
+uplink-observation-kit-desc = Includes surveillance camera monitor board and security hud disguised as sunglasses.
 
 uplink-emp-kit-name = Electrical Disruptor Kit
 uplink-emp-kit-desc = The ultimate reversal on energy-based weaponry: Disables disablers, stuns stunbatons, discharges laser guns! Contains 3 EMP grenades and an EMP implanter. Note: Does not disrupt actual firearms.

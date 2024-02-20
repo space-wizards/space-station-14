@@ -304,6 +304,17 @@
   - type: Appearance
 
 - type: entity
+  parent: ClothingBeltMedical
+  id: ClothingBeltMedicalEMT
+  name: EMT belt
+  description: Perfect for holding various equipment for medical emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/emt.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/emt.rsi
+
+- type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltPlant
   name: botanical belt
