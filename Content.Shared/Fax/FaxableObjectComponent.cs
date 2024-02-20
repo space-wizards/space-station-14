@@ -1,4 +1,3 @@
-using Robust.Shared.Utility;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Fax;

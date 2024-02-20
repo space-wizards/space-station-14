@@ -1,6 +1,5 @@
 using Robust.Client.GameObjects;
 using Content.Shared.Fax;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Paint
 {
