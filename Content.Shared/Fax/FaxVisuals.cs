@@ -5,16 +5,12 @@ namespace Content.Shared.Fax;
 [Serializable, NetSerializable]
 public enum FaxMachineVisuals : byte
 {
-    VisualState,
+    VisualState
 }
 
 [Serializable, NetSerializable]
 public enum FaxMachineVisualState : byte
 {
     Normal,
-    Inserting,
-    InsertingHamlet,
-    InsertingMouse,
-    InsertingMothroach,
     Printing
 }

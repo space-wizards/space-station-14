@@ -2,19 +2,20 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Paper;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Fax;
+namespace Content.Shared.Fax;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FaxMachineComponent : Component
 {
     /// <summary>
     /// Name with which the fax will be visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField("name")]
     public string FaxName { get; set; } = "Unknown";
 
     /// <summary>
@@ -22,6 +23,13 @@ public sealed partial class FaxMachineComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<DamageGroupPrototype> DamageType = "Brute";
+
+    /// <summary>
+    /// Sprite to use when inserting an object.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
+    public string InsertingState = "inserting";
 
     /// <summary>
     /// Amount of damage dealt when faxecuted.
@@ -33,7 +41,7 @@ public sealed partial class FaxMachineComponent : Component
     /// Device address of fax in network to which data will be send
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField("destinationAddress")]
     public string? DestinationFaxAddress { get; set; }
 
     /// <summary>

@@ -1,22 +1,14 @@
-using System.Threading;
 using Content.Server.Administration;
-using Content.Server.Administration.Commands;
-using Content.Server.Administration.Components;
 using Content.Server.Administration.Managers;
-using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
-using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Paper;
 using Content.Shared.Popups;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
-using Robust.Shared.Timing;
-using Content.Server.UserInterface;
 using Content.Shared.UserInterface;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
@@ -33,16 +25,10 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Damage;
-using Content.Shared.Random;
 using Content.Shared.Tag;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
-using Content.Server.Nutrition.Components;
-using Robust.Shared.Prototypes;
-using Content.Shared.Weapons.Melee.Events;
-
 
 namespace Content.Server.Fax;
 
@@ -73,7 +59,7 @@ public sealed class FaxSystem : EntitySystem
     /// </summary>
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultPaperPrototypeId = "Paper";
-    
+
     [ValidatePrototypeId<EntityPrototype>]
     private const string OfficePaperPrototypeId = "PaperOffice";
 
@@ -358,29 +344,18 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!TryComp<FaxableObjectComponent>(component.PaperSlot.Item, out var faxable))
-            return;
-
         if (component.PaperSlot.Item == null)
             return;
 
+        if (!TryComp<FaxableObjectComponent>(component.PaperSlot.Item.Value, out var faxable))
+            return;
+
+        component.InsertingState = faxable.InsertingState;
+
         if (component.InsertingTimeRemaining > 0)
         {
-            switch (faxable.Identity)
-            {
-                case "hamster":
-                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
-                    break;
-                case "mouse":
-                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
-                    break;
-                case "mothroach":
-                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
-                    break;
-                default:
-                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
-                    break;
-            }
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, true);
+            Dirty(uid, component);
         }
         else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
@@ -452,8 +427,8 @@ public sealed class FaxSystem : EntitySystem
         else
             prototype = DefaultPaperPrototypeId;
 
-        var name  = Loc.GetString("fax-machine-printed-paper-name");
-        
+        var name = Loc.GetString("fax-machine-printed-paper-name");
+
         var printout = new FaxPrintout(args.Content, name, prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;

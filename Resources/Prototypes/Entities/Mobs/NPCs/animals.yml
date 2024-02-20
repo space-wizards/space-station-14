@@ -434,7 +434,7 @@
     speechVerb: Moth
     speechSounds: Squeak
   - type: FaxableObject
-    identity: mothroach
+    insertingState: inserting_mothroach
   - type: MothAccent
   - type: Sprite
     sprite: Mobs/Animals/mothroach.rsi
@@ -1481,7 +1481,7 @@
       task: MouseCompound
   - type: Physics
   - type: FaxableObject
-    identity: mouse
+    insertingState: inserting_mouse
   - type: Fixtures
     fixtures:
       fix1:
@@ -2926,7 +2926,7 @@
     size: Tiny
   - type: Physics
   - type: FaxableObject
-    identity: hamster
+    insertingState: inserting_hamster
   - type: Fixtures
     fixtures:
       fix1:

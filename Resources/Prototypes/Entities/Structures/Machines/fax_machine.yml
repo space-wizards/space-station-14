@@ -9,7 +9,7 @@
     drawdepth: SmallObjects
     layers:
     - state: icon
-      map: ["base"]
+      map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
@@ -46,15 +46,11 @@
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
-        base:
+        enum.FaxMachineVisuals.VisualState:
           True: { state: idle }
           False: { state: icon }
       enum.FaxMachineVisuals.VisualState:
-        base:
-          Inserting: { state: inserting }
-          InsertingHamlet: { state: inserting_hamster }
-          InsertingMouse: { state: inserting_mouse }
-          InsertingMothroach: { state: inserting_mothroach }
+        enum.FaxMachineVisuals.VisualState:
           Printing: { state: printing }
   - type: ItemSlots
   - type: ContainerContainer
