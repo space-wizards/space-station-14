@@ -5,7 +5,7 @@ namespace Content.Shared.Fax;
 [Serializable, NetSerializable]
 public enum FaxMachineVisuals : byte
 {
-    VisualState
+    VisualState,
 }
 
 [Serializable, NetSerializable]
