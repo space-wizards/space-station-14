@@ -162,23 +162,15 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         Audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
 
-        var messagePrefix = eventArgs switch
-        {
-            { IsShoved: true } => "disarm-action-shove-",
-            { IsDisarmed: true } => "disarm-action-",
-
-            _ => "disarm-action-",
-        };
-
         var targetEnt = Identity.Entity(target, EntityManager);
         var userEnt = Identity.Entity(user, EntityManager);
 
         var msgOther = Loc.GetString(
-                messagePrefix + "popup-message-other-clients",
+                eventArgs.PopupPrefix + "popup-message-other-clients",
                 ("performerName", userEnt),
                 ("targetName", targetEnt));
 
-        var msgUser = Loc.GetString(messagePrefix + "popup-message-cursor", ("targetName", targetEnt));
+        var msgUser = Loc.GetString(eventArgs.PopupPrefix + "popup-message-cursor", ("targetName", targetEnt));
 
         var filterOther = Filter.PvsExcept(user, entityManager: EntityManager);
 

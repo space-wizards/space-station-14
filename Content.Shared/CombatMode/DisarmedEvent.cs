@@ -18,14 +18,10 @@ namespace Content.Shared.CombatMode
         public float PushProbability { get; init; }
 
         /// <summary>
-        ///     Whether the entity was successfully disarmed.
+        ///     Prefix for the popup message that will be displayed on a successful push.
+        ///     Should be set before returning.
         /// </summary>
-        public bool IsDisarmed { get; set; }
-
-        /// <summary>
-        ///     Whether the entity was successfully shoved.
-        /// </summary>
-        public bool IsShoved { get; set; }
+        public string PopupPrefix { get; set; } = "";
 
         /// <summary>
         ///     Whether the entity was successfully stunned from a shove.

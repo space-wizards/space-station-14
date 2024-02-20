@@ -102,7 +102,7 @@ namespace Content.Server.Hands.Systems
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
 
-            args.IsDisarmed = true;
+            args.PopupPrefix = "disarm-action-";
 
             args.Handled = true; // no shove/stun.
         }

@@ -131,7 +131,7 @@ public sealed partial class StaminaSystem : EntitySystem
         var damage = args.PushProbability * component.CritThreshold;
         TakeStaminaDamage(uid, damage, component, source: args.Source);
 
-        args.IsShoved = true;
+        args.PopupPrefix = "disarm-action-shove-";
         args.IsStunned = component.Critical;
 
         args.Handled = true;
