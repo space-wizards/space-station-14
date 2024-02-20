@@ -1,5 +1,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Climbing.Components;
+using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -9,7 +10,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -32,9 +32,10 @@ public sealed partial class BonkSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<BonkableComponent, DragDropTargetEvent>(OnDragDrop);
         SubscribeLocalEvent<BonkableComponent, BonkDoAfterEvent>(OnBonkDoAfter);
+        SubscribeLocalEvent<BonkableComponent, AttemptClimbEvent>(OnAttemptClimb);
     }
 
-    private void OnBonkDoAfter(EntityUid uid, Components.BonkableComponent component, BonkDoAfterEvent args)
+    private void OnBonkDoAfter(EntityUid uid, BonkableComponent component, BonkDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
@@ -45,7 +46,7 @@ public sealed partial class BonkSystem : EntitySystem
     }
 
 
-    public bool TryBonk(EntityUid user, EntityUid bonkableUid, Components.BonkableComponent? bonkableComponent = null)
+    public bool TryBonk(EntityUid user, EntityUid bonkableUid, BonkableComponent? bonkableComponent = null)
     {
         if (!Resolve(bonkableUid, ref bonkableComponent, false))
             return false;
@@ -75,12 +76,15 @@ public sealed partial class BonkSystem : EntitySystem
 
     }
 
-    private void OnDragDrop(EntityUid uid, Components.BonkableComponent component, ref DragDropTargetEvent args)
+    private bool TryStartBonk(EntityUid uid, EntityUid user, EntityUid climber, BonkableComponent? bonkableComponent = null)
     {
-        if (args.Handled || !HasComp<ClumsyComponent>(args.Dragged) || !HasComp<HandsComponent>(args.User))
-            return;
+        if (!Resolve(uid, ref bonkableComponent, false))
+            return false;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.Dragged, component.BonkDelay, new BonkDoAfterEvent(), uid, target: uid)
+        if (!HasComp<ClumsyComponent>(climber) || !HasComp<HandsComponent>(user))
+            return false;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, climber, bonkableComponent.BonkDelay, new BonkDoAfterEvent(), uid, target: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -88,6 +92,25 @@ public sealed partial class BonkSystem : EntitySystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
+
+        return true;
+    }
+
+    private void OnAttemptClimb(EntityUid uid, BonkableComponent component, AttemptClimbEvent args)
+    {
+        if (args.Cancelled || !HasComp<ClumsyComponent>(args.Climber) || !HasComp<HandsComponent>(args.User))
+            return;
+
+        if (TryStartBonk(uid, args.User, args.Climber, component))
+            args.Cancel();
+    }
+
+    private void OnDragDrop(EntityUid uid, BonkableComponent component, ref DragDropTargetEvent args)
+    {
+        if (args.Handled || !HasComp<ClumsyComponent>(args.Dragged) || !HasComp<HandsComponent>(args.User))
+            return;
+
+        TryStartBonk(uid, args.User, args.Dragged, component);
 
         args.Handled = true;
     }
