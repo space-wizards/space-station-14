@@ -74,8 +74,15 @@ public sealed class StatusIconOverlay : Overlay
 
             foreach (var proto in icons)
             {
-                var curTime = _timing.RealTime;
-                var texture = _sprite.GetFrame(proto.Icon, curTime);
+
+                var texture = _sprite.Frame0(proto.Icon);
+
+                if (proto.Animated)
+                {
+                    var curTime = _timing.RealTime;
+                    texture = _sprite.GetFrame(proto.Icon, curTime);
+                }
+
 
                 float yOffset;
                 float xOffset;
