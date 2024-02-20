@@ -30,7 +30,6 @@ public sealed partial class BonkSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<BonkableComponent, DragDropTargetEvent>(OnDragDrop);
         SubscribeLocalEvent<BonkableComponent, BonkDoAfterEvent>(OnBonkDoAfter);
         SubscribeLocalEvent<BonkableComponent, AttemptClimbEvent>(OnAttemptClimb);
     }
@@ -103,16 +102,6 @@ public sealed partial class BonkSystem : EntitySystem
 
         if (TryStartBonk(uid, args.User, args.Climber, component))
             args.Cancel();
-    }
-
-    private void OnDragDrop(EntityUid uid, BonkableComponent component, ref DragDropTargetEvent args)
-    {
-        if (args.Handled || !HasComp<ClumsyComponent>(args.Dragged) || !HasComp<HandsComponent>(args.User))
-            return;
-
-        TryStartBonk(uid, args.User, args.Dragged, component);
-
-        args.Handled = true;
     }
 
     [Serializable, NetSerializable]
