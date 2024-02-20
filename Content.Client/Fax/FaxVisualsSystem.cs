@@ -8,7 +8,6 @@ namespace Content.Client.Paint
         /// <summary>
         /// Visualizer for Paint which applies a shader and colors the entity.
         /// </summary>
-
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
@@ -20,7 +19,6 @@ namespace Content.Client.Paint
 
         private void OnAppearanceChanged(EntityUid uid, FaxMachineComponent component, ref AppearanceChangeEvent args)
         {
-
             if (args.Sprite == null)
                 return;
 
