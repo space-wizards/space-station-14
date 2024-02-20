@@ -84,7 +84,7 @@
   desc: reagent-desc-gastrotoxin
   flavor: bitter
   color: "#acc91a"
-  physicalDesc: reagent-physical-desc-exotic-smelling
+  physicalDesc: reagent-physical-desc-putrid
   metabolisms:
     Poison:
       effects:
