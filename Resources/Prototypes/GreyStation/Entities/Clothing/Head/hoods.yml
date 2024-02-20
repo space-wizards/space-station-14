@@ -30,3 +30,25 @@
     tags:
     - HidesHair
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHoodAmongGrande
+  name: among grande hood
+  description: Sospechoso...
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Hoods/amonggrande.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    # Will soon replace with new sound effects
+    equipSound: /Audio/Effects/rustle5.ogg
+    unequipSound: /Audio/Effects/rustle5.ogg
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+  - type: Tag
+    tags:
+    - HidesHair
+    - WhitelistChameleon

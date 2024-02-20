@@ -1,0 +1,43 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBloodyClothes
+  name: blood-soaked clothes
+  description: It's soaked in blood, presumably of horny Space-Camp goers...
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Uniforms/Misc/bloody_clothes.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Uniforms/Misc/bloody_clothes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRetroBloodyClothes
+  name: retro blood-soaked clothes
+  description: A more retro take on a famous murderer's garb. It smells like lake water and blood.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Uniforms/Misc/retro_bloody_clothes.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Uniforms/Misc/retro_bloody_clothes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitOldBandages
+  name: old bandages
+  description: A bunch of wrapped bandages. Very old and very used.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Uniforms/Misc/old_bandages.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Uniforms/Misc/old_bandages.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitScarecrowClothes
+  name: scarecrow costume
+  description: Some clothes made from dirty ripped-rags and straw.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Uniforms/Misc/scarecrow_clothes.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Uniforms/Misc/scarecrow_clothes.rsi
