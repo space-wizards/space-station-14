@@ -86,7 +86,7 @@
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
 
-  - type: technology
+- type: technology
   id: AdvancedRiotControl
   name: research-technology-advanced-riot-control
   icon:
