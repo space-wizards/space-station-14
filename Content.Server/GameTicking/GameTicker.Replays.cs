@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Replays;
@@ -128,6 +128,7 @@ public sealed partial class GameTicker
         metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
         metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
         metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
+        metadata["roundId"] = new ValueDataNode(RoundId.ToString());
     }
 
     private ResPath GetAutoReplayPath()
