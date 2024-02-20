@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Added sounds to UI clicking and hovering.
-    type: Add
-  id: 5471
-  time: '2023-12-29T04:43:37.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22410
 - author: FairlySadPanda
   changes:
   - message: Talking, whispering and emoting will now strip out any markup tags in
@@ -3861,3 +3854,10 @@
   id: 5970
   time: '2024-02-19T22:37:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25281
+- author: ElectroJr
+  changes:
+  - message: Fix actions sometimes disappearing.
+    type: Fix
+  id: 5971
+  time: '2024-02-20T02:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25395
