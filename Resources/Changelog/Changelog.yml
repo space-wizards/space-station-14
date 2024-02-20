@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix mobs not gibbing upon shuttle FTL.
-    type: Fix
-  id: 5475
-  time: '2023-12-30T16:12:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22952
-- author: metalgearsloth
-  changes:
   - message: Surveillance cameras now cycle their animation forwards and backwards.
     type: Add
   id: 5476
@@ -3859,3 +3852,10 @@
   id: 5974
   time: '2024-02-20T10:43:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25390
+- author: Golinth
+  changes:
+  - message: The mindshield outline now flashes!
+    type: Tweak
+  id: 5975
+  time: '2024-02-20T22:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25409
