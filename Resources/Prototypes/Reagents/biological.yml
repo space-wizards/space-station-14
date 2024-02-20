@@ -88,7 +88,7 @@
   flavor: metallic
   color: "#162581"
   recognizable: true
-  physicalDesc: reagent-physical-desc-ferrous
+  physicalDesc: reagent-physical-desc-metallic
   slippery: false
 
 - type: reagent
