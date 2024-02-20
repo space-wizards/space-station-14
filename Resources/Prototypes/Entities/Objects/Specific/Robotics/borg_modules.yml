@@ -319,7 +319,7 @@
 
 # medical modules
 - type: entity
-  id: BorgModuleDiagnosis
+  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: diagnosis cyborg module
   components:
@@ -374,6 +374,7 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Beaker
     - Beaker
     - BorgDropper
