@@ -242,6 +242,24 @@
     - buzzes.
     - buzzes!
 
+- type: emote
+  id: Chirp
+  category: Vocal
+  chatMessages: [chirps!]
+  chatTriggers:
+    - chirp
+    - chirp!
+    - chirp.
+    - chirps
+    - churps.
+    - chirps!
+    - chirped
+    - chirped.
+    - chirped!
+    - chirping
+    - chirping.
+    - chirping!
+
 - type: emote #GreyStation - Fart PR
   id: Fart
   category: Vocal

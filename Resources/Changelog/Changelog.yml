@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: You can now purchase kobolds from cargo as an alternative to monkeys!
-    type: Add
-  id: 5464
-  time: '2023-12-28T05:32:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22108
-- author: TheShuEd
-  changes:
-  - message: Tesla has been added to the game! Engineers can build a tesla power generator
-      using a tesla generator, tesla coils, and grounding wands that can be purchased
-      from the cargo.
-    type: Add
-  id: 5465
-  time: '2023-12-28T13:11:50.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21124
-- author: TheShuEd
-  changes:
-  - message: thieves can now appear in rounds with nuclear operatives
-    type: Add
-  id: 5466
-  time: '2023-12-28T23:50:25.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23102
-- author: EmoGarbage404
-  changes:
-  - message: Added station beacons. These devices create custom labels on the station
-      map. Order them from cargo today.
-    type: Add
-  id: 5467
-  time: '2023-12-29T00:02:21.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23136
-- author: lzk228
-  changes:
-  - message: Directional barricade is constructable now!
-    type: Tweak
-  id: 5468
-  time: '2023-12-29T00:45:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22988
-- author: themias
-  changes:
-  - message: Toy swords can be turned on.
-    type: Fix
-  id: 5469
-  time: '2023-12-29T00:59:23.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23137
-- author: Ubaser
-  changes:
-  - message: Magboots produced by science now have new sprites.
-    type: Add
-  id: 5470
-  time: '2023-12-29T03:08:08.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23107
-- author: metalgearsloth
-  changes:
-  - message: Added sounds to UI clicking and hovering.
-    type: Add
-  id: 5471
-  time: '2023-12-29T04:43:37.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22410
 - author: FairlySadPanda
   changes:
   - message: Talking, whispering and emoting will now strip out any markup tags in
@@ -3863,3 +3804,60 @@
   id: 5963
   time: '2024-02-17T23:55:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25357
+- author: genderGeometries
+  changes:
+  - message: Allicin, nutriment, and vitamin can now be centrifuged. Protein and fat
+      can now be electrolyzed.
+    type: Add
+  id: 5964
+  time: '2024-02-19T06:05:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25366
+- author: azurerosegarden
+  changes:
+  - message: Drinks in the Solar's Best Hot Drinks menu now show their contents
+    type: Fix
+  id: 5965
+  time: '2024-02-19T15:40:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25301
+- author: Lank
+  changes:
+  - message: Nymphs can now open doors and chirp.
+    type: Tweak
+  id: 5966
+  time: '2024-02-19T17:11:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25363
+- author: PotentiallyTom
+  changes:
+  - message: Gave guidebooks to the 4 learner roles
+    type: Tweak
+  id: 5967
+  time: '2024-02-19T18:54:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25388
+- author: jamessimo
+  changes:
+  - message: vending machine UI improved
+    type: Tweak
+  id: 5968
+  time: '2024-02-19T22:18:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25377
+- author: marbow
+  changes:
+  - message: Moths can now eat plushies and with a distinctive sound!
+    type: Add
+  id: 5969
+  time: '2024-02-19T22:35:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25382
+- author: ArchPigeon
+  changes:
+  - message: Liquid Tritium can now be used as a chem in flamethrowers
+    type: Add
+  id: 5970
+  time: '2024-02-19T22:37:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25281
+- author: ElectroJr
+  changes:
+  - message: Fix actions sometimes disappearing.
+    type: Fix
+  id: 5971
+  time: '2024-02-20T02:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25395
