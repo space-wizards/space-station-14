@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Talking, whispering and emoting will now strip out any markup tags in
-      the input text. This also means intercoms tuned to the science channel will
-      no longer squawk out "[bold]", and so on, when reporting on research unlocks.
-    type: Fix
-  id: 5472
-  time: '2023-12-30T00:38:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23055
-- author: Admiral-Obvious-001
-  changes:
-  - message: Normalized researched secfab shotgun ammo damages to align with the rest
-      of the ammo sizes.
-    type: Tweak
-  id: 5473
-  time: '2023-12-30T05:34:27.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23163
 - author: metalgearsloth
   changes:
   - message: Fix decals such as grass drawing over shuttles on planet maps.
@@ -3861,3 +3844,18 @@
   id: 5971
   time: '2024-02-20T02:08:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25395
+- author: PJB3005
+  changes:
+  - message: Fixed timezone issues with the admin notes window.
+    type: Fix
+  id: 5972
+  time: '2024-02-20T09:13:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25280
+- author: PJB3005
+  changes:
+  - message: Fixed selection behavior for player lists such as the ban panel or ahelp
+      window.
+    type: Fix
+  id: 5973
+  time: '2024-02-20T09:13:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25248
