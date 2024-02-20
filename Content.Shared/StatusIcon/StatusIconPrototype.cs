@@ -40,13 +40,6 @@ public partial class StatusIconData : IComparable<StatusIconData>
     /// </summary>
     [DataField]
     public StatusIconLayer Layer = StatusIconLayer.Base;
-
-
-    /// <summary>
-    ///  Is the icon animated. 
-    /// </summary>
-    [DataField]
-    public bool Animated = false;
 }
 
 /// <summary>
