@@ -6,14 +6,12 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class MessagesUiMessageEvent : CartridgeMessageEvent
 {
     public readonly MessagesUiAction Action;
-    public readonly MessagesMessageData? MessageData;
-    public readonly string? Chat;
+    public readonly string Parameter;
 
-    public MessagesUiMessageEvent(MessagesUiAction action, MessagesMessageData messageData, string? chat="")
+    public MessagesUiMessageEvent(MessagesUiAction action, string parameter)
     {
         Action = action;
-        MessageData = messageData;
-        Chat = chat;
+        Parameter = parameter;
     }
 }
 
@@ -24,11 +22,4 @@ public enum MessagesUiAction
     ChangeChat
 }
 
-[Serializable, NetSerializable]
-public partial struct MessagesMessageData
-{
-    public string SenderId;
-    public string ReceiverId;
-    public string Content;
-    public double Time;
-}
+

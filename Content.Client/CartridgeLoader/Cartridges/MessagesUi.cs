@@ -18,19 +18,18 @@ public sealed partial class MessagesUi : UIFragment
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new MessagesUiFragment();
-        _fragment.OnNoteRemoved += note => SendMessagesMessage(MessagesUiAction.Remove, note, userInterface);
-        _fragment.OnNoteAdded += note => SendMessagesMessage(MessagesUiAction.Add, note, userInterface);
+        _fragment.OnMessageSent += note => SendMessagesMessage(MessagesUiAction.Send, note, userInterface);
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not MessagesUiState notekeepeerState)
+        if (state is not MessagesUiState messagesState)
             return;
 
-        _fragment?.UpdateState(notekeepeerState.Notes);
+        _fragment?.UpdateState(messagesState.Contents, messagesState.Mode);
     }
 
-    private void SendMessagesMessage(MessagesUiAction action, string note, BoundUserInterface userInterface)
+    private void SendMessagesMessage(MessagesUiAction action, MessagesMessageData message, BoundUserInterface userInterface)
     {
         var MessagesMessage = new MessagesUiMessageEvent(action, note);
         var message = new CartridgeUiMessage(MessagesMessage);
