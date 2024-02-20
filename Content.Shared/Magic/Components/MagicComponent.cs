@@ -25,10 +25,10 @@ public sealed partial class MagicComponent : Component
     //      May be an action toggle or something
 
     /// <summary>
-    ///     Does this spell require Wizard robes?
+    ///     Does this spell require Wizard Robes & Hat?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Robes;
+    public bool RequiresClothes;
 
     /// <summary>
     ///     Does this spell require the user to speak?
