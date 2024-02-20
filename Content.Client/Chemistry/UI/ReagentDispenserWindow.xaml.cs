@@ -18,6 +18,7 @@ namespace Content.Client.Chemistry.UI
     public sealed partial class ReagentDispenserWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         public event Action<BaseButton.ButtonEventArgs, DispenseReagentButton>? OnDispenseReagentButtonPressed;
         public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseEntered;
         public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseExited;
@@ -85,7 +86,8 @@ namespace Content.Client.Chemistry.UI
             UpdateContainerInfo(castState);
             UpdateReagentsList(castState.Inventory);
 
-            View.SetEntity(castState.OutputContainerEntity);
+            _entityManager.TryGetEntity(castState.OutputContainerEntity, out var outputContainerEnt);
+            View.SetEntity(outputContainerEnt);
 
             // Disable the Clear & Eject button if no beaker
             ClearButton.Disabled = castState.OutputContainer is null;
