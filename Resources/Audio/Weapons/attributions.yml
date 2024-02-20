@@ -8,7 +8,7 @@
   copyright: "User tosha73 on freesound.org"
   source: "https://freesound.org/people/tosha73/sounds/509902/"
 
-- files: ["chainsaw.ogg, chainsawidle.ogg, chainsawwield.ogg"]
+- files: ["chainsaw.ogg", "chainsawidle.ogg", "chainsawwield.ogg"]
   license: "Custom"
   copyright: "https://www.soundjay.com/tos.html"
   source: "https://www.soundjay.com/chainsaw-sound-effect.html"
@@ -28,7 +28,7 @@
   copyright: "Based on genhit3.ogg from tgstation, modified by deltanedas on github."
   source: "https://github.com/deltanedas"
 
-- files: ["telescopicon.ogg, telescopicoff.ogg"]
+- files: ["telescopicon.ogg", "telescopicoff.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "User Nimfar11 on GitHub."
   source: "https://github.com/Nimfar11"
@@ -82,7 +82,7 @@
   license: "CC0-1.0"
   copyright: "Taken from ScreamStudio on freesound.org"
   source: "https://freesound.org/people/ScreamStudio/sounds/392617/"
-  
+
 - files: ["pop.ogg"]
   license: "CC0-1.0"
   copyright: "Taken from 0ne_one111yt on freesound.org"

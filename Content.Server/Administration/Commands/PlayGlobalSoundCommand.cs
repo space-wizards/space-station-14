@@ -6,6 +6,11 @@ using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Sequence;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;
 
@@ -94,10 +99,57 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
         if (args.Length == 1)
         {
             var hint = Loc.GetString("play-global-sound-command-arg-path");
+            var options2 = new List<CompletionOption>();
+            try
+            {
+                var path = new ResPath(args[0]);
+                /**
+                 * Finds any attribution.yml in current directory and tries to get 
+                 * "files" field out of it, populates options2 list only with files path
+                 * 
+                 * Any invalid-used field will result this code to not give a single damn
+                 * Example:
+                 * - files: ["honk.ogg", "something.ogg"] = good, will display autocompletion 1 by 1
+                 * - files: ["honk.ogg, something.ogg"]   = valid but incorrect field, will simply display "/Dir/honk.ogg, something.ogg"
+                 */
+                foreach (var file in _res.ContentFindFiles(path))
+                {
+                    if (file.Extension != "yml")
+                        continue;
 
+                    var yamlData = _res.ContentFileReadYaml(file);
+
+                    if (yamlData.Documents.Count == 0)
+                        continue;
+
+                    foreach (var item in yamlData.Documents[0].AllNodes)
+                    {
+                        var sequence = (SequenceDataNode) item.ToDataNode();
+                        foreach (var entry in sequence.Sequence)
+                        {
+                            if (entry is not MappingDataNode map)
+                                continue;
+                            if (!map.TryGet("files", out var value))
+                                continue;
+
+                            foreach (var item1 in (SequenceDataNode) value)
+                            {
+                                options2.Add(new CompletionOption(file.WithName(item1.ToString()).CanonPath));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception) {}
             var options = CompletionHelper.ContentFilePath(args[0], _res);
 
+#if FULL_RELEASE
+            return CompletionResult.FromHintOptions(options.Concat(options2), hint);
+#else
+            // We don't need to concat lists in debug version since it works here
             return CompletionResult.FromHintOptions(options, hint);
+#endif
+
         }
 
         if (args.Length == 2)
