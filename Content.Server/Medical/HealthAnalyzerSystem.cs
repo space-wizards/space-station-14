@@ -192,8 +192,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
                 ref bloodstream.BloodSolution, out var bloodSolution))
         {
             bloodAmount = bloodSolution.FillFraction;
-            if (bloodstream.BleedAmount > 0)
-                bleeding = true;
+            bleeding = bloodstream.BleedAmount > 0;
         }
 
 

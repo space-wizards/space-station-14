@@ -92,6 +92,10 @@ namespace Content.Client.HealthAnalyzer.UI
                 Bleeding.Text = Loc.GetString("health-analyzer-window-entity-bleeding-text");
                 Bleeding.FontColorOverride = Color.Red;
             }
+            else
+            {
+                Bleeding.Text = string.Empty;  // Clear the text
+            }
 
             patientDamageAmount.Text = Loc.GetString(
                 "health-analyzer-window-entity-damage-total-text",
