@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Rainfey
-  changes:
-  - message: Ensure correct number of thieves
-    type: Fix
-  id: 5499
-  time: '2024-01-01T02:25:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23270
 - author: icekot8
   changes:
   - message: 2 new effects for artifact
@@ -3862,3 +3855,10 @@
   id: 5998
   time: '2024-02-21T23:26:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25450
+- author: Killerqu00
+  changes:
+  - message: EVA helmets are now quick-equippable again
+    type: Fix
+  id: 5999
+  time: '2024-02-21T23:41:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25448
