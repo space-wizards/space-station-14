@@ -1,6 +1,7 @@
 tiles-space = space
 tiles-plating = plating
 tiles-lattice = lattice
+tiles-lattice-train = train lattice
 tiles-steel-floor = steel tile
 tiles-steel-floor-mini = steel mini-tile
 tiles-steel-floor-pavement = steel pavement
