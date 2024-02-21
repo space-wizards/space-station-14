@@ -320,11 +320,11 @@
 
 - type: reagent
   id: JuiceThatMakesYouWeh
-  name: juice that makes you Weh
+  name: reagent-name-weh
   group: Toxins
-  desc: Pure essence of lizard plush. Makes you Weh!
-  physicalDesc: Weh
-  flavor: WehJuice
+  desc: reagent-desc-weh
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: weh
   color: "#59b23a"
   metabolisms:
     Poison:
@@ -335,7 +335,7 @@
         showInChat: true
         probability: 0.5
       - !type:Polymorph
-        prototype: ArtifactLizard # Does the same thing as the original YML I made.
+        prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.
         conditions:
         - !type:OrganType
           type: Animal
