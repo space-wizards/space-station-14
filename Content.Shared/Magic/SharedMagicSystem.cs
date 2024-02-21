@@ -88,7 +88,7 @@ public abstract class SharedMagicSystem : EntitySystem
                 args.Cancelled = true;
         }
 
-        if (comp.Speech)
+        if (comp.RequiresSpeech)
         {
             // TODO: Move Muted to shared and check for muted comp
         }
@@ -155,7 +155,7 @@ public abstract class SharedMagicSystem : EntitySystem
         }
     }
 
-    // TODO: See what this is used for and try to swap out component.Owner
+    // staves.yml ActionRGB light
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
