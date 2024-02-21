@@ -251,7 +251,7 @@
   - type: Storage
     grid:
     - 0,0,5,3
-    maxItemSize: Normal
+    maxItemSize: Large
     whitelist:
       tags:
         - TrashBag
