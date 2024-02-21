@@ -26,6 +26,20 @@
     ClothingHeadHatBeretFrench: 2
     ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
+    ClothingOuterGorillaSuit: 2 # GreyStation - Clothing addition
+    ClothingHeadHoodGorillaMask: 2 # GreyStation - Clothing addition
+    ClothingOuterLobsterSuit: 2 # GreyStation - Clothing addition
+    ClothingHeadHoodLobsterHelm: 2 # GreyStation - Clothing addition
+    ClothingHeadHatRichard: 1 # GreyStation - Clothing addition
+    ClothingHeadHoodPigMask: 2 # GreyStation - Clothing addition
+    ClothingHeadHoodCowMask: 2 # GreyStation - Clothing addition
+    ClothingMaskBat: 1 # GreyStation - Clothing addition
+    ClothingMaskBear: 1 # GreyStation - Clothing addition
+    ClothingMaskFox: 1 # GreyStation - Clothing addition
+    ClothingMaskRat: 1 # GreyStation - Clothing addition
+    ClothingMaskJackal: 2 # GreyStation - Clothing addition
+    ClothingMaskRaven: 1 # GreyStation - Clothing addition
+    ClothingMaskBee: 1 # GreyStation - Clothing addition
     ClothingOuterSuitMonkey: 2
     ClothingHeadHatPumpkin: 2
     ClothingHeadHatShrineMaidenWig: 2
@@ -79,7 +93,7 @@
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
-    #ClothingOuterDogi: 1 - swapped out in favor of TouseiGusoku + Kabuto
+    #ClothingOuterDogi: 1 GreyStation - swapped out in favor of TouseiGusoku + Kabuto
     ClothingHeadHelmetKabuto: 1 # Nyano - Clothing addition
     ClothingOuterArmorTouseiGusoku: 1 # Nyano - Clothing addition
     ClothingMaskSexyClown: 1
