@@ -662,7 +662,8 @@ public sealed partial class ShuttleSystem
     {
         // Set position
         var mapCoordinates = _transform.ToMapCoordinates(config.Coordinates);
-        _transform.SetWorldPositionRotation(shuttle.Owner, mapCoordinates.Position, config.Angle, shuttle.Comp);
+        var mapUid = _mapManager.GetMapEntityId(mapCoordinates.MapId);
+        _transform.SetCoordinates(shuttle.Owner, shuttle.Comp, new EntityCoordinates(mapUid, mapCoordinates.Position), rotation: config.Angle);
 
         // Connect everything
         foreach (var (dockAUid, dockBUid, dockA, dockB) in config.Docks)

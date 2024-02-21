@@ -1,1 +1,1 @@
-<ui:ShuttleDockControl xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"/>
+<ui:BaseShuttleControl xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"/>

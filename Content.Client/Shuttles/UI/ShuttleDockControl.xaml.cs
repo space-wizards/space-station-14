@@ -297,8 +297,10 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
                 if (canDraw)
                 {
+                    // Because it's being layed out top-down we have to arrange for first frame.
+                    container.Arrange(PixelRect);
                     var containerPos = scaledPos - container.DesiredSize / 2 - new Vector2(0f, 0.75f) * MinimapScale;
-                    LayoutContainer.SetPosition(container, containerPos);
+                    SetPosition(container, containerPos);
                 }
 
                 _drawnDocks.Add(dock);
@@ -378,13 +380,18 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                 var container = new BoxContainer()
                 {
                     Orientation = BoxContainer.LayoutOrientation.Vertical,
+                    Margin = new Thickness(3),
                 };
 
                 var panel = new PanelContainer()
                 {
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
-                    PanelOverride = new StyleBoxFlat(new Color(30, 30, 34)),
+                    PanelOverride = new StyleBoxFlat(new Color(30, 30, 34, 200)),
+                    Children =
+                    {
+                        container,
+                    }
                 };
 
                 Button button;
@@ -455,8 +462,9 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                 button.HorizontalAlignment = HAlignment.Center;
                 container.AddChild(button);
 
-                AddChild(container);
-                _dockContainers[dock] = container;
+                AddChild(panel);
+                panel.Measure(Vector2Helpers.Infinity);
+                _dockContainers[dock] = panel;
             }
         }
     }
