@@ -143,21 +143,21 @@
   id: MobDragonRehydrated
   suffix: "Rehydrated"
   components:
-  - type: Dragon
-    spawnsLeft: 2
-    spawnsProto: MobCarpDragon
-    spawnRiftAction: ActionSpawnRift
-  - type: GenericAntag
-    rule: Dragon
-  - type: GuideHelp
-    guides:
-    - MinorAntagonists
-  - type: GhostRole
-    allowMovement: true
-    allowSpeech: true
-    makeSentient: true
-    name: ghost-role-information-space-dragon-rehydrated-name
-    description: ghost-role-information-space-dragon-rehydrated-description
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      100: 0.7
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDragon
+      amount: 1
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 20 #I wanted an identical one to the salvage dragon but it doesn't do that much damage so I upped it a bit
 
 - type: entity
   parent: BaseMobDragon
