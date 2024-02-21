@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-	"copyright": "/tg/station, 'icons/obj/device.dmi', commit 2b8b045d",
+	"copyright": "/tg/station, 'icons/obj/device.dmi' commit 2b8b045d, redrawn by Ubaser.",
 	"size": { "x": 32, "y": 32 },
 	"states": [
 		{ "name": "tray-on" , "delays": [[0.1, 1.0]]},

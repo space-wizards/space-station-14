@@ -113,3 +113,10 @@ public sealed partial class UnlockDoAfter : DoAfterEvent
         return this;
     }
 }
+
+[NetSerializable]
+[Serializable]
+public enum LockVisuals : byte
+{
+    Locked
+}

@@ -161,3 +161,13 @@
     Carbon: 3
     Sugar: 2
 
+- type: reaction
+  id: Laughter
+  reactants:
+    JuiceBanana:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Laughter: 2
+

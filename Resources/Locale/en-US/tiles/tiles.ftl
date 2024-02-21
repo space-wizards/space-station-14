@@ -1,6 +1,7 @@
 tiles-space = space
 tiles-plating = plating
 tiles-lattice = lattice
+tiles-lattice-train = train lattice
 tiles-steel-floor = steel tile
 tiles-steel-floor-mini = steel mini-tile
 tiles-steel-floor-pavement = steel pavement
@@ -77,6 +78,8 @@ tiles-blue-shuttle-floor = blue shuttle floor
 tiles-orange-shuttle-floor = orange shuttle floor
 tiles-purple-shuttle-floor = purple shuttle floor
 tiles-red-shuttle-floor = red shuttle floor
+tiles-grey-shuttle-floor = grey shuttle floor
+tiles-black-shuttle-floor = black shuttle floor
 tiles-gold-tile = gold tile
 tiles-silver-tile = silver tile
 tiles-glass-floor = glass floor
