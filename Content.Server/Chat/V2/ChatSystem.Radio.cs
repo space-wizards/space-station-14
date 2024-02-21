@@ -3,16 +3,12 @@ using Content.Server.Power.Components;
 using Content.Server.Radio;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
-using Content.Shared.CCVar;
-using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
-using Content.Shared.Speech;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
@@ -21,73 +17,7 @@ public sealed partial class ChatSystem
 {
     public void InitializeServerRadio()
     {
-        SubscribeNetworkEvent<AttemptHeadsetRadioEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, false); });
-        SubscribeNetworkEvent<AttemptInternalRadioEvent>((msg, args) => { HandleAttemptRadioMessage(args.SenderSession, msg.Speaker, msg.Message, msg.Channel, true); });
-    }
-
-    private void HandleAttemptRadioMessage(ICommonSession player, NetEntity entity, string message, string channel, bool isInnate)
-    {
-        var entityUid = GetEntity(entity);
-
-        if (player.AttachedEntity != entityUid)
-        {
-            return;
-        }
-
-        if (IsRateLimited(entityUid, out var reason))
-        {
-            RaiseNetworkEvent(new RadioFailedEvent(entity, reason), player);
-
-            return;
-        }
-
-        HashSet<string> channels;
-
-        if (isInnate)
-        {
-            if (!TryComp<InternalRadioComponent>(entityUid, out var comp))
-            {
-                RaiseNetworkEvent(new RadioFailedEvent(entity, "You can't talk on any radio channel."), player);
-
-                return;
-            }
-
-            channels = comp.SendChannels;
-        }
-        else
-        {
-            if (!TryComp<HeadsetRadioableComponent>(entityUid, out var comp))
-            {
-                RaiseNetworkEvent(new RadioFailedEvent(entity, "You can't talk on any radio channel."), player);
-
-                return;
-            }
-
-            channels = comp.Channels;
-        }
-
-        if (!channels.Contains(channel))
-        {
-            RaiseNetworkEvent(new RadioFailedEvent(entity, Loc.GetString("chat-system-radio-channel-failed", ("channel", channel))), player);
-
-            return;
-        }
-
-        if (!_proto.TryIndex(channel, out RadioChannelPrototype? radioChannelProto))
-        {
-            RaiseNetworkEvent(new RadioFailedEvent(entity, Loc.GetString("chat-system-radio-channel-nonexistent", ("channel", channel))), player);
-
-            return;
-        }
-
-        if (message.Length > MaxChatMessageLength)
-        {
-            RaiseNetworkEvent(new RadioFailedEvent(entity, Loc.GetString("chat-system-max-message-length")),player);
-
-            return;
-        }
-
-        SendRadioMessageWithWhisper(entityUid, message, radioChannelProto);
+        SubscribeLocalEvent<RadioCreatedEvent>((msg, args) => { SendRadioMessage(msg.Speaker, msg.Message, msg.Channel); });
     }
 
     public void SendRadioMessageViaDevice(EntityUid entityUid, string message, RadioChannelPrototype channel, EntityUid device, string asName = "")
@@ -149,7 +79,7 @@ public sealed partial class ChatSystem
     }
 
     private void TransmitToReceivers(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName,
-        RadioCreatedEvent msgOut)
+        RadioEmittedEvent msgOut)
     {
         foreach (var receiver in GetRadioReceivers(entityUid, channel))
         {
@@ -160,14 +90,14 @@ public sealed partial class ChatSystem
     }
 
     private void StashRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName,
-        RadioCreatedEvent msgOut)
+        RadioEmittedEvent msgOut)
     {
         _replay.RecordServerMessage(msgOut);
         _adminLogger.Add(LogType.Chat, LogImpact.Low,
             $"Radio from {ToPrettyString(entityUid):user} on {channel} as {asName}: {message}");
     }
 
-    private bool TryBuildSuccessEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioCreatedEvent? msgOut, EntityUid? device = null)
+    private bool TryBuildSuccessEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioEmittedEvent? msgOut, EntityUid? device = null)
     {
         message = SanitizeSpeechMessage(
             entityUid,
@@ -218,29 +148,18 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
         }
 
-        var verb = GetSpeechVerb(entityUid, message);
-
         if (TryComp<VoiceMaskComponent>(entityUid, out var mask))
         {
             asName = mask.VoiceName;
-
-            if (mask.SpeechVerb != null && _proto.TryIndex<SpeechVerbPrototype>(mask.SpeechVerb, out var proto))
-            {
-                verb = proto;
-            }
         }
 
         var name = SanitizeName(asName, UseEnglishGrammar);
 
-        msgOut = new RadioCreatedEvent(
+        msgOut = new RadioEmittedEvent(
             entityUid,
             name,
             message,
             channel.ID,
-            Loc.GetString(_random.Pick(verb.SpeechVerbStrings)),
-            verb.FontId,
-            verb.FontSize,
-            verb.Bold,
             device: device
         );
 

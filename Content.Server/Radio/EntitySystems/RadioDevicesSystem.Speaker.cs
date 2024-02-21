@@ -13,7 +13,7 @@ public sealed partial class RadioDevicesSystem
     public  void InitializeSpeaker()
     {
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
-        SubscribeLocalEvent<RadioSpeakerComponent, RadioCreatedEvent>(OnReceiveRadio);
+        SubscribeLocalEvent<RadioSpeakerComponent, RadioEmittedEvent>(OnReceiveRadio);
     }
 
     private void OnActivateSpeaker(EntityUid uid, RadioSpeakerComponent component, ActivateInWorldEvent args)
@@ -26,7 +26,7 @@ public sealed partial class RadioDevicesSystem
         args.Handled = true;
     }
 
-    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioCreatedEvent args)
+    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioEmittedEvent args)
     {
         if (!component.Enabled)
         {

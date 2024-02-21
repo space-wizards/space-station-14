@@ -66,11 +66,6 @@ public partial class SharedChatSystem
         return true;
     }
 
-    public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, EmotePrototype emote)
-    {
-        return TryPlayEmoteSound(uid, proto, emote.ID);
-    }
-
     public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, string emoteId)
     {
         if (proto == null)

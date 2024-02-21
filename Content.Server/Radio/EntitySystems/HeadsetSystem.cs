@@ -21,7 +21,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
         base.Initialize();
         SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
-        SubscribeLocalEvent<HeadsetComponent, RadioCreatedEvent>(OnHeadsetReceive);
+        SubscribeLocalEvent<HeadsetComponent, RadioEmittedEvent>(OnHeadsetReceive);
     }
 
     private static void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
@@ -33,7 +33,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
         args.Disabled = true;
     }
 
-    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent headset, RadioCreatedEvent ev)
+    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent headset, RadioEmittedEvent ev)
     {
         if (!TryComp<ActorComponent>(headset.CurrentlyWornBy, out var actor))
             return;

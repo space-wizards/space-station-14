@@ -1,23 +1,9 @@
-﻿using System.Globalization;
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
-using Content.Server.Chat.V2.Censorship;
-using Content.Server.Speech.EntitySystems;
-using Content.Shared.CCVar;
-using Content.Shared.Chat.V2;
+﻿using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
-using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using SixLabors.ImageSharp.Processing;
 
 namespace Content.Server.Chat.V2;
 
@@ -25,39 +11,7 @@ public sealed partial class ChatSystem
 {
     public void InitializeServerLocalChat()
     {
-        SubscribeNetworkEvent<AttemptLocalChatEvent>((msg, args) => { HandleAttemptLocalChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
-    }
-
-    private void HandleAttemptLocalChatMessage(ICommonSession player, NetEntity entity, string message)
-    {
-        var entityUid = GetEntity(entity);
-        if (player.AttachedEntity != entityUid)
-        {
-            return;
-        }
-
-        if (IsRateLimited(entityUid, out var reason))
-        {
-            RaiseNetworkEvent(new LocalChatFailedEvent(entity, reason), player);
-
-            return;
-        }
-
-        if (!TryComp<LocalChattableComponent>(entityUid, out var comp))
-        {
-            RaiseNetworkEvent(new LocalChatFailedEvent(entity, Loc.GetString("chat-system-local-chat-failed")), player);
-
-            return;
-        }
-
-        if (message.Length > MaxChatMessageLength)
-        {
-            RaiseNetworkEvent(new LocalChatFailedEvent(entity, Loc.GetString("chat-system-max-message-length-exceeded-message")), player);
-
-            return;
-        }
-
-        SendLocalChatMessage(entityUid, message, comp.Range);
+        SubscribeLocalEvent<LocalChatCreatedEvent>((msg, args) => { SendLocalChatMessage(msg.Speaker, msg.Message, msg.Range); });
     }
 
     /// <summary>
@@ -120,19 +74,7 @@ public sealed partial class ChatSystem
             asName = GetSpeakerName(entityUid);
         }
 
-        var name = SanitizeName(asName, UseEnglishGrammar);
-        RaiseLocalEvent(entityUid, new LocalChatCreatedEvent(
-            entityUid,
-            name,
-            message,
-            range
-        ), true);
-
-        var msgOut = new LocalChatEvent(
-            GetNetEntity(entityUid),
-            name,
-            message
-        );
+        var msgOut = new LocalChatEvent(GetNetEntity(entityUid), SanitizeName(asName, UseEnglishGrammar), message);
 
         foreach (var session in GetLocalChatRecipients(entityUid, range))
         {

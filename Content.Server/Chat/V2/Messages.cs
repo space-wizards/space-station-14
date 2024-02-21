@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Radio;
 
 namespace Content.Server.Chat.V2;
 
@@ -6,6 +7,7 @@ public interface IStorableChatEvent
 {
     public EntityUid GetSender();
     public void SetId(uint id);
+    public void PatchMessage(string message);
 }
 
 /// <summary>
@@ -35,6 +37,11 @@ public sealed class CommsAnnouncementCreatedEvent : EntityEventArgs, IStorableCh
     {
         Id = id;
     }
+
+    public void PatchMessage(string message)
+    {
+        Message = message;
+    }
 }
 
 /// <summary>
@@ -45,14 +52,12 @@ public sealed class DeadChatCreatedEvent : EntityEventArgs, IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
-    public string AsName;
-    public readonly string Message;
+    public string Message;
     public bool IsAdmin;
 
-    public DeadChatCreatedEvent(EntityUid speaker, string asName, string message, bool isAdmin)
+    public DeadChatCreatedEvent(EntityUid speaker, string message, bool isAdmin)
     {
         Speaker = speaker;
-        AsName = asName;
         Message = message;
         IsAdmin = isAdmin;
     }
@@ -66,6 +71,11 @@ public sealed class DeadChatCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Id = id;
     }
+
+    public void PatchMessage(string message)
+    {
+        Message = message;
+    }
 }
 
 /// <summary>
@@ -73,17 +83,36 @@ public sealed class DeadChatCreatedEvent : EntityEventArgs, IStorableChatEvent
 /// Use it to play sound, change sprite or something else.
 /// </summary>
 [ByRefEvent]
-public struct EmoteCreatedEvent : IStorableChatEvent
+public struct HandleEmoteEvent
 {
-    public uint Id;
     public EntityUid Sender;
     public bool Handled;
     public readonly EmotePrototype Emote;
 
-    public EmoteCreatedEvent(EmotePrototype emote)
+    public HandleEmoteEvent(EmotePrototype emote)
     {
         Emote = emote;
         Handled = false;
+    }
+}
+
+/// <summary>
+/// Raised by chat system when entity made some emote.
+/// Use it to play sound, change sprite or something else.
+/// </summary>
+[Serializable]
+public struct EmoteCreatedEvent : IStorableChatEvent
+{
+    public uint Id;
+    public EntityUid Sender;
+    public string Message;
+    public float Range;
+
+    public EmoteCreatedEvent(EntityUid sender, string message, float range)
+    {
+        Sender = sender;
+        Message = message;
+        Range = range;
     }
 
     public EntityUid GetSender()
@@ -95,6 +124,11 @@ public struct EmoteCreatedEvent : IStorableChatEvent
     {
         Id = id;
     }
+
+    public void PatchMessage(string message)
+    {
+        Message = message;
+    }
 }
 
 /// <summary>
@@ -105,14 +139,12 @@ public sealed class LocalChatCreatedEvent : EntityEventArgs, IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
-    public string AsName;
-    public readonly string Message;
+    public string Message;
     public float Range;
 
-    public LocalChatCreatedEvent(EntityUid speaker, string asName, string message, float range)
+    public LocalChatCreatedEvent(EntityUid speaker, string message, float range)
     {
         Speaker = speaker;
-        AsName = asName;
         Message = message;
         Range = range;
     }
@@ -126,6 +158,11 @@ public sealed class LocalChatCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Id = id;
     }
+
+    public void PatchMessage(string message)
+    {
+        Message = message;
+    }
 }
 
 /// <summary>
@@ -136,13 +173,11 @@ public sealed class LoocCreatedEvent : EntityEventArgs, IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
-    public string AsName;
-    public readonly string Message;
+    public string Message;
 
-    public LoocCreatedEvent(EntityUid speaker, string asName, string message)
+    public LoocCreatedEvent(EntityUid speaker, string message)
     {
         Speaker = speaker;
-        AsName = asName;
         Message = message;
     }
 
@@ -154,6 +189,11 @@ public sealed class LoocCreatedEvent : EntityEventArgs, IStorableChatEvent
     public void SetId(uint id)
     {
         Id = id;
+    }
+
+    public void PatchMessage(string message)
+    {
+        Message = message;
     }
 }
 
@@ -165,42 +205,18 @@ public sealed class RadioCreatedEvent : EntityEventArgs, IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
-    public EntityUid? Device;
-    public string AsName;
-    public readonly string Message;
-    public readonly string Channel;
-    public bool IsBold;
-    public string Verb;
-    public string FontId;
-    public int FontSize;
-    public bool IsAnnouncement;
-    public Color? MessageColorOverride;
+    public string Message;
+    public RadioChannelPrototype Channel;
 
     public RadioCreatedEvent(
         EntityUid speaker,
-        string asName,
         string message,
-        string channel,
-        string withVerb = "",
-        string fontId = "",
-        int fontSize = 0,
-        bool isBold = false,
-        bool isAnnouncement = false,
-        Color? messageColorOverride = null,
-        EntityUid? device = null
+        RadioChannelPrototype channel
     )
     {
         Speaker = speaker;
-        Device = device;
-        AsName = asName;
         Message = message;
         Channel = channel;
-        Verb = withVerb;
-        FontId = fontId;
-        FontSize = fontSize;
-        IsBold = isBold;
-        IsAnnouncement = isAnnouncement;
-        MessageColorOverride = messageColorOverride;
     }
 
     public EntityUid GetSender()
@@ -212,6 +228,39 @@ public sealed class RadioCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Id = id;
     }
+
+    public void PatchMessage(string message)
+    {
+        Message = message;
+    }
+}
+
+/// <summary>
+/// Raised when a character speaks on the radio.
+/// </summary>
+[Serializable]
+public sealed class RadioEmittedEvent : EntityEventArgs
+{
+    public EntityUid Speaker;
+    public EntityUid? Device;
+    public string AsName;
+    public string Message;
+    public string Channel;
+
+    public RadioEmittedEvent(
+        EntityUid speaker,
+        string asName,
+        string message,
+        string channel,
+        EntityUid? device
+    )
+    {
+        Speaker = speaker;
+        Device = device;
+        AsName = asName;
+        Message = message;
+        Channel = channel;
+    }
 }
 
 /// <summary>
@@ -222,18 +271,14 @@ public sealed class WhisperCreatedEvent : EntityEventArgs, IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
-    public string AsName;
-    public readonly string Message;
-    public readonly string ObfuscatedMessage;
+    public string Message;
     public float MinRange;
     public float MaxRange;
 
-    public WhisperCreatedEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
+    public WhisperCreatedEvent(EntityUid speaker, string message, float minRange, float maxRange)
     {
         Speaker = speaker;
-        AsName = asName;
         Message = message;
-        ObfuscatedMessage = obfuscatedMessage;
         MinRange = minRange;
         MaxRange = maxRange;
     }
@@ -247,4 +292,34 @@ public sealed class WhisperCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Id = id;
     }
+
+    public void PatchMessage(string message)
+    {
+        Message = message;
+    }
 }
+
+/// <summary>
+/// Raised when a character whispers.
+/// </summary>
+[Serializable]
+public sealed class WhisperEmittedEvent : EntityEventArgs
+{
+    public EntityUid Speaker;
+    public string AsName;
+    public string Message;
+    public string ObfuscatedMessage;
+    public float MinRange;
+    public float MaxRange;
+
+    public WhisperEmittedEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
+    {
+        Speaker = speaker;
+        AsName = asName;
+        Message = message;
+        ObfuscatedMessage = obfuscatedMessage;
+        MinRange = minRange;
+        MaxRange = maxRange;
+    }
+}
+

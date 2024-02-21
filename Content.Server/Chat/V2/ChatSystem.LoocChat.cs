@@ -1,20 +1,9 @@
-﻿using Content.Server.Administration.Logs;
-using Content.Server.Administration.Managers;
-using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
-using Content.Shared.CCVar;
-using Content.Shared.Chat;
+﻿using Content.Shared.CCVar;
 using Content.Shared.Chat.V2;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs.Systems;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.Player;
-using Robust.Shared.Replays;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
@@ -26,40 +15,14 @@ public sealed partial class ChatSystem
 
     public void InitializeServerLoocChat()
     {
-        SubscribeNetworkEvent<LoocAttemptedEvent>((msg, args) => { HandleAttemptChatMessage(args.SenderSession, msg.Speaker, msg.Message); });
+        SubscribeLocalEvent<LoocCreatedEvent>((msg, args) => { SendLoocMessage(msg.Speaker, msg.Message); });
 
         Configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         Configuration.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
         Configuration.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
     }
 
-    private void HandleAttemptChatMessage(ICommonSession player, NetEntity entity, string message)
-    {
-        var entityUid = GetEntity(entity);
-
-        if (player.AttachedEntity != entityUid)
-        {
-            return;
-        }
-
-        if (IsRateLimited(entityUid, out var reason))
-        {
-            RaiseNetworkEvent(new LoocAttemptFailedEvent(entity, reason), player);
-
-            return;
-        }
-
-        if (message.Length > MaxChatMessageLength)
-        {
-            RaiseNetworkEvent(new LoocAttemptFailedEvent(entity, Loc.GetString("chat-system-max-message-length")), player);
-
-            return;
-        }
-
-        SendLoocMessage(entityUid, message);
-    }
-
-    public void SendLoocMessage(EntityUid source,string message)
+    public void SendLoocMessage(EntityUid source, string message)
     {
         message = SanitizeMessage(message);
 
@@ -74,8 +37,6 @@ public sealed partial class ChatSystem
 
         if (!_admin.IsAdmin(source) && !LoocEnabled)
             return;
-
-        RaiseLocalEvent(new LoocCreatedEvent(source, name, message));
 
         var range = Configuration.GetCVar(CCVars.LoocRange);
 

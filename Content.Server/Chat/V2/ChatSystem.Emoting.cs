@@ -13,40 +13,7 @@ public sealed partial class ChatSystem
 {
     public void InitializeServerEmoting()
     {
-        SubscribeNetworkEvent<AttemptEmoteEvent>((msg, args) => { HandleAttemptEmoteMessage(args.SenderSession, msg.Emoter, msg.Message); });
-    }
-
-    private void HandleAttemptEmoteMessage(ICommonSession player, NetEntity entity, string message)
-    {
-        var entityUid = GetEntity(entity);
-
-        if (player.AttachedEntity != entityUid)
-        {
-            return;
-        }
-
-        if (IsRateLimited(entityUid, out var reason))
-        {
-            RaiseNetworkEvent(new EmoteFailedEvent(entity, reason), player);
-
-            return;
-        }
-
-        if (!TryComp<EmoteableComponent>(entityUid, out var emoteable))
-        {
-            RaiseNetworkEvent(new EmoteFailedEvent(entity, Loc.GetString("chat-system-emote-failed")), player);
-
-            return;
-        }
-
-        if (message.Length > MaxChatMessageLength)
-        {
-            RaiseNetworkEvent(new EmoteFailedEvent(entity, Loc.GetString("chat-system-max-message-length")), player);
-
-            return;
-        }
-
-        SendEmoteMessage(entityUid, message, emoteable.Range);
+        SubscribeLocalEvent<EmoteCreatedEvent>((msg, args) => { SendEmoteMessage(msg.Sender, msg.Message, msg.Range); });
     }
 
     /// <summary>
@@ -135,17 +102,14 @@ public sealed partial class ChatSystem
         // "the" to the front of some emotes.
         var name = SanitizeName(asName, false);
 
-        // This is a temporary workaround for weirdness with emotes where we ship around the prototype as a "success".
         var emote = GetEmote(message);
         if (emote != null)
         {
-            var ev = new EmoteCreatedEvent(emote);
+            var ev = new HandleEmoteEvent(emote);
             RaiseLocalEvent(entityUid, ref ev);
         }
 
         var msgOut = new EmoteEvent(GetNetEntity(entityUid), name, message);
-
-        RaiseLocalEvent(entityUid, msgOut, true);
 
         foreach (var session in GetEmoteRecipients(entityUid, range))
         {
@@ -213,7 +177,7 @@ public sealed partial class ChatSystem
         if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
             return;
 
-        var ev = new EmoteCreatedEvent(emote);
+        var ev = new HandleEmoteEvent(emote);
         RaiseLocalEvent(source, ref ev);
     }
 

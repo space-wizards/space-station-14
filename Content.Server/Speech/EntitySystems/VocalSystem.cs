@@ -25,7 +25,7 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
-        SubscribeLocalEvent<VocalComponent, EmoteCreatedEvent>(OnEmote);
+        SubscribeLocalEvent<VocalComponent, HandleEmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
     }
 
@@ -50,7 +50,7 @@ public sealed class VocalSystem : EntitySystem
         LoadSounds(uid, component);
     }
 
-    private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteCreatedEvent args)
+    private void OnEmote(EntityUid uid, VocalComponent component, ref HandleEmoteEvent args)
     {
         if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
             return;
@@ -63,7 +63,7 @@ public sealed class VocalSystem : EntitySystem
         }
 
         // just play regular sound based on emote proto
-        args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote.ID);
     }
 
     private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)

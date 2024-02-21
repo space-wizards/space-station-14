@@ -18,7 +18,7 @@ public partial class SharedChatSystem
             return false;
         }
 
-        RaiseNetworkEvent(new LoocAttemptedEvent(GetNetEntity(speaker), message));
+        RaiseNetworkEvent(new AttemptLoocEvent(GetNetEntity(speaker), message));
 
         reason = null;
 
@@ -30,12 +30,12 @@ public partial class SharedChatSystem
 /// Raised when a mob tries to speak in LOOC.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LoocAttemptedEvent : EntityEventArgs
+public sealed class AttemptLoocEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Message;
 
-    public LoocAttemptedEvent(NetEntity speaker, string message)
+    public AttemptLoocEvent(NetEntity speaker, string message)
     {
         Speaker = speaker;
         Message = message;

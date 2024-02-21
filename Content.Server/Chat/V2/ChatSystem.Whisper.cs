@@ -1,19 +1,8 @@
-﻿using System.Globalization;
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
-using Content.Server.Speech.EntitySystems;
-using Content.Shared.CCVar;
-using Content.Shared.Chat.V2;
+﻿using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
-using Content.Shared.Interaction;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
@@ -22,40 +11,7 @@ public sealed partial class ChatSystem
 {
     public void InitializeServerWhisper()
     {
-        SubscribeNetworkEvent<AttemptWhisperEvent>((msg, args) => { HandleAttemptWhisperEvent(args.SenderSession, msg.Speaker, msg.Message); });
-    }
-
-    private void HandleAttemptWhisperEvent(ICommonSession player, NetEntity entity, string message)
-    {
-        var entityUid = GetEntity(entity);
-
-        if (player.AttachedEntity != entityUid)
-        {
-            return;
-        }
-
-        if (IsRateLimited(entityUid, out var reason))
-        {
-            RaiseNetworkEvent(new WhisperFailedEvent(entity, reason), player);
-
-            return;
-        }
-
-        if (!TryComp<WhisperableComponent>(entityUid, out var comp))
-        {
-            RaiseNetworkEvent(new WhisperFailedEvent(entity, Loc.GetString("chat-system-whisper-failed")), player);
-
-            return;
-        }
-
-        if (message.Length > MaxChatMessageLength)
-        {
-            RaiseNetworkEvent(new WhisperFailedEvent( entity, Loc.GetString("chat-system-max-message-length") ), player);
-
-            return;
-        }
-
-        SendWhisperMessage(entityUid, message, comp.MinRange, comp.MaxRange);
+        SubscribeLocalEvent<WhisperCreatedEvent>((msg, args) => { SendWhisperMessage(msg.Speaker, msg.Message, msg.MinRange, msg.MaxRange); });
     }
 
     public bool TrySendWhisperMessage(EntityUid entityUid, string message, string asName = "")
@@ -114,7 +70,7 @@ public sealed partial class ChatSystem
 
         var name = SanitizeName(asName, UseEnglishGrammar);
 
-        RaiseLocalEvent(new WhisperCreatedEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
+        RaiseLocalEvent(new WhisperEmittedEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
 
         var msgOut = new WhisperEvent(
             GetNetEntity(entityUid),

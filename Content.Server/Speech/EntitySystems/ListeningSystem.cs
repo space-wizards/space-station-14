@@ -15,7 +15,7 @@ public sealed class ListeningSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<LocalChatCreatedEvent>(OnSpeak);
-        SubscribeLocalEvent<WhisperCreatedEvent>(OnWhisper);
+        SubscribeLocalEvent<WhisperEmittedEvent>(OnWhisper);
     }
 
     private void OnSpeak(LocalChatCreatedEvent ev)
@@ -23,7 +23,7 @@ public sealed class ListeningSystem : EntitySystem
         PingListeners(ev.Speaker, ev.Message, "");
     }
 
-    private void OnWhisper(WhisperCreatedEvent ev)
+    private void OnWhisper(WhisperEmittedEvent ev)
     {
         PingListeners(ev.Speaker, ev.Message, ev.ObfuscatedMessage, ev.MinRange);
     }
