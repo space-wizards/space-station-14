@@ -12,12 +12,6 @@ namespace Content.Shared.Climbing.Components;
 public sealed partial class BonkableComponent : Component
 {
     /// <summary>
-    /// Chance of bonk triggering if the user is clumsy.
-    /// </summary>
-    [DataField("bonkClumsyChance")]
-    public float BonkClumsyChance = 0.5f;
-
-    /// <summary>
     /// Sound to play when bonking.
     /// </summary>
     /// <seealso cref="Bonk"/>
