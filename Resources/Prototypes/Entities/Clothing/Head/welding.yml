@@ -16,7 +16,6 @@
     price: 50
   - type: Tag
     tags:
-    - DroneUsable
     - WhitelistChameleon
 
 - type: entity
@@ -31,7 +30,6 @@
     sprite: Clothing/Head/Welding/welding.rsi
   - type: Tag
     tags:
-    - DroneUsable
     - HamsterWearable
     - WhitelistChameleon
 

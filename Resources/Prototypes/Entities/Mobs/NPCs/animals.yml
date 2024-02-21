@@ -3165,11 +3165,25 @@
     attributes:
       gender: epicene
   - type: Speech
+    speechVerb: Plant
   - type: Tag
     tags:
+    - DoorBumpOpener
     - VimPilot
+  - type: Emoting
+  - type: BodyEmotes
+    soundsId: Nymph
   - type: Reform
     actionPrototype: DionaReformAction
     reformTime: 10
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
+
+- type: entity
+  parent: MobDionaNymph
+  id: MobDionaNymphAccent # No talky. For non-brain & wild nymphs
+  suffix: Accent
+  components:
+  - type: ReplacementAccent
+    accent: nymph
+    

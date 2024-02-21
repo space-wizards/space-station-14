@@ -1805,6 +1805,7 @@
     collection: FootstepHull
   itemDrop: FloorTileItemSteel
   heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
+  indestructible: true
 
 - type: tile
   id: FloorReinforcedHardened
