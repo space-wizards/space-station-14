@@ -19,7 +19,6 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetInFrontSingle
       speech: action-speech-spell-fireball
   - type: ActionUpgrade
     effectedLevels:
@@ -48,7 +47,6 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetInFrontSingle
       speech: action-speech-spell-fireball
 
 - type: entity
@@ -73,5 +71,4 @@
         state: fireball
       event: !type:ProjectileSpellEvent
         prototype: ProjectileFireball
-        posData: !type:TargetInFrontSingle
         speech: action-speech-spell-fireball
