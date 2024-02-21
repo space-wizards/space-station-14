@@ -4,7 +4,7 @@ namespace Content.Client.Replay;
 
 public sealed class ReplayConGroup : IClientConGroupImplementation
 {
-    public event Action? ConGroupUpdated;
+    public event Action? ConGroupUpdated { add { } remove { } }
     public bool CanAdminMenu() => true;
     public bool CanAdminPlace() => true;
     public bool CanCommand(string cmdName) => true;

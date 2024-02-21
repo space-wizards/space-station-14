@@ -12,8 +12,13 @@ namespace Content.Server.Communications
         /// <summary>
         /// Remaining cooldown between making announcements.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
+        [DataField]
         public float AnnouncementCooldownRemaining;
+
+        [ViewVariables]
+        [DataField]
+        public float BroadcastCooldownRemaining;
 
         /// <summary>
         /// Fluent ID for the announcement title
@@ -26,21 +31,28 @@ namespace Content.Server.Communications
         /// <summary>
         /// Announcement color
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         [DataField]
         public Color Color = Color.Gold;
 
         /// <summary>
         /// Time in seconds between announcement delays on a per-console basis
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         [DataField]
         public int Delay = 90;
 
         /// <summary>
+        /// Time in seconds of announcement cooldown when a new console is created on a per-console basis
+        /// </summary>
+        [ViewVariables]
+        [DataField]
+        public int InitialDelay = 30;
+
+        /// <summary>
         /// Can call or recall the shuttle
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         [DataField]
         public bool CanShuttle = true;
 

@@ -157,3 +157,21 @@
       - state: skewer-corn2
       - state: skewer-mushroom2
       - state: skewer-tomato1
+
+- type: entity
+  name: snake kebab
+  parent: FoodSkewerBase
+  id: FoodMeatSnakeKebab
+  description: Snake meat on a stick. It's a little tough.
+  components:
+  - type: Sprite
+    layers:
+      - state: skewer
+      - state: skewer-snake1
+      - state: skewer-snake2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12

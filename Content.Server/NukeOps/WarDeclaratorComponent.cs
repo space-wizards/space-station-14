@@ -22,10 +22,6 @@ public sealed partial class WarDeclaratorComponent : Component
     [DataField]
     public bool AllowEditingMessage = true;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
-    public int MaxMessageLength = 512;
-
     /// <summary>
     /// War declarement text color
     /// </summary>

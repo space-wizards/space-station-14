@@ -546,7 +546,7 @@ namespace Content.Server.NPC.Pathfinding
                 if ((session.Value & PathfindingDebugMode.Routes) == 0x0)
                     continue;
 
-                RaiseNetworkEvent(new PathRouteMessage(request.Polys.Select(GetDebugPoly).ToList(), new Dictionary<DebugPathPoly, float>()), session.Key.ConnectedClient);
+                RaiseNetworkEvent(new PathRouteMessage(request.Polys.Select(GetDebugPoly).ToList(), new Dictionary<DebugPathPoly, float>()), session.Key.Channel);
             }
         }
 
@@ -614,7 +614,7 @@ namespace Content.Server.NPC.Pathfinding
                 }
             }
 
-            RaiseNetworkEvent(msg, pSession.ConnectedClient);
+            RaiseNetworkEvent(msg, pSession.Channel);
         }
 
         private void SendRoute(PathRequest request)
@@ -642,7 +642,7 @@ namespace Content.Server.NPC.Pathfinding
                 if (!IsRoute(session.Value))
                     continue;
 
-                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
+                RaiseNetworkEvent(msg, session.Key.Channel);
             }
         }
 
@@ -664,7 +664,7 @@ namespace Content.Server.NPC.Pathfinding
                 }
             }
 
-            RaiseNetworkEvent(msg, pSession.ConnectedClient);
+            RaiseNetworkEvent(msg, pSession.Channel);
         }
 
         private void SendBreadcrumbs(GridPathfindingChunk chunk, EntityUid gridUid)
@@ -684,7 +684,7 @@ namespace Content.Server.NPC.Pathfinding
                 if (!IsCrumb(session.Value))
                     continue;
 
-                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
+                RaiseNetworkEvent(msg, session.Key.Channel);
             }
         }
 
@@ -718,7 +718,7 @@ namespace Content.Server.NPC.Pathfinding
                 if (!IsPoly(session.Value))
                     continue;
 
-                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
+                RaiseNetworkEvent(msg, session.Key.Channel);
             }
         }
 

@@ -76,9 +76,9 @@ namespace Content.Server.Atmos.EntitySystems
             };
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            _confMan.OnValueChanged(CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
-            _confMan.OnValueChanged(CCVars.GasOverlayThresholds, UpdateThresholds, true);
-            _confMan.OnValueChanged(CVars.NetPVS, OnPvsToggle, true);
+            Subs.CVar(_confMan, CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
+            Subs.CVar(_confMan, CCVars.GasOverlayThresholds, UpdateThresholds, true);
+            Subs.CVar(_confMan, CVars.NetPVS, OnPvsToggle, true);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
@@ -95,9 +95,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            _confMan.UnsubValueChanged(CCVars.NetGasOverlayTickRate, UpdateTickRate);
-            _confMan.UnsubValueChanged(CCVars.GasOverlayThresholds, UpdateThresholds);
-            _confMan.UnsubValueChanged(CVars.NetPVS, OnPvsToggle);
         }
 
         private void OnPvsToggle(bool value)
@@ -196,7 +193,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index, GameTick curTick)
         {
-            ref var oldData = ref chunk.GetData(index);
+            ref var oldData = ref chunk.TileData[chunk.GetDataIndex(index)];
             if (!gridAtmosphere.Tiles.TryGetValue(index, out var tile))
             {
                 if (oldData.Equals(default))

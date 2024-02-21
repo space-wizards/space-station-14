@@ -500,7 +500,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/gavel.svg.192dpi.png")),
                 Act = () =>
                 {
-                    _ghostKickManager.DoDisconnect(actorComponent.PlayerSession.ConnectedClient, "Smitten.");
+                    _ghostKickManager.DoDisconnect(actorComponent.PlayerSession.Channel, "Smitten.");
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-ghostkick-description")

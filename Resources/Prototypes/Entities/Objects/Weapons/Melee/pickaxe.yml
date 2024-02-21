@@ -11,7 +11,12 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
   - type: MeleeWeapon
+    attackRate: 0.7
     wideAnimationRotation: -135
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+      params:
+        volume: -3
     damage:
       groups:
         Brute: 5
@@ -21,7 +26,7 @@
       groups:
         Brute: 10
       types:
-        Structural: 25
+        Structural: 30
   - type: Item
     size: Normal
     shape:
@@ -44,9 +49,14 @@
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
   - type: MeleeWeapon
-    attackRate: 1.5
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+    attackRate: 3.5
     damage:
       groups:
-        Brute: 10
+        Brute: 3
       types:
-        Structural: 20
+        Structural: 12

@@ -8,6 +8,7 @@
     OreSilver: 0.25
     OrePlasma: 0.15
     OreUranium: 0.15
+    OreArtifactFragment: 0.15
 
 # Large asteroids, typically 1
 - type: dungeonConfig

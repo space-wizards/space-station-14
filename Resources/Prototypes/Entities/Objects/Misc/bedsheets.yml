@@ -185,7 +185,7 @@
 - type: entity
   id: BedsheetIan
   parent: BedsheetBase
-  name: Ian bedsheet
+  name: Ian's bedsheet
   components:
   - type: Sprite
     state: sheetian
@@ -283,7 +283,7 @@
 - type: entity
   id: BedsheetBrigmedic
   parent: BedsheetBase
-  name: Brigmedic's bedsheet
+  name: brigmedic's bedsheet
   description: Not worse than cotton.
   components:
   - type: Sprite
@@ -304,7 +304,7 @@
 - type: entity
   id: BedsheetSyndie
   parent: BedsheetBase
-  name: Syndie bedsheet
+  name: syndicate bedsheet
   description: It has a syndicate emblem and it has an aura of evil.
   components:
   - type: Sprite

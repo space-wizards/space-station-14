@@ -61,4 +61,12 @@ public sealed class UseDelaySystem : EntitySystem
         Dirty(ent);
         return true;
     }
+
+    public bool TryResetDelay(EntityUid uid, bool checkDelayed = false, UseDelayComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        return TryResetDelay((uid, component), checkDelayed);
+    }
 }

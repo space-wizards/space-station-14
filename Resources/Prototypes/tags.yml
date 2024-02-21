@@ -167,6 +167,12 @@
   id: BorgModuleService
 
 - type: Tag
+  id: BorgModuleSyndicate
+
+- type: Tag
+  id: BorgModuleSyndicateAssault
+
+- type: Tag
   id: BorgServiceHead
 
 - type: Tag
@@ -245,6 +251,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannonBall
+
+- type: Tag
   id: CannonRestrict
 
 - type: Tag
@@ -298,6 +307,9 @@
 
 - type: Tag
   id: Chicken
+
+- type: Tag
+  id: ChemDispensable # container that can go into the chem dispenser
 
 - type: Tag
   id: Cigarette
@@ -453,7 +465,7 @@
   id: DrinkSpaceGlue
 
 - type: Tag
-  id: DroneUsable
+  id: DrinkBottle
 
 - type: Tag
   id: Duck
@@ -552,7 +564,16 @@
   id: Goat
 
 - type: Tag
+  id: GPS
+
+- type: Tag
   id: Grenade
+
+- type: Tag
+  id: HudMedical
+
+- type: Tag
+  id: HudSecurity
 
 - type: Tag
   id: GuideEmbeded
@@ -663,9 +684,6 @@
   id: IntercomElectronics
 
 - type: Tag
-  id: JanicartKeys
-
-- type: Tag
   id: JawsOfLife
 
 - type: Tag
@@ -691,9 +709,6 @@
 
 - type: Tag
   id: Lemon
-
-- type: Tag
-  id: LightReplacer
 
 - type: Tag
   id: Lime
@@ -764,10 +779,16 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
+  id: MagazineGrenade
+
+- type: Tag
   id: MailingUnitElectronics
 
 - type: Tag
   id: Matchstick
+
+- type: Tag
+  id: Mayo
 
 - type: Tag
   id: Meat
@@ -777,12 +798,6 @@
 
 - type: Tag
   id: Metal
-
-- type: Tag
-  id: MicrowaveMachineUnsafe
-
-- type: Tag
-  id: MicrowaveSelfUnsafe
 
 - type: Tag
   id: MindShield
@@ -830,10 +845,10 @@
   id: Packet
 
 - type: Tag
-  id: Payload # for grenade/bomb crafting
+  id: Paper
 
 - type: Tag
-  id: PaintableAirlock
+  id: Payload # for grenade/bomb crafting
 
 - type: Tag
   id: Pancake
@@ -917,6 +932,9 @@
   id: PowerCellSmall
 
 - type: Tag
+  id: PowerCage
+
+- type: Tag
   id: Powerdrill
 
 - type: Tag
@@ -924,6 +942,9 @@
 
 - type: Tag
   id: ProximitySensor
+
+- type: Tag
+  id: QuantumSpinInverter
 
 - type: Tag
   id: Radio
@@ -993,9 +1014,6 @@
   id: ShellShotgun
 
 - type: Tag
-  id: PelletShotgunFlare
-
-- type: Tag
   id: Shiv
 
 - type: Tag
@@ -1030,6 +1048,9 @@
 
 - type: Tag
   id: Soup
+
+- type: Tag
+  id: SpookyFog
 
 - type: Tag
   id: Spray
@@ -1113,13 +1134,13 @@
   id: TrashBag
 
 - type: Tag
+  id: Unimplantable
+
+- type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 
 - type: Tag
   id: UraniumGlassShard
-
-- type: Tag
-  id: VehicleKey
 
 - type: Tag
   id: VimPilot
@@ -1140,6 +1161,9 @@
   id: WallmountSubstationElectronics
 
 - type: Tag
+  id: WeaponAntiqueLaser
+
+- type: Tag
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
@@ -1147,6 +1171,9 @@
 
 - type: Tag
   id: WetFloorSign
+
+- type: Tag
+  id: Wheat
 
 - type: Tag
   id: WhitelistChameleon

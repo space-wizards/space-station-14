@@ -20,7 +20,6 @@ namespace Content.Shared.Construction;
 public abstract class SharedFlatpackSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -67,8 +66,9 @@ public abstract class SharedFlatpackSystem : EntitySystem
         }
 
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
-        var intersecting = _entityLookup.GetEntitiesIntersecting(buildPos.ToEntityCoordinates(grid, _mapManager).Offset(new Vector2(0.5f, 0.5f))
-            , LookupFlags.Dynamic | LookupFlags.Static);
+        var coords = _map.ToCenterCoordinates(grid, buildPos);
+
+        var intersecting = _entityLookup.GetEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static);
 
         // todo make this logic smarter.
         // This should eventually allow for shit like building microwaves on tables and such.

@@ -1,8 +1,7 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
-            SetSize="620 450"
-            MinSize="620 450">
+            MinSize="680 450">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}"/>
@@ -18,10 +17,8 @@
             <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenLeft"/>
         </BoxContainer>
         <Control MinSize="0 10"/>
-        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" MinSize="0 170">
-            <GridContainer Name="ChemicalList" Access="Public" Columns="4">
-            </GridContainer>
-        </ScrollContainer>
+        <GridContainer Name="ChemicalList" HorizontalExpand="True" VerticalExpand="True" Access="Public" Columns="6">
+        </GridContainer>
         <Control MinSize="0 10"/>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'reagent-dispenser-window-container-label'}"/>

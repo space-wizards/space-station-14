@@ -28,6 +28,7 @@
     tags:
     - Document
     - Trash
+    - Paper
   - type: Appearance
   - type: PaperVisuals
   - type: Flammable
@@ -56,6 +57,29 @@
               max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Food
+    solution: food
+    delay: 7
+    forceFeedDelay: 7
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 1
+
+- type: entity
+  name: paper scrap
+  parent: Paper
+  id: PaperScrap
+  description: 'A crumpled up piece of white paper.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: scrap
 
 - type: entity
   name: office paper
@@ -250,6 +274,12 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+
+- type: entity
+  parent: Pen
+  id: PenEmbeddable
+  abstract: true
+  components:
   - type: EmbeddableProjectile
     offset: 0.3,0.0
     removalTime: 0.0
@@ -275,9 +305,9 @@
 
 - type: entity
   name: Cybersun pen
-  parent: Pen
+  parent: PenEmbeddable
   id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
   components:
   - type: Tag
     tags:
@@ -289,10 +319,6 @@
     state: overpriced_pen
   - type: MeleeWeapon
     wideAnimationRotation: -45
-    damage:
-      types:
-        Piercing: 15
-  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 15
@@ -308,7 +334,7 @@
 
 - type: entity
   name: captain's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenCap
   description: 'A luxurious fountain pen for the captain of the station.'
   components:
@@ -317,7 +343,7 @@
     state: pen_cap
 
 - type: entity
-  name: Centcom pen
+  name: CentCom pen
   parent: CyberPen
   id: PenCentcom
   description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
@@ -331,7 +357,7 @@
 
 - type: entity
   name: hop's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenHop
   description: 'A luxurious fountain pen for the hop of the station.'
   components:
@@ -481,7 +507,7 @@
 
 - type: entity
   id: BoxFolderCentCom
-  name: centcom folder
+  name: CentCom folder
   parent: BoxFolderBase
   suffix: DO NOT MAP
   description: CentCom's miserable little pile of secrets!
@@ -517,7 +543,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write
@@ -554,7 +580,7 @@
 - type: entity
   id: BoxFolderCentComClipboard
   parent: BoxFolderClipboard
-  name: centcom clipboard
+  name: CentCom clipboard
   description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentCom officials, seldom seen actually used.
   components:
   - type: Sprite
@@ -601,7 +627,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write

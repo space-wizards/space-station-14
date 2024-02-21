@@ -128,6 +128,9 @@ public sealed class MechGrabberSystem : EntitySystem
         if (args.Handled || args.Target is not {} target)
             return;
 
+        if (args.Target == args.User || component.DoAfter != null)
+            return;
+
         if (TryComp<PhysicsComponent>(target, out var physics) && physics.BodyType == BodyType.Static ||
             HasComp<WallMountComponent>(target) ||
             HasComp<MobStateComponent>(target))
@@ -152,15 +155,19 @@ public sealed class MechGrabberSystem : EntitySystem
 
         args.Handled = true;
         component.AudioStream = _audio.PlayPvs(component.GrabSound, uid).Value.Entity;
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true
-        });
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs, out component.DoAfter);
     }
 
     private void OnMechGrab(EntityUid uid, MechGrabberComponent component, DoAfterEvent args)
     {
+        component.DoAfter = null;
+
         if (args.Cancelled)
         {
             component.AudioStream = _audio.Stop(component.AudioStream);

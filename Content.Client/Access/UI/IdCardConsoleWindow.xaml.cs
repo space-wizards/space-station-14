@@ -55,7 +55,7 @@ namespace Content.Client.Access.UI
 
             foreach (var job in jobs)
             {
-                if (!job.SetPreference)
+                if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
                 {
                     continue;
                 }

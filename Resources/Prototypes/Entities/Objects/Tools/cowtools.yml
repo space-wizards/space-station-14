@@ -93,7 +93,7 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
     speed: 0.05
-  - type: TilePrying
+  - type: ToolTileCompatible
   - type: Prying
 
 - type: entity
