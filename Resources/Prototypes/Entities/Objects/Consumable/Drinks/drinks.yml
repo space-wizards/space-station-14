@@ -74,6 +74,8 @@
       Glass: 25
   - type: ExaminableSolution
     solution: drink
+  - type: FitsInDispenser
+    solution: drink
 
 # Transformable container - normal glass
 - type: entity
