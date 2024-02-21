@@ -106,7 +106,7 @@ namespace Content.Shared.Movement.Components
         /// A multiplier used when a character is walking in reverse.
         /// </summary>
         [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
-        public float BackwardsMovementModifier = 0.9f;
+        public float BackwardsMovementModifier = 1f;
 
         /// <summary>
         /// An angle that is used to determine when <see cref="BackwardsMovementModifier"/> appplies.
