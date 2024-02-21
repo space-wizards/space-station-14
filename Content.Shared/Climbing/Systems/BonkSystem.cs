@@ -36,26 +36,19 @@ public sealed partial class BonkSystem : EntitySystem
 
     private void OnBonkDoAfter(EntityUid uid, BonkableComponent component, BonkDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null)
+        if (args.Handled || args.Cancelled || args.Args.Used == null)
             return;
 
-        TryBonk(args.Args.User, uid, component);
+        TryBonk(args.Args.Used.Value, uid, component, source: args.Args.User);
 
         args.Handled = true;
     }
 
 
-    public bool TryBonk(EntityUid user, EntityUid bonkableUid, BonkableComponent? bonkableComponent = null)
+    public bool TryBonk(EntityUid user, EntityUid bonkableUid, BonkableComponent? bonkableComponent = null, EntityUid? source = null)
     {
         if (!Resolve(bonkableUid, ref bonkableComponent, false))
             return false;
-
-        if (!_cfg.GetCVar(CCVars.GameTableBonk))
-        {
-            // Not set to always bonk, try clumsy roll.
-            if (!_interactionSystem.TryRollClumsy(user, bonkableComponent.BonkClumsyChance))
-                return false;
-        }
 
         // BONK!
         var userName = Identity.Entity(user, EntityManager);
@@ -65,7 +58,11 @@ public sealed partial class BonkSystem : EntitySystem
 
         _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
 
-        _audioSystem.PlayPvs(bonkableComponent.BonkSound, bonkableUid);
+        if (source != null)
+            _audioSystem.PlayPredicted(bonkableComponent.BonkSound, bonkableUid, source);
+        else
+            _audioSystem.PlayPvs(bonkableComponent.BonkSound, bonkableUid);
+
         _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(bonkableComponent.BonkTime), true);
 
         if (bonkableComponent.BonkDamage is { } bonkDmg)
@@ -83,7 +80,14 @@ public sealed partial class BonkSystem : EntitySystem
         if (!HasComp<ClumsyComponent>(climber) || !HasComp<HandsComponent>(user))
             return false;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, climber, bonkableComponent.BonkDelay, new BonkDoAfterEvent(), uid, target: uid)
+        if (!_cfg.GetCVar(CCVars.GameTableBonk))
+        {
+            // Not set to always bonk, try clumsy roll.
+            if (!_interactionSystem.TryRollClumsy(climber, bonkableComponent.BonkClumsyChance))
+                return false;
+        }
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, bonkableComponent.BonkDelay, new BonkDoAfterEvent(), uid, target: uid, used: climber)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
