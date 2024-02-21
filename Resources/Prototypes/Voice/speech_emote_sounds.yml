@@ -122,10 +122,10 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Weh:
+      collection: Weh
   params:
     variation: 0.125
-  Weh:
-    collection: Weh
 
 - type: emoteSounds
   id: FemaleSlime
@@ -185,11 +185,10 @@
       collection: DionaLaugh
     Honk:
       collection: BikeHorn
+    Weh:
+      collection: Weh
   params:
     variation: 0.125
-  Weh:
-    collection: Weh
-
 
 - type: emoteSounds
   id: UnisexArachnid
