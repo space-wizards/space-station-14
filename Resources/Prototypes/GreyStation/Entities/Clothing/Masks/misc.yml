@@ -1,0 +1,53 @@
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskHockeyMask
+  name: hockey mask
+  description: It's a dirty-looking hockey mask, with some red markings on it, presumably painted. Whoever wore this was an aggressive player.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: BreathMask
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/hockey_mask.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/hockey_mask.rsi
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskRetroHockeyMask
+  name: retro hockey mask
+  description: A retro version of a hockey mask. Makes you want to kill people in videogames.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: BreathMask
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/retro_hockey_mask.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/retro_hockey_mask.rsi
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskMummyMask
+  name: facial bandages
+  description: Some tathered used bandages. Once worn by the bringer of death.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/facial_bandages.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/facial_bandages.rsi
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskScarecrowMask
+  name: scarecrow hood
+  description: A scarecrow sack. Can be worn as a hood. It has a little smiley face on it.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Sprite
+    sprite: GreyStation/Clothing/Mask/scarecrow_hood.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Mask/scarecrow_hood.rsi
