@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Science no longer needs to research medium batteries, and high batteries
-      are now T1.
-    type: Tweak
-  id: 5498
-  time: '2024-01-01T02:24:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23269
 - author: Rainfey
   changes:
   - message: Ensure correct number of thieves
@@ -3860,3 +3852,13 @@
   id: 5997
   time: '2024-02-21T14:47:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25109
+- author: landwhale
+  changes:
+  - message: Drink jugs can no longer be used by chemistry in place of a beaker.
+    type: Fix
+  - message: Updated names of several drink jugs to differentiate them from chem-specific
+      variants.
+    type: Tweak
+  id: 5998
+  time: '2024-02-21T23:26:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25450
