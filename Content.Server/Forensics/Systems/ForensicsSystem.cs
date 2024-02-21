@@ -75,20 +75,29 @@ namespace Content.Server.Forensics
 
         private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
         {
-            var target = EnsureComp<ForensicsComponent>(args.Target);
-            foreach (var dna in ent.Comp.DNAs)
+            CopyForensicsFrom(ent.Comp, args.Target);
+        }
+
+        /// <summary>
+        /// Copy forensic information from a source entity to a destination.
+        /// Existing forensic information on the target is still kept.
+        /// </summary>
+        public void CopyForensicsFrom(ForensicsComponent src, EntityUid target)
+        {
+            var dest = EnsureComp<ForensicsComponent>(target);
+            foreach (var dna in src.DNAs)
             {
-                target.DNAs.Add(dna);
+                dest.DNAs.Add(dna);
             }
 
-            foreach (var fiber in ent.Comp.Fibers)
+            foreach (var fiber in src.Fibers)
             {
-                target.Fibers.Add(fiber);
+                dest.Fibers.Add(fiber);
             }
 
-            foreach (var print in ent.Comp.Fingerprints)
+            foreach (var print in src.Fingerprints)
             {
-                target.Fingerprints.Add(print);
+                dest.Fingerprints.Add(print);
             }
         }
 
