@@ -26,6 +26,12 @@ namespace Content.Shared.Alert
         public List<SpriteSpecifier> Icons = new();
 
         /// <summary>
+        /// An entity used for displaying the <see cref="Icons"/> in the UI control.
+        /// </summary>
+        [DataField]
+        public EntProtoId AlertViewEntity = "AlertSpriteView";
+
+        /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("name")]
@@ -83,13 +89,9 @@ namespace Content.Shared.Alert
         /// <returns>the icon path to the texture for the provided severity level</returns>
         public SpriteSpecifier GetIcon(short? severity = null)
         {
-            if (!SupportsSeverity && severity != null)
-            {
-                throw new InvalidOperationException($"This alert ({AlertKey}) does not support severity");
-            }
-
             var minIcons = SupportsSeverity
-                ? MaxSeverity - MinSeverity : 1;
+                ? MaxSeverity - MinSeverity
+                : 1;
 
             if (Icons.Count < minIcons)
                 throw new InvalidOperationException($"Insufficient number of icons given for alert {AlertType}");

@@ -133,6 +133,7 @@ public sealed partial class RevenantSystem : EntitySystem
             return false;
 
         component.Essence += amount;
+        Dirty(uid, component);
 
         if (regenCap)
             FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
@@ -140,7 +141,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (TryComp<StoreComponent>(uid, out var store))
             _store.UpdateUserInterface(uid, uid, store);
 
-        _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence.Float() / 10f), 0, 16));
+        _alerts.ShowAlert(uid, AlertType.Essence);
 
         if (component.Essence <= 0)
         {
