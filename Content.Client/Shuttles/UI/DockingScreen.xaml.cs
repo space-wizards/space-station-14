@@ -67,7 +67,7 @@ public sealed partial class DockingScreen : BoxContainer
     {
         DockingControl.BuildDocks(shuttle);
         var currentDock = DockingControl.ViewedDock;
-        DockedWith.DisposeAllChildren();
+        // DockedWith.DisposeAllChildren();
         DockPorts.DisposeAllChildren();
         _ourDockButtons.Clear();
 
@@ -159,7 +159,7 @@ public sealed partial class DockingScreen : BoxContainer
 
                 iffLabel ??= Loc.GetString("shuttle-console-unknown");
                 dockContainer.SetName(iffLabel);
-                DockedWith.AddChild(dockContainer);
+                // DockedWith.AddChild(dockContainer);
             }
 
             dockContainer.AddDock(dock, DockingControl);
