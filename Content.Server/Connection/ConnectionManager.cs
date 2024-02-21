@@ -31,12 +31,18 @@ namespace Content.Server.Connection
         [Dependency] private readonly ILocalizationManager _loc = default!;
         [Dependency] private readonly ServerDbEntryManager _serverDbEntry = default!;
 
+        private List<NetUserId> _connectedWhitelistedPlayers = new();
+
         public void Initialize()
         {
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
+            _netMgr.Connected += NetMgrOnConnected;
+            _netMgr.Disconnect += NetMgrOnDisconnect;
             // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
             // _netMgr.HandleApprovalCallback = HandleApproval;
+
+            _cfg.OnValueChanged(CCVars.WhitelistEnabled, WhitelistCVarChanged, true);
         }
 
         /*
@@ -171,17 +177,18 @@ namespace Content.Server.Connection
 
             if (_cfg.GetCVar(CCVars.WhitelistEnabled))
             {
-                var min = _cfg.GetCVar(CCVars.WhitelistMinPlayers);
-                var max = _cfg.GetCVar(CCVars.WhitelistMaxPlayers);
-                var playerCountValid = _plyMgr.PlayerCount >= min && _plyMgr.PlayerCount < max;
+                var connectedPlayers = _plyMgr.PlayerCount;
+                var whitelistedPlayers = _connectedWhitelistedPlayers.Count;
 
-                if (playerCountValid && await _db.GetWhitelistStatusAsync(userId) == false
-                                     && adminData is null)
+                var openSlots = _cfg.GetCVar(CCVars.WhitelistOpenSlots);
+                var playerCountValid = openSlots < connectedPlayers - whitelistedPlayers;
+                if (playerCountValid && await _db.GetWhitelistStatusAsync(userId) == false && adminData is null)
                 {
                     var msg = Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason));
                     // was the whitelist playercount changed?
-                    if (min > 0 || max < int.MaxValue)
-                        msg += "\n" + Loc.GetString("whitelist-playercount-invalid", ("min", min), ("max", max));
+                    if (openSlots > 0)
+                        msg += "\n" + Loc.GetString("whitelist-playercount-invalid", ("openslots", openSlots));
+
                     return (ConnectionDenyReason.Whitelist, msg, null);
                 }
             }
@@ -205,6 +212,39 @@ namespace Content.Server.Connection
             var assigned = new NetUserId(Guid.NewGuid());
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
+        }
+
+        private async void NetMgrOnConnected(object? sender, NetChannelArgs e)
+        {
+            var userId = e.Channel.UserId;
+
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled) && await _db.GetWhitelistStatusAsync(userId))
+            {
+                _connectedWhitelistedPlayers.Add(userId);
+            }
+        }
+
+        private async void NetMgrOnDisconnect(object? sender, NetChannelArgs e)
+        {
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled))
+            {
+                _connectedWhitelistedPlayers.Remove(e.Channel.UserId);
+            }
+        }
+        private async void WhitelistCVarChanged(bool enabled)
+        {
+            if (!enabled)
+            {
+                _connectedWhitelistedPlayers.Clear();
+                return;
+            }
+
+            var connectedPlayers = _plyMgr.Sessions;
+            foreach (var player in connectedPlayers)
+            {
+                if (await _db.GetWhitelistStatusAsync(player.UserId))
+                    _connectedWhitelistedPlayers.Add(player.UserId);
+            }
         }
     }
 }
