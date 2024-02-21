@@ -26,9 +26,6 @@
           enabled:
             True: { state: working }
             False: { state: icon }
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: StaticPrice
     price: 80
   - type: PhysicalComposition

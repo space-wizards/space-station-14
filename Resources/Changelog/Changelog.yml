@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: Blazeror
-  changes:
-  - message: Pinpointers now use the correct sprites.
-    type: Fix
-  id: 5483
-  time: '2023-12-30T19:12:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23236
-- author: Emisse
-  changes:
-  - message: The Grand Lottery has even more surprises in store!
-    type: Tweak
-  id: 5484
-  time: '2023-12-30T21:24:24.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23243
-- author: Blackern5000
-  changes:
-  - message: Chang's instant ramen cups have been slightly enlarged to accommodate
-      10ml of boiling water, as per the instructions.
-    type: Tweak
-  id: 5485
-  time: '2023-12-30T22:27:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23189
-- author: Velcroboy
-  changes:
-  - message: Moved head clothing items out of their lockers and into their dressers.
-    type: Tweak
-  id: 5486
-  time: '2023-12-30T22:42:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23183
 - author: Carve
   changes:
   - message: Voice change has a new icon.
@@ -3850,3 +3821,32 @@
   id: 5982
   time: '2024-02-21T06:16:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25286
+- author: Tayrtahn
+  changes:
+  - message: Added fill level visuals to all the drinks. Cheers!
+    type: Add
+  id: 5983
+  time: '2024-02-21T06:17:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25319
+- author: Potato1234_x
+  changes:
+  - message: Happy Honk boxes can now hold normal sized items
+    type: Tweak
+  id: 5984
+  time: '2024-02-21T06:21:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25245
+- author: Hanzdegloker
+  changes:
+  - message: Standardized amount of huds in vendors and added new diagnostics eyeapatch
+      hud
+    type: Tweak
+  id: 5985
+  time: '2024-02-21T06:22:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25208
+- author: DebugOk
+  changes:
+  - message: Drones are now completely removed instead of just being disabled
+    type: Remove
+  id: 5986
+  time: '2024-02-21T06:23:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25372
