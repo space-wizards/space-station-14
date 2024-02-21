@@ -150,7 +150,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         if (!EntManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) || shuttleXform.MapUid == null)
             return;
 
-        // TODO: Move this garbage to parallaxsystem or the likes.
+        // TODO: Figure out how the fuck to make this common between the 3 slightly different parallax methods and move to parallaxsystem.
         // Draw background texture
         var tex = _shuttles.GetTexture(shuttleXform.MapUid.Value);
 

@@ -37,7 +37,6 @@ public partial class BaseShuttleControl : MapGridControl
 
     private Vector2[] _allVertices = Array.Empty<Vector2>();
 
-    // TODO: Engine PR.
     private (DirectionFlag, Vector2i)[] _neighborDirections;
 
     public BaseShuttleControl() : this(32f, 32f, 32f)
@@ -55,7 +54,6 @@ public partial class BaseShuttleControl : MapGridControl
             ScaledVertices = _allVertices,
         };
 
-        // TODO: Engine pr
         _neighborDirections = new (DirectionFlag, Vector2i)[4];
 
         for (var i = 0; i < 4; i++)

@@ -307,8 +307,6 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
             }
         }
 
-        // TODO: If dock in right range and angle then change colour to green and undisable the uhh button.
-
         // Draw the dock's collision
         var invertedPosition = Vector2.Zero;
         invertedPosition.Y = -invertedPosition.Y;
@@ -430,15 +428,6 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                             Text = Loc.GetString("shuttle-console-dock"),
                             Disabled = true,
                         };
-
-                        /*
-                             - Fix whatever the fuck happened in pressed group
-                         *   - Maybe make the leading line green if the angle is good and speed based on distance
-                             - Make the line segments longer too I think
-                             - Once all that done just need to nuke docking fixtures and shiit, also autodock
-                             - Also need to make sure panel works, then we do TODO cleanup and make the other UIs diegetic again
-                             - Add dock settings back in for drawing panels
-                         */
 
                         button.OnPressed += args =>
                         {
