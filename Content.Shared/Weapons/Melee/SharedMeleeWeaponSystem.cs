@@ -34,20 +34,20 @@ namespace Content.Shared.Weapons.Melee;
 
 public abstract class SharedMeleeWeaponSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming              Timing          = default!;
-    [Dependency] protected readonly IMapManager              MapManager      = default!;
-    [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
     [Dependency] protected readonly ISharedAdminLogManager   AdminLogger     = default!;
     [Dependency] protected readonly ActionBlockerSystem      Blocker         = default!;
-    [Dependency] protected readonly DamageableSystem         Damageable      = default!;
-    [Dependency] private   readonly InventorySystem         _inventory       = default!;
     [Dependency] protected readonly SharedCombatModeSystem   CombatMode      = default!;
+    [Dependency] protected readonly DamageableSystem         Damageable      = default!;
     [Dependency] protected readonly SharedInteractionSystem  Interaction     = default!;
-    [Dependency] private   readonly SharedPhysicsSystem     _physics         = default!;
+    [Dependency] protected readonly IMapManager              MapManager      = default!;
     [Dependency] protected readonly SharedPopupSystem        PopupSystem     = default!;
+    [Dependency] protected readonly IGameTiming              Timing          = default!;
     [Dependency] protected readonly SharedTransformSystem    TransformSystem = default!;
-    [Dependency] private   readonly StaminaSystem           _stamina         = default!;
+    [Dependency] private   readonly InventorySystem         _inventory       = default!;
     [Dependency] private   readonly MeleeSoundSystem        _meleeSound      = default!;
+    [Dependency] private   readonly SharedPhysicsSystem     _physics         = default!;
+    [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
+    [Dependency] private   readonly StaminaSystem           _stamina         = default!;
 
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
