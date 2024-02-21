@@ -242,7 +242,15 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+    layers:
+      - state: icon_empty
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
   - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: fill-
+    changeColor: false
   - type: TrashOnSolutionEmpty
     solution: drink
 
