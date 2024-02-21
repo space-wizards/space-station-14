@@ -13,7 +13,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
-using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Security.Components;
 
 namespace Content.Server.CriminalRecords.Systems;
@@ -250,10 +249,10 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     /// Checks if the new identity's name has a criminal record attached to it, and gives the entity the icon that
     /// belongs to the status if it does.
     /// </summary>
-    public void CheckNewIdentity(Entity<IdentityComponent> ent)
+    public void CheckNewIdentity(EntityUid uid)
     {
-        var name = Identity.Name(ent, EntityManager);
-        var xform = Transform(ent);
+        var name = Identity.Name(uid, EntityManager);
+        var xform = Transform(uid);
         var station = _station.GetStationInMap(xform.MapID);
 
         if (station != null && _stationRecords.GetRecordByName(station.Value, name) is { } id)
@@ -263,11 +262,11 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             {
                 if (record.Status != SecurityStatus.None)
                 {
-                    SetCriminalIcon(name, record.Status, ent);
+                    SetCriminalIcon(name, record.Status, uid);
                     return;
                 }
             }
         }
-        RemComp<CriminalRecordComponent>(ent);
+        RemComp<CriminalRecordComponent>(uid);
     }
 }

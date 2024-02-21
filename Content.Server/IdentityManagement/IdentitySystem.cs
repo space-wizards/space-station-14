@@ -39,7 +39,6 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
-        SubscribeLocalEvent<IdentityComponent, IdentityChangedEvent>(OnIdentityChanged);
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -65,16 +64,6 @@ public class IdentitySystem : SharedIdentitySystem
 
         QueueIdentityUpdate(uid);
         _container.Insert(ident, component.IdentityEntitySlot);
-    }
-
-    /// <summary>
-    ///     When the identity of a person is changed, searches the criminal records to see if the name of the new identity
-    ///     has a record. If the new name has a criminal status attached to it, the person will get the criminal status
-    ///     until they change identity again.
-    /// </summary>
-    private void OnIdentityChanged(Entity<IdentityComponent> ent, ref IdentityChangedEvent args)
-    {
-        _criminalRecordsConsole.CheckNewIdentity(ent);
     }
 
     /// <summary>
@@ -122,6 +111,7 @@ public class IdentitySystem : SharedIdentitySystem
         _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
         var identityChangedEvent = new IdentityChangedEvent(uid, ident);
         RaiseLocalEvent(uid, ref identityChangedEvent);
+        SetIdentityCriminalIcon(uid);
     }
 
     private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
@@ -130,6 +120,16 @@ public class IdentitySystem : SharedIdentitySystem
 
         RaiseLocalEvent(target, ev);
         return representation.ToStringKnown(!ev.Cancelled);
+    }
+
+    /// <summary>
+    ///     When the identity of a person is changed, searches the criminal records to see if the name of the new identity
+    ///     has a record. If the new name has a criminal status attached to it, the person will get the criminal status
+    ///     until they change identity again.
+    /// </summary>
+    private void SetIdentityCriminalIcon(EntityUid uid)
+    {
+        _criminalRecordsConsole.CheckNewIdentity(uid);
     }
 
     /// <summary>
