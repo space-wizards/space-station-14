@@ -78,16 +78,6 @@
     Cloth: 200
 
 - type: latheRecipe
-  id: HandheldCrewMonitor
-  result: HandheldCrewMonitorEmpty
-  category: Tools
-  completetime: 2
-  materials:
-    Glass: 1200
-    Steel: 1000
-    Plastic: 1400
-
-- type: latheRecipe
   id: HandheldHealthAnalyzer
   result: HandheldHealthAnalyzerEmpty
   category: Tools
