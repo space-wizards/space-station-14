@@ -289,15 +289,15 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         args.GasMixtures = gasMixDict;
     }
 
-    private void OnEjected(EntityUid uid, CryoPodComponent component, ref EntRemovedFromContainerMessage args)
+    private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
     {
-        if (TryComp<HealthAnalyzerComponent>(uid, out var healthAnalyzer))
+        if (TryComp<HealthAnalyzerComponent>(cryoPod.Owner, out var healthAnalyzer))
         {
             healthAnalyzer.ScannedEntity = null;
         }
 
         // if body is ejected - no need to display health-analyzer
-        _uiSystem.TryCloseAll(uid, HealthAnalyzerUiKey.Key);
+        _uiSystem.TryCloseAll(cryoPod.Owner, HealthAnalyzerUiKey.Key);
     }
 
     #endregion
