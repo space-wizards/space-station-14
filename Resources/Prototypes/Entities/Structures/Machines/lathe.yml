@@ -85,6 +85,8 @@
     runningState: building
     staticRecipes:
       - Wirecutter
+      - Igniter
+      - Signaller
       - Screwdriver
       - Welder
       - Wrench
@@ -98,6 +100,7 @@
       - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
+      - AirTank
       - GasAnalyzer
       - UtilityBelt
       - Fulton
@@ -285,6 +288,7 @@
       - ChemicalPayload
       - FlashPayload
       - Signaller
+      - SignallerAdvanced
       - SignalTrigger
       - VoiceTrigger
       - Igniter

@@ -24,7 +24,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
-    [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
 
     public List<AirlockStyle> Styles { get; private set; } = new();
     public List<AirlockGroupPrototype> Groups { get; private set; } = new();

@@ -103,6 +103,13 @@
     Plastic: 50
 
 - type: latheRecipe
+  id: AirTank
+  result: AirTank
+  completetime: 4
+  materials:
+    Steel: 300
+
+- type: latheRecipe
   id: ClothingShoesBootsMagSci
   result: ClothingShoesBootsMagSci
   completetime: 10

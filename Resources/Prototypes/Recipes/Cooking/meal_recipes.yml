@@ -1704,40 +1704,6 @@
     LeavesCannabis: 1
 
 - type: microwaveMealRecipe
-  id: RecipeAloeCream
-  name: aloe cream recipe
-  result: AloeCream
-  time: 10
-  solids:
-    FoodAloe: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMedicatedSuture
-  name: medicated suture recipe
-  result: MedicatedSuture
-  time: 10
-  solids:
-    FoodPoppy: 1
-    Brutepack: 1
-    MaterialCloth1: 1
-  reagents:
-    TranexamicAcid: 50
-    Cryptobiolin: 50
-
-- type: microwaveMealRecipe
-  id: RecipeRegenerativeMesh
-  name: regenerative mesh recipe
-  result: RegenerativeMesh
-  time: 10
-  solids:
-    FoodAloe: 1
-    Ointment: 1
-    MaterialCloth1: 1
-  reagents:
-    Sigynate: 50
-    Dermaline: 50
-
-- type: microwaveMealRecipe
   id: RecipeTrashBakedBananaPeel
   name: baked banana peel recipe
   result: TrashBakedBananaPeel
