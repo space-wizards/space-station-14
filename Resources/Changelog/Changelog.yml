@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Carve
-  changes:
-  - message: Voice change has a new icon.
-    type: Tweak
-  id: 5487
-  time: '2023-12-30T23:13:27.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23239
 - author: lzk228
   changes:
   - message: Mime's stamp is silent now!
@@ -3850,3 +3843,13 @@
   id: 5986
   time: '2024-02-21T06:23:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25372
+- author: Hanzdegloker
+  changes:
+  - message: Dept. Heads are now guaranteed to have their respective winter coats
+      in their dressers
+    type: Tweak
+  - message: Standardized the contents of Dept. Heads dressers and lockers
+    type: Tweak
+  id: 5987
+  time: '2024-02-21T06:26:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25206
