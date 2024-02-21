@@ -35,7 +35,7 @@ namespace Content.Server.Weapons.Melee;
 
 public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
-    [Dependency] private readonly SharedAudioSystem Audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
