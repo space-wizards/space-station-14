@@ -198,12 +198,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
                         {
-                            //Add the gun target's LayingDownLayer to the mask of the hitscan.
-                            var collisionMask = hitscan.CollisionMask;
-                            if (gun.Target != null && TryComp<StandingStateComponent>(gun.Target, out var standingState))
-                                collisionMask = hitscan.CollisionMask | (int) standingState.LayingDownLayer;
-
-                            var ray = new CollisionRay(from.Position, dir, collisionMask);
+                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
                             var rayCastResults =
                                 Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
                             if (!rayCastResults.Any())
