@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from ss14 at:https://github.com/space-wizards/space-station-14/tree/master/Resources/Textures/Structures/Machines/computers.rsi, Altered by ErhardSteinhauer (github) in:https://github.com/new-frontiers-14/frontier-station-14/pull/854",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "broken_tabletop",
+            "directions": 4
+        },
+        {
+            "name": "computer_tabletop",
+            "directions": 4
+        },
+        {
+            "name": "generic_keyboard_tabletop",
+            "directions": 4
+        }
+    ]
+}
