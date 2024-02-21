@@ -48,7 +48,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         {
 
             _adminLogger.Add(LogType.Teleport, $"{ToPrettyString(allEnts[i])} has been shuffled to {coords[i]} by the {ToPrettyString(uid)} at {xform.Coordinates}");
-            _xform.SetWorldPosition(allEnts[i], coords[i], xformQuery);
+            _xform.SetWorldPosition(allEnts[i], coords[i]);
         }
     }
 
