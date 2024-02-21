@@ -983,7 +983,7 @@
   description: uplink-dragon-dehydrated-desc
   productEntity: DehydratedSpaceDragon
   cost:
-    Telecrystal: 45
+    Telecrystal: 12 #Just so they can't buy two at once without some effort
   categories:
   - UplinkTools
   restockTime: 30
@@ -991,7 +991,7 @@
   - !type:StoreWhitelistCondition
     blacklist:
       tags:
-      - NukeOpsUplink
+      - NukeOpsUplink #Dragon ops when
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
