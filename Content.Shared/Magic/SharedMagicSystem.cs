@@ -26,7 +26,6 @@ using Robust.Shared.Spawners;
 namespace Content.Shared.Magic;
 
 // TODO: 2 split spellbooks into their own ECS
-// TODO: 3 suffer when refactoring
 
 /// <summary>
 /// Handles learning and using spells (actions)
@@ -51,12 +50,10 @@ public abstract class SharedMagicSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        // TODO: Make Magic Comp/Magic Caster Comp
         SubscribeLocalEvent<MagicComponent, MapInitEvent>(OnInit, after: new []{typeof(SharedActionsSystem)});
         SubscribeLocalEvent<MagicComponent, BeforeCastSpellEvent>(OnBeforeCastSpell);
 
-        // TODO: Magic comp on spells?
-        //  If magic comp is on spells it doesn't raise
+        // TODO: Magic Caster Comp?
         // TODO: More spells
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -82,6 +79,9 @@ public abstract class SharedMagicSystem : EntitySystem
                     hasReqs = HasComp<WizardClothesComponent>(item);
                 else
                     hasReqs = false;
+
+                if (!hasReqs)
+                    break;
             }
 
             if (!hasReqs)
@@ -183,14 +183,19 @@ public abstract class SharedMagicSystem : EntitySystem
         }
     }
 
-    private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicSpawnData data)
+    /// <summary>
+    ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
+    /// </summary>
+    /// <param name="casterXform"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicInstantSpawnData data)
     {
         switch (data)
         {
-            // TODO: Rename to TargetUnderCaster
             case TargetCasterPos:
                 return new List<EntityCoordinates>(1) {casterXform.Coordinates};
-            // TODO: Rename to TargetInFront
             case TargetInFrontSingle:
             {
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
@@ -203,7 +208,6 @@ public abstract class SharedMagicSystem : EntitySystem
                 var tileIndex = tileReference.Value.GridIndices;
                 return new List<EntityCoordinates>(1) { _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex) };
             }
-            // TODO: Rename to TargetLineInFront
             case TargetInFront:
             {
                 // This is shit but you get the idea.

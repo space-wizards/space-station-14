@@ -1,7 +1,8 @@
-﻿
+﻿using Robust.Shared.GameStates;
+
 namespace Content.Shared.Magic.Components;
 // TODO: Networked?
-[RegisterComponent, Access(typeof(SharedMagicSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedMagicSystem))]
 public sealed partial class MagicComponent : Component
 {
     // TODO: Split into different components?

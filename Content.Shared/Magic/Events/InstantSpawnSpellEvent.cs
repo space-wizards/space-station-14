@@ -6,7 +6,6 @@ namespace Content.Shared.Magic.Events;
 
 public sealed partial class InstantSpawnSpellEvent : InstantActionEvent, ISpeakSpell
 {
-    // TODO: Move to magic component?
     /// <summary>
     /// What entity should be spawned.
     /// </summary>
@@ -20,9 +19,8 @@ public sealed partial class InstantSpawnSpellEvent : InstantActionEvent, ISpeakS
     [DataField("speech")]
     public string? Speech { get; private set; }
 
-    // TODO: Check if still needed, then move to magic component if possible?
     /// <summary>
     /// Gets the targeted spawn positons; may lead to multiple entities being spawned.
     /// </summary>
-    [DataField("posData")] public MagicSpawnData Pos = new TargetCasterPos();
+    [DataField("posData")] public MagicInstantSpawnData Pos = new TargetCasterPos();
 }
