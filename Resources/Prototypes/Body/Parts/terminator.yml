@@ -16,6 +16,7 @@
     containers:
       bodypart: !type:Container
         ents: []
+  - type: Gibbable
   - type: StaticPrice
     price: 200
 

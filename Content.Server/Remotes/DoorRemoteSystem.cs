@@ -10,6 +10,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Examine;
 using static Content.Server.Remotes.DoorRemoteComponent;
 
 namespace Content.Server.Remotes
@@ -65,10 +66,9 @@ namespace Content.Server.Remotes
             if (args.Handled
                 || args.Target == null
                 || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
-                // The remote can be used anywhere the user can see the door.
-                // This doesn't work that well, but I don't know of an alternative
-                || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
-                    SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
+                // Only able to control doors if they are within your vision and within your max range.
+                // Not affected by mobs or machines anymore.
+                || !ExamineSystemShared.InRangeUnOccluded(args.User, args.Target.Value, SharedInteractionSystem.MaxRaycastRange, null))
             {
                 return;
             }
