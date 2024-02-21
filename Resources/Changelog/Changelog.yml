@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: quatre
-  changes:
-  - message: Artifact Analyzer now pauses on power-loss.
-    type: Tweak
-  id: 5482
-  time: '2023-12-30T17:49:25.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22974
 - author: Blazeror
   changes:
   - message: Pinpointers now use the correct sprites.
@@ -3850,3 +3843,10 @@
   id: 5981
   time: '2024-02-21T06:12:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25418
+- author: EdenTheLiznerd
+  changes:
+  - message: Deathnettles no longer penetrate hardsuit armor
+    type: Tweak
+  id: 5982
+  time: '2024-02-21T06:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25286
