@@ -226,13 +226,28 @@ namespace Content.IntegrationTests.Tests
 
                 if (entManager.HasComponent<StationJobsComponent>(station))
                 {
-                    // Test that the map has valid latejoin spawn points
+                    // Test that the map has valid latejoin spawn points or container spawn points
                     if (!NoSpawnMaps.Contains(mapProto))
                     {
                         var lateSpawns = 0;
 
-                        var query = entManager.AllEntityQueryEnumerator<SpawnPointComponent>();
-                        while (query.MoveNext(out var uid, out var comp))
+                        var queryPoint = entManager.AllEntityQueryEnumerator<SpawnPointComponent>();
+                        while (queryPoint.MoveNext(out var uid, out var comp))
+                        {
+                            if (comp.SpawnType != SpawnPointType.LateJoin
+                            || !xformQuery.TryGetComponent(uid, out var xform)
+                            || xform.GridUid == null
+                            || !gridUids.Contains(xform.GridUid.Value))
+                            {
+                                continue;
+                            }
+
+                            lateSpawns++;
+                            break;
+                        }
+
+                        var queryContainer = entManager.AllEntityQueryEnumerator<ContainerSpawnPointComponent>();
+                        while (queryContainer.MoveNext(out var uid, out var comp))
                         {
                             if (comp.SpawnType != SpawnPointType.LateJoin
                             || !xformQuery.TryGetComponent(uid, out var xform)
