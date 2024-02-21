@@ -77,13 +77,13 @@ public sealed partial class BonkSystem : EntitySystem
         if (!Resolve(uid, ref bonkableComponent, false))
             return false;
 
-        if (!TryComp<ClumsyComponent>(climber, out var clumsyComponent) || !HasComp<HandsComponent>(user))
+        if (!HasComp<ClumsyComponent>(climber) || !HasComp<HandsComponent>(user))
             return false;
 
         if (!_cfg.GetCVar(CCVars.GameTableBonk))
         {
             // Not set to always bonk, try clumsy roll.
-            if (!_interactionSystem.TryRollClumsy(climber, clumsyComponent.BonkChance))
+            if (!_interactionSystem.TryRollClumsy(climber, bonkableComponent.BonkClumsyChance))
                 return false;
         }
 
