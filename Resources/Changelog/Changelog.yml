@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added 3 new artifact effect. Added 1 new artifact trigger.
-    type: Add
-  id: 5497
-  time: '2024-01-01T02:19:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22574
 - author: Ilya246
   changes:
   - message: Science no longer needs to research medium batteries, and high batteries
@@ -3860,3 +3853,10 @@
   id: 5996
   time: '2024-02-21T06:52:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25008
+- author: Fildrance
+  changes:
+  - message: now cryo pod health analyzer updates atomatically!
+    type: Fix
+  id: 5997
+  time: '2024-02-21T14:47:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25109
