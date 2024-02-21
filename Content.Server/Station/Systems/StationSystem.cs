@@ -57,9 +57,9 @@ public sealed class StationSystem : EntitySystem
         SubscribeLocalEvent<StationMemberComponent, ComponentShutdown>(OnStationGridDeleted);
         SubscribeLocalEvent<StationMemberComponent, PostGridSplitEvent>(OnStationSplitEvent);
 
-        _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.StationRotation, x => _randomStationRotation = x, true);
+        Subs.CVar(_configurationManager, CCVars.StationOffset, x => _randomStationOffset = x, true);
+        Subs.CVar(_configurationManager, CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
+        Subs.CVar(_configurationManager, CCVars.StationRotation, x => _randomStationRotation = x, true);
 
         _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
