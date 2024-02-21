@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using System.Numerics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.StatusIcon;
 
@@ -12,6 +13,7 @@ public sealed class StatusIconOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly SpriteSystem _sprite;
     private readonly TransformSystem _transform;
@@ -72,7 +74,9 @@ public sealed class StatusIconOverlay : Overlay
 
             foreach (var proto in icons)
             {
-                var texture = _sprite.Frame0(proto.Icon);
+
+                var curTime = _timing.RealTime;
+                var texture = _sprite.GetFrame(proto.Icon, curTime);
 
                 float yOffset;
                 float xOffset;
