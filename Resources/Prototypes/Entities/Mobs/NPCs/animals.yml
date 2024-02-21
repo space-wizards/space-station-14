@@ -58,8 +58,6 @@
     damage:
       types:
         Piercing: 5
-  - type: Puller
-    needsHands: true
   - type: Tag
     tags:
     - VimPilot
@@ -122,8 +120,6 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-  - type: Puller
-    needsHands: true
   - type: ZombieImmune
 
 - type: entity
@@ -229,12 +225,10 @@
     accent: chicken
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
-  - type: Puller
-    needsHands: true
   - type: NpcFactionMember
     factions:
     - Passive
-    
+
 - type: entity
   parent: MobChicken
   id: MobChicken1
@@ -259,7 +253,7 @@
         Base: dead-1
       Dead:
         Base: dead-1
-        
+
 - type: entity
   parent: MobChicken
   id: MobChicken2
@@ -699,8 +693,6 @@
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
-  - type: Puller
-    needsHands: true
 
 - type: entity
   name: cow
@@ -983,7 +975,6 @@
       path: /Audio/Animals/goose_honk.ogg
   - type: Bloodstream
     bloodMaxVolume: 100
-  - type: Puller
   - type: NpcFactionMember
     factions:
     - Passive
@@ -1040,7 +1031,6 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-  - type: Puller
 
 - type: entity
   name: kangaroo
@@ -1299,7 +1289,7 @@
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
-  
+
 - type: entity
   id: MobMonkeySyndicateAgent
   parent: MobBaseSyndicateMonkey
@@ -1587,8 +1577,6 @@
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
-  - type: Puller
-    needsHands: true
   - type: BadFood
   - type: NonSpreaderZombie
   - type: PreventSpiller
@@ -1721,8 +1709,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
-  - type: Puller
-    needsHands: true
   - type: Tag
     tags:
     - VimPilot
@@ -1826,8 +1812,6 @@
       path: /Audio/Animals/frog_ribbit.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: Puller
-    needsHands: true
   - type: Tag
     tags:
     - VimPilot
@@ -2052,8 +2036,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
-  - type: Puller
-    needsHands: true
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -2240,6 +2222,9 @@
         collection: FootstepClownFast
     - type: Speech
       speechVerb: Cluwne
+    - type: Bloodstream
+      bloodMaxVolume: 150
+      bloodReagent: Laughter
 
 - type: entity
   name: possum
@@ -2497,7 +2482,6 @@
       gender: epicene
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-corgi
-  - type: Puller
   - type: MobPrice
     price: 200
   - type: Tag
@@ -3115,3 +3099,91 @@
     factions:
     - Passive
 
+- type: entity
+  name: diona nymph
+  parent: SimpleMobBase
+  id: MobDionaNymph
+  description: It's like a cat, only.... branch-ier.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: nymph
+      sprite: Mobs/Animals/nymph.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 100 # High, because wood is heavy.
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: Bloodstream
+    bloodReagent: Water
+    bloodMaxVolume: 60
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: nymph
+      Critical:
+        Base: nymph_sleep
+      Dead:
+        Base: nymph_dead
+  - type: Butcherable
+    spawned:
+    - id: MaterialWoodPlank1
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-nymph
+    interactFailureString: petting-failure-nymph
+    interactSuccessSound:
+      path: /Audio/Animals/nymph_chirp.ogg
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Critical
+      60: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Speech
+    speechVerb: Plant
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - VimPilot
+  - type: Emoting
+  - type: BodyEmotes
+    soundsId: Nymph
+  - type: Reform
+    actionPrototype: DionaReformAction
+    reformTime: 10
+    popupText: diona-reform-attempt
+    reformPrototype: MobDionaReformed
+
+- type: entity
+  parent: MobDionaNymph
+  id: MobDionaNymphAccent # No talky. For non-brain & wild nymphs
+  suffix: Accent
+  components:
+  - type: ReplacementAccent
+    accent: nymph
+    

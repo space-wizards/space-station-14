@@ -26,11 +26,11 @@
   id: DetectiveGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
+    outerClothing: ClothingOuterVestDetective
     back: ClothingBackpackFilledDetective
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHatFedoraBrown
-    outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltHolsterFilled
