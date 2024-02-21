@@ -16,8 +16,5 @@
     price: 500
   - type: GuideHelp
     guides: [ AME, Power ]
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: StealTarget
     stealGroup: AmePart

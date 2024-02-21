@@ -11,6 +11,3 @@
   - type: Sprite
     sprite: Objects/Power/solar_parts.rsi
     state: solar_assembly_parts
-  - type: Tag
-    tags:
-    - DroneUsable

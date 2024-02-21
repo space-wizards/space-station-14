@@ -73,3 +73,18 @@
   itemDrop: PartRodMetal1
   heatCapacity: 10000
 
+- type: tile
+  id: TrainLattice
+  name: tiles-lattice-train
+  sprite: /Textures/Tiles/latticeTrain.png
+  baseTurf: Space
+  isSubfloor: true
+  deconstructTools: [ Cutting ]
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
