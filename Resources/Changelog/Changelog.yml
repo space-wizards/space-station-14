@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Mime's stamp is silent now!
-    type: Tweak
-  id: 5488
-  time: '2023-12-30T23:15:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23221
 - author: EmoGarbage404
   changes:
   - message: Damage from heat sources has been increased.
@@ -3853,3 +3846,11 @@
   id: 5987
   time: '2024-02-21T06:26:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25206
+- author: deltanedas
+  changes:
+  - message: Added Conducting Gloves to the uplink, they make shocks much worse rather
+      than stop them.
+    type: Add
+  id: 5988
+  time: '2024-02-21T06:34:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25227
