@@ -72,7 +72,7 @@ public sealed partial class TestPair
             Client.SetConnectTarget(Server);
             await Client.WaitPost(() =>
             {
-                var netMgr = IoCManager.Resolve<IClientNetManager>();
+                var netMgr = Client.ResolveDependency<IClientNetManager>();
                 if (!netMgr.IsConnected)
                 {
                     netMgr.ClientConnect(null!, 0, null!);
