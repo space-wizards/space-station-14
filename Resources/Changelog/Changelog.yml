@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed disposal units visually
-    type: Tweak
-  id: 5481
-  time: '2023-12-30T17:14:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23067
 - author: quatre
   changes:
   - message: Artifact Analyzer now pauses on power-loss.
@@ -3849,3 +3842,11 @@
   id: 5980
   time: '2024-02-21T06:11:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25221
+- author: Errant
+  changes:
+  - message: Rotten food is now less lethal to eat, and has a high chance to induce
+      vomiting.
+    type: Tweak
+  id: 5981
+  time: '2024-02-21T06:12:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25418
