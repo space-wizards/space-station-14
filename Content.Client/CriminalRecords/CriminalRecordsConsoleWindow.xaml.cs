@@ -33,8 +33,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public Action<SecurityStatus>? OnStatusSelected;
     public Action<CriminalRecord, bool, bool>? OnHistoryUpdated;
     public Action? OnHistoryClosed;
-    public Action<SecurityStatus, string>? OnWantedDialogConfirmed;
-    public Action<SecurityStatus, string>? OnSuspectedDialogConfirmed;
+    public Action<SecurityStatus, string>? OnDialogConfirmed;
 
     private uint _maxLength;
     private bool _isPopulating;
@@ -238,9 +237,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         }
 
         var field = "reason";
-        var title = Loc.GetString("criminal-records-status-wanted");
-        if(status == SecurityStatus.Suspected)
-            title = Loc.GetString("criminal-records-status-suspected");
+        var title = Loc.GetString("criminal-records-status-" + status.ToString().ToLower());
         var placeholders = _proto.Index<DatasetPrototype>(ReasonPlaceholders);
         var placeholder = Loc.GetString("criminal-records-console-reason-placeholder", ("placeholder", _random.Pick(placeholders.Values))); // just funny it doesn't actually get used
         var prompt = Loc.GetString("criminal-records-console-reason");
@@ -253,16 +250,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             var reason = responses[field];
             if (reason.Length < 1 || reason.Length > _maxLength)
                 return;
-            switch (status)
-            {
-                case SecurityStatus.Wanted:
-                    OnWantedDialogConfirmed?.Invoke(status, reason);
-                    break;
-                case SecurityStatus.Suspected:
-                    OnSuspectedDialogConfirmed?.Invoke(status, reason);
-                    break;
-            }
 
+            OnDialogConfirmed?.Invoke(status, reason);
         };
 
         _reasonDialog.OnClose += () => { _reasonDialog = null; };

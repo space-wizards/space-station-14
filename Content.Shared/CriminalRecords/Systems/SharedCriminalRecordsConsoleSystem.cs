@@ -33,6 +33,9 @@ public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
     public void SetCriminalIcon(string name, SecurityStatus status, EntityUid characterUid)
     {
         EnsureComp<CriminalRecordComponent>(characterUid, out var record);
+
+        var previousIcon = record.StatusIcon;
+
         record.StatusIcon = status switch
         {
             SecurityStatus.Paroled => "SecurityIconParoled",
@@ -42,6 +45,8 @@ public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
             SecurityStatus.Suspected => "SecurityIconSuspected",
             _ => record.StatusIcon
         };
-        Dirty(characterUid, record);
+
+        if(previousIcon != record.StatusIcon)
+            Dirty(characterUid, record);
     }
 }
