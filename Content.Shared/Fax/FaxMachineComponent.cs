@@ -1,5 +1,4 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -19,23 +18,11 @@ public sealed partial class FaxMachineComponent : Component
     public string FaxName { get; set; } = "Unknown";
 
     /// <summary>
-    /// Type of damage dealt when faxecuted.
-    /// </summary>
-    [DataField]
-    public ProtoId<DamageGroupPrototype> DamageType = "Brute";
-
-    /// <summary>
     /// Sprite to use when inserting an object.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public string InsertingState = "inserting";
-
-    /// <summary>
-    /// Amount of damage dealt when faxecuted.
-    /// </summary>
-    [DataField]
-    public int Damage = 300;
 
     /// <summary>
     /// Device address of fax in network to which data will be send

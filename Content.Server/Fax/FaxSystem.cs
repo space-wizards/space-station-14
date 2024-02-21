@@ -5,7 +5,6 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
-using Content.Shared.Popups;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -25,9 +24,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Content.Shared.Damage;
-using Content.Shared.Tag;
-using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fax;
@@ -47,9 +43,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly FaxecuteSystem _faxecute = default!;
 
     private const string PaperSlotId = "Paper";
 
@@ -321,12 +315,22 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnCopyButtonPressed(EntityUid uid, FaxMachineComponent component, FaxCopyMessage args)
     {
-        Copy(uid, component);
+        if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+        {
+            _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
+        }
+        else
+            Copy(uid, component);
     }
 
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
-        Send(uid, component, args.Session.AttachedEntity);
+        if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+        {
+            _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
+        }
+        else
+            Send(uid, component, args.Session.AttachedEntity);
     }
 
     private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
@@ -449,13 +453,6 @@ public sealed class FaxSystem : EntitySystem
         if (sendEntity == null)
             return;
 
-        if (HasComp<MobStateComponent>(sendEntity))
-        {
-            Faxecute(uid, component);
-            return;
-        }
-
-
         if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
@@ -476,19 +473,6 @@ public sealed class FaxSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    public void Faxecute(EntityUid uid, FaxMachineComponent component, DamageOnFaxecuteEvent? args = null)
-    {
-        var sendEntity = component.PaperSlot.Item;
-        if (sendEntity == null)
-            return;
-
-        var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>(component.DamageType), component.Damage);
-        _damageable.TryChangeDamage(sendEntity, damageSpec);
-        _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
-        return;
-
-    }
-
     /// <summary>
     ///     Sends message to addressee if paper is set and a known fax is selected
     ///     A timeout is set after sending, which is shared by the copy button.
@@ -507,12 +491,6 @@ public sealed class FaxSystem : EntitySystem
 
         if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
             return;
-
-        if (HasComp<MobStateComponent>(sendEntity) && HasComp<FaxableObjectComponent>(sendEntity))
-        {
-            Faxecute(uid, component);
-            return;
-        }
 
         if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
            !TryComp<PaperComponent>(sendEntity, out var paper))
