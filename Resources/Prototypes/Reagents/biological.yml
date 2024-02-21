@@ -7,7 +7,10 @@
   color: "#800000"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bloodglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
