@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed ammo boxes visually
-    type: Tweak
-  id: 5491
-  time: '2023-12-31T02:13:07.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23180
-- author: leonardo-dabepis
-  changes:
-  - message: Soap no longer smells like condoms.
-    type: Tweak
-  id: 5492
-  time: '2023-12-31T07:27:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23272
 - author: EmoGarbage404
   changes:
   - message: The chemistry guidebook now includes sources for various chemicals! These
@@ -3855,3 +3841,18 @@
   id: 5990
   time: '2024-02-21T06:39:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25153
+- author: takemysoult
+  changes:
+  - message: Changed uplink catalog - add syndicate hud to nukeops uplink
+    type: Tweak
+  id: 5991
+  time: '2024-02-21T06:41:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25087
+- author: Sphiral
+  changes:
+  - message: Took the AdminPDA from the backpack and gave it it's own slot on aghosts!
+      Also aghosts can smoke/wear masks now!
+    type: Tweak
+  id: 5992
+  time: '2024-02-21T06:41:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25402
