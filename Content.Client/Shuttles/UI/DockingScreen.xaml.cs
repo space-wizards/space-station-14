@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Systems;
@@ -66,7 +67,6 @@ public sealed partial class DockingScreen : BoxContainer
     {
         DockingControl.BuildDocks(shuttle);
         var currentDock = DockingControl.ViewedDock;
-
         DockedWith.DisposeAllChildren();
         DockPorts.DisposeAllChildren();
         _ourDockButtons.Clear();

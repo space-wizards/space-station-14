@@ -182,6 +182,15 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool CanFTL(EntityUid shuttleUid, [NotNullWhen(false)] out string? reason)
     {
+        /* TODO:
+         * - Embed the nav display onto bottom-left corner of the thing
+            - Remove the margins from buttons (to be honest the engine ones need better default margins)
+            - If we can't FTL disable the FTL button on FTL page (maybe check CanFTL every frame I guess?)
+            - Some fucking margins on the dock controls
+            - Make the docked objects screen better (just use collapsible groups like sector object) then also use a panelcontainer. At minimum needs the view button + docks list
+            - Dock controls fucking up for a frame (might be engine being ass shit)
+         */
+
         if (HasComp<FTLComponent>(shuttleUid))
         {
             reason = Loc.GetString("shuttle-console-in-ftl");

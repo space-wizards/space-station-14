@@ -470,13 +470,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         mapOffset = InverseMapPosition(mapOffset);
         var coordsText = $"{mapOffset.X:0.0}, {mapOffset.Y:0.0}";
-        var coordsDimensions = handle.GetDimensions(_font, coordsText, UIScale);
-        var coordsMargins = 5f;
-
-        handle.DrawString(_font,
-            new Vector2(coordsMargins, Height) - new Vector2(0f, coordsDimensions.Y + coordsMargins),
-            coordsText,
-            Color.FromSrgb(IFFComponent.SelfColor));
+        DrawData(handle, coordsText);
     }
 
     private void AddMapObject(List<Vector2> edges, List<Vector2> verts, ValueList<Vector2> mapObject)

@@ -435,7 +435,6 @@ public sealed partial class MapScreen : BoxContainer
         {
             Text = mapObj.Name,
             HorizontalExpand = true,
-            MinHeight = 32f,
         };
 
         var gridContainer = new BoxContainer()
