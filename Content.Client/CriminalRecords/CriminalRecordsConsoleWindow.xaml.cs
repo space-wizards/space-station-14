@@ -222,14 +222,14 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     {
         if (status == SecurityStatus.Wanted || status == SecurityStatus.Suspected)
         {
-            GetWantedReason(status);
+            GetReason(status);
             return;
         }
 
         OnStatusSelected?.Invoke(status);
     }
 
-    private void GetWantedReason(SecurityStatus status)
+    private void GetReason(SecurityStatus status)
     {
         if (_reasonDialog != null)
         {
@@ -256,10 +256,10 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             switch (status)
             {
                 case SecurityStatus.Wanted:
-                    OnWantedDialogConfirmed?.Invoke(SecurityStatus.Wanted, reason);
+                    OnWantedDialogConfirmed?.Invoke(status, reason);
                     break;
                 case SecurityStatus.Suspected:
-                    OnSuspectedDialogConfirmed?.Invoke(SecurityStatus.Suspected, reason);
+                    OnSuspectedDialogConfirmed?.Invoke(status, reason);
                     break;
             }
 
