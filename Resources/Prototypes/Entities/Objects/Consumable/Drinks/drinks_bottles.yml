@@ -713,7 +713,7 @@
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkSugarJug
-  name: sugar
+  name: sugar jug
   suffix: for drinks
   description: some people put this in their coffee...
   components:
@@ -729,7 +729,7 @@
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkLemonLimeJug
-  name: lemon lime
+  name: lemon lime jug
   description: a dual citrus sensation.
   components:
   - type: SolutionContainerManager
