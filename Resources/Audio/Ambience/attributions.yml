@@ -96,3 +96,23 @@
   license: "CC0-1.0"
   copyright: "Taken from /vg/station"
   source: "https://github.com/vgstation-coders/vgstation13/commit/23303188abe6fe31b114a218a1950d7325a23730"
+
+- files: ["ambitrain1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by Badgie42 on Freesound.com, converted to Mono by TheShuEd"
+  source: "https://freesound.org/people/Badgie42/sounds/399876/"
+
+- files: ["ambitrain2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Hallkom on Freesound.com, cropped and converted to Mono by TheShuEd"
+  source: "https://freesound.org/people/Hallkom/sounds/588486/"
+
+- files: ["ambitrain3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by ldezem on Freesound.com, cropped and converted to Mono by TheShuEd"
+  source: "https://freesound.org/people/ldezem/sounds/528238/"
+
+- files: ["anomaly_scary.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by dimbark1, edited and converted to mono by TheShuEd"
+  source: "https://freesound.org/people/dimbark1/sounds/316797/"

@@ -118,7 +118,6 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
-  - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
 
@@ -141,9 +140,9 @@
           maxVol: 50
           reagents:
             - ReagentId: Ash
-              Quantity: 5
-            - ReagentId: SpaceLube
-              Quantity: 5
+              Quantity: 25
+            - ReagentId: Necrosol
+              Quantity: 25
     - type: GuideHelp
       guides:
       - MinorAntagonists

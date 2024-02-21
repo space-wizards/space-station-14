@@ -1125,7 +1125,8 @@ entities:
           15,1:
             0: 65535
           15,2:
-            0: 65535
+            0: 57343
+            9: 8192
           15,3:
             0: 65535
           16,0:
@@ -1774,6 +1775,21 @@ entities:
           moles:
           - 21.6852
           - 81.57766
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -9869,6 +9885,14 @@ entities:
     - type: Transform
       pos: 36.5,42.5
       parent: 2
+- proto: BedsheetCE
+  entities:
+  - uid: 227
+    components:
+    - type: Transform
+      parent: 5414
+    - type: Physics
+      canCollide: False
 - proto: BedsheetClown
   entities:
   - uid: 5148
@@ -9876,6 +9900,14 @@ entities:
     - type: Transform
       pos: 27.5,5.5
       parent: 2
+- proto: BedsheetCMO
+  entities:
+  - uid: 542
+    components:
+    - type: Transform
+      parent: 1179
+    - type: Physics
+      canCollide: False
 - proto: BedsheetGreen
   entities:
   - uid: 5252
@@ -9898,6 +9930,22 @@ entities:
     - type: Transform
       pos: 76.5,-6.5
       parent: 2
+- proto: BedsheetHOP
+  entities:
+  - uid: 544
+    components:
+    - type: Transform
+      parent: 9438
+    - type: Physics
+      canCollide: False
+- proto: BedsheetHOS
+  entities:
+  - uid: 545
+    components:
+    - type: Transform
+      parent: 386
+    - type: Physics
+      canCollide: False
 - proto: BedsheetMedical
   entities:
   - uid: 5197
@@ -9983,6 +10031,14 @@ entities:
     - type: Transform
       pos: 107.5,-22.5
       parent: 2
+- proto: BedsheetRD
+  entities:
+  - uid: 4300
+    components:
+    - type: Transform
+      parent: 565
+    - type: Physics
+      canCollide: False
 - proto: BedsheetSpawner
   entities:
   - uid: 5447
@@ -34351,13 +34407,6 @@ entities:
     - type: Transform
       pos: 67.5,-5.5
       parent: 2
-- proto: CrateFunATV
-  entities:
-  - uid: 9478
-    components:
-    - type: Transform
-      pos: 7.5,31.5
-      parent: 2
 - proto: CrateGenericSteel
   entities:
   - uid: 3720
@@ -37946,6 +37995,18 @@ entities:
     - type: Transform
       pos: 10.5,-36.5
       parent: 2
+    - type: Storage
+      storedItems:
+        227:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 227
 - proto: DresserChiefMedicalOfficerFilled
   entities:
   - uid: 1179
@@ -37953,6 +38014,18 @@ entities:
     - type: Transform
       pos: 58.5,-10.5
       parent: 2
+    - type: Storage
+      storedItems:
+        542:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 542
 - proto: DresserHeadOfPersonnelFilled
   entities:
   - uid: 9438
@@ -37960,6 +38033,18 @@ entities:
     - type: Transform
       pos: 18.5,-5.5
       parent: 2
+    - type: Storage
+      storedItems:
+        544:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 544
 - proto: DresserHeadOfSecurityFilled
   entities:
   - uid: 386
@@ -37967,6 +38052,18 @@ entities:
     - type: Transform
       pos: 45.5,22.5
       parent: 2
+    - type: Storage
+      storedItems:
+        545:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 545
 - proto: DresserQuarterMasterFilled
   entities:
   - uid: 941
@@ -37974,6 +38071,25 @@ entities:
     - type: Transform
       pos: 13.5,30.5
       parent: 2
+- proto: DresserResearchDirectorFilled
+  entities:
+  - uid: 565
+    components:
+    - type: Transform
+      pos: 60.5,11.5
+      parent: 2
+    - type: Storage
+      storedItems:
+        4300:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 4300
 - proto: DrinkFlask
   entities:
   - uid: 9223
@@ -40538,7 +40654,7 @@ entities:
     - type: Transform
       pos: 107.3062,-11.344688
       parent: 2
-- proto: FoodBoxDonkpocketGondola
+- proto: FoodBoxDonkpocketPizza
   entities:
   - uid: 8861
     components:
@@ -58673,6 +58789,24 @@ entities:
     - type: Transform
       pos: 61.5,11.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
 - proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 7962
@@ -59544,7 +59678,7 @@ entities:
   - uid: 11980
     components:
     - type: Transform
-      pos: 60.396873,11.712045
+      pos: 63.3999,10.027362
       parent: 2
 - proto: PersonalAI
   entities:
@@ -68770,20 +68904,6 @@ entities:
     - type: Transform
       pos: 39.5,23.5
       parent: 2
-- proto: SpawnVehicleJanicart
-  entities:
-  - uid: 12910
-    components:
-    - type: Transform
-      pos: 6.5,-5.5
-      parent: 2
-- proto: SpawnVehicleSecway
-  entities:
-  - uid: 8446
-    components:
-    - type: Transform
-      pos: 36.5,21.5
-      parent: 2
 - proto: SprayBottle
   entities:
   - uid: 5393
@@ -70880,11 +71000,6 @@ entities:
     - type: Transform
       pos: 16.5,-5.5
       parent: 2
-  - uid: 10663
-    components:
-    - type: Transform
-      pos: 60.5,11.5
-      parent: 2
   - uid: 10664
     components:
     - type: Transform
@@ -72317,20 +72432,6 @@ entities:
     components:
     - type: Transform
       pos: 81.5,-7.5
-      parent: 2
-- proto: VehicleKeyJanicart
-  entities:
-  - uid: 4300
-    components:
-    - type: Transform
-      pos: 6.513515,-4.4061713
-      parent: 2
-- proto: VehicleKeySecway
-  entities:
-  - uid: 8447
-    components:
-    - type: Transform
-      pos: 36.51057,20.60821
       parent: 2
 - proto: VendingBarDrobe
   entities:
@@ -82840,23 +82941,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,-1.5
       parent: 2
-- proto: WindoorBarKitchenLocked
-  entities:
-  - uid: 544
-    components:
-    - type: Transform
-      pos: 35.5,-8.5
-      parent: 2
-  - uid: 545
-    components:
-    - type: Transform
-      pos: 36.5,-8.5
-      parent: 2
-  - uid: 565
-    components:
-    - type: Transform
-      pos: 34.5,-8.5
-      parent: 2
 - proto: WindoorChapelLocked
   entities:
   - uid: 9730
@@ -83564,23 +83648,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 20.5,-15.5
       parent: 2
-  - uid: 227
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 34.5,-8.5
-      parent: 2
   - uid: 358
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-12.5
-      parent: 2
-  - uid: 542
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 36.5,-8.5
       parent: 2
   - uid: 673
     components:
