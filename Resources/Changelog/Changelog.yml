@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the Hyper convection protolathe and autolathe to Industrial Engineering
-      tech. These lathes have a discounted printing price at the cost of venting hot
-      air into the surroundings.
-    type: Add
-  - message: Added the industrial ore processor, an improved version with discounted
-      printing prices, to salvage equipment technology.
-    type: Add
-  - message: Moved autolathe, protolathe, circuit imprinter, ore processor, and material
-      reclaimer boards to be available by default in the circuit imprinter.
-    type: Tweak
-  - message: Removed machine part upgrades from all lathes.
-    type: Remove
-  id: 5477
-  time: '2023-12-30T16:18:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23202
 - author: Ubaser
   changes:
   - message: The uncloneable trait has been removed.
@@ -3859,3 +3842,11 @@
   id: 5976
   time: '2024-02-20T23:58:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25421
+- author: takemysoult
+  changes:
+  - message: Explosive Technology changed to tier 2 arsenal and the cost has increased
+      to 10 000
+    type: Tweak
+  id: 5977
+  time: '2024-02-21T00:56:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25397
