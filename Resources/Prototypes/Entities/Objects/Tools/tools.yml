@@ -241,7 +241,6 @@
   - type: Tag
     tags:
       - Multitool
-      - DroneUsable
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
@@ -291,9 +290,6 @@
           type: NetworkConfiguratorBoundUserInterface
         - key: enum.NetworkConfiguratorUiKey.Link
           type: NetworkConfiguratorBoundUserInterface
-    - type: Tag
-      tags:
-        - DroneUsable
     - type: StaticPrice
       price: 56
     - type: GuideHelp
