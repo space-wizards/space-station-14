@@ -1,27 +1,14 @@
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Devour.Components;
+namespace Content.Shared.Devour.Components;
 
-[RegisterComponent]
-[Access(typeof(DevouredSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedDevouredSystem))]
 public sealed partial class DevouredComponent : Component
 {
-    /// <summary>
-    ///     The entity that devoured this entity.
-    /// </summary>
-    [DataField]
-    public EntityUid Devourer;
-
-    /// <summary>
-    ///     Keeps track of if the target was originally pacified.
-    ///     This is so it only gets removed again if the entity originally didn't have it.
-    /// </summary>
-    [DataField]
-    public bool OriginallyPacified;
-
     /// <summary>
     ///     Stores the original MobStates the entity was allowed to be healed in.
     ///     This is so it can be returned to it's original state when the component is removed.
@@ -64,5 +51,4 @@ public sealed partial class DevouredComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 DeadMultiplier = 0.25;
-
 }
