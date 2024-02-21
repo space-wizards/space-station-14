@@ -9,7 +9,6 @@
     state: airalarm_electronics
   - type: Tag
     tags:
-      - DroneUsable
       - StationMapElectronics
   - type: StaticPrice
-    price: 15 
+    price: 15
