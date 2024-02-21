@@ -182,11 +182,11 @@
       food:
         reagents:
         - ReagentId: Histamine
-          Quantity: 25
+          Quantity: 3
   - type: Produce
     seedId: nettle
   - type: MeleeChemicalInjector
-    transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
+    transferAmount: 3 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
     pierceArmor: false
   - type: Extractable
