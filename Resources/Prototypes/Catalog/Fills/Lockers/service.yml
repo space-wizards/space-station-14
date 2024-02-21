@@ -60,6 +60,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: CleanerGrenade
+        amount: 2
       - id: MopItem
         amount: 2
       - id: BoxMousetrap

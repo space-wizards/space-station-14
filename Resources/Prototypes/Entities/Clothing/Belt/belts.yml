@@ -223,6 +223,7 @@
         - Plunger
       components:
         - LightReplacer
+        - SmokeOnTrigger
     maxItemSize: Large
   - type: ItemMapper
     mapLayers:
