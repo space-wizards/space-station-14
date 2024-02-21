@@ -52,7 +52,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<BloodstreamComponent, OnDevouredEvent>(OnDevoured);
+        SubscribeLocalEvent<BloodstreamComponent, DevouredEvent>(OnDevoured);
     }
 
     private void OnReactionAttempt(Entity<BloodstreamComponent> entity, ref ReactionAttemptEvent args)
@@ -275,12 +275,9 @@ public sealed class BloodstreamSystem : EntitySystem
     /// <summary>
     ///     Stops the bleeding of the devoured target so the dragon doesn't leave a trail of random blood puddles behind
     /// </summary>
-    private void OnDevoured(Entity<BloodstreamComponent> entity, ref OnDevouredEvent args)
+    private void OnDevoured(Entity<BloodstreamComponent> entity, ref DevouredEvent args)
     {
-        if (entity.Comp.BleedAmount > 0)
-        {
-            entity.Comp.BleedAmount = 0;
-        }
+        entity.Comp.BleedAmount = 0;
     }
 
     /// <summary>

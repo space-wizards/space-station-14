@@ -1,5 +1,4 @@
 using Content.Server.Body.Components;
-using Content.Server.Devour.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
@@ -31,7 +30,7 @@ public sealed class DevourSystem : SharedDevourSystem
 
             EnsureComp<DevouredComponent>(args.Args.Target.Value);
 
-            var ev = new OnDevouredEvent(args.Args.Target.Value, uid);
+            var ev = new DevouredEvent(uid);
             RaiseLocalEvent(args.Args.Target.Value, ref ev);
         }
 

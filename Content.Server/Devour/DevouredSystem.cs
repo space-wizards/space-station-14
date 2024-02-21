@@ -1,22 +1,19 @@
-using System.Linq;
-using Content.Server.Devour.Components;
-using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Devour.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Devour;
-using Content.Shared.Devour.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Devour;
 
-public sealed class DevouredSystem : EntitySystem
+public sealed class DevouredSystem : SharedDevouredSystem
 {
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DevouredComponent, OnDevouredEvent>(OnDevoured);
+        SubscribeLocalEvent<DevouredComponent, DevouredEvent>(OnDevoured);
         SubscribeLocalEvent<DevouredComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<DevouredComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
@@ -24,10 +21,8 @@ public sealed class DevouredSystem : EntitySystem
     /// <summary>
     ///     Pacifies the target and gives them a passive damage effect the moment they are devoured.
     /// </summary>
-    private void OnDevoured(Entity<DevouredComponent> entity, ref OnDevouredEvent args)
+    private void OnDevoured(Entity<DevouredComponent> entity, ref DevouredEvent args)
     {
-        entity.Comp.Devourer = args.Devourer;
-
         //If the target already had a passive damage component it will be stored so it can be returned
         //to it's original value later.
         if (EnsureComp<PassiveDamageComponent>(entity, out var passiveDamage))
@@ -36,8 +31,7 @@ public sealed class DevouredSystem : EntitySystem
         //Stores the stomach damage value if it exists.
         if (TryComp<DevourerComponent>(args.Devourer, out var devourer))
         {
-            if (devourer.StomachDamage != null)
-                entity.Comp.StomachDamage = devourer.StomachDamage;
+            entity.Comp.StomachDamage = devourer.StomachDamage;
 
             //Sets the MobStates in which the devoured entity is damaged.
             passiveDamage.AllowedStates = devourer.DigestibleStates;
@@ -45,31 +39,19 @@ public sealed class DevouredSystem : EntitySystem
 
         //Sets the damage multiplier based on MobState.
         if (TryComp<MobStateComponent>(entity, out var mobState))
-        {
             SetStomachDamage(mobState.CurrentState, entity.Comp, passiveDamage);
-        }
 
         //Sets the max damage to the damage needed for the mob to be considered dead +
         //the damage cap specified in the component. This can be used to make reviving take more work if
         //the target has been devoured for a long time.
         if (TryComp<MobThresholdsComponent>(entity, out var mobThresholds))
         {
-            for (var mobStates = 0; mobStates < mobThresholds.Thresholds.Count; mobStates++)
+            foreach (var threshold in mobThresholds.Thresholds)
             {
-                var mobStateValue = mobThresholds.Thresholds.ElementAt(mobStates);
-                if (mobStateValue.Value == MobState.Dead)
-                {
-                    passiveDamage.DamageCap = mobStateValue.Key + entity.Comp.DamageCap;
-                    break;
-                }
+                if (threshold.Value == MobState.Dead)
+                    passiveDamage.DamageCap = threshold.Key + entity.Comp.DamageCap;
             }
         }
-
-        //Pacifies entities in the stomach and stores if the target was already pacified.
-        //This is to make sure the pacified component won't be removed if the entity
-        //already had it before being devoured.
-        if (EnsureComp<PacifiedComponent>(entity, out var pacified))
-            entity.Comp.OriginallyPacified = true;
     }
 
     /// <summary>
@@ -79,9 +61,7 @@ public sealed class DevouredSystem : EntitySystem
     {
         //Remove the component if the target originally didn't have it.
         if (component.OriginalAllowedMobStates == null)
-        {
             RemComp<PassiveDamageComponent>(uid);
-        }
         else
         {
             //Return the passive damage component back to what it was before the entity got devoured.
@@ -92,10 +72,6 @@ public sealed class DevouredSystem : EntitySystem
                 passiveDamage.Damage.TrimZeros();
             }
         }
-
-        //Remove the pacified component if the target originally didn't have it.
-        if (!component.OriginallyPacified)
-            RemComp<PacifiedComponent>(uid);
     }
 
     /// <summary>

@@ -90,7 +90,7 @@ public sealed partial class DevourDoAfterEvent : SimpleDoAfterEvent { }
 /// Raised after an entity is devoured.
 /// </summary>
 [ByRefEvent]
-public record struct OnDevouredEvent(EntityUid Devoured, EntityUid Devourer);
+public record struct DevouredEvent(EntityUid Devourer);
 
 [Serializable, NetSerializable]
 public enum FoodPreference : byte
