@@ -621,6 +621,7 @@ public sealed class PlantHolderSystem : EntitySystem
             RemovePlant(uid, component);
             component.ForceUpdate = true;
             Update(uid, component);
+            return;
         }
 
         CheckHealth(uid, component);

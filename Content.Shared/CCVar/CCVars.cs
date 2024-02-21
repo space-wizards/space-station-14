@@ -2011,5 +2011,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> GatewayGeneratorEnabled =
             CVarDef.Create("gateway.generator_enabled", true);
+
+        /*
+         * DEBUG
+         */
+
+        /// <summary>
+        /// A simple toggle to test <c>OptionsVisualizerComponent</c>.
+        /// </summary>
+        public static readonly CVarDef<bool> DebugOptionVisualizerTest =
+            CVarDef.Create("debug.option_visualizer_test", false, CVar.CLIENTONLY);
     }
 }
