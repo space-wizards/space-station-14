@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The chemistry guidebook now includes sources for various chemicals! These
-      are alternative methods of collection, including grinding, juicing, condensation,
-      and various others.
-    type: Add
-  id: 5493
-  time: '2023-12-31T07:35:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22627
 - author: noctyrnal
   changes:
   - message: RD's suit got a new paint job.
@@ -3856,3 +3847,10 @@
   id: 5992
   time: '2024-02-21T06:41:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25402
+- author: EdenTheLiznerd
+  changes:
+  - message: Nettles are now weaker than their deathnettle counterparts
+    type: Tweak
+  id: 5993
+  time: '2024-02-21T06:42:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25177
