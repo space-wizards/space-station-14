@@ -1,57 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the Hyper convection protolathe and autolathe to Industrial Engineering
-      tech. These lathes have a discounted printing price at the cost of venting hot
-      air into the surroundings.
-    type: Add
-  - message: Added the industrial ore processor, an improved version with discounted
-      printing prices, to salvage equipment technology.
-    type: Add
-  - message: Moved autolathe, protolathe, circuit imprinter, ore processor, and material
-      reclaimer boards to be available by default in the circuit imprinter.
-    type: Tweak
-  - message: Removed machine part upgrades from all lathes.
-    type: Remove
-  id: 5477
-  time: '2023-12-30T16:18:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23202
-- author: Ubaser
-  changes:
-  - message: The uncloneable trait has been removed.
-    type: Remove
-  id: 5478
-  time: '2023-12-30T16:45:43.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23229
-- author: Ubaser
-  changes:
-  - message: Syndicate implanters have received a new sprite.
-    type: Add
-  id: 5479
-  time: '2023-12-30T16:46:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23227
-- author: lzk228
-  changes:
-  - message: Shivs crafting now based on construct. Click with cloth on shard to create
-      shiv.
-    type: Tweak
-  id: 5480
-  time: '2023-12-30T17:08:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23134
-- author: Alekshhh
-  changes:
-  - message: Changed disposal units visually
-    type: Tweak
-  id: 5481
-  time: '2023-12-30T17:14:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23067
-- author: quatre
-  changes:
-  - message: Artifact Analyzer now pauses on power-loss.
-    type: Tweak
-  id: 5482
-  time: '2023-12-30T17:49:25.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22974
 - author: Blazeror
   changes:
   - message: Pinpointers now use the correct sprites.
@@ -3859,3 +3806,47 @@
   id: 5976
   time: '2024-02-20T23:58:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25421
+- author: takemysoult
+  changes:
+  - message: Explosive Technology changed to tier 2 arsenal and the cost has increased
+      to 10 000
+    type: Tweak
+  id: 5977
+  time: '2024-02-21T00:56:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25397
+- author: Callmore
+  changes:
+  - message: Shoving other people is now more consistent.
+    type: Fix
+  id: 5978
+  time: '2024-02-21T04:01:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25353
+- author: Ubaser
+  changes:
+  - message: A new UI theme, "Ashen", is now available to select in the options menu.
+    type: Add
+  id: 5979
+  time: '2024-02-21T05:26:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25408
+- author: Holinka4ever
+  changes:
+  - message: Sunglasses were removed from ClothesMate
+    type: Remove
+  id: 5980
+  time: '2024-02-21T06:11:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25221
+- author: Errant
+  changes:
+  - message: Rotten food is now less lethal to eat, and has a high chance to induce
+      vomiting.
+    type: Tweak
+  id: 5981
+  time: '2024-02-21T06:12:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25418
+- author: EdenTheLiznerd
+  changes:
+  - message: Deathnettles no longer penetrate hardsuit armor
+    type: Tweak
+  id: 5982
+  time: '2024-02-21T06:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25286
