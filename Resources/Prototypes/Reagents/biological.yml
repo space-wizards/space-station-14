@@ -147,6 +147,8 @@
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
     Medicine:
       effects:
+      - !type:ModifyBloodLevel
+        amount: 3
       - !type:HealthChange
         damage:
           groups:
