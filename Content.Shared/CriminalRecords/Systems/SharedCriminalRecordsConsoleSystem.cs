@@ -8,8 +8,8 @@ namespace Content.Shared.CriminalRecords.Systems;
 public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
 {
     /// <summary>
-    /// Edits the criminal status of a specific identity if the entities true name is equal
-    /// to the name of the edited criminal record.
+    /// Any entity that has a the name of the record that was just changed as their visible name will get their icon
+    /// updated with the new status, if the record got removed their icon will be removed too.
     /// </summary>
     public void UpdateCriminalIdentity(string name, SecurityStatus status)
     {

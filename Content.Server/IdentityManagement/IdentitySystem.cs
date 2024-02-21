@@ -68,9 +68,9 @@ public class IdentitySystem : SharedIdentitySystem
     }
 
     /// <summary>
-    ///     When the identity of a person is changed, searches for a criminal records console and compares the name of
-    ///     the new identity with a dictionary stored on the console. If the new name has a criminal status attached to it,
-    ///     the person will get the same criminal status until they change identity again.
+    ///     When the identity of a person is changed, searches the criminal records to see if the name of the new identity
+    ///     has a record. If the new name has a criminal status attached to it, the person will get the criminal status
+    ///     until they change identity again.
     /// </summary>
     private void OnIdentityChanged(Entity<IdentityComponent> ent, ref IdentityChangedEvent args)
     {
