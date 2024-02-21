@@ -195,7 +195,8 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             (bloodstream != null && _solutionContainerSystem.ResolveSolution(entity.Comp.BodyContainer.ContainedEntity.Value,
                 bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 ? bloodSolution.FillFraction
-                : 0
+                : 0,
+            null
         ));
     }
 

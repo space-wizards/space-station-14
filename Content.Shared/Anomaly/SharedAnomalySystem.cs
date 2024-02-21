@@ -27,7 +27,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] protected readonly ISharedAdminLogManager Log = default!;
+    [Dependency] protected readonly ISharedAdminLogManager AdminLog = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -92,7 +92,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     private void OnAnomalyUnpause(EntityUid uid, AnomalyComponent component, ref EntityUnpausedEvent args)
     {
         component.NextPulseTime += args.PausedTime;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnPulsingUnpause(EntityUid uid, AnomalyPulsingComponent component, ref EntityUnpausedEvent args)
@@ -103,7 +103,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     private void OnSupercriticalUnpause(EntityUid uid, AnomalySupercriticalComponent component, ref EntityUnpausedEvent args)
     {
         component.EndTime += args.PausedTime;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void DoAnomalyPulse(EntityUid uid, AnomalyComponent? component = null)
@@ -132,7 +132,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var stability = Random.NextFloat(minStability, maxStability);
         ChangeAnomalyStability(uid, stability, component);
 
-        Log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
         if (_net.IsServer)
             Audio.PlayPvs(component.PulseSound, uid);
 
@@ -154,14 +154,14 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (HasComp<AnomalySupercriticalComponent>(uid))
             return;
 
-        Log.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
         if (_net.IsServer)
             _sawmill.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(uid)}");
 
-        var super = EnsureComp<AnomalySupercriticalComponent>(uid);
+        var super = AddComp<AnomalySupercriticalComponent>(uid);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
         Appearance.SetData(uid, AnomalyVisuals.Supercritical, true);
-        Dirty(super);
+        Dirty(uid, super);
     }
 
     /// <summary>
@@ -201,7 +201,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         // Logging before resolve, in case the anomaly has deleted itself.
         if (_net.IsServer)
             _sawmill.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-        Log.Add(LogType.Anomaly, LogImpact.Extreme, $"Anomaly {ToPrettyString(uid)} went supercritical.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.Extreme, $"Anomaly {ToPrettyString(uid)} went supercritical.");
 
         if (!Resolve(uid, ref component))
             return;
@@ -231,7 +231,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var newVal = component.Stability + change;
 
         component.Stability = Math.Clamp(newVal, 0, 1);
-        Dirty(component);
+        Dirty(uid, component);
 
         var ev = new AnomalyStabilityChangedEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
@@ -254,7 +254,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             StartSupercriticalEvent(uid);
 
         component.Severity = Math.Clamp(newVal, 0, 1);
-        Dirty(component);
+        Dirty(uid, component);
 
         var ev = new AnomalySeverityChangedEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
@@ -280,7 +280,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         }
 
         component.Health = Math.Clamp(newVal, 0, 1);
-        Dirty(component);
+        Dirty(uid, component);
 
         var ev = new AnomalyHealthChangedEvent(uid, component.Health);
         RaiseLocalEvent(uid, ref ev, true);
