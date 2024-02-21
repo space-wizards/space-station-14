@@ -996,6 +996,9 @@
   id: SaltShaker
 
 - type: Tag
+  id: SpicesShaker
+
+- type: Tag
   id: SalvageExperiment
 
 - type: Tag

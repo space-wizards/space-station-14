@@ -299,6 +299,18 @@
     Vinaigrette: 3
 
 - type: reaction
+  id: CookingSpices
+  reactants:
+    CapsaicinOil:
+      amount: 2
+    Blackpepper:
+      amount: 2
+    Nutriment:
+      amount: 1
+  products:
+    Spices: 5
+
+- type: reaction
   id: BananaBreakdown
   source: true
   requiredMixerCategories:
