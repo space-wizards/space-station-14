@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: DangerRevolution
-  changes:
-  - message: Fixed Syndicate Fax Machine not receiving Faxes
-    type: Fix
-  id: 5495
-  time: '2023-12-31T17:36:21.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23291
-- author: IlyaElDunaev
-  changes:
-  - message: The stun prod can now be thrown at enemies
-    type: Add
-  id: 5496
-  time: '2023-12-31T23:52:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23133
 - author: TheShuEd
   changes:
   - message: Added 3 new artifact effect. Added 1 new artifact trigger.
@@ -3858,3 +3844,19 @@
   id: 5994
   time: '2024-02-21T06:49:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25090
+- author: FungiFellow
+  changes:
+  - message: Death Acidifer Price 2->4
+    type: Tweak
+  - message: Removed Acidifier from Syndie Uplink
+    type: Remove
+  id: 5995
+  time: '2024-02-21T06:51:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25039
+- author: Aquif
+  changes:
+  - message: Admins can now disable the bwoink sound if they don't want to scare players.
+    type: Add
+  id: 5996
+  time: '2024-02-21T06:52:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25008
