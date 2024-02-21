@@ -35,7 +35,7 @@ public partial class BaseShuttleControl : MapGridControl
     private readonly HashSet<Vector2i> _gridNeighborSet = new();
     private readonly List<(Vector2 Start, Vector2 End)> _edges = new();
 
-    private readonly List<Vector2> _allVertices = new();
+    private Vector2[] _allVertices = Array.Empty<Vector2>();
 
     // TODO: Engine PR.
     private (DirectionFlag, Vector2i)[] _neighborDirections;
@@ -263,12 +263,13 @@ public partial class BaseShuttleControl : MapGridControl
         var totalData = gridData.Vertices.Count;
         var triCount = gridData.EdgeIndex;
         var edgeCount = totalData - gridData.EdgeIndex;
-        _allVertices.EnsureLength(totalData, Vector2.Zero);
+        Extensions.EnsureLength(ref _allVertices, totalData);
 
         _drawJob.MidPoint = midpoint;
         _drawJob.Matrix = matrix;
         _drawJob.MinimapScale = minimapScale;
         _drawJob.Vertices = gridData.Vertices;
+        _drawJob.ScaledVertices = _allVertices;
 
         _parallel.ProcessNow(_drawJob, totalData);
 
@@ -279,10 +280,10 @@ public partial class BaseShuttleControl : MapGridControl
             var start = (int) (i * BatchSize);
             var end = (int) Math.Min(triCount, start + BatchSize);
             var count = end - start;
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _allVertices, start, count, color.WithAlpha(alpha));
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, new Span<Vector2>(_allVertices, start, count), color.WithAlpha(alpha));
         }
 
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, _allVertices, gridData.EdgeIndex, edgeCount, color);
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, new Span<Vector2>(_allVertices, gridData.EdgeIndex, edgeCount), color);
     }
 
     private record struct GridDrawJob : IParallelRobustJob
@@ -294,7 +295,7 @@ public partial class BaseShuttleControl : MapGridControl
         public Matrix3 Matrix;
 
         public List<Vector2> Vertices;
-        public List<Vector2> ScaledVertices;
+        public Vector2[] ScaledVertices;
 
         public void Execute(int index)
         {
