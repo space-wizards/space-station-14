@@ -157,7 +157,7 @@
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 20 #I wanted an identical one to the salvage dragon but it doesn't do that much damage so I upped it a bit
+        Brute: 21 #I wanted an identical one to the salvage dragon but it doesn't do that much damage so I upped it a bit
 
 - type: entity
   parent: BaseMobDragon
