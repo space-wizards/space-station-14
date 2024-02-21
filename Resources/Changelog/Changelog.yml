@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: noctyrnal
-  changes:
-  - message: RD's suit got a new paint job.
-    type: Tweak
-  id: 5494
-  time: '2023-12-31T07:36:47.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23131
 - author: DangerRevolution
   changes:
   - message: Fixed Syndicate Fax Machine not receiving Faxes
@@ -3854,3 +3847,14 @@
   id: 5993
   time: '2024-02-21T06:42:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25177
+- author: potato1234x
+  changes:
+  - message: Added spaceman's trumpets which come from mutated lilies and can be ground
+      up into Polypyrylium Oligomers which are is just slightly better bic.
+    type: Add
+  - message: Added lilies which are mutated from poppies and are used to create spaceman's
+      trumpets.
+    type: Add
+  id: 5994
+  time: '2024-02-21T06:49:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25090
