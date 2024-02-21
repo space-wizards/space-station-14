@@ -5,8 +5,7 @@
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="5">
-                <Label Text="{Loc comp-space-heater-ui-toggle}"/>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <Button Text="{Loc comp-space-heater-ui-status-disabled}" Access="Public" Name="ToggleStatusButton"/>
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" SeparationOverride="5">

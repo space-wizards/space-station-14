@@ -451,7 +451,7 @@
   id: PortableScrubberMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: portable scrubber machine board
-  description: A PCB for a portable scrubber.
+  description: A machine printed circuit board for a portable scrubber.
   components:
   - type: Sprite
     state: engineering
@@ -468,7 +468,7 @@
   id: SpaceHeaterMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: space heater machine board
-  description: A PCB for a space heater.
+  description: A machine printed circuit board for a space heater.
   components:
   - type: Sprite
     state: engineering

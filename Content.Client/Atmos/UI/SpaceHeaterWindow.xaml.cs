@@ -5,55 +5,54 @@ using Robust.Client.UserInterface.XAML;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+/// <summary>
+/// Client-side UI used to control a space heater.
+/// </summary>
+[GenerateTypedNameReferences]
+public sealed partial class SpaceHeaterWindow : DefaultWindow
 {
-    /// <summary>
-    /// Client-side UI used to control a space heater.
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public sealed partial class SpaceHeaterWindow : DefaultWindow
+    // To account for a minimum delta temperature for atmos equalization to trigger we use a fixed step for target temperature increment/decrement
+    public int TemperatureChangeDelta = 5;
+    public bool Active = false;
+    public float MinTemp = 0.0f;
+    public float MaxTemp = 0.0f;
+
+    public SpaceHeaterWindow()
     {
-        //To account for a minimum delta temperature for atmos equalization to trigger we use a fixed step for target temperature increment/decrement
-        public int TemperatureChangeDelta = 5;
-        public bool Active = false;
-        public float MinTemp = 0.0f;
-        public float MaxTemp = 0.0f;
+        RobustXamlLoader.Load(this);
 
-        public SpaceHeaterWindow()
+        foreach (var value in Enum.GetValues<SpaceHeaterMode>())
         {
-            RobustXamlLoader.Load(this);
-
-            foreach (var value in Enum.GetValues<SpaceHeaterMode>())
-            {
-                Mode.AddItem(Loc.GetString($"comp-space-heater-mode-{value}"), (int) value);
-            }
-
-            //Only allow temperature increment/decrement of TemperatureChangeDelta
-            Thermostat.Editable = false;
+            Mode.AddItem(Loc.GetString($"comp-space-heater-mode-{value}"), (int) value);
         }
 
-        public void SetActive(bool active)
-        {
-            Active = active;
-            if (active)
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-space-heater-ui-status-enabled");
-                ToggleStatusButton.Pressed = true;
-            }
-            else
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-space-heater-ui-status-disabled");
-                ToggleStatusButton.Pressed = false;
-            }
-        }
+        // Only allow temperature increment/decrement of TemperatureChangeDelta
+        Thermostat.Editable = false;
+    }
 
-        public void SetTemperature(float targetTemperature)
+    public void SetActive(bool active)
+    {
+        Active = active;
+        if (active)
         {
-            Thermostat.SetText((targetTemperature - Atmospherics.T0C).ToString() + "°C");
-
-            IncreaseTempRange.Disabled = targetTemperature + TemperatureChangeDelta > MaxTemp ? true : false;
-            DecreaseTempRange.Disabled = targetTemperature - TemperatureChangeDelta < MinTemp ? true : false;
+            ToggleStatusButton.Text = Loc.GetString("comp-space-heater-ui-status-enabled");
+            ToggleStatusButton.Pressed = true;
         }
+        else
+        {
+            ToggleStatusButton.Text = Loc.GetString("comp-space-heater-ui-status-disabled");
+            ToggleStatusButton.Pressed = false;
+        }
+    }
+
+    public void SetTemperature(float targetTemperature)
+    {
+        Thermostat.SetText((targetTemperature - Atmospherics.T0C).ToString() + "°C");
+
+        IncreaseTempRange.Disabled = targetTemperature + TemperatureChangeDelta > MaxTemp ? true : false;
+        DecreaseTempRange.Disabled = targetTemperature - TemperatureChangeDelta < MinTemp ? true : false;
     }
 }
 

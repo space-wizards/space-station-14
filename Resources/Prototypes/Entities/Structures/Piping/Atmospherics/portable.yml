@@ -100,6 +100,7 @@
   parent: [BaseMachinePowered, ConstructibleMachine]
   name: space heater
   description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
+  suffix: Unanchored
   components:
   - type: Transform
     anchored: false
@@ -181,12 +182,18 @@
 
 - type: entity
   parent: SpaceHeater
-  id: SpaceHeaterEnabled
-  suffix: Enabled
+  id: SpaceHeaterAnchored
+  suffix: Anchored
   components:
   - type: Transform
     anchored: true
   - type: Physics
     bodyType: Static
+
+- type: entity
+  parent: SpaceHeaterAnchored
+  id: SpaceHeaterEnabled
+  suffix: Anchored, Enabled
+  components:
   - type: ApcPowerReceiver
     powerDisabled: false
