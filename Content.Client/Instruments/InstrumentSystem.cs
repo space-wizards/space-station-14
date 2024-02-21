@@ -29,8 +29,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         UpdatesOutsidePrediction = true;
 
-        _cfg.OnValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
-        _cfg.OnValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged, true);
+        Subs.CVar(_cfg, CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
+        Subs.CVar(_cfg, CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged, true);
 
         SubscribeNetworkEvent<InstrumentMidiEventEvent>(OnMidiEventRx);
         SubscribeNetworkEvent<InstrumentStartMidiEvent>(OnMidiStart);
@@ -58,14 +58,6 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             SetupRenderer(uid, true, component);
         else
             EndRenderer(uid, true, component);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _cfg.UnsubValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged);
-        _cfg.UnsubValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged);
     }
 
     private void OnShutdown(EntityUid uid, InstrumentComponent component, ComponentShutdown args)

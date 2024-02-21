@@ -13,13 +13,13 @@ namespace Content.Client.MassMedia.Ui;
 public sealed partial class MiniArticleCardControl : Control
 {
     public Action? OnDeletePressed;
-    public int ArtcileNum;
+    public int ArticleNum;
 
     public MiniArticleCardControl(string name, string author)
     {
         RobustXamlLoader.Load(this);
 
-        Name.Text = name;
+        NameLabel.Text = name;
         Author.SetMarkup(author);
 
         Delete.OnPressed += _ => OnDeletePressed?.Invoke();
