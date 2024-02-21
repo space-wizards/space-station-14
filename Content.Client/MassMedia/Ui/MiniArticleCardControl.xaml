@@ -6,7 +6,7 @@
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#4c6530"/>
                 </PanelContainer.PanelOverride>
-                <Label Name="Name" Margin="6 6 6 6" HorizontalAlignment="Center"/>
+                <Label Name="NameLabel" Margin="6 6 6 6" HorizontalAlignment="Center"/>
             </PanelContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
