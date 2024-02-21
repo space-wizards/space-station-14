@@ -1,9 +1,11 @@
 using System.Numerics;
+using Content.Server.CombatMode.Disarm;
 using Content.Server.Inventory;
 using Content.Server.Pulling;
 using Content.Server.Stack;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Systems;
@@ -24,6 +26,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -32,6 +35,7 @@ namespace Content.Server.Hands.Systems
     public sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly VirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -87,22 +91,51 @@ namespace Content.Server.Hands.Systems
             }
         }
 
+        private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand)
+        {
+            if (HasComp<DisarmProneComponent>(disarmer))
+                return 1.0f;
+
+            if (HasComp<DisarmProneComponent>(disarmed))
+                return 0.0f;
+
+            if (!TryComp(disarmer, out CombatModeComponent? combatMode))
+                return 0f;
+
+            var chance = combatMode.BaseDisarmFailChance;
+
+            if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
+            {
+                chance += malus.Malus;
+            }
+
+            return Math.Clamp(chance, 0f, 1f);
+        }
+
         private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
         {
             if (args.Handled)
                 return;
 
+            // Yeah yeah
+            var chance = CalculateDisarmChance(args.Source, args.Target, args.InTargetHand);
+
+            if (!_random.Prob(chance))
+            {
+                return;
+            }
+
+            args.PopupPrefix = "disarm-action-";
+            args.Handled = true; // No disarm.
+
             // Break any pulls
             if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled &&
                 TryComp(pulled, out SharedPullableComponent? pullable))
+            {
                 _pullingSystem.TryStopPull(pullable);
+            }
 
-            if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
-                return;
-
-            args.PopupPrefix = "disarm-action-";
-
-            args.Handled = true; // no shove/stun.
+            _handsSystem.TryDrop(uid, component.ActiveHand!, checkActionBlocker: false);
         }
 
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
