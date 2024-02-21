@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Shivs crafting now based on construct. Click with cloth on shard to create
-      shiv.
-    type: Tweak
-  id: 5480
-  time: '2023-12-30T17:08:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23134
 - author: Alekshhh
   changes:
   - message: Changed disposal units visually
@@ -3850,3 +3842,10 @@
   id: 5979
   time: '2024-02-21T05:26:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25408
+- author: Holinka4ever
+  changes:
+  - message: Sunglasses were removed from ClothesMate
+    type: Remove
+  id: 5980
+  time: '2024-02-21T06:11:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25221
