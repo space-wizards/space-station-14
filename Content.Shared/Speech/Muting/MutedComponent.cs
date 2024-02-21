@@ -1,6 +1,6 @@
 namespace Content.Shared.Speech.Muting
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class MutedComponent : Component
     {
 
