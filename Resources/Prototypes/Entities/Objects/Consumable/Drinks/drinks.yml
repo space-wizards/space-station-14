@@ -3,7 +3,7 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_glass.yml
 - type: entity
   parent: BaseItem
-  id: DrinkBase
+  id: DrinkBaseNonChem
   abstract: true
   components:
   - type: SolutionContainerManager
@@ -23,8 +23,6 @@
         Blunt: 0
   - type: Spillable
     solution: drink
-  - type: FitsInDispenser
-    solution: drink
   - type: DrawableSolution
     solution: drink
   - type: RefillableSolution
@@ -35,6 +33,14 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
+
+- type: entity
+  parent: DrinkBaseNonChem #extra step to allow for containers that cannot fit in dispensers
+  id: DrinkBase
+  abstract: true
+  components:
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: DrinkBase
