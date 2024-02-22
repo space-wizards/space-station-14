@@ -82,6 +82,33 @@
       lightningPrototype: ChargedLightning
 
 - type: entity
+  name: lightning
+  id: Spark
+  parent: BaseLightning
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "lightning_1"
+      shader: unshaded
+  - type: Electrified
+    shockDamage: 0
+  - type: Lightning
+    lightningPrototype: Spark
+  - type: PointLight
+    radius: 0.2
+    softness: .4
+  - type: Beam
+    sound: /Audio/Effects/sparks4.ogg
+  - type: TimedDespawn
+    lifetime: .3
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
   name: supercharged lightning
   id: SuperchargedLightning
   parent: ChargedLightning

@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Speech;
 using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -14,6 +15,7 @@ namespace Content.Server.SurveillanceCamera;
 public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SpeechSoundSystem _speechSound = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -37,35 +39,12 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
         var cd = TimeSpan.FromSeconds(component.SpeechSoundCooldown);
 
         // this part's mostly copied from speech
+        //     what is wrong with you?
         if (time - component.LastSoundPlayed < cd
-            && TryComp<SpeechComponent>(args.Speaker, out var speech)
-            && speech.SpeechSounds != null
-            && _prototypeManager.TryIndex(speech.SpeechSounds, out SpeechSoundsPrototype? speechProto))
+            && TryComp<SpeechComponent>(args.Speaker, out var speech))
         {
-            var sound = args.Message[^1] switch
-            {
-                '?' => speechProto.AskSound,
-                '!' => speechProto.ExclaimSound,
-                _ => speechProto.SaySound
-            };
-
-            var uppercase = 0;
-            for (var i = 0; i < args.Message.Length; i++)
-            {
-                if (char.IsUpper(args.Message[i]))
-                {
-                    uppercase++;
-                }
-            }
-
-            if (uppercase > args.Message.Length / 2)
-            {
-                sound = speechProto.ExclaimSound;
-            }
-
-            var scale = (float) _random.NextGaussian(1, speechProto.Variation);
-            var param = speech.AudioParams.WithPitchScale(scale);
-            _audioSystem.PlayPvs(sound, uid, param);
+            var sound = _speechSound.GetSpeechSound((args.Speaker, speech), args.Message);
+            _audioSystem.PlayPvs(sound, uid);
 
             component.LastSoundPlayed = time;
         }

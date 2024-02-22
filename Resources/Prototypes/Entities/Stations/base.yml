@@ -63,6 +63,7 @@
           maxCount: 2
           stationGrid: false
           paths:
+          - /Maps/Ruins/biodome_satellite.yml
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
           - /Maps/Ruins/old_ai_sat.yml

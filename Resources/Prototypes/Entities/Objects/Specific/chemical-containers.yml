@@ -43,8 +43,38 @@
     - type: SolutionContainerVisuals
       maxFillLevels: 6
       fillBaseName: jug
+      inHandsMaxFillLevels: 5
+      inHandsFillBaseName: -fill-
     - type: StaticPrice
       price: 60
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+            params:
+              volume: -4
+        - !type:SpillBehavior { }
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetPlastic1:
+              min: 0
+              max: 1
+          transferForensics: true
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - type: Label
       originalName: jug
     - type: Tag
@@ -58,7 +88,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: carbon
+      currentLabel: reagent-name-carbon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -73,7 +103,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: iodine
+      currentLabel: reagent-name-iodine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -88,7 +118,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: fluorine
+      currentLabel: reagent-name-fluorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -103,7 +133,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: chlorine
+      currentLabel: reagent-name-chlorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -118,7 +148,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: aluminium
+      currentLabel: reagent-name-aluminium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -133,7 +163,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: phosphorus
+      currentLabel: reagent-name-phosphorus
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -148,7 +178,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: sulfur
+      currentLabel: reagent-name-sulfur
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -163,7 +193,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: silicon
+      currentLabel: reagent-name-silicon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -178,7 +208,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: hydrogen
+      currentLabel: reagent-name-hydrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -193,7 +223,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: lithium
+      currentLabel: reagent-name-lithium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -208,7 +238,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: sodium
+      currentLabel: reagent-name-sodium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -223,7 +253,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: potassium
+      currentLabel: reagent-name-potassium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -238,7 +268,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: radium
+      currentLabel: reagent-name-radium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -253,7 +283,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: iron
+      currentLabel: reagent-name-iron
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -268,7 +298,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: copper
+      currentLabel: reagent-name-copper
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -283,7 +313,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: gold
+      currentLabel: reagent-name-gold
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -298,7 +328,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: mercury
+      currentLabel: reagent-name-mercury
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -313,7 +343,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: silver
+      currentLabel: reagent-name-silver
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -328,7 +358,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: ethanol
+      currentLabel: reagent-name-ethanol
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -343,7 +373,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: sugar
+      currentLabel: reagent-name-sugar
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -358,7 +388,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: nitrogen
+      currentLabel: reagent-name-nitrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -373,7 +403,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: oxygen
+      currentLabel: reagent-name-oxygen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -388,7 +418,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Plant-B-Gone
+      currentLabel: reagent-name-plant-b-gone
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -403,7 +433,7 @@
   noSpawn: true
   components:
     - type: Label
-      currentLabel: welding fuel
+      currentLabel: reagent-name-welding-fuel
     - type: SolutionContainerManager
       solutions:
         beaker:

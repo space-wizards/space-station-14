@@ -94,7 +94,7 @@ public partial class NavMapControl : MapGridControl
         Margin = new Thickness(4f, 0f),
         VerticalAlignment = VAlignment.Center,
         HorizontalAlignment = HAlignment.Center,
-        Pressed = false,
+        Pressed = true,
     };
 
     public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)

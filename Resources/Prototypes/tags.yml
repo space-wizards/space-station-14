@@ -252,7 +252,7 @@
 
 - type: Tag
   id: CannonBall
-  
+
 - type: Tag
   id: CannonRestrict
 
@@ -468,9 +468,6 @@
   id: DrinkBottle
 
 - type: Tag
-  id: DroneUsable
-
-- type: Tag
   id: Duck
 
 - type: Tag
@@ -565,10 +562,10 @@
 
 - type: Tag
   id: Goat
-  
+
 - type: Tag
   id: GPS
-  
+
 - type: Tag
   id: Grenade
 
@@ -687,9 +684,6 @@
   id: IntercomElectronics
 
 - type: Tag
-  id: JanicartKeys
-
-- type: Tag
   id: JawsOfLife
 
 - type: Tag
@@ -715,9 +709,6 @@
 
 - type: Tag
   id: Lemon
-
-- type: Tag
-  id: LightReplacer
 
 - type: Tag
   id: Lime
@@ -797,7 +788,7 @@
   id: Matchstick
 
 - type: Tag
-  id: Mayo  
+  id: Mayo
 
 - type: Tag
   id: Meat
@@ -807,12 +798,6 @@
 
 - type: Tag
   id: Metal
-
-- type: Tag
-  id: MicrowaveMachineUnsafe
-
-- type: Tag
-  id: MicrowaveSelfUnsafe
 
 - type: Tag
   id: MindShield
@@ -860,10 +845,10 @@
   id: Packet
 
 - type: Tag
-  id: Payload # for grenade/bomb crafting
+  id: Paper
 
 - type: Tag
-  id: PaintableAirlock
+  id: Payload # for grenade/bomb crafting
 
 - type: Tag
   id: Pancake
@@ -1029,9 +1014,6 @@
   id: ShellShotgun
 
 - type: Tag
-  id: PelletShotgunFlare
-
-- type: Tag
   id: Shiv
 
 - type: Tag
@@ -1066,6 +1048,9 @@
 
 - type: Tag
   id: Soup
+
+- type: Tag
+  id: SpookyFog
 
 - type: Tag
   id: Spray
@@ -1158,9 +1143,6 @@
   id: UraniumGlassShard
 
 - type: Tag
-  id: VehicleKey
-
-- type: Tag
   id: VimPilot
 
 - type: Tag
@@ -1179,6 +1161,9 @@
   id: WallmountSubstationElectronics
 
 - type: Tag
+  id: WeaponAntiqueLaser
+
+- type: Tag
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
@@ -1186,6 +1171,9 @@
 
 - type: Tag
   id: WetFloorSign
+
+- type: Tag
+  id: Wheat
 
 - type: Tag
   id: WhitelistChameleon

@@ -1,114 +1,72 @@
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBaseButcherable, BaseFoldable]
+  id: ClothingHeadBandBase
+  abstract: true
+  components:
+  - type: Foldable
+    folded: true
+  - type: Mask
+    isToggled: true
+  - type: IngestionBlocker
+    enabled: false
+  - type: IdentityBlocker
+    enabled: false
+    coverage: MOUTH
+  - type: Sprite # needed for vendor inventory icons
+    layers:
+    - state: icon
+      map: ["foldedLayer"]
+      visible: true
+    - state: icon_mask
+      map: [ "unfoldedLayer" ]
+      visible: false
+
+- type: entity
+  parent: [ClothingHeadBandBase, ClothingMaskBandBlack]
   id: ClothingHeadBandBlack
   name: black bandana
-  description: A black bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/black.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/black.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandBlue]
   id: ClothingHeadBandBlue
   name: blue bandana
-  description: A blue bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/blue.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/blue.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandBotany]
   id: ClothingHeadBandBotany
   name: botany bandana
-  description: A botany bandana to make you look cool, made from natural fibers.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/botany.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/botany.rsi
-  - type: Tag
-    tags:
-    - ClothMade
-    - HamsterWearable
-    - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandGold]
   id: ClothingHeadBandGold
   name: gold bandana
-  description: A gold bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/gold.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/gold.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandGreen]
   id: ClothingHeadBandGreen
   name: green bandana
-  description: A green bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/green.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/green.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandGrey]
   id: ClothingHeadBandGrey
   name: grey bandana
-  description: A grey bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/grey.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/grey.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandRed]
   id: ClothingHeadBandRed
   name: red bandana
-  description: A red bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/red.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/red.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandSkull]
   id: ClothingHeadBandSkull
   name: skull bandana
-  description: A bandana with a skull to make you look even cooler.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/skull.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/skull.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandMerc]
   id: ClothingHeadBandMerc
   name: mercenary bandana
-  description: To protect the head from the sun, insects and other dangers of the higher path.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/merc.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/merc.rsi
 
 - type: entity
-  parent: ClothingHeadBaseButcherable
+  parent: [ClothingHeadBandBase, ClothingMaskBandBrown]
   id: ClothingHeadBandBrown
   name: brown bandana
-  description: A brown bandana to make you look cool.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Bandanas/brown.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Bandanas/brown.rsi
