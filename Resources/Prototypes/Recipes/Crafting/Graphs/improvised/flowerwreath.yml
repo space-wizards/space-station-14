@@ -6,15 +6,15 @@
       edges:
         - to: flowerwreath
           steps:
-            - tag: Flower
+            - tag: FlowerRed # TODO add more flowers
               name: flower
               icon:
                 sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
-            - tag: Flower
+            - tag: FlowerOrange
               name: flower
               icon:
-                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                sprite: Objects/Specific/Hydroponics/lily.rsi
                 state: produce
             - tag: Ambrosia
               name: ambrosia

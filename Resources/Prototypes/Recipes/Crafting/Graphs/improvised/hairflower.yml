@@ -1,16 +1,34 @@
 - type: constructionGraph
-  id: hairflower
+  id: hairflowerred
   start: start
   graph:
     - node: start
       edges:
         - to: hairflower
           steps:
-            - tag: Flower # TODO change to "RedFlower" or "Poppy" tag, so you cant make red flower from bluesyellow etc., when it will be
+            - tag: FlowerRed
               name: flower
               icon:
                 sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
               doAfter: 3.5
     - node: hairflower
-      entity: ClothingHeadHatHairflower
+      entity: ClothingHeadHatHairflowerRed
+
+- type: constructionGraph
+  id: hairflowerorange
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: hairflower
+          steps:
+            - tag: FlowerOrange
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/lily.rsi
+                state: produce
+              doAfter: 3.5
+    - node: hairflower
+      entity: ClothingHeadHatHairflowerOrange
+

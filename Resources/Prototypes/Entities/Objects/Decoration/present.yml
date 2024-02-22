@@ -288,7 +288,9 @@
         orGroup: GiftPool
       - id: ClothingHeadHatFlowerCrown
         orGroup: GiftPool
-      - id: ClothingHeadHatHairflower
+      - id: ClothingHeadHatHairflowerRed
+        orGroup: GiftPool
+      - id: ClothingHeadHatHairflowerOrange
         orGroup: GiftPool
       - id: ClothingMaskClown
         orGroup: GiftPool
