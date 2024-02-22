@@ -86,8 +86,6 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dart
-  - type: Tag
-    tags: Dart
 
 - type: entity
   parent: Dart
