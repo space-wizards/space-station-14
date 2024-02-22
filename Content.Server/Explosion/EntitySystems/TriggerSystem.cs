@@ -235,8 +235,6 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnSlipTriggered(EntityUid uid, TriggerOnSlipComponent component, ref SlipEvent args)
         {
-            if (args.Cancelled)
-                return;
             Trigger(uid, args.Slipped);
         }
 

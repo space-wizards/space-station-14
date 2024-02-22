@@ -35,7 +35,7 @@ public sealed class SlipperySystem : EntitySystem
         SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
         SubscribeLocalEvent<SlipperyComponent, StepTriggeredEvent>(HandleStepTrigger);
         SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
-        SubscribeLocalEvent<ThrownItemComponent, SlipEvent>(OnThrownSlipAttempt);
+        SubscribeLocalEvent<ThrownItemComponent, SlipCausingAttemptEvent>(OnThrownSlipAttempt);
         // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
     }
@@ -58,11 +58,11 @@ public sealed class SlipperySystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnThrownSlipAttempt(EntityUid uid, ThrownItemComponent comp, SlipEvent args)
+    private void OnThrownSlipAttempt(EntityUid uid, ThrownItemComponent comp, ref SlipCausingAttemptEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
 
-        //TODO: If it's after 2024 March and this popup is still here, remove it
+        //TODO: If it's after 2024 April and this popup is still here, remove it
         // Only here so people who don't read even the changelog won't think soap suddenly broke
         if (_netManager.IsServer)
             _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), uid, PopupType.Medium);
@@ -84,10 +84,13 @@ public sealed class SlipperySystem : EntitySystem
         if (attemptEv.Cancelled)
             return;
 
-        var ev = new SlipEvent(other);
-        RaiseLocalEvent(uid, ev);
-        if (ev.Cancelled)
+        var attemptCausingEv = new SlipCausingAttemptEvent();
+        RaiseLocalEvent(uid, ref attemptCausingEv);
+        if (attemptCausingEv.Cancelled)
             return;
+
+        var ev = new SlipEvent(other);
+        RaiseLocalEvent(uid, ref ev);
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {
@@ -125,16 +128,13 @@ public sealed class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRel
 }
 
 /// <summary>
-///     Raised on an entity that CAUSED some other entity to slip (e.g., the banana peel).
+/// Raised on an entity that is causing the slip event (e.g, the banana peel), to determine if the slip attempt should be cancelled.
 /// </summary>
-public sealed class SlipEvent : CancellableEntityEventArgs
-{
-    /// <summary>
-    /// The person being slipped.
-    /// </summary>
-    public EntityUid Slipped;
-    public SlipEvent(EntityUid slipped)
-    {
-        Slipped = slipped;
-    }
-}
+/// <param name="Cancelled">If the slip should be cancelled</param>
+[ByRefEvent]
+public record struct SlipCausingAttemptEvent (bool Cancelled);
+
+/// Raised on an entity that CAUSED some other entity to slip (e.g., the banana peel).
+/// <param name="Slipped">The entity being slipped</param>
+[ByRefEvent]
+public readonly record struct SlipEvent(EntityUid Slipped);

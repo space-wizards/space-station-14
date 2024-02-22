@@ -291,9 +291,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private void OnPuddleSlip(Entity<PuddleComponent> entity, ref SlipEvent args)
     {
-        if (args.Cancelled)
-            return;
-
         // Reactive entities have a chance to get a touch reaction from slipping on a puddle
         // (i.e. it is implied they fell face first onto it or something)
         if (!HasComp<ReactiveComponent>(args.Slipped) || HasComp<SlidingComponent>(args.Slipped))
