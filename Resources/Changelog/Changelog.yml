@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 778b
-  changes:
-  - message: Fixed appearance of welded airlocks!
-    type: Fix
-  id: 5502
-  time: '2024-01-01T07:36:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23300
 - author: mirrorcult
   changes:
   - message: Ambient sounds are now more audible by default (unless you have the audio
@@ -3857,3 +3850,10 @@
   id: 6001
   time: '2024-02-22T02:54:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25442
+- author: Beck Thompson
+  changes:
+  - message: Radio jammer now uses 3 times less power.
+    type: Tweak
+  id: 6002
+  time: '2024-02-22T07:32:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25432
