@@ -114,7 +114,7 @@ public sealed class TargetOutlineSystem : EntitySystem
 
     private void HighlightTargets()
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity is not { Valid: true } player)
+        if (_playerManager.LocalEntity is not { Valid: true } player)
             return;
 
         // remove current highlights
