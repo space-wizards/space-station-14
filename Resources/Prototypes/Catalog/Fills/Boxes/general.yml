@@ -387,9 +387,6 @@
   - type: Storage
     grid:
     - 0,0,9,2
-    whitelist:
-      tags:
-        - Candle
   - type: StorageFill
     contents:
       - id: Candle
