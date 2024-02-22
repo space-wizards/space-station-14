@@ -513,10 +513,16 @@
   id: Flashlight
 
 - type: Tag
+  id: Flower
+
+- type: Tag
   id: FlowerRed
 
 - type: Tag
   id: FlowerOrange
+
+- type: Tag
+  id: FlowerPurple
 
 - type: Tag
   id: Folder

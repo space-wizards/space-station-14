@@ -1207,6 +1207,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
+    - Flower
     - FlowerRed
 
 - type: entity
@@ -1235,6 +1236,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
+    - Flower
     - FlowerOrange
 
 - type: entity
@@ -1485,6 +1487,7 @@
   - type: Tag
     tags:
     - Flower
+    - FlowerPurple
   - type: Instrument #hehe trumpet
     program: 56
 
