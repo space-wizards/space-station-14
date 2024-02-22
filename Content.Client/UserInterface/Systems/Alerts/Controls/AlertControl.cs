@@ -69,7 +69,10 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             _icon.SetEntity(_spriteViewEntity);
 
             Children.Add(_icon);
-            _cooldownGraphic = new CooldownGraphic();
+            _cooldownGraphic = new CooldownGraphic
+            {
+                MaxSize = new Vector2(64, 64)
+            };
             Children.Add(_cooldownGraphic);
         }
 
