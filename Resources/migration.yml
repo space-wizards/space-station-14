@@ -224,3 +224,4 @@ Onestar: null # I dont think this is even mapped, but just in case
 SolarAssemblyPart: SolarAssemblyFlatpack
 AmePart: AmePartFlatpack
 AmePartStealObjective: AmePartFlatpackStealObjective
+Observationskit: null
