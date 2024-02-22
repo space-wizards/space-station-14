@@ -120,3 +120,8 @@
   license: "CC0-1.0"
   copyright: "Created by TheShuEd (github) for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/pull/ED_INSERT_PR_CODE_HERE!"
+
+- files: ["wood_large.png"]
+  license: "CC0-1.0"
+  copyright: "Created by ps3moira (github) for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/"

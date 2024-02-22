@@ -1862,3 +1862,23 @@
   mobFrictionNoInput: 0.05
   mobAcceleration: 2
   itemDrop: FloorTileItemAstroIce
+
+- type: tile
+  id: FloorWoodLarge
+  name: tiles-wood-large
+  sprite: /Textures/Tiles/wood_large.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: FloorTileItemWoodLarge
+  heatCapacity: 10000

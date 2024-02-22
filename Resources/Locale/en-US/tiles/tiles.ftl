@@ -123,3 +123,4 @@ tiles-astro-ice = astro-ice
 tiles-asphalt-nyano = asphalt
 tiles-asteroid-sand-greystation = asteroid sand
 tiles-asteroid-sand-dug-greystation = dug asteroid sand
+tiles-wood-large = large wood
