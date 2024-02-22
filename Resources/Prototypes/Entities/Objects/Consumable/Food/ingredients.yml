@@ -641,7 +641,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 1
-        - ReagentId: Vitamins
+        - ReagentId: Vitamin
           Quantity: 1
 
 - type: entity
