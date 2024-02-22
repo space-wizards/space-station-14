@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added 3 new artifact effect. Added 1 new artifact trigger.
-    type: Add
-  id: 5497
-  time: '2024-01-01T02:19:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22574
-- author: Ilya246
-  changes:
-  - message: Science no longer needs to research medium batteries, and high batteries
-      are now T1.
-    type: Tweak
-  id: 5498
-  time: '2024-01-01T02:24:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23269
-- author: Rainfey
-  changes:
-  - message: Ensure correct number of thieves
-    type: Fix
-  id: 5499
-  time: '2024-01-01T02:25:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23270
-- author: icekot8
-  changes:
-  - message: 2 new effects for artifact
-    type: Add
-  id: 5500
-  time: '2024-01-01T06:40:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23295
-- author: TheShuEd
-  changes:
-  - message: Tesla coils now have a 50% chance of not attracting lightning.  Installing
-      ground rods is now much more important!
-    type: Tweak
-  - message: Nerf tesla energy producing.
-    type: Tweak
-  - message: Now tesla coils are gradually wearing out, taking damage from lightning.
-      Keep an eye on them and repair them with a welder every 20-30 minutes. Grounding
-      rods are immune to lightning damage.
-    type: Add
-  id: 5501
-  time: '2024-01-01T07:33:48.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23235
 - author: 778b
   changes:
   - message: Fixed appearance of welded airlocks!
@@ -3860,3 +3817,43 @@
   id: 5996
   time: '2024-02-21T06:52:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25008
+- author: Fildrance
+  changes:
+  - message: now cryo pod health analyzer updates atomatically!
+    type: Fix
+  id: 5997
+  time: '2024-02-21T14:47:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25109
+- author: landwhale
+  changes:
+  - message: Drink jugs can no longer be used by chemistry in place of a beaker.
+    type: Fix
+  - message: Updated names of several drink jugs to differentiate them from chem-specific
+      variants.
+    type: Tweak
+  id: 5998
+  time: '2024-02-21T23:26:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25450
+- author: Killerqu00
+  changes:
+  - message: EVA helmets are now quick-equippable again
+    type: Fix
+  id: 5999
+  time: '2024-02-21T23:41:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25448
+- author: genderGeometries
+  changes:
+  - message: Crops are now harvested with decimal amounts of nutriment, vitamin, etc.
+    type: Fix
+  id: 6000
+  time: '2024-02-22T00:19:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25453
+- author: Whisper
+  changes:
+  - message: Dragon ichor when eating restores the dragon's blood.
+    type: Add
+  - message: Increased Xenomorph and Dragon blood level to 650u.
+    type: Tweak
+  id: 6001
+  time: '2024-02-22T02:54:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25442
