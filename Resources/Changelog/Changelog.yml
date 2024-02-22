@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Ambient sounds are now more audible by default (unless you have the audio
-      setting changed already)
-    type: Tweak
-  - message: LV/MV wires & pipes no longer make ambient noises
-    type: Tweak
-  id: 5503
-  time: '2024-01-01T07:57:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22536
 - author: themias
   changes:
   - message: Heat damage cauterizes bleeding again.
@@ -3857,3 +3847,10 @@
   id: 6002
   time: '2024-02-22T07:32:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25432
+- author: metalgearsloth
+  changes:
+  - message: Added handheld crew monitor back just for CMO.
+    type: Add
+  id: 6003
+  time: '2024-02-22T11:00:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25439
