@@ -1,5 +1,6 @@
 - type: entity
   name: handheld crew monitor
+  suffix: DO NOT MAP
   parent:
   - BaseItem
   - PowerCellSlotSmallItem
