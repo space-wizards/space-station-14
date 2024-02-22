@@ -150,6 +150,8 @@
           prob: 0.20
         - id: ModularReceiver
           prob: 0.1
+        - id: GreenCubeFood
+          prob: 0.01
         - id: DrinkSpaceGlue
           prob: 0.20
         - id: DrinkSpaceLube
@@ -241,6 +243,8 @@
           prob: 0.20
         - id: ModularReceiver
           prob: 0.1
+        - id: greencubefood
+          prob: 1
         # Syndicate loot
         - id: null
           prob: 0.95

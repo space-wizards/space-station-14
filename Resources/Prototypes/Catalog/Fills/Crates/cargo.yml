@@ -388,3 +388,6 @@
     - id: WeakKudzu
       prob: 0.01
       orGroup: NotUseful
+    - id: GreenCubeFood
+      prob: 0.01
+      orGroup: NotUseful
