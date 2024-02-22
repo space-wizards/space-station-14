@@ -28,7 +28,9 @@
   - Musician
   - Passenger
   - Reporter
+  - Visitor
   - Zookeeper
+  - Detective
   - ServiceWorker
 
 - type: department
@@ -78,7 +80,6 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
-  - Detective
   - Warden
 
 - type: department

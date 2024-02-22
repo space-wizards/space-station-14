@@ -157,10 +157,14 @@
 
 - type: emoteSounds
   id: UnisexVox
-  sound:
-    path: /Audio/Voice/Vox/shriek1.ogg
-    params:
-      variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Vox/shriek1.ogg
+    Laugh:
+      path: /Audio/Voice/Vox/vox_laugh.ogg
+  params:
+    variation: 0.125
+    # We need vox sounds for the other emotes
 
 - type: emoteSounds
   id: UnisexDiona
@@ -264,6 +268,8 @@
   params:
     variation: 0.125
   sounds:
+    Buzz:
+      path: /Audio/Voice/Moth/moth_scream.ogg
     Scream:
       path: /Audio/Voice/Moth/moth_scream.ogg
     Laugh:
@@ -295,6 +301,10 @@
       path: /Audio/Voice/Diona/diona_snap.ogg
       params:
         volume: -10
+    Salute:
+      path: /Audio/Voice/Diona/diona_salute.ogg
+      params:
+       volume: -5
 
 # mobs
 - type: emoteSounds
@@ -345,3 +355,9 @@
     path: /Audio/Animals/kangaroo_grunt.ogg
     params:
       variation: 0.125
+
+- type: emoteSounds
+  id: Nymph
+  sounds:
+    Chirp:
+      path: /Audio/Animals/nymph_chirp.ogg

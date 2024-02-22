@@ -260,12 +260,12 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: AmePartStealObjective
+  id: AmePartFlatpackStealObjective
   components:
   - type: NotJobRequirement
     job: StationEngineer
   - type: StealCondition
-    stealGroup: AmePart
+    stealGroup: AmePartFlatpack
   - type: Objective
     difficulty: 1
 
@@ -378,18 +378,6 @@
     stealGroup: FaxMachineCaptain
   - type: Objective
     difficulty: 2
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealStructureObjective
-  id: VehicleSecwayStealObjective
-  components:
-  - type: NotJobRequirement
-    job: SecurityOfficer
-  - type: StealCondition
-    stealGroup: VehicleSecway
-  - type: Objective
-    difficulty: 1
 
 - type: entity
   noSpawn: true

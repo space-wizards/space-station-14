@@ -1,6 +1,7 @@
 - type: entity
   id: Stairs
   name: stairs
+  suffix: steel
   description: The greatest invention since rocket-propelled grenades.
   placement:
     mode: SnapgridCenter
@@ -8,7 +9,7 @@
   - type: Clickable
   - type: Sprite
     sprite: Structures/stairs.rsi
-    state: stairs
+    state: stairs_steel
     drawdepth: FloorTiles
   - type: Transform
     anchored: true
@@ -38,9 +39,49 @@
 - type: entity
   id: StairStage
   parent: Stairs
-  suffix: stage
+  suffix: steel, stage
   components:
   - type: Sprite
     sprite: Structures/stairs.rsi
-    state: stairs_stage
+    state: stairs_stage_steel
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairWhite
+  parent: Stairs
+  suffix: white
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_white
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairStageWhite
+  parent: Stairs
+  suffix: white, stage 
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_stage_white
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairDark
+  parent: Stairs
+  suffix: dark
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_dark
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairStageDark
+  parent: Stairs
+  suffix: dark, stage
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_stage_dark
     drawdepth: FloorTiles

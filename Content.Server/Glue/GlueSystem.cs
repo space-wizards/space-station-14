@@ -77,13 +77,16 @@ public sealed class GlueSystem : SharedGlueSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent>();
-        while (query.MoveNext(out var uid, out var glue, out _))
+        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var glue, out var _, out var meta))
         {
             if (_timing.CurTime < glue.Until)
                 continue;
 
-            _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
+            // Instead of string matching, just reconstruct the expected name and compare
+            if (meta.EntityName == Loc.GetString("glued-name-prefix", ("target", glue.BeforeGluedEntityName)))
+                _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
+
             RemComp<UnremoveableComponent>(uid);
             RemComp<GluedComponent>(uid);
         }
