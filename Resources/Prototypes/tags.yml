@@ -248,6 +248,9 @@
   id: Carpet
 
 - type: Tag
+  id: Candle
+
+- type: Tag
   id: CanPilot
 
 - type: Tag
@@ -421,6 +424,9 @@
 
 - type: Tag
   id: CubanCarp
+
+- type: Tag
+  id: Dart
 
 - type: Tag
   id: DeathAcidifier

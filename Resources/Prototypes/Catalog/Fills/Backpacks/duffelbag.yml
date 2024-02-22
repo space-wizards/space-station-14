@@ -366,3 +366,16 @@
       - id: ClothingHandsGlovesNitrile
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelPerformer
+  name: hatsune miku day bag
+  description: Happy Hatsune Miku Day!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingShoesBootsPerformer
+      - id: ClothingUniformJumpskirtPerformer
+      - id: FoodMealMemoryleek
+        amount: 2

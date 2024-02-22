@@ -4,58 +4,60 @@
   id: Candle
   description: A thin wick threaded through fat.
   components:
-    - type: Sprite
-      noRot: true
-      sprite: Objects/Misc/candles.rsi
-      layers:
-        - state: candle-big
-          color: "#decb8e"
-    - type: Item
-      size: Small
-    - type: Appearance
-    - type: Reactive
-      groups:
-        Flammable: [ Touch ]
-        Extinguish: [ Touch ]
-    - type: ExtinguishOnInteract
-      extinguishAttemptSound:
-        path: /Audio/Items/candle_blowing.ogg
-        params:
-          variation: 0.05
-          volume: 10
-    - type: UseDelay
-    - type: Flammable
-      fireSpread: false
-      canResistFire: false
-      alwaysCombustible: true
-      canExtinguish: true
-      firestacksOnIgnite: 3.0
-      firestackFade: -0.01
-      damage:
-        types:
-          Heat: 0.1
-    - type: FireVisuals
-      sprite: Objects/Misc/candles.rsi
-      normalState: fire-big
-    - type: ToggleableLightVisuals
-      spriteLayer: null
-      inhandVisuals:
-        left:
-        - state: inhand-left-flame
-          shader: unshaded
-        right:
-        - state: inhand-right-flame
-          shader: unshaded
-    - type: Damageable
-      damageModifierSet: Wood
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Misc/candles.rsi
+    layers:
+      - state: candle-big
+        color: "#decb8e"
+  - type: Item
+    size: Small
+  - type: Appearance
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: ExtinguishOnInteract
+    extinguishAttemptSound:
+      path: /Audio/Items/candle_blowing.ogg
+      params:
+        variation: 0.05
+        volume: 10
+  - type: UseDelay
+  - type: Flammable
+    fireSpread: false
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: true
+    firestacksOnIgnite: 3.0
+    firestackFade: -0.01
+    damage:
+      types:
+        Heat: 0.1
+  - type: FireVisuals
+    sprite: Objects/Misc/candles.rsi
+    normalState: fire-big
+  - type: ToggleableLightVisuals
+    spriteLayer: null
+    inhandVisuals:
+      left:
+      - state: inhand-left-flame
+        shader: unshaded
+      right:
+      - state: inhand-right-flame
+        shader: unshaded
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags: Candle
 
 - type: entity
   name: red candle

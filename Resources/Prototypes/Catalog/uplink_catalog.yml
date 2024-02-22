@@ -525,7 +525,7 @@
   description: uplink-binary-translator-key-desc
   icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
   productEntity: EncryptionKeyBinary
-  cost: 
+  cost:
     Telecrystal: 1
 
   categories:
@@ -551,7 +551,7 @@
     Telecrystal: 2
   categories:
   - UplinkUtility
-  
+
 - type: listing
   id: UplinkClothingEyesHudSyndicate
   name: uplink-clothing-eyes-hud-syndicate-name
@@ -714,7 +714,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
- 
+
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
   name: uplink-uplink-implanter-name
@@ -1182,11 +1182,11 @@
       - SurplusBundle
 
 - type: listing
-  id: UplinkSyndicateSpongeBox
-  name: uplink-syndicate-sponge-box-name
-  description: uplink-syndicate-sponge-box-desc
+  id: UplinkBoxSyndicateSponge
+  name: uplink-box-syndicate-sponge-name
+  description: uplink-box-syndicate-sponge-desc
   icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
-  productEntity: SyndicateSpongeBox
+  productEntity: BoxSyndicateSponge
   cost:
     Telecrystal: 7
   categories:
