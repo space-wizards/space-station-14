@@ -31,7 +31,7 @@
             Quantity: 5
         organ:
           reagents:
-          - ReagentId: Nutriment
+          - ReagentId: Slime
             Quantity: 10
 
       
@@ -60,7 +60,7 @@
     solutions:
       organ:
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Slime
           Quantity: 10
       Lung:
         maxVol: 100.0
