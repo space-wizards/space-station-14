@@ -216,8 +216,8 @@ YellowOxygenTank: OxygenTank
 YellowOxygenTankFilled: OxygenTankFilled
 
 # 2024-02-12
-FoodDonutBlumpkin: FoodDonutGlumpkin
-FoodDonutJellyBlumpkin: FoodDonutJellyGlumpkin
+FoodDonutBlumpkin: FoodDonutBluePumpkin
+FoodDonutJellyBlumpkin: FoodDonutJellyBluePumpkin
 
 # 2024-02-19
 Drone: null

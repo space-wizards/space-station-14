@@ -1514,9 +1514,9 @@
   noun: seeds-noun-seeds
   displayName: seeds-blue-pumpkin-display-name
   plantRsi: Objects/Specific/Hydroponics/blue_pumpkin.rsi
-  packetPrototype: GlumpkinSeeds
+  packetPrototype: BluePumpkinSeeds
   productPrototypes:
-    - FoodGlumpkin
+    - FoodBluePumpkin
   lifespan: 55
   maturation: 10
   production: 4

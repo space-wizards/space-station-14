@@ -27,7 +27,7 @@
   color: "#660099"
 
 - type: reagent
-  id: JuiceGlumpkin
+  id: JuiceBluePumpkin
   name: reagent-name-juice-blue-pumpkin
   parent: BaseJuice
   desc: reagent-desc-juice-blue-pumpkin

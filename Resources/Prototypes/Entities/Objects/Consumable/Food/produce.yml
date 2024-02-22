@@ -1803,7 +1803,7 @@
 - type: entity
   name: blue pumpkin
   parent: FoodProduceBase
-  id: FoodGlumpkin
+  id: FoodBluePumpkin
   description: A large, blue... berry. Seriously.
   components:
   - type: Item
@@ -1825,7 +1825,7 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: JuiceGlumpkin
+      - ReagentId: JuiceBluePumpkin
         Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi

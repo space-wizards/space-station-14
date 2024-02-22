@@ -184,7 +184,7 @@
 - type: entity
   name: blue pumpkin donut
   parent: FoodDonutBase
-  id: FoodDonutGlumpkin
+  id: FoodDonutBluePumpkin
   description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
   - type: Sprite
@@ -363,7 +363,7 @@
 - type: entity
   name: blue pumpkin jelly-donut
   parent: FoodDonutBase
-  id: FoodDonutJellyGlumpkin
+  id: FoodDonutJellyBluePumpkin
   description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
   - type: Sprite
