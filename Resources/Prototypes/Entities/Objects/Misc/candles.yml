@@ -150,7 +150,6 @@
       - state: inhand-right
         color: "#984aa1"
 
-
 - type: entity
   name: small candle
   parent: Candle
