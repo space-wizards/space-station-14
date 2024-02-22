@@ -279,8 +279,8 @@ namespace Content.IntegrationTests.Tests
             var queryPoint = entManager.AllEntityQueryEnumerator<T, TransformComponent>();
             while (queryPoint.MoveNext(out var uid, out T? comp, out var xform))
             {
-                var castedComp1 = (SpawnPointComponent) (object) comp;
-                var castedComp2 = (ContainerSpawnPointComponent) (object) comp;
+                SpawnPointComponent? castedComp1 = (SpawnPointComponent) (object) comp;
+                ContainerSpawnPointComponent? castedComp2 = (ContainerSpawnPointComponent) (object) comp;
 
                 if (!((castedComp1 != null && castedComp1.SpawnType == SpawnPointType.LateJoin)
                     || (castedComp1 != null && castedComp2.SpawnType == SpawnPointType.LateJoin))
