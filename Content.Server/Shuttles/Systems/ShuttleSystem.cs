@@ -69,13 +69,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        ShutdownGridFills();
-    }
-
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

@@ -28,6 +28,8 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
+  - type: TypingIndicator
+    proto: lizard
   - type: Vocal
     sounds:
       Male: UnisexReptilian
