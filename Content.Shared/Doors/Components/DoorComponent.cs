@@ -124,14 +124,14 @@ public sealed partial class DoorComponent : Component
     /// If false, this door is incapable of crushing entities. This just determines whether it will apply damage and
     /// stun, not whether it can close despite entities being in the way.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CanCrush = true;
 
     /// <summary>
     /// Whether to check for colliding entities before closing. This may be overridden by other system by subscribing to
     /// <see cref="BeforeDoorClosedEvent"/>. For example, hacked airlocks will set this to false.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool PerformCollisionCheck = true;
 
     /// <summary>
@@ -302,9 +302,6 @@ public sealed partial class DoorComponent : Component
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int ClosedDrawDepth = (int) DrawDepth.DrawDepth.Doors;
-
-    [DataField, AutoNetworkedField]
-    public bool Powered;
 }
 
 [Serializable, NetSerializable]

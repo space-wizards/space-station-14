@@ -122,10 +122,10 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
-        if (!HasComp<AirlockComponent>(uid))
+        if (!TryComp<AirlockComponent>(uid, out var airlock))
             return;
 
-        if (IsBolted(uid) || !door.Powered)
+        if (IsBolted(uid) || !airlock.Powered)
             return;
 
         if (door.State == DoorState.Closed)

@@ -16,7 +16,6 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<DoorBoltComponent, PowerChangedEvent>(OnBoltPowerChanged);
     }
 
@@ -37,12 +36,6 @@ public sealed class DoorSystem : SharedDoorSystem
         RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
 
         base.SetCollidable(uid, collidable, door, physics, occluder);
-    }
-
-    private void OnPowerChanged(Entity<DoorComponent> ent, ref PowerChangedEvent args)
-    {
-        ent.Comp.Powered = args.Powered;
-        Dirty(ent, ent.Comp);
     }
 
     private void OnBoltPowerChanged(Entity<DoorBoltComponent> ent, ref PowerChangedEvent args)
