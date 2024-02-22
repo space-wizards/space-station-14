@@ -277,9 +277,9 @@ namespace Content.IntegrationTests.Tests
         {
             var resultCount = 0;
             var queryPoint = entManager.AllEntityQueryEnumerator<T, TransformComponent>();
-            while (queryPoint.MoveNext(out var uid, out T comp, out var xform))
-            {
 #nullable enable
+            while (queryPoint.MoveNext(out var uid, out T? comp, out var xform))
+            {
                 var castedComp1 = (SpawnPointComponent) (object) comp;
                 var castedComp2 = (ContainerSpawnPointComponent) (object) comp;
 #nullable disable
