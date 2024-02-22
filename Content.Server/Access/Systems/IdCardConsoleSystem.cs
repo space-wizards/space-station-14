@@ -131,6 +131,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             && _prototype.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
+            _idCard.TryChangeJobDepartment(targetId, job);
         }
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))

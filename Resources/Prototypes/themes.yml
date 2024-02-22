@@ -96,3 +96,17 @@
     concerningOrangeFore: "#A5762F"
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
+- type: uiTheme
+  id: SS14AshenTheme
+  path: /Textures/Interface/Ashen/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"

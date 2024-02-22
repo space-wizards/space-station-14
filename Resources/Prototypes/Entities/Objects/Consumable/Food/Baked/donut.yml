@@ -191,6 +191,15 @@
     state: blue
 # Tastes like donut, glumpkin.
 
+  name: blorbo donut
+  parent: FoodDonutBase
+  id: FoodDonutBlumpkin
+  description: Goes great with a mug of BLORBO.
+  components:
+  - type: Sprite
+    state: blue
+# Tastes like donut, blorbo.
+
 - type: entity
   name: bungo donut
   parent: FoodDonutBase

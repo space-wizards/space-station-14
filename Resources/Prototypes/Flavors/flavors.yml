@@ -1013,3 +1013,8 @@
   id: glumpkin
   flavorType: Complex
   description: flavor-complex-glumpkin
+  
+- type: flavor
+  id: violets
+  flavorType: Complex
+  description: flavor-complex-violets

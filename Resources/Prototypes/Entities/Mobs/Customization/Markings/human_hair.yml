@@ -1307,3 +1307,10 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: uneven
+- type: marking
+  id: HumanHairTailed
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: tailed
