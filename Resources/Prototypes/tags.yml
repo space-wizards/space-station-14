@@ -468,9 +468,6 @@
   id: DrinkBottle
 
 - type: Tag
-  id: DroneUsable
-
-- type: Tag
   id: Duck
 
 - type: Tag
