@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Tesla coils now have a 50% chance of not attracting lightning.  Installing
-      ground rods is now much more important!
-    type: Tweak
-  - message: Nerf tesla energy producing.
-    type: Tweak
-  - message: Now tesla coils are gradually wearing out, taking damage from lightning.
-      Keep an eye on them and repair them with a welder every 20-30 minutes. Grounding
-      rods are immune to lightning damage.
-    type: Add
-  id: 5501
-  time: '2024-01-01T07:33:48.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23235
 - author: 778b
   changes:
   - message: Fixed appearance of welded airlocks!
@@ -3862,3 +3848,12 @@
   id: 6000
   time: '2024-02-22T00:19:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25453
+- author: Whisper
+  changes:
+  - message: Dragon ichor when eating restores the dragon's blood.
+    type: Add
+  - message: Increased Xenomorph and Dragon blood level to 650u.
+    type: Tweak
+  id: 6001
+  time: '2024-02-22T02:54:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25442
