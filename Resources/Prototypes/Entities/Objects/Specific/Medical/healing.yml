@@ -166,6 +166,7 @@
     state: medicated-suture
   - type: Item
     heldPrefix: medicated-suture
+    storedRotation: -90
   - type: Healing
     damageContainers:
       - Biological
