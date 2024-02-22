@@ -9,6 +9,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Content.Shared.PDA;
+using Content.Server.CartridgeLoader.Cartridges;
+using Content.Shared.Access.Components;
 
 namespace Content.Server.CartridgeLoader;
 
@@ -17,6 +20,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly PdaSystem _pda = default!;
+    [Dependency] private readonly MessagesCartridgeSystem _messagesCartridgeSystem = default!;
+
+    //private ISawmill _sawmill = Logger.GetSawmill("pdaMessages");
 
     public override void Initialize()
     {
@@ -29,6 +35,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeLoaderUiMessage>(OnLoaderUiMessage);
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeUiMessage>(OnUiMessage);
     }
+
 
     public IReadOnlyList<EntityUid> GetInstalled(EntityUid uid, ContainerManagerComponent? comp = null)
     {
@@ -310,6 +317,36 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     protected override void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
     {
+        if (args.Container.ID == PdaComponent.PdaIdSlotId)
+        {
+            //_sawmill.Debug("Id insertion detected");
+            if ((TryComp(uid, out ContainerManagerComponent? cont)))
+            {
+                //_sawmill.Debug("Trying program");
+                if (TryGetProgram<MessagesCartridgeComponent>(uid, out var programUid, out var messagesCartridgeComponent, false, loader, cont))
+                {
+                    //_sawmill.Debug("program found");
+                    if ((TryComp(uid, out PdaComponent? pdaComponent)) && (programUid is EntityUid realProgramUid))
+                    {
+                        //_sawmill.Debug("pda found");
+                        if (TryComp(args.Entity, out IdCardComponent? idCardComponent))
+                        {
+                            //_sawmill.Debug("found id");
+                            //_sawmill.Debug("updating cart data");
+                            messagesCartridgeComponent.ConnectedId = args.Entity;
+                            messagesCartridgeComponent.UserUid = args.Entity.ToString();
+                            //_sawmill.Debug("data updated, looking for server");
+                            if (_messagesCartridgeSystem.GetActiveServer(Transform(uid).MapID) is var (_, server))
+                            {
+                                //_sawmill.Debug("server found");
+                                _messagesCartridgeSystem.PullFromServer(realProgramUid, messagesCartridgeComponent, server);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
             return;
 
@@ -319,6 +356,23 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     protected override void OnItemRemoved(EntityUid uid, CartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)
     {
+        if (args.Container.ID == PdaComponent.PdaIdSlotId)
+        {
+            //_sawmill.Debug("id removal detected");
+            if (TryComp(uid, out ContainerManagerComponent? cont))
+            {
+                //_sawmill.Debug("trying program");
+                if (TryGetProgram<MessagesCartridgeComponent>(uid, out _, out var messagesCartridgeComponent, false, loader, cont))
+                {
+                    //_sawmill.Debug("got program, updating data");
+                    messagesCartridgeComponent.ConnectedId = null;
+                    messagesCartridgeComponent.UserUid = null;
+                    messagesCartridgeComponent.UserName = null;
+                    //_sawmill.Debug("data updated");
+                }
+            }
+        }
+
         if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
             return;
 

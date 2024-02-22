@@ -1,6 +1,6 @@
 using Content.Shared.CartridgeLoader.Cartridges;
 
-namespace Content.Shared.Radio.Components;
+namespace Content.Server.Radio.Components;
 
 /// <summary>
 /// Entities with <see cref="MessagesServerComponent"/> are needed to transmit messages using PDAs.
@@ -21,6 +21,12 @@ public sealed partial class MessagesServerComponent : Component
     /// </summary>
     [DataField]
     public List<MessagesMessageData> MessagesQueue = new();
+
+    /// <summary>
+    /// Dictionary translating uids to readable names
+    /// </summary>
+    [DataField]
+    public Dictionary<string,string> NameDict= new();
 
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
     public TimeSpan NextUpdate = TimeSpan.Zero;

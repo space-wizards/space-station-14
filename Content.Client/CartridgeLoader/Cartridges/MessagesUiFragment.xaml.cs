@@ -2,6 +2,7 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Client.GameTicking.Managers;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
@@ -10,53 +11,111 @@ public sealed partial class MessagesUiFragment : BoxContainer
 {
 
     public event Action<string>? OnMessageSent;
+    public event Action<string?>? OnButtonPressed;
+
+    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+
+    //private ISawmill _sawmill = Logger.GetSawmill("pdaMessages");
+    private LineEdit Input;
+    private BoxContainer HeaderBox;
+    private Label HeaderLabel;
+    private Button HeaderButton;
+
 
     public MessagesUiFragment()
     {
+        //_sawmill.Debug("Fragment initialising");
         RobustXamlLoader.Load(this);
         Orientation = LayoutOrientation.Vertical;
         HorizontalExpand = true;
         VerticalExpand = true;
 
+        Input = new LineEdit();
+        Input.HorizontalExpand = true;
+        Input.SetHeight = 32;
         Input.OnTextEntered += _ =>
         {
-            OnMessageSent?.Invoke(Input.Text);
+            if (Input.Text != "")
+                OnMessageSent?.Invoke(Input.Text);
             Input.Clear();
         };
 
-        UpdateState(new List<string>());
+        HeaderBox = new BoxContainer();
+
+        HeaderLabel = new Label();
+
+        HeaderButton = new Button();
+        HeaderButton.OnPressed += _ => OnButtonPressed?.Invoke(null);
+        HeaderButton.Text = "Back";
+
+        HeaderBox.AddChild(HeaderButton);
+        HeaderBox.AddChild(HeaderLabel);
+
+        UpdateState(MessagesUiStateMode.UserList, new List<(string,string)>(), null);
+        //_sawmill.Debug("Fragment initialised");
     }
 
-    public void UpdateState(List<string> contents, MessagesUiStateMode mode)
+    public void UpdateState(MessagesUiStateMode mode, List<(string,string)>? contents, string? name)
     {
+        //_sawmill.Debug("fragment updating state");
         MessageContainer.RemoveAllChildren();
-        if (mode == MessagesUiStateMode.Chat)
-        [
-            foreach (var message in contents)
+        if (OverContainer.Children.Contains(Input))
+            OverContainer.RemoveChild(Input);
+        if (OverContainer.Children.Contains(HeaderBox))
+            OverContainer.RemoveChild(HeaderBox);
+        if ((mode == MessagesUiStateMode.Chat) && (contents != null))
+        {
+            HeaderLabel.Text = name;
+
+            //_sawmill.Debug("fragment listing messages");
+            foreach (var (senderName, message) in contents)
             {
-                AddNote(contents);
+                AddNote(senderName+" "+message);
             }
+
+            OverContainer.AddChild(Input);
+            OverContainer.AddChild(HeaderBox);
         }
         else
         {
-            ///<TODO>add user list code here
+            //_sawmill.Debug("fragment listing users");
+            if (contents == null)
+            {
+                //_sawmill.Debug("users is null");
+                return;
+            }
+            foreach (var (user,userUid) in contents)
+            {
+                AddButton(userUid, user);
+            }
         }
+    }
+
+    private void AddButton(string userUid, string userName)
+    {
+        var button = new Button();
+        button.Text = userName;
+        button.HorizontalExpand = true;
+        button.ClipText = true;
+        button.MinWidth = 60;
+        button.OnPressed += _ => OnButtonPressed?.Invoke(userUid);
+        MessageContainer.AddChild(button);
     }
 
     private void AddNote(string note)
     {
-        var row = new BoxContainer();
-        row.HorizontalExpand = true;
-        row.Orientation = LayoutOrientation.Horizontal;
-        row.Margin = new Thickness(4);
+        //var row = new BoxContainer();
+        //row.HorizontalExpand = true;
+        //row.Orientation = LayoutOrientation.Horizontal;
+        //row.Margin = new Thickness(4);
 
         var label = new Label();
         label.Text = note;
         label.HorizontalExpand = true;
-        label.ClipText = true;
+        label.ClipText = false;
 
-        row.AddChild(label);
+        //row.AddChild(label);
 
-        MessageContainer.AddChild(row);
+        MessageContainer.AddChild(label);
     }
 }

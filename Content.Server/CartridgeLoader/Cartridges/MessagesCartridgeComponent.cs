@@ -1,3 +1,5 @@
+using Content.Shared.CartridgeLoader.Cartridges;
+
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
@@ -19,21 +21,39 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// The uid of the current user
     /// </summary>
     [DataField]
-    public int? UserUid = null;
+    public string? UserUid = null;
+
+    /// <summary>
+    /// The name and job of the user
+    /// </summary>
+    [DataField]
+    public string? UserName = null;
 
      /// <summary>
     /// The uid of the crew the user is chatting with
     /// </summary>
     [DataField]
-    public int? ChatUid = null;
+    public string? ChatUid = null;
+
+    /// <summary>
+    /// ID card connected to the Cartridge
+    /// </summary>
+    [DataField]
+    public EntityUid? ConnectedId = null;
 
     /// <summary>
     /// Dictionary translating uids to readable names
     /// </summary>
     [DataField]
-    public Dictionary<string,string> nameDict= new();
+    public Dictionary<string,string> NameDict= new();
 
-    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
+    /// <summary>
+    /// Whether the cartridge has lost connection and should be looking for a new server
+    /// </summary>
+    [DataField]
+    public bool DeadConnection=true;
+
+    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(10);
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
 

@@ -5,13 +5,15 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 [Serializable, NetSerializable]
 public sealed class MessagesUiState : BoundUserInterfaceState
 {
-    public List<string> Contents;
+    public List<(string,string)>? Contents;
     public MessagesUiStateMode Mode;
+    public string? Name;
 
-    public MessagesUiState(List<string> contents, MessagesUiStateMode mode)
+    public MessagesUiState(MessagesUiStateMode mode, List<(string,string)>? contents = null, string? name = null)
     {
         Contents = contents;
         Mode = mode;
+        Name = name;
     }
 }
 
@@ -28,5 +30,5 @@ public partial struct MessagesMessageData
     public string SenderId;
     public string ReceiverId;
     public string Content;
-    public double Time;
+    public TimeSpan Time;
 }

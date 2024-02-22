@@ -1,18 +1,40 @@
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.PDA;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Content.Server.Radio.Components;
+using Content.Server.GameTicking;
+using Robust.Shared.Timing;
+using Content.Shared.Access.Components;
+using Content.Server.Radio.EntitySystems;
+using Content.Server.Power.Components;
+using Content.Shared.Chat;
+using Robust.Shared.Player;
+using Content.Server.PDA.Ringer;
+using Robust.Shared.Network;
+
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed class MessagesCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
-    [Dependency] private readonly MessageServerSystem? _messageServerSystem = default!;
+    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
+    [Dependency] private readonly MessagesServerSystem _messagesServerSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly RingerSystem _ringer = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+
+    //private ISawmill _sawmill = Logger.GetSawmill("pdaMessages");
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        //_sawmill.Debug("System initialised");
     }
 
     /// <summary>
@@ -20,7 +42,11 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     /// </summary>
     private void OnUiReady(EntityUid uid, MessagesCartridgeComponent component, CartridgeUiReadyEvent args)
     {
-        UpdateId(uid, component);
+        var mapId = Transform(uid).MapID;
+        if ((component.ConnectedId != null) && (TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
+            component.UserName = idCardComponent.FullName+"("+idCardComponent.JobTitle+")";
+            if (component.UserUid != null && component.UserName != null)
+                component.NameDict[component.UserUid] = component.UserName;
         UpdateUiState(uid, args.Loader, component);
     }
 
@@ -35,23 +61,25 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         if (args is not MessagesUiMessageEvent messageEvent)
             return;
 
-        if (messageEvent.Action == MessagesUiAction.Send)
+        if ((messageEvent.Action == MessagesUiAction.Send) && (component.UserUid != null) && (component.ChatUid != null) && (messageEvent.Parameter != null))
         {
             MessagesMessageData messageData = new();
             messageData.SenderId = component.UserUid;
             messageData.ReceiverId = component.ChatUid;
             messageData.Content = messageEvent.Parameter;
-            messageData.Time = 0.0; ///<TODO> add actual timekeeping here
+            messageData.Time = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
             component.MessagesQueue.Add(messageData);
             Update(uid, component);
         }
         else
         {
-            component.ChatUid = messageEvent.Parameter;
+            if (messageEvent.Action == MessagesUiAction.ChangeChat)
+                component.ChatUid = messageEvent.Parameter;
         }
 
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
+
 
     public override void Update(float frameTime)
     {
@@ -71,52 +99,147 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     public void Update(EntityUid uid, MessagesCartridgeComponent component)
     {
         var mapId = Transform(uid).MapID;
-        var messageServer = GetActiveServer(mapId);
 
-        if ((component.MessagesQueue.Count > 0) && (messageServer != null))
+        if (component.UserName == null)
         {
-            foreach (var message in component.MessagesQueue)
+            if ((component.ConnectedId != null) && (TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
             {
-                _messageServerSystem.PdaToServerMessage(messageServer,message);
+                if (idCardComponent.FullName != "")
+                {
+                    component.UserName = idCardComponent.FullName+"("+idCardComponent.JobTitle+")";
+                }
+                else
+                {
+                    component.UserName = "Unknown"+"("+idCardComponent.JobTitle+")";
+                }
+            }
+            if (component.UserUid != null && component.UserName != null)
+                component.NameDict[component.UserUid] = component.UserName;
+        }
+
+        //_sawmill.Debug("Updating cart");
+        if ((component.MessagesQueue.Count > 0) || component.DeadConnection)
+        {
+            if (!(GetActiveServer(mapId) is var (serverUid, messageServer)))
+            {
+                component.DeadConnection=true;
+                return;
+            }
+            component.DeadConnection=false;
+            var tempMessageQueue = new List<MessagesMessageData>(component.MessagesQueue);
+            foreach (var message in tempMessageQueue)
+            {
+                _messagesServerSystem.PdaToServerMessage(serverUid, messageServer,message);
                 component.MessagesQueue.Remove(message);
                 component.Messages.Add(message);
-                ///<TODO> Update UI here
+                UpdateUiState(uid, Transform(uid).ParentUid, component);
             }
         }
     }
 
-    private MessageServerComponent? GetActiveServer(MapId mapId)
+    public (EntityUid, MessagesServerComponent)? GetActiveServer(MapId mapId)
     {
-        var servers = EntityQuery<MessageServerComponent, ApcPowerReceiverComponent, TransformComponent>();
-        foreach (var (messageServer, power, transform) in servers)
+       // _sawmill.Debug("Looking for server");
+        var servers = EntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
+        while(servers.MoveNext(out var uid, out var messageServer, out var power, out var transform))
         {
             if (transform.MapID == mapId &&
                 power.Powered)
             {
-                return messageServer;
+                //_sawmill.Debug("Server found");
+                return (uid, messageServer);
             }
         }
+       // _sawmill.Debug("No server");
         return null;
+    }
+
+    private string GetName(MessagesCartridgeComponent component, string uid)
+    {
+        if (!(component.NameDict.ContainsKey(uid)))
+        {
+            return "Unknown";
+        }
+        else
+        {
+            if (component.NameDict[uid][0] == '(')
+            {
+                return "Unknown "+component.NameDict[uid];
+            }
+            else
+            {
+                return component.NameDict[uid];
+            }
+        }
     }
 
     private void UpdateUiState(EntityUid uid, EntityUid loaderUid, MessagesCartridgeComponent? component)
     {
         if (!Resolve(uid, ref component))
             return;
+        MessagesUiState state;
+        if (component.ChatUid == null)
+        {
+            List <(string,string)> userList = new();
 
-        var state = new MessagesUiState(component.Messages,component.Chat);
+            foreach (var nameEntry in component.NameDict)
+            {
+                if (nameEntry.Key == component.UserUid)
+                    continue;
+                userList.Add((nameEntry.Value,nameEntry.Key));
+            }
+
+            userList.Sort(delegate((string,string) a, (string,string) b)
+            {
+                    return String.Compare(a.Item2,b.Item2);
+            });
+
+            state = new MessagesUiState(MessagesUiStateMode.UserList, userList, null);
+        }
+        else
+        {
+            List<MessagesMessageData> messageList = new();
+
+            foreach (var message in component.Messages)
+            {
+                if ((message.SenderId == component.ChatUid && message.ReceiverId == component.UserUid) || (message.ReceiverId == component.ChatUid && message.SenderId == component.UserUid))
+                {
+                    messageList.Add(message);
+                }
+            }
+
+            messageList.Sort(delegate(MessagesMessageData a, MessagesMessageData b)
+            {
+                return TimeSpan.Compare(a.Time,b.Time);
+            });
+
+            List<(string, string)> formattedMessageList = new();
+
+            foreach (var message in messageList)
+            {
+                string name = GetName(component, message.SenderId);
+                var stationTime =message.Time.Subtract(_gameTicker.RoundStartTimeSpan);
+                string content = stationTime.ToString("\\[hh\\:mm\\:ss\\]")+" : "+message.Content;
+                formattedMessageList.Add((name , content));
+            }
+
+            state = new MessagesUiState(MessagesUiStateMode.Chat, formattedMessageList, GetName(component, component.ChatUid));
+        }
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    public void ServerToPdaMessage(EntityUid uid, MessagesCartridgeComponent component, MessagesMessageData message)
+    public void ServerToPdaMessage(EntityUid uid, MessagesCartridgeComponent component, MessagesMessageData message, EntityUid pdaUid, MessagesServerComponent server)
     {
+        //_sawmill.Debug("Message received - cart");
         component.Messages.Add(message);
+
+        string name = GetName(component, message.SenderId);
 
         var wrappedMessage = Loc.GetString("chat-radio-message-wrap",
             ("color", Color.White),
             ("fontType", "Default"),
             ("fontSize", 12),
-            ("verb", "sends")),
+            ("verb", "sends"),
             ("channel", "[PDA]"),
             ("name", name),
             ("message", message.Content));
@@ -130,16 +253,48 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
         var chatMsg = new MsgChatMessage { Message = chat };
 
-        if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        if (TryComp(Transform(pdaUid).ParentUid, out ActorComponent? actor))
             _netMan.ServerSendMessage(chatMsg, actor.PlayerSession.Channel);
-        if (TryComp(uid, RingerComponent? ringer))
-            _ringer.RingerPlayRingtone(uid, ringer);
+        if (TryComp(pdaUid, out RingerComponent? ringer))
+            _ringer.RingerPlayRingtone(pdaUid, ringer);
 
-        ///<TODO> Update UI here
+
+        if (TryComp(pdaUid, out CartridgeLoaderComponent? loaderUid))
+            UpdateUiState(uid, pdaUid, component);
     }
 
-    public void SyncWithServer(EntityUid uid, MessagesCartridgeComponent component, MessagesServerComponent server)
+
+    public void PullFromServer(EntityUid uid, MessagesCartridgeComponent component, MessagesServerComponent server)
     {
-        for (key, value in )
+        //_sawmill.Debug("Syncing with server");
+
+        if (component.ConnectedId == null)
+            return;
+
+        if (!(TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
+            return;
+
+        component.UserName = idCardComponent.FullName+"("+idCardComponent.JobTitle+")";
+
+        if (server.NameDict != component.NameDict)
+        {
+            if ((component.UserUid is string userUid) && (component.UserName is string userName))
+                server.NameDict[userUid]=userName;
+            var keylist = server.NameDict.Keys;
+            foreach (var key in keylist)
+            {
+                component.NameDict[key]=server.NameDict[key];
+            }
+        }
+
+        //_sawmill.Debug("Pulling messages from server");
+
+        foreach (var message in server.Messages)
+        {
+            if (message.ReceiverId == component.UserUid || message.SenderId == component.UserUid)
+                component.Messages.Add(message);
+        }
+
+
     }
 }

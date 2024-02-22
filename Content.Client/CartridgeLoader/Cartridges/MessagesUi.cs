@@ -10,6 +10,13 @@ public sealed partial class MessagesUi : UIFragment
 {
     private MessagesUiFragment? _fragment;
 
+    //private ISawmill _sawmill = default!;
+
+     public void Initialize()
+    {
+       ;// _sawmill = Logger.GetSawmill("chat");
+    }
+
     public override Control GetUIFragmentRoot()
     {
         return _fragment!;
@@ -19,20 +26,25 @@ public sealed partial class MessagesUi : UIFragment
     {
         _fragment = new MessagesUiFragment();
         _fragment.OnMessageSent += note => SendMessagesMessage(MessagesUiAction.Send, note, userInterface);
+        _fragment.OnButtonPressed += userUid => SendMessagesMessage(MessagesUiAction.ChangeChat, userUid, userInterface);
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
+        //_sawmill?.Debug("UI updating state");
         if (state is not MessagesUiState messagesState)
             return;
 
-        _fragment?.UpdateState(messagesState.Contents, messagesState.Mode);
+        _fragment?.UpdateState(messagesState.Mode, messagesState.Contents, messagesState.Name);
     }
 
-    private void SendMessagesMessage(MessagesUiAction action, MessagesMessageData message, BoundUserInterface userInterface)
+    private void SendMessagesMessage(MessagesUiAction action, string? parameter, BoundUserInterface userInterface)
     {
-        var MessagesMessage = new MessagesUiMessageEvent(action, note);
+        //_sawmill?.Debug("Ui making event");
+        var MessagesMessage = new MessagesUiMessageEvent(action, parameter);
+        //_sawmill?.Debug("Ui making message");
         var message = new CartridgeUiMessage(MessagesMessage);
+        //_sawmill?.Debug("Ui sending message");
         userInterface.SendMessage(message);
     }
 }
