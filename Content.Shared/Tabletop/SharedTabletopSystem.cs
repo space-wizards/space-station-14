@@ -41,8 +41,8 @@ namespace Content.Shared.Tabletop
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
             var transform = EntityManager.GetComponent<TransformComponent>(moved);
-            Transforms.SetParent(moved, transform, _mapMan.GetMapEntityId(transform.MapID));
-            Transforms.SetLocalPositionNoLerp(moved, msg.Coordinates.Position, transform);
+            var coordinates = new EntityCoordinates(_mapMan.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
+            Transforms.SetCoordinates(moved, transform, coordinates);
         }
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)
