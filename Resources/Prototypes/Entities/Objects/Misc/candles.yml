@@ -286,6 +286,8 @@
     color: "#e39c40"
     radius: 2.5
     power: 10
+  - type: Tag
+    tags: Candle
 
 - type: entity
   name: magic red candle
