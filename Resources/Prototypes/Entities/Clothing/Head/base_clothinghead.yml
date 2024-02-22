@@ -131,8 +131,6 @@
     #Copies ClothingHeadHardsuitBase behavior
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
-    quickEquip: false
-    slots: [ HEAD ]
   - type: Tag
     tags:
     - HidesHair
