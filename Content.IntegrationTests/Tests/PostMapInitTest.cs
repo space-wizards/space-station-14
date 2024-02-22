@@ -282,10 +282,12 @@ namespace Content.IntegrationTests.Tests
             {
                 var castedComp1 = typeof(T) == typeof(SpawnPointComponent) ? (SpawnPointComponent) (object) comp : null;
                 var castedComp2 = typeof(T) == typeof(ContainerSpawnPointComponent) ? (ContainerSpawnPointComponent) (object) comp : null;
-#nullable disable
 
-                if (!((castedComp1 != null && castedComp1.SpawnType == SpawnPointType.LateJoin)
-                    || (castedComp1 != null && castedComp2.SpawnType == SpawnPointType.LateJoin))
+                if (castedComp1 == null && castedComp1 == null)
+                    continue;
+#nullable disable
+                if (!(castedComp1.SpawnType == SpawnPointType.LateJoin
+                    || castedComp2.SpawnType == SpawnPointType.LateJoin)
                 || xform.GridUid == null
                 || !gridUids.Contains(xform.GridUid.Value))
                 {
