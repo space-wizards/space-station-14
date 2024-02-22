@@ -1801,7 +1801,7 @@
     - Fruit
 
 - type: entity
-  name: glumpkin
+  name: blue pumpkin
   parent: FoodProduceBase
   id: FoodGlumpkin
   description: A large, blue... berry. Seriously.
@@ -1810,7 +1810,7 @@
     size: Small
   - type: FlavorProfile
     flavors:
-      - glumpkin
+      - bluepumpkin
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1828,9 +1828,9 @@
       - ReagentId: JuiceGlumpkin
         Quantity: 10
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/glumpkin.rsi
+    sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
   - type: Produce
-    seedId: glumpkin
+    seedId: bluePumpkin
   - type: Damageable
     damageContainer: Biological
   - type: Destructible

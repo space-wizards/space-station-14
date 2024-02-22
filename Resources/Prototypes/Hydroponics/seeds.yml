@@ -1490,7 +1490,7 @@
   productPrototypes:
     - FoodPumpkin
   mutationPrototypes:
-    - glumpkin
+    - bluePumpkin
   lifespan: 55
   maturation: 10
   production: 4
@@ -1509,11 +1509,11 @@
       PotencyDivisor: 20
 
 - type: seed
-  id: glumpkin
-  name: seeds-glumpkin-name
+  id: bluePumpkin
+  name: seeds-blue-pumpkin-name
   noun: seeds-noun-seeds
-  displayName: seeds-glumpkin-display-name
-  plantRsi: Objects/Specific/Hydroponics/glumpkin.rsi
+  displayName: seeds-blue-pumpkin-display-name
+  plantRsi: Objects/Specific/Hydroponics/blue_pumpkin.rsi
   packetPrototype: GlumpkinSeeds
   productPrototypes:
     - FoodGlumpkin

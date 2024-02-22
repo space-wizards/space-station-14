@@ -28,11 +28,11 @@
 
 - type: reagent
   id: JuiceGlumpkin
-  name: reagent-name-juice-glumpkin
+  name: reagent-name-juice-blue-pumpkin
   parent: BaseJuice
-  desc: reagent-desc-juice-glumpkin
+  desc: reagent-desc-juice-blue-pumpkin
   physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: glumpkin
+  flavor: bluepumpkin
   color: "#00BFFF"
 
 - type: reagent

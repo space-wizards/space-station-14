@@ -182,14 +182,14 @@
 # Tastes like donut, bitterness.
 
 - type: entity
-  name: glumpkin donut
+  name: blue pumpkin donut
   parent: FoodDonutBase
   id: FoodDonutGlumpkin
-  description: Goes great with a mug of soothing drunken glumpkin.
+  description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
   - type: Sprite
     state: blue
-# Tastes like donut, glumpkin.
+# Tastes like donut, blue pumpkin.
 
   name: blorbo donut
   parent: FoodDonutBase
@@ -361,10 +361,10 @@
 # Tastes like jelly-donut, bitterness.
 
 - type: entity
-  name: glumpkin jelly-donut
+  name: blue pumpkin jelly-donut
   parent: FoodDonutBase
   id: FoodDonutJellyGlumpkin
-  description: Goes great with a mug of soothing drunken glumpkin.
+  description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
   - type: Sprite
     state: jelly-blue
@@ -380,7 +380,7 @@
   - type: Tag
     tags:
     - Fruit
-# Tastes like jelly-donut, glumpkin.
+# Tastes like jelly-donut, blue pumpkin.
 
 - type: entity
   name: bungo jelly-donut

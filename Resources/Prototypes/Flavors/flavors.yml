@@ -1010,9 +1010,9 @@
   description: flavor-complex-fishops
 
 - type: flavor
-  id: glumpkin
+  id: bluepumpkin
   flavorType: Complex
-  description: flavor-complex-glumpkin
+  description: flavor-complex-blue-pumpkin
   
 - type: flavor
   id: violets
