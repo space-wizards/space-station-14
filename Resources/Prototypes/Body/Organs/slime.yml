@@ -29,8 +29,12 @@
           reagents:
           - ReagentId: GreyMatter
             Quantity: 5
+        organ:
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 10
 
-
+      
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan
