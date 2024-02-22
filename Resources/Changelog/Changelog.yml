@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Heat damage cauterizes bleeding again.
-    type: Fix
-  id: 5504
-  time: '2024-01-01T08:08:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23264
 - author: TheShuEd
   changes:
   - message: the lightning from the electrical anomaly now works the same way as the
@@ -3854,3 +3847,10 @@
   id: 6003
   time: '2024-02-22T11:00:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25439
+- author: DrMelon
+  changes:
+  - message: Fixed incorrect job-specific Uplink items being given on occasion.
+    type: Fix
+  id: 6004
+  time: '2024-02-22T11:03:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/23179
