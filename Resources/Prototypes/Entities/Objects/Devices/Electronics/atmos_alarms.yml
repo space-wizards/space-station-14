@@ -9,7 +9,6 @@
     state: airalarm_electronics
   - type: Tag
     tags:
-      - DroneUsable
       - AirAlarmElectronics
   - type: StaticPrice
     price: 61
@@ -25,7 +24,6 @@
     state: airalarm_electronics
   - type: Tag
     tags:
-      - DroneUsable
       - FireAlarmElectronics
   - type: StaticPrice
     price: 61
