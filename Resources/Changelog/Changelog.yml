@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Reptilians can now use up to two (top) head markings.
-    type: Tweak
-  id: 5506
-  time: '2024-01-01T23:27:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23219
 - author: Lukasz825700516
   changes:
   - message: Zombiefied reptilians no longer can pull objects with their tail.
@@ -3853,3 +3846,10 @@
   id: 6005
   time: '2024-02-22T11:15:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25465
+- author: lzk228
+  changes:
+  - message: Fix some items becomes bigger after turning in trash.
+    type: Fix
+  id: 6006
+  time: '2024-02-22T11:28:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25461
