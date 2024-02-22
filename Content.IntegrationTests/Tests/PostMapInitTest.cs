@@ -231,35 +231,8 @@ namespace Content.IntegrationTests.Tests
                     {
                         var lateSpawns = 0;
 
-                        var queryPoint = entManager.AllEntityQueryEnumerator<SpawnPointComponent>();
-                        while (queryPoint.MoveNext(out var uid, out var comp))
-                        {
-                            if (comp.SpawnType != SpawnPointType.LateJoin
-                            || !xformQuery.TryGetComponent(uid, out var xform)
-                            || xform.GridUid == null
-                            || !gridUids.Contains(xform.GridUid.Value))
-                            {
-                                continue;
-                            }
-
-                            lateSpawns++;
-                            break;
-                        }
-
-                        var queryContainer = entManager.AllEntityQueryEnumerator<ContainerSpawnPointComponent>();
-                        while (queryContainer.MoveNext(out var uid, out var comp))
-                        {
-                            if (comp.SpawnType != SpawnPointType.LateJoin
-                            || !xformQuery.TryGetComponent(uid, out var xform)
-                            || xform.GridUid == null
-                            || !gridUids.Contains(xform.GridUid.Value))
-                            {
-                                continue;
-                            }
-
-                            lateSpawns++;
-                            break;
-                        }
+                        lateSpawns += GetCountLateSpawn<SpawnPointComponent>(gridUids, entManager);
+                        lateSpawns += GetCountLateSpawn<ContainerSpawnPointComponent>(gridUids, entManager);
 
                         Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
                     }
@@ -296,6 +269,32 @@ namespace Content.IntegrationTests.Tests
             await server.WaitRunTicks(1);
 
             await pair.CleanReturnAsync();
+        }
+
+
+
+        private static int GetCountLateSpawn<T>(List<EntityUid> gridUids, IEntityManager entManager) where T : IComponent
+        {
+            var resultCount = 0;
+            var queryPoint = entManager.AllEntityQueryEnumerator<T, TransformComponent>();
+            while (queryPoint.MoveNext(out var uid, out T? comp, out var xform))
+            {
+                var castedComp1 = (SpawnPointComponent) (object) comp;
+                var castedComp2 = (ContainerSpawnPointComponent) (object) comp;
+
+                if (!((castedComp1 != null && castedComp1.SpawnType == SpawnPointType.LateJoin)
+                    || (castedComp1 != null && castedComp2.SpawnType == SpawnPointType.LateJoin))
+                || xform.GridUid == null
+                || !gridUids.Contains(xform.GridUid.Value))
+                {
+                    continue;
+                }
+
+                resultCount++;
+                break;
+            }
+
+            return resultCount;
         }
 
         [Test]
