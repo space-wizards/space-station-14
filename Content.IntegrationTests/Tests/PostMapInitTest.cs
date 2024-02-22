@@ -280,8 +280,8 @@ namespace Content.IntegrationTests.Tests
 #nullable enable
             while (queryPoint.MoveNext(out var uid, out T? comp, out var xform))
             {
-                var castedComp1 = (SpawnPointComponent) (object) comp;
-                var castedComp2 = (ContainerSpawnPointComponent) (object) comp;
+                var castedComp1 = typeof(T) == typeof(SpawnPointComponent) ? (SpawnPointComponent) (object) comp : null;
+                var castedComp2 = typeof(T) == typeof(ContainerSpawnPointComponent) ? (ContainerSpawnPointComponent) (object) comp : null;
 #nullable disable
 
                 if (!((castedComp1 != null && castedComp1.SpawnType == SpawnPointType.LateJoin)
