@@ -1817,11 +1817,11 @@
         maxVol: 25
         reagents:
         - ReagentId: Ammonia
-          Quantity: 13
+          Quantity: 10
         - ReagentId: Chlorine
-          Quantity: 7
-        - ReagentId: Vitamin
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 10
   - type: Extractable
     juiceSolution:
       reagents:

@@ -187,18 +187,13 @@
   id: FoodDonutBluePumpkin
   description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - bluepumpkin
   - type: Sprite
     state: blue
 # Tastes like donut, blue pumpkin.
-
-  name: blorbo donut
-  parent: FoodDonutBase
-  id: FoodDonutBlumpkin
-  description: Goes great with a mug of BLORBO.
-  components:
-  - type: Sprite
-    state: blue
-# Tastes like donut, blorbo.
 
 - type: entity
   name: bungo donut
@@ -366,6 +361,10 @@
   id: FoodDonutJellyBluePumpkin
   description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - bluepumpkin
   - type: Sprite
     state: jelly-blue
   - type: SolutionContainerManager

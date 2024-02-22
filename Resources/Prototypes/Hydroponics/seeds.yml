@@ -1527,16 +1527,16 @@
   chemicals:
     Ammonia:
       Min: 1
-      Max: 13
-      PotencyDivisor: 4
+      Max: 15
+      PotencyDivisor: 3
     Chlorine:
       Min: 1
-      Max: 7
-      PotencyDivisor: 2
+      Max: 5
+      PotencyDivisor: 5
     Vitamin:
       Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      Max: 10
+      PotencyDivisor: 3
 
 - type: seed
   id: cotton
