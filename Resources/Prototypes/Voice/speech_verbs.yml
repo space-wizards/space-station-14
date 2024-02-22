@@ -75,6 +75,13 @@
   - chat-speech-verb-slime-3
 
 - type: speechVerb
+  id: Vox
+  speechVerbStrings:
+    - chat-speech-verb-vox-1
+    - chat-speech-verb-vox-2
+    - chat-speech-verb-vox-3
+
+- type: speechVerb
   id: Plant
   speechVerbStrings:
   - chat-speech-verb-plant-1

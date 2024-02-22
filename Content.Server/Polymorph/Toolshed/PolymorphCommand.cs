@@ -24,7 +24,7 @@ public sealed class PolymorphCommand : ToolshedCommand
     {
         _system ??= GetSys<PolymorphSystem>();
 
-        return _system.PolymorphEntity(input, prototype.Value);
+        return _system.PolymorphEntity(input, prototype.Value.Configuration);
     }
 
     [CommandImplementation]

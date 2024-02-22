@@ -1,22 +1,23 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
 /// <summary>
 /// Provides API for openable food and drinks, handles opening on use and preventing transfer when closed.
 /// </summary>
-public sealed class OpenableSystem : EntitySystem
+public sealed class OpenableSystem : SharedOpenableSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -32,6 +33,7 @@ public sealed class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
+        SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<Verb>>(AddOpenCloseVerbs);
     }
 
     private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
@@ -69,6 +71,36 @@ public sealed class OpenableSystem : EntitySystem
     {
         // prevent spilling/pouring/whatever drinks when closed
         args.Handled = !comp.Opened;
+    }
+
+    private void AddOpenCloseVerbs(EntityUid uid, OpenableComponent comp, GetVerbsEvent<Verb> args)
+    {
+        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            return;
+
+        Verb verb;
+        if (comp.Opened)
+        {
+            if (!comp.Closeable)
+                return;
+
+            verb = new()
+            {
+                Text = Loc.GetString(comp.CloseVerbText),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
+                Act = () => TryClose(args.Target, comp)
+            };
+        }
+        else
+        {
+            verb = new()
+            {
+                Text = Loc.GetString(comp.OpenVerbText),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
+                Act = () => TryOpen(args.Target, comp)
+            };
+        }
+        args.Verbs.Add(verb);
     }
 
     /// <summary>
@@ -123,6 +155,17 @@ public sealed class OpenableSystem : EntitySystem
 
         comp.Opened = opened;
 
+        if (opened)
+        {
+            var ev = new OpenableOpenedEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
+        else
+        {
+            var ev = new OpenableClosedEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
+
         UpdateAppearance(uid, comp);
     }
 
@@ -137,6 +180,21 @@ public sealed class OpenableSystem : EntitySystem
 
         SetOpen(uid, true, comp);
         _audio.PlayPvs(comp.Sound, uid);
+        return true;
+    }
+
+    /// <summary>
+    /// If opened, closes it and plays the close sound, if one is defined.
+    /// </summary>
+    /// <returns>Whether it got closed</returns>
+    public bool TryClose(EntityUid uid, OpenableComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Closeable)
+            return false;
+
+        SetOpen(uid, false, comp);
+        if (comp.CloseSound != null)
+            _audio.PlayPvs(comp.CloseSound, uid);
         return true;
     }
 }

@@ -143,7 +143,7 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # no science book sprite so this is a placeholder
+    - state: book_science
   - type: Tag
     tags:
     - Book
@@ -161,7 +161,7 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_detective # maybe a proper sprite is needed
+    - state: book_security
   - type: Tag
     tags:
     - Book
@@ -220,7 +220,7 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # no medical book sprite so this is a placeholder
+    - state: book_medical
   - type: Tag
     tags:
     - Book
