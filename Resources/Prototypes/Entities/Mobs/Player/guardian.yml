@@ -85,6 +85,7 @@
       altDisarm: false
       animation: WeaponArcFist
       attackRate: 1.8
+      autoAttack: true
       damage:
         types:
           Blunt: 20

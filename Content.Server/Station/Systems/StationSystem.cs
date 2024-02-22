@@ -6,6 +6,7 @@ using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Station;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -35,6 +36,7 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -55,9 +57,9 @@ public sealed class StationSystem : EntitySystem
         SubscribeLocalEvent<StationMemberComponent, ComponentShutdown>(OnStationGridDeleted);
         SubscribeLocalEvent<StationMemberComponent, PostGridSplitEvent>(OnStationSplitEvent);
 
-        _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.StationRotation, x => _randomStationRotation = x, true);
+        Subs.CVar(_configurationManager, CCVars.StationOffset, x => _randomStationOffset = x, true);
+        Subs.CVar(_configurationManager, CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
+        Subs.CVar(_configurationManager, CCVars.StationRotation, x => _randomStationRotation = x, true);
 
         _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
@@ -209,6 +211,23 @@ public sealed class StationSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns the total number of tiles contained in the station's grids.
+    /// </summary>
+    public int GetTileCount(StationDataComponent component)
+    {
+        var count = 0;
+        foreach (var gridUid in component.Grids)
+        {
+            if (!TryComp<MapGridComponent>(gridUid, out var grid))
+                continue;
+
+            count += _map.GetAllTiles(gridUid, grid).Count();
+        }
+
+        return count;
+    }
+
+    /// <summary>
     /// Tries to retrieve a filter for everything in the station the source is on.
     /// </summary>
     /// <param name="source">The entity to use to find the station.</param>
@@ -306,8 +325,8 @@ public sealed class StationSystem : EntitySystem
             AddGridToStation(station, grid, null, data, name);
         }
 
-        var ev = new StationPostInitEvent();
-        RaiseLocalEvent(station, ref ev);
+        var ev = new StationPostInitEvent((station, data));
+        RaiseLocalEvent(station, ref ev, true);
 
         return station;
     }

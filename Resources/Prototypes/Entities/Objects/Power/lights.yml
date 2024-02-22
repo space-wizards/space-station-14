@@ -128,6 +128,19 @@
     lightSoftness: 1.1
 
 - type: entity
+  parent: LightBulb
+  name: old incandescent light bulb
+  id: LightBulbOld
+  description: An aging light bulb.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#FFD1A3" # 4000K color temp
+    lightEnergy: 0.3 # old incandescents just arent as bright
+    lightRadius: 6
+    lightSoftness: 1.1
+
+- type: entity
   suffix: Broken
   parent: BaseLightbulb
   name: incandescent light bulb
@@ -163,6 +176,19 @@
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
+
+- type: entity
+  parent: LightTube
+  name: old fluorescent light tube
+  id: LightTubeOld
+  description: An aging light fixture.
+  components:
+  - type: LightBulb
+    color: "#FFDABB" # old fluorescents are yellower-4500K temp
+    lightEnergy: 0.5
+    lightRadius: 10
+    lightSoftness: 1
+    PowerUse: 10
 
 - type: entity
   suffix: Broken

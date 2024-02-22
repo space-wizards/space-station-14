@@ -207,6 +207,13 @@
     Steel: 20
 
 - type: latheRecipe
+  id: ShellShotgunSlug
+  result: ShellShotgunSlug
+  completetime: 2
+  materials:
+    Steel: 25
+
+- type: latheRecipe
   id: CartridgeMagnum
   result: CartridgeMagnum
   category: Ammo

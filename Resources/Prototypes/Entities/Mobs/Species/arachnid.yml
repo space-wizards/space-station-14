@@ -11,10 +11,6 @@
   - type: HumanoidAppearance
     species: Arachnid
   - type: Hunger
-    starvationDamage:
-      types:
-        Cold: 0.5
-        Bloodloss: 0.5
   - type: Thirst
   - type: Sericulture
     action: ActionSericulture
@@ -34,6 +30,14 @@
         amount: 5
   - type: Inventory
     templateId: arachnid
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
+      - !type:WearableReaction
+        slot: head
+        prototypeID: WaterDropletHat
   # Damage (Self)
   - type: Bloodstream
     bloodReagent: CopperBlood

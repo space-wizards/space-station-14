@@ -30,13 +30,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         SubscribeLocalEvent<HeatExchangerComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
 
         // Getting CVars is expensive, don't do it every tick
-        _cfg.OnValueChanged(CCVars.SuperconductionTileLoss, CacheTileLoss, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfg.UnsubValueChanged(CCVars.SuperconductionTileLoss, CacheTileLoss);
+        Subs.CVar(_cfg, CCVars.SuperconductionTileLoss, CacheTileLoss, true);
     }
 
     private void CacheTileLoss(float val)

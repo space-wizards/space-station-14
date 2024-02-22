@@ -29,6 +29,8 @@ namespace Content.Client.Administration.UI.CustomControls
         private IEntityManager _entManager;
         private IUserInterfaceManager _uiManager;
 
+        private PlayerInfo? _selectedPlayer;
+
         public PlayerListControl()
         {
             _entManager = IoCManager.Resolve<IEntityManager>();
@@ -50,10 +52,14 @@ namespace Content.Client.Administration.UI.CustomControls
             if (args == null || data is not PlayerListData {Info: var selectedPlayer})
                 return;
 
+            if (selectedPlayer == _selectedPlayer)
+                return;
+
             if (args.Event.Function != EngineKeyFunctions.UIClick)
                 return;
 
             OnSelectionChanged?.Invoke(selectedPlayer);
+            _selectedPlayer = selectedPlayer;
 
             // update label text. Only required if there is some override (e.g. unread bwoink count).
             if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
@@ -95,6 +101,8 @@ namespace Content.Client.Administration.UI.CustomControls
                 _sortedPlayerList.Sort((a, b) => Comparison(a, b));
 
             PlayerListContainer.PopulateList(_sortedPlayerList.Select(info => new PlayerListData(info)).ToList());
+            if (_selectedPlayer != null)
+                PlayerListContainer.Select(new PlayerListData(_selectedPlayer));
         }
 
         public void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
@@ -102,6 +110,9 @@ namespace Content.Client.Administration.UI.CustomControls
             players ??= _adminSystem.PlayerList;
 
             _playerList = players.ToList();
+            if (_selectedPlayer != null && !_playerList.Contains(_selectedPlayer))
+                _selectedPlayer = null;
+
             FilterList();
         }
 

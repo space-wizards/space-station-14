@@ -83,6 +83,13 @@
   - type: Stripping
   - type: SolutionScanner
   - type: IgnoreUIRange
+  - type: ShowRevIcons
+  - type: ShowZombieIcons
+  - type: Inventory
+    templateId: aghost
+  - type: InventorySlots
+  - type: Loadout
+    prototypes: [ MobAghostGear ]
 
 - type: entity
   id: ActionAGhostShowSolar
