@@ -274,8 +274,7 @@ public partial class SharedBodySystem
     public virtual HashSet<EntityUid> GibBody(
         EntityUid bodyId,
         bool gibOrgans = false,
-        BodyComponent? body = null ,
-        bool deleteItems = false,
+        BodyComponent? body = null,
         bool launchGibs = true,
         Vector2? splatDirection = null,
         float splatModifier = 1,
