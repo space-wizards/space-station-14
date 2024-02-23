@@ -13,6 +13,7 @@ using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -47,6 +48,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -88,8 +90,12 @@ public abstract class SharedMagicSystem : EntitySystem
         if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
             hasReqs = false;
 
+        // TODO: Localized popup, better message
         if (!hasReqs)
+        {
             args.Cancelled = true;
+            _popupSystem.PopupClient("Missing Requirements", args.Performer, args.Performer);
+        }
     }
 
     private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)
