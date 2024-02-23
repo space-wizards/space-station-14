@@ -5,6 +5,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Puppet;
 using Content.Shared.Speech;
+using Content.Shared.Speech.Muting;
 
 namespace Content.Server.Speech.Muting
 {

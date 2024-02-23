@@ -140,7 +140,7 @@
     - state: locked
       shader: unshaded
       visible: false
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
   - type: Transform
     noRot: false
   - type: Fixtures
@@ -203,6 +203,7 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: LockVisuals
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

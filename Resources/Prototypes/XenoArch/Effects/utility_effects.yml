@@ -48,6 +48,8 @@
     components:
     - Item # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
   permanentComponents:
+  - type: Item
+    size: Huge
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -148,6 +150,12 @@
   permanentComponents:
   - type: PowerSupplier
     supplyRate: 20000
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
 
 - type: artifactEffect
   id: EffectBigIron

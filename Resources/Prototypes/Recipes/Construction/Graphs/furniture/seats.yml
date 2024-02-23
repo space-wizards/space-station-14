@@ -70,6 +70,13 @@
               doAfter: 1
             - material: Cloth
               amount: 1
+        - to: blueComfBench
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 1
 
     - node: chair
       entity: Chair
@@ -205,6 +212,23 @@
 
     - node: redComfBench
       entity: BenchRedComfy
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+
+    - node: blueComfBench
+      entity: BenchBlueComfy
       edges:
         - to: start
           completed:
