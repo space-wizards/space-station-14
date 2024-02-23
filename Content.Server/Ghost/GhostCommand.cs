@@ -1,6 +1,8 @@
 using Content.Server.Popups;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Mind;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
 namespace Content.Server.Ghost
@@ -9,6 +11,7 @@ namespace Content.Server.Ghost
     public sealed class GhostCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public string Command => "ghost";
         public string Description => Loc.GetString("ghost-command-description");
@@ -23,13 +26,14 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (player.AttachedEntity is { Valid: true } frozen &&
-                _entities.HasComponent<AdminFrozenComponent>(frozen))
+            if (player.AttachedEntity is { Valid: true } attached &&
+                (_entities.HasComponent<AdminFrozenComponent>(attached) ||
+                !_cfg.GetCVar(CCVars.ICEnableGhost)))
             {
                 var deniedMessage = Loc.GetString("ghost-command-denied");
                 shell.WriteLine(deniedMessage);
                 _entities.System<PopupSystem>()
-                    .PopupEntity(deniedMessage, frozen, frozen);
+                    .PopupEntity(deniedMessage, attached, attached);
                 return;
             }
 

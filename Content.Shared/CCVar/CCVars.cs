@@ -1966,6 +1966,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);
 
         /// <summary>
+        /// Controls whether or not ghost command is allowed. This control ghosting.
+        /// </summary>
+        public static readonly CVarDef<bool> ICEnableGhost =
+            CVarDef.Create("ic.enable_ghost", true, CVar.SERVER);
+
+        /// <summary>
+        /// Controls whether or not suiciding is allowed. This does not control ghosting.
+        /// </summary>
+        public static readonly CVarDef<bool> ICEnableSuicide =
+            CVarDef.Create("ic.enable_suicide", true, CVar.SERVER);
+
+        /// <summary>
         /// Control displaying SSD indicators near players
         /// </summary>
         public static readonly CVarDef<bool> ICShowSSDIndicator =
