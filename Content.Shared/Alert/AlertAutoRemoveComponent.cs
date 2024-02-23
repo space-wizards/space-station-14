@@ -13,7 +13,7 @@ public sealed partial class AlertAutoRemoveComponent : Component
     /// </summary>
     [AutoNetworkedField]
     [DataField]
-    public Dictionary<AlertKey, AlertState> Alerts = new();
+    public List<AlertKey> AlertKeys = new();
 
     public override bool SendOnlyToOwner => true;
 }

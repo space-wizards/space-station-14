@@ -107,7 +107,8 @@ public abstract class AlertsSystem : EntitySystem
             if (alertsComponent.Alerts[alert.AlertKey].AutoRemove is not null )
             {
                 var autoComp = EnsureComp<AlertAutoRemoveComponent>(euid);
-                autoComp.Alerts[alert.AlertKey] = state;
+                if (!autoComp.AlertKeys.Contains(alert.AlertKey))
+                    autoComp.AlertKeys.Add(alert.AlertKey);
             }
 
             AfterShowAlert((euid, alertsComponent));
@@ -184,7 +185,7 @@ public abstract class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
         SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>(OnPlayerAttached);
 
-        SubscribeLocalEvent<AlertAutoRemoveComponent, EntityUnpausedEvent>(OnAutoRemoveUnPaused);
+        //SubscribeLocalEvent<AlertAutoRemoveComponent, EntityUnpausedEvent>(OnAutoRemoveUnPaused);
 
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(HandlePrototypesReloaded);
@@ -193,7 +194,12 @@ public abstract class AlertsSystem : EntitySystem
 
     private void OnAutoRemoveUnPaused(EntityUid uid, AlertAutoRemoveComponent comp, EntityUnpausedEvent args)
     {
-        foreach (var alert in comp.Alerts)
+        if (!TryComp<AlertsComponent>(uid, out var alertComp))
+        {
+            return;
+        }
+
+        foreach (var alert in alertComp.Alerts)
         {
             var state = new AlertState
             {
@@ -202,12 +208,11 @@ public abstract class AlertsSystem : EntitySystem
                 AutoRemove =  alert.Value.AutoRemove + args.PausedTime,
                 Type = alert.Value.Type
             };
-            comp.Alerts[alert.Key] = state;
+            alertComp.Alerts[alert.Key] = state;
         }
         Dirty(uid, comp);
     }
 
-    // TODO: and avoid touching the components during iteration.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -216,21 +221,29 @@ public abstract class AlertsSystem : EntitySystem
         while (query.MoveNext(out var uid, out var autoComp))
         {
             var dirtyComp = false;
-            if (autoComp.Alerts.Count <= 0 || !TryComp<AlertsComponent>(uid, out var alertComp))
+            if (autoComp.AlertKeys.Count <= 0 || !TryComp<AlertsComponent>(uid, out var alertComp))
             {
                 RemCompDeferred(uid, autoComp);
                 continue;
             }
 
-            foreach (var (alertKey,  alertState) in autoComp.Alerts)
+            var removeList = new List<AlertKey>();
+            foreach (var alertKey in autoComp.AlertKeys)
             {
+                alertComp.Alerts.TryGetValue(alertKey, out var alertState);
+
                 if (alertState.AutoRemove is null || alertState.AutoRemove >= _timing.CurTime)
                     continue;
-
-                autoComp.Alerts.Remove(alertKey);
+                removeList.Add(alertKey);
                 alertComp.Alerts.Remove(alertKey);
                 dirtyComp = true;
             }
+
+            foreach (var alertKey in removeList)
+            {
+                autoComp.AlertKeys.Remove(alertKey);
+            }
+
             if (dirtyComp)
                 Dirty(uid, alertComp);
         }
