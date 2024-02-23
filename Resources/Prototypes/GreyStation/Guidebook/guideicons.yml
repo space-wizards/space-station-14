@@ -1,0 +1,53 @@
+- type: entity
+  id: BookImageNukie
+  name: "Guide Icon(DO NOT SPAWN)"
+  components:
+    - type: Sprite
+      sprite: GreyStation/Images/images.rsi
+      layers:
+        - state: nukie
+
+- type: entity
+  id: BookImageTerminator
+  name: "Guide Icon(DO NOT SPAWN)"
+  components:
+    - type: Sprite
+      sprite: GreyStation/Images/images.rsi
+      layers:
+        - state: terminator
+
+- type: entity
+  id: BookImageRevolutionary
+  name: "Guide Icon(DO NOT SPAWN)"
+  components:
+    - type: Sprite
+      sprite: GreyStation/Images/images.rsi
+      layers:
+        - state: revolutionary
+
+- type: entity
+  id: BookImageSpaceNinja
+  name: "Guide Icon(DO NOT SPAWN)"
+  components:
+    - type: Sprite
+      sprite: GreyStation/Images/images.rsi
+      layers:
+        - state: spaceninja
+
+- type: entity
+  id: BookImageSecurityOfficer
+  name: "Guide Icon(DO NOT SPAWN)"
+  components:
+    - type: Sprite
+      sprite: GreyStation/Images/images.rsi
+      layers:
+        - state: securityofficer
+
+- type: entity
+  id: BookImageHeadOfSecurity
+  name: "Guide Icon(DO NOT SPAWN)"
+  components:
+    - type: Sprite
+      sprite: GreyStation/Images/images.rsi
+      layers:
+        - state: headofsecurity

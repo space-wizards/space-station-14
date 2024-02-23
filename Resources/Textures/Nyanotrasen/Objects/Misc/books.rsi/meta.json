@@ -1,0 +1,17 @@
+{
+   "version" : 1,
+   "copyright" : "@Vordenburg",
+   "license" : "CC-BY-SA-4.0",
+   "size" : {
+      "x" : 32,
+      "y" : 32
+   },
+   "states" : [
+      {
+         "name" : "law_space"
+      },
+      {
+         "name" : "law_trial"
+      }
+   ]
+}
