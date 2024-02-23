@@ -5,7 +5,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Linguini.Shared.Util;
 
-namespace Content.Server.Chat.V2.Censorship;
+namespace Content.Server.Chat.V2.Moderation;
 
 /// <summary>
 /// A basic censor. Mostly built from reference from Go-Away. Not bullet-proof.

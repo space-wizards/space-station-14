@@ -46,12 +46,12 @@ public sealed class AttemptLoocEvent : EntityEventArgs
 /// Raised when a character has failed to speak in LOOC.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LoocAttemptFailedEvent : EntityEventArgs
+public sealed class LoocFailedEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public readonly string Reason;
 
-    public LoocAttemptFailedEvent(NetEntity speaker, string reason)
+    public LoocFailedEvent(NetEntity speaker, string reason)
     {
         Speaker = speaker;
         Reason = reason;

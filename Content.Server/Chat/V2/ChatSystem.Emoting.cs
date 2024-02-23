@@ -11,11 +11,6 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeServerEmoting()
-    {
-        SubscribeLocalEvent<EmoteCreatedEvent>((msg, args) => { SendEmoteMessage(msg.Sender, msg.Message, msg.Range); });
-    }
-
     /// <summary>
     /// Try and send an emote. If the emote contains some specific emote strings, they will also be emoted, to a max of 2 at a time.
     /// </summary>

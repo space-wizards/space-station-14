@@ -2,42 +2,35 @@
 using Content.Server.Power.Components;
 using Content.Server.Radio;
 using Content.Server.Radio.Components;
-using Content.Server.VoiceMask;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeServerRadio()
-    {
-        SubscribeLocalEvent<RadioCreatedEvent>((msg, args) => { SendRadioMessage(msg.Speaker, msg.Message, msg.Channel); });
-    }
-
     public void SendRadioMessageViaDevice(EntityUid entityUid, string message, RadioChannelPrototype channel, EntityUid device, string asName = "")
     {
-        if (!TryBuildSuccessEvent(entityUid, ref message, channel, ref asName, out var msgOut, device))
+        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut, device))
             return;
 
         TransmitToReceivers(entityUid, message, channel, asName, msgOut);
     }
 
     /// <summary>
-    /// Send a radio message via a channel, whispering if needed.
+    /// Send a radio message via a channel, whispering (or shouting!) if needed.
     /// </summary>
     /// <param name="entityUid">The entity who is chatting</param>
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="channel">The channel the message can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    public void SendRadioMessageWithWhisper(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "")
+    public void SendRadioMessageWithSpeech(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "")
     {
-        // If you don't have intrinsic radio, you need to whisper to send a message using your voice box.
+        // If you don't have an internal radio, you need to send a message using your voice box.
         if (!TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
         {
             TrySendWhisperMessage(entityUid, message, asName);
@@ -55,7 +48,7 @@ public sealed partial class ChatSystem
     /// <param name="asName">Override the name this entity will appear as.</param>
     public void SendRadioMessageToTargets(EntityUid entityUid, string message, RadioChannelPrototype channel, Filter allowList, string asName = "")
     {
-        if (!TryBuildSuccessEvent(entityUid, ref message, channel, ref asName, out var msgOut))
+        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut))
             return;
 
         RaiseNetworkEvent(msgOut, allowList);
@@ -72,7 +65,7 @@ public sealed partial class ChatSystem
     /// <param name="asName">Override the name this entity will appear as.</param>
     public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "")
     {
-        if (!TryBuildSuccessEvent(entityUid, ref message, channel, ref asName, out var msgOut))
+        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut))
             return;
 
         TransmitToReceivers(entityUid, message, channel, asName, msgOut);
@@ -97,63 +90,14 @@ public sealed partial class ChatSystem
             $"Radio from {ToPrettyString(entityUid):user} on {channel} as {asName}: {message}");
     }
 
-    private bool TryBuildSuccessEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioEmittedEvent? msgOut, EntityUid? device = null)
+    private bool TryBuildEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioEmittedEvent? msgOut, EntityUid? device = null)
     {
-        message = SanitizeSpeechMessage(
-            entityUid,
-            message,
-            out var emoteStr
-        );
-
-        // If you lol on the radio, you should lol in the emote chat.
-        if (emoteStr?.Length > 0)
-        {
-            TrySendEmoteMessageWithoutRecursion(entityUid, emoteStr, asName);
-        }
-
-        if (string.IsNullOrEmpty(message))
+        if (!TrySanitizeAndTransformSpokenMessage(entityUid, ref message, ref asName, out var name))
         {
             msgOut = null;
 
             return false;
         }
-
-        // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
-        try
-        {
-            message = FormattedMessage.RemoveMarkup(message);
-        }
-        catch (Exception e)
-        {
-            _logger.GetSawmill("chat")
-                .Error(
-                    $"UID {entityUid} attempted to send {message} {(asName.Length > 0 ? "as name, " : "")} but threw a parsing error: {e}");
-
-            msgOut = null;
-
-            return false;
-        }
-
-        message = TransformSpeech(entityUid, FormattedMessage.RemoveMarkup(message));
-
-        if (string.IsNullOrEmpty(message))
-        {
-            msgOut = null;
-
-            return false;
-        }
-
-        if (string.IsNullOrEmpty(asName))
-        {
-            asName = GetSpeakerName(entityUid);
-        }
-
-        if (TryComp<VoiceMaskComponent>(entityUid, out var mask))
-        {
-            asName = mask.VoiceName;
-        }
-
-        var name = SanitizeName(asName, UseEnglishGrammar);
 
         msgOut = new RadioEmittedEvent(
             entityUid,

@@ -13,15 +13,6 @@ public sealed partial class ChatSystem
     public bool DeadLoocEnabled { get; private set; }
     public bool CritLoocEnabled { get; private set; }
 
-    public void InitializeServerLoocChat()
-    {
-        SubscribeLocalEvent<LoocCreatedEvent>((msg, args) => { SendLoocMessage(msg.Speaker, msg.Message); });
-
-        Configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
-        Configuration.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
-        Configuration.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
-    }
-
     public void SendLoocMessage(EntityUid source, string message)
     {
         message = SanitizeMessage(message);
@@ -33,7 +24,7 @@ public sealed partial class ChatSystem
         if (!CritLoocEnabled && _mobState.IsCritical(source))
             return;
 
-        var name = SanitizeName(Identity.Name(source, EntityManager), UseEnglishGrammar);
+        var name = SanitizeName(Identity.Name(source, EntityManager), CurrentCultureIsSomeFormOfEnglish);
 
         if (!_admin.IsAdmin(source) && !LoocEnabled)
             return;

@@ -1,7 +1,31 @@
 ﻿using System.Linq;
-using Robust.Shared.Serialization;
+using System.Numerics;
+using Content.Shared.Chat.V2.Repository;
+using Content.Shared.GameTicking;
+using Robust.Shared.Asynchronous;
+using Robust.Shared.Replays;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Chat.V2.Repository;
+
+public interface IStorableChatEvent
+{
+    public EntityUid GetSender();
+    public void SetId(uint id);
+    public void PatchMessage(string message);
+    public string GetMessageType();
+    public string GetMessage();
+}
+
+public struct StoredChatEvent
+{
+    public string userName;
+    public string entityName;
+    public string message;
+    public Vector2 location;
+    public string messageType;
+    public string map;
+}
 
 /// <summary>
 /// Stores <see cref="IStorableChatEvent"/>, gives them UIDs, and issues them again locally for actioning.
@@ -14,14 +38,21 @@ namespace Content.Server.Chat.V2.Repository;
 /// </remarks>
 public sealed class ChatRepository : EntitySystem
 {
+    [Dependency] private readonly IReplayRecordingManager _replay = default!;
+
     // Clocks should start at 1, as 0 indicates "clock not set" or "clock forgotten to be set by bad programmer".
     private uint _clock = 1;
-    private Dictionary<uint, IStorableChatEvent> _messages = new();
-    private Dictionary<string, Dictionary<uint, IStorableChatEvent>> _playerMessages = new();
+    private Dictionary<uint, StoredChatEvent> _messages = new();
+    private Dictionary<string, Dictionary<uint, StoredChatEvent>> _playerMessages = new();
 
     public override void Initialize()
     {
         Refresh();
+
+        _replay.RecordingFinished += finished =>
+        {
+            // TODO: resolve https://github.com/space-wizards/space-station-14/issues/25485 so we can dump the chat to disc.
+        };
     }
 
     /// <summary>
@@ -30,23 +61,46 @@ public sealed class ChatRepository : EntitySystem
     /// <param name="ev">The event to store and raise</param>
     /// <returns>If storing and raising succeeded.</returns>
     /// <remarks>This function is not idempotent or thread safe.</remarks>
-    public bool Add(IStorableChatEvent ev)
+    public bool Add<T> (T ev) where T : IStorableChatEvent
     {
         var i = _clock++;
-        ev.SetId(i);
-        _messages.Add(i, ev);
-
         var user = GetUserForEntity(ev);
+        ev.SetId(i);
+
+        var location = new Vector2();
+        var map = "";
+
+        if (TryComp<TransformComponent>(ev.GetSender(), out var comp))
+        {
+            location = comp.Coordinates.Position;
+
+            if (comp.MapUid != null)
+            {
+                map = Name(comp.MapUid.Value);
+            }
+        }
+
+        var storedEv = new StoredChatEvent
+        {
+            userName = user,
+            entityName = Name(ev.GetSender()),
+            message = ev.GetMessage(),
+            location = location,
+            messageType = ev.GetMessageType(),
+            map = map
+        };
+
+        _messages.Add(i, storedEv);
 
         if (!_playerMessages.TryGetValue(user, out var set))
         {
-            set = new Dictionary<uint, IStorableChatEvent>();
+            set = new Dictionary<uint, StoredChatEvent>();
+            _playerMessages.Add(user, set);
         }
 
-        set.Add(i, ev);
-        _playerMessages.Add(user, set);
+        set.Add(i, storedEv);
 
-        RaiseLocalEvent(ev);
+        RaiseLocalEvent(ev.GetSender(), ev, true);
 
         return true;
     }
@@ -56,7 +110,7 @@ public sealed class ChatRepository : EntitySystem
     /// </summary>
     /// <param name="id">The UID of a message.</param>
     /// <returns>The event, if it exists.</returns>
-    public IStorableChatEvent? GetMessageFor(uint id)
+    public StoredChatEvent? GetMessageFor(uint id)
     {
         return _messages[id];
     }
@@ -66,7 +120,7 @@ public sealed class ChatRepository : EntitySystem
     /// </summary>
     /// <param name="entity">The entity which has a user we want the messages of.</param>
     /// <returns>An array of messages.</returns>
-    public IStorableChatEvent[] GetMessagesFor(EntityUid entity)
+    public StoredChatEvent[] GetMessagesFor(EntityUid entity)
     {
         return _playerMessages[GetUserForEntity(entity)].Values.ToArray();
     }
@@ -86,7 +140,7 @@ public sealed class ChatRepository : EntitySystem
             return false;
         }
 
-        ev.PatchMessage(message);
+        ev.message = message;
 
         var patch = new MessagePatchedEvent(id, message);
         RaiseLocalEvent(patch);
@@ -111,7 +165,7 @@ public sealed class ChatRepository : EntitySystem
 
         _messages.Remove(id);
 
-        if (_playerMessages.TryGetValue(GetUserForEntity(ev), out var set))
+        if (_playerMessages.TryGetValue(ev.userName, out var set))
         {
             set.Remove(id);
         }
@@ -146,7 +200,7 @@ public sealed class ChatRepository : EntitySystem
         RaiseLocalEvent(ev);
         RaiseNetworkEvent(ev);
 
-        _playerMessages.Add(user, new Dictionary<uint, IStorableChatEvent>());
+        _playerMessages.Add(user, new Dictionary<uint, StoredChatEvent>());
 
         return true;
     }
@@ -157,8 +211,8 @@ public sealed class ChatRepository : EntitySystem
     public void Refresh()
     {
         _clock = 1;
-        _messages = new Dictionary<uint, IStorableChatEvent>();
-        _playerMessages = new Dictionary<string, Dictionary<uint, IStorableChatEvent>>();
+        _messages = new Dictionary<uint, StoredChatEvent>();
+        _playerMessages = new Dictionary<string, Dictionary<uint, StoredChatEvent>>();
     }
 
     private string GetUserForEntity(IStorableChatEvent ev)
@@ -171,41 +225,5 @@ public sealed class ChatRepository : EntitySystem
     {
         // Arcane C# interpolated string nonsense ahoy
         return $"{ToPrettyString(uid):user}";
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class MessagePatchedEvent : EntityEventArgs
-{
-    public uint MessageId;
-    public string NewMessage;
-
-    public MessagePatchedEvent(uint id, string newMessage)
-    {
-        MessageId = id;
-        NewMessage = newMessage;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class MessageDeletedEvent : EntityEventArgs
-{
-    public uint MessageId;
-
-    public MessageDeletedEvent(uint id)
-    {
-        MessageId = id;
-    }
-}
-
-// It is the only way to be sure.
-[Serializable, NetSerializable]
-public sealed class MessagesNukedEvent : EntityEventArgs
-{
-    public uint[] messageIds;
-
-    public MessagesNukedEvent(IEnumerable<uint> set)
-    {
-        messageIds = set.ToArray();
     }
 }

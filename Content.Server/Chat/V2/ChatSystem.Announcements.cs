@@ -1,4 +1,4 @@
-﻿using Content.Server.Chat.V2.Censorship;
+﻿using Content.Server.Chat.V2.Moderation;
 using Content.Server.Station.Components;
 using Content.Shared.Chat.V2;
 using Content.Shared.Database;
@@ -29,7 +29,7 @@ public sealed partial class ChatSystem
     {
         ChatCensor.Censor(message, out message);
 
-        var msgOut = new AnnouncementEvent(SanitizeName(sender, UseEnglishGrammar), message,messageColorOverride: colorOverride);
+        var msgOut = new AnnouncementEvent(SanitizeName(sender, CurrentCultureIsSomeFormOfEnglish), message,messageColorOverride: colorOverride);
 
         RaiseNetworkEvent(msgOut);
 

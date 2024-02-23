@@ -1694,6 +1694,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("chat.fancy_name_background", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying a background under the speaking character's name.");
 
         /// <summary>
+        /// Should ALL CAPS messages in the chosen language indicate someone is shouting? Disable this if your server's
+        /// language or culture doesn't use this (e.g. your server language is Japanese).
+        /// </summary>
+        public static readonly CVarDef<bool> ChatUpperCaseMeansShouting =
+            CVarDef.Create("chat.upper_case_means_shouting", true, CVar.ARCHIVE);
+
+        /// <summary>
         /// A message broadcast to each player that joins the lobby.
         /// May be changed by admins ingame through use of the "set-motd" command.
         /// In this case the new value, if not empty, is broadcast to all connected players and saved between rounds.

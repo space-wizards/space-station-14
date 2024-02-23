@@ -2,9 +2,10 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.Chat.V2.Censorship;
+using Content.Server.Chat.V2.Moderation;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Systems;
+using Content.Server.VoiceMask;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.V2;
 using Content.Shared.Database;
@@ -37,33 +38,68 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-    private int _periodLength;
-    private bool _chatRateLimitAnnounceAdmins;
-    private int _chatRateLimitAnnounceAdminDelay;
-    private int _chatRateLimitCount;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _periodLength = Configuration.GetCVar(CCVars.ChatRateLimitPeriod);
-        _chatRateLimitAnnounceAdmins = Configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdmins);
-        _chatRateLimitAnnounceAdminDelay = Configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdminsDelay);
-        _chatRateLimitCount = Configuration.GetCVar(CCVars.ChatRateLimitCount);
+        Configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
+        Configuration.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
+        Configuration.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
 
-        Configuration.OnValueChanged(CCVars.ChatRateLimitPeriod, periodLength => _periodLength = periodLength);
-        Configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdmins, announce => _chatRateLimitAnnounceAdmins = announce);
-        Configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdminsDelay, announce => _chatRateLimitAnnounceAdminDelay = announce);
-        Configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount);
+        SubscribeLocalEvent<DeadChatCreatedEvent>(msg => { SendDeadChatMessage(msg.Speaker, msg.Message); });
+        SubscribeLocalEvent<EmoteCreatedEvent>(msg => { SendEmoteMessage(msg.Sender, msg.Message, msg.Range); });
+        SubscribeLocalEvent<LocalChatCreatedEvent>(msg => { SendLocalChatMessage(msg.Speaker, msg.Message, msg.Range); });
+        SubscribeLocalEvent<LoocCreatedEvent>(msg => { SendLoocMessage(msg.Speaker, msg.Message); });
+        SubscribeLocalEvent<RadioCreatedEvent>(msg => { SendRadioMessageWithSpeech(msg.Speaker, msg.Message, msg.Channel); });
+        SubscribeLocalEvent<WhisperCreatedEvent>(msg => { SendWhisperMessage(msg.Speaker, msg.Message, msg.MinRange, msg.MaxRange); });
+    }
 
-        InitializeServerDeadChat();
-        InitializeServerEmoting();
-        InitializeServerLocalChat();
-        InitializeServerLoocChat();
-        InitializeServerRadio();
-        InitializeServerWhisper();
+    private bool TrySanitizeAndTransformSpokenMessage(EntityUid entityUid, ref string message, ref string asName, out string name)
+    {
+        name = "";
+        message = SanitizeSpeechMessage(entityUid, message, out var emoteStr);
+
+        if (emoteStr?.Length > 0)
+        {
+            TrySendEmoteMessageWithoutRecursion(entityUid, emoteStr, asName);
+        }
+
+        if (string.IsNullOrEmpty(message))
+        {
+            return false;
+        }
+
+        // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
+        try
+        {
+            message = FormattedMessage.RemoveMarkup(message);
+        }
+        catch (Exception e)
+        {
+            _logger.GetSawmill("chat")
+                .Error(
+                    $"UID {entityUid} attempted to send {message} {(asName.Length > 0 ? "as name, " : "")} but threw a parsing error: {e}");
+
+            return false;
+        }
+
+        message = TransformSpeech(entityUid, FormattedMessage.RemoveMarkup(message));
+
+        if (string.IsNullOrEmpty(message))
+            return false;
+
+        if (string.IsNullOrEmpty(asName))
+            asName = GetSpeakerName(entityUid);
+
+        if (TryComp<VoiceMaskComponent>(entityUid, out var mask))
+        {
+            asName = mask.VoiceName;
+        }
+
+        name = SanitizeName(asName, CurrentCultureIsSomeFormOfEnglish);
+
+        return true;
     }
 
     private string SanitizeSpeechMessage(EntityUid source, string message, out string? emoteStr)
@@ -82,7 +118,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (capitalizeFirstLetter)
             message = CapitalizeFirstLetter(message);
 
-        if (UseEnglishGrammar)
+        if (CurrentCultureIsSomeFormOfEnglish)
             message = CapitalizeIPronoun(message);
 
         if (ShouldPunctuate)
@@ -96,7 +132,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         message = message.Trim();
         ChatCensor.Censor(message, out message);
 
-        if (UseEnglishGrammar)
+        if (CurrentCultureIsSomeFormOfEnglish)
         {
             message = CapitalizeFirstLetter(message);
             message = CapitalizeIPronoun(message);
@@ -136,54 +172,5 @@ public sealed partial class ChatSystem : SharedChatSystem
             name = CapitalizeFirstLetter(name);
 
         return FormattedMessage.EscapeText(name);
-    }
-
-    public bool IsRateLimited(EntityUid entityUid, out string reason)
-    {
-        reason = "";
-
-        if (!_playerManager.TryGetSessionByEntity(entityUid, out var session))
-            return false;
-
-        var data = session.ContentData();
-
-        if (data == null)
-            return false;
-
-        var time = _gameTiming.RealTime;
-
-        if (data.MessageCountExpiresAt < time)
-        {
-            data.MessageCountExpiresAt = time + TimeSpan.FromSeconds(_periodLength);
-            data.MessageCount /= 2; // Backoff from spamming slowly
-            data.RateLimitAnnouncedToPlayer = false;
-        }
-
-        data.MessageCount += 1;
-
-        if (data.MessageCount <= _chatRateLimitCount)
-            return false;
-
-        // Breached rate limits, inform admins if configured.
-        if (_chatRateLimitAnnounceAdmins)
-        {
-            if (data.CanAnnounceToAdminsNextAt < time)
-            {
-                _chatManager.SendAdminAlert(Loc.GetString("chat-manager-rate-limit-admin-announcement", ("player", session.Name)));
-
-                data.CanAnnounceToAdminsNextAt = time + TimeSpan.FromSeconds(_chatRateLimitAnnounceAdminDelay);
-            }
-        }
-
-        if (data.RateLimitAnnouncedToPlayer)
-            return true;
-
-        reason = Loc.GetString(Loc.GetString("chat-manager-rate-limited"));
-
-        _adminLogger.Add(LogType.ChatRateLimited, LogImpact.Medium, $"Player {session} breached chat rate limits");
-
-        data.RateLimitAnnouncedToPlayer = true;
-
-        return true;
     }
 }

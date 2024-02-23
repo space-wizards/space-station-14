@@ -1,20 +1,13 @@
-﻿using Content.Shared.Chat.Prototypes;
+﻿using Content.Server.Chat.V2.Repository;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 
 namespace Content.Server.Chat.V2;
 
-public interface IStorableChatEvent
-{
-    public EntityUid GetSender();
-    public void SetId(uint id);
-    public void PatchMessage(string message);
-}
-
 /// <summary>
 /// Raised when a comms console makes an announcement.
 /// </summary>
-[ByRefEvent]
-public sealed class CommsAnnouncementCreatedEvent : EntityEventArgs, IStorableChatEvent
+public sealed class CommsAnnouncementCreatedEvent : IStorableChatEvent
 {
     public uint Id;
     public EntityUid Sender;
@@ -42,13 +35,22 @@ public sealed class CommsAnnouncementCreatedEvent : EntityEventArgs, IStorableCh
     {
         Message = message;
     }
+
+    public string GetMessageType()
+    {
+        return "Announcement";
+    }
+
+    public string GetMessage()
+    {
+        return Message;
+    }
 }
 
 /// <summary>
 /// Raised locally when a character speaks in Dead Chat.
 /// </summary>
-[Serializable]
-public sealed class DeadChatCreatedEvent : EntityEventArgs, IStorableChatEvent
+public sealed class DeadChatCreatedEvent : IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
@@ -76,6 +78,16 @@ public sealed class DeadChatCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Message = message;
     }
+
+    public string GetMessageType()
+    {
+        return "DeadChat";
+    }
+
+    public string GetMessage()
+    {
+        return Message;
+    }
 }
 
 /// <summary>
@@ -100,8 +112,7 @@ public struct HandleEmoteEvent
 /// Raised by chat system when entity made some emote.
 /// Use it to play sound, change sprite or something else.
 /// </summary>
-[Serializable]
-public struct EmoteCreatedEvent : IStorableChatEvent
+public sealed class EmoteCreatedEvent : IStorableChatEvent
 {
     public uint Id;
     public EntityUid Sender;
@@ -129,13 +140,22 @@ public struct EmoteCreatedEvent : IStorableChatEvent
     {
         Message = message;
     }
+
+    public string GetMessageType()
+    {
+        return "Emote";
+    }
+
+    public string GetMessage()
+    {
+        return Message;
+    }
 }
 
 /// <summary>
 /// A server-only event that is fired when an entity chats in local chat.
 /// </summary>
-[Serializable]
-public sealed class LocalChatCreatedEvent : EntityEventArgs, IStorableChatEvent
+public sealed class LocalChatCreatedEvent : IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
@@ -163,13 +183,22 @@ public sealed class LocalChatCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Message = message;
     }
+
+    public string GetMessageType()
+    {
+        return "LocalChat";
+    }
+
+    public string GetMessage()
+    {
+        return Message;
+    }
 }
 
 /// <summary>
 /// Raised when a character speaks in LOOC.
 /// </summary>
-[Serializable]
-public sealed class LoocCreatedEvent : EntityEventArgs, IStorableChatEvent
+public sealed class LoocCreatedEvent : IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
@@ -195,13 +224,22 @@ public sealed class LoocCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Message = message;
     }
+
+    public string GetMessageType()
+    {
+        return "LoocChat";
+    }
+
+    public string GetMessage()
+    {
+        return Message;
+    }
 }
 
 /// <summary>
 /// Raised when a character speaks on the radio.
 /// </summary>
-[Serializable]
-public sealed class RadioCreatedEvent : EntityEventArgs, IStorableChatEvent
+public sealed class RadioCreatedEvent : IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
@@ -233,6 +271,16 @@ public sealed class RadioCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Message = message;
     }
+
+    public string GetMessageType()
+    {
+        return $"Radio:{Channel.Name}";
+    }
+
+    public string GetMessage()
+    {
+        return Message;
+    }
 }
 
 /// <summary>
@@ -261,13 +309,17 @@ public sealed class RadioEmittedEvent : EntityEventArgs
         Message = message;
         Channel = channel;
     }
+
+    public string GetMessage()
+    {
+        return Message;
+    }
 }
 
 /// <summary>
 /// Raised when a character whispers.
 /// </summary>
-[Serializable]
-public sealed class WhisperCreatedEvent : EntityEventArgs, IStorableChatEvent
+public sealed class WhisperCreatedEvent : IStorableChatEvent
 {
     public uint Id;
     public EntityUid Speaker;
@@ -297,29 +349,15 @@ public sealed class WhisperCreatedEvent : EntityEventArgs, IStorableChatEvent
     {
         Message = message;
     }
-}
 
-/// <summary>
-/// Raised when a character whispers.
-/// </summary>
-[Serializable]
-public sealed class WhisperEmittedEvent : EntityEventArgs
-{
-    public EntityUid Speaker;
-    public string AsName;
-    public string Message;
-    public string ObfuscatedMessage;
-    public float MinRange;
-    public float MaxRange;
-
-    public WhisperEmittedEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
+    public string GetMessageType()
     {
-        Speaker = speaker;
-        AsName = asName;
-        Message = message;
-        ObfuscatedMessage = obfuscatedMessage;
-        MinRange = minRange;
-        MaxRange = maxRange;
+        return "Whisper";
+    }
+
+    public string GetMessage()
+    {
+        return Message;
     }
 }
 

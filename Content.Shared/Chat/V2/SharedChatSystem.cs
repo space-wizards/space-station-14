@@ -23,7 +23,8 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] protected readonly IConfigurationManager Configuration = default!;
 
-    protected bool UseEnglishGrammar;
+    protected bool UpperCaseMessagesMeanShouting;
+    protected bool CurrentCultureIsSomeFormOfEnglish;
     protected bool ShouldPunctuate;
     protected int MaxChatMessageLength;
     protected int MaxAnnouncementMessageLength;
@@ -42,15 +43,13 @@ public abstract partial class SharedChatSystem : EntitySystem
     {
         base.Initialize();
 
-        UseEnglishGrammar = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
+        CurrentCultureIsSomeFormOfEnglish = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
                                     || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
-        ShouldPunctuate = Configuration.GetCVar(CCVars.ChatPunctuation);
-        MaxChatMessageLength = Configuration.GetCVar(CCVars.ChatMaxMessageLength);
-        MaxAnnouncementMessageLength = Configuration.GetCVar(CCVars.ChatMaxAnnouncementLength);
 
-        Configuration.OnValueChanged(CCVars.ChatPunctuation, shouldPunctuate => ShouldPunctuate = shouldPunctuate);
-        Configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => MaxChatMessageLength = maxLen);
-        Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxAnnouncementMessageLength = maxLen);
+        Configuration.OnValueChanged(CCVars.ChatPunctuation, shouldPunctuate => ShouldPunctuate = shouldPunctuate, true);
+        Configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => MaxChatMessageLength = maxLen, true);
+        Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxAnnouncementMessageLength = maxLen, true);
+        Configuration.OnValueChanged(CCVars.ChatUpperCaseMeansShouting, maxLen => UpperCaseMessagesMeanShouting = maxLen, true);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
 

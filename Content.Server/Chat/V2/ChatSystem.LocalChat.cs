@@ -9,11 +9,6 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeServerLocalChat()
-    {
-        SubscribeLocalEvent<LocalChatCreatedEvent>((msg, args) => { SendLocalChatMessage(msg.Speaker, msg.Message, msg.Range); });
-    }
-
     /// <summary>
     /// Try to end a chat in Local.
     /// </summary>
@@ -39,42 +34,10 @@ public sealed partial class ChatSystem
     /// <param name="asName">Override the name this entity will appear as.</param>
     public void SendLocalChatMessage(EntityUid entityUid, string message, float range, string asName = "")
     {
-        message = SanitizeSpeechMessage(entityUid,message,out var emoteStr);
-
-        if (emoteStr?.Length > 0)
-        {
-            TrySendEmoteMessageWithoutRecursion(entityUid, emoteStr, asName);
-        }
-
-        if (string.IsNullOrEmpty(message))
-        {
+        if (!TrySanitizeAndTransformSpokenMessage(entityUid, ref message, ref asName, out var name))
             return;
-        }
 
-        try
-        {
-            message = FormattedMessage.RemoveMarkup(message);
-        }
-        catch (Exception e)
-        {
-            _logger.GetSawmill("chat").Error($"UID {entityUid} attempted to send {message} {(asName.Length > 0 ? "as name, " : "")} but threw a parsing error: {e}");
-
-            return;
-        }
-
-        message = TransformSpeech(entityUid, FormattedMessage.RemoveMarkup(message));
-
-        if (string.IsNullOrEmpty(message))
-        {
-            return;
-        }
-
-        if (string.IsNullOrEmpty(asName))
-        {
-            asName = GetSpeakerName(entityUid);
-        }
-
-        var msgOut = new LocalChatEvent(GetNetEntity(entityUid), SanitizeName(asName, UseEnglishGrammar), message);
+        var msgOut = new LocalChatEvent(GetNetEntity(entityUid), name, message);
 
         foreach (var session in GetLocalChatRecipients(entityUid, range))
         {
@@ -96,7 +59,7 @@ public sealed partial class ChatSystem
 
     public void SendBackgroundChatMessage(EntityUid source, string message, string asName = "")
     {
-        RaiseNetworkEvent(new BackgroundChatEvent(GetNetEntity(EntityUid.Invalid), message, SanitizeName(asName, UseEnglishGrammar)));
+        RaiseNetworkEvent(new BackgroundChatEvent(GetNetEntity(EntityUid.Invalid), message, SanitizeName(asName, CurrentCultureIsSomeFormOfEnglish)));
     }
 
     private List<ICommonSession> GetLocalChatRecipients(EntityUid source, float range)

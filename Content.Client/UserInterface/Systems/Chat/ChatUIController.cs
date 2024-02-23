@@ -206,7 +206,7 @@ public sealed class ChatUIController : UIController
         SubscribeNetworkEvent<LocalChatFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<WhisperFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<EmoteFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Emoter), ev.Reason));
-        SubscribeNetworkEvent<LoocAttemptFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+        SubscribeNetworkEvent<LoocFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<RadioFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<DeadChatFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
 

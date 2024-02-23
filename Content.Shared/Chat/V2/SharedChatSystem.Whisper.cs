@@ -85,3 +85,27 @@ public sealed class WhisperFailedEvent : EntityEventArgs
         Reason = reason;
     }
 }
+
+/// <summary>
+/// Raised when a character whispers.
+/// </summary>
+[Serializable]
+public sealed class WhisperEmittedEvent : EntityEventArgs
+{
+    public EntityUid Speaker;
+    public string AsName;
+    public string Message;
+    public string ObfuscatedMessage;
+    public float MinRange;
+    public float MaxRange;
+
+    public WhisperEmittedEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
+    {
+        Speaker = speaker;
+        AsName = asName;
+        Message = message;
+        ObfuscatedMessage = obfuscatedMessage;
+        MinRange = minRange;
+        MaxRange = maxRange;
+    }
+}

@@ -86,7 +86,7 @@ public sealed partial class CommunicationsConsoleSystem
         message = SharedChatSystem.SanitizeAnnouncement(message);
 
         var ev = new CommsAnnouncementCreatedEvent(sender, console, message);
-        RaiseLocalEvent(ref ev);
+        RaiseLocalEvent(ev);
 
         Loc.TryGetString(comp.Title, out var title);
         title ??= comp.Title;

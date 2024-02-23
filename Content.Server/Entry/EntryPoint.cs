@@ -6,7 +6,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.V2.Censorship;
+using Content.Server.Chat.V2.Moderation;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chat.V2;
+﻿using System.Globalization;
+using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
@@ -9,11 +10,6 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void InitializeServerWhisper()
-    {
-        SubscribeLocalEvent<WhisperCreatedEvent>((msg, args) => { SendWhisperMessage(msg.Speaker, msg.Message, msg.MinRange, msg.MaxRange); });
-    }
-
     public bool TrySendWhisperMessage(EntityUid entityUid, string message, string asName = "")
     {
         if (!TryComp<WhisperableComponent>(entityUid, out var whisper))
@@ -34,41 +30,16 @@ public sealed partial class ChatSystem
     /// <param name="asName">Override the name this entity will appear as.</param>
     public void SendWhisperMessage(EntityUid entityUid, string message, float minRange, float maxRange, string asName = "")
     {
-        message = SanitizeSpeechMessage(entityUid, message, out var emoteStr);
-
-        if (emoteStr?.Length > 0)
-        {
-            TrySendEmoteMessageWithoutRecursion(entityUid, emoteStr, asName);
-        }
-
-        if (string.IsNullOrEmpty(message))
+        // You can't whisper if you're shouting and are capable of talking normally.
+        if (IsShouting(message) && TrySendLocalChatMessage(entityUid, message, asName))
         {
             return;
         }
 
-        // Mitigation for exceptions such as https://github.com/space-wizards/space-station-14/issues/24671
-        try
-        {
-            message = FormattedMessage.RemoveMarkup(message);
-        }
-        catch (Exception e)
-        {
-            _logger.GetSawmill("chat").Error($"UID {entityUid} attempted to send {message} {(asName.Length > 0 ? "as name, " : "")} but threw a parsing error: {e}");
-
+        if (!TrySanitizeAndTransformSpokenMessage(entityUid, ref message, ref asName, out var name))
             return;
-        }
-
-        message = TransformSpeech(entityUid, FormattedMessage.RemoveMarkup(message));
-
-        if (string.IsNullOrEmpty(message))
-            return;
-
-        if (string.IsNullOrEmpty(asName))
-            asName = GetSpeakerName(entityUid);
 
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
-
-        var name = SanitizeName(asName, UseEnglishGrammar);
 
         RaiseLocalEvent(new WhisperEmittedEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
 
@@ -160,5 +131,25 @@ public sealed partial class ChatSystem
         }
 
         return (minRecipients, maxRecipients, maxRecipientsNoSight);
+    }
+
+    /// <summary>
+    /// Returns if we think someone is talking loudly enough to not be whispering. The rules are:
+    /// 1. The message ends with two exclamation marks (as it's possible to exclaim whilst whispering)
+    /// 2. The message is entirely all caps (because "SCIENCE IS SO UTTERLY WORTHLESS" is clearly shouting) and is long enough not to clash with department heads (e.g. "CMO.").
+    /// </summary>
+    private bool IsShouting(string message)
+    {
+        if (message.EndsWith("!!"))
+        {
+            return true;
+        }
+
+        if (!UpperCaseMessagesMeanShouting)
+        {
+            return false;
+        }
+
+        return message.Length >= 5 && message.Equals(message.ToUpper(), StringComparison.CurrentCulture);
     }
 }

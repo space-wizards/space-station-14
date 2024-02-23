@@ -45,7 +45,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             {
                 if (TryComp(viewer, out ActorComponent? actor))
                 {
-                    RaiseNetworkEvent(ev, actor.PlayerSession);
+                    //RaiseNetworkEvent(ev, actor.PlayerSession);
                 }
             }
         }
