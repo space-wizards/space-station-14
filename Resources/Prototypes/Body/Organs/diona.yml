@@ -48,18 +48,6 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Brain
-  - type: InputMover
-  - type: Examiner
-  - type: Lung #lungs in they head. why they there tho?
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Plant ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
 
 - type: entity
   id: OrganDionaEyes
@@ -102,3 +90,104 @@
       - id: Narcotic
       - id: Alcohol
         rateModifier: 0.1
+
+- type: entity
+  id: OrganDionaLungs
+  parent: BaseDionaOrgan
+  name: lungs
+  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Lung 
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Plant ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100
+        canReact: False
+
+# Organs that turn into nymphs on removal
+- type: entity
+  id: OrganDionaBrainNymph
+  parent: OrganDionaBrain
+  noSpawn: true
+  name: brain
+  description: "The source of incredible, unending intelligence. Honk."
+  components:
+  - type: Brain
+  - type: Nymph # This will make the organs turn into a nymph when they're removed. 
+    entityPrototype: OrganDionaNymphBrain
+    transferMind: true
+
+- type: entity
+  id: OrganDionaStomachNymph
+  parent: OrganDionaStomach
+  noSpawn: true
+  name: stomach
+  description: "Gross. This is hard to stomach."
+  components:
+  - type: Nymph
+    entityPrototype: OrganDionaNymphStomach
+
+- type: entity
+  id: OrganDionaLungsNymph
+  parent: OrganDionaLungs
+  noSpawn: true
+  name: lungs
+  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  components:
+  - type: Nymph
+    entityPrototype: OrganDionaNymphLungs
+
+# Nymphs that the organs will turn into
+- type: entity
+  id: OrganDionaNymphBrain
+  parent: MobDionaNymph
+  noSpawn: true
+  name: diona nymph
+  suffix: Brain
+  description: Contains the brain of a formerly fully-formed Diona. Killing this would kill the Diona forever. You monster.
+  components:
+  - type: IsDeadIC
+  - type: Body
+    prototype: AnimalNymphBrain
+
+- type: entity
+  id: OrganDionaNymphStomach
+  parent: MobDionaNymphAccent 
+  noSpawn: true
+  name: diona nymph
+  suffix: Stomach
+  description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
+  components:
+  - type: IsDeadIC
+  - type: Body
+    prototype: AnimalNymphStomach
+
+- type: entity
+  id: OrganDionaNymphLungs
+  parent: MobDionaNymphAccent
+  noSpawn: true
+  name: diona nymph
+  suffix: Lungs
+  description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 
+  components:
+  - type: IsDeadIC
+  - type: Body
+    prototype: AnimalNymphLungs

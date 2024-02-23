@@ -106,8 +106,6 @@
   Tier: Revolutionary
 - Name: "tokie"
   Tier: Nuclear Operative
-- Name: "Wallace Megas"
-  Tier: Revolutionary
 - Name: "BlueisDumb"
   Tier: Nuclear Operative
 - Name: "Enricoc3l"
@@ -128,8 +126,6 @@
   Tier: Syndicate Agent
 - Name: "Constellations"
   Tier: Syndicate Agent
-- Name: "Charles Baron"
-  Tier: Syndicate Agent
 - Name: "Shaina Gibson"
   Tier: Revolutionary
 - Name: "Wolfie"
@@ -140,8 +136,6 @@
   Tier: Revolutionary
 - Name: "Nicholas"
   Tier: Nuclear Operative
-- Name: "GeneralMarty"
-  Tier: Revolutionary
 - Name: "HCG"
   Tier: Revolutionary
 - Name: "ShaunTexas"
@@ -150,8 +144,6 @@
   Tier: Revolutionary
 - Name: "Petalmeat"
   Tier: Revolutionary
-- Name: "Jakub Kędziora"
-  Tier: Syndicate Agent
 - Name: "Adam Smedstad"
   Tier: Revolutionary
 - Name: "oBerry"
@@ -200,8 +192,6 @@
   Tier: Revolutionary
 - Name: "ThoranTW"
   Tier: Revolutionary
-- Name: "David Gee"
-  Tier: Nuclear Operative
 - Name: "Crabby Arts"
   Tier: Revolutionary
 - Name: "以迪 黃"
@@ -223,7 +213,7 @@
 - Name: "krberryy"
   Tier: Revolutionary
 - Name: "Hasan al-Binabi"
-  Tier: Syndicate Agent
+  Tier: Nuclear Operative
 - Name: "Molly the Bully"
   Tier: Nuclear Operative
 - Name: "DrMelon"
@@ -251,4 +241,34 @@
 - Name: "Hanzdegloker"
   Tier: Syndicate Agent
 - Name: "Archmonarch"
+  Tier: Syndicate Agent
+- Name: "Ville Sarmiola"
+  Tier: Nuclear Operative
+- Name: "Tyler Putnam"
+  Tier: Revolutionary
+- Name: "Luke"
+  Tier: Revolutionary
+- Name: "Benjamin Ziebert"
+  Tier: Revolutionary
+- Name: "Robert"
+  Tier: Nuclear Operative
+- Name: "Zombine"
+  Tier: Nuclear Operative
+- Name: "Mci"
+  Tier: Revolutionary
+- Name: "The Silent Occupant"
+  Tier: Syndicate Agent
+- Name: "AmalgoMyte"
+  Tier: Syndicate Agent
+- Name: "VividWisp"
+  Tier: Syndicate Agent
+- Name: "Kaisering"
+  Tier: Revolutionary
+- Name: "Dax XZ"
+  Tier: Syndicate Agent
+- Name: "sk3iron"
+  Tier: Revolutionary
+- Name: "Nathaniel Joseph Hurd"
+  Tier: Revolutionary
+- Name: "Ali Alashar"
   Tier: Syndicate Agent

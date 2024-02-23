@@ -116,7 +116,7 @@ def main():
 
         template_path = pathlib.Path(dir_name, 'changelogs', XSL_FILE)
         with sftp.open(XSL_FILE, "wb") as f, open(template_path) as fh:
-            f.write(fh)
+            f.write(fh.read())
 
 
 def create_feed(changelog: Any, previous_items: List[Any]) -> Tuple[Any, bool]:

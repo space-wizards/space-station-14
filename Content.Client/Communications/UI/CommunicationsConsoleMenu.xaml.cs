@@ -26,6 +26,9 @@ namespace Content.Client.Communications.UI
             AnnounceButton.OnPressed += (_) => Owner.AnnounceButtonPressed(Rope.Collapse(MessageInput.TextRope));
             AnnounceButton.Disabled = !owner.CanAnnounce;
 
+            BroadcastButton.OnPressed += (_) => Owner.BroadcastButtonPressed(Rope.Collapse(MessageInput.TextRope));
+            BroadcastButton.Disabled = !owner.CanBroadcast;
+
             AlertLevelButton.OnItemSelected += args =>
             {
                 var metadata = AlertLevelButton.GetItemMetadata(args.Id);

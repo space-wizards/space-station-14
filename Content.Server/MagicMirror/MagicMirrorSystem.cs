@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;

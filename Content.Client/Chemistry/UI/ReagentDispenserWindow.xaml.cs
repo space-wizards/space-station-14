@@ -58,6 +58,8 @@ namespace Content.Client.Chemistry.UI
                 return;
 
             ChemicalList.Children.Clear();
+            //Sort inventory by reagentLabel
+            inventory.Sort((x, y) => x.Value.Key.CompareTo(y.Value.Key));
 
             foreach (KeyValuePair<string, KeyValuePair<string, string>> entry in inventory)
             {

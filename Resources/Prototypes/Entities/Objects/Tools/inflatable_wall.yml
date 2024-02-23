@@ -19,9 +19,6 @@
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
-    - type: Tag
-      tags:
-        - DroneUsable
 # TODO: Add stack sprites + visuals.
 
 - type: entity
@@ -45,9 +42,6 @@
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
-    - type: Tag
-      tags:
-        - DroneUsable
 # TODO: Add stack sprites + visuals.
 
 - type: entity
