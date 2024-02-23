@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Rainbeon
-  changes:
-  - message: The ChemMaster buffer no longer shuffles list ordering when removing
-      a reagent.
-    type: Fix
-  id: 5512
-  time: '2024-01-02T15:51:22.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23352
 - author: DrMelon
   changes:
   - message: Fixed the Tesla Ball moving too fast by being pushed with explosions.
@@ -3852,3 +3844,11 @@
   id: 6011
   time: '2024-02-23T06:53:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25483
+- author: Vasilis
+  changes:
+  - message: Fixed a bug where the centcom official/any job that is not supposed to
+      have a preference option appeared anyway.
+    type: Fix
+  id: 6012
+  time: '2024-02-23T13:19:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25496
