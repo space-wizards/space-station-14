@@ -24,6 +24,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -35,7 +36,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
-public sealed class DrinkSystem : EntitySystem
+public sealed class DrinkSystem : SharedDrinkSystem
 {
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
@@ -69,29 +70,10 @@ public sealed class DrinkSystem : EntitySystem
         SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
         // put drink amount after opened
-        SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(OpenableSystem) });
+        SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<PressurizedDrinkComponent, LandEvent>(OnPressurizedDrinkLand);
-    }
-
-    private FixedPoint2 DrinkVolume(EntityUid uid, DrinkComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return FixedPoint2.Zero;
-
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var sol))
-            return FixedPoint2.Zero;
-
-        return sol.Volume;
-    }
-
-    public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return true;
-
-        return DrinkVolume(uid, component) <= 0;
     }
 
     /// <summary>
