@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionViewLaws
-  name: action-name-borg-view-laws
-  description: action-decription-borg-view-laws
+  name: View Laws
+  description: View the laws that you must follow.
   noSpawn: true
   components:
   - type: InstantAction
@@ -14,8 +14,8 @@
 
 - type: entity
   id: ActionViewCrewManifest
-  name: action-name-borg-view-crew-manifest
-  description: action-decription-borg-view-crew-manifest
+  name: View Crew Manifest
+  description: View the View crew manifest station.
   noSpawn: true
   components:
   - type: InstantAction
