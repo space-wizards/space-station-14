@@ -92,6 +92,7 @@
   - !type:ParticleAcceleratorLimiterWireAction
   - !type:ParticleAcceleratorPowerWireAction
   - !type:ParticleAcceleratorStrengthWireAction
+  - !type:AccessWireAction
 
 - type: wireLayout
   id: Docking
