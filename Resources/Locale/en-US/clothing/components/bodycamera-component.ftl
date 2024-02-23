@@ -1,9 +1,8 @@
-bodycamera-component-on-use = The camera is now {$state}.
-bodycamera-component-on-state = on
-bodycamera-component-off-state = off
+bodycamera-on-use = The camera is now on.
+bodycamera-off-use = The camera is now off.
 
-bodycamera-component-examine-on-state = The light is currently [color=darkgreen]on[/color].
-bodycamera-component-examine-off-state = The light is currently [color=darkred]off[/color].
+bodycamera-examine-on-state = The light is currently [color=darkgreen]on[/color].
+bodycamera-examine-off-state = The light is currently [color=darkred]off[/color].
 
-bodycamera-component-unknown-name = Unknown
-bodycamera-component-unknown-job = No job
+bodycamera-unknown-name = Unknown
+bodycamera-unknown-job = No job

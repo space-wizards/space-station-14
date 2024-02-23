@@ -1,118 +1,143 @@
 using Content.Shared.Clothing.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Bodycamera;
 
 public abstract class SharedBodyCameraSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedPowerCellSystem _powerCell = default!;
-    [Dependency] protected readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BodyCameraComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<BodyCameraComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<BodyCameraComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<BodyCameraComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<BodyCameraComponent, GotUnequippedEvent>(OnUnequipped);
     }
 
-    protected virtual void OnComponentStartup(EntityUid uid, BodyCameraComponent component, ComponentStartup args)
+    protected void OnPowerCellChanged(Entity<BodyCameraComponent> bodyCamera, ref PowerCellChangedEvent args)
     {
-    }
+        if (!_timing.IsFirstTimePredicted)
+            return;
 
-    protected virtual void OnPowerCellSlotEmpty(EntityUid uid, BodyCameraComponent comp, ref PowerCellSlotEmptyEvent args)
-    {
-    }
+        if (!_containerSystem.TryGetContainingContainer(bodyCamera, out var container))
+            return;
 
-    protected virtual void OnPowerCellChanged(EntityUid uid, BodyCameraComponent comp, PowerCellChangedEvent args)
-    {
+        if (container is null)
+            return;
+
+        if (args.Ejected || !_powerCell.HasDrawCharge(bodyCamera))
+        {
+            TryDisable(bodyCamera, container.Owner);
+        }
     }
 
     /// <summary>
     /// Do popup for the equipee
     /// Only when equipped to a slot specified in the Clothing component - not pockets
     /// </summary>
-    protected virtual void OnEquipped(EntityUid uid, BodyCameraComponent comp, GotEquippedEvent args)
+    protected virtual void OnEquipped(Entity<BodyCameraComponent> bodyCamera, ref GotEquippedEvent args)
     {
         //Dont enable the camera unless placed into a slot allowed by the ClothingComponent
-        //Primary purpose is to stop it being activated in pockets
-        if (TryComp<ClothingComponent>(uid, out var clothingComp)
-            && (clothingComp.Slots & args.SlotFlags) != args.SlotFlags)
-        {
-            return;
-        }
-
-        comp.Equipped = true;
-
-        if (!TryEnable(uid, comp))
+        if (!TryComp<ClothingComponent>(bodyCamera, out var clothingComp))
             return;
 
-        var message = Loc.GetString("bodycamera-component-on-use", ("state", Loc.GetString("bodycamera-component-on-state")));
-        _popup.PopupClient(message, uid, args.Equipee);
+        //Ensure the current slot is an allowed equipment slot
+        //And not a pocket
+        if ((clothingComp.Slots & args.SlotFlags) != args.SlotFlags)
+            return;
+
+        TryEnable(bodyCamera, args.Equipee);
+
+        //Lock the power cell slot to prevent removal
+        //Prevents a prediction issue
+        SetPowerCellLock(bodyCamera, true);
     }
 
     /// <summary>
     /// Show popup for the equipee
     /// </summary>
-    protected virtual void OnUnequipped(EntityUid uid, BodyCameraComponent comp, GotUnequippedEvent args)
+    protected virtual void OnUnequipped(Entity<BodyCameraComponent> bodyCamera, ref GotUnequippedEvent args)
     {
-        comp.Equipped = false;
-        if (!TryDisable(uid, comp))
-            return;
-
-        var message = Loc.GetString("bodycamera-component-on-use", ("state", Loc.GetString("bodycamera-component-off-state")));
-        _popup.PopupClient(message, uid, args.Equipee);
+        TryDisable(bodyCamera, args.Equipee);
+        SetPowerCellLock(bodyCamera, false);
     }
 
     /// <summary>
     /// Indicate if the camera is powered via examination
     /// </summary>
-    protected virtual void OnExamine(EntityUid uid, BodyCameraComponent comp, ExaminedEvent args)
+    protected virtual void OnExamine(Entity<BodyCameraComponent> bodyCamera, ref ExaminedEvent args)
     {
-        var msg = comp.Enabled
-            ? Loc.GetString("bodycamera-component-examine-on-state")
-            : Loc.GetString("bodycamera-component-examine-off-state");
+        var msg = bodyCamera.Comp.Enabled
+            ? Loc.GetString(bodyCamera.Comp.CameraExamineOn)
+            : Loc.GetString(bodyCamera.Comp.CameraExamineOff);
         args.PushMarkup(msg);
     }
 
     /// <summary>
     /// Enable the camera and play sound if there is enough charge
     /// </summary>
-    protected virtual bool TryEnable(EntityUid uid, BodyCameraComponent comp)
+    protected virtual bool TryEnable(Entity<BodyCameraComponent> bodyCamera, EntityUid user)
     {
-        if (comp.Enabled)
+        if (bodyCamera.Comp.Enabled)
             return false;
 
-        if (!_powerCell.HasDrawCharge(uid))
+        if (!_powerCell.HasDrawCharge(bodyCamera))
             return false;
 
-        comp.Enabled = true;
+        _audio.PlayPredicted(bodyCamera.Comp.PowerOnSound, bodyCamera, user);
+
+        var message = Loc.GetString(bodyCamera.Comp.CameraOnUse);
+
+        _popup.PopupClient(message, bodyCamera, user);
+
+        bodyCamera.Comp.Enabled = true;
+        _powerCell.SetPowerCellDrawEnabled(bodyCamera, true);
         return true;
     }
 
     /// <summary>
     /// Disable the camera and play sound
     /// </summary>
-    protected virtual bool TryDisable(EntityUid uid, BodyCameraComponent comp)
+    protected virtual bool TryDisable(Entity<BodyCameraComponent> bodyCamera, EntityUid user)
     {
-        if (!comp.Enabled)
+        if (!bodyCamera.Comp.Enabled)
             return false;
 
-        comp.Enabled = false;
+        _audio.PlayPredicted(bodyCamera.Comp.PowerOffSound, bodyCamera, user);
+
+        var message = Loc.GetString(bodyCamera.Comp.CameraOffUse);
+
+        _popup.PopupClient(message, bodyCamera, user);
+
+        bodyCamera.Comp.Enabled = false;
+        _powerCell.SetPowerCellDrawEnabled(bodyCamera, false);
         return true;
+    }
+
+    /// <summary>
+    /// Locks the power cell slot so it cannot be removed (or inserted into)
+    /// </summary>
+    protected void SetPowerCellLock(Entity<BodyCameraComponent> bodyCamera, bool locked)
+    {
+        if (!TryComp<PowerCellSlotComponent>(bodyCamera, out var powerCellSlotComponent))
+            return;
+
+        _itemSlotsSystem.SetLock(bodyCamera, powerCellSlotComponent.CellSlotId, locked);
     }
 }

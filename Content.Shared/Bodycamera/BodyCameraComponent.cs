@@ -1,32 +1,44 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Bodycamera;
 
-[RegisterComponent]
-[Access(typeof(SharedBodyCameraSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedBodyCameraSystem))]
 public sealed partial class BodyCameraComponent : Component
 {
     /// <summary>
     /// Is the bodycamera enabled and broadcasting
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool Enabled;
 
-    /// <summary>
-    /// Is the bodycamera equipped to a valid slot
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool Equipped;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("powerOnSound")]
+    [DataField]
     public SoundSpecifier? PowerOnSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_success.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(2f)
     };
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("powerOffSound")]
+    [DataField]
     public SoundSpecifier? PowerOffSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_failed.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(2f)
     };
+
+    [DataField]
+    public LocId UnknownUser = "bodycamera-unknown-name";
+
+    [DataField]
+    public LocId UnknownJob = "bodycamera-unknown-job";
+
+    [DataField]
+    public LocId CameraExamineOff = "bodycamera-examine-off-state";
+
+    [DataField]
+    public LocId CameraExamineOn = "bodycamera-examine-on-state";
+
+    [DataField]
+    public LocId CameraOnUse = "bodycamera-on-use";
+
+    [DataField]
+    public LocId CameraOffUse = "bodycamera-off-use";
 }
