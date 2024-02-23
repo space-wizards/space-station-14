@@ -3,19 +3,19 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nutrition.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ShakeableComponent : Component
 {
     /// <summary>
     /// How long it takes to shake this item.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan ShakeDuration = TimeSpan.FromSeconds(1f);
 
     /// <summary>
     /// Does the entity need to be in the user's hand in order to be shaken?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool RequireInHand = true;
 
     /// <summary>
@@ -39,6 +39,6 @@ public sealed partial class ShakeableComponent : Component
     /// <summary>
     /// The sound that will be played when shaking this item.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier ShakeSound = new SoundPathSpecifier("/Audio/Items/soda_shake.ogg");
 }
