@@ -101,10 +101,10 @@
         spawn:
           ShardGlassPlasma:
             min: 1
-            max: 2
+            max: 1
           PartRodMetal:
             min: 1
-            max: 2
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StaticPrice
