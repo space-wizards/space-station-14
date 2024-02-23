@@ -159,6 +159,7 @@
       - AnomalyFloraBulb
       - MobLuminousEntity
       - MobLuminousObject
+      - MobLuminousPerson
 
 - type: entity
   id: FleshKudzu
