@@ -13,6 +13,7 @@ using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Physics;
+using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
@@ -67,11 +68,10 @@ public abstract class SharedMagicSystem : EntitySystem
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
     {
         var comp = ent.Comp;
+        var hasReqs = false;
 
         if (comp.RequiresClothes)
         {
-            var hasReqs = false;
-
             var enumerator = _inventorySystem.GetSlotEnumerator(args.Performer, SlotFlags.OUTERCLOTHING | SlotFlags.HEAD);
             while (enumerator.MoveNext(out var containerSlot))
             {
@@ -83,15 +83,13 @@ public abstract class SharedMagicSystem : EntitySystem
                 if (!hasReqs)
                     break;
             }
-
-            if (!hasReqs)
-                args.Cancelled = true;
         }
 
-        if (comp.RequiresSpeech)
-        {
-            // TODO: Move Muted to shared and check for muted comp
-        }
+        if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
+            hasReqs = false;
+
+        if (!hasReqs)
+            args.Cancelled = true;
     }
 
     private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)

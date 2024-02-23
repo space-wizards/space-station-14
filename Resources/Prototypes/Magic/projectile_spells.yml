@@ -5,7 +5,6 @@
   noSpawn: true
   components:
   - type: Magic
-    requiresClothes: true
   - type: WorldTargetAction
     useDelay: 15
     itemIconStyle: BigAction
