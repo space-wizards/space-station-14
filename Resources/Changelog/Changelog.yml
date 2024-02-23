@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Salvage mobs can no longer be ghost roles.
-    type: Remove
-  id: 5511
-  time: '2024-01-02T08:15:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23355
 - author: Rainbeon
   changes:
   - message: The ChemMaster buffer no longer shuffles list ordering when removing
@@ -3852,3 +3845,10 @@
   id: 6010
   time: '2024-02-23T04:04:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25486
+- author: liltenhead
+  changes:
+  - message: Changed emergency welder's fuel count from 25 -> 50
+    type: Tweak
+  id: 6011
+  time: '2024-02-23T06:53:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25483
