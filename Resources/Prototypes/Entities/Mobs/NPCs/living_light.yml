@@ -57,7 +57,7 @@
         mask:
           - MobMask
         layer:
-          - MobLayer
+          - Opaque
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: LivingLight
