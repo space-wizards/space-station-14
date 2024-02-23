@@ -48,8 +48,6 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
-  - type: StaticPrice
-    price: 140
   - type: RadiationBlocker
     resistance: 5
 
@@ -98,8 +96,7 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: StaticPrice
-    price: 40
+
 
 - type: entity
   parent: ReinforcedUraniumWindow

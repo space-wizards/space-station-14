@@ -9,13 +9,13 @@
           steps:
             - material: Glass
               amount: 1
-              doAfter: 3
+              doAfter: 2
 
         - to: windowReinforcedDirectional
           steps:
             - material: ReinforcedGlass
               amount: 1
-              doAfter: 2
+              doAfter: 3
 
         - to: plasmaWindowDirectional
           steps:
