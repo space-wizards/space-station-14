@@ -135,10 +135,9 @@
     state: medical
   discipline: CivilianServices
   tier: 2
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - BorgModuleAdvancedTreatment
-  - BorgModuleDiagnosis
   - BorgModuleDefibrillator
 
 - type: technology
