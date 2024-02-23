@@ -1,25 +1,34 @@
-using Content.Shared.Devour.Components;
 using Content.Shared.Damage.Components;
-using Content.Shared.Devour;
+using Content.Shared.Devour.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 
-namespace Content.Server.Devour;
+namespace Content.Shared.Devour;
 
-public sealed class DevouredSystem : SharedDevouredSystem
+public sealed class DevouredSystem : EntitySystem
 {
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DevouredComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<DevouredComponent, DevouredEvent>(OnDevoured);
         SubscribeLocalEvent<DevouredComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<DevouredComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     /// <summary>
-    ///     Pacifies the target and gives them a passive damage effect the moment they are devoured.
+    ///     Prevents attacking while devoured.
+    /// </summary>
+    private void OnAttackAttempt(EntityUid uid, DevouredComponent component, AttackAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
+    /// <summary>
+    ///     Gives the target a passive damage effect the moment they are devoured.
     /// </summary>
     private void OnDevoured(Entity<DevouredComponent> entity, ref DevouredEvent args)
     {

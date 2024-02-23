@@ -6,7 +6,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Devour.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedDevouredSystem))]
+[Access(typeof(DevouredSystem))]
 public sealed partial class DevouredComponent : Component
 {
     /// <summary>
