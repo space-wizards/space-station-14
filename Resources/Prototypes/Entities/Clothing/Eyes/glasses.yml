@@ -127,7 +127,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesGlassesCheapSunglasses
   name: cheap sun glasses
-  description: A pair of black sunglasses, does not protect against flashing.
+  description: A pair of black sunglasses. Doesn't block light, more of an accessory than something useful.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
