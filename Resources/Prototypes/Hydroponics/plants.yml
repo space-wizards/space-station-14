@@ -1,0 +1,82 @@
+# abstract parents
+
+- type: entity
+  abstract: true
+  id: BasePlant
+  components:
+  - type: Sprite
+  - type: Plant
+  - type: Damageable
+    damageContainer: Biological
+  - type: MobState # plant mob real
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: RadiationReceiver
+  - type: Hunger
+    starvationDamage:
+      types:
+        Blunt: 0.25
+  - type: Thirst
+    thirstDamage:
+      types:
+        Blunt: 1
+
+# takes damage from bad atmospheric conditions
+- type: entity
+  abstract: true
+  id: BaseAtmosPlant
+  components:
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 325
+    coldDamageThreshold: 0
+    currentTemperature: 310.15
+    specificHeat: 1
+    coldDamage:
+      types:
+        Cold: 0.1
+    heatDamage:
+      types:
+        Heat: 1.5
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.15
+
+# normal crop you'd find on earth
+- type: entity
+  abstract: true
+  parent: [BasePlant, BaseAtmosPlant]
+  id: BaseCrop
+
+# actual plants
+- type: entity
+  noSpawn: true
+  parent: BaseCrop
+  id: PlantWheat
+  name: wheat stalks
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/wheat.rsi
+  - type: Plant
+    lifespan: 25
+    maturation: 6
+    production: 3
+  - type: PlantLight
+    ideal: 8
+  - type: PlantProduce
+    produce: WheatBushel
+    yield: 3
+  - type: PlantChemicals
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 20
+        potencyDivisor: 20
+      Flour:
+        min: 5
+        max: 20
+        potencyDivisor: 20
+    potency: 5
