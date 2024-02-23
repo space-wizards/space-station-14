@@ -1241,6 +1241,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted", CVar.SERVERONLY);
 
         /// <summary>
+        ///     How many open "non whitelist" slots there are.
+        /// </summary>
+        public static readonly CVarDef<int> WhitelistOpenSlots =
+            CVarDef.Create("whitelist.open_slots", 0, CVar.SERVERONLY);
+
+        /*
+         * VOTE
+         */
+
+        /// <summary>
         ///     If the playercount is below this number, the whitelist will not apply.
         /// </summary>
         public static readonly CVarDef<int> WhitelistMinPlayers =
