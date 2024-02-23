@@ -41,11 +41,10 @@
 
 - type: entity
   name: spaceshroom
-  parent: FoodProduceBase
+  parent: FoodBase
   id: FoodSpaceshroom
   description: A wild mushroom. There's no telling what effect it could have...
   components:
-  - type: Produce
   - type: Sprite
     sprite: Objects/Misc/spaceshroom.rsi
     state: object
@@ -99,7 +98,7 @@
 # Cooked Object
 - type: entity
   name: cooked spaceshroom
-  parent: FoodProduceBase
+  parent: FoodBase
   id: FoodSpaceshroomCooked
   description: A wild mushroom that has been cooked through. It seems the heat has removed its chemical effects.
   components:
@@ -118,6 +117,5 @@
   - type: Sprite
     sprite: Objects/Misc/spaceshroom.rsi
     state: spaceshroom_cooked
-  - type: Produce
   - type: StaticPrice
     price: 40
