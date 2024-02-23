@@ -33,7 +33,6 @@
       - !type:EntityAnchored {}
       steps:
       - material: Glass
-        name: Insert Plasma, Uranium, or normal glass
         amount: 5
         doAfter: 1
 
