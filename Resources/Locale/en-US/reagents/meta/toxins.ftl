@@ -13,6 +13,9 @@ reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. Severe
 reagent-name-chloral-hydrate = chloral hydrate
 reagent-desc-chloral-hydrate = A sedative and hypnotic chemical. Commonly used to put other people to sleep, whether they want to or not.
 
+reagent-name-gastrotoxin = gastrotoxin
+reagent-desc-gastrotoxin = A moderately toxic byproduct of decomposition. Most commonly found in spoiled food.
+
 reagent-name-ferrochromic-acid = ferrochromic acid
 reagent-desc-ferrochromic-acid = A mildy corrosive solution, unable of causing severe danger unless ingested.
 

@@ -15,7 +15,6 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
-        [Dependency] private readonly EyeSystem _eye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
@@ -41,7 +40,7 @@ namespace Content.Client.Ghost
             }
         }
 
-        public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalPlayer?.ControlledEntity);
+        public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalEntity);
         public bool IsGhost => Player != null;
 
         public event Action<GhostComponent>? PlayerRemoved;

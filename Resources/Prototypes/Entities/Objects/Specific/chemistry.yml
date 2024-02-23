@@ -454,7 +454,6 @@
         maxVol: 20
   - type: SolutionSpiker
     sourceSolution: food
-  - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
   - type: StaticPrice

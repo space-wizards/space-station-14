@@ -98,22 +98,33 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         }
     }
 
-    private IEnumerable<GuideEntry> GetSortedRootEntries(List<string>? rootEntries)
+    private IEnumerable<GuideEntry> GetSortedEntries(List<string>? rootEntries)
     {
         if (rootEntries == null)
         {
             HashSet<string> entries = new(_entries.Keys);
             foreach (var entry in _entries.Values)
             {
+                if (entry.Children.Count > 0)
+                {
+                    var sortedChildren = entry.Children
+                        .Select(childId => _entries[childId])
+                        .OrderBy(childEntry => childEntry.Priority)
+                        .ThenBy(childEntry => Loc.GetString(childEntry.Name))
+                        .Select(childEntry => childEntry.Id)
+                        .ToList();
+
+                    entry.Children = sortedChildren;
+                }
                 entries.ExceptWith(entry.Children);
             }
             rootEntries = entries.ToList();
         }
 
         return rootEntries
-            .Select(x => _entries[x])
-            .OrderBy(x => x.Priority)
-            .ThenBy(x => Loc.GetString(x.Name));
+            .Select(rootEntryId => _entries[rootEntryId])
+            .OrderBy(rootEntry => rootEntry.Priority)
+            .ThenBy(rootEntry => Loc.GetString(rootEntry.Name));
     }
 
     private void RepopulateTree(List<string>? roots = null, string? forcedRoot = null)
@@ -123,7 +134,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         HashSet<string> addedEntries = new();
 
         TreeItem? parent = forcedRoot == null ? null : AddEntry(forcedRoot, null, addedEntries);
-        foreach (var entry in GetSortedRootEntries(roots))
+        foreach (var entry in GetSortedEntries(roots))
         {
             AddEntry(entry.Id, parent, addedEntries);
         }

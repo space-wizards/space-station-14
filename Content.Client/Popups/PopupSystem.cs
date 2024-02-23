@@ -23,7 +23,6 @@ namespace Content.Client.Popups
         [Dependency] private readonly IOverlayManager _overlay = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly IResourceCache _resource = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
@@ -45,7 +44,14 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             _overlay
-                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _playerManager, _prototype, _resource, _uiManager, this));
+                .AddOverlay(new PopupOverlay(
+                    _configManager,
+                    EntityManager,
+                    _playerManager,
+                    _prototype,
+                    _uiManager,
+                    _uiManager.GetUIController<PopupUIController>(),
+                    this));
         }
 
         public override void Shutdown()
