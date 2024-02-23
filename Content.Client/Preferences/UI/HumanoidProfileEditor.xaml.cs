@@ -587,10 +587,8 @@ namespace Content.Client.Preferences.UI
             _jobCategories.Clear();
             var firstCategory = true;
 
-            var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>()
-                .OrderByDescending(department => department.Weight)
-                .ThenBy(department => Loc.GetString($"department-{department.ID}"))
-                .ToList();
+            var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToArray();
+            Array.Sort(departments, DepartmentUIComparer.Instance);
 
             foreach (var department in departments)
             {
@@ -638,9 +636,8 @@ namespace Content.Client.Preferences.UI
 
                 var jobs = department.Roles.Select(jobId => _prototypeManager.Index<JobPrototype>(jobId))
                     .Where(job => job.SetPreference)
-                    .OrderByDescending(job => job.Weight)
-                    .ThenBy(job => job.LocalizedName)
-                    .ToList();
+                    .ToArray();
+                Array.Sort(jobs, JobUIComparer.Instance);
 
                 foreach (var job in jobs)
                 {
@@ -1397,7 +1394,7 @@ namespace Content.Client.Preferences.UI
                 var icon = new TextureRect
                 {
                     TextureScale = new Vector2(2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered
+                    VerticalAlignment = VAlignment.Center
                 };
                 var jobIcon = protoMan.Index<StatusIconPrototype>(proto.Icon);
                 icon.Texture = jobIcon.Icon.Frame0();

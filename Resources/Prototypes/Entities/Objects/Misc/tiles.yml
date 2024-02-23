@@ -15,9 +15,6 @@
         Blunt: 5
   - type: Stack
     count: 1
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -1029,3 +1026,22 @@
     - FloorAstroIce
   - type: Stack
     stackType: FloorTileAstroIce
+
+- type: entity
+  name: large wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLarge
+  components:
+  - type: Sprite
+    state: wood-large
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLarge
+  - type: Stack
+    stackType: FloorTileWoodLarge
+  - type: Construction
+    graph: TileWoodLarge
+    node: woodtilelarge
