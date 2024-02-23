@@ -154,10 +154,11 @@
   parent: KudzuFlowerFriendly
   components:
     - type: Kudzu
-      spreadChance: 0.4
+      spreadChance: 0.2
     - type: RandomSpawner
-      chance: 0.1
+      chance: 0.05
       rarePrototypes:
+      - AnomalyFloraBulb
       - AnomalyFloraBulb
       - MobLuminousEntity
       - MobLuminousObject
