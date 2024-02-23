@@ -12,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
+using FastAccessors;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -82,7 +83,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (!(user?.AttachedEntity is { } player))
             return;
-        if (!CheckAccess(uid, player, comp))
+        if (!CheckAccess((uid, comp), player))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.AttachedEntity.Value):player} has turned {ToPrettyString(uid)} on");
@@ -105,7 +106,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (!(user?.AttachedEntity is { } player))
             return;
-        if (!CheckAccess(uid, player, comp))
+        if (!CheckAccess((uid, comp), player))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.AttachedEntity.Value):player} has turned {ToPrettyString(uid)} off");
@@ -156,7 +157,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (!(user?.AttachedEntity is { } player))
             return;
-        if (!CheckAccess(uid, player, comp))
+        if (!CheckAccess((uid, comp), player))
             return;
 
         strength = (ParticleAcceleratorPowerState) MathHelper.Clamp(
@@ -407,13 +408,13 @@ public sealed partial class ParticleAcceleratorSystem
 
         UpdateUI(uid, comp);
     }
-    private bool CheckAccess(EntityUid uid, EntityUid user, ParticleAcceleratorControlBoxComponent comp)
+    private bool CheckAccess(Entity<ParticleAcceleratorControlBoxComponent> ent, EntityUid user)
     {
-        if (_accessReader.IsAllowed(user, uid))
+        if (_accessReader.IsAllowed(user, ent))
             return true;
 
-        _popup.PopupEntity(Loc.GetString("particle-accelerator-control-box-access-denied"), uid, user);
-        _audio.PlayPvs(comp.AccessDeniedSound, uid);
+        _popup.PopupEntity(Loc.GetString("particle-accelerator-control-box-access-denied"), ent, user);
+        _audio.PlayPvs(ent.Comp.AccessDeniedSound, ent);
 
         return false;
     }
