@@ -22,6 +22,7 @@
     thirstDamage:
       types:
         Blunt: 1
+  # plants dont need to breathe since ideally the station has 0% co2 anyway
 
 # takes damage from bad atmospheric conditions
 - type: entity
@@ -50,6 +51,16 @@
   abstract: true
   parent: [BasePlant, BaseAtmosPlant]
   id: BaseCrop
+  components:
+  - type: PlantSeeds
+
+- type: entity
+  abstract: true
+  parent: BaseCrop
+  id: BaseCropRepeat
+  components:
+  - type: Plant
+    harvestType: Repeat
 
 # actual plants
 - type: entity
@@ -80,3 +91,27 @@
         max: 20
         potencyDivisor: 20
     potency: 5
+
+- type: entity
+  noSpawn: true
+  parent: PlantWheat
+  id: PlantOat
+  name: oat stalks
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+  - type: PlantChemicals
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 20
+        potencyDivisor: 20
+      Flour:
+        min: 5
+        max: 20
+        potencyDivisor: 20
+
+- type: entity
+  parent: BaseCropRepeat
+  id: PlantBanana
+  name: banana tree
