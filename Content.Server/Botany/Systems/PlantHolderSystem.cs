@@ -1,4 +1,4 @@
-using Content.Server.Atmos;
+/*using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
@@ -28,7 +28,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Botany.Systems;
 
-public sealed class PlantHolderSystem : EntitySystem
+public sealed class PlantHolderSystem : SharedPlantHolderSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
@@ -975,3 +975,4 @@ public sealed class PlantHolderSystem : EntitySystem
         Update(uid, component);
     }
 }
+*/

@@ -1,4 +1,4 @@
-using Content.Server.Botany.Components;
+/*using Content.Server.Botany.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
@@ -143,75 +143,6 @@ public sealed partial class BotanySystem : EntitySystem
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }
 
-    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, int yieldMod = 1)
-    {
-        var totalYield = 0;
-        if (proto.Yield > -1)
-        {
-            if (yieldMod < 0)
-                totalYield = proto.Yield;
-            else
-                totalYield = proto.Yield * yieldMod;
-
-            totalYield = Math.Max(1, totalYield);
-        }
-
-        var products = new List<EntityUid>();
-
-        if (totalYield > 1 || proto.HarvestRepeat != HarvestType.NoRepeat)
-            proto.Unique = false;
-
-        for (var i = 0; i < totalYield; i++)
-        {
-            var product = _robustRandom.Pick(proto.ProductPrototypes);
-
-            var entity = Spawn(product, position);
-            _randomHelper.RandomOffset(entity, 0.25f);
-            products.Add(entity);
-
-            var produce = EnsureComp<ProduceComponent>(entity);
-
-            produce.Seed = proto;
-            ProduceGrown(entity, produce);
-
-            _appearance.SetData(entity, ProduceVisuals.Potency, proto.Potency);
-
-            if (proto.Mysterious)
-            {
-                var metaData = MetaData(entity);
-                _metaData.SetEntityName(entity, metaData.EntityName + "?", metaData);
-                _metaData.SetEntityDescription(entity,
-                    metaData.EntityDescription + " " + Loc.GetString("botany-mysterious-description-addon"), metaData);
-            }
-
-            if (proto.Bioluminescent)
-            {
-                var light = _light.EnsureLight(entity);
-                _light.SetRadius(entity, proto.BioluminescentRadius, light);
-                _light.SetColor(entity, proto.BioluminescentColor, light);
-                // TODO: Ayo why you copy-pasting code between here and plantholder?
-                _light.SetCastShadows(entity, false, light); // this is expensive, and botanists make lots of plants
-            }
-
-            if (proto.Slip)
-            {
-                var slippery = EnsureComp<SlipperyComponent>(entity);
-                Dirty(entity, slippery);
-                EnsureComp<StepTriggerComponent>(entity);
-                // Need a fixture with a slip layer in order to actually do the slipping
-                var fixtures = EnsureComp<FixturesComponent>(entity);
-                var body = EnsureComp<PhysicsComponent>(entity);
-                var shape = fixtures.Fixtures["fix1"].Shape;
-                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int) CollisionGroup.SlipLayer, manager: fixtures, body: body);
-                // Need to disable collision wake so that mobs can collide with and slip on it
-                var collisionWake = EnsureComp<CollisionWakeComponent>(entity);
-                _colWakeSystem.SetEnabled(entity, false, collisionWake);
-            }
-        }
-
-        return products;
-    }
-
     public bool CanHarvest(SeedData proto, EntityUid? held = null)
     {
         return !proto.Ligneous || proto.Ligneous && held != null && HasComp<SharpComponent>(held);
@@ -219,3 +150,4 @@ public sealed partial class BotanySystem : EntitySystem
 
     #endregion
 }
+*/

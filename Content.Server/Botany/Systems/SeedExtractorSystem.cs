@@ -1,4 +1,4 @@
-using Content.Server.Botany.Components;
+/*using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction;
@@ -51,3 +51,4 @@ public sealed class SeedExtractorSystem : EntitySystem
         }
     }
 }
+*/
