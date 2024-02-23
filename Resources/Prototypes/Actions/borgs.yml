@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionViewLaws
-  name: View Laws
-  description: View the laws that you must follow.
+  name: action-name-borg-view-laws
+  description: action-decription-borg-view-laws
   noSpawn: true
   components:
   - type: InstantAction
@@ -10,4 +10,18 @@
       sprite: Interface/Actions/actions_borg.rsi
       state: state-laws
     event: !type:ToggleLawsScreenEvent
+    useDelay: 0.5
+
+- type: entity
+  id: ActionViewCrewManifest
+  name: action-name-borg-view-crew-manifest
+  description: action-decription-borg-view-crew-manifest
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-manifest
+    event: !type:CrewManifestOpenActionEvent
     useDelay: 0.5

@@ -225,6 +225,7 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowSecurityIcons
+  - type: BorgCrewManifestViewer
 
 - type: entity
   id: BaseBorgChassisSyndicate
