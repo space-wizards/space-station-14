@@ -69,8 +69,6 @@ public sealed class DrinkSystem : SharedDrinkSystem
         SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: new[] { typeof(ServerInventorySystem) }, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
-        // put drink amount after opened
-        SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<PressurizedDrinkComponent, LandEvent>(OnPressurizedDrinkLand);
@@ -108,38 +106,6 @@ public sealed class DrinkSystem : SharedDrinkSystem
         }
 
         return total;
-    }
-
-    private void OnExamined(Entity<DrinkComponent> entity, ref ExaminedEvent args)
-    {
-        TryComp<OpenableComponent>(entity, out var openable);
-        if (_openable.IsClosed(entity.Owner, null, openable) || !args.IsInDetailsRange || !entity.Comp.Examinable)
-            return;
-
-        var empty = IsEmpty(entity, entity.Comp);
-        if (empty)
-        {
-            args.PushMarkup(Loc.GetString("drink-component-on-examine-is-empty"));
-            return;
-        }
-
-        if (HasComp<ExaminableSolutionComponent>(entity))
-        {
-            //provide exact measurement for beakers
-            args.PushText(Loc.GetString("drink-component-on-examine-exact-volume", ("amount", DrinkVolume(entity, entity.Comp))));
-        }
-        else
-        {
-            //general approximation
-            var remainingString = (int) _solutionContainer.PercentFull(entity) switch
-            {
-                100 => "drink-component-on-examine-is-full",
-                > 66 => "drink-component-on-examine-is-mostly-full",
-                > 33 => HalfEmptyOrHalfFull(args),
-                _ => "drink-component-on-examine-is-mostly-empty",
-            };
-            args.PushMarkup(Loc.GetString(remainingString));
-        }
     }
 
     private void AfterInteract(Entity<DrinkComponent> entity, ref AfterInteractEvent args)
@@ -407,17 +373,5 @@ public sealed class DrinkSystem : SharedDrinkSystem
         };
 
         ev.Verbs.Add(verb);
-    }
-
-    // some see half empty, and others see half full
-    private string HalfEmptyOrHalfFull(ExaminedEvent args)
-    {
-        string remainingString = "drink-component-on-examine-is-half-full";
-
-        if (TryComp<MetaDataComponent>(args.Examiner, out var examiner) && examiner.EntityName.Length > 0
-            && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
-            remainingString = "drink-component-on-examine-is-half-empty";
-
-        return remainingString;
     }
 }
