@@ -331,6 +331,16 @@
 
 - type: entity
   parent: AirlockSecurity
+  id: AirlockBrigmedicLocked
+  suffix: Brigmedic, Locked
+  components:
+  - type: AccessReader
+    access: [["Brigmedic"]]
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockSecurity
   id: AirlockSecurityLawyerLocked
   suffix: Security/Lawyer, Locked
   components:
@@ -655,6 +665,14 @@
   components:
   - type: AccessReader
     access: [["Brig"]]
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockBrigmedicGlassLocked
+  suffix: Brigmedic, Locked
+  components:
+  - type: AccessReader
+    access: [["Brigmedic"]]
 
 - type: entity
   parent: AirlockSecurityGlass
