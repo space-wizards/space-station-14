@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed some hairs visually
-    type: Tweak
-  id: 5509
-  time: '2024-01-02T00:12:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23304
 - author: EmoGarbage404
   changes:
   - message: Defibrillators no longer reset the rot timer when failing to revive a
@@ -3853,3 +3846,12 @@
   id: 6008
   time: '2024-02-22T12:18:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25466
+- author: lzk228
+  changes:
+  - message: Galoshes are added to the Janidrobe.
+    type: Tweak
+  - message: Galoshes now make you slower.
+    type: Tweak
+  id: 6009
+  time: '2024-02-23T01:05:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25484
