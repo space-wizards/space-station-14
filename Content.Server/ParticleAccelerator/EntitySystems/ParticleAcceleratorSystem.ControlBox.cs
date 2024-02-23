@@ -1,8 +1,7 @@
 using Content.Server.ParticleAccelerator.Components;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Popups;
+using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Utility;
@@ -81,9 +80,9 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
-        if (!(user?.AttachedEntity is { }))
+        if (!(user?.AttachedEntity is { } player))
             return;
-        if (!CheckAccess(uid, user.AttachedEntity.Value, comp))
+        if (!CheckAccess(uid, player, comp))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.AttachedEntity.Value):player} has turned {ToPrettyString(uid)} on");
@@ -104,9 +103,9 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (!comp.Enabled)
             return;
-        if (!(user?.AttachedEntity is { }))
+        if (!(user?.AttachedEntity is { } player))
             return;
-        if (!CheckAccess(uid, user.AttachedEntity.Value, comp))
+        if (!CheckAccess(uid, player, comp))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.AttachedEntity.Value):player} has turned {ToPrettyString(uid)} off");
@@ -155,9 +154,9 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (comp.StrengthLocked)
             return;
-        if (!(user?.AttachedEntity is { }))
+        if (!(user?.AttachedEntity is { } player))
             return;
-        if (!CheckAccess(uid, user.AttachedEntity.Value, comp))
+        if (!CheckAccess(uid, player, comp))
             return;
 
         strength = (ParticleAcceleratorPowerState) MathHelper.Clamp(
@@ -169,36 +168,33 @@ public sealed partial class ParticleAcceleratorSystem
         if (strength == comp.SelectedStrength)
             return;
 
-        if (user?.AttachedEntity is { } player)
+        var impact = strength switch
         {
-            var impact = strength switch
+            ParticleAcceleratorPowerState.Standby => LogImpact.Low,
+            ParticleAcceleratorPowerState.Level0 => LogImpact.Medium,
+            ParticleAcceleratorPowerState.Level1 => LogImpact.High,
+            ParticleAcceleratorPowerState.Level2
+            or ParticleAcceleratorPowerState.Level3
+            or _ => LogImpact.Extreme,
+        };
+
+        _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
+
+
+        var alertMinPowerState = (ParticleAcceleratorPowerState)_cfg.GetCVar(CCVars.AdminAlertParticleAcceleratorMinPowerState);
+        if (strength >= alertMinPowerState)
+        {
+            var pos = Transform(uid);
+            if (_timing.CurTime > comp.EffectCooldown)
             {
-                ParticleAcceleratorPowerState.Standby => LogImpact.Low,
-                ParticleAcceleratorPowerState.Level0 => LogImpact.Medium,
-                ParticleAcceleratorPowerState.Level1 => LogImpact.High,
-                ParticleAcceleratorPowerState.Level2
-                or ParticleAcceleratorPowerState.Level3
-                or _ => LogImpact.Extreme,
-            };
-
-            _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
-
-
-            var alertMinPowerState = (ParticleAcceleratorPowerState)_cfg.GetCVar(CCVars.AdminAlertParticleAcceleratorMinPowerState);
-            if (strength >= alertMinPowerState)
-            {
-                var pos = Transform(uid);
-                if (_timing.CurTime > comp.EffectCooldown)
-                {
-                    _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
-                        ("machine", ToPrettyString(uid)),
-                        ("powerState", strength),
-                        ("coordinates", pos.Coordinates)));
-                    _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
-                        Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false,
-                        AudioParams.Default.WithVolume(-8f));
-                    comp.EffectCooldown = _timing.CurTime + comp.CooldownDuration;
-                }
+                _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
+                    ("machine", ToPrettyString(uid)),
+                    ("powerState", strength),
+                    ("coordinates", pos.Coordinates)));
+                _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
+                    Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false,
+                    AudioParams.Default.WithVolume(-8f));
+                comp.EffectCooldown = _timing.CurTime + comp.CooldownDuration;
             }
         }
 
@@ -414,9 +410,7 @@ public sealed partial class ParticleAcceleratorSystem
     private bool CheckAccess(EntityUid uid, EntityUid user, ParticleAcceleratorControlBoxComponent comp)
     {
         if (_accessReader.IsAllowed(user, uid))
-        {
             return true;
-        }
 
         _popup.PopupEntity(Loc.GetString("particle-accelerator-control-box-access-denied"), uid, user);
         _audio.PlayPvs(comp.AccessDeniedSound, uid);

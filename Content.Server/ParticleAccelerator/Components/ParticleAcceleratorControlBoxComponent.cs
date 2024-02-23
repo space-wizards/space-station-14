@@ -188,6 +188,6 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     [ViewVariables]
     public bool CanBeEnabled = true;
 
-    [DataField("accessDeniedSound")]
+    [DataField]
     public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 }
