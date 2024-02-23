@@ -48,6 +48,8 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 60
   - type: RadiationBlocker
     resistance: 2
 
@@ -93,6 +95,8 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: PlasmaWindow

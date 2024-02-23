@@ -139,6 +139,8 @@
     node: windoor
     containers:
     - board
+  - type: StaticPrice
+    price: 100
   - type: PryUnpowered
 
 - type: entity
@@ -191,6 +193,8 @@
   - type: Construction
     graph: Windoor
     node: windoorSecure
+  - type: StaticPrice
+    price: 200
 
 #Plasma Windoors
 - type: entity
@@ -242,6 +246,8 @@
   - type: Construction
     graph: Windoor
     node: pwindoor
+  - type: StaticPrice
+    price: 170
   - type: RadiationBlocker
     resistance: 2
 
@@ -295,6 +301,8 @@
   - type: Construction
     graph: Windoor
     node: pwindoorSecure
+  - type: StaticPrice
+    price: 312
   - type: RadiationBlocker
     resistance: 4
 
@@ -348,6 +356,8 @@
   - type: Construction
     graph: Windoor
     node: uwindoor
+  - type: StaticPrice
+    price: 180
   - type: RadiationBlocker
     resistance: 3
 
@@ -401,5 +411,7 @@
   - type: Construction
     graph: Windoor
     node: uwindoorSecure
+  - type: StaticPrice
+    price: 462
   - type: RadiationBlocker
     resistance: 5

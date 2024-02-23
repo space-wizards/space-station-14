@@ -68,6 +68,8 @@
     graph: Window
     node: tintedWindow
   - type: Occluder
+  - type: StaticPrice
+    price: 44
 
 - type: entity
   id: WindowReinforcedDirectional
@@ -113,6 +115,8 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 22
 
 - type: entity
   parent: ReinforcedWindow
