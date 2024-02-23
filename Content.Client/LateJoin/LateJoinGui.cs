@@ -234,7 +234,7 @@ namespace Content.Client.LateJoin
                         var icon = new TextureRect
                         {
                             TextureScale = new Vector2(2, 2),
-                            Stretch = TextureRect.StretchMode.KeepCentered
+                            VerticalAlignment = VAlignment.Center
                         };
 
                         var jobIcon = _prototypeManager.Index<StatusIconPrototype>(prototype.Icon);

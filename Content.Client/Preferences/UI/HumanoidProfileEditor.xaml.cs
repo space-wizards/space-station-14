@@ -1310,7 +1310,7 @@ namespace Content.Client.Preferences.UI
                 var icon = new TextureRect
                 {
                     TextureScale = new Vector2(2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered
+                    VerticalAlignment = VAlignment.Center
                 };
                 var jobIcon = protoMan.Index<StatusIconPrototype>(proto.Icon);
                 icon.Texture = jobIcon.Icon.Frame0();

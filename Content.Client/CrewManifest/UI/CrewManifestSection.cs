@@ -56,8 +56,9 @@ public sealed class CrewManifestSection : BoxContainer
                 var icon = new TextureRect()
                 {
                     TextureScale = new Vector2(2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered,
+                    VerticalAlignment = VAlignment.Center,
                     Texture = spriteSystem.Frame0(jobIcon.Icon),
+                    Margin = new Thickness(0, 0, 4, 0)
                 };
 
                 titleContainer.AddChild(icon);
