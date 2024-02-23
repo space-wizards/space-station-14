@@ -249,7 +249,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHoSUnarmored
-  name: head of security's unarmored winter coat
+  name: head of security's winter coat
   description: A sturdy coat, a warm coat, but not an armored coat.
   components:
   - type: Sprite
@@ -472,7 +472,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterWardenUnarmored
-  name: warden's unarmored winter coat
+  name: warden's winter coat
   description: A sturdy coat, a warm coat, but not an armored coat.
   components:
   - type: Sprite
