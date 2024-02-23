@@ -3,11 +3,12 @@ lathe-menu-queue = Queue
 lathe-menu-server-list = Server list
 lathe-menu-sync = Sync
 lathe-menu-search-designs = Search designs
-lathe-menu-search-filter = Filter
+lathe-menu-category-all = All
+lathe-menu-search-filter = Filter:
 lathe-menu-amount = Amount:
 lathe-menu-material-display = {$material} ({$amount})
 lathe-menu-tooltip-display = {$amount} of {$material}
-lathe-menu-description-display = {$description}
+lathe-menu-description-display = [italic]{$description}[/italic]
 lathe-menu-material-amount = { $amount ->
     [1] {NATURALFIXED($amount, 2)} {$unit}
     *[other] {NATURALFIXED($amount, 2)} {MAKEPLURAL($unit)}

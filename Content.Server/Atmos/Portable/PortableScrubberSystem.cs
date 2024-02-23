@@ -12,7 +12,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Audio;
 using Content.Server.Administration.Logs;
-using Content.Server.Construction;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Database;
 
@@ -39,8 +38,6 @@ namespace Content.Server.Atmos.Portable
             SubscribeLocalEvent<PortableScrubberComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PortableScrubberComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<PortableScrubberComponent, GasAnalyzerScanEvent>(OnScrubberAnalyzed);
-            SubscribeLocalEvent<PortableScrubberComponent, RefreshPartsEvent>(OnRefreshParts);
-            SubscribeLocalEvent<PortableScrubberComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         private bool IsFull(PortableScrubberComponent component)
@@ -169,21 +166,6 @@ namespace Content.Server.Atmos.Portable
                     gasMixDict.Add(component.PortName, port.Air);
             }
             args.GasMixtures = gasMixDict;
-        }
-
-        private void OnRefreshParts(EntityUid uid, PortableScrubberComponent component, RefreshPartsEvent args)
-        {
-            var pressureRating = args.PartRatings[component.MachinePartMaxPressure];
-            var transferRating = args.PartRatings[component.MachinePartTransferRate];
-
-            component.MaxPressure = component.BaseMaxPressure * MathF.Pow(component.PartRatingMaxPressureModifier, pressureRating - 1);
-            component.TransferRate = component.BaseTransferRate * MathF.Pow(component.PartRatingTransferRateModifier, transferRating - 1);
-        }
-
-        private void OnUpgradeExamine(EntityUid uid, PortableScrubberComponent component, UpgradeExamineEvent args)
-        {
-            args.AddPercentageUpgrade("portable-scrubber-component-upgrade-max-pressure", component.MaxPressure / component.BaseMaxPressure);
-            args.AddPercentageUpgrade("portable-scrubber-component-upgrade-transfer-rate", component.TransferRate / component.BaseTransferRate);
         }
     }
 }

@@ -8,10 +8,6 @@
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
-    starvationDamage:
-      types:
-        Cold: 0.5
-        Bloodloss: 0.5
   - type: Puller
     needsHands: false
   - type: Thirst
@@ -32,6 +28,8 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
+  - type: TypingIndicator
+    proto: lizard
   - type: Vocal
     sounds:
       Male: UnisexReptilian
@@ -44,7 +42,7 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
-    animation: WeaponArcPunch
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 5
@@ -59,6 +57,7 @@
     heatDamage:
       types:
         Heat : 1.5 #per second, scales with temperature & other constants
+  - type: Wagging
 
 - type: entity
   parent: BaseSpeciesDummy

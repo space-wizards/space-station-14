@@ -543,6 +543,8 @@
         Heat: 0.2
         Radiation: 0.01
         Caustic: 0.5
+  - type: Item
+    size: Huge
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -915,6 +917,23 @@
     node: clownHardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitClown
+
+#Mime Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitClown
+  id: ClothingOuterHardsuitMime
+  name: mime hardsuit
+  description: A custom-made mime hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
+  - type: Construction
+    graph: MimeHardsuit
+    node: mimeHardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMime
 
 #Santa's Hardsuit
 - type: entity

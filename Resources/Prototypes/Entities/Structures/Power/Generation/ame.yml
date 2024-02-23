@@ -67,6 +67,7 @@
         display:
           Off: { visible: false }
           On: { state: control_on, visible: true }
+          Warning: { state: control_warning, visible: true }
           Critical: { state: control_critical, visible: true }
           Fuck: { state: control_fuck, visible: true }
   - type: NodeContainer

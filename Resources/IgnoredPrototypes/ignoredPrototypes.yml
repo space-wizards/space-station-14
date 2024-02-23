@@ -1,0 +1,8 @@
+# This is a basic list that specifies files for which the prototypes inside of them will be made abstract.
+# This supports all prototype kinds and is intended to allow servers to remove prototypes in a relatively clean way.
+# This method does not break inheritance, but you will still have to remove usages.
+
+# e.g., you can specify both directories and specific files by adding lines like:
+#
+# - /Prototypes/Guidebook
+# - /Prototypes/Catalog/uplink_catalog.yml

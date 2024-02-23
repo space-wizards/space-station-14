@@ -92,7 +92,7 @@
     beepSound:
       path: /Audio/Effects/Cargo/buzz_two.ogg
       params:
-        volume: -3
+        volume: -6
     startOnStick: false
     canToggleStartOnStick: true
   - type: TriggerOnSignal

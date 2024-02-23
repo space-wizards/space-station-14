@@ -99,8 +99,6 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
-  - type: CrewManifestViewer
-    unsecure: true
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -655,6 +653,24 @@
     borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+
+- type: entity
+  parent: CentcomPDA
+  id: AdminPDA
+  name: Admin PDA
+  description: If you are not an admin please return this PDA to the nearest admin.
+  components:
+  - type: Pda
+    id: PassengerIDCard
+  - type: HealthAnalyzer
+    scanDelay: 0
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReadCartridge
+      - LogProbeCartridge
 
 - type: entity
   parent: CentcomPDA

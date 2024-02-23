@@ -26,7 +26,6 @@ namespace Content.Shared.Blocking;
 
 public sealed partial class BlockingSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -177,7 +176,7 @@ public sealed partial class BlockingSystem : EntitySystem
             var playerTileRef = xform.Coordinates.GetTileRef();
             if (playerTileRef != null)
             {
-                var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value, 0f);
+                var intersecting = _lookup.GetLocalEntitiesIntersecting(playerTileRef.Value, 0f);
                 var mobQuery = GetEntityQuery<MobStateComponent>();
                 foreach (var uid in intersecting)
                 {

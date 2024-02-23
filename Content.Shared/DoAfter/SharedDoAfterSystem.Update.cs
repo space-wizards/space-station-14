@@ -9,6 +9,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
+    private DoAfter[] _doAfters = Array.Empty<DoAfter>();
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -34,8 +36,15 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     {
         var dirty = false;
 
-        foreach (var doAfter in comp.DoAfters.Values)
+        var values = comp.DoAfters.Values;
+        var count = values.Count;
+        if (_doAfters.Length < count)
+            _doAfters = new DoAfter[count];
+
+        values.CopyTo(_doAfters, 0);
+        for (var i = 0; i < count; i++)
         {
+            var doAfter = _doAfters[i];
             if (doAfter.CancelledTime != null)
             {
                 if (time - doAfter.CancelledTime.Value > ExcessTime)

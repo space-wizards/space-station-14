@@ -1,0 +1,109 @@
+﻿- type: constructionGraph
+  id: BlastDoor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame1
+          completed:
+            - !type:SetAnchor
+              value: false
+          steps:
+            - material: Plasteel
+              amount: 10
+              doAfter: 3
+
+    - node: frame1
+      entity: BlastDoorFrame
+      actions:
+        - !type:SnapToGrid {}
+        - !type:SetAnchor {}
+      edges:
+        - to: frame2
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 2
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 10
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 4
+
+    - node: frame2
+      edges:
+        - to: frame3
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tag: DoorElectronics
+              store: board
+              name: Door Electronics
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "door_electronics"
+              doAfter: 2
+        - to: frame1
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 5
+          steps:
+            - tool: Cutting
+              doAfter: 4
+            - tool: Prying
+              doAfter: 2
+
+    - node: frame3
+      edges:
+        - to: frame4
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+
+    - node: frame4
+      edges:
+        - to: blastdoor
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Anchoring
+              doAfter: 2
+        - to: frame2
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:EmptyAllContainers
+              pickup: true
+              emptyAtUser: true
+          steps:
+            - tool: Screwing
+              doAfter: 4
+            - tool: Anchoring
+              doAfter: 3
+            - tool: Prying
+              doAfter: 3
+
+    - node: blastdoor
+      entity: BlastDoorOpen
+      edges:
+        - to: frame4
+          conditions:
+            - !type:DoorWelded
+              welded: true
+          steps:
+            - tool: Anchoring
+              doAfter: 2

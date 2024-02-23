@@ -34,6 +34,3 @@ materials-raw-silver = raw silver
 materials-raw-plasma = raw plasma
 materials-raw-uranium = raw uranium
 materials-raw-bananium = raw bananium
-
-# Material Reclaimer
-material-reclaimer-upgrade-process-rate = process rate
