@@ -18,11 +18,11 @@ namespace Content.Server.ParticleAccelerator.EntitySystems;
 
 public sealed partial class ParticleAcceleratorSystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
     private void InitializeControlBoxSystem()
     {
