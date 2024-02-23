@@ -414,6 +414,9 @@
     {
       "name": "hydro-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "wood-large"
     }
   ]
 }

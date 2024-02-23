@@ -170,7 +170,7 @@
 
 - type: entity
   id: OrganDionaNymphStomach
-  parent: MobDionaNymph
+  parent: MobDionaNymphAccent 
   noSpawn: true
   name: diona nymph
   suffix: Stomach
@@ -182,7 +182,7 @@
 
 - type: entity
   id: OrganDionaNymphLungs
-  parent: MobDionaNymph
+  parent: MobDionaNymphAccent
   noSpawn: true
   name: diona nymph
   suffix: Lungs

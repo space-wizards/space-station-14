@@ -6,6 +6,8 @@
   id: FoodPieBase
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: FlavorProfile
     flavors:
       - sweet
@@ -34,6 +36,8 @@
   abstract: true
   description: A slice of pie. Tasty!
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - sweet

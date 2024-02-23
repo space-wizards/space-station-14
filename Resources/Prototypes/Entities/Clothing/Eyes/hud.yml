@@ -17,7 +17,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesHudMedical
   name: medical hud
-  description: A heads-up display that scans the humanoids in view and provides accurate data about their health status.
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their health status. 
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/med.rsi
@@ -249,3 +249,18 @@
     sprite: Clothing/Eyes/Hud/beerpatch.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/beerpatch.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesEyepatchHudDiag
+  name: diagnostic hud eyepatch
+  description: A heads-up display capable of analyzing the integrity and status of robotics and exosuits. Made out of see-borg-ium.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/diagpatch.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/diagpatch.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon

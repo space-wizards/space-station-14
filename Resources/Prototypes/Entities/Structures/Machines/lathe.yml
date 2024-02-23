@@ -85,6 +85,8 @@
     runningState: building
     staticRecipes:
       - Wirecutter
+      - Igniter
+      - Signaller
       - Screwdriver
       - Welder
       - Wrench
@@ -278,7 +280,6 @@
       - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
-      - Drone
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
