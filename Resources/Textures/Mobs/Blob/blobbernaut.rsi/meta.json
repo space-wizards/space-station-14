@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/be0e6efdf6b18e953d3dcb1eff584b66a9d3b9e3/icons/mob/nonhuman-player/blob.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "nautdamage",
+      "directions": 4,
+      "delays": [
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ]
+      ]
+    },
+    {
+      "name": "blobbernaut_produce",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "blobbernaut",
+      "directions": 4
+    },
+    {
+      "name": "blobbernaut_death",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.15,
+          0.15,
+          0.15,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "blobbernaut_dead"
+    }
+  ]
+}

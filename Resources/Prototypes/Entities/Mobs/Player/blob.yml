@@ -1,0 +1,116 @@
+- type: entity
+  parent: BaseMob
+  id: MobBlobMarker
+  name: blob marker
+  components:
+  - type: Sprite
+    drawdepth: Ghosts
+    sprite: Mobs/Blob/blob.rsi
+    layers:
+    - state: marker
+      shader: unshaded
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - GhostImpassable
+  - type: Visibility
+    layer: 2
+  - type: Eye
+    visMask:
+    - Normal
+    - Ghost
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 6
+    baseWalkSpeed: 4
+  - type: BlobMarker
+  - type: CargoSellBlacklist
+  - type: Actions
+  - type: Alerts
+  - type: MovementIgnoreGravity
+  - type: CanMoveInAir
+  - type: Tag
+    tags:
+    - BypassInteractionRangeChecks
+
+- type: entity
+  id: BlobWall
+  name: blob
+  description: make an actual description, dork.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Mobs/Blob/blob.rsi
+    drawdepth: Overdoors
+    layers:
+    - state: blob
+      color: "#9ACD32"
+  - type: Appearance
+  - type: Transform
+    anchored: true
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - GhostImpassable
+  - type: BlobStructure
+  - type: Clickable
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: AtmosExposed
+    growthTickChance: 0.3
+    spreadChance: 0.4
+#  - type: Temperature
+#    heatDamage:
+#      types:
+#        Heat: 5
+#    coldDamage: {}
+#    ColdDamageThreshold: 0
+#  - type: Flammable
+#    fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
+#    cold:
+#      types: {}
+#    damage:
+#      types:
+#        Heat: 3
+#  - type: Reactive
+#    groups:
+#      Flammable: [Touch]
+#      Extinguish: [Touch]
+#    reactions:
+#      - reagents: [WeedKiller, PlantBGone]
+#        methods: [Touch]
+#        effects:
+#          - !type:HealthChange
+#            scaled: true
+#            damage:
+#              types:
+#                Heat: 10
+#  - type: SlowContacts
+#    walkSpeedModifier: 0.2
+#    sprintSpeedModifier: 0.2
+#    ignoreWhitelist:
+#      components:
+#        - IgnoreKudzu

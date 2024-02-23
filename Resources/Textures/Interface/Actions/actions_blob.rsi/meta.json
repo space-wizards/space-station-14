@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/1bd062e9cfb09904e06ba4518af0faaa6ad882d3/icons/hud/blob.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ui_help"
+    },
+    {
+      "name": "ui_tocore"
+    },
+    {
+      "name": "ui_tonode"
+    },
+    {
+      "name": "ui_node"
+    },
+    {
+      "name": "ui_factory"
+    },
+    {
+      "name": "ui_resource"
+    },
+    {
+      "name": "ui_chemswap"
+    },
+    {
+      "name": "ui_swap"
+    },
+    {
+      "name": "ui_blobbernaut"
+    },
+    {
+      "name": "corehealth"
+    },
+    {
+      "name": "block"
+    },
+    {
+      "name": "block2"
+    }
+  ]
+}

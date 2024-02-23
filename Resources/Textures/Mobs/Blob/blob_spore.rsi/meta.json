@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/be0e6efdf6b18e953d3dcb1eff584b66a9d3b9e3/icons/mob/nonhuman-player/blob.dmi, https://github.com/vgstation-coders/vgstation13/blob/ded3ebdfc3454965bdd9cde75c9371b58bd01d70/icons/mob/blob/blob.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blob_spore_temp",
+      "directions": 4
+    },
+    {
+      "name": "blobpod",
+      "delays": [
+        [
+          1,
+          0.3,
+          0.5,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "blob_head"
+    },
+    {
+      "name": "blob_act",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    }
+  ]
+}
