@@ -1,6 +1,7 @@
 using Content.Server.ParticleAccelerator.Wires;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Audio;
 
 namespace Content.Server.ParticleAccelerator.Components;
 
@@ -186,4 +187,7 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     /// </summary>
     [ViewVariables]
     public bool CanBeEnabled = true;
+
+    [DataField("accessDeniedSound")]
+    public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 }

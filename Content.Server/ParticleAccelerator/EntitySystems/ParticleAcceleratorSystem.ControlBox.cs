@@ -1,5 +1,8 @@
 using Content.Server.ParticleAccelerator.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Utility;
@@ -16,8 +19,10 @@ namespace Content.Server.ParticleAccelerator.EntitySystems;
 public sealed partial class ParticleAcceleratorSystem
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
     private void InitializeControlBoxSystem()
     {
@@ -76,9 +81,12 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
+        if (!(user?.AttachedEntity is { }))
+            return;
+        if (!CheckAccess(uid, user.AttachedEntity.Value, comp))
+            return;
 
-        if (user?.AttachedEntity is { } player)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} on");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.AttachedEntity.Value):player} has turned {ToPrettyString(uid)} on");
 
         comp.Enabled = true;
         UpdatePowerDraw(uid, comp);
@@ -96,9 +104,12 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (!comp.Enabled)
             return;
+        if (!(user?.AttachedEntity is { }))
+            return;
+        if (!CheckAccess(uid, user.AttachedEntity.Value, comp))
+            return;
 
-        if (user?.AttachedEntity is { } player)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.AttachedEntity.Value):player} has turned {ToPrettyString(uid)} off");
 
         comp.Enabled = false;
         UpdatePowerDraw(uid, comp);
@@ -143,6 +154,10 @@ public sealed partial class ParticleAcceleratorSystem
         if (!Resolve(uid, ref comp))
             return;
         if (comp.StrengthLocked)
+            return;
+        if (!(user?.AttachedEntity is { }))
+            return;
+        if (!CheckAccess(uid, user.AttachedEntity.Value, comp))
             return;
 
         strength = (ParticleAcceleratorPowerState) MathHelper.Clamp(
@@ -395,5 +410,17 @@ public sealed partial class ParticleAcceleratorSystem
         RescanParts(uid, msg.Session, comp);
 
         UpdateUI(uid, comp);
+    }
+    private bool CheckAccess(EntityUid uid, EntityUid user, ParticleAcceleratorControlBoxComponent comp)
+    {
+        if (_accessReader.IsAllowed(user, uid))
+        {
+            return true;
+        }
+
+        _popup.PopupEntity(Loc.GetString("particle-accelerator-control-box-access-denied"), uid, user);
+        _audio.PlayPvs(comp.AccessDeniedSound, uid);
+
+        return false;
     }
 }
