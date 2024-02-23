@@ -586,7 +586,9 @@ namespace Content.Client.Preferences.UI
                     _jobList.AddChild(category);
                 }
 
-                var jobs = department.Roles.Select(jobId => _prototypeManager.Index<JobPrototype>(jobId)).ToArray();
+                var jobs = department.Roles.Select(jobId => _prototypeManager.Index<JobPrototype>(jobId))
+                    .Where(job => job.SetPreference)
+                    .ToArray();
                 Array.Sort(jobs, JobUIComparer.Instance);
 
                 foreach (var job in jobs)
