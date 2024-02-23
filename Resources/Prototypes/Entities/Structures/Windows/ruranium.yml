@@ -90,7 +90,10 @@
           collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassRUranium:
+          ShardGlassUranium:
+            min: 1
+            max: 2
+          PartRodMetal1:
             min: 1
             max: 2
       - !type:DoActsBehavior

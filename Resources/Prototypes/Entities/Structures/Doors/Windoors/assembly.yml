@@ -94,7 +94,7 @@
         acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
         spawn:
-          Sheetsteel1:
+          SheetSteel1:
             min: 1
             max: 2
           SheetPGlass1:
@@ -156,7 +156,7 @@
         acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
         spawn:
-          Sheetsteel1:
+          SheetSteel1:
             min: 1
             max: 2
           SheetUGlass1:
