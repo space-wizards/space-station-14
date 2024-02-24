@@ -209,15 +209,19 @@ namespace Content.Server.Cargo.Systems
                 _random.Shuffle(tradePads);
 
                 var freePads = GetFreeCargoPallets(trade, tradePads);
-
-                foreach (var pad in freePads)
+                if (freePads.Count >= order.OrderQuantity)
                 {
-                    var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
-
-                    if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                    foreach (var pad in freePads)
                     {
-                        tradeDestination = trade;
-                        break;
+                        var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
+
+                        if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                        {
+                            tradeDestination = trade;
+                            order.NumDispatched++;
+                            if (order.OrderQuantity <= order.NumDispatched)
+                                break;
+                        }
                     }
                 }
 
