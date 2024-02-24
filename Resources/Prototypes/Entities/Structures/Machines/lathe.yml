@@ -64,7 +64,7 @@
     solutions:
       lube:
         maxVol: 250
-  - type: SpillableSolution
+  - type: Spillable
     solution: lube
   - type: RefillableSolution
     solution: lube
