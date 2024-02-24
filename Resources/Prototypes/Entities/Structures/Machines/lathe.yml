@@ -99,7 +99,6 @@
       - CableMVStack
       - CableHVStack
       - HandheldGPSBasic
-      - HandHeldMassScanner
       - TRayScanner
       - AirTank
       - GasAnalyzer
@@ -292,6 +291,7 @@
       - SignalTrigger
       - VoiceTrigger
       - Igniter
+      - HandHeldMassScanner
       - PowerCellMicroreactor
       - PowerCellHigh
       - WeaponPistolCHIMP
