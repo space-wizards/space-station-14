@@ -15,10 +15,12 @@
       100: Dead
   - type: RadiationReceiver
   - type: Hunger
+    baseDecayRate: 0.75
     starvationDamage:
       types:
         Blunt: 0.25
   - type: Thirst
+    baseDecayRate: 0.5
     thirstDamage:
       types:
         Blunt: 1
@@ -33,7 +35,7 @@
   - type: Temperature
     heatDamageThreshold: 325
     coldDamageThreshold: 0
-    currentTemperature: 310.15
+    currentTemperature: 293.15
     specificHeat: 1
     coldDamage:
       types:
@@ -52,6 +54,7 @@
   parent: [BasePlant, BaseAtmosPlant]
   id: BaseCrop
   components:
+  - type: PlantLight
   - type: PlantSeeds
 
 - type: entity
@@ -77,9 +80,13 @@
     production: 3
   - type: PlantLight
     ideal: 8
+  - type: Hunger
+    baseDecayRate: 0.4
   - type: PlantProduce
     produce: WheatBushel
     yield: 3
+  - type: PlantSeeds
+    packet: WheatSeeds
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -100,6 +107,8 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
+  - type: PlantSeeds
+    packet: OatSeeds
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -112,6 +121,91 @@
         potencyDivisor: 20
 
 - type: entity
+  noSpawn: true
   parent: BaseCropRepeat
   id: PlantBanana
   name: banana tree
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+  - type: Plant
+    lifespan: 50
+    maturation: 6
+    production: 6
+  - type: Thirst
+    baseDecayRate: 0.6
+  - type: PlantLight
+    ideal: 9
+  - type: PlantProduce
+    produce: FoodBanana
+    yield: 2
+  - type: PlantSeeds
+    packet: BananaSeeds
+  - type: PlantChemicals
+    chemicals:
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
+    potency: 1
+
+- type: entity
+  noSpawn: true
+  parent: PlantBanana
+  id: PlantMimana
+  name: mimana tree
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
+  - type: PlantSeeds
+    packet: MimanaSeeds
+  - type: PlantChemicals
+    chemicals:
+      MuteToxin:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
+
+- type: entity
+  noSpawn: true
+  parent: BaseCrop
+  id: PlantCarrot
+  name: carrots
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/carrot.rsi
+  - type: Plant
+    lifespan: 25
+    maturation: 10
+    production: 3
+    growthStages: 3
+  - type: Thirst
+    baseDecayRate: 0.6
+  - type: PlantProduce
+    produce: FoodCarrot
+    yield: 3
+  - type: PlantSeeds
+    packet: CarrotSeeds
+  - type: PlantChemicals
+    chemicals:
+      JuiceCarrot:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Oculine:
+        min: 2
+        max: 6
+        potencyDivisor: 20
+      vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+    potency: 10

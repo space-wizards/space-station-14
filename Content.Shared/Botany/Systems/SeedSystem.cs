@@ -1,6 +1,7 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -33,22 +34,29 @@ public sealed class SeedSystem : EntitySystem
     }
 
     /// <summary>
-    /// Get the required plant component of the seed's plant.
-    /// Returning null means a programmer error, either a plant prototype was not specified or it had no <c>PlantComponent</c>.
-    /// In both cases this is a skill issue from whoever is making seed or plant prototypes.
+    /// Get a component of the seed's plant entity or prototype.
     /// </summary>
-    public PlantComponent? GetPlant(Entity<SeedComponent?> ent)
+    public bool GetSeedComp<T>(Entity<SeedComponent> ent, [NotNullWhen(true)] out T? comp)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return null;
+        return GetSeedComp<T>(ent.Comp.Seed, out comp);
+    }
 
-        if (TryComp<PlantComponent>(ent.Comp.PlantEntity, out var plant))
-            return plant;
+    /// <summary>
+    /// Get a component of a seed's plant entity or prototype.
+    /// </summary>
+    public bool GetSeedComp<T>(SeedData seed, [NotNullWhen(true)] out T? comp)
+    {
+        if (TryComp<T>(seed.Entity, out var entComp))
+        {
+            comp = entComp;
+            return true;
+        }
 
-        if (ent.Comp.Plant is not {} proto)
-            return null;
+        comp = null;
+        if (seed.Plant is not {} proto)
+            return false;
 
         var proto = _proto.Index<EntityPrototype>(proto);
-        return proto.Components.GetValueOrNull("Plant")?.Component;
+        return proto.TryGetComponent<T>(out comp);
     }
 }

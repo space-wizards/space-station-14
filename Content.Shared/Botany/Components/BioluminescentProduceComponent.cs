@@ -18,5 +18,5 @@ public sealed partial class BioluminescentProduceComponent : Component
     /// Color of the light.
     /// </summary>
     [DataField]
-    public Color Color = Color.WHITE;
+    public Color Color = Color.White;
 }
