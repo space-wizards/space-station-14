@@ -64,9 +64,10 @@
   - type: Input
     context: "ghost"
   - type: MovementIgnoreGravity
-  - type: IntrinsicRadioReceiver
-  - type: ActiveRadio
-    channels:
+  # ratvar hears all...
+  - type: InternalRadio
+    # ... but says nothing
+    receiveChannels:
     - Binary
     - Common
     - Command
