@@ -58,27 +58,3 @@
                 sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
               doAfter: 10
-    - node: PoppyBouquet
-      entity: PoppyBouquet
-      edges:
-        - to: start
-          steps:
-            - tool: Cutting
-              doAfter: 10
-          completed:
-            - !type:SpawnPrototype
-              prototype: Flower
-              amount: 5
-            - !type:EmptyAllContainers
-            - !type:DeleteEntity
-
-- type: construction
-  name: PoppyBouquet
-  id: PoppyFlowerBouquetCraft
-  graph: PoppyFlowerBouquetCraft
-  startNode: start
-  targetNode: PoppyBouquet
-  category: construction-category-misc
-  description: A bouquet of the best flowers that you could grow. At least you tried...
-  icon: { sprite: Objects/Misc/poppybouquet.rsi, state: icon }
-  objectType: Item
