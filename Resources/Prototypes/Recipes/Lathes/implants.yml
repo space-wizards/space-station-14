@@ -1,0 +1,92 @@
+# Fun
+
+- type: latheRecipe
+  id: SadTromboneImplanter
+  result: SadTromboneImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Silver: 50
+
+- type: latheRecipe
+  id: LightImplanter
+  result: LightImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Silver: 50
+
+- type: latheRecipe
+  id: BikeHornImplanter
+  result: BikeHornImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Silver: 50
+
+# Sec
+
+- type: latheRecipe
+  id: TrackingImplanter
+  result: TrackingImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Silver: 100
+    Plasma: 50
+
+- type: latheRecipe
+  id: MindShieldImplanter
+  result: MindShieldImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Silver: 100
+    Plasma: 50
+
+# Antag
+
+- type: latheRecipe
+  id: DnaScramblerImplanter
+  result: DnaScramblerImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Plasma: 100
+    Uranium: 150
+
+- type: latheRecipe
+  id: ScramImplanter
+  result: ScramImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Plasma: 100
+    Uranium: 150
+
+- type: latheRecipe
+  id: FreedomImplanter
+  result: FreedomImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Plasma: 100
+    Uranium: 150
+
+- type: latheRecipe
+  id: SmokeImplanter
+  result: SmokeImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Plasma: 100
+    Uranium: 150

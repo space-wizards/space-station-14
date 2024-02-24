@@ -1130,3 +1130,41 @@
     staticRecipes:
     - MaterialSheetMeat
     - SheetPaper
+
+- type: entity
+  parent: BaseLathe
+  id: ImpLathe
+  name: imp-Lathe
+  description: Fabricator that allows you to convert rare resources into body enhancement implants.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/implathe.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticRecipes:
+      - SadTromboneImplanter
+      - LightImplanter
+      - BikeHornImplanter
+    dynamicRecipes:
+      - TrackingImplanter
+      - MindShieldImplanter
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+      - DnaScramblerImplanter
+      - ScramImplanter
+      - FreedomImplanter
+      - SmokeImplanter
+  - type: Machine
+    board: ImpLatheCircuitboard

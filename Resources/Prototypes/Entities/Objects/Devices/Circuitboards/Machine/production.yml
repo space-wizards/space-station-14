@@ -135,6 +135,25 @@
       stealGroup: MedicalTechFabCircuitboard
 
 - type: entity
+  id: ImpLatheCircuitboard
+  parent: BaseMachineCircuitboard
+  name: imp-lathe machine board
+  description: A machine printed circuit board for a imp-lathe.
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: ImpLathe
+      requirements:
+        MatterBin: 2
+        Manipulator: 2
+      tagRequirements:
+        Syringe:
+          Amount: 5
+          DefaultPrototype: Syringe
+          ExamineName: Syringe
+
+- type: entity
   id: CircuitImprinterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: circuit imprinter machine board

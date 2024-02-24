@@ -156,6 +156,14 @@
     - type: Implanter
       implant: TrackingImplant
 
+- type: entity
+  id: MindShieldImplanter
+  name: mind-shield implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: MindShieldImplant
+
 #Traitor implanters
 
 - type: entity
@@ -206,6 +214,14 @@
     - type: Implanter
       implant: DnaScramblerImplant
 
+- type: entity
+  id: SmokeImplanter
+  name: smoke cloud implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: SmokeImplant
+
 #Nuclear Operative/Special implanters
 
 - type: entity
@@ -239,13 +255,3 @@
   components:
   - type: Implanter
     implant: DeathAcidifierImplant
-
-# Security and Command implanters
-
-- type: entity
-  id: MindShieldImplanter
-  name: mind-shield implanter
-  parent: BaseImplantOnlyImplanter
-  components:
-    - type: Implanter
-      implant: MindShieldImplant

@@ -292,6 +292,21 @@
     useDelay: 1
 
 - type: entity
+  id: ActionActivateSmokeImplant
+  name: release smoke cloud
+  description: Activates your smoke implant, releasing a cloud of smoke.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    charges: 3
+    useDelay: 5
+    itemIconStyle: BigAction
+    icon: 
+      sprite: Actions/Implants/implants.rsi
+      state: smoke
+    event: !type:ActivateImplantEvent
+
+- type: entity
   id: ActionFireStarter
   name: Ignite
   description: Ignites enemies in a radius around you.

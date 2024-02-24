@@ -43,7 +43,7 @@
       implantAction: ActionToggleLight
     - type: PointLight
       enabled: false
-      radius: 2.5
+      radius: 5
       softness: 5
       mask: /Textures/Effects/LightMasks/cone.png
       autoRot: true
@@ -203,6 +203,20 @@
       whitelist:
         components:
         - HumanoidAppearance # syndies cant turn hamlet into a human
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SmokeImplant
+  name: smoke cloud implant
+  description: This implant releases a cloud of black smoke when used.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateSmokeImplant
+    - type: TriggerImplantAction
+    - type: SmokeOnTrigger
+      duration: 30
+      spreadAmount: 30
 
 #Nuclear Operative/Special Exclusive implants
 
