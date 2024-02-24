@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -32,7 +33,7 @@ public sealed class BinSystem : EntitySystem
         SubscribeLocalEvent<BinComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BinComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
-        SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnAltInteractHand);
         SubscribeLocalEvent<BinComponent, ExaminedEvent>(OnExamined);
