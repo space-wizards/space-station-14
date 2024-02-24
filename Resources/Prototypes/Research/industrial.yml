@@ -131,6 +131,7 @@
   recipeUnlocks:
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
+  - BorgModuleGPS
   
 - type: technology
   id: Shuttlecraft
