@@ -129,7 +129,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             JobPrototype = jobId,
             Species = species,
             Gender = gender,
-            DisplayPriority = jobPrototype.Weight,
+            DisplayPriority = jobPrototype.RealDisplayWeight,
             Fingerprint = mobFingerprint,
             DNA = dna
         };

@@ -41,7 +41,7 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
+    [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
@@ -78,7 +78,7 @@ public sealed partial class AdminVerbSystem
                         : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                     Act = () =>
                     {
-                        _boltsSystem.SetBoltsWithAudio(args.Target, bolts, !bolts.BoltsDown);
+                        _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(bolts.BoltsDown
