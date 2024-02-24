@@ -24,7 +24,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
     [Dependency] private readonly ClientGameTicker _gameTicker = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
 
-    private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
+    private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
     private readonly AudioParams _roundEndParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
 
     public EntityUid? LobbyMusicStream;
@@ -79,9 +79,9 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private void LobbyMusicVolumeCVarChanged(float volume)
     {
-        if (_stateManager.CurrentState is LobbyState)
+        if (LobbyMusicStream.HasValue)
         {
-            RestartLobbyMusic();
+            _audio.SetVolume(LobbyMusicStream, _lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)));
         }
     }
 
