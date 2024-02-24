@@ -3,6 +3,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -41,12 +42,12 @@ public sealed partial class ShakeableSystem : EntitySystem
         args.Verbs.Add(shakeVerb);
     }
 
-    private void OnShakeDoAfter(EntityUid uid, ShakeableComponent shakeable, ShakeDoAfterEvent args)
+    private void OnShakeDoAfter(Entity<ShakeableComponent> entity, ref ShakeDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
 
-        TryShake((uid, shakeable), args.User);
+        TryShake((entity, entity.Comp), args.User);
     }
 
     public bool TryStartShake(Entity<ShakeableComponent?> entity, EntityUid user)
@@ -77,7 +78,7 @@ public sealed partial class ShakeableSystem : EntitySystem
         return true;
     }
 
-    public bool TryShake(Entity<ShakeableComponent?> entity, EntityUid user)
+    public bool TryShake(Entity<ShakeableComponent?> entity, EntityUid? user = null)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
@@ -96,8 +97,8 @@ public sealed partial class ShakeableSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        // If required to be in hand, fail if there's no user or the user is not holding this entity
-        if (entity.Comp.RequireInHand && (user == null || !_hands.IsHolding(user.Value, entity, out _)))
+        // If required to be in hand, fail if the user is not holding this entity
+        if (user != null && entity.Comp.RequireInHand && !_hands.IsHolding(user.Value, entity, out _))
             return false;
 
         var attemptEv = new AttemptShakeEvent();
@@ -109,7 +110,7 @@ public sealed partial class ShakeableSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct ShakeEvent(EntityUid Shaker);
+public record struct ShakeEvent(EntityUid? Shaker);
 
 public sealed class AttemptShakeEvent : CancellableEntityEventArgs
 {

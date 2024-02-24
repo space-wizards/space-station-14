@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.Components;
 [RegisterComponent, Access(typeof(SharedDrinkSystem))]
 public sealed partial class DrinkComponent : Component
 {
-    [DataField, AutoNetworkedField]
+    [DataField]
     public string Solution = "drink";
 
     [DataField, AutoNetworkedField]

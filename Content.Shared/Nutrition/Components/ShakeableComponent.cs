@@ -16,7 +16,7 @@ public sealed partial class ShakeableComponent : Component
     /// Does the entity need to be in the user's hand in order to be shaken?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool RequireInHand = true;
+    public bool RequireInHand;
 
     /// <summary>
     /// Label to display in the verbs menu for this item's shake action.
