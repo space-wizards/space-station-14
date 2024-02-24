@@ -68,7 +68,7 @@ public sealed partial class AdminNotesLine : BoxContainer
             SeverityRect.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ResPath(iconPath)));
         }
 
-        TimeLabel.Text = Note.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss");
+        TimeLabel.Text = Note.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
         ServerLabel.Text = Note.ServerName ?? "Unknown";
         RoundLabel.Text = Note.Round == null ? "Unknown round" : "Round " + Note.Round;
         AdminLabel.Text = Note.CreatedByName;
@@ -91,7 +91,7 @@ public sealed partial class AdminNotesLine : BoxContainer
             if (Note.ExpiryTime.Value > DateTime.UtcNow)
             {
                 ExpiresLabel.Text = Loc.GetString("admin-note-editor-expiry-label-params",
-                    ("date", Note.ExpiryTime.Value.ToString("yyyy-MM-dd HH:mm:ss")),
+                    ("date", Note.ExpiryTime.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")),
                     ("expiresIn", (Note.ExpiryTime.Value - DateTime.UtcNow).ToString("d'd 'hh':'mm")));
                 ExpiresLabel.Modulate = Color.FromHex("#86DC3D");
             }
@@ -104,7 +104,7 @@ public sealed partial class AdminNotesLine : BoxContainer
 
         if (Note.LastEditedAt > Note.CreatedAt)
         {
-            EditedLabel.Text = Loc.GetString("admin-notes-edited", ("author", Note.EditedByName), ("date", Note.LastEditedAt));
+            EditedLabel.Text = Loc.GetString("admin-notes-edited", ("author", Note.EditedByName), ("date", Note.LastEditedAt.Value.ToLocalTime()));
             EditedLabel.Visible = true;
         }
 

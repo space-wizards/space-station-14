@@ -7,7 +7,10 @@
   color: "#800000"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bloodglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
@@ -88,7 +91,19 @@
   flavor: metallic
   color: "#162581"
   recognizable: true
-  physicalDesc: reagent-physical-desc-ferrous
+  physicalDesc: reagent-physical-desc-metallic
+  slippery: false
+
+- type: reagent
+  parent: Blood
+  id: AmmoniaBlood
+  name: reagent-name-ammonia-blood
+  group: Biological
+  desc: reagent-desc-ammonia-blood
+  flavor: bitter
+  color: "#7a8bf2"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-pungent
   slippery: false
 
 - type: reagent
@@ -132,6 +147,8 @@
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
     Medicine:
       effects:
+      - !type:ModifyBloodLevel
+        amount: 3
       - !type:HealthChange
         damage:
           groups:

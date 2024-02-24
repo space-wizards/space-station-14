@@ -85,9 +85,9 @@ public sealed partial class EmergencyShuttleSystem
 
     private void InitializeEmergencyConsole()
     {
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime, true);
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime, true);
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime, true);
+        Subs.CVar(_configManager, CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime, true);
+        Subs.CVar(_configManager, CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime, true);
+        Subs.CVar(_configManager, CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime, true);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ComponentStartup>(OnEmergencyStartup);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
@@ -121,13 +121,6 @@ public sealed partial class EmergencyShuttleSystem
     private void SetMaxTransitTime(float obj)
     {
         MaximumTransitTime = Math.Max(MinimumTransitTime, obj);
-    }
-
-    private void ShutdownEmergencyConsole()
-    {
-        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime);
-        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime);
-        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime);
     }
 
     private void OnEmergencyStartup(EntityUid uid, EmergencyShuttleConsoleComponent component, ComponentStartup args)
