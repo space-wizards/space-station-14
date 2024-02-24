@@ -181,9 +181,13 @@ namespace Content.Server.Lathe
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
 
+            var speedEv = new LatheGetSpeedEvent(recipe.CompleteTime);
+            RaiseLocalEvent(uid, ref speedEv);
+            var time = speedEv.Time;
+
             var lathe = EnsureComp<LatheProducingComponent>(uid);
             lathe.StartTime = _timing.CurTime;
-            lathe.ProductionLength = recipe.CompleteTime * component.TimeMultiplier;
+            lathe.ProductionLength = time * component.TimeMultiplier;
             component.CurrentRecipe = recipe;
 
             var ev = new LatheStartPrintingEvent(recipe);
