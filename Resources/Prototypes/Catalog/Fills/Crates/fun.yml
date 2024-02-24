@@ -182,28 +182,6 @@
         amount: 6
 
 - type: entity
-  id: CrateFunSadTromboneImplants
-  parent: CrateGenericSteel
-  name: sad trombone implants
-  description: Death's never been so fun before! Implant these to make dying a bit more happy.
-  components:
-  - type: StorageFill
-    contents:
-      - id: SadTromboneImplanter
-        amount: 3
-
-- type: entity
-  id: CrateFunLightImplants
-  parent: CrateGenericSteel
-  name: light implants
-  description: Light up your skin with these implants!
-  components:
-  - type: StorageFill
-    contents:
-      - id: LightImplanter
-        amount: 3
-
-- type: entity
   id: CrateFunParty
   parent: CrateGenericSteel
   name: party crate
@@ -302,17 +280,6 @@
       - id: ClothingHeadHatMagician
       - id: BeachBall
       - id: ClothingShoesSkates
-
-- type: entity
-  id: CrateFunBikeHornImplants
-  parent: CrateGenericSteel
-  name: bike horn implants
-  description: A thousand honks a day keeps security officers away!
-  components:
-  - type: StorageFill
-    contents:
-      - id: BikeHornImplanter
-        amount: 3
 
 - type: entity
   id: CrateFunMysteryFigurines

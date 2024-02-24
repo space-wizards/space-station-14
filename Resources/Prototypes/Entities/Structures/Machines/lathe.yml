@@ -1158,9 +1158,9 @@
       - LightImplanter
       - BikeHornImplanter
     dynamicRecipes:
-      - TrackingImplanter #med
-      - MindShieldImplanter #cmd
-      - ProtokineticImplanter #sup
+      - TrackingImplanter           #med
+      - ProtokineticImplanter       #sup
+      #- MindShieldImplanter        #cmd (useless without revolution mode)
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - DnaScramblerImplanter

@@ -5,8 +5,6 @@
   abstract: true
   components:
   - type: SubdermalImplant
-  - type: EmitSoundOnTrigger
-    sound: Effects/implant_use.ogg
   - type: Tag
     tags:
     - SubdermalImplant
