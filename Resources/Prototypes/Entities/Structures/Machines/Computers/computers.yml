@@ -112,6 +112,8 @@
     color: "#c94242"
   - type: Computer
     board: SyndicateShuttleConsoleCircuitboard
+  - type: MessagesServer
+    encryptionKey: Syndicate
 
 - type: entity
   parent: BaseComputerShuttle
@@ -577,6 +579,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
+  - type: MessagesServer
 
 - type: entity
   parent: ComputerComms
