@@ -99,6 +99,7 @@
       - CableMVStack
       - CableHVStack
       - HandheldGPSBasic
+      - HandHeldMassScanner
       - TRayScanner
       - AirTank
       - GasAnalyzer

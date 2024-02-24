@@ -13,6 +13,7 @@
       - id: ClothingBeltUtilityFilled
       - id: SurvivalKnife
       - id: HandheldGPSBasic
+      - id: HandHeldMassScanner
       - id: RadioHandheld
       - id: SeismicCharge
         amount: 2
@@ -37,6 +38,7 @@
       - id: ClothingBeltUtilityFilled
       - id: SurvivalKnife
       - id: HandheldGPSBasic
+      - id: HandHeldMassScanner
       - id: RadioHandheld
       - id: SeismicCharge
         amount: 2
