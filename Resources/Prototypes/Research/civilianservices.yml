@@ -52,6 +52,7 @@
   - SurveillanceCameraMonitorCircuitboard
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
+  - TrackingImplanter
 
 - type: technology
   id: AdvancedEntertainment
@@ -96,6 +97,18 @@
   - FatExtractorMachineCircuitboard
   - BiofabricatorMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard
+
+- type: technology
+  id: ImplanterFabrication
+  name: research-technology-implanter-fabrication
+  icon: 
+    sprite: Structures/Machines/implathe.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - ImpLatheCircuitboard
 
 # Tier 2
 

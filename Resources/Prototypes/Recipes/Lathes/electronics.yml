@@ -157,6 +157,15 @@
     Gold: 50
 
 - type: latheRecipe
+  id: ImpLatheCircuitboard
+  result: ImpLatheCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 1000
+
+- type: latheRecipe
   id: MedicalScannerMachineCircuitboard
   result: MedicalScannerMachineCircuitboard
   category: Circuitry

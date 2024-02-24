@@ -12,6 +12,7 @@
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
   - ShuttleGunKineticCircuitboard
+  - ProtokineticImplanter
   # These are roundstart but not replenishable for salvage
 
 - type: technology

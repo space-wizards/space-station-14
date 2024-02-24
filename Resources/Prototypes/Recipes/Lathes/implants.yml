@@ -81,6 +81,9 @@
 
 - type: latheRecipe
   id: DnaScramblerImplanter
+  icon:
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+      state: implanter0
   result: DnaScramblerImplanter
   completetime: 5
   materials:
@@ -91,6 +94,9 @@
 
 - type: latheRecipe
   id: ScramImplanter
+  icon:
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+      state: implanter0
   result: ScramImplanter
   completetime: 5
   materials:
@@ -101,6 +107,9 @@
 
 - type: latheRecipe
   id: FreedomImplanter
+  icon:
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+      state: implanter0
   result: FreedomImplanter
   completetime: 5
   materials:
@@ -111,6 +120,9 @@
 
 - type: latheRecipe
   id: SmokeImplanter
+  icon:
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+      state: implanter0
   result: SmokeImplanter
   completetime: 5
   materials:
