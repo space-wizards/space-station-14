@@ -8,14 +8,16 @@ using Content.Shared.PowerCell.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Bodycamera;
 
 public abstract class SharedBodyCameraSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] protected readonly SharedPowerCellSystem PowerCell = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
@@ -30,20 +32,14 @@ public abstract class SharedBodyCameraSystem : EntitySystem
         SubscribeLocalEvent<BodyCameraComponent, GotUnequippedEvent>(OnUnequipped);
     }
 
-    protected void OnPowerCellChanged(Entity<BodyCameraComponent> bodyCamera, ref PowerCellChangedEvent args)
+    protected virtual void OnPowerCellChanged(Entity<BodyCameraComponent> bodyCamera, ref PowerCellChangedEvent args)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (!_containerSystem.TryGetContainingContainer(bodyCamera, out var container))
-            return;
-
-        if (container is null)
-            return;
-
-        if (args.Ejected || !_powerCell.HasDrawCharge(bodyCamera))
+        if (args.Ejected)
         {
-            TryDisable(bodyCamera, container.Owner);
+            TryDisable(bodyCamera);
         }
     }
 
@@ -59,7 +55,7 @@ public abstract class SharedBodyCameraSystem : EntitySystem
 
         //Ensure the current slot is an allowed equipment slot
         //And not a pocket
-        if ((clothingComp.Slots & args.SlotFlags) != args.SlotFlags)
+        if (!args.SlotFlags.HasFlag(clothingComp.Slots))
             return;
 
         TryEnable(bodyCamera, args.Equipee);
@@ -92,41 +88,48 @@ public abstract class SharedBodyCameraSystem : EntitySystem
     /// <summary>
     /// Enable the camera and play sound if there is enough charge
     /// </summary>
-    protected virtual bool TryEnable(Entity<BodyCameraComponent> bodyCamera, EntityUid user)
+    protected virtual bool TryEnable(Entity<BodyCameraComponent> bodyCamera, EntityUid? user = null)
     {
         if (bodyCamera.Comp.Enabled)
             return false;
 
-        if (!_powerCell.HasDrawCharge(bodyCamera))
+        if (!PowerCell.HasDrawCharge(bodyCamera))
             return false;
 
-        _audio.PlayPredicted(bodyCamera.Comp.PowerOnSound, bodyCamera, user);
+        if (user == null && !TryGetWearer(bodyCamera, out user))
+            return false;
+
+        Audio.PlayPredicted(bodyCamera.Comp.PowerOnSound, bodyCamera, user);
 
         var message = Loc.GetString(bodyCamera.Comp.CameraOnUse);
-
-        _popup.PopupClient(message, bodyCamera, user);
+        Popup.PopupClient(message, bodyCamera, user.Value);
 
         bodyCamera.Comp.Enabled = true;
-        _powerCell.SetPowerCellDrawEnabled(bodyCamera, true);
+        PowerCell.SetPowerCellDrawEnabled(bodyCamera, true);
         return true;
     }
 
     /// <summary>
-    /// Disable the camera and play sound
+    /// Disable the bodycamera
     /// </summary>
-    protected virtual bool TryDisable(Entity<BodyCameraComponent> bodyCamera, EntityUid user)
+    /// <param name="bodyCamera">Which bodycamera to disable</param>
+    /// <param name="user">Which user is currently wearing or interacting with the bodycamera</param>
+    /// <param name="force">Force the update even if the bodycamera is already disabled</param>
+    protected virtual bool TryDisable(Entity<BodyCameraComponent> bodyCamera, EntityUid? user = null)
     {
         if (!bodyCamera.Comp.Enabled)
             return false;
 
-        _audio.PlayPredicted(bodyCamera.Comp.PowerOffSound, bodyCamera, user);
+        if (user == null && !TryGetWearer(bodyCamera, out user))
+            return false;
+
+        Audio.PlayPredicted(bodyCamera.Comp.PowerOffSound, bodyCamera, user);
 
         var message = Loc.GetString(bodyCamera.Comp.CameraOffUse);
-
-        _popup.PopupClient(message, bodyCamera, user);
+        Popup.PopupClient(message, bodyCamera, user.Value);
 
         bodyCamera.Comp.Enabled = false;
-        _powerCell.SetPowerCellDrawEnabled(bodyCamera, false);
+        PowerCell.SetPowerCellDrawEnabled(bodyCamera, false);
         return true;
     }
 
@@ -139,5 +142,20 @@ public abstract class SharedBodyCameraSystem : EntitySystem
             return;
 
         _itemSlotsSystem.SetLock(bodyCamera, powerCellSlotComponent.CellSlotId, locked);
+    }
+
+    protected bool TryGetWearer(EntityUid bodyCamera, [NotNullWhen(true)] out EntityUid? wearer)
+    {
+        wearer = null;
+
+        if (!_containerSystem.TryGetContainingContainer(bodyCamera, out var container))
+            return false;
+
+        if (container is null)
+            return false;
+
+        wearer = container.Owner;
+
+        return true;
     }
 }
