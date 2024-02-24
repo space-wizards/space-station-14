@@ -41,17 +41,11 @@ public sealed class ChatValidator : EntitySystem
     {
         base.Initialize();
 
-        _maxChatMessageLength = _configuration.GetCVar(CCVars.ChatMaxMessageLength);
-        _periodLength = _configuration.GetCVar(CCVars.ChatRateLimitPeriod);
-        _chatRateLimitAnnounceAdmins = _configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdmins);
-        _chatRateLimitAnnounceAdminDelay = _configuration.GetCVar(CCVars.ChatRateLimitAnnounceAdminsDelay);
-        _chatRateLimitCount = _configuration.GetCVar(CCVars.ChatRateLimitCount);
-
-        _configuration.OnValueChanged(CCVars.ChatRateLimitPeriod, periodLength => _periodLength = periodLength);
-        _configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdmins, announce => _chatRateLimitAnnounceAdmins = announce);
-        _configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdminsDelay, announce => _chatRateLimitAnnounceAdminDelay = announce);
-        _configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount);
-        _configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => _maxChatMessageLength = maxLen);
+        _configuration.OnValueChanged(CCVars.ChatRateLimitPeriod, periodLength => _periodLength = periodLength, true);
+        _configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdmins, announce => _chatRateLimitAnnounceAdmins = announce, true);
+        _configuration.OnValueChanged(CCVars.ChatRateLimitAnnounceAdminsDelay, announce => _chatRateLimitAnnounceAdminDelay = announce, true);
+        _configuration.OnValueChanged(CCVars.ChatRateLimitCount, limitCount => _chatRateLimitCount = limitCount, true);
+        _configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => _maxChatMessageLength = maxLen, true);
 
         SubscribeNetworkEvent<AttemptDeadChatEvent>(HandleAttemptDeadChatMessage);
         SubscribeNetworkEvent<AttemptEmoteEvent>(HandleAttemptEmoteMessage);
@@ -230,7 +224,7 @@ public sealed class ChatValidator : EntitySystem
             return false;
         }
 
-        if (IsRateLimited(entity, out reason))
+        if (IsRateLimited(entity, message.Length, out reason))
         {
             return false;
         }
@@ -287,7 +281,7 @@ public sealed class ChatValidator : EntitySystem
     }
 
     // TODO: Expose this if it's useful for other classes.
-    private bool IsRateLimited(EntityUid entityUid, out string reason)
+    private bool IsRateLimited(EntityUid entityUid, int messageLen, out string reason)
     {
         reason = "";
 
@@ -304,13 +298,18 @@ public sealed class ChatValidator : EntitySystem
         if (data.MessageCountExpiresAt < time)
         {
             data.MessageCountExpiresAt = time + TimeSpan.FromSeconds(_periodLength);
-            data.MessageCount /= 2; // Backoff from spamming slowly
+
+            // Backoff from spamming slowly
+            data.MessageCount /= 2;
+            data.TotalMessageLength /= 2;
+
             data.RateLimitAnnouncedToPlayer = false;
         }
 
         data.MessageCount += 1;
+        data.TotalMessageLength += messageLen;
 
-        if (data.MessageCount <= _chatRateLimitCount)
+        if (data.MessageCount <= _chatRateLimitCount && data.TotalMessageLength <= _maxChatMessageLength)
             return false;
 
         // Breached rate limits, inform admins if configured.

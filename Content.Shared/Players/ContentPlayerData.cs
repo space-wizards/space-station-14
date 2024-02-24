@@ -49,6 +49,11 @@ public sealed class ContentPlayerData
     public int MessageCount;
 
     /// <summary>
+    /// The total amount of characters someone has been sending. Allows for rate-limiting.
+    /// </summary>
+    public int TotalMessageLength;
+
+    /// <summary>
     /// When the current count for this session expires.
     /// </summary>
     public TimeSpan MessageCountExpiresAt;

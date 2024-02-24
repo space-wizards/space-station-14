@@ -18,12 +18,10 @@ public partial class SharedChatSystem
             return false;
         }
 
-        var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
-
-        if (message.Length > messageMaxLen)
+        if (message.Length > MaxAnnouncementMessageLength)
         {
             reason = Loc.GetString("chat-manager-max-message-length",
-                ("maxMessageLength", messageMaxLen));
+                ("maxMessageLength", MaxAnnouncementMessageLength));
 
             return false;
         }

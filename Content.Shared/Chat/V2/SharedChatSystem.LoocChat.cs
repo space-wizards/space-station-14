@@ -8,12 +8,10 @@ public partial class SharedChatSystem
 {
     public bool SendLoocChatMessage(EntityUid speaker, string message, [NotNullWhen(false)] out string? reason)
     {
-        var messageMaxLen = _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
-
-        if (message.Length > messageMaxLen)
+        if (message.Length > MaxAnnouncementMessageLength)
         {
             reason = Loc.GetString("chat-manager-max-message-length",
-                ("maxMessageLength", messageMaxLen));
+                ("maxMessageLength", MaxAnnouncementMessageLength));
 
             return false;
         }
