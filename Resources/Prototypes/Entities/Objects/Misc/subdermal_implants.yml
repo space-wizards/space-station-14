@@ -5,6 +5,8 @@
   abstract: true
   components:
   - type: SubdermalImplant
+  - type: EmitSoundOnTrigger
+    sound: Effects/implant_use.ogg
   - type: Tag
     tags:
     - SubdermalImplant
@@ -73,7 +75,17 @@
       tags:
       - BikeHorn
 
-#Security implants
+#Crew implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ProtokineticImplant
+  name: proto-kinetic implant
+  description: this implant allows you to fire compressed clots of air.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateProtokineticImplant
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -102,6 +114,19 @@
       - Critical
     - type: Rattle
       radioChannel: "Security"
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MindShieldImplant
+  name: mind-shield implant
+  description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
+  noSpawn: true
+  components:
+   - type: SubdermalImplant
+     permanent: true
+   - type: Tag
+     tags:
+       - MindShield
 
 #Traitor implants
 
@@ -326,18 +351,3 @@
       - Critical
       - Dead
     - type: Rattle
-
-# Sec and Command implants
-
-- type: entity
-  parent: BaseSubdermalImplant
-  id: MindShieldImplant
-  name: mind-shield implant
-  description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
-  noSpawn: true
-  components:
-   - type: SubdermalImplant
-     permanent: true
-   - type: Tag
-     tags:
-       - MindShield

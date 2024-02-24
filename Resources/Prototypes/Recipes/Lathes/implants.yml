@@ -2,6 +2,9 @@
 
 - type: latheRecipe
   id: SadTromboneImplanter
+  icon:
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
   result: SadTromboneImplanter
   completetime: 5
   materials:
@@ -11,6 +14,9 @@
 
 - type: latheRecipe
   id: LightImplanter
+  icon:
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
   result: LightImplanter
   completetime: 5
   materials:
@@ -20,6 +26,9 @@
 
 - type: latheRecipe
   id: BikeHornImplanter
+  icon:
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
   result: BikeHornImplanter
   completetime: 5
   materials:
@@ -31,6 +40,9 @@
 
 - type: latheRecipe
   id: TrackingImplanter
+  icon:
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
   result: TrackingImplanter
   completetime: 5
   materials:
@@ -41,6 +53,9 @@
 
 - type: latheRecipe
   id: MindShieldImplanter
+  icon:
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
   result: MindShieldImplanter
   completetime: 5
   materials:
@@ -48,6 +63,19 @@
     Glass: 150
     Silver: 100
     Plasma: 50
+
+- type: latheRecipe
+  id: ProtokineticImplanter
+  icon:
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
+  result: ProtokineticImplanter
+  completetime: 5
+  materials:
+    Plastic: 100
+    Glass: 150
+    Silver: 100
+    Plasma: 150
 
 # Antag
 

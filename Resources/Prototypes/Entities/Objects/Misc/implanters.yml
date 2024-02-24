@@ -33,11 +33,10 @@
       state: implanter0
       layers:
         - state: implanter0
-          map: [ "implantOnly" ]
+          map: [ "implantFull" ]
           visible: true
         - state: implanter1
-          map: [ "implantFull" ]
-          visible: false
+          map: [ "implantOnly" ]
     - type: Item
       sprite: Objects/Specific/Medical/implanter.rsi
       heldPrefix: 0
@@ -52,7 +51,7 @@
         enum.ImplanterImplantOnlyVisuals.ImplantOnly:
           implantOnly:
             True: {state: broken}
-            False: {state: implanter0}
+            False: {state: implanter1}
 
 - type: entity
   id: Implanter
@@ -93,7 +92,7 @@
       implantOnly: true
 
 - type: entity
-  id: BaseImplantOnlyImplanterSyndi
+  id: BaseImplantOnlyImplanterSyndi 
   parent: BaseImplantOnlyImplanter
   description: A compact disposable syringe exclusively designed for the injection of subdermal implants.
   abstract: true
@@ -102,25 +101,8 @@
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
     - type: Sprite
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
-      state: implanter1
-      layers:
-        - state: implanter0
-          map: [ "implantFull" ]
-          visible: true
-        - state: implanter1
-          map: [ "implantOnly" ]
-    - type: GenericVisualizer
-      visuals:
-        enum.ImplanterVisuals.Full:
-          implantFull:
-            True: {visible: true}
-            False: {visible: false}
-        enum.ImplanterImplantOnlyVisuals.ImplantOnly:
-          implantOnly:
-            True: {state: broken}
-            False: {state: implanter1}
 
-#Fun implanters
+#Common implanters
 
 - type: entity
   id: SadTromboneImplanter
@@ -145,6 +127,14 @@
   components:
     - type: Implanter
       implant: BikeHornImplant
+      
+- type: entity
+  id: ProtokineticImplanter
+  name: protokinetic implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: ProtokineticImplant
 
 #Security implanters
 

@@ -94,6 +94,25 @@
     event: !type:UseFreedomImplantEvent
 
 - type: entity
+  id: ActionActivateProtokineticImplant
+  name: Shoot
+  description: Activates your implant by releasing a compressed blob of air
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 5
+    itemIconStyle: BigAction
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+    icon:
+      sprite: Objects\Weapons\Guns\Projectiles\magic.rsi
+      state: chronobolt
+    event: !type:ProjectileSpellEvent
+      prototype: BulletKinetic
+      posData: !type:TargetCasterPos
+
+- type: entity
   id: ActionOpenUplinkImplant
   name: Open Uplink
   description: Opens the syndicate uplink embedded under your skin
