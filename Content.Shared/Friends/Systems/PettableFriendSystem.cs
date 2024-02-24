@@ -4,6 +4,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
 
 namespace Content.Shared.Friends.Systems;
 
@@ -11,10 +12,17 @@ public sealed class PettableFriendSystem : EntitySystem
 {
     [Dependency] private readonly NpcFactionSystem _factionException = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
+    private EntityQuery<FactionExceptionComponent> _exceptionQuery;
+    private EntityQuery<UseDelayComponent> _useDelayQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _exceptionQuery = GetEntityQuery<FactionExceptionComponent>();
+        _useDelayQuery = GetEntityQuery<UseDelayComponent>();
 
         SubscribeLocalEvent<PettableFriendComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PettableFriendComponent, GotRehydratedEvent>(OnRehydrated);
@@ -24,8 +32,13 @@ public sealed class PettableFriendSystem : EntitySystem
     {
         var (uid, comp) = ent;
         var user = args.User;
-        if (args.Handled || !TryComp<FactionExceptionComponent>(uid, out var exceptionComp))
+        if (args.Handled || !_exceptionQuery.TryGetComponent(uid, out var exceptionComp))
             return;
+
+        if (_useDelayQuery.TryGetComponent(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay))
+            return;
+
+        _useDelay.BeginDelay(uid, useDelay);
 
         var exception = (uid, exceptionComp);
         if (_factionException.IsIgnored(exception, user))
