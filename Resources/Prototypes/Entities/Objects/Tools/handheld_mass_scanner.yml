@@ -57,7 +57,8 @@
         visible: false
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
 
-- id: HandHeldMassScannerBorg
+- type: entity
+  id: HandHeldMassScannerBorg
   parent: HandHeldMassScanner
   suffix: Borg
   components:
