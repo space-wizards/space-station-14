@@ -92,7 +92,7 @@
       implantOnly: true
 
 - type: entity
-  id: BaseImplantOnlyImplanterSyndi 
+  id: BaseImplantOnlyImplanterSyndi
   parent: BaseImplantOnlyImplanter
   description: A compact disposable syringe exclusively designed for the injection of subdermal implants.
   abstract: true
@@ -102,7 +102,7 @@
     - type: Sprite
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
 
-#Common implanters
+#Crew implanters
 
 - type: entity
   id: SadTromboneImplanter

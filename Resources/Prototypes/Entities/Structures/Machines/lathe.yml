@@ -1152,6 +1152,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
     staticRecipes:
