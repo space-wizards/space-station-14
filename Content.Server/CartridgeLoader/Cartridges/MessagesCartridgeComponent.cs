@@ -53,6 +53,12 @@ public sealed partial class MessagesCartridgeComponent : Component
     [DataField]
     public bool DeadConnection=true;
 
+    /// <summary>
+    /// Key used to denote which faction the cartridge belongs to.
+    /// </summary>
+    [DataField]
+    public string EncryptionKey = "Nanotrasen";
+
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(10);
     public TimeSpan NextUpdate = TimeSpan.Zero;
 

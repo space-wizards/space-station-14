@@ -110,7 +110,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
                 }
                 else
                 {
-                    component.UserName = "Unknown"+"("+idCardComponent.JobTitle+")";
+                    component.UserName = "Unknown "+"("+idCardComponent.JobTitle+")";
                 }
             }
             if (component.UserUid != null && component.UserName != null)
@@ -120,12 +120,19 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         //_sawmill.Debug("Updating cart");
         if ((component.MessagesQueue.Count > 0) || component.DeadConnection)
         {
-            if (!(GetActiveServer(mapId) is var (serverUid, messageServer)))
+            if (!(GetActiveServer(component, mapId) is var (serverUid, messageServer)))
             {
                 component.DeadConnection=true;
                 return;
             }
-            component.DeadConnection=false;
+            else
+            {
+                if (component.DeadConnection)
+                    PullFromServer(uid, component, messageServer);
+                component.DeadConnection=false;
+            }
+
+
             var tempMessageQueue = new List<MessagesMessageData>(component.MessagesQueue);
             foreach (var message in tempMessageQueue)
             {
@@ -137,12 +144,15 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         }
     }
 
-    public (EntityUid, MessagesServerComponent)? GetActiveServer(MapId mapId)
+    public (EntityUid, MessagesServerComponent)? GetActiveServer(MessagesCartridgeComponent component,MapId mapId)
     {
        // _sawmill.Debug("Looking for server");
         var servers = EntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
         while(servers.MoveNext(out var uid, out var messageServer, out var power, out var transform))
         {
+            if (messageServer.EncryptionKey != component.EncryptionKey)
+                continue;
+
             if (transform.MapID == mapId &&
                 power.Powered)
             {
@@ -154,21 +164,21 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         return null;
     }
 
-    private string GetName(MessagesCartridgeComponent component, string uid)
+    private string GetName(MessagesCartridgeComponent component, string key)
     {
-        if (!(component.NameDict.ContainsKey(uid)))
+        if (!(component.NameDict.ContainsKey(key)))
         {
             return "Unknown";
         }
         else
         {
-            if (component.NameDict[uid][0] == '(')
+            if (component.NameDict[key][0] == '(')
             {
-                return "Unknown "+component.NameDict[uid];
+                return "Unknown "+component.NameDict[key];
             }
             else
             {
-                return component.NameDict[uid];
+                return component.NameDict[key];
             }
         }
     }
@@ -182,11 +192,11 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         {
             List <(string,string)> userList = new();
 
-            foreach (var nameEntry in component.NameDict)
+            foreach (var nameEntry in component.NameDict.Keys)
             {
-                if (nameEntry.Key == component.UserUid)
+                if (nameEntry == component.UserUid)
                     continue;
-                userList.Add((nameEntry.Value,nameEntry.Key));
+                userList.Add((GetName(component,nameEntry),nameEntry));
             }
 
             userList.Sort(delegate((string,string) a, (string,string) b)
@@ -291,7 +301,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
         foreach (var message in server.Messages)
         {
-            if (message.ReceiverId == component.UserUid || message.SenderId == component.UserUid)
+            if ((message.ReceiverId == component.UserUid || message.SenderId == component.UserUid) && !(component.Messages.Contains(message)))
                 component.Messages.Add(message);
         }
 

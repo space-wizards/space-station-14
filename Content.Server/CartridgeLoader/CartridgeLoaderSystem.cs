@@ -336,7 +336,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
                             messagesCartridgeComponent.ConnectedId = args.Entity;
                             messagesCartridgeComponent.UserUid = args.Entity.ToString();
                             //_sawmill.Debug("data updated, looking for server");
-                            if (_messagesCartridgeSystem.GetActiveServer(Transform(uid).MapID) is var (_, server))
+                            if (_messagesCartridgeSystem.GetActiveServer(messagesCartridgeComponent,Transform(uid).MapID) is var (_, server))
                             {
                                 //_sawmill.Debug("server found");
                                 _messagesCartridgeSystem.PullFromServer(realProgramUid, messagesCartridgeComponent, server);

@@ -24,11 +24,18 @@ public sealed class MessagesServerSystem : EntitySystem
         var serverQuery = EntityQueryEnumerator<MessagesServerComponent>();
         while (serverQuery.MoveNext(out var uid, out var server))
         {
-            if (server.NextUpdate > _gameTiming.CurTime)
-                continue;
-            server.NextUpdate = _gameTiming.CurTime + server.UpdateDelay;
+            if (server.NextUpdate <= _gameTiming.CurTime)
+            {
+                server.NextUpdate = _gameTiming.CurTime + server.UpdateDelay;
 
-            Update(uid, server);
+                Update(uid, server);
+            }
+            if (server.NextSync <= _gameTiming.CurTime)
+            {
+                server.NextSync = _gameTiming.CurTime + server.SyncDelay;
+
+                Sync(uid, server);
+            }
         }
     }
 
@@ -49,6 +56,8 @@ public sealed class MessagesServerSystem : EntitySystem
             if (Transform(cartUid).MapID != mapId)
                 continue;
             if ((cartComponent.UserUid == null) || (cartComponent.UserName == null))
+                continue;
+            if (cartComponent.EncryptionKey != component.EncryptionKey)
                 continue;
             if ((component.NameDict.ContainsKey(cartComponent.UserUid)) && (component.NameDict[cartComponent.UserUid] == cartComponent.UserName))
                 continue;
@@ -76,7 +85,34 @@ public sealed class MessagesServerSystem : EntitySystem
             foreach (var message in tempMessagesQueue)
             {
                 bool sent=TryToSend(message, mapId, component);
-                if (sent) component.MessagesQueue.Remove(message);
+                if (sent)
+                {
+                    component.MessagesQueue.Remove(message);
+                    component.Messages.Add(message);
+                }
+            }
+        }
+    }
+
+    public void Sync(EntityUid uid, MessagesServerComponent component)
+    {
+        var mapId = Transform(uid).MapID;
+        var query = EntityQueryEnumerator<MessagesCartridgeComponent>();
+        while(query.MoveNext(out var cartUid, out var cartComponent))
+        {
+            if (Transform(cartUid).MapID != mapId)
+                continue;
+            if ((cartComponent.UserUid == null) || (cartComponent.UserName == null))
+                continue;
+            if (cartComponent.EncryptionKey != component.EncryptionKey)
+                continue;
+
+            foreach (var entry in component.NameDict)
+            {
+                if (cartComponent.NameDict[entry.Key] != entry.Value)
+                {
+                    cartComponent.NameDict[entry.Key] = entry.Value;
+                }
             }
         }
     }
@@ -104,7 +140,7 @@ public sealed class MessagesServerSystem : EntitySystem
 
     public void PdaToServerMessage(EntityUid uid, MessagesServerComponent component, MessagesMessageData message)
     {
-        component.Messages.Add(message);
+        //component.Messages.Add(message);
         component.MessagesQueue.Add(message);
         Update(uid, component);
     }

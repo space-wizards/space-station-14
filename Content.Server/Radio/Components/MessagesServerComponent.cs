@@ -28,6 +28,14 @@ public sealed partial class MessagesServerComponent : Component
     [DataField]
     public Dictionary<string,string> NameDict= new();
 
+    /// <summary>
+    /// Key used to denote which faction the server belongs to.
+    /// </summary>
+    [DataField]
+    public string EncryptionKey = "Nanotrasen";
+
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
     public TimeSpan NextUpdate = TimeSpan.Zero;
+    public TimeSpan SyncDelay = TimeSpan.FromSeconds(180);
+    public TimeSpan NextSync = TimeSpan.Zero;
 }
