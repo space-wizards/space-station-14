@@ -172,12 +172,12 @@
         - MaterialCloth10
         - MaterialWoodPlank10
         - ResearchDisk
-        - DeathPaintClosed
+        - DeathPaint
         - Plunger
-        - SprayPaintBlueClosed
-        - SprayPaintRedClosed
-        - SprayPaintGreenClosed
-        - SprayPaintOrangeClosed
+        - SprayPaintBlue
+        - SprayPaintRed
+        - SprayPaintGreen
+        - SprayPaintOrange
         - TechnologyDisk
         - PowerCellMedium
         - PowerCellSmall
