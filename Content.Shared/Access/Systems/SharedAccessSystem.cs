@@ -27,7 +27,7 @@ namespace Content.Shared.Access.Systems
                     continue;
 
                 component.Tags.UnionWith(proto.Tags);
-                Dirty(component);
+                Dirty(uid, component);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Content.Shared.Access.Systems
 
             access.Tags.Clear();
             access.Tags.UnionWith(newTags);
-            Dirty(access);
+            Dirty(uid, access);
 
             return true;
         }
@@ -85,7 +85,7 @@ namespace Content.Shared.Access.Systems
                 access.Tags.UnionWith(proto.Tags);
             }
 
-            Dirty(access);
+            Dirty(uid, access);
             return true;
         }
 
@@ -107,7 +107,7 @@ namespace Content.Shared.Access.Systems
 
             access.Tags.Clear();
             access.Tags.UnionWith(prototype.Access);
-            Dirty(access);
+            Dirty(uid, access);
 
             TryAddGroups(uid, prototype.AccessGroups, access);
 

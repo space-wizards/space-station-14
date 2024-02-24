@@ -468,9 +468,6 @@
   id: DrinkBottle
 
 - type: Tag
-  id: DroneUsable
-
-- type: Tag
   id: Duck
 
 - type: Tag
@@ -1051,6 +1048,9 @@
 
 - type: Tag
   id: Soup
+
+- type: Tag
+  id: SpookyFog
 
 - type: Tag
   id: Spray

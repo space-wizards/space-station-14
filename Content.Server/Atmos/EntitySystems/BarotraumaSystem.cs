@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
@@ -97,7 +98,11 @@ namespace Content.Server.Atmos.EntitySystems
                 foreach (var slot in barotrauma.ProtectionSlots)
                 {
                     if (!_inventorySystem.TryGetSlotEntity(uid, slot, out var equipment, inv, contMan)
-                        || !TryComp(equipment, out PressureProtectionComponent? protection))
+                        || !TryGetPressureProtectionValues(equipment.Value,
+                            out var itemHighMultiplier,
+                            out var itemHighModifier,
+                            out var itemLowMultiplier,
+                            out var itemLowModifier))
                     {
                         // Missing protection, skin is exposed.
                         hPModifier = 0f;
@@ -108,10 +113,10 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     // The entity is as protected as its weakest part protection
-                    hPModifier = Math.Max(hPModifier, protection.HighPressureModifier);
-                    hPMultiplier = Math.Max(hPMultiplier, protection.HighPressureMultiplier);
-                    lPModifier = Math.Min(lPModifier, protection.LowPressureModifier);
-                    lPMultiplier = Math.Min(lPMultiplier, protection.LowPressureMultiplier);
+                    hPModifier = Math.Max(hPModifier, itemHighModifier.Value);
+                    hPMultiplier = Math.Max(hPMultiplier, itemHighMultiplier.Value);
+                    lPModifier = Math.Min(lPModifier, itemLowModifier.Value);
+                    lPMultiplier = Math.Min(lPMultiplier, itemLowMultiplier.Value);
                 }
 
                 barotrauma.HighPressureModifier = hPModifier;
@@ -121,12 +126,16 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             // any innate pressure resistance ?
-            if (TryComp<PressureProtectionComponent>(uid, out var innatePressureProtection))
+            if (TryGetPressureProtectionValues(uid,
+                    out var highMultiplier,
+                    out var highModifier,
+                    out var lowMultiplier,
+                    out var lowModifier))
             {
-                barotrauma.HighPressureModifier += innatePressureProtection.HighPressureModifier;
-                barotrauma.HighPressureMultiplier *= innatePressureProtection.HighPressureMultiplier;
-                barotrauma.LowPressureModifier += innatePressureProtection.LowPressureModifier;
-                barotrauma.LowPressureMultiplier *= innatePressureProtection.LowPressureMultiplier;
+                barotrauma.HighPressureModifier += highModifier.Value;
+                barotrauma.HighPressureMultiplier *= highMultiplier.Value;
+                barotrauma.LowPressureModifier += lowModifier.Value;
+                barotrauma.LowPressureMultiplier *= lowMultiplier.Value;
             }
         }
 
@@ -154,6 +163,36 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return (environmentPressure + barotrauma.HighPressureModifier) * (barotrauma.HighPressureMultiplier);
+        }
+
+        public bool TryGetPressureProtectionValues(
+            Entity<PressureProtectionComponent?> ent,
+            [NotNullWhen(true)] out float? highMultiplier,
+            [NotNullWhen(true)] out float? highModifier,
+            [NotNullWhen(true)] out float? lowMultiplier,
+            [NotNullWhen(true)] out float? lowModifier)
+        {
+            highMultiplier = null;
+            highModifier = null;
+            lowMultiplier = null;
+            lowModifier = null;
+            if (!Resolve(ent, ref ent.Comp, false))
+                return false;
+
+            var comp = ent.Comp;
+            var ev = new GetPressureProtectionValuesEvent
+            {
+                HighPressureMultiplier = comp.HighPressureMultiplier,
+                HighPressureModifier = comp.HighPressureModifier,
+                LowPressureMultiplier = comp.LowPressureMultiplier,
+                LowPressureModifier = comp.LowPressureModifier
+            };
+            RaiseLocalEvent(ent, ref ev);
+            highMultiplier = ev.HighPressureMultiplier;
+            highModifier = ev.HighPressureModifier;
+            lowMultiplier = ev.LowPressureMultiplier;
+            lowModifier = ev.LowPressureModifier;
+            return true;
         }
 
         public override void Update(float frameTime)

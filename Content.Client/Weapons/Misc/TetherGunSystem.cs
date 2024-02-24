@@ -54,7 +54,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null ||
             !TryGetTetherGun(player.Value, out var gunUid, out var gun) ||
