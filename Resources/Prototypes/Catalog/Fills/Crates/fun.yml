@@ -290,10 +290,10 @@
     contents:
       - id: CrazyGlue
       - id: PlasticBanana
-      - id: FunnyPaintClosed
+      - id: FunnyPaint
         orGroup: Paint
         prob: 0.5
-      - id: FunnyPaintYellowClosed
+      - id: FunnyPaintYellow
         orGroup: Paint
         prob: 0.5
       - id: WhoopieCushion
@@ -344,28 +344,31 @@
   components:
   - type: StorageFill
     contents:
-      - id: SprayPaintBlueClosed
+      - id: SprayPaintBlue
         amount: 2
         prob: 0.33
-      - id: SprayPaintRedClosed
+      - id: SprayPaintRed
         amount: 2
         prob: 0.33
-      - id: SprayPaintOrangeClosed
+      - id: SprayPaintOrange
         amount: 2
         prob: 0.33
-      - id: SprayPaintBlackClosed
+      - id: SprayPaintBlack
         amount: 2
         prob: 0.33
-      - id: SprayPaintGreenClosed
+      - id: SprayPaintGreen
         amount: 2
         prob: 0.33
-      - id: SprayPaintPurpleClosed
+      - id: SprayPaintPurple
         amount: 2
         prob: 0.33
-      - id: DeathPaintClosed
-        amount: 1
-      - id: DeathPaintTwoClosed
-        amount: 1
+      - id: SprayPaintWhite
+        amount: 2
+        prob: 0.33
+      - id: DeathPaint
+        amount: 2
+      - id: DeathPaintTwo
+        amount: 2
 
 - type: entity
   name: dartboard box set

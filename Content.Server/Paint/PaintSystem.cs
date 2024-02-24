@@ -9,7 +9,7 @@ using Content.Shared.Humanoid;
 using Robust.Shared.Utility;
 using Content.Shared.Verbs;
 using Content.Shared.SubFloor;
-using Content.Shared.Mobs.Components;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Inventory;
 
 namespace Content.Server.Paint;
@@ -83,11 +83,23 @@ public sealed class PaintSystem : SharedPaintSystem
 
     private void OnPaint(Entity<PaintComponent> entity, ref PaintDoAfterEvent args)
     {
-        if (args.Target == null)
+        if (args.Target == null || args.Used == null)
+            return;
+
+        if (args.Handled || args.Cancelled)
             return;
 
         if (args.Target is not { Valid: true } target)
             return;
+
+        if (TryComp<OpenableComponent>(entity, out var openable))
+        {
+            if (!openable.Opened)
+            {
+                _popup.PopupEntity(Loc.GetString("paint-closed", ("used", args.Used)), args.User, args.User, PopupType.Medium);
+                return;
+            }
+        }
 
         if (HasComp<PaintedComponent>(target) || HasComp<RandomSpriteComponent>(target))
         {
@@ -142,8 +154,6 @@ public sealed class PaintSystem : SharedPaintSystem
             args.Handled = true;
             return;
         }
-        if (args.Used == null)
-            return;
 
         if (!TryPaint(entity, target))
         {
