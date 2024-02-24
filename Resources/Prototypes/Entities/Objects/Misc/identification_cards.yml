@@ -477,7 +477,7 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Оперативник ШСО
+    jobTitle: Офицер ШСО
     jobIcon: JobIconNanotrasen
   - type: Access
     groups:
@@ -508,7 +508,7 @@
     - state: gold
     - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
   - type: IdCard
-    jobTitle: ОБР Капеллан
+    jobTitle: ОБР Священник
   - type: Item
     heldPrefix: blue
 
@@ -522,7 +522,7 @@
     - state: gold
     - state: ert_engineer
   - type: IdCard
-    jobTitle: ОБР Полевой Инженер
+    jobTitle: ОБР Инженер
 
 - type: entity
   parent: ERTChaplainIDCard
@@ -534,7 +534,7 @@
     - state: gold
     - state: ert_janitor
   - type: IdCard
-    jobTitle: ОБР Клинер
+    jobTitle: ОБР Кустодиал Специалист
 
 - type: entity
   parent: ERTChaplainIDCard
@@ -558,7 +558,7 @@
     - state: gold
     - state: ert_security
   - type: IdCard
-    jobTitle: ОБР Полевой Офицер
+    jobTitle: ОБР Офицер Безопасности
 
 - type: entity
   parent: IDCardStandard
@@ -803,7 +803,8 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Офицер Карантина ЦК
+    jobTitle: Агент РХБЗЗ
+    jobColor: "#"
 
 - type: entity
   parent: IDCardStandard
