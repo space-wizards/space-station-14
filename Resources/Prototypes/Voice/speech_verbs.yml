@@ -26,6 +26,7 @@
 - type: speechVerb
   id: DefaultExclamationStrong
   bold: true
+  fontSize: 16
   speechVerbStrings:
   - chat-speech-verb-exclamation-strong
   priority: 10

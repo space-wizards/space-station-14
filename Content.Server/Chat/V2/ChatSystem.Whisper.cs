@@ -140,6 +140,11 @@ public sealed partial class ChatSystem
     /// </summary>
     private bool IsShouting(string message)
     {
+        if (AllowShoutWhispers)
+        {
+            return false;
+        }
+
         if (message.EndsWith("!!"))
         {
             return true;

@@ -1692,6 +1692,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("chat.upper_case_means_shouting", true, CVar.ARCHIVE);
 
         /// <summary>
+        /// Should you be able to shout-whisper? (I.e. WRITE IN ALL CAPS or use lots of bangs!!!)
+        /// Disabling this means any shout-whisper is shouted in local chat instead.
+        /// </summary>
+        public static readonly CVarDef<bool> ChatAllowShoutWhispers =
+            CVarDef.Create("chat.allow_shout_whispers", false, CVar.ARCHIVE);
+
+        /// <summary>
         /// A message broadcast to each player that joins the lobby.
         /// May be changed by admins ingame through use of the "set-motd" command.
         /// In this case the new value, if not empty, is broadcast to all connected players and saved between rounds.
