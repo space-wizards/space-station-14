@@ -654,6 +654,16 @@
     sprite: Structures/Furniture/Tables/Fancy/orange.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/orange.rsi
+    
+- type: entity
+  id: TableFancyWhite
+  parent: TableFancyBase
+  suffix: White
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/white.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/white.rsi
 
 #Debug
 
