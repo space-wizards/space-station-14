@@ -20,7 +20,7 @@
           icon:
             sprite: Objects/Tools/matches.rsi
             state: icon
-           amount: 8
-           doAfter: 1.33
+          amount: 8
+          doAfter: 1.33
     - node: shell
       entity: ShellShotgunImprovised
