@@ -87,7 +87,7 @@
       types:
         Piercing: 3
         Slash: 3 
-        #remember, it's metal shrapnel!
+        
 
 - type: entity
   id: PelletShotgunTranquilizer
