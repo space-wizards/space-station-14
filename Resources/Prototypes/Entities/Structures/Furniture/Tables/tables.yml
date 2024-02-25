@@ -548,6 +548,57 @@
     footstepSoundCollection:
       collection: FootstepCarpet
 
+# Fancy tables
+
+- type: entity
+  id: TableFancyBase
+  abstract: true
+  parent: TableBase
+  description: Expensive and rich.
+  components:
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25 
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+          MaterialCloth1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Wooden
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
+
+- type: entity
+  id: TableFancyBlue
+  parent: TableFancyBase
+  name: fancy blue table
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/fancy_blue.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/fancy_blue.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyBlue
+
+#Debug
+
 - type: entity
   id: TableDebug
   parent: TableBase
