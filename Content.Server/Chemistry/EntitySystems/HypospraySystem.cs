@@ -40,7 +40,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
     private void UseHypospray(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user)
     {
         // if target is ineligible but is a container, try to draw from the container
-        if (!EligibleEntity(target, _entMan, entity)
+        if (!EligibleEntity(target, EntityManager, entity)
             && _solutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _)
             )
         {
@@ -85,7 +85,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
     {
         var (uid, component) = entity;
 
-        if (!EligibleEntity(target, _entMan, component))
+        if (!EligibleEntity(target, EntityManager, component))
             return false;
 
         if (TryComp(uid, out UseDelayComponent? delayComp))
@@ -99,7 +99,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         if (target == user)
             msgFormat = "hypospray-component-inject-self-message";
-        else if (EligibleEntity(user, _entMan, component) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
+        else if (EligibleEntity(user, EntityManager, component) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
         {
             msgFormat = "hypospray-component-inject-self-clumsy-message";
             target = user;
@@ -113,7 +113,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         if (!_solutionContainers.TryGetInjectableSolution(target.Value, out var targetSoln, out var targetSolution))
         {
-            _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, _entMan))), target.Value, user);
+            _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, EntityManager))), target.Value, user);
             return false;
         }
 
@@ -154,7 +154,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         RaiseLocalEvent(target.Value, ref ev);
 
         // same LogType as syringes...
-        _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(uid):using}");
+        _adminLogger.Add(LogType.ForceFeed, $"{EntityManager.ToPrettyString(user):user} injected {EntityManager.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {EntityManager.ToPrettyString(uid):using}");
 
         return true;
     }

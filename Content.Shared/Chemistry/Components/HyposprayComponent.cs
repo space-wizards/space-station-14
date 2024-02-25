@@ -34,6 +34,7 @@ public sealed partial class HyposprayComponent : Component
 /// <summary>
 /// Possible modes for an <see cref="HyposprayComponent"/>.
 /// </summary>
+[Serializable, NetSerializable]
 public enum HyposprayToggleMode : byte
 {
     /// <summary>

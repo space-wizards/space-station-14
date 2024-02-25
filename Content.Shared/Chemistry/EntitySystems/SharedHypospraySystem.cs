@@ -12,7 +12,6 @@ public abstract class SharedHypospraySystem : EntitySystem
     [Dependency] protected readonly UseDelaySystem _useDelay = default!;
     [Dependency] protected readonly SharedPopupSystem _popup = default!;
     [Dependency] protected readonly SharedSolutionContainerSystem _solutionContainers = default!;
-    [Dependency] protected readonly IEntityManager _entMan = default!;
     [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly ReactiveSystem _reactiveSystem = default!;
     public override void Initialize()
@@ -28,9 +27,6 @@ public abstract class SharedHypospraySystem : EntitySystem
     private void AddToggleModeVerb(Entity<HyposprayComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
-            return;
-
-        if (!HasComp<ActorComponent>(args.User))
             return;
 
         var (_, component) = entity;
@@ -63,7 +59,7 @@ public abstract class SharedHypospraySystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        _popup.PopupEntity(Loc.GetString(msg), entity, user);
+        _popup.PopupClient(Loc.GetString(msg), entity, user);
     }
 
     public void SetMode(Entity<HyposprayComponent> entity, HyposprayToggleMode mode)
