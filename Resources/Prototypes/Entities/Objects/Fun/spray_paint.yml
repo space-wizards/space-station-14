@@ -7,6 +7,12 @@
   noSpawn: true
   components:
   - type: Appearance
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: clown_cap
+    layers:
+      - state: clown_cap
+        map: ["enum.OpenableVisuals.Layer"]
   - type: Paint
     consumptionUnit: 10
     blacklist:
@@ -46,12 +52,6 @@
   - type: Item
     sprite: Objects/Fun/spraycans.rsi
     heldPrefix: clown
-  - type: Sprite
-    sprite: Objects/Fun/spraycans.rsi
-    state: clown_cap
-    layers:
-      - state: clown_cap
-        map: ["enum.OpenableVisuals.Layer"]
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
