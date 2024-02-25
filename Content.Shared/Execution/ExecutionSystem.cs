@@ -4,19 +4,13 @@ using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Projectiles;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Map;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Execution;
@@ -31,7 +25,6 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
 
@@ -157,8 +150,8 @@ public sealed class ExecutionSystem : EntitySystem
         var prev = _combatSystem.IsInCombatMode(attacker);
         _combatSystem.SetInCombatMode(attacker, true);
         component.Executing = true;
-        string internalMsg;
-        string externalMsg;
+        string? internalMsg = null;
+        string? externalMsg = null;
 
         if (TryComp(uid, out MeleeWeaponComponent? melee))
         {
@@ -170,49 +163,24 @@ public sealed class ExecutionSystem : EntitySystem
         {
             var clumsyShot = false;
 
-            // Clumsy people have a chance to shoot themselves
-            if (TryComp<ClumsyComponent>(attacker, out var clumsy))
-            {
-                if (_interactionSystem.TryRollClumsy(attacker, 0.333f, clumsy))
-                {
-                    clumsyShot = true;
-                }
+            // TODO: This should just be an event or something instead to get this.
+            // TODO: Handle clumsy.
+            internalMsg = DefaultCompleteInternalGunExecutionMessage;
+            externalMsg = DefaultCompleteExternalGunExecutionMessage;
 
-                internalMsg = "execution-popup-gun-clumsy-internal";
-                externalMsg = "execution-popup-gun-clumsy-external";
-            }
-            else
-            {
-                internalMsg = DefaultCompleteInternalGunExecutionMessage;
-                externalMsg = DefaultCompleteExternalGunExecutionMessage;
-            }
-
-            TryComp<TransformComponent>(args.Target, out var xform);
-
-            EntityCoordinates coords;
-            if (clumsyShot)
-            {
-                // Should I be creating EntityCoordinates out of thin air? Probably not but this is the best way I can think
-                // of to actually fire a projectile where the start and end positions aren't the same.
-                coords = new EntityCoordinates(EntityUid.Invalid, xform.Coordinates.X + 1, xform.Coordinates.Y);
-            }
-            else
-            {
-                coords = xform.Coordinates;
-            }
-
-            // TODO: TakeAmmo
-            // TODO:
-
-            _gunSystem.AttemptShoot(args.User, uid, comp, coords);
+            _gunSystem.AttemptDirectShoot(args.User, uid, args.Target.Value, gun);
             args.Handled = true;
         }
 
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
-        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
         _combatSystem.SetInCombatMode(attacker, prev);
         component.Executing = false;
         args.Handled = true;
+
+        if (internalMsg != null && externalMsg != null)
+        {
+            ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
+            ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
+        }
     }
 
     private void OnGetMeleeDamage(EntityUid uid, ExecutionComponent comp, ref GetMeleeDamageEvent args)

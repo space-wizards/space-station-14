@@ -219,8 +219,13 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (!TryTakeAmmo(user, gunUid, gun, out _, out _, out var args))
             return;
 
+        ShootDirect(gunUid, gun, target, args.Ammo, user: user);
         gun.ShootCoordinates = null;
-        Dirty(gunUid, gun);
+    }
+
+    protected virtual void ShootDirect(EntityUid gunUid, GunComponent gun, EntityUid target, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityUid user)
+    {
+        return;
     }
 
     /// <summary>

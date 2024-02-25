@@ -28,10 +28,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         // This is so entities that shouldn't get a collision are ignored.
         if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
-            || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
+                                                   || component.DamagedEntity || component is
+                                                       { Weapon: null, OnlyCollideWhenShot: true })
+        {
             return;
+        }
 
         var target = args.OtherEntity;
+
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
         RaiseLocalEvent(target, ref attemptEv);
@@ -40,12 +44,17 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             SetShooter(uid, component, target);
             return;
         }
+    }
+
+    public void HandleProjectile(EntityUid target, Entity<ProjectileComponent> projectile)
+    {
+        var uid = projectile.Owner;
+        var component = projectile.Comp;
 
         var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);
 
         var otherName = ToPrettyString(target);
-        var direction = args.OurBody.LinearVelocity.Normalized();
         var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter);
         var deleted = Deleted(target);
 
@@ -60,6 +69,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 HasComp<ActorComponent>(target) ? LogImpact.Extreme : LogImpact.High,
                 $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
         }
+
+        var direction = args.OurBody.LinearVelocity.Normalized();
 
         if (!deleted)
         {
