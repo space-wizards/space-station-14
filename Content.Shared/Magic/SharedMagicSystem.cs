@@ -7,6 +7,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
@@ -44,11 +45,12 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedDoorSystem _door = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
     public override void Initialize()
     {
@@ -74,7 +76,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
         if (comp.RequiresClothes)
         {
-            var enumerator = _inventorySystem.GetSlotEnumerator(args.Performer, SlotFlags.OUTERCLOTHING | SlotFlags.HEAD);
+            var enumerator = _inventory.GetSlotEnumerator(args.Performer, SlotFlags.OUTERCLOTHING | SlotFlags.HEAD);
             while (enumerator.MoveNext(out var containerSlot))
             {
                 if (containerSlot.ContainedEntity is { } item)
@@ -91,10 +93,12 @@ public abstract class SharedMagicSystem : EntitySystem
             hasReqs = false;
 
         // TODO: Localized popup, better message
+        // If missing clothes mention robes & hat need to be equipped
+        // If muted, say requires a voce
         if (!hasReqs)
         {
             args.Cancelled = true;
-            _popupSystem.PopupClient("Missing Requirements", args.Performer, args.Performer);
+            _popup.PopupClient("Missing Requirements", args.Performer, args.Performer);
         }
     }
 
@@ -264,7 +268,7 @@ public abstract class SharedMagicSystem : EntitySystem
         }
     }
 
-    // TODO: should probably add better validation that the clicked location is on the users screen somewhere,
+    // TODO: Rename to teleport clicked spell?
     /// <summary>
     /// Teleports the user to the clicked location
     /// </summary>
@@ -276,10 +280,8 @@ public abstract class SharedMagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        if (transform.MapID != args.Target.GetMapId(EntityManager))
+        if (transform.MapID != args.Target.GetMapId(EntityManager) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
             return;
-
-        // TODO: xform query
 
         _transform.SetCoordinates(args.Performer, args.Target);
         _transform.AttachToGridOrMap(args.Performer, transform);
@@ -366,7 +368,7 @@ public abstract class SharedMagicSystem : EntitySystem
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
 
-        _bodySystem.GibBody(ev.Target, true, body);
+        _body.GibBody(ev.Target, true, body);
     }
 
     /// <summary>
@@ -393,7 +395,7 @@ public abstract class SharedMagicSystem : EntitySystem
             // TODO: See about unlocking lockers too
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
-                _doorSystem.StartOpening(entity);
+                _door.StartOpening(entity);
         }
     }
 
