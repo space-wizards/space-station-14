@@ -4,78 +4,77 @@
   graph:
     - node: start
       edges:
-        - to: shell
-          steps:
-            - material: Steel
-              amount: 1
-            - material: Plastic
-              amount: 1
-            - tag: ShardGlass
-              name: glass shard
-              icon:
-                 sprite: Objects/Materials/Shards/shard.rsi
-                 state: shard1
-            - tag: ShardGlass
-              name: glass shard
-              icon:
-                 sprite: Objects/Materials/Shards/shard.rsi
-                 state: shard2
-            - tag: ShardGlass
-              name: glass shard
-              icon:
-                 sprite: Objects/Materials/Shards/shard.rsi
-                 state: shard1
-            - tag: ShardGlass
-              name: glass shard
-              icon:
-                 sprite: Objects/Materials/Shards/shard.rsi
-                 state: shard2
-            - tag: ShardGlass
-              name: glass shard
-              icon:
-                 sprite: Objects/Materials/Shards/shard.rsi
-                 state: shard3
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-            - tag: Matchstick
-              name: match stick
-              icon:
-                sprite: Objects/Tools/matches.rsi
-                state: match_unlit
-              doAfter: 4
-              
+      - to: shell
+        steps:
+        - material: Steel
+           amount: 1
+        - material: Plastic
+           amount: 1
+        - tag: ShardGlass
+          name: glass shard
+          icon:
+            sprite: Objects/Materials/Shards/shard.rsi
+            state: shard1
+         - tag: ShardGlass
+           name: glass shard
+           icon:
+             sprite: Objects/Materials/Shards/shard.rsi
+             state: shard2
+        - tag: ShardGlass
+          name: glass shard
+          icon:
+            sprite: Objects/Materials/Shards/shard.rsi
+            state: shard1
+        - tag: ShardGlass
+          name: glass shard
+          icon:
+            sprite: Objects/Materials/Shards/shard.rsi
+            state: shard2
+        - tag: ShardGlass
+          name: glass shard
+          icon:
+            sprite: Objects/Materials/Shards/shard.rsi
+            state: shard3
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+          doAfter: 4    
     - node: shell
       entity: ShellShotgunImprovised
