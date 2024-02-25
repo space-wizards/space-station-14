@@ -17,8 +17,8 @@
               doAfter: 1.33
         - tag: Matchstick
           name: match stick
-           icon:
-           sprite: Objects/Tools/matches.rsi
+          icon:
+            sprite: Objects/Tools/matches.rsi
             state: icon
            amount: 8
            doAfter: 1.33
