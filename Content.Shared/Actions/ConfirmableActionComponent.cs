@@ -9,6 +9,7 @@ namespace Content.Shared.Actions;
 /// Used for dangerous actions that cannot be undone (unlike screaming).
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ConfirmableActionSystem))]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ConfirmableActionComponent : Component
 {
     /// <summary>
@@ -22,6 +23,7 @@ public sealed partial class ConfirmableActionComponent : Component
     /// This is the time of priming plus the delay.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextConfirm;
 
     /// <summary>
@@ -29,6 +31,7 @@ public sealed partial class ConfirmableActionComponent : Component
     /// This is <c>NextConfirm> plus <c>PrimeTime</c>
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextUnprime;
 
     /// <summary>
