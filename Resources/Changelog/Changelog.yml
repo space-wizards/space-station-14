@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: zzylex
-  changes:
-  - message: You can now make plungers stick to walls.
-    type: Tweak
-  - message: A sound is made when a plunger gets stuck to something.
-    type: Add
-  - message: You can now shoot plungers with bows.
-    type: Tweak
-  id: 5520
-  time: '2024-01-03T05:36:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23406
 - author: EmoGarbage404
   changes:
   - message: Added flatpacks, boxes that unpack into a full-sized machine when activated
@@ -3851,3 +3840,11 @@
   id: 6019
   time: '2024-02-25T13:54:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25132
+- author: wafehling
+  changes:
+  - message: Secret mode has become more secret, with the 4th option Survival added
+      to the rotation.
+    type: Tweak
+  id: 6020
+  time: '2024-02-25T21:15:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25568
