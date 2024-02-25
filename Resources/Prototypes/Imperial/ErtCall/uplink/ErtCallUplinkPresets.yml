@@ -99,7 +99,7 @@
   - ERTUplinkAmmoCombat
   - ERTUplinkExplosives
   - ERTUplinkMedial
-  #- ERTUplinkEngineering
+  - ERTUplinkEngineering
   - ERTUplinkUtilities
   #- ERTUplinkJunitor
   #- ERTUplinkPointless

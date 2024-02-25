@@ -648,6 +648,10 @@
     borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+  - type: HealthAnalyzer # imperial @keeyn
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: CentcomPDA
@@ -738,6 +742,10 @@
       whitelist:
         components:
           - Cartridge
+  - type: HealthAnalyzer # imperial @keeyn
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
@@ -754,6 +762,10 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-ert
+  - type: HealthAnalyzer # Imperial @keeyn
+    scanDelay: 1
+    scanningEndSound:
+    path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: ERTLeaderPDA

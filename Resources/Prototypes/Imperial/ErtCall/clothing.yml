@@ -61,7 +61,7 @@
 #CBURN START
 - type: entity
   noSpawn: false
-  parent: ClothingBackpackDuffelCBURN
+  parent: ClothingBackpackERTSecurity
   id: ClothingBackpackCallERTCBURNFilled
   components:
     - type: StorageFill
@@ -71,13 +71,13 @@
 
 - type: entity
   noSpawn: false
-  parent: ClothingBackpackDuffelCBURN
+  parent: ClothingBackpackERTLeader
   id: ClothingBackpackCallERTCBURNFilledLeader
   components:
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: PillRomerol
+        - id: PillAmbuzolPlus
         - id: PinpointerNuclear
 
 - type: entity
@@ -183,6 +183,17 @@
       visible: false
       shader: unshaded
       map: [ "light" ]
+
+- type: entity
+  parent: ClothingUniformJumpsuitERTLeader
+  id: ClothingUniformJumpsuitCBURN
+  name: ERT security uniform
+  description: A special suit made for the elite security under CentCom.
+  components:
+    - type: Sprite
+      sprite: Imperial/CBURN/Clothing/jumpsuit.rsi
+    - type: Clothing
+      sprite: Imperial/CBURN/Clothing/jumpsuit.rsi
 
 #CBURN END
 

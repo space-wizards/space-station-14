@@ -26,3 +26,19 @@
         - state: deadsquadID # we have the sprites but don't need individual ID entities for now.
     - type: Item
       # heldPrefix: gold
+      
+- type: entity
+  id: ThriveninChemistryBottle
+  name: thrivenin bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Thrivenin
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle

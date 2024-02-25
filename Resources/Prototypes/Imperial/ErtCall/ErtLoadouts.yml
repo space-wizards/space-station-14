@@ -163,7 +163,7 @@
 - type: startingGear
   id: ERTCallCBURNLeaderGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBrown
+    jumpsuit: ClothingUniformJumpsuitCBURN
     back: ClothingBackpackCallERTCBURNFilledLeader
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
@@ -184,7 +184,7 @@
 - type: startingGear
   id: ERTCallCBURNSecurityGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBrown
+    jumpsuit: ClothingUniformJumpsuitCBURN
     back: ClothingBackpackCallERTCBURNFilled
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
@@ -205,7 +205,7 @@
 - type: startingGear
   id: ERTCallCBURNMedicGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBrown
+    jumpsuit: ClothingUniformJumpsuitCBURN
     back: ClothingBackpackCallERTCBURNFilled
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
