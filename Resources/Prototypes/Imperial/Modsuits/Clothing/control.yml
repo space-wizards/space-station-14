@@ -91,7 +91,7 @@
     graph: ModsuitAdvanced
     node: modsuitadvanced
   - type: StaticPrice
-    price: 12000
+    price: 67000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -118,7 +118,7 @@
     graph: ModsuitEngineer
     node: modsuitengineer
   - type: StaticPrice
-    price: 3150
+    price: 5000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -145,7 +145,7 @@
     graph: ModsuitAtmospheric
     node: modsuitatmospheric
   - type: StaticPrice
-    price: 3750
+    price: 5500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -162,7 +162,7 @@
     requiredSlot: back
     slot: outerClothing
   - type: Storage
-    capacity: 100
+    capacity: 200
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
@@ -174,7 +174,7 @@
     graph: ModsuitRND
     node: modsuitrnd
   - type: StaticPrice
-    price: 3500
+    price: 6500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -201,7 +201,7 @@
     graph: ModsuitMedical
     node: modsuitmedical
   - type: StaticPrice
-    price: 2250
+    price: 4000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -228,7 +228,7 @@
     graph: ModsuitRescue
     node: modsuitrescue
   - type: StaticPrice
-    price: 6000
+    price: 8000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -255,7 +255,7 @@
     graph: ModsuitCivillian
     node: modsuitcivillian
   - type: StaticPrice
-    price: 1875
+    price: 2900
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -282,7 +282,7 @@
     graph: ModsuitMagnate
     node: modsuitmagnates
   - type: StaticPrice
-    price: 25000 # magnate = роскошный
+    price: 35000 # magnate = роскошный
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -309,7 +309,7 @@
     graph: ModsuitSecurity
     node: modsuitsecurity
   - type: StaticPrice
-    price: 3500
+    price: 5000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -336,7 +336,7 @@
     graph: ModsuitHOS
     node: modsuithos
   - type: StaticPrice
-    price: 8000
+    price: 10000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -363,7 +363,7 @@
     graph: ModsuitSalvage
     node: modsuitsalvage
   - type: StaticPrice
-    price: 3250
+    price: 4500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -387,7 +387,7 @@
     softness: 20
     autoRot: true
   - type: StaticPrice
-    price: 6500
+    price: 9000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -414,7 +414,7 @@
     tags:
       - WhitelistChameleon
   - type: StaticPrice
-    price: 5000
+    price: 50000
 
 - type: entity
   parent: ClothingControlModsuitOperativeSealed
@@ -450,7 +450,7 @@
     softness: 20
     autoRot: true
   - type: StaticPrice
-    price: 6500
+    price: 65000
 
 - type: entity
   parent: ClothingControlModsuitHonkOperativeSealed
@@ -484,7 +484,7 @@
     softness: 20
     autoRot: true
   - type: StaticPrice
-    price: 15000
+    price: 150000
 
 - type: entity
   parent: ClothingControlModsuitOperativeCMDSealed
@@ -522,7 +522,7 @@
     softness: 20
     autoRot: true
   - type: StaticPrice
-    price: 8000
+    price: 80000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -546,4 +546,176 @@
     softness: 20
     autoRot: true
   - type: StaticPrice
-    price: 35000
+    price: 150000
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitRND2Sealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/rnd2.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/rnd2.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitRND2Sealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 150
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitRND
+    node: modsuitrnd
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitEngineer2Sealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/engineer2.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/engineer2.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitEngineer2Sealed
+  - type: Storage
+    capacity: 150
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 18
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitMedical2Sealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/medical2.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/medical2.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitMedical2Sealed
+  - type: Storage
+    capacity: 120
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 25
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitMedical
+    node: modsuitmedical
+  - type: StaticPrice
+    price: 4000
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitSSTOperativeCMDSealed #20 tc dead squad almost
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/sstcmd.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/sstcmd.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitSSTOperativeCMDSealed
+  - type: Storage
+    capacity: 300
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 300
+    softness: 20
+    autoRot: true
+  - type: StaticPrice
+    price: 450000
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitSSTOperativeSupportSealed #20 tc dead squad almost
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/sstsupport.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/sstsupport.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitSSTOperativeSupportSealed
+  - type: Storage
+    capacity: 250
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 300
+    softness: 20
+    autoRot: true
+  - type: StaticPrice
+    price: 150000
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitIndustrialSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/nakamuraengineer.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/nakamuraengineer.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitIndustrialSealed
+  - type: Storage
+    capacity: 175
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 35
+    softness: 20
+    autoRot: true
+  - type: StaticPrice
+    price: 6000
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitPMCSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/pmc.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/pmc.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitPMCSealed
+  - type: Storage
+    capacity: 200
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 35
+    softness: 20
+    autoRot: true
+  - type: StaticPrice
+    price: 25000

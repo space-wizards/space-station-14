@@ -55,7 +55,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
-      - id: CoreMagnateModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitMagnate #Edited in Imperial Space by @sentryprimies in the name of modsuits
       - id: ClothingHeadHatCapcap
 
 - type: entity
@@ -90,7 +90,7 @@
       - id: JetpackCaptainFilled
       - id: MedalCase
       - id: ClothingHeadHatCapcap
-      - id: CoreMagnateModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitMagnate #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -149,7 +149,7 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
-      - id: CoreCEModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitAdvanced #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -172,7 +172,7 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
-      - id: CoreCEModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitAdvanced #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
@@ -197,7 +197,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
-      - id: CoreCMOModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitRescue #Edited in Imperial Space by @sentryprimies in the name of modsuits
       - id: PsychosisHealPaper #psychosis added paper
       - id: CompactDefibrillator # @keeyn Compact defibrillator
 
@@ -223,7 +223,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
-      - id: CoreCMOModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitRescue #Edited in Imperial Space by @sentryprimies in the name of modsuits
       - id: PsychosisHealPaper #psychosis added paper
       - id: CompactDefibrillator # @keeyn Compact defibrillator
 
@@ -302,7 +302,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
-      - id: CoreHOSModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitSafeguard #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -333,4 +333,4 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
-      - id: CoreHOSModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ControlModsuitSafeguard #Edited in Imperial Space by @sentryprimies in the name of modsuits

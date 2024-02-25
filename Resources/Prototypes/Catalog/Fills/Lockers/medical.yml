@@ -142,3 +142,4 @@
       - id: ClothingMaskSterile
       - id: MedkitFilled
         prob: 0.3
+      - id: ControlModsuitRescue #Imperial edit

@@ -11,6 +11,18 @@
   id: ModsuitControlStart
 
 - type: Tag
+  id: ModsuitControlAdvanced
+
+- type: Tag
+  id: ModsuitControlSafeguard
+
+- type: Tag
+  id: ModsuitControlRescue
+
+- type: Tag
+  id: ModsuitControlMagnate
+
+- type: Tag
   id: ModsuitControlEnd
 
 - type: Tag
@@ -20,31 +32,7 @@
   id: ModsuitPaintKit
 
 - type: Tag
-  id: CoreEngineerModsuit
-
-- type: Tag
-  id: CoreSecurityModsuit
-
-- type: Tag
-  id: CoreMedicalModsuit
-
-- type: Tag
-  id: CoreRNDModsuit
-
-- type: Tag
-  id: CoreBasicModsuit
-
-- type: Tag
-  id: CoreHOSModsuit
-
-- type: Tag
-  id: CoreCMOModsuit
-
-- type: Tag
-  id: CoreCEModsuit
-
-- type: Tag
-  id: CoreMagnateModsuit
+  id: CoreModsuit
 
 - type: Tag
   id: PlatingCivillianModsuit

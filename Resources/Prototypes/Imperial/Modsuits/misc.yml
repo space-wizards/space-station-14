@@ -4,7 +4,7 @@
   description: uplink-modsuitoperative-desc
   productEntity: ClothingControlModsuitOperativeSealed
   cost:
-    Telecrystal: 10
+    Telecrystal: 8
   categories:
     - UplinkArmor
   conditions:
@@ -17,9 +17,9 @@
   id: ModsuitOperativeCMDSealed
   name: uplink-modsuitoperativecmd-name
   description: uplink-modsuitoperativecmd-desc
-  productEntity: ClothingControlModsuitOperativeCMDSealedFractionBoom
+  productEntity: ClothingControlModsuitPMCSealed
   cost:
-    Telecrystal: 40
+    Telecrystal: 30
   categories:
     - UplinkArmor
   conditions:
@@ -34,7 +34,7 @@
   description: uplink-modsuitoperative-desc
   productEntity: ClothingControlModsuitOperativeSealedFractionBoom
   cost:
-    Telecrystal: 30
+    Telecrystal: 14
   categories:
     - UplinkArmor
   conditions:
@@ -47,9 +47,9 @@
   id: ModsuitNukeOperativeCMDSealed
   name: uplink-modsuitoperativecmd-name
   description: uplink-modsuitoperativecmd-desc
-  productEntity: ClothingControlModsuitOperativeCMDSealedFractionBoom
+  productEntity: ClothingControlModsuitPMCSealed
   cost:
-    Telecrystal: 100
+    Telecrystal: 50
   categories:
     - UplinkArmor
   conditions:
@@ -57,3 +57,23 @@
     whitelist:
       tags:
       - NukeOpsUplink
+
+- type: entity
+  id: RandomModsuitCrate
+  name: random crate spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Imperial/Modsuits/Clothing/Back/engineer.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - ClothingControlModsuitEngineerSealed
+      - ClothingControlModsuitMedicalSealed
+      - ClothingControlModsuitCivillianSealed
+    chance: 0.7
+    rarePrototypes:
+      - ClothingControlModsuitMinerSealed 
+    rareChance: 0.3

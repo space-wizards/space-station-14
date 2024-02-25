@@ -17,10 +17,26 @@
       "name": "CORE-equip0"
     },
     {
-      "name": "CORE-equip1"
+      "name": "CORE-equip1",
+      "delays": [
+        [
+          0.07,
+          0.07,
+          0.07,
+          0.07  
+        ]
+      ]
     },
     {
-      "name": "CORE-equip2"
+      "name": "CORE-equip2",
+      "delays": [
+        [
+          0.07,
+          0.07,
+          0.07,
+          0.07 
+        ]
+      ]
     },
     {
       "name": "CORE-equip3"
@@ -35,6 +51,12 @@
       "name": "CORE-equip6"
     },
     {
+      "name": "CORE-equip7"
+    },
+    {
+      "name": "CORE-equip8"
+    },
+    {
       "name": "gauntlets"
     },
     {
@@ -44,15 +66,12 @@
       "name": "mod-core",
       "delays": [
         [
-          0.18625,
-          0.18625,
-          0.18625,
-          0.18625
+          0.07,
+          0.07,
+          0.07,
+          0.07  
         ]
       ]
-    },
-    {
-      "name": "mod-core-ethereal"
     },
     {
       "name": "mod-core-plasma",
@@ -66,16 +85,16 @@
       ]
     },
     {
-      "name": "mod-core-magnate"
+      "name": "HOS"
     },
     {
-      "name": "mod-core-cmo"
+      "name": "CAP"
     },
     {
-      "name": "mod-core-ce"
+      "name": "CE"
     },
     {
-      "name": "mod-core-hos"
+      "name": "CMO"
     },
     {
       "name": "paintkit"

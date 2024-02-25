@@ -87,7 +87,7 @@
   objectType: Item
 
 - type: construction
-  name: Р.И.Г Главного врача
+  name: Спасательный Р.И.Г
   id: ModsuitRescue
   graph: ModsuitRescue
   startNode: start

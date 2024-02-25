@@ -94,6 +94,7 @@
       - id: ClothingOuterCoatAMG
       - id: ClothingHeadHelmetBrigmedic #Imperia start
       - id: ClothingUniformJumpsuitBrigmedicNew
+      - id: ControlModsuitRescue
       - id: ClothingUniformJumpskirtBrigmedicNew #Imperia end
       - id: ClothingUniformJumpskirtOfLife
         prob: 0.1

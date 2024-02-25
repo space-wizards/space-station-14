@@ -30,8 +30,6 @@
       - BootsModsuitConstructing
       - PlatingCivillianModsuitConstructing
       - PlatingMedicalModsuitConstructing
-      - PlatingEngineeringModsuitConstructing
-      - PlatingAtmosphericModsuitConstructing
     dynamicRecipes:
       - PlatingMagnateModsuitConstructing
       - PlatingSecurityModsuitConstructing
@@ -40,6 +38,8 @@
       - PlatingCEModsuitConstructing
       - PlatingAsteroidModsuitConstructing
       - PlatingRNDModsuitConstructing
+      - PlatingEngineeringModsuitConstructing
+      - PlatingAtmosphericModsuitConstructing
   - type: MaterialStorage
     whitelist:
       tags:

@@ -1,38 +1,4 @@
 - type: entity
-  id: CrateModsuitsPlasma
-  parent: CrateEngineeringSecure
-  components:
-  - type: StorageFill
-    contents:
-      - id: CoreEngineerModsuitConstructing
-      - id: CoreEngineerModsuitConstructing
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000 #no tiding only teamwork
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-
-- type: entity
-  id: CrateModsuitsScience
-  parent: CrateScienceSecure
-  components:
-  - type: StorageFill
-    contents:
-      - id: CoreRNDModsuitConstructing
-      - id: CoreRNDModsuitConstructing
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500 #no tiding only teamwork
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-
-- type: entity
   id: CrateModsuitsBasic
   parent: CrateEngineeringSecure
   components:
@@ -40,24 +6,15 @@
     contents:
       - id: CoreBasicModsuitConstructing
       - id: CoreBasicModsuitConstructing
+      - id: CoreBasicModsuitConstructing
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500 #no tiding only teamwork
+        damage: 2500 #no tiding only teamwork
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-
-- type: cargoProduct
-  id: CargoModsuitsPlasma
-  icon:
-    sprite: Imperial/Modsuits/constructing_modsuit.rsi
-    state: mod-core-plasma
-  product: CrateModsuitsPlasma
-  cost: 2500
-  category: Engineering
-  group: market
 
 - type: cargoProduct
   id: CargoModsuitsBasic
@@ -65,16 +22,6 @@
     sprite: Imperial/Modsuits/constructing_modsuit.rsi
     state: mod-core
   product: CrateModsuitsBasic
-  cost: 1250
-  category: Engineering
-  group: market
-
-- type: cargoProduct
-  id: CargoModsuitsScience
-  icon:
-    sprite: Imperial/Modsuits/constructing_modsuit.rsi
-    state: mod-core
-  product: CrateModsuitsScience
-  cost: 2000
+  cost: 1500
   category: Engineering
   group: market
