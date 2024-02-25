@@ -35,20 +35,13 @@ public sealed class ExecutionSystem : EntitySystem
     [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
 
-    private const string DefaultInternalMeleeSuicideMessage = "suicide-popup-melee-initial-internal";
-    private const string DefaultExternalMeleeSuicideMessage = "suicide-popup-melee-initial-external";
+    // TODO: Still needs more cleaning up.
     private const string DefaultInternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
     private const string DefaultExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
-    private const string DefaultCompleteInternalMeleeSuicideMessage = "suicide-popup-melee-complete-internal";
-    private const string DefaultCompleteExternalMeleeSuicideMessage = "suicide-popup-melee-complete-external";
     private const string DefaultCompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
     private const string DefaultCompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
-    private const string DefaultInternalGunSuicideMessage = "suicide-popup-gun-initial-internal";
-    private const string DefaultExternalGunSuicideMessage = "suicide-popup-gun-initial-external";
     private const string DefaultInternalGunExecutionMessage = "execution-popup-gun-initial-internal";
     private const string DefaultExternalGunExecutionMessage = "execution-popup-gun-initial-external";
-    private const string DefaultCompleteInternalGunSuicideMessage = "suicide-popup-gun-complete-internal";
-    private const string DefaultCompleteExternalGunSuicideMessage = "suicide-popup-gun-complete-external";
     private const string DefaultCompleteInternalGunExecutionMessage = "execution-popup-gun-complete-internal";
     private const string DefaultCompleteExternalGunExecutionMessage = "execution-popup-gun-complete-external";
 
@@ -58,14 +51,8 @@ public sealed class ExecutionSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
-
-        SubscribeLocalEvent<MeleeWeaponComponent, ExecutionDoAfterEvent>(OnDoafterMelee);
-        SubscribeLocalEvent<GunComponent, ExecutionDoAfterEvent>(OnDoafterGun);
-
-        SubscribeLocalEvent<ActiveExecutionComponent, AmmoShotEvent>(OnAmmoShot);
-        SubscribeLocalEvent<ActiveExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-
-        SubscribeLocalEvent<ExecutionProjectileComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
+        SubscribeLocalEvent<ExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
     private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
@@ -96,32 +83,18 @@ public sealed class ExecutionSystem : EntitySystem
         if (!CanExecuteWithAny(victim, attacker))
             return;
 
-        var defaultSuicideInternal = DefaultInternalMeleeSuicideMessage;
-        var defaultSuicideExternal = DefaultExternalMeleeSuicideMessage;
+        // TODO: This should just be on the weapons as a single execution message.
         var defaultExecutionInternal = DefaultInternalMeleeExecutionMessage;
         var defaultExecutionExternal = DefaultExternalMeleeExecutionMessage;
 
         if (HasComp<GunComponent>(weapon))
         {
-            defaultSuicideExternal = DefaultExternalGunSuicideMessage;
-            defaultSuicideInternal = DefaultInternalGunSuicideMessage;
             defaultExecutionExternal = DefaultInternalGunExecutionMessage;
             defaultExecutionInternal = DefaultExternalGunExecutionMessage;
         }
 
-        string internalMsg;
-        string externalMsg;
-
-        if (attacker == victim)
-        {
-            internalMsg = comp.SuicidePopupInternal ?? defaultSuicideInternal;
-            externalMsg = comp.SuicidePopupExternal ?? defaultSuicideExternal;
-        }
-        else
-        {
-            internalMsg = comp.ExecutionPopupInternal ?? defaultExecutionInternal;
-            externalMsg = comp.ExecutionPopupExternal ?? defaultExecutionExternal;
-        }
+        var internalMsg = defaultExecutionInternal;
+        var externalMsg = defaultExecutionExternal;
         ShowExecutionInternalPopup(internalMsg, attacker, victim, weapon);
         ShowExecutionExternalPopup(externalMsg, attacker, victim, weapon);
 
@@ -140,6 +113,10 @@ public sealed class ExecutionSystem : EntitySystem
 
     private bool CanExecuteWithAny(EntityUid victim, EntityUid attacker)
     {
+        // Use suicide.
+        if (victim == attacker)
+            return false;
+
         // No point executing someone if they can't take damage
         if (!TryComp<DamageableComponent>(victim, out _))
             return false;
@@ -164,12 +141,9 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
 
-    private void OnDoafterMelee(EntityUid uid, MeleeWeaponComponent comp, DoAfterEvent args)
+    private void OnExecutionDoAfter(EntityUid uid, ExecutionComponent component, ExecutionDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
-            return;
-
-        if (!HasComp<ExecutionComponent>(uid))
             return;
 
         var attacker = args.User;
@@ -179,180 +153,78 @@ public sealed class ExecutionSystem : EntitySystem
         if (!CanExecuteWithAny(victim, attacker))
             return;
 
-        var execComp = EnsureComp<ActiveExecutionComponent>(weapon);
-
-        execComp.Attacker = attacker;
-        execComp.Victim = victim;
-
-        Dirty(weapon, execComp);
-
         // This is needed so the melee system does not stop it.
         var prev = _combatSystem.IsInCombatMode(attacker);
         _combatSystem.SetInCombatMode(attacker, true);
-
-        _meleeSystem.AttemptLightAttack(attacker, weapon, comp, victim);
-
-        RemComp<ActiveExecutionComponent>(uid);
-        Dirty(uid, comp);
-
-        _combatSystem.SetInCombatMode(attacker, prev);
-
-        args.Handled = true;
-    }
-
-    private void OnDoafterGun(EntityUid uid, GunComponent comp, DoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
-            return;
-
-        if (!TryComp<ExecutionComponent>(uid, out var executionComponent))
-            return;
-
-        if (!TryComp<TransformComponent>(args.Target, out var xform))
-            return;
-
-        var attacker = args.User;
-        var victim = args.Target.Value;
-
-        if (!CanExecuteWithAny(victim, attacker))
-            return;
-
-        var clumsyShot = false;
-
-        // Clumsy people have a chance to shoot themselves
-        if (TryComp<ClumsyComponent>(attacker, out var clumsy) && comp.ClumsyProof == false)
-        {
-            if (_interactionSystem.TryRollClumsy(attacker, 0.333f, clumsy))
-            {
-                clumsyShot = true;
-            }
-        }
-
-        var active = EnsureComp<ActiveExecutionComponent>(uid);
-        active.Attacker = attacker;
-        active.Victim = victim;
-        active.Clumsy = clumsyShot;
-        active.FixtureId = executionComponent.FixtureId;
-        Dirty(uid, active);
-
-        EntityCoordinates coords;
-        if (victim == attacker || clumsyShot)
-        {
-            // Should I be creating EntityCoordinates out of thin air? Probably not but this is the best way I can think
-            // of to actually fire a projectile where the start and end positions aren't the same.
-            coords = new EntityCoordinates(EntityUid.Invalid, xform.Coordinates.X + 1, xform.Coordinates.Y);
-        }
-        else
-        {
-            coords = xform.Coordinates;
-        }
-
-        _gunSystem.AttemptShoot(args.User, uid, comp, coords);
-
-        RemCompDeferred<ActiveExecutionComponent>(uid);
-        Dirty(uid, active);
-
-        args.Handled = true;
-    }
-
-    private void OnAmmoShot(EntityUid uid, ActiveExecutionComponent comp, AmmoShotEvent args)
-    {
-        if (!TryComp<ExecutionComponent>(uid, out var executionComp))
-            return;
-
-        foreach (var bullet in args.FiredProjectiles)
-        {
-
-            if (comp.Attacker == comp.Victim || comp.Clumsy)
-            {
-                if (!TryComp<ProjectileComponent>(bullet, out var projComponent))
-                    return;
-
-                projComponent.IgnoreShooter = false;
-
-                Dirty(bullet, projComponent);
-            }
-
-            if (!comp.Clumsy)
-            {
-                EnsureComp<ExecutionProjectileComponent>(bullet, out var execBulletComp);
-
-                execBulletComp.Target = comp.Victim;
-                execBulletComp.Multiplier = executionComp.DamageModifier;
-                execBulletComp.FixtureId = comp.FixtureId;
-
-                Dirty(bullet, execBulletComp);
-            }
-        }
-
+        component.Executing = true;
         string internalMsg;
         string externalMsg;
 
-        var attacker = comp.Attacker;
-        var victim = comp.Victim;
+        if (TryComp(uid, out MeleeWeaponComponent? melee))
+        {
+            _meleeSystem.AttemptLightAttack(attacker, weapon, melee, victim);
+            internalMsg = DefaultCompleteInternalMeleeExecutionMessage;
+            externalMsg = DefaultCompleteExternalMeleeExecutionMessage;
+        }
+        else if (TryComp(uid, out GunComponent? gun))
+        {
+            var clumsyShot = false;
 
-        if (comp.Clumsy)
-        {
-            internalMsg = "execution-popup-gun-clumsy-internal";
-            externalMsg = "execution-popup-gun-clumsy-external";
-        }
-        else if (attacker == victim)
-        {
-            internalMsg = executionComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalGunSuicideMessage;
-            externalMsg = executionComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalGunSuicideMessage;
-        }
-        else
-        {
-            internalMsg = executionComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalGunExecutionMessage;
-            externalMsg = executionComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalGunExecutionMessage;
+            // Clumsy people have a chance to shoot themselves
+            if (TryComp<ClumsyComponent>(attacker, out var clumsy))
+            {
+                if (_interactionSystem.TryRollClumsy(attacker, 0.333f, clumsy))
+                {
+                    clumsyShot = true;
+                }
+
+                internalMsg = "execution-popup-gun-clumsy-internal";
+                externalMsg = "execution-popup-gun-clumsy-external";
+            }
+            else
+            {
+                internalMsg = DefaultCompleteInternalGunExecutionMessage;
+                externalMsg = DefaultCompleteExternalGunExecutionMessage;
+            }
+
+            TryComp<TransformComponent>(args.Target, out var xform);
+
+            EntityCoordinates coords;
+            if (clumsyShot)
+            {
+                // Should I be creating EntityCoordinates out of thin air? Probably not but this is the best way I can think
+                // of to actually fire a projectile where the start and end positions aren't the same.
+                coords = new EntityCoordinates(EntityUid.Invalid, xform.Coordinates.X + 1, xform.Coordinates.Y);
+            }
+            else
+            {
+                coords = xform.Coordinates;
+            }
+
+            // TODO: TakeAmmo
+            // TODO:
+
+            _gunSystem.AttemptShoot(args.User, uid, comp, coords);
+            args.Handled = true;
         }
 
         ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
         ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
+        _combatSystem.SetInCombatMode(attacker, prev);
+        component.Executing = false;
+        args.Handled = true;
     }
 
-    private void OnCollide(EntityUid uid, ExecutionProjectileComponent comp, StartCollideEvent args)
+    private void OnGetMeleeDamage(EntityUid uid, ExecutionComponent comp, ref GetMeleeDamageEvent args)
     {
-        if (!args.OtherBody.Hard || !(args.OtherEntity == comp.Target) || args.OurFixtureId != comp.FixtureId)
+        if (!TryComp<MeleeWeaponComponent>(uid, out var melee) ||
+            !TryComp<ExecutionComponent>(uid, out var execComp) ||
+            !execComp.Executing)
+        {
             return;
-
-        if (!TryComp<ProjectileComponent>(uid, out var projectileComponent))
-            return;
-
-        projectileComponent.Damage *= comp.Multiplier;
-
-        RemComp<ExecutionProjectileComponent>(uid);
-        Dirty(uid, comp);
-    }
-
-    private void OnGetMeleeDamage(EntityUid uid, ActiveExecutionComponent comp, ref GetMeleeDamageEvent args)
-    {
-        if (!TryComp<MeleeWeaponComponent>(uid, out var melee) || !TryComp<ExecutionComponent>(uid, out var execComp))
-            return;
+        }
 
         var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
-
-        string internalMsg;
-        string externalMsg;
-
-        var attacker = comp.Attacker;
-        var victim = comp.Victim;
-
-        // Hit is confirmed at this point so we do the popups now.
-        if (attacker == victim)
-        {
-            internalMsg = execComp.SuicidePopupCompleteInternal ?? DefaultCompleteInternalMeleeSuicideMessage;
-            externalMsg = execComp.SuicidePopupCompleteExternal ?? DefaultCompleteExternalMeleeSuicideMessage;
-        }
-        else
-        {
-            internalMsg = execComp.ExecutionPopupCompleteInternal ?? DefaultCompleteInternalMeleeExecutionMessage;
-            externalMsg = execComp.ExecutionPopupCompleteExternal ?? DefaultCompleteExternalMeleeExecutionMessage;
-        }
-
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
-        ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
-
         args.Damage += bonus;
     }
 
@@ -391,5 +263,4 @@ public sealed class ExecutionSystem : EntitySystem
             PopupType.MediumCaution
             );
     }
-
 }

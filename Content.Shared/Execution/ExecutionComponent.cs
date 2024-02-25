@@ -1,39 +1,26 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Execution;
 
-[RegisterComponent]
+/// <summary>
+/// Added to entities that can be used to execute another target.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ExecutionComponent : Component
 {
-    [DataField]
+    /// <summary>
+    /// How long the execution duration lasts.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float DoAfterDuration = 5f;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float DamageModifier = 9f;
 
+    // Not networked because this is transient inside of a tick.
+    /// <summary>
+    /// True if it is currently executing for handlers.
+    /// </summary>
     [DataField]
-    public string? SuicidePopupInternal;
-
-    [DataField]
-    public string? SuicidePopupExternal;
-
-    [DataField]
-    public string? ExecutionPopupInternal;
-
-    [DataField]
-    public string? ExecutionPopupExternal;
-
-    [DataField]
-    public string? SuicidePopupCompleteInternal;
-
-    [DataField]
-    public string? SuicidePopupCompleteExternal;
-
-    [DataField]
-    public string? ExecutionPopupCompleteInternal;
-
-    [DataField]
-    public string? ExecutionPopupCompleteExternal;
-
-    [DataField]
-    public string FixtureId = "projectile";
-
+    public bool Executing = true;
 }
