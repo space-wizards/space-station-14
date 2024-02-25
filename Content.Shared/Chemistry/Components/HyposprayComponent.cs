@@ -8,19 +8,19 @@ namespace Content.Shared.Chemistry.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class HyposprayComponent : Component
 {
-    [DataField("solutionName")]
+    [DataField]
     public string SolutionName = "hypospray";
 
     // TODO: This should be on clumsycomponent.
-    [DataField("clumsyFailChance")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float ClumsyFailChance = 0.5f;
 
-    [DataField("transferAmount")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
-    [DataField("injectSound")]
+    [DataField]
     public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
     /// <summary>
