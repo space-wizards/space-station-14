@@ -130,9 +130,7 @@
     maxTransferAmount: 7
   - type: SpentAmmoVisuals
     state: "practice"
-
-#Not yet craftable due to balance concerns. Should take a good bit of setup to create like the /tg/station recipe.
-#Either the improvised shotgun or its recipe (as of July 2023) will also probably have to be nerfed if you decide to make this craftable.
+    
 - type: entity
   id: ShellShotgunImprovised
   name: improvised shotgun shell
@@ -145,7 +143,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     count: 10
-    spread: 45 #deadly if you can get up close... otherwise, good luck doing any kind of real damage
+    spread: 45 
     proto: PelletShotgunImprovised
   - type: SpentAmmoVisuals
     state: "improvised"
