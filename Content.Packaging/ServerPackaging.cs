@@ -69,7 +69,7 @@ public static class ServerPackaging
         "zh-Hant"
     };
 
-    public static async Task PackageServer(bool skipBuild, bool hybridAcz, IPackageLogger logger, List<string>? platforms = null)
+    public static async Task PackageServer(bool skipBuild, bool hybridAcz, IPackageLogger logger, string configuration, List<string>? platforms = null)
     {
         if (platforms == null)
         {
@@ -91,11 +91,11 @@ public static class ServerPackaging
             if (!platforms.Contains(platform.Rid))
                 continue;
 
-            await BuildPlatform(platform, skipBuild, hybridAcz, logger);
+            await BuildPlatform(platform, skipBuild, hybridAcz, configuration, logger);
         }
     }
 
-    private static async Task BuildPlatform(PlatformReg platform, bool skipBuild, bool hybridAcz, IPackageLogger logger)
+    private static async Task BuildPlatform(PlatformReg platform, bool skipBuild, bool hybridAcz, string configuration, IPackageLogger logger)
     {
         logger.Info($"Building project for {platform}...");
 
@@ -108,7 +108,7 @@ public static class ServerPackaging
                 {
                     "build",
                     Path.Combine("Content.Server", "Content.Server.csproj"),
-                    "-c", "Release",
+                    "-c", $"{configuration}",
                     "--nologo",
                     "/v:m",
                     $"/p:TargetOs={platform.TargetOs}",

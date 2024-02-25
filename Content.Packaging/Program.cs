@@ -21,7 +21,7 @@ if (parsed.Client)
 }
 else
 {
-    await ServerPackaging.PackageServer(parsed.SkipBuild, parsed.HybridAcz, logger, parsed.Platforms);
+    await ServerPackaging.PackageServer(parsed.SkipBuild, parsed.HybridAcz, logger, parsed.Configuration, parsed.Platforms);
 }
 
 void WipeBin()
