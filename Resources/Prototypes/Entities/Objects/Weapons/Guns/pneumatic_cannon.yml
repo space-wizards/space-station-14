@@ -107,7 +107,6 @@
     containers:
       storagebase: !type:Container
         ents: []
-  - type: Execution
 
 # shoots bullets instead of throwing them, no other changes
 - type: entity

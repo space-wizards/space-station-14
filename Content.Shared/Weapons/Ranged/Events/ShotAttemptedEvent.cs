@@ -19,7 +19,7 @@ public record struct ShotAttemptedEvent
 
     public bool Cancelled { get; private set; }
 
-    /// <summary>
+    /// </summary>
     /// Prevent the gun from shooting
     /// </summary>
     public void Cancel()
@@ -27,7 +27,7 @@ public record struct ShotAttemptedEvent
         Cancelled = true;
     }
 
-    /// <summary>
+    /// </summary>
     /// Allow the gun to shoot again, only use if you know what you are doing
     /// </summary>
     public void Uncancel()
