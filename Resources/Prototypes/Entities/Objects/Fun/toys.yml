@@ -273,6 +273,11 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
 
 - type: entity
   parent: PlushieLizard
@@ -311,6 +316,11 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
 
 - type: entity
   parent: BasePlushie
