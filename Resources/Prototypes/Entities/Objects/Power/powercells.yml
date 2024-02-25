@@ -3,6 +3,8 @@
   abstract: true
   parent: BaseItem
   components:
+  - type: Item
+    storedRotation: -90
   - type: Battery
     pricePerJoule: 0.15
   - type: PowerCell
@@ -27,7 +29,6 @@
           Quantity: 5
   - type: Tag
     tags:
-      - DroneUsable
       - PowerCell
   - type: Appearance
   - type: PowerCellVisuals
@@ -50,7 +51,6 @@
     startingCharge: 70
   - type: Tag
     tags:
-      - DroneUsable
       - PotatoBattery
   - type: Construction
     graph: PowerCellPotato
@@ -315,7 +315,7 @@
   - type: Battery
     maxCharge: 1400
     startingCharge: 1400
-    
+
 - type: entity
   id: PowerCageMedium
   parent: BasePowerCage
@@ -333,7 +333,7 @@
   - type: Battery
     maxCharge: 2700
     startingCharge: 2700
-    
+
 - type: entity
   id: PowerCageHigh
   parent: BasePowerCage
@@ -351,7 +351,7 @@
   - type: Battery
     maxCharge: 6200
     startingCharge: 6200
-    
+
 - type: entity
   id: PowerCageSmallEmpty
   parent: PowerCageSmall
@@ -369,7 +369,7 @@
   - type: Battery
     maxCharge: 1400
     startingCharge: 0
-    
+
 - type: entity
   id: PowerCageMediumEmpty
   parent: PowerCageMedium
@@ -386,7 +386,7 @@
       visible: false
   - type: Battery
     startingCharge: 0
-    
+
 - type: entity
   id: PowerCageHighEmpty
   parent: PowerCageHigh

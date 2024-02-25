@@ -56,5 +56,5 @@
         reagents:
         - ReagentId: Water
           Quantity: 180
-        - ReagentId: Toxin
+        - ReagentId: GastroToxin
           Quantity: 20

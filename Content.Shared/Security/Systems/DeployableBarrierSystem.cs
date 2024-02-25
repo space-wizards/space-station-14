@@ -8,7 +8,6 @@ namespace Content.Shared.Security.Systems;
 
 public sealed class DeployableBarrierSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -54,9 +53,6 @@ public sealed class DeployableBarrierSystem : EntitySystem
             if (fixture != null)
                 _physics.SetHard(uid, fixture, false);
         }
-
-        var state = isDeployed ? DeployableBarrierState.Deployed : DeployableBarrierState.Idle;
-        _appearance.SetData(uid, DeployableBarrierVisuals.State, state);
 
         if (TryComp(uid, out SharedPullableComponent? pullable))
             _pulling.TryStopPull(pullable);
