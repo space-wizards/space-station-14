@@ -50,17 +50,17 @@
           icon:
             sprite: Objects/Tools/matches.rsi
             state: match_unlit
-         - tag: Matchstick
-           name: match stick
-           icon:
-             sprite: Objects/Tools/matches.rsi
-             state: match_unlit
-         - tag: Matchstick
-           name: match stick
-           icon:
-             sprite: Objects/Tools/matches.rsi
-             state: match_unlit
-         - tag: Matchstick
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+        - tag: Matchstick
            name: match stick
            icon:
              sprite: Objects/Tools/matches.rsi
