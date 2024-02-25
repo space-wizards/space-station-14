@@ -273,18 +273,17 @@ namespace Content.IntegrationTests.Tests
 
 
 
-        private static int GetCountLateSpawn<T>(List<EntityUid> gridUids, IEntityManager entManager) where T : IComponent
+        private static int GetCountLateSpawn<T>(List<EntityUid> gridUids, IEntityManager entManager)
+            where T : ISpawnPoint, IComponent
         {
             var resultCount = 0;
             var queryPoint = entManager.AllEntityQueryEnumerator<T, TransformComponent>();
 #nullable enable
-            while (queryPoint.MoveNext(out var uid, out T? comp, out var xform))
+            while (queryPoint.MoveNext(out T? comp, out var xform))
             {
-                var castedComp1 = typeof(T) == typeof(SpawnPointComponent) ? (SpawnPointComponent) (object) comp : null;
-                var castedComp2 = typeof(T) == typeof(ContainerSpawnPointComponent) ? (ContainerSpawnPointComponent) (object) comp : null;
+                var spawner = (ISpawnPoint) comp;
 
-                if (!((castedComp1 != null && castedComp1.SpawnType == SpawnPointType.LateJoin)
-                    || (castedComp2 != null && castedComp2.SpawnType == SpawnPointType.LateJoin))
+                if (spawner.SpawnType is not SpawnPointType.LateJoin
                 || xform.GridUid == null
                 || !gridUids.Contains(xform.GridUid.Value))
                 {
