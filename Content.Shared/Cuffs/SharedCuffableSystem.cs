@@ -586,14 +586,14 @@ namespace Content.Shared.Cuffs
 
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is trying to uncuff {ToPrettyString(target)}");
 
-            _popup.PopupClient(Loc.GetString("cuffable-component-start-uncuffing-observer",
+            _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-observer",
                     ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))),
                 target, Filter.Pvs(target, entityManager: EntityManager)
                     .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user), true);
 
             if (target == user)
             {
-                _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
+                _popup.PopupClient(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
             }
             else
             {
