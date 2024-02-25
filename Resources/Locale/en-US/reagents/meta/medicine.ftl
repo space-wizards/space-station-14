@@ -55,6 +55,9 @@ reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer
 reagent-name-polypyrylium-oligomers = Polypyrylium Oligomers
 reagent-desc-polypyrylium-oligomers = A purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. Heals asphyxiation and brute damage. Stops bleeding over time.
 
+reagent-name-omegizine = Omegizine
+reagent-desc-omegizine = A strange combination of nanites and copious amounts of Omnizine. It cannot be made with on station equipment, instead made in top secret Nanotrasen labs. Heals incredibly well.
+
 reagent-name-ambuzol = ambuzol
 reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
 
