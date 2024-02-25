@@ -1,21 +1,4 @@
 - type: entity
-  id: ActionArniesCurse
-  name: Arnie's curse
-  description: Gain some on-brand gear and a sick motorbike, in exchange for only being able to speak in Terminator quotes. Opportunity expires after a minute.
-  noSpawn: true
-  components:
-  - type: InstantAction
-    priority: 19
-    icon:
-      sprite: Mobs/Species/Exterminator/parts.rsi
-      state: skull_icon
-    event: !type:ExterminatorCurseEvent
-      gear: ArnoldGear
-      accent: ExterminatorCursed
-  - type: TimedDespawn
-    lifetime: 60
-
-- type: entity
   id: ActionExterminatorFreedom
   name: Break Free
   description: Use your superhuman strength to break out of any hand restraints.

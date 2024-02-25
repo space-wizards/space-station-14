@@ -360,23 +360,3 @@
     shoes: ClothingShoesClownBanana
     jumpsuit: ClothingUniformJumpsuitClownBanana
     mask: ClothingMaskClownBanana
-
-#Exterminator with Arnie's Curse, basically a cheat code but you become valid
-- type: startingGear
-  id: ArnoldGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
-    back: ClothingBackpackFilled
-    eyes: ClothingEyesGlassesSunglasses
-    outerClothing: ClothingOuterCoatGentle # i need your clothes
-    gloves: ClothingHandsGlovesColorBlack
-    shoes: ClothingShoesBootsJack # your boots
-    id: PassengerPDA
-    ears: ClothingHeadsetGrey
-  innerClothingSkirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
-  inhand:
-  - WeaponShotgunKammerer # not quite an autoloader but shouldnt be too op
-  - VehicleKeySkeletonMotorcycle
-  - VehicleSkeletonMotorcycle # and your motorcycle (this goes on the ground unless you make a mr handyinator
