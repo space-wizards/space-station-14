@@ -243,6 +243,11 @@
     - buzzes!
 
 - type: emote
+  id: Weh
+  category: Vocal
+  chatMessages: [Weh!]
+
+- type: emote
   id: Chirp
   category: Vocal
   chatMessages: [chirps!]
