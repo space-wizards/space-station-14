@@ -75,6 +75,6 @@ public sealed class ConfirmableActionSystem : EntitySystem
         var (uid, comp) = ent;
         comp.NextConfirm = null;
         comp.NextUnprime = null;
-        Dirty(uid, comp0;
+        Dirty(uid, comp);
     }
 }
