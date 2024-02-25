@@ -7,6 +7,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Shared.Ame;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -41,7 +42,7 @@ public sealed class AmeControllerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AmeControllerComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<AmeControllerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<AmeControllerComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
         SubscribeLocalEvent<AmeControllerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AmeControllerComponent, UiButtonPressedMessage>(OnUiButtonPressed);
     }
@@ -286,6 +287,9 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, AmeControllerComponent comp, InteractUsingEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!HasComp<HandsComponent>(args.User))
         {
             _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-no-hands-text"), uid, args.User);
@@ -307,6 +311,7 @@ public sealed class AmeControllerSystem : EntitySystem
         _containerSystem.Insert(args.Used, comp.JarSlot);
         _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-success"), uid, args.User, PopupType.Medium);
 
+        args.Handled = true;
         UpdateUi(uid, comp);
     }
 
