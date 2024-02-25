@@ -102,6 +102,8 @@
   name: ash
   description: This used to be something, but now it's not.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
     state: ash
