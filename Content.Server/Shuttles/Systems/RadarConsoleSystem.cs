@@ -32,25 +32,10 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
         EntityCoordinates? coordinates = onGrid ? xform.Coordinates : null;
         Angle? angle = onGrid ? xform.LocalRotation : null;
 
-        //handheld test
-        if (HasComp<PowerCellDrawComponent>(uid))
+        if (component.FollowEntity)
         {
             coordinates = new EntityCoordinates(uid, Vector2.Zero);
-            angle = Angle.Zero + MathHelper.DegreesToRadians(180);
-        }
-
-        // Use ourself I guess.
-        if (TryComp<IntrinsicUIComponent>(uid, out var intrinsic))
-        {
-            foreach (var uiKey in intrinsic.UIs)
-            {
-                if (uiKey.Key?.Equals(RadarConsoleUiKey.Key) == true)
-                {
-                    coordinates = new EntityCoordinates(uid, Vector2.Zero);
-                    angle = Angle.Zero;
-                    break;
-                }
-            }
+            angle = Angle.Zero;
         }
 
         if (_uiSystem.TryGetUi(uid, RadarConsoleUiKey.Key, out var bui))

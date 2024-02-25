@@ -16,6 +16,7 @@
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: RadarConsole
     maxRange: 64
+    followEntity: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:
