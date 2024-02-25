@@ -351,3 +351,19 @@
     layers:
       - state: green
       - state: warden
+
+# Wildcards
+
+- type: entity
+  id: ArrivalsSpawnPointPrisoner
+  parent: ArrivalsSpawnPointJobBase
+  suffix: prisoner
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - Prisoner
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: _CD/Markers/jobs.rsi
+      - state: prisoner
