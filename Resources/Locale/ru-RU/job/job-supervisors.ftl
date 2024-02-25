@@ -13,3 +13,4 @@ job-supervisors-security = Офицерам СБ, Смотрителю и ГСБ
 job-supervisors-science = ученым, старшим научным сотрудникам и Научному Руководителю
 job-supervisors-hire = своим нанимателям
 job-supervisors-everyone = вообще всем
+job-supervisors-IAA = Агенту Внутренних Дел

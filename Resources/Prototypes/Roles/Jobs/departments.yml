@@ -23,7 +23,7 @@
   - Clown
   - HeadOfPersonnel
   - Janitor
-  - Lawyer
+  ##- Lawyer Imperial department
   - Librarian
   - Mime
   - Musician
@@ -46,7 +46,6 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-  - IAA
 
 - type: department
   id: Engineering
@@ -110,3 +109,4 @@
   - Reporter
   - Zookeeper
   - Psychologist
+

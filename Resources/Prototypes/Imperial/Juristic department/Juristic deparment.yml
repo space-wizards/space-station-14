@@ -1,0 +1,8 @@
+- type: department
+  id: Juristic
+  name: department-Juristic #imperial custom department
+  description: department-Juristic-description
+  color: "#C71585"
+  roles:
+  - IAA
+  - Lawyer
