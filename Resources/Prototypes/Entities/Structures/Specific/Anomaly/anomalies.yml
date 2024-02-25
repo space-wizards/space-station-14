@@ -53,20 +53,26 @@
   parent: BaseAnomaly
   suffix: Pyroclastic
   components:
+  - type: AmbientSound
+    volume: 5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
   - type: Anomaly
     corePrototype: AnomalyCorePyroclastic
     coreInertPrototype: AnomalyCorePyroclasticInert
   - type: Sprite
+    sprite: Structures/Specific/Anomalies/pyro_anom.rsi
     layers:
-    - state: anom1
+    - state: anom
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom1-pulse
+    - state: pulse
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
   - type: PointLight
-    radius: 2.0
+    radius: 6.0
     energy: 7.5
-    color: "#fca3c0"
+    color: "#E25822"
     castShadows: false
   - type: PyroclasticAnomaly
   - type: TempAffectingAnomaly
@@ -75,9 +81,21 @@
   - type: GasProducerAnomaly
     releasedGas: 3
     releaseOnMaxSeverity: true
-    spawnRadius: 3
+    spawnRadius: 4
     tileCount: 5
-    tempChange: 550
+    tempChange: 420
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileAnomalyFireball
+    targetNonSentientChance: 0.6
+    projectileSpeed: 0.5
+    minProjectiles: 3
+    maxProjectiles: 6
+  - type: IgnitionSource
+    temperature: 800
+    ignited: true
+  - type: IgniteOnCollide
+    fixtureId: fix1
+    fireStacks: 1
 
 - type: entity
   id: AnomalyGravity
@@ -102,6 +120,14 @@
   - type: GravityAnomaly
   - type: GravityWell
   - type: RadiationSource
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: RandomWalk
+  - type: SingularityDistortion
+    intensity: 1000
+    falloffPower: 2.7
 
 - type: entity
   id: AnomalyElectricity
@@ -765,3 +791,57 @@
     solution: anomaly
   - type: InjectableSolution
     solution: beaker
+
+- type: entity
+  id: AnomalyShadow
+  parent: BaseAnomaly
+  suffix: Shadow
+  components:  
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 1.5
+    energy: 12.5
+    color: "#793a80"
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg
+  - type: Anomaly
+    corePrototype: AnomalyCoreShadow
+    coreInertPrototype: AnomalyCoreShadowInert
+    anomalyContactDamage:
+      types:
+        Cold: 10
+    animationTime: 4
+    offset: "-0.1,0.1"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 20
+        maxRange: 4
+      spawns: 
+      - ShadowKudzuWeak
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        maxRange: 50
+      spawns: 
+      - ShadowKudzu
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+  - type: Tag
+    tags:
+      - SpookyFog

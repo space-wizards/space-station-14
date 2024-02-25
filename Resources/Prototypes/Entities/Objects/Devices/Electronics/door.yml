@@ -11,6 +11,5 @@
     - type: Tag
       tags:
         - DoorElectronics
-        - DroneUsable
     - type: StaticPrice
       price: 55

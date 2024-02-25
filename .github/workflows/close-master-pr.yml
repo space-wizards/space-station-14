@@ -1,0 +1,27 @@
+name: Close PR's on master
+
+on:
+  pull_request_target:
+    types: [ opened, ready_for_review ]
+    
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: ${{github.head_ref == 'master' || github.head_ref == 'main' || github.head_ref == 'develop'}}
+    
+    steps:    
+    - uses: superbrothers/close-pull-request@v3
+      with:
+        comment: "Thank you for contributing to the Space Station 14 repository. Unfortunately, it looks like you submitted your pull request from the master branch. We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html) \n\n You can move your current work from the master branch to another branch by doing `git branch <branch_name` and resetting the master branch."
+
+    # If you prefer to just comment on the pr and not close it, uncomment the bellow and comment the above
+      
+    # - uses: actions/github-script@v7
+    #   with:
+    #     script: |
+    #       github.rest.issues.createComment({
+    #         issue_number: ${{ github.event.number }},
+    #         owner: context.repo.owner,
+    #         repo: context.repo.repo,
+    #         body: "Thank you for contributing to the Space Station 14 repository. Unfortunately, it looks like you submitted your pull request from the master branch. We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html) \n\n You can move your current work from the master branch to another branch by doing `git branch <branch_name` and resetting the master branch. \n\n This pr won't be automatically closed. However, a maintainer may close it for this reason."
+    #       })

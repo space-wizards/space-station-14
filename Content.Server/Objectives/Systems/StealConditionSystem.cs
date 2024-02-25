@@ -42,17 +42,8 @@ public sealed class StealConditionSystem : EntitySystem
     {
         List<StealTargetComponent?> targetList = new();
 
-        // cancel if invalid TargetStealName
-        var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
-        if (group == null)
-        {
-            args.Cancelled = true;
-            Log.Error("StealTargetGroup invalid prototype!");
-            return;
-        }
-
-        var query = EntityQueryEnumerator<StealTargetComponent>();
-        while (query.MoveNext(out var uid, out var target))
+        var query = AllEntityQuery<StealTargetComponent>();
+        while (query.MoveNext(out var target))
         {
             if (condition.Comp.StealGroup != target.StealGroup)
                 continue;
@@ -61,17 +52,17 @@ public sealed class StealConditionSystem : EntitySystem
         }
 
         // cancel if the required items do not exist
-        if (targetList.Count == 0 && condition.Comp.VerifyMapExistance)
+        if (targetList.Count == 0 && condition.Comp.VerifyMapExistence)
         {
             args.Cancelled = true;
             return;
         }
 
         //setup condition settings
-        var maxSize = condition.Comp.VerifyMapExistance
+        var maxSize = condition.Comp.VerifyMapExistence
             ? Math.Min(targetList.Count, condition.Comp.MaxCollectionSize)
             : condition.Comp.MaxCollectionSize;
-        var minSize = condition.Comp.VerifyMapExistance
+        var minSize = condition.Comp.VerifyMapExistence
             ? Math.Min(targetList.Count, condition.Comp.MinCollectionSize)
             : condition.Comp.MinCollectionSize;
 
@@ -102,15 +93,13 @@ public sealed class StealConditionSystem : EntitySystem
 
     private float GetProgress(MindComponent mind, StealConditionComponent condition)
     {
-        if (!_metaQuery.TryGetComponent(mind.OwnedEntity, out var meta))
-            return 0;
         if (!_containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
             return 0;
 
         var stack = new Stack<ContainerManagerComponent>();
         var count = 0;
 
-        //check pulling object 
+        //check pulling object
         if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
         {
             var pullid = pull.Pulling;
@@ -147,7 +136,7 @@ public sealed class StealConditionSystem : EntitySystem
             }
         } while (stack.TryPop(out currentManager));
 
-        var result = (float) count / (float) condition.CollectionSize;
+        var result = count / (float) condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
     }
@@ -166,7 +155,7 @@ public sealed class StealConditionSystem : EntitySystem
         {
             if (TryComp<MobStateComponent>(entity, out var state))
             {
-                if (!_mobState.IsAlive(entity))
+                if (!_mobState.IsAlive(entity, state))
                     return false;
             }
         }

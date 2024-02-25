@@ -1,5 +1,6 @@
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Explosion.Components;
+using Content.Shared.Explosion.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 

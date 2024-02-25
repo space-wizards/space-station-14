@@ -7,6 +7,10 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
+  - type: Tag
+    tags:
+      - Payload
+      - ClothMade
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -19,6 +23,9 @@
   - type: EmitSoundOnLand
     sound:
       collection: ToyFall
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ToySqueak
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
@@ -32,6 +39,18 @@
       Cloth: 100
   - type: StaticPrice
     price: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: ToySqueak
+    delay: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
 
 - type: entity
   parent: BasePlushie
@@ -66,6 +85,7 @@
       tags:
         - ForceableFollow
         - PlushieGhost
+        - Payload
     - type: RandomWalk
       accumulatorRatio: 0.5
       maxSpeed: 1
@@ -107,8 +127,15 @@
     solutions:
       bee:
         reagents:
-          - ReagentId: GroundBee
-            Quantity: 10
+        - ReagentId: GroundBee
+          Quantity: 10
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GroundBee
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 5
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/toys.rsi
@@ -132,6 +159,13 @@
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnActivate
     sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
@@ -199,6 +233,13 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -221,10 +262,22 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/weh.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
 
 - type: entity
   parent: PlushieLizard
@@ -252,10 +305,22 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
 
 - type: entity
   parent: BasePlushie
@@ -278,14 +343,27 @@
     - type: EmitSoundOnActivate
       sound:
         path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
     - type: MeleeWeapon
       wideAnimationRotation: 180
       soundHit:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: Food
+      requiresSpecialDigestion: true
+      useSound:
         path: /Audio/Items/Toys/toy_rustle.ogg
     - type: SolutionContainerManager
       solutions:
         plushie:
           maxVol: 1
+        food:
+          maxVol: 10
+          reagents:
+          - ReagentId: Fiber
+            Quantity: 10
+
     - type: RefillableSolution
       solution: plushie
     - type: SolutionContainerVisuals
@@ -330,9 +408,11 @@
     state: blue
   - type: Item
     heldPrefix: blue
+    storedRotation: -90
   - type: Tag
     tags:
       - PlushieSharkBlue
+      - Payload
 
 - type: entity
   parent: PlushieSharkBlue
@@ -348,6 +428,7 @@
   - type: Tag
     tags:
       - PlushieSharkPink
+      - Payload
 
 - type: entity
   parent: PlushieSharkBlue
@@ -363,6 +444,7 @@
   - type: Tag
     tags:
       - PlushieSharkGrey
+      - Payload
 
 - type: entity
   parent: BasePlushie
@@ -396,6 +478,7 @@
     state: carpplush
   - type: Item
     heldPrefix: carpplush
+    storedRotation: -90
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Effects/bite.ogg
@@ -404,6 +487,13 @@
       path: /Audio/Effects/bite.ogg
   - type: EmitSoundOnActivate
     sound:
+      path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
       path: /Audio/Effects/bite.ogg
   - type: MeleeWeapon
     wideAnimationRotation: -90
@@ -432,6 +522,13 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -447,6 +544,13 @@
     state: toy_mouse
   - type: EmitSoundOnUse
     sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
     wideAnimationRotation: -90
@@ -478,6 +582,13 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
 
 - type: entity
   parent: BasePlushie
@@ -492,6 +603,13 @@
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnLand
     sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
@@ -526,10 +644,81 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+- type: entity
+  parent: BasePlushie
+  id: PlushiePenguin
+  name: penguin plushie
+  description: I use arch btw!
+  components:
+  - type: Sprite
+    state: plushie_penguin
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieHuman
+  name: human plushie
+  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
+  components:
+  - type: Sprite
+    state: plushie_human
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Human/malescream_1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Human/malescream_2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Human/malescream_3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Human/malescream_1.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Human/malescream_4.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Human/malescream_5.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieMoth
+  name: moth plushie
+  description: Cute and fluffy moth plushie. Enjoy, bz!
+  components:
+  - type: Sprite
+    state: plushie_moth
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
 
 ## Cheapo Figurines
 
@@ -568,6 +757,9 @@
   components:
   - type: Sprite
     state: nuketoy
+  - type: Tag
+    tags:
+      - Payload
   - type: UseDelay
     delay: 180.0
   - type: EmitSoundOnUse
@@ -577,6 +769,12 @@
         volume: -5
         maxDistance: 10
   - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxDistance: 10
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
@@ -596,8 +794,15 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
   - type: MeleeWeapon
     soundHit:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
       path: /Audio/Items/Toys/ian.ogg
 
 ## Toyweapons
@@ -869,7 +1074,7 @@
       params:
         variation: 0.65
         volume: -10
-    
+
 - type: entity
   parent: BaseItem
   id: PonderingOrb
@@ -1013,11 +1218,15 @@
   - type: EmitSoundOnActivate
     sound:
       collection: ClownRecorder
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ClownRecorder
   - type: UseDelay
     delay: 30.0
   - type: Tag
     tags:
     - ClownRecorder
+    - Payload
 
 - type: entity
   parent: BaseItem
@@ -1067,6 +1276,9 @@
     sprite: Objects/Fun/whoopie.rsi
     state: icon
     quickEquip: false
+  - type: Tag
+    tags:
+      - Payload
   - type: EmitSoundOnUse
     sound:
       collection: Parp
@@ -1092,6 +1304,11 @@
     intersectRatio: 0.2
     requiredTriggeredSpeed: 1
   - type: TriggerOnStepTrigger
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
   - type: Appearance
   - type: CollisionWake
     enabled: false
@@ -1146,7 +1363,16 @@
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
     state: icon
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
   - type: Glue
     consumptionUnit: 10
   - type: Item
@@ -1162,52 +1388,30 @@
     solution: drink
 
 - type: entity
-  parent: BasePlushie
-  id: PlushieMoth
-  name: moth plushie
-  description: Cute and fluffy moth plushie. Enjoy, bz!
+  parent: BaseItem
+  id: NewtonCradle
+  name: newton cradle
+  description: A device bored paper pushers use to remind themselves that time did not stop yet. Contains gravity.
   components:
   - type: Sprite
-    state: plushie_moth
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-
-- type: entity
-  parent: BasePlushie
-  id: PlushiePenguin
-  name: penguin plushie
-  description: I use arch btw!
-  components:
-  - type: Sprite
-    state: plushie_penguin
-
-- type: entity
-  parent: BasePlushie
-  id: PlushieHuman
-  name: human plushie
-  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
-  components:
-  - type: Sprite
-    state: plushie_human
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Voice/Human/malescream_1.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Voice/Human/malescream_2.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Voice/Human/malescream_3.ogg
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Voice/Human/malescream_4.ogg
+    sprite: Objects/Fun/newton_cradle.rsi
+    state: icon-off
+  - type: Item
+    sprite: Objects/Fun/newton_cradle.rsi
+    storedRotation: -90
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { state: icon }
+          False: { state: icon-off }
+  - type: ItemToggle
+  - type: UseDelay
+    delay: 1
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Items/newton_cradle.ogg
+      params:
+        volume: -9
+        maxDistance: 3

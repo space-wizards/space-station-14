@@ -78,6 +78,27 @@
             Poison: 1.5
 
 - type: reagent
+  id: GastroToxin
+  name: reagent-name-gastrotoxin
+  group: Toxins
+  desc: reagent-desc-gastrotoxin
+  flavor: bitter
+  color: "#acc91a"
+  physicalDesc: reagent-physical-desc-putrid
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 2
+        - !type:ChemVomit
+          conditions:
+          - !type:ReagentThreshold
+            min: 2
+          probability: 0.2
+
+- type: reagent
   id: Mold
   name: reagent-name-mold
   group: Toxins

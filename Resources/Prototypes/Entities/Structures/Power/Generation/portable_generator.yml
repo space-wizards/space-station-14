@@ -90,6 +90,17 @@
       supplyRampRate: 500
       supplyRampTolerance: 500
       enabled: false
+    - type: DeviceLinkSink
+      ports:
+      - On
+      - Off
+      - Toggle
+    - type: GeneratorSignalControl
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
 
 - type: entity
   abstract: true
