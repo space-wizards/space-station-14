@@ -287,9 +287,15 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            component.Health -= (_random.Next(3, 5) * 10);
+            component.Health -= (_random.Next(3, 5) * 10); //Clippers remove part of a plant, damaging it
+
+            float? nullHealthOverride = null;
+            if (!component.Harvest)  //If plant is not harvestable, sets nullHealthOverride to null. Makes it so clipping a harvestable plant does not yield damaged seeds.
+            {
+                nullHealthOverride = component.Health;
+            }
             component.Seed.Unique = false;
-            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, component.Health);
+            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, nullHealthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
