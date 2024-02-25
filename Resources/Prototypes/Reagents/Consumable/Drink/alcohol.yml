@@ -39,6 +39,7 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  fizzy: true
 
 - type: reagent
   id: Beer
@@ -55,6 +56,7 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  fizzy: true
 
 - type: reagent
   id: BlueCuracao
@@ -438,6 +440,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.3
+  fizzy: true
 
 # Mixed Alcohol
 
@@ -655,6 +658,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15
+  fizzy: true
 
 - type: reagent
   id: BlackRussian
@@ -754,6 +758,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.07
+  fizzy: true
 
 - type: reagent
   id: DemonsBlood
@@ -902,6 +907,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.07
+  fizzy: true
 
 - type: reagent
   id: GinTonic
@@ -925,6 +931,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.07
+  fizzy: true
 
 - type: reagent
   id: Gildlager
@@ -1002,6 +1009,7 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  fizzy: true
 
 - type: reagent
   id: IrishCarBomb
@@ -1139,6 +1147,7 @@
   metamorphicMaxFillLevels: 2
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  fizzy: true
 
 - type: reagent
   id: Margarita
@@ -1192,6 +1201,7 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  fizzy: true
 
 - type: reagent
   id: Mojito
@@ -1207,6 +1217,7 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  fizzy: true
 
 - type: reagent
   id: Moonshine
@@ -1291,6 +1302,7 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  fizzy: true
 
 - type: reagent
   id: Sbiten
@@ -1438,6 +1450,7 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  fizzy: true
 
 - type: reagent
   id: TequilaSunrise
@@ -1586,6 +1599,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.07
+  fizzy: true
 
 - type: reagent
   id: WhiskeySoda
@@ -1609,6 +1623,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.07
+  fizzy: true
 
 - type: reagent
   id: WhiteGilgamesh

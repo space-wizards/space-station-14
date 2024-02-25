@@ -38,6 +38,9 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -192,8 +195,6 @@
     sprite: Objects/Consumable/Drinks/champagnebottle.rsi
   - type: Openable
     closeable: false # Champagne corks are fat. Not worth the effort.
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -230,8 +231,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
   - type: Sealable
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -396,8 +395,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
   - type: Sealable
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
@@ -417,8 +414,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
   - type: Sealable
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -531,8 +526,6 @@
     sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Openable
     closeable: false
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -553,8 +546,6 @@
     sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Openable
     closeable: false
-  - type: PressurizedDrink
-  - type: Shakeable
 
 
 - type: entity
@@ -576,8 +567,6 @@
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
     closeable: false
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
@@ -598,8 +587,6 @@
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
     closeable: false
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
@@ -648,8 +635,6 @@
           Quantity: 150
   - type: Label
     currentLabel: soda water
-  - type: PressurizedDrink
-  - type: Shakeable
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -666,8 +651,6 @@
           Quantity: 150
   - type: Label
     currentLabel: tonic water
-  - type: PressurizedDrink
-  - type: Shakeable
 
 # Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
 

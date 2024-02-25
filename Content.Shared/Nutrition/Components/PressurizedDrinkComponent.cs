@@ -9,8 +9,8 @@ namespace Content.Shared.Nutrition.Components;
 /// Requires <see cref="DrinkComponent"/> and <see cref="OpenableComponent"/> to work.
 /// </summary>
 [NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[RegisterComponent, Access(typeof(SharedPressurizedDrinkSystem))]
-public sealed partial class PressurizedDrinkComponent : Component
+[RegisterComponent, Access(typeof(SharedPressurizedSolutionSystem))]
+public sealed partial class PressurizedSolutionComponent : Component
 {
     /// <summary>
     /// Name of the solution to use.
@@ -40,14 +40,20 @@ public sealed partial class PressurizedDrinkComponent : Component
     /// 0.5 will increase it by half with each shake.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float FizzinessAddedPerShake = 0.4f;
+    public float FizzinessAddedOnShake = 0.4f;
+
+    /// <summary>
+    /// How much to increase the drink's fizziness when it lands after being thrown.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float FizzinessAddedOnLand = 0.1f;
 
     /// <summary>
     /// How much to modify the chance of spraying when the drink is opened.
     /// Increasing this effectively increases the fizziness value when checking if it should spray.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SprayChanceModOpened = -0.25f;
+    public float SprayChanceModOpened = -0.01f; // Just enough to prevent spraying at 0 fizziness
 
     /// <summary>
     /// How much to modify the chance of spraying when the drink is thrown.
@@ -55,6 +61,13 @@ public sealed partial class PressurizedDrinkComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float SprayChanceModThrown = 0.25f;
+
+    /// <summary>
+    /// How much to modify the chance of spraying when the drink collides with another entity.
+    /// Increasing this effectively increases the fizziness value when checking if it should spray.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float SprayChanceModCollide = 0.1f;
 
     /// <summary>
     /// Holds the current randomly-rolled threshold value for spraying.

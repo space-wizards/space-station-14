@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
@@ -14,10 +13,11 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public abstract partial class SharedPressurizedDrinkSystem : EntitySystem
+public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedOpenableSystem _openable = default!;
@@ -26,6 +26,7 @@ public abstract partial class SharedPressurizedDrinkSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _colorFlash = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -33,31 +34,28 @@ public abstract partial class SharedPressurizedDrinkSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PressurizedDrinkComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PressurizedDrinkComponent, ShakeEvent>(OnShake);
-        SubscribeLocalEvent<PressurizedDrinkComponent, OpenableOpenedEvent>(OnOpened);
-        SubscribeLocalEvent<PressurizedDrinkComponent, LandEvent>(OnLand);
-
-        SubscribeLocalEvent<PressurizedDrinkComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<PressurizedSolutionComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PressurizedSolutionComponent, ShakeEvent>(OnShake);
+        SubscribeLocalEvent<PressurizedSolutionComponent, OpenableOpenedEvent>(OnOpened);
+        SubscribeLocalEvent<PressurizedSolutionComponent, LandEvent>(OnLand);
+        SubscribeLocalEvent<PressurizedSolutionComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
     }
 
-    private void OnMapInit(Entity<PressurizedDrinkComponent> entity, ref MapInitEvent args)
+    private void OnMapInit(Entity<PressurizedSolutionComponent> entity, ref MapInitEvent args)
     {
         RollSprayThreshold(entity);
     }
 
-    private void OnExamined(Entity<PressurizedDrinkComponent> entity, ref ExaminedEvent args)
+    private void OnShake(Entity<PressurizedSolutionComponent> entity, ref ShakeEvent args)
     {
-        args.PushText(string.Format("Fizziness: {0}", Fizziness((entity, entity.Comp))));
+        AddFizziness(entity, entity.Comp.FizzinessAddedOnShake);
     }
 
-    private void OnShake(Entity<PressurizedDrinkComponent> entity, ref ShakeEvent args)
+    private void AddFizziness(Entity<PressurizedSolutionComponent> entity, float amount)
     {
-        AddFizziness(entity, entity.Comp.FizzinessAddedPerShake);
-    }
+        if (!SolutionIsFizzy(entity))
+            return;
 
-    private void AddFizziness(Entity<PressurizedDrinkComponent> entity, float amount)
-    {
         // Convert fizziness to time
         var duration = amount * entity.Comp.FizzyMaxDuration;
 
@@ -76,73 +74,128 @@ public abstract partial class SharedPressurizedDrinkSystem : EntitySystem
         RollSprayThreshold(entity);
     }
 
-    private void OnOpened(Entity<PressurizedDrinkComponent> entity, ref OpenableOpenedEvent args)
+    private void OnOpened(Entity<PressurizedSolutionComponent> entity, ref OpenableOpenedEvent args)
     {
-        if (Fizziness((entity, entity.Comp)) + entity.Comp.SprayChanceModOpened > entity.Comp.SprayFizzinessThresholdRoll)
+        if (SprayCheck(entity, entity.Comp.SprayChanceModOpened))
         {
             // Make sure the opener is actually holding the drink
             var held = args.User != null && _hands.IsHolding(args.User.Value, entity, out _);
 
-            Spray(entity, held ? args.User : null);
+            TrySpray((entity, entity.Comp), held ? args.User : null);
         }
 
         // Release the fizz!
-        ClearFizziness((entity, entity.Comp));
+        TryClearFizziness((entity, entity.Comp));
     }
 
-    private void OnLand(Entity<PressurizedDrinkComponent> entity, ref LandEvent args)
+    private void OnLand(Entity<PressurizedSolutionComponent> entity, ref LandEvent args)
     {
-        if (Fizziness((entity, entity.Comp)) + entity.Comp.SprayChanceModThrown > entity.Comp.SprayFizzinessThresholdRoll)
+        SprayOrAddFizziness(entity, entity.Comp.SprayChanceModThrown, entity.Comp.FizzinessAddedOnLand);
+    }
+
+    private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionContainerChangedEvent args)
+    {
+        if (args.SolutionId != entity.Comp.Solution)
+            return;
+
+        if (!SolutionIsFizzy(entity))
+            TryClearFizziness((entity, entity.Comp));
+    }
+
+    private bool SprayCheck(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0)
+    {
+        return Fizziness((entity, entity.Comp)) + chanceMod > entity.Comp.SprayFizzinessThresholdRoll;
+    }
+
+    private bool SolutionIsFizzy(Entity<PressurizedSolutionComponent> entity)
+    {
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionComp, out var solution))
+            return false;
+
+        if (solution.Volume <= 0)
+            return false;
+
+        foreach (var reagent in solution.Contents)
+        {
+            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto))
+            {
+                if (reagentProto != null && reagentProto.Fizzy)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private void SprayOrAddFizziness(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0, float fizzinessToAdd = 0, EntityUid? user = null)
+    {
+        if (SprayCheck(entity, chanceMod))
         {
             _openable.SetOpen(entity, true);
-            Spray(entity);
+            TrySpray((entity, entity.Comp), user);
         }
         else
         {
-            RollSprayThreshold(entity);
+            AddFizziness(entity, fizzinessToAdd);
         }
     }
 
-    private void RollSprayThreshold(Entity<PressurizedDrinkComponent> entity)
+    private void RollSprayThreshold(Entity<PressurizedSolutionComponent> entity)
     {
+        // Can't predict random, so we wait for the server to tell us
+        if (!_net.IsServer)
+            return;
+
         entity.Comp.SprayFizzinessThresholdRoll = _random.NextFloat();
         Dirty(entity, entity.Comp);
     }
 
-    private void Spray(Entity<PressurizedDrinkComponent> entity, EntityUid? user = null)
+    public bool CanSpray(Entity<PressurizedSolutionComponent?> entity)
     {
-        if (_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var interactions))
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        return SolutionIsFizzy((entity, entity.Comp));
+    }
+
+    public bool TrySpray(Entity<PressurizedSolutionComponent?> entity, EntityUid? user = null)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        if (!CanSpray(entity))
+            return false;
+
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var interactions))
+            return false;
+
+        var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
+        var drinkName = Identity.Entity(entity, EntityManager);
+
+        DoSpraySplash((entity, entity.Comp), solution, user);
+
+        if (user != null)
         {
-            var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
+            _reactive.DoEntityReaction(user.Value, solution, ReactionMethod.Touch);
 
-            var drinkName = Identity.Entity(entity, EntityManager);
+            var victimName = Identity.Entity(user.Value, EntityManager);
 
-            DoSpraySplash(entity, solution, user);
-
-            if (user != null)
-            {
-                _reactive.DoEntityReaction(user.Value, solution, ReactionMethod.Touch);
-
-                var victimName = Identity.Entity(user.Value, EntityManager);
-
-                _popup.PopupEntity(Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName)), user.Value, Filter.PvsExcept(user.Value), true);
-                _popup.PopupClient(Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName)), user.Value, user.Value);
-            }
-            else
-            {
-                if (_timing.IsFirstTimePredicted)
-                    _popup.PopupEntity(Loc.GetString(entity.Comp.SprayGroundMessage, ("drink", drinkName)), entity);
-            }
-
-            _audio.PlayPredicted(entity.Comp.SpraySound, entity, user);
+            _popup.PopupEntity(Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName)), user.Value, Filter.PvsExcept(user.Value), true);
+            _popup.PopupClient(Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName)), user.Value, user.Value);
+        }
+        else
+        {
+            if (_timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString(entity.Comp.SprayGroundMessage, ("drink", drinkName)), entity);
         }
 
-        // Can only do it once
-        RemCompDeferred(entity, entity.Comp);
+        _audio.PlayPredicted(entity.Comp.SpraySound, entity, user);
+        TryClearFizziness(entity);
+
+        return true;
     }
 
     // TODO: When more of PuddleSystem is in Shared, move the rest of this method from Server to Shared
-    protected virtual void DoSpraySplash(Entity<PressurizedDrinkComponent> entity, Solution sol, EntityUid? user = null)
+    protected virtual void DoSpraySplash(Entity<PressurizedSolutionComponent> entity, Solution sol, EntityUid? user = null)
     {
         if (user != null)
         {
@@ -151,7 +204,7 @@ public abstract partial class SharedPressurizedDrinkSystem : EntitySystem
         }
     }
 
-    public double Fizziness(Entity<PressurizedDrinkComponent?> entity)
+    public double Fizziness(Entity<PressurizedSolutionComponent?> entity)
     {
         // No component means no fizz
         if (!Resolve(entity, ref entity.Comp))
@@ -165,7 +218,7 @@ public abstract partial class SharedPressurizedDrinkSystem : EntitySystem
         return Math.Min(currentDuration / entity.Comp.FizzyMaxDuration, 1);
     }
 
-    public void ClearFizziness(Entity<PressurizedDrinkComponent?> entity)
+    public void TryClearFizziness(Entity<PressurizedSolutionComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return;
