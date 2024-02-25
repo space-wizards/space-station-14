@@ -11,6 +11,7 @@ using Content.Shared.Verbs;
 using Content.Shared.SubFloor;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Inventory;
+using Content.Server.Nutrition.EntitySystems;
 
 namespace Content.Server.Paint;
 
@@ -25,6 +26,7 @@ public sealed class PaintSystem : SharedPaintSystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
 
     public override void Initialize()
     {
@@ -92,9 +94,9 @@ public sealed class PaintSystem : SharedPaintSystem
         if (args.Target is not { Valid: true } target)
             return;
 
-        if (TryComp<OpenableComponent>(entity, out var openable))
+        if (TryComp<OpenableComponent>(entity, out var open))
         {
-            if (!openable.Opened)
+            if (!_openable.IsOpen(entity))
             {
                 _popup.PopupEntity(Loc.GetString("paint-closed", ("used", args.Used)), args.User, args.User, PopupType.Medium);
                 return;
