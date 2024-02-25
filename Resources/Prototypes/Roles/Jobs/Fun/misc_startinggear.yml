@@ -326,6 +326,7 @@
   id: MobAghostGear
   equipment:
     back: ClothingBackpackSatchelHoldingAdmin
+    id: AdminPDA
 
 #Head Rev Gear
 - type: startingGear

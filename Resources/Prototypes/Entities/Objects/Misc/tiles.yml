@@ -15,9 +15,6 @@
         Blunt: 5
   - type: Stack
     count: 1
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -745,6 +742,38 @@
   - type: Stack
     stackType: FloorTileStackShuttleRed
 
+- type: entity
+  name: grey shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleGrey
+  components:
+  - type: Sprite
+    state: shuttlegrey
+  - type: Item
+    heldPrefix: shuttlegrey
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleGrey
+  - type: Stack
+    stackType: FloorTileStackShuttleGrey
+
+- type: entity
+  name: black shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlack
+  components:
+  - type: Sprite
+    state: shuttleblack
+  - type: Item
+    heldPrefix: shuttleblack
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleBlack
+  - type: Stack
+    stackType: FloorTileStackShuttleBlack
+
 # Materials
 - type: entity
   name: gold floor
@@ -997,3 +1026,22 @@
     - FloorAstroIce
   - type: Stack
     stackType: FloorTileAstroIce
+
+- type: entity
+  name: large wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLarge
+  components:
+  - type: Sprite
+    state: wood-large
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLarge
+  - type: Stack
+    stackType: FloorTileWoodLarge
+  - type: Construction
+    graph: TileWoodLarge
+    node: woodtilelarge
