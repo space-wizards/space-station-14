@@ -73,5 +73,5 @@
             - material: Cotton
               amount: 1
               doAfter: 10
-    - node: RoseBouquet
+    - node: PoppyBouquet
       entity: PoppyBouquet
