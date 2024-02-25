@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Cyborgs can interact with shuttle consoles, gas mixers and gas filters.
-    type: Fix
-  id: 5522
-  time: '2024-01-03T06:31:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23391
-- author: metalgearsloth
-  changes:
-  - message: Fix solution injections considering the fly-by sound range and not the
-      collision range.
-    type: Fix
-  id: 5523
-  time: '2024-01-03T07:57:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23429
 - author: Bhijn and Myr
   changes:
   - message: Light fixtures now actually glow when they're powered on. Like. Their
@@ -3844,3 +3829,18 @@
   id: 6021
   time: '2024-02-25T23:03:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25391
+- author: Krunk
+  changes:
+  - message: Fixed grid inventory occasionally messing with your item rotation.
+    type: Fix
+  id: 6022
+  time: '2024-02-25T23:24:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25510
+- author: Ubaser
+  changes:
+  - message: Satchels no longer have darkened space representing a gap, and is instead
+      transparent.
+    type: Tweak
+  id: 6023
+  time: '2024-02-25T23:24:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25147
