@@ -30,7 +30,7 @@
           icon:
             sprite: Objects/Materials/Shards/shard.rsi
             state: shard3
-         - tag: Matchstick
+        - tag: Matchstick
           name: match stick
           icon:
             sprite: Objects/Tools/matches.rsi
