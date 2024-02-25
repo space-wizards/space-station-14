@@ -96,50 +96,41 @@ public sealed class JammerSystem : EntitySystem
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
+        
+        string[] popUpArray = 
+        {
+            Loc.GetString("radio-jammer-component-set-low"),
+            Loc.GetString("radio-jammer-component-set-medium"),
+            Loc.GetString("radio-jammer-component-set-high")
+        };
+        string[] settingArray = 
+        {
+            Loc.GetString("radio-jammer-component-low"),
+            Loc.GetString("radio-jammer-component-medium"),
+            Loc.GetString("radio-jammer-component-high")
+        };
 
         var user = args.User;
-        var highVerb = new Verb
+        
+        for (byte i = 0; i < 3; i++) 
         {
-            Priority = 3,
-            Category = VerbCategory.PowerLevel,
-            Disabled = entity.Comp.SelectedPowerLevel == 2,
-            Act = () =>
+            byte currentPowerLevel = i;
+            
+            var verb = new Verb
             {
-                entity.Comp.SelectedPowerLevel = 2;
-                _popup.PopupEntity(Loc.GetString("radio-jammer-component-set-high"), user, user);
-            },
-            Text = Loc.GetString("radio-jammer-component-high"),
-        };
+                Priority = currentPowerLevel+1,
+                Category = VerbCategory.PowerLevel,
+                Disabled = entity.Comp.SelectedPowerLevel == currentPowerLevel,
+                Act = () =>
+                {
+                    entity.Comp.SelectedPowerLevel = currentPowerLevel;
+                    _popup.PopupEntity(popUpArray[currentPowerLevel], user, user);
+                },
+                Text = settingArray[currentPowerLevel],
+            };
+            args.Verbs.Add(verb);
+        }
 
-        var mediumVerb = new Verb
-        {
-            Priority = 2,
-            Category = VerbCategory.PowerLevel,
-            Disabled = entity.Comp.SelectedPowerLevel == 1,
-            Act = () =>
-            {
-                entity.Comp.SelectedPowerLevel = 1;
-                _popup.PopupEntity(Loc.GetString("radio-jammer-component-set-medium"), user, user);
-            },
-            Text = Loc.GetString("radio-jammer-component-medium"),
-        };
-
-        var lowVerb = new Verb
-        {
-            Priority = 1,
-            Category = VerbCategory.PowerLevel,
-            Disabled = entity.Comp.SelectedPowerLevel == 0,
-            Act = () =>
-            {
-                entity.Comp.SelectedPowerLevel = 0;
-                _popup.PopupEntity(Loc.GetString("radio-jammer-component-set-low"), user, user);
-            },
-            Text = Loc.GetString("radio-jammer-component-low"),
-        };
-
-        args.Verbs.Add(highVerb);
-        args.Verbs.Add(mediumVerb);
-        args.Verbs.Add(lowVerb);
     }
 
     private static float GetCurrentWattage(RadioJammerComponent jammer)
