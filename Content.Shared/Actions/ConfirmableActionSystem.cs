@@ -25,13 +25,14 @@ public sealed class ConfirmableActionSystem : EntitySystem
 
         // handle automatic unpriming
         var now = _timing.CurTime;
-        foreach (var comp in EntityQuery<ConfirmableActionComponent>())
+        var query = EntityQueryEnumerator<ConfirmableActionComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.NextUnprime is not {} time)
                 continue;
 
             if (now >= time)
-                Unprime(comp);
+                Unprime((uid, comp));
         }
     }
 
@@ -43,7 +44,7 @@ public sealed class ConfirmableActionSystem : EntitySystem
         // if not primed, prime it and cancel the action
         if (ent.Comp.NextConfirm is not {} confirm)
         {
-            Prime(ent.Comp, args.User);
+            Prime(ent, args.User);
             args.Cancelled = true;
             return;
         }
@@ -56,20 +57,24 @@ public sealed class ConfirmableActionSystem : EntitySystem
         }
 
         // primed and delay has passed, let the action go through
-        Unprime(ent.Comp);
+        Unprime(ent);
     }
 
-    private void Prime(ConfirmableActionComponent comp, EntityUid user)
+    private void Prime(Entity<ConfirmableActionComponent> ent, EntityUid user)
     {
+        var (uid, comp) = ent;
         comp.NextConfirm = _timing.CurTime + comp.ConfirmDelay;
         comp.NextUnprime = comp.NextConfirm + comp.PrimeTime;
+        Dirty(uid, comp);
 
         _popup.PopupClient(Loc.GetString(comp.Popup), user, user, PopupType.LargeCaution);
     }
 
-    private void Unprime(ConfirmableActionComponent comp)
+    private void Unprime(Entity<ConfirmableActionComponent> ent)
     {
+        var (uid, comp) = ent;
         comp.NextConfirm = null;
         comp.NextUnprime = null;
+        Dirty(uid, comp0;
     }
 }
