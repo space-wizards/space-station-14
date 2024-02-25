@@ -29,11 +29,6 @@
           name: glass shard
           icon:
             sprite: Objects/Materials/Shards/shard.rsi
-            state: shard2
-        - tag: ShardGlass
-          name: glass shard
-          icon:
-            sprite: Objects/Materials/Shards/shard.rsi
             state: shard3
          - tag: Matchstick
           name: match stick
