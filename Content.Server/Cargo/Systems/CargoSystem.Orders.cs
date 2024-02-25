@@ -208,7 +208,7 @@ namespace Content.Server.Cargo.Systems
                 var tradePads = GetCargoPallets(trade);
                 _random.Shuffle(tradePads);
 
-                var freePads = new List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)>(GetFreeCargoPallets(trade, tradePads));
+                var freePads = GetFreeCargoPallets(trade, tradePads);
                 if (freePads.Count >= order.OrderQuantity)
                 {
                     foreach (var pad in freePads)
