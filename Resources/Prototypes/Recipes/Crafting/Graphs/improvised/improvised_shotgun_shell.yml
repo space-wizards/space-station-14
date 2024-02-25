@@ -7,9 +7,9 @@
       - to: shell
         steps:
         - material: Steel
-           amount: 1
+          amount: 1
         - material: Plastic
-           amount: 1
+          amount: 1
         - tag: ShardGlass
           name: glass shard
           icon:
