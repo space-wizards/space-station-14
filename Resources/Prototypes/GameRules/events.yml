@@ -239,17 +239,19 @@
     maxDuration: 120
   - type: PowerGridCheckRule
 
-- type: entity
-  id: RandomSentience
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    weight: 10
-    duration: 1
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-  - type: RandomSentienceRule
+#Disabled due to being hilariously lame.
+#
+#- type: entity
+#  id: RandomSentience
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#  - type: StationEvent
+#    weight: 10
+#    duration: 1
+#    startAudio:
+#      path: /Audio/Announcements/attention.ogg
+#  - type: RandomSentienceRule
 
 - type: entity
   parent: BaseGameRule
