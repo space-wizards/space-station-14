@@ -554,6 +554,7 @@
   id: TableFancyBase
   abstract: true
   parent: TableBase
+  name: fancy table
   description: Expensive and rich.
   components:
   - type: Damageable
@@ -587,15 +588,72 @@
 - type: entity
   id: TableFancyBlue
   parent: TableFancyBase
-  name: fancy blue table
+  suffix: Blue
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/Fancy/fancy_blue.rsi
+    sprite: Structures/Furniture/Tables/Fancy/blue.rsi
   - type: Icon
-    sprite: Structures/Furniture/Tables/Fancy/fancy_blue.rsi
-  - type: Construction
-    graph: Table
-    node: TableFancyBlue
+    sprite: Structures/Furniture/Tables/Fancy/blue.rsi
+
+- type: entity
+  id: TableFancyCyan
+  parent: TableFancyBase
+  suffix: Cyan
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
+
+- type: entity
+  id: TableFancyBlack
+  parent: TableFancyBase
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/black.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/black.rsi
+
+- type: entity
+  id: TableFancyRed
+  parent: TableFancyBase
+  suffix: Red
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/red.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/red.rsi
+    
+- type: entity
+  id: TableFancyPurple
+  parent: TableFancyBase
+  suffix: Purple
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/purple.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/purple.rsi
+    
+- type: entity
+  id: TableFancyGreen
+  parent: TableFancyBase
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/green.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/green.rsi
+    
+- type: entity
+  id: TableFancyOrange
+  parent: TableFancyBase
+  suffix: Orange
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/orange.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/orange.rsi
 
 #Debug
 
