@@ -1,0 +1,15 @@
+- type: entity
+  id: LockerAtmosphericsFilledCosmetic
+  suffix: Cosmetic
+  parent: LockerAtmospherics
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskGasAtmos
+      - id: ClothingNeckScarfStripedLightBlue
+        prob: 0.25
+      - id: ClothingOuterWinterAtmos
+        prob: 0.25
+      - id: ClothingUniformJumpsuitAtmosCasual
+        prob: 0.25
+      - id: GasAnalyzer
