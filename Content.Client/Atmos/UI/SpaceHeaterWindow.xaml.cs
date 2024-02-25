@@ -25,12 +25,17 @@ public sealed partial class SpaceHeaterWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
 
+        //Add the Mode selector list
         foreach (var value in Enum.GetValues<SpaceHeaterMode>())
         {
             ModeSelector.AddItem(Loc.GetString($"comp-space-heater-mode-{value}"), (int) value);
         }
 
+        //Add the Power level radio buttons
         PowerLevelSelectorHBox.AddChild(PowerLevelSelector = new RadioOptions<int>(RadioOptionsLayout.Horizontal));
+        PowerLevelSelector.FirstButtonStyle = "OpenRight";
+        PowerLevelSelector.LastButtonStyle = "OpenLeft";
+        PowerLevelSelector.ButtonStyle = "OpenBoth";
         foreach (var value in Enum.GetValues<SpaceHeaterPowerLevel>())
         {
             PowerLevelSelector.AddItem(Loc.GetString($"comp-space-heater-ui-{value}-power-consumption"), (int) value);
