@@ -34,7 +34,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-        SubscribeLocalEvent<ProjectileComponent, AfterProjectileHitEvent>(AfterProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
@@ -162,18 +161,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private void OnAttemptPacifiedThrow(Entity<EmbeddableProjectileComponent> ent, ref AttemptPacifiedThrowEvent args)
     {
         args.Cancel("pacified-cannot-throw-embed");
-    }
-
-    /// <summary>
-    /// Checks if the projectile is allowed to penetrate the target it hit.
-    /// </summary>
-    private void AfterProjectileHit(EntityUid uid, ProjectileComponent component, ref AfterProjectileHitEvent args)
-    {
-        //Overrides the original DeleteOnCollide if the projectile passes all penetration checks.
-        //This is to prevent having to set DeleteOnCollide to false on every prototype
-        //you want to give the ability to penetrate entities.
-        if(component.DeleteOnCollide)
-            component.DeleteOnCollide = false;
     }
 }
 

@@ -11,6 +11,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Execution;
@@ -165,10 +166,16 @@ public sealed class ExecutionSystem : EntitySystem
 
             // TODO: This should just be an event or something instead to get this.
             // TODO: Handle clumsy.
-            internalMsg = DefaultCompleteInternalGunExecutionMessage;
-            externalMsg = DefaultCompleteExternalGunExecutionMessage;
-
-            _gunSystem.AttemptDirectShoot(args.User, uid, args.Target.Value, gun);
+            if (!_gunSystem.AttemptDirectShoot(args.User, uid, args.Target.Value, gun))
+            {
+                internalMsg = null;
+                externalMsg = null;
+            }
+            else
+            {
+                internalMsg = DefaultCompleteInternalGunExecutionMessage;
+                externalMsg = DefaultCompleteExternalGunExecutionMessage;
+            }
             args.Handled = true;
         }
 
@@ -178,7 +185,7 @@ public sealed class ExecutionSystem : EntitySystem
 
         if (internalMsg != null && externalMsg != null)
         {
-            ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
+            ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
             ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
         }
     }

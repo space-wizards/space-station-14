@@ -212,20 +212,25 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// Attempts to shoot the specified target directly.
     /// This may bypass projectiles firing etc.
     /// </summary>
-    public void AttemptDirectShoot(EntityUid user, EntityUid gunUid, EntityUid target, GunComponent gun)
+    public bool AttemptDirectShoot(EntityUid user, EntityUid gunUid, EntityUid target, GunComponent gun)
     {
         // Unique name so people don't think it's "shoot towards" and not "I will teleport a bullet into them".
+        gun.ShootCoordinates = Transform(target).Coordinates;
 
         if (!TryTakeAmmo(user, gunUid, gun, out _, out _, out var args))
-            return;
+        {
+            gun.ShootCoordinates = null;
+            return false;
+        }
 
-        ShootDirect(gunUid, gun, target, args.Ammo, user: user);
+        var result = ShootDirect(gunUid, gun, target, args.Ammo, user: user);
         gun.ShootCoordinates = null;
+        return result;
     }
 
-    protected virtual void ShootDirect(EntityUid gunUid, GunComponent gun, EntityUid target, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityUid user)
+    protected virtual bool ShootDirect(EntityUid gunUid, GunComponent gun, EntityUid target, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityUid user)
     {
-        return;
+        return false;
     }
 
     /// <summary>

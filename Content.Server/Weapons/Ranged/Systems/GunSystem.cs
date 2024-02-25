@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Projectiles;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Damage;
@@ -29,13 +30,13 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly ProjectileSystem _projectile = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
@@ -65,9 +66,11 @@ public sealed partial class GunSystem : SharedGunSystem
         args.Price += price * component.UnspawnedCount;
     }
 
-    protected override void ShootDirect(EntityUid gunUid, GunComponent gun, EntityUid target, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityUid user)
+    protected override bool ShootDirect(EntityUid gunUid, GunComponent gun, EntityUid target, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityUid user)
     {
-        // TODO: This is dogshit. I just want to get executions slightly better and had already rewritten a lot of the original code that got merged.
+        var result = false;
+
+        // TODO: This is dogshit. I just want to get executions slightly better.
         // Ideally you'd pull out cartridge + ammo to separate handling functions and re-use it here, then hitscan you need to bypass entirely.
         // You should also make shooting into a struct of args given how many there are now.
         var fromCoordinates = Transform(gunUid).Coordinates;
@@ -82,9 +85,6 @@ public sealed partial class GunSystem : SharedGunSystem
         var fromEnt = MapManager.TryFindGridAt(fromMap, out var gridUid, out _)
             ? fromCoordinates.WithEntityId(gridUid, EntityManager)
             : new EntityCoordinates(MapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
-
-        // Update shot based on the recoil
-        toMap = fromMap.Position + angle.ToVec() * mapDirection.Length();
 
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
@@ -128,15 +128,18 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(ent!.Value))
                         EjectCartridge(ent.Value, angle);
 
+                    result = true;
                     Dirty(ent!.Value, cartridge);
                     break;
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:
+                    result = true;
                     shotProjectiles.Add(ent!.Value);
                     MuzzleFlash(gunUid, newAmmo, user);
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
                     break;
                 case HitscanPrototype hitscan:
+                    result = true;
                     var hitEntity = target;
                     if (hitscan.StaminaDamage > 0f)
                         _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
@@ -181,13 +184,17 @@ public sealed partial class GunSystem : SharedGunSystem
                 continue;
             }
 
-
+            _projectile.TryHandleProjectile(target, (ammoUid, projectileComponent));
+            // Even this deletion handling is mega sussy.
+            Del(ammoUid);
         }
 
         RaiseLocalEvent(gunUid, new AmmoShotEvent()
         {
             FiredProjectiles = shotProjectiles,
         });
+
+        return result;
     }
 
     public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
@@ -217,6 +224,8 @@ public sealed partial class GunSystem : SharedGunSystem
                 }
             }
         }
+
+        // As the above message wasn't obvious stop putting stuff here and use events
 
         var fromMap = fromCoordinates.ToMap(EntityManager, TransformSystem);
         var toMap = toCoordinates.ToMapPos(EntityManager, TransformSystem);

@@ -44,9 +44,19 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             SetShooter(uid, component, target);
             return;
         }
+
+        if (TryHandleProjectile(target, (uid, component)))
+        {
+            var direction = args.OurBody.LinearVelocity.Normalized();
+            _sharedCameraRecoil.KickCamera(target, direction);
+        }
     }
 
-    public void HandleProjectile(EntityUid target, Entity<ProjectileComponent> projectile)
+    /// <summary>
+    /// Tries to handle a projectile interacting with the target.
+    /// </summary>
+    /// <returns>True if the target isn't deleted.</returns>
+    public bool TryHandleProjectile(EntityUid target, Entity<ProjectileComponent> projectile)
     {
         var uid = projectile.Owner;
         var component = projectile.Comp;
@@ -70,17 +80,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
         }
 
-        var direction = args.OurBody.LinearVelocity.Normalized();
-
         if (!deleted)
         {
             _guns.PlayImpactSound(target, modifiedDamage, component.SoundHit, component.ForceSound);
-            _sharedCameraRecoil.KickCamera(target, direction);
         }
 
         component.DamagedEntity = true;
 
-        var afterProjectileHitEvent = new AfterProjectileHitEvent(component.Damage, target, args.OtherFixture);
+        var afterProjectileHitEvent = new AfterProjectileHitEvent(component.Damage, target);
         RaiseLocalEvent(uid, ref afterProjectileHitEvent);
 
         if (component.DeleteOnCollide)
@@ -90,5 +97,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
+
+        return !deleted;
     }
 }
