@@ -156,7 +156,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
   name: autism awareness pin
-  description: be autism do warcrime [:<
+  description: be autism do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -167,3 +167,19 @@
     clothingVisuals:
       neck:
       - state: autism-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGoldAutismPin
+  name: golden autism awareness pin
+  description: be autism do warcrime [:<
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: goldautism
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: goldautism-equipped
