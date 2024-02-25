@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Bhijn and Myr
   changes:
-  - message: Light fixtures now actually glow when they're powered on. Like. Their
-      sprite actually glows if the lighting is dim. Revolutionary technology, yes.
-    type: Tweak
-  id: 5524
-  time: '2024-01-03T08:46:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23428
-- author: Bhijn and Myr
-  changes:
   - message: 'Blindness has been completely reworked, top to bottom. Eye damage is
       no longer a mere dimming of the screen, but rather, a hyperstylized (read: not
       at all realistic) simulation of the symptoms described by those living with
@@ -3844,3 +3836,10 @@
   id: 6023
   time: '2024-02-25T23:24:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25147
+- author: TheShuEd
+  changes:
+  - message: Huge flora anomaly nerf
+    type: Tweak
+  id: 6024
+  time: '2024-02-25T23:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25499
