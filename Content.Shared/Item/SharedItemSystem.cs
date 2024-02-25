@@ -52,6 +52,7 @@ public abstract class SharedItemSystem : EntitySystem
             return;
 
         component.Shape = shape;
+        Dirty(uid, component);
     }
 
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, bool force = false, ItemComponent? component = null)
