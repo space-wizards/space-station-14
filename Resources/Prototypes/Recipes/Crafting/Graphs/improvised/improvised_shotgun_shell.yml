@@ -45,36 +45,36 @@
           icon:
             sprite: Objects/Tools/matches.rsi
             state: match_unlit
-         - tag: Matchstick
-           name: match stick
-           icon:
-             sprite: Objects/Tools/matches.rsi
-             state: match_unlit
-         - tag: Matchstick
-           name: match stick
-           icon:
-             sprite: Objects/Tools/matches.rsi
-             state: match_unlit
-         - tag: Matchstick
-           name: match stick
-           icon:
-             sprite: Objects/Tools/matches.rsi
-             state: match_unlit
-         - tag: Matchstick
-           name: match stick
-           icon:
-             sprite: Objects/Tools/matches.rsi
-             state: match_unlit
-         - tag: Matchstick
-           name: match stick
-           icon:
-             sprite: Objects/Tools/matches.rsi
-             state: match_unlit
         - tag: Matchstick
           name: match stick
           icon:
             sprite: Objects/Tools/matches.rsi
             state: match_unlit
-          doAfter: 4    
-    - node: shell
-      entity: ShellShotgunImprovised
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+         - tag: Matchstick
+           name: match stick
+           icon:
+             sprite: Objects/Tools/matches.rsi
+             state: match_unlit
+           doAfter: 4    
+     - node: shell
+       entity: ShellShotgunImprovised
