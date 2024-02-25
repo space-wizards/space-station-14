@@ -271,8 +271,10 @@
     - type: Sprite
       drawdepth: Effects
       sprite: Effects/spookysmoke.rsi
-      state: spookysmoke
-      color: "#793a80dd"
+      layers:
+      - state: spookysmoke
+        color: "#793a80dd"
+        map: [base]
     - type: Kudzu
       growthTickChance: 0.2
       spreadChance: 0.99
@@ -290,6 +292,13 @@
       tags:
         - HideContextMenu
         - SpookyFog
+    - type: OptionsVisualizer
+      visuals:
+        base:
+        - options: Default
+          data: { state: spookysmoke }
+        - options: ReducedMotion
+          data: { state: spookysmoke_static }
 
 - type: entity
   name: Haze
