@@ -5,6 +5,7 @@ using Content.Server.Roles;
 using Content.Shared.Roles;
 using Content.Shared.Exterminator.Components;
 using Content.Shared.Exterminator.Systems;
+using Robust.Shared.Map;
 
 namespace Content.Server.Exterminator.Systems;
 
