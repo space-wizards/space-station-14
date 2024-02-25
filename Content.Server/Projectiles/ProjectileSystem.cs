@@ -28,14 +28,10 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         // This is so entities that shouldn't get a collision are ignored.
         if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
-                                                   || component.DamagedEntity || component is
-                                                       { Weapon: null, OnlyCollideWhenShot: true })
-        {
+            || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
-        }
 
         var target = args.OtherEntity;
-
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
         RaiseLocalEvent(target, ref attemptEv);
@@ -45,26 +41,11 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        if (TryHandleProjectile(target, (uid, component)))
-        {
-            var direction = args.OurBody.LinearVelocity.Normalized();
-            _sharedCameraRecoil.KickCamera(target, direction);
-        }
-    }
-
-    /// <summary>
-    /// Tries to handle a projectile interacting with the target.
-    /// </summary>
-    /// <returns>True if the target isn't deleted.</returns>
-    public bool TryHandleProjectile(EntityUid target, Entity<ProjectileComponent> projectile)
-    {
-        var uid = projectile.Owner;
-        var component = projectile.Comp;
-
         var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);
 
         var otherName = ToPrettyString(target);
+        var direction = args.OurBody.LinearVelocity.Normalized();
         var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter);
         var deleted = Deleted(target);
 
@@ -83,11 +64,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (!deleted)
         {
             _guns.PlayImpactSound(target, modifiedDamage, component.SoundHit, component.ForceSound);
+            _sharedCameraRecoil.KickCamera(target, direction);
         }
 
         component.DamagedEntity = true;
 
-        var afterProjectileHitEvent = new AfterProjectileHitEvent(component.Damage, target);
+        var afterProjectileHitEvent = new AfterProjectileHitEvent(component.Damage, target, args.OtherFixture);
         RaiseLocalEvent(uid, ref afterProjectileHitEvent);
 
         if (component.DeleteOnCollide)
@@ -97,7 +79,5 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
-
-        return !deleted;
     }
 }
