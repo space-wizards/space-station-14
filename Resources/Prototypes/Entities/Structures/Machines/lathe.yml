@@ -811,6 +811,7 @@
       - ClothingOuterWinterSec
       - ClothingUniformJumpsuitCoroner #Imperial coroner
       - ClothingUniformJumpskirtCoroner #Imperial coroner
+      - ClothingNeckCloakNanotrasenBlack #Imperial black cloak
   - type: MaterialStorage
     whitelist:
       tags:
