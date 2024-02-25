@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: tday
-  changes:
-  - message: The admin log will now include attempts to draw from mobs with a syringe.
-    type: Add
-  id: 5514
-  time: '2024-01-02T18:47:31.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23333
 - author: 778b
   changes:
   - message: Improved mice's eating everything behavior, now they can stop!
@@ -3851,3 +3844,10 @@
   id: 6013
   time: '2024-02-24T01:45:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25512
+- author: Beck Thompson
+  changes:
+  - message: The Fire Extinguishers safety can now only be toggled when in range.
+    type: Fix
+  id: 6014
+  time: '2024-02-25T02:29:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25534
