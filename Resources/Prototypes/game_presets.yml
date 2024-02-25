@@ -16,8 +16,8 @@
   name: extended-title
   showInVote: false #2boring2vote
   description: extended-description
-  rules:
-  - BasicStationEventScheduler
+  #rules:
+  #- BasicStationEventScheduler
 
 - type: gamePreset
   id: Secret
@@ -50,7 +50,7 @@
   showInVote: false
   rules:
     - Traitor
-    - BasicStationEventScheduler
+    #- BasicStationEventScheduler
 
 - type: gamePreset
   id: Deathmatch
@@ -74,7 +74,7 @@
   showInVote: false
   rules:
     - Nukeops
-    - BasicStationEventScheduler
+    #- BasicStationEventScheduler
 
 - type: gamePreset
   id: Revolutionary
@@ -87,7 +87,7 @@
   showInVote: false
   rules:
     - Revolutionary
-    - BasicStationEventScheduler
+    #- BasicStationEventScheduler
 
 - type: gamePreset
   id: Zombie

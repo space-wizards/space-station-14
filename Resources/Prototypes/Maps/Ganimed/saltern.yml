@@ -13,7 +13,7 @@
           mapNameTemplate: '{0} Салтерн {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'СН'
+            prefixCreator: 'ИСН'
         - type: StationJobs
           overflowJobs:
           - Passenger

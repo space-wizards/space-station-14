@@ -11,7 +11,7 @@
           mapNameTemplate: '{0} Ишимура {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'СН СМ'
+            prefixCreator: 'ИСН СМ'
         - type: StationJobs
           overflowJobs:
             - Passenger

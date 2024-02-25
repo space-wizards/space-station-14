@@ -11,7 +11,7 @@
           mapNameTemplate: '{0} Проект "Врата" {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'ОН'
+            prefixCreator: 'ИОН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_raven.yml
         - type: StationJobs

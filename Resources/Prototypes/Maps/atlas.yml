@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Атлас {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'СН'
+            prefixCreator: 'ИСН'
         - type: StationJobs
           overflowJobs:
           - Passenger
@@ -57,3 +57,14 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            #ent
+            SeniorPhysician: [ 0, 1 ]
+            SeniorEngineer: [ 0, 1 ]
+            SeniorResearcher: [ 0, 1 ]
+            SeniorOfficer: [ 0, 1 ]
+            BlueShield: [ 0, 1 ]
+            Roboticist: [ 0, 1 ]
+            Brigmedic: [ 0, 1 ]
+            IAA: [ 0, 1 ]
+            Coroner: [ 0, 1 ]
+

@@ -14,7 +14,7 @@
           mapNameTemplate: '{0} Кластер {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'СН'
+            prefixCreator: 'ИСН'
         - type: StationJobs
           overflowJobs:
             - Passenger

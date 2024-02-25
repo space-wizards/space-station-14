@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Спектрум {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'ОН'
+            prefixCreator: 'ИОН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency.yml
         - type: StationJobs
