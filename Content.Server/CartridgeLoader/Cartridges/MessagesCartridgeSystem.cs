@@ -106,18 +106,17 @@ public sealed class MessagesCartridgeSystem : EntitySystem
             {
                 if (idCardComponent.FullName != "")
                 {
-                    component.UserName = idCardComponent.FullName+"("+idCardComponent.JobTitle+")";
+                    component.UserName = $"{idCardComponent.FullName} {idCardComponent.JobTitle})";
                 }
                 else
                 {
-                    component.UserName = "Unknown "+"("+idCardComponent.JobTitle+")";
+                    component.UserName = $"Unknown  ({idCardComponent.JobTitle})";
                 }
             }
             if (component.UserUid != null && component.UserName != null)
                 component.NameDict[component.UserUid] = component.UserName;
         }
 
-        //_sawmill.Debug("Updating cart");
         if ((component.MessagesQueue.Count > 0) || component.DeadConnection)
         {
             if (!(GetActiveServer(component, mapId) is var (serverUid, messageServer)))
@@ -146,7 +145,6 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
     public (EntityUid, MessagesServerComponent)? GetActiveServer(MessagesCartridgeComponent component,MapId mapId)
     {
-       // _sawmill.Debug("Looking for server");
         var servers = EntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
         while(servers.MoveNext(out var uid, out var messageServer, out var power, out var transform))
         {
@@ -156,11 +154,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
             if (transform.MapID == mapId &&
                 power.Powered)
             {
-                //_sawmill.Debug("Server found");
                 return (uid, messageServer);
             }
         }
-       // _sawmill.Debug("No server");
         return null;
     }
 
@@ -174,7 +170,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         {
             if (component.NameDict[key][0] == '(')
             {
-                return "Unknown "+component.NameDict[key];
+                return $"Unknown {component.NameDict[key]}";
             }
             else
             {
@@ -240,7 +236,6 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
     public void ServerToPdaMessage(EntityUid uid, MessagesCartridgeComponent component, MessagesMessageData message, EntityUid pdaUid, MessagesServerComponent server)
     {
-        //_sawmill.Debug("Message received - cart");
         component.Messages.Add(message);
 
         string name = GetName(component, message.SenderId);
@@ -284,7 +279,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         if (!(TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
             return;
 
-        component.UserName = idCardComponent.FullName+"("+idCardComponent.JobTitle+")";
+        component.UserName = $"{idCardComponent.FullName} ({idCardComponent.JobTitle})";
 
         if (server.NameDict != component.NameDict)
         {

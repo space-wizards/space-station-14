@@ -5,5 +5,10 @@
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical" Name="MessageContainer" HorizontalExpand="True" VerticalExpand="True"/>
         </ScrollContainer>
+        <LineEdit Name="Input" HorizontalExpand="True" SetHeight="32"/>
+        <BoxContainer Name="HeaderBox">
+            <Label Name="HeaderLabel"/>
+            <Button Name="HeaderButton" Text="messages-ui-back"/>
+        </BoxContainer>
     </BoxContainer>
 </cartridges:MessagesUiFragment>

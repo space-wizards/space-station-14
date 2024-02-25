@@ -13,9 +13,6 @@ public sealed partial class MessagesUiFragment : BoxContainer
     public event Action<string>? OnMessageSent;
     public event Action<string?>? OnButtonPressed;
 
-    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-
-    //private ISawmill _sawmill = Logger.GetSawmill("pdaMessages");
     private LineEdit Input;
     private BoxContainer HeaderBox;
     private Label HeaderLabel;
@@ -24,15 +21,11 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
     public MessagesUiFragment()
     {
-        //_sawmill.Debug("Fragment initialising");
         RobustXamlLoader.Load(this);
         Orientation = LayoutOrientation.Vertical;
         HorizontalExpand = true;
         VerticalExpand = true;
 
-        Input = new LineEdit();
-        Input.HorizontalExpand = true;
-        Input.SetHeight = 32;
         Input.OnTextEntered += _ =>
         {
             if (Input.Text != "")
@@ -40,24 +33,13 @@ public sealed partial class MessagesUiFragment : BoxContainer
             Input.Clear();
         };
 
-        HeaderBox = new BoxContainer();
-
-        HeaderLabel = new Label();
-
-        HeaderButton = new Button();
         HeaderButton.OnPressed += _ => OnButtonPressed?.Invoke(null);
-        HeaderButton.Text = "Back";
-
-        HeaderBox.AddChild(HeaderButton);
-        HeaderBox.AddChild(HeaderLabel);
 
         UpdateState(MessagesUiStateMode.UserList, new List<(string,string)>(), null);
-        //_sawmill.Debug("Fragment initialised");
     }
 
     public void UpdateState(MessagesUiStateMode mode, List<(string,string)>? contents, string? name)
     {
-        //_sawmill.Debug("fragment updating state");
         MessageContainer.RemoveAllChildren();
         if (OverContainer.Children.Contains(Input))
             OverContainer.RemoveChild(Input);
@@ -67,10 +49,9 @@ public sealed partial class MessagesUiFragment : BoxContainer
         {
             HeaderLabel.Text = name;
 
-            //_sawmill.Debug("fragment listing messages");
             foreach (var (senderName, message) in contents)
             {
-                AddNote(senderName+" "+message);
+                AddNote($"{senderName} {message}");
             }
 
             OverContainer.AddChild(Input);
@@ -78,10 +59,8 @@ public sealed partial class MessagesUiFragment : BoxContainer
         }
         else
         {
-            //_sawmill.Debug("fragment listing users");
             if (contents == null)
             {
-                //_sawmill.Debug("users is null");
                 return;
             }
             foreach (var (user,userUid) in contents)
@@ -104,17 +83,11 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
     private void AddNote(string note)
     {
-        //var row = new BoxContainer();
-        //row.HorizontalExpand = true;
-        //row.Orientation = LayoutOrientation.Horizontal;
-        //row.Margin = new Thickness(4);
 
         var label = new Label();
         label.Text = note;
         label.HorizontalExpand = true;
         label.ClipText = false;
-
-        //row.AddChild(label);
 
         MessageContainer.AddChild(label);
     }
