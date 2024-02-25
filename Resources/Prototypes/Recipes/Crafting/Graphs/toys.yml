@@ -74,5 +74,5 @@
               name: cloth
               icon:
                 sprite: Objects/Materials/materials.rsi
-                state: produce
+                state: cloth
               doAfter: 10
