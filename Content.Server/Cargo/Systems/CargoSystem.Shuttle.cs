@@ -202,6 +202,8 @@ public sealed partial class CargoSystem
     {
         _setEnts.Clear();
 
+        List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)> outList = new();
+
         foreach (var pallet in pallets)
         {
             var aabb = _lookup.GetAABBNoContainer(pallet.Entity, pallet.Transform.LocalPosition, pallet.Transform.LocalRotation);
@@ -209,8 +211,10 @@ public sealed partial class CargoSystem
             if (_lookup.AnyLocalEntitiesIntersecting(gridUid, aabb, LookupFlags.Dynamic))
                 continue;
 
-            yield return pallet;
+            outList.Add(pallet);
         }
+
+        return outList;
     }
 
     #endregion
