@@ -1,0 +1,96 @@
+- type: entity
+  parent: BaseMob
+  id: MobBlobMarker
+  name: blob marker
+  components:
+  - type: Sprite
+    drawdepth: Ghosts
+    sprite: Mobs/Blob/blob.rsi
+    layers:
+    - state: marker
+      shader: unshaded
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 15
+        mask:
+        - GhostImpassable
+        - Impassable
+  - type: Visibility
+    layer: 2
+  - type: Eye
+    visMask:
+    - Normal
+    - Ghost
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 6
+    baseWalkSpeed: 4
+  - type: BlobMarker
+  - type: CargoSellBlacklist
+  - type: Actions
+  - type: Alerts
+  - type: MovementIgnoreGravity
+  - type: CanMoveInAir
+
+- type: entity
+  id: ActionBlobCreateResource
+  name: Resource
+  description: Replace the current blob you are hovering over with a resource blob.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_blob.rsi
+      state: ui_resource
+    event:
+      !type:BlobCreateStructureEvent
+        structure: BlobStructureResource
+        cost: 40
+        minRange: 3
+        rangeComponent: BlobResource
+
+- type: entity
+  id: ActionBlobCreateFactory
+  name: Factory
+  description: Replace the current blob you are hovering over with a factory blob.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_blob.rsi
+      state: ui_factory
+    event:
+      !type:BlobCreateStructureEvent
+      structure: BlobStructureFactory
+      cost: 60
+      minRange: 6
+      rangeComponent: BlobFactory
+
+- type: entity
+  id: ActionBlobCreateNode
+  name: Node
+  description: Replace the current blob you are hovering over with a blob node.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_blob.rsi
+      state: ui_node
+    event:
+      !type:BlobCreateStructureEvent
+      structure: BlobStructureNode
+      cost: 50
+      minRange: 4
+      rangeComponent: BlobNode
