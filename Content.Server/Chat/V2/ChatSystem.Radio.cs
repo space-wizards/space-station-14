@@ -6,6 +6,7 @@ using Content.Shared.Chat.V2.Components;
 using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using JetBrains.FormatRipper.Elf;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 
@@ -13,12 +14,17 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void SendRadioMessageViaDevice(EntityUid entityUid, string message, RadioChannelPrototype channel, EntityUid device, string asName = "")
+    public void SendRadioMessageViaDevice(EntityUid entityUid, string message, RadioChannelPrototype channel, EntityUid device, string asName = "", uint id = 0)
     {
-        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut, device))
+        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut, id, device))
             return;
 
         TransmitToReceivers(entityUid, message, channel, asName, msgOut);
+    }
+
+    public void SendRadioMessageWithSpeech(RadioCreatedEvent ev)
+    {
+        SendRadioMessageWithSpeech(ev.Speaker, ev.Message, ev.Channel, id: ev.Id);
     }
 
     /// <summary>
@@ -28,15 +34,16 @@ public sealed partial class ChatSystem
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="channel">The channel the message can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    public void SendRadioMessageWithSpeech(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "")
+    /// <param name="id">The ID of the message. Defaults to zero, signifying an automated message.</param>
+    public void SendRadioMessageWithSpeech(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "", uint id = 0)
     {
         // If you don't have an internal radio, you need to send a message using your voice box.
         if (!TryComp<InternalRadioComponent>(entityUid, out var comp) || !comp.SendChannels.Contains(channel.ID))
         {
-            TrySendWhisperMessage(entityUid, message, asName);
+            TrySendWhisperMessage(entityUid, message, asName, id);
         }
 
-        SendRadioMessage(entityUid, message, channel, asName);
+        SendRadioMessage(entityUid, message, channel, asName, id);
     }
 
     /// <summary>
@@ -46,9 +53,10 @@ public sealed partial class ChatSystem
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="channel">The channel the message can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    public void SendRadioMessageToTargets(EntityUid entityUid, string message, RadioChannelPrototype channel, Filter allowList, string asName = "")
+    /// <param name="id">The ID of the message. Defaults to zero, signifying an automated message.</param>
+    public void SendRadioMessageToTargets(EntityUid entityUid, string message, RadioChannelPrototype channel, Filter allowList, string asName = "", uint id = 0)
     {
-        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut))
+        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut, id))
             return;
 
         RaiseNetworkEvent(msgOut, allowList);
@@ -63,9 +71,10 @@ public sealed partial class ChatSystem
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="channel">The channel the message can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "")
+    /// <param name="id">The ID of the message. Defaults to zero, signifying an automated message.</param>
+    public void SendRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName = "", uint id = 0)
     {
-        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut))
+        if (!TryBuildEvent(entityUid, ref message, channel, ref asName, out var msgOut, id))
             return;
 
         TransmitToReceivers(entityUid, message, channel, asName, msgOut);
@@ -82,15 +91,13 @@ public sealed partial class ChatSystem
         StashRadioMessage(entityUid, message, channel, asName, msgOut);
     }
 
-    private void StashRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName,
-        RadioEmittedEvent msgOut)
+    private void StashRadioMessage(EntityUid entityUid, string message, RadioChannelPrototype channel, string asName, RadioEmittedEvent msgOut)
     {
         _replay.RecordServerMessage(msgOut);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low,
-            $"Radio from {ToPrettyString(entityUid):user} on {channel} as {asName}: {message}");
+        LogMessage(entityUid, "radio", msgOut.Id, channel.ID, asName, message);
     }
 
-    private bool TryBuildEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioEmittedEvent? msgOut, EntityUid? device = null)
+    private bool TryBuildEvent(EntityUid entityUid, ref string message, RadioChannelPrototype channel, ref string asName, [NotNullWhen(true)] out RadioEmittedEvent? msgOut, uint id, EntityUid? device = null)
     {
         if (!TrySanitizeAndTransformSpokenMessage(entityUid, ref message, ref asName, out var name))
         {
@@ -104,7 +111,8 @@ public sealed partial class ChatSystem
             name,
             message,
             channel.ID,
-            device: device
+            device: device,
+            id
         );
 
         return true;

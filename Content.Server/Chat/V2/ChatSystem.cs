@@ -1,4 +1,6 @@
-﻿using Content.Server.Administration.Logs;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
@@ -6,6 +8,7 @@ using Content.Server.Chat.V2.Moderation;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Server.VoiceMask;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.V2;
 using Content.Shared.Database;
@@ -17,7 +20,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2;
@@ -39,6 +41,9 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
+    private bool _allowShoutWhispers;
+    private bool _upperCaseMessagesMeanShouting;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -46,13 +51,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         Configuration.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         Configuration.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
         Configuration.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
+        Configuration.OnValueChanged(CCVars.ChatAllowShoutWhispers, allow => _allowShoutWhispers = allow, true);
+        Configuration.OnValueChanged(CCVars.ChatUpperCaseMeansShouting, meansShouting => _upperCaseMessagesMeanShouting = meansShouting, true);
 
-        SubscribeLocalEvent<DeadChatCreatedEvent>(msg => { SendDeadChatMessage(msg.Speaker, msg.Message); });
-        SubscribeLocalEvent<EmoteCreatedEvent>(msg => { SendEmoteMessage(msg.Sender, msg.Message, msg.Range); });
-        SubscribeLocalEvent<LocalChatCreatedEvent>(msg => { SendLocalChatMessage(msg.Speaker, msg.Message, msg.Range); });
-        SubscribeLocalEvent<LoocCreatedEvent>(msg => { SendLoocMessage(msg.Speaker, msg.Message); });
-        SubscribeLocalEvent<RadioCreatedEvent>(msg => { SendRadioMessageWithSpeech(msg.Speaker, msg.Message, msg.Channel); });
-        SubscribeLocalEvent<WhisperCreatedEvent>(msg => { SendWhisperMessage(msg.Speaker, msg.Message, msg.MinRange, msg.MaxRange); });
+        SubscribeLocalEvent<DeadChatCreatedEvent>(SendDeadChatMessage);
+        SubscribeLocalEvent<EmoteCreatedEvent>(SendEmoteMessage);
+        SubscribeLocalEvent<LocalChatCreatedEvent>(SendLocalChatMessage);
+        SubscribeLocalEvent<LoocCreatedEvent>(SendLoocMessage);
+        SubscribeLocalEvent<RadioCreatedEvent>(SendRadioMessageWithSpeech);
+        SubscribeLocalEvent<WhisperCreatedEvent>(SendWhisperMessage);
     }
 
     private bool TrySanitizeAndTransformSpokenMessage(EntityUid entityUid, ref string message, ref string asName, out string name)
@@ -172,5 +179,21 @@ public sealed partial class ChatSystem : SharedChatSystem
             name = CapitalizeFirstLetter(name);
 
         return FormattedMessage.EscapeText(name);
+    }
+
+    // Record the message to the logs as a slog
+    private void LogMessage(EntityUid entity, string type, uint id, string channel, string name, string message)
+    {
+        var toSend = $"{type} with ID {id} as {name}";
+        if (!string.IsNullOrEmpty(channel))
+        {
+            toSend += $" on channel {channel}";
+        }
+
+        toSend += $": {message}";
+
+        // We have to use this format because putting the ToPrettyString at the end of the message means the message is not logged for some reason.
+        // This interpolated string nonsense when just trying to print usable logs to the admin logger is cursed and this system should be refactored. /rant
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"User {ToPrettyString(entity):user} sent {toSend}");
     }
 }

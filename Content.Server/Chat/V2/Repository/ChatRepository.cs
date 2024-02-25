@@ -2,6 +2,7 @@
 using System.Numerics;
 using Content.Shared.Chat.V2.Repository;
 using Content.Shared.GameTicking;
+using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
@@ -39,6 +40,7 @@ public struct StoredChatEvent
 public sealed class ChatRepository : EntitySystem
 {
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     // Clocks should start at 1, as 0 indicates "clock not set" or "clock forgotten to be set by bad programmer".
     private uint _clock = 1;
@@ -52,6 +54,7 @@ public sealed class ChatRepository : EntitySystem
         _replay.RecordingFinished += finished =>
         {
             // TODO: resolve https://github.com/space-wizards/space-station-14/issues/25485 so we can dump the chat to disc.
+            Refresh();
         };
     }
 
@@ -200,6 +203,7 @@ public sealed class ChatRepository : EntitySystem
         RaiseLocalEvent(ev);
         RaiseNetworkEvent(ev);
 
+        _playerMessages.Remove(user);
         _playerMessages.Add(user, new Dictionary<uint, StoredChatEvent>());
 
         return true;
@@ -211,19 +215,17 @@ public sealed class ChatRepository : EntitySystem
     public void Refresh()
     {
         _clock = 1;
-        _messages = new Dictionary<uint, StoredChatEvent>();
-        _playerMessages = new Dictionary<string, Dictionary<uint, StoredChatEvent>>();
+        _messages.Clear();
+        _playerMessages.Clear();
     }
 
     private string GetUserForEntity(IStorableChatEvent ev)
     {
-        // Arcane C# interpolated string nonsense ahoy
-        return $"{ToPrettyString(ev.GetSender()):user}";
+        return GetUserForEntity(ev.GetSender());
     }
 
     private string GetUserForEntity(EntityUid uid)
     {
-        // Arcane C# interpolated string nonsense ahoy
-        return $"{ToPrettyString(uid):user}";
+        return _player.TryGetSessionByEntity(uid, out var session) ? session.Name : "";
     }
 }

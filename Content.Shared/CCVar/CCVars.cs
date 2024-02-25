@@ -1689,14 +1689,14 @@ namespace Content.Shared.CCVar
         /// language or culture doesn't use this (e.g. your server language is Japanese).
         /// </summary>
         public static readonly CVarDef<bool> ChatUpperCaseMeansShouting =
-            CVarDef.Create("chat.upper_case_means_shouting", true, CVar.ARCHIVE);
+            CVarDef.Create("chat.upper_case_means_shouting", true, CVar.SERVERONLY);
 
         /// <summary>
         /// Should you be able to shout-whisper? (I.e. WRITE IN ALL CAPS or use lots of bangs!!!)
         /// Disabling this means any shout-whisper is shouted in local chat instead.
         /// </summary>
         public static readonly CVarDef<bool> ChatAllowShoutWhispers =
-            CVarDef.Create("chat.allow_shout_whispers", false, CVar.ARCHIVE);
+            CVarDef.Create("chat.allow_shout_whispers", true, CVar.SERVERONLY);
 
         /// <summary>
         /// A message broadcast to each player that joins the lobby.

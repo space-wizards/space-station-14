@@ -59,12 +59,14 @@ public sealed class WhisperEvent : EntityEventArgs
     public NetEntity Speaker;
     public string AsName;
     public readonly string Message;
+    public uint Id;
 
-    public WhisperEvent(NetEntity speaker, string asName,string message)
+    public WhisperEvent(NetEntity speaker, string asName, string message, uint id)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
+        Id = id;
     }
 }
 
@@ -96,8 +98,9 @@ public sealed class WhisperEmittedEvent : EntityEventArgs
     public string ObfuscatedMessage;
     public float MinRange;
     public float MaxRange;
+    public uint Id;
 
-    public WhisperEmittedEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage)
+    public WhisperEmittedEvent(EntityUid speaker, string asName, float minRange, float maxRange, string message, string obfuscatedMessage, uint id)
     {
         Speaker = speaker;
         AsName = asName;
@@ -105,5 +108,6 @@ public sealed class WhisperEmittedEvent : EntityEventArgs
         ObfuscatedMessage = obfuscatedMessage;
         MinRange = minRange;
         MaxRange = maxRange;
+        Id = id;
     }
 }

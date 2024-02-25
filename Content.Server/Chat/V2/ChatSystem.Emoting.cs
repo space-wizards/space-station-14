@@ -11,20 +11,53 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
+    public void TryEmoteWithChat(EntityUid source, string emoteId, string nameOverride = "", uint id = 0)
+    {
+        if (!TryComp<EmoteableComponent>(source, out var comp))
+            return;
+
+        if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
+            return;
+
+        // check if proto has valid message for chat
+        if (emote.ChatMessages.Count != 0)
+        {
+            SendEmoteMessage(source, Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source)), comp.Range, nameOverride, id: id);
+        }
+        else
+        {
+            // do the rest of emote event logic here
+            TryEmoteWithoutChat(source, emoteId);
+        }
+    }
+
+    public void TryEmoteWithoutChat(EntityUid source, string emoteId)
+    {
+        if (!TryComp<EmoteableComponent>(source, out var comp))
+            return;
+
+        if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
+            return;
+
+        var ev = new HandleEmoteEvent(emote);
+        RaiseLocalEvent(source, ref ev);
+    }
+
     /// <summary>
     /// Try and send an emote. If the emote contains some specific emote strings, they will also be emoted, to a max of 2 at a time.
     /// </summary>
     /// <param name="entityUid">The emoting entity. It needs an EmoteableComponent.</param>
     /// <param name="message">The emote message to send.</param>
     /// <param name="asName">The name to send.</param>
+    /// <param name="id">The round-scoped UID of the message. Defaults to zero, signifying an automated message</param>
     /// <remarks>For example, "dances in circles lol" produces "dances in circles" and "laughs"</remarks>
     /// <returns></returns>
-    public bool TrySendEmoteMessage(EntityUid entityUid, string message, string asName = "")
+    public bool TrySendEmoteMessage(EntityUid entityUid, string message, string asName = "", uint id = 0)
     {
         if (!TryComp<EmoteableComponent>(entityUid, out var emote))
             return false;
 
-        SendEmoteMessage(entityUid, message, emote.Range, asName, false);
+        SendEmoteMessage(entityUid, message, emote.Range, asName, false, id);
 
         return true;
     }
@@ -33,18 +66,24 @@ public sealed partial class ChatSystem
     /// Try and send an emote without causing any other messages to be sent afterward. Used to prevent recursion.
     /// </summary>
     /// <remarks>For example, Urist McShitter shouldn't be able to send "dances in circles lol lol lol lol" and emit five emotes.</remarks>
-    /// <param name="entityUid"></param>
-    /// <param name="message"></param>
-    /// <param name="asName"></param>
+    /// <param name="entityUid">The emoting entity. It needs an EmoteableComponent.</param>
+    /// <param name="message">The emote message to send.</param>
+    /// <param name="asName">The name to send.</param>
+    /// <param name="id">The round-scoped UID of the message. Defaults to zero, signifying an automated message</param>
     /// <returns></returns>
-    public bool TrySendEmoteMessageWithoutRecursion(EntityUid entityUid, string message, string asName = "")
+    public bool TrySendEmoteMessageWithoutRecursion(EntityUid entityUid, string message, string asName = "", uint id = 0)
     {
         if (!TryComp<EmoteableComponent>(entityUid, out var emote))
             return false;
 
-        SendEmoteMessage(entityUid, message, emote.Range, asName, true);
+        SendEmoteMessage(entityUid, message, emote.Range, asName, true, id);
 
         return true;
+    }
+
+    public void SendEmoteMessage(EmoteCreatedEvent ev)
+    {
+        SendEmoteMessage(ev.Sender, ev.Message, ev.Range, id: ev.Id);
     }
 
     /// <summary>
@@ -54,8 +93,9 @@ public sealed partial class ChatSystem
     /// <param name="message">The message to send.</param>
     /// <param name="range">The range the emote can be seen at</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
+    /// <param name="id">The round-scoped UID of the message. Defaults to zero, signifying an automated message</param>
     /// <param name="isRecursive">If this emote is being sent because of another message. Prevents multiple emotes being sent for the same input.</param>
-    public void SendEmoteMessage(EntityUid entityUid, string message, float range, string asName = "", bool isRecursive = false)
+    public void SendEmoteMessage(EntityUid entityUid, string message, float range, string asName = "", bool isRecursive = false, uint id = 0)
     {
         message = SanitizeEmoteMessage(entityUid, message, out var emoteStr);
 
@@ -104,7 +144,7 @@ public sealed partial class ChatSystem
             RaiseLocalEvent(entityUid, ref ev);
         }
 
-        var msgOut = new EmoteEvent(GetNetEntity(entityUid), name, message);
+        var msgOut = new EmoteEvent(GetNetEntity(entityUid), name, message, id);
 
         foreach (var session in GetEmoteRecipients(entityUid, range))
         {
@@ -112,7 +152,8 @@ public sealed partial class ChatSystem
         }
 
         _replay.RecordServerMessage(msgOut);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(entityUid):user} as {asName}: {message}");
+
+        LogMessage(entityUid, "emote", id, "", asName, message);
     }
 
     private List<ICommonSession> GetEmoteRecipients(EntityUid source, float range)
@@ -142,38 +183,6 @@ public sealed partial class ChatSystem
         }
 
         return recipients;
-    }
-
-    public void TryEmoteWithChat(EntityUid source, string emoteId, string nameOverride = "")
-    {
-        if (!TryComp<EmoteableComponent>(source, out var comp))
-            return;
-
-        if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
-            return;
-
-        // check if proto has valid message for chat
-        if (emote.ChatMessages.Count != 0)
-        {
-            SendEmoteMessage(source, Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source)), comp.Range, nameOverride);
-        }
-        else
-        {
-            // do the rest of emote event logic here
-            TryEmoteWithoutChat(source, emoteId);
-        }
-    }
-
-    public void TryEmoteWithoutChat(EntityUid source, string emoteId)
-    {
-        if (!TryComp<EmoteableComponent>(source, out var comp))
-            return;
-
-        if (!_proto.TryIndex<EmotePrototype>(emoteId, out var emote))
-            return;
-
-        var ev = new HandleEmoteEvent(emote);
-        RaiseLocalEvent(source, ref ev);
     }
 
     private string SanitizeEmoteMessage(EntityUid source, string message, out string? emoteStr)

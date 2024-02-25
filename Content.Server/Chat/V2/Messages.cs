@@ -294,13 +294,15 @@ public sealed class RadioEmittedEvent : EntityEventArgs
     public string AsName;
     public string Message;
     public string Channel;
+    public uint Id;
 
     public RadioEmittedEvent(
         EntityUid speaker,
         string asName,
         string message,
         string channel,
-        EntityUid? device
+        EntityUid? device,
+        uint id
     )
     {
         Speaker = speaker;
@@ -308,6 +310,7 @@ public sealed class RadioEmittedEvent : EntityEventArgs
         AsName = asName;
         Message = message;
         Channel = channel;
+        Id = id;
     }
 
     public string GetMessage()

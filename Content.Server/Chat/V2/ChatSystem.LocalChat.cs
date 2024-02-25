@@ -15,14 +15,20 @@ public sealed partial class ChatSystem
     /// <param name="entityUid">The entity who is chatting</param>
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    public bool TrySendLocalChatMessage(EntityUid entityUid, string message, string asName = "")
+    /// <param name="id">The ID of the message. Defaults to zero, signifying an automated message.</param>
+    public bool TrySendLocalChatMessage(EntityUid entityUid, string message, string asName = "", uint id = 0)
     {
         if (!TryComp<LocalChattableComponent>(entityUid, out var chat))
             return false;
 
-        SendLocalChatMessage(entityUid, message, chat.Range, asName);
+        SendLocalChatMessage(entityUid, message, chat.Range, asName, id);
 
         return true;
+    }
+
+    public void SendLocalChatMessage(LocalChatCreatedEvent ev)
+    {
+        SendLocalChatMessage(ev.Speaker, ev.Message, ev.Range, id: ev.Id);
     }
 
     /// <summary>
@@ -32,12 +38,13 @@ public sealed partial class ChatSystem
     /// <param name="message">The message to send. This will be mutated with accents, to remove tags, etc.</param>
     /// <param name="range">The range the audio can be heard in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    public void SendLocalChatMessage(EntityUid entityUid, string message, float range, string asName = "")
+    /// <param name="id">The round-scoped UID of the message. Defaults to zero, signifying an automated message</param>
+    public void SendLocalChatMessage(EntityUid entityUid, string message, float range, string asName = "", uint id = 0)
     {
         if (!TrySanitizeAndTransformSpokenMessage(entityUid, ref message, ref asName, out var name))
             return;
 
-        var msgOut = new LocalChatEvent(GetNetEntity(entityUid), name, message);
+        var msgOut = new LocalChatEvent(GetNetEntity(entityUid), name, message, id);
 
         foreach (var session in GetLocalChatRecipients(entityUid, range))
         {
@@ -45,7 +52,8 @@ public sealed partial class ChatSystem
         }
 
         _replay.RecordServerMessage(msgOut);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Local chat from {ToPrettyString(entityUid):user} as {asName}: {message}");
+
+        LogMessage(entityUid, "local chat", id, "local", asName, message);
     }
 
     public void SendSubtleChatMessage(ICommonSession source, ICommonSession target, string message)
@@ -54,7 +62,7 @@ public sealed partial class ChatSystem
 
         RaiseNetworkEvent(msgOut, target);
 
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity):player} received subtle message from {source.Name}: {message}");
+        LogMessage(default, "local chat", 0, "subtle", "", message);
     }
 
     public void SendBackgroundChatMessage(EntityUid source, string message, string asName = "")

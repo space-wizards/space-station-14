@@ -15,7 +15,6 @@ public abstract partial class SharedChatSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -23,8 +22,6 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] protected readonly IConfigurationManager Configuration = default!;
 
-    protected bool AllowShoutWhispers;
-    protected bool UpperCaseMessagesMeanShouting;
     protected bool CurrentCultureIsSomeFormOfEnglish;
     protected bool ShouldPunctuate;
     protected int MaxChatMessageLength;
@@ -50,8 +47,6 @@ public abstract partial class SharedChatSystem : EntitySystem
         Configuration.OnValueChanged(CCVars.ChatPunctuation, shouldPunctuate => ShouldPunctuate = shouldPunctuate, true);
         Configuration.OnValueChanged(CCVars.ChatMaxAnnouncementLength, maxLen => MaxChatMessageLength = maxLen, true);
         Configuration.OnValueChanged(CCVars.ChatMaxMessageLength, maxLen => MaxAnnouncementMessageLength = maxLen, true);
-        Configuration.OnValueChanged(CCVars.ChatUpperCaseMeansShouting, maxLen => UpperCaseMessagesMeanShouting = maxLen, true);
-        Configuration.OnValueChanged(CCVars.ChatAllowShoutWhispers, maxLen => AllowShoutWhispers = maxLen, true);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
 

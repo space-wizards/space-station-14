@@ -18,6 +18,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Decals;
 using Content.Shared.Chat.V2;
+using Content.Shared.Chat.V2.Repository;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Examine;
 using Content.Shared.Input;
@@ -209,6 +210,9 @@ public sealed class ChatUIController : UIController
         SubscribeNetworkEvent<LoocFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<RadioFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
         SubscribeNetworkEvent<DeadChatFailedEvent>((ev, _) => HandleMessageFailure(EntityManager.GetEntity(ev.Speaker), ev.Reason));
+
+        SubscribeNetworkEvent<MessageDeletedEvent>(OnDeleteChatMessagesBy);
+        SubscribeNetworkEvent<MessagesNukedEvent>(OnDeleteChatMessagesBy);
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -898,7 +902,7 @@ public sealed class ChatUIController : UIController
             ("fontSize", verb.FontSize),
             ("message", FormattedMessage.EscapeText(ev.Message)));
 
-        var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, wrappedMessage, ev.Speaker, null);
+        var fakeChatMessage = new ChatMessage(ChatChannel.Local, ev.Message, wrappedMessage, ev.Speaker, null, id: ev.Id);
 
         History.Add((_timing.CurTick, fakeChatMessage));
         MessageAdded?.Invoke(fakeChatMessage);
@@ -940,7 +944,7 @@ public sealed class ChatUIController : UIController
         // Wrapped message tech debt woo. We wrap the received message with italics here so whispering is visually distinct at close range.
         var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message", ("entityName", $"[color={GetNameColor(ev.AsName)}]{ev.AsName}[/color]"), ("message", $"[italic]{ev.Message}[/italic]"));
 
-        var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.Message, wrappedMessage, ev.Speaker, null);
+        var fakeChatMessage = new ChatMessage(ChatChannel.Whisper, ev.Message, wrappedMessage, ev.Speaker, null, id: ev.Id);
 
         History.Add((_timing.CurTick, fakeChatMessage));
         MessageAdded?.Invoke(fakeChatMessage);
@@ -957,7 +961,7 @@ public sealed class ChatUIController : UIController
             ("entity", EntityManager.GetEntity(ev.Emoter)),
             ("message", ev.Message));
 
-        var fakeChatMessage = new ChatMessage(ChatChannel.Emotes, ev.Message, wrappedMessage, ev.Emoter, null);
+        var fakeChatMessage = new ChatMessage(ChatChannel.Emotes, ev.Message, wrappedMessage, ev.Emoter, null, id: ev.Id);
 
         History.Add((_timing.CurTick, fakeChatMessage));
         MessageAdded?.Invoke(fakeChatMessage);
@@ -979,7 +983,7 @@ public sealed class ChatUIController : UIController
             ("name", ev.AsName),
             ("message", ev.Message));
 
-        var fakeChatMessage = new ChatMessage(ChatChannel.Radio, ev.Message, wrappedMessage, ev.Speaker, null);
+        var fakeChatMessage = new ChatMessage(ChatChannel.Radio, ev.Message, wrappedMessage, ev.Speaker, null, id: ev.Id);
 
         History.Add((_timing.CurTick, fakeChatMessage));
         MessageAdded?.Invoke(fakeChatMessage);
@@ -1004,7 +1008,7 @@ public sealed class ChatUIController : UIController
             ("entityName", ev.AsName),
             ("message", FormattedMessage.EscapeText(ev.Message)));
 
-        var fakeChatMessage = new ChatMessage(ChatChannel.LOOC, ev.Message, wrappedMessage, ev.Speaker, null);
+        var fakeChatMessage = new ChatMessage(ChatChannel.LOOC, ev.Message, wrappedMessage, ev.Speaker, null, id: ev.Id);
 
         History.Add((_timing.CurTick, fakeChatMessage));
         MessageAdded?.Invoke(fakeChatMessage);
@@ -1034,7 +1038,7 @@ public sealed class ChatUIController : UIController
 
         // TODO: ChatMessage should be translated to a PODO at the border; patch in a PODO to replace it that this code owns.
         // WrappedMessage also should be shot.
-        var fakeChatMessage = new ChatMessage(ChatChannel.Dead, ev.Message, wrappedMessage, ev.Speaker, null);
+        var fakeChatMessage = new ChatMessage(ChatChannel.Dead, ev.Message, wrappedMessage, ev.Speaker, null, id: ev.Id);
 
         History.Add((_timing.CurTick, fakeChatMessage));
         MessageAdded?.Invoke(fakeChatMessage);
@@ -1114,7 +1118,30 @@ public sealed class ChatUIController : UIController
         // Usages of the erase admin verb should be rare enough that this does not matter.
         // Otherwise the client would need to know that one entity has multiple author players,
         // or the server would need to track when and which entities a player sent messages as.
+
         History.RemoveAll(h => h.Msg.SenderKey == msg.Key || msg.Entities.Contains(h.Msg.SenderEntity));
+        Repopulate();
+    }
+
+    public void OnDeleteChatMessagesBy(MessageDeletedEvent msg, EntitySessionEventArgs _)
+    {
+        if (msg.MessageId == 0)
+            return; // DO NOTHING. This would 1984 every single automated message sent.
+
+        History.RemoveAll(h => h.Msg.Id == msg.MessageId);
+        Repopulate();
+    }
+
+    public void OnDeleteChatMessagesBy(MessagesNukedEvent msg, EntitySessionEventArgs _)
+    {
+        foreach (var id in msg.messageIds)
+        {
+            if (id == 0)
+                continue; // DO NOTHING. This would 1984 every single automated message sent.
+
+            History.RemoveAll(h => h.Msg.Id == id);
+        }
+
         Repopulate();
     }
 

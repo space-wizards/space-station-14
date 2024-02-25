@@ -72,12 +72,14 @@ public sealed class LocalChatEvent : EntityEventArgs
     public NetEntity Speaker;
     public string AsName;
     public readonly string Message;
+    public uint Id;
 
-    public LocalChatEvent(NetEntity speaker, string asName, string message)
+    public LocalChatEvent(NetEntity speaker, string asName, string message, uint id)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
+        Id = id;
     }
 }
 

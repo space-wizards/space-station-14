@@ -42,7 +42,8 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
             GetNetEntity(ev.Speaker),
             ev.AsName,
             ev.Message,
-            ev.Channel
+            ev.Channel,
+            ev.Id
         );
 
         RaiseNetworkEvent(translated, actor.PlayerSession);

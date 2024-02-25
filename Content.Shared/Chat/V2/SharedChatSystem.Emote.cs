@@ -114,12 +114,14 @@ public sealed class EmoteEvent : EntityEventArgs
     public NetEntity Emoter;
     public string AsName;
     public readonly string Message;
+    public uint Id;
 
-    public EmoteEvent(NetEntity emoter, string asName, string message)
+    public EmoteEvent(NetEntity emoter, string asName, string message, uint id)
     {
         Emoter = emoter;
         AsName = asName;
         Message = message;
+        Id = id;
     }
 }
 

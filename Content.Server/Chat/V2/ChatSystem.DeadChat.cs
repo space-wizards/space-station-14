@@ -11,7 +11,12 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public void SendDeadChatMessage(EntityUid source, string message)
+    public void SendDeadChatMessage(DeadChatCreatedEvent ev)
+    {
+        SendDeadChatMessage(ev.Speaker, ev.Message, ev.Id);
+    }
+
+    public void SendDeadChatMessage(EntityUid source, string message, uint id = 0)
     {
         if (!_playerManager.TryGetSessionByEntity(source, out var player))
         {
@@ -21,8 +26,9 @@ public sealed partial class ChatSystem
         message = SanitizeMessage(message);
 
         var isAdmin = _admin.IsAdmin(source);
+        var asName = SanitizeName(Identity.Name(source, EntityManager), CurrentCultureIsSomeFormOfEnglish);
 
-        var msgOut = new DeadChatEvent(GetNetEntity(source), isAdmin ? player.Channel.UserName : SanitizeName(Identity.Name(source, EntityManager), CurrentCultureIsSomeFormOfEnglish), message, isAdmin);
+        var msgOut = new DeadChatEvent(GetNetEntity(source), isAdmin ? player.Channel.UserName : asName, message, isAdmin, id);
 
         foreach (var session in GetDeadChatRecipients())
         {
@@ -31,14 +37,7 @@ public sealed partial class ChatSystem
 
         _replay.RecordServerMessage(msgOut);
 
-        if (msgOut.IsAdmin)
-        {
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
-        }
-        else
-        {
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
-        }
+        LogMessage(source, "dead chat", id, isAdmin ? "admin" : "player", asName, message);
     }
 
     private IEnumerable<INetChannel> GetDeadChatRecipients()

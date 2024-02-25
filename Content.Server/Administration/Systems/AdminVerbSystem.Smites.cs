@@ -846,5 +846,19 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-terminate-description")
         };
         args.Verbs.Add(terminate);
+
+        Verb SMITE = new()
+        {
+            Text = "SMITE.",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new ("deprecated.rsi"), "deprecated"),
+            Act = () =>
+            {
+                _adminSystem.Erase(player, true);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-SMITE-description")
+        };
+        args.Verbs.Add(SMITE);
     }
 }

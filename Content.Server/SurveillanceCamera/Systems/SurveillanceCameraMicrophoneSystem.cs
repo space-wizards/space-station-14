@@ -71,11 +71,11 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             if (range < 0 || range > ev.MaxRange)
                 continue;
             if (range < ev.MinRange)
-               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), ev.AsName, ev.Message);
+               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), ev.AsName, ev.Message, ev.Id);
             else if (_interactionSystem.InRangeUnobstructed(_xforms.GetMapCoordinates(xform), ev.Speaker, ev.MaxRange, Shared.Physics.CollisionGroup.Opaque))
-               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), ev.AsName, ev.ObfuscatedMessage);
+               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), ev.AsName, ev.ObfuscatedMessage, ev.Id);
             else
-               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), "", ev.ObfuscatedMessage);
+               outMsg = new WhisperEvent(GetNetEntity(ev.Speaker), "", ev.ObfuscatedMessage, ev.Id);
 
             foreach (var viewer in camera.ActiveViewers)
             {

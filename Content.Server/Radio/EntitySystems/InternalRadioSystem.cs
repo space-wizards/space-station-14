@@ -19,6 +19,6 @@ public sealed class InternalRadioSystem : EntitySystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        RaiseNetworkEvent(new RadioEvent(GetNetEntity(ev.Speaker),ev.AsName,ev.Message,ev.Channel), actor.PlayerSession);
+        RaiseNetworkEvent(new RadioEvent(GetNetEntity(ev.Speaker),ev.AsName,ev.Message,ev.Channel, ev.Id), actor.PlayerSession);
     }
 }

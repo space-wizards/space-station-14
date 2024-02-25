@@ -74,12 +74,14 @@ public sealed class DeadChatEvent : EntityEventArgs
     public string AsName;
     public readonly string Message;
     public bool IsAdmin;
+    public uint Id;
 
-    public DeadChatEvent(NetEntity speaker, string asName, string message, bool isAdmin)
+    public DeadChatEvent(NetEntity speaker, string asName, string message, bool isAdmin, uint id)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
         IsAdmin = isAdmin;
+        Id = id;
     }
 }

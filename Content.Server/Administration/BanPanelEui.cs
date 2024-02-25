@@ -131,9 +131,7 @@ public sealed class BanPanelEui : BaseEui
             return;
         }
 
-        if (erase &&
-            targetUid != null &&
-            _playerManager.TryGetSessionById(targetUid.Value, out var targetPlayer))
+        if (erase && targetUid != null && _playerManager.TryGetSessionById(targetUid.Value, out var targetPlayer))
         {
             try
             {

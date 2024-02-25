@@ -59,6 +59,7 @@ admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize 
 admin-smite-super-bonk-description = Slams them on every single table on the Station and beyond.
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
 admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
+admin-smite-SMITE-description = They know what they did. Erase the player from the round, with added screams and explosions.
 
 ## Tricks descriptions
 

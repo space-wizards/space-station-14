@@ -13,7 +13,12 @@ public sealed partial class ChatSystem
     public bool DeadLoocEnabled { get; private set; }
     public bool CritLoocEnabled { get; private set; }
 
-    public void SendLoocMessage(EntityUid source, string message)
+    public void SendLoocMessage(LoocCreatedEvent ev)
+    {
+        SendLoocMessage(ev.Speaker, ev.Message, id: ev.Id);
+    }
+
+    public void SendLoocMessage(EntityUid source, string message, uint id = 0)
     {
         message = SanitizeMessage(message);
 
@@ -31,13 +36,15 @@ public sealed partial class ChatSystem
 
         var range = Configuration.GetCVar(CCVars.LoocRange);
 
-        var msgOut = new LoocEvent(GetNetEntity(source), name, message);
+        var msgOut = new LoocEvent(GetNetEntity(source), name, message, id);
 
         foreach (var session in GetLoocRecipients(source, range))
+        {
             RaiseNetworkEvent(msgOut, session);
+        }
 
         if (_playerManager.TryGetSessionByEntity(source, out var commonSession))
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {commonSession:Player}: {message}");
+            LogMessage(source, "looc chat", id, "local", name, message);
 
         _replay.RecordServerMessage(msgOut);
     }
@@ -83,7 +90,8 @@ public sealed partial class ChatSystem
 
     private void OnDeadLoocEnabledChanged(bool val)
     {
-        if (DeadLoocEnabled == val) return;
+        if (DeadLoocEnabled == val)
+            return;
 
         DeadLoocEnabled = val;
         _chatManager.DispatchServerAnnouncement(

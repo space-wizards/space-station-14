@@ -1,6 +1,11 @@
 using System.Linq;
+using System.Threading;
 using Content.Server.Administration.Managers;
+using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.V2;
+using Content.Server.Chat.V2.Repository;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
@@ -8,6 +13,7 @@ using Content.Server.IdentityManagement;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Popups;
+using Content.Server.Speech.Components;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
@@ -21,6 +27,7 @@ using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Speech;
 using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
@@ -29,8 +36,11 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Systems
 {
@@ -52,6 +62,11 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly ChatRepository _chatRepository = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -318,70 +333,98 @@ namespace Content.Server.Administration.Systems
         ///     This removes them and any trace of them from the round, deleting their
         ///     chat messages and showing a popup to other players.
         ///     Their items are dropped on the ground.
+        /// <param name="player">The player to erase</param>
+        /// <param name="explodeViolently">Should the erasure be explosive or quiet?</param>
         /// </summary>
-        public void Erase(ICommonSession player)
+        public void Erase(ICommonSession player, bool explodeViolently = false)
         {
             var entity = player.AttachedEntity;
-            _chat.DeleteMessagesBy(player);
+            EntityCoordinates? coords = null;
 
             if (entity != null && !TerminatingOrDeleted(entity.Value))
             {
-                if (TryComp(entity.Value, out TransformComponent? transform))
+                var entityVal = entity.Value;
+
+                foreach (var item in _inventory.GetHandOrInventoryEntities(entityVal))
                 {
-                    var coordinates = _transform.GetMoverCoordinates(entity.Value, transform);
-                    var name = Identity.Entity(entity.Value, EntityManager);
-                    _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
-                    var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
-                    var audioParams = new AudioParams().WithVolume(3);
-                    _audio.PlayStatic("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
+                    if (!TryComp(item, out PdaComponent? pda) ||
+                        !TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) ||
+                        keyStorage.Key is not { } key ||
+                        !_stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
+                        continue;
+
+                    if (TryComp(entity, out DnaComponent? dna) && dna.DNA != record.DNA)
+                        continue;
+
+                    if (TryComp(entity, out FingerprintComponent? fingerPrint) && fingerPrint.Fingerprint != record.Fingerprint)
+                        continue;
+
+                    _stationRecords.RemoveRecord(key);
+                    Del(item);
                 }
 
-                foreach (var item in _inventory.GetHandOrInventoryEntities(entity.Value))
-                {
-                    if (TryComp(item, out PdaComponent? pda) &&
-                        TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
-                        keyStorage.Key is { } key &&
-                        _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
-                    {
-                        if (TryComp(entity, out DnaComponent? dna) &&
-                            dna.DNA != record.DNA)
-                        {
-                            continue;
-                        }
-
-                        if (TryComp(entity, out FingerprintComponent? fingerPrint) &&
-                            fingerPrint.Fingerprint != record.Fingerprint)
-                        {
-                            continue;
-                        }
-
-                        _stationRecords.RemoveRecord(key);
-                        Del(item);
-                    }
-                }
-
-                if (_inventory.TryGetContainerSlotEnumerator(entity.Value, out var enumerator))
+                if (_inventory.TryGetContainerSlotEnumerator(entityVal, out var enumerator))
                 {
                     while (enumerator.NextItem(out var item, out var slot))
                     {
-                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, true, true))
+                        if (_inventory.TryUnequip(entityVal, entityVal, slot.Name, true, true))
                             _physics.ApplyAngularImpulse(item, ThrowingSystem.ThrowAngularImpulse);
                     }
                 }
 
-                if (TryComp(entity.Value, out HandsComponent? hands))
+                if (TryComp(entityVal, out HandsComponent? hands))
                 {
-                    foreach (var hand in _hands.EnumerateHands(entity.Value, hands))
+                    foreach (var hand in _hands.EnumerateHands(entityVal, hands))
                     {
-                        _hands.TryDrop(entity.Value, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                        _hands.TryDrop(entityVal, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
                     }
+                }
+
+                if (TryComp(entityVal, out TransformComponent? transform))
+                {
+                    coords = _transform.GetMoverCoordinates(entityVal, transform);
+                    var name = Identity.Entity(entityVal, EntityManager);
+                    var audioParams = new AudioParams();
+
+                    var filename = explodeViolently ? "/Audio/Effects/Lightning/lightningbolt.ogg" : "/Audio/Effects/pop_high.ogg";
+                    var popup = explodeViolently ? "admin-nuke-popup" : "admin-erase-popup";
+
+                    if (!explodeViolently)
+                        audioParams = audioParams.WithVolume(3);
+
+                    _popup.PopupCoordinates(Loc.GetString(popup, ("user", name)), coords.Value, PopupType.LargeCaution);
+                    _audio.PlayPvs(filename, coords.Value, audioParams);
+                }
+
+                if (explodeViolently)
+                {
+                    if (TryComp<VocalComponent>(entityVal, out var comp))
+                    {
+                        _chatSystem.TryEmoteWithoutChat(entityVal, comp.ScreamId);
+                    }
+
+                    if (coords != null)
+                    {
+                        _explosionSystem.QueueExplosion(coords.Value.ToMap(EntityManager, _transform), ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0);
+                    }
+
+                    Timer.Spawn(TimeSpan.FromSeconds(1), () =>
+                    {
+                        _bodySystem.GibBody(entity.Value);
+                    });
+                }
+                else
+                {
+                    QueueDel(entity);
                 }
             }
 
-            _minds.WipeMind(player);
-            QueueDel(entity);
-
+            _chat.DeleteMessagesBy(player);
+            _chatRepository.Nuke(player.Name);
             _gameTicker.SpawnObserver(player);
+
+            if (coords != null && player.AttachedEntity != null)
+                _transform.SetCoordinates(player.AttachedEntity.Value, coords.Value);
         }
     }
 }

@@ -274,13 +274,15 @@ public sealed class RadioEvent : EntityEventArgs
     public string AsName;
     public readonly string Message;
     public readonly string Channel;
+    public uint Id;
 
-    public RadioEvent(NetEntity speaker, string asName, string message, string channel)
+    public RadioEvent(NetEntity speaker, string asName, string message, string channel, uint id)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
         Channel = channel;
+        Id = id;
     }
 }
 

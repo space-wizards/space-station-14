@@ -60,16 +60,18 @@ public sealed class LoocFailedEvent : EntityEventArgs
 /// Raised when a character speaks in LOOC.
 /// </summary>
 [Serializable, NetSerializable]
-public class LoocEvent : EntityEventArgs
+public sealed class LoocEvent : EntityEventArgs
 {
     public NetEntity Speaker;
     public string AsName;
     public readonly string Message;
+    public uint Id;
 
-    public LoocEvent(NetEntity speaker, string asName, string message)
+    public LoocEvent(NetEntity speaker, string asName, string message, uint id)
     {
         Speaker = speaker;
         AsName = asName;
         Message = message;
+        Id = id;
     }
 }

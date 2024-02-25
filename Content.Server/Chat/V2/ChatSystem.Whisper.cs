@@ -10,12 +10,17 @@ namespace Content.Server.Chat.V2;
 
 public sealed partial class ChatSystem
 {
-    public bool TrySendWhisperMessage(EntityUid entityUid, string message, string asName = "")
+    public void SendWhisperMessage(WhisperCreatedEvent ev)
+    {
+        SendWhisperMessage(ev.Speaker, ev.Message, ev.MinRange, ev.MaxRange, id: ev.Id);
+    }
+
+    public bool TrySendWhisperMessage(EntityUid entityUid, string message, string asName = "", uint id = 0)
     {
         if (!TryComp<WhisperableComponent>(entityUid, out var whisper))
             return false;
 
-        SendWhisperMessage(entityUid, message, whisper.MinRange, whisper.MaxRange, asName);
+        SendWhisperMessage(entityUid, message, whisper.MinRange, whisper.MaxRange, asName, id);
 
         return true;
     }
@@ -28,37 +33,38 @@ public sealed partial class ChatSystem
     /// <param name="minRange">The maximum range the audio can be fully heard in</param>
     /// <param name="maxRange">The maximum range the audio can be heard at all in</param>
     /// <param name="asName">Override the name this entity will appear as.</param>
-    public void SendWhisperMessage(EntityUid entityUid, string message, float minRange, float maxRange, string asName = "")
+    /// <param name="id">The ID of the message. Defaults to zero, signifying an automated message.</param>
+    public void SendWhisperMessage(EntityUid entityUid, string message, float minRange, float maxRange, string asName = "", uint id = 0)
     {
-        // You can't whisper if you're shouting and are capable of talking normally.
-        if (IsShouting(message) && TrySendLocalChatMessage(entityUid, message, asName))
-        {
+        if (IsShouting(message) && TrySendLocalChatMessage(entityUid, message, asName, id))
             return;
-        }
 
         if (!TrySanitizeAndTransformSpokenMessage(entityUid, ref message, ref asName, out var name))
             return;
 
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
-        RaiseLocalEvent(new WhisperEmittedEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage));
+        RaiseLocalEvent(new WhisperEmittedEvent(entityUid, name, minRange, maxRange, message, obfuscatedMessage, id));
 
         var msgOut = new WhisperEvent(
             GetNetEntity(entityUid),
             name,
-            message
+            message,
+            id
         );
 
         var obfuscatedMsgOut = new WhisperEvent(
             GetNetEntity(entityUid),
             name,
-            obfuscatedMessage
+            obfuscatedMessage,
+            id
         );
 
         var totallyObfuscatedlyMsgOut = new WhisperEvent(
             GetNetEntity(entityUid),
             "",
-            obfuscatedMessage
+            obfuscatedMessage,
+            id
         );
 
         var recipients = GetWhisperRecipients(entityUid, minRange, maxRange);
@@ -80,7 +86,7 @@ public sealed partial class ChatSystem
         }
 
         _replay.RecordServerMessage(msgOut);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(entityUid):user} as {asName}: {message}");
+        LogMessage(entityUid, "whisper", id, "", asName, message);
     }
 
     /// <summary>
@@ -137,10 +143,11 @@ public sealed partial class ChatSystem
     /// Returns if we think someone is talking loudly enough to not be whispering. The rules are:
     /// 1. The message ends with two exclamation marks (as it's possible to exclaim whilst whispering)
     /// 2. The message is entirely all caps (because "SCIENCE IS SO UTTERLY WORTHLESS" is clearly shouting) and is long enough not to clash with department heads (e.g. "CMO.").
+    /// This behaviour is enabled and controlled by cvars.
     /// </summary>
     private bool IsShouting(string message)
     {
-        if (AllowShoutWhispers)
+        if (_allowShoutWhispers)
         {
             return false;
         }
@@ -150,7 +157,7 @@ public sealed partial class ChatSystem
             return true;
         }
 
-        if (!UpperCaseMessagesMeanShouting)
+        if (!_upperCaseMessagesMeanShouting)
         {
             return false;
         }

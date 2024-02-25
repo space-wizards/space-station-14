@@ -32,7 +32,7 @@ namespace Content.Server.Administration.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            EntitySystem.Get<ChatSystem>().SendDeadChatMessage(entity, message);
+            EntitySystem.Get<ChatSystem>().SendDeadChatMessage(new DeadChatCreatedEvent(default, message, true));
         }
     }
 }
