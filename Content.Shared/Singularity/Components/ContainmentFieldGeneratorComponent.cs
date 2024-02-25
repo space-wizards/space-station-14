@@ -1,4 +1,4 @@
-using Content.Shared.Physics;
+    using Content.Shared.Physics;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -60,7 +60,7 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     /// For use to vessel ship <imperial space>
     /// </summary>
     [DataField("maxLength")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)] //Imperial fix
     public float MaxLength = 8F;
 
     /// <summary>
