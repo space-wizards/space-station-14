@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added flatpacks, boxes that unpack into a full-sized machine when activated
-      with a multitool.
-    type: Add
-  - message: Added the Flatpacker 1001 to industrial research. A machine capable of
-      creating flatpacks from machine boards.
-    type: Add
-  id: 5521
-  time: '2024-01-03T06:16:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23338
 - author: themias
   changes:
   - message: Cyborgs can interact with shuttle consoles, gas mixers and gas filters.
@@ -3848,3 +3837,10 @@
   id: 6020
   time: '2024-02-25T21:15:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25568
+- author: Tayrtahn
+  changes:
+  - message: Added a live preview display to reagent dispensers.
+    type: Add
+  id: 6021
+  time: '2024-02-25T23:03:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25391
