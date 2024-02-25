@@ -37,6 +37,31 @@ public sealed class ContentPlayerData
     /// </summary>
     public bool ExplicitlyDeadminned { get; set; }
 
+    /// <summary>
+    /// The rate at which this player has been sending messages. Allows for rate-limiting.
+    /// </summary>
+    public int MessageCount;
+
+    /// <summary>
+    /// The total amount of characters someone has been sending. Allows for rate-limiting.
+    /// </summary>
+    public int TotalMessageLength;
+
+    /// <summary>
+    /// When the current count for this session expires.
+    /// </summary>
+    public TimeSpan MessageCountExpiresAt;
+
+    /// <summary>
+    /// Whether rate limiting has been announced to the player
+    /// </summary>
+    public bool RateLimitAnnouncedToPlayer;
+
+    /// <summary>
+    /// When can an announcement to admins next be sent at.
+    /// </summary>
+    public TimeSpan CanAnnounceToAdminsNextAt;
+
     public ContentPlayerData(NetUserId userId, string name)
     {
         UserId = userId;

@@ -15,4 +15,14 @@ public sealed partial class HeadsetComponent : Component
 
     [DataField("requiredSlot")]
     public SlotFlags RequiredSlot = SlotFlags.EARS;
+
+    /// <summary>
+    /// Who is this headset currently worn by?
+    /// </summary>
+    public EntityUid? CurrentlyWornBy;
+
+    /// <summary>
+    /// What channels does this headset use? This is determined by its encryption keys, so isn't set via YAML.
+    /// </summary>
+    public HashSet<string> ChannelNames = new();
 }

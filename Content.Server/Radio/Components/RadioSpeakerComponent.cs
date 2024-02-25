@@ -9,7 +9,6 @@ namespace Content.Server.Radio.Components;
 ///     Listens for radio messages and relays them to local chat.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(RadioDeviceSystem))]
 public sealed partial class RadioSpeakerComponent : Component
 {
     /// <summary>

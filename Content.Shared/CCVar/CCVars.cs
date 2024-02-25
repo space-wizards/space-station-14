@@ -1198,6 +1198,11 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
+        /// <summary>
+        /// How far does LOOC transmit?
+        /// </summary>
+        public static readonly CVarDef<float> LoocRange = CVarDef.Create("looc.range", 10.0f, CVar.NOTIFY | CVar.REPLICATED);
+
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
 
@@ -1619,6 +1624,20 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ChatFancyNameBackground =
             CVarDef.Create("chat.fancy_name_background", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying a background under the speaking character's name.");
+
+        /// <summary>
+        /// Should ALL CAPS messages in the chosen language indicate someone is shouting? Disable this if your server's
+        /// language or culture doesn't use this (e.g. your server language is Japanese).
+        /// </summary>
+        public static readonly CVarDef<bool> ChatUpperCaseMeansShouting =
+            CVarDef.Create("chat.upper_case_means_shouting", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should you be able to shout-whisper? (I.e. WRITE IN ALL CAPS or use lots of bangs!!!)
+        /// Disabling this means any shout-whisper is shouted in local chat instead.
+        /// </summary>
+        public static readonly CVarDef<bool> ChatAllowShoutWhispers =
+            CVarDef.Create("chat.allow_shout_whispers", true, CVar.SERVERONLY);
 
         /// <summary>
         /// A message broadcast to each player that joins the lobby.
