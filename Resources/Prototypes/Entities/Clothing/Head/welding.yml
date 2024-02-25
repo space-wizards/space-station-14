@@ -4,6 +4,8 @@
   name: welding mask
   abstract: true
   components:
+  - type: Item
+    storedRotation: 0
   - type: IngestionBlocker
   - type: FlashImmunity
   - type: IdentityBlocker

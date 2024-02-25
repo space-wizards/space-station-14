@@ -196,11 +196,13 @@ public sealed partial class CargoSystem
         return _pads;
     }
 
-    private IEnumerable<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)>
+    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)>
         GetFreeCargoPallets(EntityUid gridUid,
             List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)> pallets)
     {
         _setEnts.Clear();
+
+        List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)> outList = new();
 
         foreach (var pallet in pallets)
         {
@@ -209,8 +211,10 @@ public sealed partial class CargoSystem
             if (_lookup.AnyLocalEntitiesIntersecting(gridUid, aabb, LookupFlags.Dynamic))
                 continue;
 
-            yield return pallet;
+            outList.Add(pallet);
         }
+
+        return outList;
     }
 
     #endregion
