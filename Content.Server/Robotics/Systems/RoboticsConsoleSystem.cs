@@ -2,10 +2,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Radio.EntitySystems;
-using Content.Server.Research.Components;
 using Content.Shared.Lock;
 using Content.Shared.Database;
-using Content.Shared.Research;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.Robotics;
+using Content.Shared.Robotics.Components;
+using Content.Shared.Robotics.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
@@ -16,7 +18,7 @@ namespace Content.Server.Research.Systems;
 /// Handles UI and state receiving for the robotics control console.
 /// <c>BorgTransponderComponent<c/> broadcasts state from the station's borgs to consoles.
 /// </summary>
-public sealed class RoboticsConsoleSystem : EntitySystem
+public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 {
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -32,7 +34,6 @@ public sealed class RoboticsConsoleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoboticsConsoleComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RoboticsConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         Subs.BuiEvents<RoboticsConsoleComponent>(RoboticsConsoleUiKey.Key, subs =>
         {
@@ -68,11 +69,6 @@ public sealed class RoboticsConsoleSystem : EntitySystem
             if (_removing.Count > 0)
                 UpdateUserInterface((uid, comp));
         }
-    }
-
-    private void OnUnpaused(Entity<RoboticsConsoleComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextDestroy += args.PausedTime;
     }
 
     private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
@@ -139,11 +135,12 @@ public sealed class RoboticsConsoleSystem : EntitySystem
         _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(user):user} destroyed borg {data.Name} with address {args.Address}");
 
         ent.Comp.NextDestroy = now + ent.Comp.DestroyCooldown;
+        Dirty(ent, ent.Comp);
     }
 
     private void UpdateUserInterface(Entity<RoboticsConsoleComponent> ent)
     {
-        var state = new RoboticsConsoleState(ent.Comp.Cyborgs, ent.Comp.NextDestroy);
+        var state = new RoboticsConsoleState(ent.Comp.Cyborgs);
         _ui.TrySetUiState(ent, RoboticsConsoleUiKey.Key, state);
     }
 }

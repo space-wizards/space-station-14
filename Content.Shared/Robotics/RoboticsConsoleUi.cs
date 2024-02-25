@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Research;
+namespace Content.Shared.Robotics;
 
 [Serializable, NetSerializable]
 public enum RoboticsConsoleUiKey : byte
@@ -18,15 +18,9 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
     /// </summary>
     public Dictionary<string, CyborgControlData> Cyborgs;
 
-    /// <summary>
-    /// When the destroy button can next be used.
-    /// </summary>
-    public TimeSpan NextDestroy;
-
-    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs, TimeSpan nextDestroy)
+    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs)
     {
         Cyborgs = cyborgs;
-        NextDestroy = nextDestroy;
     }
 }
 

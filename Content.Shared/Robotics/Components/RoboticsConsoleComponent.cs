@@ -1,12 +1,17 @@
-using Content.Server.Research.Systems;
 using Content.Shared.Radio;
-using Content.Shared.Research;
+using Content.Shared.Robotics;
+using Content.Shared.Robotics.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Research.Components;
+namespace Content.Shared.Robotics.Components;
 
-[RegisterComponent, Access(typeof(RoboticsConsoleSystem))]
+/// <summary>
+/// Robotics console for managing borgs.
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedRoboticsConsoleSystem))]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class RoboticsConsoleComponent : Component
 {
     /// <summary>
@@ -42,6 +47,7 @@ public sealed partial class RoboticsConsoleComponent : Component
     /// <summary>
     /// When a borg can next be destroyed.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextDestroy = TimeSpan.Zero;
 }

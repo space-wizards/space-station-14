@@ -1,7 +1,7 @@
-using Content.Shared.Research;
+using Content.Shared.Robotics;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Research.UI;
+namespace Content.Client.Robotics.UI;
 
 public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
 {

@@ -1,6 +1,7 @@
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
 using Content.Shared.Popups;
-using Content.Shared.Research;
+using Content.Shared.Robotics;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
