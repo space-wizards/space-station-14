@@ -21,7 +21,6 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -144,7 +143,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
         Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
-        AttemptShootInternal(user.Value, ent, gun);
+        AttemptShoot(user.Value, ent, gun);
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
@@ -209,37 +208,12 @@ public abstract partial class SharedGunSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to shoot the specified target directly.
-    /// This may bypass projectiles firing etc.
-    /// </summary>
-    public bool AttemptDirectShoot(EntityUid user, EntityUid gunUid, EntityUid target, GunComponent gun)
-    {
-        // Unique name so people don't think it's "shoot towards" and not "I will teleport a bullet into them".
-        gun.ShootCoordinates = Transform(target).Coordinates;
-
-        if (!TryTakeAmmo(user, gunUid, gun, out _, out _, out var args))
-        {
-            gun.ShootCoordinates = null;
-            return false;
-        }
-
-        var result = ShootDirect(gunUid, gun, target, args.Ammo, user: user);
-        gun.ShootCoordinates = null;
-        return result;
-    }
-
-    protected virtual bool ShootDirect(EntityUid gunUid, GunComponent gun, EntityUid target, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityUid user)
-    {
-        return false;
-    }
-
-    /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
     public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
     {
         gun.ShootCoordinates = toCoordinates;
-        AttemptShootInternal(user, gunUid, gun);
+        AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
     }
 
@@ -250,35 +224,20 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         var coordinates = new EntityCoordinates(gunUid, new Vector2(0, -1));
         gun.ShootCoordinates = coordinates;
-        AttemptShootInternal(gunUid, gunUid, gun);
+        AttemptShoot(gunUid, gunUid, gun);
         gun.ShotCounter = 0;
     }
 
-    private void AttemptShootInternal(EntityUid user, EntityUid gunUid, GunComponent gun)
-    {
-        if (!TryTakeAmmo(user, gunUid, gun, out var fromCoordinates, out var toCoordinates, out var args))
-            return;
-
-        Shoot(gunUid, gun, args.Ammo, fromCoordinates, toCoordinates, out var userImpulse, user: user);
-
-        if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
-        {
-            if (_gravity.IsWeightless(user, userPhysics))
-                CauseImpulse(fromCoordinates, toCoordinates, user, userPhysics);
-        }
-    }
-
-    /// <summary>
-    /// Validates if a gun can currently shoot.
-    /// </summary>
-    [Pure]
-    private bool CanShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
+    private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
         if (gun.FireRateModified <= 0f ||
             !_actionBlockerSystem.CanAttack(user))
-        {
-            return false;
-        }
+            return;
+
+        var toCoordinates = gun.ShootCoordinates;
+
+        if (toCoordinates == null)
+            return;
 
         var curTime = Timing.CurTime;
 
@@ -290,42 +249,17 @@ public abstract partial class SharedGunSystem : EntitySystem
         };
         RaiseLocalEvent(gunUid, ref prevention);
         if (prevention.Cancelled)
-            return false;
+            return;
 
         RaiseLocalEvent(user, ref prevention);
         if (prevention.Cancelled)
-            return false;
+            return;
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
         if (gun.NextFire > curTime)
-            return false;
+            return;
 
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to return ammo prepped for shooting if a gun is available to shoot.
-    /// </summary>
-    private bool TryTakeAmmo(
-        EntityUid user,
-        EntityUid gunUid, GunComponent gun,
-        out EntityCoordinates fromCoordinates,
-        out EntityCoordinates toCoordinates,
-        [NotNullWhen(true)] out TakeAmmoEvent? args)
-    {
-        toCoordinates = EntityCoordinates.Invalid;
-        fromCoordinates = EntityCoordinates.Invalid;
-        args = null;
-
-        if (!CanShoot(user, gunUid, gun))
-            return false;
-
-        if (gun.ShootCoordinates == null)
-            return false;
-
-        toCoordinates = gun.ShootCoordinates.Value;
-        var curTime = Timing.CurTime;
         var fireRate = TimeSpan.FromSeconds(1f / gun.FireRateModified);
 
         // First shot
@@ -373,11 +307,10 @@ public abstract partial class SharedGunSystem : EntitySystem
             }
 
             gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-            return false;
+            return;
         }
 
-        fromCoordinates = Transform(user).Coordinates;
-
+        var fromCoordinates = Transform(user).Coordinates;
         // Remove ammo
         var ev = new TakeAmmoEvent(shots, new List<(EntityUid? Entity, IShootable Shootable)>(), fromCoordinates, user);
 
@@ -412,18 +345,24 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
                 Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
-                return false;
+                return;
             }
 
-            return false;
+            return;
         }
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
+        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, out var userImpulse, user, throwItems: attemptEv.ThrowItems);
         var shotEv = new GunShotEvent(user, ev.Ammo);
         RaiseLocalEvent(gunUid, ref shotEv);
 
-        args = ev;
-        return true;
+        if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
+        {
+            if (_gravity.IsWeightless(user, userPhysics))
+                CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
+        }
+
+        Dirty(gunUid, gun);
     }
 
     public void Shoot(

@@ -65,7 +65,6 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
-  - type: Execution
 
 - type: entity
   name: viper
@@ -200,7 +199,7 @@
   name: N1984
   parent: BaseWeaponPistol
   id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
+  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber. 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
