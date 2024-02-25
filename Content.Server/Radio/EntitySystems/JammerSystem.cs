@@ -119,12 +119,10 @@ public sealed class JammerSystem : EntitySystem
     }
     private static float GetCurrentWattage(RadioJammerComponent jammer)
     {
-        var selectedPowerLevel = jammer.SelectedPowerLevel;
-        return jammer.Settings[selectedPowerLevel].Wattage;
+        return jammer.Settings[jammer.SelectedPowerLevel].Wattage;
     }
     private static float GetCurrentRange(RadioJammerComponent jammer)
     {
-        var selectedPowerLevel = jammer.SelectedPowerLevel;
-        return jammer.Settings[selectedPowerLevel].Range;
+        return jammer.Settings[jammer.SelectedPowerLevel].Range;
     }
 }

@@ -28,6 +28,6 @@ public sealed partial class RadioJammerComponent : Component
     [DataField(required: true)]
     public List<RadioJamSetting> Settings = new();
 
-    [DataField("selectedPowerLevel"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("selectedPowerLevel")]
     public byte SelectedPowerLevel = 1;
 }
