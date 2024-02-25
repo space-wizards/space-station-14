@@ -923,6 +923,25 @@
         probability: 0.1
 
 - type: reagent
+  id: Omegizine
+  name: reagent-name-omegizine
+  group: Medicine
+  desc: reagent-desc-omegizine
+  physicalDesc: reagent-physical-desc-technological
+  flavor: nanites
+  color: "#666699"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange ## THIS IS ADMIN ONLY!! NO RECIPE!!
+        damage:
+          groups:
+            Burn: -50
+            Toxin: -50
+            Airloss: -50
+            Brute: -50
+
+- type: reagent
   id: Sigynate
   name: reagent-name-sigynate
   group: Medicine
