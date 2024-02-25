@@ -17,10 +17,11 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.35
+          radius: 0.45
         density: 15
         mask:
         - GhostImpassable
+        - Impassable
   - type: Visibility
     layer: 2
   - type: Eye
@@ -57,6 +58,7 @@
   - type: Transform
     anchored: true
   - type: Physics
+    canCollide: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -65,6 +67,90 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+      blobNorth:
+        shape:
+          !type:EdgeShape
+          vertex1: "-0.5,1.5"
+          vertex2: "0.5, 1.5"
+        layer:
+        - GhostImpassable
+      blobSouth:
+        shape:
+          !type:EdgeShape
+          vertex1: "-0.5,-1.5"
+          vertex2: "0.5, -1.5"
+        layer:
+        - GhostImpassable
+      blobEast:
+        shape:
+          !type:EdgeShape
+          vertex1: "1.5, 0.5"
+          vertex2: "1.5,-0.5"
+        layer:
+        - GhostImpassable
+      blobWest:
+        shape:
+          !type:EdgeShape
+          vertex1: "-1.5, 0.5"
+          vertex2: "-1.5,-0.5"
+        layer:
+        - GhostImpassable
+      blobNorthEast:
+        shape:
+          !type:EdgeShape
+          vertex1: "1.5,1.5"
+          vertex2: "0.5,1.5"
+        layer:
+        - GhostImpassable
+      blobNorthWest:
+        shape:
+          !type:EdgeShape
+          vertex1: "-0.5,1.5"
+          vertex2: "-1.5,1.5"
+        layer:
+        - GhostImpassable
+      blobSouthEast:
+        shape:
+          !type:EdgeShape
+          vertex1: "1.5,-1.5"
+          vertex2: "0.5,-1.5"
+        layer:
+        - GhostImpassable
+      blobSouthWest:
+        shape:
+          !type:EdgeShape
+          vertex1: "-0.5,-1.5"
+          vertex2: "-1.5,-1.5"
+        layer:
+        - GhostImpassable
+      blobEastNorth:
+        shape:
+          !type:EdgeShape
+          vertex1: "1.5,1.5"
+          vertex2: "1.5,0.5"
+        layer:
+        - GhostImpassable
+      blobEastSouth:
+        shape:
+          !type:EdgeShape
+          vertex1: "1.5,-0.5"
+          vertex2: "1.5,-1.5"
+        layer:
+        - GhostImpassable
+      blobWestNorth:
+        shape:
+          !type:EdgeShape
+          vertex1: "-1.5,1.5"
+          vertex2: "-1.5,0.5"
+        layer:
+        - GhostImpassable
+      blobWestSouth:
+        shape:
+          !type:EdgeShape
+          vertex1: "-1.5,-0.5"
+          vertex2: "-1.5,-1.5"
         layer:
         - GhostImpassable
   - type: BlobStructure
