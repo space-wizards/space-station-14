@@ -35,11 +35,36 @@
           icon:
             sprite: Objects/Materials/Shards/shard.rsi
             state: shard3
-        - tag: Matchbox
-          name: match box
-          icon: 
+         - tag: Matchstick
+          name: match stick
+          icon:
             sprite: Objects/Tools/matches.rsi
-            state: matchbox
+            state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
+        - tag: Matchstick
+          name: match stick
+          icon:
+            sprite: Objects/Tools/matches.rsi
+            state: match_unlit
             doAfter: 4    
     - node: shell
       entity: ShellShotgunImprovised
