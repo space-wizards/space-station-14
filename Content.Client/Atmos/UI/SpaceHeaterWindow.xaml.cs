@@ -19,13 +19,21 @@ public sealed partial class SpaceHeaterWindow : DefaultWindow
     public float MinTemp = 0.0f;
     public float MaxTemp = 0.0f;
 
+    public RadioOptions<int> PowerLevelSelector;
+
     public SpaceHeaterWindow()
     {
         RobustXamlLoader.Load(this);
 
         foreach (var value in Enum.GetValues<SpaceHeaterMode>())
         {
-            Mode.AddItem(Loc.GetString($"comp-space-heater-mode-{value}"), (int) value);
+            ModeSelector.AddItem(Loc.GetString($"comp-space-heater-mode-{value}"), (int) value);
+        }
+
+        PowerLevelSelectorHBox.AddChild(PowerLevelSelector = new RadioOptions<int>(RadioOptionsLayout.Horizontal));
+        foreach (var value in Enum.GetValues<SpaceHeaterPowerLevel>())
+        {
+            PowerLevelSelector.AddItem(Loc.GetString($"comp-space-heater-ui-{value}-power-consumption"), (int) value);
         }
 
         // Only allow temperature increment/decrement of TemperatureChangeDelta

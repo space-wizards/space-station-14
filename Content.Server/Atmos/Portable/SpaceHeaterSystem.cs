@@ -33,6 +33,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
         SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterToggleMessage>(OnToggle);
         SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeTemperatureMessage>(OnTemperatureChanged);
         SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeModeMessage>(OnModeChanged);
+        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangePowerLevelMessage>(OnPowerLevelChanged);
     }
 
     private void OnInit(EntityUid uid, SpaceHeaterComponent spaceHeater, MapInitEvent args)
@@ -40,6 +41,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
         if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
             return;
         thermoMachine.Cp = spaceHeater.HeatingCp;
+        thermoMachine.HeatCapacity = spaceHeater.PowerConsumption;
     }
 
     private void OnBeforeOpened(EntityUid uid, SpaceHeaterComponent spaceHeater, BeforeActivatableUIOpenEvent args)
@@ -146,6 +148,31 @@ public sealed class SpaceHeaterSystem : EntitySystem
         DirtyUI(uid, spaceHeater);
     }
 
+    private void OnPowerLevelChanged(EntityUid uid, SpaceHeaterComponent spaceHeater, SpaceHeaterChangePowerLevelMessage args)
+    {
+        if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
+            return;
+
+        spaceHeater.PowerLevel = args.PowerLevel;
+
+        switch (spaceHeater.PowerLevel)
+        {
+            case SpaceHeaterPowerLevel.Low:
+                thermoMachine.HeatCapacity = spaceHeater.PowerConsumption / 2;
+                break;
+
+            case SpaceHeaterPowerLevel.Medium:
+                thermoMachine.HeatCapacity = spaceHeater.PowerConsumption;
+                break;
+
+            case SpaceHeaterPowerLevel.High:
+                thermoMachine.HeatCapacity = spaceHeater.PowerConsumption * 2;
+                break;
+        }
+
+        DirtyUI(uid, spaceHeater);
+    }
+
     private void DirtyUI(EntityUid uid, SpaceHeaterComponent? spaceHeater)
     {
         if (!Resolve(uid, ref spaceHeater)
@@ -155,7 +182,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
             return;
         }
         _userInterfaceSystem.TrySetUiState(uid, SpaceHeaterUiKey.Key,
-            new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode));
+            new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode, spaceHeater.PowerLevel));
     }
 
     private void UpdateAppearance(EntityUid uid, SpaceHeaterState state)

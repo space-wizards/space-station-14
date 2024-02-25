@@ -151,7 +151,6 @@
     key: enum.SpaceHeaterUiKey.Key
   - type: SpaceHeater
   - type: GasThermoMachine
-    heatCapacity: 7500
     temperatureTolerance: 0.2
     atmospheric: true
   - type: Damageable

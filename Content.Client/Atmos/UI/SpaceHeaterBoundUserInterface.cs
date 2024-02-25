@@ -1,4 +1,3 @@
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
@@ -34,7 +33,9 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
         _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
         _window.IncreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
         _window.DecreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
-        _window.Mode.OnItemSelected += OnModeChanged;
+        _window.ModeSelector.OnItemSelected += OnModeChanged;
+
+        _window.PowerLevelSelector.OnItemSelected += OnPowerLevelChange;
     }
 
     private void OnToggleStatusButtonPressed()
@@ -50,8 +51,14 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
 
     private void OnModeChanged(OptionButton.ItemSelectedEventArgs args)
     {
-        _window?.Mode.SelectId(args.Id);
+        _window?.ModeSelector.SelectId(args.Id);
         SendMessage(new SpaceHeaterChangeModeMessage((SpaceHeaterMode) args.Id));
+    }
+
+    private void OnPowerLevelChange(RadioOptionItemSelectedEventArgs<int> args)
+    {
+        _window?.PowerLevelSelector.Select(args.Id);
+        SendMessage(new SpaceHeaterChangePowerLevelMessage((SpaceHeaterPowerLevel) args.Id));
     }
 
     /// <summary>
@@ -65,7 +72,8 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
             return;
 
         _window.SetActive(cast.Enabled);
-        _window.Mode.SelectId((int) cast.Mode);
+        _window.ModeSelector.SelectId((int) cast.Mode);
+        _window.PowerLevelSelector.Select((int) cast.PowerLevel);
 
         _window.MinTemp = cast.MinTemperature;
         _window.MaxTemp = cast.MaxTemperature;

@@ -29,6 +29,18 @@ public sealed class SpaceHeaterChangeTemperatureMessage : BoundUserInterfaceMess
 
 [Serializable]
 [NetSerializable]
+public sealed class SpaceHeaterChangePowerLevelMessage : BoundUserInterfaceMessage
+{
+    public SpaceHeaterPowerLevel PowerLevel { get; }
+
+    public SpaceHeaterChangePowerLevelMessage(SpaceHeaterPowerLevel powerLevel)
+    {
+        PowerLevel = powerLevel;
+    }
+}
+
+[Serializable]
+[NetSerializable]
 public sealed class SpaceHeaterChangeModeMessage : BoundUserInterfaceMessage
 {
     public SpaceHeaterMode Mode { get; }
@@ -48,14 +60,16 @@ public sealed class SpaceHeaterBoundUserInterfaceState : BoundUserInterfaceState
     public float TargetTemperature { get; }
     public bool Enabled { get; }
     public SpaceHeaterMode Mode { get; }
+    public SpaceHeaterPowerLevel PowerLevel { get; }
 
-    public SpaceHeaterBoundUserInterfaceState(float minTemperature, float maxTemperature, float temperature, bool enabled, SpaceHeaterMode mode)
+    public SpaceHeaterBoundUserInterfaceState(float minTemperature, float maxTemperature, float temperature, bool enabled, SpaceHeaterMode mode, SpaceHeaterPowerLevel powerLevel)
     {
         MinTemperature = minTemperature;
         MaxTemperature = maxTemperature;
         TargetTemperature = temperature;
         Enabled = enabled;
         Mode = mode;
+        PowerLevel = powerLevel;
     }
 }
 
@@ -65,4 +79,12 @@ public enum SpaceHeaterMode : byte
     Auto,
     Heat,
     Cool
+}
+
+[Serializable, NetSerializable]
+public enum SpaceHeaterPowerLevel : byte
+{
+    Low,
+    Medium,
+    High
 }

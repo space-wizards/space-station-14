@@ -8,25 +8,31 @@ namespace Content.Server.Atmos.Portable;
 public sealed partial class SpaceHeaterComponent : Component
 {
     /// <summary>
-    /// Current mode the space heater is in. Possible values : Auto, Heat and Cool
+    ///     Current mode the space heater is in. Possible values : Auto, Heat and Cool
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SpaceHeaterMode Mode = SpaceHeaterMode.Auto;
 
     /// <summary>
-    /// The state the space heater is in. Possible values : Off, StandBy, Heating, Cooling
+    ///     The state the space heater is in. Possible values : Off, StandBy, Heating, Cooling
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SpaceHeaterState State = SpaceHeaterState.Off;
 
     /// <summary>
-    /// Maximum target temperature the device can be set to
+    ///     The power level the space heater is currently set to. Possible values : Low, Medium, High
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SpaceHeaterPowerLevel PowerLevel = SpaceHeaterPowerLevel.Medium;
+
+    /// <summary>
+    ///     Maximum target temperature the device can be set to
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxTemperature = Atmospherics.T20C + 20;
 
     /// <summary>
-    /// Minimal target temperature the device can be set to
+    ///     Minimal target temperature the device can be set to
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MinTemperature = Atmospherics.T0C - 10;
@@ -37,16 +43,22 @@ public sealed partial class SpaceHeaterComponent : Component
     /// </summary>
     [DataField("heatingCoefficientOfPerformance")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float HeatingCp = 1f;
+    public float HeatingCp = 0.9f;
 
     [DataField("coolingCoefficientOfPerformance")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float CoolingCp = -0.8f;
 
     /// <summary>
-    ///     The temperature delta from the target temperature after which the space heater switch mode while in Auto. Value should account for the thermomachine temperature tolerance.
+    ///     The delta from the target temperature after which the space heater switch mode while in Auto. Value should account for the thermomachine temperature tolerance.
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float AutoModeSwitchThreshold = 0.8f;
+
+    /// <summary>
+    ///     Current electrical power consumption, in watts, of the space heater at medium power level. Passed to the thermomachine component.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float PowerConsumption = 3500f;
 }
