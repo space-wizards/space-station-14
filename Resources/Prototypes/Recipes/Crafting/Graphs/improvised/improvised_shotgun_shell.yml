@@ -8,19 +8,50 @@
           steps:
             - material: Steel
               amount: 1
-              doAfter: 1.33
             - material: Plastic
               amount: 1
-              doAfter: 1
             - material: ShardGlass
               amount: 4
-              doAfter: 1.33
-        - tag: Matchstick
-          name: match stick
-          icon:
-            sprite: Objects/Tools/matches.rsi
-            state: icon
-          amount: 8
-          doAfter: 1.33
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: icon
+              doAfter: 4
     - node: shell
       entity: ShellShotgunImprovised
