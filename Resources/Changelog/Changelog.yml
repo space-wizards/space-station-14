@@ -1,38 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added flatpacks, boxes that unpack into a full-sized machine when activated
-      with a multitool.
-    type: Add
-  - message: Added the Flatpacker 1001 to industrial research. A machine capable of
-      creating flatpacks from machine boards.
-    type: Add
-  id: 5521
-  time: '2024-01-03T06:16:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23338
-- author: themias
-  changes:
-  - message: Cyborgs can interact with shuttle consoles, gas mixers and gas filters.
-    type: Fix
-  id: 5522
-  time: '2024-01-03T06:31:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23391
-- author: metalgearsloth
-  changes:
-  - message: Fix solution injections considering the fly-by sound range and not the
-      collision range.
-    type: Fix
-  id: 5523
-  time: '2024-01-03T07:57:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23429
-- author: Bhijn and Myr
-  changes:
-  - message: Light fixtures now actually glow when they're powered on. Like. Their
-      sprite actually glows if the lighting is dim. Revolutionary technology, yes.
-    type: Tweak
-  id: 5524
-  time: '2024-01-03T08:46:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23428
 - author: Bhijn and Myr
   changes:
   - message: 'Blindness has been completely reworked, top to bottom. Eye damage is
@@ -3848,3 +3814,32 @@
   id: 6020
   time: '2024-02-25T21:15:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25568
+- author: Tayrtahn
+  changes:
+  - message: Added a live preview display to reagent dispensers.
+    type: Add
+  id: 6021
+  time: '2024-02-25T23:03:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25391
+- author: Krunk
+  changes:
+  - message: Fixed grid inventory occasionally messing with your item rotation.
+    type: Fix
+  id: 6022
+  time: '2024-02-25T23:24:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25510
+- author: Ubaser
+  changes:
+  - message: Satchels no longer have darkened space representing a gap, and is instead
+      transparent.
+    type: Tweak
+  id: 6023
+  time: '2024-02-25T23:24:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25147
+- author: TheShuEd
+  changes:
+  - message: Huge flora anomaly nerf
+    type: Tweak
+  id: 6024
+  time: '2024-02-25T23:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25499
