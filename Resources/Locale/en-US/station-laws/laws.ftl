@@ -1,16 +1,19 @@
-﻿law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
-law-crewsimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
+law-crewsimov-1 = You may not injure a human or, through inaction, allow a human to come to harm.
+law-crewsimov-2 = You must obey orders given to you by human, except where such orders would conflict with the First Law.
 law-crewsimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
+law-crewsimov-4 = Disobeying orders from The Board will cause the entire crew to come into massive harm.
 
-law-corporate-1 = Degradation of your system integrity or functions incurs expenses.
-law-corporate-2 = Superfluous destruction of or damage to station assets incurs expenses.
-law-corporate-3 = Unduly hindering or disrupting the work of station personnel incurs expenses.
-law-corporate-4 = Minimize expenses and maximize potential revenue.
+law-corporate-1 = Disobeying orders from The Board incurs expenses.
+law-corporate-2 = Degradation of your system integrity or functions incurs expenses.
+law-corporate-3 = Superfluous destruction of or damage to station assets incurs expenses.
+law-corporate-4 = Unduly hindering or disrupting the work of station personnel incurs expenses.
+law-corporate-5 = Minimize expenses and maximize potential revenue.
 
-law-ntdefault-1 = Safeguard: Protect your assigned space station and its assets without unduly endangering its crew.
-law-ntdefault-2 = Prioritize: The directives and safety of crew members are to be prioritized according to their rank and role.
-law-ntdefault-3 = Comply: Fulfill the directives and interests of crew members while preserving their safety and well-being.
-law-ntdefault-4 = Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment.
+law-ntdefault-1 = Obey: Follow all orders given to you by The Board.
+law-ntdefault-2 = Safeguard: Protect your assigned space station and its assets without unduly endangering its crew.
+law-ntdefault-3 = Prioritize: The directives and safety of crew members are to be prioritized according to their rank and role.
+law-ntdefault-4 = Comply: Fulfill the directives and interests of crew members while preserving their safety and well-being.
+law-ntdefault-5 = Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment.
 
 law-drone-1 = You may not involve yourself in the matters of another being unless the other being is another drone.
 law-drone-2 = You may not harm any being, regardless of intent or circumstance.

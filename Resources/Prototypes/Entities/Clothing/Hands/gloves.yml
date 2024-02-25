@@ -111,6 +111,24 @@
 
 - type: entity
   parent: ClothingHandsBase
+  id: ClothingHandsGlovesSyndieCap
+  name: syndicate gloves
+  description: Powerful black gloves, with a nice red and gold trim. Swanky.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/syndicatecap.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/syndicatecap.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-black
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
   id: ClothingHandsGlovesHop
   name: papercut-proof gloves
   description: Perfect for dealing with paperwork and matters with bureaucracy.
