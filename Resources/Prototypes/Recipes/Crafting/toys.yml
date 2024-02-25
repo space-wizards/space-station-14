@@ -24,41 +24,6 @@
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
     state: icon
 
-- type: constructionGraph
-  id: PoppyFlowerBouquetCraft
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: PoppyBouquet
-          steps:
-            - tag: Flower
-              name: flower
-              icon:
-                sprite: Objects/Specific/Hydroponics/poppy.rsi
-                state: produce
-            - tag: Flower
-              name: flower
-              icon:
-                sprite: Objects/Specific/Hydroponics/poppy.rsi
-                state: produce
-            - tag: Flower
-              name: flower
-              icon:
-                sprite: Objects/Specific/Hydroponics/poppy.rsi
-                state: produce
-            - tag: Flower
-              name: flower
-              icon:
-                sprite: Objects/Specific/Hydroponics/poppy.rsi
-                state: produce
-            - tag: Flower
-              name: flower
-              icon:
-                sprite: Objects/Specific/Hydroponics/poppy.rsi
-                state: produce
-              doAfter: 10
-
 - type: construction
   name: PoppyBouquet
   id: PoppyFlowerBouquetCraft

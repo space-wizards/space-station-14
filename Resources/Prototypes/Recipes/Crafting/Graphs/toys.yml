@@ -36,3 +36,43 @@
         doAfter: 5
   - node: suit
     entity: ClothingOuterSuitIan
+
+- type: constructionGraph
+  id: PoppyFlowerBouquetCraft
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: PoppyBouquet
+          steps:
+            - tag: Flower
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Flower
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Flower
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Flower
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Flower
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Cloth
+              name: cloth
+              icon:
+                sprite: Objects/Materials/materials.rsi
+                state: produce
+              doAfter: 10
