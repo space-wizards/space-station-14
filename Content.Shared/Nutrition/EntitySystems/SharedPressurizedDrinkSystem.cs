@@ -226,7 +226,7 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
             return 0;
 
         var currentDuration = entity.Comp.FizzySettleTime - _timing.CurTime;
-        return Math.Min(currentDuration / entity.Comp.FizzinessMaxDuration, 1);
+        return Easings.InOutCubic((float) Math.Min(currentDuration / entity.Comp.FizzinessMaxDuration, 1));
     }
 
     /// <summary>
