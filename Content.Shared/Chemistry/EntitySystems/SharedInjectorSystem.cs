@@ -37,9 +37,6 @@ public abstract class SharedInjectorSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        if (!HasComp<ActorComponent>(args.User))
-            return;
-
         var (_, component) = entity;
 
         // Add specific transfer verbs according to the container's size
