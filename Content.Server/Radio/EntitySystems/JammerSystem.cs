@@ -96,65 +96,35 @@ public sealed class JammerSystem : EntitySystem
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
-        
-        string[] popUpArray = 
-        {
-            Loc.GetString("radio-jammer-component-set-low"),
-            Loc.GetString("radio-jammer-component-set-medium"),
-            Loc.GetString("radio-jammer-component-set-high")
-        };
-        string[] settingArray = 
-        {
-            Loc.GetString("radio-jammer-component-low"),
-            Loc.GetString("radio-jammer-component-medium"),
-            Loc.GetString("radio-jammer-component-high")
-        };
 
         var user = args.User;
-        
-        for (byte i = 0; i < 3; i++) 
+
+        for (byte i = 0; i < entity.Comp.Settings.Count; i++)
         {
-            byte currentPowerLevel = i;
-            
+            var currentIndex = i;
             var verb = new Verb
             {
-                Priority = currentPowerLevel+1,
+                Priority = currentIndex,
                 Category = VerbCategory.PowerLevel,
-                Disabled = entity.Comp.SelectedPowerLevel == currentPowerLevel,
+                Disabled = entity.Comp.SelectedPowerLevel == currentIndex,
                 Act = () =>
                 {
-                    entity.Comp.SelectedPowerLevel = currentPowerLevel;
-                    _popup.PopupEntity(popUpArray[currentPowerLevel], user, user);
+                    entity.Comp.SelectedPowerLevel = currentIndex;
+                    _popup.PopupEntity(Loc.GetString(entity.Comp.Settings[currentIndex].Message), user, user);
                 },
-                Text = settingArray[currentPowerLevel],
+                Text = Loc.GetString(entity.Comp.Settings[currentIndex].Name),
             };
             args.Verbs.Add(verb);
         }
-
     }
-
     private static float GetCurrentWattage(RadioJammerComponent jammer)
     {
-        switch(jammer.SelectedPowerLevel)
-        {
-        case 2:
-            return jammer.HighPowerWattage;
-        case 1:
-            return jammer.MediumPowerWattage;
-        default:
-            return jammer.LowPowerWattage;
-        }
+        var selectedPowerLevel = jammer.SelectedPowerLevel;
+        return jammer.Settings[selectedPowerLevel].Wattage;
     }
     private static float GetCurrentRange(RadioJammerComponent jammer)
     {
-        switch(jammer.SelectedPowerLevel)
-        {
-        case 2:
-            return jammer.HighPowerRange;
-        case 1:
-            return jammer.MediumPowerRange;
-        default:
-            return jammer.LowPowerRange;
-        };
+        var selectedPowerLevel = jammer.SelectedPowerLevel;
+        return jammer.Settings[selectedPowerLevel].Range;
     }
 }

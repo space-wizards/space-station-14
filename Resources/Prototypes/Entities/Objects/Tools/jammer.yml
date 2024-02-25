@@ -8,6 +8,19 @@
     sprite: Objects/Devices/jammer.rsi
     state: jammer
   - type: RadioJammer
+    settings:
+    - wattage: 1
+      range: 2.5
+      message: radio-jammer-component-set-message-low
+      name: radio-jammer-component-setting-low
+    - wattage: 2
+      range: 6
+      message: radio-jammer-component-set-message-medium
+      name: radio-jammer-component-setting-medium
+    - wattage: 12
+      range: 12
+      message: radio-jammer-component-set-message-high
+      name: radio-jammer-component-setting-high
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
