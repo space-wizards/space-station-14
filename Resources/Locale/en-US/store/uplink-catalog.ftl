@@ -216,9 +216,6 @@ uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled
 uplink-l6-saw-bundle-name = L6 Saw Bundle
 uplink-l6-saw-bundle-desc = More dakka: The iconic L6 light machine gun, bundled with 2 box magazines.
 
-uplink-zombie-bundle-name = Syndicate Zombie Bundle
-uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station.
-
 uplink-surplus-bundle-name = Surplus Crate
 uplink-surplus-bundle-desc = Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
 
