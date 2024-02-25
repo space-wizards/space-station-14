@@ -278,7 +278,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 continue;
 
             if (HasComp<InitialInfectedExemptComponent>(player.AttachedEntity))
-                continue; // used (for example) on ERT
+                continue; // used (for example) on command and security
 
             playerList.Add(player);
 
@@ -330,6 +330,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
             EnsureComp<ZombifyOnDeathComponent>(ownedEntity);
             EnsureComp<IncurableZombieComponent>(ownedEntity);
+            EnsureComp<ShowZombieIconsComponent>(ownedEntity);
             var inCharacterName = MetaData(ownedEntity).EntityName;
             _action.AddAction(ownedEntity, ref pending.Action, ZombieRuleComponent.ZombifySelfActionPrototype, ownedEntity);
 
