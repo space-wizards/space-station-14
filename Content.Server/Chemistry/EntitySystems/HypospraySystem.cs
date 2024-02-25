@@ -33,7 +33,6 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
-        SubscribeLocalEvent<HyposprayComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
     }
 
@@ -66,11 +65,6 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         UseHypospray(entity, args.Target.Value, args.User);
         args.Handled = true;
-    }
-
-    private void OnSolutionChange(Entity<HyposprayComponent> entity, ref SolutionContainerChangedEvent args)
-    {
-        Dirty(entity);
     }
 
     public void OnAttack(Entity<HyposprayComponent> entity, ref MeleeHitEvent args)
@@ -190,8 +184,6 @@ public sealed class HypospraySystem : SharedHypospraySystem
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
             ("amount", removedSolution.Volume),
             ("target", Identity.Entity(target, EntityManager))), entity.Owner, user);
-
-        Dirty(entity);
     }
 
     static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan, HyposprayComponent component)
