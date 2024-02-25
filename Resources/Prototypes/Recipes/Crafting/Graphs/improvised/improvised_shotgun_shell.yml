@@ -1,7 +1,7 @@
 - type: constructionGraph
   id: ImprovisedShotgunShellGraph
   start: start
- graph:
+  graph:
     - node: start
       edges:
         - to: shell
