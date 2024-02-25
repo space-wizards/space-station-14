@@ -5,93 +5,99 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
-/// Lets a drink burst open when thrown while closed.
-/// Requires <see cref="DrinkComponent"/> and <see cref="OpenableComponent"/> to work.
+/// Represents a solution container that can hold the pressure from a solution that
+/// gets fizzy when aggitated, and can spray the solution then opened or thrown.
+/// Handles simulating the fizziness of the solution, responding to aggitating events,
+/// and spraying the solution out when opening or throwing the entity.
 /// </summary>
 [NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [RegisterComponent, Access(typeof(SharedPressurizedSolutionSystem))]
 public sealed partial class PressurizedSolutionComponent : Component
 {
     /// <summary>
-    /// Name of the solution to use.
+    /// The name of the solution to use.
     /// </summary>
     [DataField]
     public string Solution = "drink";
 
-    [DataField, AutoNetworkedField]
+    /// <summary>
+    /// The sound to play when the solution sprays out of the container.
+    /// </summary>
+    [DataField]
     public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Items/soda_spray.ogg");
 
     /// <summary>
-    /// The longest amount of time that the drink can remain fizzy after being shaken.
+    /// The longest amount of time that the drink can remain fizzy after being aggitated.
+    /// Put another way, how long the solution will remain fizzy when aggitated the maximum amount.
     /// Used to calculate the current fizziness level.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan FizzyMaxDuration = TimeSpan.FromSeconds(120);
+    [DataField]
+    public TimeSpan FizzinessMaxDuration = TimeSpan.FromSeconds(120);
 
     /// <summary>
-    /// The time at which the drink will be fully settled after being shaken.
+    /// The time at which the solution will be fully settled after being shaken.
     /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan FizzySettleTime;
 
     /// <summary>
-    /// How much to increase the drink's fizziness each time it's shaken.
+    /// How much to increase the solution's fizziness each time it's shaken.
     /// A value of 1 will maximize it with a single shake, and a value of
     /// 0.5 will increase it by half with each shake.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float FizzinessAddedOnShake = 0.4f;
 
     /// <summary>
-    /// How much to increase the drink's fizziness when it lands after being thrown.
+    /// How much to increase the solution's fizziness when it lands after being thrown.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float FizzinessAddedOnLand = 0.1f;
 
     /// <summary>
-    /// How much to modify the chance of spraying when the drink is opened.
+    /// How much to modify the chance of spraying when the entity is opened.
     /// Increasing this effectively increases the fizziness value when checking if it should spray.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float SprayChanceModOpened = -0.01f; // Just enough to prevent spraying at 0 fizziness
+    [DataField]
+    public float SprayChanceModOnOpened = -0.01f; // Just enough to prevent spraying at 0 fizziness
 
     /// <summary>
-    /// How much to modify the chance of spraying when the drink is thrown.
+    /// How much to modify the chance of spraying when the entity is shaken.
     /// Increasing this effectively increases the fizziness value when checking if it should spray.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float SprayChanceModThrown = 0.25f;
+    [DataField]
+    public float SprayChanceModOnShake = -1; // No spraying when shaken by default
 
     /// <summary>
-    /// How much to modify the chance of spraying when the drink collides with another entity.
+    /// How much to modify the chance of spraying when the entity lands after being thrown.
     /// Increasing this effectively increases the fizziness value when checking if it should spray.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float SprayChanceModCollide = 0.1f;
+    [DataField]
+    public float SprayChanceModOnLand = 0.25f;
 
     /// <summary>
     /// Holds the current randomly-rolled threshold value for spraying.
-    /// If fizziness exceeds this value when the drink is opened, it will spray.
-    /// By rolling this value when the drink is shaken, we can have randomization
+    /// If fizziness exceeds this value when the entity is opened, it will spray.
+    /// By rolling this value when the entity is aggitated, we can have randomization
     /// while still having prediction!
     /// </summary>
     [DataField, AutoNetworkedField]
     public float SprayFizzinessThresholdRoll;
 
     /// <summary>
-    /// Popup message shown to user when sprayed by the drink.
+    /// Popup message shown to user when sprayed by the solution.
     /// </summary>
     [DataField]
     public LocId SprayHolderMessageSelf = "pressurized-drink-spray-holder-self";
 
     /// <summary>
-    /// Popup message shown to others when a user is sprayed by the drink.
+    /// Popup message shown to others when a user is sprayed by the solution.
     /// </summary>
     [DataField]
     public LocId SprayHolderMessageOthers = "pressurized-drink-spray-holder-others";
 
     /// <summary>
-    /// Popup message shown when the drink sprays without a target.
+    /// Popup message shown aboe the entity when the solution sprays without a target.
     /// </summary>
     [DataField]
     public LocId SprayGroundMessage = "pressurized-drink-spray-ground";

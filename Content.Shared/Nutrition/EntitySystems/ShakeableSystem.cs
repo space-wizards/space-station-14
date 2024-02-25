@@ -3,7 +3,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -50,6 +49,11 @@ public sealed partial class ShakeableSystem : EntitySystem
         TryShake((entity, entity.Comp), args.User);
     }
 
+    /// <summary>
+    /// Attempts to start the doAfter to shake the entity.
+    /// Fails and returns false if the entity cannot be shaken for any reason.
+    /// If successful, displays popup messages, plays shake sound, and starts the doAfter.
+    /// </summary>
     public bool TryStartShake(Entity<ShakeableComponent?> entity, EntityUid user)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -78,6 +82,11 @@ public sealed partial class ShakeableSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Attempts to shake the entity, skipping the doAfter.
+    /// Fails and returns false if the entity cannot be shaken for any reason.
+    /// If successful, raises a ShakeEvent on the entity.
+    /// </summary>
     public bool TryShake(Entity<ShakeableComponent?> entity, EntityUid? user = null)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -92,6 +101,10 @@ public sealed partial class ShakeableSystem : EntitySystem
         return true;
     }
 
+
+    /// <summary>
+    /// Is it possible for the given user to shake the entity?
+    /// </summary>
     public bool CanShake(Entity<ShakeableComponent?> entity, EntityUid? user = null)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -109,9 +122,17 @@ public sealed partial class ShakeableSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Raised when a ShakeableComponent is shaken, after the doAfter completes.
+/// </summary>
+/// <param name="Shaker"></param>
 [ByRefEvent]
 public record struct ShakeEvent(EntityUid? Shaker);
 
+/// <summary>
+/// Raised when trying to shake a ShakeableComponent. If cancelled, the
+/// entity will not be shaken.
+/// </summary>
 public sealed class AttemptShakeEvent : CancellableEntityEventArgs
 {
 }

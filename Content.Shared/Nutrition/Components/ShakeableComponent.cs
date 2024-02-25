@@ -3,19 +3,25 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nutrition.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+/// <summary>
+/// Adds a "Shake" verb to the entity's verb menu.
+/// Handles checking the entity can be shaken, displaying popups when shaking,
+/// and raising a ShakeEvent when a shake occurs.
+/// Reacting to being shaken is left up to other components.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ShakeableComponent : Component
 {
     /// <summary>
     /// How long it takes to shake this item.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan ShakeDuration = TimeSpan.FromSeconds(1f);
 
     /// <summary>
     /// Does the entity need to be in the user's hand in order to be shaken?
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool RequireInHand;
 
     /// <summary>
@@ -39,6 +45,6 @@ public sealed partial class ShakeableComponent : Component
     /// <summary>
     /// The sound that will be played when shaking this item.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public SoundSpecifier ShakeSound = new SoundPathSpecifier("/Audio/Items/soda_shake.ogg");
 }

@@ -41,30 +41,62 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         SubscribeLocalEvent<PressurizedSolutionComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
     }
 
-    private void OnMapInit(Entity<PressurizedSolutionComponent> entity, ref MapInitEvent args)
+    /// <summary>
+    /// Helper method for checking if the solution's fizziness is high enough to spray.
+    /// chanceMod is added to the actual fizziness for the comparison.
+    /// </summary>
+    private bool SprayCheck(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0)
     {
-        RollSprayThreshold(entity);
+        return Fizziness((entity, entity.Comp)) + chanceMod > entity.Comp.SprayFizzinessThresholdRoll;
     }
 
-    private void OnShake(Entity<PressurizedSolutionComponent> entity, ref ShakeEvent args)
+    /// <summary>
+    /// Checks is the solution is able to be fizzy.
+    /// Returns false if the solution isn't found, is empty, or if none of the reagents are marked as fizzy.
+    /// </summary>
+    private bool SolutionIsFizzy(Entity<PressurizedSolutionComponent> entity)
     {
-        AddFizziness(entity, entity.Comp.FizzinessAddedOnShake);
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var _, out var solution))
+            return false;
+
+        // An empty solution can't be fizzy
+        if (solution.Volume <= 0)
+            return false;
+
+        // Check each reagent in the solution
+        foreach (var reagent in solution.Contents)
+        {
+            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto))
+            {
+                // If any reagent is marked as fizzy, the solution is considered fizzy
+                if (reagentProto != null && reagentProto.Fizzy)
+                    return true;
+            }
+        }
+        // None of the reagents are marked as fizzy, so the solution isn't fizzy either
+        return false;
     }
 
+    /// <summary>
+    /// Increases the fizziness level of the solution by the given amount.
+    /// 0 will result in no change, and 1 will maximize fizziness.
+    /// Also rerolls the spray threshold.
+    /// </summary>
     private void AddFizziness(Entity<PressurizedSolutionComponent> entity, float amount)
     {
+        // Can't add fizziness if the solution isn't fizzy
         if (!SolutionIsFizzy(entity))
             return;
 
         // Convert fizziness to time
-        var duration = amount * entity.Comp.FizzyMaxDuration;
+        var duration = amount * entity.Comp.FizzinessMaxDuration;
 
         // Add to the existing settle time, if one exists. Otherwise, add to the current time
         var start = entity.Comp.FizzySettleTime > _timing.CurTime ? entity.Comp.FizzySettleTime : _timing.CurTime;
         var newTime = start + duration;
 
         // Cap the maximum fizziness
-        var maxEnd = _timing.CurTime + entity.Comp.FizzyMaxDuration;
+        var maxEnd = _timing.CurTime + entity.Comp.FizzinessMaxDuration;
         if (newTime > maxEnd)
             newTime = maxEnd;
 
@@ -74,71 +106,25 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         RollSprayThreshold(entity);
     }
 
-    private void OnOpened(Entity<PressurizedSolutionComponent> entity, ref OpenableOpenedEvent args)
-    {
-        if (SprayCheck(entity, entity.Comp.SprayChanceModOpened))
-        {
-            // Make sure the opener is actually holding the drink
-            var held = args.User != null && _hands.IsHolding(args.User.Value, entity, out _);
-
-            TrySpray((entity, entity.Comp), held ? args.User : null);
-        }
-
-        // Release the fizz!
-        TryClearFizziness((entity, entity.Comp));
-    }
-
-    private void OnLand(Entity<PressurizedSolutionComponent> entity, ref LandEvent args)
-    {
-        SprayOrAddFizziness(entity, entity.Comp.SprayChanceModThrown, entity.Comp.FizzinessAddedOnLand);
-    }
-
-    private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionContainerChangedEvent args)
-    {
-        if (args.SolutionId != entity.Comp.Solution)
-            return;
-
-        if (!SolutionIsFizzy(entity))
-            TryClearFizziness((entity, entity.Comp));
-    }
-
-    private bool SprayCheck(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0)
-    {
-        return Fizziness((entity, entity.Comp)) + chanceMod > entity.Comp.SprayFizzinessThresholdRoll;
-    }
-
-    private bool SolutionIsFizzy(Entity<PressurizedSolutionComponent> entity)
-    {
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionComp, out var solution))
-            return false;
-
-        if (solution.Volume <= 0)
-            return false;
-
-        foreach (var reagent in solution.Contents)
-        {
-            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto))
-            {
-                if (reagentProto != null && reagentProto.Fizzy)
-                    return true;
-            }
-        }
-        return false;
-    }
-
+    /// <summary>
+    /// Helper method. Performs a <see cref="SprayCheck"/>. If it passes, calls <see cref="TrySpray"/>. If it fails, <see cref="AddFizziness"/>.
+    /// </summary>
     private void SprayOrAddFizziness(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0, float fizzinessToAdd = 0, EntityUid? user = null)
     {
         if (SprayCheck(entity, chanceMod))
-        {
-            _openable.SetOpen(entity, true);
             TrySpray((entity, entity.Comp), user);
-        }
         else
-        {
             AddFizziness(entity, fizzinessToAdd);
-        }
     }
 
+    /// <summary>
+    /// Randomly generates a new spray threshold.
+    /// This is the value used to compare fizziness against when doing <see cref="SprayCheck"/>.
+    /// Since RNG will give different results between client and server, this is run on the server
+    /// and synced to the client by marking the component dirty.
+    /// We roll this in advance, rather than during <see cref="SprayCheck"/>, so that the value (hopefully)
+    /// has time to get synced to the client, so we can try be accurate with prediction.
+    /// </summary>
     private void RollSprayThreshold(Entity<PressurizedSolutionComponent> entity)
     {
         // Can't predict random, so we wait for the server to tell us
@@ -149,6 +135,22 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         Dirty(entity, entity.Comp);
     }
 
+    // TODO: When more of PuddleSystem is in Shared, move the rest of this method from Server to Shared
+    // This is separated
+    protected virtual void DoSpraySplash(Entity<PressurizedSolutionComponent> entity, Solution sol, EntityUid? user = null)
+    {
+        if (user != null)
+        {
+            var targets = new List<EntityUid>() { user.Value };
+            _colorFlash.RaiseEffect(sol.GetColor(_prototypeManager), targets, Filter.Pvs(user.Value, entityManager: EntityManager));
+        }
+    }
+
+    #region Public API
+
+    /// <summary>
+    /// Does the entity contain a solution capable of being fizzy?
+    /// </summary>
     public bool CanSpray(Entity<PressurizedSolutionComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -157,7 +159,11 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         return SolutionIsFizzy((entity, entity.Comp));
     }
 
-    public bool TrySpray(Entity<PressurizedSolutionComponent?> entity, EntityUid? user = null)
+    /// <summary>
+    /// Attempts to spray the solution onto the given entity, or the ground if none is given.
+    /// Fails if the solution isn't able to be sprayed.
+    /// </summary>
+    public bool TrySpray(Entity<PressurizedSolutionComponent?> entity, EntityUid? target = null)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
@@ -168,42 +174,47 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var interactions))
             return false;
 
+        // If the container is openable, open it
+        _openable.SetOpen(entity, true);
+
+        // Get the spray solution from the container
         var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
+
+        // TODO: When PuddleSystem is in Shared, move DoSpraySplash into this method.
+        DoSpraySplash((entity, entity.Comp), solution, target);
+
         var drinkName = Identity.Entity(entity, EntityManager);
 
-        DoSpraySplash((entity, entity.Comp), solution, user);
-
-        if (user != null)
+        if (target != null)
         {
-            _reactive.DoEntityReaction(user.Value, solution, ReactionMethod.Touch);
+            _reactive.DoEntityReaction(target.Value, solution, ReactionMethod.Touch);
 
-            var victimName = Identity.Entity(user.Value, EntityManager);
+            var victimName = Identity.Entity(target.Value, EntityManager);
 
-            _popup.PopupEntity(Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName)), user.Value, Filter.PvsExcept(user.Value), true);
-            _popup.PopupClient(Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName)), user.Value, user.Value);
+            // Show a popup to everyone but the target
+            _popup.PopupEntity(Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName)), target.Value, Filter.PvsExcept(target.Value), true);
+            // Show a popup to the target
+            _popup.PopupClient(Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName)), target.Value, target.Value);
         }
         else
         {
+            // Show a popup to everyone in PVS range
             if (_timing.IsFirstTimePredicted)
                 _popup.PopupEntity(Loc.GetString(entity.Comp.SprayGroundMessage, ("drink", drinkName)), entity);
         }
 
-        _audio.PlayPredicted(entity.Comp.SpraySound, entity, user);
+        _audio.PlayPredicted(entity.Comp.SpraySound, entity, target);
+
+        // We just used all our fizziness, so clear it
         TryClearFizziness(entity);
 
         return true;
     }
 
-    // TODO: When more of PuddleSystem is in Shared, move the rest of this method from Server to Shared
-    protected virtual void DoSpraySplash(Entity<PressurizedSolutionComponent> entity, Solution sol, EntityUid? user = null)
-    {
-        if (user != null)
-        {
-            var targets = new List<EntityUid>() { user.Value };
-            _colorFlash.RaiseEffect(sol.GetColor(_prototypeManager), targets, Filter.Pvs(user.Value, entityManager: EntityManager));
-        }
-    }
-
+    /// <summary>
+    /// What is the current fizziness level of the solution, from 0 to 1?
+    /// If the
+    /// </summary>
     public double Fizziness(Entity<PressurizedSolutionComponent?> entity)
     {
         // No component means no fizz
@@ -215,9 +226,13 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
             return 0;
 
         var currentDuration = entity.Comp.FizzySettleTime - _timing.CurTime;
-        return Math.Min(currentDuration / entity.Comp.FizzyMaxDuration, 1);
+        return Math.Min(currentDuration / entity.Comp.FizzinessMaxDuration, 1);
     }
 
+    /// <summary>
+    /// Attempts to
+    /// </summary>
+    /// <param name="entity"></param>
     public void TryClearFizziness(Entity<PressurizedSolutionComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -229,4 +244,41 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         RollSprayThreshold((entity, entity.Comp));
     }
 
+    #endregion
+
+    #region Event Handlers
+    private void OnMapInit(Entity<PressurizedSolutionComponent> entity, ref MapInitEvent args)
+    {
+        RollSprayThreshold(entity);
+    }
+
+    private void OnOpened(Entity<PressurizedSolutionComponent> entity, ref OpenableOpenedEvent args)
+    {
+        // Make sure the opener is actually holding the drink
+        var held = args.User != null && _hands.IsHolding(args.User.Value, entity, out _);
+
+        SprayOrAddFizziness(entity, entity.Comp.SprayChanceModOnOpened, -1, held ? args.User : null);
+    }
+
+    private void OnShake(Entity<PressurizedSolutionComponent> entity, ref ShakeEvent args)
+    {
+        SprayOrAddFizziness(entity, entity.Comp.SprayChanceModOnShake, entity.Comp.FizzinessAddedOnShake, args.Shaker);
+    }
+
+    private void OnLand(Entity<PressurizedSolutionComponent> entity, ref LandEvent args)
+    {
+        SprayOrAddFizziness(entity, entity.Comp.SprayChanceModOnLand, entity.Comp.FizzinessAddedOnLand);
+    }
+
+    private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionContainerChangedEvent args)
+    {
+        if (args.SolutionId != entity.Comp.Solution)
+            return;
+
+        // If the solution is no longer fizzy, clear any built up fizziness
+        if (!SolutionIsFizzy(entity))
+            TryClearFizziness((entity, entity.Comp));
+    }
+
+    #endregion
 }
