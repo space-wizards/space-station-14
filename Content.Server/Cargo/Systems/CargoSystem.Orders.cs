@@ -209,7 +209,7 @@ namespace Content.Server.Cargo.Systems
                 _random.Shuffle(tradePads);
 
                 var freePads = GetFreeCargoPallets(trade, tradePads);
-                if (freePads.Count >= order.OrderQuantity)
+                if (freePads.Count >= order.OrderQuantity) //check if the station has enough free pallets
                 {
                     foreach (var pad in freePads)
                     {
@@ -219,7 +219,7 @@ namespace Content.Server.Cargo.Systems
                         {
                             tradeDestination = trade;
                             order.NumDispatched++;
-                            if (order.OrderQuantity <= order.NumDispatched)
+                            if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
                                 break;
                         }
                     }
