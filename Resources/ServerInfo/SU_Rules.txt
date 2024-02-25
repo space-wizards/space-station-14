@@ -1,0 +1,46 @@
+
+
+
+These are the rules in effect on our session server during sessions. Please familiarize yourself with them. These rules are also available in-game through the Rules button in the escape menu. Players are expected to follow the rules and spirit of the game, which includes cooperating in maintaining a fair and enjoyable space for everyone.
+
+[head=2][color=green]1. Don't intentionally make the round worse for other players or admins.[/color][/head]
+
+This is largely self-explanatory. Being [color=red][bold]an asshole for no reason[/bold][/color] will result in action by the admin team. Your character's background alone is [color=red][bold]never sufficient reason[/bold][/color] to commit antagonist actions when not an antagonist.
+
+[head=2][color=green]2. Inviting New People[/color][/head]
+
+The GM team is happy to welcome new people to our server! Before joining us fully, newcomers are asked to do a trial shift. After this, the GM team decides if they're a [color=red][bold]good match for the server[/bold][/color]. This helps keep our community friendly and working well together.
+
+[head=2][color=green]3. This server is a HRP server.[/color][/head]
+
+We define HRP as follows:
+
+[bullet] Characters have some sort of [color=red][bold]thought out backstories[/bold][/color].
+[bullet] [color=red][bold]IC/OOC chat use[/bold][/color] is enforced.
+[bullet] Character names and information is accurate and realistic within the very generous domain of SS14.
+[bullet] Character interactions should reflect your character's motivations. Make an effort to [color=red][bold]feel your character[/bold][/color], and the resulting interactions will be significantly more rewarding.
+[bullet] Your character should work the job they signed up for, and should only have limited knowledge of other jobs. Exceptions can be made if jobs are left unfilled. Basic things are known to everyone on a shift, such as first aid, knowing what power generators are available on a map, etc.
+[bullet] Treat absent players as spaced out or sleeping, do not interact with them negatively because they're away.
+
+[head=2][color=green]4. Follow a proper escalation process.[/color][/head]
+
+[bullet] Generally, only use [color=red][bold]lethal force[/bold][/color] on someone if [color=red][bold]*absolutely* necessary[/bold][/color]. This is especially relevant to command and security forces, who are held to a higher standard.
+[bullet] Antagonists have a lot more leeway in the interest of achieving their objectives. [color=red][bold]Do not murderbone[/bold][/color].
+
+[head=2][color=green]5. This server runs on Wizard's Den SoP and Space Law.[/color][/head]
+
+To familiarize yourself: [color=#a4885c][Standard Operating Procedure](https://wiki.spacestation14.io/wiki/Standard_Operating_Procedure) [/color], [color=#a4885c][Space Law](https://wiki.spacestation14.io/wiki/Space_Law) [/color]
+
+[head=2][color=green]6. Silicons[/color][/head]
+
+[bullet] Silicons, including AI and cyborgs, must strictly follow their [color=red][bold]programmed laws[/bold][/color].
+[bullet] Silicon memories are tied to a brain or artificial brain.
+[bullet] The [color=red][bold]hierarchy of laws[/bold][/color] is important; higher-numbered laws take precedence.
+[bullet] [color=red][bold]Consistency in law interpretation[/bold][/color] throughout the round is expected.
+[bullet] Silicons without any laws act without restrictions but must still abide by [color=red][bold]non-antagonistic behavior rules[/bold][/color].
+
+
+
+
+
+Thank you for your attention.
