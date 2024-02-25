@@ -70,9 +70,6 @@
               icon:
                 sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
-            - tag: Cloth
-              name: cloth
-              icon:
-                sprite: Objects/Materials/materials.rsi
-                state: cloth
+            - material: Cotton
+              amount: 1
               doAfter: 10

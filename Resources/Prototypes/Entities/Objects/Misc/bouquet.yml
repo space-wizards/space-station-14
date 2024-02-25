@@ -11,3 +11,6 @@
   - type: Item
     size: Normal
     sprite: Objects/Misc/poppybouquet.rsi
+  - type: Construction
+    graph: PoppyFlowerBouquetCraft
+    node: PoppyBouquet
