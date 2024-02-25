@@ -26,8 +26,8 @@
 
 - type: construction
   name: PoppyBouquet
-  id: PoppyFlowerBouquetCraft
-  graph: PoppyFlowerBouquetCraft
+  id: PoppyBouquet
+  graph: PoppyBouquet
   startNode: start
   targetNode: PoppyBouquet
   category: construction-category-misc
