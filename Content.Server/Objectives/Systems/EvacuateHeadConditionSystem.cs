@@ -21,6 +21,7 @@ namespace Content.Server.Objectives.Systems
         [Dependency] private readonly SharedMindSystem _mind = default!;
         [Dependency] private readonly TargetObjectiveSystem _target = default!;
         [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+        [Dependency] private readonly KillPersonConditionSystem _killPersonConditionSystem = default!;
 
         public override void Initialize()
         {
@@ -39,56 +40,12 @@ namespace Content.Server.Objectives.Systems
 
         private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)
         {
-            if (!TryComp<TargetObjectiveComponent>(uid, out var target))
-            {
-                args.Cancelled = true;
-                return;
-            }
-
-            // target already assigned
-            if (target.Target != null)
-                return;
-        
-            // no other humans
-            var allHumans = _mind.GetAliveHumansExcept(args.MindId);
-            if (allHumans.Count == 0)
-            {
-                args.Cancelled = true;
-                return;
-            }
-
-            _target.SetTarget(uid, _random.Pick(allHumans), target);
+            _killPersonConditionSystem.OnPersonAssigned(uid, comp, ref args);
         }
 
-        private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ObjectiveAssignedEvent args)
+        private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
         {
-            if (!TryComp<TargetObjectiveComponent>(uid, out var target))
-            {
-                args.Cancelled = true;
-                return;
-            }
-            // target already assigned
-            if (target.Target != null)
-                return;
-            // no other humans
-            var allHumans = _mind.GetAliveHumansExcept(args.MindId);
-            if (allHumans.Count == 0)
-            {
-                args.Cancelled = true;
-                return;
-            }
-            // new list
-            var allHeads = new List<EntityUid>();
-            foreach (var mind in allHumans)
-            {
-                if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.RequireAdminNotify)
-                    allHeads.Add(mind);
-            }
-            
-            if (allHeads.Count == 0)
-                return; // not the head=person because it causes errors
-
-            _target.SetTarget(uid, _random.Pick(allHeads), target);
+            _killPersonConditionSystem.OnHeadAssigned(uid, comp, ref args);
         }
         
         private float GetProgress(EntityUid mindId)
