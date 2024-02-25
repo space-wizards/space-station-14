@@ -10,6 +10,9 @@ reagent-desc-slime = You thought this was gradient blood at first, but you were 
 reagent-name-hemocyanin-blood = blue blood
 reagent-desc-hemocyanin-blood = Contains copper as opposed to iron which gives it a distinct blue color.
 
+reagent-name-ammonia-blood = anaerobic blood
+reagent-desc-ammonia-blood = Nothing else in the entire galaxy smells quite so appalling.
+
 reagent-name-zombie-blood = zombie blood
 reagent-desc-zombie-blood = Would not advise eating. Can be used to create an inoculation against the infection.
 

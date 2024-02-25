@@ -31,6 +31,7 @@ namespace Content.IntegrationTests.Tests
             var entityMan = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
+            var mapSystem = entityMan.System<SharedMapSystem>();
 
             await server.WaitPost(() =>
             {
@@ -41,12 +42,13 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
+
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     // TODO: Fix this better in engine.
-                    grid.SetTile(Vector2i.Zero, new Tile(1));
+                    mapSystem.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
@@ -61,7 +63,9 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
+                    }
                 }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
@@ -113,8 +117,10 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
-                };
+                    }
+                }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
                 foreach (var (uid, meta) in entityMetas)
@@ -163,11 +169,11 @@ namespace Content.IntegrationTests.Tests
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     var ent = sEntMan.SpawnEntity(protoId, new EntityCoordinates(grid.Owner, 0.5f, 0.5f));
                     foreach (var (_, component) in sEntMan.GetNetComponents(ent))
                     {
-                        sEntMan.Dirty(component);
+                        sEntMan.Dirty(ent, component);
                     }
                 }
             });
@@ -185,7 +191,9 @@ namespace Content.IntegrationTests.Tests
                 {
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
+                    {
                         yield return (uid, meta);
+                    }
                 }
 
                 var entityMetas = Query<MetaDataComponent>(sEntMan).ToList();
@@ -351,9 +359,10 @@ namespace Content.IntegrationTests.Tests
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+            var mapSystem = entityManager.System<SharedMapSystem>();
             var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
-            MapGridComponent grid = default;
+            Entity<MapGridComponent> grid = default!;
 
             await server.WaitPost(() =>
             {
@@ -362,13 +371,13 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                grid = mapManager.CreateGrid(mapId);
+                grid = mapManager.CreateGridEntity(mapId);
 
                 var tileDefinition = tileDefinitionManager["Plating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = grid.ToCoordinates();
+                var coordinates = new EntityCoordinates(grid.Owner, Vector2.Zero);
 
-                grid.SetTile(coordinates, tile);
+                mapSystem.SetTile(grid.Owner, grid.Comp!, coordinates, tile);
 
                 mapManager.DoMapInitialize(mapId);
             });
@@ -379,7 +388,7 @@ namespace Content.IntegrationTests.Tests
             {
                 Assert.Multiple(() =>
                 {
-                    var testLocation = grid.ToCoordinates();
+                    var testLocation = new EntityCoordinates(grid.Owner, Vector2.Zero);
 
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {
@@ -404,7 +413,6 @@ namespace Content.IntegrationTests.Tests
                             continue;
                         }
 
-                        component.Owner = entity;
                         logmill.Debug($"Adding component: {name}");
 
                         Assert.DoesNotThrow(() =>

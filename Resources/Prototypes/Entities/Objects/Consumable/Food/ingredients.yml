@@ -614,7 +614,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Toxin
+        - ReagentId: GastroToxin
           Quantity: 3
   - type: Tag
     tags:

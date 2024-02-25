@@ -37,7 +37,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -125,7 +125,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -163,7 +163,8 @@
         mask:
         - FullTileMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -230,7 +231,8 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -266,7 +268,8 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -301,7 +304,8 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionOutline
   - type: Door
     openSpriteState: door_opened

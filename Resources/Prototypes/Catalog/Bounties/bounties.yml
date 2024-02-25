@@ -55,18 +55,6 @@
       - Bread
 
 - type: cargoBounty
-  id: BountyBriefcase
-  reward: 7500
-  description: bounty-description-briefcase
-  idPrefix: CC
-  entries:
-  - name: bounty-item-briefcase
-    amount: 5
-    whitelist:
-      tags:
-      - Briefcase
-
-- type: cargoBounty
   id: BountyCarrot
   reward: 7500
   description: bounty-description-carrot

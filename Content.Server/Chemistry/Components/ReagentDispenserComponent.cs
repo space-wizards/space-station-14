@@ -39,11 +39,6 @@ namespace Content.Server.Chemistry.Components
         [DataField]
         public EntityWhitelist? StorageWhitelist;
 
-        /// <summary>
-        /// Slot for container to dispense into.
-        /// </summary>
-        public static string BeakerSlotId = "ReagentDispenser-beakerSlot";
-
         [DataField]
         public ItemSlot BeakerSlot = new();
 

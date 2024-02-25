@@ -35,6 +35,15 @@
   description: alerts-low-oxygen-desc
 
 - type: alert
+  id: LowNitrogen
+  category: Breathing
+  icons:
+    - sprite: /Textures/Interface/Alerts/breathing.rsi
+      state: not_enough_nitro
+  name: alerts-low-nitrogen-name
+  description: alerts-low-nitrogen-desc
+
+- type: alert
   id: Toxins
   category: Toxins
   icons:

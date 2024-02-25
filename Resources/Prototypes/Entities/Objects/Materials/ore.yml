@@ -87,9 +87,7 @@
       ironore:
         reagents:
         - ReagentId: Iron
-          Quantity: 9
-        - ReagentId: Carbon
-          Quantity: 1
+          Quantity: 10
 
 - type: entity
   id: SteelOre1

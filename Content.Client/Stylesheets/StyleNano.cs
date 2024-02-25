@@ -31,7 +31,7 @@ namespace Content.Client.Stylesheets
                 {
                     $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
                     $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
-                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
                 },
                 size
             );
@@ -992,6 +992,18 @@ namespace Content.Client.Stylesheets
                         new StyleBoxFlat {BackgroundColor = Color.Transparent}),
                     new StyleProperty(ItemList.StylePropertyItemBackground,
                         itemListItemBackgroundTransparent),
+                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
+                        itemListBackgroundSelected)
+                }),
+
+                 new StyleRule(new SelectorElement(typeof(ItemList), new[] {"transparentBackgroundItemList"}, null, null), new[]
+                {
+                    new StyleProperty(ItemList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = Color.Transparent}),
+                    new StyleProperty(ItemList.StylePropertyItemBackground,
+                        itemListItemBackground),
                     new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
                         itemListItemBackgroundDisabled),
                     new StyleProperty(ItemList.StylePropertySelectedItemBackground,

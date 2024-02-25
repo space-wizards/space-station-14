@@ -1,4 +1,4 @@
-﻿using Content.Server.Chat.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
@@ -136,7 +136,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
         var msg = Loc.GetString("rule-respawn-in-seconds", ("second", component.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.ConnectedClient, Color.LimeGreen);
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.Channel, Color.LimeGreen);
         component.RespawnQueue[actor.PlayerSession.UserId] = _timing.CurTime + component.RespawnDelay;
         return true;
     }

@@ -229,7 +229,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var message = Loc.GetString("rev-role-greeting");
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
+            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.Red);
             _audioSystem.PlayGlobal("/Audio/Ambience/Antag/headrev_start.ogg", ev.Target);
         }
     }
@@ -260,7 +260,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 var message = Loc.GetString("head-rev-role-greeting");
                 var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex("#5e9cff"));
+                _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.FromHex("#5e9cff"));
             }
         }
     }

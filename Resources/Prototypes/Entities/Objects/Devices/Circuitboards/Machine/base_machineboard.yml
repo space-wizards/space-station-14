@@ -11,9 +11,6 @@
       state: generic
     - type: Item
       storedRotation: -90
-    - type: Tag
-      tags:
-        - DroneUsable
     - type: StaticPrice
       price: 100
     - type: PhysicalComposition

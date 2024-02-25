@@ -53,7 +53,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
   - type: ReagentDispenser
     storageWhitelist:
       tags:
@@ -68,7 +68,7 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      ReagentDispenser-beakerSlot: !type:ContainerSlot
+      beakerSlot: !type:ContainerSlot
   - type: StaticPrice
     price: 1000
   - type: Wires

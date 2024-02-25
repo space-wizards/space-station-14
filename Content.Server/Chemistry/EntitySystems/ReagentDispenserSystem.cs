@@ -88,11 +88,11 @@ namespace Content.Server.Chemistry.EntitySystems
             return null;
         }
 
-        private List<KeyValuePair<string, KeyValuePair<string, string>>> GetInventory(ReagentDispenserComponent reagentDispenser)
+        private List<KeyValuePair<string, KeyValuePair<string, string>>> GetInventory(Entity<ReagentDispenserComponent> reagentDispenser)
         {
             var inventory = new List<KeyValuePair<string, KeyValuePair<string, string>>>();
 
-            for (var i = 0; i < reagentDispenser.NumSlots; i++)
+            for (var i = 0; i < reagentDispenser.Comp.NumSlots; i++)
             {
                 var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
                 var storedContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, storageSlotId);
@@ -202,7 +202,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _itemSlotsSystem.AddItemSlot(uid, component.StorageSlotIds[i], component.StorageSlots[i]);
             }
 
-            _itemSlotsSystem.AddItemSlot(uid, ReagentDispenserComponent.BeakerSlotId, component.BeakerSlot);
+            _itemSlotsSystem.AddItemSlot(uid, SharedReagentDispenser.OutputSlotName, component.BeakerSlot);
         }
     }
 }
