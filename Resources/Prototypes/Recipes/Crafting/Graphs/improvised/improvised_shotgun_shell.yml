@@ -15,11 +15,11 @@
           icon:
             sprite: Objects/Materials/Shards/shard.rsi
             state: shard1
-         - tag: ShardGlass
-           name: glass shard
-           icon:
-             sprite: Objects/Materials/Shards/shard.rsi
-             state: shard2
+        - tag: ShardGlass
+          name: glass shard
+          icon:
+            sprite: Objects/Materials/Shards/shard.rsi
+            state: shard2
         - tag: ShardGlass
           name: glass shard
           icon:
