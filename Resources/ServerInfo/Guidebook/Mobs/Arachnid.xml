@@ -1,0 +1,16 @@
+<Document>
+  # Arachnids
+
+  <Box>
+    <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
+  </Box>
+
+  Can create Websilk, at the cost of hunger. They (and only they) can craft websilk into various items from jumpskirts to entire walls.
+
+  Two additional Pocket slots in their inventory.
+
+  They can eat raw meat without any ill effects.
+
+  Unarmed attack deals 5 Piercing
+
+</Document>

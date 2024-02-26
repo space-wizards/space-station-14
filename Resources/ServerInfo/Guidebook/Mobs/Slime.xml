@@ -1,0 +1,14 @@
+<Document>
+  # Slime People
+
+  <Box>
+    <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
+  </Box>
+
+  Their body can process 6 reagents at the same time, instead of just 2.
+
+  -80% Cellular damage, -40% Blunt, -20% Poison
+
+  +50% Cold damage, +20% Slash, +20% Piercing
+
+</Document>

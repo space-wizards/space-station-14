@@ -1,0 +1,14 @@
+<Document>
+  # Moth People
+
+  <Box>
+    <GuideEntityEmbed Entity="MobMoth" Caption=""/>
+  </Box>
+
+  They can ONLY eat cotton, fabrics and clothing.
+
+  Their wings give them better acceleration if the station losed gravity, but they still can't maneuver when floating off of a mapgrid.
+
+  -30% Cold damage, +30% Heat damage. They catch on fire more easily.
+
+</Document>
