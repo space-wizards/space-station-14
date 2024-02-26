@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed refueling a lit welder not detonating the fuel tank
-    type: Fix
-  id: 5527
-  time: '2024-01-03T21:23:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23469
 - author: Alekshhh
   changes:
   - message: Changed monkeys visually
@@ -3820,3 +3813,10 @@
   id: 6026
   time: '2024-02-26T02:41:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25161
+- author: deltanedas
+  changes:
+  - message: Traitors can now be asked to steal the CMO's Handheld Crew Monitor.
+    type: Tweak
+  id: 6027
+  time: '2024-02-26T03:40:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25563
