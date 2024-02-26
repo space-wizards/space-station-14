@@ -106,7 +106,6 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink
-    isOpen: true
     solution: beaker
 
 - type: artifactEffect
