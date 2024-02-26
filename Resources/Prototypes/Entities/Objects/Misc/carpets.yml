@@ -13,7 +13,11 @@
     outputs:
       - Plating
   - type: Stack
-    stackType: FloorCarpetRed
+    stackType: FloorCarpetRed 
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: Carpet
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -30,6 +34,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetBlack
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetBlack
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -46,6 +54,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetBlue
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetBlue
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -62,6 +74,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetGreen
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetGreen
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -78,6 +94,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetOrange
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetOrange
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -94,6 +114,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetSkyBlue
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetSBlue
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -110,6 +134,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetPurple
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetPurple
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -126,6 +154,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetPink
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetPink
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -142,6 +174,10 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetCyan
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetCyan
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   name: carpet
@@ -158,3 +194,7 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetWhite
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetWhite
+    doAfter: 0.5
+    removeOnInteract: true
