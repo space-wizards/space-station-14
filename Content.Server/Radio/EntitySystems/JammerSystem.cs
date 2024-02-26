@@ -71,10 +71,14 @@ public sealed class JammerSystem : EntitySystem
     {
         if (args.IsInDetailsRange)
         {
-            var msg = HasComp<ActiveRadioJammerComponent>(uid)
+            var powerIndicator = HasComp<ActiveRadioJammerComponent>(uid)
                 ? Loc.GetString("radio-jammer-component-examine-on-state")
                 : Loc.GetString("radio-jammer-component-examine-off-state");
-            args.PushMarkup(msg);
+            args.PushMarkup(powerIndicator);
+            
+            var powerLevel = Loc.GetString(comp.Settings[comp.SelectedPowerLevel].Name);
+            var switchIndicator = Loc.GetString("radio-jammer-component-switch-setting", ("powerLevel", powerLevel));
+            args.PushMarkup(switchIndicator);
         }
     }
 
