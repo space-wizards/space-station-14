@@ -20,19 +20,19 @@ public sealed partial class AdjustAlert : ReagentEffect
     public bool Clear;
 
     /// <summary>
-    /// Show cooldown progress over the alert
+    /// Visually display cooldown progress over the alert icon
     /// </summary>
     [DataField]
     public bool ShowCooldown;
 
     /// <summary>
-    /// Automatically remove the alert after a set time
+    /// Automatically remove the alert at the end of the cooldown
     /// </summary>
     [DataField]
     public bool AutoRemove;
 
     /// <summary>
-    /// The length of the cooldown or the delay before autoRemove (in seconds) .
+    /// The length of the cooldown (in seconds).
     /// </summary>
     [DataField]
     public float Time;
