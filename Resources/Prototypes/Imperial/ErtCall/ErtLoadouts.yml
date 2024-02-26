@@ -42,7 +42,7 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterVestKevlar
-    id: ERTCallLeaderPDA
+    id: PDAMedicalERT
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
     pocket1: ERTUplinkMedic
@@ -58,7 +58,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTMedical
     suitstorage: OxygenTankFilled
-    id: ERTLeaderPDA
+    id: PDAMedicalERT
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
     pocket1: ERTUplinkMedic
@@ -213,7 +213,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitCBURNMedic
     shoes: ClothingShoesBootsCombatFilled
-    id: CBURNPDA
+    id: PDAMedicalERT
     pocket1: ERTUplinkMedic
     #pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled

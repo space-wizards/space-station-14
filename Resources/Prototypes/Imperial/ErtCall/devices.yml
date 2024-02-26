@@ -26,7 +26,7 @@
         - state: deadsquadID # we have the sprites but don't need individual ID entities for now.
     - type: Item
       # heldPrefix: gold
-      
+   
 - type: entity
   id: ThriveninChemistryBottle
   name: thrivenin bottle
@@ -42,3 +42,23 @@
   - type: Tag
     tags:
     - Bottle
+    
+- type: entity
+  id: PDAMedicalERT
+  parent: BasePDA
+  name: ERTMedicalPDA
+  description: It seems as if he has survived numerous battles
+  components:
+  - type: Pda
+    id: ERTLeaderIDCard
+    state: pda-medicalert
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#447987"
+    accentVColor: "#447987"
+  - type: Icon
+    state: pda-medicalert
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
