@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 
 namespace Content.Shared.CartridgeLoader;
 

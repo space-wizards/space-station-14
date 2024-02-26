@@ -41,7 +41,6 @@ public sealed class NewsSystem : SharedNewsSystem
         base.Initialize();
 
         // News writer
-        SubscribeLocalEvent<NewsWriterComponent, EntityUnpausedEvent>(OnEntityUnpause);
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
 
         // New writer bui messages
@@ -75,11 +74,6 @@ public sealed class NewsSystem : SharedNewsSystem
     }
 
     #region Writer Event Handlers
-
-    private void OnEntityUnpause(Entity<NewsWriterComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextPublish += args.PausedTime;
-    }
 
     private void OnMapInit(Entity<NewsWriterComponent> ent, ref MapInitEvent args)
     {
@@ -186,6 +180,8 @@ public sealed class NewsSystem : SharedNewsSystem
     }
     #endregion
 
+    #region Reader Event Handlers
+
     private void OnArticlePublished(Entity<NewsReaderCartridgeComponent> ent, ref NewsArticlePublishedEvent args)
     {
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
@@ -235,6 +231,7 @@ public sealed class NewsSystem : SharedNewsSystem
     {
         UpdateReaderUi(ent, args.Loader);
     }
+    #endregion
 
     private bool TryGetArticles(EntityUid uid, [NotNullWhen(true)] out List<NewsArticle>? articles)
     {

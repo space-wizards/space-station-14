@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.MassMedia.Components;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.MassMedia.Ui;
@@ -8,6 +9,8 @@ namespace Content.Client.MassMedia.Ui;
 [UsedImplicitly]
 public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
     [ViewVariables]
     private NewsWriterMenu? _menu;
 
@@ -18,7 +21,7 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
-        _menu = new NewsWriterMenu();
+        _menu = new NewsWriterMenu(_gameTiming);
 
         _menu.OpenCentered();
         _menu.OnClose += Close;
