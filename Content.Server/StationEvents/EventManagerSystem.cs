@@ -28,13 +28,7 @@ public sealed class EventManagerSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("events");
 
-        _configurationManager.OnValueChanged(CCVars.EventsEnabled, SetEnabled, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _configurationManager.UnsubValueChanged(CCVars.EventsEnabled, SetEnabled);
+        Subs.CVar(_configurationManager, CCVars.EventsEnabled, SetEnabled, true);
     }
 
     /// <summary>

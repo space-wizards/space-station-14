@@ -97,7 +97,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
-        _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
+        Subs.CVar(_cfgManager, CCVars.ArrivalsShuttles, SetArrivals);
 
         // Command so admins can set these for funsies
         _console.RegisterCommand("arrivals", ArrivalsCommand, ArrivalsCompletion);
@@ -179,12 +179,6 @@ public sealed class ArrivalsSystem : EntitySystem
                 shell.WriteError(Loc.GetString($"cmd-arrivals-invalid"));
                 break;
         }
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
     }
 
     /// <summary>

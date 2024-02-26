@@ -363,7 +363,8 @@ namespace Content.Server.Kitchen.EntitySystems
                 GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
-                component.CurrentCookTimerTime
+                component.CurrentCookTimerTime,
+                component.CurrentCookTimeEnd
             ));
         }
 
@@ -486,6 +487,7 @@ namespace Content.Server.Kitchen.EntitySystems
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
+            component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime);
             if (malfunctioning)
                 activeComp.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.MalfunctionInterval);
             UpdateUserInterfaceState(uid, component);
@@ -551,7 +553,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 active.CookTimeRemaining -= frameTime;
 
-                RollMalfunction((uid, active,microwave));
+                RollMalfunction((uid, active, microwave));
 
                 //check if there's still cook time left
                 if (active.CookTimeRemaining > 0)
@@ -574,6 +576,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
 
                 _container.EmptyContainer(microwave.Storage);
+                microwave.CurrentCookTimeEnd = TimeSpan.Zero;
                 UpdateUserInterfaceState(uid, microwave);
                 _audio.PlayPvs(microwave.FoodDoneSound, uid);
                 StopCooking((uid, microwave));
@@ -611,6 +614,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
             ent.Comp.CurrentCookTimerTime = args.NewCookTime;
+            ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
             _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
             UpdateUserInterfaceState(ent, ent.Comp);
         }
