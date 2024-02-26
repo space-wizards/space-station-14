@@ -576,7 +576,7 @@
   id: HudSecurity
 
 - type: Tag
-  id: GuideEmbeded
+  id: GuideEmbedded
 
 - type: Tag
   id: Hamster

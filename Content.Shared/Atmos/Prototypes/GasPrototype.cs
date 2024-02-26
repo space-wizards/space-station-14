@@ -46,7 +46,7 @@ namespace Content.Shared.Atmos.Prototypes
         /// </summary>
         public float GasMolesVisibleMax => GasMolesVisible * GasVisibilityFactor;
 
-        [DataField("gasVisbilityFactor")]
+        [DataField("gasVisibilityFactor")]
         public float GasVisibilityFactor = Atmospherics.FactorGasVisibleMax;
 
         /// <summary>

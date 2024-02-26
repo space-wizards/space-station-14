@@ -65,7 +65,7 @@
 
 - files: ["goose_honk.ogg"]
   license: "CC0-1.0"
-  copyright: "Modified from ' Bird Honk - 1'  by freesound user 'SpaceJoe'. The originial audio was converted from WAV to OGG format"
+  copyright: "Modified from ' Bird Honk - 1'  by freesound user 'SpaceJoe'. The original audio was converted from WAV to OGG format"
   source: "https://freesound.org/people/SpaceJoe/sounds/510940/"
 
 - files: ["snake_his.ogg"]

@@ -14,7 +14,7 @@
     components:
     - type: Clumsy
       clumsyDamage:
-        types: #literally just picked semi random valus. i tested this once and tweaked it.
+        types: #literally just picked semi random values. i tested this once and tweaked it.
           Blunt: 5
           Piercing: 4
         groups:

@@ -73,7 +73,7 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: miasma
   gasMolesVisible: 2
-  gasVisbilityFactor: 3.5
+  gasVisibilityFactor: 3.5
   color: 56941E
   reagent: Ammonia
   pricePerMole: 0.15
