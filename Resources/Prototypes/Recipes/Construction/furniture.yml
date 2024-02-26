@@ -460,6 +460,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: fancy pink table
+  id: TableFancyPink
+  graph: Table
+  startNode: start
+  targetNode: TableFancyPink
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: fancy red table
   id: TableFancyRed
   graph: Table

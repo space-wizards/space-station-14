@@ -264,6 +264,9 @@
   
 - type: Tag
   id: CarpetPurple
+
+- type: Tag
+  id: CarpetPink
   
 - type: Tag
   id: CarpetRed

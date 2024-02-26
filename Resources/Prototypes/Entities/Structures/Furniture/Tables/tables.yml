@@ -636,6 +636,16 @@
     sprite: Structures/Furniture/Tables/Fancy/purple.rsi
     
 - type: entity
+  id: TableFancyPink
+  parent: TableFancyBase
+  suffix: Pink
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+    
+- type: entity
   id: TableFancyGreen
   parent: TableFancyBase
   suffix: Green
