@@ -1012,6 +1012,25 @@
 
 - type: entity
   parent: BaseItem
+  id: BalloonNT
+  name: nanotrasen balloon
+  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: ntb
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: ntb
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Balloon
+
+- type: entity
+  parent: BaseItem
   id: BalloonCorgi
   name: corgi balloon
   description: Just like owning a real dog - but a lot floatier.
