@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed monkeys visually
-    type: Tweak
-  id: 5528
-  time: '2024-01-03T21:23:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23464
-- author: lapatison
-  changes:
-  - message: Circuit imprinter now can produce circuit floor.
-    type: Add
-  id: 5529
-  time: '2024-01-03T21:25:18.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23467
-- author: 21Melkuu
-  changes:
-  - message: increased RPED capacity.
-    type: Tweak
-  id: 5530
-  time: '2024-01-03T21:34:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23455
 - author: Bhijn and Myr
   changes:
   - message: Service lights have had their overall brightness toned down.
@@ -3820,3 +3799,25 @@
   id: 6027
   time: '2024-02-26T03:40:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25563
+- author: MACMAN2003
+  changes:
+  - message: You can now make LED light tubes and LED light bulbs at an autolathe.
+    type: Add
+  id: 6028
+  time: '2024-02-26T22:58:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25616
+- author: botanySupremist
+  changes:
+  - message: Fixed a few small typos in ghost role information.
+    type: Fix
+  id: 6029
+  time: '2024-02-26T22:58:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25613
+- author: Whisper
+  changes:
+  - message: Juice that makes you Weh can be found in; anomalies, Artifacts, random
+      puddles.
+    type: Add
+  id: 6030
+  time: '2024-02-26T22:59:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25611
