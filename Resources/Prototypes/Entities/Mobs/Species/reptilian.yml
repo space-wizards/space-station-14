@@ -8,10 +8,6 @@
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
-    starvationDamage:
-      types:
-        Cold: 0.5
-        Bloodloss: 0.5
   - type: Puller
     needsHands: false
   - type: Thirst
@@ -32,6 +28,8 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
+  - type: TypingIndicator
+    proto: lizard
   - type: Vocal
     sounds:
       Male: UnisexReptilian

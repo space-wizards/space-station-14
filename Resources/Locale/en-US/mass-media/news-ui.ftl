@@ -24,6 +24,7 @@ news-write-ui-new-article = New Article
 news-write-ui-article-name-label = Heading:
 news-write-ui-article-content-label = Content:
 news-write-no-access-popup = No access
+news-writer-text-length-exceeded = Text exceeds maximum length
 news-write-ui-richtext-tooltip = News articles support rich text
     The following rich text tags are supported:
     {"[color=Gray][bullet/]heading \\[size=1-3\\]"}

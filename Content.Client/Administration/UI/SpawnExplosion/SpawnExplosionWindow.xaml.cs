@@ -99,7 +99,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
     {
         UpdateMapOptions();
 
-        if (!_entMan.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out TransformComponent? transform))
+        if (!_entMan.TryGetComponent(_playerManager.LocalEntity, out TransformComponent? transform))
             return;
 
         _pausePreview = true;

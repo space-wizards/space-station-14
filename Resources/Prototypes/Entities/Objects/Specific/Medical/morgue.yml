@@ -102,6 +102,8 @@
   name: ash
   description: This used to be something, but now it's not.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
     state: ash
@@ -118,7 +120,6 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
-  - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
 
@@ -141,9 +142,9 @@
           maxVol: 50
           reagents:
             - ReagentId: Ash
-              Quantity: 5
-            - ReagentId: SpaceLube
-              Quantity: 5
+              Quantity: 25
+            - ReagentId: Necrosol
+              Quantity: 25
     - type: GuideHelp
       guides:
       - MinorAntagonists

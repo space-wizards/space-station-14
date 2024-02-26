@@ -20,7 +20,7 @@ public sealed partial class StealConditionComponent : Component
     /// When enabled, disables generation of this target if there is no entity on the map (disable for objects that can be created mid-round).
     /// </summary>
     [DataField]
-    public bool VerifyMapExistance = true;
+    public bool VerifyMapExistence = true;
 
     /// <summary>
     /// If the target may be alive but has died, it will not be counted

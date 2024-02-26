@@ -394,7 +394,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             foreach (var player in _visPlayers)
             {
-                RaiseNetworkEvent(msg, player.ConnectedClient);
+                RaiseNetworkEvent(msg, player.Channel);
             }
         }
 
@@ -407,7 +407,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 msg.Groups.Add(VisMakeGroupState(network));
             }
 
-            RaiseNetworkEvent(msg, player.ConnectedClient);
+            RaiseNetworkEvent(msg, player.Channel);
         }
 
         private NodeVis.GroupData VisMakeGroupState(BaseNodeGroup group)

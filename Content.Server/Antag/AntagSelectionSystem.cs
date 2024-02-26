@@ -145,7 +145,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             {
                 var message = Loc.GetString(antagGreeting);
                 var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex(greetingColor));
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.FromHex(greetingColor));
             }
         }
     }

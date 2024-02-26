@@ -1,5 +1,5 @@
 using Content.Shared.Eye.Blinding;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Server.Popups;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;

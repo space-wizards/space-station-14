@@ -8,6 +8,10 @@ health-analyzer-window-damage-group-text = {$damageGroup}: {$amount}
 health-analyzer-window-damage-type-text = {$damageType}: {$amount}
 health-analyzer-window-damage-type-duplicate-text = {$damageType}: {$amount} (duplicate)
 
+health-analyzer-window-scan-mode-text = Scan Mode:
+health-analyzer-window-scan-mode-active = ACTIVE
+health-analyzer-window-scan-mode-inactive = INACTIVE
+
 health-analyzer-window-damage-group-Brute = Brute
 health-analyzer-window-damage-type-Blunt = Blunt
 health-analyzer-window-damage-type-Slash = Slash
@@ -29,3 +33,5 @@ health-analyzer-window-damage-type-Radiation = Radiation
 
 health-analyzer-window-damage-group-Genetic = Genetic
 health-analyzer-window-damage-type-Cellular = Cellular
+
+health-analyzer-window-malnutrition = Severely malnourished

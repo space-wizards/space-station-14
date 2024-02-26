@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Info;
@@ -60,7 +60,7 @@ public sealed class ShowRulesCommand : IConsoleCommand
         var message = new SharedRulesManager.ShowRulesPopupMessage();
         message.PopupTime = seconds;
 
-        var player = IoCManager.Resolve<IPlayerManager>().GetSessionByUserId(located.UserId);
-        netManager.ServerSendMessage(message, player.ConnectedClient);
+        var player = IoCManager.Resolve<IPlayerManager>().GetSessionById(located.UserId);
+        netManager.ServerSendMessage(message, player.Channel);
     }
 }

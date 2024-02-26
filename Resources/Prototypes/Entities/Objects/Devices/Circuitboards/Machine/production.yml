@@ -553,7 +553,7 @@
     - type: Sprite
       state: medical
     - type: MachineBoard
-      prototype: ChemDispenser
+      prototype: ChemDispenserEmpty
       requirements:
         Capacitor: 1
       materialRequirements:
@@ -660,6 +660,29 @@
         Plastic: 30
     - type: StaticPrice
       price: 15
+
+- type: entity
+  id: PowerCageRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cage recharger machine board
+  description: A machine printed circuit board for a energy cage recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: PowerCageRecharger
+      requirements:
+        Capacitor: 4
+      materialRequirements:
+        Steel: 5
+        Cable: 10
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 30
 
 - type: entity
   id: BorgChargerCircuitboard
@@ -1145,7 +1168,7 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: BoozeDispenser
+      prototype: BoozeDispenserEmpty
       materialRequirements:
         Steel: 5
       tagRequirements:
@@ -1178,7 +1201,7 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: soda_dispenser
+      prototype: SodaDispenserEmpty
       materialRequirements:
         Steel: 5
       tagRequirements:
@@ -1229,3 +1252,90 @@
       Steel: 5
       CableHV: 5
       Uranium: 2
+
+- type: entity
+  id: ShuttleGunSvalinnMachineGunCircuitboard
+  parent: BaseMachineCircuitboard
+  name: LSE-400c "Svalinn machine gun" machine board
+  description: A machine printed circuit board for an LSE-400c "Svalinn machine gun"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunSvalinnMachineGun
+    requirements:
+      MatterBin: 2
+      Manipulator: 4
+    materialRequirements:
+      Steel: 5
+      CableHV: 5
+      
+- type: entity
+  id: ShuttleGunPerforatorCircuitboard
+  parent: BaseMachineCircuitboard
+  name: LSE-1200c "Perforator" machine board
+  description: A machine printed circuit board for an LSE-1200c "Perforator"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunPerforator
+    requirements:
+      MatterBin: 4
+      Manipulator: 6
+    materialRequirements:
+      Steel: 10
+      CableHV: 5
+      
+- type: entity
+  id: ShuttleGunFriendshipCircuitboard
+  parent: BaseMachineCircuitboard
+  name: EXP-320g "Friendship" machine board
+  description: A machine printed circuit board for an EXP-320g "Friendship"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunFriendship
+    requirements:
+      MatterBin: 3
+      Manipulator: 2
+    materialRequirements:
+      Steel: 7
+      CableHV: 5  
+      
+- type: entity
+  id: ShuttleGunDusterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: EXP-2100g "Duster" machine board
+  description: A machine printed circuit board for an EXP-2100g "Duster"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunDuster
+    requirements:
+      MatterBin: 6
+      Manipulator: 4
+    materialRequirements:
+      Steel: 10
+      CableHV: 5
+      Uranium: 2
+      
+- type: entity
+  id: ShuttleGunKineticCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PTK-800 "Matter Dematerializer" machine board
+  description: A machine printed circuit board for an PTK-800 "Matter Dematerializer"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunKinetic
+    requirements:
+      MatterBin: 2
+      Manipulator: 3
+    materialRequirements:
+      Steel: 5
+      CableHV: 2
+      

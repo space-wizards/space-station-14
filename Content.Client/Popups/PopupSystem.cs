@@ -23,7 +23,6 @@ namespace Content.Client.Popups
         [Dependency] private readonly IOverlayManager _overlay = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly IResourceCache _resource = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
@@ -45,7 +44,14 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             _overlay
-                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _playerManager, _prototype, _resource, _uiManager, this));
+                .AddOverlay(new PopupOverlay(
+                    _configManager,
+                    EntityManager,
+                    _playerManager,
+                    _prototype,
+                    _uiManager,
+                    _uiManager.GetUIController<PopupUIController>(),
+                    this));
         }
 
         public override void Shutdown()
@@ -55,8 +61,11 @@ namespace Content.Client.Popups
                 .RemoveOverlay<PopupOverlay>();
         }
 
-        private void PopupMessage(string message, PopupType type, EntityCoordinates coordinates, EntityUid? entity, bool recordReplay)
+        private void PopupMessage(string? message, PopupType type, EntityCoordinates coordinates, EntityUid? entity, bool recordReplay)
         {
+            if (message == null)
+                return;
+
             if (recordReplay && _replayRecording.IsRecording)
             {
                 if (entity != null)
@@ -75,25 +84,28 @@ namespace Content.Client.Popups
         }
 
         #region Abstract Method Implementations
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
         {
             PopupMessage(message, type, coordinates, null, true);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small)
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalPlayer?.Session == recipient)
+            if (_playerManager.LocalSession == recipient)
                 PopupMessage(message, type, coordinates, null, true);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+            if (_playerManager.LocalEntity == recipient)
                 PopupMessage(message, type, coordinates, null, true);
         }
 
-        private void PopupCursorInternal(string message, PopupType type, bool recordReplay)
+        private void PopupCursorInternal(string? message, PopupType type, bool recordReplay)
         {
+            if (message == null)
+                return;
+
             if (recordReplay && _replayRecording.IsRecording)
                 _replayRecording.RecordClientMessage(new PopupCursorEvent(message, type));
 
@@ -106,53 +118,53 @@ namespace Content.Client.Popups
             _aliveCursorLabels.Add(label);
         }
 
-        public override void PopupCursor(string message, PopupType type = PopupType.Small)
+        public override void PopupCursor(string? message, PopupType type = PopupType.Small)
             => PopupCursorInternal(message, type, true);
 
-        public override void PopupCursor(string message, ICommonSession recipient, PopupType type = PopupType.Small)
+        public override void PopupCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalPlayer?.Session == recipient)
+            if (_playerManager.LocalSession == recipient)
                 PopupCursor(message, type);
         }
 
-        public override void PopupCursor(string message, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+            if (_playerManager.LocalEntity == recipient)
                 PopupCursor(message, type);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
         {
             PopupCoordinates(message, coordinates, type);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupEntity(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+            if (_playerManager.LocalEntity == recipient)
                 PopupEntity(message, uid, type);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
+        public override void PopupEntity(string? message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalPlayer?.Session == recipient)
+            if (_playerManager.LocalSession == recipient)
                 PopupEntity(message, uid, type);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, Filter filter, bool recordReplay, PopupType type=PopupType.Small)
+        public override void PopupEntity(string? message, EntityUid uid, Filter filter, bool recordReplay, PopupType type=PopupType.Small)
         {
-            if (!filter.Recipients.Contains(_playerManager.LocalPlayer?.Session))
+            if (!filter.Recipients.Contains(_playerManager.LocalSession))
                 return;
 
             PopupEntity(message, uid, type);
         }
 
-        public override void PopupClient(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupClient(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (_timing.IsFirstTimePredicted)
                 PopupEntity(message, uid, recipient, type);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)
+        public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
         {
             if (TryComp(uid, out TransformComponent? transform))
                 PopupMessage(message, type, transform.Coordinates, uid, true);
