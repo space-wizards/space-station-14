@@ -29,7 +29,6 @@ public sealed partial class HyposprayComponent : Component
     [AutoNetworkedField]
     [DataField]
     public HyposprayToggleMode ToggleMode = HyposprayToggleMode.All;
-
 }
 
 /// <summary>
