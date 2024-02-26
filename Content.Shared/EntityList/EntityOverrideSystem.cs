@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.EntityList;
 
 /// <summary>
-/// System for modifing lists of entity prototypes based on presets and contextual information.
+/// System for modifying lists of entity prototypes based on presets and contextual information.
 /// </summary>
 public sealed partial class EntityOverrideSystem : EntitySystem
 {
