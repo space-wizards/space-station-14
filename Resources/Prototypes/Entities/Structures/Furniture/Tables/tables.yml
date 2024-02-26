@@ -594,6 +594,9 @@
     sprite: Structures/Furniture/Tables/Fancy/blue.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/blue.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyBlue
 
 - type: entity
   id: TableFancyCyan
@@ -604,6 +607,9 @@
     sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyCyan
 
 - type: entity
   id: TableFancyBlack
@@ -614,6 +620,9 @@
     sprite: Structures/Furniture/Tables/Fancy/black.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/black.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyBlack
 
 - type: entity
   id: TableFancyRed
@@ -624,6 +633,9 @@
     sprite: Structures/Furniture/Tables/Fancy/red.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/red.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyRed
     
 - type: entity
   id: TableFancyPurple
@@ -634,6 +646,9 @@
     sprite: Structures/Furniture/Tables/Fancy/purple.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/purple.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyPurple
     
 - type: entity
   id: TableFancyPink
@@ -644,6 +659,9 @@
     sprite: Structures/Furniture/Tables/Fancy/pink.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyPink
     
 - type: entity
   id: TableFancyGreen
@@ -664,6 +682,9 @@
     sprite: Structures/Furniture/Tables/Fancy/orange.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/orange.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyOrange
     
 - type: entity
   id: TableFancyWhite
@@ -674,6 +695,9 @@
     sprite: Structures/Furniture/Tables/Fancy/white.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/Fancy/white.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyWhite
 
 #Debug
 
