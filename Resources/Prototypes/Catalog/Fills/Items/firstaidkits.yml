@@ -58,6 +58,7 @@
     contents:
       - id: ClothingMaskBreathMedical
       - id: EmergencyOxygenTankFilled
+      - id: EmergencyNitrogenTankFilled
       - id: EmergencyMedipen
       - id: SyringeInaprovaline
       - id: PillCanisterDexalin
