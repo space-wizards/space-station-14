@@ -36,7 +36,7 @@
         mask:
         - TableMask
         layer:
-        - WallLayer
+        - TableLayer
         hard: false
   - type: ObjectSensor
   - type: DeviceLinkSource

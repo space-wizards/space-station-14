@@ -450,6 +450,7 @@
       - ArtifactCrusherMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
+      - ObjectSensorCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

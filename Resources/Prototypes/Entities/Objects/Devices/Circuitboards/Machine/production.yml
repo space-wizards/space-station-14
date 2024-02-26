@@ -1269,7 +1269,7 @@
     materialRequirements:
       Steel: 5
       CableHV: 5
-      
+
 - type: entity
   id: ShuttleGunPerforatorCircuitboard
   parent: BaseMachineCircuitboard
@@ -1286,7 +1286,7 @@
     materialRequirements:
       Steel: 10
       CableHV: 5
-      
+
 - type: entity
   id: ShuttleGunFriendshipCircuitboard
   parent: BaseMachineCircuitboard
@@ -1302,8 +1302,8 @@
       Manipulator: 2
     materialRequirements:
       Steel: 7
-      CableHV: 5  
-      
+      CableHV: 5
+
 - type: entity
   id: ShuttleGunDusterCircuitboard
   parent: BaseMachineCircuitboard
@@ -1321,7 +1321,7 @@
       Steel: 10
       CableHV: 5
       Uranium: 2
-      
+
 - type: entity
   id: ShuttleGunKineticCircuitboard
   parent: BaseMachineCircuitboard
@@ -1338,4 +1338,15 @@
     materialRequirements:
       Steel: 5
       CableHV: 2
-      
+
+- type: entity
+  id: ObjectSensorCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Object Sensor machine board
+  description: A machine printed circuit board for an object sensor
+  components:
+  - type: MachineBoard
+    prototype: ObjectSensor
+    materialRequirements:
+      Steel: 5
+      Glass: 5
