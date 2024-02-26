@@ -189,7 +189,7 @@
   parent: SignalSwitch
   components:
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Construction
     graph: SignalSwitchDirectionalGraph
     node: SignalSwitchDirectionalNode
@@ -201,7 +201,7 @@
   parent: SignalButton
   components:
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Construction
     graph: SignalButtonDirectionalGraph
     node: SignalButtonDirectionalNode
@@ -213,7 +213,7 @@
   parent: ApcNetSwitch
   components:
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Construction
     graph: LightSwitchDirectionalGraph
     node: LightSwitchDirectionalNode
