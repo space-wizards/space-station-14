@@ -373,7 +373,7 @@ namespace Content.Shared.Preferences
 
         public void EnsureValid(IConfigurationManager configManager, IPrototypeManager prototypeManager)
         {
-            if (!prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
+            if (!prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype) || speciesPrototype.Name == "Terminator")
             {
                 Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
                 speciesPrototype = prototypeManager.Index<SpeciesPrototype>(Species);
