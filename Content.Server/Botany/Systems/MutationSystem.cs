@@ -61,7 +61,7 @@ public sealed class MutationSystem : EntitySystem
         MutateFloat(ref seed.Lifespan             , 10f  , 80f , 5, totalbits, 2 * severity);
         MutateFloat(ref seed.Maturation           , 3f   , 8f  , 5, totalbits, 2 * severity);
         MutateFloat(ref seed.Production           , 1f   , 10f , 5, totalbits, 2 * severity);
-        MutateFloat(ref seed.Potency              , 30f  , 100f, 5, totalbits, 2 * severity);
+        MutateFloat(ref seed.Potency              , 40f  , 100f, 5, totalbits, 2 * severity);
 
         // Kill the plant (30)
         MutateBool(ref seed.Viable        , false, 30, totalbits, severity);

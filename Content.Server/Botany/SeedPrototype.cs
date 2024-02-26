@@ -67,12 +67,6 @@ public partial struct SeedChemQuantity
     [DataField("Max")] public int Max;
 
     /// <summary>
-    /// When chemicals are added to produce, the potency of the seed is divided with this value. Final chemical amount is the result plus the `Min` value.
-    /// Example: PotencyDivisor of 20 with seed potency of 55 results in 2.75, 55/20 = 2.75. If minimum is 1 then final result will be 3.75 of that chemical, 55/20+1 = 3.75.
-    /// </summary>
-    [DataField("PotencyDivisor")] public int PotencyDivisor;
-
-    /// <summary>
     /// Inherent chemical is one that is NOT result of mutation or crossbreeding. These chemicals are removed if species mutation is executed.
     /// </summary>
     [DataField("Inherent")] public bool Inherent = true;
