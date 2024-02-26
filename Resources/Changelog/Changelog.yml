@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Terminator endoskeletons have learned how to pry doors.
-    type: Tweak
-  id: 5532
-  time: '2024-01-03T21:58:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23468
-- author: lzk228
-  changes:
-  - message: Vendors will thank you now for using them.
-    type: Tweak
-  id: 5533
-  time: '2024-01-03T22:21:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23023
-- author: Flareguy
-  changes:
-  - message: Airlocks now have a new deny sound, courtesy of /tg/station.
-    type: Tweak
-  id: 5534
-  time: '2024-01-03T22:22:37.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22954
 - author: Blackern5000
   changes:
   - message: After realizing their employees have been forced to make medical supplies
@@ -3821,3 +3800,25 @@
   id: 6031
   time: '2024-02-26T23:00:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25606
+- author: Ilya246
+  changes:
+  - message: Macrobomb implant price reduced 20->13 TC.
+    type: Tweak
+  id: 6032
+  time: '2024-02-26T23:04:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25585
+- author: QuietlyWhisper
+  changes:
+  - message: Handcuff and handcuff replacements are faster to escape. You can allow
+      your teammates to uncuff themselves!
+    type: Tweak
+  id: 6033
+  time: '2024-02-26T23:05:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25601
+- author: PoorMansDreams
+  changes:
+  - message: New lobby art (of horror)
+    type: Add
+  id: 6034
+  time: '2024-02-26T23:06:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25455
