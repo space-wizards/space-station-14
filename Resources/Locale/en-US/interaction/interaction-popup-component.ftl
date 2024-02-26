@@ -30,7 +30,7 @@ petting-success-hamster = You pet {THE($target)} on {POSS-ADJ($target)} fluffy l
 petting-success-bear = You reluctantly pet {THE($target)} on {POSS-ADJ($target)} mystical head.
 petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous surface.
 petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
-petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
+petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischievous little head.
 petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
