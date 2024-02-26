@@ -1,24 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: The blindness and eye damage effects now properly take screen resolution
-      into account, and are no longer way wider than intended.
-    type: Fix
-  id: 5536
-  time: '2024-01-04T00:17:06.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23465
-- author: EmoGarbage404
-  changes:
-  - message: Cargo Bounties no longer have time limits. There are also more available
-      at once.
-    type: Tweak
-  - message: Adjusted reward amounts for bounties
-    type: Tweak
-  - message: Fixed bounties failing to register mobs and items inside containers.
-    type: Fix
-  id: 5537
-  time: '2024-01-04T00:34:47.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23411
 - author: themias
   changes:
   - message: Microwaves no longer eject their contents when they lose power.
@@ -3828,3 +3808,17 @@
   id: 6035
   time: '2024-02-26T23:11:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25562
+- author: SlamBamActionman
+  changes:
+  - message: Added new noses for humans and dwarves.
+    type: Add
+  id: 6036
+  time: '2024-02-26T23:15:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25557
+- author: MACMAN2003
+  changes:
+  - message: Added a NanoTrasen balloon toy.
+    type: Add
+  id: 6037
+  time: '2024-02-26T23:15:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25543
