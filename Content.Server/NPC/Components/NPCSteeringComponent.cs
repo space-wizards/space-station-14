@@ -11,7 +11,7 @@ namespace Content.Server.NPC.Components;
 /// <summary>
 /// Added to NPCs that are moving.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class NPCSteeringComponent : Component
 {
     #region Context Steering
@@ -49,6 +49,7 @@ public sealed partial class NPCSteeringComponent : Component
     /// Next time we can change our steering direction.
     /// </summary>
     [DataField("nextSteer", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextSteer = TimeSpan.Zero;
 
     [DataField("lastSteerIndex")]
@@ -66,6 +67,7 @@ public sealed partial class NPCSteeringComponent : Component
     public EntityCoordinates LastStuckCoordinates;
 
     [DataField("lastStuckTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan LastStuckTime;
 
     public const float StuckDistance = 1f;
