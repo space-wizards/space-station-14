@@ -645,6 +645,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
 - type: entity
   parent: BasePlushie
   id: PlushiePenguin
@@ -709,6 +710,82 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieOreBananium
+  name: ore plushie
+  description: It's plushie ore! And it has eyes!
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    layers:
+    - state: bananium
+    - state: eyes
+
+- type: entity
+  parent: PlushieOreBananium
+  id: PlushieOreCoal
+  components:
+  - type: Sprite
+    layers:
+    - state: coal
+    - state: eyes
+
+- type: entity
+  parent: PlushieOreBananium
+  id: PlushieOreGold
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: eyes
+
+- type: entity
+  parent: PlushieOreBananium
+  id: PlushieOreIron
+  components:
+  - type: Sprite
+    layers:
+    - state: iron
+    - state: eyes
+
+- type: entity
+  parent: PlushieOreBananium
+  id: PlushieOrePlasma
+  components:
+  - type: Sprite
+    layers:
+    - state: plasma
+    - state: eyes
+
+- type: entity
+  parent: PlushieOreBananium
+  id: PlushieOreSilver
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: eyes
+
+- type: entity
+  parent: PlushieOreBananium
+  id: PlushieOreSpacequartz
+  components:
+  - type: Sprite
+    layers:
+    - state: spacequartz
+    - state: eyes
+
+- type: entity
+  parent: PlushieOreBananium
+  id: PlushieOreUranium
+  components:
+  - type: Sprite
+    layers:
+    - state: uranium
+    - state: eyes
+
 
 ## Cheapo Figurines
 

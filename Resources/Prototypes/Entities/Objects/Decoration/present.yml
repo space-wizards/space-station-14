@@ -90,6 +90,22 @@
         orGroup: GiftPool
       - id: PlushieArachind
         orGroup: GiftPool
+      - id: PlushieOreBananium
+        orGroup: GiftPool
+      - id: PlushieOreCoal
+        orGroup: GiftPool
+      - id: PlushieOreGold
+        orGroup: GiftPool
+      - id: PlushieOreIron
+        orGroup: GiftPool
+      - id: PlushieOrePlasma
+        orGroup: GiftPool
+      - id: PlushieOreSilver
+        orGroup: GiftPool
+      - id: PlushieOreSpacequartz
+        orGroup: GiftPool
+      - id: PlushieOreUranium
+        orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool
       - id: ToyMouse

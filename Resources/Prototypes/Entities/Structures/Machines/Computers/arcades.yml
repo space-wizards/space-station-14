@@ -89,6 +89,14 @@
     - PlushiePenguin
     - PlushieHuman
     - ClothingHeadHatCowboyRed
+    - PlushieOreBananium
+    - PlushieOreCoal
+    - PlushieOreGold
+    - PlushieOreIron
+    - PlushieOrePlasma
+    - PlushieOreSilver
+    - PlushieOreSpacequartz
+    - PlushieOreUranium
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade

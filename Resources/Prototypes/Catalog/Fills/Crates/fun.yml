@@ -28,6 +28,22 @@
       - id: PlushieMoth
       - id: PlushieArachind
       - id: PlushiePenguin
+      - id: PlushieOreBananium
+        orGroup: PlushieOre
+      - id: PlushieOreCoal
+        orGroup: PlushieOre
+      - id: PlushieOreGold
+        orGroup: PlushieOre
+      - id: PlushieOreIron
+        orGroup: PlushieOre
+      - id: PlushieOrePlasma
+        orGroup: PlushieOre
+      - id: PlushieOreSilver
+        orGroup: PlushieOre
+      - id: PlushieOreSpacequartz
+        orGroup: PlushieOre
+      - id: PlushieOreUranium
+        orGroup: PlushieOre
 
 - type: entity
   id: CrateFunLizardPlushieBulk

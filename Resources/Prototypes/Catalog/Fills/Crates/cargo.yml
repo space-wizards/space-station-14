@@ -305,6 +305,15 @@
     - id: PlushieArachind
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieOreIron
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieOreGold
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieOreSilver
+      prob: 0.01
+      orGroup: Plushies
     #useful
     - id: AmeJar
       prob: 0.01

@@ -34,6 +34,21 @@
         - ToyMouse
         - PlushieDiona
         - PlushieArachind
+        - PlushieHampter
+        - PlushieRGBee
+        - PlushieLamp
+        - PlushieXeno
+        - PlushiePenguin
+        - PlushieHuman
+        - PlushieMoth
+        - PlushieOreBananium
+        - PlushieOreCoal
+        - PlushieOreGold
+        - PlushieOreIron
+        - PlushieOrePlasma
+        - PlushieOreSilver
+        - PlushieOreSpacequartz
+        - PlushieOreUranium
       chance: 0.5
       offset: 0.2
 
@@ -101,7 +116,7 @@
       - ToyFigurineLawyer
       - ToyFigurineCargoTech
       - ToyFigurineSalvage
-      - ToyFigurineQuartermaster   
+      - ToyFigurineQuartermaster
       - ToyFigurineChiefEngineer
       - ToyFigurineAtmosTech
       - ToyFigurineEngineer
