@@ -212,6 +212,9 @@
         - id: BoxSurvival
         - id: AcousticGuitarInstrument
         - id: SaxophoneInstrument
+      overrides:
+        - MusicianStringInstrument
+        - MusicianWindInstrument
 
 - type: entity
   noSpawn: true

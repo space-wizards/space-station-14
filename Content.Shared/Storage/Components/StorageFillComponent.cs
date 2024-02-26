@@ -1,5 +1,7 @@
+using Content.Shared.EntityList;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Storage.Components;
 
@@ -9,4 +11,5 @@ namespace Content.Shared.Storage.Components;
 public sealed partial class StorageFillComponent : Component
 {
     [DataField("contents")] public List<EntitySpawnEntry> Contents = new();
+    [DataField("overrides")] public List<ProtoId<EntityOverridePrototype>> Overrides = new();
 }

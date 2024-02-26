@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Spawners.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.EntityList;
 using Content.Shared.Item;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage;
@@ -41,6 +42,9 @@ public sealed partial class StorageSystem
         var coordinates = Transform(uid).Coordinates;
 
         var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, Random);
+
+        var ev = new EntityOverrideApplyEvent(in spawnItems, component.Overrides);
+        RaiseLocalEvent(ref ev);
 
         var items = new List<Entity<ItemComponent>>();
         foreach (var spawnPrototype in spawnItems)
@@ -85,6 +89,10 @@ public sealed partial class StorageSystem
         var coordinates = Transform(uid).Coordinates;
 
         var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, Random);
+
+        var ev = new EntityOverrideApplyEvent(in spawnItems, component.Overrides);
+        RaiseLocalEvent(ref ev);
+
         foreach (var item in spawnItems)
         {
             // No, you are not allowed to fill a container with entity spawners.

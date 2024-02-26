@@ -3,6 +3,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.EntityList;
 
 namespace Content.Shared.Station;
 
@@ -26,7 +27,11 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 var equipmentStr = startingGear.GetGear(slot.Name, profile);
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
+                    var ev = new EntityOverrideMarkContextEvent(entity);
+                    RaiseLocalEvent(ref ev);
+
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true, force:true);
                 }
             }

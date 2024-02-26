@@ -1,0 +1,41 @@
+- type: entityOverride
+  id: SlimePersonEmergencyTank
+  species: SlimePerson
+  target: EmergencyOxygenTankFilled
+  single: EmergencyNitrogenTankFilled
+
+- type: entityOverride
+  id: SlimePersonExtendedEmergencyTank
+  species: SlimePerson
+  target: ExtendedEmergencyOxygenTankFilled
+  single: ExtendedEmergencyNitrogenTankFilled
+
+- type: entityOverride
+  id: MusicianStringInstrument
+  job: Musician
+  target: AcousticGuitarInstrument
+  random:
+    - AcousticGuitarInstrument
+    - BanjoInstrument
+    - BassGuitarInstrument
+    - CelloInstrument
+    - ElectricGuitarInstrument
+    - GuitarlessFretsInstrument
+    - RockGuitarInstrument
+    - ViolaInstrument
+    - ViolinInstrument
+
+- type: entityOverride
+  id: MusicianWindInstrument
+  job: Musician
+  target: SaxophoneInstrument
+  random:
+    - AccordionInstrument
+    # - BagpipeInstrument # Too big, drops on the floor
+    - ClarinetInstrument
+    - FluteInstrument
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - PanFluteInstrument
+    - RecorderInstrument
+    - SaxophoneInstrument

@@ -12,6 +12,8 @@
       - id: Flare
       - id: FoodTinMRE
       - id: DrinkWaterBottleFull
+    overrides:
+      - SlimePersonEmergencyTank
   - type: Sprite
     layers:
       - state: internals
@@ -31,6 +33,8 @@
       - id: Flare
       - id: FoodTinMRE
       - id: DrinkWaterBottleFull
+    overrides:
+      - SlimePersonExtendedEmergencyTank
   - type: Sprite
     layers:
       - state: internals
@@ -51,6 +55,8 @@
       - id: Flare
       - id: FoodTinMRE
       - id: DrinkWaterBottleFull
+    overrides:
+      - SlimePersonEmergencyTank
   - type: Sprite
     layers:
       - state: internals
@@ -71,6 +77,8 @@
       - id: Flare
       - id: FoodTinMRE
       - id: DrinkWaterBottleFull
+    overrides:
+      - SlimePersonEmergencyTank
   - type: Sprite
     layers:
       - state: internals
@@ -113,6 +121,9 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+      - id: DrinkWaterBottleFull
+    overrides:
+      - SlimePersonExtendedEmergencyTank
   - type: Sprite
     layers:
       - state: internals
