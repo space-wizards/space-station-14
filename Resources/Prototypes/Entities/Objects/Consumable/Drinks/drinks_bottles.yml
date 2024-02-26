@@ -197,7 +197,7 @@
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkCognacBottleFull
   name: cognac bottle
-  description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
+  description: A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -287,7 +287,7 @@
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
   id: DrinkCoffeeLiqueurBottleFull
   name: coffee liqueur bottle
-  description: The great taste of coffee with none of the benifits.
+  description: The great taste of coffee with none of the benefits.
   components:
   - type: SolutionContainerManager
     solutions:

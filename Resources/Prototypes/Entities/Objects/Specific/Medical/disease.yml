@@ -2,7 +2,7 @@
   parent: BaseItem
   id: DiseaseSwab
   name: sterile swab
-  description: Used for taking and transfering samples. Sterile until open. Single use only.
+  description: Used for taking and transferring samples. Sterile until open. Single use only.
   components:
   - type: Item
     size: Tiny
