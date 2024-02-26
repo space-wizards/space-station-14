@@ -113,9 +113,11 @@
       - Syringe
       - HandLabeler
       - LightTube
+      - LedLightTube
       - SodiumLightTube
       - ExteriorLightTube
       - LightBulb
+      - LedLightBulb
       - Bucket
       - DrinkMug
       - DrinkMugMetal
