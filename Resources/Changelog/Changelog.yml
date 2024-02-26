@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed green-red jester outfit visually
-    type: Tweak
-  id: 5541
-  time: '2024-01-04T00:40:23.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23454
 - author: themias
   changes:
   - message: Zombies now take longer to pry open bolted doors.
@@ -3831,3 +3824,13 @@
   id: 6040
   time: '2024-02-26T23:26:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25434
+- author: Velcroboy
+  changes:
+  - message: Tweaked wallmounted objects can not be interacted with through thindows
+      or windoors.
+    type: Tweak
+  - message: Fixed NanoMed vendor not being accessible from all directions.
+    type: Fix
+  id: 6041
+  time: '2024-02-26T23:28:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25451
