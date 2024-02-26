@@ -27,7 +27,7 @@ public sealed partial class DrainComponent : Component
     public float Accumulator = 0f;
 
     /// <summary>
-    /// Does this drain automatically absorb surrouding puddles? Or is it a drain designed to empty
+    /// Does this drain automatically absorb surrounding puddles? Or is it a drain designed to empty
     /// solutions in it manually?
     /// </summary>
     [DataField("autoDrain"), ViewVariables(VVAccess.ReadOnly)]
