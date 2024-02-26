@@ -4,6 +4,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
+using Content.Server.Roles.Jobs;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -41,6 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly JobSystem _jobs = default!;
 
     public override void Initialize()
     {

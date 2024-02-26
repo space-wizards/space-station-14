@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Replays;
@@ -47,6 +47,10 @@ public sealed partial class GameTicker
             var recordPath = finalPath;
             var tempDir = _cfg.GetCVar(CCVars.ReplayAutoRecordTempDir);
             ResPath? moveToPath = null;
+
+            // Set the round end player and text back to null to prevent it from writing the previous round's data.
+            _replayRoundPlayerInfo = null;
+            _replayRoundText = null;
 
             if (!string.IsNullOrEmpty(tempDir))
             {
@@ -124,9 +128,8 @@ public sealed partial class GameTicker
         metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
         metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
         metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
-        // These should be set to null to prepare them for the next round.
-        _replayRoundPlayerInfo = null;
-        _replayRoundText = null;
+        metadata["server_name"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.AdminLogsServerName));
+        metadata["roundId"] = new ValueDataNode(RoundId.ToString());
     }
 
     private ResPath GetAutoReplayPath()

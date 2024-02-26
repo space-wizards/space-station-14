@@ -19,6 +19,7 @@
           Quantity: 8
   - type: Item
     size: Small
+    storedRotation: -90
 
 # Kebabs
 

@@ -259,6 +259,7 @@
       - id: ClothingHeadHelmetSyndicate
       - id: ClothingOuterHardsuitSyndicate
       - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesColorYellowBudget
       - id: DoubleEmergencyOxygenTankFilled
       - id: DoubleEmergencyNitrogenTankFilled
 
@@ -273,6 +274,35 @@
       - id: ClothingOuterHardsuitSyndie
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
+  name: syndicate elite hardsuit bundle
+  description: "Contains the Syndicate's elite hardsuit, which comes with some more stuff in it."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSyndieElite
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateHardsuitExtrasBundle
+  name: syndicate hardsuit extras bundle
+  description: "Contains stuff that you will absolutely want to have when purchasing a hardsuit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
