@@ -25,6 +25,8 @@
   - type: GuideHelp
     guides:
     - Security
+  - type: UseDelay
+    delay: 6
 
 - type: entity
   name: makeshift handcuffs
@@ -148,9 +150,6 @@
   - type: Handcuff
     cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
     breakoutTime: 100
-    damageOnResist:
-      types:
-        Blunt: 0
     cuffTime: 10
     uncuffTime: 10
     stunBonus: 4
