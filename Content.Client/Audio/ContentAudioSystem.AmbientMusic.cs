@@ -46,7 +46,7 @@ public sealed partial class ContentAudioSystem
     /// <summary>
     /// If we find a better ambient music proto can we interrupt this one.
     /// </summary>
-    private bool _interruptable;
+    private bool _interruptible;
 
     /// <summary>
     /// Track what ambient sounds we've played. This is so they all get played an even
@@ -163,7 +163,7 @@ public sealed partial class ContentAudioSystem
             isDone = !audioComp.Playing;
         }
 
-        if (_interruptable)
+        if (_interruptible)
         {
             var player = _player.LocalSession?.AttachedEntity;
 
@@ -171,7 +171,7 @@ public sealed partial class ContentAudioSystem
             {
                 FadeOut(_ambientMusicStream, duration: AmbientMusicFadeTime);
                 _musicProto = null;
-                _interruptable = false;
+                _interruptible = false;
                 isDone = true;
             }
         }
@@ -196,11 +196,11 @@ public sealed partial class ContentAudioSystem
 
         if (_musicProto == null)
         {
-            _interruptable = false;
+            _interruptible = false;
             return;
         }
 
-        _interruptable = _musicProto.Interruptable;
+        _interruptible = _musicProto.Interruptible;
         var tracks = _ambientSounds[_musicProto.ID];
 
         var track = tracks[^1];

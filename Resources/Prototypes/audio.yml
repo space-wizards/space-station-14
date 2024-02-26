@@ -70,7 +70,7 @@
       volume: -10
     collection: AmbienceSpace
   fadeIn: true
-  interruptable: true
+  interruptible: true
   rules: InSpace
   priority: 1
 
@@ -82,7 +82,7 @@
     collection: AmbienceMining
   rules: OnMapGrid
   fadeIn: true
-  interruptable: true
+  interruptible: true
   priority: 1
 
 ## Fallback if nothing else found
