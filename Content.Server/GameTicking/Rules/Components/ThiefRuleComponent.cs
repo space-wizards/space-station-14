@@ -48,7 +48,7 @@ public sealed partial class ThiefRuleComponent : Component
     /// Things that will be given to thieves
     /// </summary>
     [DataField]
-    public List<EntProtoId> StarterItems = new List<EntProtoId> { "ToolboxThief", "ClothingHandsChameleonThief" };
+    public List<EntProtoId> StarterItems = new() { "ToolboxThief", "ClothingHandsChameleonThief" };
 
     /// <summary>
     /// All Thieves created by this rule

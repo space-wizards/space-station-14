@@ -1,10 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.GameTicking.Rules;
 

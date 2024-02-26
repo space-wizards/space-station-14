@@ -1,3 +1,4 @@
+using Content.Server.Maps;
 using Content.Server.NPC.Components;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Events;
@@ -7,6 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 
@@ -15,15 +17,8 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
 public sealed partial class NukeopsRuleComponent : Component
 {
-    // TODO Replace with GameRuleComponent.minPlayers
     /// <summary>
-    /// The minimum needed amount of players
-    /// </summary>
-    [DataField]
-    public int MinPlayers = 20;
-
-    /// <summary>
-    ///     This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
+    /// This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
     /// </summary>
     [DataField]
     public int PlayersPerOperative = 10;
@@ -92,16 +87,10 @@ public sealed partial class NukeopsRuleComponent : Component
     public int WarTCAmountPerNukie = 40;
 
     /// <summary>
-    ///     Time allowed for declaration of war
-    /// </summary>
-    [DataField]
-    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
-
-    /// <summary>
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField]
-    public TimeSpan? WarNukieArriveDelay = TimeSpan.FromMinutes(15);
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(15);
 
     /// <summary>
     ///     Minimal operatives count for war declaration
@@ -118,17 +107,14 @@ public sealed partial class NukeopsRuleComponent : Component
     [DataField]
     public string OperationName = "Test Operation";
 
-    [DataField(customTypeSerializer: typeof(ResPathSerializer))]
-    public ResPath OutpostMap = new("/Maps/nukieplanet.yml");
-
-    [DataField(customTypeSerializer: typeof(ResPathSerializer))]
-    public ResPath ShuttleMap = new("/Maps/infiltrator.yml");
+    [DataField]
+    public ProtoId<GameMapPrototype> OutpostMapPrototype = "NukieOutpost";
 
     [DataField]
     public WinType WinType = WinType.Neutral;
 
     [DataField]
-    public List<WinCondition> WinConditions = new();
+    public List<WinCondition> WinConditions = new ();
 
     public MapId? NukiePlanet;
 
@@ -139,23 +125,10 @@ public sealed partial class NukeopsRuleComponent : Component
     public EntityUid? TargetStation;
 
     /// <summary>
-    ///     Cached operator name prototypes.
-    /// </summary>
-    [DataField]
-    public Dictionary<string, List<string>> OperativeNames = new();
-
-    /// <summary>
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
     [DataField]
     public Dictionary<EntityUid, string> OperativeMindPendingData = new();
-
-    /// <summary>
-    ///     Players who played as an operative at some point in the round.
-    ///     Stores the mind as well as the entity name
-    /// </summary>
-    [DataField]
-    public Dictionary<string, EntityUid> OperativePlayers = new();
 
     [DataField(required: true)]
     public ProtoId<NpcFactionPrototype> Faction = default!;

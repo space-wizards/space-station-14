@@ -1,4 +1,3 @@
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -16,14 +15,14 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Chat;
+using Robust.Shared.Enums;
 
 namespace Content.Server.Antag;
 
 public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
@@ -40,13 +39,19 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
     /// <returns>List of all player entities that match the requirements</returns>
-    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions, ProtoId<AntagPrototype> antagPrototype, bool includeAllJobs = false, AntagAcceptability acceptableAntags = AntagAcceptability.NotExclusive, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions,
+        ProtoId<AntagPrototype> antagPrototype,
+        bool includeAllJobs = false,
+        AntagAcceptability acceptableAntags = AntagAcceptability.NotExclusive,
+        bool ignorePreferences = false,
+        bool allowNonHumanoids = false,
+        Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         var eligiblePlayers = new List<EntityUid>();
 
         foreach (var player in playerSessions)
         {
-            if (IsEligible(player, antagPrototype, includeAllJobs, acceptableAntags, ignorePreferences, allowNonHumanoids, customExcludeCondition))
+            if (IsPlayerEligible(player, antagPrototype, includeAllJobs, acceptableAntags, ignorePreferences, allowNonHumanoids, customExcludeCondition))
                 eligiblePlayers.Add(player.AttachedEntity!.Value);
         }
 
@@ -84,7 +89,13 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A function, accepting an EntityUid and returning bool. Each player is tested against this, returning truw will exclude the player from eligibility</param>
     /// <returns>True if the player session matches the requirements, false otherwise</returns>
-    public bool IsEligible(ICommonSession session, ProtoId<AntagPrototype> antagPrototype, bool includeAllJobs = false, AntagAcceptability acceptableAntags = AntagAcceptability.NotExclusive, bool ignorePreferences = false, bool allowNonHumanoids = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public bool IsPlayerEligible(ICommonSession session,
+        ProtoId<AntagPrototype> antagPrototype,
+        bool includeAllJobs = false,
+        AntagAcceptability acceptableAntags = AntagAcceptability.NotExclusive,
+        bool ignorePreferences = false,
+        bool allowNonHumanoids = false,
+        Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         if (!IsSessionEligible(session, antagPrototype, ignorePreferences))
             return false;
@@ -111,13 +122,15 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             //If we dont want to select any antag roles
             case AntagAcceptability.None:
                 {
-                    if (_roleSystem.MindIsAntagonist(playerMind)) return false;
+                    if (_roleSystem.MindIsAntagonist(playerMind))
+                        return false;
                     break;
                 }
             //If we dont want to select exclusive antag roles
             case AntagAcceptability.NotExclusive:
                 {
-                    if (_roleSystem.MindIsExclusiveAntagonist(playerMind)) return false;
+                    if (_roleSystem.MindIsExclusiveAntagonist(playerMind))
+                        return false;
                     break;
                 }
         }
@@ -145,10 +158,8 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     {
         //Exclude disconnected or zombie sessions
         //No point giving antag roles to them
-        if (session.Status == Robust.Shared.Enums.SessionStatus.Disconnected)
-            return false;
-
-        if (session.Status == Robust.Shared.Enums.SessionStatus.Zombie)
+        if (session.Status == SessionStatus.Disconnected ||
+            session.Status == SessionStatus.Zombie)
             return false;
 
         //Check the player has this antag preference selected
@@ -187,7 +198,9 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         {
             //Remove all chosen players from this list, to prevent duplicates
             foreach (var chosenPlayer in chosenPlayers)
+            {
                 playerList.Remove(chosenPlayer);
+            }
 
             //If we have reached the desired number of players, skip
             if (chosenPlayers.Count >= count)
@@ -208,12 +221,12 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     {
         var chosenPlayers = new List<EntityUid>();
 
-        for (int i = 0; i < count; i++)
+        for (var i = 0; i < count; i++)
         {
             if (eligiblePlayers.Count == 0)
                 break;
 
-            chosenPlayers.Add(_random.PickAndTake(eligiblePlayers));
+            chosenPlayers.Add(RobustRandom.PickAndTake(eligiblePlayers));
         }
 
         return chosenPlayers;
@@ -232,7 +245,9 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         {
             //Remove all chosen players from this list, to prevent duplicates
             foreach (var chosenPlayer in chosenPlayers)
+            {
                 playerList.Remove(chosenPlayer);
+            }
 
             //If we have reached the desired number of players, skip
             if (chosenPlayers.Count >= count)
@@ -258,7 +273,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             if (eligiblePlayers.Count == 0)
                 break;
 
-            chosenPlayers.Add(_random.PickAndTake(eligiblePlayers));
+            chosenPlayers.Add(RobustRandom.PickAndTake(eligiblePlayers));
         }
 
         return chosenPlayers;
@@ -290,7 +305,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
     public void SendBriefing(EntityUid entity, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
-        if (!_mindSystem.TryGetMind(entity, out var mind, out var mindComponent))
+        if (!_mindSystem.TryGetMind(entity, out _, out var mindComponent))
             return;
 
         if (mindComponent.Session == null)
@@ -326,7 +341,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     {
         _audioSystem.PlayGlobal(briefingSound, session);
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
-        _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
+        ChatManager.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
     }
     #endregion
 }

@@ -233,7 +233,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             if (!ev.LateJoin)
                 continue;
 
-            if (!_antagSelection.IsEligible(ev.Player, comp.TraitorPrototypeId))
+            if (!_antagSelection.IsPlayerEligible(ev.Player, comp.TraitorPrototypeId))
                 continue;
 
             //If its before we have selected traitors, continue

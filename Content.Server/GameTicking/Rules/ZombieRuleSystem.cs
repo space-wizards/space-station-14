@@ -4,7 +4,6 @@ using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
-using Content.Server.Roles.Jobs;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -42,7 +41,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly JobSystem _jobs = default!;
 
     public override void Initialize()
     {
@@ -249,7 +247,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent
         var eligiblePlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, includeAllJobs: true, customExcludeCondition: x => HasComp<ZombieImmuneComponent>(x) || HasComp<InitialInfectedExemptComponent>(x));
         //And get all players, excluding ZombieImmune - to fill any leftover initial infected slots
-        var allPlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, acceptableAntags: Shared.Antag.AntagAcceptability.All, includeAllJobs: true, ignorePreferences: true, customExcludeCondition: x => HasComp<ZombieImmuneComponent>(x));
+        var allPlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, acceptableAntags: Shared.Antag.AntagAcceptability.All, includeAllJobs: true, ignorePreferences: true, customExcludeCondition: HasComp<ZombieImmuneComponent>);
 
         //If there are no players to choose, abort
         if (allPlayers.Count == 0)
@@ -271,7 +269,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     private void MakeZombie(List<EntityUid> entities, ZombieRuleComponent component)
     {
         foreach (var entity in entities)
+        {
             MakeZombie(entity, component);
+        }
     }
     private void MakeZombie(EntityUid entity, ZombieRuleComponent component)
     {

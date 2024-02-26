@@ -1,4 +1,4 @@
-using Content.Server.NPC.Components;
+﻿using Content.Server.NPC.Components;
 using Content.Shared.Dataset;
 using Content.Shared.Random;
 using Content.Shared.Roles;
@@ -13,7 +13,7 @@ public sealed partial class TraitorRuleComponent : Component
 {
     public readonly List<EntityUid> TraitorMinds = new();
 
-    [DataField("traitorPrototypeId")]
+    [DataField]
     public ProtoId<AntagPrototype> TraitorPrototypeId = "Traitor";
 
     [DataField]
@@ -55,6 +55,6 @@ public sealed partial class TraitorRuleComponent : Component
     /// <summary>
     ///     Path to antagonist alert sound.
     /// </summary>
-    [DataField("greetSoundNotification")]
+    [DataField]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 }

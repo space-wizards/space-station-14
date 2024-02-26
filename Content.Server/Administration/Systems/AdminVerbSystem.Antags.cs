@@ -3,7 +3,6 @@ using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
@@ -19,7 +18,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
-    [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -32,7 +30,7 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        if (!TryComp<MindContainerComponent>(args.Target, out var targetMindComp))
+        if (!HasComp<MindContainerComponent>(args.Target))
             return;
 
         Verb traitor = new()

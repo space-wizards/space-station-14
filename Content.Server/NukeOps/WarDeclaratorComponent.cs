@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.NukeOps;
+using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.NukeOps;
 
@@ -6,6 +8,7 @@ namespace Content.Server.NukeOps;
 /// Used with NukeOps game rule to send war declaration announcement
 /// </summary>
 [RegisterComponent]
+[Access(typeof(WarDeclaratorSystem))]
 public sealed partial class WarDeclaratorComponent : Component
 {
     /// <summary>
@@ -23,22 +26,37 @@ public sealed partial class WarDeclaratorComponent : Component
     public bool AllowEditingMessage = true;
 
     /// <summary>
-    /// War declarement text color
+    /// War declaration text color
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public Color Color = Color.Red;
 
     /// <summary>
-    /// War declarement sound file path
+    /// War declaration sound file path
     /// </summary>
     [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Announcements/war.ogg");
 
     /// <summary>
-    /// Fluent ID for the declarement title
+    /// Fluent ID for the declaration sender title
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
-    public LocId Title = "comms-console-announcement-title-nukie";
+    public LocId SenderTitle = "comms-console-announcement-title-nukie";
+
+    /// <summary>
+    /// Time allowed for declaration of war
+    /// </summary>
+    [DataField]
+    public float WarDeclarationDelay = 6.0f;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan DisableAt;
+
+    [DataField]
+    public WarConditionStatus? CurrentStatus;
 }
+
+[ByRefEvent]
+public record struct WarDeclaredEvent(WarConditionStatus? Status);

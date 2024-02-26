@@ -11,7 +11,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent]
 public sealed partial class NukeOperativeSpawnerComponent : Component
 {
-    [DataField("name", required: true)]
+    [DataField("name", required:true)]
     public string OperativeName = default!;
 
     [DataField]
