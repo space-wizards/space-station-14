@@ -44,7 +44,7 @@ public sealed class JammerSystem : EntitySystem
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
 
-        var activated = !HasComp<ActiveRadioJammerComponent>(uid) && 
+        var activated = !HasComp<ActiveRadioJammerComponent>(uid) &&
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
             battery.CurrentCharge > GetCurrentWattage(comp);
         if (activated)
@@ -75,7 +75,7 @@ public sealed class JammerSystem : EntitySystem
                 ? Loc.GetString("radio-jammer-component-examine-on-state")
                 : Loc.GetString("radio-jammer-component-examine-off-state");
             args.PushMarkup(powerIndicator);
-            
+
             var powerLevel = Loc.GetString(comp.Settings[comp.SelectedPowerLevel].Name);
             var switchIndicator = Loc.GetString("radio-jammer-component-switch-setting", ("powerLevel", powerLevel));
             args.PushMarkup(switchIndicator);
@@ -103,22 +103,26 @@ public sealed class JammerSystem : EntitySystem
 
         var user = args.User;
 
-        for (byte i = 0; i < entity.Comp.Settings.Count; i++)
+        byte index = 0;
+        foreach (var setting in entity.Comp.Settings)
         {
-            var currentIndex = i;
+            // This is because Act wont work with index.
+            // Needs it to be saved in the loop.
+            var currIndex = index;
             var verb = new Verb
             {
-                Priority = currentIndex,
+                Priority = currIndex,
                 Category = VerbCategory.PowerLevel,
-                Disabled = entity.Comp.SelectedPowerLevel == currentIndex,
+                Disabled = entity.Comp.SelectedPowerLevel == currIndex,
                 Act = () =>
                 {
-                    entity.Comp.SelectedPowerLevel = currentIndex;
-                    _popup.PopupEntity(Loc.GetString(entity.Comp.Settings[currentIndex].Message), user, user);
+                    entity.Comp.SelectedPowerLevel = currIndex;
+                    _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
                 },
-                Text = Loc.GetString(entity.Comp.Settings[currentIndex].Name),
+                Text = Loc.GetString(setting.Name),
             };
             args.Verbs.Add(verb);
+            index++;
         }
     }
     private static float GetCurrentWattage(RadioJammerComponent jammer)
