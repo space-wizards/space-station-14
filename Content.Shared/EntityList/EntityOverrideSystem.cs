@@ -20,13 +20,19 @@ public sealed partial class EntityOverrideSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EntityOverrideMarkContextEvent>(OnMarkEntityOverrideContext);
+        SubscribeLocalEvent<EntityOverrideMarkContextEvent>(OnEntityOverrideMarkContext);
+        SubscribeLocalEvent<EntityOverrideClearContextEvent>(OnEntityOverrideClearContext);
         SubscribeLocalEvent<EntityOverrideApplyEvent>(OnApplyEntityOverrides);
     }
 
-    private void OnMarkEntityOverrideContext(ref EntityOverrideMarkContextEvent args)
+    private void OnEntityOverrideMarkContext(ref EntityOverrideMarkContextEvent args)
     {
         _context = args.Context;
+    }
+
+    private void OnEntityOverrideClearContext(ref EntityOverrideClearContextEvent args)
+    {
+        _context = null;
     }
 
     private void OnApplyEntityOverrides(ref EntityOverrideApplyEvent args)
@@ -82,3 +88,9 @@ public readonly struct EntityOverrideMarkContextEvent(EntityUid context)
 {
     public readonly EntityUid Context = context;
 }
+
+/// <summary>
+/// Event raised to clear the entity recored by <see cref="EntityOverrideSystem"/> and omit all contextual checks.
+/// </summary>
+[ByRefEvent]
+public readonly struct EntityOverrideClearContextEvent();
