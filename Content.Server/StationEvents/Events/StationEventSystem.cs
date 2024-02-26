@@ -134,25 +134,5 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
         GameTicker.EndGameRule(uid, component);
     }
 
-    public float GetSeverityModifier()
-    {
-        var ev = new GetSeverityModifierEvent();
-        RaiseLocalEvent(ev);
-        return ev.Modifier;
-    }
-
     #endregion
-}
-
-/// <summary>
-///     Raised broadcast to determine what the severity modifier should be for an event, some positive number that can be multiplied with various things.
-///     Handled by usually other game rules (like the ramping scheduler).
-///     Most events should try and make use of this if possible.
-/// </summary>
-public sealed class GetSeverityModifierEvent : EntityEventArgs
-{
-    /// <summary>
-    ///     Should be multiplied/added to rather than set, for commutativity.
-    /// </summary>
-    public float Modifier = 1.0f;
 }

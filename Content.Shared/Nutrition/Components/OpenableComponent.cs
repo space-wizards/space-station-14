@@ -1,27 +1,29 @@
-using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Nutrition.Components;
+namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
 /// A drink or food that can be opened.
 /// Starts closed, open it with Z or E.
 /// </summary>
-[RegisterComponent, Access(typeof(OpenableSystem))]
+[NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, Access(typeof(SharedOpenableSystem))]
 public sealed partial class OpenableComponent : Component
 {
     /// <summary>
     /// Whether this drink or food is opened or not.
     /// Drinks can only be drunk or poured from/into when open, and food can only be eaten when open.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Opened;
 
     /// <summary>
     /// If this is false you cant press Z to open it.
     /// Requires an OpenBehavior damage threshold or other logic to open.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool OpenableByHand = true;
 
     /// <summary>
@@ -61,7 +63,7 @@ public sealed partial class OpenableComponent : Component
     /// <summary>
     /// Can this item be closed again after opening?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Closeable;
 
     /// <summary>
