@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: 'Blindness has been completely reworked, top to bottom. Eye damage is
-      no longer a mere dimming of the screen, but rather, a hyperstylized (read: not
-      at all realistic) simulation of the symptoms described by those living with
-      various types of real-world blindness.'
-    type: Add
-  - message: When your eyes have reached a critical state of damage, you are now capable
-      of simply closing them.
-    type: Add
-  - message: The settings menu now has a "Reduce motion of visual effects" setting!
-      Currently, the only thing this does is swap the eye damage effect out for a
-      far more straight-forward one akin to the blindness overlays seen across various
-      SS13 servers.
-    type: Add
-  - message: The amount of damage that eyes can take has been greatly increased. Total
-      blindness now takes 9 damage, up from 3. Additionally, eyes are considered to
-      be in a critical state once they hit 6 damage.
-    type: Tweak
-  - message: Glasses no longer actively increase the eye damage effect. They now actively
-      reduce the eye damage effect, with their effectiveness dropping off as you take
-      more eye damage, until they eventually do nothing once your eyes are in critical
-      condition.
-    type: Tweak
-  - message: The blind trait is now legal blindness, rather than complete blindness.
-      The blind trait permanently prevents your eyes from being reduced below the
-      critical state threshold.
-    type: Tweak
-  id: 5525
-  time: '2024-01-03T09:07:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23212
-- author: BurninDreamer
-  changes:
-  - message: Hand labelers can now be printed by autolathes.
-    type: Tweak
-  id: 5526
-  time: '2024-01-03T18:24:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23457
 - author: themias
   changes:
   - message: Fixed refueling a lit welder not detonating the fuel tank
@@ -3843,3 +3805,18 @@
   id: 6024
   time: '2024-02-25T23:41:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25499
+- author: OctoRocket
+  changes:
+  - message: Removed the hands requirement to read paper.
+    type: Tweak
+  id: 6025
+  time: '2024-02-26T02:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25580
+- author: SlamBamActionman
+  changes:
+  - message: Self-uncuff damage has been removed, but attempting to self-uncuff now
+      has a cooldown instead.
+    type: Tweak
+  id: 6026
+  time: '2024-02-26T02:41:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25161
