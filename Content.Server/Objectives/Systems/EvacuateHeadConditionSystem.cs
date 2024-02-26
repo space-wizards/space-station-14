@@ -40,12 +40,20 @@ namespace Content.Server.Objectives.Systems
 
         private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)
         {
-            _killPersonConditionSystem.OnPersonAssigned(uid, comp, ref args);
+            //I'm not sure
+            var targetComponent = new TargetObjectiveComponent();
+
+            var targetUid = _random.Pick(_killPersonConditionSystem.killPersonTargets);
+            _target.SetTarget(uid, targetUid, targetComponent);
         }
 
         private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
         {
-            _killPersonConditionSystem.OnHeadAssigned(uid, comp, ref args);
+            //I'm not sure
+            var targetComponent = new TargetObjectiveComponent();
+            
+            var targetUid = _random.Pick(_killPersonConditionSystem.killHeadTargets);
+            _target.SetTarget(uid, targetUid, targetComponent);
         }
         
         private float GetProgress(EntityUid mindId)

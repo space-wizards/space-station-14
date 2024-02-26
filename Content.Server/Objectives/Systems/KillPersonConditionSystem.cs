@@ -21,6 +21,10 @@ public sealed class KillPersonConditionSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
+    //the list for "addicted"
+    public List<EntityUid> killPersonTargets = new List<EntityUid>();
+    public List<EntityUid> killHeadTargets = new List<EntityUid>();
+    
     public override void Initialize()
     {
         base.Initialize();
@@ -60,8 +64,11 @@ public sealed class KillPersonConditionSystem : EntitySystem
             args.Cancelled = true;
             return;
         }
+        
+        var targetUid = _random.Pick(allHumans);
+        _target.SetTarget(uid, targetUid, target);
 
-        _target.SetTarget(uid, _random.Pick(allHumans), target);
+        killPersonTargets.Add(targetUid);
     }
 
     public void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
@@ -96,7 +103,10 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (allHeads.Count == 0)
             allHeads = allHumans; // fallback to non-head target
 
-        _target.SetTarget(uid, _random.Pick(allHeads), target);
+        var targetUid = _random.Pick(allHeads);
+        _target.SetTarget(uid, targetUid, target);
+
+        killHeadTargets.Add(targetUid);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
