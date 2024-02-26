@@ -319,7 +319,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltPlant
   name: botanical belt
-  description: A belt used to hold most hydroponics supplies. Suprisingly, not green.
+  description: A belt used to hold most hydroponics supplies. Surprisingly, not green.
   components:
   - type: Sprite
     sprite: Clothing/Belt/plant.rsi

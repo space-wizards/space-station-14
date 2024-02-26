@@ -272,7 +272,7 @@
   id: ClothingHeadHatHoodWinterCentcom
   noSpawn: true
   name: Centcom winter coat hood
-  description: A hood for keeping the central comander's head warm.
+  description: A hood for keeping the central commander's head warm.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
@@ -316,7 +316,7 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOP
   noSpawn: true
-  name: head of personel's winter coat hood
+  name: head of personnel's winter coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi

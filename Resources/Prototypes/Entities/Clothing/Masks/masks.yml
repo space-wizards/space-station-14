@@ -530,7 +530,7 @@
   parent: ClothingMaskBase
   id: ClothingMaskItalianMoustache
   name: italian moustache
-  description: Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly.
+  description: Made from authentic Italian moustache hairs. Gives the wearer an irresistible urge to gesticulate wildly.
   components:
   - type: Sprite
     sprite: Clothing/Mask/italian_moustache.rsi
