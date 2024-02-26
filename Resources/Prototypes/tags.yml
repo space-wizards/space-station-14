@@ -654,6 +654,9 @@
   id: HidesHair # for headwear.
 
 - type: Tag
+  id: HidesNose # for non-standard noses.
+
+- type: Tag
   id: HighRiskItem
 
 - type: Tag
