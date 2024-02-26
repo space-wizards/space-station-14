@@ -22,18 +22,8 @@
     contents:
       - id: ClothingOuterSuitEmergency
       - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
       - id: OxygenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.80
-        orGroup: EmergencyNitrogenOrRegularNitrogen
       - id: NitrogenTankFilled
-        prob: 0.20
-        orGroup: EmergencyNitrogenOrRegularNitrogen
       - id: ToolboxEmergencyFilled
         prob: 0.4
       - id: MedkitOxygenFilled
@@ -52,18 +42,8 @@
     contents:
       - id: ClothingOuterSuitEmergency
       - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
       - id: OxygenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
       - id: NitrogenTankFilled
-        prob: 0.80
-        orGroup: EmergencyNitrogenOrRegularNitrogen
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.20
-        orGroup: EmergencyNitrogenOrRegularNitrogen  
       - id: ToolboxEmergencyFilled
         prob: 0.4
       - id: MedkitOxygenFilled
