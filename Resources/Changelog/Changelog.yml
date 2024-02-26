@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: After realizing their employees have been forced to make medical supplies
-      by hand, Centcomm has added a gauze option to their medical fabricators.
-    type: Add
-  id: 5535
-  time: '2024-01-03T22:42:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23417
 - author: Bhijn and Myr
   changes:
   - message: The blindness and eye damage effects now properly take screen resolution
@@ -3822,3 +3814,17 @@
   id: 6034
   time: '2024-02-26T23:06:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25455
+- author: TheShuEd
+  changes:
+  - message: Carpets can now be printed at the uniform printer.
+    type: Add
+  - message: Carpets can be collected from the floor and buthered into fabric.
+    type: Add
+  - message: New white and cyan carpets.
+    type: Add
+  - message: Carpets can now be placed on wooden tables to get beautiful new tables
+      with tablecloths.
+    type: Add
+  id: 6035
+  time: '2024-02-26T23:11:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25562
