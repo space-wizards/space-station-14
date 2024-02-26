@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Zombies now take longer to pry open bolted doors.
-    type: Tweak
-  id: 5542
-  time: '2024-01-04T00:41:39.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23383
 - author: Blazeror
   changes:
   - message: Vials now work in dispensers.
@@ -3834,3 +3827,10 @@
   id: 6041
   time: '2024-02-26T23:28:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25451
+- author: Lank
+  changes:
+  - message: Diona can no longer split or reform to cure themselves of a zombie infection.
+    type: Fix
+  id: 6042
+  time: '2024-02-26T23:31:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25404
