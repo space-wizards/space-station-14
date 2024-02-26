@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: IlyaElDunaev
-  changes:
-  - message: Tarantula can pry doors.
-    type: Add
-  - message: Added regeneration for tarantula.
-    type: Add
-  id: 5540
-  time: '2024-01-04T00:39:23.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23449
 - author: Alekshhh
   changes:
   - message: Changed green-red jester outfit visually
@@ -3826,3 +3817,17 @@
   id: 6039
   time: '2024-02-26T23:25:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25501
+- author: Whisper
+  changes:
+  - message: Bleed wounds will no longer heal so fast they do not need to be treated.
+      Please see the medical guidebook.
+    type: Tweak
+  - message: Decreased passive bleed wound clotting by 60% (now 0.33u per 3 seconds).
+    type: Tweak
+  - message: Decreased all bloodloss damage (as a result of bleeding) by 50%.
+    type: Tweak
+  - message: Health analyzers will report if your patient is bleeding.
+    type: Add
+  id: 6040
+  time: '2024-02-26T23:26:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25434
