@@ -1,8 +1,9 @@
 # TODO once tiles can be smoothed and carpets ported over to that, add them to the FloorTile outputs
 - type: entity
-  name: red carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemRed
+  suffix: Red
   components:
   - type: Sprite
     state: carpet-red
@@ -15,9 +16,10 @@
     stackType: FloorCarpetRed
 
 - type: entity
-  name: black carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemBlack
+  suffix: Black
   components:
   - type: Sprite
     state: carpet-black
@@ -30,9 +32,10 @@
     stackType: FloorCarpetBlack
 
 - type: entity
-  name: blue carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemBlue
+  suffix: Blue
   components:
   - type: Sprite
     state: carpet-blue
@@ -45,9 +48,10 @@
     stackType: FloorCarpetBlue
 
 - type: entity
-  name: green carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemGreen
+  suffix: Green
   components:
   - type: Sprite
     state: carpet-green
@@ -60,9 +64,10 @@
     stackType: FloorCarpetGreen
 
 - type: entity
-  name: orange carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemOrange
+  suffix: Orange
   components:
   - type: Sprite
     state: carpet-orange
@@ -75,9 +80,10 @@
     stackType: FloorCarpetOrange
 
 - type: entity
-  name: sky blue carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemSkyBlue
+  suffix: Sky Blue
   components:
   - type: Sprite
     state: carpet-skyblue
@@ -90,9 +96,10 @@
     stackType: FloorCarpetSkyBlue
 
 - type: entity
-  name: purple carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemPurple
+  suffix: Purple
   components:
   - type: Sprite
     state: carpet-purple
@@ -105,9 +112,10 @@
     stackType: FloorCarpetPurple
 
 - type: entity
-  name: pink carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemPink
+  suffix: Pink
   components:
   - type: Sprite
     state: carpet-pink
@@ -118,3 +126,35 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetPink
+
+- type: entity
+  name: carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemCyan
+  suffix: Cyan
+  components:
+  - type: Sprite
+    state: carpet-cyan
+  - type: Item
+    heldPrefix: carpet-cyan
+  - type: FloorTile
+    outputs:
+      - Plating
+  - type: Stack
+    stackType: FloorCarpetCyan
+
+- type: entity
+  name: carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemWhite
+  suffix: White
+  components:
+  - type: Sprite
+    state: carpet-white
+  - type: Item
+    heldPrefix: carpet-white
+  - type: FloorTile
+    outputs:
+      - Plating
+  - type: Stack
+    stackType: FloorCarpetWhite
