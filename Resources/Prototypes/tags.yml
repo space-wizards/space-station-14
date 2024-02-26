@@ -468,9 +468,6 @@
   id: DrinkBottle
 
 - type: Tag
-  id: DroneUsable
-
-- type: Tag
   id: Duck
 
 - type: Tag
@@ -1053,6 +1050,9 @@
   id: Soup
 
 - type: Tag
+  id: SpookyFog
+
+- type: Tag
   id: Spray
 
 - type: Tag
@@ -1159,6 +1159,9 @@
 
 - type: Tag
   id: WallmountSubstationElectronics
+
+- type: Tag
+  id: WeaponAntiqueLaser
 
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit

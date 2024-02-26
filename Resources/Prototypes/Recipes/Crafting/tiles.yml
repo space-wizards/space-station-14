@@ -164,3 +164,14 @@
 #   description: "A dirty station tile."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: dirty }
 #   objectType: Item
+
+- type: construction
+  name: large wood floor
+  id: TileWoodLarge
+  graph: TileWoodLarge
+  startNode: start
+  targetNode: woodtilelarge
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: wood-large }
+  objectType: Item
