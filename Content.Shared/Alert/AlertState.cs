@@ -7,6 +7,7 @@ public struct AlertState
 {
     public short? Severity;
     public (TimeSpan, TimeSpan)? Cooldown;
-    public TimeSpan? AutoRemove;
+    public bool AutoRemove;
+    public bool ShowCooldown;
     public AlertType Type;
 }

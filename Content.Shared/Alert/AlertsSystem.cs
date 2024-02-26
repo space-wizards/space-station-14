@@ -76,8 +76,9 @@ public abstract class AlertsSystem : EntitySystem
     /// <param name="severity">severity, if supported by the alert</param>
     /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
     ///     be erased if there is currently a cooldown for the alert)</param>
-    /// /// <param name="autoRemove">the server time after which the alert will be removed automatically</param>
-    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null, TimeSpan? autoRemove = null)
+    /// <param name="autoRemove">if true, the alert will be removed at the end of the cooldown</param>
+    /// <param name="showCooldown">if true, the cooldown will be visibly shown over the alert icon</param>
+    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null, bool autoRemove = false, bool showCooldown = true )
     {
         if (!TryComp(euid, out AlertsComponent? alertsComponent))
             return;
@@ -90,7 +91,8 @@ public abstract class AlertsSystem : EntitySystem
                 alertStateCallback.Type == alertType &&
                 alertStateCallback.Severity == severity &&
                 alertStateCallback.Cooldown == cooldown &&
-                alertStateCallback.AutoRemove == autoRemove)
+                alertStateCallback.AutoRemove == autoRemove &&
+                alertStateCallback.ShowCooldown == showCooldown)
             {
                 return;
             }
@@ -99,12 +101,11 @@ public abstract class AlertsSystem : EntitySystem
             alertsComponent.Alerts.Remove(alert.AlertKey);
 
             var state = new AlertState
-                { Cooldown = cooldown, AutoRemove = autoRemove, Severity = severity, Type = alertType };
-
+                { Cooldown = cooldown, Severity = severity, Type = alertType, AutoRemove = autoRemove, ShowCooldown = showCooldown};
             alertsComponent.Alerts[alert.AlertKey] = state;
 
             // Keeping a list of AutoRemove alerts, so Update() doesn't need to check every alert
-            if (alertsComponent.Alerts[alert.AlertKey].AutoRemove is not null )
+            if (autoRemove)
             {
                 var autoComp = EnsureComp<AlertAutoRemoveComponent>(euid);
                 if (!autoComp.AlertKeys.Contains(alert.AlertKey))
@@ -185,7 +186,7 @@ public abstract class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
         SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>(OnPlayerAttached);
 
-        //SubscribeLocalEvent<AlertAutoRemoveComponent, EntityUnpausedEvent>(OnAutoRemoveUnPaused);
+        SubscribeLocalEvent<AlertAutoRemoveComponent, EntityUnpausedEvent>(OnAutoRemoveUnPaused);
 
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(HandlePrototypesReloaded);
@@ -199,18 +200,29 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
+        var dirty = false;
+
         foreach (var alert in alertComp.Alerts)
         {
+            if (alert.Value.Cooldown is null)
+                continue;
+
+            var cooldown = (alert.Value.Cooldown.Value.Item1, alert.Value.Cooldown.Value.Item2 + args.PausedTime);
+
             var state = new AlertState
             {
                 Severity = alert.Value.Severity,
-                Cooldown = alert.Value.Cooldown,
-                AutoRemove =  alert.Value.AutoRemove + args.PausedTime,
+                Cooldown = cooldown,
+                ShowCooldown = alert.Value.ShowCooldown,
+                AutoRemove = alert.Value.AutoRemove,
                 Type = alert.Value.Type
             };
             alertComp.Alerts[alert.Key] = state;
+            dirty = true;
         }
-        Dirty(uid, comp);
+
+        if (dirty)
+            Dirty(uid, comp);
     }
 
     public override void Update(float frameTime)
@@ -232,7 +244,7 @@ public abstract class AlertsSystem : EntitySystem
             {
                 alertComp.Alerts.TryGetValue(alertKey, out var alertState);
 
-                if (alertState.AutoRemove is null || alertState.AutoRemove >= _timing.CurTime)
+                if (alertState.Cooldown is null || alertState.Cooldown.Value.Item2 >= _timing.CurTime)
                     continue;
                 removeList.Add(alertKey);
                 alertComp.Alerts.Remove(alertKey);

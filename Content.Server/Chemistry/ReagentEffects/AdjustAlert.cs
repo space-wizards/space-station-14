@@ -7,9 +7,15 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class AdjustAlert : ReagentEffect
 {
+    /// <summary>
+    /// The specific Alert that will be adjusted
+    /// </summary>
     [DataField("alertType", required: true)]
     public AlertType Type;
 
+    /// <summary>
+    /// If true, clears the alert immediately
+    /// </summary>
     [DataField]
     public bool Clear;
 
@@ -17,7 +23,7 @@ public sealed partial class AdjustAlert : ReagentEffect
     /// Show cooldown progress over the alert
     /// </summary>
     [DataField]
-    public bool Cooldown;
+    public bool ShowCooldown;
 
     /// <summary>
     /// Automatically remove the alert after a set time
@@ -48,18 +54,11 @@ public sealed partial class AdjustAlert : ReagentEffect
         {
             var timing = IoCManager.Resolve<IGameTiming>();
             (TimeSpan, TimeSpan)? cooldown = null;
-            TimeSpan? autoRemove = null;
 
-            if (Cooldown)
-            {
+            if (ShowCooldown || AutoRemove && Time > 0)
                 cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
-            }
 
-            if (AutoRemove)
-            {
-                autoRemove = (timing.CurTime + TimeSpan.FromSeconds(Time));
-            }
-            alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: autoRemove);
+            alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: AutoRemove, showCooldown: ShowCooldown);
         }
 
     }
