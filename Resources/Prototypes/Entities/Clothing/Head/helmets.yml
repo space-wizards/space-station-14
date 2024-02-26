@@ -6,7 +6,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetBasic
   name: helmet
-  description: Standard security gear. Protects the head from impacts.
+  description: Standard combat gear. Protects the head from impacts.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi

@@ -322,8 +322,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoS
-  name: head of security's jumpsuit
-  description: It's bright red and rather crisp, much like security's victims tend to be.
+  name: Gorlex Commander's jumpsuit
+  description: It's bright red and rather crisp, much like Marauder's victims tend to be.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
@@ -333,8 +333,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSAlt
-  name: head of security's turtleneck
-  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security.
+  name: Gorlex Commander's turtleneck
+  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Gorlex Commander.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
@@ -345,7 +345,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSBlue
   name: head of security's blue jumpsuit
-  description: A blue jumpsuit of Head of Security.
+  description: A stolen jumpsuit of NT's HoS.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_blue.rsi
@@ -355,8 +355,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSGrey
-  name: head of security's grey jumpsuit
-  description: A grey jumpsuit of Head of Security, which make him look somewhat like a passenger.
+  name: Gorlex Commander's grey jumpsuit
+  description: A grey jumpsuit of the Gorlex Commander, which make him look somewhat like a Trooper.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_grey.rsi
@@ -366,8 +366,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSParadeMale
-  name: head of security's parade uniform
-  description: A male head of security's luxury-wear, for special occasions.
+  name: Gorlex Commander's parade uniform
+  description: Gorlex Commander's parade suit, for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
@@ -573,8 +573,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSecGrey
-  name: grey security jumpsuit
-  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  name: Gorlex Trooper's jumpsuit
+  description: A tactical combat suit for Gorlex Troopers. Grey and ready to be stained with blood.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
@@ -584,8 +584,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitWarden
-  name: warden's uniform
-  description: A formal security suit for officers complete with Nanotrasen belt buckle.
+  name: Interrogator's uniform
+  description: A formal security suit for officers.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/warden.rsi

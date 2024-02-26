@@ -120,8 +120,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretHoS
-  name: head of security's beret
-  description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
+  name: Gorlex Commander's beret
+  description: A black beret with a commander's rank emblem. For officers that are more inclined to show power than safety.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_hos.rsi
@@ -136,8 +136,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretWarden
-  name: warden's beret
-  description: A corporate blue beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
+  name: Interrogator's beret
+  description: A blue beret with an NCO's rank emblem. For officers that want to show the blood on their berets.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_warden.rsi
@@ -169,8 +169,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretMerc
-  name: mercenary beret
-  description: Olive beret, the badge depicts a jackal on a rock.
+  name: Terragov beret
+  description: Olive beret, the badge depicts the Terragov logo.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_merc.rsi
@@ -748,8 +748,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSyndie
-  name: syndicate hat
-  description: A souvenir hat from "Syndieland", their production has already been closed.
+  name: Gorlex Private Cap
+  description: For the Fresh meat of the Gorlex Marauders
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/syndiecap.rsi

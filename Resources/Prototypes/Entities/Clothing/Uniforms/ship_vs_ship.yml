@@ -17,7 +17,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitRecruitSyndie
-  name: syndicate recuit jumpsuit
+  name: Gorlex Private jumpsuit
   description: A dubious,, dark-grey jumpsuit. As if passengers weren't dubious enough already.
   components:
   - type: Sprite

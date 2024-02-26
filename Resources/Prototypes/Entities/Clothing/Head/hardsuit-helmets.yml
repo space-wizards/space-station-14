@@ -157,8 +157,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurity
-  name: security hardsuit helmet
-  description: Armored hardsuit helmet for security needs.
+  name: Gorlex hardsuit helmet
+  description: Armored hardsuit helmet for Combat needs.
   components:
   - type: BreathMask
   - type: Sprite
@@ -209,7 +209,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitWarden
-  name: warden's hardsuit helmet
+  name: Interrogator's hardsuit helmet
   description: A modified riot helmet. Oddly comfortable.
   components:
   - type: BreathMask
@@ -304,8 +304,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
-  name: head of security's hardsuit helmet
-  description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
+  name: Gorlex Commanders's hardsuit helmet
+  description: Gorlex hardsuit helmet with the latest top secret Syndie-HUD software. Belongs to the GC.
   components:
   - type: BreathMask
   - type: Sprite

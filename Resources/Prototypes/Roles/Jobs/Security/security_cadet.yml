@@ -25,13 +25,14 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorRed
+    jumpsuit: ClothingUniformJumpsuitRecruitSyndie
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatSyndie
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
     pocket1: WeaponPistolMk58Nonlethal
-  innerClothingSkirt: ClothingUniformJumpskirtColorRed
+  innerClothingSkirt: ClothingUniformJumpsuitRecruitSyndie
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled
