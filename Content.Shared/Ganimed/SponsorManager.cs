@@ -13,6 +13,7 @@ public sealed class SponsorManager
 			{"EugeneOM", new DateTime(2024, 02, 01)},
 			{"Safno_S", new DateTime(2024, 02, 01)},
 			{"Inkvizitor", new DateTime(2024, 02, 24)},
+			{"Hyper_B", new DateTime(2024, 02,26)},
 			{"watrushechnik", new DateTime(2024, 02, 09)},
 		};
 
