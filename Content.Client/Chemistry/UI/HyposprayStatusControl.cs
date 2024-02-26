@@ -2,6 +2,7 @@ using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.FixedPoint;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -13,6 +14,10 @@ public sealed class HyposprayStatusControl : Control
     private readonly Entity<HyposprayComponent> _parent;
     private readonly RichTextLabel _label;
     private readonly SharedSolutionContainerSystem _solutionContainers;
+
+    private FixedPoint2 PrevVolume;
+    private FixedPoint2 PrevMaxVolume;
+    private HyposprayToggleMode PrevToggleMode;
 
     public HyposprayStatusControl(Entity<HyposprayComponent> parent, SharedSolutionContainerSystem solutionContainers)
     {
@@ -28,6 +33,16 @@ public sealed class HyposprayStatusControl : Control
 
         if (!_solutionContainers.TryGetSolution(_parent.Owner, _parent.Comp.SolutionName, out _, out var solution))
             return;
+
+        // only updates the UI if any of the details are different than they previously were
+        if (PrevVolume == solution.Volume
+            && PrevMaxVolume == solution.MaxVolume
+            && PrevToggleMode == _parent.Comp.ToggleMode)
+            return;
+
+        PrevVolume = solution.Volume;
+        PrevMaxVolume = solution.MaxVolume;
+        PrevToggleMode = _parent.Comp.ToggleMode;
 
         var modeStringLocalized = Loc.GetString(_parent.Comp.ToggleMode switch
         {

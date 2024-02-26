@@ -3,7 +3,7 @@
 hypospray-all-mode-text = Only Injects
 hypospray-mobs-only-mode-text = Draws From Containers
 hypospray-invalid-text = Invalid
-hypospray-volume-label = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color]
+hypospray-volume-label = Volume: [color=white]{$currentVolume}u / {$totalVolume}u[/color]
     Mode: [color=white]{$modeString}[/color]
 
 ## Entity
