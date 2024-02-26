@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Microwaves no longer eject their contents when they lose power.
-    type: Tweak
-  id: 5538
-  time: '2024-01-04T00:36:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23460
 - author: Bhijn and Myr
   changes:
   - message: Kobolds now come in a wide variety of colors, and now have random horns!
@@ -3822,3 +3815,13 @@
   id: 6037
   time: '2024-02-26T23:15:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25543
+- author: TheShuEd
+  changes:
+  - message: Added a new T2 industrial technology "Space Scanning"! It includes a
+      mass scanner console board, a Borg GPS module, and a new handheld mass scanner.
+    type: Add
+  - message: GPS borg module now have handheld mass scanner.
+    type: Add
+  id: 6038
+  time: '2024-02-26T23:19:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25526
