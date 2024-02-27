@@ -21,4 +21,10 @@ public sealed partial class PaperComponent : SharedPaperComponent
     /// </summary>
     [DataField("stampState")]
     public string? StampState { get; set; }
+
+    /// <summary>
+    ///     Allows a paper to be unstampable.
+    /// </summary>
+    [DataField("isStampable")]
+    public bool IsStampable { get; set; }
 }

@@ -178,7 +178,7 @@ namespace Content.Server.Paper
         /// </summary>
         public bool TryStamp(EntityUid uid, StampDisplayInfo stampInfo, string spriteStampState, PaperComponent? paperComp = null)
         {
-            if (!Resolve(uid, ref paperComp))
+            if (!Resolve(uid, ref paperComp) || !paperComp.IsStampable)
                 return false;
 
             if (!paperComp.StampedBy.Contains(stampInfo))
