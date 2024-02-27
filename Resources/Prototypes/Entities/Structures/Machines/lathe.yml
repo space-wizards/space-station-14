@@ -53,13 +53,17 @@
   - type: ResearchClient
   - type: TechnologyDatabase
 
-# a lathe that can be sped up with space lube
+# a lathe that can be sped up with space lube / slowed down with glue
 - type: entity
   abstract: true
   parent: BaseLathe
   id: BaseLatheLube
   components:
-  - type: LatheLube
+  - type: ReagentSpeed
+    solution: lube
+    modifiers:
+      SpaceLube: 0.25
+      SpaceGlue: 5
   - type: SolutionContainerManager
     solutions:
       lube:

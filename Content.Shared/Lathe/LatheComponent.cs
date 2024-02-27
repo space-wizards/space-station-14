@@ -84,10 +84,4 @@ namespace Content.Shared.Lathe
     /// </summary>
     [ByRefEvent]
     public readonly record struct LatheStartPrintingEvent(LatheRecipePrototype Recipe);
-
-    /// <summary>
-    /// Event raised on a lathe to modify production time.
-    /// </summary>
-    [ByRefEvent]
-    public record struct LatheGetSpeedEvent(TimeSpan Time);
 }
