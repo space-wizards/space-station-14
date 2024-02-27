@@ -126,3 +126,4 @@ tiles-web = web tile
 tiles-chromite = chromite
 tiles-astro-grass = astro-grass
 tiles-astro-ice = astro-ice
+tiles-wood-large = large wood

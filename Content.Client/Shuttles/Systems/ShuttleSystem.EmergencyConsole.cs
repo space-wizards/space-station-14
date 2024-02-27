@@ -58,6 +58,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 public sealed class EmergencyShuttleOverlay : Overlay
 {
     private IEntityManager _entManager;
+    private SharedTransformSystem _xformSystem;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -67,13 +68,14 @@ public sealed class EmergencyShuttleOverlay : Overlay
     public EmergencyShuttleOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
+        _xformSystem = _entManager.System<SharedTransformSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         if (Position == null || !_entManager.TryGetComponent<TransformComponent>(StationUid, out var xform)) return;
 
-        args.WorldHandle.SetTransform(xform.WorldMatrix);
+        args.WorldHandle.SetTransform(_xformSystem.GetWorldMatrix(xform));
         args.WorldHandle.DrawRect(Position.Value, Color.Red.WithAlpha(100));
         args.WorldHandle.SetTransform(Matrix3.Identity);
     }

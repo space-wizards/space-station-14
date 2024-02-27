@@ -105,7 +105,7 @@ public sealed class ExplosionCommand : IConsoleCommand
             if (args.Length > 4)
                 coords = new MapCoordinates(new Vector2(x, y), xform.MapID);
             else
-                coords = xform.MapPosition;
+                coords = entMan.System<SharedTransformSystem>().GetMapCoordinates(xform);
         }
 
         ExplosionPrototype? type;

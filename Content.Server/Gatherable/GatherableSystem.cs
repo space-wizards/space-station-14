@@ -18,6 +18,7 @@ public sealed partial class GatherableSystem : EntitySystem
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -61,7 +62,7 @@ public sealed partial class GatherableSystem : EntitySystem
         if (component.MappedLoot == null)
             return;
 
-        var pos = Transform(gatheredUid).MapPosition;
+        var pos = _xformSystem.GetMapCoordinates(gatheredUid);
 
         foreach (var (tag, table) in component.MappedLoot)
         {

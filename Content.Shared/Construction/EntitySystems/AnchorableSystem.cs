@@ -127,7 +127,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         // Snap rotation to cardinal (multiple of 90)
         var rot = xform.LocalRotation;
-        xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+        _transformSystem.SetLocalRotation(uid, Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2), xform);
 
         if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.Puller != null)
         {

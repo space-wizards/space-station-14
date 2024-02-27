@@ -63,6 +63,7 @@ namespace Content.Server.Construction.Commands
 
             var changed = 0;
             var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
+            var xformSystem = _entManager.System<SharedTransformSystem>();
 
 
             var enumerator = xformQuery.GetComponent(gridId.Value).ChildEnumerator;
@@ -97,7 +98,7 @@ namespace Content.Server.Construction.Commands
 
                 if (childXform.LocalRotation != Angle.Zero)
                 {
-                    childXform.LocalRotation = Angle.Zero;
+                    xformSystem.SetLocalRotation(child, Angle.Zero, childXform);
                     changed++;
                 }
             }

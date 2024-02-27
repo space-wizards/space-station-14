@@ -142,6 +142,9 @@ uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instan
 uplink-voice-mask-name = Voice Mask
 uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of. Also utilizes cutting-edge chameleon technology.
 
+uplink-clothing-eyes-hud-syndicate-name = Syndicate Visor
+uplink-clothing-eyes-hud-syndicate-desc = The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
+
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
@@ -309,6 +312,9 @@ uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to 
 
 uplink-cigarettes-name = Syndicate Smokes Packet
 uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
+
+uplink-clothing-conducting-gloves-name = Conducting Gloves
+uplink-clothing-conducting-gloves-desc = Looks exactly like insulated gloves, but shocks you far worse than if you had nothing at all! Best given as a gift to passengers you really don't like.
 
 uplink-snack-box-name = Syndicate Snack Box
 uplink-snack-box-desc = A box of delicious snacks and drinks to eat alone or with your team. Includes 1 toy you didn't want.

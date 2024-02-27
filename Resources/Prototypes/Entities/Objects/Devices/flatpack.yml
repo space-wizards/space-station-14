@@ -35,3 +35,35 @@
       cpu_supply: "#A46106"
   - type: StaticPrice
     price: 250
+
+- type: entity
+  parent: BaseFlatpack
+  id: SolarAssemblyFlatpack
+  name: solar assembly flatpack
+  description: A flatpack used for constructing a solar assembly.
+  components:
+  - type: Flatpack
+    entity: SolarAssembly
+  - type: Sprite
+    layers:
+    - state: solar-assembly-part
+  - type: StaticPrice
+    price: 75
+
+- type: entity
+  parent: BaseFlatpack
+  id: AmePartFlatpack
+  name: AME flatpack
+  description: A flatpack used for constructing an antimatter engine reactor.
+  components:
+  - type: Sprite
+    layers:
+    - state: ame-part
+  - type: Flatpack
+    entity: AmeShielding
+  - type: StaticPrice
+    price: 500
+  - type: GuideHelp
+    guides: [ AME, Power ]
+  - type: StealTarget
+    stealGroup: AmePartFlatpack

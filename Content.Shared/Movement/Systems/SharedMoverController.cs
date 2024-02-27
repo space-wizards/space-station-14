@@ -248,7 +248,7 @@ namespace Content.Shared.Movement.Systems
                     // TODO apparently this results in a duplicate move event because "This should have its event run during
                     // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
                     var worldRot = _transform.GetWorldRotation(xform);
-                    _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
+                    _transform.SetLocalRotation(physicsUid, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot, xform);
                 }
 
                 if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&

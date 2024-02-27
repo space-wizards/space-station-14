@@ -9,7 +9,7 @@
       - state: icon-0
         map: ["enum.StorageFillLayers.Fill"]
   - type: Storage
-    maxItemSize: Small
+    maxItemSize: Normal
     grid:
     - 0,0,7,5
     quickInsert: true

@@ -94,7 +94,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
-        SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -120,11 +119,6 @@ public abstract partial class SharedGunSystem : EntitySystem
             component.NextFire = melee.NextAttack;
             Dirty(component);
         }
-    }
-
-    private void OnGunUnpaused(EntityUid uid, GunComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextFire += args.PausedTime;
     }
 
     private void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)
@@ -437,8 +431,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         var coordinates = xform.Coordinates;
         coordinates = coordinates.Offset(offsetPos);
 
-        TransformSystem.SetLocalRotation(xform, Random.NextAngle());
-        TransformSystem.SetCoordinates(entity, xform, coordinates);
+        TransformSystem.SetCoordinates(entity, xform, coordinates, Random.NextAngle());
 
         // decides direction the casing ejects and only when not cycling
         if (angle != null)
