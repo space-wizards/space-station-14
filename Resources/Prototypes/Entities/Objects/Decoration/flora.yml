@@ -229,8 +229,6 @@
     state: stalagmite6
 
 - type: entity
-  name: stalagmite
-  description: Natural stone spikes.
   parent: FloraStalagmite1
   id: FloraGreyStalagmite1
   components:
