@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/37fb6bc6dd20005775dde8d886f48f7722606b77",
+  "copyright": "closed books from https://github.com/tgstation/tgstation/commit/37fb6bc6dd20005775dde8d886f48f7722606b77, open books by rosieposieeee (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -110,6 +110,39 @@
     },
     {
       "name": "book_security"
+    },
+    {
+      "name": "open_red"
+    },
+    {
+      "name": "open_orange"
+    },
+    {
+      "name": "open_yellow"
+    },
+    {
+      "name": "open_green"
+    },
+    {
+      "name": "open_blue"
+    },
+    {
+      "name": "open_cyan"
+    },
+    {
+      "name": "open_pink"
+    },
+    {
+      "name": "open_purple"
+    },
+    {
+      "name": "open_black"
+    },
+    {
+      "name": "open_white"
+    },
+    {
+      "name": "open_writing"
     }
   ]
 }

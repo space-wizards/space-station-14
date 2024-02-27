@@ -368,3 +368,41 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-vents
+
+# open books
+
+- type: entity
+  id: OpenBook
+  parent: Paper
+  name: open book
+  noSpawn: true
+  description: A book left open for you to read or write in.
+  components:
+  - type: Sprite
+      sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_black
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+  - type: Paper
+    # i'm not making 500 stamp permutations
+    isStampable: false
+  - type: Item
+    size: Normal
+  - type: Rotatable
+
+- type: entity
+  id: OpenBookBlack
+  parent: OpenBook
+  suffix: black
+  components:
+  - type: Sprite
+      sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_black
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
