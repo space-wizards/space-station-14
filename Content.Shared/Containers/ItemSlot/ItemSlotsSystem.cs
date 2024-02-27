@@ -274,7 +274,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (ev.Cancelled)
                 return false;
 
-            return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: true);
+            return _containers.CanInsert(usedUid, slot.ContainerSlot);
         }
 
         /// <summary>

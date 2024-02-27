@@ -25,6 +25,7 @@ namespace Content.Client.Verbs
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         /// <summary>
         ///     When a user right clicks somewhere, how large is the box we use to get entities for the context menu?
@@ -140,8 +141,7 @@ namespace Content.Client.Verbs
             // Remove any entities that do not have LOS
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var xformQuery = GetEntityQuery<TransformComponent>();
-                var playerPos = xformQuery.GetComponent(player.Value).MapPosition;
+                var playerPos = _xformSystem.GetMapCoordinates(player.Value);
 
                 for (var i = entities.Count - 1; i >= 0; i--)
                 {
@@ -149,7 +149,7 @@ namespace Content.Client.Verbs
 
                     if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
-                        xformQuery.GetComponent(entity).MapPosition,
+                        _xformSystem.GetMapCoordinates(entity),
                         ExamineSystemShared.ExamineRange,
                         null))
                     {

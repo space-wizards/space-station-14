@@ -441,7 +441,7 @@
     color: "#fb4747"
   - type: EntitySpawnAnomaly
     entries:
-    - settings:  
+    - settings:
         spawnOnPulse: true
         minAmount: 8
         maxAmount: 15
@@ -559,7 +559,7 @@
         maxRange: 4.5
       spawns:
       - CrystalOrange
-    - settings: 
+    - settings:
         spawnOnSuperCritical: true
         minAmount: 30
         maxAmount: 40
@@ -625,21 +625,21 @@
         minAmount: 2
         maxAmount: 5
         maxRange: 2
-      spawns: 
+      spawns:
       - KudzuFlowerFriendly
     - settings:
         spawnOnSuperCritical: true
         minAmount: 5
         maxAmount: 10
         maxRange: 6
-      spawns: 
+      spawns:
       - KudzuFlowerAngry
 
 - type: entity
   id: AnomalyFloraBulb
   name: strange glowing berry
   parent: BaseStructure
-  description: It's a beautiful strange glowing berry. It seems to have something growing inside it... 
+  description: It's a beautiful strange glowing berry. It seems to have something growing inside it...
   suffix: Flora Anomaly
   components:
   - type: Transform
@@ -779,6 +779,7 @@
     - CogChamp
     - Honk
     - Carpetium
+    - JuiceThatMakesYouWeh
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
@@ -796,7 +797,7 @@
   id: AnomalyShadow
   parent: BaseAnomaly
   suffix: Shadow
-  components:  
+  components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/shadow_anom.rsi
     layers:
@@ -830,14 +831,14 @@
         minAmount: 10
         maxAmount: 20
         maxRange: 4
-      spawns: 
+      spawns:
       - ShadowKudzuWeak
     - settings:
         spawnOnSuperCritical: true
         minAmount: 30
         maxAmount: 40
         maxRange: 50
-      spawns: 
+      spawns:
       - ShadowKudzu
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg

@@ -13,6 +13,8 @@ public sealed partial class NpcFactionSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -159,7 +161,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     private IEnumerable<EntityUid> GetNearbyFactions(EntityUid entity, float range, HashSet<ProtoId<NpcFactionPrototype>> factions)
     {
         var xform = Transform(entity);
-        foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(xform.MapPosition, range))
+        foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(_xform.GetMapCoordinates((entity, entityXform)), range))
         {
             if (ent.Owner == entity)
                 continue;

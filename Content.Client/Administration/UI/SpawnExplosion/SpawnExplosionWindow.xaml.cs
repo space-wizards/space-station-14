@@ -22,6 +22,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
+    private SharedTransformSystem? _xformSystem = null;
 
 
     private readonly SpawnExplosionEui _eui;
@@ -102,9 +103,13 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
         if (!_entMan.TryGetComponent(_playerManager.LocalEntity, out TransformComponent? transform))
             return;
 
+        _xformSystem ??= _entMan.SystemOrNull<SharedTransformSystem>();
+        if (_xformSystem is null)
+            return;
+
         _pausePreview = true;
         MapOptions.Select(_mapData.IndexOf(transform.MapID));
-        (MapX.Value, MapY.Value) = transform.MapPosition.Position;
+        (MapX.Value, MapY.Value) = _xformSystem.GetWorldPosition(transform);
         _pausePreview = false;
 
         UpdatePreview();

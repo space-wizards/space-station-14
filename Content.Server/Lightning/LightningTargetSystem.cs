@@ -12,6 +12,7 @@ public sealed class LightningTargetSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -29,7 +30,7 @@ public sealed class LightningTargetSystem : EntitySystem
         if (uid.Comp.LightningExplode)
         {
             _explosionSystem.QueueExplosion(
-                Transform(uid).MapPosition,
+                _xformSystem.GetMapCoordinates(uid),
                 uid.Comp.ExplosionPrototype,
                 uid.Comp.TotalIntensity, uid.Comp.Dropoff,
                 uid.Comp.MaxTileIntensity,

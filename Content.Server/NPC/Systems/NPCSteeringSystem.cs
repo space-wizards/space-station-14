@@ -109,7 +109,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         Subs.CVar(_configManager, CCVars.NPCPathfinding, SetNPCPathfinding, true);
 
         SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
-        SubscribeLocalEvent<NPCSteeringComponent, EntityUnpausedEvent>(OnSteeringUnpaused);
         SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
     }
 
@@ -158,12 +157,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         // Cancel any active pathfinding jobs as they're irrelevant.
         component.PathfindToken?.Cancel();
         component.PathfindToken = null;
-    }
-
-    private void OnSteeringUnpaused(EntityUid uid, NPCSteeringComponent component, ref EntityUnpausedEvent args)
-    {
-        component.LastStuckTime += args.PausedTime;
-        component.NextSteer += args.PausedTime;
     }
 
     /// <summary>
@@ -471,7 +464,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
 
         var targetPos = steering.Coordinates.ToMap(EntityManager, _transform);
-        var ourPos = xform.MapPosition;
+        var ourPos = _transform.GetMapCoordinates((uid, xform));
 
         PrunePath(uid, ourPos, targetPos.Position - ourPos.Position, result.Path);
         steering.CurrentPath = new Queue<PathPoly>(result.Path);

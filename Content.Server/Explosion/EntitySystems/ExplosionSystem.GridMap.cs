@@ -70,8 +70,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             var targetGrid = Comp<MapGridComponent>(referenceGrid.Value);
             var xform = Transform(referenceGrid.Value);
-            targetAngle = xform.WorldRotation;
-            targetMatrix = xform.InvWorldMatrix;
+            targetAngle = _transformSystem.GetWorldRotation(xform);
+            targetMatrix = _transformSystem.GetInvWorldMatrix(xform);
             tileSize = targetGrid.TileSize;
         }
 
@@ -104,7 +104,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
             var xform = xforms.GetComponent(gridToTransform);
-            var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
+            var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = _transformSystem.GetWorldPositionRotationMatrixWithInv(xform);
 
             var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
             var matrix = offsetMatrix * gridWorldMatrix * targetMatrix;
