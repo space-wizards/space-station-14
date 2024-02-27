@@ -1580,6 +1580,8 @@
   - type: BadFood
   - type: NonSpreaderZombie
   - type: PreventSpiller
+  - type: MobDisarmFailChance
+    failChanceModifier: -1
 
 - type: entity
   parent: MobMouse

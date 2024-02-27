@@ -54,6 +54,8 @@
         Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: MobDisarmFailChance
+    failChanceModifier: -0.25
 
 - type: entity
   parent: BaseMobFlesh

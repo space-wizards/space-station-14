@@ -4,6 +4,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.CombatMode.Disarm;
+using Content.Server.Mobs;
 using Content.Server.Movement.Systems;
 using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Components;
@@ -221,7 +222,13 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (HasComp<DisarmProneComponent>(disarmed))
             return 0.0f;
 
-        var chance = disarmerComp.BaseDisarmFailChance;
+        var targetDisarmChanceModifier = 0.0f;
+        if (TryComp<MobDisarmFailChanceComponent>(disarmed, out var failChance))
+        {
+            targetDisarmChanceModifier = failChance.FailChanceModifier;
+        }
+
+        var chance = disarmerComp.BaseDisarmFailChance + targetDisarmChanceModifier;
 
         if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
         {
