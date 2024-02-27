@@ -116,7 +116,7 @@ namespace Content.Server.Physics.Controllers
                     var baseRotation = pulledData.WorldRotation - pulledXform.LocalRotation;
                     var localRotation = newAngle - baseRotation;
                     var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
-                    TransformSystem.SetLocalRotation(pulled, localRotationSnapped, pulledXform);
+                    TransformSystem.SetLocalRotation(pulledXform, localRotationSnapped);
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace Content.Server.Physics.Controllers
 
                 // Now that's over with...
 
-                var pullerPosition = TransformSystem.GetMapCoordinates((puller, pullerXform));
+                var pullerPosition = pullerXform.MapPosition;
                 var movingTo = pullable.MovingTo.Value.ToMap(EntityManager, _transform);
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
@@ -163,7 +163,7 @@ namespace Content.Server.Physics.Controllers
                 }
 
                 var movingPosition = movingTo.Position;
-                var ownerPosition = TransformSystem.GetWorldPosition(pullableXform);
+                var ownerPosition = pullableXform.MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length();
