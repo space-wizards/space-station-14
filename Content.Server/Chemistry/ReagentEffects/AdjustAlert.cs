@@ -49,7 +49,7 @@ public sealed partial class AdjustAlert : ReagentEffect
             var timing = IoCManager.Resolve<IGameTiming>();
             (TimeSpan, TimeSpan)? cooldown = null;
 
-            if (ShowCooldown || Clear && Time > 0)
+            if ((ShowCooldown || Clear) && Time > 0)
                 cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
 
             alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: Clear, showCooldown: ShowCooldown);
