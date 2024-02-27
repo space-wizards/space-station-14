@@ -103,11 +103,10 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
 
         UpdatesBefore.Add(typeof(SharedPhysicsSystem));
-        _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
-        _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding, true);
+        Subs.CVar(_configManager, CCVars.NPCEnabled, SetNPCEnabled, true);
+        Subs.CVar(_configManager, CCVars.NPCPathfinding, SetNPCPathfinding, true);
 
         SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
-        SubscribeLocalEvent<NPCSteeringComponent, EntityUnpausedEvent>(OnSteeringUnpaused);
         SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
     }
 
@@ -140,13 +139,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
-        _configManager.UnsubValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
-    }
-
     private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
     {
         if (!_admin.IsAdmin(args.SenderSession))
@@ -163,12 +155,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         // Cancel any active pathfinding jobs as they're irrelevant.
         component.PathfindToken?.Cancel();
         component.PathfindToken = null;
-    }
-
-    private void OnSteeringUnpaused(EntityUid uid, NPCSteeringComponent component, ref EntityUnpausedEvent args)
-    {
-        component.LastStuckTime += args.PausedTime;
-        component.NextSteer += args.PausedTime;
     }
 
     /// <summary>
