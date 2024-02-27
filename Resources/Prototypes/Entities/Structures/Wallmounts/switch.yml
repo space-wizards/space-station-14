@@ -217,3 +217,368 @@
   - type: Construction
     graph: LightSwitchDirectionalGraph
     node: LightSwitchDirectionalNode
+
+# lockable buttons
+
+- type: entity
+  id: LockableButton
+  name: lockable button
+  parent: SignalButtonDirectional
+  noSpawn: true
+  components:
+  - type: Appearance
+  - type: Lock
+  - type: LockVisuals
+  - type: AccessReader
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/locked_switch.rsi
+    layers:
+    - state: base
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+
+- type: entity
+  id: LockableButtonCaptain
+  name: lockable button
+  suffix: Captain
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  id: LockableButtonHeadOfPersonnel
+  name: lockable button
+  suffix: HeadOfPersonnel
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
+  id: LockableButtonChiefEngineer
+  name: lockable button
+  suffix: ChiefEngineer
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["ChiefEngineer"]]
+
+- type: entity
+  id: LockableButtonChiefMedicalOfficer
+  name: lockable button
+  suffix: ChiefMedicalOfficer
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["ChiefMedicalOfficer"]]
+
+- type: entity
+  id: LockableButtonHeadOfSecurity
+  name: lockable button
+  suffix: HeadOfSecurity
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  id: LockableButtonResearchDirector
+  name: lockable button
+  suffix: ResearchDirector
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+
+- type: entity
+  id: LockableButtonCommand
+  name: lockable button
+  suffix: Command
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  id: LockableButtonCryogenics
+  name: lockable button
+  suffix: Cryogenics
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Cryogenics"]]
+
+- type: entity
+  id: LockableButtonSecurity
+  name: lockable button
+  suffix: Security
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  id: LockableButtonDetective
+  name: lockable button
+  suffix: Detective
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+
+- type: entity
+  id: LockableButtonArmory
+  name: lockable button
+  suffix: Armory
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  id: LockableButtonBrig
+  name: lockable button
+  suffix: Brig
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+
+- type: entity
+  id: LockableButtonLawyer
+  name: lockable button
+  suffix: Lawyer
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Lawyer"]]
+
+- type: entity
+  id: LockableButtonEngineering
+  name: lockable button
+  suffix: Engineering
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  id: LockableButtonMedical
+  name: lockable button
+  suffix: Medical
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  id: LockableButtonQuartermaster
+  name: lockable button
+  suffix: Quartermaster
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
+  id: LockableButtonSalvage
+  name: lockable button
+  suffix: Salvage
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
+  id: LockableButtonCargo
+  name: lockable button
+  suffix: Cargo
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  id: LockableButtonResearch
+  name: lockable button
+  suffix: Research
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  id: LockableButtonService
+  name: lockable button
+  suffix: Service
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  id: LockableButtonMaintenance
+  name: lockable button
+  suffix: Maintenance
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  id: LockableButtonExternal
+  name: lockable button
+  suffix: External
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  id: LockableButtonJanitor
+  name: lockable button
+  suffix: Janitor
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  id: LockableButtonTheatre
+  name: lockable button
+  suffix: Theatre
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+- type: entity
+  id: LockableButtonBar
+  name: lockable button
+  suffix: Bar
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  id: LockableButtonChemistry
+  name: lockable button
+  suffix: Chemistry
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
+  id: LockableButtonKitchen
+  name: lockable button
+  suffix: Kitchen
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  id: LockableButtonChapel
+  name: lockable button
+  suffix: Chapel
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
+  id: LockableButtonHydroponics
+  name: lockable button
+  suffix: Hydroponics
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  id: LockableButtonAtmospherics
+  name: lockable button
+  suffix: Atmospherics
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+# button frames
+
+- type: entity
+  id: ButtonFrame
+  name: button frame
+  noSpawn: true
+  description: It's a frame to help distinguish switches visually.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: Clickable
+  - type: WallMount
+    arc: 360
+  - type: Physics
+    canCollide: false
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: grey
+  - type: Rotatable
+  - type: Fixtures
+
+- type: entity
+  id: ButtonFrameGrey
+  parent: ButtonFrame
+  suffix: grey
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: grey
+
+- type: entity
+  id: ButtonFrameCaution
+  parent: ButtonFrame
+  suffix: caution
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution
+
+- type: entity
+  id: ButtonFrameCautionSecurity
+  parent: ButtonFrame
+  suffix: caution
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution_security
+
+- type: entity
+  id: ButtonFrameExit
+  parent: ButtonFrame
+  suffix: exit
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: exit
+
+- type: entity
+  id: ButtonFrameJanitor
+  parent: ButtonFrame
+  suffix: janitor
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: janitor
