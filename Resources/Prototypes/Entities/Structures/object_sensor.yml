@@ -1,6 +1,6 @@
 - type: entity
-  parent: BaseMachine
   id: ObjectSensor
+  parent: [ BaseMachine, ConstructibleMachine]
   name: object sensor
   description: A sensor that detects how many objects are near it.
   components:
@@ -45,3 +45,5 @@
     - ObjectSensor2Objects
     - ObjectSensor3Objects
     - ObjectSensor4OrMoreObjects
+  - type: Machine
+    board: ObjectSensorCircuitboard

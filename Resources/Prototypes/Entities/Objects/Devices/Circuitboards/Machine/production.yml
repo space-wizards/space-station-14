@@ -1340,13 +1340,15 @@
       CableHV: 2
 
 - type: entity
-  id: ObjectSensorCircuitboard
   parent: BaseMachineCircuitboard
-  name: Object Sensor machine board
+  id: ObjectSensorCircuitboard
+  name: object sensor machine board
   description: A machine printed circuit board for an object sensor
   components:
   - type: MachineBoard
     prototype: ObjectSensor
+    requirements:
+      Manipulator: 2
     materialRequirements:
       Steel: 5
       Glass: 5

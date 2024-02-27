@@ -133,8 +133,6 @@ public sealed class ObjectSensorSystem : EntitySystem
         if (total == oldTotal)
             return;
 
-        Logger.Debug($"{ToPrettyString(uid)} {total}");
-
         component.Contacting = total;
 
         _appearance.SetData(uid, ToggleVisuals.Toggled, total > 0);
