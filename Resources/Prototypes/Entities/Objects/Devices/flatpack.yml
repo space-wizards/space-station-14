@@ -141,14 +141,14 @@
 - type: entity
   parent: BaseFlatpack
   id: TeslaGroundingRodFlatpack
-  name: grounging rod flatpack
-  description: A flatpack used for constructing a grounging rod.
+  name: grounding rod flatpack
+  description: A flatpack used for constructing a grounding rod.
   components:
   - type: Flatpack
     entity: TeslaGroundingRod
   - type: Sprite
     layers:
-    - state: grounging-rod
+    - state: grounding-rod
   - type: GuideHelp
     guides: [ Power ] # TODO add tesla guide
 
@@ -181,4 +181,3 @@
     - state: overlay
       color: "#cec8ac"
     - state: icon-default
-

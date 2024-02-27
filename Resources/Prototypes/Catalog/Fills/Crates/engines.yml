@@ -48,7 +48,7 @@
   id: CrateEngineeringSingularityCollector
   parent: CrateEngineeringSecure
   name: radiation collector crate
-  description: A radiation collector, best used for singularity engines. Plamsa is included.
+  description: A radiation collector, best used for singularity engines. Plasma is included.
   components:
   - type: StorageFill
     contents:
