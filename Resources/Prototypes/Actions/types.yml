@@ -94,25 +94,6 @@
     event: !type:UseFreedomImplantEvent
 
 - type: entity
-  id: ActionActivateProtokineticImplant
-  name: Shoot
-  description: Activates your implant by releasing a compressed blob of air
-  noSpawn: true
-  components:
-  - type: WorldTargetAction
-    useDelay: 5
-    itemIconStyle: BigAction
-    range: 60
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
-    icon:
-      sprite: Objects\Weapons\Guns\Projectiles\magic.rsi
-      state: chronobolt
-    event: !type:ProjectileSpellEvent
-      prototype: BulletKinetic
-      posData: !type:TargetCasterPos
-
-- type: entity
   id: ActionOpenUplinkImplant
   name: Open Uplink
   description: Opens the syndicate uplink embedded under your skin
@@ -309,21 +290,6 @@
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     event: !type:ActivateImplantEvent
     useDelay: 1
-
-- type: entity
-  id: ActionActivateSmokeImplant
-  name: release smoke cloud
-  description: Activates your smoke implant, releasing a cloud of smoke.
-  noSpawn: true
-  components:
-  - type: InstantAction
-    charges: 3
-    useDelay: 5
-    itemIconStyle: BigAction
-    icon: 
-      sprite: Actions/Implants/implants.rsi
-      state: smoke
-    event: !type:ActivateImplantEvent
 
 - type: entity
   id: ActionFireStarter

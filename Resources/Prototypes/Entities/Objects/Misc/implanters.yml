@@ -127,14 +127,6 @@
   components:
     - type: Implanter
       implant: BikeHornImplant
-      
-- type: entity
-  id: ProtokineticImplanter
-  name: protokinetic implanter
-  parent: BaseImplantOnlyImplanter
-  components:
-    - type: Implanter
-      implant: ProtokineticImplant
 
 #Security implanters
 
@@ -203,14 +195,6 @@
   components:
     - type: Implanter
       implant: DnaScramblerImplant
-
-- type: entity
-  id: SmokeImplanter
-  name: smoke cloud implanter
-  parent: BaseImplantOnlyImplanterSyndi
-  components:
-    - type: Implanter
-      implant: SmokeImplant
 
 #Nuclear Operative/Special implanters
 

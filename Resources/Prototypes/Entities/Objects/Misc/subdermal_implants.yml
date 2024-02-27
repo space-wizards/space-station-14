@@ -77,16 +77,6 @@
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: ProtokineticImplant
-  name: proto-kinetic implant
-  description: this implant allows you to fire compressed clots of air.
-  noSpawn: true
-  components:
-    - type: SubdermalImplant
-      implantAction: ActionActivateProtokineticImplant
-
-- type: entity
-  parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
   description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel.
@@ -226,20 +216,6 @@
       whitelist:
         components:
         - HumanoidAppearance # syndies cant turn hamlet into a human
-
-- type: entity
-  parent: BaseSubdermalImplant
-  id: SmokeImplant
-  name: smoke cloud implant
-  description: This implant releases a cloud of black smoke when used.
-  noSpawn: true
-  components:
-    - type: SubdermalImplant
-      implantAction: ActionActivateSmokeImplant
-    - type: TriggerImplantAction
-    - type: SmokeOnTrigger
-      duration: 30
-      spreadAmount: 30
 
 #Nuclear Operative/Special Exclusive implants
 
