@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Switching songs when playing a MIDI instrument no longer inconsistently
-      requires stopping the old song first.
-    type: Fix
-  - message: Clicking the [bold]Play MIDI[/bold] button repeatedly in the Instrument
-      menu no longer queues up more file windows to open.
-    type: Fix
-  id: 5544
-  time: '2024-01-04T02:19:22.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23339
 - author: metalgearsloth
   changes:
   - message: Salvage magnet now has an interface to choose what you want to do.
@@ -3835,3 +3824,13 @@
   id: 6043
   time: '2024-02-26T23:34:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25324
+- author: juliangiebel
+  changes:
+  - message: The mass media consoles UI got overhauled
+    type: Tweak
+  - message: Added PDA notifications in chat for new news articles. They can be turned
+      off in the news reader program and are only visible to you.
+    type: Add
+  id: 6044
+  time: '2024-02-27T01:38:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/19610
