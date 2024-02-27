@@ -222,11 +222,11 @@ SolarAssemblyPart: SolarAssemblyFlatpack
 AmePart: AmePartFlatpack
 AmePartStealObjective: AmePartFlatpackStealObjective
 Observationskit: null
+
+# 2024-02-26
+CrateBaseWeldable: CrateGenericSteel
 BoxPerformer: ClothingBackpackDuffelPerformer
 MonkeyCubeBox: BoxMonkeyCube
 KoboldCubeBox: BoxKoboldCube
 VariantCubeBox: BoxVariantCube
 SyndicateSpongeBox: BoxSyndicateSponge
-
-# 2024-02-26
-CrateBaseWeldable: CrateGenericSteel
