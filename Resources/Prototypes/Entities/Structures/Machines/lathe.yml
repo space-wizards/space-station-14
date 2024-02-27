@@ -1161,13 +1161,5 @@
       - BikeHornImplanter
     dynamicRecipes:
       - TrackingImplanter           #med
-      - ProtokineticImplanter       #sup
-      #- MindShieldImplanter        #cmd (useless without revolution mode)
-  - type: EmagLatheRecipes
-    emagStaticRecipes:
-      - DnaScramblerImplanter
-      - ScramImplanter
-      - FreedomImplanter
-      - SmokeImplanter
   - type: Machine
     board: ImpLatheCircuitboard
