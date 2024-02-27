@@ -25,6 +25,7 @@ namespace Content.Server.PDA.Ringer
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         private readonly Dictionary<NetUserId, TimeSpan> _lastSetRingtoneAt = new();
 
@@ -206,7 +207,7 @@ namespace Content.Server.PDA.Ringer
 
                 _audio.PlayEntity(
                     GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
+                    Filter.Empty().AddInRange(_xformSystem.GetMapCoordinates(ringerXform), ringer.Range),
                     uid,
                     true,
                     AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)

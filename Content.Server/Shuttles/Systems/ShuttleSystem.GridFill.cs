@@ -206,7 +206,7 @@ public sealed partial class ShuttleSystem
 
                 if (config != null)
                 {
-                    FTLDock(config, shuttleXform);
+                    FTLDock((ent[0], shuttleXform), config);
 
                     if (TryComp<StationMemberComponent>(xform.GridUid, out var stationMember))
                     {

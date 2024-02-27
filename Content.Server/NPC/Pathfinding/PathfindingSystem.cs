@@ -405,7 +405,7 @@ namespace Content.Server.NPC.Pathfinding
                 return null;
             }
 
-            var localPos = xform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
+            var localPos = _transform.GetInvWorldMatrix(xform).Transform(coordinates.ToMapPos(EntityManager));
             var origin = GetOrigin(localPos);
 
             if (!TryGetChunk(origin, comp, out var chunk))

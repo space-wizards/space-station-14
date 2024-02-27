@@ -89,6 +89,10 @@ public sealed class NPCSteeringOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        var xformSystem = _entManager.SystemOrNull<SharedTransformSystem>();
+        if (xformSystem is null)
+            return;
+
         foreach (var (comp, mover, xform) in _entManager.EntityQuery<NPCSteeringComponent, InputMoverComponent, TransformComponent>(true))
         {
             if (xform.MapID != args.MapId)
@@ -96,7 +100,7 @@ public sealed class NPCSteeringOverlay : Overlay
                 continue;
             }
 
-            var (worldPos, worldRot) = xform.GetWorldPositionRotation();
+            var (worldPos, worldRot) = xformSystem.GetWorldPositionRotation(xform);
 
             if (!args.WorldAABB.Contains(worldPos))
                 continue;

@@ -37,6 +37,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -181,7 +182,7 @@ namespace Content.Server.Pointing.EntitySystems
                     (eyeComp.VisibilityMask & layer) == 0)
                     return false;
 
-                return Transform(ent).MapPosition.InRange(Transform(player).MapPosition, PointingRange);
+                return _xformSystem.GetMapCoordinates(ent).InRange(_xformSystem.GetMapCoordinates(player), PointingRange);
             }
 
             var viewers = Filter.Empty()
