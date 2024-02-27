@@ -26,6 +26,24 @@
       ]
     },
     {
+      "name": "emergency",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "locked",
       "directions": 4,
       "delays": [

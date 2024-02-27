@@ -804,6 +804,24 @@
   - type: AccessReader
     access: [["Atmospherics"]]
 
+- type: entity
+  id: BigRedButtonEmergency
+  parent: BigRedButton
+  description: Sets the alert level of the station to Code Red. Be careful!
+  suffix: Emergency
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Specific/big_red_button.rsi
+    layers:
+    - state: emergency
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+  - type: EmergencyButton
+    alertLevelOnActivate: red
+  - type: AccessReader
+    access: [["Command"]]
+
 # button frames
 
 - type: entity
