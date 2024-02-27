@@ -11,7 +11,6 @@ namespace Content.Server.Thief.Systems;
 
 /// <summary>
 /// <see cref="ThiefFultonComponent"/>
-/// 
 /// </summary>
 public sealed class ThiefFultonSystem : EntitySystem
 {

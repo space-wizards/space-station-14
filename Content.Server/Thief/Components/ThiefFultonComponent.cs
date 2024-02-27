@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Thief.Components;
 
 /// <summary>
-/// 
+/// counts targets for stealing nearby objects from a target that is connected to this beacon.
 /// </summary>
 [RegisterComponent, Access(typeof(ThiefFultonSystem))]
 public sealed partial class ThiefFultonComponent : Component
@@ -14,9 +14,6 @@ public sealed partial class ThiefFultonComponent : Component
 
     [DataField]
     public float ThievingRange = 1f;
-
-    [DataField]
-    public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
     [DataField]
     public SoundSpecifier LinkSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
