@@ -112,6 +112,8 @@
   description: A device that sooner or later teleports everything around it to the thief's vault.
   components:
     - type: ThiefFulton
+    - type: Item
+      size: Normal
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
@@ -137,7 +139,7 @@
             True: { state: folded_extraction }
             False: { state: extraction_point }
     - type: Sprite
-      sprite: Objects/Tools/fulton.rsi
+      sprite: Objects/Tools/thief_beacon.rsi
       drawdepth: SmallObjects
       noRot: true
       layers:

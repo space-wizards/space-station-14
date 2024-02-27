@@ -23,6 +23,12 @@ public sealed partial class StealConditionComponent : Component
     public bool VerifyMapExistence = true;
 
     /// <summary>
+    /// If true, counts objects that are close to linked thieving beacons.
+    /// </summary>
+    [DataField]
+    public bool CheckThievingBeacon = false;
+
+    /// <summary>
     /// If the target may be alive but has died, it will not be counted
     /// </summary>
     [DataField]

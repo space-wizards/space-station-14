@@ -1,7 +1,5 @@
 using Content.Server.Thief.Systems;
-using Content.Shared.Thief;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Thief.Components;
 
@@ -15,11 +13,14 @@ public sealed partial class ThiefFultonComponent : Component
     public EntityUid? LinkedOwner;
 
     [DataField]
-    public float ThievingRange = 2f;
+    public float ThievingRange = 1f;
 
     [DataField]
     public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
     [DataField]
-    public SoundSpecifier LinkSound = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
+    public SoundSpecifier LinkSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
+
+    [DataField]
+    public SoundSpecifier UnlinkSound = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
 }

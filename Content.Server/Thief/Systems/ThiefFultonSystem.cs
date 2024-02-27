@@ -1,12 +1,11 @@
 using Content.Server.Thief.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Popups;
-using Robust.Shared.Prototypes;
-using Content.Shared.GameTicking;
-using Content.Shared.Interaction;
 using Content.Server.Mind;
 using Content.Server.Roles;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Verbs;
+using Content.Shared.Examine;
 
 namespace Content.Server.Thief.Systems;
 
@@ -17,7 +16,6 @@ namespace Content.Server.Thief.Systems;
 public sealed class ThiefFultonSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly FoldableSystem _foldable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MindSystem _mind = default!;
@@ -26,36 +24,62 @@ public sealed class ThiefFultonSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ThiefFultonComponent, RoundEndMessageEvent>(OnRoundEnd);
-        SubscribeLocalEvent<ThiefFultonComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<ThiefFultonComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
+        SubscribeLocalEvent<ThiefFultonComponent, FoldedEvent>(OnFolded);
+        SubscribeLocalEvent<ThiefFultonComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnRoundEnd(Entity<ThiefFultonComponent> fulton, ref RoundEndMessageEvent args)
+    private void OnExamined(Entity<ThiefFultonComponent> fulton, ref ExaminedEvent args)
     {
-
+        args.PushText(Loc.GetString(fulton.Comp.LinkedOwner == null
+                ? "thief-fulton-examined-unsetted"
+                : "thief-fulton-examined-setted"));
     }
 
-    private void OnActivate(Entity<ThiefFultonComponent> fulton, ref ActivateInWorldEvent args)
+    private void OnFolded(Entity<ThiefFultonComponent> fulton, ref FoldedEvent args)
     {
+        if (args.IsFolded)
+            ClearCoordinate(fulton);
+    }
+
+    private void OnGetInteractionVerbs(Entity<ThiefFultonComponent> fulton, ref GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands is null)
+            return;
+
+        if (TryComp<FoldableComponent>(fulton, out var foldable) && foldable.IsFolded)
+            return;
+
         var mind = _mind.GetMind(args.User);
         if (!HasComp<ThiefRoleComponent>(mind))
-        {
-            _audio.PlayPvs(fulton.Comp.AccessDeniedSound, fulton);
-            _popup.PopupEntity(Loc.GetString("thief-fulton-access-denied"), fulton);
             return;
-        }
 
+        var user = args.User;
+        args.Verbs.Add(new()
+        {
+            Act = () =>
+            {
+                SetCoordinate(fulton, mind.Value);
+            },
+            Message = Loc.GetString("thief-fulton-verb-message"),
+            Text = Loc.GetString("thief-fulton-verb-text"),
+        });
+    }
+
+    private void SetCoordinate(Entity<ThiefFultonComponent> fulton, EntityUid mind)
+    {
+        _audio.PlayPvs(fulton.Comp.LinkSound, fulton);
+        _popup.PopupEntity(Loc.GetString("thief-fulton-set"), fulton);
+        fulton.Comp.LinkedOwner = mind;
+    }
+
+    private void ClearCoordinate(Entity<ThiefFultonComponent> fulton)
+    {
         if (fulton.Comp.LinkedOwner == null)
-        {
-            _audio.PlayPvs(fulton.Comp.LinkSound, fulton);
-            _popup.PopupEntity(Loc.GetString("thief-fulton-set"), fulton);
-            fulton.Comp.LinkedOwner = mind;
-        }
-        else
-        {
-            _audio.PlayPvs(fulton.Comp.AccessDeniedSound, fulton);
-            _popup.PopupEntity(Loc.GetString("thief-fulton-already-set"), fulton);
             return;
-        }
+
+        _audio.PlayPvs(fulton.Comp.UnlinkSound, fulton);
+        _popup.PopupEntity(Loc.GetString("thief-fulton-clear"), fulton);
+        fulton.Comp.LinkedOwner = null;
     }
 }
