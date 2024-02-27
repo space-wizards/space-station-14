@@ -1578,7 +1578,7 @@ namespace Content.Shared.CCVar
         /// A generic toggle for various visual effects that are color sensitive.
         /// As of 2/16/24, only applies to progress bar colors.
         /// </summary>
-        public static readonly CVarDef<bool> ColorblindFriendly =
+        public static readonly CVarDef<bool> AccessibilityColorblindFriendly =
             CVarDef.Create("accessibility.colorblind_friendly", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*

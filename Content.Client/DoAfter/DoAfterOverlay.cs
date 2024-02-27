@@ -18,6 +18,7 @@ public sealed class DoAfterOverlay : Overlay
     private readonly IPlayerManager _player;
     private readonly SharedTransformSystem _transform;
     private readonly MetaDataSystem _meta;
+    private readonly ProgressColorSystem _progressColor;
 
     private readonly Texture _barTexture;
     private readonly ShaderInstance _shader;
@@ -40,6 +41,7 @@ public sealed class DoAfterOverlay : Overlay
         _player = player;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
+        _progressColor = _entManager.System<ProgressColorSystem>();
         var sprite = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
@@ -125,7 +127,7 @@ public sealed class DoAfterOverlay : Overlay
                     elapsedRatio = (float) Math.Min(1, elapsed.TotalSeconds / doAfter.Args.Delay.TotalSeconds);
                     var cancelElapsed = (time - doAfter.CancelledTime.Value).TotalSeconds;
                     var flash = Math.Floor(cancelElapsed / FlashTime) % 2 == 0;
-                    color = new Color(1f, 0f, 0f, flash ? alpha : 0f);
+                    color = GetProgressColor(0, flash ? alpha : 0);
                 }
                 else
                 {
@@ -146,8 +148,8 @@ public sealed class DoAfterOverlay : Overlay
         handle.SetTransform(Matrix3.Identity);
     }
 
-    public static Color GetProgressColor(float progress, float alpha = 1f)
+    public Color GetProgressColor(float progress, float alpha = 1f)
     {
-        return ProgressColorSystem.GetProgressColor(progress).WithAlpha(alpha);
+        return _progressColor.GetProgressColor(progress).WithAlpha(alpha);
     }
 }

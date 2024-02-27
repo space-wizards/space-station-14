@@ -24,6 +24,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly SharedTransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
+    private readonly ProgressColorSystem _progressColor;
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     public HashSet<string> DamageContainers = new();
     private readonly ShaderInstance _shader;
@@ -35,6 +36,7 @@ public sealed class EntityHealthBarOverlay : Overlay
         _transform = _entManager.System<SharedTransformSystem>();
         _mobStateSystem = _entManager.System<MobStateSystem>();
         _mobThresholdSystem = _entManager.System<MobThresholdSystem>();
+        _progressColor = _entManager.System<ProgressColorSystem>();
         _shader = _prototype.Index<ShaderPrototype>("unshaded").Instance();
     }
 
@@ -160,6 +162,6 @@ public sealed class EntityHealthBarOverlay : Overlay
         if (crit)
             progress = 0;
 
-        return ProgressColorSystem.GetProgressColor(progress);
+        return _progressColor.GetProgressColor(progress);
     }
 }

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
@@ -11,29 +10,29 @@ public sealed class ProgressColorSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
 
-    private static bool _colorBlindFriendly;
+    private bool _colorBlindFriendly;
 
-    private static IReadOnlyList<Color> _plasma = new[]
+    private static readonly Color[] Plasma =
     {
-        new Color(240, 249, 33),
-        new Color(248, 149, 64),
-        new Color(204, 71, 120),
-        new Color(126, 3, 168),
-        new Color(13, 8, 135)
+        new(240, 249, 33),
+        new(248, 149, 64),
+        new(204, 71, 120),
+        new(126, 3, 168),
+        new(13, 8, 135)
     };
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        Subs.CVar(_configuration, CCVars.ColorblindFriendly, OnColorBlindFriendlyChanged, true);
+        Subs.CVar(_configuration, CCVars.AccessibilityColorblindFriendly, OnColorBlindFriendlyChanged, true);
     }
 
-    private void OnColorBlindFriendlyChanged(bool newvalue, in CVarChangeInfo info)
+    private void OnColorBlindFriendlyChanged(bool value, in CVarChangeInfo info)
     {
-        _colorBlindFriendly = newvalue;
+        _colorBlindFriendly = value;
     }
 
-    public static Color GetProgressColor(float progress)
+    public Color GetProgressColor(float progress)
     {
         if (!_colorBlindFriendly)
         {
@@ -43,15 +42,16 @@ public sealed class ProgressColorSystem : EntitySystem
             }
 
             // lerp
-            var hue = (5f / 18f) * progress;
+            var hue = 5f / 18f * progress;
             return Color.FromHsv((hue, 1f, 0.75f, 1f));
         }
 
-        return InterpolateColorGaussian(_plasma.ToArray(), progress);
+        return InterpolateColorGaussian(Plasma, progress);
     }
 
     /// <summary>
     /// Interpolates between multiple colors based on a gaussian distribution.
+    /// Taken from https://stackoverflow.com/a/26103117
     /// </summary>
     public static Color InterpolateColorGaussian(Color[] colors, double x)
     {
@@ -78,6 +78,6 @@ public sealed class ProgressColorSystem : EntitySystem
             b += color.B * percent / total;
         }
 
-        return new Color((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+        return new Color((float) r, (float) g, (float) b);
     }
 }
