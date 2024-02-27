@@ -809,7 +809,6 @@
   parent: BigRedButton
   name: emergency button
   description: Sets the alert level of the station to Code Red. Be careful!
-  suffix: Emergency
   components:
   - type: Sprite
     drawdepth: SmallObjects
@@ -818,8 +817,9 @@
     - state: emergency
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
-  - type: EmergencyButton
+  - type: SetAlertLevel
     alertLevelOnActivate: red
+    textField: The emergency button has been pressed. Alert level set to Red.
   - type: AccessReader
     access: [["Command"]]
 

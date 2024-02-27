@@ -1,5 +1,5 @@
 using Content.Shared.Interaction;
-using Content.Shared.EmergencyButton;
+using Content.Shared.SetAlertLevel;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
@@ -24,9 +24,9 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 
-namespace Content.Server.EmergencyButton;
+namespace Content.Server.SetAlertLevel;
 
-public sealed class EmergencyButtonSystem : EntitySystem
+public sealed class SetAlertLevelSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
@@ -36,10 +36,10 @@ public sealed class EmergencyButtonSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EmergencyButtonComponent, ActivateInWorldEvent>(OnActivated);
+        SubscribeLocalEvent<SetAlertLevelComponent, ActivateInWorldEvent>(OnActivated);
     }
 
-    public void OnActivated(EntityUid uid, EmergencyButtonComponent comp, ActivateInWorldEvent args)
+    public void OnActivated(EntityUid uid, SetAlertLevelComponent comp, ActivateInWorldEvent args)
     {
         if (args.Handled)
             return;
