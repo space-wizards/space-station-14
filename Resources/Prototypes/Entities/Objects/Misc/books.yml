@@ -406,3 +406,115 @@
     - state: open_writing
       map: ["enum.PaperVisualLayers.Writing"]
       visible: false
+
+- type: entity
+  id: OpenBookWhite
+  parent: OpenBook
+  suffix: white
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_white
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+
+- type: entity
+  id: OpenBookRed
+  parent: OpenBook
+  suffix: red
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_red
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+
+- type: entity
+  id: OpenBookOrange
+  parent: OpenBook
+  suffix: orange
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_orange
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+
+- type: entity
+  id: OpenBookYellow
+  parent: OpenBook
+  suffix: yellow
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_yellow
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+
+- type: entity
+  id: OpenBookGreen
+  parent: OpenBook
+  suffix: green
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_green
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+
+- type: entity
+  id: OpenBookBlue
+  parent: OpenBook
+  suffix: blue
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_blue
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+
+- type: entity
+  id: OpenBookPurple
+  parent: OpenBook
+  suffix: purple
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_purple
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+
+- type: entity
+  id: OpenBookPink
+  parent: OpenBook
+  suffix: pink
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    noRot: false
+    layers:
+    - state: open_pink
+    - state: open_writing
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
