@@ -119,26 +119,6 @@
   group: market
 
 - type: cargoProduct
-  id: FunSadTromboneImplants
-  icon:
-    sprite: Objects/Specific/Medical/implanter.rsi
-    state: implanter0
-  product: CrateFunSadTromboneImplants
-  cost: 1000
-  category: Fun
-  group: market
-
-- type: cargoProduct
-  id: FunLightImplants
-  icon:
-    sprite: Objects/Specific/Medical/implanter.rsi
-    state: implanter0
-  product: CrateFunLightImplants
-  cost: 1000
-  category: Fun
-  group: market
-
-- type: cargoProduct
   id: FunBoxing
   icon:
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
@@ -165,16 +145,6 @@
     state: crate_icon
   product: CrateFunToyBox
   cost: 900
-  category: Fun
-  group: market
-
-- type: cargoProduct
-  id: FunBikeHornImplants
-  icon:
-    sprite: Objects/Specific/Medical/implanter.rsi
-    state: implanter0
-  product: CrateFunBikeHornImplants
-  cost: 1000
   category: Fun
   group: market
 
