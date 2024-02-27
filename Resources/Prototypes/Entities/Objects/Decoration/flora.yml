@@ -229,6 +229,16 @@
     state: stalagmite6
 
 - type: entity
+  name: stalagmite
+  description: Natural stone spikes.
+  parent: FloraStalagmite1
+  id: FloraGreyStalagmite1
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite1
+
+- type: entity
   parent: FloraGreyStalagmite1
   id: FloraGreyStalagmite2
   components:
@@ -267,6 +277,7 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     state: grey_stalagmite6
+
 
 - type: entity
   parent: BaseTree
