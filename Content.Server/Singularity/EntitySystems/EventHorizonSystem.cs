@@ -40,7 +40,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<EventHorizonComponent, MapInitEvent>(OnHorizonMapInit);
-        SubscribeLocalEvent<EventHorizonComponent, EntityUnpausedEvent>(OnHorizonUnpaused);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<EventHorizonComponent, EntGotInsertedIntoContainerMessage>(OnEventHorizonContained);
         SubscribeLocalEvent<EventHorizonContainedEvent>(OnEventHorizonContained);
@@ -55,11 +54,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     private void OnHorizonMapInit(EntityUid uid, EventHorizonComponent component, MapInitEvent args)
     {
         component.NextConsumeWaveTime = _timing.CurTime;
-    }
-
-    private void OnHorizonUnpaused(EntityUid uid, EventHorizonComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextConsumeWaveTime += args.PausedTime;
     }
 
     public override void Shutdown()
@@ -171,7 +165,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var range2 = range * range;
         var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
         var epicenter = _xformSystem.GetWorldPosition(xform, xformQuery);
-        foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, range, flags: LookupFlags.Uncontained))
+        foreach (var entity in _lookup.GetEntitiesInRange(_xformSystem.GetMapCoordinates((uid, xform)), range, flags: LookupFlags.Uncontained))
         {
             if (entity == uid)
                 continue;
@@ -301,7 +295,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
             return;
 
-        var mapPos = xform.MapPosition;
+        var mapPos = _xformSystem.GetMapCoordinates((uid, xform));
         var box = Box2.CenteredAround(mapPos.Position, new Vector2(range, range));
         var circle = new Circle(mapPos.Position, range);
         var grids = new List<Entity<MapGridComponent>>();

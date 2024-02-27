@@ -19,6 +19,7 @@ public sealed class BeamSystem : SharedBeamSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -144,8 +145,8 @@ public sealed class BeamSystem : SharedBeamSystem
         if (Deleted(user) || Deleted(target))
             return;
 
-        var userMapPos = Transform(user).MapPosition;
-        var targetMapPos = Transform(target).MapPosition;
+        var userMapPos = _xformSystem.GetMapCoordinates(user);
+        var targetMapPos = _xformSystem.GetMapCoordinates(target);
 
         //The distance between the target and the user.
         var calculatedDistance = targetMapPos.Position - userMapPos.Position;

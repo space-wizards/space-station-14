@@ -22,6 +22,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -64,11 +65,11 @@ public sealed class ImmovableRodSystem : EntitySystem
             var vel = component.DirectionOverride.Degrees switch
             {
                 0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
-                _ => xform.WorldRotation.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
+                _ => _xformSystem.GetWorldRotation(xform).RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
             };
 
             _physics.ApplyLinearImpulse(uid, vel, body: phys);
-            xform.LocalRotation = (vel - xform.WorldPosition).ToWorldAngle() + MathHelper.PiOver2;
+            _xformSystem.SetLocalRotation(uid, (vel - _xformSystem.GetWorldPosition(xform)).ToWorldAngle() + MathHelper.PiOver2, xform);
         }
     }
 

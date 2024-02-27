@@ -6,7 +6,6 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
-using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Effects;
@@ -28,6 +27,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
@@ -48,7 +48,6 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-        [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -58,6 +57,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly UseDelaySystem _delay = default!;
 
         public override void Initialize()
         {
@@ -560,6 +560,18 @@ namespace Content.Shared.Cuffs
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
+
+            if (isOwner)
+            {
+                if (!TryComp(cuffsToRemove.Value, out UseDelayComponent? useDelay))
+                    return;
+
+                if (!_delay.TryResetDelay((cuffsToRemove.Value, useDelay), true))
+                {
+                    return;
+                }
+            }
+
             var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
             {
                 BreakOnUserMove = true,
@@ -574,11 +586,6 @@ namespace Content.Shared.Cuffs
 
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is trying to uncuff {ToPrettyString(target)}");
 
-            if (isOwner)
-            {
-                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, true, false);
-            }
-
             _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-observer",
                     ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))),
                 target, Filter.Pvs(target, entityManager: EntityManager)
@@ -586,7 +593,6 @@ namespace Content.Shared.Cuffs
 
             if (target == user)
             {
-                _color.RaiseEffect(Color.Red, new List<EntityUid>() { user }, Filter.Pvs(user, entityManager: EntityManager));
                 _popup.PopupClient(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
             }
             else
@@ -618,6 +624,8 @@ namespace Content.Shared.Cuffs
 
             cuff.Removing = true;
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
+
+            var isOwner = user == target;
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 

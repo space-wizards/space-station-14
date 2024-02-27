@@ -38,6 +38,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         public override void Initialize()
         {
@@ -52,7 +53,6 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
-            SubscribeLocalEvent<HandsComponent, EntityUnpausedEvent>(OnUnpaused);
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
 
@@ -73,10 +73,6 @@ namespace Content.Server.Hands.Systems
             args.State = new HandsComponentState(hands);
         }
 
-        private void OnUnpaused(Entity<HandsComponent> ent, ref EntityUnpausedEvent args)
-        {
-            ent.Comp.NextThrowTime += args.PausedTime;
-        }
 
         private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
         {
@@ -203,7 +199,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coordinates.ToMapPos(EntityManager) - Transform(player).WorldPosition;
+            var direction = coordinates.ToMapPos(EntityManager) - _xformSystem.GetWorldPosition(player);
             if (direction == Vector2.Zero)
                 return true;
 
