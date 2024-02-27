@@ -806,10 +806,10 @@
 
 - type: entity
   id: BigRedButtonEmergency
-  parent: BigRedButton
   name: emergency button
   description: Sets the alert level of the station to Code Red. Be careful!
-  suffix: Emergency
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     drawdepth: SmallObjects
@@ -818,10 +818,23 @@
     - state: emergency
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
-  - type: EmergencyButton
+  - type: UseDelay
+    delay: 0.5 # prevent light-toggling auto-clickers.
+  - type: ChangeAlertLevel
     alertLevelOnActivate: red
+    textField: An emergency button was pressed. The station has been set to Alert Level Red.
   - type: AccessReader
     access: [["Command"]]
+  - type: Appearance
+  - type: Lock
+  - type: LockVisuals
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    canCollide: false
+  - type: UseDelay
+    delay: 0.5 # prevent light-toggling auto-clickers.
+  - type: Rotatable
 
 # button frames
 
