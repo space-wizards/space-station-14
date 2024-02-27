@@ -53,7 +53,7 @@ namespace Content.Client.CloningConsole.UI
                         case ClonerStatus.ScannerOccupantAlive:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-scanner-occupant-alive"));
                             break;
-                        case ClonerStatus.OccupantMetaphyiscal:
+                        case ClonerStatus.OccupantMetaPhysical:
                             CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-already-alive"));
                             break;
                         case ClonerStatus.NoMindDetected:

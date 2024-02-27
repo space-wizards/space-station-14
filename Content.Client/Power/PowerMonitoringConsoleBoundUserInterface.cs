@@ -26,7 +26,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-        _menu?.ShowEntites
+        _menu?.ShowEntities
             (castState.TotalSources,
             castState.TotalBatteryUsage,
             castState.TotalLoads,

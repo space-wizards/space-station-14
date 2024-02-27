@@ -104,7 +104,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             NavMap.HiddenLineGroups.Add(lineGroup);
     }
 
-    public void ShowEntites
+    public void ShowEntities
         (double totalSources,
         double totalBatteryUsage,
         double totalLoads,
