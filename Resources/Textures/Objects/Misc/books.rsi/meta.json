@@ -112,37 +112,48 @@
       "name": "book_security"
     },
     {
-      "name": "open_red"
+      "name": "open_red",
+      "directions": 4
     },
     {
-      "name": "open_orange"
+      "name": "open_orange",
+      "directions": 4
     },
     {
-      "name": "open_yellow"
+      "name": "open_yellow",
+      "directions": 4
     },
     {
-      "name": "open_green"
+      "name": "open_green",
+      "directions": 4
     },
     {
-      "name": "open_blue"
+      "name": "open_blue",
+      "directions": 4
     },
     {
-      "name": "open_cyan"
+      "name": "open_cyan",
+      "directions": 4
     },
     {
-      "name": "open_pink"
+      "name": "open_pink",
+      "directions": 4
     },
     {
-      "name": "open_purple"
+      "name": "open_purple",
+      "directions": 4
     },
     {
-      "name": "open_black"
+      "name": "open_black",
+      "directions": 4
     },
     {
-      "name": "open_white"
+      "name": "open_white",
+      "directions": 4
     },
     {
-      "name": "open_writing"
+      "name": "open_writing",
+      "directions": 4
     }
   ]
 }

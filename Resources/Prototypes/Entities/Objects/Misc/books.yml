@@ -379,7 +379,7 @@
   description: A book left open for you to read or write in.
   components:
   - type: Sprite
-      sprite: Objects/Misc/books.rsi
+    sprite: Objects/Misc/books.rsi
     noRot: false
     layers:
     - state: open_black
@@ -399,7 +399,7 @@
   suffix: black
   components:
   - type: Sprite
-      sprite: Objects/Misc/books.rsi
+    sprite: Objects/Misc/books.rsi
     noRot: false
     layers:
     - state: open_black
