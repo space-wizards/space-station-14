@@ -1187,6 +1187,8 @@
   id: FoodPoppy
   description: A flower with extracts often used in the production of medicine
   components:
+  - type: Clothing
+    quickEquip: false
   - type: FlavorProfile
     flavors:
       - medicine

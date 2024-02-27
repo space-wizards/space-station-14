@@ -223,4 +223,6 @@ SolarAssemblyPart: SolarAssemblyFlatpack
 AmePart: AmePartFlatpack
 AmePartStealObjective: AmePartFlatpackStealObjective
 Observationskit: null
-ClothingHeadHatHairflower: ClothingHeadHatHairflowerRed
+
+# 2024-02-26
+ClothingHeadHatHairflower: null

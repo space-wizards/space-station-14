@@ -99,32 +99,6 @@
     state: icon
 
 - type: construction
-  name: red hairflower
-  id: hairflowerred
-  graph: hairflowerred
-  startNode: start
-  targetNode: hairflower
-  category: construction-category-clothing
-  description: "A red flower for beautiful ladies."
-  icon:
-    sprite: Clothing/Head/Misc/hairflower_red.rsi
-    state: icon
-  objectType: Item
-
-- type: construction
-  name: orange hairflower
-  id: hairflowerorange
-  graph: hairflowerorange
-  startNode: start
-  targetNode: hairflower
-  category: construction-category-clothing
-  description: "An orange flower for beautiful ladies."
-  icon:
-    sprite: Clothing/Head/Misc/hairflower_orange.rsi
-    state: icon
-  objectType: Item
-
-- type: construction
   name: flower crown
   id: flowercrown
   graph: flowercrown
