@@ -24,11 +24,10 @@ public sealed partial class ContentAudioSystem
     private readonly AudioParams _lobbySongParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
     private readonly AudioParams _roundEndSoundEffectParams = new(-5f, 1, "Master", 0, 0, 0, false, 0f);
 
-    private EntityUid? _lobbyMusicStream;
     private EntityUid? _lobbyRoundRestartAudioStream;
     private string[]? _lobbyPlaylist;
-    private TimeSpan? _nextSoundtrackOn;
-    private string? _currentLobbySoundtrack;
+
+    private LobbySongInfo? _lobbySongInfo;
     private Action<LobbySongChangedEvent>? _lobbySongChanged;
 
     public event Action<LobbySongChangedEvent>? LobbySongChanged
@@ -37,7 +36,11 @@ public sealed partial class ContentAudioSystem
         {
             if (value != null)
             {
-                value(new LobbySongChangedEvent(_currentLobbySoundtrack));
+                if (_lobbySongInfo != null)
+                {
+                    value(new LobbySongChangedEvent(_lobbySongInfo.Filename));
+                }
+
                 _lobbySongChanged += value;
             }
         }
@@ -86,9 +89,12 @@ public sealed partial class ContentAudioSystem
 
     private void LobbyMusicVolumeCVarChanged(float volume)
     {
-        if (_lobbyMusicStream.HasValue)
+        if (_lobbySongInfo != null)
         {
-            _audio.SetVolume(_lobbyMusicStream, _lobbySongParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)));
+            _audio.SetVolume(
+                _lobbySongInfo.MusicStreamEntityUid,
+                _lobbySongParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume))
+            );
         }
     }
 
@@ -111,7 +117,7 @@ public sealed partial class ContentAudioSystem
     {
         var playlist = playlistChangedEvent.Playlist;
         //playlist is already playing, no need to restart it
-        if (_lobbyMusicStream != null
+        if (_lobbySongInfo != null
             && _lobbyPlaylist != null
             && _lobbyPlaylist.SequenceEqual(playlist)
            )
@@ -125,7 +131,7 @@ public sealed partial class ContentAudioSystem
 
     private void StartLobbyPlaylist(string[] playlist)
     {
-        if (_lobbyMusicStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+        if (_lobbySongInfo != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
             return;
 
         _lobbyPlaylist = playlist;
@@ -134,9 +140,7 @@ public sealed partial class ContentAudioSystem
             return;
         }
 
-        _currentLobbySoundtrack = playlist[0];
-
-        PlaySoundtrack(_currentLobbySoundtrack);
+        PlaySoundtrack(playlist[0]);
     }
 
     private void PlaySoundtrack(string soundtrackFilename)
@@ -146,23 +150,33 @@ public sealed partial class ContentAudioSystem
             return;
         }
 
-        _nextSoundtrackOn = _timing.CurTime + audio.AudioStream.Length;
-
-        _lobbyMusicStream = _audio.PlayGlobal(
+        var playResult = _audio.PlayGlobal(
             soundtrackFilename,
             Filter.Local(),
             false,
             _lobbySongParams.WithVolume(_lobbySongParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
-        )?.Entity;
+        );
+        if (playResult.Value.Entity != default)
+        {
+            return;
+        }
+
         var lobbySongChangedEvent = new LobbySongChangedEvent(soundtrackFilename);
+
+        _lobbySongInfo = new LobbySongInfo(soundtrackFilename, _timing.CurTime + audio.AudioStream.Length, playResult.Value.Entity);
+
         _lobbySongChanged?.Invoke(lobbySongChangedEvent);
     }
 
     private void EndLobbyMusic()
     {
-        _currentLobbySoundtrack = null;
-        _nextSoundtrackOn = null;
-        _lobbyMusicStream = _audio.Stop(_lobbyMusicStream);
+        if (_lobbySongInfo == null)
+        {
+            return;
+        }
+
+        _audio.Stop(_lobbySongInfo.MusicStreamEntityUid);
+        _lobbySongInfo = null;
         var lobbySongChangedEvent = new LobbySongChangedEvent();
         _lobbySongChanged?.Invoke(lobbySongChangedEvent);
     }
@@ -198,14 +212,13 @@ public sealed partial class ContentAudioSystem
     private void UpdateLobbyMusic()
     {
         if (
-            _nextSoundtrackOn.HasValue
-            && _timing.CurTime >= _nextSoundtrackOn
+            _lobbySongInfo != null
+            && _timing.CurTime >= _lobbySongInfo.NextTrackOn
             && _lobbyPlaylist?.Length > 0
-            && _currentLobbySoundtrack != null
             )
         {
-            _currentLobbySoundtrack = GetNextTrackInLobbyPlaylist(_currentLobbySoundtrack, _lobbyPlaylist);
-            PlaySoundtrack(_currentLobbySoundtrack);
+            var nextSoundtrackFilename = GetNextTrackInLobbyPlaylist(_lobbySongInfo.Filename, _lobbyPlaylist);
+            PlaySoundtrack(nextSoundtrackFilename);
         }
     }
 
@@ -220,6 +233,8 @@ public sealed partial class ContentAudioSystem
 
         return playlist[nextTrackIndex];
     }
+
+    private sealed record LobbySongInfo(string Filename, TimeSpan NextTrackOn, EntityUid MusicStreamEntityUid);
 }
 
 public sealed record LobbySongChangedEvent(string? SongFilename = null);
