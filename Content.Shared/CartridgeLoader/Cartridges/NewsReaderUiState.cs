@@ -4,14 +4,14 @@ using Content.Shared.MassMedia.Systems;
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class NewsReadBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class NewsReaderBoundUserInterfaceState : BoundUserInterfaceState
 {
     public NewsArticle Article;
     public int TargetNum;
     public int TotalNum;
     public bool NotificationOn;
 
-    public NewsReadBoundUserInterfaceState(NewsArticle article, int targetNum, int totalNum, bool notificationOn)
+    public NewsReaderBoundUserInterfaceState(NewsArticle article, int targetNum, int totalNum, bool notificationOn)
     {
         Article = article;
         TargetNum = targetNum;
@@ -21,11 +21,11 @@ public sealed class NewsReadBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsReadEmptyBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class NewsReaderEmptyBoundUserInterfaceState : BoundUserInterfaceState
 {
     public bool NotificationOn;
 
-    public NewsReadEmptyBoundUserInterfaceState(bool notificationOn)
+    public NewsReaderEmptyBoundUserInterfaceState(bool notificationOn)
     {
         NotificationOn = notificationOn;
     }

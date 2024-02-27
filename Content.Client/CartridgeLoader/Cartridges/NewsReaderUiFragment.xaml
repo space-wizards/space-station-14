@@ -1,21 +1,30 @@
-<cartridges:NewsReadUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+<cartridges:NewsReaderUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                               xmlns="https://spacestation14.io" Margin="1 0 2 0">
+                               xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                               xmlns="https://spacestation14.io"
+                               Margin="1 0 2 0"
+                               Orientation="Vertical"
+                               HorizontalExpand="True"
+                               VerticalExpand="True">
     <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5,5,5,5">
         <Button
             Name="Prev"
             MinWidth="64"
+            Disabled="True"
             HorizontalAlignment="Left"
-            Text="{Loc 'news-read-ui-past-text'}"
+            Text="{Loc 'news-read-ui-prev-text'}"
+            ToolTip="{Loc 'news-read-ui-prev-tooltip'}"
             Access="Public"
             HorizontalExpand="True"/>
         <Button
             Name="Next"
             MinWidth="64"
+            Disabled="True"
             HorizontalAlignment="Right"
-            Text="{Loc 'news-read-ui-next-text'}" />
+            Text="{Loc 'news-read-ui-next-text'}"
+            ToolTip="{Loc 'news-read-ui-next-tooltip'}"/>
     </BoxContainer>
     <controls:StripeBack Name="АrticleNameContainer">
         <PanelContainer>
@@ -46,9 +55,11 @@
     </PanelContainer>
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5,5,5,5">
         <Button
-            Name="NotificationSwith"
+            Name="NotificationSwitch"
+            ToolTip="{Loc news-reader-ui-mute-tooltip}"
             MinWidth="20"/>
         <RichTextLabel Margin="5,2,2,2" Name="ShareTime" VerticalAlignment="Top"/>
+        <customControls:VSeparator Margin="2 0"/>
         <RichTextLabel Margin="5,2,2,2" Name="Author" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </BoxContainer>
-</cartridges:NewsReadUiFragment>
+</cartridges:NewsReaderUiFragment>

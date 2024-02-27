@@ -7,23 +7,20 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.CartridgeLoader.Cartridges;
 
 [GenerateTypedNameReferences]
-public sealed partial class NewsReadUiFragment : BoxContainer
+public sealed partial class NewsReaderUiFragment : BoxContainer
 {
     public event Action? OnNextButtonPressed;
     public event Action? OnPrevButtonPressed;
 
     public event Action? OnNotificationSwithPressed;
 
-    public NewsReadUiFragment()
+    public NewsReaderUiFragment()
     {
         RobustXamlLoader.Load(this);
-        Orientation = LayoutOrientation.Vertical;
-        HorizontalExpand = true;
-        VerticalExpand = true;
 
         Next.OnPressed += _ => OnNextButtonPressed?.Invoke();
         Prev.OnPressed += _ => OnPrevButtonPressed?.Invoke();
-        NotificationSwith.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
+        NotificationSwitch.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
     }
 
     public void UpdateState(NewsArticle article, int targetNum, int totalNum, bool notificationOn)
@@ -33,17 +30,20 @@ public sealed partial class NewsReadUiFragment : BoxContainer
         ShareTime.Visible = true;
         Author.Visible = true;
 
-        PageName.Text = article.Name;
+        PageName.Text = article.Title;
         PageText.SetMarkup(article.Content);
 
         PageNum.Text = $"{targetNum}/{totalNum}";
 
-        NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
+        NotificationSwitch.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
 
-        string shareTime = article.ShareTime.ToString("hh\\:mm\\:ss");
+        string shareTime = article.ShareTime.ToString(@"hh\:mm\:ss");
         ShareTime.SetMarkup(Loc.GetString("news-read-ui-time-prefix-text") + " " + shareTime);
 
         Author.SetMarkup(Loc.GetString("news-read-ui-author-prefix") + " " + (article.Author != null ? article.Author : Loc.GetString("news-read-ui-no-author")));
+
+        Prev.Disabled = targetNum <= 1;
+        Next.Disabled = targetNum >= totalNum;
     }
 
     public void UpdateEmptyState(bool notificationOn)
@@ -55,6 +55,6 @@ public sealed partial class NewsReadUiFragment : BoxContainer
 
         PageName.Text = Loc.GetString("news-read-ui-not-found-text");
 
-        NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
+        NotificationSwitch.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
     }
 }
