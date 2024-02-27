@@ -14,25 +14,19 @@ public sealed partial class AdjustAlert : ReagentEffect
     public AlertType Type;
 
     /// <summary>
-    /// If true, clears the alert immediately
+    /// If true, the alert is removed after Time seconds. If Time was not specified the alert is removed immediately.
     /// </summary>
     [DataField]
     public bool Clear;
 
     /// <summary>
-    /// Visually display cooldown progress over the alert icon
+    /// Visually display cooldown progress over the alert icon.
     /// </summary>
     [DataField]
     public bool ShowCooldown;
 
     /// <summary>
-    /// Automatically remove the alert at the end of the cooldown
-    /// </summary>
-    [DataField]
-    public bool AutoRemove;
-
-    /// <summary>
-    /// The length of the cooldown (in seconds).
+    /// The length of the cooldown or delay before removing the alert (in seconds).
     /// </summary>
     [DataField]
     public float Time;
@@ -46,7 +40,7 @@ public sealed partial class AdjustAlert : ReagentEffect
         if (!args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))
             return;
 
-        if (Clear)
+        if (Clear && Time <= 0)
         {
                 alertSys.ClearAlert(args.SolutionEntity, Type);
         }
@@ -55,10 +49,10 @@ public sealed partial class AdjustAlert : ReagentEffect
             var timing = IoCManager.Resolve<IGameTiming>();
             (TimeSpan, TimeSpan)? cooldown = null;
 
-            if (ShowCooldown || AutoRemove && Time > 0)
+            if (ShowCooldown || Clear && Time > 0)
                 cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
 
-            alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: AutoRemove, showCooldown: ShowCooldown);
+            alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: Clear, showCooldown: ShowCooldown);
         }
 
     }

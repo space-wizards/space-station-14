@@ -74,7 +74,7 @@
         conditions:
           - !type:ReagentThreshold
             min: 1.5
-        autoRemove: True
+        clear: True
         time: 5
   reactiveEffects:
     Flammable:
@@ -120,7 +120,7 @@
         conditions:
           - !type:ReagentThreshold
             min: 1.5
-        autoRemove: True
+        clear: True
         time: 5
 
 - type: reagent
