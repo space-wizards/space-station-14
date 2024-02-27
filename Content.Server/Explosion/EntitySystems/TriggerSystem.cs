@@ -186,7 +186,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             // Gets location of the implant
             var ownerXform = Transform(uid);
-            var pos = _transformSystem.GetMapCoordinates((uid, ownerXform));
+            var pos = ownerXform.MapPosition;
             var x = (int) pos.X;
             var y = (int) pos.Y;
             var posText = $"({x}, {y})";
