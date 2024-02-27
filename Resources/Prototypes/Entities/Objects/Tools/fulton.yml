@@ -126,8 +126,6 @@
           mask:
             - Impassable
     - type: Foldable
-      foldSound: /Audio/Items/Mining/fultext_deploy.ogg
-      unfoldSound: /Audio/Items/Mining/fultext_deploy.ogg
       folded: true
     - type: Clickable
     - type: InteractionOutline
