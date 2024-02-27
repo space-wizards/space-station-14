@@ -353,10 +353,6 @@
   - type: Storage
     grid:
     - 0,0,5,3
-    whitelist:
-      components:
-        - Implanter
-        - HandheldGPS
   - type: Sprite
     layers:
       - state: box
