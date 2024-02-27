@@ -261,16 +261,16 @@
 
 - type: Tag
   id: CarpetOrange
-  
+
 - type: Tag
   id: CarpetPurple
 
 - type: Tag
   id: CarpetPink
-  
+
 - type: Tag
   id: CarpetRed
-  
+
 - type: Tag
   id: CarpetWhite
 
@@ -991,6 +991,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: ReptilianFood
 
 - type: Tag
   id: RifleStock
