@@ -13,13 +13,11 @@ public sealed class HandheldGpsStatusControl : Control
     private readonly RichTextLabel _label;
     private float _updateDif;
     private readonly IEntityManager _entMan;
-    private readonly SharedTransformSystem _xformSystem;
 
     public HandheldGpsStatusControl(Entity<HandheldGPSComponent> parent)
     {
         _parent = parent;
         _entMan = IoCManager.Resolve<IEntityManager>();
-        _xformSystem = _entMan.System<SharedTransformSystem>();
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
         UpdateGpsDetails();
@@ -43,7 +41,7 @@ public sealed class HandheldGpsStatusControl : Control
         var posText = "Error";
         if (_entMan.TryGetComponent(_parent, out TransformComponent? transComp))
         {
-            var pos = _xformSystem.GetMapCoordinates((_parent, transComp));
+            var pos =  transComp.MapPosition;
             var x = (int) pos.X;
             var y = (int) pos.Y;
             posText = $"({x}, {y})";

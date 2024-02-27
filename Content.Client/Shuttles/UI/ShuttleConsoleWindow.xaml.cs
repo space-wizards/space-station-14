@@ -21,7 +21,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 {
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
-    private SharedTransformSystem? _xformSystem = null;
 
     private EntityUid? _shuttleEntity;
 
@@ -310,9 +309,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         base.Draw(handle);
 
-        _xformSystem ??= _entManager.SystemOrNull<SharedTransformSystem>();
-        if (_xformSystem is null ||
-            !_entManager.TryGetComponent<PhysicsComponent>(_shuttleEntity, out var gridBody) ||
+        if (!_entManager.TryGetComponent<PhysicsComponent>(_shuttleEntity, out var gridBody) ||
             !_entManager.TryGetComponent<TransformComponent>(_shuttleEntity, out var gridXform))
         {
             return;
@@ -325,7 +322,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         FTLTimer.Text = GetFTLText();
 
-        var (_, worldRot, worldMatrix) = _xformSystem.GetWorldPositionRotationMatrix(gridXform);
+        var (_, worldRot, worldMatrix) = gridXform.GetWorldPositionRotationMatrix();
         var worldPos = worldMatrix.Transform(gridBody.LocalCenter);
 
         // Get the positive reduced angle.
