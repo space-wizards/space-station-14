@@ -207,7 +207,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SheetCGlass1
+              prototype: SheetClockworkGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:

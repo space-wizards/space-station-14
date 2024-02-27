@@ -53,7 +53,7 @@
               amount: 1
             - material: MetalRod
               amount: 1
-        - to: SheetCGlass
+        - to: SheetClockworkGlass
           completed:
             - !type:SetStackCount
               amount: 1
@@ -81,6 +81,6 @@
     - node: SheetRUGlass
       entity: SheetRUGlass
       
-    - node: SheetCGlass
-      entity: SheetCGlass
+    - node: SheetClockworkGlass
+      entity: SheetClockworkGlass
 

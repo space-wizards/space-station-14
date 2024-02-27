@@ -464,7 +464,7 @@
         anchored: false
       completed:
       - !type:SpawnPrototype
-        prototype: SheetCGlass1
+        prototype: SheetClockworkGlass1
         amount: 5
       steps:
       - tool: Screwing

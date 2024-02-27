@@ -108,7 +108,7 @@
         pickup: true
         emptyAtUser: true
       - !type:SpawnPrototype
-        prototype: SheetCGlass1
+        prototype: SheetClockworkGlass1
         amount: 1
       steps:
       - tool: Prying
@@ -133,7 +133,7 @@
       - !type:AllWiresCut
       completed:
       - !type:SpawnPrototype
-        prototype: SheetCGlass1
+        prototype: SheetClockworkGlass1
         amount: 1
       steps:
       - tool: Prying

@@ -54,7 +54,6 @@ tiles-lime-floor = lime floor
 tiles-hydro-floor = hydro floor
 tiles-bar-floor = bar floor
 tiles-clown-floor = clown floor
-tiles-clockwork-lattice = clockwork lattice
 tiles-brass-plating = brass plating
 tiles-brass-floor-filled = filled brass plating
 tiles-brass-floor-reebe = smooth brass plating

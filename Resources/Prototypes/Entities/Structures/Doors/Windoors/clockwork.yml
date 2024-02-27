@@ -2,6 +2,7 @@
   id: BaseClockworkWindoor
   name: clockwork windoor
   parent: BaseWindoor
+  abstract: true
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/clockwork_windoor.rsi

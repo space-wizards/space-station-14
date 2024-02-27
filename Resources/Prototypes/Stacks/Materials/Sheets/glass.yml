@@ -50,6 +50,6 @@
   id: ClockworkGlass
   name: clockwork glass
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: cglass }
-  spawn: SheetCGlass1
+  spawn: SheetClockworkGlass1
   maxCount: 30
   itemSize: 1

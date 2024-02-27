@@ -32,7 +32,7 @@
 
 - type: material
   id: BrassGlass
-  stackEntity: SheetCGlass1
+  stackEntity: SheetClockworkGlass1
   name: materials-clockwork-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: cglass }
   color: "#9b6f07"

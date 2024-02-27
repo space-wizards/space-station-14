@@ -458,7 +458,7 @@
 
 - type: entity
   parent: SheetGlassBase
-  id: SheetCGlass
+  id: SheetClockworkGlass
   name: clockwork glass
   description: A sheet of brass-hardened glass, primarily used by clockwork enthusiasts and remnants of Ratvarian cults.
   suffix: Full
@@ -482,7 +482,7 @@
     heldPrefix: cglass
   - type: Construction
     graph: Glass
-    node: SheetCGlass
+    node: SheetClockworkGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -522,8 +522,8 @@
         canReact: false
 
 - type: entity
-  parent: SheetCGlass
-  id: SheetCGlass1
+  parent: SheetClockworkGlass
+  id: SheetClockworkGlass1
   name: clockwork glass
   suffix: Single
   components:
