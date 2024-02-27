@@ -162,6 +162,7 @@
     - state: blob_core_glow
       color: "#9ACD32"
     - state: blob_core_overlay
+  - type: BlobCore
 
 - type: entity
   id: BlobStructureResource

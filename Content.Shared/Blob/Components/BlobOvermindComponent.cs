@@ -13,7 +13,7 @@ namespace Content.Shared.Blob.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedBlobSystem))]
 [AutoGenerateComponentState]
-public sealed partial class BlobMarkerComponent : Component
+public sealed partial class BlobOvermindComponent : Component
 {
     [DataField, AutoNetworkedField]
     public int Resource = 60;
@@ -30,13 +30,18 @@ public sealed partial class BlobMarkerComponent : Component
     [DataField]
     public List<EntProtoId> Actions = new()
     {
+        "ActionBlobJumpCore",
         "ActionBlobCreateResource",
         "ActionBlobCreateFactory",
-        "ActionBlobCreateNode"
+        "ActionBlobCreateNode",
+        "ActionBlobSwapCore",
     };
 
     [DataField]
     public int RegularBlobCost = 4;
+
+    [DataField]
+    public int SwapCoreCost = 80;
 
     [DataField]
     public EntProtoId RegularBlobProtoId = "BlobStructure";
@@ -71,4 +76,14 @@ public sealed partial class BlobCreateStructureEvent : InstantActionEvent
     /// </summary>
     [DataField]
     public string RangeComponent;
+}
+
+public sealed partial class BlobJumpToCoreEvent : InstantActionEvent
+{
+
+}
+
+public sealed partial class BlobSwapCoreEvent : InstantActionEvent
+{
+
 }

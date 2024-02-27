@@ -49,12 +49,14 @@ public abstract class SharedBlobSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<BlobMarkerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<BlobMarkerComponent, BlobCreateStructureEvent>(OnCreateStructure);
+        SubscribeLocalEvent<BlobOvermindComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<BlobOvermindComponent, BlobCreateStructureEvent>(OnCreateStructure);
+        SubscribeLocalEvent<BlobOvermindComponent, BlobJumpToCoreEvent>(OnJumpToCore);
+        SubscribeLocalEvent<BlobOvermindComponent, BlobSwapCoreEvent>(OnSwapCore);
 
-        SubscribeLocalEvent((Entity<BlobStructureComponent> ent, ref ComponentInit _) => UpdateNearby(ent));
-        //bug: this doesn't actually work when it's deleted
-        SubscribeLocalEvent((Entity<BlobStructureComponent> ent, ref EntParentChangedMessage _) => UpdateNearby(ent));
+        //todo this needs to reload the fixtures for blob structures when they re-enter PVS
+        SubscribeLocalEvent((Entity<BlobStructureComponent> ent, ref ComponentStartup _) => UpdateNearby(ent));
+        SubscribeLocalEvent((Entity<BlobStructureComponent> ent, ref MoveEvent ev) => UpdateNearby(ent, ev.OldPosition));
         SubscribeLocalEvent<BlobStructureComponent, PreventCollideEvent>(OnPreventCollide);
 
         CommandBinds.Builder
@@ -68,15 +70,18 @@ public abstract class SharedBlobSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
         _fixtureQuery = GetEntityQuery<FixturesComponent>();
     }
+
     public override void Shutdown()
     {
         base.Shutdown();
         CommandBinds.Unregister<SharedBlobSystem>();
     }
 
-    private void OnMapInit(Entity<BlobMarkerComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<BlobOvermindComponent> ent, ref MapInitEvent args)
     {
         var comp = ent.Comp;
+
+        comp.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
 
         if (TryComp<ActionsComponent>(ent, out var actions))
         {
@@ -87,10 +92,15 @@ public abstract class SharedBlobSystem : EntitySystem
         }
 
         SpawnBlobCreated(comp.CoreProtoId, Transform(ent).Coordinates, ent);
+
+        Dirty(ent, ent.Comp);
     }
 
-    private void OnCreateStructure(Entity<BlobMarkerComponent> ent, ref BlobCreateStructureEvent args)
+    private void OnCreateStructure(Entity<BlobOvermindComponent> ent, ref BlobCreateStructureEvent args)
     {
+        if (args.Handled)
+            return;
+
         var pos = Transform(ent).Coordinates;
         if (!TryGetBlobStructure(pos, out var blob) || !_tag.HasTag(blob.Value, AllowBlobReplaceTag))
             return;
@@ -104,17 +114,67 @@ public abstract class SharedBlobSystem : EntitySystem
             return;
         }
 
-        if (!TryUseResource((ent, ent), args.Cost))
-        {
-            _popup.PopupClient(Loc.GetString("blob-popup-structure-no-resource"), ent, ent);
+        if (!TryUseResource((ent, ent), args.Cost, user: ent))
             return;
-        }
 
         if (_net.IsServer)
         {
             Del(blob);
             SpawnBlobCreated(args.Structure, pos, ent);
         }
+
+        args.Handled = true;
+    }
+
+    private void OnJumpToCore(Entity<BlobOvermindComponent> ent, ref BlobJumpToCoreEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryGetCore(ent, out var core))
+            return;
+
+        _transform.SetCoordinates(ent, Transform(core.Value).Coordinates);
+        args.Handled = true;
+    }
+
+    private void OnSwapCore(Entity<BlobOvermindComponent> ent, ref BlobSwapCoreEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryGetCore(ent, out var core))
+            return;
+
+        if (!TryGetBlobStructure(Transform(ent).Coordinates, out var hovering))
+        {
+            _popup.PopupClient(Loc.GetString("blob-popup-swap-no-node"), ent, ent);
+            return;
+        }
+
+        if (core.Value.Owner == hovering.Value.Owner)
+            return;
+
+        if (!HasComp<BlobNodeComponent>(hovering))
+        {
+            _popup.PopupClient(Loc.GetString("blob-popup-swap-no-node"), ent, ent);
+            return;
+        }
+
+        if (!TryUseResource((ent, ent), ent.Comp.SwapCoreCost, ent))
+            return;
+
+        var coreXform = Transform(core.Value);
+        var hoverXform = Transform(hovering.Value);
+        var pos2 = coreXform.Coordinates;
+        var pos1 = hoverXform.Coordinates;
+        _transform.SetCoordinates(core.Value, coreXform, pos1);
+        _transform.SetCoordinates(hovering.Value, hoverXform, pos2);
+        _transform.AnchorEntity((core.Value, coreXform));
+        _transform.AnchorEntity((hovering.Value, hoverXform));
+        UpdateNearby(core.Value, coreXform.Coordinates);
+        UpdateNearby(hovering.Value, hoverXform.Coordinates);
+        args.Handled = true;
     }
 
     private void OnPreventCollide(Entity<BlobStructureComponent> ent, ref PreventCollideEvent args)
@@ -125,16 +185,16 @@ public abstract class SharedBlobSystem : EntitySystem
         if (args.OurFixture.CollisionLayer != (int) CollisionGroup.GhostImpassable)
             return;
 
-        if (HasComp<BlobMarkerComponent>(args.OtherEntity))
+        if (HasComp<BlobOvermindComponent>(args.OtherEntity))
             return;
 
         args.Cancelled = true;
     }
 
-    public void UpdateNearby(Entity<BlobStructureComponent> ent)
+    public void UpdateNearby(EntityUid ent, EntityCoordinates? coords = null)
     {
-        var xform = _xformQuery.Get(ent);
-        foreach (var blob in _lookup.GetEntitiesInRange<BlobStructureComponent>(xform.Comp.Coordinates, 4f))
+        coords ??= _xformQuery.Get(ent).Comp.Coordinates;
+        foreach (var blob in _lookup.GetEntitiesInRange<BlobStructureComponent>(coords.Value, 4f))
         {
             if (TerminatingOrDeleted(blob))
                 continue;
@@ -152,7 +212,7 @@ public abstract class SharedBlobSystem : EntitySystem
         if (session?.AttachedEntity is not { } playerEnt)
             return false;
 
-        if (!TryComp<BlobMarkerComponent>(playerEnt, out var blobMarker))
+        if (!TryComp<BlobOvermindComponent>(playerEnt, out var blobMarker))
             return false;
 
         if (!coords.TryGetTileRef(out var tile, EntityManager) ||
@@ -168,7 +228,7 @@ public abstract class SharedBlobSystem : EntitySystem
         if (!HasAdjacentBlobStructures(coords, includeSelf: false, getDiagonal: false))
             return false;
 
-        if (!TryUseResource((playerEnt, blobMarker), blobMarker.RegularBlobCost))
+        if (!TryUseResource((playerEnt, blobMarker), blobMarker.RegularBlobCost, playerEnt))
             return false;
 
         SpawnBlobCreated(blobMarker.RegularBlobProtoId, coords, (playerEnt, blobMarker));
@@ -180,18 +240,15 @@ public abstract class SharedBlobSystem : EntitySystem
         if (session?.AttachedEntity is not { } playerEnt)
             return false;
 
-        if (!TryComp<BlobMarkerComponent>(playerEnt, out var blobMarker))
+        if (!TryComp<BlobOvermindComponent>(playerEnt, out var blobMarker))
             return false;
 
         if (!TryGetBlobStructure(coords, out var ent) ||
             !TryComp<BlobUpgradeableComponent>(ent, out var upgradeableComponent))
             return false;
 
-        if (!TryUseResource((playerEnt, blobMarker), upgradeableComponent.UpgradeCost))
-        {
-            _popup.PopupClient(Loc.GetString("blob-popup-structure-no-resource"), playerEnt, playerEnt);
+        if (!TryUseResource((playerEnt, blobMarker), upgradeableComponent.UpgradeCost, playerEnt))
             return false;
-        }
 
         if (_net.IsServer)
         {
@@ -222,6 +279,8 @@ public abstract class SharedBlobSystem : EntitySystem
         UpdateFixtureHard(ent, (grid, gridComp), tileRef, new Vector2i(2, -1), "blobEastSouth");
         UpdateFixtureHard(ent, (grid, gridComp), tileRef, new Vector2i(-2, 1), "blobWestNorth");
         UpdateFixtureHard(ent, (grid, gridComp), tileRef, new Vector2i(-2, -1), "blobWestSouth");
+
+        Dirty(ent, ent.Comp1);
     }
 
     private void UpdateFixtureHard(Entity<FixturesComponent, TransformComponent> ent, Entity<MapGridComponent> grid, TileRef tile, Vector2i offset, string name)
@@ -307,7 +366,7 @@ public abstract class SharedBlobSystem : EntitySystem
         // ReSharper restore EnforceForeachStatementBraces
     }
 
-    public EntityUid? SpawnBlobCreated(EntProtoId proto, EntityCoordinates position, Entity<BlobMarkerComponent> creator)
+    public EntityUid? SpawnBlobCreated(EntProtoId proto, EntityCoordinates position, Entity<BlobOvermindComponent> creator)
     {
         //todo remove when predicted entity spawning
         if (_net.IsClient)
@@ -320,19 +379,41 @@ public abstract class SharedBlobSystem : EntitySystem
         return ent;
     }
 
-    public bool TryUseResource(Entity<BlobMarkerComponent?> ent, int amount)
+    public bool TryGetCore(
+        Entity<BlobOvermindComponent> ent,
+        [NotNullWhen(true)] out Entity<BlobCoreComponent, BlobCreatedComponent>? blob)
+    {
+        var query = EntityQueryEnumerator<BlobCoreComponent, BlobCreatedComponent>();
+        while (query.MoveNext(out var uid, out var core, out var created))
+        {
+            if (created.Creator != ent)
+                continue;
+
+            blob = (uid, core, created);
+            return true;
+        }
+
+        blob = null;
+        return false;
+    }
+
+    public bool TryUseResource(Entity<BlobOvermindComponent?> ent, int amount, EntityUid? user = null, bool silent = false)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
         if (ent.Comp.Resource - amount < 0)
+        {
+            if (user != null && !silent)
+                _popup.PopupClient(Loc.GetString("blob-popup-structure-no-resource", ("amount", amount - ent.Comp.Resource)), user.Value, user.Value);
             return false;
+        }
 
         SetResource((ent, ent.Comp), ent.Comp.Resource - amount);
         return true;
     }
 
-    public bool TryAddResource(Entity<BlobMarkerComponent?> ent, int amount)
+    public bool TryAddResource(Entity<BlobOvermindComponent?> ent, int amount)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
@@ -343,12 +424,12 @@ public abstract class SharedBlobSystem : EntitySystem
         return true;
     }
 
-    public bool HasResource(Entity<BlobMarkerComponent?> ent, int amount)
+    public bool HasResource(Entity<BlobOvermindComponent?> ent, int amount)
     {
         return Resolve(ent, ref ent.Comp) && ent.Comp.Resource >= amount;
     }
 
-    public void SetResource(Entity<BlobMarkerComponent> ent, int amount)
+    public void SetResource(Entity<BlobOvermindComponent> ent, int amount)
     {
         ent.Comp.Resource = amount;
         Dirty(ent, ent.Comp);
@@ -358,7 +439,7 @@ public abstract class SharedBlobSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<BlobMarkerComponent>();
+        var query = EntityQueryEnumerator<BlobOvermindComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             if (_timing.CurTime < comp.NextSecond)

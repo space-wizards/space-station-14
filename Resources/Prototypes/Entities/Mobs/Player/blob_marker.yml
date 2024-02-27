@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseMob
-  id: MobBlobMarker
-  name: blob marker
+  id: MobBlobOvermind
+  name: blob overmind
   components:
   - type: Sprite
     drawdepth: Ghosts
@@ -31,7 +31,7 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 6
     baseWalkSpeed: 4
-  - type: BlobMarker
+  - type: BlobOvermind
   - type: CargoSellBlacklist
   - type: Actions
   - type: Alerts
@@ -78,7 +78,7 @@
 
 - type: entity
   id: ActionBlobCreateNode
-  name: Node
+  name: Node (50)
   description: Replace the current blob you are hovering over with a blob node.
   noSpawn: true
   components:
@@ -94,3 +94,31 @@
       cost: 50
       minRange: 4
       rangeComponent: BlobNode
+
+- type: entity
+  id: ActionBlobJumpCore
+  name: Jump to Core
+  description: Teleports you to your core instantly.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_blob.rsi
+      state: ui_tocore
+    event: !type:BlobJumpToCoreEvent
+
+- type: entity
+  id: ActionBlobSwapCore
+  name: Swap Core (80)
+  description: Swaps a node and your core for 80 resources.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_blob.rsi
+      state: ui_swap
+    event: !type:BlobSwapCoreEvent
