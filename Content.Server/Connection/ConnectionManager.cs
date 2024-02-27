@@ -106,7 +106,7 @@ namespace Content.Server.Connection
 
             var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
 
-            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
+            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled) && adminData == null)
             {
                 var showReason = _cfg.GetCVar(CCVars.PanicBunkerShowReason);
                 var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);

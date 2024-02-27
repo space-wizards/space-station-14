@@ -78,3 +78,19 @@
               amount: 1
     - node: fleshTile
       entity: FloorTileItemFlesh
+
+- type: constructionGraph
+  id: TileWoodLarge
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodtilelarge
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: WoodPlank
+              amount: 2
+    - node: woodtilelarge
+      entity: FloorTileItemWoodLarge

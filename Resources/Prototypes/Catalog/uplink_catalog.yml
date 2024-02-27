@@ -686,7 +686,7 @@
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
   productEntity: MacroBombImplanter
   cost:
-    Telecrystal: 20
+    Telecrystal: 13
   categories:
     - UplinkImplants
   conditions:
@@ -751,17 +751,6 @@
           - SurplusBundle
 
 # Bundles
-
-- type: listing
-  id: Observationkit
-  name: uplink-observation-kit-name
-  description: uplink-observation-kit-desc
-  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: tracks }
-  productEntity: Observationskit
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkBundles
 
 - type: listing
   id: UplinkEmpKit

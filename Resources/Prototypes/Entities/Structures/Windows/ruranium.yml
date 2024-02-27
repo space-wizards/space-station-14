@@ -54,6 +54,54 @@
     resistance: 5
 
 - type: entity
+  id: UraniumReinforcedWindowDirectional
+  parent: WindowDirectional
+  name: directional reinforced uranium window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window
+  - type: Construction
+    graph: WindowDirectional
+    node: uraniumReinforcedWindowDirectional
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 3.333
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 2
+          PartRodMetal1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 70
+
+- type: entity
   parent: ReinforcedUraniumWindow
   id: ReinforcedUraniumWindowDiagonal
   suffix: diagonal
