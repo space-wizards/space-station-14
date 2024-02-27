@@ -26,7 +26,7 @@ public sealed partial class PaperVisualsComponent : Component
     public Color BackgroundModulate = Color.White;
 
     /// <summary>
-    ///     Should the background image tile, or be streched? Sets <code>StyleBoxTexture.StrechMode</code>
+    ///     Should the background image tile, or be stretched? Sets <code>StyleBoxTexture.StrechMode</code>
     /// </summary>
     [DataField("backgroundImageTile")]
     public bool BackgroundImageTile = false;

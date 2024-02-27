@@ -62,7 +62,7 @@ public sealed partial class BlockingSystem
 
     private void OnDamageModified(EntityUid uid, BlockingComponent component, DamageModifyEvent args)
     {
-        var modifier = component.IsBlocking ? component.ActiveBlockDamageModifier : component.PassiveBlockDamageModifer;
+        var modifier = component.IsBlocking ? component.ActiveBlockDamageModifier : component.PassiveBlockDamageModifier;
         if (modifier == null)
         {
             return;

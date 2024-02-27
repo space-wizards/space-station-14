@@ -148,7 +148,7 @@ namespace Content.Client.RoundEnd
                     else
                     {
                         //TODO: On Hover display a popup detailing more play info.
-                        //For example: their antag goals and if they completed them sucessfully.
+                        //For example: their antag goals and if they completed them successfully.
                         var icNameColor = playerInfo.Antag ? "red" : "white";
                         playerInfoText.SetMarkup(
                             Loc.GetString("round-end-summary-window-player-info-if-not-observer-text",

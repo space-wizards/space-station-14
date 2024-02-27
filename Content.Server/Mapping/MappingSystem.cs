@@ -105,7 +105,7 @@ public sealed class MappingSystem : EntitySystem
         {
             if (!_mapManager.MapExists(map) || _mapManager.IsMapInitialized(map))
             {
-                _sawmill.Warning("Tried to enable autosaving on non-existant or already initialized map!");
+                _sawmill.Warning("Tried to enable autosaving on non-existent or already initialized map!");
                 _currentlyAutosaving.Remove(map);
                 return;
             }

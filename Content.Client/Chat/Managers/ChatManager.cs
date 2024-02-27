@@ -57,7 +57,7 @@ namespace Content.Client.Chat.Managers
                         _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                     break;
 
-                // TODO sepearate radio and say into separate commands.
+                // TODO separate radio and say into separate commands.
                 case ChatSelectChannel.Radio:
                 case ChatSelectChannel.Local:
                     _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");

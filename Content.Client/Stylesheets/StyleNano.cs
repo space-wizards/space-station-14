@@ -39,7 +39,7 @@ namespace Content.Client.Stylesheets
         }
 
     }
-    // STLYE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
+    // STYLE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";

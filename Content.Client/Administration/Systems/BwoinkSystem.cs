@@ -11,12 +11,12 @@ namespace Content.Client.Administration.Systems
     {
         [Dependency] private readonly IGameTiming _timing = default!;
 
-        public event EventHandler<BwoinkTextMessage>? OnBwoinkTextMessageRecieved;
+        public event EventHandler<BwoinkTextMessage>? OnBwoinkTextMessageReceived;
         private (TimeSpan Timestamp, bool Typing) _lastTypingUpdateSent;
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
-            OnBwoinkTextMessageRecieved?.Invoke(this, message);
+            OnBwoinkTextMessageReceived?.Invoke(this, message);
         }
 
         public void Send(NetUserId channelId, string text, bool playSound)

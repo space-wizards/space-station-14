@@ -267,7 +267,7 @@ namespace Content.Shared.Damage
         /// </remarks>
         public bool TryGetDamageInGroup(DamageGroupPrototype group, out FixedPoint2 total)
         {
-            bool containsMemeber = false;
+            bool containsMember = false;
             total = FixedPoint2.Zero;
 
             foreach (var type in group.DamageTypes)
@@ -275,10 +275,10 @@ namespace Content.Shared.Damage
                 if (DamageDict.TryGetValue(type, out var value))
                 {
                     total += value;
-                    containsMemeber = true;
+                    containsMember = true;
                 }
             }
-            return containsMemeber;
+            return containsMember;
         }
 
         /// <summary>

@@ -65,14 +65,14 @@ namespace Content.Client.Atmos.EntitySystems
 
         private void HandleGasOverlayUpdate(GasOverlayUpdateEvent ev)
         {
-            foreach (var (nent, removedIndicies) in ev.RemovedChunks)
+            foreach (var (nent, removedIndices) in ev.RemovedChunks)
             {
                 var grid = GetEntity(nent);
 
                 if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;
 
-                foreach (var index in removedIndicies)
+                foreach (var index in removedIndices)
                 {
                     comp.Chunks.Remove(index);
                 }

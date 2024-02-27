@@ -5,6 +5,6 @@ namespace Content.Shared.Maths
     /// </summary>
     public static class PhysicalConstants
     {
-        public const float ZERO_CELCIUS = 273.15f;
+        public const float ZERO_CELSIUS = 273.15f;
     }
 }

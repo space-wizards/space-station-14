@@ -239,7 +239,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 _power.TogglePower(uid, user: args.Session.AttachedEntity);
                 break;
             default:
-                throw new ArgumentOutOfRangeException($"{ToPrettyString(player):player} attempted to hit a nonexistant button on {ToPrettyString(uid)}");
+                throw new ArgumentOutOfRangeException($"{ToPrettyString(player):player} attempted to hit a nonexistent button on {ToPrettyString(uid)}");
         }
     }
 
