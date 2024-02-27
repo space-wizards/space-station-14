@@ -259,6 +259,14 @@
     Steel: 500
 
 - type: latheRecipe
+  id: TargetMoving
+  result: TargetMoving
+  completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
+  materials:
+    Steel: 500
+
+- type: latheRecipe
   id: TargetClown
   result: TargetClown
   completetime: 5
