@@ -48,6 +48,7 @@ public sealed class EmergencyButtonSystem : EntitySystem
         var stationUid = _station.GetStationInMap(buttonXform.MapID);
         if (stationUid != null)
             _alertLevel.SetLevel(stationUid.Value, comp.AlertLevelOnActivate, true, true, true, false);
+        Dirty(uid,comp);
 
         args.Handled = true;
     }
