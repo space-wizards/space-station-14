@@ -41,9 +41,7 @@
     state: implanter0
   content:
   - StorageImplanter
-  - DnaScramblerImplanter
   - ChemicalSynthesisKit
-  - HypopenBox
   - SoapOmega
   - Syringe
   - Syringe
@@ -75,7 +73,6 @@
   - ClothingUniformJumpsuitPyjamaSyndicateBlack
   - NocturineChemistryBottle
   - NocturineChemistryBottle
-  - NocturineChemistryBottle
   - NitrousOxideTankFilled
   - BedsheetSyndie
 
@@ -102,26 +99,24 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
     state: icon
   content:
-  - SmokeGrenade
-  - ScramImplanter
+  - ThiefFultonBeacon
+  - InvisibleCrate
   - FultonBeacon
   - Fulton
-  - ClothingNeckCloakVoid
-  - InvisibleCrate
+  - PetCarrier
 
 - type: thiefBackpackSet
-  id: ArenaInspectorSet
-  name: thief-backpack-category-zooinspector-name
-  description: thief-backpack-category-zooinspector-description
+  id: InvisibleSet
+  name: thief-backpack-category-invisible-name
+  description: thief-backpack-category-invisible-description
   sprite:
     sprite: Mobs/Aliens/Carps/space.rsi
     state: alive
   content:
-  - PetCarrier
-  - SpaceCarpCube
-  - SpaceCarpCube
-  - SpaceCarpCube
-  - SpaceTickCube
-  - CockroachCube
-  - AbominationCube
-  - ClothingHeadHatCowboyRed
+  - SmokeGrenade
+  - SmokeGrenade
+  - SmokeGrenade
+  - ScramImplanter
+  - DnaScramblerImplanter
+  - FreedomImplanter
+  - ClothingNeckCloakVoid

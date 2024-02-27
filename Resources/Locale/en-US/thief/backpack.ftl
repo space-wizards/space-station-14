@@ -31,9 +31,7 @@ thief-backpack-category-chemistry-name = chemistry kit
 thief-backpack-category-chemistry-description =
     A set for those who love to improve their body.
     It includes a storage implanter,
-    a DNA scrambler implanter,
-    chemical synthesis kit
-    and omega soap.
+    chemical synthesis kit and omega soap.
 
 thief-backpack-category-syndie-name = syndie kit
 thief-backpack-category-syndie-description =
@@ -45,7 +43,7 @@ thief-backpack-category-sleeper-name = sleepwalker's kit
 thief-backpack-category-sleeper-description =
     A set for those who like to sleep in,
     or for everyone around you to sleep.
-    Includes a set of nocturine vials, a hypopen and
+    Includes a set of nocturine vials and
     a tank of sleeping gas.
 
 thief-backpack-category-communicator-name = communicator's kit
@@ -57,12 +55,13 @@ thief-backpack-category-communicator-description =
 thief-backpack-category-smuggler-name = smuggler's kit
 thief-backpack-category-smuggler-description =
     A kit for those who like to have big pockets.
-    Includes a fulton beacon, ten fultons, 1 smoke grenades,
-    scram implanter and an invisible crate. You can't move in them,
-    but you can quickly hide or carry valuable loot.
+    Includes a fulton beacon, ten fultons, Pet Carrier,
+    scram implanter, bonus thieving beacon and an invisible crate. 
+    You can't move in them, but you can quickly 
+    hide or carry valuable loot.
 
-thief-backpack-category-zooinspector-name = Arena inspector's kit
-thief-backpack-category-zooinspector-description = 
-    A set for those who like to control other creatures.
-    Includes pet carrier, 3 space carp cube and 
-    abomination cube.
+thief-backpack-category-invisible-name = Invisibility kit
+thief-backpack-category-invisible-description = 
+    A set for someone who can't be caught. 
+    Includes: 3 smoke grenades, DNA scrambler implanter,
+    freedom implanter and scram implanter.
