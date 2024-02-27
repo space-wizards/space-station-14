@@ -5,7 +5,7 @@ namespace Content.Shared.Ame.Components;
 [Virtual]
 public partial class SharedAmeControllerComponent : Component
 {
-    public const string FuelSlotId = "Fuel";
+    public const string FuelSlotId = "fuelSlot";
 }
 
 [Serializable, NetSerializable]
