@@ -148,6 +148,8 @@
     layers:
     - state: blob_shield
       color: "#9ACD32"
+  - type: Tag
+    tags: [ BlobAllowReplace ]
 
 - type: entity
   id: BlobStructureCore
@@ -163,6 +165,8 @@
       color: "#9ACD32"
     - state: blob_core_overlay
   - type: BlobCore
+  - type: BlobNode
+    pulseRange: 4
 
 - type: entity
   id: BlobStructureResource
@@ -191,6 +195,7 @@
       color: "#9ACD32"
     - state: blob_node_overlay
   - type: BlobNode
+    pulseRange: 3
 
 - type: entity
   id: BlobStructureFactory

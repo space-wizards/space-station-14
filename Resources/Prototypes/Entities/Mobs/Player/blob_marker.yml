@@ -40,7 +40,7 @@
 
 - type: entity
   id: ActionBlobCreateResource
-  name: Resource
+  name: Resource (40)
   description: Replace the current blob you are hovering over with a resource blob.
   noSpawn: true
   components:
@@ -54,12 +54,13 @@
       !type:BlobCreateStructureEvent
         structure: BlobStructureResource
         cost: 40
-        minRange: 3
+        minRange: 3.5
         rangeComponent: BlobResource
+        requiresNode: true
 
 - type: entity
   id: ActionBlobCreateFactory
-  name: Factory
+  name: Factory (60)
   description: Replace the current blob you are hovering over with a factory blob.
   noSpawn: true
   components:
@@ -73,8 +74,9 @@
       !type:BlobCreateStructureEvent
       structure: BlobStructureFactory
       cost: 60
-      minRange: 6
+      minRange: 6.5
       rangeComponent: BlobFactory
+      requiresNode: true
 
 - type: entity
   id: ActionBlobCreateNode
@@ -92,7 +94,7 @@
       !type:BlobCreateStructureEvent
       structure: BlobStructureNode
       cost: 50
-      minRange: 4
+      minRange: 4.5
       rangeComponent: BlobNode
 
 - type: entity

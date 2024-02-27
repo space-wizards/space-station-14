@@ -25,7 +25,7 @@ namespace Content.Shared.Blob;
 /// <summary>
 /// This handles logic related to the blob's movement, abilities, minions, and spreading.
 /// </summary>
-public abstract class SharedBlobSystem : EntitySystem
+public abstract partial class SharedBlobSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -49,6 +49,9 @@ public abstract class SharedBlobSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        InitializeNode();
+        InitializeResource();
+
         SubscribeLocalEvent<BlobOvermindComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BlobOvermindComponent, BlobCreateStructureEvent>(OnCreateStructure);
         SubscribeLocalEvent<BlobOvermindComponent, BlobJumpToCoreEvent>(OnJumpToCore);
@@ -56,7 +59,7 @@ public abstract class SharedBlobSystem : EntitySystem
 
         //todo this needs to reload the fixtures for blob structures when they re-enter PVS
         SubscribeLocalEvent((Entity<BlobStructureComponent> ent, ref ComponentStartup _) => UpdateNearby(ent));
-        SubscribeLocalEvent((Entity<BlobStructureComponent> ent, ref MoveEvent ev) => UpdateNearby(ent, ev.OldPosition));
+        SubscribeLocalEvent<BlobStructureComponent, MoveEvent>(OnStructureMove);
         SubscribeLocalEvent<BlobStructureComponent, PreventCollideEvent>(OnPreventCollide);
 
         CommandBinds.Builder
@@ -92,7 +95,6 @@ public abstract class SharedBlobSystem : EntitySystem
         }
 
         SpawnBlobCreated(comp.CoreProtoId, Transform(ent).Coordinates, ent);
-
         Dirty(ent, ent.Comp);
     }
 
@@ -105,13 +107,24 @@ public abstract class SharedBlobSystem : EntitySystem
         if (!TryGetBlobStructure(pos, out var blob) || !_tag.HasTag(blob.Value, AllowBlobReplaceTag))
             return;
 
+        var mapPos = pos.SnapToGrid().ToMap(EntityManager, _transform);
+
         var rangeComp = EntityManager.ComponentFactory.GetRegistration(args.RangeComponent).Type;
-        var nearby = _lookup.GetEntitiesInRange(rangeComp, pos.SnapToGrid().ToMap(EntityManager, _transform), args.MinRange);
+        var nearby = _lookup.GetEntitiesInRange(rangeComp, mapPos, args.MinRange);
 
         if (nearby.Count != 0)
         {
             _popup.PopupClient(Loc.GetString("blob-popup-structure-too-close"), ent, ent);
             return;
+        }
+
+        if (args.RequiresNode)
+        {
+            if (!HasNodeNearby(pos.SnapToGrid()))
+            {
+                _popup.PopupClient(Loc.GetString("blob-popup-structure-no-nodes"), ent, ent);
+                return;
+            }
         }
 
         if (!TryUseResource((ent, ent), args.Cost, user: ent))
@@ -175,6 +188,13 @@ public abstract class SharedBlobSystem : EntitySystem
         UpdateNearby(core.Value, coreXform.Coordinates);
         UpdateNearby(hovering.Value, hoverXform.Coordinates);
         args.Handled = true;
+    }
+
+    private void OnStructureMove(Entity<BlobStructureComponent> ent, ref MoveEvent args)
+    {
+        if (!TerminatingOrDeleted(ent))
+            SetBlobStructurePulsed(ent, HasNodeNearby(args.NewPosition));
+        UpdateNearby(ent, args.OldPosition);
     }
 
     private void OnPreventCollide(Entity<BlobStructureComponent> ent, ref PreventCollideEvent args)
@@ -402,7 +422,7 @@ public abstract class SharedBlobSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (ent.Comp.Resource - amount < 0)
+        if (!HasResource(ent, amount))
         {
             if (user != null && !silent)
                 _popup.PopupClient(Loc.GetString("blob-popup-structure-no-resource", ("amount", amount - ent.Comp.Resource)), user.Value, user.Value);
@@ -438,6 +458,8 @@ public abstract class SharedBlobSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        UpdateResource();
 
         var query = EntityQueryEnumerator<BlobOvermindComponent>();
         while (query.MoveNext(out var uid, out var comp))

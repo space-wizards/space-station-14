@@ -76,6 +76,12 @@ public sealed partial class BlobCreateStructureEvent : InstantActionEvent
     /// </summary>
     [DataField]
     public string RangeComponent;
+
+    /// <summary>
+    /// Whether or not this structure must be built within a certain range of a core or node.
+    /// </summary>
+    [DataField]
+    public bool RequiresNode;
 }
 
 public sealed partial class BlobJumpToCoreEvent : InstantActionEvent
