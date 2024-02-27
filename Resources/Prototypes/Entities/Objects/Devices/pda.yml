@@ -669,7 +669,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
-      - NewsReadCartridge
+      - NewsReaderCartridge
       - LogProbeCartridge
 
 - type: entity
