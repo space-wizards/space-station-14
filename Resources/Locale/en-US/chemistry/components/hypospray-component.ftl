@@ -1,7 +1,7 @@
 ## UI
 
 hypospray-all-mode-text = Only Injects
-hypospray-mobs-only-mode-text = Draws From Containers
+hypospray-mobs-only-mode-text = Draws and Injects
 hypospray-invalid-text = Invalid
 hypospray-volume-label = Volume: [color=white]{$currentVolume}u / {$totalVolume}u[/color]
     Mode: [color=white]{$modeString}[/color]
