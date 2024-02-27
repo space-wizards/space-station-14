@@ -65,10 +65,10 @@
   description: A shooting target. This one moves.
   components:
   - type: RandomWalk
-    minSpeed: 30
-    maxSpeed: 40
-    minStepCooldown: 1
-    maxStepCooldown: 3
+    minSpeed: 4
+    maxSpeed: 6
+    minStepCooldown: 0.3
+    maxStepCooldown: 0.5
 
 - type: entity
   name: syndicate target
