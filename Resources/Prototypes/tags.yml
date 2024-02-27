@@ -261,16 +261,16 @@
 
 - type: Tag
   id: CarpetOrange
-  
+
 - type: Tag
   id: CarpetPurple
 
 - type: Tag
   id: CarpetPink
-  
+
 - type: Tag
   id: CarpetRed
-  
+
 - type: Tag
   id: CarpetWhite
 
@@ -541,15 +541,6 @@
 
 - type: Tag
   id: Flower
-
-- type: Tag
-  id: FlowerRed
-
-- type: Tag
-  id: FlowerOrange
-
-- type: Tag
-  id: FlowerPurple
 
 - type: Tag
   id: Folder

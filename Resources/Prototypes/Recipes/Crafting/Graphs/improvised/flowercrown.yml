@@ -6,20 +6,15 @@
       edges:
         - to: flowercrown
           steps:
-            - tag: FlowerRed
+            - tag: Flower
               name: flower
               icon:
                 sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
-            - tag: FlowerOrange
+            - tag: Flower
               name: flower
               icon:
-                sprite: Objects/Specific/Hydroponics/lily.rsi
-                state: produce
-            - tag: FlowerPurple
-              name: flower
-              icon:
-                sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
             - tag: Ambrosia
               name: ambrosia
