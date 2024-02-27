@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/TauCetiStation/TauCetiClassic/pull/12655/files ",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "ares" },
+        { "name": "bust_1" },
+        { "name": "bust_2" },
+        { "name": "earth" },
+        { "name": "earth2" },
+        { "name": "moon" },
+        { "name": "portret_1" },
+        { "name": "portret_2" },
+        { "name": "portret_3" },
+        { "name": "rnd-light" },
+        { "name": "table_glass" },
+        { "name": "shelf" }
+    ]
+}

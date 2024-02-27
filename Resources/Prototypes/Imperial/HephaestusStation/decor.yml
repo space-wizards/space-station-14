@@ -1,0 +1,120 @@
+- type: entity
+  id: ImperialGlobeAres
+  name: filler
+  parent: BaseItem
+  description: filler
+  components:
+  - type: Item
+    size: 5
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    layers:
+    - state: ares
+
+- type: entity
+  id: ImperialGlobeMoon
+  name: filler
+  parent: BaseItem
+  description: filler
+  components:
+  - type: Item
+    size: 5
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    layers:
+    - state: moon
+
+- type: entity
+  id: ImperialGlobeEarth
+  name: filler
+  parent: BaseItem
+  description: filler
+  components:
+  - type: Item
+    size: 5
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    layers:
+    - state: earth
+
+- type: entity
+  id: ImperialGlobeEarth2
+  name: filler
+  parent: BaseItem
+  description: filler
+  components:
+  - type: Item
+    size: 5
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    layers:
+    - state: earth2
+
+- type: entity
+  id: ImperialBust1
+  name: filler
+  parent: BaseItem
+  description: filler
+  components:
+  - type: Item
+    size: 5
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    layers:
+    - state: bust_1
+
+- type: entity
+  id: ImperialBust2
+  name: filler
+  parent: BaseItem
+  description: filler
+  components:
+  - type: Item
+    size: 5
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    layers:
+    - state: bust_2
+
+- type: entity
+  id: ImperialTableGlass
+  name: filler
+  parent: BaseItem
+  description: filler
+  components:
+  - type: Item
+    size: 5
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    layers:
+    - state: table_glass
+
+- type: entity
+  parent: CommunityPosterBase
+  id: portret_1
+  name: "We will sow in time - we will collect a mountain of grain!"
+  description: "The poster looks worn. The poster depicts a hardworking botanist who is responsible for his work."
+  components:
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    state: portret_1
+
+- type: entity
+  parent: CommunityPosterBase
+  id: portret_2
+  name: "We will sow in time - we will collect a mountain of grain!"
+  description: "The poster looks worn. The poster depicts a hardworking botanist who is responsible for his work."
+  components:
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    state: portret_2
+
+- type: entity
+  parent: CommunityPosterBase
+  id: portret_3
+  name: "We will sow in time - we will collect a mountain of grain!"
+  description: "The poster looks worn. The poster depicts a hardworking botanist who is responsible for his work."
+  components:
+  - type: Sprite
+    sprite: Imperial/HephaestusStation/Decor/decor.rsi
+    state: portret_3

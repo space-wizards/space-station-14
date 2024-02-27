@@ -1,0 +1,113 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA 3.0",
+    "copyright": "taken from TGstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "box"
+        },
+        {
+            "name": "corner_ne"
+        },
+        {
+            "name": "corner_se"
+        },
+        {
+            "name": "corner_nw"
+        },
+        {
+            "name": "corner_sw"
+        },
+        {
+            "name": "end_n"
+        },
+        {
+            "name": "end_e"
+        },
+        {
+            "name": "end_s"
+        },
+        {
+            "name": "end_w"
+        },
+        {
+            "name": "line_n"
+        },
+        {
+            "name": "line_e"
+        },
+        {
+            "name": "line_s"
+        },
+        {
+            "name": "line_w"
+        },
+        {
+            "name": "inner_ne"
+        },
+        {
+            "name": "inner_se"
+        },
+        {
+            "name": "inner_nw"
+        },
+        {
+            "name": "inner_sw"
+        },
+        {
+            "name": "fill_box"
+        },
+        {
+            "name": "fill_corner_ne"
+        },
+        {
+            "name": "fill_corner_se"
+        },
+        {
+            "name": "fill_corner_nw"
+        },
+        {
+            "name": "fill_corner_sw"
+        },
+        {
+            "name": "fill_end_n"
+        },
+        {
+            "name": "fill_end_e"
+        },
+        {
+            "name": "fill_end_s"
+        },
+        {
+            "name": "fill_end_w"
+        },
+        {
+            "name": "fill_line_n"
+        },
+        {
+            "name": "fill_line_e"
+        },
+        {
+            "name": "fill_line_s"
+        },
+        {
+            "name": "fill_line_w"
+        },
+        {
+            "name": "fill_inner_ne"
+        },
+        {
+            "name": "fill_inner_se"
+        },
+        {
+            "name": "fill_inner_nw"
+        },
+        {
+            "name": "fill_inner_sw"
+        }
+    ]
+}
