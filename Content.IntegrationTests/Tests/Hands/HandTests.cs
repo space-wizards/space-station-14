@@ -24,6 +24,7 @@ public sealed class HandTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var mapMan = server.ResolveDependency<IMapManager>();
         var sys = entMan.System<SharedHandsSystem>();
+        var xfm = entMan.System<SharedTransformSystem>();
 
         var data = await pair.CreateTestMap();
         await pair.RunTicksSync(5);
@@ -35,7 +36,7 @@ public sealed class HandTests
         {
             player = playerMan.Sessions.First().AttachedEntity!.Value;
             var xform = entMan.GetComponent<TransformComponent>(player);
-            item = entMan.SpawnEntity("Crowbar", xform.MapPosition);
+            item = entMan.SpawnEntity("Crowbar", xfm.GetMapCoordinates(xform));
             hands = entMan.GetComponent<HandsComponent>(player);
             sys.TryPickup(player, item, hands.ActiveHand!);
         });

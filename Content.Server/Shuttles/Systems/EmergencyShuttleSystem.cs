@@ -507,14 +507,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         EnsureComp<EmergencyShuttleComponent>(shuttle.Value);
     }
 
-    private void OnEscapeUnpaused(EntityUid uid, EscapePodComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.LaunchTime == null)
-            return;
-
-        component.LaunchTime = component.LaunchTime.Value + args.PausedTime;
-    }
-
     /// <summary>
     /// Returns whether a target is escaping on the emergency shuttle, but only if evac has arrived.
     /// </summary>

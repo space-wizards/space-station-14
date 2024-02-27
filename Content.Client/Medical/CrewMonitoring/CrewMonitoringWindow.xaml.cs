@@ -265,7 +265,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 var jobIcon = new TextureRect()
                 {
                     TextureScale = new Vector2(2f, 2f),
-                    Stretch = TextureRect.StretchMode.KeepCentered,
+                    VerticalAlignment = VAlignment.Center,
                     Texture = _spriteSystem.Frame0(proto.Icon),
                     Margin = new Thickness(5, 0, 5, 0),
                 };

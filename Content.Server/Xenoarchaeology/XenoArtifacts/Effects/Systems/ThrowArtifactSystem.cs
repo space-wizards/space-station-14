@@ -19,6 +19,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -32,7 +33,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
         if (_map.TryGetGrid(xform.GridUid, out var grid))
         {
             var tiles = grid.GetTilesIntersecting(
-                Box2.CenteredAround(xform.WorldPosition, new Vector2(component.Range * 2, component.Range)));
+                Box2.CenteredAround(_xformSystem.GetWorldPosition(xform), new Vector2(component.Range * 2, component.Range)));
 
             foreach (var tile in tiles)
             {
@@ -51,9 +52,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
                 && (phys.CollisionMask & (int) CollisionGroup.GhostImpassable) != 0)
                 continue;
 
-            var tempXform = Transform(ent);
-
-            var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;
+            var foo = _xformSystem.GetWorldPosition(ent) - _xformSystem.GetWorldPosition(xform);
             _throwing.TryThrow(ent, foo*2, component.ThrowStrength, uid, 0);
         }
     }

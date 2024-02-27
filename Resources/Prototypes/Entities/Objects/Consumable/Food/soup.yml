@@ -5,6 +5,8 @@
   id: FoodBowlBase
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
     trash: FoodBowlBig
     utensil: Spoon

@@ -92,6 +92,7 @@
     - Gold
     - Silver
     - Sodium
+    - JuiceThatMakesYouWeh
 
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddleBloodbath

@@ -23,6 +23,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -233,7 +234,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!gen1XForm.Anchored)
             return false;
 
-        var genWorldPosRot = gen1XForm.GetWorldPositionRotation();
+        var genWorldPosRot = _xformSystem.GetWorldPositionRotation(gen1XForm);
         var dirRad = dir.ToAngle() + genWorldPosRot.WorldRotation; //needs to be like this for the raycast to work properly
 
         var ray = new CollisionRay(genWorldPosRot.WorldPosition, dirRad.ToVec(), component.CollisionMask);
@@ -310,14 +311,14 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             var newField = Spawn(firstGen.Comp.CreatedField, currentCoords);
 
             var fieldXForm = Transform(newField);
-            fieldXForm.AttachParent(firstGen);
+            _xformSystem.SetParent(newField, fieldXForm, firstGen);
             if (dirVec.GetDir() == Direction.East || dirVec.GetDir() == Direction.West)
             {
                 var angle = fieldXForm.LocalPosition.ToAngle();
                 var rotateBy90 = angle.Degrees + 90;
                 var rotatedAngle = Angle.FromDegrees(rotateBy90);
 
-                fieldXForm.LocalRotation = rotatedAngle;
+                _xformSystem.SetLocalRotation(newField, rotatedAngle, fieldXForm);
             }
 
             fieldList.Add(newField);
