@@ -17,7 +17,7 @@
     # i'm not making 500 stamp permutations
     isStampable: false
   - type: Item
-    size: Medium
+    size: medium
   - type: Rotatable
 
 - type: entity
