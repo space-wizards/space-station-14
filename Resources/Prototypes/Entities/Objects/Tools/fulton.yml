@@ -105,3 +105,41 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
+
+- type: entity
+  id: ThiefFultonBeacon
+  name: thieving beacon
+  description: A device that sooner or later teleports everything around it to the thief's vault.
+  components:
+    - type: ThiefFulton
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.4,0.25,0.1"
+          density: 20
+          mask:
+            - Impassable
+    - type: Foldable
+      foldSound: /Audio/Items/Mining/fultext_deploy.ogg
+      unfoldSound: /Audio/Items/Mining/fultext_deploy.ogg
+      folded: true
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FoldedVisuals.State:
+          foldedLayer:
+            True: { state: folded_extraction }
+            False: { state: extraction_point }
+    - type: Sprite
+      sprite: Objects/Tools/fulton.rsi
+      drawdepth: SmallObjects
+      noRot: true
+      layers:
+        - state: extraction_point
+          map: [ "foldedLayer" ]
