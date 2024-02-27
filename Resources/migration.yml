@@ -225,4 +225,5 @@ AmePartStealObjective: AmePartFlatpackStealObjective
 Observationskit: null
 
 # 2024-02-26
+CrateBaseWeldable: CrateGenericSteel
 ClothingHeadHatHairflower: null
