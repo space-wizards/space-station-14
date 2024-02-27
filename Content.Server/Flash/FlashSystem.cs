@@ -37,6 +37,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         public override void Initialize()
         {

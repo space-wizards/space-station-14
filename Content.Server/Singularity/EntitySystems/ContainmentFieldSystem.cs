@@ -13,6 +13,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -34,8 +35,8 @@ public sealed class ContainmentFieldSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(otherBody, out var physics) && physics.Mass <= component.MaxMass && physics.Hard)
         {
-            var fieldDir = Transform(uid).WorldPosition;
-            var playerDir = Transform(otherBody).WorldPosition;
+            var fieldDir = _xformSystem.GetWorldPosition(uid);
+            var playerDir = _xformSystem.GetWorldPosition(otherBody);
 
             _throwing.TryThrow(otherBody, playerDir-fieldDir, strength: component.ThrowForce);
         }

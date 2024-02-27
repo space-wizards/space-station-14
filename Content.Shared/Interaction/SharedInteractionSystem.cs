@@ -630,7 +630,7 @@ namespace Content.Shared.Interaction
                 fixtureB.FixtureCount > 0 &&
                 TryComp<TransformComponent>(origin, out var xformA))
             {
-                var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
+                var (worldPosA, worldRotA) = _transform.GetWorldPositionRotation(xformA);
                 var xfA = new Transform(worldPosA, worldRotA);
                 var parentRotB = _transform.GetWorldRotation(otherCoordinates.EntityId);
                 var xfB = new Transform(targetPos.Position, parentRotB + otherAngle);
@@ -660,14 +660,14 @@ namespace Content.Shared.Interaction
                 else
                 {
                     // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
-                    originPos = xformA.MapPosition;
+                    originPos = _transform.GetMapCoordinates(xformA);
                     range = (originPos.Position - targetPos.Position).Length();
                 }
             }
             // No fixtures, e.g. wallmounts.
             else
             {
-                originPos = Transform(origin).MapPosition;
+                originPos = _transform.GetMapCoordinates(origin);
                 var otherParent = Transform(other).ParentUid;
                 targetRot = otherParent.IsValid() ? Transform(otherParent).LocalRotation + otherAngle : otherAngle;
             }
@@ -696,7 +696,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null)
         {
             var transform = Transform(target);
-            var (position, rotation) = transform.GetWorldPositionRotation();
+            var (position, rotation) = _transform.GetWorldPositionRotation(transform);
             var mapPos = new MapCoordinates(position, transform.MapID);
             var combinedPredicate = GetPredicate(origin, target, mapPos, rotation, collisionMask, predicate);
 
@@ -821,7 +821,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
-            var originPosition = Transform(origin).MapPosition;
+            var originPosition = _transform.GetMapCoordinates(origin);
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate, ShouldCheckAccess(origin));
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
@@ -1057,7 +1057,7 @@ namespace Content.Shared.Interaction
                 rotation = mover.TargetRelativeRotation;
             }
 
-            Transform(item).LocalRotation = rotation;
+            _transform.SetLocalRotation(item, rotation);
         }
         #endregion
 

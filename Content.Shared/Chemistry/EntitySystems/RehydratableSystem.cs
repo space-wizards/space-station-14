@@ -10,6 +10,7 @@ public sealed class RehydratableSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     public override void Initialize()
     {
@@ -37,7 +38,7 @@ public sealed class RehydratableSystem : EntitySystem
         var target = Spawn(randomMob, Transform(uid).Coordinates);
         _popup.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), target);
 
-        Transform(target).AttachToGridOrMap();
+        _xform.AttachToGridOrMap(target);
         var ev = new GotRehydratedEvent(target);
         RaiseLocalEvent(uid, ref ev);
 

@@ -18,6 +18,7 @@ public sealed class GunSpreadOverlay : Overlay
     private readonly IInputManager _input;
     private readonly IPlayerManager _player;
     private readonly GunSystem _guns;
+    private readonly SharedTransformSystem _xforms;
 
     public GunSpreadOverlay(IEntityManager entManager, IEyeManager eyeManager, IGameTiming timing, IInputManager input, IPlayerManager player, GunSystem system)
     {
@@ -27,6 +28,7 @@ public sealed class GunSpreadOverlay : Overlay
         _timing = timing;
         _player = player;
         _guns = system;
+        _xforms = entManager.System<SharedTransformSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -41,7 +43,7 @@ public sealed class GunSpreadOverlay : Overlay
             return;
         }
 
-        var mapPos = xform.MapPosition;
+        var mapPos = _xforms.GetMapCoordinates((player.Value, xform));
 
         if (mapPos.MapId == MapId.Nullspace)
             return;
